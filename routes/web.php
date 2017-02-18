@@ -22,8 +22,16 @@ Route::get('/admin/', function () {
 
 use App\Post;
 
-Route::resource('/admin/posts/', 'PostController');
 
+Route::resource('/admin/posts/', 'PostController', ['except' => [
+  'edit',
+  ]
+]);
+
+Route::get('/admin/posts/{id}', function ($id) {
+  $post = Post::findOrFail($id);
+  return view('admin.posts.edit')->with('post', $post);
+});
 
 // Posts Loop
 Route::get('/posts/', function () {
@@ -36,3 +44,7 @@ Route::get('/post/{id}', function ($id) {
   $post = Post::findOrFail($id); // Prende i post con id
   return view('blog.post')->with('post', $post); // ritorno la view con il post
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

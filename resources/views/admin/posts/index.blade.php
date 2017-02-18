@@ -47,7 +47,7 @@
           <td><a class="btn btn-small btn-success" href="/post/{{ $post->id }}">Preview</a></td>
 
           <!-- edit post -->
-          <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}/edit">Edit</a></td>
+          <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}">Edit</a></td>
 
         </tr>
       @endforeach
