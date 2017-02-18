@@ -22,11 +22,9 @@ Route::get('/admin/', function () {
 
 use App\Post;
 
-
-Route::resource('/admin/posts/', 'PostController', ['except' => [
-  'edit',
-  ]
-]);
+Route::group(['prefix' => 'admin'], function () {
+  Route::resource('posts', 'PostController');
+});
 
 Route::get('/admin/posts/{id}', function ($id) {
   $post = Post::findOrFail($id);
