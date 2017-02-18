@@ -11,12 +11,14 @@
       {!! Form::open(['url' => 'admin/posts']) !!}
 
       <div class="form-group">
-        {{ Form::label('name', 'Name') }}
+        {{ Form::label('title', 'Title') }}
+        {{ Form::text('title', Input::old('title'), ['class' => 'form-control']) }}
       </div>
 
 
       {!! Form::close() !!}
 
     </div>
+    @include('admin.footer')
   </body>
 </html>

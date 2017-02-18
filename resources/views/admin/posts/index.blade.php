@@ -46,7 +46,7 @@
       @endforeach
 
     </table>
-
+    @include('admin.footer')
   </div>
 </body>
 </html>
