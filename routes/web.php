@@ -20,8 +20,11 @@ Route::get('/admin/', function () {
   return view('admin');
 });
 
-
 use App\Post;
+
+Route::group(['prefix' => 'admin'], function () {
+  Route::resource('posts', 'PostController');
+});
 
 // Posts Loop
 Route::get('/posts/', function () {
@@ -32,5 +35,9 @@ Route::get('/posts/', function () {
 // Single Post
 Route::get('/post/{id}', function ($id) {
   $post = Post::findOrFail($id); // Prende i post con id
-  return view('blog.post')->with('post',$post); // ritorno la view con il post
+  return view('blog.post')->with('post', $post); // ritorno la view con il post
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');

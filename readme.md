@@ -1,6 +1,4 @@
-<p align="center">
- The Film Corner
- </p>
-
+ ##The Film Corner
+ 
  <p>Created using Laravel</p>
  <p>this is a learning project</p>

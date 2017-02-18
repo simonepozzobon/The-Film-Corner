@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Lista dei post</title>
+    <title>Post List</title>
   </head>
 <body>
   @if(count($posts)===0)
