@@ -8,7 +8,14 @@
       @include('admin.menu')
 
       <h1>Create a new post</h1>
-      {{ Html::ul($errors->all()) }}
+      @if (count($errors) > 0)
+        <ul>
+          @foreach ($errors as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+
+      @endif
 
       {!! Form::open(['url' => 'admin/posts']) !!}
 
