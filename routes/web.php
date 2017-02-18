@@ -26,11 +26,6 @@ Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
 });
 
-Route::get('/admin/posts/{id}', function ($id) {
-  $post = Post::findOrFail($id);
-  return view('admin.posts.edit')->with('post', $post);
-});
-
 // Posts Loop
 Route::get('/posts/', function () {
   $posts = Post::with('author')->get(); // Prende tutti i post integrandoli con l'autore vd. app/Post.php

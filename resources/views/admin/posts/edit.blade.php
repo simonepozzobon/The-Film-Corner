@@ -13,11 +13,10 @@
             {{ session('status') }}
           </div>
       @endif
-      <div>
+      </div>
 
-      {{ Form::model($post, array('route' => array('admin.posts.update', $post->id), 'method' => 'PUT')) }}
-      {{ Form::close() }}
       ciao
+
       @include('admin.footer')
     </div>
   </body>
