@@ -1,17 +1,23 @@
-<nav class="navbar navbar-inverse">
-  <div class="navbar-header">
-    <a class="navbar-brand" href="{{ url('admin') }}">Admin</a>
+<nav class="navbar fixed-top navbar-toggleable-md bg-faded mtr-8dp">
+  {{-- Mobile --}}
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  {{-- Logo --}}
+  <a class="navbar-brand" href="{{ url('admin') }}">Admin</a>
+  {{-- Desktop --}}
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Post
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ url('admin/posts') }}">All Post</a>
+          <a class="dropdown-item" href="{{ url('admin/posts/create') }}">Add Post</a>
+        </div>
+      </li>
+    </ul>
   </div>
-  <ul class="nav navbar-nav">
-    <li class="dropdown">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-        Post
-        <span class="caret"></span>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a href="{{ url('admin/posts') }}">All Post</a></li>
-        <li><a href="{{ url('admin/posts/create') }}">Add Post</a></li>
-      </ul>
-    </li>
-  </ul>
 </nav>
+<br><br>

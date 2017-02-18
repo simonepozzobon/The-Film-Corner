@@ -19,12 +19,12 @@
 
       <div class="form-group">
         {{ Form::label('content', 'Content') }}
-        {{ Form::text('content', Input::old('content'), ['class' => 'form-control']) }}
+        {{ Form::textarea('content', Input::old('content'), ['class' => 'form-control']) }}
       </div>
 
       <div class="form-group">
-        {{ Form::label('content', 'Content') }}
-        {{ Form::text('content', Input::old('content'), ['class' => 'form-control']) }}
+        {{ Form::label('user_id', 'Author Id') }}
+        {{ Form::text('user_id', Input::old('user_id'), ['class' => 'form-control']) }}
       </div>
 
         {{ Form::submit('Create Post', ['class' => 'btn btn-primary']) }}

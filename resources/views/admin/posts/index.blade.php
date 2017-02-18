@@ -13,7 +13,7 @@
      <!-- verficare questa parte del codice su laravel -->
     @endif
 
-    <a class="btn btn-small btn-success pull-right" href="{{ url('admin/posts/create') }}">Add Post</a>
+    <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
 
     <table class="table table-striped table-bordered">
       <thead>
