@@ -22,10 +22,7 @@ Route::get('/admin/', function () {
 
 use App\Post;
 
-Route::get('/admin/posts/', function () {
-  $posts_list = Post::all();
-  return view('admin.list')->with('posts', $posts_list);
-});
+Route::resource('/admin/posts/', 'PostController');
 
 
 // Posts Loop

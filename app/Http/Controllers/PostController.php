@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -13,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('author')->get();
+
+        return view('admin.posts.index')->with('posts', $posts);
     }
 
     /**
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
