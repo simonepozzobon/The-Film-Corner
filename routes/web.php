@@ -11,6 +11,9 @@
 |
 */
 
+use App\Post;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,10 +23,10 @@ Route::get('/admin/', function () {
   return view('admin');
 });
 
-use App\Post;
-
+// Admin Panel Routes
 Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
+  Route::resource('users', 'UserController');
 });
 
 // Posts Loop

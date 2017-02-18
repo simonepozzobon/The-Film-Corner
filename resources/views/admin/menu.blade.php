@@ -4,20 +4,20 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a class="navbar-brand" href="{{ url('admin') }}">Admin</a>
+  <a class="navbar-brand" href="{{ url('admin') }}">Admin Panel</a>
   {{-- Desktop --}}
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Post
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{ url('admin/posts') }}">All Post</a>
-          <a class="dropdown-item" href="{{ url('admin/posts/create') }}">Add Post</a>
-        </div>
-      </li>
-    </ul>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <li class="nav-link">
+      <a href="{{ url('admin/posts') }}">Posts</a>
+    </li>
+
+    <li class="nav-link disabled">Pages</li>
+    <li class="nav-link disabled">Media</li>
+    <li class="nav-link">
+      <a href="{{ url('admin/users') }}">Users</a>
+    </li>
+    <li class="nav-link disabled">Logout</li>
+
   </div>
 </nav>
 <br><br>

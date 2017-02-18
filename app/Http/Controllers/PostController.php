@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
 use App\Http\Requests\UpdatePost;
-use App\Post;
 
 class PostController extends Controller
 {
@@ -81,7 +81,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePost $request, $id) //verificare Request > va cambiato con UpdatePost
     {
         $post = Post::findOrFail($id);
         $post->title = $request->get('title');

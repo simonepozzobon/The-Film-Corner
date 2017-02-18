@@ -6,7 +6,7 @@
   <body>
     <div class="container">
       @include('admin.menu')
-      <div><h1>{{ $post->title }}</h1></div>
+      <div><h1>Edit {{ $user->name }}</h1></div>
 
       <div>
       @if (session('status'))
@@ -16,20 +16,20 @@
       @endif
       </div>
 
-      <form action="/admin/posts/{{ $post->id }}" method="POST">
+      <form action="/admin/users/{{ $user->id }}" method="POST">
         <div class="form-group">
-          <label for="title">Title</label>
-          <input name="title" value="{{ old('title') }}" type="text"class="form-control" id="title" placeholder="title of the post">
+          <label for="name">Name</label>
+          <input name="name" value="{{ old('name') }}" type="text"class="form-control" id="name" placeholder="Name of the user">
         </div>
 
         <div class="form-group">
-          <label for="content">Content</label>
-          <textarea name="content" value="{{ old('content') }}" class="form-control" id="content" placeholder="content of the post" rows="8"></textarea>
+          <label for="email">Email</label>
+          <input name="email" value="{{ old('email') }}" class="form-control" id="content" placeholder="user@email.com">
         </div>
 
         <div class="form-group">
-          <label for="user_id">Title</label>
-          <input name="user_id" value="{{ old('user_id') }}" type="text" class="form-control" id="user_id" placeholder="author id">
+          <label for="password">Password</label>
+          <input name="password" value="{{ old('password') }}" type="text" class="form-control" id="password" placeholder="password">
         </div>
 
         {{ method_field('PUT') }}
