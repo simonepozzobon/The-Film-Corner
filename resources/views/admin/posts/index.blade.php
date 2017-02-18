@@ -6,14 +6,21 @@
 
   <div class="container">
     @include('admin.menu')
+    <div class="clearfix">
+      <h1>Posts</h1>
+    </div>
 
-    <h1>Tutti i post</h1>
-
-    @if (Session::has('message'))
-     <!-- verficare questa parte del codice su laravel -->
+    <div>
+    @if (session('status'))
+        <div class="alert alert-success">
+          {{ session('status') }}
+        </div>
     @endif
+    <div>
 
-    <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
+    <div class="clearfix">
+      <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
+    </div>
 
     <table class="table table-striped table-bordered">
       <thead>
@@ -40,7 +47,7 @@
           <td><a class="btn btn-small btn-success" href="/post/{{ $post->id }}">Preview</a></td>
 
           <!-- edit post -->
-          <td><a class="btn btn-small btn-info" href="{{ url('admin/posts/edit') }}">Edit</a></td>
+          <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}/edit">Edit</a></td>
 
         </tr>
       @endforeach

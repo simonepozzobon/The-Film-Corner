@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
 use App\Post;
 
@@ -30,6 +31,8 @@ class PostController extends Controller
         return view('admin.posts.create');
     }
 
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -44,7 +47,7 @@ class PostController extends Controller
         $post->user_id = $request->input('user_id');
         $post->save();
 
-        return redirect('/admin/posts');
+        return redirect('/admin/posts')->with('status', 'New post created!');
     }
 
     /**
@@ -66,7 +69,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('admin.posts.edit')->with('post', $post);
     }
 
     /**

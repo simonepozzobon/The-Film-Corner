@@ -83,7 +83,8 @@
                 </div>
 
                 <div class="links">
-                  <a href="{{ url('/posts') }}">Vedi i Post del Blog</a>
+                  <a href="{{ url('/posts') }}">Blog</a>
+                  <a href="{{ url('/admin') }}">Admin Panel</a>
                 </div>
             </div>
         </div>
