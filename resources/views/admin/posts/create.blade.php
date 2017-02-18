@@ -17,26 +17,28 @@
 
       @endif
 
-      {!! Form::open(['url' => 'admin/posts']) !!}
-
+      <form action="/admin/posts" method="POST">
       <div class="form-group">
-        {{ Form::label('title', 'Title') }}
-        {{ Form::text('title', Input::old('title'), ['class' => 'form-control']) }}
+        <label for="title">Title</label>
+        <input name="title" value="{{ old('title') }}" type="text"class="form-control" id="title" placeholder="title of the post">
       </div>
 
       <div class="form-group">
-        {{ Form::label('content', 'Content') }}
-        {{ Form::textarea('content', Input::old('content'), ['class' => 'form-control']) }}
+        <label for="content">Content</label>
+        <textarea name="content" value="{{ old('content') }}" class="form-control" id="content" placeholder="content of the post" rows="8"></textarea>
       </div>
 
       <div class="form-group">
-        {{ Form::label('user_id', 'Author Id') }}
-        {{ Form::text('user_id', Input::old('user_id'), ['class' => 'form-control']) }}
+        <label for="user_id">Title</label>
+        <input name="user_id" value="{{ old('user_id') }}" type="text" class="form-control" id="user_id" placeholder="author id">
       </div>
 
-        {{ Form::submit('Create Post', ['class' => 'btn btn-primary']) }}
+      {{ method_field('POST') }}
+      <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-      {!! Form::close() !!}
+      <button type="submit" class="btn btn-success" value="Submit">Save</button>
+
+      </form>
 
     </div>
 

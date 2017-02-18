@@ -6,6 +6,7 @@
 
   <div class="container">
     @include('admin.menu')
+    <br>
     <div class="clearfix">
       <h1>Posts</h1>
     </div>
@@ -22,37 +23,48 @@
       <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
     </div>
 
-    <table class="table table-striped table-bordered">
-      <thead>
-        <tr>
-          <td>Id</td>
-          <td>Title</td>
-          <td>Content</td>
-          <td>User</td>
-        </tr>
-      </thead>
+    <br>
 
-      @foreach ($posts as $post)
-        <tr>
-          <!-- Show Post -->
-          <td>{{ $post->id }}</td>
-          <td>{{ $post->title }}</td>
-          <td>{{ $post->content }}</td>
-          <td>{{ $post->author->name }}</td>
+    <div class="clearfix">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <td>Id</td>
+            <td>Title</td>
+            <td>Content</td>
+            <td>User</td>
+            <td>Preview</td>
+            <td>Edit</td>
+            <td>Delete</td>
+          </tr>
+        </thead>
 
-          <!-- delete post -->
+        @foreach ($posts as $post)
+          <tr>
+            <!-- Show Post -->
+            <td>{{ $post->id }}</td>
+            <td>{{ $post->title }}</td>
+            <td>{{ $post->content }}</td>
+            <td>{{ $post->author->name }}</td>
 
+            {{-- show post --}}
+            <td><a class="btn btn-small btn-success" href="/post/{{ $post->id }}">Preview</a></td>
 
-          <!-- show post -->
-          <td><a class="btn btn-small btn-success" href="/post/{{ $post->id }}">Preview</a></td>
+            {{-- edit post --}}
+            <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}/edit">Edit</a></td>
 
-          <!-- edit post -->
-          <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}/edit">Edit</a></td>
+            <td>
+              <form action="/admin/posts/{{ $post->id }}" method="POST">
+                {{ method_field('DELETE') }}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        @endforeach
 
-        </tr>
-      @endforeach
-
-    </table>
+      </table>
+    </div>
     @include('admin.footer')
   </div>
 </body>
