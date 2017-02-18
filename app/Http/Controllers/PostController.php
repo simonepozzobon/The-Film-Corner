@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
+use App\Http\Requests\UpdatePost;
 use App\Post;
 
 class PostController extends Controller
@@ -82,7 +83,13 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->title = $request->get('title');
+        $post->content = $request->get('content');
+        $post->user_id = $request->get('user_id');
+        $post->save();
+
+        return redirect('/admin/posts')->with('status', 'Post saved!');
     }
 
     /**
@@ -95,6 +102,6 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-        return redirect('/admin/posts')->with('error', 'Post deleted!');
+        return redirect('/admin/posts')->with('status', 'Post deleted!');
     }
 }
