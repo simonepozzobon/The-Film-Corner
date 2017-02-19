@@ -15,7 +15,8 @@ use App\Post;
 
 
 Route::get('/', function () {
-    return view('welcome');
+    $posts = Post::with('author')->get();
+    return view('welcome')->with('posts', $posts);
 });
 
 // Admin panel view

@@ -1,0 +1,33 @@
+
+@import 'down-arrow.css';
+
+.home {
+  background: url('/img/cover.jpg') center bottom no-repeat;
+  background-color: #FDD351;
+  background-blend-mode: screen;
+}
+
+.hero {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+}
+.hero:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /*background-image: linear-gradient(to top, #FE595A, rgba(0,0,0,0));*/
+  opacity: 1;
+}
+
+.title {
+  color: #252525;
+}
+
+.sp-center {
+  margin-top: 64px;
+  text-align: center;
+}
