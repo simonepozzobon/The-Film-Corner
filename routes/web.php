@@ -28,8 +28,8 @@ Route::get('/admin/', function () {
 Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
   Route::resource('users', 'UserController');
-  Route::resource('medias', 'MediaController');
-  Route::post('medias/create', function()
+  Route::resource('media', 'MediaController');
+  Route::post('media/create', function()
   {
     request()->file('media')->store('media');
     return back();

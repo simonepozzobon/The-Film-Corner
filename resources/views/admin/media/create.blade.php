@@ -6,11 +6,11 @@
   <body>
       <div class="container">
         @include('admin.menu')
-        <br>
-        <form action="/admin/media" method="POST" enctype="multipart/form-data">
+
+        <form action="/admin/medias" method="POST" enctype="multipart/form-data">
           {{ csrf_field() }}
           <input type="file" name="media" value=""></input>
-          <button type="submit" class="btn btn-success ">Upload</button>
+          <button type="submit" class="btn btn-success "></button>
         </form>
 
         @include('admin.footer')
