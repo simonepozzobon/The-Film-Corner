@@ -44,8 +44,8 @@
               <td><a class="btn btn-small btn-info" href="users/{{ $user->id }}/edit">Edit</a></td>
               <td>
                 <form action="/admin/users/{{ $user->id }}" method="POST">
+                  {{ csrf_field() }}
                   {{ method_field('DELETE') }}
-                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                   <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
                 </form>
               </td>

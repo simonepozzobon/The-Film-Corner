@@ -55,8 +55,8 @@
 
             <td>
               <form action="/admin/posts/{{ $post->id }}" method="POST">
+                {{ csrf_field() }}
                 {{ method_field('DELETE') }}
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
               </form>
             </td>

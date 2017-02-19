@@ -31,9 +31,8 @@
           <label for="password">Password</label>
           <input name="password" value="{{ old('password') }}" type="text" class="form-control" id="password" placeholder="password">
         </div>
-
+        {{ csrf_field() }}
         {{ method_field('PUT') }}
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
         <button type="submit" class="btn btn-success" value="Submit">Save</button>
 

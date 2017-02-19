@@ -32,9 +32,8 @@
         <label for="user_id">Title</label>
         <input name="user_id" value="{{ old('user_id') }}" type="text" class="form-control" id="user_id" placeholder="author id">
       </div>
-
+      {{ csrf_field() }}
       {{ method_field('POST') }}
-      <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
       <button type="submit" class="btn btn-success" value="Submit">Save</button>
 
