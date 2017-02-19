@@ -1,5 +1,7 @@
 <?php
 
+use App\Post;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -10,8 +12,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-use App\Post;
 
 
 Route::get('/', function () {
@@ -28,7 +28,15 @@ Route::get('/admin/', function () {
 Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
   Route::resource('users', 'UserController');
+  Route::resource('medias', 'MediaController');
+  Route::post('medias/create', function()
+  {
+    request()->file('media')->store('media');
+    return back();
+  });
 });
+
+
 
 // Posts Loop
 Route::get('/posts/', function () {
