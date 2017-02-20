@@ -107,8 +107,12 @@
           <div class="grid">
             @foreach ($posts as $post)
               <div class="grid-item">
-                <h1>{{ $post->title }}</h1>
-                <p>{{ $post->content }}</p>
+                <div class="overlay"></div>
+                <img class="" src="{{ Storage::disk('local')->url($post->featuredImage->url) }}">
+                <div class="grid-caption">
+                  <h1>{{ $post->title }}</h1>
+                  <p>{{ $post->content }}</p>
+                </div>
               </div>
             @endforeach
           </div>

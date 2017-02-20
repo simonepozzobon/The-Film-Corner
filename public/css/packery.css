@@ -1,0 +1,58 @@
+.grid {
+  margin: 64px;
+}
+
+.grid-item {
+  width: 25%;
+  overflow: hidden;
+}
+
+.grid-item figure {
+
+}
+
+.grid-item .color-1 {
+    background-color: #FDD351;
+}
+
+.grid-item .color-2 {
+    background-color: #48C0B8;
+}
+
+.grid-item .color-3 {
+    background-color: #FE595A;
+}
+
+.grid-item .color-4 {
+    background-color: #FD9B43;  
+}
+
+.grid-item .overlay {
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  mix-blend-mode: screen;
+}
+
+.grid-item img {
+  width: 100%;
+  height: auto;
+}
+
+.grid-caption {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.grid-item h1 {
+  display: block;
+  text-align: center;
+}
+
+.grid-item p {
+  display:block;
+  text-align: center;
+}
