@@ -10,4 +10,7 @@ class Post extends Model
       return $this->belongsTo('App\User', 'user_id');
     }
 
+    public function featuredImage() {
+      return $this->belongsTo('App\Media', 'featured_image');
+    }
 }
