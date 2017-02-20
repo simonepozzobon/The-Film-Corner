@@ -31,7 +31,7 @@
           <tr>
             <td>Id</td>
             <td>Title</td>
-            <td>Content</td>
+            <td>Image</td>
             <td>User</td>
             <td>Preview</td>
             <td>Edit</td>
@@ -44,7 +44,7 @@
             <!-- Show Post -->
             <td>{{ $post->id }}</td>
             <td>{{ $post->title }}</td>
-            <td>{{ $post->content }}</td>
+            <td><img width="200" class="img-thumbnail mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->url) }}"></td>
             <td>{{ $post->author->name }}</td>
 
             {{-- show post --}}

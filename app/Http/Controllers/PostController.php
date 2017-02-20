@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Media;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
@@ -17,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('author')->get();
+        $posts = Post::all();
 
         return view('admin.posts.index')->with('posts', $posts);
     }
@@ -45,6 +46,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->content = $request->input('content');
+        $post->media_id = $request->input('media_id');
         $post->user_id = $request->input('user_id');
         $post->save();
 

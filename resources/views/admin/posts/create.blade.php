@@ -29,6 +29,11 @@
       </div>
 
       <div class="form-group">
+        <label for="media_id">Featured_image</label>
+        <input name="media_id" value="{{ old('media_id') }}" type="text" class="form-control" id="media_id" placeholder="media id">
+      </div>
+
+      <div class="form-group">
         <label for="user_id">Title</label>
         <input name="user_id" value="{{ old('user_id') }}" type="text" class="form-control" id="user_id" placeholder="author id">
       </div>
