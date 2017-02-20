@@ -12,7 +12,9 @@
     </li>
 
     <li class="nav-link disabled">Pages</li>
-    <li class="nav-link disabled">Media</li>
+    <li class="nav-link">
+      <a href="{{ url('admin/media') }}">Media</a>
+    </li>
     <li class="nav-link">
       <a href="{{ url('admin/users') }}">Users</a>
     </li>

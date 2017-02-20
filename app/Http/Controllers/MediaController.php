@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
+use App\Http\Requests\StoreMedia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
@@ -13,7 +16,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $media = Media::all();
+        return view('admin.media.index')->with('medias', $media);
     }
 
     /**
@@ -32,9 +36,16 @@ class MediaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMedia $request)
     {
-        //
+        $file = $request->file('media')->store('public/media');
+        $media = new Media;
+        $media->title = $request->input('title');
+        $media->url = $file;
+        $media->alt = $request->input('alt');
+        $media->save();
+
+        return redirect('/admin/media')->with('status', 'New media uploaded!');
     }
 
     /**
@@ -79,6 +90,10 @@ class MediaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $media = Media::findOrFail($id);
+        $file = $media->url;
+        Storage::delete($file);
+        $media->delete();
+        return redirect('/admin/media')->with('status', 'Media deleted!');
     }
 }

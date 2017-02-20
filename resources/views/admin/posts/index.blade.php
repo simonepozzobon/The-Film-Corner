@@ -17,7 +17,7 @@
           {{ session('status') }}
         </div>
     @endif
-    <div>
+    </div>
 
     <div class="clearfix">
       <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
