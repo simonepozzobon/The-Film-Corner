@@ -180,6 +180,9 @@ return [
         // Laravel Collective
         Collective\Html\HtmlServiceProvider::class,
 
+        //Image Intervention
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
