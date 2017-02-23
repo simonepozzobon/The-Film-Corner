@@ -19,17 +19,17 @@
       <form action="/admin/users/{{ $user->id }}" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
-          <input name="name" value="{{ old('name') }}" type="text"class="form-control" id="name" placeholder="Name of the user">
+          <input name="name" value="{{ $user->name }}" type="text"class="form-control" id="name" placeholder="Name of the user">
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input name="email" value="{{ old('email') }}" class="form-control" id="content" placeholder="user@email.com">
+          <input name="email" value="{{ $user->email }}" class="form-control" id="content" placeholder="user@email.com">
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input name="password" value="{{ old('password') }}" type="text" class="form-control" id="password" placeholder="password">
+          <input name="password" value="{{ $user->password }}" type="text" class="form-control" id="password" placeholder="password">
         </div>
         {{ csrf_field() }}
         {{ method_field('PUT') }}

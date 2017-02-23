@@ -19,17 +19,22 @@
       <form action="/admin/posts/{{ $post->id }}" method="POST">
         <div class="form-group">
           <label for="title">Title</label>
-          <input name="title" value="{{ old('title') }}" type="text"class="form-control" id="title" placeholder="title of the post">
+          <input name="title" value="{{ $post->title }}" type="text"class="form-control" id="title" placeholder="title of the post">
         </div>
 
         <div class="form-group">
           <label for="content">Content</label>
-          <textarea name="content" value="{{ old('content') }}" class="form-control" id="content" placeholder="content of the post" rows="8"></textarea>
+          <textarea name="content" value="{{ $post->content }}" class="form-control" id="content" placeholder="content of the post" rows="8">{{ $post->content }}</textarea>
         </div>
 
         <div class="form-group">
-          <label for="user_id">Title</label>
-          <input name="user_id" value="{{ old('user_id') }}" type="text" class="form-control" id="user_id" placeholder="author id">
+          <label for="media_id">Featured_image</label>
+          <input name="media_id" value="{{ $post->media_id }}" type="text" class="form-control" id="media_id" placeholder="media id">
+        </div>
+
+        <div class="form-group">
+          <label for="user_id">Author</label>
+          <input name="user_id" value="{{ $post->user_id }}" type="text" class="form-control" id="user_id" placeholder="author id">
         </div>
         {{ csrf_field() }}
         {{ method_field('PUT') }}
