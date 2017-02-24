@@ -45,6 +45,7 @@ class MediaController extends Controller
 
         // Pre-save files to be resized
         $icon = $request->file('media')->storeAs('public/media', 'icon_'.$filename);
+        $thumbnail = $request->file('media')->storeAs('public/media', 'thumbnail_'.$filename);
         $square = $request->file('media')->storeAs('public/media', 'square_'.$filename);
         $mobile = $request->file('media')->storeAs('public/media', 'mobile_'.$filename);
         $tablet = $request->file('media')->storeAs('public/media', 'tablet_'.$filename);
@@ -55,6 +56,7 @@ class MediaController extends Controller
 
         // Edit files
         $img_icon = Image::make($path.'/icon_'.$filename)->fit(57)->save();
+        $img_thumbnail = Image::make($path.'/thumbnail_'.$filename)->fit(150)->save();
         $img_square = Image::make($path.'/square_'.$filename)->fit(400)->save();
         $img_mobile = Image::make($path.'/mobile_'.$filename)->resize( 320, null, function ($constraint) { $constraint->aspectRatio(); $constraint->upsize(); })->save();
         $img_tablet = Image::make($path.'/tablet_'.$filename)->resize( 1024, null, function ($constraint) { $constraint->aspectRatio(); $constraint->upsize(); })->save();
@@ -67,6 +69,7 @@ class MediaController extends Controller
         $media->url = $file;
         $media->alt = $request->input('alt');
         $media->icon = $icon;
+        $media->thumbnail = $thumbnail;
         $media->square = $square;
         $media->mobile = $mobile;
         $media->tablet = $tablet;
@@ -123,6 +126,7 @@ class MediaController extends Controller
         // Get files path
         $file = $media->url;
         $icon = $media->icon;
+        $thumbnail = $media->thumbnail;
         $square = $media->square;
         $mobile = $media->mobile;
         $tablet = $media->tablet;
@@ -131,6 +135,7 @@ class MediaController extends Controller
         // Delete Files
         Storage::delete($file);
         Storage::delete($icon);
+        Storage::delete($thumbnail);
         Storage::delete($square);
         Storage::delete($mobile);
         Storage::delete($tablet);

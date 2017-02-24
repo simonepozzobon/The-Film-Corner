@@ -39,7 +39,7 @@
               {{-- show media --}}
               <td>{{ $media->id }}</td>
               <td>{{ $media->title }}</td>
-              <td><img width="200" class="img-thumbnail mx-auto d-block" src="{{ Storage::disk('local')->url($media->url) }}"></td>
+              <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($media->icon) }}"></td>
               {{-- Preview --}}
               <td><a class="btn btn-small btn-success" href="/media/{{ $media->id }}">Preview</a></td>
 

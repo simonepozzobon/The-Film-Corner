@@ -44,7 +44,7 @@
             <!-- Show Post -->
             <td>{{ $post->id }}</td>
             <td>{{ $post->title }}</td>
-            <td><img width="200" class="img-thumbnail mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->url) }}"></td>
+            <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}"></td>
             <td>{{ $post->author->name }}</td>
 
             {{-- show post --}}
@@ -57,7 +57,32 @@
               <form action="/admin/posts/{{ $post->id }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
-                <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
+
+                {{-- Trigger for Modal --}}
+                <button type="button" class="btn btn-small btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
+
+                {{-- Modal --}}
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="deleteLabel">Delete Post</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{-- End Modal --}}
+
               </form>
             </td>
           </tr>

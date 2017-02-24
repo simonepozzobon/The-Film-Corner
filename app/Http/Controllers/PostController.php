@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use App\Media;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
@@ -30,7 +31,13 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+
+        $users = User::all();
+        $media = Media::all();
+
+        return view('admin.posts.create')
+                      ->with('users', $users)
+                      ->with('medias', $media);
     }
 
 
@@ -73,7 +80,13 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-        return view('admin.posts.edit')->with('post', $post);
+        $users = User::all();
+        $media = Media::all();
+
+        return view('admin.posts.edit')
+                      ->with('post', $post)
+                      ->with('users', $users)
+                      ->with('medias', $media);
     }
 
     /**
