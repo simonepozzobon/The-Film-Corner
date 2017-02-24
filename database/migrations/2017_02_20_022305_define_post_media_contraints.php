@@ -14,7 +14,7 @@ class DefinePostMediaContraints extends Migration
     public function up()
     {
       Schema::table('posts', function (Blueprint $table) {
-          $table->foreign('media_id')->references('id')->on('medias');
+          $table->foreign('media_id')->references('id')->on('medias')->onDelete('cascade');
       });
     }
 

@@ -42,34 +42,35 @@ class MediaController extends Controller
     {
         $filename = $request->file('media')->getClientOriginalName();
         $file = $request->file('media')->storeAs('public/media', $filename);
-        //$img = Image::make($request->file('media')->getRealPath());
 
-        $path = $request->file('media');
-        // Resize with image intervention
-        $img_icon = Image::make($path)->resize( 300, null, function ($constraint) {
-          $constraint->aspectRatio();
-        });
-        // Path where resized file are stored
-        $store_path = public_path('storage/media/' . 'icon_'.$filename);
-        // save action
-        $store = $img_icon->save($store_path);
+        // Pre-save files to be resized
+        $icon = $request->file('media')->storeAs('public/media', 'icon_'.$filename);
+        $square = $request->file('media')->storeAs('public/media', 'square_'.$filename);
+        $mobile = $request->file('media')->storeAs('public/media', 'mobile_'.$filename);
+        $tablet = $request->file('media')->storeAs('public/media', 'tablet_'.$filename);
+        $big = $request->file('media')->storeAs('public/media', 'big_'.$filename);
 
-        //$img_icon = $img->resize(57,57)->storeAs('public/media', 'icon_'.$ilename);
-        //$img_square = $img->resize(400,400)->storeAs('public/media', 'square_'.$ilename);
-        //$img_mobile = $img->resize(320, null)->storeAs('public/media', 'mobile_'.$ilename);
-        //$img_tablet = $img->resize(1024, null)->storeAs('public/media', 'tablet_'.$ilename);
-        //$img_big = $img->resize(1920,null)->storeAs('public/media', 'big_'.$ilename);
+        // Path where files are stored according to Filesystem.php
+        $path = storage_path('app/public/media');
+
+        // Edit files
+        $img_icon = Image::make($path.'/icon_'.$filename)->fit(57)->save();
+        $img_square = Image::make($path.'/square_'.$filename)->fit(400)->save();
+        $img_mobile = Image::make($path.'/mobile_'.$filename)->resize( 320, null, function ($constraint) { $constraint->aspectRatio(); $constraint->upsize(); })->save();
+        $img_tablet = Image::make($path.'/tablet_'.$filename)->resize( 1024, null, function ($constraint) { $constraint->aspectRatio(); $constraint->upsize(); })->save();
+        $img_big = Image::make($path.'/big_'.$filename)->resize( 1920, null, function ($constraint) { $constraint->aspectRatio(); $constraint->upsize(); })->save();
+
 
         // Run the query
         $media = new Media;
         $media->title = $request->input('title');
         $media->url = $file;
         $media->alt = $request->input('alt');
-        $media->icon = $store_path;
-        $media->square = $store_path;
-        $media->mobile = $store_path;
-        $media->tablet = $store_path;
-        $media->big = $store_path;
+        $media->icon = $icon;
+        $media->square = $square;
+        $media->mobile = $mobile;
+        $media->tablet = $tablet;
+        $media->big = $big;
         $media->save();
 
         return redirect('/admin/media')->with('status', 'New media uploaded!');
@@ -118,9 +119,26 @@ class MediaController extends Controller
     public function destroy($id)
     {
         $media = Media::findOrFail($id);
+
+        // Get files path
         $file = $media->url;
+        $icon = $media->icon;
+        $square = $media->square;
+        $mobile = $media->mobile;
+        $tablet = $media->tablet;
+        $big = $media->big;
+
+        // Delete Files
         Storage::delete($file);
+        Storage::delete($icon);
+        Storage::delete($square);
+        Storage::delete($mobile);
+        Storage::delete($tablet);
+        Storage::delete($big);
+
+        // Delete Row DB
         $media->delete();
+
         return redirect('/admin/media')->with('status', 'Media deleted!');
     }
 }
