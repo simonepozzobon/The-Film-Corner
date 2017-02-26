@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMediasTable extends Migration
+class DefinePostUserConstraints extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateMediasTable extends Migration
      */
     public function up()
     {
-      Schema::create('medias', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('title');
-          $table->string('url');
-
-          $table->timestamps();
-      });
+        Schema::table('posts', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -29,6 +25,8 @@ class CreateMediasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medias');
+        Schema::table('posts', function (Blueprint $table) {
+            $table->dropForeign('posts_user_id_foreign');
+        });
     }
 }

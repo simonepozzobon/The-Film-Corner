@@ -83,7 +83,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Simone Pozzobon
+                    The Film Corner
                 </div>
 
                 <div class="links">
@@ -99,7 +99,7 @@
 				</svg>
         <section>
           <div class="title sp-center">
-            Blog
+            News
           </div>
           @if (count($posts)===0)
             <h1>No posts to show</h1>

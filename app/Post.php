@@ -13,4 +13,5 @@ class Post extends Model
     public function featuredImage() {
       return $this->belongsTo('App\Media', 'media_id');
     }
+
 }

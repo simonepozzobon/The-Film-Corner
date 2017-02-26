@@ -21,7 +21,8 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        return view('admin.posts.index')->with('posts', $posts);
+        return view('admin.posts.index')
+                      ->with('posts', $posts);
     }
 
     /**
@@ -55,6 +56,7 @@ class PostController extends Controller
         $post->content = $request->input('content');
         $post->media_id = $request->input('media_id');
         $post->user_id = $request->input('user_id');
+
         $post->save();
 
         return redirect('/admin/posts')->with('status', 'New post created!');

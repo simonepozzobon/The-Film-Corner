@@ -18,6 +18,9 @@
     <li class="nav-link">
       <a href="{{ url('admin/users') }}">Users</a>
     </li>
+    <li class="nav-link">
+      <a href="{{ url('admin/categories') }}">Categories</a>
+    </li>
     <li class="nav-link disabled">Logout</li>
 
   </div>

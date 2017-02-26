@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class DefinePostMediaContraints extends Migration
+class CreateCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class DefinePostMediaContraints extends Migration
      */
     public function up()
     {
-      Schema::table('posts', function (Blueprint $table) {
-          $table->foreign('media_id')->references('id')->on('medias')->onDelete('cascade');
+      Schema::create('categories', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name');
+        $table->timestamps();
       });
     }
 
@@ -25,8 +27,6 @@ class DefinePostMediaContraints extends Migration
      */
     public function down()
     {
-      Schema::table('posts', function (Blueprint $table) {
-          $table->dropForeign('posts_media_id_foreign');
-      });
+        Schema::dropIfExists('categories');
     }
 }

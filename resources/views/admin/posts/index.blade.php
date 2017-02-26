@@ -32,7 +32,8 @@
             <td>Id</td>
             <td>Title</td>
             <td>Image</td>
-            <td>User</td>
+            <td>Category</td>
+            <td>Author</td>
             <td>Preview</td>
             <td>Edit</td>
             <td>Delete</td>
@@ -41,10 +42,19 @@
 
         @foreach ($posts as $post)
           <tr>
-            <!-- Show Post -->
+            {{-- Post Id --}}
             <td>{{ $post->id }}</td>
+
+            {{-- Post Title --}}
             <td>{{ $post->title }}</td>
+
+            {{-- Post Featured Image --}}
             <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}"></td>
+
+            {{-- Categories --}}
+            <td>categories</td>
+
+            {{-- Post Author --}}
             <td>{{ $post->author->name }}</td>
 
             {{-- show post --}}

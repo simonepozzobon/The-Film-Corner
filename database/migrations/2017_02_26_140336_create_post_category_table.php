@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMediasTable extends Migration
+class CreatePostCategoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateMediasTable extends Migration
      */
     public function up()
     {
-      Schema::create('medias', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('title');
-          $table->string('url');
-
+      Schema::create('post_category', function (Blueprint $table) {
+          $table->integer('post_id')->unsigned()->unique()->nullable();
+          $table->integer('cat_id')->unsigned()->unique()->nullable();
           $table->timestamps();
       });
     }
@@ -29,6 +27,6 @@ class CreateMediasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medias');
+        Schema::dropIfExists('post_category');
     }
 }

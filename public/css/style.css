@@ -3,7 +3,7 @@
 @import 'packery.css';
 
 .home {
-  background: url('/img/cover.jpg') center bottom no-repeat;
+  background: url('/img/cover.png') center bottom no-repeat;
   background-color: #FDD351;
   background-blend-mode: screen;
 }

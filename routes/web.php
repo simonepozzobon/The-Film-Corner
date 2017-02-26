@@ -20,7 +20,7 @@ Route::get('/', function () {
 });
 
 // Admin panel view
-Route::get('/admin/', function () {
+Route::get('/admin', function () {
   return view('admin');
 });
 
