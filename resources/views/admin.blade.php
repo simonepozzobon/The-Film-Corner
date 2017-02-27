@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-  <body>
-    <div class="container">
-      @include('admin.menu')
+@extends('layouts.admin')
+
+@section('title', 'Panel')
+
+@section('content')
       <br>
       <div class="clearfix">
         <h1 class="mt-4">Admin Panel</h1>
@@ -56,9 +53,4 @@
           </div>
         </div>
       </div>
-
-
-      @include('admin.footer')
-    </div>
-  </body>
-</html>
+@endsection
