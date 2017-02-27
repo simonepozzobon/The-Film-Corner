@@ -1,7 +1,7 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('content')
-@include('layouts.main._menu')
+@include('layouts.admin._menu')
 <br><br>
 <div class="container mt-5">
     <div class="row">

@@ -4,7 +4,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 {{-- Script --}}
-<script src="js/app.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
-<script src="js/custom.js"></script>
+<script src="{{ asset('js/custom.js') }}"></script>
 @yield('scripts')

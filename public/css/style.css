@@ -3,15 +3,17 @@
 @import 'packery.css';
 
 .home {
-  background: url('/img/cover.jpg') center bottom no-repeat;
+  background: url('/img/cover.jpg');
   background-color: #FDD351;
-  background-blend-mode: screen;
 }
 
 .hero {
   width: 100%;
   height: 100%;
   background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
 }
 .hero:before {
   content: '';

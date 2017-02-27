@@ -24,7 +24,7 @@
 }
 
 .grid-item .color-4 {
-    background-color: #FD9B43;  
+    background-color: #FD9B43;
 }
 
 .grid-item .overlay {
@@ -44,7 +44,8 @@
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .grid-item h1 {

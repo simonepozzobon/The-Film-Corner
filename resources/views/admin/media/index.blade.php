@@ -1,4 +1,7 @@
 @extends('layouts.admin')
+@section('title')
+  Media
+@endsection
 @section('content')
       <br>
       <div class="clearfix">
