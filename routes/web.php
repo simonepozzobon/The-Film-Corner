@@ -27,8 +27,9 @@ Route::get('/admin', function () {
 // Admin Panel Routes
 Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
-  Route::resource('users', 'UserController');
-  Route::resource('media', 'MediaController');
+  Route::resource('users', 'UserController', ['except' => ['create']]);
+  Route::resource('media', 'MediaController', ['except' => ['show', 'create']]);
+  Route::resource('categories', 'CategoryController', ['except' => ['show', 'create'] ]);
 });
 
 

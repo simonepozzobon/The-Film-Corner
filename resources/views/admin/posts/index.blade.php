@@ -18,87 +18,51 @@
         </div>
     @endif
     </div>
-
-    <div class="clearfix">
-      <a class="btn btn-small btn-success float-right" href="{{ url('admin/posts/create') }}">Add Post</a>
-    </div>
-
     <br>
 
     <div class="clearfix">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <td>Id</td>
-            <td>Title</td>
-            <td>Image</td>
-            <td>Category</td>
-            <td>Author</td>
-            <td>Preview</td>
-            <td>Edit</td>
-            <td>Delete</td>
-          </tr>
-        </thead>
-
-        @foreach ($posts as $post)
-          <tr>
-            {{-- Post Id --}}
-            <td>{{ $post->id }}</td>
-
-            {{-- Post Title --}}
-            <td>{{ $post->title }}</td>
-
-            {{-- Post Featured Image --}}
-            <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}"></td>
-
-            {{-- Categories --}}
-            <td>categories</td>
-
-            {{-- Post Author --}}
-            <td>{{ $post->author->name }}</td>
-
-            {{-- show post --}}
-            <td><a class="btn btn-small btn-success" href="/post/{{ $post->id }}">Preview</a></td>
-
-            {{-- edit post --}}
-            <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}/edit">Edit</a></td>
-
-            <td>
-              <form action="/admin/posts/{{ $post->id }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('DELETE') }}
-
-                {{-- Trigger for Modal --}}
-                <button type="button" class="btn btn-small btn-danger" data-toggle="modal" data-target="#delete">Delete</button>
-
-                {{-- Modal --}}
-                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="deleteLabel">Delete Post</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        Are you sure?
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{-- End Modal --}}
-
-              </form>
-            </td>
-          </tr>
-        @endforeach
-
-      </table>
+      <div class="row">
+        <div class="col-8">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Author</th>
+                <th>Preview</th>
+              </tr>
+            </thead>
+            @foreach ($posts as $post)
+              <tr>
+                <td>{{ $post->id }}</td>
+                <td>{{ $post->title }}</td>
+                <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}"></td>
+                <td>
+                  @if ($post->category_id)
+                    {{ $post->category->name }}
+                  @else
+                    uncategorized
+                  @endif
+                </td>
+                <td>{{ $post->author->name }}</td>
+                <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}">Preview</a></td>
+              </tr>
+            @endforeach
+          </table>
+        </div>
+        <div class="col-4">
+          <div class="card">
+            <h3 class="card-header">New Post</h3>
+            <div class="card-block">
+              <div class="card-text">
+                <a class="btn btn-small btn-success btn-block" href="{{ url('admin/posts/create') }}">Add Post</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     @include('admin.footer')
   </div>

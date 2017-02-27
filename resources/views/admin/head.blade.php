@@ -14,4 +14,4 @@
 <link rel="stylesheet" href="{{ asset('admin-assets/css/image-picker.css') }}">
 
 {{-- Custom Style --}}
-<link rel="stylesheet" href="{{ asset('admin-assets/css/style.min.css') }}">
+<link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">

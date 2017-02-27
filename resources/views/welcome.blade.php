@@ -70,25 +70,21 @@
     <body>
         <section class="hero home">
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
 
             <div class="content">
+                <div class="logo">
+                  <img src="/img/logo.png">
+                </div>
                 <div class="title m-b-md">
                     The Film Corner
                 </div>
 
                 <div class="links">
-                  <a href="{{ url('/posts') }}">Blog</a>
-                  <a href="{{ url('/admin') }}">Admin Panel</a>
+                  <a href="#">The Project</a>
+                  <a href="#">Partners</a>
+                  <a href="#">Login</a>
+                  <a href="#">Apps</a>
+                  <a href="#">Resources</a>
                 </div>
             </div>
         </div>

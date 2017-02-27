@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\User;
 use App\Media;
+use App\Category;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
@@ -35,10 +36,11 @@ class PostController extends Controller
 
         $users = User::all();
         $media = Media::all();
-
+        $categories = Category::all();
         return view('admin.posts.create')
                       ->with('users', $users)
-                      ->with('medias', $media);
+                      ->with('medias', $media)
+                      ->with('categories', $categories);
     }
 
 
@@ -54,6 +56,7 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->input('title');
         $post->content = $request->input('content');
+        $post->category_id = $request->input('category_id');
         $post->media_id = $request->input('media_id');
         $post->user_id = $request->input('user_id');
 
@@ -70,7 +73,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('admin.posts.show')->with('post', $post);
     }
 
     /**
@@ -84,11 +88,13 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $users = User::all();
         $media = Media::all();
+        $categories = Category::all();
 
         return view('admin.posts.edit')
                       ->with('post', $post)
                       ->with('users', $users)
-                      ->with('medias', $media);
+                      ->with('medias', $media)
+                      ->with('categories', $categories);
     }
 
     /**
@@ -103,6 +109,8 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->title = $request->get('title');
         $post->content = $request->get('content');
+        $post->category_id = $request->get('category_id');
+        $post->media_id = $request->get('media_id');
         $post->user_id = $request->get('user_id');
         $post->save();
 
