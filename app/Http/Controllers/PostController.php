@@ -12,7 +12,7 @@ use App\Http\Requests\StorePost;
 use App\Http\Requests\UpdatePost;
 
 class PostController extends Controller
-{ 
+{
     /**
      * Create a new controller instance.
      *
