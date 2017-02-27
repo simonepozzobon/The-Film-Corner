@@ -2,9 +2,8 @@
 
 use App\Post;
 
-use Symfony\Component\Debug\Debug;
-
-Debug::enable();
+// use Symfony\Component\Debug\Debug;
+// Debug::enable();
 
 /*
 |--------------------------------------------------------------------------
