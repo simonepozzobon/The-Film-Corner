@@ -88,11 +88,7 @@
                   <a href="#">Login</a>
                   <a href="#">Apps</a>
                   <a href="#">Resources</a>
-<<<<<<< HEAD
                   <a href="#">Login</a>
-                  <a href="#">blabla</a>
-=======
->>>>>>> parent of 80f85fd... Auth
                 </div>
             </div>
         </div>
