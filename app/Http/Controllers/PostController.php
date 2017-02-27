@@ -82,8 +82,12 @@ class PostController extends Controller
      */
     public function show($id)
     {
+<<<<<<< Updated upstream
         $post = Post::findOrFail($id);
         return view('admin.posts.show')->with('post', $post);
+=======
+        //disabled for now
+>>>>>>> Stashed changes
     }
 
     /**
