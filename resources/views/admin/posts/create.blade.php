@@ -7,7 +7,7 @@
     <div class="container">
       @include('admin.menu')
       <br>
-      <h1>Create a new post</h1>
+      <h1 class="mt-4">Create a new post</h1>
       @if (count($errors) > 0)
         <ul>
           @foreach ($errors as $error)

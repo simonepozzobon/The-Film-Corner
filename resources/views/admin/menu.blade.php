@@ -5,7 +5,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a href="{{ url('/admin') }}" class="navbar-logo mr-4"><img src="/img/logo.png" height="50"></a>
+  <a href="{{ url('/admin') }}" class="navbar-brand mr-4"><img src="/img/logo.png" height="50"></a>
   <div class="collapse navbar-collapse justify-content-start" id="">
     <li class="nav-link">
       <a href="{{ url('/') }}">Visit Website</a>
