@@ -1,12 +1,6 @@
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-<body>
-
-  <div class="container">
-    @include('admin.menu')
-    <br>
+@extends('layouts.admin')
+@section('title', 'Posts')
+@section('content')
     <div class="clearfix">
       <h1>Posts</h1>
     </div>
@@ -64,7 +58,4 @@
         </div>
       </div>
     </div>
-    @include('admin.footer')
-  </div>
-</body>
-</html>
+@endsection

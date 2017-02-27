@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-  <body>
-    <div class="container">
+@extends('layouts.admin')
+@section('title', 'Users')
+@section ('content')
       @include('admin.menu')
       <br>
       <div class="clearfix">
@@ -80,8 +76,4 @@
         </div>
 
       </div>
-
-
-    </div>
-  </body>
-</html>
+@endsection

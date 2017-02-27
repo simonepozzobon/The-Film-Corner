@@ -1,4 +1,3 @@
-
 <nav class="navbar fixed-top navbar-toggleable-md bg-faded">
   {{-- Mobile --}}
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +17,7 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Posts <span class="caret"></span></a>
       <ul class="dropdown-menu">
         <li class="nav-link"><a href="{{ url('admin/posts') }}">Posts</a></li>
-        <li class="nav-link"><a href="{{ url('admin/media') }}">Media</a></li>
+        <li class="nav-link "><a href="{{ url('admin/media') }}">Media</a></li>
         <li class="nav-link"><a href="{{ url('admin/categories') }}">Categories</a></li>
       </ul>
     </li>
@@ -31,4 +30,3 @@
 
   </div>
 </nav>
-<br><br>

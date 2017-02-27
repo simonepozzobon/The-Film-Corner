@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-  <body>
-    <div class="container">
-      @include('admin.menu')
+@extends('layouts.admin')
+@section('title', 'Post Create')
+@section('content')
       <br>
       <h1 class="mt-4">Create a new post</h1>
       @if (count($errors) > 0)
@@ -114,8 +109,4 @@
             </div>
           </div>
       </form>
-    </div>
-
-    @include('admin.footer')
-  </body>
-</html>
+@endsection

@@ -1,12 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-  <body>
-    <div class="container">
-      @include('admin.menu')
-      <div><h1>Edit {{ $user->name }}</h1></div>
+@extends('layouts.admin')
+
+@section('title')
+  Edit User - {{ $user->name }}
+@endsection
+
+@section('content')
+      <div><h1>Edit - {{ $user->name }}</h1></div>
 
       <div>
       @if (session('status'))
@@ -37,8 +36,4 @@
         <button type="submit" class="btn btn-success" value="Submit">Save</button>
 
       </form>
-
-      @include('admin.footer')
-    </div>
-  </body>
-</html>
+@endsection

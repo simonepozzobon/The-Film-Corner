@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    @include('admin.head')
-  </head>
-  <body>
-    <div class="container">
-      @include('admin.menu')
+@extends('layouts.admin')
+@section('title')
+ Edit Post - {{ $post->title }}
+@endsection
+@section('content')
       <br>
       <div><h1>Edit Post: {{ $post->title }}</h1></div>
 
@@ -110,7 +107,4 @@
 
       </form>
 
-      @include('admin.footer')
-    </div>
-  </body>
-</html>
+@endsection
