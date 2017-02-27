@@ -85,9 +85,9 @@
                 <div class="links">
                   <a href="#">The Project</a>
                   <a href="#">Partners</a>
-                  <a href="#">Login</a>
                   <a href="#">Apps</a>
                   <a href="#">Resources</a>
+                  <a href="#">Login</a>
                 </div>
             </div>
         </div>

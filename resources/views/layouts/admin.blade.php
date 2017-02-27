@@ -10,6 +10,6 @@
       @yield('content')
     </div>
     @include('layouts.admin._footer')
-    @include('layouts.admin_scripts')
+    @include('layouts.admin._scripts')
   </body>
 </html>

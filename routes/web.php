@@ -2,6 +2,10 @@
 
 use App\Post;
 
+use Symfony\Component\Debug\Debug;
+
+Debug::enable();
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,26 +17,15 @@ use App\Post;
 |
 */
 
-
 Route::get('/', function () {
     $posts = Post::with('author')->get();
     return view('welcome')->with('posts', $posts);
 });
 
-// Admin Panel Routes
-Route::group(['prefix' => 'admin'], function () {
-  Route::resource('posts', 'PostController');
-  Route::resource('users', 'UserController', ['except' => ['create']]);
-  Route::resource('media', 'MediaController', ['except' => ['show', 'create']]);
-  Route::resource('categories', 'CategoryController', ['except' => ['show', 'create'] ]);
-});
-
-
-
 // Posts Loop
 Route::get('/posts', function () {
-  $posts = Post::with('author')->get(); // Prende tutti i post integrandoli con l'autore vd. app/Post.php
-  return view('blog.list')->with('posts', $posts); // Ritorno la view con i post
+  $posts = Post::with('author')->get();
+  return view('blog.list')->with('posts', $posts);
 });
 
 // Single Post
@@ -43,5 +36,20 @@ Route::get('/post/{id}', function ($id) {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
-Route::get('/admin', 'Admincontroller@index');
+Route::get('/logout', 'Auth\LoginController@logout');
+
+// Admin Panel Routes
+Route::prefix('admin')->group(function () {
+
+  // Auth
+  Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+  Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::get('/', 'AdminController@index')->name('admin');
+
+  // Dashboard
+  Route::resource('posts', 'PostController');
+  Route::resource('users', 'UserController', ['except' => ['create']]);
+  Route::resource('media', 'MediaController', ['except' => ['show', 'create']]);
+  Route::resource('categories', 'CategoryController', ['except' => ['show', 'create'] ]);
+
+});

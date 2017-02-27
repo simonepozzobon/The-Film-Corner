@@ -7,10 +7,10 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card">
-              <h3 class="card-header">Login</h3>
+              <h3 class="card-header">Admin Login</h3>
               <div class="card-block">
                 <div class="card-text">
-                  <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
+                  <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.login.submit') }}">
                       {{ csrf_field() }}
 
                       <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
