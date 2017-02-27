@@ -13,6 +13,7 @@ use App\Http\Requests\UpdatePost;
 
 class PostController extends Controller
 {
+<<<<<<< HEAD
     /**
      * Create a new controller instance.
      *
@@ -22,6 +23,8 @@ class PostController extends Controller
     // {
     //     $this->middleware('auth:admin');
     // }
+=======
+>>>>>>> parent of 80f85fd... Auth
     /**
      * Display a listing of the resource.
      *

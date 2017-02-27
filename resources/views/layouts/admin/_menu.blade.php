@@ -23,18 +23,8 @@
     </li>
 
     <li class="nav-link disabled">Pages</li>
-    
-    <li class="nav-link dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
-      <ul class="dropdown-menu">
-        <li class="nav-link"><a href="#">Admins</a></li>
-        <li class="nav-link "><a href="#">Teachers</a></li>
-        <li class="nav-link"><a href="#">Students</a></li>
-        <li class="nav-link"><a href="{{ url('admin/users') }}">Users</a></li>
-      </ul>
-    </li>
     <li class="nav-link">
-
+      <a href="{{ url('admin/users') }}">Users</a>
     </li>
     <li class="nav-link disabled">Logout</li>
 

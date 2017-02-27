@@ -19,6 +19,11 @@ Route::get('/', function () {
     return view('welcome')->with('posts', $posts);
 });
 
+// Admin panel view
+Route::get('/admin', function () {
+  return view('admin');
+});
+
 // Admin Panel Routes
 Route::group(['prefix' => 'admin'], function () {
   Route::resource('posts', 'PostController');
@@ -30,7 +35,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 // Posts Loop
-Route::get('/posts', function () {
+Route::get('/posts/', function () {
   $posts = Post::with('author')->get(); // Prende tutti i post integrandoli con l'autore vd. app/Post.php
   return view('blog.list')->with('posts', $posts); // Ritorno la view con i post
 });
@@ -44,4 +49,3 @@ Route::get('/post/{id}', function ($id) {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/admin', 'Admincontroller@index');
