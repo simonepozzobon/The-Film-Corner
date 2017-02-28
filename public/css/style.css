@@ -1,6 +1,7 @@
 
 @import 'down-arrow.css';
 @import 'packery.css';
+@import 'animations.css';
 
 .home {
   background: url('/img/cover.jpg');
@@ -30,7 +31,6 @@
 }
 
 .sp-center {
-  margin-top: 64px;
   text-align: center;
 }
 

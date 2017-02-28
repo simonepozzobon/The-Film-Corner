@@ -16,18 +16,17 @@ use App\Post;
 |
 */
 
+// need to create a controller for these maybe Main or FrontendController
 Route::get('/', function () {
     $posts = Post::with('author')->get();
     return view('welcome')->with('posts', $posts);
 });
 
-// Posts Loop
 Route::get('/posts', function () {
   $posts = Post::with('author')->get();
   return view('blog.list')->with('posts', $posts);
 });
 
-// Single Post
 Route::get('/post/{id}', function ($id) {
   $post = Post::findOrFail($id); // Prende i post con id
   return view('blog.post')->with('post', $post); // ritorno la view con il post

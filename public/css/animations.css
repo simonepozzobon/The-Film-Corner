@@ -1,0 +1,69 @@
+.animations-wrapper {
+  position: relative;
+}
+
+.animations-wrapper section {
+  min-height: 100vh;
+  position: relative;
+}
+
+.tween-content-container {
+  border: 8px solid #252525;
+  padding: 40px;
+  position: absolute;
+  z-index: 2;
+}
+
+.tween-image-container {
+  display: inline-block;
+  position: absolute;
+  z-index: 1;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover !important;
+}
+
+/* Typography */
+
+.tween-content-container .tween-title {
+  font-family:  'Montserrat', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  color: #252525;
+  text-transform: uppercase;
+}
+
+.tween-content-container .tween-subtitle {
+  font-family:  'Montserrat', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  color: #252525;
+}
+
+
+
+#container-1 {
+  width: 500px;
+  top: 240px;
+}
+
+#container-2 {
+  width: 600px;
+  height: 400px;
+  top: 380px;
+}
+
+#container-3 {
+  width: 700px;
+  top: 120px;
+}
+
+#container-4 {
+  width: 470px;
+  height: 600px;
+  top: 240px;
+}
+
+#partners {
+  top: 128px;
+}
