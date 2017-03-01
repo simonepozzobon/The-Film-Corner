@@ -11,7 +11,7 @@
         <img class="img-fluid" src="{{ Storage::disk('local')->url($post->featuredImage->tablet) }}">
       </div>
       <h1 class="mt-4">{{ $post->title }}</h1>
-      <p class="mt-4">{{ $post->content }}</p>
+      <p class="mt-4">{!! $post->content !!}</p>
     </div>
     <div class="col-4">
       <div class="card">

@@ -2,6 +2,17 @@
 @section('title')
  Edit Post - {{ $post->title }}
 @endsection
+@section('stylesheets')
+  <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
+  <script type="text/javascript">
+    tinymce.init({
+      selector: 'textarea.content',
+      plugins: 'link',
+      menubar: false,
+
+    });
+  </script>
+@endsection
 @section('content')
       <br>
       <div><h1>Edit Post: {{ $post->title }}</h1></div>
@@ -25,7 +36,7 @@
               </div>
               <div class="form-group">
                 <label for="content">Content</label>
-                <textarea name="content" value="{{ $post->content }}" class="form-control" id="content" placeholder="content of the post" rows="8">{{ $post->content }}</textarea>
+                <textarea name="content" value="{{ $post->content }}" class="form-control content" id="content" placeholder="content of the post" rows="8">{{ $post->content }}</textarea>
               </div>
             </div>
             {{-- right --}}

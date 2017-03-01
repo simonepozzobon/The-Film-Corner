@@ -21,7 +21,7 @@
         <h4 class="mt-4">Scritto da {{$post->author->name}}</h4>
       </div>
       <div class="clearfix">
-        <p class="mt-4">{{$post->content}}</p>
+        <p class="mt-4">{!! $post->content !!}</p>
       </div>
     </div>
   </div>

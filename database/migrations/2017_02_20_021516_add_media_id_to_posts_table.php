@@ -14,7 +14,7 @@ class AddMediaIdToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-          $table->integer('media_id')->unsigned()->after('content');
+          $table->integer('media_id')->unsigned()->nullable()->after('content');
           $table->index('media_id');
         });
     }

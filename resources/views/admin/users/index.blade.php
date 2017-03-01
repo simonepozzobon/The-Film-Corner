@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Users')
 @section ('content')
-      @include('admin.menu')
       <br>
       <div class="clearfix">
         <h1>Users</h1>

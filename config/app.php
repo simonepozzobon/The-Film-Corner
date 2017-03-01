@@ -178,10 +178,13 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // Laravel Collective
-        Collective\Html\HtmlServiceProvider::class,
+        //Collective\Html\HtmlServiceProvider::class,
 
         //Image Intervention
         Intervention\Image\ImageServiceProvider::class,
+
+        // HTML purifier
+        Mews\Purifier\PurifierServiceProvider::class,
 
     ],
 
@@ -234,9 +237,11 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         // Laravel Collective
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
+        //'Form' => Collective\Html\FormFacade::class,
+        //'Html' => Collective\Html\HtmlFacade::class,
 
+        // HTML Purifier
+        'Purifier' => Mews\Purifier\Facades\Purifier::class,
     ],
 
 ];

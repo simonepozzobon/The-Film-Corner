@@ -10,9 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Validation\Validator;
 use App\Http\Requests\StorePost;
 use App\Http\Requests\UpdatePost;
+use Purifier;
 
 class PostController extends Controller
-{ 
+{
     /**
      * Create a new controller instance.
      *
@@ -64,7 +65,7 @@ class PostController extends Controller
     {
         $post = new Post;
         $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        $post->content = Purifier::clean($request->input('content'), 'youtube');
         $post->category_id = $request->input('category_id');
         $post->media_id = $request->input('media_id');
         $post->user_id = $request->input('user_id');
@@ -116,11 +117,11 @@ class PostController extends Controller
     public function update(UpdatePost $request, $id) //verificare Request > va cambiato con UpdatePost
     {
         $post = Post::findOrFail($id);
-        $post->title = $request->get('title');
-        $post->content = $request->get('content');
-        $post->category_id = $request->get('category_id');
-        $post->media_id = $request->get('media_id');
-        $post->user_id = $request->get('user_id');
+        $post->title = $request->input('title');
+        $post->content = Purifier::clean($request->get('content'), 'youtube');
+        $post->category_id = $request->input('category_id');
+        $post->media_id = $request->input('media_id');
+        $post->user_id = $request->input('user_id');
         $post->save();
 
         return redirect('/admin/posts')->with('status', 'Post saved!');

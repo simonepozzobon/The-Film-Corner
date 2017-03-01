@@ -1,5 +1,6 @@
 .animations-wrapper {
     position: relative;
+    overflow: hidden;
 }
 
 .animations-wrapper section {
@@ -75,13 +76,45 @@
     height: 90%;
 }
 
-#partners {
+#apps-animation{
+  width: 80%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
+
+.lines {
+  margin-top: -85%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+}
+
+#partners,
+#apps,
+#resources,
+#login {
     top: 128px;
 }
 
-#apps {
-    top: 128px;
+.screen, .blink1, .blink2, .blink2, .blink3, .circle1, .circle2, .pen, .design {
+  opacity: 0;
 }
+
+/*.line1,
+.line2,
+.line3,
+.line4,
+.line5,
+.line6,
+.line7,
+.line8,
+.line9,
+.line10,
+.line11,
+.line12, {
+  stroke: #252525 !important;
+  stroke-width: 5px !important;
+}*/
 
 @media screen and (min-width: 480px) {
     .tween-title {

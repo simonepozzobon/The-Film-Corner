@@ -9,6 +9,15 @@ use App\Http\Requests\StoreCategory;
 class CategoryController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -89,6 +98,6 @@ class CategoryController extends Controller
     {
         $categories = Category::findOrFail($category);
         $categories->delete();
-        return redirect('admin/categories')->with('status', 'Category deleted!'); 
+        return redirect('admin/categories')->with('status', 'Category deleted!');
     }
 }

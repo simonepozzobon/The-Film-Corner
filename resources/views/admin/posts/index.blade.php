@@ -24,6 +24,7 @@
                 <th>Title</th>
                 <th>Image</th>
                 <th>Category</th>
+                <th>Content</th>
                 <th>Author</th>
                 <th>Preview</th>
               </tr>
@@ -40,6 +41,7 @@
                     uncategorized
                   @endif
                 </td>
+                <td>{{ substr(strip_tags($post->content), 0, 50) }}{{ strlen(strip_tags($post->content)) > 50 ? '...' : "" }}</td>
                 <td>{{ $post->author->name }}</td>
                 <td><a class="btn btn-small btn-info" href="/admin/posts/{{ $post->id }}">Preview</a></td>
               </tr>

@@ -10,7 +10,7 @@
   <div>
     <h1><a href="/post/{{$post->id}}">{{$post->title}}</a></h1>
     <h2>Scritto da {{$post->author->name}}</h2>
-    <p>{{$post->content}}</p>
+    <p>{!! $post->content !!}</p>
   </div>
   @endforeach
 </body>

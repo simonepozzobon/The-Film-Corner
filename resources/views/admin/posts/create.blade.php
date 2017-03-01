@@ -1,5 +1,16 @@
 @extends('layouts.admin')
 @section('title', 'Post Create')
+@section('stylesheets')
+  <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
+  <script type="text/javascript">
+    tinymce.init({
+      selector: 'textarea.content',
+      plugins: 'link',
+      menubar: false,
+
+    });
+  </script>
+@endsection
 @section('content')
       <br>
       <h1 class="mt-4">Create a new post</h1>
@@ -22,7 +33,7 @@
 
               <div class="form-group">
                 <label for="content"><h3>Content</h3></label>
-                <textarea name="content" value="{{ old('content') }}" class="form-control" id="content" placeholder="content of the post" rows="8"></textarea>
+                <textarea name="content" value="{{ old('content') }}" class="form-control content" id="content" placeholder="content of the post" rows="8"></textarea>
               </div>
             </div>
             <div class="col-4">

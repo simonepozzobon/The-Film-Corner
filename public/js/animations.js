@@ -4,11 +4,11 @@ jQuery(function($) {
   // wait for document ready
 
   // Titles that don't needs to be responsive
-  var title1     = TweenMax.fromTo('#title-project', 1, {opacity: 0}, {opacity: 1});
-  var title2     = TweenMax.fromTo('#title-partners', 1, {opacity: 0}, {opacity: 1});
-  var title3     = TweenMax.fromTo('#title-apps', 1, {opacity: 0}, {opacity: 1});
-  var title4     = TweenMax.fromTo('#title-resources', 1, {opacity: 0}, {opacity: 1});
-  var title5     = TweenMax.fromTo('#title-login', 1, {opacity: 0}, {opacity: 1});
+  var title1 = TweenMax.fromTo('#title-project', 1, {opacity: 0}, {opacity: 1});
+  var title2 = TweenMax.fromTo('#title-partners', 1, {opacity: 0}, {opacity: 1});
+  var title3 = TweenMax.fromTo('#title-apps', 1, {opacity: 0}, {opacity: 1});
+  var title4 = TweenMax.fromTo('#title-resources', 1, {opacity: 0}, {opacity: 1});
+  var title5 = TweenMax.fromTo('#title-login', 1, {opacity: 0}, {opacity: 1});
 
   // Resposive
   var _window = $(window).width();
@@ -41,21 +41,25 @@ jQuery(function($) {
 
   }
 
+  // Apps
+  var container13 = TweenMax.fromTo('#container-13', 1, {opacity: 0, ease: SlowMo.easeIn}, {opacity: 1, delay: 1, ease: SlowMo.easeOut, onComplete: apps()});
 
-  // build scene
-  var title1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 150}).setTween(title1).addIndicators().addTo(controller);
-  var scene1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container1).addIndicators().addTo(controller);
-  var scene2 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container2).addIndicators().addTo(controller);
-  var scene3 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container4).addIndicators().addTo(controller);
-  var scene4 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container3).addIndicators().addTo(controller);
+  // build scene to debug add .addIndicators
+  var title1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 150}).setTween(title1).addTo(controller);
+  var scene1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container1).addTo(controller);
+  var scene2 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container2).addTo(controller);
+  var scene3 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container4).addTo(controller);
+  var scene4 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container3).addTo(controller);
 
-  var title2 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 150}).setTween(title2).addIndicators().addTo(controller);
-  var scene5 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 350}).setTween(container5).addIndicators().addTo(controller);
-  var scene6 = new ScrollMagic.Scene({triggerElement: "#trigger-partners-2", duration: 350}).setTween(container9).addIndicators().addTo(controller);
+  var title2 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 150}).setTween(title2).addTo(controller);
+  var scene5 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 350}).setTween(container5).addTo(controller);
+  var scene6 = new ScrollMagic.Scene({triggerElement: "#trigger-partners-2", duration: 350}).setTween(container9).addTo(controller);
 
-  var title3 = new ScrollMagic.Scene({triggerElement: "#trigger-apps", duration: 150}).setTween(title3).addIndicators().addTo(controller);
-  var title4 = new ScrollMagic.Scene({triggerElement: "#trigger-resources", duration: 150}).setTween(title4).addIndicators().addTo(controller);
-  var title5 = new ScrollMagic.Scene({triggerElement: "#trigger-login", duration: 150}).setTween(title5).addIndicators().addTo(controller);
+  var title3 = new ScrollMagic.Scene({triggerElement: "#trigger-apps", duration: 150}).setTween(title3).addTo(controller);
+  var scene7 = new ScrollMagic.Scene({triggerElement: "#trigger-apps", duration: 350}).setTween(container13).addTo(controller);
+
+  var title4 = new ScrollMagic.Scene({triggerElement: "#trigger-resources", duration: 150}).setTween(title4).addTo(controller);
+  var title5 = new ScrollMagic.Scene({triggerElement: "#trigger-login", duration: 150}).setTween(title5).addTo(controller);
 
 
   // Parallax function
@@ -69,8 +73,8 @@ jQuery(function($) {
     for (var i = 0; i < limit; i++) {
       var selector = '#container-'+(i+start);
       var delayTime = i+1+delayStart;
-      var cascade    = TweenMax.fromTo(selector, 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, delay: delayTime});
-      new ScrollMagic.Scene({triggerElement: trigger, duration: 350}).setTween(cascade).addIndicators().addTo(controller);
+      var cascade = TweenMax.fromTo(selector, 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, delay: delayTime});
+      new ScrollMagic.Scene({triggerElement: trigger, duration: 350}).setTween(cascade).addTo(controller);
     }
   }
 
@@ -86,6 +90,21 @@ jQuery(function($) {
   // function tweenMax(trigger, selector, x_start_post, x_end_pos, parallax_y) {
   //   TweenMax.fromTo(selector, 1, {x: percentToPixel(selector, x_start_post), opacity: "0"}, {x: x_end_pos, opacity: "1", ease:SlowMo.easeOut, onComplete: parallax(selector, trigger, parallax_y)});
   // }
+
+  function apps() {
+    var app  = new TimelineMax();
+    var circles = new TimelineMax();
+    app.fromTo('.screen', 1, {}, {opacity: 1, ease: Power4.easeIn})
+       .fromTo('.blink1', .5, {}, {opacity: 1, ease: SlowMo.easeIn})
+       .fromTo('.blink2', .25, {}, {opacity: 1, ease: SlowMo.easeIn})
+       .fromTo('.blink3', .5, {}, {opacity: 1, ease: SlowMo.easeIn});
+
+    circles.fromTo('.circle1', .5, {}, {opacity: 1, ease: SlowMo.easeIn, delay: 1.7})
+           .fromTo('.circle2', .25, {}, {opacity: 1, ease: SlowMo.easeIn});
+
+    var $svg = $('svg').drawsvg();
+    $svg.drawsvg('animate');
+  }
 
 
 });

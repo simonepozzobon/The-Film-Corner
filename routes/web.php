@@ -42,6 +42,7 @@ Route::prefix('admin')->group(function () {
   // Auth
   Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
   Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+  Route::get('/logout', 'Auth\AdminLoginController@logout');
   Route::get('/', 'AdminController@index')->name('admin');
 
   // Dashboard
@@ -50,4 +51,23 @@ Route::prefix('admin')->group(function () {
   Route::resource('media', 'MediaController', ['except' => ['show', 'create']]);
   Route::resource('categories', 'CategoryController', ['except' => ['show', 'create'] ]);
 
+});
+
+// Teacher Panel Teacher
+Route::prefix('teacher')->group(function() {
+  // Auth
+  Route::get('/login', 'Auth\TeacherLoginController@showLoginForm')->name('teacher.login');
+  Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
+  Route::get('/logout', 'Auth\TeacherLoginController@logout');
+  Route::get('/', 'TeacherController@index')->name('teacher');
+});
+
+
+// Student Panel Routes
+Route::prefix('student')->group(function() {
+  // Auth
+  Route::get('/login', 'Auth\StudentLoginController@showLoginForm')->name('student.login');
+  Route::post('/login', 'Auth\StudentLoginController@login')->name('student.login.submit');
+  Route::get('/logout', 'Auth\StudentLoginController@logout');
+  Route::get('/', 'StudentController@index')->name('student');
 });
