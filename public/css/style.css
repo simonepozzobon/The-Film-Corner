@@ -28,6 +28,7 @@
 
 .title {
   color: #252525;
+  font-size: 2rem;
 }
 
 .sp-center {
@@ -37,4 +38,29 @@
 .logo img {
   width: 50%;
   margin-bottom: 16px;
+}
+
+.links > a {
+    color: #252525;
+    padding: 0 25px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    text-transform: uppercase;
+    display: block;
+    line-height: 2.5;
+}
+
+@media screen and (min-width: 480px) {
+
+  .title {
+    font-size: 4rem !important;
+  }
+
+  .links > a {
+    display: inline-block;
+    line-height: 1.5;
+  }
+
 }

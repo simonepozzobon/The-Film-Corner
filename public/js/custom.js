@@ -1,3 +1,4 @@
+jQuery(function($) {
 $(document).ready( function() {
 
   $('.grid-item .overlay').each(function() {
@@ -8,4 +9,5 @@ $(document).ready( function() {
   $('.grid').packery({
     itemSelector: '.grid-item'
   });
+});
 });

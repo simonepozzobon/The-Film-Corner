@@ -1,69 +1,114 @@
 .animations-wrapper {
-  position: relative;
+    position: relative;
 }
 
 .animations-wrapper section {
-  min-height: 100vh;
-  position: relative;
+    position: relative;
+    min-height: 100vh;
 }
 
 .tween-content-container {
-  border: 8px solid #252525;
-  padding: 40px;
-  position: absolute;
-  z-index: 2;
+    z-index: 2;
+    position: absolute;
+    padding: 40px;
+    border: 8px solid #252525;
 }
 
 .tween-image-container {
-  display: inline-block;
-  position: absolute;
-  z-index: 1;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover !important;
+    z-index: 1;
+    display: inline-block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover !important;
 }
+
+.tween-card {
+    border: none !important;
+}
+
 
 /* Typography */
 
-.tween-content-container .tween-title {
-  font-family:  'Montserrat', sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  color: #252525;
-  text-transform: uppercase;
+.tween-title {
+    color: #252525;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 900;
 }
 
-.tween-content-container .tween-subtitle {
-  font-family:  'Montserrat', sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  color: #252525;
+.tween-subtitle {
+    color: #252525;
+    font-family: 'Montserrat', sans-serif;
+    font-style: italic;
+    font-weight: 900;
 }
 
-
+.tween-card svg {
+    width: 50%;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
 
 #container-1 {
-  width: 500px;
-  top: 240px;
+    top: 240px;
+    width: 80%;
 }
 
 #container-2 {
-  width: 600px;
-  height: 400px;
-  top: 380px;
+    top: 380px;
+    width: 60%;
+    height: 40%;
 }
 
 #container-3 {
-  width: 700px;
-  top: 120px;
+    top: 140px;
+    width: 85%;
 }
 
 #container-4 {
-  width: 470px;
-  height: 600px;
-  top: 240px;
+    top: 240px;
+    width: 75%;
+    height: 90%;
 }
 
 #partners {
-  top: 128px;
+    top: 128px;
+}
+
+#apps {
+    top: 128px;
+}
+
+@media screen and (min-width: 480px) {
+    .tween-title {
+        font-size: 1.5rem !important;
+    }
+
+    .tween-card svg {
+        width: auto;
+        margin-left: auto;
+        transform: none;
+    }
+
+    #container-1 {
+        top: 240px;
+        width: 35%;
+    }
+    #container-2 {
+        top: 390px;
+        width: 45%;
+        height: 40%;
+    }
+    #container-3 {
+        top: 140px;
+        width: 55%;
+    }
+    #container-4 {
+        top: 240px;
+        width: 45%;
+        height: 90%;
+    }
 }
