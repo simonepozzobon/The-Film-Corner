@@ -112,6 +112,7 @@
         </div>
       </div>
       <div class="row pt-5">
+        <div id="trigger-partners-2-mobile"></div>
         <div id="container-9" class="col-md-2 offset-md-2 text-center">
           <div class="tween-card card">
             <svg id="partner-5" data-name="partner 5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><title>partner5</title><path d="M275.56,313.92h0l0,0Z"/><g id="_Gruppo_" data-name="&lt;Gruppo&gt;"><path d="M250,151a99,99,0,1,1-99,99,99.11,99.11,0,0,1,99-99m0-6A105,105,0,1,0,355,250,105,105,0,0,0,250,145Z"/><path d="M302.38,262.67a2.81,2.81,0,0,1-.71,4.25l-50.26,29h0a2.83,2.83,0,0,1-2.8,0h0l-50.26-29A2.79,2.79,0,0,1,197,265a2.82,2.82,0,0,1,.65-2.3l50.26-58.05c.06-.06.14-.1.2-.16a3,3,0,0,1,.34-.28,2,2,0,0,1,.37-.21c.08,0,.15-.1.23-.13a.8.8,0,0,1,.15,0,1.87,1.87,0,0,1,.41-.09,3,3,0,0,1,.43,0,2.45,2.45,0,0,1,.38,0,2.39,2.39,0,0,1,.45.09s.09,0,.13,0a2.18,2.18,0,0,1,.22.12,2.46,2.46,0,0,1,.39.22,2.22,2.22,0,0,1,.33.28c.06.06.14.1.2.17Zm-6.43,1.1L252.79,214v74.74Zm-48.74,24.92V214l-43.16,49.82Z"/></g></svg>
@@ -157,10 +158,16 @@
   {{-- Resources --}}
   <section id="resources">
     <div id="trigger-resources"></div>
+    <div id="title-resources" class="title sp-center pt-5">
+      Resources
+    </div>
   </section>
   {{-- Login / call to action for registration --}}
   <section id="login">
     <div id="trigger-login"></div>
+    <div id="title-login" class="title sp-center pt-5">
+      Login
+    </div>
   </section>
 </div>
 @endsection
@@ -170,89 +177,5 @@
   {{-- <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/debug.addIndicators.min.js"></script> --}}
   <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
-  <script>
-  jQuery.noConflict();
-  var controller = new ScrollMagic.Controller();
-  jQuery(function($) {
-    // wait for document ready
-
-    // Resposive
-
-    var _window = $(window).width();
-
-    if (_window >= 480) {
-      // build the tweens
-      var title1     = TweenMax.fromTo('#title-project', 1, {opacity: 0}, {opacity: 1});
-      var container1 = TweenMax.fromTo('#container-1', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(10), opacity: "1", ease:SlowMo.easeOut, onComplete: parallax('#container-1','#trigger-project', '80')});
-      var container2 = TweenMax.fromTo('#container-2', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(35), opacity: ".5", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-2','#trigger-project', '-140')});
-      var container3 = TweenMax.fromTo('#container-3', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(35), opacity: "1", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-3','#trigger-project-2', '10')});
-      var container4 = TweenMax.fromTo('#container-4', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(6), opacity: ".5", ease: SlowMo.easeOut, onComplete: parallax('#container-4','#trigger-project-2', '-160')});
-
-      var title2     = TweenMax.fromTo('#title-partners', 1, {opacity: 0}, {opacity: 1});
-      var container5 = TweenMax.fromTo('#container-5', 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, onComplete: cascade(6, 3, 0, '#trigger-partners')});
-      var container9 = TweenMax.fromTo('#container-9', 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, delay: 1, onComplete: cascade(10, 3, 1, '#trigger-partners-2')});
-
-      var title3     = TweenMax.fromTo('#title-apps', 1, {opacity: 0}, {opacity: 1});
-
-    } else {
-
-      var title1     = TweenMax.fromTo('#title-project', 1, {opacity: 0}, {opacity: 1});
-      var container1 = TweenMax.fromTo('#container-1', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(5), opacity: "1", ease:SlowMo.easeOut, onComplete: parallax('#container-1','#trigger-project', '40')});
-      var container2 = TweenMax.fromTo('#container-2', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(35), opacity: ".5", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-2','#trigger-project', '-140')});
-      var container3 = TweenMax.fromTo('#container-3', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(10), opacity: "1", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-3','#trigger-project-2', '-30')});
-      var container4 = TweenMax.fromTo('#container-4', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(6), opacity: ".5", ease: SlowMo.easeOut, onComplete: parallax('#container-4','#trigger-project-2', '-80')});
-
-      var title2     = TweenMax.fromTo('#title-partners', 1, {opacity: 0}, {opacity: 1});
-      var container5 = TweenMax.fromTo('#container-5', 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, onComplete: cascade(6, 3, 0, '#trigger-partners')});
-      var container9 = TweenMax.fromTo('#container-9', 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, delay: 1, onComplete: cascade(10, 3, 1, '#trigger-partners-2')});
-
-      var title3     = TweenMax.fromTo('#title-apps', 1, {opacity: 0}, {opacity: 1});
-    }
-
-
-		// build scene
-    var title1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 150}).setTween(title1).addIndicators().addTo(controller);
-    var scene1 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container1).addIndicators().addTo(controller);
-    var scene2 = new ScrollMagic.Scene({triggerElement: "#trigger-project", duration: 350}).setTween(container2).addIndicators().addTo(controller);
-    var scene3 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container4).addIndicators().addTo(controller);
-    var scene4 = new ScrollMagic.Scene({triggerElement: "#trigger-project-2", duration: 450}).setTween(container3).addIndicators().addTo(controller);
-
-    var title2 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 150}).setTween(title2).addIndicators().addTo(controller);
-    var scene5 = new ScrollMagic.Scene({triggerElement: "#trigger-partners", duration: 350}).setTween(container5).addIndicators().addTo(controller);
-    var scene6 = new ScrollMagic.Scene({triggerElement: "#trigger-partners-2", duration: 350}).setTween(container9).addIndicators().addTo(controller);
-
-    var title3 = new ScrollMagic.Scene({triggerElement: "#trigger-apps", duration: 150}).setTween(title3).addIndicators().addTo(controller);
-
-    // Parallax function
-    function parallax(selector, trigger, size) {
-      parallaxController = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "200%"}});
-      new ScrollMagic.Scene({triggerElement: trigger}).setTween(selector, {y: size+"%", ease: Linear.easeNone, delay: 2}).addTo(parallaxController);
-    }
-
-    // Cascade Function
-    function cascade(start, limit, delayStart, trigger) {
-      for (var i = 0; i < limit; i++) {
-        var selector = '#container-'+(i+start);
-        var delayTime = i+1+delayStart;
-        var cascade    = TweenMax.fromTo(selector, 1, {opacity: 0, y: 100, ease: SlowMo.easeIn}, {opacity: 1, y: 0, ease: SlowMo.easeOut, delay: delayTime});
-        new ScrollMagic.Scene({triggerElement: trigger, duration: 350}).setTween(cascade).addIndicators().addTo(controller);
-      }
-    }
-
-    // Responsive TweenMax
-    function percentToPixel(_perc){
-      var perc = $('body').outerWidth()
-
-      var percentuale = (perc/100)* parseFloat(_perc);
-      // alert(percentuale);
-      return percentuale
-    }
-
-    // function tweenMax(trigger, selector, x_start_post, x_end_pos, parallax_y) {
-    //   TweenMax.fromTo(selector, 1, {x: percentToPixel(selector, x_start_post), opacity: "0"}, {x: x_end_pos, opacity: "1", ease:SlowMo.easeOut, onComplete: parallax(selector, trigger, parallax_y)});
-    // }
-
-
-  });
-  </script>
+  <script src="{{ asset('js/animations.js') }}"></script>
 @endsection
