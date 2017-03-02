@@ -29,4 +29,11 @@ class Teacher extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function students() {
+      return $this->hasMany('App\Student');
+    }
+
+    public function school() {
+      return $this->belongsTo('App\School');
+    }
 }

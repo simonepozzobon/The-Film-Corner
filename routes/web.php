@@ -46,10 +46,16 @@ Route::prefix('admin')->group(function () {
   Route::get('/', 'AdminController@index')->name('admin');
 
   // Dashboard
-  Route::resource('posts', 'PostController');
-  Route::resource('users', 'UserController', ['except' => ['create']]);
-  Route::resource('media', 'MediaController', ['except' => ['show', 'create']]);
-  Route::resource('categories', 'CategoryController', ['except' => ['show', 'create'] ]);
+
+  // Post menu routes
+  Route::resource('posts', 'Admin\PostController');
+  Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
+  Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
+
+  // Users menu routes
+  Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
+  Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
+  Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
 
 });
 

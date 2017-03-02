@@ -3,18 +3,11 @@
 @section('title')
   Edit User - {{ $user->name }}
 @endsection
+@section('page-title')
+  Edit User - {{ $user->name }}
+@endsection
 
 @section('content')
-      <div><h1>Edit - {{ $user->name }}</h1></div>
-
-      <div>
-      @if (session('status'))
-          <div class="alert alert-success">
-            {{ session('status') }}
-          </div>
-      @endif
-      </div>
-
       <form action="/admin/users/{{ $user->id }}" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
@@ -28,7 +21,7 @@
 
         <div class="form-group">
           <label for="password">Password</label>
-          <input name="password" value="{{ $user->password }}" type="text" class="form-control" id="password" placeholder="password">
+          <input name="password" value="{{ $user->password }}" type="password" class="form-control" id="password" placeholder="password">
         </div>
         {{ csrf_field() }}
         {{ method_field('PUT') }}

@@ -22,6 +22,7 @@
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ url('admin/posts') }}">Posts</a></li>
           <li class="nav-link "><a href="{{ url('admin/media') }}">Media</a></li>
+          <div class="dropdown-divider"></div>
           <li class="nav-link"><a href="{{ url('admin/categories') }}">Categories</a></li>
         </ul>
       </li>
@@ -31,10 +32,12 @@
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-link"><a href="#">Admins</a></li>
-          <li class="nav-link "><a href="#">Teachers</a></li>
+          <li class="nav-link"><a href="{{ url('admin/admins/') }}">Admins</a></li>
+          <li class="nav-link "><a href="{{ url('admin/teachers/') }}">Teachers</a></li>
           <li class="nav-link"><a href="#">Students</a></li>
           <li class="nav-link"><a href="{{ url('admin/users') }}">Users</a></li>
+          <div class="dropdown-divider"></div>
+          <li class="nav-link"><a href="#">Schools</a></li>
         </ul>
       </li>
       <li class="nav-link">

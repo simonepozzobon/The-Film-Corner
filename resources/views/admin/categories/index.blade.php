@@ -1,19 +1,15 @@
 @extends('layouts.admin')
+@section('title')
+  Categories
+@endsection
+@section('page-title')
+  Categories List
+@endsection
 @section('content')
-      <br>
-      <div class="clearfix">
-        <h1>Categories</h1>
-      </div>
-      @if (session('status'))
-          <div class="alert alert-success">
-            {{ session('status') }}
-          </div>
-      @endif
-      <br>
       <div class="clearfix">
         <div class="container">
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-8">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -65,7 +61,7 @@
               </table>
             </div>
 
-            <div class="col-4">
+            <div class="col-md-4">
               <div class="card">
                 <h3 class="card-header">New Category</h3>
                 <div class="card-block">

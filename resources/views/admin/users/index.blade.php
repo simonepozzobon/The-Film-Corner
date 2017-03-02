@@ -1,17 +1,7 @@
 @extends('layouts.admin')
 @section('title', 'Users')
+@section('page-title', 'Users')
 @section ('content')
-      <br>
-      <div class="clearfix">
-        <h1>Users</h1>
-      </div>
-
-      @if (session('status'))
-          <div class="alert alert-success">
-            {{ session('status') }}
-          </div>
-      @endif
-      <br>
       <div class="clearfix">
         <div class="row">
           <div class="col-8">
@@ -55,12 +45,12 @@
 
                     <div class="form-group">
                       <label for="email">Email:</label>
-                      <input name="email" value="{{ old('email') }}" class="form-control" id="content" placeholder="user@email.com">
+                      <input name="email" value="{{ $user->email }}" class="form-control" id="content" placeholder="user@email.com">
                     </div>
 
                     <div class="form-group">
                       <label for="password">Password:</label>
-                      <input name="password" value="{{ old('password') }}" type="text" class="form-control" id="password" placeholder="password">
+                      <input name="password" value="{{ old('password') }}" type="password" class="form-control" id="password" placeholder="password">
                     </div>
                     {{ csrf_field() }}
                     {{ method_field('POST') }}
