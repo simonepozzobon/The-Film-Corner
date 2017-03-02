@@ -94,6 +94,8 @@ jQuery(function($) {
   function apps() {
     var app  = new TimelineMax();
     var circles = new TimelineMax();
+    var pen = new TimelineMax();
+
     app.fromTo('.screen', 1, {}, {opacity: 1, ease: Power4.easeIn})
        .fromTo('.blink1', .5, {}, {opacity: 1, ease: SlowMo.easeIn})
        .fromTo('.blink2', .25, {}, {opacity: 1, ease: SlowMo.easeIn})
@@ -102,8 +104,12 @@ jQuery(function($) {
     circles.fromTo('.circle1', .5, {}, {opacity: 1, ease: SlowMo.easeIn, delay: 1.7})
            .fromTo('.circle2', .25, {}, {opacity: 1, ease: SlowMo.easeIn});
 
-    var $svg = $('svg').drawsvg();
-    $svg.drawsvg('animate');
+    pen.fromTo('.pen', 1, {opacity: 0, x:4}, {opacity: 1, ease: SlowMo.easeIn, onComplete: svg('.lines')});
+
+    function svg(selector) {
+      var $svg = $(selector).drawsvg();
+      $svg.drawsvg('animate');
+    }
   }
 
 
