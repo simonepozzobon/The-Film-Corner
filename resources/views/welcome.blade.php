@@ -19,10 +19,10 @@
         <a href="#apps">Apps</a>
         <a href="#resources">Resources</a>
         @if (Auth::user())
-          <a href="#login">Your Account</a>
+          <a href="#">Your Account</a>
         @endif
         @if (Auth::guard('admin')->check())
-          <a href="#">Admin Panel</a>
+          <a href="{{ route('admin') }}">Admin Panel</a>
         @endif
         @if (Auth::guard('teacher')->check())
           <a href="#">Teacher Area</a>
