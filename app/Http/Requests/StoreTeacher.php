@@ -27,6 +27,7 @@ class StoreTeacher extends FormRequest
             'name' =>'required',
             'email' => 'required',
             'password' => 'required',
+            'school_id' => 'required',
         ];
     }
 }
