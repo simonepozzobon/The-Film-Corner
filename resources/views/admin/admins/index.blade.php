@@ -16,11 +16,13 @@
     </thead>
     <tbody>
       @foreach ($admins as $admin)
-        <td>{{ $admin->id }}</td>
-        <td>{{ $admin->name }}</td>
-        <td>{{ $admin->email }}</td>
-        <td>{{ $admin->created_at }}</td>
-        <td>{{ $admin->updated_at }}</td>
+        <tr>
+          <td>{{ $admin->id }}</td>
+          <td>{{ $admin->name }}</td>
+          <td>{{ $admin->email }}</td>
+          <td>{{ $admin->created_at }}</td>
+          <td>{{ $admin->updated_at }}</td>
+        </tr>
       @endforeach
     </tbody>
   </table>
