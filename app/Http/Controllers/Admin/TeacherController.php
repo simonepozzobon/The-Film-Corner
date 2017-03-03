@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Teacher;
 use App\School;
+use App\Teacher;
+use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTeacher;
 use App\Http\Controllers\Controller;
@@ -62,7 +63,10 @@ class TeacherController extends Controller
     public function show($id)
     {
       $teacher = Teacher::findOrFail($id);
-      return view('admin.teachers.show')->with('teacher', $teacher);
+      $students = Student::where('teacher_id', '=', $id)->get();
+      return view('admin.teachers.show')
+                  ->with('teacher', $teacher)
+                  ->with('students', $students);
     }
 
     /**

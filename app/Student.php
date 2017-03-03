@@ -28,4 +28,13 @@ class Student extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function teacher()
+    {
+      return $this->belongsTo('App\Teacher');
+    }
+
+    public function school()
+    {
+      return $this->belongsTo('App\School');
+    }
 }

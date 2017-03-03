@@ -55,6 +55,7 @@ Route::prefix('admin')->group(function () {
   // Users menu routes
   Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
   Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
+  Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
   Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
   Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
 

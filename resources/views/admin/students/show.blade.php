@@ -31,6 +31,31 @@
           </div>
         </div>
         <div class="card mt-4">
+          <h3 class="card-header">School Informations</h3>
+          <div class="card-block">
+            <div class="card-text">
+              <table class="table">
+                <thead>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>Postal Code</th>
+                  <th>Country</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ $teacher->school->name }}</td>
+                    <td>{{ $teacher->school->address }}</td>
+                    <td>{{ $teacher->school->city }}</td>
+                    <td>{{ $teacher->school->postal_code }}</td>
+                    <td>{{ $teacher->school->country }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-4">
           <h3 class="card-header">Students Assigned</h3>
           <div class="card-block">
             <div class="card-text">
@@ -42,14 +67,12 @@
                   <th>View</th>
                 </thead>
                 <tbody>
-                  @foreach ($students as $student)
-                    <tr>
-                      <td>{{ $student->id }}</td>
-                      <td>{{ $student->name }}</td>
-                      <td>{{ $student->email }}</td>
-                      <td><button type="button" name="button" class="btn btn-info btn-small">View</button></td>
-                    </tr>
-                  @endforeach
+                  <tr>
+                    <td>1</td>
+                    <td>Gianni</td>
+                    <td>student@email.com</td>
+                    <td><button type="button" name="button" class="btn btn-info btn-small">View</button></td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -114,38 +137,6 @@
                   </form>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="card mt-4">
-          <h3 class="card-header">School Informations</h3>
-          <div class="card-block">
-            <div class="card-text">
-              <table class="table">
-                <thead><th>Name</th></thead>
-                <tbody><tr><td>{{ $teacher->school->name }}</td></tr></tbody>
-              </table>
-              <table class="table">
-                <thead><th>Address</th></thead>
-                <tbody><tr><td>{{ $teacher->school->address }}</td></tr></tbody>
-              </table>
-              <table class="table">
-                <thead><th>City</th></thead>
-                <tbody><tr><td>{{ $teacher->school->city }}</td></tr></tbody>
-              </table>
-              <table class="table">
-                <thead>
-                  <th>Postal Code</th>
-                  <th>Country</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{{ $teacher->school->postal_code }}</td>
-                    <td>{{ $teacher->school->country }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <a class="btn btn-info btn-block mt-4" href="/admin/schools/{{ $teacher->school->id }}/edit">Edit School</a>
             </div>
           </div>
         </div>
