@@ -37,7 +37,7 @@
           <li class="nav-link"><a href="#">Students</a></li>
           <li class="nav-link"><a href="{{ url('admin/users') }}">Users</a></li>
           <div class="dropdown-divider"></div>
-          <li class="nav-link"><a href="#">Schools</a></li>
+          <li class="nav-link"><a href="{{ url('admin/schools') }}">Schools</a></li>
         </ul>
       </li>
       <li class="nav-link">

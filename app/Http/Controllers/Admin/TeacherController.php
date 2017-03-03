@@ -49,9 +49,8 @@ class TeacherController extends Controller
         if ($request->input('school_id')) {
           $teacher->school_id = $request->input('school_id');
         } else {
-          $teacher->school_id = '';
+          $teacher->school_id = null;
         }
-
 
         $teacher->save();
 
