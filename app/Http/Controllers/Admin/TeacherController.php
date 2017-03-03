@@ -46,11 +46,7 @@ class TeacherController extends Controller
         $teacher->name = $request->input('name');
         $teacher->email = $request->input('email');
         $teacher->password = $request->input('password');
-        if ($request->input('school_id')) {
-          $teacher->school_id = $request->input('school_id');
-        } else {
-          $teacher->school_id = null;
-        }
+        $teacher->school_id = $request->input('school_id');
 
         $teacher->save();
 
