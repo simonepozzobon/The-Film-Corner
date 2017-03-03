@@ -45,7 +45,7 @@
 
                     <div class="form-group">
                       <label for="email">Email:</label>
-                      <input name="email" value="{{ $user->email }}" class="form-control" id="content" placeholder="user@email.com">
+                      <input name="email" type="email" value="{{ old('email') }}" class="form-control" id="content" placeholder="user@email.com">
                     </div>
 
                     <div class="form-group">
