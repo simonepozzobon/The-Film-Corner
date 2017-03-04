@@ -2,10 +2,12 @@
 @section('title')
   Teacher {{ $teacher->name }}
 @endsection
-@section('page-title')
-  Edit Teacher - {{ $teacher->name }}
-@endsection
 @section('content')
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">Admin</a></li>
+    <li class="breadcrumb-item"><a href="{{ url('/admin/teachers') }}">Teachers</a></li>
+    <li class="breadcrumb-item active">{{ $teacher->name }}</li>
+  </ol>
     <div class="row">
       <div class="col-md-8">
         <div class="card">

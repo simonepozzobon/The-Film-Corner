@@ -10,6 +10,7 @@
 
     });
   </script>
+  <link rel="stylesheet" href="{{ asset('admin-assets/css/select2.min.css') }}">
 @endsection
 @section('content')
       <br>
@@ -45,7 +46,7 @@
                     <div class="form-group">
                       <label for="media_id">Featured Image</label>
                       <br>
-                      @if ($medias)
+                      @if (isset($medias))
                         {{-- Modal Trigger --}}
                         <button type="button" class="btn btn-small btn-info btn-block" data-toggle="modal" data-target="#featuredImage">Select Image</button>
 
@@ -81,7 +82,7 @@
                     {{-- Author --}}
                     <div class="form-group">
                       <label for="user_id">Author</label>
-                        @if ($users)
+                        @if (isset($users))
                           <select name="user_id" class="form-control" id="user_id">
                             @foreach ($users as $user)
 
@@ -97,7 +98,7 @@
                     {{-- Category selection --}}
                     <div class="form-group">
                       <label for="category_id">Category</label>
-                      @if ($categories)
+                      @if (isset($categories))
                         <select class="form-control" name="category_id" id="category_id">
                           @foreach ($categories as $category)
 
@@ -108,6 +109,14 @@
                       @else
                         You need to create a category first!!
                       @endif
+                    </div>
+                    <div class="form-group">
+                      <label for="tags">Tags:</label>
+                      <select class="form-control select2-multi" name="tags[]" multiple="multiple">
+                        @foreach ($tags as $tag)
+                          <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                        @endforeach
+                      </select>
                     </div>
 
                     {{ csrf_field() }}
@@ -120,4 +129,10 @@
             </div>
           </div>
       </form>
+@endsection
+@section('scripts')
+  <script src="{{ asset('admin-assets/js/select2.full.min.js') }}"></script>
+  <script type="text/javascript">
+    $('.select2-multi').select2();
+  </script>
 @endsection

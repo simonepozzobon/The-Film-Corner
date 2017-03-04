@@ -51,6 +51,7 @@ Route::prefix('admin')->group(function () {
   Route::resource('posts', 'Admin\PostController');
   Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
   Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
+  Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
 
   // Users menu routes
   Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');

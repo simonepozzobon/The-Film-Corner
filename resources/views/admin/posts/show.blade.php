@@ -11,7 +11,13 @@
         <img class="img-fluid" src="{{ Storage::disk('local')->url($post->featuredImage->tablet) }}">
       </div>
       <h1 class="mt-4">{{ $post->title }}</h1>
-      <p class="mt-4">{!! $post->content !!}</p>
+      <p class="lead mt-4">{!! $post->content !!}</p>
+      <hr>
+      <div class="tags my-4">
+        @foreach ($post->tags as $tag)
+          <span class="badge badge-default">{{ $tag->name }}</span>
+        @endforeach
+      </div>
     </div>
     <div class="col-4">
       <div class="card">

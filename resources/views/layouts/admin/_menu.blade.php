@@ -20,10 +20,11 @@
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Posts <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-link"><a href="{{ url('admin/posts') }}">Posts</a></li>
-          <li class="nav-link "><a href="{{ url('admin/media') }}">Media</a></li>
+          <li class="nav-link"><a href="{{ route('posts.index') }}">Posts</a></li>
+          <li class="nav-link "><a href="{{ route('media.index') }}">Media</a></li>
           <div class="dropdown-divider"></div>
-          <li class="nav-link"><a href="{{ url('admin/categories') }}">Categories</a></li>
+          <li class="nav-link"><a href="{{ route('categories.index') }}">Categories</a></li>
+          <li class="nav-link"><a href="{{ route('tags.index') }}">Tags</a></li>
         </ul>
       </li>
 
@@ -32,12 +33,12 @@
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-link"><a href="{{ url('admin/admins/') }}">Admins</a></li>
-          <li class="nav-link "><a href="{{ url('admin/teachers/') }}">Teachers</a></li>
-          <li class="nav-link"><a href="{{ url('admin/students/') }}">Students</a></li>
-          <li class="nav-link"><a href="{{ url('admin/users') }}">Users</a></li>
+          <li class="nav-link"><a href="{{ route('admin.admins.index') }}">Admins</a></li>
+          <li class="nav-link "><a href="{{ route('teachers.index') }}">Teachers</a></li>
+          <li class="nav-link"><a href="{{ route('students.index') }}">Students</a></li>
+          <li class="nav-link"><a href="{{ route('users.index') }}">Users</a></li>
           <div class="dropdown-divider"></div>
-          <li class="nav-link"><a href="{{ url('admin/schools') }}">Schools</a></li>
+          <li class="nav-link"><a href="{{ route('schools.index') }}">Schools</a></li>
         </ul>
       </li>
       <li class="nav-link">

@@ -12,6 +12,7 @@
 
     });
   </script>
+  <link rel="stylesheet" href="{{ asset('admin-assets/css/select2.min.css') }}">
 @endsection
 @section('content')
       <br>
@@ -108,6 +109,15 @@
                   You need to create a category first!!
                 @endif
               </div>
+
+              <div class="form-group">
+                <label for="tags">Tags:</label>
+                <select class="form-control select2-multi" name="tags[]" multiple="multiple">
+                  @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                  @endforeach
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -118,4 +128,12 @@
 
       </form>
 
+@endsection
+@section('scripts')
+  <script src="{{ asset('admin-assets/js/select2.full.min.js') }}"></script>
+  <script type="text/javascript">
+    $('.select2-multi').select2();
+    var tags = {{ $tagsForThisPost }}
+    $('.select2-multi').select2().val(tags).trigger('change');
+  </script>
 @endsection

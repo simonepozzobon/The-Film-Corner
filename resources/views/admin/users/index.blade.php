@@ -8,26 +8,19 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th>Id</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
+                  <th>View</th>
                 </tr>
               </thead>
 
               @foreach ($users as $user)
                 <tr>
+                  <td>{{ $user->id }}</td>
                   <td>{{ $user->name }}</td>
                   <td>{{ $user->email }}</td>
-                  {{-- edit user --}}
-                  <td><a class="btn btn-small btn-info" href="users/{{ $user->id }}/edit">Edit</a></td>
-                  <td>
-                    <form action="/admin/users/{{ $user->id }}" method="POST">
-                      {{ csrf_field() }}
-                      {{ method_field('DELETE') }}
-                      <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
-                    </form>
-                  </td>
+                  <td><a class="btn btn-small btn-info" href="users/{{ $user->id }}">View</a></td>
                 </tr>
               @endforeach
             </table>
@@ -55,7 +48,7 @@
                     {{ csrf_field() }}
                     {{ method_field('POST') }}
 
-                    <button type="submit" class="btn btn-success btn-block mt-4" value="Submit">Save</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-4" value="Submit">Save</button>
 
                   </form>
                 </div>

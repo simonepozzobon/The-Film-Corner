@@ -3,18 +3,6 @@
   Media
 @endsection
 @section('content')
-      <br>
-      <div class="clearfix">
-        <h1>Media</h1>
-      </div>
-      @if (session('status'))
-        <div class="alert alert-success">
-          {{ session('status') }}
-        </div>
-      @endif
-
-      <br>
-
       <div class="clearfix">
         <div class="container">
           <div class="row">

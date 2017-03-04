@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Tag;
 use App\Post;
 use App\User;
 use Purifier;
@@ -44,14 +45,15 @@ class PostController extends Controller
    */
   public function create()
   {
-
       $users = User::all();
       $media = Media::all();
       $categories = Category::all();
+      $tags = Tag::all();
       return view('admin.posts.create')
                     ->with('users', $users)
                     ->with('medias', $media)
-                    ->with('categories', $categories);
+                    ->with('categories', $categories)
+                    ->with('tags', $tags);
   }
 
 
@@ -72,6 +74,13 @@ class PostController extends Controller
       $post->user_id = $request->input('user_id');
 
       $post->save();
+
+
+      if (isset($request->tags)) {
+        // where to link -> name of the array -> sync($request->nameOfTheArray, false);
+        $post->tags()->sync($request->tags, false);
+      }
+
 
       return redirect('/admin/posts')->with('status', 'New post created!');
   }
@@ -100,12 +109,16 @@ class PostController extends Controller
       $users = User::all();
       $media = Media::all();
       $categories = Category::all();
+      $tags = Tag::all();
+      $tagsForThisPost = json_encode($post->tags->pluck('id'));
 
       return view('admin.posts.edit')
                     ->with('post', $post)
                     ->with('users', $users)
                     ->with('medias', $media)
-                    ->with('categories', $categories);
+                    ->with('categories', $categories)
+                    ->with('tags', $tags)
+                    ->with('tagsForThisPost', $tagsForThisPost);
   }
 
   /**
@@ -124,6 +137,13 @@ class PostController extends Controller
       $post->media_id = $request->input('media_id');
       $post->user_id = $request->input('user_id');
       $post->save();
+
+      if (isset($request->tags)) {
+        $post->tags()->sync($request->tags);
+      } else {
+        $post->tags()->sync(array());
+      }
+
 
       return redirect('/admin/posts')->with('status', 'Post saved!');
   }

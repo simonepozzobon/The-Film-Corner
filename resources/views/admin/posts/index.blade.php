@@ -2,19 +2,6 @@
 @section('title', 'Posts')
 @section('content')
     <div class="clearfix">
-      <h1>Posts</h1>
-    </div>
-
-    <div>
-    @if (session('status'))
-        <div class="alert alert-success">
-          {{ session('status') }}
-        </div>
-    @endif
-    </div>
-    <br>
-
-    <div class="clearfix">
       <div class="row">
         <div class="col-8">
           <table class="table table-hover">
