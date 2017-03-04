@@ -3,14 +3,15 @@
   {{$post->title}}
 @endsection
 @section('content')
-<section class="hero" style="background: url({{ Storage::disk('local')->url($post->featuredImage->big) }});">
-  <div class="flex-center position-ref full-height">
-  </div>
-</section>
-<section class="mt-5">
+<section class="mt-2">
   <div class="container">
     <div class="col-md-10 offset-md-1">
-      <div class="title sp-center">
+      <div class="featured-image" style="background: url({{ Storage::disk('local')->url($post->featuredImage->big) }}) center center no-repeat;">
+        <div class="image-dimension">
+
+        </div>
+      </div>
+      <div class="title sp-center mt-5">
         {{$post->title}}
       </div>
       <ol class="breadcrumb mt-5">
