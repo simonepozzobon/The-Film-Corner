@@ -1,10 +1,10 @@
-<nav class="navbar fixed-top navbar-toggleable-md bg-faded">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   {{-- Mobile --}}
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a href="{{ url('/admin') }}" class="navbar-brand mr-4"><img src="/img/logo.png" height="50"></a>
+  <a href="{{ url('/admin') }}" class="navbar-brand"><img src="/img/logo.png" height="50" style="width: 40vw;"></a>
   <div class="collapse navbar-collapse justify-content-start" id="">
     @if (Auth::guard('admin')->check())
       <li class="nav-link">Super Admin Panel</li>

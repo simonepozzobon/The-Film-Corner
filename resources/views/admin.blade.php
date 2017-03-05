@@ -2,10 +2,10 @@
 
 @section('title', 'Panel')
 
+@section('page-title', 'Admin Panel')
+
 @section('content')
-      <br>
       <div class="clearfix">
-        <h1 class="mt-4">Admin Panel</h1>
         <p class="mt-4">Welcome to the admin panel of The Film Corner Project</p>
         <div class="row mt-4">
           <div class="col">
