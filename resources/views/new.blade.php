@@ -150,7 +150,7 @@
           <div id="partners-container" class="tween-content-container block-wrapper">
             <div class="row mt-5">
               <div class="col-md-4 offset-md-4">
-                <img class="eu__img"src="/img/home/eu-flag.jpg">
+                <a href="https://eacea.ec.europa.eu/about-eacea/visual-identity_en" target="_blank"><img class="eu__img"src="/img/home/eu-flag.jpg"></a>
               </div>
             </div>
             <div class="row mt-4">
