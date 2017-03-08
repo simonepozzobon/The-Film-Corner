@@ -148,6 +148,16 @@
             Partners
           </div>
           <div id="partners-container" class="tween-content-container block-wrapper">
+            <div class="row mt-5">
+              <div class="col-md-4 offset-md-4">
+                <img class="eu__img"src="/img/home/eu-flag.jpg">
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col-md-4 offset-md-4">
+                <hr>
+              </div>
+            </div>
             <div class="row pt-5">
               <div class="offset-md-1"></div>
               @foreach ($partners as $partner)
@@ -283,61 +293,7 @@
 	<script src="{{ asset('js/anime.min.js') }}"></script>
 	<script src="{{ asset('js/scrollMonitor.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
-  <script type="text/javascript">
-  (function() {
-			// Fake loading.
-			init();
+  <script src="{{ asset('js/animations.new.js') }}">
 
-			function init() {
-				var rev1 = new RevealFx(document.querySelector('#el-1'), {
-					revealSettings : {
-						bgcolor: '#7f40f1',
-						onCover: function(contentEl, revealerEl) {
-							contentEl.style.opacity = 1;
-						}
-					}
-				});
-				rev1.reveal({
-          bgcolor: '#c1c0b7',
-          duration: 300,
-          direction: 'tb',
-          onStart: function(contentEl, revealerEl) {
-            anime.remove(contentEl);
-            contentEl.style.opacity = 0;
-          },
-          onCover: function(contentEl, revealerEl) {
-            anime({
-              targets: contentEl,
-              duration: 500,
-              delay: 50,
-              easing: 'easeOutBounce',
-              translateY: [-40,0],
-              opacity: {
-                value: [0,1],
-                duration: 300,
-                easing: 'linear'
-              }
-            });
-          }
-        });
-
-        var scrollElemToWatch_1 = document.getElementById('news-title'),
-					watcher_1 = scrollMonitor.create(scrollElemToWatch_1, -300),
-					rev3 = new RevealFx(scrollElemToWatch_1, {
-						revealSettings : {
-							bgcolor: '#FDD351',
-							direction: 'rl',
-							onCover: function(contentEl, revealerEl) {
-								contentEl.style.opacity = 1;
-							}
-						}
-					});
-
-          watcher_1.enterViewport(function() {
-  					rev3.reveal();
-  					watcher_1.destroy();
-  				});
-			}
-		})();
   </script>
 @endsection

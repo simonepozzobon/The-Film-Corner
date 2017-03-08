@@ -48,6 +48,10 @@
   min-height: 100vh;
 }
 
+.eu__img {
+  width: 100%;
+}
+
 .login-wrapper {
   position: relative;
   top:0;
