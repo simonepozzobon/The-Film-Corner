@@ -58,7 +58,7 @@
                     <div class="news-subtitle">
                       <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
                     </div>
-                    <p class="lead">{!! $post->content !!}</p>
+                    <p class="lead">{{ substr(strip_tags($post->content), 0, 500) }}{{ strlen(strip_tags($post->content)) > 500 ? '...' : "" }}</p>
                     <div class="clearfix">
                       <div class="tags">
                          <span>Tags:
