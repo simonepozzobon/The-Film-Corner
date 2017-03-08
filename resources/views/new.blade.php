@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{ asset('css/revealer.css') }}">
 @endsection
 @section('content')
+  <main>
   {{-- Main Hero Cover --}}
   <div id="el-1">
     <section id="top" class="hero home">
@@ -13,6 +14,9 @@
         <div class="content">
           <div class="logo">
             <img src="/img/logo.png">
+          </div>
+          <div class="logo__eu">
+            <img src="/img/home/media-logo-small.png">
           </div>
           <div class="title m-b-md">
               The Film Corner
@@ -287,6 +291,7 @@
       </div>
     </div>
   </div>
+</main>
 @endsection
 @section('scripts')
   <script src="//raw.githubusercontent.com/lcdsantos/jquery-drawsvg/master/public/jquery.drawsvg.min.js"></script>
