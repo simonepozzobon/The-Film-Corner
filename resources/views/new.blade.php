@@ -293,7 +293,5 @@
 	<script src="{{ asset('js/anime.min.js') }}"></script>
 	<script src="{{ asset('js/scrollMonitor.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
-  <script src="{{ asset('js/animations.new.js') }}">
-
-  </script>
+  <script src="{{ asset('js/animations.new.js') }}"></script>
 @endsection
