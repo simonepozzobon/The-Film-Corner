@@ -19,10 +19,13 @@
         </div>
       </div>
       <div class="clearfix">
-        <h4 class="mt-4">Scritto da {{$post->author->name}}</h4>
-      </div>
-      <div class="clearfix">
         <p class="mt-4">{!! $post->content !!}</p>
+      </div>
+      <hr>
+      <div class="tags">
+        @foreach ($post->tags as $tag)
+          <span class="badge badge-default">{{ $tag->name }}</span>
+        @endforeach
       </div>
     </div>
   </div>
