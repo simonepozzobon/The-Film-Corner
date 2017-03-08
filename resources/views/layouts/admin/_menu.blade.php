@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a href="{{ url('/admin') }}" class="navbar-brand"><img src="/img/logo.png" height="50" style="width: 40vw;"></a>
+  <a href="{{ url('/admin') }}" class="navbar-brand"><img src="/img/logo.png" height="50" style="max-width: 40vw;"></a>
   <div class="collapse navbar-collapse justify-content-start" id="">
     @if (Auth::guard('admin')->check())
       <li class="nav-link">Super Admin Panel</li>
@@ -39,10 +39,14 @@
           <li class="nav-link"><a href="{{ route('users.index') }}">Users</a></li>
           <div class="dropdown-divider"></div>
           <li class="nav-link"><a href="{{ route('schools.index') }}">Schools</a></li>
+          <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
         </ul>
       </li>
-      <li class="nav-link">
-
+      <li class="nav-link dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
+        </ul>
       </li>
       <li class="nav-link"><a href="{{ url('admin/logout') }}">Logout</a></li>
     @endif

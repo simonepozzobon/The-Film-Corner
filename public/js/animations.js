@@ -17,8 +17,8 @@ jQuery(function($) {
     // Tablet e Desktop
 
     // The Project
-    var container1 = TweenMax.fromTo('#container-1', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(10), opacity: "1", ease:SlowMo.easeOut, onComplete: parallax('#container-1','#trigger-project', '80')});
-    var container2 = TweenMax.fromTo('#container-2', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(35), opacity: ".5", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-2','#trigger-project', '-140')});
+    var container1 = TweenMax.fromTo('#container-1', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(10), opacity: "1", ease:SlowMo.easeOut, onComplete: parallax('#container-1','#trigger-project', '20')});
+    var container2 = TweenMax.fromTo('#container-2', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(65), opacity: ".5", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-2','#trigger-project', '40')});
     var container3 = TweenMax.fromTo('#container-3', 1, {x: percentToPixel(120), opacity: "0"}, {x: percentToPixel(35), opacity: "1", ease: SlowMo.easeOut, delay: .8, onComplete: parallax('#container-3','#trigger-project-2', '10')});
     var container4 = TweenMax.fromTo('#container-4', 1, {x: percentToPixel(-100), opacity: "0"}, {x: percentToPixel(6), opacity: ".5", ease: SlowMo.easeOut, onComplete: parallax('#container-4','#trigger-project-2', '-160')});
 
@@ -64,7 +64,9 @@ jQuery(function($) {
 
   // Parallax function
   function parallax(selector, trigger, size) {
-    parallaxController = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "200%"}});
+    var height = ($(selector).height()/100)*200;
+    console.log(height);
+    parallaxController = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: height}});
     new ScrollMagic.Scene({triggerElement: trigger}).setTween(selector, {y: size+"%", ease: Linear.easeNone, delay: 2}).addTo(parallaxController);
   }
 

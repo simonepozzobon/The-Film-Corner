@@ -47,10 +47,16 @@
     </div>
     {{-- Slide 1 --}}
     <div id="container-1" class="tween-content-container">
+      <h2 class="tween-title">The Film Corner</h2>
       <h3 class="tween-title">New on and off activities for Film Literacy</h3>
       <p class="tween-content mt-4">
-        Cross-media and engagement
-        for Film Literacy and Audience Development
+        The project is aimed to the design, release and testing of an online digital virtual user-centered platform for Film Literacy, taking advantage of the opportunities offered by web 2.0 and crossmedia innovative approach in the digital era in order to raise the average film literacy level of EU young audiences. The general aim of the project is to contribute to draw an easy-going model for Film Literacy that could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience.
+The project involves 5 European institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy (leading partner); The Film Space, an innovative Film Literacy provider (Manchester, UK); The Nerve Centre, a Creative Learning Centre Derry, Northern Ireland; the National Cinèmatheque of Serbia (Belgrade, Serbia) one of the eldest cinèmatheques in the world and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
+The platform consists of an interactive narrative-based environmental layout with game-based didactical resources integrated as apps the user can interact with. Didactical resources will be both based on generic Film Literacy skills and on a set of EU national and non-national films. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
+In the first part of the project, the partner institutions will share their expertise and best practices in order to draw a shared methodological didactical approach. On the basis of this methodological framework the platform and its content will be designed. The platform designed will be then technically realised by professional providers.
+The second part of the project is dedicated to testing: the platform will be tested on students (target age: 12-16) and teachers of the schools involved with the guidance of the tutors from the partner institutions. Offline knowledge transfer activities will be held with teachers and students aimed to understand how it can be used for pedagogical purposes in class. Students and teachers will fulfil questionnaires of evaluation and data will be further used for Evaluation and Quality Assurance. During the whole duration of the project, dissemination and communication take place. This activity is carried on on the basis of a previously drafted dissemination strategy plan.
+In november 2017, an international conference will take place in the frame of the 10th edition of “Piccolo Grande Cinema” Festival, a film festival dedicated to young audience promoted by Fondazione Cineteca Italiana. During the international conference the platform blueprint will be officially presented and some panels discussing several issues concerning Film Literacy, crossmedia and Audience Development and engagement will be discussed. A call for papers will be issued and keynote speakers, including representants from other film literacy project financed in the frame of the Creative Europe Programme will be invited.
+
       </p>
     </div>
 

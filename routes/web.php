@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use App\Partner;
 
 // use Symfony\Component\Debug\Debug;
 // Debug::enable();
@@ -19,7 +20,10 @@ use App\Post;
 // need to create a controller for these maybe Main or FrontendController
 Route::get('/', function () {
     $posts = Post::with('author')->get();
-    return view('welcome')->with('posts', $posts);
+    $partners = Partner::all();
+    return view('new')
+                ->with('posts', $posts)
+                ->with('partners', $partners);
 });
 
 Route::get('/posts', function () {
@@ -59,6 +63,7 @@ Route::prefix('admin')->group(function () {
   Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
   Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
   Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+  Route::resource('partners', 'Admin\PartnerController', ['except' => ['show', 'create'] ]);
 
 });
 
