@@ -2,48 +2,52 @@
 @section('title')
   The Film Corner
 @endsection
+@section('stylesheets')
+  <link rel="stylesheet" href="{{ asset('css/revealer.css') }}">
+@endsection
 @section('content')
   {{-- Main Hero Cover --}}
-  <section id="top" class="hero home">
-    <div class="flex-center position-ref full-height">
-      <div class="content">
-        <div class="logo">
-          <img src="/img/logo.png">
-        </div>
-        <div class="title m-b-md">
-            The Film Corner
-        </div>
-        <div class="links">
-          <a href="#project">The Project</a>
-          <a href="#news">News</a>
-          <a href="#partners">Partners</a>
-          <a href="#apps">Apps</a>
-          <a href="#resources">Resources</a>
-          @if (Auth::user())
-            <a href="#">Your Account</a>
-          @endif
-          @if (Auth::guard('admin')->check())
-            <a href="{{ route('admin') }}">Admin Panel</a>
-          @endif
-          @if (Auth::guard('teacher')->check())
-            <a href="#">Teacher Area</a>
-          @endif
-          @if (Auth::guard('student')->check())
-            <a href="#">Student Area</a>
-          @endif
-          @if (Auth::guest())
-            <a href="#login">Login</a>
-          @endif
+  <div id="el-1">
+    <section id="top" class="hero home">
+      <div class="flex-center position-ref full-height">
+        <div class="content">
+          <div class="logo">
+            <img src="/img/logo.png">
+          </div>
+          <div class="title m-b-md">
+              The Film Corner
+          </div>
+          <div class="links">
+            <a href="#project">The Project</a>
+            <a href="#news">News</a>
+            <a href="#partners">Partners</a>
+            <a href="#apps">Apps</a>
+            <a href="#resources">Resources</a>
+            @if (Auth::user())
+              <a href="#">Your Account</a>
+            @endif
+            @if (Auth::guard('admin')->check())
+              <a href="{{ route('admin') }}">Admin Panel</a>
+            @endif
+            @if (Auth::guard('teacher')->check())
+              <a href="#">Teacher Area</a>
+            @endif
+            @if (Auth::guard('student')->check())
+              <a href="#">Student Area</a>
+            @endif
+            @if (Auth::guest())
+              <a href="#login">Login</a>
+            @endif
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
   <div class="container">
     {{-- News --}}
     <div class="row">
       <div class="col">
         <section id="news">
-          <div id="news-trigger"></div>
           <div id="news-title" class="title sp-center pt-5 pb-5">
             News
           </div>
@@ -275,10 +279,65 @@
   </div>
 @endsection
 @section('scripts')
-  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.js"></script>
   <script src="//raw.githubusercontent.com/lcdsantos/jquery-drawsvg/master/public/jquery.drawsvg.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/ScrollToPlugin.min.js"></script>
-  <script src="{{ asset('js/animations.new.js') }}"></script>
+	<script src="{{ asset('js/anime.min.js') }}"></script>
+	<script src="{{ asset('js/scrollMonitor.js') }}"></script>
+	<script src="{{ asset('js/main.js') }}"></script>
+  <script type="text/javascript">
+  (function() {
+			// Fake loading.
+			init();
+
+			function init() {
+				var rev1 = new RevealFx(document.querySelector('#el-1'), {
+					revealSettings : {
+						bgcolor: '#7f40f1',
+						onCover: function(contentEl, revealerEl) {
+							contentEl.style.opacity = 1;
+						}
+					}
+				});
+				rev1.reveal({
+          bgcolor: '#c1c0b7',
+          duration: 300,
+          direction: 'tb',
+          onStart: function(contentEl, revealerEl) {
+            anime.remove(contentEl);
+            contentEl.style.opacity = 0;
+          },
+          onCover: function(contentEl, revealerEl) {
+            anime({
+              targets: contentEl,
+              duration: 500,
+              delay: 50,
+              easing: 'easeOutBounce',
+              translateY: [-40,0],
+              opacity: {
+                value: [0,1],
+                duration: 300,
+                easing: 'linear'
+              }
+            });
+          }
+        });
+
+        var scrollElemToWatch_1 = document.getElementById('news-title'),
+					watcher_1 = scrollMonitor.create(scrollElemToWatch_1, -300),
+					rev3 = new RevealFx(scrollElemToWatch_1, {
+						revealSettings : {
+							bgcolor: '#FDD351',
+							direction: 'rl',
+							onCover: function(contentEl, revealerEl) {
+								contentEl.style.opacity = 1;
+							}
+						}
+					});
+
+          watcher_1.enterViewport(function() {
+  					rev3.reveal();
+  					watcher_1.destroy();
+  				});
+			}
+		})();
+  </script>
 @endsection
