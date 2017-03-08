@@ -81,11 +81,11 @@
               {{-- Author --}}
               <div class="form-group">
                 <label for="user_id">Author</label>
-                @if ($users)
+                @if (isset($admins))
                   <select name="user_id" class="form-control" id="user_id">
-                    @foreach ($users as $user)
+                    @foreach ($admins as $admin)
 
-                      <option value="{{ $user->id }}">{{ $user->name }}</option>
+                      <option value="{{ $admin->id }}">{{ $admin->name }}</option>
 
                     @endforeach
                   </select>

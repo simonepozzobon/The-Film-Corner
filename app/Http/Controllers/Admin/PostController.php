@@ -6,6 +6,7 @@ use App\Tag;
 use App\Post;
 use App\User;
 use Purifier;
+use App\Admin;
 use App\Media;
 use App\Category;
 use Illuminate\Http\Request;
@@ -45,12 +46,12 @@ class PostController extends Controller
    */
   public function create()
   {
-      $users = User::all();
+      $admins = Admin::all();
       $media = Media::all();
       $categories = Category::all();
       $tags = Tag::all();
       return view('admin.posts.create')
-                    ->with('users', $users)
+                    ->with('admins', $admins)
                     ->with('medias', $media)
                     ->with('categories', $categories)
                     ->with('tags', $tags);
