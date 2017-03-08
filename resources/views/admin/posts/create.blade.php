@@ -85,9 +85,7 @@
                         @if (isset($admins))
                           <select name="user_id" class="form-control" id="user_id">
                             @foreach ($admins as $admin)
-
                               <option value="{{ $admin->id }}">{{ $admin->name }}</option>
-
                             @endforeach
                           </select>
                         @else

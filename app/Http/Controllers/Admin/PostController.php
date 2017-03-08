@@ -107,7 +107,7 @@ class PostController extends Controller
   public function edit($id)
   {
       $post = Post::findOrFail($id);
-      $users = User::all();
+      $admins = Admin::all();
       $media = Media::all();
       $categories = Category::all();
       $tags = Tag::all();
@@ -115,7 +115,7 @@ class PostController extends Controller
 
       return view('admin.posts.edit')
                     ->with('post', $post)
-                    ->with('users', $users)
+                    ->with('admins', $admins)
                     ->with('medias', $media)
                     ->with('categories', $categories)
                     ->with('tags', $tags)
