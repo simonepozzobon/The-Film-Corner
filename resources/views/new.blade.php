@@ -117,7 +117,7 @@
       </div>
     </div>
     {{-- Partners --}}
-    <div class="row">
+    <div class="row mb-5">
       <div class="col">
         <section id="partners">
           <div id="partners-trigger"></div>
