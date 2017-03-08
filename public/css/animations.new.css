@@ -70,10 +70,14 @@
     transform: translateX(-50%);
 }
 
+#left, #right {
+  width: 32px;
+}
+
 .carousel-control-prev,
 .carousel-control-next {
-  background-color: #252525;
-  opacity: .1;
+  /*background-color: #252525;
+  opacity: .1;*/
 }
 
 @media screen and (min-width : 480px) {
