@@ -1,4 +1,5 @@
-@import "packery.css", "animations.new.css";
+@import "packery.css";
+@import "animations.new.css";
 .home {
     background: url('/img/cover.jpg');
     background-color: #FDD351;
