@@ -48,32 +48,51 @@
             News
           </div>
           <div id="news-container" class="tween-content-container">
-            <div class="list-group">
-              @foreach ($posts as $post)
+            <div id="carouselNewsIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="3"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="4"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
                 <div class="row mb-4">
-                  <div class="col-md-8 offset-md-2">
-                    <div class="news-title">
-                      <h2>{{ $post->title }}</h2>
-                    </div>
-                    <div class="news-subtitle">
-                      <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
-                    </div>
-                    <p class="lead">{{ substr(strip_tags($post->content), 0, 500) }}{{ strlen(strip_tags($post->content)) > 500 ? '...' : "" }}</p>
-                    <div class="clearfix">
-                      <div class="tags">
-                         <span>Tags:
-                           @foreach ($post->tags as $tag)
-                           <span class="badge badge-default">{{ $tag->name }}</span>
-                           @endforeach
-                         </span>
+                @foreach ($posts as $key=>$post)
+                  <div class="carousel-item {{ $key===1 ? 'active' : ''  }}">
+
+                      <div class="col-md-8 offset-md-2">
+                        <div class="news-title">
+                          <h2>{{ $post->title }}</h2>
+                        </div>
+                        <div class="news-subtitle">
+                          <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
+                        </div>
+                        <p class="lead">{{ substr(strip_tags($post->content), 0, 500) }}{{ strlen(strip_tags($post->content)) > 500 ? '...' : "" }}</p>
+                        <div class="clearfix">
+                          <div class="tags">
+                             <span>Tags:
+                               @foreach ($post->tags as $tag)
+                               <span class="badge badge-default">{{ $tag->name }}</span>
+                               @endforeach
+                             </span>
+                          </div>
+                        </div>
+                        <a class="btn btn-info mt-4" href="/post/{{ $post->id }}">Read more</a>
+                        <hr>
                       </div>
                     </div>
-                    <a class="btn btn-info mt-4" href="/post/{{ $post->id }}">Read more</a>
-                    <hr>
-                  </div>
+                @endforeach
                 </div>
-              @endforeach
-            </div>
+                <a class="carousel-control-prev" href="#carouselNewsIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselNewsIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
           </div>
         </section>
       </div>
