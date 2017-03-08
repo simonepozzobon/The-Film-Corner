@@ -86,7 +86,7 @@
             watcher_3 = scrollMonitor.create(scrollElemToWatch_3, -300),
             rev6 = new RevealFx(scrollElemToWatch_3, {
               revealSettings : {
-                bgcolor: '#C0A03D',
+                bgcolor: '#C0BFB6',
                 direction: 'bt',
                 onCover: function(contentEl, revealerEl) {
                   contentEl.style.opacity = 1;
@@ -95,7 +95,7 @@
             }),
             rev7 = new RevealFx(document.querySelector('#partners-container'), {
               revealSettings : {
-                bgcolor: '#404040',
+                bgcolor: '#CAB87E',
                 direction: 'lr',
                 delay: 500,
                 onCover: function(contentEl, revealerEl) {
