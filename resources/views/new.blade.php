@@ -56,51 +56,55 @@
             News
           </div>
           <div id="news-container" class="tween-content-container">
-          <div id="carouselNewsIndicators" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselNewsIndicators" data-slide-to="1"></li>
-              <li data-target="#carouselNewsIndicators" data-slide-to="2"></li>
-              <li data-target="#carouselNewsIndicators" data-slide-to="3"></li>
-              <li data-target="#carouselNewsIndicators" data-slide-to="4"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-              <div class="row mb-4">
-              @foreach ($posts as $key=>$post)
-                <div class="carousel-item {{ $key===1 ? 'active' : ''  }}">
-                    <div class="col-md-8 offset-md-2">
-                      <div class="news-title">
-                        <h2>{{ $post->title }}</h2>
-                      </div>
-                      <div class="news-subtitle">
-                        <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
-                      </div>
-                      <p class="lead">{{ substr(strip_tags($post->content), 0, 500) }}{{ strlen(strip_tags($post->content)) > 500 ? '...' : "" }}</p>
-                      <div class="clearfix">
-                        <div class="tags">
-                           <span>Tags:
-                             @foreach ($post->tags as $tag)
-                             <span class="badge badge-default">{{ $tag->name }}</span>
-                             @endforeach
-                           </span>
+          @if (isset($posts))
+            <div id="carouselNewsIndicators" class="carousel slide" data-ride="carousel">
+              <ol class="carousel-indicators">
+                <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="2"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="3"></li>
+                <li data-target="#carouselNewsIndicators" data-slide-to="4"></li>
+              </ol>
+              <div class="carousel-inner" role="listbox">
+                <div class="row mb-4">
+                @foreach ($posts as $key=>$post)
+                  <div class="carousel-item {{ $key===1 ? 'active' : ''  }}">
+                      <div class="col-md-8 offset-md-2">
+                        <div class="news-title">
+                          <h2>{{ $post->title }}</h2>
                         </div>
+                        <div class="news-subtitle">
+                          <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
+                        </div>
+                        <p class="lead">{{ substr(strip_tags($post->content), 0, 500) }}{{ strlen(strip_tags($post->content)) > 500 ? '...' : "" }}</p>
+                        <div class="clearfix">
+                          <div class="tags">
+                             <span>Tags:
+                               @foreach ($post->tags as $tag)
+                               <span class="badge badge-default">{{ $tag->name }}</span>
+                               @endforeach
+                             </span>
+                          </div>
+                        </div>
+                        <a class="btn btn-info mt-4" href="{{ route('blog.post', $post->slug) }}">Read more</a>
+                        <hr>
                       </div>
-                      <a class="btn btn-info mt-4" href="/post/{{ $post->id }}">Read more</a>
-                      <hr>
                     </div>
-                  </div>
-              @endforeach
+                @endforeach
+                </div>
+                <a class="carousel-control-prev" href="#carouselNewsIndicators" role="button" data-slide="prev">
+                  <svg id="left" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>left</title><path d="M18.67,16.54v-.72H1.08l7.64-7.6-.5-.54L.11,15.75a.35.35,0,0,0,0,.5l.18.18v.11H.4l7.78,7.78.5-.5L1.41,16.54Zm11.17-.72H32v.72H29.84Zm-4.79,0h2.41v.72H25Zm-4.58,0h2.16v.72H20.47Z"/></svg>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselNewsIndicators" role="button" data-slide="next">
+                  <svg id="right" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>right</title><path d="M31.75,15.59v-.11h-.11L23.85,7.68l-.51.51,7.29,7.29H13.35v.72H31l-7.65,7.61.51.51,8.08-8.08a.35.35,0,0,0,0-.51Zm-22.37.05h2.16v.72H9.38Zm-4.8,0H7v.72H4.58ZM0,15.64H2.16v.72H0Z"/></svg>
+                  <span class="sr-only">Next</span>
+                </a>
               </div>
-              <a class="carousel-control-prev" href="#carouselNewsIndicators" role="button" data-slide="prev">
-                <svg id="left" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>left</title><path d="M18.67,16.54v-.72H1.08l7.64-7.6-.5-.54L.11,15.75a.35.35,0,0,0,0,.5l.18.18v.11H.4l7.78,7.78.5-.5L1.41,16.54Zm11.17-.72H32v.72H29.84Zm-4.79,0h2.41v.72H25Zm-4.58,0h2.16v.72H20.47Z"/></svg>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#carouselNewsIndicators" role="button" data-slide="next">
-                <svg id="right" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><title>right</title><path d="M31.75,15.59v-.11h-.11L23.85,7.68l-.51.51,7.29,7.29H13.35v.72H31l-7.65,7.61.51.51,8.08-8.08a.35.35,0,0,0,0-.51Zm-22.37.05h2.16v.72H9.38Zm-4.8,0H7v.72H4.58ZM0,15.64H2.16v.72H0Z"/></svg>
-                <span class="sr-only">Next</span>
-              </a>
             </div>
-          </div>
+          @else
+              No news yet
+          @endif
           </div>
         </section>
       </div>

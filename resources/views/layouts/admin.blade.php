@@ -3,11 +3,17 @@
   @include('layouts.admin._head')
   <body>
     @include('layouts.admin._menu')
-    <br><br>
     <div class="container mt-5">
       <div class="clearfix mt-5 mb-5">
         <h1>@yield('page-title')<h1>
       </div>
+
+      @if (session()->has('success'))
+        <div class="alert alert-success" role="alert">
+          {{ session()->get('success') }}
+        </div>
+      @endif
+
       @if (session('status'))
         <div class="alert alert-success">
           {{ session('status') }}

@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Posts')
+@section('page-title', 'Posts list')
 @section('content')
     <div class="clearfix">
       <div class="row">

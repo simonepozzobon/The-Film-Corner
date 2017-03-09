@@ -34,7 +34,7 @@
             </dl>
             <dl class="dl-horizontal">
               <label><b>Url:</b></label>
-              <p><a href="{{ url($post->slug) }}">{{ url($post->slug) }}</a></p>
+              <p><a href="{{ route('blog.post', $post->slug) }}">{{ route('blog.post', $post->slug) }}</a></p>
             </dl>
             <hr>
             <div class="row">

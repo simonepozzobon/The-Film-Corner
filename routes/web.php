@@ -26,6 +26,8 @@ Route::get('/', function () {
                 ->with('partners', $partners);
 });
 
+Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
+
 Route::get('/posts', function () {
   $posts = Post::with('author')->get();
   return view('blog.list')->with('posts', $posts);

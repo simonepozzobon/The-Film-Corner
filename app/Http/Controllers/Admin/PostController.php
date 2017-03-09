@@ -83,8 +83,10 @@ class PostController extends Controller
         $post->tags()->sync($request->tags, false);
       }
 
+      $request->session()->flash('success', 'New post created!');
 
-      return redirect('/admin/posts')->with('status', 'New post created!');
+
+      return redirect('/admin/posts');
   }
 
   /**
@@ -130,8 +132,24 @@ class PostController extends Controller
    * @param  int  $id
    * @return \Illuminate\Http\Response
    */
-  public function update(UpdatePost $request, $id) //verificare Request > va cambiato con UpdatePost
+  public function update(Request $request, $id) //verificare Request > va cambiato con UpdatePost
   {
+      $post = Post::find($id);
+
+      if ($request->input('slug') == $post->slug) {
+        $this->validate($request, array(
+          'title' => 'required',
+          'user_id' => 'required',
+        ));
+      } else {
+        $this->validate($request, array(
+          'title' => 'required',
+          'user_id' => 'required',
+          'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
+        ));
+      }
+
+
       $post = Post::findOrFail($id);
       $post->title = $request->input('title');
       $post->content = Purifier::clean($request->get('content'), 'youtube');

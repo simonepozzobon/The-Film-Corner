@@ -9,7 +9,7 @@
     @if (Auth::guard('admin')->check())
       <li class="nav-link">Super Admin Panel</li>
       <li class="nav-link">
-        <a href="{{ url('/') }}">Visit Website</a>
+        <a href="{{ url('/') }}" target="_blank">Visit Website</a>
       </li>
     @endif
   </div>
