@@ -211,10 +211,10 @@
       <div class="col">
         <section id="apps">
           <div id="trigger-apps"></div>
-          <div id="title-apps" class="title sp-center pt-5">
+          <div id="apps-title" class="title sp-center pt-5">
             Apps
           </div>
-          <div id="container-13" class="col-md-6 offset-md-3">
+          <div id="apps-container" class="col-md-6 offset-md-3">
             <svg id="apps-animation" data-name="Livello 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
               <title>Apps</title>
               <style>.pen{z-index: 1;} .screen{z-index: 2;}</style>
@@ -249,10 +249,10 @@
       <div class="col">
         <section id="resources">
           <div id="trigger-resources"></div>
-          <div id="title-resources" class="title sp-center pt-5">
+          <div id="resources-title" class="title sp-center pt-5">
             Resources
           </div>
-          <div class="empty-page">
+          <div id="resources-container" class="empty-page">
 
           </div>
         </section>
@@ -263,10 +263,10 @@
       <div class="col">
         <section id="login">
           <div id="trigger-login"></div>
-          <div id="title-login" class="title sp-center pt-5 pb-5">
+          <div id="login-title" class="title sp-center pt-5 pb-5">
             Login
           </div>
-            <div class="login-wrapper">
+            <div id="login-container" class="login-wrapper">
               <div class="login-container">
                 @if (Auth::user())
                   <a href="#" class="btn btn-lg btn-block">Your Account</a>
