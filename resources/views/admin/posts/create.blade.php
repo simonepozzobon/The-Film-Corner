@@ -93,6 +93,13 @@
                         @endif
                     </div>
 
+                    {{-- Slug --}}
+                    <div class="form-group">
+                      <label for="slug">Slug</label>
+                      <textarea name="slug" value="{{ old('slug') }}" class="form-control" rows="1" minlenght="5" maxlength="255"></textarea>
+                    </div>
+
+
                     {{-- Category selection --}}
                     <div class="form-group">
                       <label for="category_id">Category</label>

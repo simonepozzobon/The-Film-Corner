@@ -70,6 +70,7 @@ class PostController extends Controller
       $post = new Post;
       $post->title = $request->input('title');
       $post->content = Purifier::clean($request->input('content'), 'youtube');
+      $post->slug = $request->input('slug');
       $post->category_id = $request->input('category_id');
       $post->media_id = $request->input('media_id');
       $post->user_id = $request->input('user_id');
@@ -134,6 +135,7 @@ class PostController extends Controller
       $post = Post::findOrFail($id);
       $post->title = $request->input('title');
       $post->content = Purifier::clean($request->get('content'), 'youtube');
+      $post->slug = $request->input('slug');
       $post->category_id = $request->input('category_id');
       $post->media_id = $request->input('media_id');
       $post->user_id = $request->input('user_id');

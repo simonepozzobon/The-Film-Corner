@@ -26,6 +26,7 @@ class StorePost extends FormRequest
         return [
           'title' => 'required',
           'user_id' => 'required',
+          'slug' => 'required|alpha_dash|min:5|max:255|unique:posts,slug',
         ];
     }
 }

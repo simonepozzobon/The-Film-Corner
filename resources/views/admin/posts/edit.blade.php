@@ -94,6 +94,12 @@
                 @endif
               </div>
 
+              {{-- Slug --}}
+              <div class="form-group">
+                <label for="slug">Slug</label>
+                <textarea name="slug" value="{{ $post->slug }}" class="form-control" rows="1" minlenght="5" maxlength="255">{{ $post->slug }}</textarea>
+              </div>
+
               {{-- Category selection --}}
               <div class="form-group">
                 <label for="category_id">Category</label>

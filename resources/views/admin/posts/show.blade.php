@@ -24,22 +24,19 @@
         <h3 class="card-header">Post Details</h3>
         <div class="card-block">
           <div class="card-text">
-            <table class="table">
-              <thead>
-                <th>Created At:</th>
-              </thead>
-              <tbody>
-                <td>{{ $post->created_at }}</td>
-              </tbody>
-            </table>
-            <table class="table">
-              <thead>
-                <th>Updated At:</th>
-              </thead>
-              <tbody>
-                <td>{{ $post->updated_at }}</td>
-              </tbody>
-            </table>
+            <dl class="dl-horizontal">
+              <label><b>Created At:</b></label>
+              <p>{{ $post->created_at }}</p>
+            </dl>
+            <dl class="dl-horizontal">
+              <label><b>Updated At:</b></label>
+              <p>{{ $post->updated_at }}</p>
+            </dl>
+            <dl class="dl-horizontal">
+              <label><b>Url:</b></label>
+              <p><a href="{{ url($post->slug) }}">{{ url($post->slug) }}</a></p>
+            </dl>
+            <hr>
             <div class="row">
               <div class="col">
                 <a class="btn btn-small btn-info btn-block" href="/admin/posts/{{ $post->id }}/edit">Edit</a>
