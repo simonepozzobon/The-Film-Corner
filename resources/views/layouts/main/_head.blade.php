@@ -5,17 +5,8 @@
 
     <title>The Film Corner - @yield('title')</title>
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,400,600,700" rel="stylesheet" type="text/css">
-
-    {{-- Bootstrap --}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-
-    {{-- Monsterrat Google Font --}}
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:900i" rel="stylesheet">
-
     {{-- Main Stylesheet --}}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     {{-- Google Analytics --}}
     <script>
