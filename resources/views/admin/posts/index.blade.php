@@ -47,7 +47,7 @@
             <h3 class="card-header">New Post</h3>
             <div class="card-block">
               <div class="card-text">
-                <a class="btn btn-small btn-success btn-block" href="{{ url('admin/posts/create') }}">Add Post</a>
+                <a class="btn btn-small btn-primary btn-block" href="{{ url('admin/posts/create') }}">Add Post</a>
               </div>
             </div>
           </div>

@@ -5,29 +5,39 @@
   <div class="clearfix">
     <div class="row">
       <div class="col-md-8">
-        <div class="row">
-          <div class="col-md-4">
-            <img width="250" class="" src="{{ Storage::disk('local')->url($partner->logo_url) }}">
-          </div>
-          <div class="col-md-8">
-            <div class="container">
-              <dl class="dl-horizontal">
-                <label><b>Name</b></label>
-                <p>{{ $partner->name }}</p>
-              </dl>
-              <dl class="dl-horizontal">
-                <label><b>Location</b></label>
-                <p>{{ $partner->location }}</p>
-              </dl>
-              <dl class="dl-horizontal">
-                <label><b>Url</b></label>
-                <p><a href="{{ $partner->url }}" target="_blank" class="btn btn-info">Visit website</a></p>
-              </dl>
+          <div class="card">
+            <h3 class="card-header">Partner Informations</h3>
+            <div class="card-block">
+              <div class="card-text">
+                <div class="row">
+                  <div class="col-md-5">
+                    <img width="250" class="" src="{{ Storage::disk('local')->url($partner->logo_url) }}">
+                  </div>
+                  <div class="col-md-7">
+                    <table class="table">
+                      <thead><th>Location</th></thead>
+                      <tbody><tr><td>{{ $partner->location }}</td></tr></tbody>
+                    </table>
+                    <table class="table">
+                      <thead><th>Url</th></thead>
+                      <tbody><tr><td><a href="{{ $partner->url }}" target="_blank">{{ $partner->url }}</a></td></tr></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
         <div class="row mt-4">
-            {!! $partner->description !!}
+          <div class="col">
+            <div class="card">
+              <h3 class="card-header">Description</h3>
+              <div class="card-block">
+                <div class="card-text">
+                  {!! $partner->description !!}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-md-4">

@@ -38,7 +38,7 @@
                       <br>
                       @if (isset($medias))
                         {{-- Modal Trigger --}}
-                        <button type="button" class="btn btn-small btn-info btn-block" data-toggle="modal" data-target="#featuredImage">Select Image</button>
+                        <button type="button" class="btn btn-small btn-primary btn-block" data-toggle="modal" data-target="#featuredImage">Select Image</button>
 
                         {{-- Modal Box --}}
                         <div class="modal fade" id="featuredImage" tabindex="-1" role="dialog" aria-labelledby="featuredImageLabel" aria-hidden="true">
@@ -118,7 +118,7 @@
                     {{ csrf_field() }}
                     {{ method_field('POST') }}
 
-                    <button type="submit" class="btn btn-success btn-block mt-4" value="Submit">Save</button>
+                    <button type="submit" class="btn btn-primary btn-block mt-4" value="Submit">Save</button>
                   </div>
                 </div>
               </div>

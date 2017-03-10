@@ -17,6 +17,8 @@
 @endsection
 @section('content')
       <form action="/admin/posts/{{ $post->id }}" method="POST">
+        {{ csrf_field() }}
+        {{ method_field('PUT') }}
         <div class="container">
           <div class="row">
             {{-- left --}}
@@ -119,13 +121,11 @@
                   @endforeach
                 </select>
               </div>
+
+              <button type="submit" class="btn btn-primary btn-block mt-4" value="Submit">Save</button>
             </div>
           </div>
         </div>
-        {{ csrf_field() }}
-        {{ method_field('PUT') }}
-
-        <button type="submit" class="btn btn-success" value="Submit">Save</button>
 
       </form>
 

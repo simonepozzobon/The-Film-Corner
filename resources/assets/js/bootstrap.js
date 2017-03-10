@@ -6,8 +6,9 @@ window._ = require('lodash');
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-
 window.$ = window.jQuery = require('jquery');
+
+window.Tether = require('tether');
 
 require('bootstrap');
 

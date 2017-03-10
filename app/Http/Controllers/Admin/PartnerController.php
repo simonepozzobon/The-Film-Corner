@@ -85,7 +85,8 @@ class PartnerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $partner = Partner::findOrFail($id);
+        return view('admin.partners.edit')->with('partner', $partner);
     }
 
     /**
@@ -97,7 +98,39 @@ class PartnerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, array(
+        'name' => 'required',
+        'id_tag' => 'required',
+        'location' => 'required',
+        'url' => 'required',
+        'description' => 'required',
+      ));
+
+      $partner = Partner::findOrFail($id);
+
+      // If image has changed
+      if ( $request->file('media') ) {
+        // Delete old file
+        $file = $partner->logo;
+        Storage::delete($file);
+        // Save the new one
+        $filename = $request->file('media')->getClientOriginalName();
+        $partnerName = $request->input('id_tag');
+        $file = $request->file('media')->storeAs('public/partners/'.$partnerName, $filename);
+        $path = storage_path('app/public/partners/'.$partnerName);
+        $img_square = Image::make($path.'/'.$filename)->fit(500)->save();
+        $partner->logo_url = $file;
+      }
+
+      $partner->name = $request->input('name');
+      $partner->id_tag = $request->input('id_tag');
+      $partner->location = $request->input('location');
+      $partner->url = $request->input('url');
+      $partner->description = Purifier::clean($request->input('description'), 'youtube');
+      $partner->save();
+
+        session()->flash('success', 'Partner updated!');
+        return redirect('/admin/partners');
     }
 
     /**

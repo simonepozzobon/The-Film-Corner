@@ -12,7 +12,6 @@
       selector: 'textarea.content',
       plugins: 'link lists',
       menubar: false,
-
     });
   </script>
   <link rel="stylesheet" href="{{ asset('admin-assets/css/select2.min.css') }}">
@@ -20,16 +19,14 @@
 @section('content')
       <div class="clearfix">
           <div class="row">
-            <div class="col">
+            <div class="col-md-8">
               <table class="table table-hover">
                 <thead>
                   <tr>
                     <th>Id</th>
                     <th>Name</th>
                     <th>Logo</th>
-                    <th>ID Html</th>
                     <th>Location</th>
-                    <th>Url</th>
                     <th>Description</th>
                     <th>Preview</th>
                   </tr>
@@ -40,9 +37,7 @@
                     <td class="align-middle">{{ $partner->id }}</td>
                     <td class="align-middle">{{ $partner->name }}</td>
                     <td class="align-middle"><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($partner->logo_url) }}"></td>
-                    <td class="align-middle">{{ $partner->id_tag }}</td>
                     <td class="align-middle">{{ $partner->location }}</td>
-                    <td class="align-middle">{{ $partner->url }}</td>
                     <td class="align-middle">{{ substr(strip_tags($partner->description), 0, 50) }}{{ strlen(strip_tags($partner->description)) > 50 ? '...' : "" }}</td>
                     <td class="align-middle"><a href="{{ route('partners.show', $partner->id) }}" class="btn btn-info">Preview</a></td>
                   </tr>
@@ -50,9 +45,7 @@
                 </tbody>
               </table>
             </div>
-          </div>
-          <div class="row">
-            <div class="col mb-5">
+            <div class="col-md-4">
               <div class="card">
                 <h3 class="card-header">New Partner</h3>
                 <div class="card-block">
@@ -94,6 +87,9 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row">
+
           </div>
       </div>
 @endsection

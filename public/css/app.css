@@ -559,8 +559,8 @@ h6,
 .h5,
 .h6 {
   margin-bottom: 0.5rem;
-  font-family: inherit;
-  font-weight: 500;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
   line-height: 1.1;
   color: inherit;
 }
