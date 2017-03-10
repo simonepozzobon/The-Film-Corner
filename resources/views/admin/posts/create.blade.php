@@ -53,6 +53,7 @@
                               <div class="modal-body">
                                 {{-- Content --}}
                                 <select class="form-control image-picker" name="media_id" id="media_id">
+                                  <option data-img-src="/img/helpers/null-image.svg" data-img-alt="No Image" value="">Null</option>
                                   @foreach ($medias as $media)
                                     <option data-img-src="{{ Storage::disk('local')->url($media->icon) }}" data-img-alt="{{ $media->id }}" value="{{ $media->id }}">{{ $media->title }}</option>
                                   @endforeach

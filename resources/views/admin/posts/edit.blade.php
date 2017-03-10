@@ -52,9 +52,13 @@
                         <div class="modal-body">
                           {{-- Content --}}
                           <select class="form-control image-picker" name="media_id" id="media_id">
-                            <option data-img-src="{{ public_path('img/helpers/null-image.svg') }}" data-img-alt="No Image" value="">Null</option>
+                            <option data-img-src="/img/helpers/null-image.svg" data-img-alt="No Image" value="">Null</option>
                             @foreach ($medias as $media)
-                              <option data-img-src="{{ Storage::disk('local')->url($media->icon) }}" data-img-alt="{{ $media->id }}" value="{{ $media->id }}">{{ $media->title }}</option>
+                              @if ($media->id == $post->media_id)
+                                <option data-img-src="{{ Storage::disk('local')->url($media->icon) }}" selected="selected" data-img-alt="{{ $media->id }}" value="{{ $media->id }}">{{ $media->title }}</option>
+                              @else
+                                <option data-img-src="{{ Storage::disk('local')->url($media->icon) }}" data-img-alt="{{ $media->id }}" value="{{ $media->id }}">{{ $media->title }}</option>
+                              @endif
                             @endforeach
                           </select>
                         </div>
