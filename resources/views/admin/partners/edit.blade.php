@@ -27,7 +27,7 @@
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" rows="8" class="content form-control">{{ $partner->description }}</textarea>
+            <textarea name="description" rows="16" class="content form-control">{{ $partner->description }}</textarea>
           </div>
         </div>
         <div class="col-md-4">
