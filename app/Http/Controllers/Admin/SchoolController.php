@@ -43,10 +43,9 @@ class SchoolController extends Controller
       $school->city = $request->input('city');
       $school->postal_code = $request->input('postal_code');
       $school->country = $request->input('country');
-
       $school->save();
-
-      return redirect('admin/schools')->with('status', 'New school created!');
+      $request->session()->flash('success', 'New school created!');
+      return redirect('admin/schools');
     }
 
     /**

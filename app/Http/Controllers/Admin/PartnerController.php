@@ -60,7 +60,9 @@ class PartnerController extends Controller
         $partner->description = Purifier::clean($request->input('description'), 'youtube');
         $partner->save();
 
-        return redirect()->route('partners.index')->with('status', 'New partnern created!');
+        $request->session()->flash('success', 'New partner created!');
+
+        return redirect()->route('partners.index');
     }
 
     /**
@@ -116,6 +118,8 @@ class PartnerController extends Controller
         // Delete Row DB
         $partner->delete();
 
-        return redirect()->route('partners.index')->with('status', 'Partner deleted!');
+        $request->session()->flash('success', 'Partner deleted!');
+
+        return redirect()->route('partners.index');
     }
 }

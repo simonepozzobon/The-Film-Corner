@@ -48,10 +48,9 @@ class TeacherController extends Controller
         $teacher->email = $request->input('email');
         $teacher->password = $request->input('password');
         $teacher->school_id = $request->input('school_id');
-
         $teacher->save();
-
-        return redirect('admin/teachers')->with('status', 'New teacher created!');
+        $request->session()->flash('success', 'New teacher created!');
+        return redirect('admin/teachers');
     }
 
     /**
@@ -103,6 +102,7 @@ class TeacherController extends Controller
     {
       $teacher = Teacher::findOrFail($id);
       $teacher->delete();
-      return redirect('/admin/teachers')->with('status', 'Teacher deleted!');
+      $request->session()->flash('success', 'Teacher Deleted!');
+      return redirect('/admin/teachers');
     }
 }

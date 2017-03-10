@@ -86,7 +86,9 @@ class MediaController extends Controller
       $media->big = $big;
       $media->save();
 
-      return redirect('/admin/media')->with('status', 'New media uploaded!');
+      $request->session()->flash('success', 'New media upload!');
+
+      return redirect('/admin/media');
   }
 
   /**
@@ -154,6 +156,7 @@ class MediaController extends Controller
       // Delete Row DB
       $media->delete();
 
-      return redirect('/admin/media')->with('status', 'Media deleted!');
+      $request->session()->flash('success', 'Media deleted!');
+      return redirect('/admin/media');
   }
 }

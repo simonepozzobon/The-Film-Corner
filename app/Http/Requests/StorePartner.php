@@ -27,7 +27,7 @@ class StorePartner extends FormRequest
           'name' => 'required|max:255',
           'location' => 'required',
           'url' => 'required',
-          'id_tag' => 'required',
+          'id_tag' => 'required|alpha_dash|max:255',
           'description' => 'required',
         ];
     }

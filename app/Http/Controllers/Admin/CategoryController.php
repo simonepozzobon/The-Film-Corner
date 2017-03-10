@@ -51,7 +51,8 @@ class CategoryController extends Controller
       $category = new Category;
       $category->name = $request->input('name');
       $category->save();
-      return redirect('admin/categories')->with('status', 'New category created!');
+      $request->session()->flash('success', 'New category created!');
+      return redirect('admin/categories');
   }
 
   /**
@@ -99,6 +100,7 @@ class CategoryController extends Controller
   {
       $categories = Category::findOrFail($category);
       $categories->delete();
-      return redirect('admin/categories')->with('status', 'Category deleted!');
+      $request->session()->flash('success', 'Category deleted!');
+      return redirect('admin/categories');
   }
 }

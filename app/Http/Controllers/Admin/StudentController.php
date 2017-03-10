@@ -50,10 +50,9 @@ class StudentController extends Controller
       $student->password = $request->input('password');
       $student->teacher_id = $request->input('teacher_id');
       $student->school_id = $request->input('school_id');
-
       $student->save();
-
-      return redirect('admin/students')->with('status', 'New student created!');
+      $request->session()->flash('success', 'New student created!');
+      return redirect('admin/students');
     }
 
     /**

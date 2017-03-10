@@ -40,8 +40,8 @@ class TagController extends Controller
         $tag = new Tag;
         $tag->name = $request->input('name');
         $tag->save();
-
-        return redirect()->route('tags.index')->with('status', 'New tag created!');
+        $request->session()->flash('success', 'New tag created!');
+        return redirect()->route('tags.index');
     }
 
     /**

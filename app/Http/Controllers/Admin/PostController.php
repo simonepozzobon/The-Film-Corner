@@ -165,8 +165,9 @@ class PostController extends Controller
         $post->tags()->sync(array());
       }
 
+      $request->session()->flash('success', 'Post saved!');
 
-      return redirect('/admin/posts')->with('status', 'Post saved!');
+      return redirect('/admin/posts');
   }
 
   /**

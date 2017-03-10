@@ -44,8 +44,8 @@ class UserController extends Controller
       $user->email = $request->input('email');
       $user->password = $request->input('password');
       $user->save();
-
-      return redirect('/admin/users')->with('status', 'New user created!');
+      $request->session()->flash('success', 'New user created!');
+      return redirect('/admin/users');
   }
 
   /**
@@ -85,8 +85,8 @@ class UserController extends Controller
       $user->email = $request->get('email');
       $user->password = $request->get('password');
       $user->save();
-
-      return redirect('/admin/users')->with('status', 'User saved!');
+      $request->session()->flash('success', 'User saveed!');
+      return redirect('/admin/users');
   }
 
   /**
@@ -99,6 +99,7 @@ class UserController extends Controller
   {
     $user = User::findOrFail($user->id);
     $user->delete();
-    return redirect('/admin/users')->with('status', 'User deleted!');
+    $request->session()->flash('success', 'User deleted!');
+    return redirect('/admin/users');
   }
 }
