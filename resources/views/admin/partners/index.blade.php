@@ -31,7 +31,7 @@
                     <th>Location</th>
                     <th>Url</th>
                     <th>Description</th>
-                    <th>Delete</th>
+                    <th>Preview</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -44,36 +44,7 @@
                     <td class="align-middle">{{ $partner->location }}</td>
                     <td class="align-middle">{{ $partner->url }}</td>
                     <td class="align-middle">{{ substr(strip_tags($partner->description), 0, 50) }}{{ strlen(strip_tags($partner->description)) > 50 ? '...' : "" }}</td>
-                    <td class="align-middle">
-                      <form action="/admin/partners/{{ $partner->id }}" method="POST">
-                        {{ csrf_field() }}
-                        {{ method_field('DELETE') }}
-
-                        {{-- Modal Trigger --}}
-                        <button type="button" class="btn btn-small btn-danger" data-toggle="modal" data-target="#delete" name="button">Delete</button>
-
-                        {{-- Modal --}}
-                        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
-                          <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="deleteLabel">Delete Partner</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                Are you sure?
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </form>
-                    </td>
+                    <td class="align-middle"><a href="{{ route('partners.show', $partner->id) }}" class="btn btn-info">Preview</a></td>
                   </tr>
                 @endforeach
                 </tbody>

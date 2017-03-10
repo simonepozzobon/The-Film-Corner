@@ -156,7 +156,7 @@ class MediaController extends Controller
       // Delete Row DB
       $media->delete();
 
-      $request->session()->flash('success', 'Media deleted!');
+      session()->flash('success', 'Media deleted!');
       return redirect('/admin/media');
   }
 }

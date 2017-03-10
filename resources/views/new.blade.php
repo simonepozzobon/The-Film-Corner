@@ -56,7 +56,6 @@
             News
           </div>
           <div id="news-container" class="tween-content-container">
-          @if (isset($posts))
             <div id="carouselNewsIndicators" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
                 <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
@@ -73,6 +72,7 @@
                         <div class="news-title">
                           <h2>{{ $post->title }}</h2>
                         </div>
+
                         <div class="news-subtitle">
                           <h4>Posted {{ $post->updated_at->diffForHumans() }}</h4>
                         </div>
@@ -102,9 +102,6 @@
                 </a>
               </div>
             </div>
-          @else
-              No news yet
-          @endif
           </div>
         </section>
       </div>

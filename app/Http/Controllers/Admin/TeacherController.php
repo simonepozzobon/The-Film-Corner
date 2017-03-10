@@ -102,7 +102,7 @@ class TeacherController extends Controller
     {
       $teacher = Teacher::findOrFail($id);
       $teacher->delete();
-      $request->session()->flash('success', 'Teacher Deleted!');
+      session()->flash('success', 'Teacher Deleted!');
       return redirect('/admin/teachers');
     }
 }

@@ -99,7 +99,7 @@ class UserController extends Controller
   {
     $user = User::findOrFail($user->id);
     $user->delete();
-    $request->session()->flash('success', 'User deleted!');
+    session()->flash('success', 'User deleted!');
     return redirect('/admin/users');
   }
 }

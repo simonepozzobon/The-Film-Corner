@@ -180,6 +180,7 @@ class PostController extends Controller
   {
       $post = Post::findOrFail($id);
       $post->delete();
-      return redirect('/admin/posts')->with('status', 'Post deleted!');
+      session()->flash('success', 'Post deleted!');
+      return redirect('/admin/posts');
   }
 }

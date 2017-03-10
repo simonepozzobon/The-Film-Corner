@@ -99,8 +99,7 @@ class CategoryController extends Controller
   public function destroy(Category $category)
   {
       $categories = Category::findOrFail($category);
-      $categories->delete();
-      $request->session()->flash('success', 'Category deleted!');
+      $categories->delete();session()->flash('success', 'Category deleted!');
       return redirect('admin/categories');
   }
 }

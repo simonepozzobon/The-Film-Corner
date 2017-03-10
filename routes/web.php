@@ -19,7 +19,7 @@ use App\Partner;
 
 // need to create a controller for these maybe Main or FrontendController
 Route::get('/', function () {
-    $posts = Post::with('author')->latest()->limit(5)->get();
+    $posts = Post::latest()->limit(5)->get();
     $partners = Partner::all();
     return view('new')
                 ->with('posts', $posts)
@@ -65,7 +65,7 @@ Route::prefix('admin')->group(function () {
   Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
   Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
   Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
-  Route::resource('partners', 'Admin\PartnerController', ['except' => ['show', 'create'] ]);
+  Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
 
 });
 

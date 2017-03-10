@@ -73,7 +73,8 @@ class PartnerController extends Controller
      */
     public function show($id)
     {
-        //
+        $partner = Partner::findOrFail($id);
+        return view('admin.partners.show')->with('partner', $partner);
     }
 
     /**
@@ -118,7 +119,7 @@ class PartnerController extends Controller
         // Delete Row DB
         $partner->delete();
 
-        $request->session()->flash('success', 'Partner deleted!');
+        session()->flash('success', 'Partner deleted!');
 
         return redirect()->route('partners.index');
     }
