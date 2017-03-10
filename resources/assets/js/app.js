@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./node_modules/tether/dist/js/tether.min.js');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
