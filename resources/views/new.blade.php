@@ -267,24 +267,27 @@
           <div id="login-title" class="title sp-center pt-5 pb-5">
             Login
           </div>
-            <div id="login-container" class="login-wrapper">
-              <div class="login-container">
-                @if (Auth::user())
-                  <a href="#" class="btn btn-lg btn-block mb-3">Your Account</a>
-                @endif
-                @if (Auth::guard('admin')->check())
-                  <a href="{{ route('admin') }}" class="btn btn-block btn-info mb-3">Admin Panel</a>
-                @endif
-                @if (Auth::guard('teacher')->check())
-                  <a href="#" class="btn btn-block btn-info mb-3">Teacher Area</a>
-                @endif
-                @if (Auth::guard('student')->check())
-                  <a href="#" class="btn btn-block btn-info mb-3">Student Area</a>
-                @endif
-                @if (Auth::guest())
-                  <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3">Login</a>
-                  <a href="{{ route('register') }}" class="btn btn-block btn-success">Sign Up</a>
-                @endif
+          <div id="login-container" class="login-wrapper">
+            <div class"container">
+              <div class="row align-items-center">
+                <div class="col-md-4 offset-md-4">
+                  @if (Auth::user())
+                    <a href="#" class="btn btn-lg btn-block mb-3">Your Account</a>
+                  @endif
+                  @if (Auth::guard('admin')->check())
+                    <a href="{{ route('admin') }}" class="btn btn-block btn-info mb-3">Admin Panel</a>
+                  @endif
+                  @if (Auth::guard('teacher')->check())
+                    <a href="#" class="btn btn-block btn-info mb-3">Teacher Area</a>
+                  @endif
+                  @if (Auth::guard('student')->check())
+                    <a href="#" class="btn btn-block btn-info mb-3">Student Area</a>
+                  @endif
+                  @if (Auth::guest())
+                    <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-block btn-success">Sign Up</a>
+                  @endif
+                </div>
               </div>
             </div>
           </div>
