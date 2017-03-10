@@ -270,16 +270,16 @@
             <div id="login-container" class="login-wrapper">
               <div class="login-container">
                 @if (Auth::user())
-                  <a href="#" class="btn btn-lg btn-block">Your Account</a>
+                  <a href="#" class="btn btn-lg btn-block mb-3">Your Account</a>
                 @endif
                 @if (Auth::guard('admin')->check())
-                  <a href="{{ route('admin') }}" class="btn btn-block btn-info">Admin Panel</a>
+                  <a href="{{ route('admin') }}" class="btn btn-block btn-info mb-3">Admin Panel</a>
                 @endif
                 @if (Auth::guard('teacher')->check())
-                  <a href="#" class="btn btn-block btn-info">Teacher Area</a>
+                  <a href="#" class="btn btn-block btn-info mb-3">Teacher Area</a>
                 @endif
                 @if (Auth::guard('student')->check())
-                  <a href="#" class="btn btn-block btn-info">Student Area</a>
+                  <a href="#" class="btn btn-block btn-info mb-3">Student Area</a>
                 @endif
                 @if (Auth::guest())
                   <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3">Login</a>
