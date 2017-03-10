@@ -11,13 +11,16 @@
         <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
         <li class="breadcrumb-item active">{{ $post->title }}</li>
       </ol>
-      <div class="featured-image" style="background: url({{ Storage::disk('local')->url($post->featuredImage->tablet) }}) center center no-repeat;">
-        <div class="image-dimension">
-        </div>
-        <div class="title single-post-title sp-center mt-5">
-          {{$post->title}}
-        </div>
+
+      <div class="clearfix mb-4">
+        <h1 class="bg-faded p-3">{{ $post->title }}<h1>
       </div>
+      @if (isset($post->featuredImage->tablet))
+        <div class="featured-image" style="background: url({{ Storage::disk('local')->url($post->featuredImage->tablet) }}) center center no-repeat;">
+          <div class="image-dimension">
+          </div>
+        </div>
+      @endif
       <div class="clearfix">
         <p class="mt-4">{!! $post->content !!}</p>
       </div>

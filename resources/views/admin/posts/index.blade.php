@@ -4,7 +4,7 @@
 @section('content')
     <div class="clearfix">
       <div class="row">
-        <div class="col-8">
+        <div class="col-md-8">
           <table class="table table-hover">
             <thead>
               <tr>
@@ -21,7 +21,13 @@
               <tr>
                 <td>{{ $post->id }}</td>
                 <td>{{ $post->title }}</td>
-                <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}"></td>
+                <td>
+                  @if (isset($post->featuredImage->icon))
+                    <img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($post->featuredImage->icon) }}">
+                  @else
+                    <p class="text-warning text-center">No Img</p>
+                  @endif
+                </td>
                 <td>
                   @if ($post->category_id)
                     {{ $post->category->name }}
@@ -36,7 +42,7 @@
             @endforeach
           </table>
         </div>
-        <div class="col-4">
+        <div class="col-md-4">
           <div class="card">
             <h3 class="card-header">New Post</h3>
             <div class="card-block">

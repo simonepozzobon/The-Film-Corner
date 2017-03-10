@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'Post Create')
+@section('page-title', 'Create a new post')
 @section('stylesheets')
   <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
   <script type="text/javascript">
@@ -13,18 +14,7 @@
   <link rel="stylesheet" href="{{ asset('admin-assets/css/select2.min.css') }}">
 @endsection
 @section('content')
-      <br>
-      <h1 class="mt-4">Create a new post</h1>
-      @if (count($errors) > 0)
-        <ul>
-          @foreach ($errors as $error)
-            <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-
-      @endif
-      <br>
-      <form action="/admin/posts" method="POST">
+      <form action="{{ route('posts.store') }}" method="POST">
           <div class="row">
             <div class="col-8">
               <div class="form-group">

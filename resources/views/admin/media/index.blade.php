@@ -1,12 +1,11 @@
 @extends('layouts.admin')
-@section('title')
-  Media
-@endsection
+@section('title', 'Media')
+@section('page-title', 'Media')
 @section('content')
       <div class="clearfix">
         <div class="container">
           <div class="row">
-            <div class="col-8">
+            <div class="col-md-8">
               <table class="table table-hover">
                 <thead>
                   <tr>
@@ -20,15 +19,38 @@
                 @foreach ($medias as $media)
                   <tr>
                     {{-- show media --}}
-                    <td>{{ $media->id }}</td>
-                    <td>{{ $media->title }}</td>
-                    <td><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($media->icon) }}"></td>
+                    <td class="align-middle">{{ $media->id }}</td>
+                    <td class="align-middle">{{ $media->title }}</td>
+                    <td class="align-middle"><img width="57" class="mx-auto d-block" src="{{ Storage::disk('local')->url($media->icon) }}"></td>
 
-                    <td>
+                    <td class="align-middle">
                       <form action="/admin/media/{{ $media->id }}" method="POST">
                         {{ csrf_field() }}
                         {{ method_field('DELETE') }}
-                        <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
+
+                        {{-- Modal Trigger --}}
+                        <button type="button" class="btn btn-small btn-danger" data-toggle="modal" data-target="#delete" name="button">Delete</button>
+
+                        {{-- Modal --}}
+                        <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="deleteLabel">Delete Media</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                Are you sure?
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-small btn-danger" value="Submit">Delete</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </form>
                     </td>
                   </tr>
@@ -36,7 +58,7 @@
 
               </table>
             </div>
-            <div class="col-4">
+            <div class="col-md-4">
               <div class="card">
                 <h3 class="card-header">
                   New Image

@@ -2,6 +2,7 @@
 @section('title')
  Edit Post - {{ $post->title }}
 @endsection
+@section('page-title', "$post->title (edit)")
 @section('stylesheets')
   <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
   <script type="text/javascript">
@@ -15,17 +16,6 @@
   <link rel="stylesheet" href="{{ asset('admin-assets/css/select2.min.css') }}">
 @endsection
 @section('content')
-      <br>
-      <div><h1>Edit Post: {{ $post->title }}</h1></div>
-
-      <div>
-      @if (session('status'))
-          <div class="alert alert-success">
-            {{ session('status') }}
-          </div>
-      @endif
-      </div>
-
       <form action="/admin/posts/{{ $post->id }}" method="POST">
         <div class="container">
           <div class="row">
@@ -62,6 +52,7 @@
                         <div class="modal-body">
                           {{-- Content --}}
                           <select class="form-control image-picker" name="media_id" id="media_id">
+                            <option data-img-src="{{ public_path('img/helpers/null-image.svg') }}" data-img-alt="No Image" value="">Null</option>
                             @foreach ($medias as $media)
                               <option data-img-src="{{ Storage::disk('local')->url($media->icon) }}" data-img-alt="{{ $media->id }}" value="{{ $media->id }}">{{ $media->title }}</option>
                             @endforeach

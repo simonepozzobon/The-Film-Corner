@@ -4,13 +4,16 @@
    Post - {{ $post->title }}
 @endsection
 
+@section('page-title', "$post->title")
+
 @section('content')
   <div class="row">
     <div class="col-8">
-      <div class="featured-image">
-        <img class="img-fluid" src="{{ Storage::disk('local')->url($post->featuredImage->tablet) }}">
-      </div>
-      <h1 class="mt-4">{{ $post->title }}</h1>
+      @if (isset($post->featuredImage->tablet))
+        <div class="featured-image">
+          <img class="img-fluid" src="{{ Storage::disk('local')->url($post->featuredImage->tablet) }}">
+        </div>
+      @endif
       <p class="lead mt-4">{!! $post->content !!}</p>
       <hr>
       <div class="tags my-4">
@@ -34,7 +37,7 @@
             </dl>
             <dl class="dl-horizontal">
               <label><b>Url:</b></label>
-              <p><a href="{{ route('blog.post', $post->slug) }}">{{ route('blog.post', $post->slug) }}</a></p>
+              <p><a href="{{ route('blog.post', $post->slug) }}" target="_blank">{{ route('blog.post', $post->slug) }}</a></p>
             </dl>
             <hr>
             <div class="row">
