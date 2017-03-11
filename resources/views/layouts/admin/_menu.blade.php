@@ -34,7 +34,7 @@
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li class="nav-link"><a href="{{ route('app_1.index') }}">Frame Painter</a></li>
+          <li class="nav-link"><a href="{{ route('app_1.index') }}">1 - Frame Painter</a></li>
         </ul>
       </li>
       {{-- Users --}}
@@ -47,7 +47,6 @@
           <li class="nav-link"><a href="{{ route('users.index') }}">Users</a></li>
           <div class="dropdown-divider"></div>
           <li class="nav-link"><a href="{{ route('schools.index') }}">Schools</a></li>
-          <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
         </ul>
       </li>
       {{-- Settings --}}

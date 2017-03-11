@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin\App;
 
+use App\Models\Apps\App1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class App1Controller extends Controller
 {
@@ -23,7 +27,8 @@ class App1Controller extends Controller
      */
     public function index()
     {
-        return view('admin.apps.1.index');
+        $frames = App1::all();
+        return view('admin.apps.1.index')->with('frames', $frames);
     }
 
     /**
@@ -33,7 +38,7 @@ class App1Controller extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.apps.1.create');
     }
 
     /**
@@ -44,7 +49,23 @@ class App1Controller extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $this->validate($request, array(
+        'name' => 'required',
+        'description' => 'required',
+      ));
+
+      $filename = $request->file('frame')->getClientOriginalName();
+      $file = $request->file('frame')->storeAs('public/apps/app_1', $filename);
+      $path = storage_path('app/public/apps/app_1');
+      $img_square = Image::make($path.'/'.$filename)->fit(500)->save();
+
+      $frame = new App1;
+      $frame->name = $request->input('name');
+      $frame->description = $request->input('description');
+      $frame->frame = $file;
+      $frame->save();
+      $request->session()->flash('succes', 'New frame created!');
+      return redirect()->route('app_1.index');
     }
 
     /**
@@ -55,7 +76,8 @@ class App1Controller extends Controller
      */
     public function show($id)
     {
-        //
+        $frame = App1::find($id);
+        return view('admin.apps.1.show')->with('frame', $frame);
     }
 
     /**
@@ -66,7 +88,8 @@ class App1Controller extends Controller
      */
     public function edit($id)
     {
-        //
+        $frame = App1::find($id);
+        return view('admin.apps.1.edit')->with('frame', $frame);
     }
 
     /**
