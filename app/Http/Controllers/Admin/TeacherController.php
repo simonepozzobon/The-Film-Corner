@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Hash;
 use App\School;
 use App\Teacher;
 use App\Student;
@@ -60,8 +61,10 @@ class TeacherController extends Controller
         $teacher->name = $request->input('name');
         $teacher->email = $request->input('email');
         $teacher->profile_img = $file;
-        $teacher->password = $request->input('password');
+        $teacher->password = Hash::make($request->input('password'));
+        $teacher->students_slots = $request->input('students_slots');
         $teacher->school_id = $request->input('school_id');
+
         $teacher->save();
 
         $request->session()->flash('success', 'New teacher created!');
@@ -129,11 +132,10 @@ class TeacherController extends Controller
         $img_square = Image::make($path.'/'.$filename)->fit(500)->save();
         $teacher->profile_img = $file;
       }
-
       $teacher->status = $request->input('status');
       $teacher->name = $request->input('name');
       $teacher->email = $request->input('email');
-      $teacher->password = $request->input('password');
+      $teacher->password = Hash::make($request->input('password'));
       $teacher->students_slots = $request->input('students_slots');
       $teacher->school_id = $request->input('school_id');
       $teacher->save();

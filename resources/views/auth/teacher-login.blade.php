@@ -1,13 +1,11 @@
-@extends('layouts.admin')
-
+@extends('layouts.teacher')
+@section('title', 'Teacher login')
+@section('page-title', 'Teacher Login')
 @section('content')
-@include('layouts.admin._menu')
-<br><br>
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card">
-              <h3 class="card-header">Teacher Login</h3>
               <div class="card-block">
                 <div class="card-text">
                   <form class="form-horizontal" role="form" method="POST" action="{{ route('teacher.login.submit') }}">

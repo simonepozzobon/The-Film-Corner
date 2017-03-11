@@ -77,6 +77,9 @@ Route::prefix('teacher')->group(function() {
   Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
   Route::get('/logout', 'Auth\TeacherLoginController@logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
+
+  //APP
+  Route::get('/app', 'AppController@firstApp')->name('teacher.app');
 });
 
 

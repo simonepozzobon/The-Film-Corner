@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Teacher;
 use Illuminate\Http\Request;
 
 class TeacherController extends Controller
@@ -23,6 +25,8 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        return view('teacher');
+        $id = Auth::id();
+        $teacher = Teacher::find($id);
+        return view('teacher')->with('teacher', $teacher);
     }
 }

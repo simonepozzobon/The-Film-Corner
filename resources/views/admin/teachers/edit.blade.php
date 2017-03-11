@@ -93,7 +93,7 @@
                 @endif
                 <div class="form-group">
                   <label for="status">Account Status</label>
-                  <input type="checkbox" name="status" value="{{ $teacher->status }}" class="form-control" {{ $teacher->status == true ? 'checked' : '' }}>
+                  <input type="text" name="status" value="{{ $teacher->status == true ? '1' : '0' }}" class="form-control" >
                   <small>Checked means active</small>
                 </div>
                 <table class="table">
