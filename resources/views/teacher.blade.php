@@ -4,6 +4,6 @@
 @section('content')
   <div class="clearfix">
     <span class="alert alert-info d-block">Welcome back {{ $teacher->name }}</span>
-    <a href="#" class="btn btn-primary btn-lg btn-block">First App</a>
+    <a href="{{ route('app.first') }}" class="btn btn-primary btn-lg btn-block">First App</a>
   </div>
 @endsection

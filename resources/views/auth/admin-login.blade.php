@@ -1,11 +1,11 @@
 @extends('layouts.admin')
-
+@section('title', 'Admin Login')
+@section('page-title', 'Admin Login')
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3">
           <div class="card">
-              <h3 class="card-header">Admin Login</h3>
               <div class="card-block">
                 <div class="card-text">
                   <form class="form-horizontal" role="form" method="POST" action="{{ route('admin.login.submit') }}">

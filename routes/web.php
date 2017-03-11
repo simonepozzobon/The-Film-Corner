@@ -48,16 +48,19 @@ Route::prefix('admin')->group(function () {
   // Auth
   Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
   Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-  Route::get('/logout', 'Auth\AdminLoginController@logout');
+  Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
   Route::get('/', 'AdminController@index')->name('admin');
 
-  // Dashboard
-
-  // Post menu routes
+  // Web menu routes
   Route::resource('posts', 'Admin\PostController');
   Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
   Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
   Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
+
+  // Apps menu settings
+  Route::prefix('app')->group(function () {
+    Route::resource('app_1', 'Admin\App\App1Controller');
+  });
 
   // Users menu routes
   Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
@@ -66,6 +69,8 @@ Route::prefix('admin')->group(function () {
   Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
   Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
   Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+
+  // Settings menu routes
   Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
 
 });
@@ -75,11 +80,11 @@ Route::prefix('teacher')->group(function() {
   // Auth
   Route::get('/login', 'Auth\TeacherLoginController@showLoginForm')->name('teacher.login');
   Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
-  Route::get('/logout', 'Auth\TeacherLoginController@logout');
+  Route::get('/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
 
-  //APP
-  Route::get('/app', 'AppController@firstApp')->name('teacher.app');
+  // Apps
+  Route::get('/app', 'AppController@firstApp')->name('app.first');
 });
 
 

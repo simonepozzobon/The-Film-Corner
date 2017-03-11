@@ -17,19 +17,27 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 
     @if (Auth::guard('admin')->check())
+      {{-- Web --}}
       <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Posts <span class="caret"></span></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Web <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('posts.index') }}">Posts</a></li>
           <li class="nav-link "><a href="{{ route('media.index') }}">Media</a></li>
           <div class="dropdown-divider"></div>
           <li class="nav-link"><a href="{{ route('categories.index') }}">Categories</a></li>
           <li class="nav-link"><a href="{{ route('tags.index') }}">Tags</a></li>
+          <div class="dropdown-divider"></div>
+          <li class="nav-link disabled">Pages</li>
         </ul>
       </li>
-
-      <li class="nav-link disabled">Pages</li>
-
+      {{-- Apps --}}
+      <li class="nav-link dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li class="nav-link"><a href="{{ route('app_1.index') }}">Frame Painter</a></li>
+        </ul>
+      </li>
+      {{-- Users --}}
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
         <ul class="dropdown-menu">
@@ -42,12 +50,14 @@
           <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
         </ul>
       </li>
+      {{-- Settings --}}
       <li class="nav-link dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
         </ul>
       </li>
+      {{-- Account Actions --}}
       <li class="nav-link"><a href="{{ url('admin/logout') }}">Logout</a></li>
     @endif
 

@@ -33,7 +33,6 @@ class TeacherLoginController extends Controller
         return redirect()->intended('teacher');
 
       }
-      session()->flash('success', 'ciao');
       // If unseccesfull redirect back
       return redirect()->back()->withInput($request->only('email', 'remember'));
     }
@@ -47,6 +46,6 @@ class TeacherLoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect('/teacher');
+        return redirect()->route('teacher');
     }
 }
