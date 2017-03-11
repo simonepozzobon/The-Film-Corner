@@ -12,6 +12,7 @@
              <th>Name</th>
              <th>School</th>
              <th>Students</th>
+             <th>Status</th>
              <th>View</th>
            </thead>
            <tbody>
@@ -21,6 +22,13 @@
                 <td>{{ $teacher->name }}</td>
                 <td>{{ $teacher->school->name }}</td>
                 <td>{{ $teacher->students_slots }}</td>
+                <td class="align-middle">
+                  @if ($teacher->status = true)
+                    <span class="alert alert-success">Active</span>
+                  @else
+                    <span class="alert alert-danger">Deactivated</span>
+                  @endif
+                </td>
                 <td><a class="btn btn-small btn-info" href="teachers/{{ $teacher->id }}">View</a></td>
               </tr>
             @endforeach

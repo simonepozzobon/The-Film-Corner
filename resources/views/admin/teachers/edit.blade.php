@@ -86,6 +86,16 @@
             <h3 class="card-header">Account Details</h3>
             <div class="card-block">
               <div class="card-text">
+                @if ($teacher->status == true)
+                  <span class="alert alert-success d-block">Active</span>
+                @else
+                  <span class="alert alert-danger d-block">Deactivated</span>
+                @endif
+                <div class="form-group">
+                  <label for="status">Account Status</label>
+                  <input type="checkbox" name="status" value="{{ $teacher->status }}" class="form-control" {{ $teacher->status == true ? 'checked' : '' }}>
+                  <small>Checked means active</small>
+                </div>
                 <table class="table">
                   <thead><th>Created At:</th></thead>
                   <tbody><td>{{ $teacher->created_at }}</td></tbody>

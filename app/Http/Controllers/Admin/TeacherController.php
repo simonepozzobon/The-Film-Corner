@@ -130,6 +130,7 @@ class TeacherController extends Controller
         $teacher->profile_img = $file;
       }
 
+      $teacher->status = $request->input('status');
       $teacher->name = $request->input('name');
       $teacher->email = $request->input('email');
       $teacher->password = $request->input('password');
