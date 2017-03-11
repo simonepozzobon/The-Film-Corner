@@ -58,11 +58,13 @@
           <div id="news-container" class="tween-content-container">
             <div id="carouselNewsIndicators" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
-                <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselNewsIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselNewsIndicators" data-slide-to="2"></li>
-                <li data-target="#carouselNewsIndicators" data-slide-to="3"></li>
-                <li data-target="#carouselNewsIndicators" data-slide-to="4"></li>
+                @foreach ($posts as $key=>$post)
+                  @if ($key == 0)
+                    <li data-target="#carouselNewsIndicators" data-slide-to="0" class="active"></li>
+                  @else
+                    <li data-target="#carouselNewsIndicators" data-slide-to="{{ $key }}"></li>
+                  @endif
+                @endforeach
               </ol>
               <div class="carousel-inner" role="listbox">
                 <div class="row mb-4">
