@@ -1,13 +1,7 @@
 @extends('layouts.admin')
-@section('title')
-  Teacher {{ $teacher->name }}
-@endsection
+@section('title', "Teacher $teacher->name")
+@section('page-title', "$teacher->name")
 @section('content')
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{{ route('admin.admins.index') }}">Admin</a></li>
-    <li class="breadcrumb-item"><a href="{{ url('/admin/teachers') }}">Teachers</a></li>
-    <li class="breadcrumb-item active">{{ $teacher->name }}</li>
-  </ol>
     <div class="row">
       <div class="col-md-8">
         <div class="card">
@@ -16,7 +10,11 @@
             <div class="card-text">
               <div class="row">
                 <div class="col-md-6">
-                  <img class="img-circle m-x-auto d-block" src="/img/logo.png" alt="Teacher - {{ $teacher->name }}" style="width: 100%">
+                  @if ($teacher->profile_img)
+                    <img class="img-circle mx-auto d-block" src="{{ Storage::disk('local')->url($teacher->profile_img) }}" alt="Teacher - {{ $teacher->name }}" width="220">
+                  @else
+                    <img class="mx-auto d-block" src="{{ url('/') }}/img/helpers/null-image.png" width="220">
+                  @endif
                 </div>
                 <div class="col-md-6">
                   <table class="table">

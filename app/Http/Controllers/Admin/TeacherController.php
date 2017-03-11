@@ -8,6 +8,9 @@ use App\Student;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreTeacher;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Contracts\Validation\Validator;
 
 class TeacherController extends Controller
@@ -43,12 +46,24 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacher $request)
     {
+        $filename = $request->file('media')->getClientOriginalName();
+        $teacherName = $request->input('name');
+        $file = $request->file('media')->storeAs('public/teachers/'.$teacherName, $filename);
+
+        // Path where files are stored according to Filesystem.php
+        $path = storage_path('app/public/teachers/'.$teacherName);
+
+        // Edit files
+        $img_square = Image::make($path.'/'.$filename)->fit(500)->save();
+
         $teacher = new Teacher;
         $teacher->name = $request->input('name');
         $teacher->email = $request->input('email');
+        $teacher->profile_img = $file;
         $teacher->password = $request->input('password');
         $teacher->school_id = $request->input('school_id');
         $teacher->save();
+
         $request->session()->flash('success', 'New teacher created!');
         return redirect('admin/teachers');
     }
@@ -76,8 +91,11 @@ class TeacherController extends Controller
      */
     public function edit($id)
     {
+      $schools = School::all();
       $teacher = Teacher::findOrFail($id);
-      return view('admin.teachers.edit')->with('teacher', $teacher);
+      return view('admin.teachers.edit')
+                  ->with('teacher', $teacher)
+                  ->with('schools', $schools);
     }
 
     /**
@@ -89,7 +107,36 @@ class TeacherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $this->validate($request, array(
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required',
+        'school_id' => 'required',
+      ));
+
+      $teacher = Teacher::findOrFail($id);
+
+      // If image has changed
+      if ($request->file('media')) {
+        $file = $partner->logo;
+        Storage::delete($file);
+        $filename = $request->file('media')->getClientOriginalName();
+        $teacherName = $request->input('name');
+        $file = $request->file('media')->storeAs('public/teachers/'.$teacherName, $filename);
+        $path = storage_path('app/public/teachers/'.$teacherName);
+        $img_square = Image::make($path.'/'.$filename)->fit(500)->save();
+        $teacher->profile_img = $file;
+      }
+
+      $teacher->name = $request->input('name');
+      $teacher->email = $request->input('email');
+      $teacher->password = $request->input('password');
+      $teacher->school_id = $request->input('school_id');
+      $teacher->save();
+
+      $request->session()->flash('success', 'Teacher updated!');
+      $redirect = 'admin/teachers/'.$teacher->id;
+      return redirect($redirect);
     }
 
     /**
@@ -101,6 +148,8 @@ class TeacherController extends Controller
     public function destroy($id)
     {
       $teacher = Teacher::findOrFail($id);
+      $file = $teacher->profile_img;
+      Storage::delete($file);
       $teacher->delete();
       session()->flash('success', 'Teacher Deleted!');
       return redirect('/admin/teachers');

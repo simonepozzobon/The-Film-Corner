@@ -1,11 +1,6 @@
 @extends('layouts.admin')
-
-@section('title')
-   Post - {{ $post->title }}
-@endsection
-
+@section('title', "Post - $post->title")
 @section('page-title', "$post->title")
-
 @section('content')
   <div class="row">
     <div class="col-8">

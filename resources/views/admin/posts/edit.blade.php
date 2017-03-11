@@ -2,7 +2,7 @@
 @section('title')
  Edit Post - {{ $post->title }}
 @endsection
-@section('page-title', "$post->title (edit)")
+@section('page-title', "$post->title")
 @section('stylesheets')
   <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
   <script type="text/javascript">

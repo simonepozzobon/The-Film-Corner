@@ -32,7 +32,7 @@
            <h3 class="card-header">New Teacher</h3>
            <div class="card-block">
              <div class="card-text">
-               <form class="" action="/admin/teachers" method="POST">
+               <form class="" action="/admin/teachers" method="POST" enctype="multipart/form-data">
                  {{ csrf_field() }}
                  {{ method_field('POST') }}
                  <div class="form-group">
@@ -59,7 +59,12 @@
                      You need to create a School first!!
                    @endif
                  </div>
-                 <button type="submit" name="button" class="btn btn-primary btn-small btn-block mt-4">Save</button>
+                 <div class="form-group">
+                   <label for="media">Profile Picture:</label>
+                   <input type="file" name="media" class="form-control"></input>
+                 </div>
+                 <hr>
+                 <button type="submit" name="button" class="btn btn-primary btn-small btn-block mt-3">Save</button>
                </form>
              </div>
            </div>

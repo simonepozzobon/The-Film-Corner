@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 @section('title', "Partner $partner->name - Preview")
-@section('page-title', "$partner->name - Preview")
+@section('page-title', "$partner->name")
 @section('content')
   <div class="clearfix">
     <div class="row">

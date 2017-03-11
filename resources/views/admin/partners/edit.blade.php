@@ -2,7 +2,7 @@
 @section('title')
  Edit Partner - {{ $partner->name }}
 @endsection
-@section('page-title', "$partner->name (edit)")
+@section('page-title', "$partner->name")
 @section('stylesheets')
   <script src="//cloud.tinymce.com/stable/tinymce.min.js?apiKey=qecr5wd0wdcbodk88lbyo28f9rwd2zpg9kqvq6cgle2fkal7"></script>
   <script type="text/javascript">
