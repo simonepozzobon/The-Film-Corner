@@ -69,6 +69,17 @@
               </div>
             </div>
           </div>
+          <div class="card mt-4">
+            <h3 class="card-header">Restrictions</h3>
+            <div class="card-block">
+              <div class="card-text">
+                <div class="form-group">
+                  <label for="students_slots">How Many Students?</label>
+                  <input type="text" name="students_slots" value="{{ $teacher->students_slots }}" class="form-control">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="col-md-4">
           <div class="card">

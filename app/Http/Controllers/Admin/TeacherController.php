@@ -78,9 +78,11 @@ class TeacherController extends Controller
     {
       $teacher = Teacher::findOrFail($id);
       $students = Student::where('teacher_id', '=', $id)->get();
+      $students_num = count($students);
       return view('admin.teachers.show')
                   ->with('teacher', $teacher)
-                  ->with('students', $students);
+                  ->with('students', $students)
+                  ->with('students_num', $students_num);
     }
 
     /**
@@ -131,12 +133,13 @@ class TeacherController extends Controller
       $teacher->name = $request->input('name');
       $teacher->email = $request->input('email');
       $teacher->password = $request->input('password');
+      $teacher->students_slots = $request->input('students_slots');
       $teacher->school_id = $request->input('school_id');
       $teacher->save();
 
       $request->session()->flash('success', 'Teacher updated!');
       $redirect = 'admin/teachers/'.$teacher->id;
-      return redirect($redirect);
+      return redirect()->route('teachers.show', $id);
     }
 
     /**
@@ -153,5 +156,24 @@ class TeacherController extends Controller
       $teacher->delete();
       session()->flash('success', 'Teacher Deleted!');
       return redirect('/admin/teachers');
+    }
+
+    public function storeStudent(Request $request, $id)
+    {
+      $teacher = Teacher::findOrFail($id);
+      $this->validate($request, array(
+        'name' => 'required',
+        'email' => 'required',
+        'password' => 'required'
+      ));
+      $student = new Student;
+      $student->name = $request->input('name');
+      $student->email = $request->input('email');
+      $student->password = $request->input('password');
+      $student->teacher_id = $teacher->id;
+      $student->school_id = $teacher->school_id;
+      $student->save();
+      $request->session()->flash('success', 'New student created!');
+      return redirect()->route('teachers.show', $id);
     }
 }

@@ -31,6 +31,35 @@
           </div>
         </div>
         <div class="card mt-4">
+          <h3 class="card-header">Stats</h3>
+          <div class="card-block">
+            <div class="card-text">
+              <table class="table table-hover">
+                <thead>
+                  <th>Description</th>
+                  <th>Detail</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Account Available</td>
+                    <td>
+                      @if ($teacher->students_slots == 0)
+                        infinite
+                      @else
+                        {{ $teacher->students_slots }}
+                      @endif
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Students Assigned</td>
+                    <td>{{ $students_num }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-4">
           <h3 class="card-header">Students Assigned</h3>
           <div class="card-block">
             <div class="card-text">
@@ -52,6 +81,31 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-4">
+          <h3 class="card-header">Add New Student</h3>
+          <div class="card-block">
+            <div class="card-text">
+              <form action="{{ route('teacher.store.student', $teacher->id) }}" method="post">
+                {{ csrf_field() }}
+                {{ method_field('POST') }}
+                <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Name of the student">
+                </div>
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" name="email" value="{{ old('email') }}" class="form-control" placeholder="student@email.com">
+                </div>
+                <div class="form-group">
+                  <label for="password">Password</label>
+                  <input type="password" name="password" value="{{ old('password') }}" class="form-control" placeholder="123456">
+                </div>
+                <hr>
+                <button type="submit" name="button" class="btn btn-block btn-primary mt-3">Add Student</button>
+              </form>
             </div>
           </div>
         </div>
