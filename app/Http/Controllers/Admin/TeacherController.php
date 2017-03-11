@@ -118,7 +118,7 @@ class TeacherController extends Controller
 
       // If image has changed
       if ($request->file('media')) {
-        $file = $partner->logo;
+        $file = $teacher->profile_img;
         Storage::delete($file);
         $filename = $request->file('media')->getClientOriginalName();
         $teacherName = $request->input('name');
