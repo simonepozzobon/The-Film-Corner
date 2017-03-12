@@ -96,3 +96,10 @@ Route::prefix('student')->group(function() {
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
 });
+
+Route::prefix('test')->group(function () {
+  Route::get('/', function() { return view('test'); });
+  Route::prefix('api')->group(function () {
+    Route::get('/', 'TestController@index');
+  });
+});
