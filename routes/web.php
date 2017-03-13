@@ -98,8 +98,11 @@ Route::prefix('student')->group(function() {
 });
 
 Route::prefix('test')->group(function () {
-  Route::get('/', function() { return view('test'); });
   Route::prefix('api')->group(function () {
-    Route::get('/', 'TestController@index');
+    Route::get('/{id}', 'TestController@show')->name('api.categories.show');
+    Route::delete('/{id}', 'TestController@destroy')->name('api.categories.delete');
+    Route::post('/', 'TestController@store')->name('api.categories.store');
+    Route::get('/', 'TestController@index')->name('api.categories.index');
   });
+  Route::get('/', function() { return view('test'); });
 });
