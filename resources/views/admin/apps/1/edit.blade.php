@@ -70,7 +70,7 @@
             <div class="image-container">
               <input type="text" ng-model="message.content">
               <div class="row">
-                <table class="table">
+                {{-- <table class="table">
                   <thead>
                     <tr>
                       <th ng-click="sortData('name')">Name</th>
@@ -90,7 +90,7 @@
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> --}}
               </div>
               <img ng-src="/%image.src%/">
               {{-- <img src="{{ Storage::disk('local')->url($frame->frame) }}" alt="{{ $frame->name }}" width="500"> --}}
