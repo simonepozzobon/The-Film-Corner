@@ -9,12 +9,16 @@
 <script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
 <script type="text/javascript">
   var compApp = angular
-      .module('compApp', []) // Name of the module
+      .module('compApp', ['common.fabric','common.fabric.utilities','common.fabric.constants']) // Name of the module
       .config(function($interpolateProvider) {
         $interpolateProvider.startSymbol('/%');
         $interpolateProvider.endSymbol('%/');
       }) // Config the module
-      .controller('AppCtrl', function($scope) {
+      .controller('AppCtrl', ['$scope', 'Fabric', 'FabricConstants', 'Keypress', function($scope, Fabric, FabricConstants, Keypress) {
+
+        $scope.fabric = {};
+        $scope.FabricConstants = FabricConstants;
+
         // Properties of the model
         var image = {
           src : '{{ Storage::disk('local')->url($frame->frame) }}',
@@ -25,35 +29,26 @@
           content: 'Ciao'
         };
 
-        var technologies = [
-          { name: 'Gianni1', like: '0', dislike: '0'},
-          { name: 'Marco00', like: '0', dislike: '0'},
-          { name: 'Gianni3', like: '0', dislike: '0'},
-          { name: 'Roberto', like: '0', dislike: '0'},
-        ];
-
         // assign them to $scope (Models)
         $scope.image = image;
         $scope.message = message;
-        $scope.technologies = technologies;
 
-        $scope.sortColumn = 'name';
-        $scope.reverseSort = 'false'
 
-        $scope.sortData = function(column) {
-          $scope.sortColumn = column
-        };
+        var canvas = new fabric.Canvas('fabric');
 
-        // updating $scope with functions
-        $scope.incrementLikes = function(technology) {
-          technology.like++;
-        };
+        // create a rectangle object
+        var rect = new fabric.Rect({
+          left: 100,
+          top: 100,
+          fill: 'red',
+          width: 20,
+          height: 20
+        });
 
-        $scope.incrementDislikes = function(technology) {
-          technology.dislike++;
-        };
+        // "add" rectangle onto canvas
+        canvas.add(rect);
 
-      }) // Define the controller;
+      }]); // Define the controller;
  </script>
 @endsection
 @section('content')
@@ -92,7 +87,11 @@
                   </tbody>
                 </table> --}}
               </div>
-              <img ng-src="/%image.src%/">
+              <div id="fabric">
+                <canvas id="canvas" width="300" height="300"></canvas>
+              </div>
+
+              {{-- <img ng-src="/%image.src%/"> --}}
               {{-- <img src="{{ Storage::disk('local')->url($frame->frame) }}" alt="{{ $frame->name }}" width="500"> --}}
             </div>
           </div>
@@ -116,7 +115,11 @@
           <div class="card-text">
             <div class="row">
               <div class="col">
-                slider
+                <input type="text" ng-model="xPos" name="" class="form-control" placeholder="x">
+                <input type="text" ng-model="yPos" name="" class="form-control" placeholder="y">
+                /% scale.x %/, /% scale.y %/
+                <a href="#" ng-click="scale()">Vai</a>
+                <a href="#" ng-click="clear()">Clear</a>
               </div>
             </div>
             <table class="table table-hover">
@@ -140,5 +143,4 @@
 </div>
 @endsection
 @section('scripts')
-
 @endsection
