@@ -369,6 +369,10 @@
 </main>
 @endsection
 @section('scripts')
+  <script type="text/javascript">
+    var h = $('#logo-img').height();
+    $('.main-wrapper').height(h);
+  </script>
   <script src="//raw.githubusercontent.com/lcdsantos/jquery-drawsvg/master/public/jquery.drawsvg.min.js"></script>
 	<script src="{{ asset('js/anime.min.js') }}"></script>
 	<script src="{{ asset('js/scrollMonitor.js') }}"></script>
