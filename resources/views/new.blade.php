@@ -225,7 +225,7 @@
           <div id="partners-container" class="tween-content-container block-wrapper">
             <div class="row mt-5">
               <div id="partner-12" class="col-md-4 offset-md-4">
-                <a href="https://eacea.ec.europa.eu/about-eacea/visual-identity_en" target="_blank"><img class="eu__img"src="/img/home/eu-flag.jpg"></a>
+                <a href="https://eacea.ec.europa.eu/about-eacea" target="_blank"><img class="eu__img"src="/img/home/eu-flag.jpg"></a>
               </div>
             </div>
             <div class="row mt-4">
