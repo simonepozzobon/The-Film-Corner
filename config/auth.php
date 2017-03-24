@@ -71,7 +71,7 @@ return [
             'provider' => 'students',
         ],
 
-        'studet-api' => [
+        'student-api' => [
             'driver' => 'token',
             'provider' => 'students',
         ],

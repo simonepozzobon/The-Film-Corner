@@ -1,0 +1,141 @@
+.main-wrapper {
+  background: #dcefea;
+  position: relative;
+  height: 100vh;
+  max-width: 100vw;
+  overflow: hidden;
+}
+
+.back1 {
+  background: url('./home/tour-eiffel.svg');
+  background-repeat: repeat-x;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  background-position: -1200px 0;
+}
+
+.back2 {
+  background: url('./home/brandev.svg');
+  background-repeat: repeat-x;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 2;
+}
+
+.back3 {
+  background: url('./home/duomo.svg');
+  background-repeat: repeat-x;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
+}
+
+#tour-eiffel {
+  position: absolute;
+  z-index: 1;
+}
+
+#brandev {
+  position: absolute;
+  z-index: 2;
+}
+
+#duomo {
+  position: absolute;
+  z-index: 3;
+}
+
+
+
+#logo-img {
+  position: absolute;
+  z-index: 7;
+  max-width: 100%;
+}
+
+.group {
+  overflow: hidden;
+}
+
+.color-1 {
+  /* hover: #ff888e */
+  fill: #7d7e80;
+}
+
+.color-2 {
+  /* hover: f7d5d9 */
+  fill: #989a9d;
+}
+
+.color-3 {
+  /*hover: fd4e50*/
+  fill: #85878a;
+}
+
+.color-4 {
+  /*hover: f7dfe3*/
+  fill: #cccecf
+}
+
+.color-5 {
+  /*hover: fc656d*/
+  fill: #85878a;
+}
+
+.color-6 {
+  /*hover: f7e8eb*/
+  fill: #f1f1f2;
+}
+
+.color-7 {
+  /*hover: f9b4b8*/
+  fill: #989a9d;
+}
+
+.color-8 {
+  /*hover: f7c9cd*/
+  fill: #cbcbcb;
+}
+
+.color-9 {
+  /*hover: f97582*/
+  fill: #989a9d;
+}
+
+.color-10 {
+  /*hover: f7edef*/
+  fill: #ffffff;
+}
+
+.mic-g:hover > .color-1{ fill: #ff888e; }
+.mic-g:hover > .color-4 { fill: #f7dfe3; }
+.mic-g:hover > .color-5 { fill: #fc656d; }
+.mic-g:hover > .color-7 { fill: #f9b4b8; }
+.mic-g:hover > .color-8 { fill: #f7c9cd; }
+.mic-g:hover > .color-9 { fill: #f97582; }
+.mic-g:hover > .color-10 { fill: #f7edef; }
+
+.belgrado-g:hover > .color-1 { fill: #ff888e; }
+.belgrado-g:hover > .color-2 { fill: #f7d5d9; }
+.belgrado-g:hover > .color-3 { fill: #fd4e50; }
+.belgrado-g:hover > .color-5 { fill: #fc656d; }
+.belgrado-g:hover > .color-7 { fill: #f9b4b8; }
+
+.nerve-centre-g:hover > .color-1 { fill: #ff888e; }
+.nerve-centre-g:hover > .color-5 { fill: #fc656d; }
+.nerve-centre-g:hover > .color-6 { fill: #f7e8eb; }
+
+.bicocca-g:hover > .color-1 { fill: #ff888e; }
+.bicocca-g:hover > .color-2 { fill: #f7d5d9; }
+.bicocca-g:hover > .color-3 { fill: #fd4e50; }
+.bicocca-g:hover > .color-5 { fill: #fc656d; }
+.bicocca-g:hover > .color-6 { fill: #f7e8eb; }
+.bicocca-g:hover > .color-7 { fill: #f9b4b8; }
+
+.film-space-g:hover > .color-1 { fill: #ff888e; }
+.film-space-g:hover > .color-2 { fill: #f7d5d9; }
+.film-space-g:hover > .color-5 { fill: #fc656d; }
