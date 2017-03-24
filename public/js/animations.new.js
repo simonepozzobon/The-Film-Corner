@@ -127,28 +127,28 @@
                 }
               });
 
-              // Resources Section Scene
-              var scrollElemToWatch_5 = document.getElementById('resources-title'),
-                watcher_5 = scrollMonitor.create(scrollElemToWatch_5, -300),
-                rev10 = new RevealFx(scrollElemToWatch_5, {
-                  revealSettings : {
-                    bgcolor: '#CAB87E',
-                    direction: 'tb',
-                    onCover: function(contentEl, revealerEl) {
-                      contentEl.style.opacity = 1;
-                    }
-                  }
-                }),
-                rev11 = new RevealFx(document.querySelector('#resources-container'), {
-                  revealSettings : {
-                    bgcolor: '#FDD351',
-                    direction: 'lr',
-                    delay: 500,
-                    onCover: function(contentEl, revealerEl) {
-                      contentEl.style.opacity = 1;
-                    }
-                  }
-                });
+              // // Resources Section Scene
+              // var scrollElemToWatch_5 = document.getElementById('resources-title'),
+              //   watcher_5 = scrollMonitor.create(scrollElemToWatch_5, -300),
+              //   rev10 = new RevealFx(scrollElemToWatch_5, {
+              //     revealSettings : {
+              //       bgcolor: '#CAB87E',
+              //       direction: 'tb',
+              //       onCover: function(contentEl, revealerEl) {
+              //         contentEl.style.opacity = 1;
+              //       }
+              //     }
+              //   }),
+              //   rev11 = new RevealFx(document.querySelector('#resources-container'), {
+              //     revealSettings : {
+              //       bgcolor: '#FDD351',
+              //       direction: 'lr',
+              //       delay: 500,
+              //       onCover: function(contentEl, revealerEl) {
+              //         contentEl.style.opacity = 1;
+              //       }
+              //     }
+              //   });
 
                 // Login Section Scene
                 var scrollElemToWatch_6 = document.getElementById('login-title'),
@@ -202,13 +202,13 @@
         });
 
         // Resources Section Init
-        watcher_5.enterViewport(function() {
-          rev10.reveal();
-          rev11.reveal();
-          watcher_5.destroy();
-        });
+        // watcher_5.enterViewport(function() {
+        //   rev10.reveal();
+        //   rev11.reveal();
+        //   watcher_5.destroy();
+        // });
 
-        // Resources Section Init
+        // Login Section Init
         watcher_6.enterViewport(function() {
           rev12.reveal();
           rev13.reveal();

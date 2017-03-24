@@ -317,7 +317,7 @@
       </div>
     </div>
     {{-- Resources --}}
-    <div class="row">
+    {{-- <div class="row">
       <div class="col">
         <section id="resources">
           <div id="trigger-resources"></div>
@@ -329,7 +329,7 @@
           </div>
         </section>
       </div>
-    </div>
+    </div> --}}
     {{-- Login / call to action for registration --}}
     <div class="row">
       <div class="col">
@@ -355,8 +355,11 @@
                     <a href="#" class="btn btn-block btn-info mb-3">Student Area</a>
                   @endif
                   @if (Auth::guest())
-                    <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-block btn-success">Sign Up</a>
+                    <p class="text-center alert-danger mt-4">
+                      Login and Registration <br>are temporary unavailable
+                    </p>
+                    <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3 disabled">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-block btn-success disabled">Sign Up</a>
                   @endif
                 </div>
               </div>
@@ -371,7 +374,16 @@
 @section('scripts')
   <script type="text/javascript">
     var h = $('#logo-img').height();
-    $('.main-wrapper').height(h);
+    setHeight(h);
+
+    $(window).resize(function() {
+      var h = $('#logo-img').height();
+      setHeight(h);
+    });
+
+    function setHeight(a) {
+      $('.main-wrapper').height(a);
+    };
   </script>
   <script src="//raw.githubusercontent.com/lcdsantos/jquery-drawsvg/master/public/jquery.drawsvg.min.js"></script>
 	<script src="{{ asset('js/anime.min.js') }}"></script>
