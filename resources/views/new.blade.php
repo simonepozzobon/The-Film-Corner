@@ -195,17 +195,7 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    Project is aimed to the <b>design, release</b> and <b>testing</b> of an <b>online digital virtual user-centered platform for Film Literacy</b>, taking advantage of the opportunities offered by <b>web 2.0 and crossmedia innovative approach</b> in the digital era in order to <b>raise the average film literacy level of EU young audiences</b>. The general aim of the project is to contribute to draw an <b>easy-going model for Film Literacy that could improve Film Literacy</b> skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience.
-                    <br>
-                    The project involves 5 European institutions in 4 EU countries: <b>Fondazione Cineteca Italiana</b> in Milan, Italy (leading partner); <b>The Film Space</b>, an innovative Film Literacy provider (Manchester, UK); <b>The Nerve Centre</b>, a Creative Learning Centre Derry, Northern Ireland; the <b>National Cinèmatheque of Serbia</b> (Belgrade, Serbia) one of the eldest cinèmatheques in the world and the <b>University of Milano Bicocca</b>,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
-                    <br>
-                    The platform consists of an <b>interactive narrative-based environmental layout with game-based didactical resources</b> integrated as <b>apps</b> the user can interact with. Didactical resources will be both based on generic Film Literacy skills and on a set of EU national and non-national films. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
-                    <br>
-                    In the first part of the project, the partner institutions will share their expertise and best practices in order to draw a <b>shared methodological didactical approach</b>. On the basis of this methodological framework the platform and its content will be designed. The platform designed will be then technically realised by professional providers.
-                    <br>
-                    The second part of the project is dedicated to <b>testing</b>: the platform will be tested on students (<b>target age: 12-16</b>) and teachers of the schools involved with the guidance of the tutors from the partner institutions. Offline knowledge transfer activities will be held with teachers and students aimed to understand how it can be used for pedagogical purposes in class. Students and teachers will fulfil questionnaires of evaluation and data will be further used for <b>Evaluation and Quality Assurance</b>. During the whole duration of the project, <b>dissemination and communication</b> take place. This activity is carried on on the basis of a previously drafted dissemination strategy plan.
-                    <br>
-                    In november 2017, an <b>international conference</b> will take place in the frame of the 10th edition of “Piccolo Grande Cinema” Festival, a film festival dedicated to young audience promoted by Fondazione Cineteca Italiana. During the international conference the platform blueprint will be officially presented and some panels discussing several issues concerning Film Literacy, crossmedia and Audience Development and engagement will be discussed. A call for papers will be issued and keynote speakers, including representants from other film literacy project financed in the frame of the Creative Europe Programme will be invited.
+                    project is aimed to the <b>design, release</b> and testing of an <b>online digital virtual user-centered platform for Film Literacy</b>, taking advantage of the opportunities offered by <b>web 2.0 and crossmedia innovative approach</b> in the digital era in order to <b>raise the average film literacy level of EU young audiences</b>. The platform consists of an <b>interactive layout</b> with <b>game-based didactical resources</b> integrated as apps the user can interact with. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
                   </p>
                 </div>
               </div>
@@ -223,6 +213,17 @@
             Partners
           </div>
           <div id="partners-container" class="tween-content-container block-wrapper">
+            <div class="row">
+              <div class="col-md-8 offset-md-2">
+                <div class="block-container">
+                  <div class="block-text">
+                    <p class="text-justify">
+                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy (leading partner); The Film Space, an innovative Film Literacy provider (Manchester, UK); The Nerve Centre, a Creative Learning Centre Derry, Northern Ireland; the National Cinèmatheque of Serbia (Belgrade, Serbia) one of the eldest cinèmatheques in the world and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="row mt-5">
               <div id="partner-12" class="col-md-4 offset-md-4">
                 <a href="https://eacea.ec.europa.eu/about-eacea" target="_blank"><img class="eu__img"src="/img/home/eu-flag.jpg"></a>
