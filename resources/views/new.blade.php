@@ -311,7 +311,7 @@
 
           </div>
           <div id="apps-footer" class="text-center">
-            <a href="#" class="btn btn-info">Go To Apps</a>
+            <a href="#" class="btn btn-info disabled">Go To Apps</a>
           </div>
         </section>
       </div>
