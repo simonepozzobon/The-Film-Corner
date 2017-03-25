@@ -1807,6 +1807,7 @@ var tv = new _moJs2.default.Shape({
   fill: { '#7d7e80': '#ff888e', curve: nScaleCurve },
   fillOpacity: 1,
 
+  x: 10,
   y: 0,
   scale: { 1: 1, curve: nScaleCurve },
   isShowStart: true,
