@@ -33314,20 +33314,20 @@ __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.addShape('tv', Tv);
 __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.addShape('pen', Pen);
 __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.addShape('buzz', Buzz);
 
-const shiftCurve = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 C50,100 50,100 50,50 C50,0 50,0 100,0');
-const scaleCurveBase = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 C21.3776817,95.8051376 50,77.3262711 50,-700 C50,80.1708527 76.6222458,93.9449005 100,100');
-const scaleCurve = p => {
+var shiftCurve = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 C50,100 50,100 50,50 C50,0 50,0 100,0');
+var scaleCurveBase = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 C21.3776817,95.8051376 50,77.3262711 50,-700 C50,80.1708527 76.6222458,93.9449005 100,100');
+var scaleCurve = p => {
   return 1 + scaleCurveBase(p);
 };
-const nScaleCurve = p => {
+var nScaleCurve = p => {
   return 1 - scaleCurveBase(p) / 10;
 };
-const noizeEasing = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 L24.2114672,99.7029845 L27.0786839,106.645089 L29.2555809,93.3549108 L32.0340385,103.816964 L35.3459816,94.6015626 L38.3783493,103.092634 L41.0513382,95.9547991 L43.7739944,106.645089 L45.6729927,96.8973214 L50,105.083147 L53.3504448,93.3549108 L57.7360497,103.816964 L60.8616066,95.9547991 L65.0345993,103.092634 L68.6997757,97.5106029 L71.6646194,102.03125 L75.5066986,96.5672433 L78.2949219,102.652344 L81.0313873,96.8973214 L84.0174408,102.328264 L86.0842667,97.7332592 L88.7289352,101.606306 L91.1429977,98.3533763 L94.3822556,101.287388 L97.0809174,98.7254467 L100,100');
-const noizeProgress = p => {
+var noizeEasing = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0,100 L24.2114672,99.7029845 L27.0786839,106.645089 L29.2555809,93.3549108 L32.0340385,103.816964 L35.3459816,94.6015626 L38.3783493,103.092634 L41.0513382,95.9547991 L43.7739944,106.645089 L45.6729927,96.8973214 L50,105.083147 L53.3504448,93.3549108 L57.7360497,103.816964 L60.8616066,95.9547991 L65.0345993,103.092634 L68.6997757,97.5106029 L71.6646194,102.03125 L75.5066986,96.5672433 L78.2949219,102.652344 L81.0313873,96.8973214 L84.0174408,102.328264 L86.0842667,97.7332592 L88.7289352,101.606306 L91.1429977,98.3533763 L94.3822556,101.287388 L97.0809174,98.7254467 L100,100');
+var noizeProgress = p => {
   return 10 + 5 * noizeEasing(p);
 };
 
-const tv = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Shape({
+var tv = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Shape({
   parent: '#apps-animations',
   shape: 'tv',
   className: 'tv',
@@ -33336,15 +33336,14 @@ const tv = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Shape({
 
   y: 0,
   scale: { 3: 3, curve: nScaleCurve },
-
   isShowStart: true,
   isYoyo: true,
   delay: 500,
   duration: 800
 });
 
-const circles = [];
-const fires = [];
+var circles = [];
+var fires = [];
 
 for (let i = 0; i < 5; i++) {
   circles.push(new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Burst({
@@ -33391,7 +33390,7 @@ for (let i = 0; i < 5; i++) {
   }));
 }
 
-const timeline = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Timeline({ delay: 0, repeat: 99999 });
+var timeline = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Timeline({ delay: 0, repeat: 99999 });
 
 for (var i = 0; i < circles.length; i++) {
   timeline.add(circles[i]);
