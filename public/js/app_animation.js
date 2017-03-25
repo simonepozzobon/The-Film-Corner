@@ -1819,7 +1819,7 @@ var tv = new _moJs2.default.Shape({
 var circles = [];
 var fires = [];
 
-for (var _i = 0; _i < 5; _i++) {
+for (var _i = 0; _i < 2; _i++) {
   circles.push(new _moJs2.default.Burst({
     parent: '#apps-animations',
     radius: { 100: 300 },
@@ -1842,7 +1842,7 @@ for (var _i = 0; _i < 5; _i++) {
   }));
 }
 
-for (var _i2 = 0; _i2 < 5; _i2++) {
+for (var _i2 = 0; _i2 < 2; _i2++) {
   fires.push(new _moJs2.default.Burst({
     parent: '#apps-animations',
     radius: { 100: 300 },
