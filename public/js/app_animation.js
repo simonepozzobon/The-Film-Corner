@@ -1823,7 +1823,7 @@ for (var _i = 0; _i < 5; _i++) {
   circles.push(new _moJs2.default.Burst({
     parent: '#apps-animations',
     radius: { 100: 300 },
-    count: 'rand(40, 50)',
+    count: 'rand(10, 15)',
     speed: 0.5,
     opacity: { 0: 1 },
 
@@ -1835,7 +1835,6 @@ for (var _i = 0; _i < 5; _i++) {
       fill: 'none',
       stroke: { '#ff888e': '#ccc' },
       scale: { 1: 0 },
-      stroke: { 1: 0 },
       degreeShift: 'rand(-360, 360)',
       delay: 'stagger(0, 100)'
     }
@@ -1847,7 +1846,7 @@ for (var _i2 = 0; _i2 < 5; _i2++) {
   fires.push(new _moJs2.default.Burst({
     parent: '#apps-animations',
     radius: { 100: 300 },
-    count: 'rand(50, 70)',
+    count: 'rand(8, 12)',
     speed: 0.5,
     opacity: { 0: 1 },
 
