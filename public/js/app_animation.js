@@ -2035,7 +2035,6 @@ var fires = new _moJs2.default.Burst({
   opacity: { 0: 1 },
 
   duration: 250,
-  delay: 4250,
   children: {
     shape: 'polygon',
     points: { 3: 7 },
@@ -2058,7 +2057,6 @@ var circles = new _moJs2.default.Burst({
   opacity: { 0: 1 },
 
   duration: 250,
-  delay: 4250,
   children: {
     shape: 'circle',
     points: { 3: 10 },
