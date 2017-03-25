@@ -1905,7 +1905,7 @@ var boul = new _moJs2.default.Shape({
   scale: { 0: 1 },
   opacity: { 0: 1 },
 
-  left: '90%',
+  left: '85%',
   radius: 50,
   x: 12.5,
   y: 12.5,
@@ -1920,7 +1920,7 @@ var sparkle = new _moJs2.default.Shape({
   fill: '#F79E5F',
   scale: { 0: 1 },
 
-  left: '90%',
+  left: '85%',
   radius: 50,
   x: 12.5,
   y: 12.5,
@@ -1935,7 +1935,7 @@ var stars = new _moJs2.default.Shape({
   fill: '#F79E5F',
   scale: { 0: 1 },
 
-  left: '90%',
+  left: '85%',
   radius: 50,
   x: 12.5,
   y: 12.5,
