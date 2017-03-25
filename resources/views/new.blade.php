@@ -286,8 +286,8 @@
           <div id="apps-title" class="title sp-center pt-5">
             Apps
           </div>
-          <div id="apps-container" class="col-md-6 offset-md-3">
-            <div id="apps-animations" style="height: 70vh">
+          <div id="apps-container" class="col-md-8 offset-md-2">
+            <div id="apps-animations" style="height: 75vh">
 
             </div>
 
