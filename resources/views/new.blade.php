@@ -293,7 +293,7 @@
 
           </div>
           <div id="apps-footer" class="text-center">
-            <a href="#" class="btn btn-info disabled">Go To Apps</a>
+            <a href="#" class="btn btn-info disabled">Soon</a>
           </div>
         </section>
       </div>
@@ -340,8 +340,8 @@
                     <p class="text-center alert-danger mt-4">
                       Login and Registration <br>are temporary unavailable
                     </p>
-                    <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3 disabled">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-block btn-success disabled">Sign Up</a>
+                    <a href="{{ route('login') }}" class="btn btn-block btn-info mb-3 disabled">Login (Soon)</a>
+                    <a href="{{ route('register') }}" class="btn btn-block btn-success disabled">Sign Up (Soon)</a>
                   @endif
                 </div>
               </div>
