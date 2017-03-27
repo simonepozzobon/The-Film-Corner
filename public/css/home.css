@@ -160,6 +160,7 @@
 
 */
 
+
 .modal-trans {
   z-index: 9;
 }
@@ -206,4 +207,8 @@
   padding: 0 5% 20px 5%;
   font-family: monospace;
   line-height: 2;
+  overflow: scroll;
+  height: 80vh;
+  margin-bottom: 20px;
+  max-height: 600px;
 }

@@ -2223,7 +2223,7 @@ var webLink = new _moJs2.default.Shape({
   opacity: { 0: 1 },
   fill: '#252525',
 
-  top: '60%',
+  top: '360px',
   left: '90%',
   easing: 'elastic.out'
 });
@@ -2237,7 +2237,7 @@ var mapPlace = new _moJs2.default.Shape({
   opacity: { 0: 1 },
   fill: '#252525',
 
-  top: '30%',
+  top: '220px',
   left: '90%',
   easing: 'elastic.out'
 });
@@ -2247,7 +2247,7 @@ var locationName = new _moJs2.default.Html({
   el: '.modal__location',
   scale: { 0: 1 },
   opacity: { 0: 1 },
-  top: '36%',
+  top: '260px',
   left: '86%',
   easing: 'elastic.out'
 });
@@ -2257,7 +2257,7 @@ var linkName = new _moJs2.default.Html({
   el: '.modal__link',
   scale: { 0: 1 },
   opacity: { 0: 1 },
-  top: '66%',
+  top: '380px',
   left: '86%',
   easing: 'elastic.out',
   yoyo: true
