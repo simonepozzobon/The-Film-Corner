@@ -173,6 +173,29 @@
                     }
                   });
 
+                  // Conference Section Scene
+                  var scrollElemToWatch_7 = document.getElementById('conference-title'),
+                    watcher_7 = scrollMonitor.create(scrollElemToWatch_7, -300),
+                    rev14 = new RevealFx(scrollElemToWatch_7, {
+                      revealSettings : {
+                        bgcolor: '#C1C0B7',
+                        direction: 'rl',
+                        onCover: function(contentEl, revealerEl) {
+                          contentEl.style.opacity = 1;
+                        }
+                      }
+                    }),
+                    rev15 = new RevealFx(document.querySelector('#conference-container'), {
+                      revealSettings : {
+                        bgcolor: '#CAB87E',
+                        direction: 'tb',
+                        delay: 500,
+                        onCover: function(contentEl, revealerEl) {
+                          contentEl.style.opacity = 1;
+                        }
+                      }
+                    });
+
         // News Section Init
         watcher_1.enterViewport(function() {
           rev2.reveal();
@@ -213,6 +236,12 @@
           rev12.reveal();
           rev13.reveal();
           watcher_6.destroy();
+        });
+
+        watcher_7.enterViewport(function() {
+          rev14.reveal();
+          rev15.reveal();
+          watcher_7.destroy();
         });
 
     }
