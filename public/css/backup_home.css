@@ -69,74 +69,68 @@
 }
 
 .color-1 {
-  /*989a9d*/
-  /*hover: ff888e*/
-  fill: #989a9d;
+  /* hover: #ff888e */
+  fill: #7d7e80;
 }
 
 .color-2 {
-  /*85878a*/
+  /* hover: f7d5d9 */
+  fill: #989a9d;
+}
+
+.color-3 {
+  /*hover: fd4e50*/
+  fill: #85878a;
+}
+
+.color-4 {
+  /*hover: f7dfe3*/
+  fill: #cccecf
+}
+
+.color-5 {
   /*hover: fc656d*/
   fill: #85878a;
 }
 
-.color-3 {
-  /*606060*/
-  /*hover: f43d47*/
-  fill: #606060;
-}
-
-.color-4 {
-  /*d9dbdc*/
-  /*hover: */
-  fill: #d9dbdc;
-}
-
-.color-5 {
-  /*f1f1f2*/
-  /*hover: */
+.color-6 {
+  /*hover: f7e8eb*/
   fill: #f1f1f2;
 }
 
-.color-6 {
-  /*6b6c6f*/
-  /*hover: fd4e50 */
-  fill: #6b6c6f;
-}
-
 .color-7 {
-  /*bdbfc1*/
   /*hover: f9b4b8*/
-  fill: #bdbfc1;
+  fill: #989a9d;
 }
 
 .color-8 {
-  /*ffffff*/
-  /*hover: f7f2f3*/
+  /*hover: f7c9cd*/
+  fill: #cbcbcb;
+}
+
+.color-9 {
+  /*hover: f97582*/
+  fill: #989a9d;
+}
+
+.color-10 {
+  /*hover: f7edef*/
   fill: #ffffff;
 }
 
 .mic-g, .belgrado-g, .nerve-centre-g, .bicocca-g, .film-space-g { cursor: pointer; }
 
-.mic-g:hover > .color-1 { fill: #ff888e; }
-.mic-g:hover > .color-2 { fill: #fc656d; }
-.mic-g:hover > .color-3 { fill: #f43d47; }
-.mic-g:hover > .color-4 { fill: #d9dbdc; }
-.mic-g:hover > .color-5 { fill: #f1f1f2; }
-.mic-g:hover > .color-6 { fill: #fd4e50; }
+.mic-g:hover > .color-1{ fill: #ff888e; }
+.mic-g:hover > .color-4 { fill: #f7dfe3; }
+.mic-g:hover > .color-5 { fill: #fc656d; }
 .mic-g:hover > .color-7 { fill: #f9b4b8; }
-.mic-g:hover > .color-8 { fill: #f7f2f3; }
+.mic-g:hover > .color-8 { fill: #f7c9cd; }
+.mic-g:hover > .color-9 { fill: #f97582; }
+.mic-g:hover > .color-10 { fill: #f7edef; }
 
-.film-space-g:hover > .color-1 { fill: #ff888e; }
-.film-space-g:hover > .color-2 { fill: #fc656d; }
-.film-space-g:hover > .color-5 { fill: #f1f1f2; }
-
-
-
-/*
 .belgrado-g:hover > .color-1 { fill: #ff888e; }
 .belgrado-g:hover > .color-2 { fill: #f7d5d9; }
-.belgrado-g:hover > .color-3 { fill: #f43d47; }
+.belgrado-g:hover > .color-3 { fill: #fd4e50; }
 .belgrado-g:hover > .color-5 { fill: #fc656d; }
 .belgrado-g:hover > .color-7 { fill: #f9b4b8; }
 
@@ -146,14 +140,14 @@
 
 .bicocca-g:hover > .color-1 { fill: #ff888e; }
 .bicocca-g:hover > .color-2 { fill: #f7d5d9; }
-.bicocca-g:hover > .color-3 { fill: #f43d47; }
-.bicocca-g:hover > .color-4 { fill: #fc656d; }
+.bicocca-g:hover > .color-3 { fill: #fd4e50; }
+.bicocca-g:hover > .color-5 { fill: #fc656d; }
 .bicocca-g:hover > .color-6 { fill: #f7e8eb; }
 .bicocca-g:hover > .color-7 { fill: #f9b4b8; }
 
 .film-space-g:hover > .color-1 { fill: #ff888e; }
 .film-space-g:hover > .color-2 { fill: #f7d5d9; }
-.film-space-g:hover > .color-5 { fill: #fc656d; }*/
+.film-space-g:hover > .color-5 { fill: #fc656d; }
 
 .modal-trans {
   z-index: 9;
