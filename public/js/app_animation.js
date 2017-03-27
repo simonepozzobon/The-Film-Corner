@@ -2180,7 +2180,7 @@ var modalCloseBtn = new _moJs2.default.Shape({
   scale: { 0: 1 },
   opacity: { 0: 1 },
 
-  top: '10%',
+  top: '120px',
   left: '90%',
   delay: 1000,
   duration: 500,
@@ -2199,7 +2199,7 @@ var closeBtn = new _moJs2.default.Shape({
   stroke: '#252525',
   strokeWidth: 4,
 
-  top: '10%',
+  top: '120px',
   left: '90%',
 
   duration: 500,
