@@ -224,6 +224,77 @@
         </section>
       </div>
     </div>
+    {{-- Conference --}}
+    <div class="row">
+      <div class="col">
+        <section id="conference">
+          <div id="conference-trigger"></div>
+          <div id="conference-title" class="title sp-center pt-5 pb-5">
+            International Conference
+          </div>
+          <div class="row">
+            <div id="conference-container" class="tween-content-container block-wrapper col-md-8 offset-md-2">
+              <div class="block-container">
+                <div class="block-subtitle">
+                  <h4>Details</h4>
+                </div>
+                <div class="block-text">
+                  <p class="text-justify">
+                    <b>Managing institution:</b> Fondazione Cineteca Italiana, Milan, Italy<br>
+                    Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy<br>
+                    <b>2017, Thu, November 9th, 6pm, italian time:</b> networking cocktail<br>
+                    <b>2017, Fri, November, 10th, 9 am-6 pm:</b> conference<br>
+                  </p>
+                </div>
+                <div class="block-subtitle mt-5">
+                  <h4>Introduction</h4>
+                </div>
+                <div class="block-text">
+                  <p class="text-justify">
+                    The Film Corner. Online and offline activities for Film Literacy project is aimed to the design, release and testing of an online digital virtual user-centered platform for Film Literacy, taking advantage of the opportunities offered by web 2.0 and crossmedia innovative approach in the digital era in order to raise the average film literacy level of EU young audiences.
+                    The general aim of the project is to contribute to draw an easy-going model for Film Literacy that could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience.
+                    The platform consists of an interactive layout with game-based didactical resources integrated as apps the user can interact with. Didactical resources will be both based on generic Film Literacy skills and on a set of EU national and non-national films. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
+                    The Film Corner. Online and offline activities for Film Literacy project is co-financed by the European Union in the frame of the Creative Europe Programme.
+                  </p>
+                </div>
+                <div class="block-subtitle mt-5">
+                  <h4>Partners</h4>
+                </div>
+                <div class="block-text">
+                  <p class="text-justify">
+                    The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana (Milan, Italy) (leading institution); The Film Space, (Manchester, UK); The Nerve Centre (Derry, Northern Ireland); Yugoslovenska Kinoteka, the National Cinèmatheque of Serbia (Belgrade, Serbia); University of Milano-Bicocca-Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
+                  </p>
+                </div>
+                <div class="block-subtitle mt-5">
+                  <h4>About the conference</h4>
+                </div>
+                <div class="block-text">
+                  <p class="text-justify">
+                    The Film Corner International Conference open to public and addressed to professionals and trainers to be held within the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
+                    <ul>
+                      <li>Launch of The Film Corner platform;</li>
+                      <li>methodologies for Film Literacy in the digital era;</li>
+                      <li>integration between online and offline Film Literacy actions;</li>
+                      <li>crossmedia educational and promotional platforms in the digital film market.</li>
+                    </ul>
+                  </p>
+                </div>
+                <div class="block-subtitle mt-5">
+                  <h4>Registration</h4>
+                </div>
+                <div class="block-text">
+                  <p class="text-justify">
+                    Up to XXX people can attend the conference and it is completely free of charge. If you’d like to join us, you can register on the conference website from 2017, April 27th onwards.
+                    <br><br>
+                    Keep updated through our social media accounts on facebook and twitter (METTI LINKS). Further details will be made available in the official website of the conference that will be released in 2017, April, 17th.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
     {{-- Partners --}}
     <div class="row mb-5">
       <div class="col">
