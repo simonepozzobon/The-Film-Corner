@@ -2,7 +2,7 @@
 
 
 .main-wrapper {
-  background: #dcefea;
+  background: #fff6d2;
   position: relative;
   min-height: 30vh;
   max-width: 100vw;
@@ -35,6 +35,10 @@
   height: 100%;
   position: absolute;
   z-index: 3;
+}
+
+.color-bg {
+  fill:   #fff6d2;
 }
 
 #tour-eiffel {
