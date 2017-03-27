@@ -202,13 +202,16 @@
   text-align: center;
 }
 
-.modal-text-class p {
-  width: 70%;
+.modal-text-inner {
   padding: 0 5% 20px 5%;
-  font-family: monospace;
-  line-height: 2;
+  width: 70%;
   overflow: scroll;
   height: 80vh;
   margin-bottom: 20px;
   max-height: 600px;
+}
+
+.modal-text-class p {
+  font-family: monospace;
+  line-height: 2;
 }

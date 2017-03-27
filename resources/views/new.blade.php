@@ -50,7 +50,9 @@
     <script id="js-modal-template-{{ $partner->id_tag }}" type="text/template">
       <div class="modal-text-class">
         <h2 class="modal-text-title">{{ $partner->name }}</h2>
-        <p>{!! $partner->description !!}</p>
+        <div class="modal-text-inner">
+          <p>{!! $partner->description !!}</p>
+        </div>
       </div>
     </script>
     <script id="js-modal-location-{{ $partner->id_tag }}" type="text/template">
