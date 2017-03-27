@@ -181,7 +181,7 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    The Film Corner International Conference open to public and addressed to professionals and trainers to be held within the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
+                    The Film Corner International Conference is open to public and addressed to professionals and trainers to be held within the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
                     <ul>
                       <li>Launch of The Film Corner platform;</li>
                       <li>methodologies for Film Literacy in the digital era;</li>

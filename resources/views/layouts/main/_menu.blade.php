@@ -10,19 +10,19 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav justify-content-end">
       <li class="nav-item">
-        <a href="#" class="nav-link">The Project</a>
+        <a href="#project" class="nav-link">The Project</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Conference</a>
+        <a href="#conference" class="nav-link">Conference</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Partners</a>
+        <a href="#partners" class="nav-link">Partners</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Apps</a>
+        <a href="#apps" class="nav-link">Apps</a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">Login</a>
+        <a href="#login" class="nav-link">Login</a>
       </li>
     </ul>
   </div>
