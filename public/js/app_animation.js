@@ -2303,6 +2303,33 @@ modalOpenTimeline.append(modalCloseBtn, closeBtn, modalText, mapPlace, locationN
   modalOpenTimeline.replay();
 });
 
+var Mic = zoomBuilding('.mic-g');
+var Belgrado = zoomBuilding('.belgrado-g');
+var NerveCentre = zoomBuilding('.nerve-centre-g');
+var Bicocca = zoomBuilding('.bicocca-g');
+var FilmSpace = zoomBuilding('.film-space-g');
+
+function zoomBuilding(el) {
+  (0, _jquery2.default)(el).on('mouseenter', function (e) {
+    var element = new _moJs2.default.Html({
+      el: el,
+      scale: { 1: 1.002 },
+      y: { 0: -5 },
+      duration: 200
+    }).replay();
+  });
+
+  (0, _jquery2.default)(el).on('mouseleave', function (e) {
+    var element = new _moJs2.default.Html({
+      el: el,
+      scale: { 1.002: 1 },
+      y: _defineProperty({}, -5, 0),
+      duration: 400,
+      easing: 'elastic.out'
+    }).replay();
+  });
+}
+
 (0, _jquery2.default)('.modal-close-btn, .close-btn').on('click', function (e) {
   var modalCloseTimeline = new _moJs2.default.Timeline();
 
