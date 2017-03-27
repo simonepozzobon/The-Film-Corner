@@ -2162,7 +2162,7 @@ var modal = new _moJs2.default.Shape({
   parent: '.main-wrapper',
   shape: 'circle',
   className: 'modal-trans',
-  fill: '#ee6568',
+  fill: '#f9d953',
   scale: { 0: 20 },
   opacity: { 0: 1 },
 
