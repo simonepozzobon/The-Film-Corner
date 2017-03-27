@@ -211,7 +211,7 @@
                   <h2>The Film Corner</h2>
                 </div>
                 <div class="block-subtitle">
-                  <h4>On and off activities for Film Literacy</h4>
+                  <h4>On and offline activities for Film Literacy</h4>
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
