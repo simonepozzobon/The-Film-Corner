@@ -2149,12 +2149,9 @@ link.classList.add('modal__link');
 parent.appendChild(link);
 
 // lo riempie con il contenuto
-
 function fillElement(ele) {
-  alert('triggereds');
   // Inner
   modalInner.innerHTML = document.querySelector('#js-modal-template-' + ele).innerHTML;
-
   // Location
   location.innerHTML = document.querySelector('#js-modal-location-' + ele).innerHTML;
   // Link
