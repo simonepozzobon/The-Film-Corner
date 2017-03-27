@@ -220,7 +220,7 @@
                 <div class="block-container">
                   <div class="block-text">
                     <p class="text-justify">
-                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy; The Film Space in Manchester, UK; The Nerve Centre in Derry, Northern Ireland; the Ugoslovenska Kinoteka in Belgrade, Serbia and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” in Milan, Italy.
+                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy; The Film Space in Manchester, UK; The Nerve Centre in Derry, Northern Ireland; the Jugoslovenska Kinoteka in Belgrade, Serbia and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” in Milan, Italy.
                     </p>
                   </div>
                 </div>
