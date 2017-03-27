@@ -145,7 +145,7 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    project is aimed to the <b>design, release</b> and testing of an <b>online digital virtual user-centered platform for Film Literacy</b>, taking advantage of the opportunities offered by <b>web 2.0 and crossmedia innovative approach</b> in the digital era in order to <b>raise the average film literacy level of EU young audiences</b>. The platform consists of an <b>interactive layout</b> with <b>game-based didactical resources</b> integrated as apps the user can interact with. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
+                    The Film Corner project is aimed to the <b>design, release</b> and testing of an <b>online digital virtual user-centered platform for Film Literacy</b>, taking advantage of the opportunities offered by <b>web 2.0 and crossmedia innovative approach</b> in the digital era in order to <b>raise the average film literacy level of EU young audiences</b>. The platform consists of an <b>interactive layout</b> with <b>game-based didactical resources</b> integrated as apps the user can interact with. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
                   </p>
                 </div>
               </div>
@@ -220,7 +220,7 @@
                 <div class="block-container">
                   <div class="block-text">
                     <p class="text-justify">
-                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy (leading partner); The Film Space, an innovative Film Literacy provider (Manchester, UK); The Nerve Centre, a Creative Learning Centre Derry, Northern Ireland; the National Cinèmatheque of Serbia (Belgrade, Serbia) one of the eldest cinèmatheques in the world and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
+                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy; The Film Space in Manchester, UK; The Nerve Centre in Derry, Northern Ireland; the Ugoslovenska Kinoteka in Belgrade, Serbia and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” in Milan, Italy.
                     </p>
                   </div>
                 </div>
