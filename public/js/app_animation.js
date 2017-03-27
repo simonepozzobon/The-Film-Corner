@@ -1875,6 +1875,44 @@ var Stars = function (_mojs$CustomShape9) {
   return Stars;
 }(_moJs2.default.CustomShape);
 
+var Website = function (_mojs$CustomShape10) {
+  _inherits(Website, _mojs$CustomShape10);
+
+  function Website() {
+    _classCallCheck(this, Website);
+
+    return _possibleConstructorReturn(this, (Website.__proto__ || Object.getPrototypeOf(Website)).apply(this, arguments));
+  }
+
+  _createClass(Website, [{
+    key: 'getShape',
+    value: function getShape() {
+      return '<path d="M27.68,36.32a13.68,13.68,0,0,0,0,27.36H41.36a2.16,2.16,0,1,0,.06-4.32H27.68a9.36,9.36,0,1,1,0-18.72H42.8A9.29,9.29,0,0,1,52.16,50a2.16,2.16,0,1,0,4.32.06s0,0,0-.06A13.7,13.7,0,0,0,42.8,36.32Zm30.8,0a2.16,2.16,0,1,0,.16,4.32H72.32a9.36,9.36,0,1,1,0,18.72H57.2A9.29,9.29,0,0,1,47.84,50a2.16,2.16,0,1,0-4.32-.06s0,0,0,.06A13.7,13.7,0,0,0,57.2,63.68H72.32a13.68,13.68,0,1,0,0-27.36H58.48Z"/>';
+    }
+  }]);
+
+  return Website;
+}(_moJs2.default.CustomShape);
+
+var Mapplace = function (_mojs$CustomShape11) {
+  _inherits(Mapplace, _mojs$CustomShape11);
+
+  function Mapplace() {
+    _classCallCheck(this, Mapplace);
+
+    return _possibleConstructorReturn(this, (Mapplace.__proto__ || Object.getPrototypeOf(Mapplace)).apply(this, arguments));
+  }
+
+  _createClass(Mapplace, [{
+    key: 'getShape',
+    value: function getShape() {
+      return '<path d="M50,6A27,27,0,0,0,23,33a32.11,32.11,0,0,0,2.13,10.72c7.71,15.69,15.4,33.44,23.09,49.16a2,2,0,0,0,3.56,0C59.56,77.2,67,59.35,74.88,43.72A31.94,31.94,0,0,0,77,33,27,27,0,0,0,50,6Zm0,4A23,23,0,0,1,73,33a29.68,29.68,0,0,1-1.87,9.28L50,87.47,28.88,42.28A29.83,29.83,0,0,1,27,33,22.93,22.93,0,0,1,50,10Zm0,8A15,15,0,1,0,65,33,15,15,0,0,0,50,18Zm0,4A11,11,0,1,1,39,33,11,11,0,0,1,50,22Z"/>';
+    }
+  }]);
+
+  return Mapplace;
+}(_moJs2.default.CustomShape);
+
 _moJs2.default.addShape('tv', Tv);
 _moJs2.default.addShape('pen', Pen);
 _moJs2.default.addShape('buzz', Buzz);
@@ -1884,6 +1922,8 @@ _moJs2.default.addShape('arrows', Arrows);
 _moJs2.default.addShape('boul', Boul);
 _moJs2.default.addShape('sparkle', Sparkle);
 _moJs2.default.addShape('stars', Stars);
+_moJs2.default.addShape('website', Website);
+_moJs2.default.addShape('mapplace', Mapplace);
 
 var shiftCurve = _moJs2.default.easing.path('M0,100 C50,100 50,100 50,50 C50,0 50,0 100,0');
 var scaleCurveBase = _moJs2.default.easing.path('M0,100 C21.3776817,95.8051376 50,77.3262711 50,-700 C50,80.1708527 76.6222458,93.9449005 100,100');
@@ -1988,6 +2028,7 @@ var arrows = new _moJs2.default.Shape({
   radius: 50,
   x: 12.5,
   y: 12.5,
+
   easing: 'elastic.out'
 });
 
@@ -2004,6 +2045,7 @@ var tv = new _moJs2.default.Shape({
   x: 10,
   y: 0,
   scale: { 0: 1 },
+
   duration: 800,
   easing: 'elastic.out'
 });
@@ -2022,7 +2064,8 @@ var fires = new _moJs2.default.Burst({
     fill: ['#40BAB7', '#F79E5F', '#ee6568', '#FBD85E'],
     scale: { 1: 0 },
     degreeShift: 'rand(-360, 360)',
-    delay: 'stagger(0, 100)'
+    delay: 'stagger(0, 100)',
+    easing: 'cubic.out'
   },
   onComplete: function onComplete() {
     this.generate().replay();
@@ -2042,10 +2085,11 @@ var circles = new _moJs2.default.Burst({
     shape: 'circle',
     points: { 3: 10 },
     fill: 'none',
-    stroke: ['#40BAB7', '#F79E5F', '#EF6568', '#FBD85E'],
+    stroke: ['#40BAB7', '#F79E5F', '#ee6568', '#FBD85E'],
     scale: { 1: 0 },
     degreeShift: 'rand(-360, 360)',
-    delay: 'stagger(0, 100)'
+    delay: 'stagger(0, 100)',
+    easing: 'cubic.out'
   },
   onComplete: function onComplete() {
     this.generate().replay();
@@ -2054,6 +2098,8 @@ var circles = new _moJs2.default.Burst({
 
 var globalTimeline = new _moJs2.default.Timeline({ delay: 200 });
 globalTimeline.append(brainTimeline, tv, boulTimeline);
+
+// VIEW PORT CHECK TO START ANIMATION
 
 function inView(n) {
   var win = (0, _jquery2.default)(window);
@@ -2065,7 +2111,6 @@ function inView(n) {
 }
 
 var v = 0;
-
 (0, _jquery2.default)(window).scroll(function () {
   if (v == 0) {
     if (inView('.tv')) {
@@ -2076,6 +2121,279 @@ var v = 0;
       return v;
     }
   }
+});
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *
+ * MODAL CODE
+ *
+ */
+
+// Definisco il Parent contenitore
+var parent = document.querySelector('.main-wrapper');
+
+// crea l'elemento
+// Inner
+var modalInner = document.createElement('div');
+modalInner.classList.add('modal__inner');
+parent.appendChild(modalInner);
+
+// Location
+var location = document.createElement('div');
+location.classList.add('modal__location');
+parent.appendChild(location);
+
+// Link
+var link = document.createElement('div');
+link.classList.add('modal__link');
+parent.appendChild(link);
+
+// lo riempie con il contenuto
+
+function fillElement(ele) {
+  alert('triggereds');
+  // Inner
+  modalInner.innerHTML = document.querySelector('#js-modal-template-' + ele).innerHTML;
+
+  // Location
+  location.innerHTML = document.querySelector('#js-modal-location-' + ele).innerHTML;
+  // Link
+  link.innerHTML = document.querySelector('#js-modal-link-' + ele).innerHTML;
+}
+
+var modal = new _moJs2.default.Shape({
+  parent: '.main-wrapper',
+  shape: 'circle',
+  className: 'modal-trans',
+  fill: '#ee6568',
+  scale: { 0: 20 },
+  opacity: { 0: 1 },
+
+  delay: 500,
+  duration: 1500,
+  easing: 'elastic.out'
+});
+
+var modalCloseBtn = new _moJs2.default.Shape({
+  parent: '.main-wrapper',
+  shape: 'circle',
+  className: 'modal-close-btn',
+  fill: 'white',
+  radius: 20,
+  scale: { 0: 1 },
+  opacity: { 0: 1 },
+
+  top: '10%',
+  left: '90%',
+  delay: 1000,
+  duration: 500,
+  easing: 'elastic.out'
+});
+
+var closeBtn = new _moJs2.default.Shape({
+  parent: '.main-wrapper',
+  className: 'close-btn',
+  shape: 'cross',
+  angle: 45,
+  fill: 'none',
+  radius: { 0: 10 },
+  opacity: { 0: 1 },
+  scale: { 0: 1 },
+  stroke: '#252525',
+  strokeWidth: 4,
+
+  top: '10%',
+  left: '90%',
+
+  duration: 500,
+  easing: 'elastic.out'
+});
+
+var modalText = new _moJs2.default.Html({
+  el: '.modal__inner',
+  opacity: { 0: 1 },
+  scale: { 0: 1 },
+  duration: 250,
+  easing: 'cubic.out'
+});
+
+var webLink = new _moJs2.default.Shape({
+  parent: '.main-wrapper',
+  shape: 'website',
+  className: 'web-link',
+  radius: 30,
+  scale: { 0: 1 },
+  opacity: { 0: 1 },
+  fill: '#252525',
+
+  top: '60%',
+  left: '90%',
+  easing: 'elastic.out'
+});
+
+var mapPlace = new _moJs2.default.Shape({
+  parent: '.main-wrapper',
+  shape: 'mapplace',
+  className: 'map-place',
+  radius: 30,
+  scale: { 0: 1 },
+  opacity: { 0: 1 },
+  fill: '#252525',
+
+  top: '30%',
+  left: '90%',
+  easing: 'elastic.out'
+});
+
+var locationName = new _moJs2.default.Html({
+  parent: '.map-place',
+  el: '.modal__location',
+  scale: { 0: 1 },
+  opacity: { 0: 1 },
+  top: '36%',
+  left: '86%',
+  easing: 'elastic.out'
+});
+
+var linkName = new _moJs2.default.Html({
+  parent: '.map-place',
+  el: '.modal__link',
+  scale: { 0: 1 },
+  opacity: { 0: 1 },
+  top: '66%',
+  left: '86%',
+  easing: 'elastic.out',
+  yoyo: true
+});
+
+var modalOpenTimeline = new _moJs2.default.Timeline({ delay: 0 });
+modalOpenTimeline.append(modalCloseBtn, closeBtn, modalText, mapPlace, locationName, webLink, linkName);
+
+// CLICK BUTTON
+
+// Cineteca
+(0, _jquery2.default)('.mic-g').on('click', function (e) {
+  fillElement('cineteca');
+  modal.replay();
+  modalOpenTimeline.replay();
+});
+
+// Belgrado / Kinoteka
+(0, _jquery2.default)('.belgrado-g').on('click', function (e) {
+  fillElement('kinoteka');
+  modal.replay();
+  modalOpenTimeline.replay();
+});
+
+// Nerve Centre
+(0, _jquery2.default)('.nerve-centre-g').on('click', function (e) {
+  fillElement('nerve-centre');
+  modal.replay();
+  modalOpenTimeline.replay();
+});
+
+// Bicocca
+(0, _jquery2.default)('.bicocca-g').on('click', function (e) {
+  fillElement('bicocca');
+  modal.replay();
+  modalOpenTimeline.replay();
+});
+
+// Film Space
+(0, _jquery2.default)('.film-space-g').on('click', function (e) {
+  fillElement('film-space');
+  modal.replay();
+  modalOpenTimeline.replay();
+});
+
+(0, _jquery2.default)('.modal-close-btn, .close-btn').on('click', function (e) {
+  var modalCloseTimeline = new _moJs2.default.Timeline();
+
+  var modalLinkClose = new _moJs2.default.Html({
+    el: '.modal__link',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(modalLinkClose);
+
+  var modalLocationClose = new _moJs2.default.Html({
+    el: '.modal__location',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(modalLocationClose);
+
+  var mapPlaceClose = new _moJs2.default.Html({
+    el: '.map-place',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(mapPlaceClose);
+
+  var webLinkClose = new _moJs2.default.Html({
+    el: '.web-link',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(webLinkClose);
+
+  var modalCloseCloseBtn = new _moJs2.default.Html({
+    el: '.modal-close-btn',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(modalCloseCloseBtn);
+
+  var CloseCloseBtn = new _moJs2.default.Html({
+    el: '.close-btn',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(CloseCloseBtn);
+
+  var modalCloseInner = new _moJs2.default.Html({
+    el: '.modal__inner',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(modalCloseInner);
+
+  var modalCloseTrans = new _moJs2.default.Html({
+    el: '.modal-trans',
+    scale: { 1: 0 },
+    opacity: { 1: 0 },
+    duration: 500,
+    easing: 'elastic.out'
+  });
+  modalCloseTimeline.add(modalCloseTrans);
+
+  modalCloseTimeline.replay();
+});
+
+// RESIZE SVG TO WINDOW
+
+function setHeight(a) {
+  (0, _jquery2.default)('.main-wrapper').height(a);
+};
+var h = (0, _jquery2.default)(window).height();
+setHeight(h);
+(0, _jquery2.default)(window).resize(function () {
+  var h = (0, _jquery2.default)(window).height();
+  setHeight(h);
 });
 
 // GET LENGHT OF THE CUSTOM SHAPE

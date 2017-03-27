@@ -112,6 +112,8 @@
   fill: #ffffff;
 }
 
+.mic-g, .belgrado-g, .nerve-centre-g, .bicocca-g, .film-space-g { cursor: pointer; }
+
 .mic-g:hover > .color-1{ fill: #ff888e; }
 .mic-g:hover > .color-4 { fill: #f7dfe3; }
 .mic-g:hover > .color-5 { fill: #fc656d; }
@@ -140,3 +142,50 @@
 .film-space-g:hover > .color-1 { fill: #ff888e; }
 .film-space-g:hover > .color-2 { fill: #f7d5d9; }
 .film-space-g:hover > .color-5 { fill: #fc656d; }
+
+.modal-trans {
+  z-index: 9;
+}
+
+.modal-close-btn {
+  z-index: 10;
+  cursor: pointer;
+}
+.close-btn {
+  z-index: 11;
+  cursor: pointer;
+}
+
+.modal__inner {
+  width: 100%;
+}
+
+.modal__inner, .modal__location, .modal__link {
+  z-index: 11;
+  position: absolute;
+}
+
+.modal-text-class {
+  z-index: 11;
+}
+
+.modal-text-title {
+  font-family: monospace;
+  padding: 20px 5%;
+}
+
+.web-link, .map-place {
+  z-index: 12;
+}
+
+.modal-location p {
+  font-family: monospace;
+  text-align: center;
+}
+
+.modal-text-class p {
+  width: 70%;
+  padding: 0 5% 20px 5%;
+  font-family: monospace;
+  line-height: 2;
+}
