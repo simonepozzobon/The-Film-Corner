@@ -8,7 +8,7 @@
   min-height : 30vh;
   overflow   : hidden;
   background : #fff6d2;
-  margin-top : 70px;  
+  margin-top : 70px;
 }
 
 .back1 {
@@ -278,7 +278,7 @@
 
 .modal-text-inner {
   width         : 70%;
-  height        : 80vh;
+  height        : 40vh;
   max-height    : 600px;
   margin-bottom : 20px;
   padding       : 0 5% 20px 5%;
