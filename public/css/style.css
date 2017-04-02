@@ -12,7 +12,7 @@ main {
     background-color: #FDD351;
 }*/
 
-.hero {
+/*.hero {
     width: 100%;
     height: 105%;
     background-blend-mode: screen;
@@ -31,26 +31,7 @@ main {
     opacity: 1;
 }
 
-.featured-image {
-    width: 100%;
-    height: 50%;
-    background-color: #FDD351 !important;
-    background-blend-mode: screen;
-}
 
-.image-dimension {
-    content: '';
-    height: 320px;
-}
-
-.title {
-    color: #252525;
-    font-size: 2rem;
-}
-
-.sp-center {
-    text-align: center;
-}
 
 .logo img {
     width: 30%;
@@ -72,6 +53,26 @@ main {
     font-weight: 600;
     line-height: 2.5;
     letter-spacing: .1rem;
+}*/
+.sp-center {
+    text-align: center;
+}
+
+.featured-image {
+    width: 100%;
+    height: 50%;
+    background-color: #FDD351 !important;
+    background-blend-mode: screen;
+}
+
+.image-dimension {
+    content: '';
+    height: 320px;
+}
+
+.title {
+    color: #252525;
+    font-size: 2rem;
 }
 
 .single-post-title {
