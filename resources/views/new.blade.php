@@ -11,26 +11,9 @@
   {{-- Main Hero Cover --}}
   <div id="el-1">
     <section id="top" class="hero home">
-      <svg id="mask" width="0" height="0" data-name="LOGO" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve" preserveAspectRatio=“xMaxYMax meet”>
-        <defs>
-          <clipPath id="myClip">
-            <circle cx="100" cy="100" r="40" />
-            <circle cx="60" cy="60" r="40" />
-          </clipPath>
-        </defs>
-      </svg>
       <div class="main-wrapper">
         <div class="svg-container__content">
           <div class="omini">
-            <!--
-            <svg>
-              <defs>
-                <clipPath id="street">
-                  <polygon points="1920 920 850 920 625 615 540 615 485 920 0 920 0 840 390 840 494 615 494 570 640 570 950 840 1920 840" style="opacity: 0.5; fill: #ff00ff;"></polygon>
-                </clipPath>
-              </defs>
-
-            </svg> -->
             <svg id="logo-img" data-name="LOGO" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" xml:space="preserve" preserveAspectRatio=“xMaxYMax meet”>
               <title>logo</title>
 

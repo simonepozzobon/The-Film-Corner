@@ -38,6 +38,8 @@ Route::get('/post/{id}', function ($id) {
   return view('blog.post')->with('post', $post); // ritorno la view con il post
 });
 
+Route::get('/map', 'MapController@index')->name('map.index');
+
 Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');
