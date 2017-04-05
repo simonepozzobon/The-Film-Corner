@@ -37,10 +37,13 @@
           }
         });
 
-        var marker = new google.maps.Marker({
-          position: {lat: 45.464167, lng: 9.190027},
-          map: map
-        });
+        @foreach ($points as $key => $point)
+          var marker{{ $key }} = new google.maps.Marker({
+            position: {lat: {{ $point->lat }}, lng: {{ $point->long }}},
+            map: map
+          });
+        @endforeach
+
 
         map.setOptions({
           styles: [

@@ -16,9 +16,9 @@ class CreatePointsTable extends Migration
         Schema::create('points', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->integer('lat');
-            $table->integer('long');
-            $table->string('place_name');
+            $table->float('lat', 9, 6);
+            $table->float('long', 9, 6);
+            $table->string('place_name')->nullable();
             $table->string('genre')->nullable();
             $table->string('director')->nullable();
             $table->string('actors')->nullable();
