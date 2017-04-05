@@ -23,8 +23,6 @@ class MapController extends Controller
     {
       $map = new Map();
       $map->setVariable('map');
-
-      dd($map);
       $map->setHtmlId('map_canvas');
       // Disable the auto zoom flag (disabled by default)
       $map->setAutoZoom(false);
@@ -35,43 +33,6 @@ class MapController extends Controller
       // Set map option
       $map->setMapOption('zoom', 14);
       $map->setMapOption('streetViewControl', false);
-
-      $map->setMapOption('styles', "[
-        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
-        {
-          featureType: 'administrative.locality',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'geometry',
-          stylers: [{color: '#263c3f'}]
-        },
-        {
-          featureType: 'poi.park',
-          elementType: 'labels.text.fill',
-          stylers: [{color: '#6b9a76'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry',
-          stylers: [{color: '#38414e'}]
-        },
-        {
-          featureType: 'road',
-          elementType: 'geometry.stroke',
-          stylers: [{color: '#212a37'}]
-        },
-
-      ]");
 
       $map->setStylesheetOption('width', '100%');
       $map->setStylesheetOption('height', '100%');
