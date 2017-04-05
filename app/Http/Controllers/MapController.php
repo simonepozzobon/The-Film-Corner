@@ -22,7 +22,6 @@ class MapController extends Controller
     public function index()
     {
       $map = new Map();
-      $map->setVariable('map');
       $map->setHtmlId('map_canvas');
       // Disable the auto zoom flag (disabled by default)
       $map->setAutoZoom(false);
