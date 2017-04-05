@@ -64,6 +64,9 @@ Route::prefix('admin')->group(function () {
     Route::resource('app_1', 'Admin\App\App1Controller');
   });
 
+  // Maps settings
+  Route::resource('map', 'Admin\PointController');
+
   // Users menu routes
   Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
   Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);

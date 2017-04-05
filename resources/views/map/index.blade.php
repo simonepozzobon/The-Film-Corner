@@ -37,6 +37,11 @@
           }
         });
 
+        var marker = new google.maps.Marker({
+          position: {lat: 45.464167, lng: 9.190027},
+          map: map
+        });
+
         map.setOptions({
           styles: [
             // Hide Features
@@ -121,7 +126,7 @@
             {
               featureType: 'transit.station',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#d59563'}]
+              stylers: [{color: '#FAD86A'}]
             },
             {
               featureType: 'water',
@@ -131,16 +136,17 @@
             {
               featureType: 'water',
               elementType: 'labels.text.fill',
-              stylers: [{color: '#515c6d'}]
+              stylers: [{color: '#FAD86A'}]
             },
             {
               featureType: 'water',
               elementType: 'labels.text.stroke',
-              stylers: [{color: '#17263c'}]
+              stylers: [{color: '#FFF5D6'}]
             }
           ]
         });
-      }
+
+      } //end init
 
 
       // Resize Window
