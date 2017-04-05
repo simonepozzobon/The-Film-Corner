@@ -28,17 +28,55 @@ class MapController extends Controller
       $map->setAutoZoom(false);
 
       // Sets the center
-      $map->setCenter(new Coordinate(0, 0));
+      $map->setCenter(new Coordinate(45.464072, 9.190453));
 
-      // Sets the zoom
-      $map->setMapOption('zoom', 3);
+      // Set map option
+      $map->setMapOption('zoom', 14);
+      $map->setMapOption('streetViewControl', false);
+
+      $map->setMapOption('styles', "[
+        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{color: '#263c3f'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#6b9a76'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{color: '#38414e'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#212a37'}]
+        },
+
+      ]");
 
       $map->setStylesheetOption('width', '100%');
       $map->setStylesheetOption('height', '100%');
 
       // Create control options
       $mapTypeControl = new MapTypeControl(
-          [MapTypeId::ROADMAP, MapTypeId::SATELLITE],
+          [MapTypeId::ROADMAP],
           ControlPosition::TOP_RIGHT,
           MapTypeControlStyle::DEFAULT_
       );
