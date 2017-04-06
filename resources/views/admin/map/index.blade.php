@@ -379,6 +379,7 @@
                 if (type == 'cities') {
                   angular.forEach($scope.cities, function (city, key)
                   {
+                    console.log(city.lat);
                     if (city.id == id) {
                       $scope.map.setZoom(14);
                       $scope.map.setCenter({lat: city.lat, lng: city.lng});
