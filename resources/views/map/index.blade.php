@@ -39,7 +39,7 @@
 
         @foreach ($points as $key => $point)
           var marker{{ $key }} = new google.maps.Marker({
-            position: {lat: {{ $point->lat }}, lng: {{ $point->long }}},
+            position: {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
             map: map
           });
         @endforeach

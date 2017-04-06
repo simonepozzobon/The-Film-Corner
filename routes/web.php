@@ -65,7 +65,20 @@ Route::prefix('admin')->group(function () {
   });
 
   // Maps settings
-  Route::resource('map', 'Admin\PointController');
+  Route::prefix('map')->group( function() {
+    Route::prefix('api')->group(function() {
+      Route::get('/{id}/edit', 'Admin\PointController@edit')->name('api.map.edit');
+      Route::put('/{id}', 'Admin\PointController@update')->name('api.map.update');
+      Route::post('/', 'Admin\PointController@store')->name('api.map.store');
+      Route::delete('/{id}', 'Admin\PointController@destroy')->name('api.map.delete');
+      Route::get('/', 'Admin\PointController@index')->name('api.map.index');
+    });
+
+    // ...admin/map/ to show index
+    Route::get('/', function() {
+      return view('admin.map.index');
+    });
+  });
 
   // Users menu routes
   Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');

@@ -3,7 +3,7 @@
   @include('layouts.admin._head')
   <body>
     @include('layouts.admin._menu')
-    <div class="container mt-3">
+    <div class="m-4">
       <div class="clearfix mb-4">
         <h1 class="bg-faded p-3">@yield('page-title')</h1>
       </div>

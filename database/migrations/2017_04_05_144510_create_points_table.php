@@ -17,7 +17,7 @@ class CreatePointsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->float('lat', 9, 6);
-            $table->float('long', 9, 6);
+            $table->float('lng', 9, 6);
             $table->string('place_name')->nullable();
             $table->string('genre')->nullable();
             $table->string('director')->nullable();

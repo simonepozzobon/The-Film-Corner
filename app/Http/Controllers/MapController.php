@@ -12,9 +12,12 @@ class MapController extends Controller
     {
       $cities = City::all();
       $points = Point::all();
-      return view('map.index')
-                    ->with('points', $points)
-                    ->with('cities', $cities);
+      $content = collect([
+          'cities' => $cities,
+          'points' => $points,
+      ]);
+
+      return view('map.index', collect(['cities' => $cities, 'points' => $points,]));
     }
 
 }

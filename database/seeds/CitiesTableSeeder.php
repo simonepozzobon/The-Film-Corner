@@ -15,23 +15,23 @@ class CitiesTableSeeder extends Seeder
       DB::table('cities')->insert([
         [
           'name' => 'Milan',
-          'center-lat' => '45.464167',
-          'center-long' => '9.190027',
+          'lat' => '45.464167',
+          'lng' => '9.190027',
         ],
         [
           'name' => 'Canterbury',
-          'center-lat' => '51.280367',
-          'center-long' => '1.078958',
+          'lat' => '51.280367',
+          'lng' => '1.078958',
         ],
         [
           'name' => 'Belgrado',
-          'center-lat' => '44.814503',
-          'center-long' => '20.421735',
+          'lat' => '44.814503',
+          'lng' => '20.421735',
         ],
         [
           'name' => 'Londonderry',
-          'center-lat' => '54.996739',
-          'center-long' => '-7.308581',
+          'lat' => '54.996739',
+          'lng' => '-7.308581',
         ]
       ]);
     }
