@@ -377,6 +377,7 @@
               $scope.setMapCenter = function (id, type)
               {
                 if (type == 'cities') {
+                  console.log($scope.cities);
                   angular.forEach($scope.cities, function (city, key)
                   {
                     console.log(city.lat);
