@@ -380,11 +380,11 @@
                   console.log($scope.cities);
                   angular.forEach($scope.cities, function (city, key)
                   {
-                    console.log(parsefloat(city.lng));
+                    console.log(parseFloat(city.lng));
                     if (city.id == id) {
                       $scope.map.setZoom(14);
-                      var _lat = parsefloat(city.lat);
-                      var _lng = parsefloat(city.lng)
+                      var _lat = parseFloat(city.lat);
+                      var _lng = parseFloat(city.lng)
                       $scope.map.setCenter({lat: city.lat, lng: city.lng});
                     }
                   });
