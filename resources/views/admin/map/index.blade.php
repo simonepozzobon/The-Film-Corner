@@ -8,7 +8,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&sensor=false"
+  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs"
   async defer></script>
   <style media="screen">
     #map {
@@ -374,31 +374,27 @@
 
               }
 
-              $scope.setMapCenter = function (id, type)
-              {
-                if (type == 'cities') {
-                  console.log($scope.cities);
-                  angular.forEach($scope.cities, function (city, key)
-                  {
-                    console.log(parseFloat(city.lng));
-                    if (city.id == id) {
-                      $scope.map.setZoom(14);
-                      var _lat = parseFloat(city.lat);
-                      var _lng = parseFloat(city.lng)
-                      $scope.map.setCenter({lat: city.lat, lng: city.lng});
-                    }
-                  });
-                }
-                if (type == 'points') {
-                  angular.forEach($scope.points, function (point, key)
-                  {
-                    if (point.id == id) {
-                      $scope.map.setZoom(14);
-                      $scope.map.setCenter({lat: point.lat, lng: point.lng});
-                    }
-                  });
-                }
-              }
+$scope.setMapCenter = function (id, type)
+{
+  if (type == 'cities') {
+    angular.forEach($scope.cities, function (city, key)
+    {
+      if (city.id == id) {
+        $scope.map.setZoom(14);
+        $scope.map.setCenter(new google.maps.LatLng(city.lat, city.lng));
+      }
+    });
+  }
+  if (type == 'points') {
+    angular.forEach($scope.points, function (point, key)
+    {
+      if (point.id == id) {
+        $scope.map.setZoom(14);
+        $scope.map.setCenter(new google.maps.LatLng(point.lat, point.lng)));
+      }
+    });
+  }
+}
 
               // Create new point
               $scope.submitPoint = function ()
