@@ -23,6 +23,13 @@
 @endsection
 @section('scripts')
   <script>
+      // Setting locations
+      var locations = [
+        @foreach ($points as $key => $point)
+          {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
+        @endforeach
+      ];
+
       function initMap() {
         // Create a map object and specify the DOM element for display.
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -37,13 +44,24 @@
           }
         });
 
-        @foreach ($points as $key => $point)
-          var marker{{ $key }} = new google.maps.Marker({
-            position: {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
-            map: map
-          });
-        @endforeach
+        var icon = {
+            path: "M11,0 L11,0 C5.19971429,0 0.5,4.69628571 0.5,10.4884286 C0.5,15.6012857 3.39885714,22.4104286 11,30 L11,30 C18.6011429,22.4104286 21.5,15.6012857 21.5,10.4884286 C21.5,4.69628571 16.8002857,0 11,0 Z M11,13.1802857 C8.83271429,13.1802857 7.07685714,11.4274286 7.07685714,9.26442857 C7.07685714,7.10357143 8.83314286,5.349 11,5.349 C13.1668571,5.349 14.9197143,7.10357143 14.9197143,9.26442857 C14.9197143,11.4274286 13.1672857,13.1802857 11,13.1802857 Z",
+            fillColor: '#F9555B',
+            fillOpacity: 0.7,
+            anchor: new google.maps.Point(0,0),
+            strokeWeight: 0,
+            scale: 1,
+        }
 
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: location,
+            icon: icon,
+          });
+        });
+
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
         map.setOptions({
           styles: [
@@ -151,7 +169,6 @@
 
       } //end init
 
-
       // Resize Window
       function setSize(a) {
         var h = a-140;
@@ -167,6 +184,7 @@
       });
 
     </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap"
     async defer></script>
 @endsection
