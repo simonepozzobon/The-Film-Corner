@@ -20,6 +20,8 @@ class CreatePointsTable extends Migration
             $table->float('lng', 9, 6);
             $table->string('place_name')->nullable();
             $table->string('genre')->nullable();
+            $table->string('year')->nullable();
+            $table->string('info_link')->nullable();
             $table->string('director')->nullable();
             $table->string('actors')->nullable();
             $table->string('video_link')->nullable();

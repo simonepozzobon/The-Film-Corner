@@ -38,7 +38,6 @@
         });
 
         @foreach ($points as $key => $point)
-          console.log('{!! $point !!}');
           var marker{{ $key }} = new google.maps.Marker({
             position: {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
             map: map

@@ -348,8 +348,9 @@
                   });
 
                   angular.forEach($scope.points, function(point, key){
+                    var latLng = '';
                     var marker = new google.maps.Marker({
-                        position: {lat: point.lat, lng: point.lng},
+                        position: new google.maps.LatLng(point.lat, point.lng),
                         map: $scope.map
                       });
                   });
@@ -390,7 +391,7 @@ $scope.setMapCenter = function (id, type)
     {
       if (point.id == id) {
         $scope.map.setZoom(14);
-        $scope.map.setCenter(new google.maps.LatLng(point.lat, point.lng)));
+        $scope.map.setCenter(new google.maps.LatLng(point.lat, point.lng));
       }
     });
   }
@@ -399,7 +400,6 @@ $scope.setMapCenter = function (id, type)
               // Create new point
               $scope.submitPoint = function ()
               {
-                  console.log($scope.pointData);
                   Point.save($scope.pointData)
                           .then(function successCallback(response) {
                             jQuery(function() {
@@ -420,7 +420,6 @@ $scope.setMapCenter = function (id, type)
               {
                 $http.get('{{ route('api.map.index') }}/'+id+'/edit')
                   .then(function(response) {
-                    console.log(response.data);
                     $scope.pointData = response.data.point;
                     $scope.cities = response.data.cities;
                   });
@@ -429,7 +428,6 @@ $scope.setMapCenter = function (id, type)
               // Edit Point
               $scope.editPoint = function (id)
               {
-                console.log($scope.pointData);
                 Point.update($scope.pointData, id)
                     .then(
                       function successCallback(response)
@@ -454,7 +452,6 @@ $scope.setMapCenter = function (id, type)
               // Delete Point
               $scope.deletePoint = function (id)
               {
-                  console.log(id);
                   Point.delete(id)
                        .then(
                          function successCallback(response)
