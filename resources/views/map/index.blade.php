@@ -15,6 +15,10 @@
      padding: 0;
    }
   </style>
+
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap"
+    async defer></script>
 @endsection
 @section('content')
   <div class="map-wrapper">
@@ -24,58 +28,16 @@
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="map-{{ $point->id }}Title">{{ $point->title }}</h5>
+              <h3 class="modal-title text-uppercase" id="map-{{ $point->id }}Title">{{ $point->title }}</h3>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="container">
               <div class="row p-3">
-                <div class="col">
+                <div id="video-box-{{ $point->id }}"class="col">
                   <h4>Video</h4>
-                  <div id="player{{ $key }}"></div>
-                  <script>
-                    // 2. This code loads the IFrame Player API code asynchronously.
-                    var tag = document.createElement('script');
-
-                    tag.src = "https://www.youtube.com/iframe_api";
-                    var firstScriptTag = document.getElementsByTagName('script')[0];
-                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-                    // 3. This function creates an <iframe> (and YouTube player)
-                    //    after the API code downloads.
-                    var player;
-                    function onYouTubeIframeAPIReady() {
-                      player = new YT.Player('player{{ $key }}', {
-                        height: '360',
-                        width: '640',
-                        videoId: 'M7lc1UVf-VE',
-                        events: {
-                          'onReady': onPlayerReady,
-                          'onStateChange': onPlayerStateChange
-                        }
-                      });
-                    }
-
-                    // 4. The API will call this function when the video player is ready.
-                    function onPlayerReady(event) {
-                      event.target.playVideo();
-                    }
-
-                    // 5. The API calls this function when the player's state changes.
-                    //    The function indicates that when playing a video (state=1),
-                    //    the player should play for six seconds and then stop.
-                    var done = false;
-                    function onPlayerStateChange(event) {
-                      if (event.data == YT.PlayerState.PLAYING && !done) {
-                        setTimeout(stopVideo, 6000);
-                        done = true;
-                      }
-                    }
-                    function stopVideo() {
-                      player.stopVideo();
-                    }
-                  </script>
+                  <div id="player-{{ $point->id }}"></div>
                 </div>
               </div>
               <div class="row p-3">
@@ -83,10 +45,20 @@
                   <h4>Sinossi</h4>
                   <p class="text-justify">
                     {{ $point->sinossi }}
+                    <br>
+                    <br>
+                    <a href="{{ $point->info_link }}" target="_blank">More info</a>
                   </p>
                 </div>
                 <div class="col-md-3">
-
+                  <h4>Place</h4>
+                  <p class="text-capitalize">{{ $point->place_name }}</p>
+                  <h4>City</h4>
+                  <p class="text-capitalize">{{ $point->city->name }}</p>
+                  <h4>Director</h4>
+                  <p class="text-capitalize">{{ $point->director }}</p>
+                  <h4>Actors</h4>
+                  <p class="text-capitalize">{{ $point->actors }}</p>
                 </div>
               </div>
             </div>
@@ -102,11 +74,18 @@
 @section('scripts')
   <script>
       // Setting locations
-      var locations = [
-        @foreach ($points as $key => $point)
-          {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
-        @endforeach
-      ];
+
+      var locations = [];
+
+      @foreach ($points as $key => $point)
+        locations.push(
+          {
+            'position' : {lat: {{ $point->lat }}, lng: {{ $point->lng }}},
+            'point_id' : {{ $point->id }},
+            'video_id' : '{{ $point->video_id }}'
+          }
+        );
+      @endforeach
 
       function initMap() {
         // Create a map object and specify the DOM element for display.
@@ -133,14 +112,19 @@
 
         var markers = locations.map(function(location, i) {
           return new google.maps.Marker({
-            position: location,
+            position: location.position,
             icon: icon,
           });
         });
 
         markers.map(function(marker, i) {
           return marker.addListener('click', function() {
-            $('#map-'+i).modal('show');
+            var videoId = locations[i].video_id;
+            var id = locations[i].point_id;
+            $('#map-'+id).on('show.bs.modal', function (e) {
+              generateVideo(id, videoId);
+            });
+            $('#map-'+id).modal('show');
           });
         });
 
@@ -258,17 +242,32 @@
         var h = a-140;
         $('.map-wrapper').height(h);
       };
-
       var h = $(window).height();
       setSize(h);
-
       $(window).resize(function() {
         var h = $(window).height();
         setSize(h);
       });
 
+        // 2. This code loads the IFrame Player API code asynchronously.
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // 3. This function creates an <iframe> (and YouTube player)
+        //    after the API code downloads.
+        var player;
+
+        function generateVideo(id, video)
+        {
+          player = new YT.Player('player-'+id, {
+            height: '360',
+            width: '100%',
+            videoId: video,
+          });
+        }
+
     </script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap"
-    async defer></script>
 @endsection
