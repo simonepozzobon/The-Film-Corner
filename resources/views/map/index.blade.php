@@ -19,6 +19,84 @@
 @section('content')
   <div class="map-wrapper">
     <div id="map"></div>
+    @foreach ($points as $key => $point)
+      <div class="modal fade" id="map-{{ $point->id }}" tabindex="-1" role="dialog" aria-labelledby="map-{{ $point->id }}Title" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="map-{{ $point->id }}Title">{{ $point->title }}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="container">
+              <div class="row p-3">
+                <div class="col">
+                  <h4>Video</h4>
+                  <div id="player{{ $key }}"></div>
+                  <script>
+                    // 2. This code loads the IFrame Player API code asynchronously.
+                    var tag = document.createElement('script');
+
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    // 3. This function creates an <iframe> (and YouTube player)
+                    //    after the API code downloads.
+                    var player;
+                    function onYouTubeIframeAPIReady() {
+                      player = new YT.Player('player{{ $key }}', {
+                        height: '360',
+                        width: '640',
+                        videoId: 'M7lc1UVf-VE',
+                        events: {
+                          'onReady': onPlayerReady,
+                          'onStateChange': onPlayerStateChange
+                        }
+                      });
+                    }
+
+                    // 4. The API will call this function when the video player is ready.
+                    function onPlayerReady(event) {
+                      event.target.playVideo();
+                    }
+
+                    // 5. The API calls this function when the player's state changes.
+                    //    The function indicates that when playing a video (state=1),
+                    //    the player should play for six seconds and then stop.
+                    var done = false;
+                    function onPlayerStateChange(event) {
+                      if (event.data == YT.PlayerState.PLAYING && !done) {
+                        setTimeout(stopVideo, 6000);
+                        done = true;
+                      }
+                    }
+                    function stopVideo() {
+                      player.stopVideo();
+                    }
+                  </script>
+                </div>
+              </div>
+              <div class="row p-3">
+                <div class="col-md-7">
+                  <h4>Sinossi</h4>
+                  <p class="text-justify">
+                    {{ $point->sinossi }}
+                  </p>
+                </div>
+                <div class="col-md-3">
+
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-trash" aria-hidden="true"></i> Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    @endforeach
   </div>
 @endsection
 @section('scripts')
@@ -60,7 +138,11 @@
           });
         });
 
-        console.log(markers);
+        markers.map(function(marker, i) {
+          return marker.addListener('click', function() {
+            $('#map-'+i).modal('show');
+          });
+        });
 
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: '{{ asset('/map_assets/clusters/m') }}'});
