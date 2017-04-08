@@ -102,7 +102,7 @@
   @endforeach
   {{-- END OF PARTNER MODAL --}}
   <div class="container">
-    {{-- News --}}
+    {{-- News --}} {{-- HIDDEN FOR NOW --}}
     <div class="row">
       <div class="col">
         <section id="news">
@@ -124,7 +124,7 @@
                 <div class="row mb-4">
                 @foreach ($posts as $key=>$post)
                   <div class="carousel-item {{ $key===1 ? 'active' : ''  }}">
-                      <div class="col-md-8 offset-md-2">
+                      <div class="col-md-10 offset-md-1">
                         <div class="news-title">
                           <h2>{{ $post->title }}</h2>
                         </div>
@@ -171,7 +171,7 @@
             The Project
           </div>
           <div class="row">
-            <div id="project-container" class="tween-content-container block-wrapper col-md-8 offset-md-2">
+            <div id="project-container" class="tween-content-container block-wrapper col-md-10 offset-md-1">
               <div class="block-container">
                 <div class="block-title">
                   <h2>The Film Corner</h2>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    The Film Corner project is aimed to the <b>design, release</b> and testing of an <b>online digital virtual user-centered platform for Film Literacy</b>, taking advantage of the opportunities offered by <b>web 2.0 and crossmedia innovative approach</b> in the digital era in order to <b>raise the average film literacy level of EU young audiences</b>. The platform consists of an <b>interactive layout</b> with <b>game-based didactical resources</b> integrated as apps the user can interact with. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.
+                    “The Film Corner. New online and offline activities for Film Literacy” is a project whose aim is to create an  online virtual platform on Film Literacy, taking advantage of the opportunities offered by <b class="sp-bold">web 2.0 and crossmedia opportunities in order to raise the level of film literacy of EU young audiences</b>. The platform consists of <b class="sp-bold">a variety of interactive resources looking at the art of film, the ways in which films can be used across a variety of curriculum subjects and creative approaches to making films</b>. The platform is being developed in 4 EU languages I - English, French, Italian and Serbian.
                   </p>
                 </div>
               </div>
@@ -199,17 +199,17 @@
             International Conference
           </div>
           <div class="row">
-            <div id="conference-container" class="tween-content-container block-wrapper col-md-8 offset-md-2">
+            <div id="conference-container" class="tween-content-container block-wrapper col-md-10 offset-md-1">
               <div class="block-container">
                 <div class="block-subtitle">
                   <h4>Details</h4>
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    <b>Managing institution:</b> Fondazione Cineteca Italiana, Milan, Italy<br>
+                    <b class="sp-bold">Managing institution:</b> Fondazione Cineteca Italiana, Milan, Italy<br>
                     Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy<br>
-                    <b>2017, Thu, November 9th, 6pm, italian time:</b> networking cocktail<br>
-                    <b>2017, Fri, November, 10th, 9 am-6 pm:</b> conference<br>
+                    <b class="sp-bold">2017, Thu, November 9th, 6pm, italian time:</b> networking cocktail<br>
+                    <b class="sp-bold">2017, Fri, November, 10th, 9 am-6 pm:</b> conference<br>
                   </p>
                 </div>
                 <div class="block-subtitle mt-5">
@@ -217,12 +217,12 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    The Film Corner International Conference is open to public and addressed to professionals and trainers to be held within the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
+                    The Film Corner International Conference will be open to public and will address both film  professionals and teachers and will  be held as part of the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
                     <ul>
                       <li>Launch of The Film Corner platform;</li>
-                      <li>methodologies for Film Literacy in the digital era;</li>
-                      <li>integration between online and offline Film Literacy actions;</li>
-                      <li>crossmedia educational and promotional platforms in the digital film market.</li>
+                      <li>Pedagogical methodologies for Film Literacy in the digital era;</li>
+                      <li>Integrating online and offline Film Literacy actions;</li>
+                      <li>Crossmedia educational and promotional platforms in the digital film market.</li>
                     </ul>
                   </p>
                 </div>
@@ -231,7 +231,7 @@
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    Up to 100 people can attend the conference and it is completely free of charge. If you’d like to join us, you can register on the conference website from 2017, April 27th onwards.
+                    Up to 180 people can attend the conference and it is completely free of charge. If you’d like to join us, you can register on the conference website from 2017, April 27th onwards.
                     <br><br>
                     Keep updated through our social media accounts on <a href="https://www.facebook.com/TheFilmCorner/">facebook</a>. Further details will be made available in the official website of the conference that will be released in 2017, April, 17th.
                   </p>
@@ -252,11 +252,11 @@
           </div>
           <div id="partners-container" class="tween-content-container block-wrapper">
             <div class="row">
-              <div class="col-md-8 offset-md-2">
+              <div class="col-md-10 offset-md-1">
                 <div class="block-container">
                   <div class="block-text">
                     <p class="text-justify">
-                      The project involves 5 EU institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy; The Film Space in Manchester, UK; The Nerve Centre in Derry, Northern Ireland; the Jugoslovenska Kinoteka in Belgrade, Serbia and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” in Milan, Italy.
+                      The project involves 5 institutions in 4 EU countries: <b class="sp-bold">Fondazione Cineteca Italiana</b> in Milan, Italy (lead partner); <b class="sp-bold">The Film Space</b>, an innovative Film Literacy provider (London, UK); <b class="sp-bold">The Nerve Centre</b>, a Creative Learning Centre Derry, Northern Ireland; the <b class="sp-bold">National Cinèmatheque of Serbia</b> (Belgrade, Serbia) one of the oldest cinèmatheques in the world and the <b class="sp-bold">University of Milano Bicocca</b>,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).
                     </p>
                   </div>
                 </div>
@@ -324,7 +324,7 @@
           <div id="apps-title" class="title sp-center pt-5">
             Apps
           </div>
-          <div id="apps-container" class="col-md-8 offset-md-2">
+          <div id="apps-container" class="col-md-10 offset-md-1">
             <div id="apps-animations" style="height: 75vh">
 
             </div>
