@@ -11,12 +11,15 @@ class MapController extends Controller
     public function index()
     {
       $points = Point::all();
+      $cities = City::all();
       foreach ($points as $key => $point) {
         $videoID = '';
         preg_match("#(?<=v=)[a-zA-Z0-9-]+(?=&)|(?<=v\/)[^&\n]+|(?<=v=)[^&\n]+|(?<=youtu.be/)[^&\n]+|(?<=embed/)[^&\n]+#", $point->video_link, $videoID);
         $point->video_id = $videoID[0];
       }
-      return view('map.index')->with('points', $points);
+      return view('map.index')
+        ->with('points', $points)
+        ->with('cities', $cities);
     }
 
 }

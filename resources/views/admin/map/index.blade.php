@@ -313,7 +313,7 @@
                   $scope.map = new google.maps.Map(document.getElementById('map'), {
                     center: {lat: 45.464167, lng: 9.190027},
                     scrollwheel: false,
-                    zoom: 14,
+                    zoom: 12,
                     disableDefaultUI: true,
                     zoomControl: true,
                     streetViewControl: false,
@@ -381,7 +381,7 @@ $scope.setMapCenter = function (id, type)
     angular.forEach($scope.cities, function (city, key)
     {
       if (city.id == id) {
-        $scope.map.setZoom(14);
+        $scope.map.setZoom(12);
         $scope.map.setCenter(new google.maps.LatLng(city.lat, city.lng));
       }
     });

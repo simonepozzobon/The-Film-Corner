@@ -14,6 +14,10 @@
      margin: 0;
      padding: 0;
    }
+
+   .m-6 {
+     margin: 6rem;
+   }
   </style>
 
   <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
@@ -21,7 +25,24 @@
     async defer></script>
 @endsection
 @section('content')
+  <div class="choice ">
+
+  </div>
   <div class="map-wrapper">
+    <nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-bottom m-6">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          @foreach ($cities as $key => $city)
+            <li class="nav-item">
+              <a href="#" class="nav-link" onclick="setMapCenter({{ $city->lat }}, {{ $city->lng }})">{{ $city->name }}</a>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    </nav>
     <div id="map"></div>
     @foreach ($points as $key => $point)
       <div class="modal fade" id="map-{{ $point->id }}" tabindex="-1" role="dialog" aria-labelledby="map-{{ $point->id }}Title" aria-hidden="true">
@@ -74,7 +95,7 @@
 @section('scripts')
   <script>
       // Setting locations
-
+      var map;
       var locations = [];
 
       @foreach ($points as $key => $point)
@@ -89,10 +110,11 @@
 
       function initMap() {
         // Create a map object and specify the DOM element for display.
-        var map = new google.maps.Map(document.getElementById('map'), {
+
+        map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 45.464167, lng: 9.190027},
           scrollwheel: false,
-          zoom: 14,
+          zoom: 12,
           disableDefaultUI: true,
           zoomControl: true,
           streetViewControl: false,
@@ -234,8 +256,14 @@
             }
           ]
         });
-
       } //end init
+
+      // Set Map Center to the new city
+      function setMapCenter (lat, lng)
+      {
+        map.setZoom(12);
+        map.setCenter(new google.maps.LatLng(lat, lng));
+      }
 
       // Resize Window
       function setSize(a) {
@@ -249,25 +277,26 @@
         setSize(h);
       });
 
-        // 2. This code loads the IFrame Player API code asynchronously.
-        var tag = document.createElement('script');
 
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-        // 3. This function creates an <iframe> (and YouTube player)
-        //    after the API code downloads.
-        var player;
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
 
-        function generateVideo(id, video)
-        {
-          player = new YT.Player('player-'+id, {
-            height: '360',
-            width: '100%',
-            videoId: video,
-          });
-        }
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // Generate iFrame when modal is opened
+      var player;
+
+      function generateVideo(id, video)
+      {
+        player = new YT.Player('player-'+id, {
+          height: '360',
+          width: '100%',
+          videoId: video,
+        });
+      }
 
     </script>
 @endsection
