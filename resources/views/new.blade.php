@@ -167,11 +167,15 @@
       <div class="col">
         <section id="project">
           <div id="project-trigger"></div>
-          <div id="project-title" class="title sp-center pt-5 pb-5">
-            The Project
-          </div>
-          <div class="row">
-            <div id="project-container" class="tween-content-container block-wrapper col-md-10 offset-md-1">
+
+          <div class="row pt-5">
+            <div class="col-md-2">
+              <img src="{{ asset('img/home/the_project.png') }}" alt="">
+            </div>
+            <div id="project-container" class="tween-content-container block-wrapper col-md-10">
+              <div id="project-title" class="title pb-5">
+                The Project
+              </div>
               <div class="block-container">
                 <div class="block-title">
                   <h2>The Film Corner</h2>
@@ -195,11 +199,14 @@
       <div class="col">
         <section id="conference">
           <div id="conference-trigger"></div>
-          <div id="conference-title" class="title sp-center pt-5 pb-5">
-            International Conference
-          </div>
-          <div class="row">
-            <div id="conference-container" class="tween-content-container block-wrapper col-md-10 offset-md-1">
+          <div class="row pt-5">
+            <div class="col-md-2">
+              <img src="{{ asset('img/home/conference.png') }}" alt="">
+            </div>
+            <div id="conference-container" class="tween-content-container block-wrapper col-md-10">
+              <div id="conference-title" class="title pb-5">
+                International Conference
+              </div>
               <div class="block-container">
                 <div class="block-subtitle">
                   <h4>Details</h4>
@@ -247,12 +254,15 @@
       <div class="col">
         <section id="partners">
           <div id="partners-trigger"></div>
-          <div id="partners-title" class="title sp-center pt-5 pb-5">
-            Partners
-          </div>
           <div id="partners-container" class="tween-content-container block-wrapper">
-            <div class="row">
-              <div class="col-md-10 offset-md-1">
+            <div class="row pt-5">
+              <div class="col-md-2">
+                <img src="{{ asset('img/home/partners.png') }}" alt="">
+              </div>
+              <div class="col-md-10">
+                <div id="partners-title" class="title pb-5">
+                  Partners
+                </div>
                 <div class="block-container">
                   <div class="block-text">
                     <p class="text-justify">
@@ -321,10 +331,13 @@
       <div class="col">
         <section id="apps">
           <div id="trigger-apps"></div>
-          <div id="apps-title" class="title sp-center pt-5">
-            Apps
+          <div class="col-md-2">
+            <img src="{{ asset('img/home/apps.png') }}" alt="">
           </div>
-          <div id="apps-container" class="col-md-10 offset-md-1">
+          <div id="apps-container" class="col-md-10">
+            <div id="apps-title" class="title">
+              Apps
+            </div>
             <div id="apps-animations" style="height: 75vh">
 
             </div>
