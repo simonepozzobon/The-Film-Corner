@@ -103,7 +103,8 @@
   {{-- END OF PARTNER MODAL --}}
   <div class="container">
     {{-- News --}} {{-- HIDDEN FOR NOW --}}
-    <div class="row">
+    @isset($posts)
+      <div class="row">
       <div class="col">
         <section id="news">
           <div id="news-title" class="title sp-center pt-5 pb-5">
@@ -162,6 +163,7 @@
         </section>
       </div>
     </div>
+    @endisset
     {{-- Project --}}
     <div class="row">
       <div class="col">
