@@ -19,7 +19,7 @@ use App\Partner;
 
 // need to create a controller for these maybe Main or FrontendController
 Route::get('/', function () {
-    $posts = Post::where('category_id', '=', '1')->latest()->limit(5)->get();
+    $posts = Post::where('category_id', '=', 1)->latest()->limit(5)->get();
     $partners = Partner::all();
     return view('new')
                 ->with('posts', $posts)
