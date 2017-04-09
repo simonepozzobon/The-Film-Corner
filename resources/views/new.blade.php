@@ -331,17 +331,20 @@
       <div class="col">
         <section id="apps">
           <div id="trigger-apps"></div>
-          <div class="col-md-2">
-            <img src="{{ asset('img/home/apps.png') }}" alt="">
-          </div>
           <div id="apps-container" class="col-md-10">
-            <div id="apps-title" class="title">
-              Apps
-            </div>
-            <div id="apps-animations" style="height: 75vh">
+            <div class="row">
+              <div class="col-md-2">
+                <img src="{{ asset('img/home/apps.png') }}" alt="">
+              </div>
+              <div class="col-md-10">
+                <div id="apps-title" class="title">
+                  Apps
+                </div>
+                <div id="apps-animations" style="height: 75vh">
 
+                </div>
+              </div>
             </div>
-
           </div>
           <div id="apps-footer" class="text-center">
             <a href="#" class="btn btn-info disabled">Soon</a>
@@ -364,7 +367,7 @@
       </div>
     </div> --}}
     {{-- Login / call to action for registration --}}
-    <div class="row">
+    {{-- <div class="row">
       <div class="col">
         <section id="login">
           <div id="trigger-login"></div>
@@ -400,7 +403,7 @@
           </div>
         </section>
       </div>
-    </div>
+    </div> --}}
   </div>
 </main>
 @endsection
