@@ -20,9 +20,6 @@
    }
   </style>
 
-  <script src="//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-  <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap"
-    async defer></script>
 @endsection
 @section('content')
   <div class="choice ">
@@ -299,4 +296,7 @@
       }
 
     </script>
+
+      <script src="//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+      <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap" async defer></script>
 @endsection
