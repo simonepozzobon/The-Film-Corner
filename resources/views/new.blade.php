@@ -241,7 +241,7 @@
                   <p class="text-justify">
                     Up to 180 people can attend the conference and it is completely free of charge. If you’d like to join us, you can register on the conference website from 2017, April 27th onwards.
                     <br><br>
-                    Keep updated through our social media accounts on <a href="https://www.facebook.com/TheFilmCorner/">facebook</a>. Further details will be made available in the official website of the conference that will be released in 2017, April, 17th.
+                    Keep updated through our social media accounts on <a href="https://www.facebook.com/TheFilmCorner/">facebook</a>.
                   </p>
                 </div>
               </div>
@@ -328,7 +328,7 @@
       </div>
     </div>
     {{-- Apps --}}
-    <div class="row">
+    <div class="row pb-5">
       <div class="col">
         <section id="apps">
           <div id="trigger-apps"></div>
