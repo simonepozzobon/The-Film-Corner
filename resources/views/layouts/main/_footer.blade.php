@@ -26,7 +26,7 @@
         </div>
       </div>
       <div class="col-md-4 p-5">
-        Social Section
+        {{-- Social Section --}}
       </div>
       <div class="col-md-4 p-5">
         {{-- Feedback --}}
