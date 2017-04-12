@@ -796,13 +796,13 @@ $modal-dialog-sm-up-margin-y: 30px !default;
 
 $modal-title-line-height:     $line-height-base !default;
 
-$modal-content-bg:               $gray-lighter !default;
+$modal-content-bg:               $gray-lightest !default;
 $modal-content-border-color:     none !default;
 $modal-content-border-width:     0 !default;
-$modal-content-xs-box-shadow:    0 3px 9px rgba($black,.5) !default;
-$modal-content-sm-up-box-shadow: 0 5px 15px rgba($black,.5) !default;
+$modal-content-xs-box-shadow:    0 3px 9px rgba($yellow,.5) !default;
+$modal-content-sm-up-box-shadow: 0 5px 15px rgba($yellow,.5) !default;
 
-$modal-backdrop-bg:           $black !default;
+$modal-backdrop-bg:           $yellow !default;
 $modal-backdrop-opacity:      .5 !default;
 $modal-header-border-color:   none !default;
 $modal-footer-border-color:   $modal-header-border-color !default;

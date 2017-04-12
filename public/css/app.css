@@ -5949,7 +5949,7 @@ button.close {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #eceeef;
+  background-color: #f7f7f9;
   background-clip: padding-box;
   border: 0 solid none;
   border-radius: 0.3rem;
@@ -5963,7 +5963,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #252525;
+  background-color: #FADA28;
 }
 
 .modal-backdrop.fade {
