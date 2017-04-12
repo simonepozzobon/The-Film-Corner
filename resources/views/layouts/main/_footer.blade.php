@@ -4,6 +4,9 @@
       <div class="col-md-4 p-5">
         {{-- The Film Corner --}}
         <div class="block-container pb-5">
+          <a href="https://eacea.ec.europa.eu/about-eacea" target="_blank"><img class="eu__img w-50"src="/img/home/eu-flag.jpg"></a>
+        </div>
+        <div class="block-container pb-5">
           <div class="block-title">
             <h2>The Film Corner</h2>
           </div>

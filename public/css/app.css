@@ -5949,9 +5949,9 @@ button.close {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  background-color: #fff;
+  background-color: #eceeef;
   background-clip: padding-box;
-  border: 1px solid rgba(37, 37, 37, 0.2);
+  border: 0 solid none;
   border-radius: 0.3rem;
   outline: 0;
 }
@@ -5984,8 +5984,8 @@ button.close {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  padding: 15px;
-  border-bottom: 1px solid #eceeef;
+  padding: 3rem;
+  border-bottom: 0 solid none;
 }
 
 .modal-title {
@@ -5998,7 +5998,7 @@ button.close {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-  padding: 5rem;
+  padding: 3rem;
 }
 
 .modal-footer {
@@ -6011,8 +6011,8 @@ button.close {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  padding: 5rem;
-  border-top: 1px solid #eceeef;
+  padding: 3rem;
+  border-top: 0 solid none;
 }
 
 .modal-footer > :not(:first-child) {
