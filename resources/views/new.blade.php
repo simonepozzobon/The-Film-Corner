@@ -4,13 +4,13 @@
 @endsection
 @section('stylesheets')
   {{-- Pace --}}
-  <script src="{{ asset('js/pace.js') }}"></script>
+  {{-- <script src="{{ asset('js/pace.js') }}"></script>
   <link href="{{ asset('css/pace-loader/pace-theme-center-radar.css') }}" rel="stylesheet" />
   <style media="screen">
   .pace-running .content {
   display: none;
   }
-  </style>
+  </style> --}}
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   {{-- <link rel="stylesheet" href="{{ asset('css/revealer.css') }}"> --}}
 @endsection

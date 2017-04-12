@@ -5998,7 +5998,7 @@ button.close {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
-  padding: 15px;
+  padding: 5rem;
 }
 
 .modal-footer {
@@ -6011,7 +6011,7 @@ button.close {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  padding: 15px;
+  padding: 5rem;
   border-top: 1px solid #eceeef;
 }
 
