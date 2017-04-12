@@ -369,7 +369,7 @@ $(window).resize(function() {
  *
  */
 
-const manColor      = '#3E3940';    // '#bdbfc1';
+const manColor      = '#696759';    // '#bdbfc1';
 const manScale      = 0.4;          // dimensione
 const manNumber     = 50;           // total people
 const leftStreet    = 0.4;          // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
@@ -398,7 +398,7 @@ for (let i = 0; i < manNumber; i++) {
   }
 
   // genero una velocità per ognuno
-  _speed[i] = Math.floor((Math.random() * 100) + 50); // compresa tra O.05 e 0.1
+  _speed[i] = Math.floor((Math.random() * 100) + 30); // compresa tra O.05 e 0.1
   _speed[i] = (_speed[i]/1000);
 
   let shiftTop = -1.5;
@@ -407,7 +407,7 @@ for (let i = 0; i < manNumber; i++) {
   let manPosition = shiftTop + Math.floor((Math.random() * 1000) - 500)/1000;
 
   // vario la durata dei gesti
-  var _duration = Math.floor((Math.random() * 1000) + 500) * (1/_speed[i]);
+  var _duration = Math.floor((Math.random() * 1000) + 500);
 
   mansHead.push( new mojs.Shape({
     parent:           '.omini',

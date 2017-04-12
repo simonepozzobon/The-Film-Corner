@@ -10747,7 +10747,7 @@ __WEBPACK_IMPORTED_MODULE_1_jquery___default()(window).resize(function () {
  *
  */
 
-var manColor = '#3E3940'; // '#bdbfc1';
+var manColor = '#696759'; // '#bdbfc1';
 var manScale = 0.4; // dimensione
 var manNumber = 50; // total people
 var leftStreet = 0.4; // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
@@ -10775,7 +10775,7 @@ for (var i = 0; i < manNumber; i++) {
   }
 
   // genero una velocità per ognuno
-  _speed[i] = Math.floor(Math.random() * 100 + 50); // compresa tra O.05 e 0.1
+  _speed[i] = Math.floor(Math.random() * 100 + 30); // compresa tra O.05 e 0.1
   _speed[i] = _speed[i] / 1000;
 
   var shiftTop = -1.5;
@@ -10784,7 +10784,7 @@ for (var i = 0; i < manNumber; i++) {
   var _manPosition = shiftTop + Math.floor(Math.random() * 1000 - 500) / 1000;
 
   // vario la durata dei gesti
-  var _duration = Math.floor(Math.random() * 1000 + 500) * (1 / _speed[i]);
+  var _duration = Math.floor(Math.random() * 1000 + 500);
 
   mansHead.push(new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Shape({
     parent: '.omini',
