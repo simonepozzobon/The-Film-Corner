@@ -92,16 +92,16 @@
 // Grayscale and brand colors for use across Bootstrap.
 
 // Start with assigning color names to specific hex values.
-$white:  #fff !default;
-$black:  #252525 !default;
-$red:    #FE595A !default;
-$orange: #FD9B43 !default;
-$yellow: #FADA28 !default;
-$green:  #48C0B8 !default;
-$blue:   #0275d8 !default;
-$teal:   #5bc0de !default;
-$pink:   #ff5b77 !default;
-$purple: #613d7c !default;
+$white:       #fff !default;
+$black:       #252525 !default;
+$red:         #FE595A !default;
+$orange:      #FD9B43 !default;
+$yellow:      #FADA28 !default;
+$green:       #48C0B8 !default;
+$blue:        #4597DE !default;
+$teal:        #5bc0de !default;
+$pink:        #ff5b77 !default;
+$purple:      #613d7c !default;
 
 // Create grayscale
 $gray-dark:                 #292b2c !default;
@@ -268,7 +268,7 @@ $font-size-h5: 1.25rem !default;
 $font-size-h6: 1rem !default;
 
 $headings-margin-bottom: ($spacer / 2) !default;
-$headings-font-family:   $font-family-serif !default;
+$headings-font-family:   $font-family-sans-serif !default;
 $headings-font-weight:   900 !default;
 $headings-line-height:   1.1 !default;
 $headings-color:         inherit !default;
@@ -359,8 +359,8 @@ $table-border-color:            $gray-lighter !default;
 //
 // For each of Bootstrap's buttons, define text, background and border color.
 
-$btn-padding-x:                  1rem !default;
-$btn-padding-y:                  .5rem !default;
+$btn-padding-x:                  1.2rem !default;
+$btn-padding-y:                  .7rem !default;
 $btn-line-height:                1.25 !default;
 $btn-font-weight:                $font-weight-normal !default;
 $btn-box-shadow:                 inset 0 1px 0 rgba($white,.15), 0 1px 1px rgba($black,.075) !default;

@@ -40,6 +40,11 @@ Route::get('/post/{id}', function ($id) {
 
 Route::get('/map', 'MapController@index')->name('map.index');
 
+
+// Feedback controller
+Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
+
+
 Auth::routes();
 
 Route::get('/logout', 'Auth\LoginController@logout');

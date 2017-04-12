@@ -10,6 +10,9 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav justify-content-end">
       <li class="nav-item">
+        <a href="{{ url('/') }}" class="nav-link">Home</a>
+      </li>
+      <li class="nav-item">
         <a href="{{ url('/') }}#project" class="nav-link">The Project</a>
       </li>
       <li class="nav-item">
@@ -17,9 +20,6 @@
       </li>
       <li class="nav-item">
         <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ url('/') }}#apps" class="nav-link">Apps</a>
       </li>
       <li class="nav-item">
         <a href="{{ url('/') }}#login" class="nav-link">Login</a>

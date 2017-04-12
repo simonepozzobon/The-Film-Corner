@@ -22,9 +22,6 @@
 
 @endsection
 @section('content')
-  <div class="choice ">
-
-  </div>
   <div class="map-wrapper">
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-bottom m-6">
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -297,6 +294,6 @@
 
     </script>
 
-      <script src="//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-      <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap" async defer></script>
+    <script src="//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyBMuYp_fLHyQ-vkDFpJzLdS6WoU_uYSBHs&callback=initMap" async defer></script>
 @endsection
