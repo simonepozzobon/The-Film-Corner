@@ -6,6 +6,9 @@
         <div class="block-container pb-5">
           <a href="https://eacea.ec.europa.eu/about-eacea" target="_blank"><img class="eu__img w-50"src="/img/home/eu-flag.jpg"></a>
         </div>
+
+      </div>
+      <div class="col-md-4 p-5">
         <div class="block-container pb-5">
           <div class="block-title">
             <h2>The Film Corner</h2>
@@ -27,8 +30,6 @@
             </ul>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 p-5">
         {{-- Social Section --}}
       </div>
       <div class="col-md-4 p-5">
