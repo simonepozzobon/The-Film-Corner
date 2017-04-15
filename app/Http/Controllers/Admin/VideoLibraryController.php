@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Main;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class FooterController extends Controller
+class VideoLibraryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class FooterController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.video_library.index')
     }
 
     /**
@@ -35,6 +35,7 @@ class FooterController extends Controller
      */
     public function store(Request $request)
     {
+        //
     }
 
     /**

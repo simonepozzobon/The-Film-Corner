@@ -17,6 +17,31 @@ use App\Partner;
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| PROGRESS
+|--------------------------------------------------------------------------
+*/
+
+Route::get('video-test', 'Admin\VideoController@index')->name('video-test.index');
+
+
+/*
+|--------------------------------------------------------------------------
+| NEED UPDATE
+|--------------------------------------------------------------------------
+*/
+
+// Feedback controller
+Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
+
 // need to create a controller for these maybe Main or FrontendController
 Route::get('/', function () {
     $posts = Post::where('category_id', '=', 1)->latest()->limit(5)->get();
@@ -26,32 +51,70 @@ Route::get('/', function () {
                 ->with('partners', $partners);
 });
 
-Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
-
 Route::get('/posts', function () {
   $posts = Post::with('author')->get();
   return view('blog.list')->with('posts', $posts);
 });
 
 Route::get('/post/{id}', function ($id) {
-  $post = Post::findOrFail($id); // Prende i post con id
-  return view('blog.post')->with('post', $post); // ritorno la view con il post
+  $post = Post::findOrFail($id);
+  return view('blog.post')->with('post', $post);
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| DONE
+|--------------------------------------------------------------------------
+*/
+
+Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
+
+// Map Public Route
 Route::get('/map', 'MapController@index')->name('map.index');
-
-
-// Feedback controller
-Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
-
-
+// Auth
 Auth::routes();
-
+// Logout
 Route::get('/logout', 'Auth\LoginController@logout');
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| Admin Routes (Admin Panel)
+|--------------------------------------------------------------------------
+|
+*/
 
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {
 
+  /*
+  |--------------------------------------------------------------------------
+  | WORKING
+  |--------------------------------------------------------------------------
+  | - add video library to manage all the video in once then assign to apps.
+  */
+
+
+
+  /*
+  |--------------------------------------------------------------------------
+  | NEED UPDATE
+  |--------------------------------------------------------------------------
+  */
+
+  // Apps menu settings
+  Route::prefix('app')->group(function () {
+    Route::resource('app_1', 'Admin\App\App1Controller');
+  });
+
+  /*
+  |--------------------------------------------------------------------------
+  | DONE
+  |--------------------------------------------------------------------------
+  */
   // Auth
   Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
   Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
@@ -63,11 +126,6 @@ Route::prefix('admin')->group(function () {
   Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
   Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
   Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
-
-  // Apps menu settings
-  Route::prefix('app')->group(function () {
-    Route::resource('app_1', 'Admin\App\App1Controller');
-  });
 
   // Maps settings
   Route::prefix('map')->group( function() {
@@ -98,6 +156,16 @@ Route::prefix('admin')->group(function () {
 
 });
 
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| Teacher Routes (Teacher Panel)
+|--------------------------------------------------------------------------
+|
+*/
+
 // Teacher Panel Teacher
 Route::prefix('teacher')->group(function() {
   // Auth
@@ -111,6 +179,15 @@ Route::prefix('teacher')->group(function() {
 });
 
 
+/*
+|
+|
+|--------------------------------------------------------------------------
+| Student Routes (Student Panel)
+|--------------------------------------------------------------------------
+|
+*/
+
 // Student Panel Routes
 Route::prefix('student')->group(function() {
   // Auth
@@ -118,14 +195,4 @@ Route::prefix('student')->group(function() {
   Route::post('/login', 'Auth\StudentLoginController@login')->name('student.login.submit');
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
-});
-
-Route::prefix('test')->group(function () {
-  Route::prefix('api')->group(function () {
-    Route::get('/{id}', 'TestController@show')->name('api.categories.show');
-    Route::delete('/{id}', 'TestController@destroy')->name('api.categories.delete');
-    Route::post('/', 'TestController@store')->name('api.categories.store');
-    Route::get('/', 'TestController@index')->name('api.categories.index');
-  });
-  Route::get('/', function() { return view('test'); });
 });

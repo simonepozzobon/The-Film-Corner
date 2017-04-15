@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
+        "barryvdh/laravel-debugbar": "^2.3",
         "doctrine/dbal": "^2.5",
         "egeloen/google-map": "^2.0",
         "egeloen/serializer": "^1.0",
@@ -13,7 +14,8 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.3.0",
-        "mews/purifier": "^2.0"
+        "mews/purifier": "^2.0",
+        "php-ffmpeg/php-ffmpeg": "^0.9.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

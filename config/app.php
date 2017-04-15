@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -185,6 +186,9 @@ return [
 
         // HTML purifier
         Mews\Purifier\PurifierServiceProvider::class,
+
+        // Debug
+        'Barryvdh\Debugbar\ServiceProvider',
 
     ],
 
@@ -242,6 +246,9 @@ return [
 
         // HTML Purifier
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+
+        // Debug
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
     ],
 
 ];
