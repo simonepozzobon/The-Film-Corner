@@ -1,13 +1,46 @@
+
+// colors
+@white:             #fff;
+@black:             #252525;
+@red:               #FE595A;
+@orange:            #FD9B43;
+@yellow:            #FADA28;
+@yellow-dark:       #F8D349;
+@green:             #48C0B8;
+@blue:              #4597DE;
+@teal:              #5bc0de;
+@pink:              #ff5b77;
+@purple:            #613d7c;
+
+// grayscale
+@gray-dark:         #292b2c;
+@gray:              #464a4c;
+@gray-light:        #636c72;
+@gray-lighter:      #eceeef;
+@gray-lightest:     #f7f7f9;
+
+// border
+@border-width:      1px solid;
+@border-radius:     0.25rem;
+
+// typo
+@font-size-base:    1rem;
+@font-size-lg:      1.25rem;
+@font-size-sm:      .875rem;
+@font-size-xs:      .75rem;
+
+// shadows
+@shadows:           0 .1rem 0 @black;
+
 .timetooltip {
   visibility: hidden;
   white-space: nowrap;
   position: fixed;
-  background-color: lightgreen;
-  border-radius: 5px;
-  border: 1px solid green;
-  font-size: 10px;
+  background-color: @teal;
+  border-radius: @border-radius;
+  font-size: @font-size-base;
   font-weight: bold;
-  padding: 3px;
+  padding: 0.5rem;
   z-index: 2003;
 
     &.active {
@@ -21,7 +54,7 @@ mt-timelines {
   .timelines-tick-navigator {
     width : 100%;
     height: 15px;
-    border: 1px solid black;
+    // border: 1px solid black;
     border-bottom: 0;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -32,7 +65,6 @@ mt-timelines {
     .tickHandlerHeader {
       height: 15px;
       width: 150px;
-      border-right: 1px solid black;
       float: left;
     }
 
@@ -94,7 +126,7 @@ mt-timelines {
           height: 0;
           border-left: 6px solid transparent;
           border-right: 6px solid transparent;
-          border-top: 12px solid blue;
+          border-top: 12px solid @red;
         }
 
         .tickHandler {
@@ -114,7 +146,7 @@ mt-timelines {
   .timelines-group {
     width : 100%;
     height: calc(~"100% - 16px"); /* remove header height, its a patch */
-    border: 1px solid black;
+    // border: 1px solid black;
     overflow-x: hidden;
     overflow-y: scroll;
     position: relative;
@@ -125,30 +157,21 @@ mt-timelines {
       width: 150px;
       vertical-align: top;
       float: left;
-      background-color: gray;
-      color: white;
-      border-right: 1px black dashed;
+      background-color: @gray-lightest;
+      color: @white;
       min-height: 100%;
 
       .timeline-header {
-        background-color : #999;
+        background-color : @gray-light;
         vertical-align: middle;
         overflow: hidden;
-        background: rgb(255,255,255); /* Old browsers */
-        background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
-        background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
-        background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
 
         span {
           top: 50%;
           height: 18px;
           margin-top: -9px; /* = height/2 */
           padding-left: 5px;
-          color: #888;
+          color: @white;
         }
       }
     }
@@ -170,14 +193,14 @@ mt-timelines {
         position: absolute;
         width: 1px;
         top: 0px;
-        background-color: blue;
-        box-shadow: 0px 0px 3px #888897;
+        background-color: @red;
+        box-shadow: @shadows;
       }
 
       mt-timeline {
         display : block;
         position : relative;
-        border-top: 1px dotted grey;
+        // border-top: 1px dotted grey;
 
         .timeline-content {
           overflow: hidden;
@@ -195,8 +218,7 @@ mt-timelines {
             display: inline-block;
             position: absolute;
             height: 80%;
-            background-color: #F0FFE0;
-            border: 1px solid #7A995C;
+            background-color: @yellow;
 
             &.highlight {
               top: 1px;
@@ -245,13 +267,13 @@ mt-timelines {
 
               &.highlight {
                 background: rgb(255,255,255); /* Old browsers */
-                background: -moz-linear-gradient(left,  rgba(255,255,255,1) 0%, rgba(255,48,25,1) 100%); /* FF3.6+ */
-                background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(255,48,25,1))); /* Chrome,Safari4+ */
-                background: -webkit-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,48,25,1) 100%); /* Chrome10+,Safari5.1+ */
-                background: -o-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,48,25,1) 100%); /* Opera 11.10+ */
-                background: -ms-linear-gradient(left,  rgba(255,255,255,1) 0%,rgba(255,48,25,1) 100%); /* IE10+ */
-                background: linear-gradient(to right,  rgba(255,255,255,1) 0%,rgba(255,48,25,1) 100%); /* W3C */
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ff3019',GradientType=1 ); /* IE6-9 */
+                background: -moz-linear-gradient(left,  @yellow 0%, @yellow-dark 100%); /* FF3.6+ */
+                background: -webkit-gradient(linear, left top, right top, color-stop(0%,@yellow), color-stop(100%,@yellow-dark)); /* Chrome,Safari4+ */
+                background: -webkit-linear-gradient(left,  @yellow 0%,@yellow-dark 100%); /* Chrome10+,Safari5.1+ */
+                background: -o-linear-gradient(left,  @yellow 0%,@yellow-dark 100%); /* Opera 11.10+ */
+                background: -ms-linear-gradient(left,  @yellow 0%,@yellow-dark 100%); /* IE10+ */
+                background: linear-gradient(to right,  @yellow 0%,@yellow-dark 100%); /* W3C */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=@yellow, endColorstr=@yellow-dark,GradientType=1 ); /* IE6-9 */
               }
 
               &.cursor {
@@ -275,7 +297,6 @@ mt-timelines {
             position: absolute;
             top: 3px;
             margin-left: -5px;
-            border: 1px solid white;
 
             &.highlight {
               height: 10px;

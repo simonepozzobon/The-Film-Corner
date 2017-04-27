@@ -151,19 +151,6 @@ angular.module('mt.demo', ['mt.media-timeline'])
                       duration : 450
                     }
                   ]
-                }, {
-                  name : 'multiAnimation3',
-                  points :
-                  [
-                    {
-                      tick : 10,
-                      id : 'guid3',
-                    },
-                    {
-                      tick : 210,
-                      id : 'guid4',
-                    }
-                  ]
                 }
               ]
           }

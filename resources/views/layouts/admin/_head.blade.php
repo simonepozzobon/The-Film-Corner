@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="{{ asset('admin-assets/css/image-picker.css') }}">
   {{-- Custom Style --}}
   <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
+  {{-- Font Awesome --}}
+  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 
   {{-- Google Analytics --}}
   <script>

@@ -96,8 +96,12 @@ Route::prefix('admin')->group(function () {
   |--------------------------------------------------------------------------
   | - add video library to manage all the video in once then assign to apps.
   */
-
-
+  Route::prefix('/video-library')->group(function() {
+    Route::resource('/video-api-library', 'Admin\VideoLibraryController');
+    Route::get('/', function() {
+      return view('admin.video_library.index');
+    })->name('video-library.index');
+  });
 
   /*
   |--------------------------------------------------------------------------

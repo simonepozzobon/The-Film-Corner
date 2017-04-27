@@ -16,7 +16,10 @@ class CreateVideoLibrariesTable extends Migration
         Schema::create('video_libraries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
-            $table->string('path');
+            $table->string('path_x264');
+            $table->string('path_wmv')->nullable();
+            $table->string('path_webm')->nullable();
+            $table->string('thumb');
             $table->timestamps();
         });
     }

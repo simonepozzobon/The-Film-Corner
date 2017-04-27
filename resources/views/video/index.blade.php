@@ -1,14 +1,14 @@
-@extends('layouts.admin')
-@section('page-title')
+@extends('layouts.main')
+@section('title')
   Video Test
 @endsection
 @section('stylesheets')
   <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}">
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}">
+  {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
 @endsection
 @section('content')
-  <div class="clearfix" ng-app="App" ng-cloak>
+  <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak>
     <div class="row">
       <div class="col-md-8">
         <div ng-controller="videoController as controller">
@@ -40,7 +40,7 @@
         Settings
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
         <div ng-controller="DemoMediaTimelineController">
       		<mt-timelines data="timelines" style="height: 200px;" tick="tick" is-disable="enable"
