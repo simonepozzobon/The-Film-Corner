@@ -10427,6 +10427,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ["ngSanitize
       poster: "http://www.videogular.com/assets/images/videogular.png"
     }
   };
+  console.log($sce);
 }]);
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mt.demo', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope) {
@@ -10463,46 +10464,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mt.demo', ['mt.media-tim
   };
 
   $scope.timelines = [{
-    name: 'timeline1-name',
-    data: { id: 'timeline1' },
-    lines: [{
-      events: [{
-        name: 'animation1',
-        data: { id: 'animation1-guid' },
-        start: 10,
-        duration: 190,
-        'class': 'fade-out'
-      }, {
-        name: 'animation2',
-        data: { id: 'animation2-guid' },
-        start: 210,
-        duration: 200,
-        'class': 'fade-in'
-      }]
-    }, {
-      name: 'multiAnimation1',
-      data: { id: 'multiAnimation1-guid' },
-      points: [{
-        tick: 10,
-        data: { id: 'guid1' }
-      }, {
-        tick: 210,
-        data: { id: 'guid2' }
-      }]
-    }, {
-      name: 'multiAnimation2',
-      points: [{
-        tick: 24,
-        data: { id: 'guid7' }
-      }, {
-        tick: 104,
-        data: { id: 'guid5' }
-      }, {
-        tick: 250,
-        data: { id: 'guid6' }
-      }]
-    }]
-  }, {
     name: 'timeline2-name',
     data: { id: 'timeline2-guid' },
     lines: [{
@@ -10516,31 +10477,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mt.demo', ['mt.media-tim
         data: { id: 'animation4-guid' },
         start: 500,
         duration: 450
-      }]
-    }, {
-      name: 'multiAnimation3',
-      points: [{
-        tick: 10,
-        id: 'guid3'
-      }, {
-        tick: 210,
-        id: 'guid4'
-      }]
-    }]
-  }, {
-    name: 'timeline4-name',
-    data: { id: 'timeline4-guid' },
-    lines: [{
-      events: [{
-        name: 'animation6',
-        data: { id: 'animation6-guid' },
-        start: 150,
-        duration: 100
-      }, {
-        name: 'animation7',
-        data: { id: 'animation7-guid' },
-        start: 500,
-        duration: 4500
       }]
     }]
   }];
