@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\VideoLibrary;
 use FFMpeg; //php-FFmpeg
 
 class VideoController extends Controller
@@ -16,6 +17,20 @@ class VideoController extends Controller
             'timeout'          => 3600, // the timeout for the underlying process
             'ffmpeg.threads'   => 12,   // the number of threads that FFMpeg should use
         ]);
-      return view('video.index');
+
+      $elements = VideoLibrary::all();
+
+      return view('video.index', compact('elements'));
+    }
+
+    public function upload(Request $request)
+    {
+
+  		$file = $request->file('file');
+      $ext = $file->getClientOriginalExtension();
+      $name = $file->getClientOriginalName();
+
+      return response()->json(['success' => $name]);
+
     }
 }
