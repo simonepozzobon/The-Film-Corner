@@ -30,6 +30,8 @@ const { mix } = require('laravel-mix');
     .sass('resources/assets/sass/app/2.1/videogular.scss', 'public/css/app/2.1/style.css')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')
+    // .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
+    .sass('node_modules/dropzone/src/dropzone.scss', 'public/css/app/2.1/dropzone.css')
 
     // ADMIN SCRIPTS
 

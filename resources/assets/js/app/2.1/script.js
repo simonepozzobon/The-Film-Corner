@@ -7,6 +7,9 @@ require('videogular/dist/poster/vg-poster.js');
 require('videogular-overlay-play');
 require('videogular-buffering');
 
+// dropzone
+require('dropzone/dist/dropzone.js');
+
 // Angular Media Timeline
 require('angular-media-timeline/timeline.js')
 
