@@ -10406,18 +10406,19 @@ __webpack_require__(21);
 'use strict';
 
 // Define the service
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Category', function ($http, CSRF_TOKEN) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Video', function ($http, CSRF_TOKEN) {
+
   // Get all the category
   return {
     get: function get() {
       return $http.get('test/api');
     },
 
-    save: function save(categoryData) {
+    save: function save(videoData) {
       return $http({
         method: 'POST',
         url: '', //url: "{{ route('categories.index') }}",
-        data: $.param(categoryData),
+        data: $.param(videoData),
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
       });
     },
@@ -10428,16 +10429,17 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
         url: '' //url: "{{ route('categories.index') }}/"+id
       });
     }
+
   };
 });
 
 // Define the controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controller('mainController', function ($scope, $http, Category) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controller('mainController', function ($scope, $http, Video) {
   // models
-  $scope.categoryData = {}; // Initialize the object
+  $scope.videoData = {}; // Initialize the object
 
-  // get function from factory of the Category service
-  // Category.get().then(function(response) {
+  // get function from factory of the Video service
+  // Video.get().then(function(response) {
   //     $scope.categories = response.data;
   //   });
 });
@@ -10461,56 +10463,11 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ["ngSanitize
   console.log($sce);
 }]);
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mt.demo', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope) {
-  $scope.tick = 200;
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, sharedTimelines) {
+  $scope.tick = 0;
   $scope.disable = false;
-  $scope.addTimeline = function () {
-    var timeline = {
-      name: 'timeline2-name',
-      data: { id: 'timeline2-guid' },
-      lines: [{
-        events: [{
-          name: 'animation3',
-          data: { id: 'animation3-guid' },
-          start: 100,
-          duration: 100
-        }, {
-          name: 'animation4',
-          data: { id: 'animation4-guid' },
-          start: 500,
-          duration: 450
-        }]
-      }, {
-        name: 'multiAnimation3',
-        points: [{
-          tick: 10,
-          id: 'guid3'
-        }, {
-          tick: 210,
-          id: 'guid4'
-        }]
-      }]
-    };
-    $scope.timelines.push(timeline);
-  };
 
-  $scope.timelines = [{
-    name: 'timeline2-name',
-    data: { id: 'timeline2-guid' },
-    lines: [{
-      events: [{
-        name: 'animation3',
-        data: { id: 'animation3-guid' },
-        start: 100,
-        duration: 100
-      }, {
-        name: 'animation4',
-        data: { id: 'animation4-guid' },
-        start: 500,
-        duration: 450
-      }]
-    }]
-  }];
+  $scope.timelines = sharedTimelines.getTimelines();
 
   $scope.onTickChange = function (tick) {
     console.log(tick);
@@ -10568,8 +10525,52 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mt.demo', ['mt.media-tim
   };
 });
 
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, sharedTimelines) {
+
+  $scope.addElement = function (id, title) {
+
+    var timeline = {
+      name: title,
+      data: { id: title + '-guid' },
+      lines: [{
+        events: [{
+          name: 'animationID',
+          data: { id: 'animationID-guid' },
+          start: 100,
+          duration: 100
+        }]
+      }]
+    };
+
+    sharedTimelines.addTimeline(timeline);
+  };
+});
+
 // Define the Application
-var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mt.demo', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).service('sharedTimelines', function () {
+  var timelines = [{
+    name: 'timeline3-name',
+    data: { id: 'timeline3-guid' },
+    lines: [{
+      events: [{
+        name: 'animation5',
+        data: { id: 'animation5-guid' },
+        start: 100,
+        duration: 100
+      }]
+    }]
+  }];
+
+  return {
+    getTimelines: function getTimelines() {
+      return timelines;
+    },
+
+    addTimeline: function addTimeline(timeline) {
+      timelines.push(timeline);
+    }
+  };
+}).constant("CSRF_TOKEN", '{{ csrf_token() }}');
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),

@@ -69,13 +69,13 @@
                       </td>
                       <td class="align-middle">{{ $element->title }}</td>
                       <td class="align-middle">
-                        <div class="btn-group">
+                        <div class="btn-group" ng-controller="toolController">
                           <a href="#" class="btn btn-info">
                             <i class="fa fa-eye" aria-hidden="true"></i> Preview
                           </a>
-                          <a href="#" class="btn btn-primary">
+                          <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}')" class="btn btn-primary">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add Media
-                          </a>
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -104,7 +104,6 @@
             event-durationchange="onEventDurationChange(timelineData, eventData, newDuration)"
             event-click="onEventClick(timelineData, eventData)"
             tick-ratio="30";></mt-timelines>
-          <button ng-click="addTimeline()">Add timeline</button>
       	</div>
       </div>
     </div>
