@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use FFMpeg;
 use App\VideoLibrary;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -16,94 +17,103 @@ class VideoLibraryController extends Controller
         return response(compact('videos'));
     }
 
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
-      $bins = [
-          'ffmpeg.binaries'  => '/usr/local/bin/ffmpeg', // the path to the FFMpeg binary
-          'ffprobe.binaries' => '/usr/local/bin/ffprobe', // the path to the FFProbe binary
+      // definisco la library di FFMPEG
+      define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
+
+      // definisco la path global
+      $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+
+      // Get The File
+      $file = $request->file('video');
+
+      // get more informations
+      $det = [
+        'name'  => $file->getClientOriginalName(),
+        'noext' => preg_replace('/\\.[^.\\s]{3,4}$/', '', $file->getClientOriginalName()),
+        'ext'   => $file->getClientOriginalExtension(),
+        'size'  => $file->getSize(),
+        'mime'  => $file->getMimeType(),
+        'path'  => $file->getRealPath(),
       ];
 
-        session()->flash('success',$request);
+      // create a uniq id
+      $filename = uniqid();
 
-        // // Init FFmpeg
-        // $ffmpeg = FFMpeg\FFMpeg::create($bins);
-        //
-        // // get the file
-        // $file = $request->file('video');
-        // $fileExt = $file->getClientOriginalExtension();
-        // $filename = uniqid();
-        //
-        // // salvo il file così com'è
-        // $file = $file->storeAs('public/video', "$filename.$fileExt");
-        //
-        // // Set the absolute path to storage folder
-        // $globalPath = Storage::disk('local')->getDriver()->getAdapter();
-        //
-        // // Creo l'oggetto video
-        // $filePath = $globalPath->applyPathPrefix($file);
-        // $video = $ffmpeg->open($filePath);
-        //
-        // // Prendo la durata del video
-        // $ffprobe = FFMpeg\FFProbe::create($bins);
-        // $length = $ffprobe
-        //     ->format($filePath) // extracts file informations
-        //     ->get('duration');
-        //
-        // // Definisco il percorso per per il frame
-        // $thumbPath = $globalPath->applyPathPrefix("public/video/$filename.jpg");
-        //
-        // // Estraggo il frame
-        // if ($length > 10) {
-        //   $thumb = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds(10))->save($thumbPath);
-        // } else {
-        //   $middle = $length / 2;
-        //   $thumb = $video->frame(FFMpeg\Coordinate\TimeCode::fromSeconds($middle))->save($thumbPath);
-        // }
-        //
-        // //scrivo la path pubblica senza esporre le cartelle del server
-        // $thumbPublic = Storage::url("video/$filename.jpg");
-        //
-        // // Converto il video nel formato mp4
-        // $format = new FFMpeg\Format\Video\X264('aac', 'libx264');
-        //
-        // // Da lavorare, deve mandarmi indietro il progress di quello che sta succedendo
-        // $format->on('progress', function ($video, $format, $percentage) {
-        //   session()->flash('info', "$percentage % transcoded");
-        // });
-        //
-        // // Setto i parametri aggiuntivi per la conversione
-        // $format->getExtraParams();
-        // $format->setAudioChannels(2)->setAudioKiloBitrate(256);
-        //
-        // // Setto il formato unico per i video 1920x1080
-        // $video->filters()
-        //       ->pad(new FFMpeg\Coordinate\Dimension(1920, 1080));
-        //
-        // // Salvo il file
-        // $videoPath = $globalPath->applyPathPrefix("public/video/$filename.mp4");
-        // $video->save($format, $videoPath);
-        // $videoPublic = Storage::url("video/$filename.mp4");
-        //
-        // // se il file non è un mp4 allora elimino la versione originale lasciando solo quella convertita
-        // if ($fileExt != 'mp4') {
-        //   Storage::delete($file);
-        // }
-        //
-        // // Salvo nel DB
-        // $video = new VideoLibrary;
-        // $video->title = $request->input('title');
-        // $video->path_x264 = $videoPublic;
-        // $video->thumb = $thumbPublic;
-        // $video->save();
-        //
-        // $request->session()->flash('success', 'Video uploaded!');
-        //
-        // return response()->json(['success' => true]);
+      // Allowed File Extensions
+      $video = ['mp4', 'avi','mov','mpeg','3gp','m4v','mkv','flv','FLV','MP4','MKV','MOV','AVI','MPEG','MPEG'];
+      $audio = ['wav','mp3','WAV','MP3'];
+  		$image = ['jpg','png','gif','JPG','PNG','GIF'];
+
+      // Define what type of file it is
+      $ext = $det['ext'];
+
+      if (in_array($ext, $image)) {
+        $fileType = 'image';
+        $path = 'images';
+      } elseif (in_array($ext, $audio)) {
+        $fileType = 'audio';
+        $path = 'audio';
+      } elseif (in_array($ext, $video)) {
+        $fileType = 'video';
+        $path = storage_path('app/public/video/uploads');
+
+        if ($ext != 'mp4') {
+          // Salvo il file nella cartella tmp per la conversione
+          $file = $file->storeAs('public/video/tmp', $filename.'.'.$ext);
+          $filePath = $globalPath->applyPathPrefix($file);
+
+          // eseguo il comando FFMPEG
+          $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/video/uploads/').$filename.'.mp4';
+          exec($cli);
+
+          // Cancello il file temporaneo
+          Storage::delete($file);
+
+          // salvo la path del file converito per il DB
+          $path = 'video/uploads/'.$filename.'.mp4';
+
+        } elseif ($ext == 'mp4') {
+          // se è già un mp4 lo salvo direttamente senza convertirlo
+          $file = $file->storeAs('public/video/uploads', $filename.'.mp4');
+          $path = $file;
+        }
+
+        // get duration
+        $filePath = $globalPath->applyPathPrefix($path);
+
+        $cli = FFMPEG_LIB.' -i '.$filePath.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+        $duration =  exec($cli);
+
+        // Converto la durata in secondi
+        $duration = explode(":",$duration);
+        $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+        $timeToSnap = $duration / 2;
+
+        // prendo il frame e lo salvo
+        $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.storage_path('app/public/video/uploads/').$filename.'-thumb.jpg';
+        exec($cli);
+
+        // salvo la path del frame
+        $thumbPath = 'video/uploads/'.$filename.'-thumb.jpg';
+
+      } else {
+        // formato non supportato
+        $request->session()->flash('error', 'File format not supported!');
+        return back();
+      }
+
+      $el = new VideoLibrary;
+      $el->title = $request->input('title');
+      $el->file_type = $fileType;
+      $el->path = $path;
+      $el->thumb = $thumbPath;
+      $el->save();
+
+      $request->session()->flash('success', 'Media uploaded!');
+      return back();
+
     }
 
     public function show($id)

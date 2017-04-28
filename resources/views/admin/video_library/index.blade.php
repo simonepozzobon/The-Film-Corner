@@ -34,8 +34,7 @@
                   <td class="align-middle">@{{ video.id }}</td>
                   <td class="align-middle">@{{ video.title }}</td>
                   <td class="align-middle">
-                    @{{ video.thumb }}
-                    {{-- <img src="@{{ $video.thumb }}" width="57"> --}}
+                    <img ng-src="{{ url('/') }}/storage/@{{ video.thumb }}" width="57">
                   </td>
                   <td class="align-middle">
                     <div class="btn-group">
@@ -56,20 +55,32 @@
         <div class="container-fluid bg-faded p-4">
           <h3>Add Video</h3>
           <hr>
-          <form ng-submit="submitVideo()" method="post" enctype="multipart/form-data">
+          <form class="" action="{{ route('video-api-library.store') }}" method="post" enctype="multipart/form-data">
+            {{ csrf_field() }}
+            {{ method_field('POST') }}
+            <div class="form-group">
+              <h5>Title</h5>
+              <input type="text" name="title" class="form-control">
+            </div>
+            <div class="form-group">
+              <h5>File</h5>
+              <input type="file" name="video" class="form-control">
+            </div>
+            <button type="submit" name="button">Invia</button>
+          </form>
+          {{-- <form ng-submit="submitVideo()" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             <div class="form-group">
               <h5>Title</h5>
               <input type="text" name="title" class="form-control" ng-model="videoData.title">
             </div>
             <div class="form-group border-0">
-              <h5>Video</h5>
-              {{-- <input type="file" name="video" class="form-control" onchange="$scope.getFile(this)"> --}}
-              <input type="file" data-file="param.file"/>
+              <h5>Video</h5> --}}
+              {{-- <input type="file" data-file="param.file"/>
               <div>param.file: @{{param.file}}</div>
             </div>
             <button type="submit" class="btn btn-primary"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
-          </form>
+          </form> --}}
         </div>
       </div>
     </div>
