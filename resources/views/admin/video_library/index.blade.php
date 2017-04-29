@@ -27,6 +27,7 @@
               <th>Id</th>
               <th>Title</th>
               <th>Preview</th>
+              <th>Duration</th>
               <th>Tools</th>
             </thead>
             <tbody>
@@ -36,6 +37,7 @@
                   <td class="align-middle">
                     <img ng-src="{{ url('/') }}/storage/@{{ video.thumb }}" width="57">
                   </td>
+                  <td class="align-middle">@{{ video.duration }}</td>
                   <td class="align-middle">
                     <div class="btn-group">
                       <a href="#" class="btn btn-info">
