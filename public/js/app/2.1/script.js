@@ -25418,7 +25418,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 
     setTime: function setTime(_time) {
       time.value = _time;
-      console.log(time.value);
     }
 
   };

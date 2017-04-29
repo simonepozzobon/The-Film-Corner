@@ -72,7 +72,6 @@ angular.module('appService', [])
 
       setTime: function(_time) {
         time.value = _time;
-        console.log(time.value);
       }
 
     }
