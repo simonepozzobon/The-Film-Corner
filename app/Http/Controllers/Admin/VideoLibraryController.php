@@ -107,6 +107,7 @@ class VideoLibraryController extends Controller
       $el = new VideoLibrary;
       $el->title = $request->input('title');
       $el->file_type = $fileType;
+      $el->duration = $duration;
       $el->path = $path;
       $el->thumb = $thumbPath;
       $el->save();
