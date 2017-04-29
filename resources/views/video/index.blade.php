@@ -16,8 +16,10 @@
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak>
     <div class="row">
       <div class="col-md-8" ng-controller="videoController">
-        <video class="video-js vjs-default-skin" controls preload="auto" width="592" height="252" vjs-video vjs-media="mediaToggle">
-        </video>
+        <vjs-video-container vjs-ratio="16:9" vjs-media="mediaToggle">
+          <video class="video-js vjs-default-skin" controls preload="auto" >
+          </video>
+        </vjs-video-container>
       </div>
       <div class="col-md-4">
         {{-- Nav Tabs --}}
