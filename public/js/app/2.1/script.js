@@ -10466,7 +10466,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ["ngSanitize
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, sharedTimelines) {
   $scope.tick = 0;
   $scope.disable = false;
-
   $scope.timelines = sharedTimelines.getTimelines();
 
   $scope.onTickChange = function (tick) {
@@ -10527,7 +10526,11 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, sharedTimelines) {
 
-  $scope.addElement = function (id, title) {
+  $scope.addElement = function (id, title, duration) {
+
+    var d = duration * 100 / 3;
+
+    alert(d);
 
     var timeline = {
       name: title,
@@ -10536,8 +10539,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
         events: [{
           name: 'animationID',
           data: { id: 'animationID-guid' },
-          start: 100,
-          duration: 100
+          start: 0,
+          duration: d
         }]
       }]
     };
@@ -10548,18 +10551,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
 
 // Define the Application
 var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).service('sharedTimelines', function () {
-  var timelines = [{
-    name: 'timeline3-name',
-    data: { id: 'timeline3-guid' },
-    lines: [{
-      events: [{
-        name: 'animation5',
-        data: { id: 'animation5-guid' },
-        start: 100,
-        duration: 100
-      }]
-    }]
-  }];
+  var timelines = [];
 
   return {
     getTimelines: function getTimelines() {
