@@ -17,8 +17,9 @@ class CreateVideoLibrariesTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('file_type');
+            $table->string('duration')->nullable();
             $table->string('path');
-            $table->string('thumb');
+            $table->string('thumb')->nullable();
             $table->timestamps();
         });
     }
