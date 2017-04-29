@@ -16,7 +16,7 @@
     <div class="row">
       <div class="col-md-8">
         <div ng-controller="videoController as controller">
-      		<videogular vg-theme="controller.config.theme">
+      		<videogular vg-theme="controller.config.theme" vg-update-time="controller.onUpdateTime($currentTime, $duration)">
       			<vg-media vg-src="controller.config.sources"
       					vg-tracks="controller.config.tracks">
       			</vg-media>
@@ -73,7 +73,7 @@
                           <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Preview">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                           </a>
-                          <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                          <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                           </button>
                         </div>

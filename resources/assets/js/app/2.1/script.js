@@ -7,6 +7,9 @@ require('videogular/dist/poster/vg-poster.js');
 require('videogular-overlay-play');
 require('videogular-buffering');
 
+// VideoJS
+require('video.js/dist/video.js');
+
 // dropzone
 require('dropzone/dist/dropzone.js');
 
@@ -65,9 +68,10 @@ angular.module('videoCtrl', [
     "com.2fdevs.videogular",
     "com.2fdevs.videogular.plugins.controls",
     "com.2fdevs.videogular.plugins.overlayplay",
-    "com.2fdevs.videogular.plugins.poster"
+    "com.2fdevs.videogular.plugins.poster",
+    "com.2fdevs.videogular.plugins.buffering"
   ])
-  .controller('videoController', ["$sce", function ($sce) {
+  .controller('videoController', ["$sce, $sharedPlayer", function ($sce, sharedPlayer) {
 			this.config = {
 				sources: [
 					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"), type: "video/mp4"},
@@ -88,15 +92,29 @@ angular.module('videoCtrl', [
 					poster: "http://www.videogular.com/assets/images/videogular.png"
 				}
 			};
-      console.log($sce);
+
+      var controller = this;
+      controller.currentTime = null;
+      controller.duration = null;
+
+      controller.onUpdateTime = function (currentTime, duration) {
+        controller.currentTime = currentTime;
+        controller.duration = duration;
+        sharedPlayer.onUpdateTime(currentTime);
+        console.log(currentTime +' '+ duration);
+      }
+
 		}]
   );
 
 angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
-    .controller('DemoMediaTimelineController', function ($scope, sharedTimelines) {
+    .controller('DemoMediaTimelineController', function ($scope, sharedTimelines, sharedPlayer) {
     $scope.tick = 0;
     $scope.disable = false;
     $scope.timelines = sharedTimelines.getTimelines();
+
+    var tempo = sharedPlayer.onUpdateTime()
+    console.log('timeline'+tempo);
 
     $scope.onTickChange = function (tick) {
       console.log(tick);
@@ -159,11 +177,9 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 angular.module('toolCtrl', [])
   .controller('toolController', function($scope, sharedTimelines) {
 
-    $scope.addElement = function(id, title, duration) {
+    $scope.addElement = function(id, title, duration, url) {
 
       var d = (duration * 100) / 3;
-
-      alert(d);
 
       var timeline = {
         name: title,
@@ -176,7 +192,10 @@ angular.module('toolCtrl', [])
             duration : d
           }]
         }],
+        video_url: url,
       }
+
+      console.log(timeline);
 
       sharedTimelines.addTimeline(timeline);
 
@@ -204,6 +223,16 @@ angular.module('App', [
 
             addTimeline: function (timeline) {
               timelines.push(timeline);
+            }
+          }
+        })
+        .factory('sharedPlayer', function() {
+          var _currentTime = null;
+          var _duration = null;
+
+          return {
+            onUpdateTime: function(currentTime) {
+              return currentTime;
             }
           }
         })
