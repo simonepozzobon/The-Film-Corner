@@ -25418,6 +25418,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 
     setTime: function setTime(_time) {
       time.value = _time;
+      console.log(time.value);
     }
 
   };
@@ -25446,10 +25447,12 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   //listen for when the vjs-media object changes
   $scope.$on('vjsVideoReady', function (e, videoData) {
     videoData.player.on('timeupdate', function () {
+      var time = this.currentTime();
+      Timeline.setTime(time);
       var time = {
-        value: this.currentTime()
+        time: this.currentTime()
       };
-      console.log(time);
+      $scope.tick = 400;
       $scope.$broadcast('playit', time);
     });
   });
@@ -25459,16 +25462,13 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
   $scope.tick = 100;
   $scope.disable = false;
   $scope.timelines = Timeline.getTimelines();
-  $scope.gianni = 0;
 
   $scope.$on('playit', function (e, data) {
-    var time = data * 100 / 2.5;
-    time = Math.round(time);
-    $scope.tick = time;
-    console.log(data);
+    $scope.tick = data.time * 100 / 2.5;
+    console.log($scope.tick);
+    console.log('$on called');
   });
   console.log($scope.tick);
-
   $scope.onTickChange = function (tick) {
     console.log(tick);
   };
