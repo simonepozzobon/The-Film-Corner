@@ -72,7 +72,7 @@ class VideoLibraryController extends Controller
           Storage::delete($file);
 
           // salvo la path del file converito per il DB
-          $path = 'video/uploads/'.$filename.'.mp4';
+          $path = 'public/video/uploads/'.$filename.'.mp4';
 
         } elseif ($ext == 'mp4') {
           // se è già un mp4 lo salvo direttamente senza convertirlo
