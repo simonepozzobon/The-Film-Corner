@@ -50,8 +50,9 @@ angular.module('appService', [])
 
 
     }
-  }).factory('sharedTimelines', function(){
+  }).factory('Timeline', function(){
     var timelines = [];
+    var time = null;
 
     return {
       getTimelines: function() {
@@ -60,6 +61,10 @@ angular.module('appService', [])
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
+      },
+
+      setTime: function(time) {
+        return time;
       }
     }
   });
@@ -79,7 +84,7 @@ angular.module('mainCtrl', [])
 
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
-  .controller('videoController', ['$scope', 'sharedTimelines', function (scope, sharedTimelines) {
+  .controller('videoController', ['$scope', 'Timeline', function (scope, Timeline) {
         scope.mediaToggle = {
             sources: [
                 {
@@ -90,16 +95,20 @@ angular.module('videoCtrl', ['vjs.video'])
         };
 
         //listen for when the vjs-media object changes
-        scope.$on('vjsVideoMediaChanged', function (e, data) {
-            console.log('vjsVideoMediaChanged event was fired');
+        scope.$on('vjsVideoReady', function (e, videoData) {
+         scope.playInstance = videoData.player;
+         videoData.player.on('timeupdate', function () {
+           time = this.currentTime();
+           console.log(this.currentTime());
+          })
         });
     }]);
 
 angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
-    .controller('DemoMediaTimelineController', function ($scope, sharedTimelines) {
+    .controller('DemoMediaTimelineController', function ($scope, Timeline) {
     $scope.tick = 0;
     $scope.disable = false;
-    $scope.timelines = sharedTimelines.getTimelines();
+    $scope.timelines = Timeline.getTimelines();
 
     $scope.onTickChange = function (tick) {
       console.log(tick);
@@ -160,7 +169,7 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     });
 
 angular.module('toolCtrl', [])
-  .controller('toolController', function($scope, sharedTimelines) {
+  .controller('toolController', function($scope, Timeline) {
 
     $scope.addElement = function(id, title, duration, url) {
 
@@ -180,7 +189,7 @@ angular.module('toolCtrl', [])
         video_url: url,
       }
 
-      sharedTimelines.addTimeline(timeline);
+      Timeline.addTimeline(timeline);
 
     }
 
