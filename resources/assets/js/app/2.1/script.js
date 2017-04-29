@@ -51,7 +51,7 @@ angular.module('appService', [])
 
     }
   }).factory('sharedTimelines', function(){
-    var timelines = ['gianni'];
+    var timelines = [];
 
     return {
       getTimelines: function() {
