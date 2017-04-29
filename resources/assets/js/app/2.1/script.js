@@ -125,7 +125,6 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
     $scope.$on('playit', function(e, data) {
       $scope.tick = (data.time*100)/2.5;
-      console.log($scope.tick);
       console.log('$on called');
     });
     console.log($scope.tick);
