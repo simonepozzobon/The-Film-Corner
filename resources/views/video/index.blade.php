@@ -4,6 +4,7 @@
 @endsection
 @section('stylesheets')
   <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}">
+  <link rel="stylesheet" href="{{ mix('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
   <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
@@ -14,31 +15,9 @@
   </div>
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak>
     <div class="row">
-      <div class="col-md-8">
-        <div ng-controller="videoController as controller">
-      		<videogular vg-theme="controller.config.theme" vg-update-time="controller.onUpdateTime($currentTime, $duration)">
-      			<vg-media vg-src="controller.config.sources"
-      					vg-tracks="controller.config.tracks">
-      			</vg-media>
-
-      			<vg-controls>
-      				<vg-play-pause-button></vg-play-pause-button>
-      				<vg-time-display>@{{ currentTime | date:"mm:ss" }}</vg-time-display>
-      				<vg-scrub-bar>
-      					<vg-scrub-bar-current-time></vg-scrub-bar-current-time>
-      				</vg-scrub-bar>
-      				<vg-time-display>@{{ timeLeft | date:'mm:ss' }}</vg-time-display>
-      				<vg-volume>
-      					<vg-mute-button></vg-mute-button>
-      					<vg-volume-bar></vg-volume-bar>
-      				</vg-volume>
-      				<vg-fullscreen-button></vg-fullscreen-button>
-      			</vg-controls>
-
-      			<vg-overlay-play></vg-overlay-play>
-      			<vg-poster vg-url='controller.config.plugins.poster'></vg-poster>
-      		</videogular>
-      	</div>
+      <div class="col-md-8" ng-controller="videoController">
+        <video class="video-js vjs-default-skin" controls preload="auto" width="592" height="252" vjs-video vjs-media="mediaToggle">
+        </video>
       </div>
       <div class="col-md-4">
         {{-- Nav Tabs --}}

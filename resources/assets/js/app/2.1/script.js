@@ -1,14 +1,17 @@
 import angular from 'angular';
 
-// Video Playe Videogular
-require('videogular/dist/videogular/videogular.js');
-require('videogular/dist/controls/vg-controls.js');
-require('videogular/dist/poster/vg-poster.js');
-require('videogular-overlay-play');
-require('videogular-buffering');
+// // Video Playe Videogular
+// require('videogular/dist/videogular/videogular.js');
+// require('videogular/dist/controls/vg-controls.js');
+// require('videogular/dist/poster/vg-poster.js');
+// require('videogular-overlay-play');
+// require('videogular-buffering');
 
 // VideoJS
 require('video.js/dist/video.js');
+
+// Angular VideoJS
+require('vjs-video/dist/vjs-video.js');
 
 // dropzone
 require('dropzone/dist/dropzone.js');
@@ -47,6 +50,18 @@ angular.module('appService', [])
 
 
     }
+  }).factory('sharedTimelines', function(){
+    var timelines = ['gianni'];
+
+    return {
+      getTimelines: function() {
+        return timelines;
+      },
+
+      addTimeline: function (timeline) {
+        timelines.push(timeline);
+      }
+    }
   });
 
 // Define the controller
@@ -63,58 +78,28 @@ angular.module('mainCtrl', [])
   });
 
 // Define the video controller
-angular.module('videoCtrl', [
-    "ngSanitize",
-    "com.2fdevs.videogular",
-    "com.2fdevs.videogular.plugins.controls",
-    "com.2fdevs.videogular.plugins.overlayplay",
-    "com.2fdevs.videogular.plugins.poster",
-    "com.2fdevs.videogular.plugins.buffering"
-  ])
-  .controller('videoController', ["$sce, $sharedPlayer", function ($sce, sharedPlayer) {
-			this.config = {
-				sources: [
-					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.mp4"), type: "video/mp4"},
-					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.webm"), type: "video/webm"},
-					{src: $sce.trustAsResourceUrl("http://static.videogular.com/assets/videos/videogular.ogg"), type: "video/ogg"}
-				],
-				tracks: [
-					{
-						src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
-						kind: "subtitles",
-						srclang: "en",
-						label: "English",
-						default: "true"
-					}
-				],
-				theme: "css/app/2.1/style.css",
-				plugins: {
-					poster: "http://www.videogular.com/assets/images/videogular.png"
-				}
-			};
+angular.module('videoCtrl', ['vjs.video'])
+  .controller('videoController', ['$scope', 'sharedTimelines', function (scope, sharedTimelines) {
+        scope.mediaToggle = {
+            sources: [
+                {
+                    src: 'http://static.videogular.com/assets/videos/videogular.mp4',
+                    type: 'video/mp4'
+                }
+            ],
+        };
 
-      var controller = this;
-      controller.currentTime = null;
-      controller.duration = null;
-
-      controller.onUpdateTime = function (currentTime, duration) {
-        controller.currentTime = currentTime;
-        controller.duration = duration;
-        sharedPlayer.onUpdateTime(currentTime);
-        console.log(currentTime +' '+ duration);
-      }
-
-		}]
-  );
+        //listen for when the vjs-media object changes
+        scope.$on('vjsVideoMediaChanged', function (e, data) {
+            console.log('vjsVideoMediaChanged event was fired');
+        });
+    }]);
 
 angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
-    .controller('DemoMediaTimelineController', function ($scope, sharedTimelines, sharedPlayer) {
+    .controller('DemoMediaTimelineController', function ($scope, sharedTimelines) {
     $scope.tick = 0;
     $scope.disable = false;
     $scope.timelines = sharedTimelines.getTimelines();
-
-    var tempo = sharedPlayer.onUpdateTime()
-    console.log('timeline'+tempo);
 
     $scope.onTickChange = function (tick) {
       console.log(tick);
@@ -195,8 +180,6 @@ angular.module('toolCtrl', [])
         video_url: url,
       }
 
-      console.log(timeline);
-
       sharedTimelines.addTimeline(timeline);
 
     }
@@ -213,27 +196,4 @@ angular.module('App', [
           'toolCtrl',
           'appService',
         ])
-        .service('sharedTimelines', function() {
-          var timelines = [];
-
-          return {
-            getTimelines: function() {
-              return timelines;
-            },
-
-            addTimeline: function (timeline) {
-              timelines.push(timeline);
-            }
-          }
-        })
-        .factory('sharedPlayer', function() {
-          var _currentTime = null;
-          var _duration = null;
-
-          return {
-            onUpdateTime: function(currentTime) {
-              return currentTime;
-            }
-          }
-        })
         .constant("CSRF_TOKEN", '{{ csrf_token() }}');
