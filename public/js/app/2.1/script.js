@@ -25463,7 +25463,9 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
   $scope.timelines = Timeline.getTimelines();
 
   $scope.$on('playit', function (e, data) {
-    $scope.tick = data.time * 100 / 2.5;
+    $scope.$apply(function () {
+      $scope.tick = data.time * 100 / 2.5;
+    });
     console.log('$on called');
   });
   console.log($scope.tick);
