@@ -3,7 +3,7 @@
   Video Test
 @endsection
 @section('stylesheets')
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}">
+  {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
@@ -13,9 +13,9 @@
   <div class="pt-5">
 
   </div>
-  <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak>
+  <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
-      <div class="col-md-8" ng-controller="videoController">
+      <div class="col-md-8" >
         <vjs-video-container vjs-ratio="16:9" vjs-media="mediaToggle">
           <video class="video-js vjs-default-skin" controls preload="auto" >
           </video>
@@ -76,6 +76,7 @@
     <div class="row mt-3">
       <div class="col">
         <div ng-controller="DemoMediaTimelineController">
+          <input type='number' ng-change='internalTickChange()' ng-model='tick'></input>@{{ time.value }}
       		<mt-timelines data="timelines" style="height: 200px;" tick="tick" is-disable="enable"
             tick-change="onTickChange(tick);"
             point-move="onPointMove(timelineData, eventData, pointData, newTick)"
@@ -84,7 +85,7 @@
             event-startchange="onEventStartChange(timelineData, eventData, newStartTick)"
             event-durationchange="onEventDurationChange(timelineData, eventData, newDuration)"
             event-click="onEventClick(timelineData, eventData)"
-            tick-ratio="30";></mt-timelines>
+            tick-ratio="25";></mt-timelines>
       	</div>
       </div>
     </div>

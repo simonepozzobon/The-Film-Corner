@@ -52,9 +52,12 @@ angular.module('appService', [])
     }
   }).factory('Timeline', function(){
     var timelines = [];
-    var time = null;
-
+    var time = {
+      value: null
+    };
     return {
+
+
       getTimelines: function() {
         return timelines;
       },
@@ -63,9 +66,15 @@ angular.module('appService', [])
         timelines.push(timeline);
       },
 
-      setTime: function(time) {
+      getTime: function() {
         return time;
+      },
+
+      setTime: function(_time) {
+        time.value = _time;
+        console.log(time.value);
       }
+
     }
   });
 
@@ -84,8 +93,8 @@ angular.module('mainCtrl', [])
 
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
-  .controller('videoController', ['$scope', 'Timeline', function (scope, Timeline) {
-        scope.mediaToggle = {
+  .controller('videoController', ['$scope', 'Timeline', function ($scope, Timeline) {
+        $scope.mediaToggle = {
             sources: [
                 {
                     src: 'http://static.videogular.com/assets/videos/videogular.mp4',
@@ -95,21 +104,31 @@ angular.module('videoCtrl', ['vjs.video'])
         };
 
         //listen for when the vjs-media object changes
-        scope.$on('vjsVideoReady', function (e, videoData) {
-         scope.playInstance = videoData.player;
-         videoData.player.on('timeupdate', function () {
-           time = this.currentTime();
-           console.log(this.currentTime());
+        $scope.$on('vjsVideoReady', function (e, videoData) {
+          videoData.player.on('timeupdate', function () {
+            var time = this.currentTime();
+            Timeline.setTime(time);
+            var time = {
+              time: this.currentTime()
+            };
+            $scope.tick = 400;
+            $scope.$broadcast('playit', time);
           })
         });
     }]);
 
 angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     .controller('DemoMediaTimelineController', function ($scope, Timeline) {
-    $scope.tick = 0;
+    $scope.tick = 100;
     $scope.disable = false;
     $scope.timelines = Timeline.getTimelines();
 
+    $scope.$on('playit', function(e, data) {
+      $scope.tick = (data.time*100)/2.5;
+      console.log($scope.tick);
+      console.log('$on called');
+    });
+    console.log($scope.tick);
     $scope.onTickChange = function (tick) {
       console.log(tick);
     };
@@ -161,8 +180,8 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
       console.log('------');
     };
 
-    $scope.changeTick = function (){
-      $scope.tick = 100;
+    $scope.changeTick = function (ticks){
+      $scope.tick = ticks;
     };
 
 
@@ -173,7 +192,7 @@ angular.module('toolCtrl', [])
 
     $scope.addElement = function(id, title, duration, url) {
 
-      var d = (duration * 100) / 3;
+      var d = (duration * 100) / 2.5;
 
       var timeline = {
         name: title,
