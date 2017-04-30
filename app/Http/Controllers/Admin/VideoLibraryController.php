@@ -72,17 +72,16 @@ class VideoLibraryController extends Controller
           Storage::delete($file);
 
           // salvo la path del file converito per il DB
-          $path = 'public/video/uploads/'.$filename.'.mp4';
+          $path = 'video/uploads/'.$filename.'.mp4';
 
         } elseif ($ext == 'mp4') {
           // se è già un mp4 lo salvo direttamente senza convertirlo
           $file = $file->storeAs('public/video/uploads', $filename.'.mp4');
-          $path = $file;
+          $path = 'video/uploads/'.$filename.'.mp4';
         }
 
         // get duration
-        $filePath = $globalPath->applyPathPrefix($path);
-
+        $filePath = $globalPath->applyPathPrefix('public/'.$path);
         $cli = FFMPEG_LIB.' -i '.$filePath.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
         $duration =  exec($cli);
 
