@@ -57,7 +57,6 @@ angular.module('appService', [])
     };
     return {
 
-
       getTimelines: function() {
         return timelines;
       },
@@ -102,12 +101,26 @@ angular.module('videoCtrl', ['vjs.video'])
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
           if (videoData.player.id() == 'vjs_video_3') {
+
+            $scope.editorPlay = function() {
+              videoData.player.play();
+            };
+
+            $scope.editorPause = function() {
+              videoData.player.pause();
+            };
+
+            $scope.editorStop = function() {
+              videoData.player.pause();
+              videoData.player.currentTime(0);
+            }
+
             videoData.player.on('timeupdate', function () {
               var time = {
                 time: this.currentTime()
               };
               $scope.$broadcast('playit', time);
-            })
+            });
           }
         });
     }]);
