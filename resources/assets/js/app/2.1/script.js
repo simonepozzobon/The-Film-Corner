@@ -54,12 +54,17 @@ angular.module('appService', [])
     var timelines = [];
     return {
 
-      getTimelines: function() {
+      getTimelines: function () {
+        timelines = timelines.sort((a,b) => a.lines[0].events[0].start - b.lines[0].events[0].start);
         return timelines;
       },
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
+        console.log('-----');
+        console.log('timeline data');
+        console.log(timelines.name);
+        console.log('-----');
       },
 
       tToS: function (t) {
@@ -88,25 +93,31 @@ angular.module('videoCtrl', ['vjs.video'])
   .controller('videoController', ['$scope', 'Timeline', function ($scope, Timeline) {
 
         $scope.mediaToggle = {
-            sources: [
-                {
-                    src: 'http://static.videogular.com/assets/videos/videogular.mp4',
-                    type: 'video/mp4'
-                }
-            ],
-        };
+          sources: [
+            {
+              src: 'img/helpers/poster.png'
+            }
+          ],
+          poster: 'img/helpers/poster.png'
+        }
+
+        // $scope.mediaToggle = {
+        //     sources: [
+        //         {
+        //             src: '',
+        //             type: 'video/mp4'
+        //         }
+        //     ],
+        // };
 
         $scope.$on('timelineChanged', function(e, timeline) {
           console.log('-----');
-          console.log('data from changes');
+          console.log('data from change');
           console.log(timeline);
           console.log('-----');
 
           var timelines = Timeline.getTimelines();
-          console.log('-----');
-          console.log('Timelines Obj');
-          console.log(timelines);
-          console.log('-----');
+
         });
 
         //listen for when the vjs-media object changes
