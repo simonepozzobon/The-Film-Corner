@@ -177,11 +177,8 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
 angular.module('toolCtrl', [])
   .controller('toolController', function($scope, Timeline) {
-
     $scope.addElement = function(id, title, duration, url) {
-
       var d = (duration * 100) / 5;
-
       var timeline = {
         name: title,
         data: { id : title+'-guid' },
@@ -195,11 +192,8 @@ angular.module('toolCtrl', [])
         }],
         video_url: url,
       }
-
       Timeline.addTimeline(timeline);
-
     }
-
   });
 
 

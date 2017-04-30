@@ -25453,7 +25453,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
 
   $scope.$on('playit', function (e, data) {
     $scope.$apply(function () {
-      $scope.tick = data.time * 100 / 2.5;
+      $scope.tick = data.time * 100 / 5;
     });
   });
 
@@ -25514,11 +25514,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
 });
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, Timeline) {
-
   $scope.addElement = function (id, title, duration, url) {
-
-    var d = duration * 100 / 2.5;
-
+    var d = duration * 100 / 5;
     var timeline = {
       name: title,
       data: { id: title + '-guid' },
@@ -25532,7 +25529,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
       }],
       video_url: url
     };
-
     Timeline.addTimeline(timeline);
   };
 });
