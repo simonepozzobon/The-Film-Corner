@@ -96,7 +96,6 @@ angular.module('videoCtrl', ['vjs.video'])
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
-          console.log(videoData.player.id());
           if (videoData.player.id() == 'vjs_video_3') {
             videoData.player.on('timeupdate', function () {
               var time = {
@@ -149,7 +148,11 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     };
 
     $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
+      // convert tick to s
+      var tempo = newStartTick * 5 / 100;
+
       console.log('onEventStartChange');
+      console.log(tempo);
       console.log(timelineData);
       console.log(eventData);
       console.log(newStartTick);
