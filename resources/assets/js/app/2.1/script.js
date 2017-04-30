@@ -97,7 +97,6 @@ angular.module('videoCtrl', ['vjs.video'])
         };
 
         $scope.$on('timelineChanged', function(e, timeline) {
-          alert('changed');
           console.log(timeline);
         });
 
