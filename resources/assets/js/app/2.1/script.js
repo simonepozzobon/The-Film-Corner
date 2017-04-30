@@ -113,7 +113,7 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
     $scope.$on('playit', function(e, data) {
       $scope.$apply(function() {
-        $scope.tick = data.time * 100 / 2.5;
+        $scope.tick = data.time * 100 / 5;
       });
     });
 
@@ -180,7 +180,7 @@ angular.module('toolCtrl', [])
 
     $scope.addElement = function(id, title, duration, url) {
 
-      var d = (duration * 100) / 2.5;
+      var d = (duration * 100) / 5;
 
       var timeline = {
         name: title,
