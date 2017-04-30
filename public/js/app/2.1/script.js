@@ -25399,9 +25399,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
   };
 }).factory('Timeline', function () {
   var timelines = [];
-  var time = {
-    value: null
-  };
   return {
 
     getTimelines: function getTimelines() {
@@ -25410,6 +25407,11 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 
     addTimeline: function addTimeline(timeline) {
       timelines.push(timeline);
+    },
+
+    tToS: function tToS(t) {
+      var s = t * 5 / 100;
+      return s;
     }
 
   };
@@ -25428,6 +25430,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controlle
 
 // Define the video controller
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', 'Timeline', function ($scope, Timeline) {
+
   $scope.mediaToggle = {
     sources: [{
       src: 'http://static.videogular.com/assets/videos/videogular.mp4',
@@ -25435,15 +25438,41 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
     }]
   };
 
+  $scope.$on('timelineChanged', function (e, timeline) {
+    console.log('-----');
+    console.log('data from changes');
+    console.log(timeline);
+    console.log('-----');
+
+    var timelines = Timeline.getTimelines();
+    console.log('-----');
+    console.log('Timelines Obj');
+    console.log(timelines);
+    console.log('-----');
+  });
+
   //listen for when the vjs-media object changes
   $scope.$on('vjsVideoReady', function (e, videoData) {
-    console.log(videoData.player.id());
     if (videoData.player.id() == 'vjs_video_3') {
+
+      $scope.editorPlay = function () {
+        videoData.player.play();
+      };
+
+      $scope.editorPause = function () {
+        videoData.player.pause();
+      };
+
+      $scope.editorStop = function () {
+        videoData.player.pause();
+        videoData.player.currentTime(0);
+      };
+
       videoData.player.on('timeupdate', function () {
         var time = {
           time: this.currentTime()
         };
-        $scope.$broadcast('playit', time);
+        $scope.$broadcast('editorPlay', time);
       });
     }
   });
@@ -25454,7 +25483,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
   $scope.disable = false;
   $scope.timelines = Timeline.getTimelines();
 
-  $scope.$on('playit', function (e, data) {
+  $scope.$on('editorPlay', function (e, data) {
     $scope.$apply(function () {
       $scope.tick = data.time * 100 / 5;
     });
@@ -25464,52 +25493,60 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
     console.log(tick);
   };
 
-  $scope.onPointMove = function (timelineData, eventData, pointData, newTick) {
-    console.log('onPointMove');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log(pointData);
-    console.log(newTick);
-    console.log('------');
-  };
+  // $scope.onPointMove = function (timelineData, eventData, pointData, newTick) {
+  //   console.log('onPointMove');
+  //   console.log(timelineData);
+  //   console.log(eventData);
+  //   console.log(pointData);
+  //   console.log(newTick);
+  //   console.log('------');
+  // };
 
-  $scope.onPointClick = function (timelineData, eventData, pointData) {
-    console.log('onPointClick');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log(pointData);
-    console.log('------');
-  };
+  // $scope.onPointClick = function (timelineData, eventData, pointData) {
+  //   console.log('onPointClick');
+  //   console.log(timelineData);
+  //   console.log(eventData);
+  //   console.log(pointData);
+  //   console.log('------');
+  // };
 
-  $scope.onMultiplePointEventSelected = function (timelineData, eventData) {
-    console.log('onMultiplePointEventSelected');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log('------');
-  };
+  // $scope.onMultiplePointEventSelected = function (timelineData, eventData) {
+  //   console.log('onMultiplePointEventSelected');
+  //   console.log(timelineData);
+  //   console.log(eventData);
+  //   console.log('------');
+  // };
 
   $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
-    console.log('onEventStartChange');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log(newStartTick);
-    console.log('------');
+    // convert tick to s
+    var newStartTime = Timeline.tToS(newStartTick);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newStartTime: newStartTime,
+      newStartTick: newStartTick
+    };
+    $scope.$emit('timelineChanged', data);
   };
 
   $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
-    console.log('onEventDurationChange');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log(newDuration);
-    console.log('------');
+    // convert tick to s
+    var newDurationS = Timeline.tToS(newDuration);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newDuration: newDuration,
+      newDurationS: newDurationS
+    };
+    $scope.$emit('timelineChanged', data);
   };
 
-  $scope.onEventClick = function (timelineData, eventData) {
-    console.log('onEventClick');
-    console.log(timelineData);
-    console.log(eventData);
-    console.log('------');
-  };
+  // $scope.onEventClick = function (timelineData, eventData){
+  //   console.log('onEventClick');
+  //   console.log(timelineData);
+  //   console.log(eventData);
+  //   console.log('------');
+  // };
 
   $scope.changeTick = function (ticks) {
     $scope.tick = ticks;
@@ -25524,8 +25561,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
       data: { id: title + '-guid' },
       lines: [{
         events: [{
-          name: 'animationID',
-          data: { id: 'animationID-guid' },
+          name: 'animation' + id,
+          data: { id: 'animation' + id + '-guid' },
           start: 0,
           duration: d
         }]
@@ -25533,6 +25570,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
       video_url: url
     };
     Timeline.addTimeline(timeline);
+    $scope.$emit('timelineChanged', timeline);
   };
 });
 

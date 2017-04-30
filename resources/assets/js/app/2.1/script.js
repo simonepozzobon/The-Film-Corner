@@ -97,7 +97,16 @@ angular.module('videoCtrl', ['vjs.video'])
         };
 
         $scope.$on('timelineChanged', function(e, timeline) {
+          console.log('-----');
+          console.log('data from changes');
           console.log(timeline);
+          console.log('-----');
+
+          var timelines = Timeline.getTimelines();
+          console.log('-----');
+          console.log('Timelines Obj');
+          console.log(timelines);
+          console.log('-----');
         });
 
         //listen for when the vjs-media object changes
