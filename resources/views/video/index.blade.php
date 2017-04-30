@@ -47,14 +47,42 @@
                         <img src="{{ Storage::disk('local')->url($element->thumb) }}" width="57">
                       </td>
                       <td class="align-middle">{{ $element->title }}</td>
-                      <td class="align-middle">
-                        <div class="btn-group" ng-controller="toolController">
-                          <a href="#" class="btn btn-info" data-toggle="tooltip" data-placement="top" title="Preview">
+                      <td class="align-middle" ng-controller="toolController">
+                        <div class="btn-group">
+                          {{-- Trigger Modal --}}
+                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
                             <i class="fa fa-eye" aria-hidden="true"></i>
-                          </a>
+                          </button>
                           <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                           </button>
+                        </div>
+
+                        {{-- Modal Preview --}}
+                        <div class="modal fade" id="preview-{{ $element->id }}" tabindex="-1" role="dialog" aria-labelledby="modalPreview-{{ $element->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalPreview-{{ $element->id }}">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <vjs-video-container vjs-ratio="16:9">
+                                    <video class="video-js vjs-default-skin" controls preload="auto" poster="{{ Storage::disk('local')->url($element->thumb) }}">
+                                        <source src="{{ Storage::disk('local')->url($element->path) }}" type="video/mp4">
+                                    </video>
+                                </vjs-video-container>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
+                                  Add to timeline
+                                </button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </td>
                     </tr>
@@ -91,7 +119,7 @@
 @section('scripts')
   <script>
     (function () {
-      jQuery('[data-toggle="tooltip"]').tooltip()
+      jQuery('[data-toggle="tooltip"]').tooltip();
     })
   </script>
   <script src="{{ mix('js/app/2.1/script.js') }}"></script>
