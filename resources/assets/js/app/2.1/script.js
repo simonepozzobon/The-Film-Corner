@@ -52,9 +52,6 @@ angular.module('appService', [])
     }
   }).factory('Timeline', function(){
     var timelines = [];
-    var time = {
-      value: null
-    };
     return {
 
       getTimelines: function() {
@@ -65,7 +62,7 @@ angular.module('appService', [])
         timelines.push(timeline);
       },
 
-      convertTs: function (t) {
+      tToS: function (t) {
         var s = t * 5 / 100;
         return s;
       }
@@ -89,6 +86,7 @@ angular.module('mainCtrl', [])
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
   .controller('videoController', ['$scope', 'Timeline', function ($scope, Timeline) {
+
         $scope.mediaToggle = {
             sources: [
                 {
@@ -97,6 +95,11 @@ angular.module('videoCtrl', ['vjs.video'])
                 }
             ],
         };
+
+        $scope.$on('timelineChanged', function(e, timeline) {
+          alert('changed');
+          console.log(timeline);
+        });
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
@@ -141,58 +144,60 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
       console.log(tick);
     };
 
-    $scope.onPointMove = function (timelineData, eventData, pointData, newTick) {
-      console.log('onPointMove');
-      console.log(timelineData);
-      console.log(eventData);
-      console.log(pointData);
-      console.log(newTick);
-      console.log('------');
-    };
+    // $scope.onPointMove = function (timelineData, eventData, pointData, newTick) {
+    //   console.log('onPointMove');
+    //   console.log(timelineData);
+    //   console.log(eventData);
+    //   console.log(pointData);
+    //   console.log(newTick);
+    //   console.log('------');
+    // };
 
-    $scope.onPointClick = function (timelineData, eventData, pointData) {
-      console.log('onPointClick');
-      console.log(timelineData);
-      console.log(eventData);
-      console.log(pointData);
-      console.log('------');
-    };
+    // $scope.onPointClick = function (timelineData, eventData, pointData) {
+    //   console.log('onPointClick');
+    //   console.log(timelineData);
+    //   console.log(eventData);
+    //   console.log(pointData);
+    //   console.log('------');
+    // };
 
-    $scope.onMultiplePointEventSelected = function (timelineData, eventData) {
-      console.log('onMultiplePointEventSelected');
-      console.log(timelineData);
-      console.log(eventData);
-      console.log('------');
-    };
+    // $scope.onMultiplePointEventSelected = function (timelineData, eventData) {
+    //   console.log('onMultiplePointEventSelected');
+    //   console.log(timelineData);
+    //   console.log(eventData);
+    //   console.log('------');
+    // };
 
     $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
       // convert tick to s
-      var newStartTime = Timeline.convertTs(newStartTick);
-      console.log('onEventStartChange');
-      console.log(newStartTime);
-      console.log(timelineData);
-      console.log(eventData);
-      console.log(newStartTick);
-      console.log('------');
+      var newStartTime = Timeline.tToS(newStartTick);
+      var data = {
+        timelineData: timelineData,
+        eventData:    eventData,
+        newStartTime: newStartTime,
+        newStartTick: newStartTick
+      };
+      $scope.$emit('timelineChanged', data);
     };
 
     $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
       // convert tick to s
-      var newDurationS = Timeline.convertTs(newDuration);
-      console.log('onEventDurationChange');
-      console.log(timelineData);
-      console.log(eventData);
-      console.log(newDuration);
-      console.log(newDurationS);
-      console.log('------');
+      var newDurationS = Timeline.tToS(newDuration);
+      var data = {
+        timelineData: timelineData,
+        eventData:    eventData,
+        newDuration:  newDuration,
+        newDurationS: newDurationS
+      };
+      $scope.$emit('timelineChanged', data);
     };
 
-    $scope.onEventClick = function (timelineData, eventData){
-      console.log('onEventClick');
-      console.log(timelineData);
-      console.log(eventData);
-      console.log('------');
-    };
+    // $scope.onEventClick = function (timelineData, eventData){
+    //   console.log('onEventClick');
+    //   console.log(timelineData);
+    //   console.log(eventData);
+    //   console.log('------');
+    // };
 
     $scope.changeTick = function (ticks){
       $scope.tick = ticks;
@@ -219,6 +224,7 @@ angular.module('toolCtrl', [])
         video_url: url,
       }
       Timeline.addTimeline(timeline);
+      $scope.$emit('timelineChanged', timeline);
     }
   });
 
