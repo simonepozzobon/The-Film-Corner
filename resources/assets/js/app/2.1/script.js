@@ -64,6 +64,11 @@ angular.module('appService', [])
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
+      },
+
+      convertTs: function (t) {
+        var s = t * 5 / 100;
+        return s;
       }
 
     }
@@ -149,7 +154,7 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
     $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
       // convert tick to s
-      var newStartTime = newStartTick * 5 / 100;
+      var newStartTime = Timeline.convertTs(newStartTick);
       console.log('onEventStartChange');
       console.log(newStartTime);
       console.log(timelineData);
@@ -159,10 +164,13 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     };
 
     $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
+      // convert tick to s
+      var newDurationS = Timeline.convertTs(newDuration);
       console.log('onEventDurationChange');
       console.log(timelineData);
       console.log(eventData);
       console.log(newDuration);
+      console.log(newDurationS);
       console.log('------');
     };
 
@@ -189,8 +197,8 @@ angular.module('toolCtrl', [])
         data: { id : title+'-guid' },
         lines: [{
           events: [{
-            name: 'animationID',
-            data : { id : 'animationID-guid' },
+            name: 'animation'+id,
+            data : { id : 'animation'+id+'-guid' },
             start : 0,
             duration : d
           }]
