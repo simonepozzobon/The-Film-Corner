@@ -76,7 +76,6 @@
     <div class="row mt-3">
       <div class="col">
         <div ng-controller="DemoMediaTimelineController">
-          <input type='number' ng-change='internalTickChange()' ng-model='tick'></input>@{{ time.value }}
       		<mt-timelines data="timelines" style="height: 200px;" tick="tick" is-disable="enable"
             tick-change="onTickChange(tick);"
             point-move="onPointMove(timelineData, eventData, pointData, newTick)"

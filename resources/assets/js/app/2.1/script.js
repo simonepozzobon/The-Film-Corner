@@ -64,14 +64,6 @@ angular.module('appService', [])
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
-      },
-
-      getTime: function() {
-        return time;
-      },
-
-      setTime: function(_time) {
-        time.value = _time;
       }
 
     }
@@ -110,7 +102,6 @@ angular.module('videoCtrl', ['vjs.video'])
             var time = {
               time: this.currentTime()
             };
-            $scope.tick = 400;
             $scope.$broadcast('playit', time);
           })
         });
@@ -123,12 +114,9 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     $scope.timelines = Timeline.getTimelines();
 
     $scope.$on('playit', function(e, data) {
-      $scope.$apply(function() {
-        $scope.tick = data.time * 100 / 2.5;
-      });
-      console.log('$on called');
+      $scope.$apply(function() { $scope.tick = data.time * 100 / 2.5; });
     });
-    console.log($scope.tick);
+
     $scope.onTickChange = function (tick) {
       console.log(tick);
     };
