@@ -97,8 +97,6 @@ angular.module('videoCtrl', ['vjs.video'])
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
           videoData.player.on('timeupdate', function () {
-            var time = this.currentTime();
-            Timeline.setTime(time);
             var time = {
               time: this.currentTime()
             };
@@ -109,12 +107,14 @@ angular.module('videoCtrl', ['vjs.video'])
 
 angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     .controller('DemoMediaTimelineController', function ($scope, Timeline) {
-    $scope.tick = 100;
+    $scope.tick = 0;
     $scope.disable = false;
     $scope.timelines = Timeline.getTimelines();
 
     $scope.$on('playit', function(e, data) {
-      $scope.$apply(function() { $scope.tick = data.time * 100 / 2.5; });
+      $scope.$apply(function() {
+        $scope.tick = data.time * 100 / 2.5;
+      });
     });
 
     $scope.onTickChange = function (tick) {

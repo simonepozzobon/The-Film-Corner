@@ -25410,14 +25410,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 
     addTimeline: function addTimeline(timeline) {
       timelines.push(timeline);
-    },
-
-    getTime: function getTime() {
-      return time;
-    },
-
-    setTime: function setTime(_time) {
-      time.value = _time;
     }
 
   };
@@ -25446,19 +25438,16 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   //listen for when the vjs-media object changes
   $scope.$on('vjsVideoReady', function (e, videoData) {
     videoData.player.on('timeupdate', function () {
-      var time = this.currentTime();
-      Timeline.setTime(time);
       var time = {
         time: this.currentTime()
       };
-      $scope.tick = 400;
       $scope.$broadcast('playit', time);
     });
   });
 }]);
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
-  $scope.tick = 100;
+  $scope.tick = 0;
   $scope.disable = false;
   $scope.timelines = Timeline.getTimelines();
 
@@ -25466,9 +25455,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
     $scope.$apply(function () {
       $scope.tick = data.time * 100 / 2.5;
     });
-    console.log('$on called');
   });
-  console.log($scope.tick);
+
   $scope.onTickChange = function (tick) {
     console.log(tick);
   };
