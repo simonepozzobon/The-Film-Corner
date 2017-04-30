@@ -8,6 +8,16 @@
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
   <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
+  <style media="screen">
+    #video-editor button.vjs-play-control.vjs-control.vjs-button.vjs-paused,
+    #video-editor button.vjs-play-control.vjs-control.vjs-button.vjs-playing
+    {
+      display: none;
+    }
+    #video-editor button.vjs-big-play-button {
+      display: none;
+    }
+  </style>
 @endsection
 @section('content')
   <div class="pt-5">
@@ -16,7 +26,7 @@
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
       <div class="col-md-8" >
-        <vjs-video-container vjs-ratio="16:9" vjs-media="mediaToggle">
+        <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle" >
           <video class="video-js vjs-default-skin" controls preload="auto" >
           </video>
         </vjs-video-container>
