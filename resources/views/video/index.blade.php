@@ -20,6 +20,23 @@
           <video class="video-js vjs-default-skin" controls preload="auto" >
           </video>
         </vjs-video-container>
+        <div class="clearfix">
+          <div class="row">
+            <div class="col">
+              <div class="btn-group mt-3">
+                <button type="button" name="button" class="btn btn-secondary" ng-click="editorPlay()">
+                  <i class="fa fa-play" aria-hidden="true"></i> Play
+                </button>
+                <button type="button" name="button" class="btn btn-secondary" ng-click="editorPause()">
+                  <i class="fa fa-pause" aria-hidden="true"></i> Pause
+                </button>
+                <button type="button" name="button" class="btn btn-secondary" ng-click="editorStop()">
+                  <i class="fa fa-stop" aria-hidden="true"></i> Stop
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-md-4">
         {{-- Nav Tabs --}}
