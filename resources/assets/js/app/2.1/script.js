@@ -61,10 +61,6 @@ angular.module('appService', [])
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
-        console.log('-----');
-        console.log('timeline data');
-        console.log(timelines.name);
-        console.log('-----');
       },
 
       tToS: function (t) {
