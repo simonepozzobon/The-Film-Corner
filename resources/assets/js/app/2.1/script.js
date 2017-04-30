@@ -149,10 +149,9 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
     $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
       // convert tick to s
-      var tempo = newStartTick * 5 / 100;
-
+      var newStartTime = newStartTick * 5 / 100;
       console.log('onEventStartChange');
-      console.log(tempo);
+      console.log(newStartTime);
       console.log(timelineData);
       console.log(eventData);
       console.log(newStartTick);
