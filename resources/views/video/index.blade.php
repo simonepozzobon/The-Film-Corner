@@ -36,7 +36,6 @@
           <div class="tab-pane active pt-3" id="library" role="tabpanel">
               <table class="table table-hover">
                 <thead>
-                  <th>Id</th>
                   <th>Preview</th>
                   <th>Title</th>
                   <th>Tools</th>
@@ -44,7 +43,6 @@
                 <tbody>
                   @foreach ($elements as $key => $element)
                     <tr>
-                      <td class="align-middle">{{ $element->id }}</td>
                       <td class="align-middle">
                         <img src="{{ Storage::disk('local')->url($element->thumb) }}" width="57">
                       </td>
