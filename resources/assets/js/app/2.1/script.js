@@ -96,12 +96,15 @@ angular.module('videoCtrl', ['vjs.video'])
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
-          videoData.player.on('timeupdate', function () {
-            var time = {
-              time: this.currentTime()
-            };
-            $scope.$broadcast('playit', time);
-          })
+          console.log(videoData.player.id());
+          if (videoData.player.id() == 'vjs_video_3') {
+            videoData.player.on('timeupdate', function () {
+              var time = {
+                time: this.currentTime()
+              };
+              $scope.$broadcast('playit', time);
+            })
+          }
         });
     }]);
 
