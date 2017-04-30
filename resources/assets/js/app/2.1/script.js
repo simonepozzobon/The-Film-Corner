@@ -119,7 +119,7 @@ angular.module('videoCtrl', ['vjs.video'])
               var time = {
                 time: this.currentTime()
               };
-              $scope.$broadcast('playit', time);
+              $scope.$broadcast('editorPlay', time);
             });
           }
         });
@@ -131,7 +131,7 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     $scope.disable = false;
     $scope.timelines = Timeline.getTimelines();
 
-    $scope.$on('playit', function(e, data) {
+    $scope.$on('editorPlay', function(e, data) {
       $scope.$apply(function() {
         $scope.tick = data.time * 100 / 5;
       });
