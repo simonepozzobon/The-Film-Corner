@@ -6,9 +6,9 @@ import angular from 'angular';
 // require('videogular/dist/poster/vg-poster.js');
 // require('videogular-overlay-play');
 // require('videogular-buffering');
+//
 
-//FFMPEG
-
+var ffmpeg = require('fluent-ffmpeg-extended');
 
 // VideoJS
 require('video.js/dist/video.js');
@@ -149,8 +149,7 @@ angular.module('videoCtrl', ['vjs.video'])
           // if (videoData.player.id() == 'vjs_video_3') {
 
             $scope.editorPlay = function() {
-              var ffmpeg = require('fluent-ffmpeg');
-              var command = ffmpeg();
+              var command = ffmpeg(fs.createReadStream('/path/to/file.avi'));
               console.log(command);
               var media = Timeline.getTimelines($scope);
               $scope.mediaToggle = {

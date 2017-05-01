@@ -18,12 +18,14 @@
   },
   "dependencies": {
     "angular": "*",
+    "angular-media-timeline": "*",
+    "child_process": "^1.0.2",
+    "dropzone": "*",
     "fluent-ffmpeg": "^2.1.2",
+    "fs": "0.0.1-security",
+    "mo-js": "*",
     "pace": "0.0.4",
     "video.js": "*",
-    "vjs-video": "*",
-    "angular-media-timeline": "*",
-    "dropzone": "*",
-    "mo-js": "*"
+    "vjs-video": "*"
   }
 }

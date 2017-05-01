@@ -4,7 +4,7 @@
 @endsection
 @section('stylesheets')
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/video-js.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
   <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">

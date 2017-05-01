@@ -28,13 +28,17 @@ const { mix } = require('laravel-mix');
     // libraries and edit them as an intercut.
     .js('resources/assets/js/app/2.1/script.js', 'public/js/app/2.1/script.js')
     // .sass('resources/assets/sass/app/2.1/videogular.scss', 'public/css/app/2.1/style.css')
-    .sass('node_modules/video.js/src/css/vjs-cdn.scss', 'public/css/app/2.1/video-js.css')
+    // .sass('node_modules/video.js/src/css/vjs-cdn.scss', 'public/css/app/2.1/video-js.css')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')
-    // .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
-    .sass('node_modules/dropzone/src/dropzone.scss', 'public/css/app/2.1/dropzone.css')
+    .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
+    // .sass('node_modules/dropzone/src/dropzone.scss', 'public/css/app/2.1/dropzone.css')
 
     // ADMIN SCRIPTS
 
     // CSS
-    .sass('resources/assets/sass/app.scss', 'public/css');
+    .sass('resources/assets/sass/app.scss', 'public/css')
+
+    .webpackConfig({
+        target: 'node'
+    });

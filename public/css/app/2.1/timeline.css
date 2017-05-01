@@ -178,9 +178,7 @@ mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-e
   background: #ff3019;
   /* Old browsers */
   /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ff3019), color-stop(100%, #ffffff));
   /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #ff3019 0%, #ffffff 100%);
   /* Chrome10+,Safari5.1+ */
   /* Opera 11.10+ */
   /* IE10+ */
@@ -209,9 +207,7 @@ mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-e
   background: #ffffff;
   /* Old browsers */
   /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #FADA28), color-stop(100%, #F8D349));
   /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(left, #FADA28 0%, #F8D349 100%);
   /* Chrome10+,Safari5.1+ */
   /* Opera 11.10+ */
   /* IE10+ */
