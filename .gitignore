@@ -15,3 +15,5 @@ public/img/cover-1.jpg
 *.DS_Store
 www.simonepozzobon.dev.crt
 www.simonepozzobon.dev.key
+
+.bash_profile

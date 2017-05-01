@@ -8,7 +8,7 @@ import angular from 'angular';
 // require('videogular-buffering');
 
 // FFMPEG
-import ffmpeg from 'fluent-ffmpeg';
+// import ffmpeg from 'fluent-ffmpeg';
 
 // VideoJS
 require('video.js/dist/video.js');
