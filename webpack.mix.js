@@ -37,8 +37,8 @@ const { mix } = require('laravel-mix');
     // ADMIN SCRIPTS
 
     // CSS
-    .sass('resources/assets/sass/app.scss', 'public/css')
-
-    .webpackConfig({
-        target: 'node'
-    });
+    .sass('resources/assets/sass/app.scss', 'public/css');
+    //
+    // .webpackConfig({
+    //     target: 'node'
+    // });

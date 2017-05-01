@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 219);
+/******/ 	return __webpack_require__(__webpack_require__.s = 168);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -91,11 +91,11 @@ var _guid = __webpack_require__(13);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -103,7 +103,7 @@ var _toTitleCase = __webpack_require__(14);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -2033,11 +2033,11 @@ var _guid = __webpack_require__(13);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(60);
+var _tsml = __webpack_require__(40);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -2889,9 +2889,9 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var topLevel = typeof global !== 'undefined' ? global :
+/* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(135);
+var minDoc = __webpack_require__(166);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -2905,12 +2905,13 @@ if (typeof document !== 'undefined') {
     module.exports = doccy;
 }
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-if (typeof window !== "undefined") {
+/* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
     module.exports = window;
 } else if (typeof global !== "undefined") {
     module.exports = global;
@@ -2920,6 +2921,7 @@ if (typeof window !== "undefined") {
     module.exports = {};
 }
 
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
 /* 5 */
@@ -3185,8 +3187,7 @@ function isPlain(value) {
 
 
 /***/ }),
-/* 7 */,
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3333,13 +3334,8 @@ exports['default'] = log;
 
 
 /***/ }),
+/* 8 */,
 /* 9 */
-/***/ (function(module, exports) {
-
-module.exports = require("child_process");
-
-/***/ }),
-/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3394,7 +3390,7 @@ function mergeOptions() {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3415,7 +3411,7 @@ var _guid = __webpack_require__(13);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -3858,7 +3854,7 @@ function one(elem, type, fn) {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3914,6 +3910,33 @@ function formatTime(seconds) {
 }
 
 exports['default'] = formatTime;
+
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
 
 
 /***/ }),
@@ -3982,12 +4005,6 @@ exports['default'] = toTitleCase;
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports) {
-
-module.exports = require("path");
-
-/***/ }),
-/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3995,7 +4012,7 @@ module.exports = require("path");
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(17);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4003,7 +4020,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4170,7 +4187,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4186,7 +4203,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4194,7 +4211,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4497,7 +4514,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4509,31 +4526,31 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(198);
+var _htmlTrackElement = __webpack_require__(153);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(197);
+var _htmlTrackElementList = __webpack_require__(152);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(33);
+var _textTrack = __webpack_require__(28);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(202);
+var _textTrackList = __webpack_require__(157);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(71);
+var _videoTrackList = __webpack_require__(51);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(70);
+var _audioTrackList = __webpack_require__(50);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
@@ -4541,15 +4558,15 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(19);
+var _timeRanges = __webpack_require__(18);
 
-var _buffer = __webpack_require__(72);
+var _buffer = __webpack_require__(52);
 
-var _mediaError = __webpack_require__(64);
+var _mediaError = __webpack_require__(44);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -5152,7 +5169,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(144);
+      var vtt = __webpack_require__(99);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -5884,7 +5901,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5894,7 +5911,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -6036,5564 +6053,7 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(module) {(function (global, factory) {
-   true ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.async = global.async || {})));
-}(this, (function (exports) { 'use strict';
-
-function slice(arrayLike, start) {
-    start = start|0;
-    var newLen = Math.max(arrayLike.length - start, 0);
-    var newArr = Array(newLen);
-    for(var idx = 0; idx < newLen; idx++)  {
-        newArr[idx] = arrayLike[start + idx];
-    }
-    return newArr;
-}
-
-var initialParams = function (fn) {
-    return function (/*...args, callback*/) {
-        var args = slice(arguments);
-        var callback = args.pop();
-        fn.call(this, args, callback);
-    };
-};
-
-/**
- * Checks if `value` is the
- * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
- * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(_.noop);
- * // => true
- *
- * _.isObject(null);
- * // => false
- */
-function isObject(value) {
-  var type = typeof value;
-  return value != null && (type == 'object' || type == 'function');
-}
-
-var hasSetImmediate = typeof setImmediate === 'function' && setImmediate;
-var hasNextTick = typeof process === 'object' && typeof process.nextTick === 'function';
-
-function fallback(fn) {
-    setTimeout(fn, 0);
-}
-
-function wrap(defer) {
-    return function (fn/*, ...args*/) {
-        var args = slice(arguments, 1);
-        defer(function () {
-            fn.apply(null, args);
-        });
-    };
-}
-
-var _defer;
-
-if (hasSetImmediate) {
-    _defer = setImmediate;
-} else if (hasNextTick) {
-    _defer = process.nextTick;
-} else {
-    _defer = fallback;
-}
-
-var setImmediate$1 = wrap(_defer);
-
-/**
- * Take a sync function and make it async, passing its return value to a
- * callback. This is useful for plugging sync functions into a waterfall,
- * series, or other async functions. Any arguments passed to the generated
- * function will be passed to the wrapped function (except for the final
- * callback argument). Errors thrown will be passed to the callback.
- *
- * If the function passed to `asyncify` returns a Promise, that promises's
- * resolved/rejected state will be used to call the callback, rather than simply
- * the synchronous return value.
- *
- * This also means you can asyncify ES2017 `async` functions.
- *
- * @name asyncify
- * @static
- * @memberOf module:Utils
- * @method
- * @alias wrapSync
- * @category Util
- * @param {Function} func - The synchronous function, or Promise-returning
- * function to convert to an {@link AsyncFunction}.
- * @returns {AsyncFunction} An asynchronous wrapper of the `func`. To be
- * invoked with `(args..., callback)`.
- * @example
- *
- * // passing a regular synchronous function
- * async.waterfall([
- *     async.apply(fs.readFile, filename, "utf8"),
- *     async.asyncify(JSON.parse),
- *     function (data, next) {
- *         // data is the result of parsing the text.
- *         // If there was a parsing error, it would have been caught.
- *     }
- * ], callback);
- *
- * // passing a function returning a promise
- * async.waterfall([
- *     async.apply(fs.readFile, filename, "utf8"),
- *     async.asyncify(function (contents) {
- *         return db.model.create(contents);
- *     }),
- *     function (model, next) {
- *         // `model` is the instantiated model object.
- *         // If there was an error, this function would be skipped.
- *     }
- * ], callback);
- *
- * // es2017 example, though `asyncify` is not needed if your JS environment
- * // supports async functions out of the box
- * var q = async.queue(async.asyncify(async function(file) {
- *     var intermediateStep = await processFile(file);
- *     return await somePromise(intermediateStep)
- * }));
- *
- * q.push(files);
- */
-function asyncify(func) {
-    return initialParams(function (args, callback) {
-        var result;
-        try {
-            result = func.apply(this, args);
-        } catch (e) {
-            return callback(e);
-        }
-        // if result is Promise object
-        if (isObject(result) && typeof result.then === 'function') {
-            result.then(function(value) {
-                invokeCallback(callback, null, value);
-            }, function(err) {
-                invokeCallback(callback, err.message ? err : new Error(err));
-            });
-        } else {
-            callback(null, result);
-        }
-    });
-}
-
-function invokeCallback(callback, error, value) {
-    try {
-        callback(error, value);
-    } catch (e) {
-        setImmediate$1(rethrow, e);
-    }
-}
-
-function rethrow(error) {
-    throw error;
-}
-
-var supportsSymbol = typeof Symbol === 'function';
-
-function isAsync(fn) {
-    return supportsSymbol && fn[Symbol.toStringTag] === 'AsyncFunction';
-}
-
-function wrapAsync(asyncFn) {
-    return isAsync(asyncFn) ? asyncify(asyncFn) : asyncFn;
-}
-
-function applyEach$1(eachfn) {
-    return function(fns/*, ...args*/) {
-        var args = slice(arguments, 1);
-        var go = initialParams(function(args, callback) {
-            var that = this;
-            return eachfn(fns, function (fn, cb) {
-                wrapAsync(fn).apply(that, args.concat(cb));
-            }, callback);
-        });
-        if (args.length) {
-            return go.apply(this, args);
-        }
-        else {
-            return go;
-        }
-    };
-}
-
-/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/** Detect free variable `self`. */
-var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
-
-/** Used as a reference to the global object. */
-var root = freeGlobal || freeSelf || Function('return this')();
-
-/** Built-in value references. */
-var Symbol$1 = root.Symbol;
-
-/** Used for built-in method references. */
-var objectProto = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty = objectProto.hasOwnProperty;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString = objectProto.toString;
-
-/** Built-in value references. */
-var symToStringTag$1 = Symbol$1 ? Symbol$1.toStringTag : undefined;
-
-/**
- * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the raw `toStringTag`.
- */
-function getRawTag(value) {
-  var isOwn = hasOwnProperty.call(value, symToStringTag$1),
-      tag = value[symToStringTag$1];
-
-  try {
-    value[symToStringTag$1] = undefined;
-    var unmasked = true;
-  } catch (e) {}
-
-  var result = nativeObjectToString.call(value);
-  if (unmasked) {
-    if (isOwn) {
-      value[symToStringTag$1] = tag;
-    } else {
-      delete value[symToStringTag$1];
-    }
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var objectProto$1 = Object.prototype;
-
-/**
- * Used to resolve the
- * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
- * of values.
- */
-var nativeObjectToString$1 = objectProto$1.toString;
-
-/**
- * Converts `value` to a string using `Object.prototype.toString`.
- *
- * @private
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- */
-function objectToString(value) {
-  return nativeObjectToString$1.call(value);
-}
-
-/** `Object#toString` result references. */
-var nullTag = '[object Null]';
-var undefinedTag = '[object Undefined]';
-
-/** Built-in value references. */
-var symToStringTag = Symbol$1 ? Symbol$1.toStringTag : undefined;
-
-/**
- * The base implementation of `getTag` without fallbacks for buggy environments.
- *
- * @private
- * @param {*} value The value to query.
- * @returns {string} Returns the `toStringTag`.
- */
-function baseGetTag(value) {
-  if (value == null) {
-    return value === undefined ? undefinedTag : nullTag;
-  }
-  value = Object(value);
-  return (symToStringTag && symToStringTag in value)
-    ? getRawTag(value)
-    : objectToString(value);
-}
-
-/** `Object#toString` result references. */
-var asyncTag = '[object AsyncFunction]';
-var funcTag = '[object Function]';
-var genTag = '[object GeneratorFunction]';
-var proxyTag = '[object Proxy]';
-
-/**
- * Checks if `value` is classified as a `Function` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a function, else `false`.
- * @example
- *
- * _.isFunction(_);
- * // => true
- *
- * _.isFunction(/abc/);
- * // => false
- */
-function isFunction(value) {
-  if (!isObject(value)) {
-    return false;
-  }
-  // The use of `Object#toString` avoids issues with the `typeof` operator
-  // in Safari 9 which returns 'object' for typed arrays and other constructors.
-  var tag = baseGetTag(value);
-  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;
-}
-
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This method is loosely based on
- * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- * @example
- *
- * _.isLength(3);
- * // => true
- *
- * _.isLength(Number.MIN_VALUE);
- * // => false
- *
- * _.isLength(Infinity);
- * // => false
- *
- * _.isLength('3');
- * // => false
- */
-function isLength(value) {
-  return typeof value == 'number' &&
-    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-/**
- * Checks if `value` is array-like. A value is considered array-like if it's
- * not a function and has a `value.length` that's an integer greater than or
- * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- * @example
- *
- * _.isArrayLike([1, 2, 3]);
- * // => true
- *
- * _.isArrayLike(document.body.children);
- * // => true
- *
- * _.isArrayLike('abc');
- * // => true
- *
- * _.isArrayLike(_.noop);
- * // => false
- */
-function isArrayLike(value) {
-  return value != null && isLength(value.length) && !isFunction(value);
-}
-
-// A temporary value used to identify if the loop should be broken.
-// See #1064, #1293
-var breakLoop = {};
-
-/**
- * This method returns `undefined`.
- *
- * @static
- * @memberOf _
- * @since 2.3.0
- * @category Util
- * @example
- *
- * _.times(2, _.noop);
- * // => [undefined, undefined]
- */
-function noop() {
-  // No operation performed.
-}
-
-function once(fn) {
-    return function () {
-        if (fn === null) return;
-        var callFn = fn;
-        fn = null;
-        callFn.apply(this, arguments);
-    };
-}
-
-var iteratorSymbol = typeof Symbol === 'function' && Symbol.iterator;
-
-var getIterator = function (coll) {
-    return iteratorSymbol && coll[iteratorSymbol] && coll[iteratorSymbol]();
-};
-
-/**
- * The base implementation of `_.times` without support for iteratee shorthands
- * or max array length checks.
- *
- * @private
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- */
-function baseTimes(n, iteratee) {
-  var index = -1,
-      result = Array(n);
-
-  while (++index < n) {
-    result[index] = iteratee(index);
-  }
-  return result;
-}
-
-/**
- * Checks if `value` is object-like. A value is object-like if it's not `null`
- * and has a `typeof` result of "object".
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
- * @example
- *
- * _.isObjectLike({});
- * // => true
- *
- * _.isObjectLike([1, 2, 3]);
- * // => true
- *
- * _.isObjectLike(_.noop);
- * // => false
- *
- * _.isObjectLike(null);
- * // => false
- */
-function isObjectLike(value) {
-  return value != null && typeof value == 'object';
-}
-
-/** `Object#toString` result references. */
-var argsTag = '[object Arguments]';
-
-/**
- * The base implementation of `_.isArguments`.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- */
-function baseIsArguments(value) {
-  return isObjectLike(value) && baseGetTag(value) == argsTag;
-}
-
-/** Used for built-in method references. */
-var objectProto$3 = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$2 = objectProto$3.hasOwnProperty;
-
-/** Built-in value references. */
-var propertyIsEnumerable = objectProto$3.propertyIsEnumerable;
-
-/**
- * Checks if `value` is likely an `arguments` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an `arguments` object,
- *  else `false`.
- * @example
- *
- * _.isArguments(function() { return arguments; }());
- * // => true
- *
- * _.isArguments([1, 2, 3]);
- * // => false
- */
-var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {
-  return isObjectLike(value) && hasOwnProperty$2.call(value, 'callee') &&
-    !propertyIsEnumerable.call(value, 'callee');
-};
-
-/**
- * Checks if `value` is classified as an `Array` object.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an array, else `false`.
- * @example
- *
- * _.isArray([1, 2, 3]);
- * // => true
- *
- * _.isArray(document.body.children);
- * // => false
- *
- * _.isArray('abc');
- * // => false
- *
- * _.isArray(_.noop);
- * // => false
- */
-var isArray = Array.isArray;
-
-/**
- * This method returns `false`.
- *
- * @static
- * @memberOf _
- * @since 4.13.0
- * @category Util
- * @returns {boolean} Returns `false`.
- * @example
- *
- * _.times(2, _.stubFalse);
- * // => [false, false]
- */
-function stubFalse() {
-  return false;
-}
-
-/** Detect free variable `exports`. */
-var freeExports = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports = freeModule && freeModule.exports === freeExports;
-
-/** Built-in value references. */
-var Buffer = moduleExports ? root.Buffer : undefined;
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;
-
-/**
- * Checks if `value` is a buffer.
- *
- * @static
- * @memberOf _
- * @since 4.3.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
- * @example
- *
- * _.isBuffer(new Buffer(2));
- * // => true
- *
- * _.isBuffer(new Uint8Array(2));
- * // => false
- */
-var isBuffer = nativeIsBuffer || stubFalse;
-
-/** Used as references for various `Number` constants. */
-var MAX_SAFE_INTEGER$1 = 9007199254740991;
-
-/** Used to detect unsigned integer values. */
-var reIsUint = /^(?:0|[1-9]\d*)$/;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  length = length == null ? MAX_SAFE_INTEGER$1 : length;
-  return !!length &&
-    (typeof value == 'number' || reIsUint.test(value)) &&
-    (value > -1 && value % 1 == 0 && value < length);
-}
-
-/** `Object#toString` result references. */
-var argsTag$1 = '[object Arguments]';
-var arrayTag = '[object Array]';
-var boolTag = '[object Boolean]';
-var dateTag = '[object Date]';
-var errorTag = '[object Error]';
-var funcTag$1 = '[object Function]';
-var mapTag = '[object Map]';
-var numberTag = '[object Number]';
-var objectTag = '[object Object]';
-var regexpTag = '[object RegExp]';
-var setTag = '[object Set]';
-var stringTag = '[object String]';
-var weakMapTag = '[object WeakMap]';
-
-var arrayBufferTag = '[object ArrayBuffer]';
-var dataViewTag = '[object DataView]';
-var float32Tag = '[object Float32Array]';
-var float64Tag = '[object Float64Array]';
-var int8Tag = '[object Int8Array]';
-var int16Tag = '[object Int16Array]';
-var int32Tag = '[object Int32Array]';
-var uint8Tag = '[object Uint8Array]';
-var uint8ClampedTag = '[object Uint8ClampedArray]';
-var uint16Tag = '[object Uint16Array]';
-var uint32Tag = '[object Uint32Array]';
-
-/** Used to identify `toStringTag` values of typed arrays. */
-var typedArrayTags = {};
-typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
-typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
-typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
-typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
-typedArrayTags[uint32Tag] = true;
-typedArrayTags[argsTag$1] = typedArrayTags[arrayTag] =
-typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
-typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
-typedArrayTags[errorTag] = typedArrayTags[funcTag$1] =
-typedArrayTags[mapTag] = typedArrayTags[numberTag] =
-typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
-typedArrayTags[setTag] = typedArrayTags[stringTag] =
-typedArrayTags[weakMapTag] = false;
-
-/**
- * The base implementation of `_.isTypedArray` without Node.js optimizations.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
- */
-function baseIsTypedArray(value) {
-  return isObjectLike(value) &&
-    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];
-}
-
-/**
- * The base implementation of `_.unary` without support for storing metadata.
- *
- * @private
- * @param {Function} func The function to cap arguments for.
- * @returns {Function} Returns the new capped function.
- */
-function baseUnary(func) {
-  return function(value) {
-    return func(value);
-  };
-}
-
-/** Detect free variable `exports`. */
-var freeExports$1 = typeof exports == 'object' && exports && !exports.nodeType && exports;
-
-/** Detect free variable `module`. */
-var freeModule$1 = freeExports$1 && typeof module == 'object' && module && !module.nodeType && module;
-
-/** Detect the popular CommonJS extension `module.exports`. */
-var moduleExports$1 = freeModule$1 && freeModule$1.exports === freeExports$1;
-
-/** Detect free variable `process` from Node.js. */
-var freeProcess = moduleExports$1 && freeGlobal.process;
-
-/** Used to access faster Node.js helpers. */
-var nodeUtil = (function() {
-  try {
-    return freeProcess && freeProcess.binding('util');
-  } catch (e) {}
-}());
-
-/* Node.js helper references. */
-var nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;
-
-/**
- * Checks if `value` is classified as a typed array.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.
- * @example
- *
- * _.isTypedArray(new Uint8Array);
- * // => true
- *
- * _.isTypedArray([]);
- * // => false
- */
-var isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;
-
-/** Used for built-in method references. */
-var objectProto$2 = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$1 = objectProto$2.hasOwnProperty;
-
-/**
- * Creates an array of the enumerable property names of the array-like `value`.
- *
- * @private
- * @param {*} value The value to query.
- * @param {boolean} inherited Specify returning inherited property names.
- * @returns {Array} Returns the array of property names.
- */
-function arrayLikeKeys(value, inherited) {
-  var isArr = isArray(value),
-      isArg = !isArr && isArguments(value),
-      isBuff = !isArr && !isArg && isBuffer(value),
-      isType = !isArr && !isArg && !isBuff && isTypedArray(value),
-      skipIndexes = isArr || isArg || isBuff || isType,
-      result = skipIndexes ? baseTimes(value.length, String) : [],
-      length = result.length;
-
-  for (var key in value) {
-    if ((inherited || hasOwnProperty$1.call(value, key)) &&
-        !(skipIndexes && (
-           // Safari 9 has enumerable `arguments.length` in strict mode.
-           key == 'length' ||
-           // Node.js 0.10 has enumerable non-index properties on buffers.
-           (isBuff && (key == 'offset' || key == 'parent')) ||
-           // PhantomJS 2 has enumerable non-index properties on typed arrays.
-           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||
-           // Skip index properties.
-           isIndex(key, length)
-        ))) {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/** Used for built-in method references. */
-var objectProto$5 = Object.prototype;
-
-/**
- * Checks if `value` is likely a prototype object.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
- */
-function isPrototype(value) {
-  var Ctor = value && value.constructor,
-      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto$5;
-
-  return value === proto;
-}
-
-/**
- * Creates a unary function that invokes `func` with its argument transformed.
- *
- * @private
- * @param {Function} func The function to wrap.
- * @param {Function} transform The argument transform.
- * @returns {Function} Returns the new function.
- */
-function overArg(func, transform) {
-  return function(arg) {
-    return func(transform(arg));
-  };
-}
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeKeys = overArg(Object.keys, Object);
-
-/** Used for built-in method references. */
-var objectProto$4 = Object.prototype;
-
-/** Used to check objects for own properties. */
-var hasOwnProperty$3 = objectProto$4.hasOwnProperty;
-
-/**
- * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- */
-function baseKeys(object) {
-  if (!isPrototype(object)) {
-    return nativeKeys(object);
-  }
-  var result = [];
-  for (var key in Object(object)) {
-    if (hasOwnProperty$3.call(object, key) && key != 'constructor') {
-      result.push(key);
-    }
-  }
-  return result;
-}
-
-/**
- * Creates an array of the own enumerable property names of `object`.
- *
- * **Note:** Non-object values are coerced to objects. See the
- * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)
- * for more details.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Object
- * @param {Object} object The object to query.
- * @returns {Array} Returns the array of property names.
- * @example
- *
- * function Foo() {
- *   this.a = 1;
- *   this.b = 2;
- * }
- *
- * Foo.prototype.c = 3;
- *
- * _.keys(new Foo);
- * // => ['a', 'b'] (iteration order is not guaranteed)
- *
- * _.keys('hi');
- * // => ['0', '1']
- */
-function keys(object) {
-  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);
-}
-
-function createArrayIterator(coll) {
-    var i = -1;
-    var len = coll.length;
-    return function next() {
-        return ++i < len ? {value: coll[i], key: i} : null;
-    }
-}
-
-function createES2015Iterator(iterator) {
-    var i = -1;
-    return function next() {
-        var item = iterator.next();
-        if (item.done)
-            return null;
-        i++;
-        return {value: item.value, key: i};
-    }
-}
-
-function createObjectIterator(obj) {
-    var okeys = keys(obj);
-    var i = -1;
-    var len = okeys.length;
-    return function next() {
-        var key = okeys[++i];
-        return i < len ? {value: obj[key], key: key} : null;
-    };
-}
-
-function iterator(coll) {
-    if (isArrayLike(coll)) {
-        return createArrayIterator(coll);
-    }
-
-    var iterator = getIterator(coll);
-    return iterator ? createES2015Iterator(iterator) : createObjectIterator(coll);
-}
-
-function onlyOnce(fn) {
-    return function() {
-        if (fn === null) throw new Error("Callback was already called.");
-        var callFn = fn;
-        fn = null;
-        callFn.apply(this, arguments);
-    };
-}
-
-function _eachOfLimit(limit) {
-    return function (obj, iteratee, callback) {
-        callback = once(callback || noop);
-        if (limit <= 0 || !obj) {
-            return callback(null);
-        }
-        var nextElem = iterator(obj);
-        var done = false;
-        var running = 0;
-
-        function iterateeCallback(err, value) {
-            running -= 1;
-            if (err) {
-                done = true;
-                callback(err);
-            }
-            else if (value === breakLoop || (done && running <= 0)) {
-                done = true;
-                return callback(null);
-            }
-            else {
-                replenish();
-            }
-        }
-
-        function replenish () {
-            while (running < limit && !done) {
-                var elem = nextElem();
-                if (elem === null) {
-                    done = true;
-                    if (running <= 0) {
-                        callback(null);
-                    }
-                    return;
-                }
-                running += 1;
-                iteratee(elem.value, elem.key, onlyOnce(iterateeCallback));
-            }
-        }
-
-        replenish();
-    };
-}
-
-/**
- * The same as [`eachOf`]{@link module:Collections.eachOf} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name eachOfLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.eachOf]{@link module:Collections.eachOf}
- * @alias forEachOfLimit
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each
- * item in `coll`. The `key` is the item's key, or index in the case of an
- * array.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- */
-function eachOfLimit(coll, limit, iteratee, callback) {
-    _eachOfLimit(limit)(coll, wrapAsync(iteratee), callback);
-}
-
-function doLimit(fn, limit) {
-    return function (iterable, iteratee, callback) {
-        return fn(iterable, limit, iteratee, callback);
-    };
-}
-
-// eachOf implementation optimized for array-likes
-function eachOfArrayLike(coll, iteratee, callback) {
-    callback = once(callback || noop);
-    var index = 0,
-        completed = 0,
-        length = coll.length;
-    if (length === 0) {
-        callback(null);
-    }
-
-    function iteratorCallback(err, value) {
-        if (err) {
-            callback(err);
-        } else if ((++completed === length) || value === breakLoop) {
-            callback(null);
-        }
-    }
-
-    for (; index < length; index++) {
-        iteratee(coll[index], index, onlyOnce(iteratorCallback));
-    }
-}
-
-// a generic version of eachOf which can handle array, object, and iterator cases.
-var eachOfGeneric = doLimit(eachOfLimit, Infinity);
-
-/**
- * Like [`each`]{@link module:Collections.each}, except that it passes the key (or index) as the second argument
- * to the iteratee.
- *
- * @name eachOf
- * @static
- * @memberOf module:Collections
- * @method
- * @alias forEachOf
- * @category Collection
- * @see [async.each]{@link module:Collections.each}
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each
- * item in `coll`.
- * The `key` is the item's key, or index in the case of an array.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @example
- *
- * var obj = {dev: "/dev.json", test: "/test.json", prod: "/prod.json"};
- * var configs = {};
- *
- * async.forEachOf(obj, function (value, key, callback) {
- *     fs.readFile(__dirname + value, "utf8", function (err, data) {
- *         if (err) return callback(err);
- *         try {
- *             configs[key] = JSON.parse(data);
- *         } catch (e) {
- *             return callback(e);
- *         }
- *         callback();
- *     });
- * }, function (err) {
- *     if (err) console.error(err.message);
- *     // configs is now a map of JSON data
- *     doSomethingWith(configs);
- * });
- */
-var eachOf = function(coll, iteratee, callback) {
-    var eachOfImplementation = isArrayLike(coll) ? eachOfArrayLike : eachOfGeneric;
-    eachOfImplementation(coll, wrapAsync(iteratee), callback);
-};
-
-function doParallel(fn) {
-    return function (obj, iteratee, callback) {
-        return fn(eachOf, obj, wrapAsync(iteratee), callback);
-    };
-}
-
-function _asyncMap(eachfn, arr, iteratee, callback) {
-    callback = callback || noop;
-    arr = arr || [];
-    var results = [];
-    var counter = 0;
-    var _iteratee = wrapAsync(iteratee);
-
-    eachfn(arr, function (value, _, callback) {
-        var index = counter++;
-        _iteratee(value, function (err, v) {
-            results[index] = v;
-            callback(err);
-        });
-    }, function (err) {
-        callback(err, results);
-    });
-}
-
-/**
- * Produces a new collection of values by mapping each value in `coll` through
- * the `iteratee` function. The `iteratee` is called with an item from `coll`
- * and a callback for when it has finished processing. Each of these callback
- * takes 2 arguments: an `error`, and the transformed item from `coll`. If
- * `iteratee` passes an error to its callback, the main `callback` (for the
- * `map` function) is immediately called with the error.
- *
- * Note, that since this function applies the `iteratee` to each item in
- * parallel, there is no guarantee that the `iteratee` functions will complete
- * in order. However, the results array will be in the same order as the
- * original `coll`.
- *
- * If `map` is passed an Object, the results will be an Array.  The results
- * will roughly be in the order of the original Objects' keys (but this can
- * vary across JavaScript engines).
- *
- * @name map
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with the transformed item.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Results is an Array of the
- * transformed items from the `coll`. Invoked with (err, results).
- * @example
- *
- * async.map(['file1','file2','file3'], fs.stat, function(err, results) {
- *     // results is now an array of stats for each file
- * });
- */
-var map = doParallel(_asyncMap);
-
-/**
- * Applies the provided arguments to each function in the array, calling
- * `callback` after all functions have completed. If you only provide the first
- * argument, `fns`, then it will return a function which lets you pass in the
- * arguments as if it were a single function call. If more arguments are
- * provided, `callback` is required while `args` is still optional.
- *
- * @name applyEach
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array|Iterable|Object} fns - A collection of {@link AsyncFunction}s
- * to all call with the same arguments
- * @param {...*} [args] - any number of separate arguments to pass to the
- * function.
- * @param {Function} [callback] - the final argument should be the callback,
- * called when all functions have completed processing.
- * @returns {Function} - If only the first argument, `fns`, is provided, it will
- * return a function which lets you pass in the arguments as if it were a single
- * function call. The signature is `(..args, callback)`. If invoked with any
- * arguments, `callback` is required.
- * @example
- *
- * async.applyEach([enableSearch, updateSchema], 'bucket', callback);
- *
- * // partial application example:
- * async.each(
- *     buckets,
- *     async.applyEach([enableSearch, updateSchema]),
- *     callback
- * );
- */
-var applyEach = applyEach$1(map);
-
-function doParallelLimit(fn) {
-    return function (obj, limit, iteratee, callback) {
-        return fn(_eachOfLimit(limit), obj, wrapAsync(iteratee), callback);
-    };
-}
-
-/**
- * The same as [`map`]{@link module:Collections.map} but runs a maximum of `limit` async operations at a time.
- *
- * @name mapLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.map]{@link module:Collections.map}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with the transformed item.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Results is an array of the
- * transformed items from the `coll`. Invoked with (err, results).
- */
-var mapLimit = doParallelLimit(_asyncMap);
-
-/**
- * The same as [`map`]{@link module:Collections.map} but runs only a single async operation at a time.
- *
- * @name mapSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.map]{@link module:Collections.map}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with the transformed item.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Results is an array of the
- * transformed items from the `coll`. Invoked with (err, results).
- */
-var mapSeries = doLimit(mapLimit, 1);
-
-/**
- * The same as [`applyEach`]{@link module:ControlFlow.applyEach} but runs only a single async operation at a time.
- *
- * @name applyEachSeries
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.applyEach]{@link module:ControlFlow.applyEach}
- * @category Control Flow
- * @param {Array|Iterable|Object} fns - A collection of {@link AsyncFunction}s to all
- * call with the same arguments
- * @param {...*} [args] - any number of separate arguments to pass to the
- * function.
- * @param {Function} [callback] - the final argument should be the callback,
- * called when all functions have completed processing.
- * @returns {Function} - If only the first argument is provided, it will return
- * a function which lets you pass in the arguments as if it were a single
- * function call.
- */
-var applyEachSeries = applyEach$1(mapSeries);
-
-/**
- * Creates a continuation function with some arguments already applied.
- *
- * Useful as a shorthand when combined with other control flow functions. Any
- * arguments passed to the returned function are added to the arguments
- * originally passed to apply.
- *
- * @name apply
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {Function} fn - The function you want to eventually apply all
- * arguments to. Invokes with (arguments...).
- * @param {...*} arguments... - Any number of arguments to automatically apply
- * when the continuation is called.
- * @returns {Function} the partially-applied function
- * @example
- *
- * // using apply
- * async.parallel([
- *     async.apply(fs.writeFile, 'testfile1', 'test1'),
- *     async.apply(fs.writeFile, 'testfile2', 'test2')
- * ]);
- *
- *
- * // the same process without using apply
- * async.parallel([
- *     function(callback) {
- *         fs.writeFile('testfile1', 'test1', callback);
- *     },
- *     function(callback) {
- *         fs.writeFile('testfile2', 'test2', callback);
- *     }
- * ]);
- *
- * // It's possible to pass any number of additional arguments when calling the
- * // continuation:
- *
- * node> var fn = async.apply(sys.puts, 'one');
- * node> fn('two', 'three');
- * one
- * two
- * three
- */
-var apply = function(fn/*, ...args*/) {
-    var args = slice(arguments, 1);
-    return function(/*callArgs*/) {
-        var callArgs = slice(arguments);
-        return fn.apply(null, args.concat(callArgs));
-    };
-};
-
-/**
- * A specialized version of `_.forEach` for arrays without support for
- * iteratee shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns `array`.
- */
-function arrayEach(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length;
-
-  while (++index < length) {
-    if (iteratee(array[index], index, array) === false) {
-      break;
-    }
-  }
-  return array;
-}
-
-/**
- * Creates a base function for methods like `_.forIn` and `_.forOwn`.
- *
- * @private
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Function} Returns the new base function.
- */
-function createBaseFor(fromRight) {
-  return function(object, iteratee, keysFunc) {
-    var index = -1,
-        iterable = Object(object),
-        props = keysFunc(object),
-        length = props.length;
-
-    while (length--) {
-      var key = props[fromRight ? length : ++index];
-      if (iteratee(iterable[key], key, iterable) === false) {
-        break;
-      }
-    }
-    return object;
-  };
-}
-
-/**
- * The base implementation of `baseForOwn` which iterates over `object`
- * properties returned by `keysFunc` and invokes `iteratee` for each property.
- * Iteratee functions may exit iteration early by explicitly returning `false`.
- *
- * @private
- * @param {Object} object The object to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @param {Function} keysFunc The function to get the keys of `object`.
- * @returns {Object} Returns `object`.
- */
-var baseFor = createBaseFor();
-
-/**
- * The base implementation of `_.forOwn` without support for iteratee shorthands.
- *
- * @private
- * @param {Object} object The object to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Object} Returns `object`.
- */
-function baseForOwn(object, iteratee) {
-  return object && baseFor(object, iteratee, keys);
-}
-
-/**
- * The base implementation of `_.findIndex` and `_.findLastIndex` without
- * support for iteratee shorthands.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {Function} predicate The function invoked per iteration.
- * @param {number} fromIndex The index to search from.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseFindIndex(array, predicate, fromIndex, fromRight) {
-  var length = array.length,
-      index = fromIndex + (fromRight ? 1 : -1);
-
-  while ((fromRight ? index-- : ++index < length)) {
-    if (predicate(array[index], index, array)) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.isNaN` without support for number objects.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is `NaN`, else `false`.
- */
-function baseIsNaN(value) {
-  return value !== value;
-}
-
-/**
- * A specialized version of `_.indexOf` which performs strict equality
- * comparisons of values, i.e. `===`.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function strictIndexOf(array, value, fromIndex) {
-  var index = fromIndex - 1,
-      length = array.length;
-
-  while (++index < length) {
-    if (array[index] === value) {
-      return index;
-    }
-  }
-  return -1;
-}
-
-/**
- * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {*} value The value to search for.
- * @param {number} fromIndex The index to search from.
- * @returns {number} Returns the index of the matched value, else `-1`.
- */
-function baseIndexOf(array, value, fromIndex) {
-  return value === value
-    ? strictIndexOf(array, value, fromIndex)
-    : baseFindIndex(array, baseIsNaN, fromIndex);
-}
-
-/**
- * Determines the best order for running the {@link AsyncFunction}s in `tasks`, based on
- * their requirements. Each function can optionally depend on other functions
- * being completed first, and each function is run as soon as its requirements
- * are satisfied.
- *
- * If any of the {@link AsyncFunction}s pass an error to their callback, the `auto` sequence
- * will stop. Further tasks will not execute (so any other functions depending
- * on it will not run), and the main `callback` is immediately called with the
- * error.
- *
- * {@link AsyncFunction}s also receive an object containing the results of functions which
- * have completed so far as the first argument, if they have dependencies. If a
- * task function has no dependencies, it will only be passed a callback.
- *
- * @name auto
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Object} tasks - An object. Each of its properties is either a
- * function or an array of requirements, with the {@link AsyncFunction} itself the last item
- * in the array. The object's key of a property serves as the name of the task
- * defined by that property, i.e. can be used when specifying requirements for
- * other tasks. The function receives one or two arguments:
- * * a `results` object, containing the results of the previously executed
- *   functions, only passed if the task has any dependencies,
- * * a `callback(err, result)` function, which must be called when finished,
- *   passing an `error` (which can be `null`) and the result of the function's
- *   execution.
- * @param {number} [concurrency=Infinity] - An optional `integer` for
- * determining the maximum number of tasks that can be run in parallel. By
- * default, as many as possible.
- * @param {Function} [callback] - An optional callback which is called when all
- * the tasks have been completed. It receives the `err` argument if any `tasks`
- * pass an error to their callback. Results are always returned; however, if an
- * error occurs, no further `tasks` will be performed, and the results object
- * will only contain partial results. Invoked with (err, results).
- * @returns undefined
- * @example
- *
- * async.auto({
- *     // this function will just be passed a callback
- *     readData: async.apply(fs.readFile, 'data.txt', 'utf-8'),
- *     showData: ['readData', function(results, cb) {
- *         // results.readData is the file's contents
- *         // ...
- *     }]
- * }, callback);
- *
- * async.auto({
- *     get_data: function(callback) {
- *         console.log('in get_data');
- *         // async code to get some data
- *         callback(null, 'data', 'converted to array');
- *     },
- *     make_folder: function(callback) {
- *         console.log('in make_folder');
- *         // async code to create a directory to store a file in
- *         // this is run at the same time as getting the data
- *         callback(null, 'folder');
- *     },
- *     write_file: ['get_data', 'make_folder', function(results, callback) {
- *         console.log('in write_file', JSON.stringify(results));
- *         // once there is some data and the directory exists,
- *         // write the data to a file in the directory
- *         callback(null, 'filename');
- *     }],
- *     email_link: ['write_file', function(results, callback) {
- *         console.log('in email_link', JSON.stringify(results));
- *         // once the file is written let's email a link to it...
- *         // results.write_file contains the filename returned by write_file.
- *         callback(null, {'file':results.write_file, 'email':'user@example.com'});
- *     }]
- * }, function(err, results) {
- *     console.log('err = ', err);
- *     console.log('results = ', results);
- * });
- */
-var auto = function (tasks, concurrency, callback) {
-    if (typeof concurrency === 'function') {
-        // concurrency is optional, shift the args.
-        callback = concurrency;
-        concurrency = null;
-    }
-    callback = once(callback || noop);
-    var keys$$1 = keys(tasks);
-    var numTasks = keys$$1.length;
-    if (!numTasks) {
-        return callback(null);
-    }
-    if (!concurrency) {
-        concurrency = numTasks;
-    }
-
-    var results = {};
-    var runningTasks = 0;
-    var hasError = false;
-
-    var listeners = Object.create(null);
-
-    var readyTasks = [];
-
-    // for cycle detection:
-    var readyToCheck = []; // tasks that have been identified as reachable
-    // without the possibility of returning to an ancestor task
-    var uncheckedDependencies = {};
-
-    baseForOwn(tasks, function (task, key) {
-        if (!isArray(task)) {
-            // no dependencies
-            enqueueTask(key, [task]);
-            readyToCheck.push(key);
-            return;
-        }
-
-        var dependencies = task.slice(0, task.length - 1);
-        var remainingDependencies = dependencies.length;
-        if (remainingDependencies === 0) {
-            enqueueTask(key, task);
-            readyToCheck.push(key);
-            return;
-        }
-        uncheckedDependencies[key] = remainingDependencies;
-
-        arrayEach(dependencies, function (dependencyName) {
-            if (!tasks[dependencyName]) {
-                throw new Error('async.auto task `' + key +
-                    '` has a non-existent dependency `' +
-                    dependencyName + '` in ' +
-                    dependencies.join(', '));
-            }
-            addListener(dependencyName, function () {
-                remainingDependencies--;
-                if (remainingDependencies === 0) {
-                    enqueueTask(key, task);
-                }
-            });
-        });
-    });
-
-    checkForDeadlocks();
-    processQueue();
-
-    function enqueueTask(key, task) {
-        readyTasks.push(function () {
-            runTask(key, task);
-        });
-    }
-
-    function processQueue() {
-        if (readyTasks.length === 0 && runningTasks === 0) {
-            return callback(null, results);
-        }
-        while(readyTasks.length && runningTasks < concurrency) {
-            var run = readyTasks.shift();
-            run();
-        }
-
-    }
-
-    function addListener(taskName, fn) {
-        var taskListeners = listeners[taskName];
-        if (!taskListeners) {
-            taskListeners = listeners[taskName] = [];
-        }
-
-        taskListeners.push(fn);
-    }
-
-    function taskComplete(taskName) {
-        var taskListeners = listeners[taskName] || [];
-        arrayEach(taskListeners, function (fn) {
-            fn();
-        });
-        processQueue();
-    }
-
-
-    function runTask(key, task) {
-        if (hasError) return;
-
-        var taskCallback = onlyOnce(function(err, result) {
-            runningTasks--;
-            if (arguments.length > 2) {
-                result = slice(arguments, 1);
-            }
-            if (err) {
-                var safeResults = {};
-                baseForOwn(results, function(val, rkey) {
-                    safeResults[rkey] = val;
-                });
-                safeResults[key] = result;
-                hasError = true;
-                listeners = Object.create(null);
-
-                callback(err, safeResults);
-            } else {
-                results[key] = result;
-                taskComplete(key);
-            }
-        });
-
-        runningTasks++;
-        var taskFn = wrapAsync(task[task.length - 1]);
-        if (task.length > 1) {
-            taskFn(results, taskCallback);
-        } else {
-            taskFn(taskCallback);
-        }
-    }
-
-    function checkForDeadlocks() {
-        // Kahn's algorithm
-        // https://en.wikipedia.org/wiki/Topological_sorting#Kahn.27s_algorithm
-        // http://connalle.blogspot.com/2013/10/topological-sortingkahn-algorithm.html
-        var currentTask;
-        var counter = 0;
-        while (readyToCheck.length) {
-            currentTask = readyToCheck.pop();
-            counter++;
-            arrayEach(getDependents(currentTask), function (dependent) {
-                if (--uncheckedDependencies[dependent] === 0) {
-                    readyToCheck.push(dependent);
-                }
-            });
-        }
-
-        if (counter !== numTasks) {
-            throw new Error(
-                'async.auto cannot execute tasks due to a recursive dependency'
-            );
-        }
-    }
-
-    function getDependents(taskName) {
-        var result = [];
-        baseForOwn(tasks, function (task, key) {
-            if (isArray(task) && baseIndexOf(task, taskName, 0) >= 0) {
-                result.push(key);
-            }
-        });
-        return result;
-    }
-};
-
-/**
- * A specialized version of `_.map` for arrays without support for iteratee
- * shorthands.
- *
- * @private
- * @param {Array} [array] The array to iterate over.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the new mapped array.
- */
-function arrayMap(array, iteratee) {
-  var index = -1,
-      length = array == null ? 0 : array.length,
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = iteratee(array[index], index, array);
-  }
-  return result;
-}
-
-/** `Object#toString` result references. */
-var symbolTag = '[object Symbol]';
-
-/**
- * Checks if `value` is classified as a `Symbol` primitive or object.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
- * @example
- *
- * _.isSymbol(Symbol.iterator);
- * // => true
- *
- * _.isSymbol('abc');
- * // => false
- */
-function isSymbol(value) {
-  return typeof value == 'symbol' ||
-    (isObjectLike(value) && baseGetTag(value) == symbolTag);
-}
-
-/** Used as references for various `Number` constants. */
-var INFINITY = 1 / 0;
-
-/** Used to convert symbols to primitives and strings. */
-var symbolProto = Symbol$1 ? Symbol$1.prototype : undefined;
-var symbolToString = symbolProto ? symbolProto.toString : undefined;
-
-/**
- * The base implementation of `_.toString` which doesn't convert nullish
- * values to empty strings.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  // Exit early for strings to avoid a performance hit in some environments.
-  if (typeof value == 'string') {
-    return value;
-  }
-  if (isArray(value)) {
-    // Recursively convert values (susceptible to call stack limits).
-    return arrayMap(value, baseToString) + '';
-  }
-  if (isSymbol(value)) {
-    return symbolToString ? symbolToString.call(value) : '';
-  }
-  var result = (value + '');
-  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
-}
-
-/**
- * The base implementation of `_.slice` without an iteratee call guard.
- *
- * @private
- * @param {Array} array The array to slice.
- * @param {number} [start=0] The start position.
- * @param {number} [end=array.length] The end position.
- * @returns {Array} Returns the slice of `array`.
- */
-function baseSlice(array, start, end) {
-  var index = -1,
-      length = array.length;
-
-  if (start < 0) {
-    start = -start > length ? 0 : (length + start);
-  }
-  end = end > length ? length : end;
-  if (end < 0) {
-    end += length;
-  }
-  length = start > end ? 0 : ((end - start) >>> 0);
-  start >>>= 0;
-
-  var result = Array(length);
-  while (++index < length) {
-    result[index] = array[index + start];
-  }
-  return result;
-}
-
-/**
- * Casts `array` to a slice if it's needed.
- *
- * @private
- * @param {Array} array The array to inspect.
- * @param {number} start The start position.
- * @param {number} [end=array.length] The end position.
- * @returns {Array} Returns the cast slice.
- */
-function castSlice(array, start, end) {
-  var length = array.length;
-  end = end === undefined ? length : end;
-  return (!start && end >= length) ? array : baseSlice(array, start, end);
-}
-
-/**
- * Used by `_.trim` and `_.trimEnd` to get the index of the last string symbol
- * that is not found in the character symbols.
- *
- * @private
- * @param {Array} strSymbols The string symbols to inspect.
- * @param {Array} chrSymbols The character symbols to find.
- * @returns {number} Returns the index of the last unmatched string symbol.
- */
-function charsEndIndex(strSymbols, chrSymbols) {
-  var index = strSymbols.length;
-
-  while (index-- && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
-  return index;
-}
-
-/**
- * Used by `_.trim` and `_.trimStart` to get the index of the first string symbol
- * that is not found in the character symbols.
- *
- * @private
- * @param {Array} strSymbols The string symbols to inspect.
- * @param {Array} chrSymbols The character symbols to find.
- * @returns {number} Returns the index of the first unmatched string symbol.
- */
-function charsStartIndex(strSymbols, chrSymbols) {
-  var index = -1,
-      length = strSymbols.length;
-
-  while (++index < length && baseIndexOf(chrSymbols, strSymbols[index], 0) > -1) {}
-  return index;
-}
-
-/**
- * Converts an ASCII `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function asciiToArray(string) {
-  return string.split('');
-}
-
-/** Used to compose unicode character classes. */
-var rsAstralRange = '\\ud800-\\udfff';
-var rsComboMarksRange = '\\u0300-\\u036f\\ufe20-\\ufe23';
-var rsComboSymbolsRange = '\\u20d0-\\u20f0';
-var rsVarRange = '\\ufe0e\\ufe0f';
-
-/** Used to compose unicode capture groups. */
-var rsZWJ = '\\u200d';
-
-/** Used to detect strings with [zero-width joiners or code points from the astral planes](http://eev.ee/blog/2015/09/12/dark-corners-of-unicode/). */
-var reHasUnicode = RegExp('[' + rsZWJ + rsAstralRange  + rsComboMarksRange + rsComboSymbolsRange + rsVarRange + ']');
-
-/**
- * Checks if `string` contains Unicode symbols.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {boolean} Returns `true` if a symbol is found, else `false`.
- */
-function hasUnicode(string) {
-  return reHasUnicode.test(string);
-}
-
-/** Used to compose unicode character classes. */
-var rsAstralRange$1 = '\\ud800-\\udfff';
-var rsComboMarksRange$1 = '\\u0300-\\u036f\\ufe20-\\ufe23';
-var rsComboSymbolsRange$1 = '\\u20d0-\\u20f0';
-var rsVarRange$1 = '\\ufe0e\\ufe0f';
-
-/** Used to compose unicode capture groups. */
-var rsAstral = '[' + rsAstralRange$1 + ']';
-var rsCombo = '[' + rsComboMarksRange$1 + rsComboSymbolsRange$1 + ']';
-var rsFitz = '\\ud83c[\\udffb-\\udfff]';
-var rsModifier = '(?:' + rsCombo + '|' + rsFitz + ')';
-var rsNonAstral = '[^' + rsAstralRange$1 + ']';
-var rsRegional = '(?:\\ud83c[\\udde6-\\uddff]){2}';
-var rsSurrPair = '[\\ud800-\\udbff][\\udc00-\\udfff]';
-var rsZWJ$1 = '\\u200d';
-
-/** Used to compose unicode regexes. */
-var reOptMod = rsModifier + '?';
-var rsOptVar = '[' + rsVarRange$1 + ']?';
-var rsOptJoin = '(?:' + rsZWJ$1 + '(?:' + [rsNonAstral, rsRegional, rsSurrPair].join('|') + ')' + rsOptVar + reOptMod + ')*';
-var rsSeq = rsOptVar + reOptMod + rsOptJoin;
-var rsSymbol = '(?:' + [rsNonAstral + rsCombo + '?', rsCombo, rsRegional, rsSurrPair, rsAstral].join('|') + ')';
-
-/** Used to match [string symbols](https://mathiasbynens.be/notes/javascript-unicode). */
-var reUnicode = RegExp(rsFitz + '(?=' + rsFitz + ')|' + rsSymbol + rsSeq, 'g');
-
-/**
- * Converts a Unicode `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function unicodeToArray(string) {
-  return string.match(reUnicode) || [];
-}
-
-/**
- * Converts `string` to an array.
- *
- * @private
- * @param {string} string The string to convert.
- * @returns {Array} Returns the converted array.
- */
-function stringToArray(string) {
-  return hasUnicode(string)
-    ? unicodeToArray(string)
-    : asciiToArray(string);
-}
-
-/**
- * Converts `value` to a string. An empty string is returned for `null`
- * and `undefined` values. The sign of `-0` is preserved.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to convert.
- * @returns {string} Returns the converted string.
- * @example
- *
- * _.toString(null);
- * // => ''
- *
- * _.toString(-0);
- * // => '-0'
- *
- * _.toString([1, 2, 3]);
- * // => '1,2,3'
- */
-function toString(value) {
-  return value == null ? '' : baseToString(value);
-}
-
-/** Used to match leading and trailing whitespace. */
-var reTrim = /^\s+|\s+$/g;
-
-/**
- * Removes leading and trailing whitespace or specified characters from `string`.
- *
- * @static
- * @memberOf _
- * @since 3.0.0
- * @category String
- * @param {string} [string=''] The string to trim.
- * @param {string} [chars=whitespace] The characters to trim.
- * @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
- * @returns {string} Returns the trimmed string.
- * @example
- *
- * _.trim('  abc  ');
- * // => 'abc'
- *
- * _.trim('-_-abc-_-', '_-');
- * // => 'abc'
- *
- * _.map(['  foo  ', '  bar  '], _.trim);
- * // => ['foo', 'bar']
- */
-function trim(string, chars, guard) {
-  string = toString(string);
-  if (string && (guard || chars === undefined)) {
-    return string.replace(reTrim, '');
-  }
-  if (!string || !(chars = baseToString(chars))) {
-    return string;
-  }
-  var strSymbols = stringToArray(string),
-      chrSymbols = stringToArray(chars),
-      start = charsStartIndex(strSymbols, chrSymbols),
-      end = charsEndIndex(strSymbols, chrSymbols) + 1;
-
-  return castSlice(strSymbols, start, end).join('');
-}
-
-var FN_ARGS = /^(?:async\s+)?(function)?\s*[^\(]*\(\s*([^\)]*)\)/m;
-var FN_ARG_SPLIT = /,/;
-var FN_ARG = /(=.+)?(\s*)$/;
-var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-
-function parseParams(func) {
-    func = func.toString().replace(STRIP_COMMENTS, '');
-    func = func.match(FN_ARGS)[2].replace(' ', '');
-    func = func ? func.split(FN_ARG_SPLIT) : [];
-    func = func.map(function (arg){
-        return trim(arg.replace(FN_ARG, ''));
-    });
-    return func;
-}
-
-/**
- * A dependency-injected version of the [async.auto]{@link module:ControlFlow.auto} function. Dependent
- * tasks are specified as parameters to the function, after the usual callback
- * parameter, with the parameter names matching the names of the tasks it
- * depends on. This can provide even more readable task graphs which can be
- * easier to maintain.
- *
- * If a final callback is specified, the task results are similarly injected,
- * specified as named parameters after the initial error parameter.
- *
- * The autoInject function is purely syntactic sugar and its semantics are
- * otherwise equivalent to [async.auto]{@link module:ControlFlow.auto}.
- *
- * @name autoInject
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.auto]{@link module:ControlFlow.auto}
- * @category Control Flow
- * @param {Object} tasks - An object, each of whose properties is an {@link AsyncFunction} of
- * the form 'func([dependencies...], callback). The object's key of a property
- * serves as the name of the task defined by that property, i.e. can be used
- * when specifying requirements for other tasks.
- * * The `callback` parameter is a `callback(err, result)` which must be called
- *   when finished, passing an `error` (which can be `null`) and the result of
- *   the function's execution. The remaining parameters name other tasks on
- *   which the task is dependent, and the results from those tasks are the
- *   arguments of those parameters.
- * @param {Function} [callback] - An optional callback which is called when all
- * the tasks have been completed. It receives the `err` argument if any `tasks`
- * pass an error to their callback, and a `results` object with any completed
- * task results, similar to `auto`.
- * @example
- *
- * //  The example from `auto` can be rewritten as follows:
- * async.autoInject({
- *     get_data: function(callback) {
- *         // async code to get some data
- *         callback(null, 'data', 'converted to array');
- *     },
- *     make_folder: function(callback) {
- *         // async code to create a directory to store a file in
- *         // this is run at the same time as getting the data
- *         callback(null, 'folder');
- *     },
- *     write_file: function(get_data, make_folder, callback) {
- *         // once there is some data and the directory exists,
- *         // write the data to a file in the directory
- *         callback(null, 'filename');
- *     },
- *     email_link: function(write_file, callback) {
- *         // once the file is written let's email a link to it...
- *         // write_file contains the filename returned by write_file.
- *         callback(null, {'file':write_file, 'email':'user@example.com'});
- *     }
- * }, function(err, results) {
- *     console.log('err = ', err);
- *     console.log('email_link = ', results.email_link);
- * });
- *
- * // If you are using a JS minifier that mangles parameter names, `autoInject`
- * // will not work with plain functions, since the parameter names will be
- * // collapsed to a single letter identifier.  To work around this, you can
- * // explicitly specify the names of the parameters your task function needs
- * // in an array, similar to Angular.js dependency injection.
- *
- * // This still has an advantage over plain `auto`, since the results a task
- * // depends on are still spread into arguments.
- * async.autoInject({
- *     //...
- *     write_file: ['get_data', 'make_folder', function(get_data, make_folder, callback) {
- *         callback(null, 'filename');
- *     }],
- *     email_link: ['write_file', function(write_file, callback) {
- *         callback(null, {'file':write_file, 'email':'user@example.com'});
- *     }]
- *     //...
- * }, function(err, results) {
- *     console.log('err = ', err);
- *     console.log('email_link = ', results.email_link);
- * });
- */
-function autoInject(tasks, callback) {
-    var newTasks = {};
-
-    baseForOwn(tasks, function (taskFn, key) {
-        var params;
-        var fnIsAsync = isAsync(taskFn);
-        var hasNoDeps =
-            (!fnIsAsync && taskFn.length === 1) ||
-            (fnIsAsync && taskFn.length === 0);
-
-        if (isArray(taskFn)) {
-            params = taskFn.slice(0, -1);
-            taskFn = taskFn[taskFn.length - 1];
-
-            newTasks[key] = params.concat(params.length > 0 ? newTask : taskFn);
-        } else if (hasNoDeps) {
-            // no dependencies, use the function as-is
-            newTasks[key] = taskFn;
-        } else {
-            params = parseParams(taskFn);
-            if (taskFn.length === 0 && !fnIsAsync && params.length === 0) {
-                throw new Error("autoInject task functions require explicit parameters.");
-            }
-
-            // remove callback param
-            if (!fnIsAsync) params.pop();
-
-            newTasks[key] = params.concat(newTask);
-        }
-
-        function newTask(results, taskCb) {
-            var newArgs = arrayMap(params, function (name) {
-                return results[name];
-            });
-            newArgs.push(taskCb);
-            wrapAsync(taskFn).apply(null, newArgs);
-        }
-    });
-
-    auto(newTasks, callback);
-}
-
-// Simple doubly linked list (https://en.wikipedia.org/wiki/Doubly_linked_list) implementation
-// used for queues. This implementation assumes that the node provided by the user can be modified
-// to adjust the next and last properties. We implement only the minimal functionality
-// for queue support.
-function DLL() {
-    this.head = this.tail = null;
-    this.length = 0;
-}
-
-function setInitial(dll, node) {
-    dll.length = 1;
-    dll.head = dll.tail = node;
-}
-
-DLL.prototype.removeLink = function(node) {
-    if (node.prev) node.prev.next = node.next;
-    else this.head = node.next;
-    if (node.next) node.next.prev = node.prev;
-    else this.tail = node.prev;
-
-    node.prev = node.next = null;
-    this.length -= 1;
-    return node;
-};
-
-DLL.prototype.empty = function () {
-    while(this.head) this.shift();
-    return this;
-};
-
-DLL.prototype.insertAfter = function(node, newNode) {
-    newNode.prev = node;
-    newNode.next = node.next;
-    if (node.next) node.next.prev = newNode;
-    else this.tail = newNode;
-    node.next = newNode;
-    this.length += 1;
-};
-
-DLL.prototype.insertBefore = function(node, newNode) {
-    newNode.prev = node.prev;
-    newNode.next = node;
-    if (node.prev) node.prev.next = newNode;
-    else this.head = newNode;
-    node.prev = newNode;
-    this.length += 1;
-};
-
-DLL.prototype.unshift = function(node) {
-    if (this.head) this.insertBefore(this.head, node);
-    else setInitial(this, node);
-};
-
-DLL.prototype.push = function(node) {
-    if (this.tail) this.insertAfter(this.tail, node);
-    else setInitial(this, node);
-};
-
-DLL.prototype.shift = function() {
-    return this.head && this.removeLink(this.head);
-};
-
-DLL.prototype.pop = function() {
-    return this.tail && this.removeLink(this.tail);
-};
-
-DLL.prototype.toArray = function () {
-    var arr = Array(this.length);
-    var curr = this.head;
-    for(var idx = 0; idx < this.length; idx++) {
-        arr[idx] = curr.data;
-        curr = curr.next;
-    }
-    return arr;
-};
-
-DLL.prototype.remove = function (testFn) {
-    var curr = this.head;
-    while(!!curr) {
-        var next = curr.next;
-        if (testFn(curr)) {
-            this.removeLink(curr);
-        }
-        curr = next;
-    }
-    return this;
-};
-
-function queue(worker, concurrency, payload) {
-    if (concurrency == null) {
-        concurrency = 1;
-    }
-    else if(concurrency === 0) {
-        throw new Error('Concurrency must not be zero');
-    }
-
-    var _worker = wrapAsync(worker);
-    var numRunning = 0;
-    var workersList = [];
-
-    function _insert(data, insertAtFront, callback) {
-        if (callback != null && typeof callback !== 'function') {
-            throw new Error('task callback must be a function');
-        }
-        q.started = true;
-        if (!isArray(data)) {
-            data = [data];
-        }
-        if (data.length === 0 && q.idle()) {
-            // call drain immediately if there are no tasks
-            return setImmediate$1(function() {
-                q.drain();
-            });
-        }
-
-        for (var i = 0, l = data.length; i < l; i++) {
-            var item = {
-                data: data[i],
-                callback: callback || noop
-            };
-
-            if (insertAtFront) {
-                q._tasks.unshift(item);
-            } else {
-                q._tasks.push(item);
-            }
-        }
-        setImmediate$1(q.process);
-    }
-
-    function _next(tasks) {
-        return function(err){
-            numRunning -= 1;
-
-            for (var i = 0, l = tasks.length; i < l; i++) {
-                var task = tasks[i];
-                var index = baseIndexOf(workersList, task, 0);
-                if (index >= 0) {
-                    workersList.splice(index);
-                }
-
-                task.callback.apply(task, arguments);
-
-                if (err != null) {
-                    q.error(err, task.data);
-                }
-            }
-
-            if (numRunning <= (q.concurrency - q.buffer) ) {
-                q.unsaturated();
-            }
-
-            if (q.idle()) {
-                q.drain();
-            }
-            q.process();
-        };
-    }
-
-    var isProcessing = false;
-    var q = {
-        _tasks: new DLL(),
-        concurrency: concurrency,
-        payload: payload,
-        saturated: noop,
-        unsaturated:noop,
-        buffer: concurrency / 4,
-        empty: noop,
-        drain: noop,
-        error: noop,
-        started: false,
-        paused: false,
-        push: function (data, callback) {
-            _insert(data, false, callback);
-        },
-        kill: function () {
-            q.drain = noop;
-            q._tasks.empty();
-        },
-        unshift: function (data, callback) {
-            _insert(data, true, callback);
-        },
-        remove: function (testFn) {
-            q._tasks.remove(testFn);
-        },
-        process: function () {
-            // Avoid trying to start too many processing operations. This can occur
-            // when callbacks resolve synchronously (#1267).
-            if (isProcessing) {
-                return;
-            }
-            isProcessing = true;
-            while(!q.paused && numRunning < q.concurrency && q._tasks.length){
-                var tasks = [], data = [];
-                var l = q._tasks.length;
-                if (q.payload) l = Math.min(l, q.payload);
-                for (var i = 0; i < l; i++) {
-                    var node = q._tasks.shift();
-                    tasks.push(node);
-                    data.push(node.data);
-                }
-
-                numRunning += 1;
-                workersList.push(tasks[0]);
-
-                if (q._tasks.length === 0) {
-                    q.empty();
-                }
-
-                if (numRunning === q.concurrency) {
-                    q.saturated();
-                }
-
-                var cb = onlyOnce(_next(tasks));
-                _worker(data, cb);
-            }
-            isProcessing = false;
-        },
-        length: function () {
-            return q._tasks.length;
-        },
-        running: function () {
-            return numRunning;
-        },
-        workersList: function () {
-            return workersList;
-        },
-        idle: function() {
-            return q._tasks.length + numRunning === 0;
-        },
-        pause: function () {
-            q.paused = true;
-        },
-        resume: function () {
-            if (q.paused === false) { return; }
-            q.paused = false;
-            setImmediate$1(q.process);
-        }
-    };
-    return q;
-}
-
-/**
- * A cargo of tasks for the worker function to complete. Cargo inherits all of
- * the same methods and event callbacks as [`queue`]{@link module:ControlFlow.queue}.
- * @typedef {Object} CargoObject
- * @memberOf module:ControlFlow
- * @property {Function} length - A function returning the number of items
- * waiting to be processed. Invoke like `cargo.length()`.
- * @property {number} payload - An `integer` for determining how many tasks
- * should be process per round. This property can be changed after a `cargo` is
- * created to alter the payload on-the-fly.
- * @property {Function} push - Adds `task` to the `queue`. The callback is
- * called once the `worker` has finished processing the task. Instead of a
- * single task, an array of `tasks` can be submitted. The respective callback is
- * used for every task in the list. Invoke like `cargo.push(task, [callback])`.
- * @property {Function} saturated - A callback that is called when the
- * `queue.length()` hits the concurrency and further tasks will be queued.
- * @property {Function} empty - A callback that is called when the last item
- * from the `queue` is given to a `worker`.
- * @property {Function} drain - A callback that is called when the last item
- * from the `queue` has returned from the `worker`.
- * @property {Function} idle - a function returning false if there are items
- * waiting or being processed, or true if not. Invoke like `cargo.idle()`.
- * @property {Function} pause - a function that pauses the processing of tasks
- * until `resume()` is called. Invoke like `cargo.pause()`.
- * @property {Function} resume - a function that resumes the processing of
- * queued tasks when the queue is paused. Invoke like `cargo.resume()`.
- * @property {Function} kill - a function that removes the `drain` callback and
- * empties remaining tasks from the queue forcing it to go idle. Invoke like `cargo.kill()`.
- */
-
-/**
- * Creates a `cargo` object with the specified payload. Tasks added to the
- * cargo will be processed altogether (up to the `payload` limit). If the
- * `worker` is in progress, the task is queued until it becomes available. Once
- * the `worker` has completed some tasks, each callback of those tasks is
- * called. Check out [these](https://camo.githubusercontent.com/6bbd36f4cf5b35a0f11a96dcd2e97711ffc2fb37/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f313637363837312f36383130382f62626330636662302d356632392d313165322d393734662d3333393763363464633835382e676966) [animations](https://camo.githubusercontent.com/f4810e00e1c5f5f8addbe3e9f49064fd5d102699/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f313637363837312f36383130312f38346339323036362d356632392d313165322d383134662d3964336430323431336266642e676966)
- * for how `cargo` and `queue` work.
- *
- * While [`queue`]{@link module:ControlFlow.queue} passes only one task to one of a group of workers
- * at a time, cargo passes an array of tasks to a single worker, repeating
- * when the worker is finished.
- *
- * @name cargo
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.queue]{@link module:ControlFlow.queue}
- * @category Control Flow
- * @param {AsyncFunction} worker - An asynchronous function for processing an array
- * of queued tasks. Invoked with `(tasks, callback)`.
- * @param {number} [payload=Infinity] - An optional `integer` for determining
- * how many tasks should be processed per round; if omitted, the default is
- * unlimited.
- * @returns {module:ControlFlow.CargoObject} A cargo object to manage the tasks. Callbacks can
- * attached as certain properties to listen for specific events during the
- * lifecycle of the cargo and inner queue.
- * @example
- *
- * // create a cargo object with payload 2
- * var cargo = async.cargo(function(tasks, callback) {
- *     for (var i=0; i<tasks.length; i++) {
- *         console.log('hello ' + tasks[i].name);
- *     }
- *     callback();
- * }, 2);
- *
- * // add some items
- * cargo.push({name: 'foo'}, function(err) {
- *     console.log('finished processing foo');
- * });
- * cargo.push({name: 'bar'}, function(err) {
- *     console.log('finished processing bar');
- * });
- * cargo.push({name: 'baz'}, function(err) {
- *     console.log('finished processing baz');
- * });
- */
-function cargo(worker, payload) {
-    return queue(worker, 1, payload);
-}
-
-/**
- * The same as [`eachOf`]{@link module:Collections.eachOf} but runs only a single async operation at a time.
- *
- * @name eachOfSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.eachOf]{@link module:Collections.eachOf}
- * @alias forEachOfSeries
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * Invoked with (item, key, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Invoked with (err).
- */
-var eachOfSeries = doLimit(eachOfLimit, 1);
-
-/**
- * Reduces `coll` into a single value using an async `iteratee` to return each
- * successive step. `memo` is the initial state of the reduction. This function
- * only operates in series.
- *
- * For performance reasons, it may make sense to split a call to this function
- * into a parallel map, and then use the normal `Array.prototype.reduce` on the
- * results. This function is for situations where each step in the reduction
- * needs to be async; if you can get the data before reducing it, then it's
- * probably a good idea to do so.
- *
- * @name reduce
- * @static
- * @memberOf module:Collections
- * @method
- * @alias inject
- * @alias foldl
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {*} memo - The initial state of the reduction.
- * @param {AsyncFunction} iteratee - A function applied to each item in the
- * array to produce the next step in the reduction.
- * The `iteratee` should complete with the next state of the reduction.
- * If the iteratee complete with an error, the reduction is stopped and the
- * main `callback` is immediately called with the error.
- * Invoked with (memo, item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result is the reduced value. Invoked with
- * (err, result).
- * @example
- *
- * async.reduce([1,2,3], 0, function(memo, item, callback) {
- *     // pointless async:
- *     process.nextTick(function() {
- *         callback(null, memo + item)
- *     });
- * }, function(err, result) {
- *     // result is now equal to the last value of memo, which is 6
- * });
- */
-function reduce(coll, memo, iteratee, callback) {
-    callback = once(callback || noop);
-    var _iteratee = wrapAsync(iteratee);
-    eachOfSeries(coll, function(x, i, callback) {
-        _iteratee(memo, x, function(err, v) {
-            memo = v;
-            callback(err);
-        });
-    }, function(err) {
-        callback(err, memo);
-    });
-}
-
-/**
- * Version of the compose function that is more natural to read. Each function
- * consumes the return value of the previous function. It is the equivalent of
- * [compose]{@link module:ControlFlow.compose} with the arguments reversed.
- *
- * Each function is executed with the `this` binding of the composed function.
- *
- * @name seq
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.compose]{@link module:ControlFlow.compose}
- * @category Control Flow
- * @param {...AsyncFunction} functions - the asynchronous functions to compose
- * @returns {Function} a function that composes the `functions` in order
- * @example
- *
- * // Requires lodash (or underscore), express3 and dresende's orm2.
- * // Part of an app, that fetches cats of the logged user.
- * // This example uses `seq` function to avoid overnesting and error
- * // handling clutter.
- * app.get('/cats', function(request, response) {
- *     var User = request.models.User;
- *     async.seq(
- *         _.bind(User.get, User),  // 'User.get' has signature (id, callback(err, data))
- *         function(user, fn) {
- *             user.getCats(fn);      // 'getCats' has signature (callback(err, data))
- *         }
- *     )(req.session.user_id, function (err, cats) {
- *         if (err) {
- *             console.error(err);
- *             response.json({ status: 'error', message: err.message });
- *         } else {
- *             response.json({ status: 'ok', message: 'Cats found', data: cats });
- *         }
- *     });
- * });
- */
-function seq(/*...functions*/) {
-    var _functions = arrayMap(arguments, wrapAsync);
-    return function(/*...args*/) {
-        var args = slice(arguments);
-        var that = this;
-
-        var cb = args[args.length - 1];
-        if (typeof cb == 'function') {
-            args.pop();
-        } else {
-            cb = noop;
-        }
-
-        reduce(_functions, args, function(newargs, fn, cb) {
-            fn.apply(that, newargs.concat(function(err/*, ...nextargs*/) {
-                var nextargs = slice(arguments, 1);
-                cb(err, nextargs);
-            }));
-        },
-        function(err, results) {
-            cb.apply(that, [err].concat(results));
-        });
-    };
-}
-
-/**
- * Creates a function which is a composition of the passed asynchronous
- * functions. Each function consumes the return value of the function that
- * follows. Composing functions `f()`, `g()`, and `h()` would produce the result
- * of `f(g(h()))`, only this version uses callbacks to obtain the return values.
- *
- * Each function is executed with the `this` binding of the composed function.
- *
- * @name compose
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {...AsyncFunction} functions - the asynchronous functions to compose
- * @returns {Function} an asynchronous function that is the composed
- * asynchronous `functions`
- * @example
- *
- * function add1(n, callback) {
- *     setTimeout(function () {
- *         callback(null, n + 1);
- *     }, 10);
- * }
- *
- * function mul3(n, callback) {
- *     setTimeout(function () {
- *         callback(null, n * 3);
- *     }, 10);
- * }
- *
- * var add1mul3 = async.compose(mul3, add1);
- * add1mul3(4, function (err, result) {
- *     // result now equals 15
- * });
- */
-var compose = function(/*...args*/) {
-    return seq.apply(null, slice(arguments).reverse());
-};
-
-function concat$1(eachfn, arr, fn, callback) {
-    var result = [];
-    eachfn(arr, function (x, index, cb) {
-        fn(x, function (err, y) {
-            result = result.concat(y || []);
-            cb(err);
-        });
-    }, function (err) {
-        callback(err, result);
-    });
-}
-
-/**
- * Applies `iteratee` to each item in `coll`, concatenating the results. Returns
- * the concatenated list. The `iteratee`s are called in parallel, and the
- * results are concatenated as they return. There is no guarantee that the
- * results array will be returned in the original order of `coll` passed to the
- * `iteratee` function.
- *
- * @name concat
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each item in `coll`,
- * which should use an array as its result. Invoked with (item, callback).
- * @param {Function} [callback(err)] - A callback which is called after all the
- * `iteratee` functions have finished, or an error occurs. Results is an array
- * containing the concatenated results of the `iteratee` function. Invoked with
- * (err, results).
- * @example
- *
- * async.concat(['dir1','dir2','dir3'], fs.readdir, function(err, files) {
- *     // files is now a list of filenames that exist in the 3 directories
- * });
- */
-var concat = doParallel(concat$1);
-
-function doSeries(fn) {
-    return function (obj, iteratee, callback) {
-        return fn(eachOfSeries, obj, wrapAsync(iteratee), callback);
-    };
-}
-
-/**
- * The same as [`concat`]{@link module:Collections.concat} but runs only a single async operation at a time.
- *
- * @name concatSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.concat]{@link module:Collections.concat}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each item in `coll`.
- * The iteratee should complete with an array an array of results.
- * Invoked with (item, callback).
- * @param {Function} [callback(err)] - A callback which is called after all the
- * `iteratee` functions have finished, or an error occurs. Results is an array
- * containing the concatenated results of the `iteratee` function. Invoked with
- * (err, results).
- */
-var concatSeries = doSeries(concat$1);
-
-/**
- * Returns a function that when called, calls-back with the values provided.
- * Useful as the first function in a [`waterfall`]{@link module:ControlFlow.waterfall}, or for plugging values in to
- * [`auto`]{@link module:ControlFlow.auto}.
- *
- * @name constant
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {...*} arguments... - Any number of arguments to automatically invoke
- * callback with.
- * @returns {AsyncFunction} Returns a function that when invoked, automatically
- * invokes the callback with the previous given arguments.
- * @example
- *
- * async.waterfall([
- *     async.constant(42),
- *     function (value, next) {
- *         // value === 42
- *     },
- *     //...
- * ], callback);
- *
- * async.waterfall([
- *     async.constant(filename, "utf8"),
- *     fs.readFile,
- *     function (fileData, next) {
- *         //...
- *     }
- *     //...
- * ], callback);
- *
- * async.auto({
- *     hostname: async.constant("https://server.net/"),
- *     port: findFreePort,
- *     launchServer: ["hostname", "port", function (options, cb) {
- *         startServer(options, cb);
- *     }],
- *     //...
- * }, callback);
- */
-var constant = function(/*...values*/) {
-    var values = slice(arguments);
-    var args = [null].concat(values);
-    return function (/*...ignoredArgs, callback*/) {
-        var callback = arguments[arguments.length - 1];
-        return callback.apply(this, args);
-    };
-};
-
-/**
- * This method returns the first argument it receives.
- *
- * @static
- * @since 0.1.0
- * @memberOf _
- * @category Util
- * @param {*} value Any value.
- * @returns {*} Returns `value`.
- * @example
- *
- * var object = { 'a': 1 };
- *
- * console.log(_.identity(object) === object);
- * // => true
- */
-function identity(value) {
-  return value;
-}
-
-function _createTester(check, getResult) {
-    return function(eachfn, arr, iteratee, cb) {
-        cb = cb || noop;
-        var testPassed = false;
-        var testResult;
-        eachfn(arr, function(value, _, callback) {
-            iteratee(value, function(err, result) {
-                if (err) {
-                    callback(err);
-                } else if (check(result) && !testResult) {
-                    testPassed = true;
-                    testResult = getResult(true, value);
-                    callback(null, breakLoop);
-                } else {
-                    callback();
-                }
-            });
-        }, function(err) {
-            if (err) {
-                cb(err);
-            } else {
-                cb(null, testPassed ? testResult : getResult(false));
-            }
-        });
-    };
-}
-
-function _findGetResult(v, x) {
-    return x;
-}
-
-/**
- * Returns the first value in `coll` that passes an async truth test. The
- * `iteratee` is applied in parallel, meaning the first iteratee to return
- * `true` will fire the detect `callback` with that result. That means the
- * result might not be the first item in the original `coll` (in terms of order)
- * that passes the test.
-
- * If order within the original `coll` is important, then look at
- * [`detectSeries`]{@link module:Collections.detectSeries}.
- *
- * @name detect
- * @static
- * @memberOf module:Collections
- * @method
- * @alias find
- * @category Collections
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A truth test to apply to each item in `coll`.
- * The iteratee must complete with a boolean value as its result.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the `iteratee` functions have finished.
- * Result will be the first item in the array that passes the truth test
- * (iteratee) or the value `undefined` if none passed. Invoked with
- * (err, result).
- * @example
- *
- * async.detect(['file1','file2','file3'], function(filePath, callback) {
- *     fs.access(filePath, function(err) {
- *         callback(null, !err)
- *     });
- * }, function(err, result) {
- *     // result now equals the first file in the list that exists
- * });
- */
-var detect = doParallel(_createTester(identity, _findGetResult));
-
-/**
- * The same as [`detect`]{@link module:Collections.detect} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name detectLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.detect]{@link module:Collections.detect}
- * @alias findLimit
- * @category Collections
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - A truth test to apply to each item in `coll`.
- * The iteratee must complete with a boolean value as its result.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the `iteratee` functions have finished.
- * Result will be the first item in the array that passes the truth test
- * (iteratee) or the value `undefined` if none passed. Invoked with
- * (err, result).
- */
-var detectLimit = doParallelLimit(_createTester(identity, _findGetResult));
-
-/**
- * The same as [`detect`]{@link module:Collections.detect} but runs only a single async operation at a time.
- *
- * @name detectSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.detect]{@link module:Collections.detect}
- * @alias findSeries
- * @category Collections
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A truth test to apply to each item in `coll`.
- * The iteratee must complete with a boolean value as its result.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the `iteratee` functions have finished.
- * Result will be the first item in the array that passes the truth test
- * (iteratee) or the value `undefined` if none passed. Invoked with
- * (err, result).
- */
-var detectSeries = doLimit(detectLimit, 1);
-
-function consoleFunc(name) {
-    return function (fn/*, ...args*/) {
-        var args = slice(arguments, 1);
-        args.push(function (err/*, ...args*/) {
-            var args = slice(arguments, 1);
-            if (typeof console === 'object') {
-                if (err) {
-                    if (console.error) {
-                        console.error(err);
-                    }
-                } else if (console[name]) {
-                    arrayEach(args, function (x) {
-                        console[name](x);
-                    });
-                }
-            }
-        });
-        wrapAsync(fn).apply(null, args);
-    };
-}
-
-/**
- * Logs the result of an [`async` function]{@link AsyncFunction} to the
- * `console` using `console.dir` to display the properties of the resulting object.
- * Only works in Node.js or in browsers that support `console.dir` and
- * `console.error` (such as FF and Chrome).
- * If multiple arguments are returned from the async function,
- * `console.dir` is called on each argument in order.
- *
- * @name dir
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} function - The function you want to eventually apply
- * all arguments to.
- * @param {...*} arguments... - Any number of arguments to apply to the function.
- * @example
- *
- * // in a module
- * var hello = function(name, callback) {
- *     setTimeout(function() {
- *         callback(null, {hello: name});
- *     }, 1000);
- * };
- *
- * // in the node repl
- * node> async.dir(hello, 'world');
- * {hello: 'world'}
- */
-var dir = consoleFunc('dir');
-
-/**
- * The post-check version of [`during`]{@link module:ControlFlow.during}. To reflect the difference in
- * the order of operations, the arguments `test` and `fn` are switched.
- *
- * Also a version of [`doWhilst`]{@link module:ControlFlow.doWhilst} with asynchronous `test` function.
- * @name doDuring
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.during]{@link module:ControlFlow.during}
- * @category Control Flow
- * @param {AsyncFunction} fn - An async function which is called each time
- * `test` passes. Invoked with (callback).
- * @param {AsyncFunction} test - asynchronous truth test to perform before each
- * execution of `fn`. Invoked with (...args, callback), where `...args` are the
- * non-error args from the previous callback of `fn`.
- * @param {Function} [callback] - A callback which is called after the test
- * function has failed and repeated execution of `fn` has stopped. `callback`
- * will be passed an error if one occurred, otherwise `null`.
- */
-function doDuring(fn, test, callback) {
-    callback = onlyOnce(callback || noop);
-    var _fn = wrapAsync(fn);
-    var _test = wrapAsync(test);
-
-    function next(err/*, ...args*/) {
-        if (err) return callback(err);
-        var args = slice(arguments, 1);
-        args.push(check);
-        _test.apply(this, args);
-    }
-
-    function check(err, truth) {
-        if (err) return callback(err);
-        if (!truth) return callback(null);
-        _fn(next);
-    }
-
-    check(null, true);
-
-}
-
-/**
- * The post-check version of [`whilst`]{@link module:ControlFlow.whilst}. To reflect the difference in
- * the order of operations, the arguments `test` and `iteratee` are switched.
- *
- * `doWhilst` is to `whilst` as `do while` is to `while` in plain JavaScript.
- *
- * @name doWhilst
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.whilst]{@link module:ControlFlow.whilst}
- * @category Control Flow
- * @param {AsyncFunction} iteratee - A function which is called each time `test`
- * passes. Invoked with (callback).
- * @param {Function} test - synchronous truth test to perform after each
- * execution of `iteratee`. Invoked with any non-error callback results of
- * `iteratee`.
- * @param {Function} [callback] - A callback which is called after the test
- * function has failed and repeated execution of `iteratee` has stopped.
- * `callback` will be passed an error and any arguments passed to the final
- * `iteratee`'s callback. Invoked with (err, [results]);
- */
-function doWhilst(iteratee, test, callback) {
-    callback = onlyOnce(callback || noop);
-    var _iteratee = wrapAsync(iteratee);
-    var next = function(err/*, ...args*/) {
-        if (err) return callback(err);
-        var args = slice(arguments, 1);
-        if (test.apply(this, args)) return _iteratee(next);
-        callback.apply(null, [null].concat(args));
-    };
-    _iteratee(next);
-}
-
-/**
- * Like ['doWhilst']{@link module:ControlFlow.doWhilst}, except the `test` is inverted. Note the
- * argument ordering differs from `until`.
- *
- * @name doUntil
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.doWhilst]{@link module:ControlFlow.doWhilst}
- * @category Control Flow
- * @param {AsyncFunction} iteratee - An async function which is called each time
- * `test` fails. Invoked with (callback).
- * @param {Function} test - synchronous truth test to perform after each
- * execution of `iteratee`. Invoked with any non-error callback results of
- * `iteratee`.
- * @param {Function} [callback] - A callback which is called after the test
- * function has passed and repeated execution of `iteratee` has stopped. `callback`
- * will be passed an error and any arguments passed to the final `iteratee`'s
- * callback. Invoked with (err, [results]);
- */
-function doUntil(iteratee, test, callback) {
-    doWhilst(iteratee, function() {
-        return !test.apply(this, arguments);
-    }, callback);
-}
-
-/**
- * Like [`whilst`]{@link module:ControlFlow.whilst}, except the `test` is an asynchronous function that
- * is passed a callback in the form of `function (err, truth)`. If error is
- * passed to `test` or `fn`, the main callback is immediately called with the
- * value of the error.
- *
- * @name during
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.whilst]{@link module:ControlFlow.whilst}
- * @category Control Flow
- * @param {AsyncFunction} test - asynchronous truth test to perform before each
- * execution of `fn`. Invoked with (callback).
- * @param {AsyncFunction} fn - An async function which is called each time
- * `test` passes. Invoked with (callback).
- * @param {Function} [callback] - A callback which is called after the test
- * function has failed and repeated execution of `fn` has stopped. `callback`
- * will be passed an error, if one occurred, otherwise `null`.
- * @example
- *
- * var count = 0;
- *
- * async.during(
- *     function (callback) {
- *         return callback(null, count < 5);
- *     },
- *     function (callback) {
- *         count++;
- *         setTimeout(callback, 1000);
- *     },
- *     function (err) {
- *         // 5 seconds have passed
- *     }
- * );
- */
-function during(test, fn, callback) {
-    callback = onlyOnce(callback || noop);
-    var _fn = wrapAsync(fn);
-    var _test = wrapAsync(test);
-
-    function next(err) {
-        if (err) return callback(err);
-        _test(check);
-    }
-
-    function check(err, truth) {
-        if (err) return callback(err);
-        if (!truth) return callback(null);
-        _fn(next);
-    }
-
-    _test(check);
-}
-
-function _withoutIndex(iteratee) {
-    return function (value, index, callback) {
-        return iteratee(value, callback);
-    };
-}
-
-/**
- * Applies the function `iteratee` to each item in `coll`, in parallel.
- * The `iteratee` is called with an item from the list, and a callback for when
- * it has finished. If the `iteratee` passes an error to its `callback`, the
- * main `callback` (for the `each` function) is immediately called with the
- * error.
- *
- * Note, that since this function applies `iteratee` to each item in parallel,
- * there is no guarantee that the iteratee functions will complete in order.
- *
- * @name each
- * @static
- * @memberOf module:Collections
- * @method
- * @alias forEach
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to
- * each item in `coll`. Invoked with (item, callback).
- * The array index is not passed to the iteratee.
- * If you need the index, use `eachOf`.
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- * @example
- *
- * // assuming openFiles is an array of file names and saveFile is a function
- * // to save the modified contents of that file:
- *
- * async.each(openFiles, saveFile, function(err){
- *   // if any of the saves produced an error, err would equal that error
- * });
- *
- * // assuming openFiles is an array of file names
- * async.each(openFiles, function(file, callback) {
- *
- *     // Perform operation on file here.
- *     console.log('Processing file ' + file);
- *
- *     if( file.length > 32 ) {
- *       console.log('This file name is too long');
- *       callback('File name too long');
- *     } else {
- *       // Do work to process file here
- *       console.log('File processed');
- *       callback();
- *     }
- * }, function(err) {
- *     // if any of the file processing produced an error, err would equal that error
- *     if( err ) {
- *       // One of the iterations produced an error.
- *       // All processing will now stop.
- *       console.log('A file failed to process');
- *     } else {
- *       console.log('All files have been processed successfully');
- *     }
- * });
- */
-function eachLimit(coll, iteratee, callback) {
-    eachOf(coll, _withoutIndex(wrapAsync(iteratee)), callback);
-}
-
-/**
- * The same as [`each`]{@link module:Collections.each} but runs a maximum of `limit` async operations at a time.
- *
- * @name eachLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.each]{@link module:Collections.each}
- * @alias forEachLimit
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The array index is not passed to the iteratee.
- * If you need the index, use `eachOfLimit`.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- */
-function eachLimit$1(coll, limit, iteratee, callback) {
-    _eachOfLimit(limit)(coll, _withoutIndex(wrapAsync(iteratee)), callback);
-}
-
-/**
- * The same as [`each`]{@link module:Collections.each} but runs only a single async operation at a time.
- *
- * @name eachSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.each]{@link module:Collections.each}
- * @alias forEachSeries
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each
- * item in `coll`.
- * The array index is not passed to the iteratee.
- * If you need the index, use `eachOfSeries`.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called when all
- * `iteratee` functions have finished, or an error occurs. Invoked with (err).
- */
-var eachSeries = doLimit(eachLimit$1, 1);
-
-/**
- * Wrap an async function and ensure it calls its callback on a later tick of
- * the event loop.  If the function already calls its callback on a next tick,
- * no extra deferral is added. This is useful for preventing stack overflows
- * (`RangeError: Maximum call stack size exceeded`) and generally keeping
- * [Zalgo](http://blog.izs.me/post/59142742143/designing-apis-for-asynchrony)
- * contained. ES2017 `async` functions are returned as-is -- they are immune
- * to Zalgo's corrupting influences, as they always resolve on a later tick.
- *
- * @name ensureAsync
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} fn - an async function, one that expects a node-style
- * callback as its last argument.
- * @returns {AsyncFunction} Returns a wrapped function with the exact same call
- * signature as the function passed in.
- * @example
- *
- * function sometimesAsync(arg, callback) {
- *     if (cache[arg]) {
- *         return callback(null, cache[arg]); // this would be synchronous!!
- *     } else {
- *         doSomeIO(arg, callback); // this IO would be asynchronous
- *     }
- * }
- *
- * // this has a risk of stack overflows if many results are cached in a row
- * async.mapSeries(args, sometimesAsync, done);
- *
- * // this will defer sometimesAsync's callback if necessary,
- * // preventing stack overflows
- * async.mapSeries(args, async.ensureAsync(sometimesAsync), done);
- */
-function ensureAsync(fn) {
-    if (isAsync(fn)) return fn;
-    return initialParams(function (args, callback) {
-        var sync = true;
-        args.push(function () {
-            var innerArgs = arguments;
-            if (sync) {
-                setImmediate$1(function () {
-                    callback.apply(null, innerArgs);
-                });
-            } else {
-                callback.apply(null, innerArgs);
-            }
-        });
-        fn.apply(this, args);
-        sync = false;
-    });
-}
-
-function notId(v) {
-    return !v;
-}
-
-/**
- * Returns `true` if every element in `coll` satisfies an async test. If any
- * iteratee call returns `false`, the main `callback` is immediately called.
- *
- * @name every
- * @static
- * @memberOf module:Collections
- * @method
- * @alias all
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collection in parallel.
- * The iteratee must complete with a boolean result value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result will be either `true` or `false`
- * depending on the values of the async tests. Invoked with (err, result).
- * @example
- *
- * async.every(['file1','file2','file3'], function(filePath, callback) {
- *     fs.access(filePath, function(err) {
- *         callback(null, !err)
- *     });
- * }, function(err, result) {
- *     // if result is true then every file exists
- * });
- */
-var every = doParallel(_createTester(notId, notId));
-
-/**
- * The same as [`every`]{@link module:Collections.every} but runs a maximum of `limit` async operations at a time.
- *
- * @name everyLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.every]{@link module:Collections.every}
- * @alias allLimit
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collection in parallel.
- * The iteratee must complete with a boolean result value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result will be either `true` or `false`
- * depending on the values of the async tests. Invoked with (err, result).
- */
-var everyLimit = doParallelLimit(_createTester(notId, notId));
-
-/**
- * The same as [`every`]{@link module:Collections.every} but runs only a single async operation at a time.
- *
- * @name everySeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.every]{@link module:Collections.every}
- * @alias allSeries
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collection in series.
- * The iteratee must complete with a boolean result value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result will be either `true` or `false`
- * depending on the values of the async tests. Invoked with (err, result).
- */
-var everySeries = doLimit(everyLimit, 1);
-
-/**
- * The base implementation of `_.property` without support for deep paths.
- *
- * @private
- * @param {string} key The key of the property to get.
- * @returns {Function} Returns the new accessor function.
- */
-function baseProperty(key) {
-  return function(object) {
-    return object == null ? undefined : object[key];
-  };
-}
-
-function filterArray(eachfn, arr, iteratee, callback) {
-    var truthValues = new Array(arr.length);
-    eachfn(arr, function (x, index, callback) {
-        iteratee(x, function (err, v) {
-            truthValues[index] = !!v;
-            callback(err);
-        });
-    }, function (err) {
-        if (err) return callback(err);
-        var results = [];
-        for (var i = 0; i < arr.length; i++) {
-            if (truthValues[i]) results.push(arr[i]);
-        }
-        callback(null, results);
-    });
-}
-
-function filterGeneric(eachfn, coll, iteratee, callback) {
-    var results = [];
-    eachfn(coll, function (x, index, callback) {
-        iteratee(x, function (err, v) {
-            if (err) {
-                callback(err);
-            } else {
-                if (v) {
-                    results.push({index: index, value: x});
-                }
-                callback();
-            }
-        });
-    }, function (err) {
-        if (err) {
-            callback(err);
-        } else {
-            callback(null, arrayMap(results.sort(function (a, b) {
-                return a.index - b.index;
-            }), baseProperty('value')));
-        }
-    });
-}
-
-function _filter(eachfn, coll, iteratee, callback) {
-    var filter = isArrayLike(coll) ? filterArray : filterGeneric;
-    filter(eachfn, coll, wrapAsync(iteratee), callback || noop);
-}
-
-/**
- * Returns a new array of all the values in `coll` which pass an async truth
- * test. This operation is performed in parallel, but the results array will be
- * in the same order as the original.
- *
- * @name filter
- * @static
- * @memberOf module:Collections
- * @method
- * @alias select
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {Function} iteratee - A truth test to apply to each item in `coll`.
- * The `iteratee` is passed a `callback(err, truthValue)`, which must be called
- * with a boolean argument once it has completed. Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results).
- * @example
- *
- * async.filter(['file1','file2','file3'], function(filePath, callback) {
- *     fs.access(filePath, function(err) {
- *         callback(null, !err)
- *     });
- * }, function(err, results) {
- *     // results now equals an array of the existing files
- * });
- */
-var filter = doParallel(_filter);
-
-/**
- * The same as [`filter`]{@link module:Collections.filter} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name filterLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.filter]{@link module:Collections.filter}
- * @alias selectLimit
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {Function} iteratee - A truth test to apply to each item in `coll`.
- * The `iteratee` is passed a `callback(err, truthValue)`, which must be called
- * with a boolean argument once it has completed. Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results).
- */
-var filterLimit = doParallelLimit(_filter);
-
-/**
- * The same as [`filter`]{@link module:Collections.filter} but runs only a single async operation at a time.
- *
- * @name filterSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.filter]{@link module:Collections.filter}
- * @alias selectSeries
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {Function} iteratee - A truth test to apply to each item in `coll`.
- * The `iteratee` is passed a `callback(err, truthValue)`, which must be called
- * with a boolean argument once it has completed. Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results)
- */
-var filterSeries = doLimit(filterLimit, 1);
-
-/**
- * Calls the asynchronous function `fn` with a callback parameter that allows it
- * to call itself again, in series, indefinitely.
-
- * If an error is passed to the callback then `errback` is called with the
- * error, and execution stops, otherwise it will never be called.
- *
- * @name forever
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {AsyncFunction} fn - an async function to call repeatedly.
- * Invoked with (next).
- * @param {Function} [errback] - when `fn` passes an error to it's callback,
- * this function will be called, and execution stops. Invoked with (err).
- * @example
- *
- * async.forever(
- *     function(next) {
- *         // next is suitable for passing to things that need a callback(err [, whatever]);
- *         // it will result in this function being called again.
- *     },
- *     function(err) {
- *         // if next is called with a value in its first parameter, it will appear
- *         // in here as 'err', and execution will stop.
- *     }
- * );
- */
-function forever(fn, errback) {
-    var done = onlyOnce(errback || noop);
-    var task = wrapAsync(ensureAsync(fn));
-
-    function next(err) {
-        if (err) return done(err);
-        task(next);
-    }
-    next();
-}
-
-/**
- * The same as [`groupBy`]{@link module:Collections.groupBy} but runs a maximum of `limit` async operations at a time.
- *
- * @name groupByLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.groupBy]{@link module:Collections.groupBy}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with a `key` to group the value under.
- * Invoked with (value, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Result is an `Object` whoses
- * properties are arrays of values which returned the corresponding key.
- */
-var groupByLimit = function(coll, limit, iteratee, callback) {
-    callback = callback || noop;
-    var _iteratee = wrapAsync(iteratee);
-    mapLimit(coll, limit, function(val, callback) {
-        _iteratee(val, function(err, key) {
-            if (err) return callback(err);
-            return callback(null, {key: key, val: val});
-        });
-    }, function(err, mapResults) {
-        var result = {};
-        // from MDN, handle object having an `hasOwnProperty` prop
-        var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-        for (var i = 0; i < mapResults.length; i++) {
-            if (mapResults[i]) {
-                var key = mapResults[i].key;
-                var val = mapResults[i].val;
-
-                if (hasOwnProperty.call(result, key)) {
-                    result[key].push(val);
-                } else {
-                    result[key] = [val];
-                }
-            }
-        }
-
-        return callback(err, result);
-    });
-};
-
-/**
- * Returns a new object, where each value corresponds to an array of items, from
- * `coll`, that returned the corresponding key. That is, the keys of the object
- * correspond to the values passed to the `iteratee` callback.
- *
- * Note: Since this function applies the `iteratee` to each item in parallel,
- * there is no guarantee that the `iteratee` functions will complete in order.
- * However, the values for each key in the `result` will be in the same order as
- * the original `coll`. For Objects, the values will roughly be in the order of
- * the original Objects' keys (but this can vary across JavaScript engines).
- *
- * @name groupBy
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with a `key` to group the value under.
- * Invoked with (value, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Result is an `Object` whoses
- * properties are arrays of values which returned the corresponding key.
- * @example
- *
- * async.groupBy(['userId1', 'userId2', 'userId3'], function(userId, callback) {
- *     db.findById(userId, function(err, user) {
- *         if (err) return callback(err);
- *         return callback(null, user.age);
- *     });
- * }, function(err, result) {
- *     // result is object containing the userIds grouped by age
- *     // e.g. { 30: ['userId1', 'userId3'], 42: ['userId2']};
- * });
- */
-var groupBy = doLimit(groupByLimit, Infinity);
-
-/**
- * The same as [`groupBy`]{@link module:Collections.groupBy} but runs only a single async operation at a time.
- *
- * @name groupBySeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.groupBy]{@link module:Collections.groupBy}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with a `key` to group the value under.
- * Invoked with (value, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. Result is an `Object` whoses
- * properties are arrays of values which returned the corresponding key.
- */
-var groupBySeries = doLimit(groupByLimit, 1);
-
-/**
- * Logs the result of an `async` function to the `console`. Only works in
- * Node.js or in browsers that support `console.log` and `console.error` (such
- * as FF and Chrome). If multiple arguments are returned from the async
- * function, `console.log` is called on each argument in order.
- *
- * @name log
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} function - The function you want to eventually apply
- * all arguments to.
- * @param {...*} arguments... - Any number of arguments to apply to the function.
- * @example
- *
- * // in a module
- * var hello = function(name, callback) {
- *     setTimeout(function() {
- *         callback(null, 'hello ' + name);
- *     }, 1000);
- * };
- *
- * // in the node repl
- * node> async.log(hello, 'world');
- * 'hello world'
- */
-var log = consoleFunc('log');
-
-/**
- * The same as [`mapValues`]{@link module:Collections.mapValues} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name mapValuesLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.mapValues]{@link module:Collections.mapValues}
- * @category Collection
- * @param {Object} obj - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - A function to apply to each value and key
- * in `coll`.
- * The iteratee should complete with the transformed value as its result.
- * Invoked with (value, key, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. `result` is a new object consisting
- * of each key from `obj`, with each transformed value on the right-hand side.
- * Invoked with (err, result).
- */
-function mapValuesLimit(obj, limit, iteratee, callback) {
-    callback = once(callback || noop);
-    var newObj = {};
-    var _iteratee = wrapAsync(iteratee);
-    eachOfLimit(obj, limit, function(val, key, next) {
-        _iteratee(val, key, function (err, result) {
-            if (err) return next(err);
-            newObj[key] = result;
-            next();
-        });
-    }, function (err) {
-        callback(err, newObj);
-    });
-}
-
-/**
- * A relative of [`map`]{@link module:Collections.map}, designed for use with objects.
- *
- * Produces a new Object by mapping each value of `obj` through the `iteratee`
- * function. The `iteratee` is called each `value` and `key` from `obj` and a
- * callback for when it has finished processing. Each of these callbacks takes
- * two arguments: an `error`, and the transformed item from `obj`. If `iteratee`
- * passes an error to its callback, the main `callback` (for the `mapValues`
- * function) is immediately called with the error.
- *
- * Note, the order of the keys in the result is not guaranteed.  The keys will
- * be roughly in the order they complete, (but this is very engine-specific)
- *
- * @name mapValues
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Object} obj - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each value and key
- * in `coll`.
- * The iteratee should complete with the transformed value as its result.
- * Invoked with (value, key, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. `result` is a new object consisting
- * of each key from `obj`, with each transformed value on the right-hand side.
- * Invoked with (err, result).
- * @example
- *
- * async.mapValues({
- *     f1: 'file1',
- *     f2: 'file2',
- *     f3: 'file3'
- * }, function (file, key, callback) {
- *   fs.stat(file, callback);
- * }, function(err, result) {
- *     // result is now a map of stats for each file, e.g.
- *     // {
- *     //     f1: [stats for file1],
- *     //     f2: [stats for file2],
- *     //     f3: [stats for file3]
- *     // }
- * });
- */
-
-var mapValues = doLimit(mapValuesLimit, Infinity);
-
-/**
- * The same as [`mapValues`]{@link module:Collections.mapValues} but runs only a single async operation at a time.
- *
- * @name mapValuesSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.mapValues]{@link module:Collections.mapValues}
- * @category Collection
- * @param {Object} obj - A collection to iterate over.
- * @param {AsyncFunction} iteratee - A function to apply to each value and key
- * in `coll`.
- * The iteratee should complete with the transformed value as its result.
- * Invoked with (value, key, callback).
- * @param {Function} [callback] - A callback which is called when all `iteratee`
- * functions have finished, or an error occurs. `result` is a new object consisting
- * of each key from `obj`, with each transformed value on the right-hand side.
- * Invoked with (err, result).
- */
-var mapValuesSeries = doLimit(mapValuesLimit, 1);
-
-function has(obj, key) {
-    return key in obj;
-}
-
-/**
- * Caches the results of an async function. When creating a hash to store
- * function results against, the callback is omitted from the hash and an
- * optional hash function can be used.
- *
- * If no hash function is specified, the first argument is used as a hash key,
- * which may work reasonably if it is a string or a data type that converts to a
- * distinct string. Note that objects and arrays will not behave reasonably.
- * Neither will cases where the other arguments are significant. In such cases,
- * specify your own hash function.
- *
- * The cache of results is exposed as the `memo` property of the function
- * returned by `memoize`.
- *
- * @name memoize
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} fn - The async function to proxy and cache results from.
- * @param {Function} hasher - An optional function for generating a custom hash
- * for storing results. It has all the arguments applied to it apart from the
- * callback, and must be synchronous.
- * @returns {AsyncFunction} a memoized version of `fn`
- * @example
- *
- * var slow_fn = function(name, callback) {
- *     // do something
- *     callback(null, result);
- * };
- * var fn = async.memoize(slow_fn);
- *
- * // fn can now be used as if it were slow_fn
- * fn('some name', function() {
- *     // callback
- * });
- */
-function memoize(fn, hasher) {
-    var memo = Object.create(null);
-    var queues = Object.create(null);
-    hasher = hasher || identity;
-    var _fn = wrapAsync(fn);
-    var memoized = initialParams(function memoized(args, callback) {
-        var key = hasher.apply(null, args);
-        if (has(memo, key)) {
-            setImmediate$1(function() {
-                callback.apply(null, memo[key]);
-            });
-        } else if (has(queues, key)) {
-            queues[key].push(callback);
-        } else {
-            queues[key] = [callback];
-            _fn.apply(null, args.concat(function(/*args*/) {
-                var args = slice(arguments);
-                memo[key] = args;
-                var q = queues[key];
-                delete queues[key];
-                for (var i = 0, l = q.length; i < l; i++) {
-                    q[i].apply(null, args);
-                }
-            }));
-        }
-    });
-    memoized.memo = memo;
-    memoized.unmemoized = fn;
-    return memoized;
-}
-
-/**
- * Calls `callback` on a later loop around the event loop. In Node.js this just
- * calls `setImmediate`.  In the browser it will use `setImmediate` if
- * available, otherwise `setTimeout(callback, 0)`, which means other higher
- * priority events may precede the execution of `callback`.
- *
- * This is used internally for browser-compatibility purposes.
- *
- * @name nextTick
- * @static
- * @memberOf module:Utils
- * @method
- * @alias setImmediate
- * @category Util
- * @param {Function} callback - The function to call on a later loop around
- * the event loop. Invoked with (args...).
- * @param {...*} args... - any number of additional arguments to pass to the
- * callback on the next tick.
- * @example
- *
- * var call_order = [];
- * async.nextTick(function() {
- *     call_order.push('two');
- *     // call_order now equals ['one','two']
- * });
- * call_order.push('one');
- *
- * async.setImmediate(function (a, b, c) {
- *     // a, b, and c equal 1, 2, and 3
- * }, 1, 2, 3);
- */
-var _defer$1;
-
-if (hasNextTick) {
-    _defer$1 = process.nextTick;
-} else if (hasSetImmediate) {
-    _defer$1 = setImmediate;
-} else {
-    _defer$1 = fallback;
-}
-
-var nextTick = wrap(_defer$1);
-
-function _parallel(eachfn, tasks, callback) {
-    callback = callback || noop;
-    var results = isArrayLike(tasks) ? [] : {};
-
-    eachfn(tasks, function (task, key, callback) {
-        wrapAsync(task)(function (err, result) {
-            if (arguments.length > 2) {
-                result = slice(arguments, 1);
-            }
-            results[key] = result;
-            callback(err);
-        });
-    }, function (err) {
-        callback(err, results);
-    });
-}
-
-/**
- * Run the `tasks` collection of functions in parallel, without waiting until
- * the previous function has completed. If any of the functions pass an error to
- * its callback, the main `callback` is immediately called with the value of the
- * error. Once the `tasks` have completed, the results are passed to the final
- * `callback` as an array.
- *
- * **Note:** `parallel` is about kicking-off I/O tasks in parallel, not about
- * parallel execution of code.  If your tasks do not use any timers or perform
- * any I/O, they will actually be executed in series.  Any synchronous setup
- * sections for each task will happen one after the other.  JavaScript remains
- * single-threaded.
- *
- * **Hint:** Use [`reflect`]{@link module:Utils.reflect} to continue the
- * execution of other tasks when a task fails.
- *
- * It is also possible to use an object instead of an array. Each property will
- * be run as a function and the results will be passed to the final `callback`
- * as an object instead of an array. This can be a more readable way of handling
- * results from {@link async.parallel}.
- *
- * @name parallel
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array|Iterable|Object} tasks - A collection of
- * [async functions]{@link AsyncFunction} to run.
- * Each async function can complete with any number of optional `result` values.
- * @param {Function} [callback] - An optional callback to run once all the
- * functions have completed successfully. This function gets a results array
- * (or object) containing all the result arguments passed to the task callbacks.
- * Invoked with (err, results).
- *
- * @example
- * async.parallel([
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'two');
- *         }, 100);
- *     }
- * ],
- * // optional callback
- * function(err, results) {
- *     // the results array will equal ['one','two'] even though
- *     // the second function had a shorter timeout.
- * });
- *
- * // an example using an object instead of an array
- * async.parallel({
- *     one: function(callback) {
- *         setTimeout(function() {
- *             callback(null, 1);
- *         }, 200);
- *     },
- *     two: function(callback) {
- *         setTimeout(function() {
- *             callback(null, 2);
- *         }, 100);
- *     }
- * }, function(err, results) {
- *     // results is now equals to: {one: 1, two: 2}
- * });
- */
-function parallelLimit(tasks, callback) {
-    _parallel(eachOf, tasks, callback);
-}
-
-/**
- * The same as [`parallel`]{@link module:ControlFlow.parallel} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name parallelLimit
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.parallel]{@link module:ControlFlow.parallel}
- * @category Control Flow
- * @param {Array|Iterable|Object} tasks - A collection of
- * [async functions]{@link AsyncFunction} to run.
- * Each async function can complete with any number of optional `result` values.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {Function} [callback] - An optional callback to run once all the
- * functions have completed successfully. This function gets a results array
- * (or object) containing all the result arguments passed to the task callbacks.
- * Invoked with (err, results).
- */
-function parallelLimit$1(tasks, limit, callback) {
-    _parallel(_eachOfLimit(limit), tasks, callback);
-}
-
-/**
- * A queue of tasks for the worker function to complete.
- * @typedef {Object} QueueObject
- * @memberOf module:ControlFlow
- * @property {Function} length - a function returning the number of items
- * waiting to be processed. Invoke with `queue.length()`.
- * @property {boolean} started - a boolean indicating whether or not any
- * items have been pushed and processed by the queue.
- * @property {Function} running - a function returning the number of items
- * currently being processed. Invoke with `queue.running()`.
- * @property {Function} workersList - a function returning the array of items
- * currently being processed. Invoke with `queue.workersList()`.
- * @property {Function} idle - a function returning false if there are items
- * waiting or being processed, or true if not. Invoke with `queue.idle()`.
- * @property {number} concurrency - an integer for determining how many `worker`
- * functions should be run in parallel. This property can be changed after a
- * `queue` is created to alter the concurrency on-the-fly.
- * @property {Function} push - add a new task to the `queue`. Calls `callback`
- * once the `worker` has finished processing the task. Instead of a single task,
- * a `tasks` array can be submitted. The respective callback is used for every
- * task in the list. Invoke with `queue.push(task, [callback])`,
- * @property {Function} unshift - add a new task to the front of the `queue`.
- * Invoke with `queue.unshift(task, [callback])`.
- * @property {Function} remove - remove items from the queue that match a test
- * function.  The test function will be passed an object with a `data` property,
- * and a `priority` property, if this is a
- * [priorityQueue]{@link module:ControlFlow.priorityQueue} object.
- * Invoked with `queue.remove(testFn)`, where `testFn` is of the form
- * `function ({data, priority}) {}` and returns a Boolean.
- * @property {Function} saturated - a callback that is called when the number of
- * running workers hits the `concurrency` limit, and further tasks will be
- * queued.
- * @property {Function} unsaturated - a callback that is called when the number
- * of running workers is less than the `concurrency` & `buffer` limits, and
- * further tasks will not be queued.
- * @property {number} buffer - A minimum threshold buffer in order to say that
- * the `queue` is `unsaturated`.
- * @property {Function} empty - a callback that is called when the last item
- * from the `queue` is given to a `worker`.
- * @property {Function} drain - a callback that is called when the last item
- * from the `queue` has returned from the `worker`.
- * @property {Function} error - a callback that is called when a task errors.
- * Has the signature `function(error, task)`.
- * @property {boolean} paused - a boolean for determining whether the queue is
- * in a paused state.
- * @property {Function} pause - a function that pauses the processing of tasks
- * until `resume()` is called. Invoke with `queue.pause()`.
- * @property {Function} resume - a function that resumes the processing of
- * queued tasks when the queue is paused. Invoke with `queue.resume()`.
- * @property {Function} kill - a function that removes the `drain` callback and
- * empties remaining tasks from the queue forcing it to go idle. Invoke with `queue.kill()`.
- */
-
-/**
- * Creates a `queue` object with the specified `concurrency`. Tasks added to the
- * `queue` are processed in parallel (up to the `concurrency` limit). If all
- * `worker`s are in progress, the task is queued until one becomes available.
- * Once a `worker` completes a `task`, that `task`'s callback is called.
- *
- * @name queue
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {AsyncFunction} worker - An async function for processing a queued task.
- * If you want to handle errors from an individual task, pass a callback to
- * `q.push()`. Invoked with (task, callback).
- * @param {number} [concurrency=1] - An `integer` for determining how many
- * `worker` functions should be run in parallel.  If omitted, the concurrency
- * defaults to `1`.  If the concurrency is `0`, an error is thrown.
- * @returns {module:ControlFlow.QueueObject} A queue object to manage the tasks. Callbacks can
- * attached as certain properties to listen for specific events during the
- * lifecycle of the queue.
- * @example
- *
- * // create a queue object with concurrency 2
- * var q = async.queue(function(task, callback) {
- *     console.log('hello ' + task.name);
- *     callback();
- * }, 2);
- *
- * // assign a callback
- * q.drain = function() {
- *     console.log('all items have been processed');
- * };
- *
- * // add some items to the queue
- * q.push({name: 'foo'}, function(err) {
- *     console.log('finished processing foo');
- * });
- * q.push({name: 'bar'}, function (err) {
- *     console.log('finished processing bar');
- * });
- *
- * // add some items to the queue (batch-wise)
- * q.push([{name: 'baz'},{name: 'bay'},{name: 'bax'}], function(err) {
- *     console.log('finished processing item');
- * });
- *
- * // add some items to the front of the queue
- * q.unshift({name: 'bar'}, function (err) {
- *     console.log('finished processing bar');
- * });
- */
-var queue$1 = function (worker, concurrency) {
-    var _worker = wrapAsync(worker);
-    return queue(function (items, cb) {
-        _worker(items[0], cb);
-    }, concurrency, 1);
-};
-
-/**
- * The same as [async.queue]{@link module:ControlFlow.queue} only tasks are assigned a priority and
- * completed in ascending priority order.
- *
- * @name priorityQueue
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.queue]{@link module:ControlFlow.queue}
- * @category Control Flow
- * @param {AsyncFunction} worker - An async function for processing a queued task.
- * If you want to handle errors from an individual task, pass a callback to
- * `q.push()`.
- * Invoked with (task, callback).
- * @param {number} concurrency - An `integer` for determining how many `worker`
- * functions should be run in parallel.  If omitted, the concurrency defaults to
- * `1`.  If the concurrency is `0`, an error is thrown.
- * @returns {module:ControlFlow.QueueObject} A priorityQueue object to manage the tasks. There are two
- * differences between `queue` and `priorityQueue` objects:
- * * `push(task, priority, [callback])` - `priority` should be a number. If an
- *   array of `tasks` is given, all tasks will be assigned the same priority.
- * * The `unshift` method was removed.
- */
-var priorityQueue = function(worker, concurrency) {
-    // Start with a normal queue
-    var q = queue$1(worker, concurrency);
-
-    // Override push to accept second parameter representing priority
-    q.push = function(data, priority, callback) {
-        if (callback == null) callback = noop;
-        if (typeof callback !== 'function') {
-            throw new Error('task callback must be a function');
-        }
-        q.started = true;
-        if (!isArray(data)) {
-            data = [data];
-        }
-        if (data.length === 0) {
-            // call drain immediately if there are no tasks
-            return setImmediate$1(function() {
-                q.drain();
-            });
-        }
-
-        priority = priority || 0;
-        var nextNode = q._tasks.head;
-        while (nextNode && priority >= nextNode.priority) {
-            nextNode = nextNode.next;
-        }
-
-        for (var i = 0, l = data.length; i < l; i++) {
-            var item = {
-                data: data[i],
-                priority: priority,
-                callback: callback
-            };
-
-            if (nextNode) {
-                q._tasks.insertBefore(nextNode, item);
-            } else {
-                q._tasks.push(item);
-            }
-        }
-        setImmediate$1(q.process);
-    };
-
-    // Remove unshift function
-    delete q.unshift;
-
-    return q;
-};
-
-/**
- * Runs the `tasks` array of functions in parallel, without waiting until the
- * previous function has completed. Once any of the `tasks` complete or pass an
- * error to its callback, the main `callback` is immediately called. It's
- * equivalent to `Promise.race()`.
- *
- * @name race
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array} tasks - An array containing [async functions]{@link AsyncFunction}
- * to run. Each function can complete with an optional `result` value.
- * @param {Function} callback - A callback to run once any of the functions have
- * completed. This function gets an error or result from the first function that
- * completed. Invoked with (err, result).
- * @returns undefined
- * @example
- *
- * async.race([
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'two');
- *         }, 100);
- *     }
- * ],
- * // main callback
- * function(err, result) {
- *     // the result will be equal to 'two' as it finishes earlier
- * });
- */
-function race(tasks, callback) {
-    callback = once(callback || noop);
-    if (!isArray(tasks)) return callback(new TypeError('First argument to race must be an array of functions'));
-    if (!tasks.length) return callback();
-    for (var i = 0, l = tasks.length; i < l; i++) {
-        wrapAsync(tasks[i])(callback);
-    }
-}
-
-/**
- * Same as [`reduce`]{@link module:Collections.reduce}, only operates on `array` in reverse order.
- *
- * @name reduceRight
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.reduce]{@link module:Collections.reduce}
- * @alias foldr
- * @category Collection
- * @param {Array} array - A collection to iterate over.
- * @param {*} memo - The initial state of the reduction.
- * @param {AsyncFunction} iteratee - A function applied to each item in the
- * array to produce the next step in the reduction.
- * The `iteratee` should complete with the next state of the reduction.
- * If the iteratee complete with an error, the reduction is stopped and the
- * main `callback` is immediately called with the error.
- * Invoked with (memo, item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result is the reduced value. Invoked with
- * (err, result).
- */
-function reduceRight (array, memo, iteratee, callback) {
-    var reversed = slice(array).reverse();
-    reduce(reversed, memo, iteratee, callback);
-}
-
-/**
- * Wraps the async function in another function that always completes with a
- * result object, even when it errors.
- *
- * The result object has either the property `error` or `value`.
- *
- * @name reflect
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} fn - The async function you want to wrap
- * @returns {Function} - A function that always passes null to it's callback as
- * the error. The second argument to the callback will be an `object` with
- * either an `error` or a `value` property.
- * @example
- *
- * async.parallel([
- *     async.reflect(function(callback) {
- *         // do some stuff ...
- *         callback(null, 'one');
- *     }),
- *     async.reflect(function(callback) {
- *         // do some more stuff but error ...
- *         callback('bad stuff happened');
- *     }),
- *     async.reflect(function(callback) {
- *         // do some more stuff ...
- *         callback(null, 'two');
- *     })
- * ],
- * // optional callback
- * function(err, results) {
- *     // values
- *     // results[0].value = 'one'
- *     // results[1].error = 'bad stuff happened'
- *     // results[2].value = 'two'
- * });
- */
-function reflect(fn) {
-    var _fn = wrapAsync(fn);
-    return initialParams(function reflectOn(args, reflectCallback) {
-        args.push(function callback(error, cbArg) {
-            if (error) {
-                reflectCallback(null, { error: error });
-            } else {
-                var value;
-                if (arguments.length <= 2) {
-                    value = cbArg;
-                } else {
-                    value = slice(arguments, 1);
-                }
-                reflectCallback(null, { value: value });
-            }
-        });
-
-        return _fn.apply(this, args);
-    });
-}
-
-function reject$1(eachfn, arr, iteratee, callback) {
-    _filter(eachfn, arr, function(value, cb) {
-        iteratee(value, function(err, v) {
-            cb(err, !v);
-        });
-    }, callback);
-}
-
-/**
- * The opposite of [`filter`]{@link module:Collections.filter}. Removes values that pass an `async` truth test.
- *
- * @name reject
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.filter]{@link module:Collections.filter}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {Function} iteratee - An async truth test to apply to each item in
- * `coll`.
- * The should complete with a boolean value as its `result`.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results).
- * @example
- *
- * async.reject(['file1','file2','file3'], function(filePath, callback) {
- *     fs.access(filePath, function(err) {
- *         callback(null, !err)
- *     });
- * }, function(err, results) {
- *     // results now equals an array of missing files
- *     createFiles(results);
- * });
- */
-var reject = doParallel(reject$1);
-
-/**
- * A helper function that wraps an array or an object of functions with `reflect`.
- *
- * @name reflectAll
- * @static
- * @memberOf module:Utils
- * @method
- * @see [async.reflect]{@link module:Utils.reflect}
- * @category Util
- * @param {Array|Object|Iterable} tasks - The collection of
- * [async functions]{@link AsyncFunction} to wrap in `async.reflect`.
- * @returns {Array} Returns an array of async functions, each wrapped in
- * `async.reflect`
- * @example
- *
- * let tasks = [
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     function(callback) {
- *         // do some more stuff but error ...
- *         callback(new Error('bad stuff happened'));
- *     },
- *     function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'two');
- *         }, 100);
- *     }
- * ];
- *
- * async.parallel(async.reflectAll(tasks),
- * // optional callback
- * function(err, results) {
- *     // values
- *     // results[0].value = 'one'
- *     // results[1].error = Error('bad stuff happened')
- *     // results[2].value = 'two'
- * });
- *
- * // an example using an object instead of an array
- * let tasks = {
- *     one: function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'one');
- *         }, 200);
- *     },
- *     two: function(callback) {
- *         callback('two');
- *     },
- *     three: function(callback) {
- *         setTimeout(function() {
- *             callback(null, 'three');
- *         }, 100);
- *     }
- * };
- *
- * async.parallel(async.reflectAll(tasks),
- * // optional callback
- * function(err, results) {
- *     // values
- *     // results.one.value = 'one'
- *     // results.two.error = 'two'
- *     // results.three.value = 'three'
- * });
- */
-function reflectAll(tasks) {
-    var results;
-    if (isArray(tasks)) {
-        results = arrayMap(tasks, reflect);
-    } else {
-        results = {};
-        baseForOwn(tasks, function(task, key) {
-            results[key] = reflect.call(this, task);
-        });
-    }
-    return results;
-}
-
-/**
- * The same as [`reject`]{@link module:Collections.reject} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name rejectLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.reject]{@link module:Collections.reject}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {Function} iteratee - An async truth test to apply to each item in
- * `coll`.
- * The should complete with a boolean value as its `result`.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results).
- */
-var rejectLimit = doParallelLimit(reject$1);
-
-/**
- * The same as [`reject`]{@link module:Collections.reject} but runs only a single async operation at a time.
- *
- * @name rejectSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.reject]{@link module:Collections.reject}
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {Function} iteratee - An async truth test to apply to each item in
- * `coll`.
- * The should complete with a boolean value as its `result`.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Invoked with (err, results).
- */
-var rejectSeries = doLimit(rejectLimit, 1);
-
-/**
- * Creates a function that returns `value`.
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Util
- * @param {*} value The value to return from the new function.
- * @returns {Function} Returns the new constant function.
- * @example
- *
- * var objects = _.times(2, _.constant({ 'a': 1 }));
- *
- * console.log(objects);
- * // => [{ 'a': 1 }, { 'a': 1 }]
- *
- * console.log(objects[0] === objects[1]);
- * // => true
- */
-function constant$1(value) {
-  return function() {
-    return value;
-  };
-}
-
-/**
- * Attempts to get a successful response from `task` no more than `times` times
- * before returning an error. If the task is successful, the `callback` will be
- * passed the result of the successful task. If all attempts fail, the callback
- * will be passed the error and result (if any) of the final attempt.
- *
- * @name retry
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @see [async.retryable]{@link module:ControlFlow.retryable}
- * @param {Object|number} [opts = {times: 5, interval: 0}| 5] - Can be either an
- * object with `times` and `interval` or a number.
- * * `times` - The number of attempts to make before giving up.  The default
- *   is `5`.
- * * `interval` - The time to wait between retries, in milliseconds.  The
- *   default is `0`. The interval may also be specified as a function of the
- *   retry count (see example).
- * * `errorFilter` - An optional synchronous function that is invoked on
- *   erroneous result. If it returns `true` the retry attempts will continue;
- *   if the function returns `false` the retry flow is aborted with the current
- *   attempt's error and result being returned to the final callback.
- *   Invoked with (err).
- * * If `opts` is a number, the number specifies the number of times to retry,
- *   with the default interval of `0`.
- * @param {AsyncFunction} task - An async function to retry.
- * Invoked with (callback).
- * @param {Function} [callback] - An optional callback which is called when the
- * task has succeeded, or after the final failed attempt. It receives the `err`
- * and `result` arguments of the last attempt at completing the `task`. Invoked
- * with (err, results).
- *
- * @example
- *
- * // The `retry` function can be used as a stand-alone control flow by passing
- * // a callback, as shown below:
- *
- * // try calling apiMethod 3 times
- * async.retry(3, apiMethod, function(err, result) {
- *     // do something with the result
- * });
- *
- * // try calling apiMethod 3 times, waiting 200 ms between each retry
- * async.retry({times: 3, interval: 200}, apiMethod, function(err, result) {
- *     // do something with the result
- * });
- *
- * // try calling apiMethod 10 times with exponential backoff
- * // (i.e. intervals of 100, 200, 400, 800, 1600, ... milliseconds)
- * async.retry({
- *   times: 10,
- *   interval: function(retryCount) {
- *     return 50 * Math.pow(2, retryCount);
- *   }
- * }, apiMethod, function(err, result) {
- *     // do something with the result
- * });
- *
- * // try calling apiMethod the default 5 times no delay between each retry
- * async.retry(apiMethod, function(err, result) {
- *     // do something with the result
- * });
- *
- * // try calling apiMethod only when error condition satisfies, all other
- * // errors will abort the retry control flow and return to final callback
- * async.retry({
- *   errorFilter: function(err) {
- *     return err.message === 'Temporary error'; // only retry on a specific error
- *   }
- * }, apiMethod, function(err, result) {
- *     // do something with the result
- * });
- *
- * // It can also be embedded within other control flow functions to retry
- * // individual methods that are not as reliable, like this:
- * async.auto({
- *     users: api.getUsers.bind(api),
- *     payments: async.retryable(3, api.getPayments.bind(api))
- * }, function(err, results) {
- *     // do something with the results
- * });
- *
- */
-function retry(opts, task, callback) {
-    var DEFAULT_TIMES = 5;
-    var DEFAULT_INTERVAL = 0;
-
-    var options = {
-        times: DEFAULT_TIMES,
-        intervalFunc: constant$1(DEFAULT_INTERVAL)
-    };
-
-    function parseTimes(acc, t) {
-        if (typeof t === 'object') {
-            acc.times = +t.times || DEFAULT_TIMES;
-
-            acc.intervalFunc = typeof t.interval === 'function' ?
-                t.interval :
-                constant$1(+t.interval || DEFAULT_INTERVAL);
-
-            acc.errorFilter = t.errorFilter;
-        } else if (typeof t === 'number' || typeof t === 'string') {
-            acc.times = +t || DEFAULT_TIMES;
-        } else {
-            throw new Error("Invalid arguments for async.retry");
-        }
-    }
-
-    if (arguments.length < 3 && typeof opts === 'function') {
-        callback = task || noop;
-        task = opts;
-    } else {
-        parseTimes(options, opts);
-        callback = callback || noop;
-    }
-
-    if (typeof task !== 'function') {
-        throw new Error("Invalid arguments for async.retry");
-    }
-
-    var _task = wrapAsync(task);
-
-    var attempt = 1;
-    function retryAttempt() {
-        _task(function(err) {
-            if (err && attempt++ < options.times &&
-                (typeof options.errorFilter != 'function' ||
-                    options.errorFilter(err))) {
-                setTimeout(retryAttempt, options.intervalFunc(attempt));
-            } else {
-                callback.apply(null, arguments);
-            }
-        });
-    }
-
-    retryAttempt();
-}
-
-/**
- * A close relative of [`retry`]{@link module:ControlFlow.retry}.  This method
- * wraps a task and makes it retryable, rather than immediately calling it
- * with retries.
- *
- * @name retryable
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.retry]{@link module:ControlFlow.retry}
- * @category Control Flow
- * @param {Object|number} [opts = {times: 5, interval: 0}| 5] - optional
- * options, exactly the same as from `retry`
- * @param {AsyncFunction} task - the asynchronous function to wrap.
- * This function will be passed any arguments passed to the returned wrapper.
- * Invoked with (...args, callback).
- * @returns {AsyncFunction} The wrapped function, which when invoked, will
- * retry on an error, based on the parameters specified in `opts`.
- * This function will accept the same parameters as `task`.
- * @example
- *
- * async.auto({
- *     dep1: async.retryable(3, getFromFlakyService),
- *     process: ["dep1", async.retryable(3, function (results, cb) {
- *         maybeProcessData(results.dep1, cb);
- *     })]
- * }, callback);
- */
-var retryable = function (opts, task) {
-    if (!task) {
-        task = opts;
-        opts = null;
-    }
-    var _task = wrapAsync(task);
-    return initialParams(function (args, callback) {
-        function taskFn(cb) {
-            _task.apply(null, args.concat(cb));
-        }
-
-        if (opts) retry(opts, taskFn, callback);
-        else retry(taskFn, callback);
-
-    });
-};
-
-/**
- * Run the functions in the `tasks` collection in series, each one running once
- * the previous function has completed. If any functions in the series pass an
- * error to its callback, no more functions are run, and `callback` is
- * immediately called with the value of the error. Otherwise, `callback`
- * receives an array of results when `tasks` have completed.
- *
- * It is also possible to use an object instead of an array. Each property will
- * be run as a function, and the results will be passed to the final `callback`
- * as an object instead of an array. This can be a more readable way of handling
- *  results from {@link async.series}.
- *
- * **Note** that while many implementations preserve the order of object
- * properties, the [ECMAScript Language Specification](http://www.ecma-international.org/ecma-262/5.1/#sec-8.6)
- * explicitly states that
- *
- * > The mechanics and order of enumerating the properties is not specified.
- *
- * So if you rely on the order in which your series of functions are executed,
- * and want this to work on all platforms, consider using an array.
- *
- * @name series
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array|Iterable|Object} tasks - A collection containing
- * [async functions]{@link AsyncFunction} to run in series.
- * Each function can complete with any number of optional `result` values.
- * @param {Function} [callback] - An optional callback to run once all the
- * functions have completed. This function gets a results array (or object)
- * containing all the result arguments passed to the `task` callbacks. Invoked
- * with (err, result).
- * @example
- * async.series([
- *     function(callback) {
- *         // do some stuff ...
- *         callback(null, 'one');
- *     },
- *     function(callback) {
- *         // do some more stuff ...
- *         callback(null, 'two');
- *     }
- * ],
- * // optional callback
- * function(err, results) {
- *     // results is now equal to ['one', 'two']
- * });
- *
- * async.series({
- *     one: function(callback) {
- *         setTimeout(function() {
- *             callback(null, 1);
- *         }, 200);
- *     },
- *     two: function(callback){
- *         setTimeout(function() {
- *             callback(null, 2);
- *         }, 100);
- *     }
- * }, function(err, results) {
- *     // results is now equal to: {one: 1, two: 2}
- * });
- */
-function series(tasks, callback) {
-    _parallel(eachOfSeries, tasks, callback);
-}
-
-/**
- * Returns `true` if at least one element in the `coll` satisfies an async test.
- * If any iteratee call returns `true`, the main `callback` is immediately
- * called.
- *
- * @name some
- * @static
- * @memberOf module:Collections
- * @method
- * @alias any
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collections in parallel.
- * The iteratee should complete with a boolean `result` value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the iteratee functions have finished.
- * Result will be either `true` or `false` depending on the values of the async
- * tests. Invoked with (err, result).
- * @example
- *
- * async.some(['file1','file2','file3'], function(filePath, callback) {
- *     fs.access(filePath, function(err) {
- *         callback(null, !err)
- *     });
- * }, function(err, result) {
- *     // if result is true then at least one of the files exists
- * });
- */
-var some = doParallel(_createTester(Boolean, identity));
-
-/**
- * The same as [`some`]{@link module:Collections.some} but runs a maximum of `limit` async operations at a time.
- *
- * @name someLimit
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.some]{@link module:Collections.some}
- * @alias anyLimit
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collections in parallel.
- * The iteratee should complete with a boolean `result` value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the iteratee functions have finished.
- * Result will be either `true` or `false` depending on the values of the async
- * tests. Invoked with (err, result).
- */
-var someLimit = doParallelLimit(_createTester(Boolean, identity));
-
-/**
- * The same as [`some`]{@link module:Collections.some} but runs only a single async operation at a time.
- *
- * @name someSeries
- * @static
- * @memberOf module:Collections
- * @method
- * @see [async.some]{@link module:Collections.some}
- * @alias anySeries
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async truth test to apply to each item
- * in the collections in series.
- * The iteratee should complete with a boolean `result` value.
- * Invoked with (item, callback).
- * @param {Function} [callback] - A callback which is called as soon as any
- * iteratee returns `true`, or after all the iteratee functions have finished.
- * Result will be either `true` or `false` depending on the values of the async
- * tests. Invoked with (err, result).
- */
-var someSeries = doLimit(someLimit, 1);
-
-/**
- * Sorts a list by the results of running each `coll` value through an async
- * `iteratee`.
- *
- * @name sortBy
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {AsyncFunction} iteratee - An async function to apply to each item in
- * `coll`.
- * The iteratee should complete with a value to use as the sort criteria as
- * its `result`.
- * Invoked with (item, callback).
- * @param {Function} callback - A callback which is called after all the
- * `iteratee` functions have finished, or an error occurs. Results is the items
- * from the original `coll` sorted by the values returned by the `iteratee`
- * calls. Invoked with (err, results).
- * @example
- *
- * async.sortBy(['file1','file2','file3'], function(file, callback) {
- *     fs.stat(file, function(err, stats) {
- *         callback(err, stats.mtime);
- *     });
- * }, function(err, results) {
- *     // results is now the original array of files sorted by
- *     // modified date
- * });
- *
- * // By modifying the callback parameter the
- * // sorting order can be influenced:
- *
- * // ascending order
- * async.sortBy([1,9,3,5], function(x, callback) {
- *     callback(null, x);
- * }, function(err,result) {
- *     // result callback
- * });
- *
- * // descending order
- * async.sortBy([1,9,3,5], function(x, callback) {
- *     callback(null, x*-1);    //<- x*-1 instead of x, turns the order around
- * }, function(err,result) {
- *     // result callback
- * });
- */
-function sortBy (coll, iteratee, callback) {
-    var _iteratee = wrapAsync(iteratee);
-    map(coll, function (x, callback) {
-        _iteratee(x, function (err, criteria) {
-            if (err) return callback(err);
-            callback(null, {value: x, criteria: criteria});
-        });
-    }, function (err, results) {
-        if (err) return callback(err);
-        callback(null, arrayMap(results.sort(comparator), baseProperty('value')));
-    });
-
-    function comparator(left, right) {
-        var a = left.criteria, b = right.criteria;
-        return a < b ? -1 : a > b ? 1 : 0;
-    }
-}
-
-/**
- * Sets a time limit on an asynchronous function. If the function does not call
- * its callback within the specified milliseconds, it will be called with a
- * timeout error. The code property for the error object will be `'ETIMEDOUT'`.
- *
- * @name timeout
- * @static
- * @memberOf module:Utils
- * @method
- * @category Util
- * @param {AsyncFunction} asyncFn - The async function to limit in time.
- * @param {number} milliseconds - The specified time limit.
- * @param {*} [info] - Any variable you want attached (`string`, `object`, etc)
- * to timeout Error for more information..
- * @returns {AsyncFunction} Returns a wrapped function that can be used with any
- * of the control flow functions.
- * Invoke this function with the same parameters as you would `asyncFunc`.
- * @example
- *
- * function myFunction(foo, callback) {
- *     doAsyncTask(foo, function(err, data) {
- *         // handle errors
- *         if (err) return callback(err);
- *
- *         // do some stuff ...
- *
- *         // return processed data
- *         return callback(null, data);
- *     });
- * }
- *
- * var wrapped = async.timeout(myFunction, 1000);
- *
- * // call `wrapped` as you would `myFunction`
- * wrapped({ bar: 'bar' }, function(err, data) {
- *     // if `myFunction` takes < 1000 ms to execute, `err`
- *     // and `data` will have their expected values
- *
- *     // else `err` will be an Error with the code 'ETIMEDOUT'
- * });
- */
-function timeout(asyncFn, milliseconds, info) {
-    var originalCallback, timer;
-    var timedOut = false;
-
-    function injectedCallback() {
-        if (!timedOut) {
-            originalCallback.apply(null, arguments);
-            clearTimeout(timer);
-        }
-    }
-
-    function timeoutCallback() {
-        var name = asyncFn.name || 'anonymous';
-        var error  = new Error('Callback function "' + name + '" timed out.');
-        error.code = 'ETIMEDOUT';
-        if (info) {
-            error.info = info;
-        }
-        timedOut = true;
-        originalCallback(error);
-    }
-
-    var fn = wrapAsync(asyncFn);
-
-    return initialParams(function (args, origCallback) {
-        originalCallback = origCallback;
-        // setup timer and call original function
-        timer = setTimeout(timeoutCallback, milliseconds);
-        fn.apply(null, args.concat(injectedCallback));
-    });
-}
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeCeil = Math.ceil;
-var nativeMax = Math.max;
-
-/**
- * The base implementation of `_.range` and `_.rangeRight` which doesn't
- * coerce arguments.
- *
- * @private
- * @param {number} start The start of the range.
- * @param {number} end The end of the range.
- * @param {number} step The value to increment or decrement by.
- * @param {boolean} [fromRight] Specify iterating from right to left.
- * @returns {Array} Returns the range of numbers.
- */
-function baseRange(start, end, step, fromRight) {
-  var index = -1,
-      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
-      result = Array(length);
-
-  while (length--) {
-    result[fromRight ? length : ++index] = start;
-    start += step;
-  }
-  return result;
-}
-
-/**
- * The same as [times]{@link module:ControlFlow.times} but runs a maximum of `limit` async operations at a
- * time.
- *
- * @name timesLimit
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.times]{@link module:ControlFlow.times}
- * @category Control Flow
- * @param {number} count - The number of times to run the function.
- * @param {number} limit - The maximum number of async operations at a time.
- * @param {AsyncFunction} iteratee - The async function to call `n` times.
- * Invoked with the iteration index and a callback: (n, next).
- * @param {Function} callback - see [async.map]{@link module:Collections.map}.
- */
-function timeLimit(count, limit, iteratee, callback) {
-    var _iteratee = wrapAsync(iteratee);
-    mapLimit(baseRange(0, count, 1), limit, _iteratee, callback);
-}
-
-/**
- * Calls the `iteratee` function `n` times, and accumulates results in the same
- * manner you would use with [map]{@link module:Collections.map}.
- *
- * @name times
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.map]{@link module:Collections.map}
- * @category Control Flow
- * @param {number} n - The number of times to run the function.
- * @param {AsyncFunction} iteratee - The async function to call `n` times.
- * Invoked with the iteration index and a callback: (n, next).
- * @param {Function} callback - see {@link module:Collections.map}.
- * @example
- *
- * // Pretend this is some complicated async factory
- * var createUser = function(id, callback) {
- *     callback(null, {
- *         id: 'user' + id
- *     });
- * };
- *
- * // generate 5 users
- * async.times(5, function(n, next) {
- *     createUser(n, function(err, user) {
- *         next(err, user);
- *     });
- * }, function(err, users) {
- *     // we should now have 5 users
- * });
- */
-var times = doLimit(timeLimit, Infinity);
-
-/**
- * The same as [times]{@link module:ControlFlow.times} but runs only a single async operation at a time.
- *
- * @name timesSeries
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.times]{@link module:ControlFlow.times}
- * @category Control Flow
- * @param {number} n - The number of times to run the function.
- * @param {AsyncFunction} iteratee - The async function to call `n` times.
- * Invoked with the iteration index and a callback: (n, next).
- * @param {Function} callback - see {@link module:Collections.map}.
- */
-var timesSeries = doLimit(timeLimit, 1);
-
-/**
- * A relative of `reduce`.  Takes an Object or Array, and iterates over each
- * element in series, each step potentially mutating an `accumulator` value.
- * The type of the accumulator defaults to the type of collection passed in.
- *
- * @name transform
- * @static
- * @memberOf module:Collections
- * @method
- * @category Collection
- * @param {Array|Iterable|Object} coll - A collection to iterate over.
- * @param {*} [accumulator] - The initial state of the transform.  If omitted,
- * it will default to an empty Object or Array, depending on the type of `coll`
- * @param {AsyncFunction} iteratee - A function applied to each item in the
- * collection that potentially modifies the accumulator.
- * Invoked with (accumulator, item, key, callback).
- * @param {Function} [callback] - A callback which is called after all the
- * `iteratee` functions have finished. Result is the transformed accumulator.
- * Invoked with (err, result).
- * @example
- *
- * async.transform([1,2,3], function(acc, item, index, callback) {
- *     // pointless async:
- *     process.nextTick(function() {
- *         acc.push(item * 2)
- *         callback(null)
- *     });
- * }, function(err, result) {
- *     // result is now equal to [2, 4, 6]
- * });
- *
- * @example
- *
- * async.transform({a: 1, b: 2, c: 3}, function (obj, val, key, callback) {
- *     setImmediate(function () {
- *         obj[key] = val * 2;
- *         callback();
- *     })
- * }, function (err, result) {
- *     // result is equal to {a: 2, b: 4, c: 6}
- * })
- */
-function transform (coll, accumulator, iteratee, callback) {
-    if (arguments.length <= 3) {
-        callback = iteratee;
-        iteratee = accumulator;
-        accumulator = isArray(coll) ? [] : {};
-    }
-    callback = once(callback || noop);
-    var _iteratee = wrapAsync(iteratee);
-
-    eachOf(coll, function(v, k, cb) {
-        _iteratee(accumulator, v, k, cb);
-    }, function(err) {
-        callback(err, accumulator);
-    });
-}
-
-/**
- * It runs each task in series but stops whenever any of the functions were
- * successful. If one of the tasks were successful, the `callback` will be
- * passed the result of the successful task. If all tasks fail, the callback
- * will be passed the error and result (if any) of the final attempt.
- *
- * @name tryEach
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array|Iterable|Object} tasks - A collection containing functions to
- * run, each function is passed a `callback(err, result)` it must call on
- * completion with an error `err` (which can be `null`) and an optional `result`
- * value.
- * @param {Function} [callback] - An optional callback which is called when one
- * of the tasks has succeeded, or all have failed. It receives the `err` and
- * `result` arguments of the last attempt at completing the `task`. Invoked with
- * (err, results).
- * @example
- * async.try([
- *     function getDataFromFirstWebsite(callback) {
- *         // Try getting the data from the first website
- *         callback(err, data);
- *     },
- *     function getDataFromSecondWebsite(callback) {
- *         // First website failed,
- *         // Try getting the data from the backup website
- *         callback(err, data);
- *     }
- * ],
- * // optional callback
- * function(err, results) {
- *     Now do something with the data.
- * });
- *
- */
-function tryEach(tasks, callback) {
-    var error = null;
-    var result;
-    callback = callback || noop;
-    eachSeries(tasks, function(task, callback) {
-        wrapAsync(task)(function (err, res/*, ...args*/) {
-            if (arguments.length > 2) {
-                result = slice(arguments, 1);
-            } else {
-                result = res;
-            }
-            error = err;
-            callback(!err);
-        });
-    }, function () {
-        callback(error, result);
-    });
-}
-
-/**
- * Undoes a [memoize]{@link module:Utils.memoize}d function, reverting it to the original,
- * unmemoized form. Handy for testing.
- *
- * @name unmemoize
- * @static
- * @memberOf module:Utils
- * @method
- * @see [async.memoize]{@link module:Utils.memoize}
- * @category Util
- * @param {AsyncFunction} fn - the memoized function
- * @returns {AsyncFunction} a function that calls the original unmemoized function
- */
-function unmemoize(fn) {
-    return function () {
-        return (fn.unmemoized || fn).apply(null, arguments);
-    };
-}
-
-/**
- * Repeatedly call `iteratee`, while `test` returns `true`. Calls `callback` when
- * stopped, or an error occurs.
- *
- * @name whilst
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Function} test - synchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
- * @param {AsyncFunction} iteratee - An async function which is called each time
- * `test` passes. Invoked with (callback).
- * @param {Function} [callback] - A callback which is called after the test
- * function has failed and repeated execution of `iteratee` has stopped. `callback`
- * will be passed an error and any arguments passed to the final `iteratee`'s
- * callback. Invoked with (err, [results]);
- * @returns undefined
- * @example
- *
- * var count = 0;
- * async.whilst(
- *     function() { return count < 5; },
- *     function(callback) {
- *         count++;
- *         setTimeout(function() {
- *             callback(null, count);
- *         }, 1000);
- *     },
- *     function (err, n) {
- *         // 5 seconds have passed, n = 5
- *     }
- * );
- */
-function whilst(test, iteratee, callback) {
-    callback = onlyOnce(callback || noop);
-    var _iteratee = wrapAsync(iteratee);
-    if (!test()) return callback(null);
-    var next = function(err/*, ...args*/) {
-        if (err) return callback(err);
-        if (test()) return _iteratee(next);
-        var args = slice(arguments, 1);
-        callback.apply(null, [null].concat(args));
-    };
-    _iteratee(next);
-}
-
-/**
- * Repeatedly call `iteratee` until `test` returns `true`. Calls `callback` when
- * stopped, or an error occurs. `callback` will be passed an error and any
- * arguments passed to the final `iteratee`'s callback.
- *
- * The inverse of [whilst]{@link module:ControlFlow.whilst}.
- *
- * @name until
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.whilst]{@link module:ControlFlow.whilst}
- * @category Control Flow
- * @param {Function} test - synchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
- * @param {AsyncFunction} iteratee - An async function which is called each time
- * `test` fails. Invoked with (callback).
- * @param {Function} [callback] - A callback which is called after the test
- * function has passed and repeated execution of `iteratee` has stopped. `callback`
- * will be passed an error and any arguments passed to the final `iteratee`'s
- * callback. Invoked with (err, [results]);
- */
-function until(test, iteratee, callback) {
-    whilst(function() {
-        return !test.apply(this, arguments);
-    }, iteratee, callback);
-}
-
-/**
- * Runs the `tasks` array of functions in series, each passing their results to
- * the next in the array. However, if any of the `tasks` pass an error to their
- * own callback, the next function is not executed, and the main `callback` is
- * immediately called with the error.
- *
- * @name waterfall
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Array} tasks - An array of [async functions]{@link AsyncFunction}
- * to run.
- * Each function should complete with any number of `result` values.
- * The `result` values will be passed as arguments, in order, to the next task.
- * @param {Function} [callback] - An optional callback to run once all the
- * functions have completed. This will be passed the results of the last task's
- * callback. Invoked with (err, [results]).
- * @returns undefined
- * @example
- *
- * async.waterfall([
- *     function(callback) {
- *         callback(null, 'one', 'two');
- *     },
- *     function(arg1, arg2, callback) {
- *         // arg1 now equals 'one' and arg2 now equals 'two'
- *         callback(null, 'three');
- *     },
- *     function(arg1, callback) {
- *         // arg1 now equals 'three'
- *         callback(null, 'done');
- *     }
- * ], function (err, result) {
- *     // result now equals 'done'
- * });
- *
- * // Or, with named functions:
- * async.waterfall([
- *     myFirstFunction,
- *     mySecondFunction,
- *     myLastFunction,
- * ], function (err, result) {
- *     // result now equals 'done'
- * });
- * function myFirstFunction(callback) {
- *     callback(null, 'one', 'two');
- * }
- * function mySecondFunction(arg1, arg2, callback) {
- *     // arg1 now equals 'one' and arg2 now equals 'two'
- *     callback(null, 'three');
- * }
- * function myLastFunction(arg1, callback) {
- *     // arg1 now equals 'three'
- *     callback(null, 'done');
- * }
- */
-var waterfall = function(tasks, callback) {
-    callback = once(callback || noop);
-    if (!isArray(tasks)) return callback(new Error('First argument to waterfall must be an array of functions'));
-    if (!tasks.length) return callback();
-    var taskIndex = 0;
-
-    function nextTask(args) {
-        var task = wrapAsync(tasks[taskIndex++]);
-        args.push(onlyOnce(next));
-        task.apply(null, args);
-    }
-
-    function next(err/*, ...args*/) {
-        if (err || taskIndex === tasks.length) {
-            return callback.apply(null, arguments);
-        }
-        nextTask(slice(arguments, 1));
-    }
-
-    nextTask([]);
-};
-
-/**
- * An "async function" in the context of Async is an asynchronous function with
- * a variable number of parameters, with the final parameter being a callback.
- * (`function (arg1, arg2, ..., callback) {}`)
- * The final callback is of the form `callback(err, results...)`, which must be
- * called once the function is completed.  The callback should be called with a
- * Error as its first argument to signal that an error occurred.
- * Otherwise, if no error occurred, it should be called with `null` as the first
- * argument, and any additional `result` arguments that may apply, to signal
- * successful completion.
- * The callback must be called exactly once, ideally on a later tick of the
- * JavaScript event loop.
- *
- * This type of function is also referred to as a "Node-style async function",
- * or a "continuation passing-style function" (CPS). Most of the methods of this
- * library are themselves CPS/Node-style async functions, or functions that
- * return CPS/Node-style async functions.
- *
- * Wherever we accept a Node-style async function, we also directly accept an
- * [ES2017 `async` function]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function}.
- * In this case, the `async` function will not be passed a final callback
- * argument, and any thrown error will be used as the `err` argument of the
- * implicit callback, and the return value will be used as the `result` value.
- * (i.e. a `rejected` of the returned Promise becomes the `err` callback
- * argument, and a `resolved` value becomes the `result`.)
- *
- * Note, due to JavaScript limitations, we can only detect native `async`
- * functions and not transpilied implementations.
- * Your environment must have `async`/`await` support for this to work.
- * (e.g. Node > v7.6, or a recent version of a modern browser).
- * If you are using `async` functions through a transpiler (e.g. Babel), you
- * must still wrap the function with [asyncify]{@link module:Utils.asyncify},
- * because the `async function` will be compiled to an ordinary function that
- * returns a promise.
- *
- * @typedef {Function} AsyncFunction
- * @static
- */
-
-/**
- * Async is a utility module which provides straight-forward, powerful functions
- * for working with asynchronous JavaScript. Although originally designed for
- * use with [Node.js](http://nodejs.org) and installable via
- * `npm install --save async`, it can also be used directly in the browser.
- * @module async
- * @see AsyncFunction
- */
-
-
-/**
- * A collection of `async` functions for manipulating collections, such as
- * arrays and objects.
- * @module Collections
- */
-
-/**
- * A collection of `async` functions for controlling the flow through a script.
- * @module ControlFlow
- */
-
-/**
- * A collection of `async` utility functions.
- * @module Utils
- */
-
-var index = {
-    applyEach: applyEach,
-    applyEachSeries: applyEachSeries,
-    apply: apply,
-    asyncify: asyncify,
-    auto: auto,
-    autoInject: autoInject,
-    cargo: cargo,
-    compose: compose,
-    concat: concat,
-    concatSeries: concatSeries,
-    constant: constant,
-    detect: detect,
-    detectLimit: detectLimit,
-    detectSeries: detectSeries,
-    dir: dir,
-    doDuring: doDuring,
-    doUntil: doUntil,
-    doWhilst: doWhilst,
-    during: during,
-    each: eachLimit,
-    eachLimit: eachLimit$1,
-    eachOf: eachOf,
-    eachOfLimit: eachOfLimit,
-    eachOfSeries: eachOfSeries,
-    eachSeries: eachSeries,
-    ensureAsync: ensureAsync,
-    every: every,
-    everyLimit: everyLimit,
-    everySeries: everySeries,
-    filter: filter,
-    filterLimit: filterLimit,
-    filterSeries: filterSeries,
-    forever: forever,
-    groupBy: groupBy,
-    groupByLimit: groupByLimit,
-    groupBySeries: groupBySeries,
-    log: log,
-    map: map,
-    mapLimit: mapLimit,
-    mapSeries: mapSeries,
-    mapValues: mapValues,
-    mapValuesLimit: mapValuesLimit,
-    mapValuesSeries: mapValuesSeries,
-    memoize: memoize,
-    nextTick: nextTick,
-    parallel: parallelLimit,
-    parallelLimit: parallelLimit$1,
-    priorityQueue: priorityQueue,
-    queue: queue$1,
-    race: race,
-    reduce: reduce,
-    reduceRight: reduceRight,
-    reflect: reflect,
-    reflectAll: reflectAll,
-    reject: reject,
-    rejectLimit: rejectLimit,
-    rejectSeries: rejectSeries,
-    retry: retry,
-    retryable: retryable,
-    seq: seq,
-    series: series,
-    setImmediate: setImmediate$1,
-    some: some,
-    someLimit: someLimit,
-    someSeries: someSeries,
-    sortBy: sortBy,
-    timeout: timeout,
-    times: times,
-    timesLimit: timeLimit,
-    timesSeries: timesSeries,
-    transform: transform,
-    tryEach: tryEach,
-    unmemoize: unmemoize,
-    until: until,
-    waterfall: waterfall,
-    whilst: whilst,
-
-    // aliases
-    all: every,
-    any: some,
-    forEach: eachLimit,
-    forEachSeries: eachSeries,
-    forEachLimit: eachLimit$1,
-    forEachOf: eachOf,
-    forEachOfSeries: eachOfSeries,
-    forEachOfLimit: eachOfLimit,
-    inject: reduce,
-    foldl: reduce,
-    foldr: reduceRight,
-    select: filter,
-    selectLimit: filterLimit,
-    selectSeries: filterSeries,
-    wrapSync: asyncify
-};
-
-exports['default'] = index;
-exports.applyEach = applyEach;
-exports.applyEachSeries = applyEachSeries;
-exports.apply = apply;
-exports.asyncify = asyncify;
-exports.auto = auto;
-exports.autoInject = autoInject;
-exports.cargo = cargo;
-exports.compose = compose;
-exports.concat = concat;
-exports.concatSeries = concatSeries;
-exports.constant = constant;
-exports.detect = detect;
-exports.detectLimit = detectLimit;
-exports.detectSeries = detectSeries;
-exports.dir = dir;
-exports.doDuring = doDuring;
-exports.doUntil = doUntil;
-exports.doWhilst = doWhilst;
-exports.during = during;
-exports.each = eachLimit;
-exports.eachLimit = eachLimit$1;
-exports.eachOf = eachOf;
-exports.eachOfLimit = eachOfLimit;
-exports.eachOfSeries = eachOfSeries;
-exports.eachSeries = eachSeries;
-exports.ensureAsync = ensureAsync;
-exports.every = every;
-exports.everyLimit = everyLimit;
-exports.everySeries = everySeries;
-exports.filter = filter;
-exports.filterLimit = filterLimit;
-exports.filterSeries = filterSeries;
-exports.forever = forever;
-exports.groupBy = groupBy;
-exports.groupByLimit = groupByLimit;
-exports.groupBySeries = groupBySeries;
-exports.log = log;
-exports.map = map;
-exports.mapLimit = mapLimit;
-exports.mapSeries = mapSeries;
-exports.mapValues = mapValues;
-exports.mapValuesLimit = mapValuesLimit;
-exports.mapValuesSeries = mapValuesSeries;
-exports.memoize = memoize;
-exports.nextTick = nextTick;
-exports.parallel = parallelLimit;
-exports.parallelLimit = parallelLimit$1;
-exports.priorityQueue = priorityQueue;
-exports.queue = queue$1;
-exports.race = race;
-exports.reduce = reduce;
-exports.reduceRight = reduceRight;
-exports.reflect = reflect;
-exports.reflectAll = reflectAll;
-exports.reject = reject;
-exports.rejectLimit = rejectLimit;
-exports.rejectSeries = rejectSeries;
-exports.retry = retry;
-exports.retryable = retryable;
-exports.seq = seq;
-exports.series = series;
-exports.setImmediate = setImmediate$1;
-exports.some = some;
-exports.someLimit = someLimit;
-exports.someSeries = someSeries;
-exports.sortBy = sortBy;
-exports.timeout = timeout;
-exports.times = times;
-exports.timesLimit = timeLimit;
-exports.timesSeries = timesSeries;
-exports.transform = transform;
-exports.tryEach = tryEach;
-exports.unmemoize = unmemoize;
-exports.until = until;
-exports.waterfall = waterfall;
-exports.whilst = whilst;
-exports.all = every;
-exports.allLimit = everyLimit;
-exports.allSeries = everySeries;
-exports.any = some;
-exports.anyLimit = someLimit;
-exports.anySeries = someSeries;
-exports.find = detect;
-exports.findLimit = detectLimit;
-exports.findSeries = detectSeries;
-exports.forEach = eachLimit;
-exports.forEachSeries = eachSeries;
-exports.forEachLimit = eachLimit$1;
-exports.forEachOf = eachOf;
-exports.forEachOfSeries = eachOfSeries;
-exports.forEachOfLimit = eachOfLimit;
-exports.inject = reduce;
-exports.foldl = reduce;
-exports.foldr = reduceRight;
-exports.select = filter;
-exports.selectLimit = filterLimit;
-exports.selectSeries = filterSeries;
-exports.wrapSync = asyncify;
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module)))
-
-/***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11601,7 +6061,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(62);
+var _trackButton = __webpack_require__(42);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -11609,11 +6069,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _textTrackMenuItem = __webpack_require__(32);
+var _textTrackMenuItem = __webpack_require__(27);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _offTextTrackMenuItem = __webpack_require__(174);
+var _offTextTrackMenuItem = __webpack_require__(129);
 
 var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
 
@@ -11703,7 +6163,7 @@ exports['default'] = TextTrackButton;
 
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11711,7 +6171,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -11879,7 +6339,7 @@ exports['default'] = EventTarget;
 
 
 /***/ }),
-/* 23 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11887,7 +6347,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(17);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -12024,7 +6484,7 @@ exports['default'] = MenuItem;
 
 
 /***/ }),
-/* 24 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12204,58 +6664,18 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 
 /***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = function(module) {
-	if(!module.webpackPolyfill) {
-		module.deprecate = function() {};
-		module.paths = [];
-		// module.parent = undefined by default
-		if(!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = require("fs");
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-module.exports = require("os");
-
-/***/ }),
-/* 28 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(87);
+__webpack_require__(64);
 module.exports = angular;
 
 
 /***/ }),
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12265,7 +6685,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(23);
+var _menuItem = __webpack_require__(21);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -12429,7 +6849,7 @@ exports['default'] = TextTrackMenuItem;
 
 
 /***/ }),
-/* 33 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12437,7 +6857,7 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(199);
+var _textTrackCueList = __webpack_require__(154);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
@@ -12445,9 +6865,9 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(34);
+var _trackEnums = __webpack_require__(29);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -12455,17 +6875,17 @@ var _window = __webpack_require__(4);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(36);
+var _track = __webpack_require__(31);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(24);
+var _url = __webpack_require__(22);
 
-var _xhr = __webpack_require__(75);
+var _xhr = __webpack_require__(55);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -12885,7 +7305,7 @@ exports['default'] = TextTrack;
 
 
 /***/ }),
-/* 34 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12958,7 +7378,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 
 /***/ }),
-/* 35 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12966,7 +7386,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(22);
+var _eventTarget = __webpack_require__(20);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -13198,7 +7618,7 @@ exports['default'] = TrackList;
 
 
 /***/ }),
-/* 36 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13218,7 +7638,7 @@ var _guid = __webpack_require__(13);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(22);
+var _eventTarget = __webpack_require__(20);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -13347,7 +7767,7 @@ exports['default'] = Track;
 
 
 /***/ }),
-/* 37 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13396,746 +7816,40 @@ function computedStyle(el, prop) {
 
 
 /***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
 /* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */
-/***/ (function(module, exports) {
-
-var slice = Array.prototype.slice
-
-module.exports = iterativelyWalk
-
-function iterativelyWalk(nodes, cb) {
-    if (!('length' in nodes)) {
-        nodes = [nodes]
-    }
-    
-    nodes = slice.call(nodes)
-
-    while(nodes.length) {
-        var node = nodes.shift(),
-            ret = cb(node)
-
-        if (ret) {
-            return ret
-        }
-
-        if (node.childNodes && node.childNodes.length) {
-            nodes = slice.call(node.childNodes).concat(nodes)
-        }
-    }
-}
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/calculate.js", [2,3,13,77,162,4,5,7,9,15,18,21,22,25,30,31,35,39,40,41,42,43,46,52,55,56,57,58,59,62,68,73,79,80,81,83,84,90,155,157,158,87,97,94,100,102,103,106,109,110,118,115,122,124,125,128,131,132,140,141,142,137,144,149,152], {"6_8_36":0,"6_8_16":0,"6_28_16":0,"9_14_13":0,"9_31_13":0,"14_8_17":0,"17_10_53":0,"17_10_25":0,"17_39_24":0,"19_17_26":0,"29_10_55":0,"29_10_25":0,"29_39_26":0,"34_10_56":0,"37_12_20":0,"53_19_19":0,"83_52_21":0,"83_76_27":0,"86_8_11":0,"91_8_35":0,"91_8_10":0,"91_22_21":0,"93_10_13":0,"99_10_39":0,"101_12_6":0,"112_15_37":0,"112_15_11":0,"112_30_22":0,"114_10_13":0,"121_10_39":0,"123_12_6":0,"134_15_39":0,"134_15_12":0,"134_31_23":0,"136_10_30":0,"136_10_13":0,"136_27_13":0,"148_8_11":0,"151_8_11":0}, ["","exports = module.exports = function Calculate(command) {","  command.prototype._aspectIsEqual = function(ar1, ar2) {","    var p1 = this.toAspectRatio(ar1);","    var p2 = this.toAspectRatio(ar2);","    if (p1 === undefined || p2 === undefined) {","      return false;","    } else {","      return (p1.x === p2.x && p1.y === p2.y);","    }","  };","","  command.prototype._calculatePadding = function(data) {","    if (data.video.aspect) {","      var newaspect, padAmount;","      // check if the aspect ratio has changed","      if (this.options.video.aspect && !this.options.video.size) {","        newaspect = this.options.video.aspect;","      } else if (!this.options.video.aspect) {","        // check aspect ratio change by calculating new aspect ratio from size (using greatest common divider, GCD)","        var ratio = this.gcd(this.options.video.width, this.options.video.height);","        newaspect = this.options.video.width / ratio + ':' + this.options.video.height / ratio;","      } else {","        // we have both aspect ratio and size set, all calculations are fine","        newaspect = this.options.video.aspect;","      }","","      // if there are still no sizes for our output video, assume input size","      if (!this.options.video.width && !this.options.video.height) {","        this.options.video.width = data.video.resolution.w;","        this.options.video.height = data.video.resolution.h;","      }","","      if (!this._aspectIsEqual(data.video.aspectString, newaspect)) {","        var ardata = this.toAspectRatio(newaspect);","","        if (newaspect === '16:9') {","          // assume conversion from 4:3 to 16:9, pad output video stream left- / right-sided","          var newWidth = parseInt(this.options.video.width / (4 / 3), 10);","          newWidth += (newWidth % 2);","          var wdiff = this.options.video.width - newWidth;","          padAmount = parseInt(wdiff / 2, 10);","          padAmount += (padAmount % 2);","","          // set pad filter options","          this.options.video.pad = {","            x: padAmount,","            y: 0,","            w: this.options.video.width,","            h: this.options.video.height","          };","          this.options.video.size = newWidth + 'x' + this.options.video.height;","        } else if (newaspect === '4:3') {","          // assume conversion from 16:9 to 4:3, add padding to top and bottom","          var newHeight = parseInt(this.options.video.height / (4 / 3), 10);","          newHeight -= (newHeight % 2);","          var hdiff = this.options.video.height - newHeight;","          padAmount = parseInt(hdiff / 2, 10);","          padAmount += (padAmount % 2);","","          // set pad filter options","          this.options.video.pad = {","            x: 0,","            y: padAmount,","            w: this.options.video.width,","            h: this.options.video.height","          };","          this.options.video.size = this.options.video.pad.w + 'x' + newHeight;","        }","      }","    } else {","      // aspect ratio could not be read from source file","      return;","    }","  };","","  command.prototype._calculateDimensions = function(data) {","    // load metadata and prepare size calculations","    var fixedWidth = /([0-9]+)x\\?/.exec(this.options.video.size);","    var fixedHeight = /\\?x([0-9]+)/.exec(this.options.video.size);","    var percentRatio = /\\b([0-9]{1,2})%/.exec(this.options.video.size);","","    var resolution = this.options.keepPixelAspect ? data.video.resolution : data.video.resolutionSquare;","    var w, h;","","    if (!resolution) {","      return new Error('could not determine video resolution, check your ffmpeg setup');","    }","","    var ratio, ardata;","    if (fixedWidth && fixedWidth.length > 0) {","      // calculate height of output","      if (!resolution.w) {","        return new Error('could not determine width of source video, aborting execution');","      }","","      ratio = resolution.w / parseInt(fixedWidth[1], 10);","      // if we have an aspect ratio target set, calculate new size using AR","      if (this.options.video.aspect !== undefined) {","        ardata = this.toAspectRatio(this.options.video.aspect);","        if (ardata) {","          w = parseInt(fixedWidth[1], 10);","          h = Math.round((w / ardata.x) * ardata.y);","        } else {","          // aspect ratio could not be parsed, return error","          return new Error('could not parse aspect ratio set using withAspect(), aborting execution');","        }","      } else {","        w = parseInt(fixedWidth[1], 10);","        h = Math.round(resolution.h / ratio);","      }","    } else if (fixedHeight && fixedHeight.length > 0) {","      // calculate width of output","      if (!resolution.h) {","        return new Error('could not determine height of source video, aborting execution');","      }","","      ratio = resolution.h / parseInt(fixedHeight[1], 10);","","      // if we have an aspect ratio target set, calculate new size using AR","      if (this.options.video.aspect !== undefined) {","        ardata = this.toAspectRatio(this.options.video.aspect);","        if (ardata) {","          h = parseInt(fixedHeight[1], 10);","          w = Math.round((h / ardata.y) * ardata.x);","        } else {","          // aspect ratio could not be parsed, return error","          return new Error('could not parse aspect ratio set using withAspect(), aborting execution');","        }","      } else {","        w = Math.round(resolution.w / ratio);","        h = parseInt(fixedHeight[1], 10);","      }","    } else if (percentRatio && percentRatio.length > 0) {","      // calculate both height and width of output","      if (!resolution.w || !resolution.h) {","        return new Error('could not determine resolution of source video, aborting execution');","      }","","      ratio = parseInt(percentRatio[1], 10) / 100;","      w = Math.round(resolution.w * ratio);","      h = Math.round(resolution.h * ratio);","    } else {","      return new Error('could not determine type of size string, aborting execution');","    }","","    // for video resizing, width and height have to be a multiple of 2","    if (w % 2 === 1) {","      w -= 1;","    }","    if (h % 2 === 1) {","      h -= 1;","    }","","    this.options.video.size = w + 'x' + h;","","    this.options.video.width = w;","    this.options.video.height = h;","","  };","  ","  command.prototype.calculateDimensions = command.prototype._calculateDimensions;","};",""]);
-_$jscmd("lib/calculate.js", "line", 2);
-
-exports = module.exports = function Calculate(command) {
-    _$jscmd("lib/calculate.js", "line", 3);
-    command.prototype._aspectIsEqual = function(ar1, ar2) {
-        _$jscmd("lib/calculate.js", "line", 4);
-        var p1 = this.toAspectRatio(ar1);
-        _$jscmd("lib/calculate.js", "line", 5);
-        var p2 = this.toAspectRatio(ar2);
-        if (_$jscmd("lib/calculate.js", "cond", "6_8_36", _$jscmd("lib/calculate.js", "cond", "6_8_16", p1 === undefined) || _$jscmd("lib/calculate.js", "cond", "6_28_16", p2 === undefined))) {
-            _$jscmd("lib/calculate.js", "line", 7);
-            return false;
-        } else {
-            _$jscmd("lib/calculate.js", "line", 9);
-            return _$jscmd("lib/calculate.js", "cond", "9_14_13", p1.x === p2.x) && _$jscmd("lib/calculate.js", "cond", "9_31_13", p1.y === p2.y);
-        }
-    };
-    _$jscmd("lib/calculate.js", "line", 13);
-    command.prototype._calculatePadding = function(data) {
-        if (_$jscmd("lib/calculate.js", "cond", "14_8_17", data.video.aspect)) {
-            _$jscmd("lib/calculate.js", "line", 15);
-            var newaspect, padAmount;
-            // check if the aspect ratio has changed
-            if (_$jscmd("lib/calculate.js", "cond", "17_10_53", _$jscmd("lib/calculate.js", "cond", "17_10_25", this.options.video.aspect) && _$jscmd("lib/calculate.js", "cond", "17_39_24", !this.options.video.size))) {
-                _$jscmd("lib/calculate.js", "line", 18);
-                newaspect = this.options.video.aspect;
-            } else if (_$jscmd("lib/calculate.js", "cond", "19_17_26", !this.options.video.aspect)) {
-                _$jscmd("lib/calculate.js", "line", 21);
-                // check aspect ratio change by calculating new aspect ratio from size (using greatest common divider, GCD)
-                var ratio = this.gcd(this.options.video.width, this.options.video.height);
-                _$jscmd("lib/calculate.js", "line", 22);
-                newaspect = this.options.video.width / ratio + ":" + this.options.video.height / ratio;
-            } else {
-                _$jscmd("lib/calculate.js", "line", 25);
-                // we have both aspect ratio and size set, all calculations are fine
-                newaspect = this.options.video.aspect;
-            }
-            // if there are still no sizes for our output video, assume input size
-            if (_$jscmd("lib/calculate.js", "cond", "29_10_55", _$jscmd("lib/calculate.js", "cond", "29_10_25", !this.options.video.width) && _$jscmd("lib/calculate.js", "cond", "29_39_26", !this.options.video.height))) {
-                _$jscmd("lib/calculate.js", "line", 30);
-                this.options.video.width = data.video.resolution.w;
-                _$jscmd("lib/calculate.js", "line", 31);
-                this.options.video.height = data.video.resolution.h;
-            }
-            if (_$jscmd("lib/calculate.js", "cond", "34_10_56", !this._aspectIsEqual(data.video.aspectString, newaspect))) {
-                _$jscmd("lib/calculate.js", "line", 35);
-                var ardata = this.toAspectRatio(newaspect);
-                if (_$jscmd("lib/calculate.js", "cond", "37_12_20", newaspect === "16:9")) {
-                    _$jscmd("lib/calculate.js", "line", 39);
-                    // assume conversion from 4:3 to 16:9, pad output video stream left- / right-sided
-                    var newWidth = parseInt(this.options.video.width / (4 / 3), 10);
-                    _$jscmd("lib/calculate.js", "line", 40);
-                    newWidth += newWidth % 2;
-                    _$jscmd("lib/calculate.js", "line", 41);
-                    var wdiff = this.options.video.width - newWidth;
-                    _$jscmd("lib/calculate.js", "line", 42);
-                    padAmount = parseInt(wdiff / 2, 10);
-                    _$jscmd("lib/calculate.js", "line", 43);
-                    padAmount += padAmount % 2;
-                    _$jscmd("lib/calculate.js", "line", 46);
-                    // set pad filter options
-                    this.options.video.pad = {
-                        x: padAmount,
-                        y: 0,
-                        w: this.options.video.width,
-                        h: this.options.video.height
-                    };
-                    _$jscmd("lib/calculate.js", "line", 52);
-                    this.options.video.size = newWidth + "x" + this.options.video.height;
-                } else if (_$jscmd("lib/calculate.js", "cond", "53_19_19", newaspect === "4:3")) {
-                    _$jscmd("lib/calculate.js", "line", 55);
-                    // assume conversion from 16:9 to 4:3, add padding to top and bottom
-                    var newHeight = parseInt(this.options.video.height / (4 / 3), 10);
-                    _$jscmd("lib/calculate.js", "line", 56);
-                    newHeight -= newHeight % 2;
-                    _$jscmd("lib/calculate.js", "line", 57);
-                    var hdiff = this.options.video.height - newHeight;
-                    _$jscmd("lib/calculate.js", "line", 58);
-                    padAmount = parseInt(hdiff / 2, 10);
-                    _$jscmd("lib/calculate.js", "line", 59);
-                    padAmount += padAmount % 2;
-                    _$jscmd("lib/calculate.js", "line", 62);
-                    // set pad filter options
-                    this.options.video.pad = {
-                        x: 0,
-                        y: padAmount,
-                        w: this.options.video.width,
-                        h: this.options.video.height
-                    };
-                    _$jscmd("lib/calculate.js", "line", 68);
-                    this.options.video.size = this.options.video.pad.w + "x" + newHeight;
-                }
-            }
-        } else {
-            _$jscmd("lib/calculate.js", "line", 73);
-            // aspect ratio could not be read from source file
-            return;
-        }
-    };
-    _$jscmd("lib/calculate.js", "line", 77);
-    command.prototype._calculateDimensions = function(data) {
-        _$jscmd("lib/calculate.js", "line", 79);
-        // load metadata and prepare size calculations
-        var fixedWidth = /([0-9]+)x\?/.exec(this.options.video.size);
-        _$jscmd("lib/calculate.js", "line", 80);
-        var fixedHeight = /\?x([0-9]+)/.exec(this.options.video.size);
-        _$jscmd("lib/calculate.js", "line", 81);
-        var percentRatio = /\b([0-9]{1,2})%/.exec(this.options.video.size);
-        _$jscmd("lib/calculate.js", "line", 83);
-        var resolution = this.options.keepPixelAspect ? _$jscmd("lib/calculate.js", "cond", "83_52_21", data.video.resolution) : _$jscmd("lib/calculate.js", "cond", "83_76_27", data.video.resolutionSquare);
-        _$jscmd("lib/calculate.js", "line", 84);
-        var w, h;
-        if (_$jscmd("lib/calculate.js", "cond", "86_8_11", !resolution)) {
-            _$jscmd("lib/calculate.js", "line", 87);
-            return new Error("could not determine video resolution, check your ffmpeg setup");
-        }
-        _$jscmd("lib/calculate.js", "line", 90);
-        var ratio, ardata;
-        if (_$jscmd("lib/calculate.js", "cond", "91_8_35", _$jscmd("lib/calculate.js", "cond", "91_8_10", fixedWidth) && _$jscmd("lib/calculate.js", "cond", "91_22_21", fixedWidth.length > 0))) {
-            // calculate height of output
-            if (_$jscmd("lib/calculate.js", "cond", "93_10_13", !resolution.w)) {
-                _$jscmd("lib/calculate.js", "line", 94);
-                return new Error("could not determine width of source video, aborting execution");
-            }
-            _$jscmd("lib/calculate.js", "line", 97);
-            ratio = resolution.w / parseInt(fixedWidth[1], 10);
-            // if we have an aspect ratio target set, calculate new size using AR
-            if (_$jscmd("lib/calculate.js", "cond", "99_10_39", this.options.video.aspect !== undefined)) {
-                _$jscmd("lib/calculate.js", "line", 100);
-                ardata = this.toAspectRatio(this.options.video.aspect);
-                if (_$jscmd("lib/calculate.js", "cond", "101_12_6", ardata)) {
-                    _$jscmd("lib/calculate.js", "line", 102);
-                    w = parseInt(fixedWidth[1], 10);
-                    _$jscmd("lib/calculate.js", "line", 103);
-                    h = Math.round(w / ardata.x * ardata.y);
-                } else {
-                    _$jscmd("lib/calculate.js", "line", 106);
-                    // aspect ratio could not be parsed, return error
-                    return new Error("could not parse aspect ratio set using withAspect(), aborting execution");
-                }
-            } else {
-                _$jscmd("lib/calculate.js", "line", 109);
-                w = parseInt(fixedWidth[1], 10);
-                _$jscmd("lib/calculate.js", "line", 110);
-                h = Math.round(resolution.h / ratio);
-            }
-        } else if (_$jscmd("lib/calculate.js", "cond", "112_15_37", _$jscmd("lib/calculate.js", "cond", "112_15_11", fixedHeight) && _$jscmd("lib/calculate.js", "cond", "112_30_22", fixedHeight.length > 0))) {
-            // calculate width of output
-            if (_$jscmd("lib/calculate.js", "cond", "114_10_13", !resolution.h)) {
-                _$jscmd("lib/calculate.js", "line", 115);
-                return new Error("could not determine height of source video, aborting execution");
-            }
-            _$jscmd("lib/calculate.js", "line", 118);
-            ratio = resolution.h / parseInt(fixedHeight[1], 10);
-            // if we have an aspect ratio target set, calculate new size using AR
-            if (_$jscmd("lib/calculate.js", "cond", "121_10_39", this.options.video.aspect !== undefined)) {
-                _$jscmd("lib/calculate.js", "line", 122);
-                ardata = this.toAspectRatio(this.options.video.aspect);
-                if (_$jscmd("lib/calculate.js", "cond", "123_12_6", ardata)) {
-                    _$jscmd("lib/calculate.js", "line", 124);
-                    h = parseInt(fixedHeight[1], 10);
-                    _$jscmd("lib/calculate.js", "line", 125);
-                    w = Math.round(h / ardata.y * ardata.x);
-                } else {
-                    _$jscmd("lib/calculate.js", "line", 128);
-                    // aspect ratio could not be parsed, return error
-                    return new Error("could not parse aspect ratio set using withAspect(), aborting execution");
-                }
-            } else {
-                _$jscmd("lib/calculate.js", "line", 131);
-                w = Math.round(resolution.w / ratio);
-                _$jscmd("lib/calculate.js", "line", 132);
-                h = parseInt(fixedHeight[1], 10);
-            }
-        } else if (_$jscmd("lib/calculate.js", "cond", "134_15_39", _$jscmd("lib/calculate.js", "cond", "134_15_12", percentRatio) && _$jscmd("lib/calculate.js", "cond", "134_31_23", percentRatio.length > 0))) {
-            // calculate both height and width of output
-            if (_$jscmd("lib/calculate.js", "cond", "136_10_30", _$jscmd("lib/calculate.js", "cond", "136_10_13", !resolution.w) || _$jscmd("lib/calculate.js", "cond", "136_27_13", !resolution.h))) {
-                _$jscmd("lib/calculate.js", "line", 137);
-                return new Error("could not determine resolution of source video, aborting execution");
-            }
-            _$jscmd("lib/calculate.js", "line", 140);
-            ratio = parseInt(percentRatio[1], 10) / 100;
-            _$jscmd("lib/calculate.js", "line", 141);
-            w = Math.round(resolution.w * ratio);
-            _$jscmd("lib/calculate.js", "line", 142);
-            h = Math.round(resolution.h * ratio);
-        } else {
-            _$jscmd("lib/calculate.js", "line", 144);
-            return new Error("could not determine type of size string, aborting execution");
-        }
-        // for video resizing, width and height have to be a multiple of 2
-        if (_$jscmd("lib/calculate.js", "cond", "148_8_11", w % 2 === 1)) {
-            _$jscmd("lib/calculate.js", "line", 149);
-            w -= 1;
-        }
-        if (_$jscmd("lib/calculate.js", "cond", "151_8_11", h % 2 === 1)) {
-            _$jscmd("lib/calculate.js", "line", 152);
-            h -= 1;
-        }
-        _$jscmd("lib/calculate.js", "line", 155);
-        this.options.video.size = w + "x" + h;
-        _$jscmd("lib/calculate.js", "line", 157);
-        this.options.video.width = w;
-        _$jscmd("lib/calculate.js", "line", 158);
-        this.options.video.height = h;
-    };
-    _$jscmd("lib/calculate.js", "line", 162);
-    command.prototype.calculateDimensions = command.prototype._calculateDimensions;
-};
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/presets/divx.js", [1,2,11], {}, ["exports.load = function(ffmpeg) {","  ffmpeg","    .toFormat('avi')","    .withVideoBitrate('1024k')","    .withVideoCodec('mpeg4')","    .withSize('720x?')","    .withAudioBitrate('128k')","    .withAudioChannels(2)","    .withAudioCodec('libmp3lame')","    .addOptions([ '-vtag DIVX' ]);","  return ffmpeg;","};"]);
-_$jscmd("lib/presets/divx.js", "line", 1);
-
-exports.load = function(ffmpeg) {
-    _$jscmd("lib/presets/divx.js", "line", 2);
-    ffmpeg.toFormat("avi").withVideoBitrate("1024k").withVideoCodec("mpeg4").withSize("720x?").withAudioBitrate("128k").withAudioChannels(2).withAudioCodec("libmp3lame").addOptions([ "-vtag DIVX" ]);
-    _$jscmd("lib/presets/divx.js", "line", 11);
-    return ffmpeg;
-};
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/presets/flashvideo.js", [1,2,14], {}, ["exports.load = function(ffmpeg) {","  ffmpeg","    .toFormat('flv')","    .updateFlvMetadata()","    .withSize('320x?')","    .withVideoBitrate('512k')","    .withVideoCodec('libx264')","    .withFps(24)","    .withAudioBitrate('96k')","    .withAudioCodec('aac')","    .withStrictExperimental()","    .withAudioFrequency(22050)","    .withAudioChannels(2);","  return ffmpeg;","};",""]);
-_$jscmd("lib/presets/flashvideo.js", "line", 1);
-
-exports.load = function(ffmpeg) {
-    _$jscmd("lib/presets/flashvideo.js", "line", 2);
-    ffmpeg.toFormat("flv").updateFlvMetadata().withSize("320x?").withVideoBitrate("512k").withVideoCodec("libx264").withFps(24).withAudioBitrate("96k").withAudioCodec("aac").withStrictExperimental().withAudioFrequency(22050).withAudioChannels(2);
-    _$jscmd("lib/presets/flashvideo.js", "line", 14);
-    return ffmpeg;
-};
-
-/***/ }),
-/* 49 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/presets/podcast.js", [1,2,14], {}, ["exports.load = function(ffmpeg) {","  ffmpeg","    .toFormat('m4v')","    .withVideoBitrate('512k')","    .withVideoCodec('libx264')","    .withSize('320x176')","    .withAudioBitrate('128k')","    .withAudioCodec('aac')","    .withStrictExperimental()","    .withAudioChannels(1)","    .addOptions(['-flags', '+loop', '-cmp', '+chroma', '-partitions','+parti4x4+partp8x8+partb8x8', '-flags2',","      '+mixed_refs', '-me_method umh', '-subq 5', '-bufsize 2M', '-rc_eq \\'blurCplx^(1-qComp)\\'',","      '-qcomp 0.6', '-qmin 10', '-qmax 51', '-qdiff 4', '-level 13' ]);","  return ffmpeg;","};",""]);
-_$jscmd("lib/presets/podcast.js", "line", 1);
-
-exports.load = function(ffmpeg) {
-    _$jscmd("lib/presets/podcast.js", "line", 2);
-    ffmpeg.toFormat("m4v").withVideoBitrate("512k").withVideoCodec("libx264").withSize("320x176").withAudioBitrate("128k").withAudioCodec("aac").withStrictExperimental().withAudioChannels(1).addOptions([ "-flags", "+loop", "-cmp", "+chroma", "-partitions", "+parti4x4+partp8x8+partb8x8", "-flags2", "+mixed_refs", "-me_method umh", "-subq 5", "-bufsize 2M", "-rc_eq 'blurCplx^(1-qComp)'", "-qcomp 0.6", "-qmin 10", "-qmax 51", "-qdiff 4", "-level 13" ]);
-    _$jscmd("lib/presets/podcast.js", "line", 14);
-    return ffmpeg;
-};
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports) {
-
-
-exports = module.exports = function Calculate(command) {
-  command.prototype._aspectIsEqual = function(ar1, ar2) {
-    var p1 = this.toAspectRatio(ar1);
-    var p2 = this.toAspectRatio(ar2);
-    if (p1 === undefined || p2 === undefined) {
-      return false;
-    } else {
-      return (p1.x === p2.x && p1.y === p2.y);
-    }
-  };
-
-  command.prototype._calculatePadding = function(data) {
-    if (data.video.aspect) {
-      var newaspect, padAmount;
-      // check if the aspect ratio has changed
-      if (this.options.video.aspect && !this.options.video.size) {
-        newaspect = this.options.video.aspect;
-      } else if (!this.options.video.aspect) {
-        // check aspect ratio change by calculating new aspect ratio from size (using greatest common divider, GCD)
-        var ratio = this.gcd(this.options.video.width, this.options.video.height);
-        newaspect = this.options.video.width / ratio + ':' + this.options.video.height / ratio;
-      } else {
-        // we have both aspect ratio and size set, all calculations are fine
-        newaspect = this.options.video.aspect;
-      }
-
-      // if there are still no sizes for our output video, assume input size
-      if (!this.options.video.width && !this.options.video.height) {
-        this.options.video.width = data.video.resolution.w;
-        this.options.video.height = data.video.resolution.h;
-      }
-
-      if (!this._aspectIsEqual(data.video.aspectString, newaspect)) {
-        var ardata = this.toAspectRatio(newaspect);
-
-        if (newaspect === '16:9') {
-          // assume conversion from 4:3 to 16:9, pad output video stream left- / right-sided
-          var newWidth = parseInt(this.options.video.width / (4 / 3), 10);
-          newWidth += (newWidth % 2);
-          var wdiff = this.options.video.width - newWidth;
-          padAmount = parseInt(wdiff / 2, 10);
-          padAmount += (padAmount % 2);
-
-          // set pad filter options
-          this.options.video.pad = {
-            x: padAmount,
-            y: 0,
-            w: this.options.video.width,
-            h: this.options.video.height
-          };
-          this.options.video.size = newWidth + 'x' + this.options.video.height;
-        } else if (newaspect === '4:3') {
-          // assume conversion from 16:9 to 4:3, add padding to top and bottom
-          var newHeight = parseInt(this.options.video.height / (4 / 3), 10);
-          newHeight -= (newHeight % 2);
-          var hdiff = this.options.video.height - newHeight;
-          padAmount = parseInt(hdiff / 2, 10);
-          padAmount += (padAmount % 2);
-
-          // set pad filter options
-          this.options.video.pad = {
-            x: 0,
-            y: padAmount,
-            w: this.options.video.width,
-            h: this.options.video.height
-          };
-          this.options.video.size = this.options.video.pad.w + 'x' + newHeight;
-        }
-      }
-    } else {
-      // aspect ratio could not be read from source file
-      return;
-    }
-  };
-
-  command.prototype._calculateDimensions = function(data) {
-    // load metadata and prepare size calculations
-    var fixedWidth = /([0-9]+)x\?/.exec(this.options.video.size);
-    var fixedHeight = /\?x([0-9]+)/.exec(this.options.video.size);
-    var percentRatio = /\b([0-9]{1,2})%/.exec(this.options.video.size);
-
-    var resolution = this.options.keepPixelAspect ? data.video.resolution : data.video.resolutionSquare;
-    var w, h;
-
-    if (!resolution) {
-      return new Error('could not determine video resolution, check your ffmpeg setup');
-    }
-
-    var ratio, ardata;
-    if (fixedWidth && fixedWidth.length > 0) {
-      // calculate height of output
-      if (!resolution.w) {
-        return new Error('could not determine width of source video, aborting execution');
-      }
-
-      ratio = resolution.w / parseInt(fixedWidth[1], 10);
-      // if we have an aspect ratio target set, calculate new size using AR
-      if (this.options.video.aspect !== undefined) {
-        ardata = this.toAspectRatio(this.options.video.aspect);
-        if (ardata) {
-          w = parseInt(fixedWidth[1], 10);
-          h = Math.round((w / ardata.x) * ardata.y);
-        } else {
-          // aspect ratio could not be parsed, return error
-          return new Error('could not parse aspect ratio set using withAspect(), aborting execution');
-        }
-      } else {
-        w = parseInt(fixedWidth[1], 10);
-        h = Math.round(resolution.h / ratio);
-      }
-    } else if (fixedHeight && fixedHeight.length > 0) {
-      // calculate width of output
-      if (!resolution.h) {
-        return new Error('could not determine height of source video, aborting execution');
-      }
-
-      ratio = resolution.h / parseInt(fixedHeight[1], 10);
-
-      // if we have an aspect ratio target set, calculate new size using AR
-      if (this.options.video.aspect !== undefined) {
-        ardata = this.toAspectRatio(this.options.video.aspect);
-        if (ardata) {
-          h = parseInt(fixedHeight[1], 10);
-          w = Math.round((h / ardata.y) * ardata.x);
-        } else {
-          // aspect ratio could not be parsed, return error
-          return new Error('could not parse aspect ratio set using withAspect(), aborting execution');
-        }
-      } else {
-        w = Math.round(resolution.w / ratio);
-        h = parseInt(fixedHeight[1], 10);
-      }
-    } else if (percentRatio && percentRatio.length > 0) {
-      // calculate both height and width of output
-      if (!resolution.w || !resolution.h) {
-        return new Error('could not determine resolution of source video, aborting execution');
-      }
-
-      ratio = parseInt(percentRatio[1], 10) / 100;
-      w = Math.round(resolution.w * ratio);
-      h = Math.round(resolution.h * ratio);
-    } else {
-      return new Error('could not determine type of size string, aborting execution');
-    }
-
-    // for video resizing, width and height have to be a multiple of 2
-    if (w % 2 === 1) {
-      w -= 1;
-    }
-    if (h % 2 === 1) {
-      h -= 1;
-    }
-
-    this.options.video.size = w + 'x' + h;
-
-    this.options.video.width = w;
-    this.options.video.height = h;
-
-  };
-  
-  command.prototype.calculateDimensions = command.prototype._calculateDimensions;
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports) {
-
-exports.load = function(ffmpeg) {
-  ffmpeg
-    .toFormat('avi')
-    .withVideoBitrate('1024k')
-    .withVideoCodec('mpeg4')
-    .withSize('720x?')
-    .withAudioBitrate('128k')
-    .withAudioChannels(2)
-    .withAudioCodec('libmp3lame')
-    .addOptions([ '-vtag DIVX' ]);
-  return ffmpeg;
-};
-
-/***/ }),
-/* 52 */
-/***/ (function(module, exports) {
-
-exports.load = function(ffmpeg) {
-  ffmpeg
-    .toFormat('flv')
-    .updateFlvMetadata()
-    .withSize('320x?')
-    .withVideoBitrate('512k')
-    .withVideoCodec('libx264')
-    .withFps(24)
-    .withAudioBitrate('96k')
-    .withAudioCodec('aac')
-    .withStrictExperimental()
-    .withAudioFrequency(22050)
-    .withAudioChannels(2);
-  return ffmpeg;
-};
-
-
-/***/ }),
-/* 53 */
-/***/ (function(module, exports) {
-
-exports.load = function(ffmpeg) {
-  ffmpeg
-    .toFormat('m4v')
-    .withVideoBitrate('512k')
-    .withVideoCodec('libx264')
-    .withSize('320x176')
-    .withAudioBitrate('128k')
-    .withAudioCodec('aac')
-    .withStrictExperimental()
-    .withAudioChannels(1)
-    .addOptions(['-flags', '+loop', '-cmp', '+chroma', '-partitions','+parti4x4+partp8x8+partb8x8', '-flags2',
-      '+mixed_refs', '-me_method umh', '-subq 5', '-bufsize 2M', '-rc_eq \'blurCplx^(1-qComp)\'',
-      '-qcomp 0.6', '-qmin 10', '-qmax 51', '-qdiff 4', '-level 13' ]);
-  return ffmpeg;
-};
-
-
-/***/ }),
-/* 54 */,
-/* 55 */
+/* 39 */
 /***/ (function(module, exports) {
 
 module.exports = isFunction
@@ -14156,307 +7870,7 @@ function isFunction (fn) {
 
 
 /***/ }),
-/* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var domWalk = __webpack_require__(45)
-var dispatchEvent = __webpack_require__(58)
-var addEventListener = __webpack_require__(57)
-var removeEventListener = __webpack_require__(59)
-var serializeNode = __webpack_require__(136)
-
-var htmlns = "http://www.w3.org/1999/xhtml"
-
-module.exports = DOMElement
-
-function DOMElement(tagName, owner, namespace) {
-    if (!(this instanceof DOMElement)) {
-        return new DOMElement(tagName)
-    }
-
-    var ns = namespace === undefined ? htmlns : (namespace || null)
-
-    this.tagName = ns === htmlns ? String(tagName).toUpperCase() : tagName
-    this.nodeName = this.tagName
-    this.className = ""
-    this.dataset = {}
-    this.childNodes = []
-    this.parentNode = null
-    this.style = {}
-    this.ownerDocument = owner || null
-    this.namespaceURI = ns
-    this._attributes = {}
-
-    if (this.tagName === 'INPUT') {
-      this.type = 'text'
-    }
-}
-
-DOMElement.prototype.type = "DOMElement"
-DOMElement.prototype.nodeType = 1
-
-DOMElement.prototype.appendChild = function _Element_appendChild(child) {
-    if (child.parentNode) {
-        child.parentNode.removeChild(child)
-    }
-
-    this.childNodes.push(child)
-    child.parentNode = this
-
-    return child
-}
-
-DOMElement.prototype.replaceChild =
-    function _Element_replaceChild(elem, needle) {
-        // TODO: Throw NotFoundError if needle.parentNode !== this
-
-        if (elem.parentNode) {
-            elem.parentNode.removeChild(elem)
-        }
-
-        var index = this.childNodes.indexOf(needle)
-
-        needle.parentNode = null
-        this.childNodes[index] = elem
-        elem.parentNode = this
-
-        return needle
-    }
-
-DOMElement.prototype.removeChild = function _Element_removeChild(elem) {
-    // TODO: Throw NotFoundError if elem.parentNode !== this
-
-    var index = this.childNodes.indexOf(elem)
-    this.childNodes.splice(index, 1)
-
-    elem.parentNode = null
-    return elem
-}
-
-DOMElement.prototype.insertBefore =
-    function _Element_insertBefore(elem, needle) {
-        // TODO: Throw NotFoundError if referenceElement is a dom node
-        // and parentNode !== this
-
-        if (elem.parentNode) {
-            elem.parentNode.removeChild(elem)
-        }
-
-        var index = needle === null || needle === undefined ?
-            -1 :
-            this.childNodes.indexOf(needle)
-
-        if (index > -1) {
-            this.childNodes.splice(index, 0, elem)
-        } else {
-            this.childNodes.push(elem)
-        }
-
-        elem.parentNode = this
-        return elem
-    }
-
-DOMElement.prototype.setAttributeNS =
-    function _Element_setAttributeNS(namespace, name, value) {
-        var prefix = null
-        var localName = name
-        var colonPosition = name.indexOf(":")
-        if (colonPosition > -1) {
-            prefix = name.substr(0, colonPosition)
-            localName = name.substr(colonPosition + 1)
-        }
-        if (this.tagName === 'INPUT' && name === 'type') {
-          this.type = value;
-        }
-        else {
-          var attributes = this._attributes[namespace] || (this._attributes[namespace] = {})
-          attributes[localName] = {value: value, prefix: prefix}
-        }
-    }
-
-DOMElement.prototype.getAttributeNS =
-    function _Element_getAttributeNS(namespace, name) {
-        var attributes = this._attributes[namespace];
-        var value = attributes && attributes[name] && attributes[name].value
-        if (this.tagName === 'INPUT' && name === 'type') {
-          return this.type;
-        }
-        if (typeof value !== "string") {
-            return null
-        }
-        return value
-    }
-
-DOMElement.prototype.removeAttributeNS =
-    function _Element_removeAttributeNS(namespace, name) {
-        var attributes = this._attributes[namespace];
-        if (attributes) {
-            delete attributes[name]
-        }
-    }
-
-DOMElement.prototype.hasAttributeNS =
-    function _Element_hasAttributeNS(namespace, name) {
-        var attributes = this._attributes[namespace]
-        return !!attributes && name in attributes;
-    }
-
-DOMElement.prototype.setAttribute = function _Element_setAttribute(name, value) {
-    return this.setAttributeNS(null, name, value)
-}
-
-DOMElement.prototype.getAttribute = function _Element_getAttribute(name) {
-    return this.getAttributeNS(null, name)
-}
-
-DOMElement.prototype.removeAttribute = function _Element_removeAttribute(name) {
-    return this.removeAttributeNS(null, name)
-}
-
-DOMElement.prototype.hasAttribute = function _Element_hasAttribute(name) {
-    return this.hasAttributeNS(null, name)
-}
-
-DOMElement.prototype.removeEventListener = removeEventListener
-DOMElement.prototype.addEventListener = addEventListener
-DOMElement.prototype.dispatchEvent = dispatchEvent
-
-// Un-implemented
-DOMElement.prototype.focus = function _Element_focus() {
-    return void 0
-}
-
-DOMElement.prototype.toString = function _Element_toString() {
-    return serializeNode(this)
-}
-
-DOMElement.prototype.getElementsByClassName = function _Element_getElementsByClassName(classNames) {
-    var classes = classNames.split(" ");
-    var elems = []
-
-    domWalk(this, function (node) {
-        if (node.nodeType === 1) {
-            var nodeClassName = node.className || ""
-            var nodeClasses = nodeClassName.split(" ")
-
-            if (classes.every(function (item) {
-                return nodeClasses.indexOf(item) !== -1
-            })) {
-                elems.push(node)
-            }
-        }
-    })
-
-    return elems
-}
-
-DOMElement.prototype.getElementsByTagName = function _Element_getElementsByTagName(tagName) {
-    tagName = tagName.toLowerCase()
-    var elems = []
-
-    domWalk(this.childNodes, function (node) {
-        if (node.nodeType === 1 && (tagName === '*' || node.tagName.toLowerCase() === tagName)) {
-            elems.push(node)
-        }
-    })
-
-    return elems
-}
-
-DOMElement.prototype.contains = function _Element_contains(element) {
-    return domWalk(this, function (node) {
-        return element === node
-    }) || false
-}
-
-
-/***/ }),
-/* 57 */
-/***/ (function(module, exports) {
-
-module.exports = addEventListener
-
-function addEventListener(type, listener) {
-    var elem = this
-
-    if (!elem.listeners) {
-        elem.listeners = {}
-    }
-
-    if (!elem.listeners[type]) {
-        elem.listeners[type] = []
-    }
-
-    if (elem.listeners[type].indexOf(listener) === -1) {
-        elem.listeners[type].push(listener)
-    }
-}
-
-
-/***/ }),
-/* 58 */
-/***/ (function(module, exports) {
-
-module.exports = dispatchEvent
-
-function dispatchEvent(ev) {
-    var elem = this
-    var type = ev.type
-
-    if (!ev.target) {
-        ev.target = elem
-    }
-
-    if (!elem.listeners) {
-        elem.listeners = {}
-    }
-
-    var listeners = elem.listeners[type]
-
-    if (listeners) {
-        return listeners.forEach(function (listener) {
-            ev.currentTarget = elem
-            if (typeof listener === 'function') {
-                listener(ev)
-            } else {
-                listener.handleEvent(ev)
-            }
-        })
-    }
-
-    if (elem.parentNode) {
-        elem.parentNode.dispatchEvent(ev)
-    }
-}
-
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports) {
-
-module.exports = removeEventListener
-
-function removeEventListener(type, listener) {
-    var elem = this
-
-    if (!elem.listeners) {
-        return
-    }
-
-    if (!elem.listeners[type]) {
-        return
-    }
-
-    var list = elem.listeners[type]
-    var index = list.indexOf(listener)
-    if (index !== -1) {
-        list.splice(index, 1)
-    }
-}
-
-
-/***/ }),
-/* 60 */
+/* 40 */
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -14475,7 +7889,7 @@ module.exports = function tsml (sa) {
 }
 
 /***/ }),
-/* 61 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14483,7 +7897,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(16);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -14636,7 +8050,7 @@ exports['default'] = MuteToggle;
 
 
 /***/ }),
-/* 62 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14644,7 +8058,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(65);
+var _menuButton = __webpack_require__(45);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -14721,7 +8135,7 @@ exports['default'] = TrackButton;
 
 
 /***/ }),
-/* 63 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14729,7 +8143,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(69);
+var _slider = __webpack_require__(49);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -14741,7 +8155,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(181);
+__webpack_require__(136);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -14909,7 +8323,7 @@ exports['default'] = VolumeBar;
 
 
 /***/ }),
-/* 64 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15127,7 +8541,7 @@ exports['default'] = MediaError;
 
 
 /***/ }),
-/* 65 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15135,7 +8549,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(17);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -15143,7 +8557,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(66);
+var _menu = __webpack_require__(46);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -15486,7 +8900,7 @@ exports['default'] = MenuButton;
 
 
 /***/ }),
-/* 66 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15506,7 +8920,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -15695,7 +9109,7 @@ exports['default'] = Menu;
 
 
 /***/ }),
-/* 67 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16195,7 +9609,7 @@ exports['default'] = ModalDialog;
 
 
 /***/ }),
-/* 68 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16215,7 +9629,7 @@ var _window = __webpack_require__(4);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -16235,7 +9649,7 @@ var _browser = __webpack_require__(5);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -16243,73 +9657,73 @@ var _toTitleCase = __webpack_require__(14);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(19);
+var _timeRanges = __webpack_require__(18);
 
-var _buffer = __webpack_require__(72);
+var _buffer = __webpack_require__(52);
 
-var _stylesheet = __webpack_require__(73);
+var _stylesheet = __webpack_require__(53);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(185);
+var _fullscreenApi = __webpack_require__(140);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(64);
+var _mediaError = __webpack_require__(44);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(140);
+var _tuple = __webpack_require__(95);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
 var _obj = __webpack_require__(6);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(201);
+var _textTrackListConverter = __webpack_require__(156);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(67);
+var _modalDialog = __webpack_require__(47);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(18);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(70);
+var _audioTrackList = __webpack_require__(50);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(71);
+var _videoTrackList = __webpack_require__(51);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-__webpack_require__(195);
+__webpack_require__(150);
 
-__webpack_require__(193);
+__webpack_require__(148);
 
-__webpack_require__(190);
-
-__webpack_require__(200);
-
-__webpack_require__(186);
-
-__webpack_require__(151);
-
-__webpack_require__(152);
+__webpack_require__(145);
 
 __webpack_require__(155);
 
-__webpack_require__(183);
+__webpack_require__(141);
 
-__webpack_require__(203);
+__webpack_require__(106);
 
-__webpack_require__(194);
+__webpack_require__(107);
+
+__webpack_require__(110);
+
+__webpack_require__(138);
+
+__webpack_require__(158);
+
+__webpack_require__(149);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -19837,7 +13251,7 @@ exports['default'] = Player;
 
 
 /***/ }),
-/* 69 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20197,7 +13611,7 @@ exports['default'] = Slider;
 
 
 /***/ }),
-/* 70 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20205,7 +13619,7 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(35);
+var _trackList = __webpack_require__(30);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -20385,7 +13799,7 @@ exports['default'] = AudioTrackList;
 
 
 /***/ }),
-/* 71 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20393,7 +13807,7 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(35);
+var _trackList = __webpack_require__(30);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -20585,7 +13999,7 @@ exports['default'] = VideoTrackList;
 
 
 /***/ }),
-/* 72 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20594,7 +14008,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(19);
+var _timeRanges = __webpack_require__(18);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -20641,7 +14055,7 @@ function bufferedPercent(buffered, duration) {
 
 
 /***/ }),
-/* 73 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20696,7 +14110,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 
 /***/ }),
-/* 74 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20722,11 +14136,11 @@ var _document = __webpack_require__(3);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _setup = __webpack_require__(191);
+var _setup = __webpack_require__(146);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(73);
+var _stylesheet = __webpack_require__(53);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -20734,23 +14148,23 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(22);
+var _eventTarget = __webpack_require__(20);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(68);
+var _player = __webpack_require__(48);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(187);
+var _plugins = __webpack_require__(142);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(10);
+var _mergeOptions2 = __webpack_require__(9);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
@@ -20758,25 +14172,25 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(33);
+var _textTrack = __webpack_require__(28);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(196);
+var _audioTrack = __webpack_require__(151);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(204);
+var _videoTrack = __webpack_require__(159);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(19);
+var _timeRanges = __webpack_require__(18);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -20788,25 +14202,25 @@ var _browser = __webpack_require__(5);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _url = __webpack_require__(24);
+var _url = __webpack_require__(22);
 
 var Url = _interopRequireWildcard(_url);
 
 var _obj = __webpack_require__(6);
 
-var _computedStyle = __webpack_require__(37);
+var _computedStyle = __webpack_require__(32);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(184);
+var _extend = __webpack_require__(139);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(75);
+var _xhr = __webpack_require__(55);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(18);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -21425,15 +14839,15 @@ exports['default'] = videojs;
 
 
 /***/ }),
-/* 75 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var window = __webpack_require__(4)
-var isFunction = __webpack_require__(55)
-var parseHeaders = __webpack_require__(139)
-var xtend = __webpack_require__(210)
+var isFunction = __webpack_require__(39)
+var parseHeaders = __webpack_require__(94)
+var xtend = __webpack_require__(165)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -21667,16 +15081,13 @@ function noop() {}
 
 
 /***/ }),
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */
+/* 56 */,
+/* 57 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
 
 
@@ -21688,19 +15099,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // require('videogular-buffering');
 //
 
-var ffmpeg = __webpack_require__(113);
-
 // VideoJS
-__webpack_require__(143);
+__webpack_require__(98);
 
 // Angular VideoJS
-__webpack_require__(150);
+__webpack_require__(105);
 
 // dropzone
-__webpack_require__(112);
+__webpack_require__(88);
 
 // Angular Media Timeline
-__webpack_require__(86);
+__webpack_require__(63);
 
 'use strict';
 
@@ -21958,12 +15367,12 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
 var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
 
 /***/ }),
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */
+/* 58 */,
+/* 59 */,
+/* 60 */,
+/* 61 */,
+/* 62 */,
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -22736,7 +16145,7 @@ angular.module('mt.media-timeline', [])
 
 
 /***/ }),
-/* 87 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -56113,31 +49522,30 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */,
+/* 76 */,
+/* 77 */,
+/* 78 */,
+/* 79 */,
+/* 80 */,
+/* 81 */,
+/* 82 */,
+/* 83 */,
+/* 84 */,
+/* 85 */,
+/* 86 */,
+/* 87 */,
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {
@@ -57908,3908 +51316,13 @@ $provide.value("$locale", {
 
 }).call(this);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)(module)))
 
 /***/ }),
-/* 113 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = process.env.FLUENTFFMPEG_COV ? __webpack_require__(116) : __webpack_require__(123);
-
-
-/***/ }),
-/* 114 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/debug.js", [1,2,25,3,4,22,6,8,11,13,14,15,18,16,27,28,30,32,35,37,42], {"5_10_3":0,"10_12_25":0,"26_8_8":0,"29_12_3":0,"34_14_25":0}, ["exports = module.exports = function Debug(command) {","  command.prototype.getCommand = function(outputmethod, callback) {","    var self = this;","    this._prepare(function(err, meta) {","      if (err) {","        callback(null, err);","      } else {","        var args = self.buildFfmpegArgs(true, meta);","        // kinda hacky, have to make sure the returned object is no array","        if (args.length === undefined) {","          callback(null, args);","        } else {","          var cmd = '';","          cmd += 'ffmpeg';","          args.forEach(function(el) {","            cmd += ' ' + el;","          });","          callback(cmd, null);","        }","      }","    });","    return this;","  };","","  command.prototype.getArgs = function(callback) {","    if (callback) {","      var self = this;","      this._prepare(function(err, meta) {","        if (err) {","          callback(null, err);","        } else {","          var args = self.buildFfmpegArgs(true, meta);","          // kinda hacky, have to make sure the returned object is no array","          if (args.length === undefined) {","            callback(null, args);","          } else {","            callback(args, null);","          }","        }","      });","    } else {","      return this.buildFfmpegArgs(true, null);","    }","  };","};"]);
-_$jscmd("lib/debug.js", "line", 1);
-
-exports = module.exports = function Debug(command) {
-    _$jscmd("lib/debug.js", "line", 2);
-    command.prototype.getCommand = function(outputmethod, callback) {
-        _$jscmd("lib/debug.js", "line", 3);
-        var self = this;
-        _$jscmd("lib/debug.js", "line", 4);
-        this._prepare(function(err, meta) {
-            if (_$jscmd("lib/debug.js", "cond", "5_10_3", err)) {
-                _$jscmd("lib/debug.js", "line", 6);
-                callback(null, err);
-            } else {
-                _$jscmd("lib/debug.js", "line", 8);
-                var args = self.buildFfmpegArgs(true, meta);
-                // kinda hacky, have to make sure the returned object is no array
-                if (_$jscmd("lib/debug.js", "cond", "10_12_25", args.length === undefined)) {
-                    _$jscmd("lib/debug.js", "line", 11);
-                    callback(null, args);
-                } else {
-                    _$jscmd("lib/debug.js", "line", 13);
-                    var cmd = "";
-                    _$jscmd("lib/debug.js", "line", 14);
-                    cmd += "ffmpeg";
-                    _$jscmd("lib/debug.js", "line", 15);
-                    args.forEach(function(el) {
-                        _$jscmd("lib/debug.js", "line", 16);
-                        cmd += " " + el;
-                    });
-                    _$jscmd("lib/debug.js", "line", 18);
-                    callback(cmd, null);
-                }
-            }
-        });
-        _$jscmd("lib/debug.js", "line", 22);
-        return this;
-    };
-    _$jscmd("lib/debug.js", "line", 25);
-    command.prototype.getArgs = function(callback) {
-        if (_$jscmd("lib/debug.js", "cond", "26_8_8", callback)) {
-            _$jscmd("lib/debug.js", "line", 27);
-            var self = this;
-            _$jscmd("lib/debug.js", "line", 28);
-            this._prepare(function(err, meta) {
-                if (_$jscmd("lib/debug.js", "cond", "29_12_3", err)) {
-                    _$jscmd("lib/debug.js", "line", 30);
-                    callback(null, err);
-                } else {
-                    _$jscmd("lib/debug.js", "line", 32);
-                    var args = self.buildFfmpegArgs(true, meta);
-                    // kinda hacky, have to make sure the returned object is no array
-                    if (_$jscmd("lib/debug.js", "cond", "34_14_25", args.length === undefined)) {
-                        _$jscmd("lib/debug.js", "line", 35);
-                        callback(null, args);
-                    } else {
-                        _$jscmd("lib/debug.js", "line", 37);
-                        callback(args, null);
-                    }
-                }
-            });
-        } else {
-            _$jscmd("lib/debug.js", "line", 42);
-            return this.buildFfmpegArgs(true, null);
-        }
-    };
-};
-
-/***/ }),
-/* 115 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/extensions.js", [2,4,6,10,17,29,41,61,77,7,14,12,26,19,22,23,24,30,32,34,44,45,48,50,53,56,58,65,67,68,69,70,63,78,79,87,90,93,95], {"4_33_23":0,"11_8_15":0,"18_8_8":0,"18_8_2":0,"18_14_2":0,"31_8_14":0,"42_7_31":0,"62_8_62":0,"62_8_29":0,"62_41_29":0,"67_14_18":0,"68_14_18":0,"69_14_18":0,"83_8_8":0,"86_8_31":0,"89_10_31":0,"92_12_31":0}, ["","exports = module.exports = function Extensions(command) {","","  command.prototype.ffmpegPath = process.env.FFMPEG_PATH || 'ffmpeg';","","  command.prototype.setFfmpegPath = function(path) {","    this.ffmpegPath = path;","  };","","  command.prototype.determineFfmpegPath = function() {","    if (this.ffmpegPath) {","      return this.ffmpegPath;","    }","    return 'ffmpeg';","  };","","  command.prototype.gcd = function(a, b) {","    if (!a && !b) {","      return 0;","    }","    while (a !== 0) {","      var z = b % a;","      b = a;","      a = z;","    }","    return b;","  };","","  command.prototype.toAspectRatio = function(ar) {","    var p = ar.split(':');","    if (p.length !== 2) {","      return undefined;","    } else {","      return {","        x: parseInt(p[0], 10),","        y: parseInt(p[1], 10)","      };","    }","  };","","  command.prototype.ffmpegTimemarkToSeconds = function(timemark) {","    if(typeof timemark === 'undefined') return 0;","","    var parts = timemark.split(':');","    var secs = 0;","","    // add hours","    secs += parseInt(parts[0], 10) * 3600;","    // add minutes","    secs += parseInt(parts[1], 10) * 60;","","    // split sec/msec part","    var secParts = parts[2].split('.');","","    // add seconds","    secs += parseInt(secParts[0], 10);","","    return secs;","  };","","  command.prototype.parseVersionString = function(versionstr) {","    if (typeof versionstr != 'string' || versionstr.indexOf('.') == -1) {","      return false;","    }","    var x = versionstr.split('.');","    // parse from string or default to 0 if can't parse","    var maj = parseInt(x[0], 10) || 0;","    var min = parseInt(x[1], 10) || 0;","    var pat = parseInt(x[2], 10) || 0;","    return {","      major: maj,","      minor: min,","      patch: pat","    };","  };","","  command.prototype.atLeastVersion = function(actualVersion, minVersion) {","    var minimum = this.parseVersionString(minVersion);","    var running = this.parseVersionString(actualVersion);","","    // if we can't even parse the version string (affects git builds for windows),","    // we simply return true and assume a current build","    if (!running)","      return true;","","    if (running.major !== minimum.major) {","      return (running.major > minimum.major);","    } else {","      if (running.minor !== minimum.minor) {","        return (running.minor > minimum.minor);","      } else {","        if (running.patch !== minimum.patch) {","          return (running.patch > minimum.patch);","        } else {","          return true;","        }","      }","    }","  };","};",""]);
-_$jscmd("lib/extensions.js", "line", 2);
-
-exports = module.exports = function Extensions(command) {
-    _$jscmd("lib/extensions.js", "line", 4);
-    command.prototype.ffmpegPath = _$jscmd("lib/extensions.js", "cond", "4_33_23", process.env.FFMPEG_PATH) || "ffmpeg";
-    _$jscmd("lib/extensions.js", "line", 6);
-    command.prototype.setFfmpegPath = function(path) {
-        _$jscmd("lib/extensions.js", "line", 7);
-        this.ffmpegPath = path;
-    };
-    _$jscmd("lib/extensions.js", "line", 10);
-    command.prototype.determineFfmpegPath = function() {
-        if (_$jscmd("lib/extensions.js", "cond", "11_8_15", this.ffmpegPath)) {
-            _$jscmd("lib/extensions.js", "line", 12);
-            return this.ffmpegPath;
-        }
-        _$jscmd("lib/extensions.js", "line", 14);
-        return "ffmpeg";
-    };
-    _$jscmd("lib/extensions.js", "line", 17);
-    command.prototype.gcd = function(a, b) {
-        if (_$jscmd("lib/extensions.js", "cond", "18_8_8", _$jscmd("lib/extensions.js", "cond", "18_8_2", !a) && _$jscmd("lib/extensions.js", "cond", "18_14_2", !b))) {
-            _$jscmd("lib/extensions.js", "line", 19);
-            return 0;
-        }
-        while (a !== 0) {
-            _$jscmd("lib/extensions.js", "line", 22);
-            var z = b % a;
-            _$jscmd("lib/extensions.js", "line", 23);
-            b = a;
-            _$jscmd("lib/extensions.js", "line", 24);
-            a = z;
-        }
-        _$jscmd("lib/extensions.js", "line", 26);
-        return b;
-    };
-    _$jscmd("lib/extensions.js", "line", 29);
-    command.prototype.toAspectRatio = function(ar) {
-        _$jscmd("lib/extensions.js", "line", 30);
-        var p = ar.split(":");
-        if (_$jscmd("lib/extensions.js", "cond", "31_8_14", p.length !== 2)) {
-            _$jscmd("lib/extensions.js", "line", 32);
-            return undefined;
-        } else {
-            _$jscmd("lib/extensions.js", "line", 34);
-            return {
-                x: parseInt(p[0], 10),
-                y: parseInt(p[1], 10)
-            };
-        }
-    };
-    _$jscmd("lib/extensions.js", "line", 41);
-    command.prototype.ffmpegTimemarkToSeconds = function(timemark) {
-        if (_$jscmd("lib/extensions.js", "cond", "42_7_31", typeof timemark === "undefined")) return 0;
-        _$jscmd("lib/extensions.js", "line", 44);
-        var parts = timemark.split(":");
-        _$jscmd("lib/extensions.js", "line", 45);
-        var secs = 0;
-        _$jscmd("lib/extensions.js", "line", 48);
-        // add hours
-        secs += parseInt(parts[0], 10) * 3600;
-        _$jscmd("lib/extensions.js", "line", 50);
-        // add minutes
-        secs += parseInt(parts[1], 10) * 60;
-        _$jscmd("lib/extensions.js", "line", 53);
-        // split sec/msec part
-        var secParts = parts[2].split(".");
-        _$jscmd("lib/extensions.js", "line", 56);
-        // add seconds
-        secs += parseInt(secParts[0], 10);
-        _$jscmd("lib/extensions.js", "line", 58);
-        return secs;
-    };
-    _$jscmd("lib/extensions.js", "line", 61);
-    command.prototype.parseVersionString = function(versionstr) {
-        if (_$jscmd("lib/extensions.js", "cond", "62_8_62", _$jscmd("lib/extensions.js", "cond", "62_8_29", typeof versionstr != "string") || _$jscmd("lib/extensions.js", "cond", "62_41_29", versionstr.indexOf(".") == -1))) {
-            _$jscmd("lib/extensions.js", "line", 63);
-            return false;
-        }
-        _$jscmd("lib/extensions.js", "line", 65);
-        var x = versionstr.split(".");
-        _$jscmd("lib/extensions.js", "line", 67);
-        // parse from string or default to 0 if can't parse
-        var maj = _$jscmd("lib/extensions.js", "cond", "67_14_18", parseInt(x[0], 10)) || 0;
-        _$jscmd("lib/extensions.js", "line", 68);
-        var min = _$jscmd("lib/extensions.js", "cond", "68_14_18", parseInt(x[1], 10)) || 0;
-        _$jscmd("lib/extensions.js", "line", 69);
-        var pat = _$jscmd("lib/extensions.js", "cond", "69_14_18", parseInt(x[2], 10)) || 0;
-        _$jscmd("lib/extensions.js", "line", 70);
-        return {
-            major: maj,
-            minor: min,
-            patch: pat
-        };
-    };
-    _$jscmd("lib/extensions.js", "line", 77);
-    command.prototype.atLeastVersion = function(actualVersion, minVersion) {
-        _$jscmd("lib/extensions.js", "line", 78);
-        var minimum = this.parseVersionString(minVersion);
-        _$jscmd("lib/extensions.js", "line", 79);
-        var running = this.parseVersionString(actualVersion);
-        // if we can't even parse the version string (affects git builds for windows),
-        // we simply return true and assume a current build
-        if (_$jscmd("lib/extensions.js", "cond", "83_8_8", !running)) return true;
-        if (_$jscmd("lib/extensions.js", "cond", "86_8_31", running.major !== minimum.major)) {
-            _$jscmd("lib/extensions.js", "line", 87);
-            return running.major > minimum.major;
-        } else {
-            if (_$jscmd("lib/extensions.js", "cond", "89_10_31", running.minor !== minimum.minor)) {
-                _$jscmd("lib/extensions.js", "line", 90);
-                return running.minor > minimum.minor;
-            } else {
-                if (_$jscmd("lib/extensions.js", "cond", "92_12_31", running.patch !== minimum.patch)) {
-                    _$jscmd("lib/extensions.js", "line", 93);
-                    return running.patch > minimum.patch;
-                } else {
-                    _$jscmd("lib/extensions.js", "line", 95);
-                    return true;
-                }
-            }
-        }
-    };
-};
-
-/***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/fluent-ffmpeg.js", [1,310,311,312,313,314,316,322,323,325,326,14,32,35,51,72,85,89,93,103,107,116,120,124,128,132,136,140,144,151,155,162,166,170,174,178,182,186,190,204,208,213,218,222,226,240,244,250,23,39,40,41,43,44,48,83,75,79,77,81,86,87,90,91,100,101,95,98,104,105,108,114,110,112,117,118,121,122,125,126,129,130,133,134,137,138,141,142,145,149,147,152,153,159,160,157,163,164,167,168,171,172,175,176,179,180,183,184,187,188,202,192,193,195,196,198,205,206,209,210,214,215,219,220,223,224,237,238,229,234,235,241,242,245,246,251,254,255,256,281,260,262,263,270,267,268,273,278,284,285,286,289,294,298,300,304,317], {"15_39_12":0,"15_54_2":0,"16_17_13":0,"17_15_11":0,"18_18_10":0,"19_18_14":0,"21_6_20":0,"21_6_7":0,"21_17_9":0,"36_6_26":0,"37_8_15":0,"76_10_33":0,"94_8_57":0,"94_8_28":0,"94_40_25":0,"97_8_41":0,"97_8_4":0,"97_16_33":0,"109_8_6":0,"137_42_4":0,"137_49_5":0,"146_8_8":0,"156_8_57":0,"156_8_28":0,"156_40_25":0,"191_8_39":0,"194_14_19":0,"227_8_6":0,"233_8_25":0,"233_8_10":0,"233_22_11":0,"258_8_44":0,"258_8_27":0,"258_39_13":0,"258_8_11":0,"258_23_12":0,"261_10_45":0,"261_10_23":0,"261_37_18":0,"266_12_17":0,"277_8_26":0,"283_8_56":0,"283_8_29":0,"283_41_23":0,"283_8_14":0,"283_26_11":0,"288_12_14":0,"293_12_11":0,"297_12_16":0,"297_12_6":0,"297_22_6":0}, ["var path = require('path'),","  async = require('async'),","  exec = require('child_process').exec,","  spawn = require('child_process').spawn;","","/* options object consists of the following keys:"," * - source: either a ReadableStream or the path to a file (required)"," * - timeout: timeout in seconds for all ffmpeg sub-processes (optional, defaults to 30)"," * - priority: default-priority for all ffmpeg sub-processes (optional, defaults to 0)"," * - logger: add a winston logging instance (optional, default is no logging)"," * - nolog: completely disables any logging"," */","function FfmpegCommand(args) {","  var source = args.source,","      timeout = args.timeout != null ? args.timeout : 30,","      priority = args.priority || 0,","      logger = args.logger || null,","      nologging = args.nolog || false,","      inputlive = args.inputlive || false;","","  if (!logger || nologging) {","    // create fake object to route log calls","    logger = {","      debug: function() {},","      info: function() {},","      warn: function() {},","      error: function() {}","    };","  }","","  // make sure execution is not killed on error","  logger.exitOnError = false;","","  // check if argument is a stream","  var srcstream, srcfile;","  if (typeof source === 'object') {","    if (source.readable) {","      // streaming mode","      source.pause();","      srcstream = source;","      srcfile = source.path;","    } else {","      logger.error('Source is not a ReadableStream instance');","      throw new Error('Source is not a ReadableStream instance');","    }","  } else {","    // file mode","    srcfile = source;","  }","","  this.options = {","    _isStreamable: true,","    _updateFlvMetadata: false,","    _useConstantVideoBitrate: false,","    _nice: { level: priority },","    keepPixelAspect: false,","    inputfile: srcfile,","    inputstream: srcstream,","    inputlive: inputlive,","    timeout: timeout,","    mergeList:[],","    video: {},","    audio: {},","    additional: [],","    otherInputs: [],","    informInputAudioCodec: null,","    informInputVideoCodec: null,","    logger: logger","  };","","  // public chaining methods","  FfmpegCommand.prototype.usingPreset = function(preset) {","    // require preset (since require() works like a singleton, multiple calls generate no overhead)","    try {","      var module = require('./presets/' + preset);","      if (typeof module.load === 'function') {","        module.load(this);","      }","      return this;","    } catch (err) {","      throw new Error('preset ' + preset + ' could not be loaded');","    }","    return this;","  };","  FfmpegCommand.prototype.withNoVideo = function() {","    this.options.video.skip = true;","    return this;","  };","  FfmpegCommand.prototype.withNoAudio = function() {","    this.options.audio.skip = true;","    return this;","  };","  FfmpegCommand.prototype.withVideoBitrate = function(vbitrate, type) {","    if (typeof vbitrate === 'string' && vbitrate.indexOf('k') > 0) {","      vbitrate = vbitrate.replace('k', '');","    }","    if (type && type === exports.CONSTANT_BITRATE) {","      this.options._useConstantVideoBitrate = true;","    }","    this.options.video.bitrate = parseInt(vbitrate, 10);","    return this;","  };","  FfmpegCommand.prototype.withSize = function(sizeString) {","    this.options.video.size = sizeString;","    return this;","  };","  FfmpegCommand.prototype.applyAutopadding = function(autopad, color) {","    this.options._applyAutopad = autopad;","    if (!color) {","      this.options.video.padcolor = 'black';","    } else {","      this.options.video.padcolor = color;","    }","    return this;","  };","  FfmpegCommand.prototype.withFps = function(fps) {","    this.options.video.fps = fps;","    return this;","  };","  FfmpegCommand.prototype.withFpsInput = function(fps) {","    this.options.video.fpsInput = fps;","    return this;","  };","  FfmpegCommand.prototype.withStrictExperimental = function() {","    this.options.strictExperimental = true;","    return this;","  }","  FfmpegCommand.prototype.withFpsOutput = function(fps) {","    this.options.video.fpsOutput = fps;","    return this;","  };","  FfmpegCommand.prototype.withAspect = function(aspectRatio) {","    this.options.video.aspect = aspectRatio;","    return this;","  };","  FfmpegCommand.prototype.keepPixelAspect = function(bool) {","    this.options.keepPixelAspect = bool ? true : false;","    return this;","  };","  FfmpegCommand.prototype.withVideoCodec = function(codec) {","    this.options.video.codec = codec;","    return this;","  };","  FfmpegCommand.prototype.loop = function(duration) {","    this.options.video.loop = true;","    if (duration) {","      this.options.duration = duration;","    }","    return this;","  };","  FfmpegCommand.prototype.takeFrames = function(frameCount) {","    this.options.video.framecount = frameCount;","    return this;","  };","  FfmpegCommand.prototype.withAudioBitrate = function(abitrate) {","    if (typeof abitrate === 'string' && abitrate.indexOf('k') > 0) {","      abitrate = abitrate.replace('k', '');","    }","    this.options.audio.bitrate = parseInt(abitrate, 10);","    return this;","  };","  FfmpegCommand.prototype.withAudioCodec = function(audiocodec){","    this.options.audio.codec = audiocodec;","    return this;","  };","  FfmpegCommand.prototype.withAudioChannels = function(audiochannels) {","    this.options.audio.channels = audiochannels;","    return this;","  };","  FfmpegCommand.prototype.withAudioFrequency = function(frequency) {","    this.options.audio.frequency = frequency;","    return this;","  };","  FfmpegCommand.prototype.withAudioQuality = function(quality) {","    this.options.audio.quality = parseInt(quality, 10);","    return this;","  };","  FfmpegCommand.prototype.setStartTime = function(timestamp) {","    this.options.starttime = timestamp;","    return this;","  };","  FfmpegCommand.prototype.setDuration = function(duration) {","    this.options.duration = duration;","    return this;","  };","  FfmpegCommand.prototype.addInput = function(inputFile) {","    this.options.otherInputs.push(inputFile);","    return this;","  };","  FfmpegCommand.prototype.addOptions = function(optionArray) {","    if (typeof optionArray.length !== undefined) {","        var self = this;","        optionArray.forEach(function(el) {","          if (el.indexOf(' ') > 0) {","            var values = el.split(' ');","            self.options.additional.push(values[0], values[1]);","          } else {","            self.options.additional.push(el);","          }","        });","    }","    return this;","  };","  FfmpegCommand.prototype.addOption = function(option, value) {","    this.options.additional.push(option, value);","    return this;","  };","  FfmpegCommand.prototype.mergeAdd = function(path){","    this.options.mergeList.push(path);","    return this;","  };","","  FfmpegCommand.prototype.fromFormat = function(format) {","    this.options.fromFormat = format;","    return this;","  };","","  FfmpegCommand.prototype.toFormat = function(format) {","    this.options.format = format;","    return this;","  };","  FfmpegCommand.prototype.updateFlvMetadata = function() {","    this.options._updateFlvMetadata = true;","    return this;","  };","  FfmpegCommand.prototype.renice = function(level) {","    if (!level) {","      // use 0 as default nice level (os default)","      level = 0;","    }","","    // make sure niceness is within allowed boundaries","    if (level > 20 || level < -20) {","      this.options.logger.warn('niceness ' + level + ' is not valid, consider a value between -20 and +20 (whereas -20 is the highest priority)');","      level = 0;","    }","    this.options._nice.level = level;","    return this;","  };","  FfmpegCommand.prototype.onCodecData = function(callback) {","    this.options.onCodecData = callback;","    return this;","  };","  FfmpegCommand.prototype.onProgress = function(callback) {","    this.options.onProgress = callback;","    return this;","  };","","  // private methods","  FfmpegCommand.prototype._prepare = function(callback) {","    var calcDimensions = false, calcPadding = false;","","    // check for allowed sizestring formats and handle them accordingly","    var fixedWidth = /([0-9]+)x\\?/.exec(this.options.video.size);","    var fixedHeight = /\\?x([0-9]+)/.exec(this.options.video.size);","    var percentRatio = /\\b([0-9]{1,2})%/.exec(this.options.video.size);","","    if (!fixedWidth && !fixedHeight && !percentRatio) {","      // check for invalid size string","      var defaultSizestring = /([0-9]+)x([0-9]+)/.exec(this.options.video.size);","      if (this.options.video.size && !defaultSizestring) {","        callback(new Error('could not parse size string, aborting execution'));","        return;","      } else {","        // get width and height as integers (used for padding calculation)","        if (defaultSizestring) {","          this.options.video.width = parseInt(defaultSizestring[1], 10);","          this.options.video.height = parseInt(defaultSizestring[2], 10);","        }","        calcDimensions = false;","      }","    } else {","      calcDimensions = true;","    }","","    // check if we have to check aspect ratio for changes and auto-pad the output","    if (this.options._applyAutopad) {","      calcPadding = true;","    }","","    var self = this;","","    if (calcDimensions || calcPadding || this.requiresMetaData()) {","      this.getMetadata(this.options.inputfile, function(meta, err) {","        self.metaData = meta;","        var dimErr, padErr;","        // calculate dimensions","        if (calcDimensions) {","          dimErr = self._calculateDimensions(meta);","        }","","        // calculate padding","        if (calcPadding) {","          padErr = self._calculatePadding(meta);","        }","","        if (dimErr || padErr) {","          callback(new Error('error while preparing: dimension -> ' + dimErr + ' padding -> ' + padErr));","        } else {","          callback(undefined);","        }","      });","    } else {","      callback(undefined);","    }","  };","}","","// add module methods","require('./extensions')(FfmpegCommand);","var metaDataLib = require('./metadata')(FfmpegCommand);","require('./processor')(FfmpegCommand);","require('./calculate')(FfmpegCommand);","require('./debug')(FfmpegCommand);","// module exports","exports = module.exports = function(args) {","  return new FfmpegCommand(args);","};","","// export meta data discovery","","exports.Metadata = metaDataLib;","exports.Calculate = require('./calculate');","","exports.CONSTANT_BITRATE = 1;","exports.VARIABLE_BITRATE = 2;",""]);
-_$jscmd("lib/fluent-ffmpeg.js", "line", 1);
-
-var path = __webpack_require__(15), async = __webpack_require__(20), exec = __webpack_require__(9).exec, spawn = __webpack_require__(9).spawn;
-
-/* options object consists of the following keys:
- * - source: either a ReadableStream or the path to a file (required)
- * - timeout: timeout in seconds for all ffmpeg sub-processes (optional, defaults to 30)
- * - priority: default-priority for all ffmpeg sub-processes (optional, defaults to 0)
- * - logger: add a winston logging instance (optional, default is no logging)
- * - nolog: completely disables any logging
- */
-function FfmpegCommand(args) {
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 14);
-    var source = args.source, timeout = args.timeout != null ? _$jscmd("lib/fluent-ffmpeg.js", "cond", "15_39_12", args.timeout) : _$jscmd("lib/fluent-ffmpeg.js", "cond", "15_54_2", 30), priority = _$jscmd("lib/fluent-ffmpeg.js", "cond", "16_17_13", args.priority) || 0, logger = _$jscmd("lib/fluent-ffmpeg.js", "cond", "17_15_11", args.logger) || null, nologging = _$jscmd("lib/fluent-ffmpeg.js", "cond", "18_18_10", args.nolog) || false, inputlive = _$jscmd("lib/fluent-ffmpeg.js", "cond", "19_18_14", args.inputlive) || false;
-    if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "21_6_20", _$jscmd("lib/fluent-ffmpeg.js", "cond", "21_6_7", !logger) || _$jscmd("lib/fluent-ffmpeg.js", "cond", "21_17_9", nologging))) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 23);
-        // create fake object to route log calls
-        logger = {
-            debug: function() {},
-            info: function() {},
-            warn: function() {},
-            error: function() {}
-        };
-    }
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 32);
-    // make sure execution is not killed on error
-    logger.exitOnError = false;
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 35);
-    // check if argument is a stream
-    var srcstream, srcfile;
-    if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "36_6_26", typeof source === "object")) {
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "37_8_15", source.readable)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 39);
-            // streaming mode
-            source.pause();
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 40);
-            srcstream = source;
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 41);
-            srcfile = source.path;
-        } else {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 43);
-            logger.error("Source is not a ReadableStream instance");
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 44);
-            throw new Error("Source is not a ReadableStream instance");
-        }
-    } else {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 48);
-        // file mode
-        srcfile = source;
-    }
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 51);
-    this.options = {
-        _isStreamable: true,
-        _updateFlvMetadata: false,
-        _useConstantVideoBitrate: false,
-        _nice: {
-            level: priority
-        },
-        keepPixelAspect: false,
-        inputfile: srcfile,
-        inputstream: srcstream,
-        inputlive: inputlive,
-        timeout: timeout,
-        mergeList: [],
-        video: {},
-        audio: {},
-        additional: [],
-        otherInputs: [],
-        informInputAudioCodec: null,
-        informInputVideoCodec: null,
-        logger: logger
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 72);
-    // public chaining methods
-    FfmpegCommand.prototype.usingPreset = function(preset) {
-        // require preset (since require() works like a singleton, multiple calls generate no overhead)
-        try {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 75);
-            var module = __webpack_require__(118)("./" + preset);
-            if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "76_10_33", typeof module.load === "function")) {
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 77);
-                module.load(this);
-            }
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 79);
-            return this;
-        } catch (err) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 81);
-            throw new Error("preset " + preset + " could not be loaded");
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 83);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 85);
-    FfmpegCommand.prototype.withNoVideo = function() {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 86);
-        this.options.video.skip = true;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 87);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 89);
-    FfmpegCommand.prototype.withNoAudio = function() {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 90);
-        this.options.audio.skip = true;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 91);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 93);
-    FfmpegCommand.prototype.withVideoBitrate = function(vbitrate, type) {
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "94_8_57", _$jscmd("lib/fluent-ffmpeg.js", "cond", "94_8_28", typeof vbitrate === "string") && _$jscmd("lib/fluent-ffmpeg.js", "cond", "94_40_25", vbitrate.indexOf("k") > 0))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 95);
-            vbitrate = vbitrate.replace("k", "");
-        }
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "97_8_41", _$jscmd("lib/fluent-ffmpeg.js", "cond", "97_8_4", type) && _$jscmd("lib/fluent-ffmpeg.js", "cond", "97_16_33", type === exports.CONSTANT_BITRATE))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 98);
-            this.options._useConstantVideoBitrate = true;
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 100);
-        this.options.video.bitrate = parseInt(vbitrate, 10);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 101);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 103);
-    FfmpegCommand.prototype.withSize = function(sizeString) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 104);
-        this.options.video.size = sizeString;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 105);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 107);
-    FfmpegCommand.prototype.applyAutopadding = function(autopad, color) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 108);
-        this.options._applyAutopad = autopad;
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "109_8_6", !color)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 110);
-            this.options.video.padcolor = "black";
-        } else {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 112);
-            this.options.video.padcolor = color;
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 114);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 116);
-    FfmpegCommand.prototype.withFps = function(fps) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 117);
-        this.options.video.fps = fps;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 118);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 120);
-    FfmpegCommand.prototype.withFpsInput = function(fps) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 121);
-        this.options.video.fpsInput = fps;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 122);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 124);
-    FfmpegCommand.prototype.withStrictExperimental = function() {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 125);
-        this.options.strictExperimental = true;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 126);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 128);
-    FfmpegCommand.prototype.withFpsOutput = function(fps) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 129);
-        this.options.video.fpsOutput = fps;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 130);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 132);
-    FfmpegCommand.prototype.withAspect = function(aspectRatio) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 133);
-        this.options.video.aspect = aspectRatio;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 134);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 136);
-    FfmpegCommand.prototype.keepPixelAspect = function(bool) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 137);
-        this.options.keepPixelAspect = bool ? _$jscmd("lib/fluent-ffmpeg.js", "cond", "137_42_4", true) : _$jscmd("lib/fluent-ffmpeg.js", "cond", "137_49_5", false);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 138);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 140);
-    FfmpegCommand.prototype.withVideoCodec = function(codec) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 141);
-        this.options.video.codec = codec;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 142);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 144);
-    FfmpegCommand.prototype.loop = function(duration) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 145);
-        this.options.video.loop = true;
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "146_8_8", duration)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 147);
-            this.options.duration = duration;
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 149);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 151);
-    FfmpegCommand.prototype.takeFrames = function(frameCount) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 152);
-        this.options.video.framecount = frameCount;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 153);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 155);
-    FfmpegCommand.prototype.withAudioBitrate = function(abitrate) {
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "156_8_57", _$jscmd("lib/fluent-ffmpeg.js", "cond", "156_8_28", typeof abitrate === "string") && _$jscmd("lib/fluent-ffmpeg.js", "cond", "156_40_25", abitrate.indexOf("k") > 0))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 157);
-            abitrate = abitrate.replace("k", "");
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 159);
-        this.options.audio.bitrate = parseInt(abitrate, 10);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 160);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 162);
-    FfmpegCommand.prototype.withAudioCodec = function(audiocodec) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 163);
-        this.options.audio.codec = audiocodec;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 164);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 166);
-    FfmpegCommand.prototype.withAudioChannels = function(audiochannels) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 167);
-        this.options.audio.channels = audiochannels;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 168);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 170);
-    FfmpegCommand.prototype.withAudioFrequency = function(frequency) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 171);
-        this.options.audio.frequency = frequency;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 172);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 174);
-    FfmpegCommand.prototype.withAudioQuality = function(quality) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 175);
-        this.options.audio.quality = parseInt(quality, 10);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 176);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 178);
-    FfmpegCommand.prototype.setStartTime = function(timestamp) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 179);
-        this.options.starttime = timestamp;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 180);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 182);
-    FfmpegCommand.prototype.setDuration = function(duration) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 183);
-        this.options.duration = duration;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 184);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 186);
-    FfmpegCommand.prototype.addInput = function(inputFile) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 187);
-        this.options.otherInputs.push(inputFile);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 188);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 190);
-    FfmpegCommand.prototype.addOptions = function(optionArray) {
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "191_8_39", typeof optionArray.length !== undefined)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 192);
-            var self = this;
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 193);
-            optionArray.forEach(function(el) {
-                if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "194_14_19", el.indexOf(" ") > 0)) {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 195);
-                    var values = el.split(" ");
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 196);
-                    self.options.additional.push(values[0], values[1]);
-                } else {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 198);
-                    self.options.additional.push(el);
-                }
-            });
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 202);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 204);
-    FfmpegCommand.prototype.addOption = function(option, value) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 205);
-        this.options.additional.push(option, value);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 206);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 208);
-    FfmpegCommand.prototype.mergeAdd = function(path) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 209);
-        this.options.mergeList.push(path);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 210);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 213);
-    FfmpegCommand.prototype.fromFormat = function(format) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 214);
-        this.options.fromFormat = format;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 215);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 218);
-    FfmpegCommand.prototype.toFormat = function(format) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 219);
-        this.options.format = format;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 220);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 222);
-    FfmpegCommand.prototype.updateFlvMetadata = function() {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 223);
-        this.options._updateFlvMetadata = true;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 224);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 226);
-    FfmpegCommand.prototype.renice = function(level) {
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "227_8_6", !level)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 229);
-            // use 0 as default nice level (os default)
-            level = 0;
-        }
-        // make sure niceness is within allowed boundaries
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "233_8_25", _$jscmd("lib/fluent-ffmpeg.js", "cond", "233_8_10", level > 20) || _$jscmd("lib/fluent-ffmpeg.js", "cond", "233_22_11", level < -20))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 234);
-            this.options.logger.warn("niceness " + level + " is not valid, consider a value between -20 and +20 (whereas -20 is the highest priority)");
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 235);
-            level = 0;
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 237);
-        this.options._nice.level = level;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 238);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 240);
-    FfmpegCommand.prototype.onCodecData = function(callback) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 241);
-        this.options.onCodecData = callback;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 242);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 244);
-    FfmpegCommand.prototype.onProgress = function(callback) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 245);
-        this.options.onProgress = callback;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 246);
-        return this;
-    };
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 250);
-    // private methods
-    FfmpegCommand.prototype._prepare = function(callback) {
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 251);
-        var calcDimensions = false, calcPadding = false;
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 254);
-        // check for allowed sizestring formats and handle them accordingly
-        var fixedWidth = /([0-9]+)x\?/.exec(this.options.video.size);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 255);
-        var fixedHeight = /\?x([0-9]+)/.exec(this.options.video.size);
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 256);
-        var percentRatio = /\b([0-9]{1,2})%/.exec(this.options.video.size);
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "258_8_44", _$jscmd("lib/fluent-ffmpeg.js", "cond", "258_8_27", _$jscmd("lib/fluent-ffmpeg.js", "cond", "258_8_11", !fixedWidth) && _$jscmd("lib/fluent-ffmpeg.js", "cond", "258_23_12", !fixedHeight)) && _$jscmd("lib/fluent-ffmpeg.js", "cond", "258_39_13", !percentRatio))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 260);
-            // check for invalid size string
-            var defaultSizestring = /([0-9]+)x([0-9]+)/.exec(this.options.video.size);
-            if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "261_10_45", _$jscmd("lib/fluent-ffmpeg.js", "cond", "261_10_23", this.options.video.size) && _$jscmd("lib/fluent-ffmpeg.js", "cond", "261_37_18", !defaultSizestring))) {
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 262);
-                callback(new Error("could not parse size string, aborting execution"));
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 263);
-                return;
-            } else {
-                // get width and height as integers (used for padding calculation)
-                if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "266_12_17", defaultSizestring)) {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 267);
-                    this.options.video.width = parseInt(defaultSizestring[1], 10);
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 268);
-                    this.options.video.height = parseInt(defaultSizestring[2], 10);
-                }
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 270);
-                calcDimensions = false;
-            }
-        } else {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 273);
-            calcDimensions = true;
-        }
-        // check if we have to check aspect ratio for changes and auto-pad the output
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "277_8_26", this.options._applyAutopad)) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 278);
-            calcPadding = true;
-        }
-        _$jscmd("lib/fluent-ffmpeg.js", "line", 281);
-        var self = this;
-        if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "283_8_56", _$jscmd("lib/fluent-ffmpeg.js", "cond", "283_8_29", _$jscmd("lib/fluent-ffmpeg.js", "cond", "283_8_14", calcDimensions) || _$jscmd("lib/fluent-ffmpeg.js", "cond", "283_26_11", calcPadding)) || _$jscmd("lib/fluent-ffmpeg.js", "cond", "283_41_23", this.requiresMetaData()))) {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 284);
-            this.getMetadata(this.options.inputfile, function(meta, err) {
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 285);
-                self.metaData = meta;
-                _$jscmd("lib/fluent-ffmpeg.js", "line", 286);
-                var dimErr, padErr;
-                // calculate dimensions
-                if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "288_12_14", calcDimensions)) {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 289);
-                    dimErr = self._calculateDimensions(meta);
-                }
-                // calculate padding
-                if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "293_12_11", calcPadding)) {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 294);
-                    padErr = self._calculatePadding(meta);
-                }
-                if (_$jscmd("lib/fluent-ffmpeg.js", "cond", "297_12_16", _$jscmd("lib/fluent-ffmpeg.js", "cond", "297_12_6", dimErr) || _$jscmd("lib/fluent-ffmpeg.js", "cond", "297_22_6", padErr))) {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 298);
-                    callback(new Error("error while preparing: dimension -> " + dimErr + " padding -> " + padErr));
-                } else {
-                    _$jscmd("lib/fluent-ffmpeg.js", "line", 300);
-                    callback(undefined);
-                }
-            });
-        } else {
-            _$jscmd("lib/fluent-ffmpeg.js", "line", 304);
-            callback(undefined);
-        }
-    };
-}
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 310);
-
-// add module methods
-__webpack_require__(115)(FfmpegCommand);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 311);
-
-var metaDataLib = __webpack_require__(117)(FfmpegCommand);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 312);
-
-__webpack_require__(119)(FfmpegCommand);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 313);
-
-__webpack_require__(46)(FfmpegCommand);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 314);
-
-__webpack_require__(114)(FfmpegCommand);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 316);
-
-// module exports
-exports = module.exports = function(args) {
-    _$jscmd("lib/fluent-ffmpeg.js", "line", 317);
-    return new FfmpegCommand(args);
-};
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 322);
-
-// export meta data discovery
-exports.Metadata = metaDataLib;
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 323);
-
-exports.Calculate = __webpack_require__(46);
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 325);
-
-exports.CONSTANT_BITRATE = 1;
-
-_$jscmd("lib/fluent-ffmpeg.js", "line", 326);
-
-exports.VARIABLE_BITRATE = 2;
-
-/***/ }),
-/* 117 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/metadata.js", [1,5,7,27,33,38,46,178,199,24,9,13,14,15,16,28,29,35,36,40,43,52,53,54,48,57,94,172,174,84,89,128,133,134,135,138,139,140,142,148,149,150,153,154,155,157,164,165,167,168,197,182,187,192,195,200], {"8_7_17":0,"11_10_22":0,"17_12_55":0,"17_12_25":0,"17_41_26":0,"17_12_7":0,"17_23_14":0,"20_12_55":0,"20_12_25":0,"20_41_26":0,"20_12_7":0,"20_23_14":0,"39_8_13":0,"47_8_13":0,"58_26_29":0,"58_59_4":0,"59_25_32":0,"59_61_4":0,"60_26_38":0,"60_68_4":0,"61_26_39":0,"61_69_4":0,"62_26_40":0,"62_70_4":0,"63_26_38":0,"63_68_4":0,"64_26_32":0,"64_62_4":0,"65_26_31":0,"65_61_4":0,"66_26_31":0,"66_61_4":0,"67_26_30":0,"67_60_4":0,"68_26_61":0,"68_91_4":0,"69_26_29":0,"69_59_4":0,"70_26_66":0,"70_96_4":0,"71_26_42":0,"71_72_4":0,"72_26_41":0,"72_71_4":0,"73_26_27":0,"73_57_4":0,"74_26_29":0,"74_59_4":0,"75_26_64":0,"75_94_4":0,"76_26_61":0,"76_91_4":0,"78_26_42":0,"78_72_4":0,"80_26_40":0,"80_70_4":0,"83_10_10":0,"85_29_13":0,"85_45_4":0,"86_29_13":0,"86_45_4":0,"87_29_13":0,"87_45_4":0,"97_17_8":0,"98_18_9":0,"99_17_8":0,"100_17_8":0,"101_16_7":0,"102_23_11":0,"103_37_41":0,"103_81_1":0,"107_21_12":0,"108_50_30":0,"108_83_1":0,"109_19_14":0,"111_39_27":0,"111_69_1":0,"112_41_27":0,"112_71_1":0,"115_40_23":0,"115_66_1":0,"116_34_18":0,"116_55_3":0,"117_46_27":0,"117_76_3":0,"120_17_14":0,"121_89_4":0,"121_96_1":0,"122_50_28":0,"122_81_1":0,"123_46_27":0,"123_76_3":0,"127_10_19":0,"128_29_31":0,"132_10_17":0,"137_11_28":0,"147_10_16":0,"152_12_28":0,"162_10_46":0,"162_10_21":0,"162_35_21":0,"163_12_19":0,"180_8_50":0,"180_8_22":0,"180_34_24":0,"185_8_23":0,"190_8_28":0,"194_7_23":0}, ["var exec = require('child_process').exec,","  path = require('path'),","  os = require('os').platform();","","exports = module.exports = function Metadata(command) {","  ","  command.prototype.escapedPath = function(path, enclose)  {","    if(/http/.exec(path)) {","      path = path.replace(' ', '%20');","    } else {","      if (os.match(/win(32|64)/)) {","        // on windows, we have to fix up the filename","        var parts = path.split(/\\\\/gi);","        var fName = parts[parts.length - 1];","        parts[parts.length - 1] = fName.replace(/[\\s\\\\:\"'*?<>|\\/]+/mig, '-');","        path = parts.join('\\\\');","        if (enclose && path[0] != '\"' && path[path.length-1] != '\"')","          path = '\"' + path + '\"'","      } else {","        if (enclose && path[0] != '\"' && path[path.length-1] != '\"')","          path = '\"' + path + '\"';","      }","    }","    return path;","  };","  // for internal use","  command.prototype.getMetadata = function(inputfile, callback) {","    this.inputfile = path.normalize(inputfile);","    this._loadDataInternal(callback);","  };","","  // for external use","  command.prototype.get = function(callback) {","    // import extensions for external call","    this.inputfile = path.normalize(inputfile);","    this._loadDataInternal(callback);","  };","  command.prototype.meta = function() {","    if (this.metaData){","      return this.metaData;","    }","    else{","      return {};","    }","  }","  command.prototype._loadDataInternal = function(callback) {","    if (this.metaData){","      return callback(this.metaData);","    }","    ","","    var inputfile = this.escapedPath(this.inputfile, true);","    var self = this;","    exec(this.ffmpegPath + ' -i ' + inputfile, function(err, stdout, stderr) {","      // parse data from stderr","","      var none          = []","        , aspect        = /DAR ([0-9\\:]+)/.exec(stderr) || none","        , pixel        = /[SP]AR ([0-9\\:]+)/.exec(stderr) || none","        , video_bitrate = /bitrate: ([0-9]+) kb\\/s/.exec(stderr) || none","        , fps           = /([0-9\\.]+) (fps|tb\\(r\\))/.exec(stderr) || none","        , container     = /Input #0, ([a-zA-Z0-9]+),/.exec(stderr) || none","        , title         = /(INAM|title)\\s+:\\s(.+)/i.exec(stderr) || none","        , artist        = /artist\\s+:\\s(.+)/i.exec(stderr) || none","        , album         = /album\\s+:\\s(.+)/i.exec(stderr) || none","        , track         = /track\\s+:\\s(.+)/i.exec(stderr) || none","        , date          = /date\\s+:\\s(.+)/i.exec(stderr) || none","        , video_stream  = /Stream #([0-9\\.]+)([a-z0-9\\(\\)\\[\\]]*)[:] Video/.exec(stderr) || none","        , video_codec   = /Video: ([\\w]+)/.exec(stderr) || none","        , duration      = /Duration: (([0-9]+):([0-9]{2}):([0-9]{2}).([0-9]+))/.exec(stderr) || none","        , resolution    = /(([0-9]{2,5})x([0-9]{2,5}))/.exec(stderr) || none","        , audio_bitrate = /Audio:(.)*, ([0-9]+) kb\\/s/.exec(stderr) || none","        , sample_rate   = /([0-9]+) Hz/i.exec(stderr) || none","        , audio_codec   = /Audio: ([\\w]+)/.exec(stderr) || none","        , channels      = /Audio: [\\w]+, [0-9]+ Hz, ([a-z0-9:]+)[a-z0-9\\/,]*/.exec(stderr) || none","        , audio_stream  = /Stream #([0-9\\.]+)([a-z0-9\\(\\)\\[\\]]*)[:] Audio/.exec(stderr) || none","        , is_synched    = (/start: 0.000000/.exec(stderr) !== null)","        , rotate        = /rotate[\\s]+:[\\s]([\\d]{2,3})/.exec(stderr) || none","        , getVersion    = /ffmpeg version (?:(\\d+)\\.)?(?:(\\d+)\\.)?(\\*|\\d+)/i.exec(stderr)","        , major_brand   = /major_brand\\s+:\\s([^\\s]+)/.exec(stderr) || none","        , ffmpegVersion = 0;","","      if (getVersion) {","        ffmpegVersion = [","          getVersion[1]>=0 ? getVersion[1] : null,","          getVersion[2]>=0 ? getVersion[2] : null,","          getVersion[3]>=0 ? getVersion[3] : null","          ].filter(function(val) {","            return val !== null;","          }).join('.');","      }","","      // build return object","      var _ref","        , ret = {","        ffmpegversion: ffmpegVersion","        , title: title[2] || ''","        , artist: artist[1] || ''","        , album: album[1] || ''","        , track: track[1] || ''","        , date: date[1] || ''","        , durationraw: duration[1] || ''","        , durationsec: duration[1] ? self.ffmpegTimemarkToSeconds(duration[1]) : 0","        , synched: is_synched","        , major_brand: major_brand[1]","        , video: {","          container: container[1] || ''","          , bitrate: (video_bitrate.length > 1) ? parseInt(video_bitrate[1], 10) : 0","          , codec: video_codec[1] || ''","          , resolution: {","            w: resolution.length > 2 ? parseInt(resolution[2], 10) : 0","            , h: resolution.length > 3 ? parseInt(resolution[3], 10) : 0","          }","          , resolutionSquare: {}","          , rotate: rotate.length > 1 ? parseInt(rotate[1], 10) : 0","          , fps: fps.length > 1 ? parseFloat(fps[1]) : 0.0","          , stream: video_stream.length > 1 ? parseFloat(video_stream[1]) : 0.0","        }","        , audio: {","          codec: audio_codec[1] || ''","          , bitrate: parseInt((_ref = audio_bitrate[audio_bitrate.length - 1]) != null ? _ref : 0, 10)","          , sample_rate: sample_rate.length > 1 ? parseInt(sample_rate[1], 10) : 0","          , stream: audio_stream.length > 1 ? parseFloat(audio_stream[1]) : 0.0","        }","      };","","      if (channels.length > 0) {","        ret.audio.channels = {stereo:2, mono:1}[channels[1]] || 0;","      }","","      // save aspect ratio for auto-padding","      if (aspect.length > 0) {","        ret.video.aspectString = aspect[1];","        var n = aspect[1].split(\":\");","        ret.video.aspect = parseFloat((parseInt(n[0], 10) / parseInt(n[1], 10)));","      } else {","        if(ret.video.resolution.w !== 0) {","          var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);","          ret.video.aspectString = ret.video.resolution.w/f + ':' + ret.video.resolution.h/f;","          ret.video.aspect = parseFloat((ret.video.resolution.w / ret.video.resolution.h));","        } else {","          ret.video.aspect = 0.0;","        }","      }","","      // save pixel ratio for output size calculation","      if (pixel.length > 0) {","        ret.video.pixelString = pixel[1];","        var n = pixel[1].split(\":\");","        ret.video.pixel = parseFloat((parseInt(n[0], 10) / parseInt(n[1], 10)));","      } else {","        if (ret.video.resolution.w !== 0) {","          var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);","          ret.video.pixelString = '1:1';","          ret.video.pixel = 1;","        } else {","          ret.video.pixel = 0.0;","        }","      }","","      // correct video.resolution when pixel aspectratio is not 1","      if (ret.video.pixel !== 1 || ret.video.pixel !== 0) {","        if( ret.video.pixel > 1 ) {","          ret.video.resolutionSquare.w = parseInt(ret.video.resolution.w * ret.video.pixel, 10);","          ret.video.resolutionSquare.h = ret.video.resolution.h;","        } else {","          ret.video.resolutionSquare.w = ret.video.resolution.w;","          ret.video.resolutionSquare.h = parseInt(ret.video.resolution.h / ret.video.pixel, 10);","        }","      }","","      self.metaData = ret;","","      callback(ret);","    });","  };","  ","  command.prototype.requiresMetaData = function() {","    ","    if (this.options.video.pad && !this.options.video.skip)","    {","      return true;","    }","","    if (this.options.onProgress)","    {","      return true;","    }","","    if (this.options.requireMetaData)","    {","      return true;","    }","    if(this.options.video.loop){","      return true;","    }","    return false;","  };","  return  function(filename,callback){","      var cmd = new command({}).getMetadata(filename, callback);","    }","  ","};","",""]);
-_$jscmd("lib/metadata.js", "line", 1);
-
-var exec = __webpack_require__(9).exec, path = __webpack_require__(15), os = __webpack_require__(27).platform();
-
-_$jscmd("lib/metadata.js", "line", 5);
-
-exports = module.exports = function Metadata(command) {
-    _$jscmd("lib/metadata.js", "line", 7);
-    command.prototype.escapedPath = function(path, enclose) {
-        if (_$jscmd("lib/metadata.js", "cond", "8_7_17", /http/.exec(path))) {
-            _$jscmd("lib/metadata.js", "line", 9);
-            path = path.replace(" ", "%20");
-        } else {
-            if (_$jscmd("lib/metadata.js", "cond", "11_10_22", os.match(/win(32|64)/))) {
-                _$jscmd("lib/metadata.js", "line", 13);
-                // on windows, we have to fix up the filename
-                var parts = path.split(/\\/gi);
-                _$jscmd("lib/metadata.js", "line", 14);
-                var fName = parts[parts.length - 1];
-                _$jscmd("lib/metadata.js", "line", 15);
-                parts[parts.length - 1] = fName.replace(/[\s\\:"'*?<>|\/]+/gim, "-");
-                _$jscmd("lib/metadata.js", "line", 16);
-                path = parts.join("\\");
-                if (_$jscmd("lib/metadata.js", "cond", "17_12_55", _$jscmd("lib/metadata.js", "cond", "17_12_25", _$jscmd("lib/metadata.js", "cond", "17_12_7", enclose) && _$jscmd("lib/metadata.js", "cond", "17_23_14", path[0] != '"')) && _$jscmd("lib/metadata.js", "cond", "17_41_26", path[path.length - 1] != '"'))) path = '"' + path + '"';
-            } else {
-                if (_$jscmd("lib/metadata.js", "cond", "20_12_55", _$jscmd("lib/metadata.js", "cond", "20_12_25", _$jscmd("lib/metadata.js", "cond", "20_12_7", enclose) && _$jscmd("lib/metadata.js", "cond", "20_23_14", path[0] != '"')) && _$jscmd("lib/metadata.js", "cond", "20_41_26", path[path.length - 1] != '"'))) path = '"' + path + '"';
-            }
-        }
-        _$jscmd("lib/metadata.js", "line", 24);
-        return path;
-    };
-    _$jscmd("lib/metadata.js", "line", 27);
-    // for internal use
-    command.prototype.getMetadata = function(inputfile, callback) {
-        _$jscmd("lib/metadata.js", "line", 28);
-        this.inputfile = path.normalize(inputfile);
-        _$jscmd("lib/metadata.js", "line", 29);
-        this._loadDataInternal(callback);
-    };
-    _$jscmd("lib/metadata.js", "line", 33);
-    // for external use
-    command.prototype.get = function(callback) {
-        _$jscmd("lib/metadata.js", "line", 35);
-        // import extensions for external call
-        this.inputfile = path.normalize(inputfile);
-        _$jscmd("lib/metadata.js", "line", 36);
-        this._loadDataInternal(callback);
-    };
-    _$jscmd("lib/metadata.js", "line", 38);
-    command.prototype.meta = function() {
-        if (_$jscmd("lib/metadata.js", "cond", "39_8_13", this.metaData)) {
-            _$jscmd("lib/metadata.js", "line", 40);
-            return this.metaData;
-        } else {
-            _$jscmd("lib/metadata.js", "line", 43);
-            return {};
-        }
-    };
-    _$jscmd("lib/metadata.js", "line", 46);
-    command.prototype._loadDataInternal = function(callback) {
-        if (_$jscmd("lib/metadata.js", "cond", "47_8_13", this.metaData)) {
-            _$jscmd("lib/metadata.js", "line", 48);
-            return callback(this.metaData);
-        }
-        _$jscmd("lib/metadata.js", "line", 52);
-        var inputfile = this.escapedPath(this.inputfile, true);
-        _$jscmd("lib/metadata.js", "line", 53);
-        var self = this;
-        _$jscmd("lib/metadata.js", "line", 54);
-        exec(this.ffmpegPath + " -i " + inputfile, function(err, stdout, stderr) {
-            _$jscmd("lib/metadata.js", "line", 57);
-            // parse data from stderr
-            var none = [], aspect = _$jscmd("lib/metadata.js", "cond", "58_26_29", /DAR ([0-9\:]+)/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "58_59_4", none), pixel = _$jscmd("lib/metadata.js", "cond", "59_25_32", /[SP]AR ([0-9\:]+)/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "59_61_4", none), video_bitrate = _$jscmd("lib/metadata.js", "cond", "60_26_38", /bitrate: ([0-9]+) kb\/s/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "60_68_4", none), fps = _$jscmd("lib/metadata.js", "cond", "61_26_39", /([0-9\.]+) (fps|tb\(r\))/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "61_69_4", none), container = _$jscmd("lib/metadata.js", "cond", "62_26_40", /Input #0, ([a-zA-Z0-9]+),/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "62_70_4", none), title = _$jscmd("lib/metadata.js", "cond", "63_26_38", /(INAM|title)\s+:\s(.+)/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "63_68_4", none), artist = _$jscmd("lib/metadata.js", "cond", "64_26_32", /artist\s+:\s(.+)/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "64_62_4", none), album = _$jscmd("lib/metadata.js", "cond", "65_26_31", /album\s+:\s(.+)/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "65_61_4", none), track = _$jscmd("lib/metadata.js", "cond", "66_26_31", /track\s+:\s(.+)/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "66_61_4", none), date = _$jscmd("lib/metadata.js", "cond", "67_26_30", /date\s+:\s(.+)/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "67_60_4", none), video_stream = _$jscmd("lib/metadata.js", "cond", "68_26_61", /Stream #([0-9\.]+)([a-z0-9\(\)\[\]]*)[:] Video/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "68_91_4", none), video_codec = _$jscmd("lib/metadata.js", "cond", "69_26_29", /Video: ([\w]+)/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "69_59_4", none), duration = _$jscmd("lib/metadata.js", "cond", "70_26_66", /Duration: (([0-9]+):([0-9]{2}):([0-9]{2}).([0-9]+))/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "70_96_4", none), resolution = _$jscmd("lib/metadata.js", "cond", "71_26_42", /(([0-9]{2,5})x([0-9]{2,5}))/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "71_72_4", none), audio_bitrate = _$jscmd("lib/metadata.js", "cond", "72_26_41", /Audio:(.)*, ([0-9]+) kb\/s/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "72_71_4", none), sample_rate = _$jscmd("lib/metadata.js", "cond", "73_26_27", /([0-9]+) Hz/i.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "73_57_4", none), audio_codec = _$jscmd("lib/metadata.js", "cond", "74_26_29", /Audio: ([\w]+)/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "74_59_4", none), channels = _$jscmd("lib/metadata.js", "cond", "75_26_64", /Audio: [\w]+, [0-9]+ Hz, ([a-z0-9:]+)[a-z0-9\/,]*/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "75_94_4", none), audio_stream = _$jscmd("lib/metadata.js", "cond", "76_26_61", /Stream #([0-9\.]+)([a-z0-9\(\)\[\]]*)[:] Audio/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "76_91_4", none), is_synched = /start: 0.000000/.exec(stderr) !== null, rotate = _$jscmd("lib/metadata.js", "cond", "78_26_42", /rotate[\s]+:[\s]([\d]{2,3})/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "78_72_4", none), getVersion = /ffmpeg version (?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)/i.exec(stderr), major_brand = _$jscmd("lib/metadata.js", "cond", "80_26_40", /major_brand\s+:\s([^\s]+)/.exec(stderr)) || _$jscmd("lib/metadata.js", "cond", "80_70_4", none), ffmpegVersion = 0;
-            if (_$jscmd("lib/metadata.js", "cond", "83_10_10", getVersion)) {
-                _$jscmd("lib/metadata.js", "line", 84);
-                ffmpegVersion = [ getVersion[1] >= 0 ? _$jscmd("lib/metadata.js", "cond", "85_29_13", getVersion[1]) : _$jscmd("lib/metadata.js", "cond", "85_45_4", null), getVersion[2] >= 0 ? _$jscmd("lib/metadata.js", "cond", "86_29_13", getVersion[2]) : _$jscmd("lib/metadata.js", "cond", "86_45_4", null), getVersion[3] >= 0 ? _$jscmd("lib/metadata.js", "cond", "87_29_13", getVersion[3]) : _$jscmd("lib/metadata.js", "cond", "87_45_4", null) ].filter(function(val) {
-                    _$jscmd("lib/metadata.js", "line", 89);
-                    return val !== null;
-                }).join(".");
-            }
-            _$jscmd("lib/metadata.js", "line", 94);
-            // build return object
-            var _ref, ret = {
-                ffmpegversion: ffmpegVersion,
-                title: _$jscmd("lib/metadata.js", "cond", "97_17_8", title[2]) || "",
-                artist: _$jscmd("lib/metadata.js", "cond", "98_18_9", artist[1]) || "",
-                album: _$jscmd("lib/metadata.js", "cond", "99_17_8", album[1]) || "",
-                track: _$jscmd("lib/metadata.js", "cond", "100_17_8", track[1]) || "",
-                date: _$jscmd("lib/metadata.js", "cond", "101_16_7", date[1]) || "",
-                durationraw: _$jscmd("lib/metadata.js", "cond", "102_23_11", duration[1]) || "",
-                durationsec: duration[1] ? _$jscmd("lib/metadata.js", "cond", "103_37_41", self.ffmpegTimemarkToSeconds(duration[1])) : _$jscmd("lib/metadata.js", "cond", "103_81_1", 0),
-                synched: is_synched,
-                major_brand: major_brand[1],
-                video: {
-                    container: _$jscmd("lib/metadata.js", "cond", "107_21_12", container[1]) || "",
-                    bitrate: video_bitrate.length > 1 ? _$jscmd("lib/metadata.js", "cond", "108_50_30", parseInt(video_bitrate[1], 10)) : _$jscmd("lib/metadata.js", "cond", "108_83_1", 0),
-                    codec: _$jscmd("lib/metadata.js", "cond", "109_19_14", video_codec[1]) || "",
-                    resolution: {
-                        w: resolution.length > 2 ? _$jscmd("lib/metadata.js", "cond", "111_39_27", parseInt(resolution[2], 10)) : _$jscmd("lib/metadata.js", "cond", "111_69_1", 0),
-                        h: resolution.length > 3 ? _$jscmd("lib/metadata.js", "cond", "112_41_27", parseInt(resolution[3], 10)) : _$jscmd("lib/metadata.js", "cond", "112_71_1", 0)
-                    },
-                    resolutionSquare: {},
-                    rotate: rotate.length > 1 ? _$jscmd("lib/metadata.js", "cond", "115_40_23", parseInt(rotate[1], 10)) : _$jscmd("lib/metadata.js", "cond", "115_66_1", 0),
-                    fps: fps.length > 1 ? _$jscmd("lib/metadata.js", "cond", "116_34_18", parseFloat(fps[1])) : _$jscmd("lib/metadata.js", "cond", "116_55_3", 0),
-                    stream: video_stream.length > 1 ? _$jscmd("lib/metadata.js", "cond", "117_46_27", parseFloat(video_stream[1])) : _$jscmd("lib/metadata.js", "cond", "117_76_3", 0)
-                },
-                audio: {
-                    codec: _$jscmd("lib/metadata.js", "cond", "120_17_14", audio_codec[1]) || "",
-                    bitrate: parseInt((_ref = audio_bitrate[audio_bitrate.length - 1]) != null ? _$jscmd("lib/metadata.js", "cond", "121_89_4", _ref) : _$jscmd("lib/metadata.js", "cond", "121_96_1", 0), 10),
-                    sample_rate: sample_rate.length > 1 ? _$jscmd("lib/metadata.js", "cond", "122_50_28", parseInt(sample_rate[1], 10)) : _$jscmd("lib/metadata.js", "cond", "122_81_1", 0),
-                    stream: audio_stream.length > 1 ? _$jscmd("lib/metadata.js", "cond", "123_46_27", parseFloat(audio_stream[1])) : _$jscmd("lib/metadata.js", "cond", "123_76_3", 0)
-                }
-            };
-            if (_$jscmd("lib/metadata.js", "cond", "127_10_19", channels.length > 0)) {
-                _$jscmd("lib/metadata.js", "line", 128);
-                ret.audio.channels = _$jscmd("lib/metadata.js", "cond", "128_29_31", {
-                    stereo: 2,
-                    mono: 1
-                }[channels[1]]) || 0;
-            }
-            // save aspect ratio for auto-padding
-            if (_$jscmd("lib/metadata.js", "cond", "132_10_17", aspect.length > 0)) {
-                _$jscmd("lib/metadata.js", "line", 133);
-                ret.video.aspectString = aspect[1];
-                _$jscmd("lib/metadata.js", "line", 134);
-                var n = aspect[1].split(":");
-                _$jscmd("lib/metadata.js", "line", 135);
-                ret.video.aspect = parseFloat(parseInt(n[0], 10) / parseInt(n[1], 10));
-            } else {
-                if (_$jscmd("lib/metadata.js", "cond", "137_11_28", ret.video.resolution.w !== 0)) {
-                    _$jscmd("lib/metadata.js", "line", 138);
-                    var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);
-                    _$jscmd("lib/metadata.js", "line", 139);
-                    ret.video.aspectString = ret.video.resolution.w / f + ":" + ret.video.resolution.h / f;
-                    _$jscmd("lib/metadata.js", "line", 140);
-                    ret.video.aspect = parseFloat(ret.video.resolution.w / ret.video.resolution.h);
-                } else {
-                    _$jscmd("lib/metadata.js", "line", 142);
-                    ret.video.aspect = 0;
-                }
-            }
-            // save pixel ratio for output size calculation
-            if (_$jscmd("lib/metadata.js", "cond", "147_10_16", pixel.length > 0)) {
-                _$jscmd("lib/metadata.js", "line", 148);
-                ret.video.pixelString = pixel[1];
-                _$jscmd("lib/metadata.js", "line", 149);
-                var n = pixel[1].split(":");
-                _$jscmd("lib/metadata.js", "line", 150);
-                ret.video.pixel = parseFloat(parseInt(n[0], 10) / parseInt(n[1], 10));
-            } else {
-                if (_$jscmd("lib/metadata.js", "cond", "152_12_28", ret.video.resolution.w !== 0)) {
-                    _$jscmd("lib/metadata.js", "line", 153);
-                    var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);
-                    _$jscmd("lib/metadata.js", "line", 154);
-                    ret.video.pixelString = "1:1";
-                    _$jscmd("lib/metadata.js", "line", 155);
-                    ret.video.pixel = 1;
-                } else {
-                    _$jscmd("lib/metadata.js", "line", 157);
-                    ret.video.pixel = 0;
-                }
-            }
-            // correct video.resolution when pixel aspectratio is not 1
-            if (_$jscmd("lib/metadata.js", "cond", "162_10_46", _$jscmd("lib/metadata.js", "cond", "162_10_21", ret.video.pixel !== 1) || _$jscmd("lib/metadata.js", "cond", "162_35_21", ret.video.pixel !== 0))) {
-                if (_$jscmd("lib/metadata.js", "cond", "163_12_19", ret.video.pixel > 1)) {
-                    _$jscmd("lib/metadata.js", "line", 164);
-                    ret.video.resolutionSquare.w = parseInt(ret.video.resolution.w * ret.video.pixel, 10);
-                    _$jscmd("lib/metadata.js", "line", 165);
-                    ret.video.resolutionSquare.h = ret.video.resolution.h;
-                } else {
-                    _$jscmd("lib/metadata.js", "line", 167);
-                    ret.video.resolutionSquare.w = ret.video.resolution.w;
-                    _$jscmd("lib/metadata.js", "line", 168);
-                    ret.video.resolutionSquare.h = parseInt(ret.video.resolution.h / ret.video.pixel, 10);
-                }
-            }
-            _$jscmd("lib/metadata.js", "line", 172);
-            self.metaData = ret;
-            _$jscmd("lib/metadata.js", "line", 174);
-            callback(ret);
-        });
-    };
-    _$jscmd("lib/metadata.js", "line", 178);
-    command.prototype.requiresMetaData = function() {
-        if (_$jscmd("lib/metadata.js", "cond", "180_8_50", _$jscmd("lib/metadata.js", "cond", "180_8_22", this.options.video.pad) && _$jscmd("lib/metadata.js", "cond", "180_34_24", !this.options.video.skip))) {
-            _$jscmd("lib/metadata.js", "line", 182);
-            return true;
-        }
-        if (_$jscmd("lib/metadata.js", "cond", "185_8_23", this.options.onProgress)) {
-            _$jscmd("lib/metadata.js", "line", 187);
-            return true;
-        }
-        if (_$jscmd("lib/metadata.js", "cond", "190_8_28", this.options.requireMetaData)) {
-            _$jscmd("lib/metadata.js", "line", 192);
-            return true;
-        }
-        if (_$jscmd("lib/metadata.js", "cond", "194_7_23", this.options.video.loop)) {
-            _$jscmd("lib/metadata.js", "line", 195);
-            return true;
-        }
-        _$jscmd("lib/metadata.js", "line", 197);
-        return false;
-    };
-    _$jscmd("lib/metadata.js", "line", 199);
-    return function(filename, callback) {
-        _$jscmd("lib/metadata.js", "line", 200);
-        var cmd = new command({}).getMetadata(filename, callback);
-    };
-};
-
-/***/ }),
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./divx": 47,
-	"./divx.js": 47,
-	"./flashvideo": 48,
-	"./flashvideo.js": 48,
-	"./podcast": 49,
-	"./podcast.js": 49
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 118;
-
-/***/ }),
-/* 119 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/processor.js", [1,11,12,14,112,264,371,543,570,593,626,653,16,18,20,21,24,30,37,45,55,56,57,96,100,27,33,40,41,47,48,49,50,51,59,62,63,70,72,74,75,79,80,85,86,90,93,97,101,103,106,113,118,119,121,128,145,167,182,205,212,220,221,223,224,233,234,235,238,240,115,116,122,123,124,129,130,138,140,146,152,161,149,163,168,176,178,183,184,186,188,191,196,206,209,213,214,215,233,241,243,245,246,247,251,253,254,255,256,257,266,273,274,277,269,270,282,288,291,304,314,316,326,330,363,279,285,295,296,297,298,299,306,307,308,309,310,317,319,322,327,339,360,332,336,347,341,344,345,348,353,356,358,365,366,373,487,509,515,517,520,525,528,376,377,381,386,387,388,389,390,391,392,383,384,398,427,428,429,432,434,438,400,403,404,405,413,417,418,423,440,443,450,451,452,455,469,477,478,446,448,474,481,491,494,497,501,502,505,506,513,522,530,532,534,538,545,546,547,549,553,566,563,571,574,575,590,579,587,594,595,596,597,598,619,601,605,609,610,611,614,615,616,621,622,627,650,630,635,636,641,632,643,648,654,831,658,663,666,673,680,683,685,687,690,694,695,701,706,708,709,715,716,722,726,730,735,741,744,747,748,749,753,756,759,766,769,772,775,778,781,788,789,798,799,805,811,816,820,822,824,828], {"16_15_8":0,"16_27_13":0,"26_10_3":0,"32_10_22":0,"38_10_19":0,"46_10_15":0,"58_12_12":0,"61_12_9":0,"66_12_40":0,"68_14_44":0,"71_18_18":0,"83_21_44":0,"102_12_19":0,"105_12_18":0,"114_7_38":0,"122_23_24":0,"139_15_3":0,"162_15_3":0,"177_15_3":0,"185_17_6":0,"187_22_3":0,"207_11_17":0,"208_11_31":0,"218_7_27":0,"223_27_23":0,"223_54_12":0,"244_15_24":0,"250_11_3":0,"252_15_13":0,"266_15_8":0,"266_27_12":0,"268_8_27":0,"278_10_3":0,"284_10_22":0,"293_10_19":0,"305_10_15":0,"318_12_19":0,"321_12_18":0,"331_12_12":0,"335_11_38":0,"340_14_47":0,"340_14_20":0,"340_38_23":0,"343_14_23":0,"352_12_9":0,"355_12_10":0,"373_15_8":0,"373_27_12":0,"377_29_1":0,"377_31_3":0,"382_9_19":0,"399_11_3":0,"402_12_26":0,"409_12_24":0,"412_16_29":0,"415_16_54":0,"422_14_22":0,"444_16_24":0,"450_72_13":0,"450_88_6":0,"472_16_69":0,"472_16_42":0,"472_62_23":0,"474_41_24":0,"488_8_26":0,"490_10_12":0,"493_10_16":0,"496_10_20":0,"504_8_24":0,"509_15_15":0,"510_7_74":0,"510_7_50":0,"510_61_20":0,"510_7_22":0,"510_33_24":0,"515_13_6":0,"521_8_6":0,"529_10_7":0,"531_14_12":0,"548_8_2":0,"551_8_8":0,"562_10_40":0,"562_10_16":0,"562_30_20":0,"584_9_28":0,"600_8_27":0,"600_8_6":0,"600_18_17":0,"604_8_21":0,"604_8_3":0,"604_15_14":0,"608_8_25":0,"608_8_5":0,"608_17_16":0,"613_8_25":0,"613_8_5":0,"613_17_16":0,"620_8_15":0,"629_8_69":0,"629_8_42":0,"629_54_23":0,"630_22_24":0,"631_10_13":0,"642_12_4":0,"647_8_14":0,"657_8_22":0,"661_8_23":0,"662_10_53":0,"672_8_23":0,"677_8_78":0,"677_8_51":0,"677_63_23":0,"677_8_22":0,"677_34_25":0,"679_10_27":0,"682_10_43":0,"684_17_36":0,"688_12_15":0,"699_15_24":0,"702_15_22":0,"704_8_43":0,"713_8_24":0,"714_10_35":0,"721_8_31":0,"725_8_21":0,"729_8_29":0,"734_8_19":0,"739_8_23":0,"743_10_26":0,"745_12_37":0,"752_10_24":0,"755_10_22":0,"758_10_25":0,"764_8_23":0,"768_10_26":0,"771_10_27":0,"774_10_24":0,"777_10_28":0,"780_10_62":0,"780_10_26":0,"780_40_32":0,"786_8_23":0,"787_10_34":0,"794_8_50":0,"794_8_22":0,"794_34_24":0,"796_10_55":0,"810_8_51":0,"810_8_23":0,"810_35_24":0,"815_8_28":0,"819_8_23":0,"821_10_23":0,"827_10_20":0}, ["var fs       = require('fs'),","    path     = require('path'),","    async    = require('async'),","    os       = require('os').platform(),","    exec     = require('child_process').exec,","    spawn    = require('child_process').spawn,","    Registry = require('./registry'),","","exports = module.exports = function Processor(command) {","  // constant for timeout checks","  command.prototype.E_PROCESSTIMEOUT = -99;","  command.prototype._codecDataAlreadySent = false;","","  command.prototype.saveToFile = function(targetfile, callback) {","","    callback = callback || function() {};","","    this.options.outputfile = path.normalize(targetfile);","","    var self = this;","    var options = this.options;","","    // parse options to command","    this._prepare(function(err) {","","      if (err) {","        return callback(null, null, err);","      }","","      var args = self.buildFfmpegArgs(false);","","      if (!args instanceof Array) {","        return callback (null, null, args);","      }","","      // start conversion of file using spawn","      var ffmpegProc = self._spawnProcess(args);","      if (options.inputstream) {","        // pump input stream to stdin","        options.inputstream.resume();","        options.inputstream.pipe(ffmpegProc.stdin);","      }","","      //handle timeout if set","      var processTimer;","      if (options.timeout) {","        processTimer = setTimeout(function() {","          ffmpegProc.removeAllListeners('exit');","          ffmpegProc.kill('SIGKILL');","          options.logger.warn('process ran into a timeout (' + self.options.timeout + 's)');","          callback(self.E_PROCESSTIMEOUT, 'timeout');","        }, options.timeout * 1000);","      }","","      var stdout = '';","      var stderr = '';","      ffmpegProc.on('exit', function(code) {","        if (processTimer) {","          clearTimeout(processTimer);","        }","        if (code != 0) {","          var err = new Error('ffmpeg returned with code: ' + code);","          return callback(stdout, stderr, err);","        }","        // check if we have to run flvtool2 to update flash video meta data","        if (self.options._updateFlvMetadata === true) {","          // make sure we didn't try to determine this capability before","          if (!Registry.instance.get('capabilityFlvTool2')) {","            // check if flvtool2 is installed","            exec('which flvtool2', function(whichErr, whichStdOut, whichStdErr) {","              if (whichStdOut !== '') {","                Registry.instance.set('capabilityFlvTool2', true);","                // update metadata in flash video","                exec('flvtool2 -U ' + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {","                  callback(stdout, stderr, null);","                });","              } else {","                // flvtool2 is not installed, skip further checks","                Registry.instance.set('capabilityFlvTool2', false);","                callback(stdout, stderr, null);","              }","            });","          } else if (!Registry.instance.get('capabilityFlvTool2')) {","            // flvtool2 capability was checked before, execute update","            exec('flvtool2 -U ' + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {","              callback(stdout, stderr, null);","            });","          } else {","            // flvtool2 not installed, skip update","            callback(stdout, stderr, null);","          }","        } else {","          callback(stdout, stderr, null);","        }","      });","      ffmpegProc.stdout.on('data', function (data) {","        stdout += data;","      });","","      ffmpegProc.stderr.on('data', function (data) {","        stderr += data;","        if (options.onCodecData) {","          self._checkStdErrForCodec(stderr);","        }","        if (options.onProgress) {","          self._getProgressFromStdErr(stderr, self.metaData.durationsec);","        }","      });","    });","  };","","  command.prototype.mergeToFile = function(targetfile,callback){","    this.options.outputfile = path.normalize(targetfile);","    if(fs.existsSync(this.options.outputfile)){","      console.log(\"outputfile already exists. Do not merge.\");","      return;","    }","    var self = this;","    var options = this.options;","","    var getExtension = function(filename) {","        var filename = path.normalize(filename) || '';","        var ext = path.extname(filename).split('.');","        return ext[ext.length - 1];","    };","","    // creates intermediate copies of each video.","    var makeIntermediateFile = function(_mergeSource,_callback){","        var fname =  _mergeSource+\".temp.mpg\";","        var command = [","            self.ffmpegPath,","            [","                '-i', _mergeSource,","                '-qscale:v',1,","                fname","            ].join(' ')","        ];","        exec(command.join(' '),function(err, stdout, stderr) {","            if(err)throw err;","            _callback(fname);","        });","    };","","    // concat all created intermediate copies","    var concatIntermediates = function(target,intermediatesList,_callback){","        var fname =  path.normalize(target)+\".temp.merged.mpg\";","        // unescape paths","        for(var i=0; i<intermediatesList.length; i++){","            intermediatesList[i] = unescapePath(intermediatesList[i]);","        }","","        var command = [","            self.ffmpegPath,","            [","                '-loglevel','panic', //Generetes too much muxing warnings and fills default buffer of exec. This is to ignore them.","                '-i', 'concat:\"'+intermediatesList.join(\"|\")+'\"',","                '-c',\"copy\",","                fname","            ].join(' ')","        ];","        exec(command.join(' '), function(err, stdout, stderr) {","            if(err)throw err;","            _callback(fname);","        });","    };","","    var quantizeConcat = function(concatResult,numFiles,_callback){","        var command = [","            self.ffmpegPath,","            [","                '-i', concatResult,","                '-qscale:v',numFiles,","                targetfile","            ].join(' ')","        ];","        exec(command.join(' '), function(err, stdout, stderr) {","            if(err)throw err;","            _callback();","        });","    }","","    var deleteIntermediateFiles = function(intermediates,callback){","        async.each(intermediates,function(item,cb){","            fs.exists(unescapePath(item),function(exists){","              if(exists){","                fs.unlink(unescapePath(item),function (err) {","                  if (err){","                    cb(err);","                  }","                  else{","                    cb();","                  }","                });","              }","              else{","                cb();","              }","","            });","","        },callback);","","    }","","    var unescapePath = function(path){","        var f = path+\"\";","        if(f.indexOf('\"')==0)f = f.substring(1);","        if(f.lastIndexOf('\"')== f.length-1)f = f.substring(0, f.length-1);","        return f;","    }","","    var makeProgress = function(){","      progress.createdFiles = progress.createdFiles + 1;","      progress.precent = progress.createdFiles/progress.totalFiles*100;","      progressCallback(progress);","    }","","    if(options.mergeList.length<=0)throw new Error(\"No file added to be merged\");","","    var mergeList = options.mergeList;","    mergeList.unshift(options.inputfile);","","    var progressCallback = this.options.onProgress || function(){};","    var progress = {frames : 0,","                    currentFps: 0,","                    currentKbps: 0,","                    targetSize: 0,","                    timemark: 0,","                    percent: 0,","                    totalFiles: mergeList.length + 2,","                    createdFiles: 0}","","    var toDelete = mergeList.map(function(name){return name + \".temp.mpg\"});","    toDelete.push(this.options.outputfile + \".temp.merged.mpg\");","    deleteIntermediateFiles(toDelete);","","","    var intermediateFiles = [];","","    async.whilst(function(){","        return (mergeList.length != 0);","    },function(callback){","        makeIntermediateFile(mergeList.shift(),function(createdIntermediateFile){","            if(!createdIntermediateFile)throw new Error(\"Invalid intermediate file\");","            intermediateFiles.push(createdIntermediateFile);","            makeProgress();","            callback();","        })","    },function(err){","        if(err)throw err;","        concatIntermediates(targetfile,intermediateFiles,function(concatResult){","            if(!concatResult)throw new Error(\"Invalid concat result file\");","            makeProgress();","            quantizeConcat(concatResult,intermediateFiles.length,function(){","                makeProgress();","                intermediateFiles.push(concatResult); // add concatResult to intermediates list so it can be deleted too.","                deleteIntermediateFiles(intermediateFiles,callback);","            });","        });","    });","","  }","","  command.prototype.writeToStream = function(stream, callback) {","","    callback = callback || function(){};","","    if (!this.options._isStreamable) {","      this.options.logger.error('selected output format is not streamable');","      return callback(null, new Error('selected output format is not streamable'));","    }","","    var self    = this;","    var options = this.options;","","    // parse options to command","    this._prepare(function(err) {","      if (err) {","        return callback(null, err);","      }","","      var args = self.buildFfmpegArgs(true);","","      if (!args instanceof Array) {","        return callback(null, args);","      }","      // write data to stdout","      args.push('pipe:1');","","      // start conversion of file using spawn","      var ffmpegProc = self._spawnProcess(args);","","      if (options.inputstream) {","        // pump input stream to stdin","        options.inputstream.resume();","        options.inputstream.pipe(ffmpegProc.stdin);","        options.inputstream.on('error', function(){","          options.logger.debug(\"input stream closed, killing ffmpgeg process\");","          ffmpegProc.kill();","        });","      }","","      //handle timeout if set","      var processTimer;","      if (options.timeout) {","        processTimer = setTimeout(function() {","          ffmpegProc.removeAllListeners('exit');","          ffmpegProc.kill('SIGKILL');","          options.logger.warn('process ran into a timeout (' + options.timeout + 's)');","          callback(self.E_PROCESSTIMEOUT, 'timeout');","        }, options.timeout * 1000);","      }","","      var stderr = '';","","      ffmpegProc.stderr.on('data', function(data) {","        stderr += data;","        if (options.onCodecData) {","          self._checkStdErrForCodec(stderr);","        }","        if (options.onProgress) {","          self._getProgressFromStdErr(stderr, self.metaData.durationsec);","        }","      });","","      ffmpegProc.stdout.on('data', function(chunk) {","        stream.write(chunk);","      });","","      ffmpegProc.on('exit', function(code, signal) {","        if (processTimer) {","          clearTimeout(processTimer);","        }","        // close file descriptor on outstream","        if(/^[a-z]+:\\/\\//.test(options.inputfile)) {","          return callback(code, stderr);","        }","","        var cb_ = function() {","          if (!options.inputstream || !options.inputstream.fd) {","            return callback(code, stderr);","          }","          if (!options.inputstream.fd) {","            options.inputstream.destroy();","            return callback(code, stderr);","          }","          fs.close(options.inputstream.fd, function() {","            callback(code, stderr);","          });","        };","","        if (stream.fd) {","          return fs.close(stream.fd, cb_);","        }","        if (stream.end) {","          stream.end();","        } else {","          callback(code, \"stream will not be closed\");","        }","        cb_();","      });","","      stream.on(\"close\", function()","      {","        options.logger.debug(\"Output stream closed, killing ffmpgeg process\");","        ffmpegProc.kill();","      });","    });","  };","","  command.prototype.takeScreenshots = function(config, folder, callback) {","","    callback = callback || function(){};","","    function _zeroPad(number, len) {","      len = len-String(number).length+2;","      return new Array(len<0?0:len).join('0')+number;","    }","","    function _renderOutputName(j, offset) {","      var result = filename;","      if(/%0*i/.test(result)) {","        var numlen = String(result.match(/%(0*)i/)[1]).length;","        result = result.replace(/%0*i/, _zeroPad(j, numlen));","      }","      result = result.replace('%s', offset);","      result = result.replace('%w', self.options.video.width);","      result = result.replace('%h', self.options.video.height);","      result = result.replace('%r', self.options.video.width+'x'+self.options.video.height);","      result = result.replace('%f', path.basename(self.options.inputfile));","      result = result.replace('%b', path.basename(self.options.inputfile, path.extname(self.options.inputfile)));","      return result;","    }","","    function _screenShotInternal(callback) {","","      // get correct dimensions","      self._prepare(function(err) {","        if(err) {","          return callback(err);","        }","        if (!self.metaData.durationsec) {","          var errString = 'meta data contains no duration, aborting screenshot creation';","          self.options.logger.warn(errString);","          return callback(new Error(errString));","        }","","        // check if all timemarks are inside duration","        if (Array.isArray(timemarks)) {","          for (var i = 0; i < timemarks.length; i++) {","            /* convert percentage to seconds */","            if( timemarks[i].indexOf('%') > 0 ) {","              timemarks[i] = (parseInt(timemarks[i], 10) / 100) * self.metaData.durationsec;","            }","            if (parseInt(timemarks[i], 10) > self.metaData.durationsec) {","              // remove timemark from array","              timemarks.splice(i, 1);","              --i;","            }","          }","          // if there are no more timemarks around, add one at end of the file","          if (timemarks.length === 0) {","            timemarks[0] = (self.metaData.durationsec * 0.9);","          }","        }","        // get positions for screenshots (using duration of file minus 10% to remove fade-in/fade-out)","        var secondOffset = (self.metaData.durationsec * 0.9) / screenshotcount;","        var donecount = 0;","        var series = [];","","        // reset iterator","        var j = 1;","","        var filenames = [];","","        // use async helper function to generate all screenshots and","        // fire callback just once after work is done","        async.until(","          function() {","            return j > screenshotcount;","          },","          function(taskcallback) {","            var offset;","            if (Array.isArray(timemarks)) {","              // get timemark for current iteration","              offset = timemarks[(j - 1)];","            } else {","              offset = secondOffset * j;","            }","            var fname = _renderOutputName(j, offset) + (fileextension ? fileextension : '.jpg');","            var target = self.escapedPath(path.join(folder, fname), true);","            var input = self.escapedPath(self.options.inputfile, true);","","            // build screenshot command","            var command = [","              self.ffmpegPath,","              [","                '-ss', Math.floor(offset * 100) / 100,","                '-i', input,","                '-vcodec', 'mjpeg',","                '-vframes', '1',","                '-an',","                '-f', 'rawvideo',","                '-s', self.options.video.size,","                '-y', target","                ].join(' ')","            ];","","            j++;","","            // only set niceness if running on a non-windows platform","            if (self.options.hasOwnProperty('_nice.level') && !os.match(/win(32|64)/)) {","              // execute ffmpeg through nice","              command.unshift('nice -n', self.options._nice.level||0);","            }","","            exec(command.join(' '), taskcallback);","            filenames.push(fname);","          },","          function(err) {","            callback(err, filenames);","          }","        );","      });","    }","","    var timemarks, screenshotcount, filename, fileextension;","    if (typeof config === 'object') {","      // use json object as config","      if (config.count) {","        screenshotcount = config.count;","      }","      if (config.timemarks) {","        timemarks = config.timemarks;","      }","      if (config.fileextension){","        fileextension = config.fileextension;","      }","    } else {","      // assume screenshot count as parameter","      screenshotcount = config;","      timemarks = null;","    }","    if (!this.options.video.size) {","      this.options.logger.warn(\"set size of thumbnails using 'withSize' method\");","      callback(new Error(\"set size of thumbnails using 'withSize' method\"));","    }","","    filename = config.filename || 'tn_%ss';","    if(!/%0*i/.test(filename) && Array.isArray(timemarks) && timemarks.length > 1 ) {","      // if there are multiple timemarks but no %i in filename add one","      // so we won't overwrite the same thumbnail with each timemark","      filename += '_%i';","    }","    folder = folder || '.';","","    var self = this;","","    // WORKAROUND: exists will be moved from path to fs with node v0.7","    var check = fs.exists;","    if (!check) {","      check = path.exists;","    }","","    this.options.requireMetaData = true;","","    // check target folder","    check(folder, function(exists) {","      if (!exists) {","        fs.mkdir(folder, '0755', function(err) {","          if (err !== null) {","            callback(err);","          } else {","            _screenShotInternal(callback);","          }","        });","      } else {","        _screenShotInternal(callback);","      }","    });","  };","","  command.prototype._getProgressFromStdErr = function(stderrString, totalDurationSec) {","    // get last stderr line","    var lastLine = stderrString.split(/\\r\\n|\\r|\\n/g);","    var ll = lastLine[lastLine.length - 2];","    var progress;","    if (ll) {","      progress = this._parseProgressLine(ll);","    }","    if (progress) {","      // build progress report object","      var ret = {","        frames: parseInt(progress.frame, 10),","        currentFps: parseInt(progress.fps, 10),","        currentKbps: parseFloat(progress.bitrate.replace(\"kbits/s\", \"\")),","        targetSize: parseInt(progress.size, 10),","        timemark: progress.time","      };","","      // calculate percent progress using duration","      if (totalDurationSec && totalDurationSec > 0) {","        ret.percent = (this.ffmpegTimemarkToSeconds(ret.timemark) / totalDurationSec) * 100;","      }","","      this.options.onProgress(ret);","    }","  };","","  command.prototype._parseProgressLine = function(line) {","    var progress = {};","","    // Remove all spaces after = and trim","    line  = line.replace(/=\\s+/g, '=').trim()","    progressParts = line.split(' ')","","    // Split every progress part by \"=\" to get key and value","    for(var i = 0; i < progressParts.length; i++) {","      var progressSplit = progressParts[i].split(\"=\", 2)","        , key = progressSplit[0]","        , value = progressSplit[1]","","      // This is not a progress line","      if(typeof value === \"undefined\")","        return null;","","      progress[key] = value","    }","","    return progress","  };","","  command.prototype._checkStdErrForCodec = function(stderrString) {","    var format= /Input #[0-9]+, ([^ ]+),/.exec(stderrString);","    var dur   = /Duration\\: ([^,]+)/.exec(stderrString);","    var audio = /Audio\\: (.*)/.exec(stderrString);","    var video = /Video\\: (.*)/.exec(stderrString);","    var codecObject = { format: '', audio: '', video: '', duration: '' };","","    if (format && format.length > 1) {","      codecObject.format = format[1];","    }","","    if (dur && dur.length > 1) {","      codecObject.duration = dur[1];","    }","","    if (audio && audio.length > 1) {","      audio = audio[1].split(', ');","      codecObject.audio = audio[0];","      codecObject.audio_details = audio;","    }","    if (video && video.length > 1) {","      video = video[1].split(', ');","      codecObject.video = video[0];","      codecObject.video_details = video;","    }","","    var codecInfoPassed = /Press (\\[q\\]|ctrl-c) to stop/.test(stderrString);","    if (codecInfoPassed) {","      this.options.onCodecData(codecObject);","      this.options.onCodecData = null;","    }","  };","","  command.prototype._spawnProcess = function(args, options) {","    var retProc = spawn(this.ffmpegPath, args, options);","    // only re-nice if running on a non-windows platform","    if (this.options.hasOwnProperty('_nice.level') && !os.match(/win(32|64)/)) {","      var niceLevel = this.options._nice.level || 0;","      if (niceLevel > 0) {","        niceLevel = '+' + niceLevel;","      }","      // renice the spawned process without waiting for callback","      var self = this;","      var command = [","        'renice -n', niceLevel,","        '-p', retProc.pid","      ].join(' ');","","      exec(command, function(err, stderr, stdout) {","        if (!err) {","          self.options.logger.info('successfully reniced process ' + retProc.pid + ' to ' + niceLevel + ' niceness!');","        }","      });","    }","    if (retProc.stderr) {","      retProc.stderr.setEncoding('utf8');","    }","    return retProc;","  };","","  command.prototype.buildFfmpegArgs = function(overrideOutputCheck) {","    var args = [];","","    // add startoffset and duration","    if (this.options.starttime) {","      args.push('-ss', this.options.starttime);","    }","","    if (this.options.video.loop) {","      if (this.atLeastVersion(this.meta().ffmpegversion, '0.9')){","        args.push('-loop', 1);","      }","      else{","        args.push('-loop_output', 1);","      }","    }","","","    // add input format","    if (this.options.fromFormat) {","      args.push('-f', this.options.fromFormat);","    }","","    // add input file (if using fs mode)","    if (this.options.inputfile && !this.options.inputstream && !this.options.inputlive) {","      // add input file fps","      if (this.options.video.fpsInput) {","        args.push('-r', this.options.video.fpsInput);","      }","      if (/^[a-z]+:\\/\\//.test(this.options.inputfile)) {","        args.push('-i', this.options.inputfile.replace(' ', '%20'));","      } else if (/%\\d*d/.test(this.options.inputfile)) { // multi-file format - http://ffmpeg.org/ffmpeg.html#image2-1","        args.push('-i', this.options.inputfile.replace(' ', '\\ '));","      } else {","        var fstats = fs.statSync(this.options.inputfile);","        if (fstats.isFile()) {","          // fix for spawn call with path containing spaces and quotes","          args.push('-i', this.options.inputfile.replace(/ /g, \"\\ \")","            .replace(/'/g, \"\\'\")","            .replace(/\"/g, \"\\\"\"));","        } else {","          this.options.logger.error('input file is not readable');","          throw new Error('input file is not readable');","        }","      }","    // check for input stream","    } else if (this.options.inputstream) {","      // push args to make ffmpeg read from stdin","      args.push('-i', '-');","    } else if (this.options.inputlive){","    \t//Check if input URI","    \tif(/^[a-z]+:\\/\\//.test(this.options.inputfile)) {","    \t\t// add input with live flag","    \t\targs.push('-i', this.options.inputfile.replace(' ', '%20')+' live=1');","    \t}else {","    \t\tthis.options.logger.error('live input URI is not valid');","    \t\tthrow new Error('live input URI is not valid');","    \t}","    }","","    if (this.options.otherInputs) {","      if (this.options.otherInputs.length > 0) {","        this.options.otherInputs.forEach(function(el) {","          args.push('-i', el);","        });","      }","    }","","    if (this.options.strictExperimental) {","      args.push('-strict', 'experimental');","    }","","    if (this.options.duration) {","      args.push('-t', this.options.duration);","    }","","    if (this.options.video.framecount) {","      args.push('-vframes', this.options.video.framecount);","    }","","    // add format","    if (this.options.format) {","      args.push('-f', this.options.format);","    }","","    // add video options","    if (this.options.video.skip) {","      // skip video stream completely (#45)","      args.push('-vn');","    } else {","      if (this.options.video.bitrate) {","        args.push('-b:v', this.options.video.bitrate + 'k');","        if (this.options._useConstantVideoBitrate) {","          // add parameters to ensure constant bitrate encoding","          args.push('-maxrate', this.options.video.bitrate + 'k');","          args.push('-minrate', this.options.video.bitrate + 'k');","          args.push('-bufsize', '3M');","        }","      }","      if (this.options.video.codec) {","        args.push('-vcodec', this.options.video.codec);","      }","      if (this.options.video.fps) {","        args.push('-r', this.options.video.fps);","      }","      if (this.options.video.aspect) {","        args.push('-aspect', this.options.video.aspect);","      }","    }","","    // add video options","    if (this.options.audio.skip) {","      // skip audio stream completely (#45)","      args.push('-an');","    } else {","      if (this.options.audio.bitrate) {","        args.push('-b:a', this.options.audio.bitrate + 'k');","      }","      if (this.options.audio.channels) {","        args.push('-ac', this.options.audio.channels);","      }","      if (this.options.audio.codec) {","        args.push('-acodec', this.options.audio.codec);","      }","      if (this.options.audio.frequency) {","        args.push('-ar', this.options.audio.frequency);","      }","      if (this.options.audio.quality || this.options.audio.quality === 0) {","        args.push('-aq', this.options.audio.quality);","      }","    }","","    // add additional options","    if (this.options.additional) {","      if (this.options.additional.length > 0) {","        this.options.additional.forEach(function(el) {","          args.push(el);","        });","      }","    }","","    if (this.options.video.pad && !this.options.video.skip) {","      // we have padding arguments, push","      if (this.atLeastVersion(this.metaData.ffmpegversion, '0.7')) {","        // padding is not supported ffmpeg < 0.7 (only using legacy commands which were replaced by vfilter calls)","        args.push('-vf');","        args.push('pad=' + this.options.video.pad.w +","          ':' + this.options.video.pad.h +","          ':' + this.options.video.pad.x +","          ':' + this.options.video.pad.y +","          ':' + this.options.video.padcolor);","      } else {","        return new Error(\"Your ffmpeg version \" + this.metaData.ffmpegversion + \" does not support padding\");","      }","    }","","    // add size and output file","    if (this.options.video.size && !this.options.video.skip) {","      args.push('-s', this.options.video.size);","    }","","    // add output file fps","    if (this.options.video.fpsOutput) {","      args.push('-r', this.options.video.fpsOutput);","    }","","    if (this.options.outputfile) {","      var target = this.escapedPath(this.options.outputfile, false);","      if (!os.match(/win(32|64)/)) {","        args.push('-y', target.replace(' ', '\\\\ '));","      } else {","        args.push('-y', target);","      }","    } else {","      if (!overrideOutputCheck) {","        this.options.logger.error('no outputfile specified');","      }","    }","    return args;","  };","","};",""]);
-_$jscmd("lib/processor.js", "line", 1);
-
-var fs = __webpack_require__(26), path = __webpack_require__(15), async = __webpack_require__(20), os = __webpack_require__(27).platform(), exec = __webpack_require__(9).exec, spawn = __webpack_require__(9).spawn, Registry = __webpack_require__(120), exports = module.exports = function Processor(command) {
-    _$jscmd("lib/processor.js", "line", 11);
-    // constant for timeout checks
-    command.prototype.E_PROCESSTIMEOUT = -99;
-    _$jscmd("lib/processor.js", "line", 12);
-    command.prototype._codecDataAlreadySent = false;
-    _$jscmd("lib/processor.js", "line", 14);
-    command.prototype.saveToFile = function(targetfile, callback) {
-        _$jscmd("lib/processor.js", "line", 16);
-        callback = _$jscmd("lib/processor.js", "cond", "16_15_8", callback) || _$jscmd("lib/processor.js", "cond", "16_27_13", function() {});
-        _$jscmd("lib/processor.js", "line", 18);
-        this.options.outputfile = path.normalize(targetfile);
-        _$jscmd("lib/processor.js", "line", 20);
-        var self = this;
-        _$jscmd("lib/processor.js", "line", 21);
-        var options = this.options;
-        _$jscmd("lib/processor.js", "line", 24);
-        // parse options to command
-        this._prepare(function(err) {
-            if (_$jscmd("lib/processor.js", "cond", "26_10_3", err)) {
-                _$jscmd("lib/processor.js", "line", 27);
-                return callback(null, null, err);
-            }
-            _$jscmd("lib/processor.js", "line", 30);
-            var args = self.buildFfmpegArgs(false);
-            if (_$jscmd("lib/processor.js", "cond", "32_10_22", !args instanceof Array)) {
-                _$jscmd("lib/processor.js", "line", 33);
-                return callback(null, null, args);
-            }
-            _$jscmd("lib/processor.js", "line", 37);
-            // start conversion of file using spawn
-            var ffmpegProc = self._spawnProcess(args);
-            if (_$jscmd("lib/processor.js", "cond", "38_10_19", options.inputstream)) {
-                _$jscmd("lib/processor.js", "line", 40);
-                // pump input stream to stdin
-                options.inputstream.resume();
-                _$jscmd("lib/processor.js", "line", 41);
-                options.inputstream.pipe(ffmpegProc.stdin);
-            }
-            _$jscmd("lib/processor.js", "line", 45);
-            //handle timeout if set
-            var processTimer;
-            if (_$jscmd("lib/processor.js", "cond", "46_10_15", options.timeout)) {
-                _$jscmd("lib/processor.js", "line", 47);
-                processTimer = setTimeout(function() {
-                    _$jscmd("lib/processor.js", "line", 48);
-                    ffmpegProc.removeAllListeners("exit");
-                    _$jscmd("lib/processor.js", "line", 49);
-                    ffmpegProc.kill("SIGKILL");
-                    _$jscmd("lib/processor.js", "line", 50);
-                    options.logger.warn("process ran into a timeout (" + self.options.timeout + "s)");
-                    _$jscmd("lib/processor.js", "line", 51);
-                    callback(self.E_PROCESSTIMEOUT, "timeout");
-                }, options.timeout * 1e3);
-            }
-            _$jscmd("lib/processor.js", "line", 55);
-            var stdout = "";
-            _$jscmd("lib/processor.js", "line", 56);
-            var stderr = "";
-            _$jscmd("lib/processor.js", "line", 57);
-            ffmpegProc.on("exit", function(code) {
-                if (_$jscmd("lib/processor.js", "cond", "58_12_12", processTimer)) {
-                    _$jscmd("lib/processor.js", "line", 59);
-                    clearTimeout(processTimer);
-                }
-                if (_$jscmd("lib/processor.js", "cond", "61_12_9", code != 0)) {
-                    _$jscmd("lib/processor.js", "line", 62);
-                    var err = new Error("ffmpeg returned with code: " + code);
-                    _$jscmd("lib/processor.js", "line", 63);
-                    return callback(stdout, stderr, err);
-                }
-                // check if we have to run flvtool2 to update flash video meta data
-                if (_$jscmd("lib/processor.js", "cond", "66_12_40", self.options._updateFlvMetadata === true)) {
-                    // make sure we didn't try to determine this capability before
-                    if (_$jscmd("lib/processor.js", "cond", "68_14_44", !Registry.instance.get("capabilityFlvTool2"))) {
-                        _$jscmd("lib/processor.js", "line", 70);
-                        // check if flvtool2 is installed
-                        exec("which flvtool2", function(whichErr, whichStdOut, whichStdErr) {
-                            if (_$jscmd("lib/processor.js", "cond", "71_18_18", whichStdOut !== "")) {
-                                _$jscmd("lib/processor.js", "line", 72);
-                                Registry.instance.set("capabilityFlvTool2", true);
-                                _$jscmd("lib/processor.js", "line", 74);
-                                // update metadata in flash video
-                                exec("flvtool2 -U " + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {
-                                    _$jscmd("lib/processor.js", "line", 75);
-                                    callback(stdout, stderr, null);
-                                });
-                            } else {
-                                _$jscmd("lib/processor.js", "line", 79);
-                                // flvtool2 is not installed, skip further checks
-                                Registry.instance.set("capabilityFlvTool2", false);
-                                _$jscmd("lib/processor.js", "line", 80);
-                                callback(stdout, stderr, null);
-                            }
-                        });
-                    } else if (_$jscmd("lib/processor.js", "cond", "83_21_44", !Registry.instance.get("capabilityFlvTool2"))) {
-                        _$jscmd("lib/processor.js", "line", 85);
-                        // flvtool2 capability was checked before, execute update
-                        exec("flvtool2 -U " + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {
-                            _$jscmd("lib/processor.js", "line", 86);
-                            callback(stdout, stderr, null);
-                        });
-                    } else {
-                        _$jscmd("lib/processor.js", "line", 90);
-                        // flvtool2 not installed, skip update
-                        callback(stdout, stderr, null);
-                    }
-                } else {
-                    _$jscmd("lib/processor.js", "line", 93);
-                    callback(stdout, stderr, null);
-                }
-            });
-            _$jscmd("lib/processor.js", "line", 96);
-            ffmpegProc.stdout.on("data", function(data) {
-                _$jscmd("lib/processor.js", "line", 97);
-                stdout += data;
-            });
-            _$jscmd("lib/processor.js", "line", 100);
-            ffmpegProc.stderr.on("data", function(data) {
-                _$jscmd("lib/processor.js", "line", 101);
-                stderr += data;
-                if (_$jscmd("lib/processor.js", "cond", "102_12_19", options.onCodecData)) {
-                    _$jscmd("lib/processor.js", "line", 103);
-                    self._checkStdErrForCodec(stderr);
-                }
-                if (_$jscmd("lib/processor.js", "cond", "105_12_18", options.onProgress)) {
-                    _$jscmd("lib/processor.js", "line", 106);
-                    self._getProgressFromStdErr(stderr, self.metaData.durationsec);
-                }
-            });
-        });
-    };
-    _$jscmd("lib/processor.js", "line", 112);
-    command.prototype.mergeToFile = function(targetfile, callback) {
-        _$jscmd("lib/processor.js", "line", 113);
-        this.options.outputfile = path.normalize(targetfile);
-        if (_$jscmd("lib/processor.js", "cond", "114_7_38", fs.existsSync(this.options.outputfile))) {
-            _$jscmd("lib/processor.js", "line", 115);
-            console.log("outputfile already exists. Do not merge.");
-            _$jscmd("lib/processor.js", "line", 116);
-            return;
-        }
-        _$jscmd("lib/processor.js", "line", 118);
-        var self = this;
-        _$jscmd("lib/processor.js", "line", 119);
-        var options = this.options;
-        _$jscmd("lib/processor.js", "line", 121);
-        var getExtension = function(filename) {
-            _$jscmd("lib/processor.js", "line", 122);
-            var filename = _$jscmd("lib/processor.js", "cond", "122_23_24", path.normalize(filename)) || "";
-            _$jscmd("lib/processor.js", "line", 123);
-            var ext = path.extname(filename).split(".");
-            _$jscmd("lib/processor.js", "line", 124);
-            return ext[ext.length - 1];
-        };
-        _$jscmd("lib/processor.js", "line", 128);
-        // creates intermediate copies of each video.
-        var makeIntermediateFile = function(_mergeSource, _callback) {
-            _$jscmd("lib/processor.js", "line", 129);
-            var fname = _mergeSource + ".temp.mpg";
-            _$jscmd("lib/processor.js", "line", 130);
-            var command = [ self.ffmpegPath, [ "-i", _mergeSource, "-qscale:v", 1, fname ].join(" ") ];
-            _$jscmd("lib/processor.js", "line", 138);
-            exec(command.join(" "), function(err, stdout, stderr) {
-                if (_$jscmd("lib/processor.js", "cond", "139_15_3", err)) throw err;
-                _$jscmd("lib/processor.js", "line", 140);
-                _callback(fname);
-            });
-        };
-        _$jscmd("lib/processor.js", "line", 145);
-        // concat all created intermediate copies
-        var concatIntermediates = function(target, intermediatesList, _callback) {
-            _$jscmd("lib/processor.js", "line", 146);
-            var fname = path.normalize(target) + ".temp.merged.mpg";
-            // unescape paths
-            for (var i = 0; i < intermediatesList.length; i++) {
-                _$jscmd("lib/processor.js", "line", 149);
-                intermediatesList[i] = unescapePath(intermediatesList[i]);
-            }
-            _$jscmd("lib/processor.js", "line", 152);
-            var command = [ self.ffmpegPath, [ "-loglevel", "panic", //Generetes too much muxing warnings and fills default buffer of exec. This is to ignore them.
-            "-i", 'concat:"' + intermediatesList.join("|") + '"', "-c", "copy", fname ].join(" ") ];
-            _$jscmd("lib/processor.js", "line", 161);
-            exec(command.join(" "), function(err, stdout, stderr) {
-                if (_$jscmd("lib/processor.js", "cond", "162_15_3", err)) throw err;
-                _$jscmd("lib/processor.js", "line", 163);
-                _callback(fname);
-            });
-        };
-        _$jscmd("lib/processor.js", "line", 167);
-        var quantizeConcat = function(concatResult, numFiles, _callback) {
-            _$jscmd("lib/processor.js", "line", 168);
-            var command = [ self.ffmpegPath, [ "-i", concatResult, "-qscale:v", numFiles, targetfile ].join(" ") ];
-            _$jscmd("lib/processor.js", "line", 176);
-            exec(command.join(" "), function(err, stdout, stderr) {
-                if (_$jscmd("lib/processor.js", "cond", "177_15_3", err)) throw err;
-                _$jscmd("lib/processor.js", "line", 178);
-                _callback();
-            });
-        };
-        _$jscmd("lib/processor.js", "line", 182);
-        var deleteIntermediateFiles = function(intermediates, callback) {
-            _$jscmd("lib/processor.js", "line", 183);
-            async.each(intermediates, function(item, cb) {
-                _$jscmd("lib/processor.js", "line", 184);
-                fs.exists(unescapePath(item), function(exists) {
-                    if (_$jscmd("lib/processor.js", "cond", "185_17_6", exists)) {
-                        _$jscmd("lib/processor.js", "line", 186);
-                        fs.unlink(unescapePath(item), function(err) {
-                            if (_$jscmd("lib/processor.js", "cond", "187_22_3", err)) {
-                                _$jscmd("lib/processor.js", "line", 188);
-                                cb(err);
-                            } else {
-                                _$jscmd("lib/processor.js", "line", 191);
-                                cb();
-                            }
-                        });
-                    } else {
-                        _$jscmd("lib/processor.js", "line", 196);
-                        cb();
-                    }
-                });
-            }, callback);
-        };
-        _$jscmd("lib/processor.js", "line", 205);
-        var unescapePath = function(path) {
-            _$jscmd("lib/processor.js", "line", 206);
-            var f = path + "";
-            if (_$jscmd("lib/processor.js", "cond", "207_11_17", f.indexOf('"') == 0)) f = f.substring(1);
-            if (_$jscmd("lib/processor.js", "cond", "208_11_31", f.lastIndexOf('"') == f.length - 1)) f = f.substring(0, f.length - 1);
-            _$jscmd("lib/processor.js", "line", 209);
-            return f;
-        };
-        _$jscmd("lib/processor.js", "line", 212);
-        var makeProgress = function() {
-            _$jscmd("lib/processor.js", "line", 213);
-            progress.createdFiles = progress.createdFiles + 1;
-            _$jscmd("lib/processor.js", "line", 214);
-            progress.precent = progress.createdFiles / progress.totalFiles * 100;
-            _$jscmd("lib/processor.js", "line", 215);
-            progressCallback(progress);
-        };
-        if (_$jscmd("lib/processor.js", "cond", "218_7_27", options.mergeList.length <= 0)) throw new Error("No file added to be merged");
-        _$jscmd("lib/processor.js", "line", 220);
-        var mergeList = options.mergeList;
-        _$jscmd("lib/processor.js", "line", 221);
-        mergeList.unshift(options.inputfile);
-        _$jscmd("lib/processor.js", "line", 223);
-        var progressCallback = _$jscmd("lib/processor.js", "cond", "223_27_23", this.options.onProgress) || _$jscmd("lib/processor.js", "cond", "223_54_12", function() {});
-        _$jscmd("lib/processor.js", "line", 224);
-        var progress = {
-            frames: 0,
-            currentFps: 0,
-            currentKbps: 0,
-            targetSize: 0,
-            timemark: 0,
-            percent: 0,
-            totalFiles: mergeList.length + 2,
-            createdFiles: 0
-        };
-        _$jscmd("lib/processor.js", "line", 233);
-        var toDelete = mergeList.map(function(name) {
-            _$jscmd("lib/processor.js", "line", 233);
-            return name + ".temp.mpg";
-        });
-        _$jscmd("lib/processor.js", "line", 234);
-        toDelete.push(this.options.outputfile + ".temp.merged.mpg");
-        _$jscmd("lib/processor.js", "line", 235);
-        deleteIntermediateFiles(toDelete);
-        _$jscmd("lib/processor.js", "line", 238);
-        var intermediateFiles = [];
-        _$jscmd("lib/processor.js", "line", 240);
-        async.whilst(function() {
-            _$jscmd("lib/processor.js", "line", 241);
-            return mergeList.length != 0;
-        }, function(callback) {
-            _$jscmd("lib/processor.js", "line", 243);
-            makeIntermediateFile(mergeList.shift(), function(createdIntermediateFile) {
-                if (_$jscmd("lib/processor.js", "cond", "244_15_24", !createdIntermediateFile)) throw new Error("Invalid intermediate file");
-                _$jscmd("lib/processor.js", "line", 245);
-                intermediateFiles.push(createdIntermediateFile);
-                _$jscmd("lib/processor.js", "line", 246);
-                makeProgress();
-                _$jscmd("lib/processor.js", "line", 247);
-                callback();
-            });
-        }, function(err) {
-            if (_$jscmd("lib/processor.js", "cond", "250_11_3", err)) throw err;
-            _$jscmd("lib/processor.js", "line", 251);
-            concatIntermediates(targetfile, intermediateFiles, function(concatResult) {
-                if (_$jscmd("lib/processor.js", "cond", "252_15_13", !concatResult)) throw new Error("Invalid concat result file");
-                _$jscmd("lib/processor.js", "line", 253);
-                makeProgress();
-                _$jscmd("lib/processor.js", "line", 254);
-                quantizeConcat(concatResult, intermediateFiles.length, function() {
-                    _$jscmd("lib/processor.js", "line", 255);
-                    makeProgress();
-                    _$jscmd("lib/processor.js", "line", 256);
-                    intermediateFiles.push(concatResult);
-                    _$jscmd("lib/processor.js", "line", 257);
-                    // add concatResult to intermediates list so it can be deleted too.
-                    deleteIntermediateFiles(intermediateFiles, callback);
-                });
-            });
-        });
-    };
-    _$jscmd("lib/processor.js", "line", 264);
-    command.prototype.writeToStream = function(stream, callback) {
-        _$jscmd("lib/processor.js", "line", 266);
-        callback = _$jscmd("lib/processor.js", "cond", "266_15_8", callback) || _$jscmd("lib/processor.js", "cond", "266_27_12", function() {});
-        if (_$jscmd("lib/processor.js", "cond", "268_8_27", !this.options._isStreamable)) {
-            _$jscmd("lib/processor.js", "line", 269);
-            this.options.logger.error("selected output format is not streamable");
-            _$jscmd("lib/processor.js", "line", 270);
-            return callback(null, new Error("selected output format is not streamable"));
-        }
-        _$jscmd("lib/processor.js", "line", 273);
-        var self = this;
-        _$jscmd("lib/processor.js", "line", 274);
-        var options = this.options;
-        _$jscmd("lib/processor.js", "line", 277);
-        // parse options to command
-        this._prepare(function(err) {
-            if (_$jscmd("lib/processor.js", "cond", "278_10_3", err)) {
-                _$jscmd("lib/processor.js", "line", 279);
-                return callback(null, err);
-            }
-            _$jscmd("lib/processor.js", "line", 282);
-            var args = self.buildFfmpegArgs(true);
-            if (_$jscmd("lib/processor.js", "cond", "284_10_22", !args instanceof Array)) {
-                _$jscmd("lib/processor.js", "line", 285);
-                return callback(null, args);
-            }
-            _$jscmd("lib/processor.js", "line", 288);
-            // write data to stdout
-            args.push("pipe:1");
-            _$jscmd("lib/processor.js", "line", 291);
-            // start conversion of file using spawn
-            var ffmpegProc = self._spawnProcess(args);
-            if (_$jscmd("lib/processor.js", "cond", "293_10_19", options.inputstream)) {
-                _$jscmd("lib/processor.js", "line", 295);
-                // pump input stream to stdin
-                options.inputstream.resume();
-                _$jscmd("lib/processor.js", "line", 296);
-                options.inputstream.pipe(ffmpegProc.stdin);
-                _$jscmd("lib/processor.js", "line", 297);
-                options.inputstream.on("error", function() {
-                    _$jscmd("lib/processor.js", "line", 298);
-                    options.logger.debug("input stream closed, killing ffmpgeg process");
-                    _$jscmd("lib/processor.js", "line", 299);
-                    ffmpegProc.kill();
-                });
-            }
-            _$jscmd("lib/processor.js", "line", 304);
-            //handle timeout if set
-            var processTimer;
-            if (_$jscmd("lib/processor.js", "cond", "305_10_15", options.timeout)) {
-                _$jscmd("lib/processor.js", "line", 306);
-                processTimer = setTimeout(function() {
-                    _$jscmd("lib/processor.js", "line", 307);
-                    ffmpegProc.removeAllListeners("exit");
-                    _$jscmd("lib/processor.js", "line", 308);
-                    ffmpegProc.kill("SIGKILL");
-                    _$jscmd("lib/processor.js", "line", 309);
-                    options.logger.warn("process ran into a timeout (" + options.timeout + "s)");
-                    _$jscmd("lib/processor.js", "line", 310);
-                    callback(self.E_PROCESSTIMEOUT, "timeout");
-                }, options.timeout * 1e3);
-            }
-            _$jscmd("lib/processor.js", "line", 314);
-            var stderr = "";
-            _$jscmd("lib/processor.js", "line", 316);
-            ffmpegProc.stderr.on("data", function(data) {
-                _$jscmd("lib/processor.js", "line", 317);
-                stderr += data;
-                if (_$jscmd("lib/processor.js", "cond", "318_12_19", options.onCodecData)) {
-                    _$jscmd("lib/processor.js", "line", 319);
-                    self._checkStdErrForCodec(stderr);
-                }
-                if (_$jscmd("lib/processor.js", "cond", "321_12_18", options.onProgress)) {
-                    _$jscmd("lib/processor.js", "line", 322);
-                    self._getProgressFromStdErr(stderr, self.metaData.durationsec);
-                }
-            });
-            _$jscmd("lib/processor.js", "line", 326);
-            ffmpegProc.stdout.on("data", function(chunk) {
-                _$jscmd("lib/processor.js", "line", 327);
-                stream.write(chunk);
-            });
-            _$jscmd("lib/processor.js", "line", 330);
-            ffmpegProc.on("exit", function(code, signal) {
-                if (_$jscmd("lib/processor.js", "cond", "331_12_12", processTimer)) {
-                    _$jscmd("lib/processor.js", "line", 332);
-                    clearTimeout(processTimer);
-                }
-                // close file descriptor on outstream
-                if (_$jscmd("lib/processor.js", "cond", "335_11_38", /^[a-z]+:\/\//.test(options.inputfile))) {
-                    _$jscmd("lib/processor.js", "line", 336);
-                    return callback(code, stderr);
-                }
-                _$jscmd("lib/processor.js", "line", 339);
-                var cb_ = function() {
-                    if (_$jscmd("lib/processor.js", "cond", "340_14_47", _$jscmd("lib/processor.js", "cond", "340_14_20", !options.inputstream) || _$jscmd("lib/processor.js", "cond", "340_38_23", !options.inputstream.fd))) {
-                        _$jscmd("lib/processor.js", "line", 341);
-                        return callback(code, stderr);
-                    }
-                    if (_$jscmd("lib/processor.js", "cond", "343_14_23", !options.inputstream.fd)) {
-                        _$jscmd("lib/processor.js", "line", 344);
-                        options.inputstream.destroy();
-                        _$jscmd("lib/processor.js", "line", 345);
-                        return callback(code, stderr);
-                    }
-                    _$jscmd("lib/processor.js", "line", 347);
-                    fs.close(options.inputstream.fd, function() {
-                        _$jscmd("lib/processor.js", "line", 348);
-                        callback(code, stderr);
-                    });
-                };
-                if (_$jscmd("lib/processor.js", "cond", "352_12_9", stream.fd)) {
-                    _$jscmd("lib/processor.js", "line", 353);
-                    return fs.close(stream.fd, cb_);
-                }
-                if (_$jscmd("lib/processor.js", "cond", "355_12_10", stream.end)) {
-                    _$jscmd("lib/processor.js", "line", 356);
-                    stream.end();
-                } else {
-                    _$jscmd("lib/processor.js", "line", 358);
-                    callback(code, "stream will not be closed");
-                }
-                _$jscmd("lib/processor.js", "line", 360);
-                cb_();
-            });
-            _$jscmd("lib/processor.js", "line", 363);
-            stream.on("close", function() {
-                _$jscmd("lib/processor.js", "line", 365);
-                options.logger.debug("Output stream closed, killing ffmpgeg process");
-                _$jscmd("lib/processor.js", "line", 366);
-                ffmpegProc.kill();
-            });
-        });
-    };
-    _$jscmd("lib/processor.js", "line", 371);
-    command.prototype.takeScreenshots = function(config, folder, callback) {
-        _$jscmd("lib/processor.js", "line", 373);
-        callback = _$jscmd("lib/processor.js", "cond", "373_15_8", callback) || _$jscmd("lib/processor.js", "cond", "373_27_12", function() {});
-        function _zeroPad(number, len) {
-            _$jscmd("lib/processor.js", "line", 376);
-            len = len - String(number).length + 2;
-            _$jscmd("lib/processor.js", "line", 377);
-            return new Array(len < 0 ? _$jscmd("lib/processor.js", "cond", "377_29_1", 0) : _$jscmd("lib/processor.js", "cond", "377_31_3", len)).join("0") + number;
-        }
-        function _renderOutputName(j, offset) {
-            _$jscmd("lib/processor.js", "line", 381);
-            var result = filename;
-            if (_$jscmd("lib/processor.js", "cond", "382_9_19", /%0*i/.test(result))) {
-                _$jscmd("lib/processor.js", "line", 383);
-                var numlen = String(result.match(/%(0*)i/)[1]).length;
-                _$jscmd("lib/processor.js", "line", 384);
-                result = result.replace(/%0*i/, _zeroPad(j, numlen));
-            }
-            _$jscmd("lib/processor.js", "line", 386);
-            result = result.replace("%s", offset);
-            _$jscmd("lib/processor.js", "line", 387);
-            result = result.replace("%w", self.options.video.width);
-            _$jscmd("lib/processor.js", "line", 388);
-            result = result.replace("%h", self.options.video.height);
-            _$jscmd("lib/processor.js", "line", 389);
-            result = result.replace("%r", self.options.video.width + "x" + self.options.video.height);
-            _$jscmd("lib/processor.js", "line", 390);
-            result = result.replace("%f", path.basename(self.options.inputfile));
-            _$jscmd("lib/processor.js", "line", 391);
-            result = result.replace("%b", path.basename(self.options.inputfile, path.extname(self.options.inputfile)));
-            _$jscmd("lib/processor.js", "line", 392);
-            return result;
-        }
-        function _screenShotInternal(callback) {
-            _$jscmd("lib/processor.js", "line", 398);
-            // get correct dimensions
-            self._prepare(function(err) {
-                if (_$jscmd("lib/processor.js", "cond", "399_11_3", err)) {
-                    _$jscmd("lib/processor.js", "line", 400);
-                    return callback(err);
-                }
-                if (_$jscmd("lib/processor.js", "cond", "402_12_26", !self.metaData.durationsec)) {
-                    _$jscmd("lib/processor.js", "line", 403);
-                    var errString = "meta data contains no duration, aborting screenshot creation";
-                    _$jscmd("lib/processor.js", "line", 404);
-                    self.options.logger.warn(errString);
-                    _$jscmd("lib/processor.js", "line", 405);
-                    return callback(new Error(errString));
-                }
-                // check if all timemarks are inside duration
-                if (_$jscmd("lib/processor.js", "cond", "409_12_24", Array.isArray(timemarks))) {
-                    for (var i = 0; i < timemarks.length; i++) {
-                        /* convert percentage to seconds */
-                        if (_$jscmd("lib/processor.js", "cond", "412_16_29", timemarks[i].indexOf("%") > 0)) {
-                            _$jscmd("lib/processor.js", "line", 413);
-                            timemarks[i] = parseInt(timemarks[i], 10) / 100 * self.metaData.durationsec;
-                        }
-                        if (_$jscmd("lib/processor.js", "cond", "415_16_54", parseInt(timemarks[i], 10) > self.metaData.durationsec)) {
-                            _$jscmd("lib/processor.js", "line", 417);
-                            // remove timemark from array
-                            timemarks.splice(i, 1);
-                            _$jscmd("lib/processor.js", "line", 418);
-                            --i;
-                        }
-                    }
-                    // if there are no more timemarks around, add one at end of the file
-                    if (_$jscmd("lib/processor.js", "cond", "422_14_22", timemarks.length === 0)) {
-                        _$jscmd("lib/processor.js", "line", 423);
-                        timemarks[0] = self.metaData.durationsec * .9;
-                    }
-                }
-                _$jscmd("lib/processor.js", "line", 427);
-                // get positions for screenshots (using duration of file minus 10% to remove fade-in/fade-out)
-                var secondOffset = self.metaData.durationsec * .9 / screenshotcount;
-                _$jscmd("lib/processor.js", "line", 428);
-                var donecount = 0;
-                _$jscmd("lib/processor.js", "line", 429);
-                var series = [];
-                _$jscmd("lib/processor.js", "line", 432);
-                // reset iterator
-                var j = 1;
-                _$jscmd("lib/processor.js", "line", 434);
-                var filenames = [];
-                _$jscmd("lib/processor.js", "line", 438);
-                // use async helper function to generate all screenshots and
-                // fire callback just once after work is done
-                async.until(function() {
-                    _$jscmd("lib/processor.js", "line", 440);
-                    return j > screenshotcount;
-                }, function(taskcallback) {
-                    _$jscmd("lib/processor.js", "line", 443);
-                    var offset;
-                    if (_$jscmd("lib/processor.js", "cond", "444_16_24", Array.isArray(timemarks))) {
-                        _$jscmd("lib/processor.js", "line", 446);
-                        // get timemark for current iteration
-                        offset = timemarks[j - 1];
-                    } else {
-                        _$jscmd("lib/processor.js", "line", 448);
-                        offset = secondOffset * j;
-                    }
-                    _$jscmd("lib/processor.js", "line", 450);
-                    var fname = _renderOutputName(j, offset) + (fileextension ? _$jscmd("lib/processor.js", "cond", "450_72_13", fileextension) : _$jscmd("lib/processor.js", "cond", "450_88_6", ".jpg"));
-                    _$jscmd("lib/processor.js", "line", 451);
-                    var target = self.escapedPath(path.join(folder, fname), true);
-                    _$jscmd("lib/processor.js", "line", 452);
-                    var input = self.escapedPath(self.options.inputfile, true);
-                    _$jscmd("lib/processor.js", "line", 455);
-                    // build screenshot command
-                    var command = [ self.ffmpegPath, [ "-ss", Math.floor(offset * 100) / 100, "-i", input, "-vcodec", "mjpeg", "-vframes", "1", "-an", "-f", "rawvideo", "-s", self.options.video.size, "-y", target ].join(" ") ];
-                    _$jscmd("lib/processor.js", "line", 469);
-                    j++;
-                    // only set niceness if running on a non-windows platform
-                    if (_$jscmd("lib/processor.js", "cond", "472_16_69", _$jscmd("lib/processor.js", "cond", "472_16_42", self.options.hasOwnProperty("_nice.level")) && _$jscmd("lib/processor.js", "cond", "472_62_23", !os.match(/win(32|64)/)))) {
-                        _$jscmd("lib/processor.js", "line", 474);
-                        // execute ffmpeg through nice
-                        command.unshift("nice -n", _$jscmd("lib/processor.js", "cond", "474_41_24", self.options._nice.level) || 0);
-                    }
-                    _$jscmd("lib/processor.js", "line", 477);
-                    exec(command.join(" "), taskcallback);
-                    _$jscmd("lib/processor.js", "line", 478);
-                    filenames.push(fname);
-                }, function(err) {
-                    _$jscmd("lib/processor.js", "line", 481);
-                    callback(err, filenames);
-                });
-            });
-        }
-        _$jscmd("lib/processor.js", "line", 487);
-        var timemarks, screenshotcount, filename, fileextension;
-        if (_$jscmd("lib/processor.js", "cond", "488_8_26", typeof config === "object")) {
-            // use json object as config
-            if (_$jscmd("lib/processor.js", "cond", "490_10_12", config.count)) {
-                _$jscmd("lib/processor.js", "line", 491);
-                screenshotcount = config.count;
-            }
-            if (_$jscmd("lib/processor.js", "cond", "493_10_16", config.timemarks)) {
-                _$jscmd("lib/processor.js", "line", 494);
-                timemarks = config.timemarks;
-            }
-            if (_$jscmd("lib/processor.js", "cond", "496_10_20", config.fileextension)) {
-                _$jscmd("lib/processor.js", "line", 497);
-                fileextension = config.fileextension;
-            }
-        } else {
-            _$jscmd("lib/processor.js", "line", 501);
-            // assume screenshot count as parameter
-            screenshotcount = config;
-            _$jscmd("lib/processor.js", "line", 502);
-            timemarks = null;
-        }
-        if (_$jscmd("lib/processor.js", "cond", "504_8_24", !this.options.video.size)) {
-            _$jscmd("lib/processor.js", "line", 505);
-            this.options.logger.warn("set size of thumbnails using 'withSize' method");
-            _$jscmd("lib/processor.js", "line", 506);
-            callback(new Error("set size of thumbnails using 'withSize' method"));
-        }
-        _$jscmd("lib/processor.js", "line", 509);
-        filename = _$jscmd("lib/processor.js", "cond", "509_15_15", config.filename) || "tn_%ss";
-        if (_$jscmd("lib/processor.js", "cond", "510_7_74", _$jscmd("lib/processor.js", "cond", "510_7_50", _$jscmd("lib/processor.js", "cond", "510_7_22", !/%0*i/.test(filename)) && _$jscmd("lib/processor.js", "cond", "510_33_24", Array.isArray(timemarks))) && _$jscmd("lib/processor.js", "cond", "510_61_20", timemarks.length > 1))) {
-            _$jscmd("lib/processor.js", "line", 513);
-            // if there are multiple timemarks but no %i in filename add one
-            // so we won't overwrite the same thumbnail with each timemark
-            filename += "_%i";
-        }
-        _$jscmd("lib/processor.js", "line", 515);
-        folder = _$jscmd("lib/processor.js", "cond", "515_13_6", folder) || ".";
-        _$jscmd("lib/processor.js", "line", 517);
-        var self = this;
-        _$jscmd("lib/processor.js", "line", 520);
-        // WORKAROUND: exists will be moved from path to fs with node v0.7
-        var check = fs.exists;
-        if (_$jscmd("lib/processor.js", "cond", "521_8_6", !check)) {
-            _$jscmd("lib/processor.js", "line", 522);
-            check = path.exists;
-        }
-        _$jscmd("lib/processor.js", "line", 525);
-        this.options.requireMetaData = true;
-        _$jscmd("lib/processor.js", "line", 528);
-        // check target folder
-        check(folder, function(exists) {
-            if (_$jscmd("lib/processor.js", "cond", "529_10_7", !exists)) {
-                _$jscmd("lib/processor.js", "line", 530);
-                fs.mkdir(folder, "0755", function(err) {
-                    if (_$jscmd("lib/processor.js", "cond", "531_14_12", err !== null)) {
-                        _$jscmd("lib/processor.js", "line", 532);
-                        callback(err);
-                    } else {
-                        _$jscmd("lib/processor.js", "line", 534);
-                        _screenShotInternal(callback);
-                    }
-                });
-            } else {
-                _$jscmd("lib/processor.js", "line", 538);
-                _screenShotInternal(callback);
-            }
-        });
-    };
-    _$jscmd("lib/processor.js", "line", 543);
-    command.prototype._getProgressFromStdErr = function(stderrString, totalDurationSec) {
-        _$jscmd("lib/processor.js", "line", 545);
-        // get last stderr line
-        var lastLine = stderrString.split(/\r\n|\r|\n/g);
-        _$jscmd("lib/processor.js", "line", 546);
-        var ll = lastLine[lastLine.length - 2];
-        _$jscmd("lib/processor.js", "line", 547);
-        var progress;
-        if (_$jscmd("lib/processor.js", "cond", "548_8_2", ll)) {
-            _$jscmd("lib/processor.js", "line", 549);
-            progress = this._parseProgressLine(ll);
-        }
-        if (_$jscmd("lib/processor.js", "cond", "551_8_8", progress)) {
-            _$jscmd("lib/processor.js", "line", 553);
-            // build progress report object
-            var ret = {
-                frames: parseInt(progress.frame, 10),
-                currentFps: parseInt(progress.fps, 10),
-                currentKbps: parseFloat(progress.bitrate.replace("kbits/s", "")),
-                targetSize: parseInt(progress.size, 10),
-                timemark: progress.time
-            };
-            // calculate percent progress using duration
-            if (_$jscmd("lib/processor.js", "cond", "562_10_40", _$jscmd("lib/processor.js", "cond", "562_10_16", totalDurationSec) && _$jscmd("lib/processor.js", "cond", "562_30_20", totalDurationSec > 0))) {
-                _$jscmd("lib/processor.js", "line", 563);
-                ret.percent = this.ffmpegTimemarkToSeconds(ret.timemark) / totalDurationSec * 100;
-            }
-            _$jscmd("lib/processor.js", "line", 566);
-            this.options.onProgress(ret);
-        }
-    };
-    _$jscmd("lib/processor.js", "line", 570);
-    command.prototype._parseProgressLine = function(line) {
-        _$jscmd("lib/processor.js", "line", 571);
-        var progress = {};
-        _$jscmd("lib/processor.js", "line", 574);
-        // Remove all spaces after = and trim
-        line = line.replace(/=\s+/g, "=").trim();
-        _$jscmd("lib/processor.js", "line", 575);
-        progressParts = line.split(" ");
-        // Split every progress part by "=" to get key and value
-        for (var i = 0; i < progressParts.length; i++) {
-            _$jscmd("lib/processor.js", "line", 579);
-            var progressSplit = progressParts[i].split("=", 2), key = progressSplit[0], value = progressSplit[1];
-            // This is not a progress line
-            if (_$jscmd("lib/processor.js", "cond", "584_9_28", typeof value === "undefined")) return null;
-            _$jscmd("lib/processor.js", "line", 587);
-            progress[key] = value;
-        }
-        _$jscmd("lib/processor.js", "line", 590);
-        return progress;
-    };
-    _$jscmd("lib/processor.js", "line", 593);
-    command.prototype._checkStdErrForCodec = function(stderrString) {
-        _$jscmd("lib/processor.js", "line", 594);
-        var format = /Input #[0-9]+, ([^ ]+),/.exec(stderrString);
-        _$jscmd("lib/processor.js", "line", 595);
-        var dur = /Duration\: ([^,]+)/.exec(stderrString);
-        _$jscmd("lib/processor.js", "line", 596);
-        var audio = /Audio\: (.*)/.exec(stderrString);
-        _$jscmd("lib/processor.js", "line", 597);
-        var video = /Video\: (.*)/.exec(stderrString);
-        _$jscmd("lib/processor.js", "line", 598);
-        var codecObject = {
-            format: "",
-            audio: "",
-            video: "",
-            duration: ""
-        };
-        if (_$jscmd("lib/processor.js", "cond", "600_8_27", _$jscmd("lib/processor.js", "cond", "600_8_6", format) && _$jscmd("lib/processor.js", "cond", "600_18_17", format.length > 1))) {
-            _$jscmd("lib/processor.js", "line", 601);
-            codecObject.format = format[1];
-        }
-        if (_$jscmd("lib/processor.js", "cond", "604_8_21", _$jscmd("lib/processor.js", "cond", "604_8_3", dur) && _$jscmd("lib/processor.js", "cond", "604_15_14", dur.length > 1))) {
-            _$jscmd("lib/processor.js", "line", 605);
-            codecObject.duration = dur[1];
-        }
-        if (_$jscmd("lib/processor.js", "cond", "608_8_25", _$jscmd("lib/processor.js", "cond", "608_8_5", audio) && _$jscmd("lib/processor.js", "cond", "608_17_16", audio.length > 1))) {
-            _$jscmd("lib/processor.js", "line", 609);
-            audio = audio[1].split(", ");
-            _$jscmd("lib/processor.js", "line", 610);
-            codecObject.audio = audio[0];
-            _$jscmd("lib/processor.js", "line", 611);
-            codecObject.audio_details = audio;
-        }
-        if (_$jscmd("lib/processor.js", "cond", "613_8_25", _$jscmd("lib/processor.js", "cond", "613_8_5", video) && _$jscmd("lib/processor.js", "cond", "613_17_16", video.length > 1))) {
-            _$jscmd("lib/processor.js", "line", 614);
-            video = video[1].split(", ");
-            _$jscmd("lib/processor.js", "line", 615);
-            codecObject.video = video[0];
-            _$jscmd("lib/processor.js", "line", 616);
-            codecObject.video_details = video;
-        }
-        _$jscmd("lib/processor.js", "line", 619);
-        var codecInfoPassed = /Press (\[q\]|ctrl-c) to stop/.test(stderrString);
-        if (_$jscmd("lib/processor.js", "cond", "620_8_15", codecInfoPassed)) {
-            _$jscmd("lib/processor.js", "line", 621);
-            this.options.onCodecData(codecObject);
-            _$jscmd("lib/processor.js", "line", 622);
-            this.options.onCodecData = null;
-        }
-    };
-    _$jscmd("lib/processor.js", "line", 626);
-    command.prototype._spawnProcess = function(args, options) {
-        _$jscmd("lib/processor.js", "line", 627);
-        var retProc = spawn(this.ffmpegPath, args, options);
-        // only re-nice if running on a non-windows platform
-        if (_$jscmd("lib/processor.js", "cond", "629_8_69", _$jscmd("lib/processor.js", "cond", "629_8_42", this.options.hasOwnProperty("_nice.level")) && _$jscmd("lib/processor.js", "cond", "629_54_23", !os.match(/win(32|64)/)))) {
-            _$jscmd("lib/processor.js", "line", 630);
-            var niceLevel = _$jscmd("lib/processor.js", "cond", "630_22_24", this.options._nice.level) || 0;
-            if (_$jscmd("lib/processor.js", "cond", "631_10_13", niceLevel > 0)) {
-                _$jscmd("lib/processor.js", "line", 632);
-                niceLevel = "+" + niceLevel;
-            }
-            _$jscmd("lib/processor.js", "line", 635);
-            // renice the spawned process without waiting for callback
-            var self = this;
-            _$jscmd("lib/processor.js", "line", 636);
-            var command = [ "renice -n", niceLevel, "-p", retProc.pid ].join(" ");
-            _$jscmd("lib/processor.js", "line", 641);
-            exec(command, function(err, stderr, stdout) {
-                if (_$jscmd("lib/processor.js", "cond", "642_12_4", !err)) {
-                    _$jscmd("lib/processor.js", "line", 643);
-                    self.options.logger.info("successfully reniced process " + retProc.pid + " to " + niceLevel + " niceness!");
-                }
-            });
-        }
-        if (_$jscmd("lib/processor.js", "cond", "647_8_14", retProc.stderr)) {
-            _$jscmd("lib/processor.js", "line", 648);
-            retProc.stderr.setEncoding("utf8");
-        }
-        _$jscmd("lib/processor.js", "line", 650);
-        return retProc;
-    };
-    _$jscmd("lib/processor.js", "line", 653);
-    command.prototype.buildFfmpegArgs = function(overrideOutputCheck) {
-        _$jscmd("lib/processor.js", "line", 654);
-        var args = [];
-        // add startoffset and duration
-        if (_$jscmd("lib/processor.js", "cond", "657_8_22", this.options.starttime)) {
-            _$jscmd("lib/processor.js", "line", 658);
-            args.push("-ss", this.options.starttime);
-        }
-        if (_$jscmd("lib/processor.js", "cond", "661_8_23", this.options.video.loop)) {
-            if (_$jscmd("lib/processor.js", "cond", "662_10_53", this.atLeastVersion(this.meta().ffmpegversion, "0.9"))) {
-                _$jscmd("lib/processor.js", "line", 663);
-                args.push("-loop", 1);
-            } else {
-                _$jscmd("lib/processor.js", "line", 666);
-                args.push("-loop_output", 1);
-            }
-        }
-        // add input format
-        if (_$jscmd("lib/processor.js", "cond", "672_8_23", this.options.fromFormat)) {
-            _$jscmd("lib/processor.js", "line", 673);
-            args.push("-f", this.options.fromFormat);
-        }
-        // add input file (if using fs mode)
-        if (_$jscmd("lib/processor.js", "cond", "677_8_78", _$jscmd("lib/processor.js", "cond", "677_8_51", _$jscmd("lib/processor.js", "cond", "677_8_22", this.options.inputfile) && _$jscmd("lib/processor.js", "cond", "677_34_25", !this.options.inputstream)) && _$jscmd("lib/processor.js", "cond", "677_63_23", !this.options.inputlive))) {
-            // add input file fps
-            if (_$jscmd("lib/processor.js", "cond", "679_10_27", this.options.video.fpsInput)) {
-                _$jscmd("lib/processor.js", "line", 680);
-                args.push("-r", this.options.video.fpsInput);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "682_10_43", /^[a-z]+:\/\//.test(this.options.inputfile))) {
-                _$jscmd("lib/processor.js", "line", 683);
-                args.push("-i", this.options.inputfile.replace(" ", "%20"));
-            } else if (_$jscmd("lib/processor.js", "cond", "684_17_36", /%\d*d/.test(this.options.inputfile))) {
-                _$jscmd("lib/processor.js", "line", 685);
-                // multi-file format - http://ffmpeg.org/ffmpeg.html#image2-1
-                args.push("-i", this.options.inputfile.replace(" ", " "));
-            } else {
-                _$jscmd("lib/processor.js", "line", 687);
-                var fstats = fs.statSync(this.options.inputfile);
-                if (_$jscmd("lib/processor.js", "cond", "688_12_15", fstats.isFile())) {
-                    _$jscmd("lib/processor.js", "line", 690);
-                    // fix for spawn call with path containing spaces and quotes
-                    args.push("-i", this.options.inputfile.replace(/ /g, " ").replace(/'/g, "'").replace(/"/g, '"'));
-                } else {
-                    _$jscmd("lib/processor.js", "line", 694);
-                    this.options.logger.error("input file is not readable");
-                    _$jscmd("lib/processor.js", "line", 695);
-                    throw new Error("input file is not readable");
-                }
-            }
-        } else if (_$jscmd("lib/processor.js", "cond", "699_15_24", this.options.inputstream)) {
-            _$jscmd("lib/processor.js", "line", 701);
-            // push args to make ffmpeg read from stdin
-            args.push("-i", "-");
-        } else if (_$jscmd("lib/processor.js", "cond", "702_15_22", this.options.inputlive)) {
-            //Check if input URI
-            if (_$jscmd("lib/processor.js", "cond", "704_8_43", /^[a-z]+:\/\//.test(this.options.inputfile))) {
-                _$jscmd("lib/processor.js", "line", 706);
-                // add input with live flag
-                args.push("-i", this.options.inputfile.replace(" ", "%20") + " live=1");
-            } else {
-                _$jscmd("lib/processor.js", "line", 708);
-                this.options.logger.error("live input URI is not valid");
-                _$jscmd("lib/processor.js", "line", 709);
-                throw new Error("live input URI is not valid");
-            }
-        }
-        if (_$jscmd("lib/processor.js", "cond", "713_8_24", this.options.otherInputs)) {
-            if (_$jscmd("lib/processor.js", "cond", "714_10_35", this.options.otherInputs.length > 0)) {
-                _$jscmd("lib/processor.js", "line", 715);
-                this.options.otherInputs.forEach(function(el) {
-                    _$jscmd("lib/processor.js", "line", 716);
-                    args.push("-i", el);
-                });
-            }
-        }
-        if (_$jscmd("lib/processor.js", "cond", "721_8_31", this.options.strictExperimental)) {
-            _$jscmd("lib/processor.js", "line", 722);
-            args.push("-strict", "experimental");
-        }
-        if (_$jscmd("lib/processor.js", "cond", "725_8_21", this.options.duration)) {
-            _$jscmd("lib/processor.js", "line", 726);
-            args.push("-t", this.options.duration);
-        }
-        if (_$jscmd("lib/processor.js", "cond", "729_8_29", this.options.video.framecount)) {
-            _$jscmd("lib/processor.js", "line", 730);
-            args.push("-vframes", this.options.video.framecount);
-        }
-        // add format
-        if (_$jscmd("lib/processor.js", "cond", "734_8_19", this.options.format)) {
-            _$jscmd("lib/processor.js", "line", 735);
-            args.push("-f", this.options.format);
-        }
-        // add video options
-        if (_$jscmd("lib/processor.js", "cond", "739_8_23", this.options.video.skip)) {
-            _$jscmd("lib/processor.js", "line", 741);
-            // skip video stream completely (#45)
-            args.push("-vn");
-        } else {
-            if (_$jscmd("lib/processor.js", "cond", "743_10_26", this.options.video.bitrate)) {
-                _$jscmd("lib/processor.js", "line", 744);
-                args.push("-b:v", this.options.video.bitrate + "k");
-                if (_$jscmd("lib/processor.js", "cond", "745_12_37", this.options._useConstantVideoBitrate)) {
-                    _$jscmd("lib/processor.js", "line", 747);
-                    // add parameters to ensure constant bitrate encoding
-                    args.push("-maxrate", this.options.video.bitrate + "k");
-                    _$jscmd("lib/processor.js", "line", 748);
-                    args.push("-minrate", this.options.video.bitrate + "k");
-                    _$jscmd("lib/processor.js", "line", 749);
-                    args.push("-bufsize", "3M");
-                }
-            }
-            if (_$jscmd("lib/processor.js", "cond", "752_10_24", this.options.video.codec)) {
-                _$jscmd("lib/processor.js", "line", 753);
-                args.push("-vcodec", this.options.video.codec);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "755_10_22", this.options.video.fps)) {
-                _$jscmd("lib/processor.js", "line", 756);
-                args.push("-r", this.options.video.fps);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "758_10_25", this.options.video.aspect)) {
-                _$jscmd("lib/processor.js", "line", 759);
-                args.push("-aspect", this.options.video.aspect);
-            }
-        }
-        // add video options
-        if (_$jscmd("lib/processor.js", "cond", "764_8_23", this.options.audio.skip)) {
-            _$jscmd("lib/processor.js", "line", 766);
-            // skip audio stream completely (#45)
-            args.push("-an");
-        } else {
-            if (_$jscmd("lib/processor.js", "cond", "768_10_26", this.options.audio.bitrate)) {
-                _$jscmd("lib/processor.js", "line", 769);
-                args.push("-b:a", this.options.audio.bitrate + "k");
-            }
-            if (_$jscmd("lib/processor.js", "cond", "771_10_27", this.options.audio.channels)) {
-                _$jscmd("lib/processor.js", "line", 772);
-                args.push("-ac", this.options.audio.channels);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "774_10_24", this.options.audio.codec)) {
-                _$jscmd("lib/processor.js", "line", 775);
-                args.push("-acodec", this.options.audio.codec);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "777_10_28", this.options.audio.frequency)) {
-                _$jscmd("lib/processor.js", "line", 778);
-                args.push("-ar", this.options.audio.frequency);
-            }
-            if (_$jscmd("lib/processor.js", "cond", "780_10_62", _$jscmd("lib/processor.js", "cond", "780_10_26", this.options.audio.quality) || _$jscmd("lib/processor.js", "cond", "780_40_32", this.options.audio.quality === 0))) {
-                _$jscmd("lib/processor.js", "line", 781);
-                args.push("-aq", this.options.audio.quality);
-            }
-        }
-        // add additional options
-        if (_$jscmd("lib/processor.js", "cond", "786_8_23", this.options.additional)) {
-            if (_$jscmd("lib/processor.js", "cond", "787_10_34", this.options.additional.length > 0)) {
-                _$jscmd("lib/processor.js", "line", 788);
-                this.options.additional.forEach(function(el) {
-                    _$jscmd("lib/processor.js", "line", 789);
-                    args.push(el);
-                });
-            }
-        }
-        if (_$jscmd("lib/processor.js", "cond", "794_8_50", _$jscmd("lib/processor.js", "cond", "794_8_22", this.options.video.pad) && _$jscmd("lib/processor.js", "cond", "794_34_24", !this.options.video.skip))) {
-            // we have padding arguments, push
-            if (_$jscmd("lib/processor.js", "cond", "796_10_55", this.atLeastVersion(this.metaData.ffmpegversion, "0.7"))) {
-                _$jscmd("lib/processor.js", "line", 798);
-                // padding is not supported ffmpeg < 0.7 (only using legacy commands which were replaced by vfilter calls)
-                args.push("-vf");
-                _$jscmd("lib/processor.js", "line", 799);
-                args.push("pad=" + this.options.video.pad.w + ":" + this.options.video.pad.h + ":" + this.options.video.pad.x + ":" + this.options.video.pad.y + ":" + this.options.video.padcolor);
-            } else {
-                _$jscmd("lib/processor.js", "line", 805);
-                return new Error("Your ffmpeg version " + this.metaData.ffmpegversion + " does not support padding");
-            }
-        }
-        // add size and output file
-        if (_$jscmd("lib/processor.js", "cond", "810_8_51", _$jscmd("lib/processor.js", "cond", "810_8_23", this.options.video.size) && _$jscmd("lib/processor.js", "cond", "810_35_24", !this.options.video.skip))) {
-            _$jscmd("lib/processor.js", "line", 811);
-            args.push("-s", this.options.video.size);
-        }
-        // add output file fps
-        if (_$jscmd("lib/processor.js", "cond", "815_8_28", this.options.video.fpsOutput)) {
-            _$jscmd("lib/processor.js", "line", 816);
-            args.push("-r", this.options.video.fpsOutput);
-        }
-        if (_$jscmd("lib/processor.js", "cond", "819_8_23", this.options.outputfile)) {
-            _$jscmd("lib/processor.js", "line", 820);
-            var target = this.escapedPath(this.options.outputfile, false);
-            if (_$jscmd("lib/processor.js", "cond", "821_10_23", !os.match(/win(32|64)/))) {
-                _$jscmd("lib/processor.js", "line", 822);
-                args.push("-y", target.replace(" ", "\\ "));
-            } else {
-                _$jscmd("lib/processor.js", "line", 824);
-                args.push("-y", target);
-            }
-        } else {
-            if (_$jscmd("lib/processor.js", "cond", "827_10_20", !overrideOutputCheck)) {
-                _$jscmd("lib/processor.js", "line", 828);
-                this.options.logger.error("no outputfile specified");
-            }
-        }
-        _$jscmd("lib/processor.js", "line", 831);
-        return args;
-    };
-};
-
-/***/ }),
-/* 120 */
-/***/ (function(module, exports) {
-
-
-  // instrument by jscoverage, do not modifly this file
-  (function(file, lines, conds, source) {
-      var BASE;
-      if (typeof global === "object") {
-          BASE = global;
-      } else if (typeof window === "object") {
-          BASE = window;
-      } else {
-          throw new Error("[jscoverage] unknow ENV!");
-      }
-      if (BASE._$jscoverage) {
-          BASE._$jscmd(file, "init", lines, conds, source);
-          return;
-      }
-      var cov = {};
-      /**
-   * jsc(file, 'init', lines, condtions)
-   * jsc(file, 'line', lineNum)
-   * jsc(file, 'cond', lineNum, expr, start, offset)
-   */
-      function jscmd(file, type, line, express, start, offset) {
-          var storage;
-          switch (type) {
-            case "init":
-              if (cov[file]) {
-                  storage = cov[file];
-              } else {
-                  storage = [];
-                  for (var i = 0; i < line.length; i++) {
-                      storage[line[i]] = 0;
-                  }
-                  var condition = express;
-                  var source = start;
-                  storage.condition = condition;
-                  storage.source = source;
-              }
-              cov[file] = storage;
-              break;
-
-            case "line":
-              storage = cov[file];
-              storage[line]++;
-              break;
-
-            case "cond":
-              storage = cov[file];
-              storage.condition[line]++;
-              return express;
-          }
-      }
-      BASE._$jscoverage = cov;
-      BASE._$jscmd = jscmd;
-      jscmd(file, "init", lines, conds, source);
-  })("lib/registry.js", [1,7,13,15,24,21,27], {"6_12_28":0,"12_10_24":0,"20_12_28":0}, ["exports = module.exports = {","  instance: {","    values: [],","    getIndex: function(name) {","      for (var i = 0; i < this.values.length; i++) {","        if (this.values[i].name === name) {","          return i;","        }","      }","    },","    set : function(name, value) {","      if (this.get(name) === false) {","        this.values.push({ name: name, value: value });","      } else {","        this.values[this.getIndex(name)].value = value;","      }","    },","    get: function(name) {","      for (var i = 0; i < this.values.length; i++) {","        if (this.values[i].name === name) {","          return this.values[i].value;","        }","      }","      return false;","    },","    reset: function() {","      this.values = [];","    }","  }","};"]);
-_$jscmd("lib/registry.js", "line", 1);
-
-exports = module.exports = {
-    instance: {
-        values: [],
-        getIndex: function(name) {
-            for (var i = 0; i < this.values.length; i++) {
-                if (_$jscmd("lib/registry.js", "cond", "6_12_28", this.values[i].name === name)) {
-                    _$jscmd("lib/registry.js", "line", 7);
-                    return i;
-                }
-            }
-        },
-        set: function(name, value) {
-            if (_$jscmd("lib/registry.js", "cond", "12_10_24", this.get(name) === false)) {
-                _$jscmd("lib/registry.js", "line", 13);
-                this.values.push({
-                    name: name,
-                    value: value
-                });
-            } else {
-                _$jscmd("lib/registry.js", "line", 15);
-                this.values[this.getIndex(name)].value = value;
-            }
-        },
-        get: function(name) {
-            for (var i = 0; i < this.values.length; i++) {
-                if (_$jscmd("lib/registry.js", "cond", "20_12_28", this.values[i].name === name)) {
-                    _$jscmd("lib/registry.js", "line", 21);
-                    return this.values[i].value;
-                }
-            }
-            _$jscmd("lib/registry.js", "line", 24);
-            return false;
-        },
-        reset: function() {
-            _$jscmd("lib/registry.js", "line", 27);
-            this.values = [];
-        }
-    }
-};
-
-/***/ }),
-/* 121 */
-/***/ (function(module, exports) {
-
-exports = module.exports = function Debug(command) {
-  command.prototype.getCommand = function(outputmethod, callback) {
-    var self = this;
-    this._prepare(function(err, meta) {
-      if (err) {
-        callback(null, err);
-      } else {
-        var args = self.buildFfmpegArgs(true, meta);
-        // kinda hacky, have to make sure the returned object is no array
-        if (args.length === undefined) {
-          callback(null, args);
-        } else {
-          var cmd = '';
-          cmd += 'ffmpeg';
-          args.forEach(function(el) {
-            cmd += ' ' + el;
-          });
-          callback(cmd, null);
-        }
-      }
-    });
-    return this;
-  };
-
-  command.prototype.getArgs = function(callback) {
-    if (callback) {
-      var self = this;
-      this._prepare(function(err, meta) {
-        if (err) {
-          callback(null, err);
-        } else {
-          var args = self.buildFfmpegArgs(true, meta);
-          // kinda hacky, have to make sure the returned object is no array
-          if (args.length === undefined) {
-            callback(null, args);
-          } else {
-            callback(args, null);
-          }
-        }
-      });
-    } else {
-      return this.buildFfmpegArgs(true, null);
-    }
-  };
-};
-
-/***/ }),
-/* 122 */
-/***/ (function(module, exports) {
-
-
-exports = module.exports = function Extensions(command) {
-
-  command.prototype.ffmpegPath = process.env.FFMPEG_PATH || 'ffmpeg';
-
-  command.prototype.setFfmpegPath = function(path) {
-    this.ffmpegPath = path;
-  };
-
-  command.prototype.determineFfmpegPath = function() {
-    if (this.ffmpegPath) {
-      return this.ffmpegPath;
-    }
-    return 'ffmpeg';
-  };
-
-  command.prototype.gcd = function(a, b) {
-    if (!a && !b) {
-      return 0;
-    }
-    while (a !== 0) {
-      var z = b % a;
-      b = a;
-      a = z;
-    }
-    return b;
-  };
-
-  command.prototype.toAspectRatio = function(ar) {
-    var p = ar.split(':');
-    if (p.length !== 2) {
-      return undefined;
-    } else {
-      return {
-        x: parseInt(p[0], 10),
-        y: parseInt(p[1], 10)
-      };
-    }
-  };
-
-  command.prototype.ffmpegTimemarkToSeconds = function(timemark) {
-    if(typeof timemark === 'undefined') return 0;
-
-    var parts = timemark.split(':');
-    var secs = 0;
-
-    // add hours
-    secs += parseInt(parts[0], 10) * 3600;
-    // add minutes
-    secs += parseInt(parts[1], 10) * 60;
-
-    // split sec/msec part
-    var secParts = parts[2].split('.');
-
-    // add seconds
-    secs += parseInt(secParts[0], 10);
-
-    return secs;
-  };
-
-  command.prototype.parseVersionString = function(versionstr) {
-    if (typeof versionstr != 'string' || versionstr.indexOf('.') == -1) {
-      return false;
-    }
-    var x = versionstr.split('.');
-    // parse from string or default to 0 if can't parse
-    var maj = parseInt(x[0], 10) || 0;
-    var min = parseInt(x[1], 10) || 0;
-    var pat = parseInt(x[2], 10) || 0;
-    return {
-      major: maj,
-      minor: min,
-      patch: pat
-    };
-  };
-
-  command.prototype.atLeastVersion = function(actualVersion, minVersion) {
-    var minimum = this.parseVersionString(minVersion);
-    var running = this.parseVersionString(actualVersion);
-
-    // if we can't even parse the version string (affects git builds for windows),
-    // we simply return true and assume a current build
-    if (!running)
-      return true;
-
-    if (running.major !== minimum.major) {
-      return (running.major > minimum.major);
-    } else {
-      if (running.minor !== minimum.minor) {
-        return (running.minor > minimum.minor);
-      } else {
-        if (running.patch !== minimum.patch) {
-          return (running.patch > minimum.patch);
-        } else {
-          return true;
-        }
-      }
-    }
-  };
-};
-
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var path = __webpack_require__(15),
-  async = __webpack_require__(20),
-  exec = __webpack_require__(9).exec,
-  spawn = __webpack_require__(9).spawn;
-
-/* options object consists of the following keys:
- * - source: either a ReadableStream or the path to a file (required)
- * - timeout: timeout in seconds for all ffmpeg sub-processes (optional, defaults to 30)
- * - priority: default-priority for all ffmpeg sub-processes (optional, defaults to 0)
- * - logger: add a winston logging instance (optional, default is no logging)
- * - nolog: completely disables any logging
- */
-function FfmpegCommand(args) {
-  var source = args.source,
-      timeout = args.timeout != null ? args.timeout : 30,
-      priority = args.priority || 0,
-      logger = args.logger || null,
-      nologging = args.nolog || false,
-      inputlive = args.inputlive || false;
-
-  if (!logger || nologging) {
-    // create fake object to route log calls
-    logger = {
-      debug: function() {},
-      info: function() {},
-      warn: function() {},
-      error: function() {}
-    };
-  }
-
-  // make sure execution is not killed on error
-  logger.exitOnError = false;
-
-  // check if argument is a stream
-  var srcstream, srcfile;
-  if (typeof source === 'object') {
-    if (source.readable) {
-      // streaming mode
-      source.pause();
-      srcstream = source;
-      srcfile = source.path;
-    } else {
-      logger.error('Source is not a ReadableStream instance');
-      throw new Error('Source is not a ReadableStream instance');
-    }
-  } else {
-    // file mode
-    srcfile = source;
-  }
-
-  this.options = {
-    _isStreamable: true,
-    _updateFlvMetadata: false,
-    _useConstantVideoBitrate: false,
-    _nice: { level: priority },
-    keepPixelAspect: false,
-    inputfile: srcfile,
-    inputstream: srcstream,
-    inputlive: inputlive,
-    timeout: timeout,
-    mergeList:[],
-    video: {},
-    audio: {},
-    additional: [],
-    otherInputs: [],
-    informInputAudioCodec: null,
-    informInputVideoCodec: null,
-    logger: logger
-  };
-
-  // public chaining methods
-  FfmpegCommand.prototype.usingPreset = function(preset) {
-    // require preset (since require() works like a singleton, multiple calls generate no overhead)
-    try {
-      var module = __webpack_require__(125)("./" + preset);
-      if (typeof module.load === 'function') {
-        module.load(this);
-      }
-      return this;
-    } catch (err) {
-      throw new Error('preset ' + preset + ' could not be loaded');
-    }
-    return this;
-  };
-  FfmpegCommand.prototype.withNoVideo = function() {
-    this.options.video.skip = true;
-    return this;
-  };
-  FfmpegCommand.prototype.withNoAudio = function() {
-    this.options.audio.skip = true;
-    return this;
-  };
-  FfmpegCommand.prototype.withVideoBitrate = function(vbitrate, type) {
-    if (typeof vbitrate === 'string' && vbitrate.indexOf('k') > 0) {
-      vbitrate = vbitrate.replace('k', '');
-    }
-    if (type && type === exports.CONSTANT_BITRATE) {
-      this.options._useConstantVideoBitrate = true;
-    }
-    this.options.video.bitrate = parseInt(vbitrate, 10);
-    return this;
-  };
-  FfmpegCommand.prototype.withSize = function(sizeString) {
-    this.options.video.size = sizeString;
-    return this;
-  };
-  FfmpegCommand.prototype.applyAutopadding = function(autopad, color) {
-    this.options._applyAutopad = autopad;
-    if (!color) {
-      this.options.video.padcolor = 'black';
-    } else {
-      this.options.video.padcolor = color;
-    }
-    return this;
-  };
-  FfmpegCommand.prototype.withFps = function(fps) {
-    this.options.video.fps = fps;
-    return this;
-  };
-  FfmpegCommand.prototype.withFpsInput = function(fps) {
-    this.options.video.fpsInput = fps;
-    return this;
-  };
-  FfmpegCommand.prototype.withStrictExperimental = function() {
-    this.options.strictExperimental = true;
-    return this;
-  }
-  FfmpegCommand.prototype.withFpsOutput = function(fps) {
-    this.options.video.fpsOutput = fps;
-    return this;
-  };
-  FfmpegCommand.prototype.withAspect = function(aspectRatio) {
-    this.options.video.aspect = aspectRatio;
-    return this;
-  };
-  FfmpegCommand.prototype.keepPixelAspect = function(bool) {
-    this.options.keepPixelAspect = bool ? true : false;
-    return this;
-  };
-  FfmpegCommand.prototype.withVideoCodec = function(codec) {
-    this.options.video.codec = codec;
-    return this;
-  };
-  FfmpegCommand.prototype.loop = function(duration) {
-    this.options.video.loop = true;
-    if (duration) {
-      this.options.duration = duration;
-    }
-    return this;
-  };
-  FfmpegCommand.prototype.takeFrames = function(frameCount) {
-    this.options.video.framecount = frameCount;
-    return this;
-  };
-  FfmpegCommand.prototype.withAudioBitrate = function(abitrate) {
-    if (typeof abitrate === 'string' && abitrate.indexOf('k') > 0) {
-      abitrate = abitrate.replace('k', '');
-    }
-    this.options.audio.bitrate = parseInt(abitrate, 10);
-    return this;
-  };
-  FfmpegCommand.prototype.withAudioCodec = function(audiocodec){
-    this.options.audio.codec = audiocodec;
-    return this;
-  };
-  FfmpegCommand.prototype.withAudioChannels = function(audiochannels) {
-    this.options.audio.channels = audiochannels;
-    return this;
-  };
-  FfmpegCommand.prototype.withAudioFrequency = function(frequency) {
-    this.options.audio.frequency = frequency;
-    return this;
-  };
-  FfmpegCommand.prototype.withAudioQuality = function(quality) {
-    this.options.audio.quality = parseInt(quality, 10);
-    return this;
-  };
-  FfmpegCommand.prototype.setStartTime = function(timestamp) {
-    this.options.starttime = timestamp;
-    return this;
-  };
-  FfmpegCommand.prototype.setDuration = function(duration) {
-    this.options.duration = duration;
-    return this;
-  };
-  FfmpegCommand.prototype.addInput = function(inputFile) {
-    this.options.otherInputs.push(inputFile);
-    return this;
-  };
-  FfmpegCommand.prototype.addOptions = function(optionArray) {
-    if (typeof optionArray.length !== undefined) {
-        var self = this;
-        optionArray.forEach(function(el) {
-          if (el.indexOf(' ') > 0) {
-            var values = el.split(' ');
-            self.options.additional.push(values[0], values[1]);
-          } else {
-            self.options.additional.push(el);
-          }
-        });
-    }
-    return this;
-  };
-  FfmpegCommand.prototype.addOption = function(option, value) {
-    this.options.additional.push(option, value);
-    return this;
-  };
-  FfmpegCommand.prototype.mergeAdd = function(path){
-    this.options.mergeList.push(path);
-    return this;
-  };
-
-  FfmpegCommand.prototype.fromFormat = function(format) {
-    this.options.fromFormat = format;
-    return this;
-  };
-
-  FfmpegCommand.prototype.toFormat = function(format) {
-    this.options.format = format;
-    return this;
-  };
-  FfmpegCommand.prototype.updateFlvMetadata = function() {
-    this.options._updateFlvMetadata = true;
-    return this;
-  };
-  FfmpegCommand.prototype.renice = function(level) {
-    if (!level) {
-      // use 0 as default nice level (os default)
-      level = 0;
-    }
-
-    // make sure niceness is within allowed boundaries
-    if (level > 20 || level < -20) {
-      this.options.logger.warn('niceness ' + level + ' is not valid, consider a value between -20 and +20 (whereas -20 is the highest priority)');
-      level = 0;
-    }
-    this.options._nice.level = level;
-    return this;
-  };
-  FfmpegCommand.prototype.onCodecData = function(callback) {
-    this.options.onCodecData = callback;
-    return this;
-  };
-  FfmpegCommand.prototype.onProgress = function(callback) {
-    this.options.onProgress = callback;
-    return this;
-  };
-
-  // private methods
-  FfmpegCommand.prototype._prepare = function(callback) {
-    var calcDimensions = false, calcPadding = false;
-
-    // check for allowed sizestring formats and handle them accordingly
-    var fixedWidth = /([0-9]+)x\?/.exec(this.options.video.size);
-    var fixedHeight = /\?x([0-9]+)/.exec(this.options.video.size);
-    var percentRatio = /\b([0-9]{1,2})%/.exec(this.options.video.size);
-
-    if (!fixedWidth && !fixedHeight && !percentRatio) {
-      // check for invalid size string
-      var defaultSizestring = /([0-9]+)x([0-9]+)/.exec(this.options.video.size);
-      if (this.options.video.size && !defaultSizestring) {
-        callback(new Error('could not parse size string, aborting execution'));
-        return;
-      } else {
-        // get width and height as integers (used for padding calculation)
-        if (defaultSizestring) {
-          this.options.video.width = parseInt(defaultSizestring[1], 10);
-          this.options.video.height = parseInt(defaultSizestring[2], 10);
-        }
-        calcDimensions = false;
-      }
-    } else {
-      calcDimensions = true;
-    }
-
-    // check if we have to check aspect ratio for changes and auto-pad the output
-    if (this.options._applyAutopad) {
-      calcPadding = true;
-    }
-
-    var self = this;
-
-    if (calcDimensions || calcPadding || this.requiresMetaData()) {
-      this.getMetadata(this.options.inputfile, function(meta, err) {
-        self.metaData = meta;
-        var dimErr, padErr;
-        // calculate dimensions
-        if (calcDimensions) {
-          dimErr = self._calculateDimensions(meta);
-        }
-
-        // calculate padding
-        if (calcPadding) {
-          padErr = self._calculatePadding(meta);
-        }
-
-        if (dimErr || padErr) {
-          callback(new Error('error while preparing: dimension -> ' + dimErr + ' padding -> ' + padErr));
-        } else {
-          callback(undefined);
-        }
-      });
-    } else {
-      callback(undefined);
-    }
-  };
-}
-
-// add module methods
-__webpack_require__(122)(FfmpegCommand);
-var metaDataLib = __webpack_require__(124)(FfmpegCommand);
-__webpack_require__(126)(FfmpegCommand);
-__webpack_require__(50)(FfmpegCommand);
-__webpack_require__(121)(FfmpegCommand);
-// module exports
-exports = module.exports = function(args) {
-  return new FfmpegCommand(args);
-};
-
-// export meta data discovery
-
-exports.Metadata = metaDataLib;
-exports.Calculate = __webpack_require__(50);
-
-exports.CONSTANT_BITRATE = 1;
-exports.VARIABLE_BITRATE = 2;
-
-
-/***/ }),
-/* 124 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var exec = __webpack_require__(9).exec,
-  path = __webpack_require__(15),
-  os = __webpack_require__(27).platform();
-
-exports = module.exports = function Metadata(command) {
-  
-  command.prototype.escapedPath = function(path, enclose)  {
-    if(/http/.exec(path)) {
-      path = path.replace(' ', '%20');
-    } else {
-      if (os.match(/win(32|64)/)) {
-        // on windows, we have to fix up the filename
-        var parts = path.split(/\\/gi);
-        var fName = parts[parts.length - 1];
-        parts[parts.length - 1] = fName.replace(/[\s\\:"'*?<>|\/]+/mig, '-');
-        path = parts.join('\\');
-        if (enclose && path[0] != '"' && path[path.length-1] != '"')
-          path = '"' + path + '"'
-      } else {
-        if (enclose && path[0] != '"' && path[path.length-1] != '"')
-          path = '"' + path + '"';
-      }
-    }
-    return path;
-  };
-  // for internal use
-  command.prototype.getMetadata = function(inputfile, callback) {
-    this.inputfile = path.normalize(inputfile);
-    this._loadDataInternal(callback);
-  };
-
-  // for external use
-  command.prototype.get = function(callback) {
-    // import extensions for external call
-    this.inputfile = path.normalize(inputfile);
-    this._loadDataInternal(callback);
-  };
-  command.prototype.meta = function() {
-    if (this.metaData){
-      return this.metaData;
-    }
-    else{
-      return {};
-    }
-  }
-  command.prototype._loadDataInternal = function(callback) {
-    if (this.metaData){
-      return callback(this.metaData);
-    }
-    
-
-    var inputfile = this.escapedPath(this.inputfile, true);
-    var self = this;
-    exec(this.ffmpegPath + ' -i ' + inputfile, function(err, stdout, stderr) {
-      // parse data from stderr
-
-      var none          = []
-        , aspect        = /DAR ([0-9\:]+)/.exec(stderr) || none
-        , pixel        = /[SP]AR ([0-9\:]+)/.exec(stderr) || none
-        , video_bitrate = /bitrate: ([0-9]+) kb\/s/.exec(stderr) || none
-        , fps           = /([0-9\.]+) (fps|tb\(r\))/.exec(stderr) || none
-        , container     = /Input #0, ([a-zA-Z0-9]+),/.exec(stderr) || none
-        , title         = /(INAM|title)\s+:\s(.+)/i.exec(stderr) || none
-        , artist        = /artist\s+:\s(.+)/i.exec(stderr) || none
-        , album         = /album\s+:\s(.+)/i.exec(stderr) || none
-        , track         = /track\s+:\s(.+)/i.exec(stderr) || none
-        , date          = /date\s+:\s(.+)/i.exec(stderr) || none
-        , video_stream  = /Stream #([0-9\.]+)([a-z0-9\(\)\[\]]*)[:] Video/.exec(stderr) || none
-        , video_codec   = /Video: ([\w]+)/.exec(stderr) || none
-        , duration      = /Duration: (([0-9]+):([0-9]{2}):([0-9]{2}).([0-9]+))/.exec(stderr) || none
-        , resolution    = /(([0-9]{2,5})x([0-9]{2,5}))/.exec(stderr) || none
-        , audio_bitrate = /Audio:(.)*, ([0-9]+) kb\/s/.exec(stderr) || none
-        , sample_rate   = /([0-9]+) Hz/i.exec(stderr) || none
-        , audio_codec   = /Audio: ([\w]+)/.exec(stderr) || none
-        , channels      = /Audio: [\w]+, [0-9]+ Hz, ([a-z0-9:]+)[a-z0-9\/,]*/.exec(stderr) || none
-        , audio_stream  = /Stream #([0-9\.]+)([a-z0-9\(\)\[\]]*)[:] Audio/.exec(stderr) || none
-        , is_synched    = (/start: 0.000000/.exec(stderr) !== null)
-        , rotate        = /rotate[\s]+:[\s]([\d]{2,3})/.exec(stderr) || none
-        , getVersion    = /ffmpeg version (?:(\d+)\.)?(?:(\d+)\.)?(\*|\d+)/i.exec(stderr)
-        , major_brand   = /major_brand\s+:\s([^\s]+)/.exec(stderr) || none
-        , ffmpegVersion = 0;
-
-      if (getVersion) {
-        ffmpegVersion = [
-          getVersion[1]>=0 ? getVersion[1] : null,
-          getVersion[2]>=0 ? getVersion[2] : null,
-          getVersion[3]>=0 ? getVersion[3] : null
-          ].filter(function(val) {
-            return val !== null;
-          }).join('.');
-      }
-
-      // build return object
-      var _ref
-        , ret = {
-        ffmpegversion: ffmpegVersion
-        , title: title[2] || ''
-        , artist: artist[1] || ''
-        , album: album[1] || ''
-        , track: track[1] || ''
-        , date: date[1] || ''
-        , durationraw: duration[1] || ''
-        , durationsec: duration[1] ? self.ffmpegTimemarkToSeconds(duration[1]) : 0
-        , synched: is_synched
-        , major_brand: major_brand[1]
-        , video: {
-          container: container[1] || ''
-          , bitrate: (video_bitrate.length > 1) ? parseInt(video_bitrate[1], 10) : 0
-          , codec: video_codec[1] || ''
-          , resolution: {
-            w: resolution.length > 2 ? parseInt(resolution[2], 10) : 0
-            , h: resolution.length > 3 ? parseInt(resolution[3], 10) : 0
-          }
-          , resolutionSquare: {}
-          , rotate: rotate.length > 1 ? parseInt(rotate[1], 10) : 0
-          , fps: fps.length > 1 ? parseFloat(fps[1]) : 0.0
-          , stream: video_stream.length > 1 ? parseFloat(video_stream[1]) : 0.0
-        }
-        , audio: {
-          codec: audio_codec[1] || ''
-          , bitrate: parseInt((_ref = audio_bitrate[audio_bitrate.length - 1]) != null ? _ref : 0, 10)
-          , sample_rate: sample_rate.length > 1 ? parseInt(sample_rate[1], 10) : 0
-          , stream: audio_stream.length > 1 ? parseFloat(audio_stream[1]) : 0.0
-        }
-      };
-
-      if (channels.length > 0) {
-        ret.audio.channels = {stereo:2, mono:1}[channels[1]] || 0;
-      }
-
-      // save aspect ratio for auto-padding
-      if (aspect.length > 0) {
-        ret.video.aspectString = aspect[1];
-        var n = aspect[1].split(":");
-        ret.video.aspect = parseFloat((parseInt(n[0], 10) / parseInt(n[1], 10)));
-      } else {
-        if(ret.video.resolution.w !== 0) {
-          var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);
-          ret.video.aspectString = ret.video.resolution.w/f + ':' + ret.video.resolution.h/f;
-          ret.video.aspect = parseFloat((ret.video.resolution.w / ret.video.resolution.h));
-        } else {
-          ret.video.aspect = 0.0;
-        }
-      }
-
-      // save pixel ratio for output size calculation
-      if (pixel.length > 0) {
-        ret.video.pixelString = pixel[1];
-        var n = pixel[1].split(":");
-        ret.video.pixel = parseFloat((parseInt(n[0], 10) / parseInt(n[1], 10)));
-      } else {
-        if (ret.video.resolution.w !== 0) {
-          var f = self.gcd(ret.video.resolution.w, ret.video.resolution.h);
-          ret.video.pixelString = '1:1';
-          ret.video.pixel = 1;
-        } else {
-          ret.video.pixel = 0.0;
-        }
-      }
-
-      // correct video.resolution when pixel aspectratio is not 1
-      if (ret.video.pixel !== 1 || ret.video.pixel !== 0) {
-        if( ret.video.pixel > 1 ) {
-          ret.video.resolutionSquare.w = parseInt(ret.video.resolution.w * ret.video.pixel, 10);
-          ret.video.resolutionSquare.h = ret.video.resolution.h;
-        } else {
-          ret.video.resolutionSquare.w = ret.video.resolution.w;
-          ret.video.resolutionSquare.h = parseInt(ret.video.resolution.h / ret.video.pixel, 10);
-        }
-      }
-
-      self.metaData = ret;
-
-      callback(ret);
-    });
-  };
-  
-  command.prototype.requiresMetaData = function() {
-    
-    if (this.options.video.pad && !this.options.video.skip)
-    {
-      return true;
-    }
-
-    if (this.options.onProgress)
-    {
-      return true;
-    }
-
-    if (this.options.requireMetaData)
-    {
-      return true;
-    }
-    if(this.options.video.loop){
-      return true;
-    }
-    return false;
-  };
-  return  function(filename,callback){
-      var cmd = new command({}).getMetadata(filename, callback);
-    }
-  
-};
-
-
-
-/***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var map = {
-	"./divx": 51,
-	"./divx.js": 51,
-	"./flashvideo": 52,
-	"./flashvideo.js": 52,
-	"./podcast": 53,
-	"./podcast.js": 53
-};
-function webpackContext(req) {
-	return __webpack_require__(webpackContextResolve(req));
-};
-function webpackContextResolve(req) {
-	var id = map[req];
-	if(!(id + 1)) // check for number or string
-		throw new Error("Cannot find module '" + req + "'.");
-	return id;
-};
-webpackContext.keys = function webpackContextKeys() {
-	return Object.keys(map);
-};
-webpackContext.resolve = webpackContextResolve;
-module.exports = webpackContext;
-webpackContext.id = 125;
-
-/***/ }),
-/* 126 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var fs       = __webpack_require__(26),
-    path     = __webpack_require__(15),
-    async    = __webpack_require__(20),
-    os       = __webpack_require__(27).platform(),
-    exec     = __webpack_require__(9).exec,
-    spawn    = __webpack_require__(9).spawn,
-    Registry = __webpack_require__(127),
-
-exports = module.exports = function Processor(command) {
-  // constant for timeout checks
-  command.prototype.E_PROCESSTIMEOUT = -99;
-  command.prototype._codecDataAlreadySent = false;
-
-  command.prototype.saveToFile = function(targetfile, callback) {
-
-    callback = callback || function() {};
-
-    this.options.outputfile = path.normalize(targetfile);
-
-    var self = this;
-    var options = this.options;
-
-    // parse options to command
-    this._prepare(function(err) {
-
-      if (err) {
-        return callback(null, null, err);
-      }
-
-      var args = self.buildFfmpegArgs(false);
-
-      if (!args instanceof Array) {
-        return callback (null, null, args);
-      }
-
-      // start conversion of file using spawn
-      var ffmpegProc = self._spawnProcess(args);
-      if (options.inputstream) {
-        // pump input stream to stdin
-        options.inputstream.resume();
-        options.inputstream.pipe(ffmpegProc.stdin);
-      }
-
-      //handle timeout if set
-      var processTimer;
-      if (options.timeout) {
-        processTimer = setTimeout(function() {
-          ffmpegProc.removeAllListeners('exit');
-          ffmpegProc.kill('SIGKILL');
-          options.logger.warn('process ran into a timeout (' + self.options.timeout + 's)');
-          callback(self.E_PROCESSTIMEOUT, 'timeout');
-        }, options.timeout * 1000);
-      }
-
-      var stdout = '';
-      var stderr = '';
-      ffmpegProc.on('exit', function(code) {
-        if (processTimer) {
-          clearTimeout(processTimer);
-        }
-        if (code != 0) {
-          var err = new Error('ffmpeg returned with code: ' + code);
-          return callback(stdout, stderr, err);
-        }
-        // check if we have to run flvtool2 to update flash video meta data
-        if (self.options._updateFlvMetadata === true) {
-          // make sure we didn't try to determine this capability before
-          if (!Registry.instance.get('capabilityFlvTool2')) {
-            // check if flvtool2 is installed
-            exec('which flvtool2', function(whichErr, whichStdOut, whichStdErr) {
-              if (whichStdOut !== '') {
-                Registry.instance.set('capabilityFlvTool2', true);
-                // update metadata in flash video
-                exec('flvtool2 -U ' + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {
-                  callback(stdout, stderr, null);
-                });
-              } else {
-                // flvtool2 is not installed, skip further checks
-                Registry.instance.set('capabilityFlvTool2', false);
-                callback(stdout, stderr, null);
-              }
-            });
-          } else if (!Registry.instance.get('capabilityFlvTool2')) {
-            // flvtool2 capability was checked before, execute update
-            exec('flvtool2 -U ' + self.options.outputfile, function(flvtoolErr, flvtoolStdout, flvtoolStderr) {
-              callback(stdout, stderr, null);
-            });
-          } else {
-            // flvtool2 not installed, skip update
-            callback(stdout, stderr, null);
-          }
-        } else {
-          callback(stdout, stderr, null);
-        }
-      });
-      ffmpegProc.stdout.on('data', function (data) {
-        stdout += data;
-      });
-
-      ffmpegProc.stderr.on('data', function (data) {
-        stderr += data;
-        if (options.onCodecData) {
-          self._checkStdErrForCodec(stderr);
-        }
-        if (options.onProgress) {
-          self._getProgressFromStdErr(stderr, self.metaData.durationsec);
-        }
-      });
-    });
-  };
-
-  command.prototype.mergeToFile = function(targetfile,callback){
-    this.options.outputfile = path.normalize(targetfile);
-    if(fs.existsSync(this.options.outputfile)){
-      console.log("outputfile already exists. Do not merge.");
-      return;
-    }
-    var self = this;
-    var options = this.options;
-
-    var getExtension = function(filename) {
-        var filename = path.normalize(filename) || '';
-        var ext = path.extname(filename).split('.');
-        return ext[ext.length - 1];
-    };
-
-    // creates intermediate copies of each video.
-    var makeIntermediateFile = function(_mergeSource,_callback){
-        var fname =  _mergeSource+".temp.mpg";
-        var command = [
-            self.ffmpegPath,
-            [
-                '-i', _mergeSource,
-                '-qscale:v',1,
-                fname
-            ].join(' ')
-        ];
-        exec(command.join(' '),function(err, stdout, stderr) {
-            if(err)throw err;
-            _callback(fname);
-        });
-    };
-
-    // concat all created intermediate copies
-    var concatIntermediates = function(target,intermediatesList,_callback){
-        var fname =  path.normalize(target)+".temp.merged.mpg";
-        // unescape paths
-        for(var i=0; i<intermediatesList.length; i++){
-            intermediatesList[i] = unescapePath(intermediatesList[i]);
-        }
-
-        var command = [
-            self.ffmpegPath,
-            [
-                '-loglevel','panic', //Generetes too much muxing warnings and fills default buffer of exec. This is to ignore them.
-                '-i', 'concat:"'+intermediatesList.join("|")+'"',
-                '-c',"copy",
-                fname
-            ].join(' ')
-        ];
-        exec(command.join(' '), function(err, stdout, stderr) {
-            if(err)throw err;
-            _callback(fname);
-        });
-    };
-
-    var quantizeConcat = function(concatResult,numFiles,_callback){
-        var command = [
-            self.ffmpegPath,
-            [
-                '-i', concatResult,
-                '-qscale:v',numFiles,
-                targetfile
-            ].join(' ')
-        ];
-        exec(command.join(' '), function(err, stdout, stderr) {
-            if(err)throw err;
-            _callback();
-        });
-    }
-
-    var deleteIntermediateFiles = function(intermediates,callback){
-        async.each(intermediates,function(item,cb){
-            fs.exists(unescapePath(item),function(exists){
-              if(exists){
-                fs.unlink(unescapePath(item),function (err) {
-                  if (err){
-                    cb(err);
-                  }
-                  else{
-                    cb();
-                  }
-                });
-              }
-              else{
-                cb();
-              }
-
-            });
-
-        },callback);
-
-    }
-
-    var unescapePath = function(path){
-        var f = path+"";
-        if(f.indexOf('"')==0)f = f.substring(1);
-        if(f.lastIndexOf('"')== f.length-1)f = f.substring(0, f.length-1);
-        return f;
-    }
-
-    var makeProgress = function(){
-      progress.createdFiles = progress.createdFiles + 1;
-      progress.precent = progress.createdFiles/progress.totalFiles*100;
-      progressCallback(progress);
-    }
-
-    if(options.mergeList.length<=0)throw new Error("No file added to be merged");
-
-    var mergeList = options.mergeList;
-    mergeList.unshift(options.inputfile);
-
-    var progressCallback = this.options.onProgress || function(){};
-    var progress = {frames : 0,
-                    currentFps: 0,
-                    currentKbps: 0,
-                    targetSize: 0,
-                    timemark: 0,
-                    percent: 0,
-                    totalFiles: mergeList.length + 2,
-                    createdFiles: 0}
-
-    var toDelete = mergeList.map(function(name){return name + ".temp.mpg"});
-    toDelete.push(this.options.outputfile + ".temp.merged.mpg");
-    deleteIntermediateFiles(toDelete);
-
-
-    var intermediateFiles = [];
-
-    async.whilst(function(){
-        return (mergeList.length != 0);
-    },function(callback){
-        makeIntermediateFile(mergeList.shift(),function(createdIntermediateFile){
-            if(!createdIntermediateFile)throw new Error("Invalid intermediate file");
-            intermediateFiles.push(createdIntermediateFile);
-            makeProgress();
-            callback();
-        })
-    },function(err){
-        if(err)throw err;
-        concatIntermediates(targetfile,intermediateFiles,function(concatResult){
-            if(!concatResult)throw new Error("Invalid concat result file");
-            makeProgress();
-            quantizeConcat(concatResult,intermediateFiles.length,function(){
-                makeProgress();
-                intermediateFiles.push(concatResult); // add concatResult to intermediates list so it can be deleted too.
-                deleteIntermediateFiles(intermediateFiles,callback);
-            });
-        });
-    });
-
-  }
-
-  command.prototype.writeToStream = function(stream, callback) {
-
-    callback = callback || function(){};
-
-    if (!this.options._isStreamable) {
-      this.options.logger.error('selected output format is not streamable');
-      return callback(null, new Error('selected output format is not streamable'));
-    }
-
-    var self    = this;
-    var options = this.options;
-
-    // parse options to command
-    this._prepare(function(err) {
-      if (err) {
-        return callback(null, err);
-      }
-
-      var args = self.buildFfmpegArgs(true);
-
-      if (!args instanceof Array) {
-        return callback(null, args);
-      }
-      // write data to stdout
-      args.push('pipe:1');
-
-      // start conversion of file using spawn
-      var ffmpegProc = self._spawnProcess(args);
-
-      if (options.inputstream) {
-        // pump input stream to stdin
-        options.inputstream.resume();
-        options.inputstream.pipe(ffmpegProc.stdin);
-        options.inputstream.on('error', function(){
-          options.logger.debug("input stream closed, killing ffmpgeg process");
-          ffmpegProc.kill();
-        });
-      }
-
-      //handle timeout if set
-      var processTimer;
-      if (options.timeout) {
-        processTimer = setTimeout(function() {
-          ffmpegProc.removeAllListeners('exit');
-          ffmpegProc.kill('SIGKILL');
-          options.logger.warn('process ran into a timeout (' + options.timeout + 's)');
-          callback(self.E_PROCESSTIMEOUT, 'timeout');
-        }, options.timeout * 1000);
-      }
-
-      var stderr = '';
-
-      ffmpegProc.stderr.on('data', function(data) {
-        stderr += data;
-        if (options.onCodecData) {
-          self._checkStdErrForCodec(stderr);
-        }
-        if (options.onProgress) {
-          self._getProgressFromStdErr(stderr, self.metaData.durationsec);
-        }
-      });
-
-      ffmpegProc.stdout.on('data', function(chunk) {
-        stream.write(chunk);
-      });
-
-      ffmpegProc.on('exit', function(code, signal) {
-        if (processTimer) {
-          clearTimeout(processTimer);
-        }
-        // close file descriptor on outstream
-        if(/^[a-z]+:\/\//.test(options.inputfile)) {
-          return callback(code, stderr);
-        }
-
-        var cb_ = function() {
-          if (!options.inputstream || !options.inputstream.fd) {
-            return callback(code, stderr);
-          }
-          if (!options.inputstream.fd) {
-            options.inputstream.destroy();
-            return callback(code, stderr);
-          }
-          fs.close(options.inputstream.fd, function() {
-            callback(code, stderr);
-          });
-        };
-
-        if (stream.fd) {
-          return fs.close(stream.fd, cb_);
-        }
-        if (stream.end) {
-          stream.end();
-        } else {
-          callback(code, "stream will not be closed");
-        }
-        cb_();
-      });
-
-      stream.on("close", function()
-      {
-        options.logger.debug("Output stream closed, killing ffmpgeg process");
-        ffmpegProc.kill();
-      });
-    });
-  };
-
-  command.prototype.takeScreenshots = function(config, folder, callback) {
-
-    callback = callback || function(){};
-
-    function _zeroPad(number, len) {
-      len = len-String(number).length+2;
-      return new Array(len<0?0:len).join('0')+number;
-    }
-
-    function _renderOutputName(j, offset) {
-      var result = filename;
-      if(/%0*i/.test(result)) {
-        var numlen = String(result.match(/%(0*)i/)[1]).length;
-        result = result.replace(/%0*i/, _zeroPad(j, numlen));
-      }
-      result = result.replace('%s', offset);
-      result = result.replace('%w', self.options.video.width);
-      result = result.replace('%h', self.options.video.height);
-      result = result.replace('%r', self.options.video.width+'x'+self.options.video.height);
-      result = result.replace('%f', path.basename(self.options.inputfile));
-      result = result.replace('%b', path.basename(self.options.inputfile, path.extname(self.options.inputfile)));
-      return result;
-    }
-
-    function _screenShotInternal(callback) {
-
-      // get correct dimensions
-      self._prepare(function(err) {
-        if(err) {
-          return callback(err);
-        }
-        if (!self.metaData.durationsec) {
-          var errString = 'meta data contains no duration, aborting screenshot creation';
-          self.options.logger.warn(errString);
-          return callback(new Error(errString));
-        }
-
-        // check if all timemarks are inside duration
-        if (Array.isArray(timemarks)) {
-          for (var i = 0; i < timemarks.length; i++) {
-            /* convert percentage to seconds */
-            if( timemarks[i].indexOf('%') > 0 ) {
-              timemarks[i] = (parseInt(timemarks[i], 10) / 100) * self.metaData.durationsec;
-            }
-            if (parseInt(timemarks[i], 10) > self.metaData.durationsec) {
-              // remove timemark from array
-              timemarks.splice(i, 1);
-              --i;
-            }
-          }
-          // if there are no more timemarks around, add one at end of the file
-          if (timemarks.length === 0) {
-            timemarks[0] = (self.metaData.durationsec * 0.9);
-          }
-        }
-        // get positions for screenshots (using duration of file minus 10% to remove fade-in/fade-out)
-        var secondOffset = (self.metaData.durationsec * 0.9) / screenshotcount;
-        var donecount = 0;
-        var series = [];
-
-        // reset iterator
-        var j = 1;
-
-        var filenames = [];
-
-        // use async helper function to generate all screenshots and
-        // fire callback just once after work is done
-        async.until(
-          function() {
-            return j > screenshotcount;
-          },
-          function(taskcallback) {
-            var offset;
-            if (Array.isArray(timemarks)) {
-              // get timemark for current iteration
-              offset = timemarks[(j - 1)];
-            } else {
-              offset = secondOffset * j;
-            }
-            var fname = _renderOutputName(j, offset) + (fileextension ? fileextension : '.jpg');
-            var target = self.escapedPath(path.join(folder, fname), true);
-            var input = self.escapedPath(self.options.inputfile, true);
-
-            // build screenshot command
-            var command = [
-              self.ffmpegPath,
-              [
-                '-ss', Math.floor(offset * 100) / 100,
-                '-i', input,
-                '-vcodec', 'mjpeg',
-                '-vframes', '1',
-                '-an',
-                '-f', 'rawvideo',
-                '-s', self.options.video.size,
-                '-y', target
-                ].join(' ')
-            ];
-
-            j++;
-
-            // only set niceness if running on a non-windows platform
-            if (self.options.hasOwnProperty('_nice.level') && !os.match(/win(32|64)/)) {
-              // execute ffmpeg through nice
-              command.unshift('nice -n', self.options._nice.level||0);
-            }
-
-            exec(command.join(' '), taskcallback);
-            filenames.push(fname);
-          },
-          function(err) {
-            callback(err, filenames);
-          }
-        );
-      });
-    }
-
-    var timemarks, screenshotcount, filename, fileextension;
-    if (typeof config === 'object') {
-      // use json object as config
-      if (config.count) {
-        screenshotcount = config.count;
-      }
-      if (config.timemarks) {
-        timemarks = config.timemarks;
-      }
-      if (config.fileextension){
-        fileextension = config.fileextension;
-      }
-    } else {
-      // assume screenshot count as parameter
-      screenshotcount = config;
-      timemarks = null;
-    }
-    if (!this.options.video.size) {
-      this.options.logger.warn("set size of thumbnails using 'withSize' method");
-      callback(new Error("set size of thumbnails using 'withSize' method"));
-    }
-
-    filename = config.filename || 'tn_%ss';
-    if(!/%0*i/.test(filename) && Array.isArray(timemarks) && timemarks.length > 1 ) {
-      // if there are multiple timemarks but no %i in filename add one
-      // so we won't overwrite the same thumbnail with each timemark
-      filename += '_%i';
-    }
-    folder = folder || '.';
-
-    var self = this;
-
-    // WORKAROUND: exists will be moved from path to fs with node v0.7
-    var check = fs.exists;
-    if (!check) {
-      check = path.exists;
-    }
-
-    this.options.requireMetaData = true;
-
-    // check target folder
-    check(folder, function(exists) {
-      if (!exists) {
-        fs.mkdir(folder, '0755', function(err) {
-          if (err !== null) {
-            callback(err);
-          } else {
-            _screenShotInternal(callback);
-          }
-        });
-      } else {
-        _screenShotInternal(callback);
-      }
-    });
-  };
-
-  command.prototype._getProgressFromStdErr = function(stderrString, totalDurationSec) {
-    // get last stderr line
-    var lastLine = stderrString.split(/\r\n|\r|\n/g);
-    var ll = lastLine[lastLine.length - 2];
-    var progress;
-    if (ll) {
-      progress = this._parseProgressLine(ll);
-    }
-    if (progress) {
-      // build progress report object
-      var ret = {
-        frames: parseInt(progress.frame, 10),
-        currentFps: parseInt(progress.fps, 10),
-        currentKbps: parseFloat(progress.bitrate.replace("kbits/s", "")),
-        targetSize: parseInt(progress.size, 10),
-        timemark: progress.time
-      };
-
-      // calculate percent progress using duration
-      if (totalDurationSec && totalDurationSec > 0) {
-        ret.percent = (this.ffmpegTimemarkToSeconds(ret.timemark) / totalDurationSec) * 100;
-      }
-
-      this.options.onProgress(ret);
-    }
-  };
-
-  command.prototype._parseProgressLine = function(line) {
-    var progress = {};
-
-    // Remove all spaces after = and trim
-    line  = line.replace(/=\s+/g, '=').trim()
-    progressParts = line.split(' ')
-
-    // Split every progress part by "=" to get key and value
-    for(var i = 0; i < progressParts.length; i++) {
-      var progressSplit = progressParts[i].split("=", 2)
-        , key = progressSplit[0]
-        , value = progressSplit[1]
-
-      // This is not a progress line
-      if(typeof value === "undefined")
-        return null;
-
-      progress[key] = value
-    }
-
-    return progress
-  };
-
-  command.prototype._checkStdErrForCodec = function(stderrString) {
-    var format= /Input #[0-9]+, ([^ ]+),/.exec(stderrString);
-    var dur   = /Duration\: ([^,]+)/.exec(stderrString);
-    var audio = /Audio\: (.*)/.exec(stderrString);
-    var video = /Video\: (.*)/.exec(stderrString);
-    var codecObject = { format: '', audio: '', video: '', duration: '' };
-
-    if (format && format.length > 1) {
-      codecObject.format = format[1];
-    }
-
-    if (dur && dur.length > 1) {
-      codecObject.duration = dur[1];
-    }
-
-    if (audio && audio.length > 1) {
-      audio = audio[1].split(', ');
-      codecObject.audio = audio[0];
-      codecObject.audio_details = audio;
-    }
-    if (video && video.length > 1) {
-      video = video[1].split(', ');
-      codecObject.video = video[0];
-      codecObject.video_details = video;
-    }
-
-    var codecInfoPassed = /Press (\[q\]|ctrl-c) to stop/.test(stderrString);
-    if (codecInfoPassed) {
-      this.options.onCodecData(codecObject);
-      this.options.onCodecData = null;
-    }
-  };
-
-  command.prototype._spawnProcess = function(args, options) {
-    var retProc = spawn(this.ffmpegPath, args, options);
-    // only re-nice if running on a non-windows platform
-    if (this.options.hasOwnProperty('_nice.level') && !os.match(/win(32|64)/)) {
-      var niceLevel = this.options._nice.level || 0;
-      if (niceLevel > 0) {
-        niceLevel = '+' + niceLevel;
-      }
-      // renice the spawned process without waiting for callback
-      var self = this;
-      var command = [
-        'renice -n', niceLevel,
-        '-p', retProc.pid
-      ].join(' ');
-
-      exec(command, function(err, stderr, stdout) {
-        if (!err) {
-          self.options.logger.info('successfully reniced process ' + retProc.pid + ' to ' + niceLevel + ' niceness!');
-        }
-      });
-    }
-    if (retProc.stderr) {
-      retProc.stderr.setEncoding('utf8');
-    }
-    return retProc;
-  };
-
-  command.prototype.buildFfmpegArgs = function(overrideOutputCheck) {
-    var args = [];
-
-    // add startoffset and duration
-    if (this.options.starttime) {
-      args.push('-ss', this.options.starttime);
-    }
-
-    if (this.options.video.loop) {
-      if (this.atLeastVersion(this.meta().ffmpegversion, '0.9')){
-        args.push('-loop', 1);
-      }
-      else{
-        args.push('-loop_output', 1);
-      }
-    }
-
-
-    // add input format
-    if (this.options.fromFormat) {
-      args.push('-f', this.options.fromFormat);
-    }
-
-    // add input file (if using fs mode)
-    if (this.options.inputfile && !this.options.inputstream && !this.options.inputlive) {
-      // add input file fps
-      if (this.options.video.fpsInput) {
-        args.push('-r', this.options.video.fpsInput);
-      }
-      if (/^[a-z]+:\/\//.test(this.options.inputfile)) {
-        args.push('-i', this.options.inputfile.replace(' ', '%20'));
-      } else if (/%\d*d/.test(this.options.inputfile)) { // multi-file format - http://ffmpeg.org/ffmpeg.html#image2-1
-        args.push('-i', this.options.inputfile.replace(' ', '\ '));
-      } else {
-        var fstats = fs.statSync(this.options.inputfile);
-        if (fstats.isFile()) {
-          // fix for spawn call with path containing spaces and quotes
-          args.push('-i', this.options.inputfile.replace(/ /g, "\ ")
-            .replace(/'/g, "\'")
-            .replace(/"/g, "\""));
-        } else {
-          this.options.logger.error('input file is not readable');
-          throw new Error('input file is not readable');
-        }
-      }
-    // check for input stream
-    } else if (this.options.inputstream) {
-      // push args to make ffmpeg read from stdin
-      args.push('-i', '-');
-    } else if (this.options.inputlive){
-    	//Check if input URI
-    	if(/^[a-z]+:\/\//.test(this.options.inputfile)) {
-    		// add input with live flag
-    		args.push('-i', this.options.inputfile.replace(' ', '%20')+' live=1');
-    	}else {
-    		this.options.logger.error('live input URI is not valid');
-    		throw new Error('live input URI is not valid');
-    	}
-    }
-
-    if (this.options.otherInputs) {
-      if (this.options.otherInputs.length > 0) {
-        this.options.otherInputs.forEach(function(el) {
-          args.push('-i', el);
-        });
-      }
-    }
-
-    if (this.options.strictExperimental) {
-      args.push('-strict', 'experimental');
-    }
-
-    if (this.options.duration) {
-      args.push('-t', this.options.duration);
-    }
-
-    if (this.options.video.framecount) {
-      args.push('-vframes', this.options.video.framecount);
-    }
-
-    // add format
-    if (this.options.format) {
-      args.push('-f', this.options.format);
-    }
-
-    // add video options
-    if (this.options.video.skip) {
-      // skip video stream completely (#45)
-      args.push('-vn');
-    } else {
-      if (this.options.video.bitrate) {
-        args.push('-b:v', this.options.video.bitrate + 'k');
-        if (this.options._useConstantVideoBitrate) {
-          // add parameters to ensure constant bitrate encoding
-          args.push('-maxrate', this.options.video.bitrate + 'k');
-          args.push('-minrate', this.options.video.bitrate + 'k');
-          args.push('-bufsize', '3M');
-        }
-      }
-      if (this.options.video.codec) {
-        args.push('-vcodec', this.options.video.codec);
-      }
-      if (this.options.video.fps) {
-        args.push('-r', this.options.video.fps);
-      }
-      if (this.options.video.aspect) {
-        args.push('-aspect', this.options.video.aspect);
-      }
-    }
-
-    // add video options
-    if (this.options.audio.skip) {
-      // skip audio stream completely (#45)
-      args.push('-an');
-    } else {
-      if (this.options.audio.bitrate) {
-        args.push('-b:a', this.options.audio.bitrate + 'k');
-      }
-      if (this.options.audio.channels) {
-        args.push('-ac', this.options.audio.channels);
-      }
-      if (this.options.audio.codec) {
-        args.push('-acodec', this.options.audio.codec);
-      }
-      if (this.options.audio.frequency) {
-        args.push('-ar', this.options.audio.frequency);
-      }
-      if (this.options.audio.quality || this.options.audio.quality === 0) {
-        args.push('-aq', this.options.audio.quality);
-      }
-    }
-
-    // add additional options
-    if (this.options.additional) {
-      if (this.options.additional.length > 0) {
-        this.options.additional.forEach(function(el) {
-          args.push(el);
-        });
-      }
-    }
-
-    if (this.options.video.pad && !this.options.video.skip) {
-      // we have padding arguments, push
-      if (this.atLeastVersion(this.metaData.ffmpegversion, '0.7')) {
-        // padding is not supported ffmpeg < 0.7 (only using legacy commands which were replaced by vfilter calls)
-        args.push('-vf');
-        args.push('pad=' + this.options.video.pad.w +
-          ':' + this.options.video.pad.h +
-          ':' + this.options.video.pad.x +
-          ':' + this.options.video.pad.y +
-          ':' + this.options.video.padcolor);
-      } else {
-        return new Error("Your ffmpeg version " + this.metaData.ffmpegversion + " does not support padding");
-      }
-    }
-
-    // add size and output file
-    if (this.options.video.size && !this.options.video.skip) {
-      args.push('-s', this.options.video.size);
-    }
-
-    // add output file fps
-    if (this.options.video.fpsOutput) {
-      args.push('-r', this.options.video.fpsOutput);
-    }
-
-    if (this.options.outputfile) {
-      var target = this.escapedPath(this.options.outputfile, false);
-      if (!os.match(/win(32|64)/)) {
-        args.push('-y', target.replace(' ', '\\ '));
-      } else {
-        args.push('-y', target);
-      }
-    } else {
-      if (!overrideOutputCheck) {
-        this.options.logger.error('no outputfile specified');
-      }
-    }
-    return args;
-  };
-
-};
-
-
-/***/ }),
-/* 127 */
-/***/ (function(module, exports) {
-
-exports = module.exports = {
-  instance: {
-    values: [],
-    getIndex: function(name) {
-      for (var i = 0; i < this.values.length; i++) {
-        if (this.values[i].name === name) {
-          return i;
-        }
-      }
-    },
-    set : function(name, value) {
-      if (this.get(name) === false) {
-        this.values.push({ name: name, value: value });
-      } else {
-        this.values[this.getIndex(name)].value = value;
-      }
-    },
-    get: function(name) {
-      for (var i = 0; i < this.values.length; i++) {
-        if (this.values[i].name === name) {
-          return this.values[i].value;
-        }
-      }
-      return false;
-    },
-    reset: function() {
-      this.values = [];
-    }
-  }
-};
-
-/***/ }),
-/* 128 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isFunction = __webpack_require__(55)
+var isFunction = __webpack_require__(39)
 
 module.exports = forEach
 
@@ -61858,357 +51371,15 @@ function forEachObject(object, iterator, context) {
 
 
 /***/ }),
-/* 129 */,
-/* 130 */
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var domWalk = __webpack_require__(45)
-
-var Comment = __webpack_require__(131)
-var DOMText = __webpack_require__(133)
-var DOMElement = __webpack_require__(56)
-var DocumentFragment = __webpack_require__(132)
-var Event = __webpack_require__(134)
-var dispatchEvent = __webpack_require__(58)
-var addEventListener = __webpack_require__(57)
-var removeEventListener = __webpack_require__(59)
-
-module.exports = Document;
-
-function Document() {
-    if (!(this instanceof Document)) {
-        return new Document();
-    }
-
-    this.head = this.createElement("head")
-    this.body = this.createElement("body")
-    this.documentElement = this.createElement("html")
-    this.documentElement.appendChild(this.head)
-    this.documentElement.appendChild(this.body)
-    this.childNodes = [this.documentElement]
-    this.nodeType = 9
-}
-
-var proto = Document.prototype;
-proto.createTextNode = function createTextNode(value) {
-    return new DOMText(value, this)
-}
-
-proto.createElementNS = function createElementNS(namespace, tagName) {
-    var ns = namespace === null ? null : String(namespace)
-    return new DOMElement(tagName, this, ns)
-}
-
-proto.createElement = function createElement(tagName) {
-    return new DOMElement(tagName, this)
-}
-
-proto.createDocumentFragment = function createDocumentFragment() {
-    return new DocumentFragment(this)
-}
-
-proto.createEvent = function createEvent(family) {
-    return new Event(family)
-}
-
-proto.createComment = function createComment(data) {
-    return new Comment(data, this)
-}
-
-proto.getElementById = function getElementById(id) {
-    id = String(id)
-
-    var result = domWalk(this.childNodes, function (node) {
-        if (String(node.id) === id) {
-            return node
-        }
-    })
-
-    return result || null
-}
-
-proto.getElementsByClassName = DOMElement.prototype.getElementsByClassName
-proto.getElementsByTagName = DOMElement.prototype.getElementsByTagName
-proto.contains = DOMElement.prototype.contains
-
-proto.removeEventListener = removeEventListener
-proto.addEventListener = addEventListener
-proto.dispatchEvent = dispatchEvent
-
-
-/***/ }),
-/* 131 */
-/***/ (function(module, exports) {
-
-module.exports = Comment
-
-function Comment(data, owner) {
-    if (!(this instanceof Comment)) {
-        return new Comment(data, owner)
-    }
-
-    this.data = data
-    this.nodeValue = data
-    this.length = data.length
-    this.ownerDocument = owner || null
-}
-
-Comment.prototype.nodeType = 8
-Comment.prototype.nodeName = "#comment"
-
-Comment.prototype.toString = function _Comment_toString() {
-    return "[object Comment]"
-}
-
-
-/***/ }),
-/* 132 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var DOMElement = __webpack_require__(56)
-
-module.exports = DocumentFragment
-
-function DocumentFragment(owner) {
-    if (!(this instanceof DocumentFragment)) {
-        return new DocumentFragment()
-    }
-
-    this.childNodes = []
-    this.parentNode = null
-    this.ownerDocument = owner || null
-}
-
-DocumentFragment.prototype.type = "DocumentFragment"
-DocumentFragment.prototype.nodeType = 11
-DocumentFragment.prototype.nodeName = "#document-fragment"
-
-DocumentFragment.prototype.appendChild  = DOMElement.prototype.appendChild
-DocumentFragment.prototype.replaceChild = DOMElement.prototype.replaceChild
-DocumentFragment.prototype.removeChild  = DOMElement.prototype.removeChild
-
-DocumentFragment.prototype.toString =
-    function _DocumentFragment_toString() {
-        return this.childNodes.map(function (node) {
-            return String(node)
-        }).join("")
-    }
-
-
-/***/ }),
-/* 133 */
-/***/ (function(module, exports) {
-
-module.exports = DOMText
-
-function DOMText(value, owner) {
-    if (!(this instanceof DOMText)) {
-        return new DOMText(value)
-    }
-
-    this.data = value || ""
-    this.length = this.data.length
-    this.ownerDocument = owner || null
-}
-
-DOMText.prototype.type = "DOMTextNode"
-DOMText.prototype.nodeType = 3
-DOMText.prototype.nodeName = "#text"
-
-DOMText.prototype.toString = function _Text_toString() {
-    return this.data
-}
-
-DOMText.prototype.replaceData = function replaceData(index, length, value) {
-    var current = this.data
-    var left = current.substring(0, index)
-    var right = current.substring(index + length, current.length)
-    this.data = left + value + right
-    this.length = this.data.length
-}
-
-
-/***/ }),
-/* 134 */
-/***/ (function(module, exports) {
-
-module.exports = Event
-
-function Event(family) {}
-
-Event.prototype.initEvent = function _Event_initEvent(type, bubbles, cancelable) {
-    this.type = type
-    this.bubbles = bubbles
-    this.cancelable = cancelable
-}
-
-Event.prototype.preventDefault = function _Event_preventDefault() {
-    
-}
-
-
-/***/ }),
-/* 135 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Document = __webpack_require__(130);
-
-module.exports = new Document();
-
-
-/***/ }),
-/* 136 */
-/***/ (function(module, exports) {
-
-module.exports = serializeNode
-
-var voidElements = ["area","base","br","col","embed","hr","img","input","keygen","link","menuitem","meta","param","source","track","wbr"];
-
-function serializeNode(node) {
-    switch (node.nodeType) {
-        case 3:
-            return escapeText(node.data)
-        case 8:
-            return "<!--" + node.data + "-->"
-        default:
-            return serializeElement(node)
-    }
-}
-
-function serializeElement(elem) {
-    var strings = []
-
-    var tagname = elem.tagName
-
-    if (elem.namespaceURI === "http://www.w3.org/1999/xhtml") {
-        tagname = tagname.toLowerCase()
-    }
-
-    strings.push("<" + tagname + properties(elem) + datasetify(elem))
-
-    if (voidElements.indexOf(tagname) > -1) {
-        strings.push(" />")
-    } else {
-        strings.push(">")
-
-        if (elem.childNodes.length) {
-            strings.push.apply(strings, elem.childNodes.map(serializeNode))
-        } else if (elem.textContent || elem.innerText) {
-            strings.push(escapeText(elem.textContent || elem.innerText))
-        } else if (elem.innerHTML) {
-            strings.push(elem.innerHTML)
-        }
-
-        strings.push("</" + tagname + ">")
-    }
-
-    return strings.join("")
-}
-
-function isProperty(elem, key) {
-    var type = typeof elem[key]
-
-    if (key === "style" && Object.keys(elem.style).length > 0) {
-      return true
-    }
-
-    return elem.hasOwnProperty(key) &&
-        (type === "string" || type === "boolean" || type === "number") &&
-        key !== "nodeName" && key !== "className" && key !== "tagName" &&
-        key !== "textContent" && key !== "innerText" && key !== "namespaceURI" &&  key !== "innerHTML"
-}
-
-function stylify(styles) {
-    if (typeof styles === 'string') return styles
-    var attr = ""
-    Object.keys(styles).forEach(function (key) {
-        var value = styles[key]
-        key = key.replace(/[A-Z]/g, function(c) {
-            return "-" + c.toLowerCase();
-        })
-        attr += key + ":" + value + ";"
-    })
-    return attr
-}
-
-function datasetify(elem) {
-    var ds = elem.dataset
-    var props = []
-
-    for (var key in ds) {
-        props.push({ name: "data-" + key, value: ds[key] })
-    }
-
-    return props.length ? stringify(props) : ""
-}
-
-function stringify(list) {
-    var attributes = []
-    list.forEach(function (tuple) {
-        var name = tuple.name
-        var value = tuple.value
-
-        if (name === "style") {
-            value = stylify(value)
-        }
-
-        attributes.push(name + "=" + "\"" + escapeAttributeValue(value) + "\"")
-    })
-
-    return attributes.length ? " " + attributes.join(" ") : ""
-}
-
-function properties(elem) {
-    var props = []
-    for (var key in elem) {
-        if (isProperty(elem, key)) {
-            props.push({ name: key, value: elem[key] })
-        }
-    }
-
-    for (var ns in elem._attributes) {
-      for (var attribute in elem._attributes[ns]) {
-        var prop = elem._attributes[ns][attribute]
-        var name = (prop.prefix ? prop.prefix + ":" : "") + attribute
-        props.push({ name: name, value: prop.value })
-      }
-    }
-
-    if (elem.className) {
-        props.push({ name: "class", value: elem.className })
-    }
-
-    return props.length ? stringify(props) : ""
-}
-
-function escapeText(s) {
-    var str = '';
-
-    if (typeof(s) === 'string') { 
-        str = s; 
-    } else if (s) {
-        str = s.toString();
-    }
-
-    return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-}
-
-function escapeAttributeValue(str) {
-    return escapeText(str).replace(/"/g, "&quot;")
-}
-
-
-/***/ }),
-/* 137 */,
-/* 138 */,
-/* 139 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var trim = __webpack_require__(142)
-  , forEach = __webpack_require__(128)
+var trim = __webpack_require__(97)
+  , forEach = __webpack_require__(89)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -62240,7 +51411,7 @@ module.exports = function (headers) {
 }
 
 /***/ }),
-/* 140 */
+/* 95 */
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -62260,8 +51431,8 @@ function SafeParseTuple(obj, reviver) {
 
 
 /***/ }),
-/* 141 */,
-/* 142 */
+/* 96 */,
+/* 97 */
 /***/ (function(module, exports) {
 
 
@@ -62281,10 +51452,10 @@ exports.right = function(str){
 
 
 /***/ }),
-/* 143 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var require;var require;/**
+/* WEBPACK VAR INJECTION */(function(global) {var require;var require;/**
  * @license
  * Video.js 6.0.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
@@ -89360,9 +78531,10 @@ if (!window.VTTCue) {
 arguments[4][100][0].apply(exports,arguments)
 },{"100":100}]},{},[98])(98)
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ }),
-/* 144 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -89386,9 +78558,9 @@ arguments[4][100][0].apply(exports,arguments)
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(145).WebVTT,
-  VTTCue: __webpack_require__(146).VTTCue,
-  VTTRegion: __webpack_require__(148).VTTRegion
+  WebVTT: __webpack_require__(100).WebVTT,
+  VTTCue: __webpack_require__(101).VTTCue,
+  VTTRegion: __webpack_require__(103).VTTRegion
 };
 
 window.vttjs = vttjs;
@@ -89415,7 +78587,7 @@ if (!window.VTTCue) {
 
 
 /***/ }),
-/* 145 */
+/* 100 */
 /***/ (function(module, exports) {
 
 /**
@@ -90755,7 +79927,7 @@ if (!window.VTTCue) {
 
 
 /***/ }),
-/* 146 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -90777,7 +79949,7 @@ if (!window.VTTCue) {
 // If we're in Node.js then require VTTCue so we can extend it, otherwise assume
 // VTTCue is on the global.
 if (typeof module !== "undefined" && module.exports) {
-  this.VTTCue = this.VTTCue || __webpack_require__(147).VTTCue;
+  this.VTTCue = this.VTTCue || __webpack_require__(102).VTTCue;
 }
 
 // Extend VTTCue with methods to convert to JSON, from JSON, and construct a
@@ -90821,7 +79993,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 
 /***/ }),
-/* 147 */
+/* 102 */
 /***/ (function(module, exports) {
 
 /**
@@ -91136,7 +80308,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 
 /***/ }),
-/* 148 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -91158,7 +80330,7 @@ if (typeof module !== "undefined" && module.exports) {
 // If we're in Node.js then require VTTRegion so we can extend it, otherwise assume
 // VTTRegion is on the global.
 if (typeof module !== "undefined" && module.exports) {
-  this.VTTRegion = __webpack_require__(149).VTTRegion;
+  this.VTTRegion = __webpack_require__(104).VTTRegion;
 }
 
 // Extend VTTRegion with methods to convert to JSON, from JSON, and construct a
@@ -91185,7 +80357,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 
 /***/ }),
-/* 149 */
+/* 104 */
 /***/ (function(module, exports) {
 
 /**
@@ -91329,7 +80501,7 @@ if (typeof module !== "undefined" && module.exports) {
 
 
 /***/ }),
-/* 150 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -91340,15 +80512,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function (root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(209)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(164)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(28), __webpack_require__(74)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(23), __webpack_require__(54)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(28), __webpack_require__(74));
+        module.exports = factory(__webpack_require__(23), __webpack_require__(54));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -91788,7 +80960,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 151 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91796,7 +80968,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(16);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -91887,7 +81059,7 @@ exports['default'] = BigPlayButton;
 
 
 /***/ }),
-/* 152 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91895,7 +81067,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(16);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -91991,7 +81163,7 @@ exports['default'] = CloseButton;
 
 
 /***/ }),
-/* 153 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91999,7 +81171,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(62);
+var _trackButton = __webpack_require__(42);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -92007,7 +81179,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(154);
+var _audioTrackMenuItem = __webpack_require__(109);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -92117,7 +81289,7 @@ exports['default'] = AudioTrackButton;
 
 
 /***/ }),
-/* 154 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92125,7 +81297,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(23);
+var _menuItem = __webpack_require__(21);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -92243,7 +81415,7 @@ exports['default'] = AudioTrackMenuItem;
 
 
 /***/ }),
-/* 155 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92255,41 +81427,41 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(158);
+__webpack_require__(113);
 
-__webpack_require__(176);
+__webpack_require__(131);
 
-__webpack_require__(177);
+__webpack_require__(132);
 
-__webpack_require__(179);
+__webpack_require__(134);
 
-__webpack_require__(178);
+__webpack_require__(133);
 
-__webpack_require__(157);
+__webpack_require__(112);
 
-__webpack_require__(164);
+__webpack_require__(119);
 
-__webpack_require__(156);
+__webpack_require__(111);
 
-__webpack_require__(180);
+__webpack_require__(135);
 
-__webpack_require__(182);
+__webpack_require__(137);
 
-__webpack_require__(61);
+__webpack_require__(41);
 
-__webpack_require__(171);
+__webpack_require__(126);
 
-__webpack_require__(173);
+__webpack_require__(128);
 
-__webpack_require__(175);
+__webpack_require__(130);
 
-__webpack_require__(170);
+__webpack_require__(125);
 
-__webpack_require__(153);
+__webpack_require__(108);
 
-__webpack_require__(159);
+__webpack_require__(114);
 
-__webpack_require__(167);
+__webpack_require__(122);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -92355,7 +81527,7 @@ exports['default'] = ControlBar;
 
 
 /***/ }),
-/* 156 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92363,7 +81535,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(16);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -92478,7 +81650,7 @@ exports['default'] = FullscreenToggle;
 
 
 /***/ }),
-/* 157 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92587,7 +81759,7 @@ exports['default'] = LiveDisplay;
 
 
 /***/ }),
-/* 158 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92595,7 +81767,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(16);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -92726,7 +81898,7 @@ exports['default'] = PlayToggle;
 
 
 /***/ }),
-/* 159 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92734,15 +81906,15 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(65);
+var _menuButton = __webpack_require__(45);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(66);
+var _menu = __webpack_require__(46);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(160);
+var _playbackRateMenuItem = __webpack_require__(115);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
@@ -92968,7 +82140,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 
 /***/ }),
-/* 160 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92976,7 +82148,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(23);
+var _menuItem = __webpack_require__(21);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -93082,7 +82254,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 
 /***/ }),
-/* 161 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93211,7 +82383,7 @@ exports['default'] = LoadProgressBar;
 
 
 /***/ }),
-/* 162 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93231,11 +82403,11 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(37);
+var _computedStyle = __webpack_require__(32);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -93412,7 +82584,7 @@ exports['default'] = MouseTimeDisplay;
 
 
 /***/ }),
-/* 163 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93428,7 +82600,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -93520,7 +82692,7 @@ exports['default'] = PlayProgressBar;
 
 
 /***/ }),
-/* 164 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93532,9 +82704,9 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(165);
+__webpack_require__(120);
 
-__webpack_require__(162);
+__webpack_require__(117);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -93594,7 +82766,7 @@ exports['default'] = ProgressControl;
 
 
 /***/ }),
-/* 165 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93602,7 +82774,7 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(69);
+var _slider = __webpack_require__(49);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -93614,19 +82786,19 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(37);
+var _computedStyle = __webpack_require__(32);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(161);
+__webpack_require__(116);
 
-__webpack_require__(163);
+__webpack_require__(118);
 
-__webpack_require__(166);
+__webpack_require__(121);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -93861,7 +83033,7 @@ exports['default'] = SeekBar;
 
 
 /***/ }),
-/* 166 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93877,7 +83049,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -93967,7 +83139,7 @@ exports['default'] = TooltipProgressBar;
 
 
 /***/ }),
-/* 167 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93975,7 +83147,7 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(168);
+var _spacer = __webpack_require__(123);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
@@ -94045,7 +83217,7 @@ exports['default'] = CustomControlSpacer;
 
 
 /***/ }),
-/* 168 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94116,7 +83288,7 @@ exports['default'] = Spacer;
 
 
 /***/ }),
-/* 169 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94124,7 +83296,7 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(32);
+var _textTrackMenuItem = __webpack_require__(27);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -94208,7 +83380,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 
 /***/ }),
-/* 170 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94216,7 +83388,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(21);
+var _textTrackButton = __webpack_require__(19);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -94224,7 +83396,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(169);
+var _captionSettingsMenuItem = __webpack_require__(124);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -94326,7 +83498,7 @@ exports['default'] = CaptionsButton;
 
 
 /***/ }),
-/* 171 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94334,7 +83506,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(21);
+var _textTrackButton = __webpack_require__(19);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -94342,7 +83514,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(172);
+var _chaptersTrackMenuItem = __webpack_require__(127);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
@@ -94573,7 +83745,7 @@ exports['default'] = ChaptersButton;
 
 
 /***/ }),
-/* 172 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94581,7 +83753,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(23);
+var _menuItem = __webpack_require__(21);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -94688,7 +83860,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 
 /***/ }),
-/* 173 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94696,7 +83868,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(21);
+var _textTrackButton = __webpack_require__(19);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -94831,7 +84003,7 @@ exports['default'] = DescriptionsButton;
 
 
 /***/ }),
-/* 174 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94839,7 +84011,7 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(32);
+var _textTrackMenuItem = __webpack_require__(27);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -94929,7 +84101,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 
 /***/ }),
-/* 175 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -94937,7 +84109,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(21);
+var _textTrackButton = __webpack_require__(19);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -95023,7 +84195,7 @@ exports['default'] = SubtitlesButton;
 
 
 /***/ }),
-/* 176 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95039,7 +84211,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -95138,7 +84310,7 @@ exports['default'] = CurrentTimeDisplay;
 
 
 /***/ }),
-/* 177 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95154,7 +84326,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -95263,7 +84435,7 @@ exports['default'] = DurationDisplay;
 
 
 /***/ }),
-/* 178 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95279,7 +84451,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(11);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -95384,7 +84556,7 @@ exports['default'] = RemainingTimeDisplay;
 
 
 /***/ }),
-/* 179 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95443,7 +84615,7 @@ exports['default'] = TimeDivider;
 
 
 /***/ }),
-/* 180 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95455,7 +84627,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(63);
+__webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -95541,7 +84713,7 @@ exports['default'] = VolumeControl;
 
 
 /***/ }),
-/* 181 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95599,7 +84771,7 @@ exports['default'] = VolumeLevel;
 
 
 /***/ }),
-/* 182 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95615,19 +84787,19 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(189);
+var _popup = __webpack_require__(144);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(188);
+var _popupButton = __webpack_require__(143);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(61);
+var _muteToggle = __webpack_require__(41);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(63);
+var _volumeBar = __webpack_require__(43);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -95849,7 +85021,7 @@ exports['default'] = VolumeMenuButton;
 
 
 /***/ }),
-/* 183 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95861,11 +85033,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(67);
+var _modalDialog = __webpack_require__(47);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -95957,7 +85129,7 @@ exports['default'] = ErrorDisplay;
 
 
 /***/ }),
-/* 184 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95967,7 +85139,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -96064,7 +85236,7 @@ exports['default'] = extendFn;
 
 
 /***/ }),
-/* 185 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96126,7 +85298,7 @@ exports['default'] = FullscreenApi;
 
 
 /***/ }),
-/* 186 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96184,7 +85356,7 @@ exports['default'] = LoadingSpinner;
 
 
 /***/ }),
-/* 187 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96192,7 +85364,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(68);
+var _player = __webpack_require__(48);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -96217,7 +85389,7 @@ exports['default'] = plugin;
 
 
 /***/ }),
-/* 188 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96225,7 +85397,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(17);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -96346,7 +85518,7 @@ exports['default'] = PopupButton;
 
 
 /***/ }),
-/* 189 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96366,7 +85538,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -96451,7 +85623,7 @@ exports['default'] = Popup;
 
 
 /***/ }),
-/* 190 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96459,7 +85631,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(17);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -96639,7 +85811,7 @@ exports['default'] = PosterImage;
 
 
 /***/ }),
-/* 191 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96652,7 +85824,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(10);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -96790,7 +85962,7 @@ exports.hasLoaded = hasLoaded;
 
 
 /***/ }),
-/* 192 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96999,7 +86171,7 @@ exports['default'] = FlashRtmpDecorator;
 
 
 /***/ }),
-/* 193 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97007,7 +86179,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(18);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -97015,13 +86187,13 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(24);
+var _url = __webpack_require__(22);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(19);
+var _timeRanges = __webpack_require__(18);
 
-var _flashRtmp = __webpack_require__(192);
+var _flashRtmp = __webpack_require__(147);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
@@ -98163,7 +87335,7 @@ exports['default'] = Flash;
 
 
 /***/ }),
-/* 194 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -98173,7 +87345,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(18);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -98185,7 +87357,7 @@ var _dom = __webpack_require__(2);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(24);
+var _url = __webpack_require__(22);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -98193,11 +87365,11 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(60);
+var _tsml = __webpack_require__(40);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -98215,7 +87387,7 @@ var _window2 = _interopRequireDefault(_window);
 
 var _obj = __webpack_require__(6);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -99923,7 +89095,7 @@ exports['default'] = Html5;
 
 
 /***/ }),
-/* 195 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99935,7 +89107,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(18);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -100018,7 +89190,7 @@ exports['default'] = MediaLoader;
 
 
 /***/ }),
-/* 196 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100026,13 +89198,13 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(34);
+var _trackEnums = __webpack_require__(29);
 
-var _track = __webpack_require__(36);
+var _track = __webpack_require__(31);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -100154,7 +89326,7 @@ exports['default'] = AudioTrack;
 
 
 /***/ }),
-/* 197 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100309,7 +89481,7 @@ exports['default'] = HtmlTrackElementList;
 
 
 /***/ }),
-/* 198 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100325,11 +89497,11 @@ var _document = __webpack_require__(3);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(22);
+var _eventTarget = __webpack_require__(20);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(33);
+var _textTrack = __webpack_require__(28);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -100485,7 +89657,7 @@ exports['default'] = HTMLTrackElement;
 
 
 /***/ }),
-/* 199 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -100644,7 +89816,7 @@ exports['default'] = TextTrackCueList;
 
 
 /***/ }),
-/* 200 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101001,7 +90173,7 @@ exports['default'] = TextTrackDisplay;
 
 
 /***/ }),
-/* 201 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101110,7 +90282,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 
 /***/ }),
-/* 202 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101118,7 +90290,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(35);
+var _trackList = __webpack_require__(30);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -101221,7 +90393,7 @@ exports['default'] = TextTrackList;
 
 
 /***/ }),
-/* 203 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101247,7 +90419,7 @@ var _obj = __webpack_require__(6);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(8);
+var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -101829,7 +91001,7 @@ exports['default'] = TextTrackSettings;
 
 
 /***/ }),
-/* 204 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101837,13 +91009,13 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(34);
+var _trackEnums = __webpack_require__(29);
 
-var _track = __webpack_require__(36);
+var _track = __webpack_require__(31);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(9);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -101964,11 +91136,11 @@ exports['default'] = VideoTrack;
 
 
 /***/ }),
-/* 205 */,
-/* 206 */,
-/* 207 */,
-/* 208 */,
-/* 209 */
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -101977,7 +91149,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 210 */
+/* 165 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -102002,18 +91174,17 @@ function extend() {
 
 
 /***/ }),
-/* 211 */,
-/* 212 */,
-/* 213 */,
-/* 214 */,
-/* 215 */,
-/* 216 */,
-/* 217 */,
-/* 218 */,
-/* 219 */
+/* 166 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 167 */,
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(80);
+module.exports = __webpack_require__(57);
 
 
 /***/ })
