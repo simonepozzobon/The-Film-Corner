@@ -7,6 +7,9 @@ import angular from 'angular';
 // require('videogular-overlay-play');
 // require('videogular-buffering');
 
+// FFMPEG
+import ffmpeg from 'fluent-ffmpeg';
+
 // VideoJS
 require('video.js/dist/video.js');
 
@@ -52,22 +55,55 @@ angular.module('appService', [])
     }
   }).factory('Timeline', function(){
     var timelines = [];
+    var k = [];
     return {
 
-      getTimelines: function () {
-        timelines = timelines.sort((a,b) => a.lines[0].events[0].start - b.lines[0].events[0].start);
+      getTimelines: function ($scope) {
+
+        // Verifico se c'è un oggetto all'inizio
+        var lenght = null;
+        var start = false;
+        for (var i = 0; i < timelines.length; i++) {
+          if (timelines[i].lines[0].events[0].start == 0) {
+            start = true;
+          }
+          lenght = i+1;
+        }
+
+        // prendo l'inizio
+        if (lenght > 0) {
+
+          var distance = timelines[0].lines[0].events[0].start;
+
+          for (var i = 0; i < timelines.length; i++) {
+            if (timelines[i].lines[0].events[0].start < distance) {
+              distance = timelines[i].lines[0].events[0].start;
+            }
+          }
+          $scope.$broadcast('startReset', distance);
+        }
+
         return timelines;
       },
+
+      // getTimelinesOrdered: function() {
+        // // ordino gli oggetti nella timeline
+        // var timelinesOrdered = timelines.sort((a,b) => a.lines[0].events[0].start - b.lines[0].events[0].start);
+        // return timelinesOrdered;
+      // },
 
       addTimeline: function (timeline) {
         timelines.push(timeline);
       },
 
+      // Convert ticks on seconds
       tToS: function (t) {
         var s = t * 5 / 100;
         return s;
-      }
+      },
 
+      // getCurrentPos: function () {
+      // }
     }
   });
 
@@ -91,20 +127,12 @@ angular.module('videoCtrl', ['vjs.video'])
         $scope.mediaToggle = {
           sources: [
             {
-              src: 'img/helpers/poster.png'
+              src: 'img/helpers/poster.png'//,
+              //type: 'video/mp4'
             }
           ],
           poster: 'img/helpers/poster.png'
         }
-
-        // $scope.mediaToggle = {
-        //     sources: [
-        //         {
-        //             src: '',
-        //             type: 'video/mp4'
-        //         }
-        //     ],
-        // };
 
         $scope.$on('timelineChanged', function(e, timeline) {
           console.log('-----');
@@ -112,7 +140,7 @@ angular.module('videoCtrl', ['vjs.video'])
           console.log(timeline);
           console.log('-----');
 
-          var timelines = Timeline.getTimelines();
+          Timeline.getTimelines($scope);
 
         });
 
@@ -121,6 +149,15 @@ angular.module('videoCtrl', ['vjs.video'])
           if (videoData.player.id() == 'vjs_video_3') {
 
             $scope.editorPlay = function() {
+              var media = Timeline.getTimelines($scope);
+              $scope.mediaToggle = {
+                sources: [
+                  {
+                    src: 'storage/'+media[0].media_url,
+                    type: 'video/mp4'
+                  }
+                ]
+              };
               videoData.player.play();
             };
 
@@ -147,7 +184,14 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
     .controller('DemoMediaTimelineController', function ($scope, Timeline) {
     $scope.tick = 0;
     $scope.disable = false;
-    $scope.timelines = Timeline.getTimelines();
+    $scope.timelines = Timeline.getTimelines($scope);
+
+    // this force start always from the first position
+    $scope.$on('startReset', function(e, distance) {
+      $scope.$apply(function() {
+        $scope.tick = distance;
+      });
+    });
 
     $scope.$on('editorPlay', function(e, data) {
       $scope.$apply(function() {
@@ -192,6 +236,7 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
         newStartTime: newStartTime,
         newStartTick: newStartTick
       };
+      Timeline.getTimelines($scope);
       $scope.$emit('timelineChanged', data);
     };
 
@@ -236,9 +281,10 @@ angular.module('toolCtrl', [])
             duration : d
           }]
         }],
-        video_url: url,
+        media_url: url,
       }
       Timeline.addTimeline(timeline);
+      Timeline.getTimelines($scope);
       $scope.$emit('timelineChanged', timeline);
     }
   });
