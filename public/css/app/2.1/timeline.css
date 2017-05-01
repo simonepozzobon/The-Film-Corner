@@ -1,1 +1,251 @@
-.timetooltip{visibility:hidden;white-space:nowrap;position:fixed;background-color:#5bc0de;border-radius:.25rem;font-size:1rem;font-weight:700;padding:.5rem;z-index:2003}.timetooltip.active{visibility:visible}mt-timelines{display:block}mt-timelines .timelines-tick-navigator{width:100%;height:15px;border-bottom:0;overflow-x:hidden;overflow-y:hidden;position:relative;white-space:nowrap;background-color:#f0f0f5}mt-timelines .timelines-tick-navigator .tickHandlerHeader{height:15px;width:150px;float:left}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer{height:100%;width:auto;position:relative;overflow-x:hidden}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer:hover{cursor:pointer}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer{height:15px;width:100%;position:relative;display:block}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler{background:#fff;color:#444;font-family:source code pro,Arial Narrow,Helvetica Neue,Helvetica,Arial,Veranda,sans-serif;font-size:12px;line-height:14px;overflow:hidden}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler div{background:#444}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickLabel{position:absolute;top:0;width:1px;height:100%;text-indent:1px}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickMajor{position:absolute;bottom:0;width:1px;height:6px}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickMinor{position:absolute;bottom:0;width:1px;height:4px}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler{position:absolute;top:3px;z-index:2001;width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:12px solid #fe595a}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler.cursor{cursor:move;cursor:-webkit-grab}mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler.cursor.moving{cursor:-webkit-grabbing}mt-timelines .timelines-group{width:100%;height:calc(100% - 16px);overflow-x:hidden;overflow-y:scroll;position:relative;white-space:nowrap;background-color:#f0f0f5}mt-timelines .timelines-group .timelinesHeaders{width:150px;vertical-align:top;float:left;background-color:#f7f7f9;color:#fff;min-height:100%}mt-timelines .timelines-group .timelinesHeaders .timeline-header{background-color:#636c72;vertical-align:middle;overflow:hidden}mt-timelines .timelines-group .timelinesHeaders .timeline-header span{top:50%;height:18px;margin-top:-9px;padding-left:5px;color:#fff}mt-timelines .timelines-group .timelinesContainer{vertical-align:top;position:relative;overflow-x:scroll;width:auto;min-height:100%}mt-timelines .timelines-group .timelinesContainer .elementLinesContainer{min-height:30px}mt-timelines .timelines-group .timelinesContainer .verticalLine{z-index:2000;height:100%;position:absolute;width:1px;top:0;background-color:#fe595a;box-shadow:0 .1rem 0 #252525}mt-timelines .timelines-group .timelinesContainer mt-timeline{display:block;position:relative}mt-timelines .timelines-group .timelinesContainer mt-timeline .timeline-content{overflow:hidden;white-space:nowrap;height:100%}mt-timelines .timelines-group .timelinesContainer mt-timeline.events{height:30px;max-height:30px;min-height:30px}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event{top:2px;display:inline-block;position:absolute;height:80%;background-color:#fada28}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event.highlight{top:1px;box-shadow:2px 2px 2px 0 rgba(49,50,50,.75);z-index:100}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left{left:0;display:inline-block;height:100%;width:15px}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left.highlight{background:#ff3019;background:-webkit-gradient(linear,left top,right top,color-stop(0,#ff3019),color-stop(100%,#fff));background:-webkit-linear-gradient(left,#ff3019,#fff);background:linear-gradient(90deg,#ff3019 0,#fff);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff3019",endColorstr="#ffffff",GradientType=1)}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left.cursor{cursor:ew-resize}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .center{display:inline-block;height:100%}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .center.cursor{cursor:move}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right{right:0;display:inline-block;height:100%;width:15px}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right.highlight{background:#fff;background:-webkit-gradient(linear,left top,right top,color-stop(0,#fada28),color-stop(100%,#f8d349));background:-webkit-linear-gradient(left,#fada28,#f8d349);background:linear-gradient(90deg,#fada28 0,#f8d349);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FADA28,endColorstr=#F8D349,GradientType=1)}mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right.cursor{cursor:ew-resize}mt-timelines .timelines-group .timelinesContainer mt-timeline.points{height:15px;max-height:15px;min-height:15px;background-color:#dfe1e8}mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point{background-color:#ff4d4d;border-radius:10px;height:8px;width:8px;position:absolute;top:3px;margin-left:-5px}mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point.highlight{height:10px;width:10px;top:1px;margin-left:-7px;box-shadow:2px 2px 2px 0 rgba(49,50,50,.75);z-index:100}mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point.cursor{cursor:move}
+.timetooltip {
+  visibility: hidden;
+  white-space: nowrap;
+  position: fixed;
+  background-color: #5bc0de;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  z-index: 2003;
+}
+.timetooltip.active {
+  visibility: visible;
+}
+mt-timelines {
+  display: block;
+}
+mt-timelines .timelines-tick-navigator {
+  width: 100%;
+  height: 15px;
+  border-bottom: 0;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: relative;
+  white-space: nowrap;
+  background-color: #F0F0F5;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerHeader {
+  height: 15px;
+  width: 150px;
+  float: left;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer {
+  height: 100%;
+  width: auto;
+  position: relative;
+  overflow-x: hidden;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer:hover {
+  cursor: pointer;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer {
+  height: 15px;
+  width: 100%;
+  position: relative;
+  display: block;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler {
+  background: #ffffff;
+  color: #444;
+  font-family: source code pro, "Arial Narrow", "Helvetica Neue", Helvetica, Arial, Veranda, sans-serif;
+  font-size: 12px;
+  line-height: 14px;
+  overflow: hidden;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler div {
+  background: #444;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickLabel {
+  position: absolute;
+  top: 0px;
+  width: 1px;
+  height: 100%;
+  text-indent: 1px;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickMajor {
+  position: absolute;
+  bottom: 0px;
+  width: 1px;
+  height: 6px;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .ruler .tickMinor {
+  position: absolute;
+  bottom: 0px;
+  width: 1px;
+  height: 4px;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler {
+  position: absolute;
+  top: 3px;
+  z-index: 2001;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 12px solid #FE595A;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler.cursor {
+  cursor: move;
+  cursor: -webkit-grab;
+}
+mt-timelines .timelines-tick-navigator .tickHandlerScrollerContainer .tickHandlerContainer .tickHandler.cursor.moving {
+  cursor: -webkit-grabbing;
+}
+mt-timelines .timelines-group {
+  width: 100%;
+  height: calc(100% - 16px);
+  /* remove header height, its a patch */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  white-space: nowrap;
+  background-color: #F0F0F5;
+}
+mt-timelines .timelines-group .timelinesHeaders {
+  width: 150px;
+  vertical-align: top;
+  float: left;
+  background-color: #f7f7f9;
+  color: #fff;
+  min-height: 100%;
+}
+mt-timelines .timelines-group .timelinesHeaders .timeline-header {
+  background-color: #636c72;
+  vertical-align: middle;
+  overflow: hidden;
+}
+mt-timelines .timelines-group .timelinesHeaders .timeline-header span {
+  top: 50%;
+  height: 18px;
+  margin-top: -9px;
+  /* = height/2 */
+  padding-left: 5px;
+  color: #fff;
+}
+mt-timelines .timelines-group .timelinesContainer {
+  vertical-align: top;
+  position: relative;
+  overflow-x: scroll;
+  width: auto;
+  min-height: 100%;
+}
+mt-timelines .timelines-group .timelinesContainer .elementLinesContainer {
+  min-height: 30px;
+}
+mt-timelines .timelines-group .timelinesContainer .verticalLine {
+  z-index: 2000;
+  height: 100%;
+  position: absolute;
+  width: 1px;
+  top: 0px;
+  background-color: #FE595A;
+  box-shadow: 0 0.1rem 0 #252525;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline {
+  display: block;
+  position: relative;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline .timeline-content {
+  overflow: hidden;
+  white-space: nowrap;
+  height: 100%;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events {
+  height: 30px;
+  max-height: 30px;
+  min-height: 30px;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event {
+  top: 2px;
+  display: inline-block;
+  position: absolute;
+  height: 80%;
+  background-color: #FADA28;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event.highlight {
+  top: 1px;
+  box-shadow: 2px 2px 2px 0px rgba(49, 50, 50, 0.75);
+  z-index: 100;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left {
+  left: 0;
+  display: inline-block;
+  height: 100%;
+  width: 15px;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left.highlight {
+  background: #ff3019;
+  /* Old browsers */
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #ff3019), color-stop(100%, #ffffff));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #ff3019 0%, #ffffff 100%);
+  /* Chrome10+,Safari5.1+ */
+  /* Opera 11.10+ */
+  /* IE10+ */
+  background: linear-gradient(to right, #ff3019 0%, #ffffff 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3019', endColorstr='#ffffff', GradientType=1);
+  /* IE6-9 */
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .left.cursor {
+  cursor: ew-resize;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .center {
+  display: inline-block;
+  height: 100%;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .center.cursor {
+  cursor: move;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right {
+  right: 0;
+  display: inline-block;
+  height: 100%;
+  width: 15px;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right.highlight {
+  background: #ffffff;
+  /* Old browsers */
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%, #FADA28), color-stop(100%, #F8D349));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #FADA28 0%, #F8D349 100%);
+  /* Chrome10+,Safari5.1+ */
+  /* Opera 11.10+ */
+  /* IE10+ */
+  background: linear-gradient(to right, #FADA28 0%, #F8D349 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FADA28, endColorstr=#F8D349, GradientType=1);
+  /* IE6-9 */
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.events .timeline-event .right.cursor {
+  cursor: ew-resize;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.points {
+  height: 15px;
+  max-height: 15px;
+  min-height: 15px;
+  background-color: #DFE1E8;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point {
+  background-color: #FF4D4D;
+  border-radius: 10px;
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 3px;
+  margin-left: -5px;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point.highlight {
+  height: 10px;
+  width: 10px;
+  top: 1px;
+  margin-left: -7px;
+  box-shadow: 2px 2px 2px 0px rgba(49, 50, 50, 0.75);
+  z-index: 100;
+}
+mt-timelines .timelines-group .timelinesContainer mt-timeline.points mt-point.cursor {
+  cursor: move;
+}

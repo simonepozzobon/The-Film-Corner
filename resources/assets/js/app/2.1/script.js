@@ -7,8 +7,6 @@ import angular from 'angular';
 // require('videogular-overlay-play');
 // require('videogular-buffering');
 
-// FFMPEG
-// import ffmpeg from 'fluent-ffmpeg';
 
 // VideoJS
 require('video.js/dist/video.js');
