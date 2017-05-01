@@ -25483,35 +25483,35 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
 
   //listen for when the vjs-media object changes
   $scope.$on('vjsVideoReady', function (e, videoData) {
-    if (videoData.player.id() == 'vjs_video_3') {
+    // if (videoData.player.id() == 'vjs_video_3') {
 
-      $scope.editorPlay = function () {
-        var media = Timeline.getTimelines($scope);
-        $scope.mediaToggle = {
-          sources: [{
-            src: 'storage/' + media[0].media_url,
-            type: 'video/mp4'
-          }]
-        };
-        videoData.player.play();
+    $scope.editorPlay = function () {
+      var media = Timeline.getTimelines($scope);
+      $scope.mediaToggle = {
+        sources: [{
+          src: 'storage/' + media[0].media_url,
+          type: 'video/mp4'
+        }]
       };
+      videoData.player.play();
+    };
 
-      $scope.editorPause = function () {
-        videoData.player.pause();
+    $scope.editorPause = function () {
+      videoData.player.pause();
+    };
+
+    $scope.editorStop = function () {
+      videoData.player.pause();
+      videoData.player.currentTime(0);
+    };
+
+    videoData.player.on('timeupdate', function () {
+      var time = {
+        time: this.currentTime()
       };
-
-      $scope.editorStop = function () {
-        videoData.player.pause();
-        videoData.player.currentTime(0);
-      };
-
-      videoData.player.on('timeupdate', function () {
-        var time = {
-          time: this.currentTime()
-        };
-        $scope.$broadcast('editorPlay', time);
-      });
-    }
+      $scope.$broadcast('editorPlay', time);
+    });
+    //}
   });
 }]);
 

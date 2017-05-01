@@ -17,10 +17,13 @@
     "webpack-dev-server": "^2.2.0-rc.0"
   },
   "dependencies": {
-    "child_process": "^1.0.2",
+    "angular": "*",
     "fluent-ffmpeg": "^2.1.2",
-    "fs": "0.0.1-security",
     "pace": "0.0.4",
-    "videogular": "^2.0.1"
+    "video.js": "*",
+    "vjs-video": "*",
+    "angular-media-timeline": "*",
+    "dropzone": "*",
+    "mo-js": "*"
   }
 }

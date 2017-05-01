@@ -7,6 +7,8 @@ import angular from 'angular';
 // require('videogular-overlay-play');
 // require('videogular-buffering');
 
+//FFMPEG
+
 
 // VideoJS
 require('video.js/dist/video.js');
@@ -144,9 +146,12 @@ angular.module('videoCtrl', ['vjs.video'])
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
-          if (videoData.player.id() == 'vjs_video_3') {
+          // if (videoData.player.id() == 'vjs_video_3') {
 
             $scope.editorPlay = function() {
+              var ffmpeg = require('fluent-ffmpeg');
+              var command = ffmpeg();
+              console.log(command);
               var media = Timeline.getTimelines($scope);
               $scope.mediaToggle = {
                 sources: [
@@ -174,7 +179,7 @@ angular.module('videoCtrl', ['vjs.video'])
               };
               $scope.$broadcast('editorPlay', time);
             });
-          }
+          //}
         });
     }]);
 
