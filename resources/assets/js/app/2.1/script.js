@@ -24,7 +24,7 @@ require('angular-media-timeline/timeline.js')
 
 // Define the service
 angular.module('appService', [])
-  .factory('Video', function($http, CSRF_TOKEN){
+  .factory('Video', function($http, CSRF_TOKEN, Timeline){
 
     // Get all the category
     return {
@@ -80,6 +80,12 @@ angular.module('appService', [])
           }
           $scope.$broadcast('startReset', distance);
         }
+
+        console.log('-------');
+        console.log('timelines');
+        console.log(timelines);
+        console.log('-------');
+
 
         return timelines;
       },
@@ -147,7 +153,7 @@ angular.module('videoCtrl', ['vjs.video'])
           // if (videoData.player.id() == 'vjs_video_3') {
 
             $scope.editorPlay = function() {
-              var command = ffmpeg(fs.createReadStream('/path/to/file.avi'));
+              var command = ffmpeg(Fs.createReadStream('/path/to/file.avi'));
               console.log(command);
               var media = Timeline.getTimelines($scope);
               $scope.mediaToggle = {
