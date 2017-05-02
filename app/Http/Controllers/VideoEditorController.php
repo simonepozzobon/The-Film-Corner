@@ -30,7 +30,17 @@ class VideoEditorController extends Controller
 
     public function updateEditor(Request $request)
     {
+        // Prendo i dati
         $data = $request->all();
+
+        // Li ordino
+        $start = array();
+        foreach ($data as $key => $media) {
+          $start[$key] = $media['start'];
+        }
+        array_multisort($start, SORT_ASC, $data);
+
+        // Li salvo nel db per debug
         foreach ($data as $key => $media) {
           $save = new Test;
           $save->media_url = $media['media_url'];
