@@ -37,6 +37,7 @@ angular.module('appService', [])
           for (var i = 0; i < timelines.length; i++) {
             var edit = {
               session:    timelines[i].session,
+              file:       timelines[i].file,
               id:         timelines[i].id,
               media_url:  timelines[i].media_url,
               start:      timelines[i].lines[0].events[0].start,
@@ -146,16 +147,6 @@ angular.module('mainCtrl', [])
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
   .controller('videoController', ['$scope', 'Timeline', 'Video', function ($scope, Timeline, Video) {
-        // console.log('url '+$scope.session);
-        // $scope.mediaToggle = {
-        //   sources: [
-        //     {
-        //       src: 'img/helpers/poster.png'//,
-        //       //type: 'video/mp4'
-        //     }
-        //   ],
-        //   poster: 'img/helpers/poster.png'
-        // }
 
         $scope.$on('timelineChanged', function(e, timeline) {
           console.log('-----');
@@ -173,14 +164,6 @@ angular.module('videoCtrl', ['vjs.video'])
 
             $scope.editorPlay = function() {
               var media = Timeline.getTimelines($scope);
-              // $scope.mediaToggle = {
-              //   sources: [
-              //     {
-              //       src: 'storage/'+media[0].media_url,
-              //       type: 'video/mp4'
-              //     }
-              //   ]
-              // };
               videoData.player.play();
             };
 
@@ -260,10 +243,11 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
 angular.module('toolCtrl', [])
   .controller('toolController', function($scope, Timeline) {
-    $scope.addElement = function(session, id, title, duration, url) {
+    $scope.addElement = function(session, file, id, title, duration, url) {
       var d = (duration * 100) / 5;
       var timeline = {
         session:    session,
+        file:       file,
         id:         id,
         name:       title,
         media_url:  url,
