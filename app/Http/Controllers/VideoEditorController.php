@@ -9,29 +9,17 @@ use App\Video;
 
 class VideoEditorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     public function updateEditor(Request $request, Video $t)
     {
-        $Video = new Video; // inizializzo la classe Video per utilizzarla dopo
+        // inizializzo la classe Video per utilizzarla dopo
+        $Video = new Video;
+
+        // definisco la library di FFMPEG
+        define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
+
+        // definisco la path global
+        $globalPath = Storage::disk('local')->getDriver()->getAdapter();
 
         // Prendo i dati
         $data = $request->all();
