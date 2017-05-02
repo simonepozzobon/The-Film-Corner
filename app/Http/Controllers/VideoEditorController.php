@@ -12,7 +12,7 @@ class VideoEditorController extends Controller
 
     public function updateEditor(Request $request, Video $t)
     {
-        // inizializzo la classe Video per utilizzarla dopo
+        // inizializzo la sessione
         $Video = new Video;
 
         // definisco la library di FFMPEG
