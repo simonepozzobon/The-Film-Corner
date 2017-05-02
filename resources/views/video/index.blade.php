@@ -28,8 +28,9 @@
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
       <div class="col-md-8" >
-        <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle" >
+        <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
           <video class="video-js vjs-default-skin" controls preload="auto" >
+             <source src="{{ $media_url }}" type="video/mp4">
           </video>
         </vjs-video-container>
         <div class="clearfix">
@@ -105,7 +106,7 @@
                           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                           </button>
-                          <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                          <button ng-click="addElement('{{ $session_id }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                           </button>
                         </div>
