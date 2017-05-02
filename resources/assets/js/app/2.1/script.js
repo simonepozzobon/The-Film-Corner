@@ -32,12 +32,30 @@ angular.module('appService', [])
         return $http.get('test/api');
       },
 
-      save : function(videoData) {
+      send : function(timelines) {
+          var media = [];
+          for (var i = 0; i < timelines.length; i++) {
+            var edit = {
+              id:         timelines[i].id,
+              media_url:  timelines[i].media_url,
+              start:      timelines[i].lines[0].events[0].start,
+              duration:   timelines[i].lines[0].events[0].duration
+            }
+            media.push(edit);
+          }
+
+
+
+          console.log('-------');
+          console.log('sto per inviare');
+          console.log(media);
+          console.log(JSON.stringify(media));
+
+          console.log('-------');
           return $http({
             method: 'POST',
-            url: '', //url: "{{ route('categories.index') }}",
-            data: $.param(videoData),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            url: 'video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
+            data: media,
           });
       },
 
@@ -126,7 +144,7 @@ angular.module('mainCtrl', [])
 
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
-  .controller('videoController', ['$scope', 'Timeline', function ($scope, Timeline) {
+  .controller('videoController', ['$scope', 'Timeline', 'Video', function ($scope, Timeline, Video) {
 
         $scope.mediaToggle = {
           sources: [
@@ -140,12 +158,12 @@ angular.module('videoCtrl', ['vjs.video'])
 
         $scope.$on('timelineChanged', function(e, timeline) {
           console.log('-----');
-          console.log('data from change');
+          console.log('timelineChanged Event Before Send');
           console.log(timeline);
           console.log('-----');
 
-          Timeline.getTimelines($scope);
-
+          var timelines = Timeline.getTimelines($scope);
+          Video.send(timelines);
         });
 
         //listen for when the vjs-media object changes
@@ -244,17 +262,18 @@ angular.module('toolCtrl', [])
     $scope.addElement = function(id, title, duration, url) {
       var d = (duration * 100) / 5;
       var timeline = {
-        name: title,
-        data: { id : title+'-guid' },
-        lines: [{
-          events: [{
-            name: 'animation'+id,
-            data : { id : 'animation'+id+'-guid' },
-            start : 0,
-            duration : d
-          }]
-        }],
-        media_url: url,
+        id:         id,
+        name:       title,
+        media_url:  url,
+        data:       { id : title+'-guid' },
+        lines:  [{
+            events: [{
+                name:       'animation'+id,
+                data :      { id : 'animation'+id+'-guid' },
+                start :     0,
+                duration :  d
+            }]
+        }]
       }
       Timeline.addTimeline(timeline);
       Timeline.getTimelines($scope);
