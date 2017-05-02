@@ -77,14 +77,24 @@ class VideoEditorController extends Controller
             $start = $media['start'];
             // la sottraggo a quella precedente per avere la nuova durata
             $newDuration = $nextStart - $start;
-            $duration = $Video->tToS($newDuration);
-
+            $duration = $media['duration'];
+            // se la nuova durata è minore dell'originale assegno la nuova durata
+            if ($newDuration < $duration) {
+              $duration = $newDuration;
+            }
+            // Converto la durata in secondi
+            $duration = $Video->tToS($duration);
           }
 
           // se la durata non è cambiata mantengo il file intatto
           if (!$duration) {
             $duration = $Video->tToS($media['duration']);
           }
+
+          $save = new Test;
+          $save->session = $duration;
+          $save->media_url = $media['media_url'];
+          $save->save();
 
           // $save = new Test;
           // $save->session = $lastElement;
