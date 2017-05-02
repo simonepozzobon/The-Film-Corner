@@ -64,9 +64,11 @@ class VideoEditorController extends Controller
         // taglio i files e li salvo nella cartella tmp
         foreach ($data as $key => $media) {
           $mediaPath = $media['media_url'];
-          $tmpFilename = str_replace("video/uploads/", "", $mediaPath);
-          $srcPath = $storePath.'/src/'.$tmpFilename;
-          $tmpPath = $storePath.'/tmp/'.$tmpFilename;
+          $srcFilename = str_replace("video/uploads/", "", $mediaPath);
+          $tmpFilename = $media['id'];
+          $srcPath = $storePath.'/src/'.$srcFilename;
+
+          $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
 
           // per ogni elemento tranne l'ultimo verifico la distanza dall'elemento successivo
           if ($key != ($dataLenght - 1)) {
@@ -87,7 +89,7 @@ class VideoEditorController extends Controller
           }
 
           // se la durata non è cambiata mantengo il file intatto
-          if (!$duration) {
+          if (!isset($duration)) {
             $duration = $Video->tToS($media['duration']);
           }
 
