@@ -22,6 +22,9 @@ class VideoEditorController extends Controller
         // Prendo i dati
         $data = $request->all();
 
+        // Prendo l'id della sessione
+        $session_id = $data[0]['session'];
+
         // Li ordino
         $start = array();
         foreach ($data as $key => $media) {
@@ -29,14 +32,19 @@ class VideoEditorController extends Controller
         }
         array_multisort($start, SORT_ASC, $data);
 
-        // Cartella della sessione
-        $session_id = $data[0]['session'];
+        // Cartelle della sessione
         $storePath = storage_path('app/public/video/sessions/'.$session_id);
         $srcPath = $storePath.'/src';
+        $tmpPath = $storePath.'/tmp';
 
         // Se non esiste la cartella src la creo
         if (!file_exists($srcPath)) {
           $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/src', 0777, true);
+        }
+
+        // Se non esiste la cartella tmp la Creo
+        if (!file_exists($tmpPath)) {
+          $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/tmp', 0777, true);
         }
 
         // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
@@ -51,6 +59,44 @@ class VideoEditorController extends Controller
           }
         }
 
+        $dataLenght = count($data);
+
+        // taglio i files e li salvo nella cartella tmp
+        foreach ($data as $key => $media) {
+          $mediaPath = $media['media_url'];
+          $tmpFilename = str_replace("video/uploads/", "", $mediaPath);
+          $srcPath = $storePath.'/src/'.$tmpFilename;
+          $tmpPath = $storePath.'/tmp/'.$tmpFilename;
+
+          // per ogni elemento tranne l'ultimo verifico la distanza dall'elemento successivo
+          if ($key != ($dataLenght - 1)) {
+            // Seleziono la chiave del prossimo elemento
+            $nextKey = $key + 1;
+            // la sua partenza
+            $nextStart = $data[$nextKey]['start'];
+            $start = $media['start'];
+            // la sottraggo a quella precedente per avere la nuova durata
+            $newDuration = $nextStart - $start;
+            $duration = $Video->tToS($newDuration);
+
+          }
+
+          // se la durata non è cambiata mantengo il file intatto
+          if (!$duration) {
+            $duration = $Video->tToS($media['duration']);
+          }
+
+          // $save = new Test;
+          // $save->session = $lastElement;
+          // $save->save();
+
+          //ffmpeg -ss [start] -i in.mp4 -t [duration] -c copy out.mp4
+          $cli = FFMPEG_LIB.' -y -i '.$srcPath.' -t '.$duration.' -c copy '.$tmpPath;
+          exec($cli);
+
+        }
+
+        // faccio il render
 
 
         // Se c'è qualcosa all'inizio della timeline li salvo
