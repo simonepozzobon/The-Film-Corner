@@ -248,7 +248,7 @@ angular.module('toolCtrl', [])
       var timeline = {
         session:    session,
         file:       file,
-        id:         id,
+        id:         (new Date()).getTime(),
         name:       title,
         media_url:  url,
         data:       { id : title+'-guid' },
