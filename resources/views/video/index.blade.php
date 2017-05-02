@@ -106,7 +106,7 @@
                           <button type="button" class="btn btn-info" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
                             <i class="fa fa-eye" aria-hidden="true"></i>
                           </button>
-                          <button ng-click="addElement('{{ $session_id }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                          <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                           </button>
                         </div>
@@ -130,7 +130,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
+                                <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
                                   Add to timeline
                                 </button>
                               </div>
