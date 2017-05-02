@@ -21,7 +21,9 @@
 @endsection
 @section('content')
   <div class="pt-5">
-
+  </div>
+  <div class="clearfix pt-5">
+    session_id: {{ $session_id }}
   </div>
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
@@ -127,7 +129,7 @@
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
+                                <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
                                   Add to timeline
                                 </button>
                               </div>
