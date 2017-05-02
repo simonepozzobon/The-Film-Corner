@@ -32,6 +32,13 @@ use App\Partner;
 
 Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
 Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
+// HTTP FOR STREAMING EDITOR
+Route::prefix('video-edit')->group(function() {
+  Route::post('video-edit-api', 'VideoEditorController@updateEditor')->name('update.editor');
+  Route::get('/', function() {
+    return view('video.index');
+  })->name('video.index');
+});
 
 
 /*
