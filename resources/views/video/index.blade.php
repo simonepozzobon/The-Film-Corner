@@ -32,8 +32,9 @@
         </vjs-video-container>
         <div class="clearfix">
           <div class="row">
-            <div class="col">
-              <div class="btn-group mt-3">
+            <div class="col mt-3">
+              {{-- Control Bar --}}
+              <div class="btn-group">
                 <button type="button" name="button" class="btn btn-secondary" ng-click="editorPlay()">
                   <i class="fa fa-play" aria-hidden="true"></i> Play
                 </button>
@@ -44,6 +45,28 @@
                   <i class="fa fa-stop" aria-hidden="true"></i> Stop
                 </button>
               </div>
+
+
+              <div class="btn-group">
+                <button type="button" name="button" class="btn btn-secondary">
+                  <i class="fa fa-backward" aria-hidden="true"></i> Rewind
+                </button>
+                <button type="button" name="button" class="btn btn-secondary">
+                  <i class="fa fa-forward" aria-hidden="true"></i> Forward
+                </button>
+              </div>
+
+              <button type="button" name="button" class="btn btn-secondary">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
+              </button>
+
+              <button type="button" name="button" class="btn btn-secondary">
+                <i class="fa fa-save" aria-hidden="true"></i> Save
+              </button>
+
+              <button type="button" name="button" class="btn btn-secondary">
+                <i class="fa fa-share-square-o" aria-hidden="true"></i> Share
+              </button>
             </div>
           </div>
         </div>
