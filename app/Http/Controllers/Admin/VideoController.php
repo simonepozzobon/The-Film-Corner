@@ -31,17 +31,19 @@ class VideoController extends Controller
 
       // definisco la path pubblica per recuperare il video successivamente
       $publicPath = 'storage/video/sessions/'.$session_id;
+      $media_url = $publicPath.'/tfc_video_session.mp4';
 
       // Salvo la sessione nel database
       $Video = new Video;
       $Video->session = $session_id;
-      $Video->media_url = $publicPath.'/tfc_video_session.mp4';
+      $Video->media_url = $media_url;
       $Video->save();
+
 
       // prendo la libreria
       $elements = VideoLibrary::all();
 
-      return view('video.index', compact('elements', 'session_id'));
+      return view('video.index', compact('elements', 'session_id', 'media_url'));
     }
 
     public function upload(Request $request)
