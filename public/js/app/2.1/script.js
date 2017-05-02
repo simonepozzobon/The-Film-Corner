@@ -15126,6 +15126,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
       var media = [];
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
+          session: timelines[i].session,
           id: timelines[i].id,
           media_url: timelines[i].media_url,
           start: timelines[i].lines[0].events[0].start,
@@ -15225,14 +15226,16 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controlle
 
 // Define the video controller
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', 'Timeline', 'Video', function ($scope, Timeline, Video) {
-
-  $scope.mediaToggle = {
-    sources: [{
-      src: 'img/helpers/poster.png' //,
-      //type: 'video/mp4'
-    }],
-    poster: 'img/helpers/poster.png'
-  };
+  // console.log('url '+$scope.session);
+  // $scope.mediaToggle = {
+  //   sources: [
+  //     {
+  //       src: 'img/helpers/poster.png'//,
+  //       //type: 'video/mp4'
+  //     }
+  //   ],
+  //   poster: 'img/helpers/poster.png'
+  // }
 
   $scope.$on('timelineChanged', function (e, timeline) {
     console.log('-----');
@@ -15250,12 +15253,14 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
 
       $scope.editorPlay = function () {
         var media = Timeline.getTimelines($scope);
-        $scope.mediaToggle = {
-          sources: [{
-            src: 'storage/' + media[0].media_url,
-            type: 'video/mp4'
-          }]
-        };
+        // $scope.mediaToggle = {
+        //   sources: [
+        //     {
+        //       src: 'storage/'+media[0].media_url,
+        //       type: 'video/mp4'
+        //     }
+        //   ]
+        // };
         videoData.player.play();
       };
 
@@ -15331,9 +15336,10 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
 });
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, Timeline) {
-  $scope.addElement = function (id, title, duration, url) {
+  $scope.addElement = function (session, id, title, duration, url) {
     var d = duration * 100 / 5;
     var timeline = {
+      session: session,
       id: id,
       name: title,
       media_url: url,
