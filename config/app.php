@@ -188,6 +188,7 @@ return [
         Mews\Purifier\PurifierServiceProvider::class,
 
         // Debug
+        Lanin\Laravel\ApiDebugger\ServiceProvider::class,
         'Barryvdh\Debugbar\ServiceProvider',
 
     ],
@@ -249,6 +250,7 @@ return [
 
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
     ],
 
 ];
