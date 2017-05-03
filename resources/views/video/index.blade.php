@@ -60,11 +60,11 @@
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
               </button>
 
-              <button type="button" name="button" class="btn btn-secondary">
+              <button type="button" name="button" class="btn btn-secondary disabled">
                 <i class="fa fa-save" aria-hidden="true"></i> Save
               </button>
 
-              <button type="button" name="button" class="btn btn-secondary">
+              <button type="button" name="button" class="btn btn-secondary disabled">
                 <i class="fa fa-share-square-o" aria-hidden="true"></i> Share
               </button>
             </div>
