@@ -22,7 +22,7 @@
     }
 
     .scrollable {
-      height: 100%;
+      height: 460px;
       overflow: scroll;
     }
   </style>
