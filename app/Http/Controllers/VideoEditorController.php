@@ -67,7 +67,6 @@ class VideoEditorController extends Controller
           $srcFilename = str_replace("video/uploads/", "", $mediaPath);
           $tmpFilename = $media['id'];
           $srcPath = $storePath.'/src/'.$srcFilename;
-
           $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
 
           // per ogni elemento tranne l'ultimo verifico la distanza dall'elemento successivo
@@ -93,49 +92,76 @@ class VideoEditorController extends Controller
             $duration = $Video->tToS($media['duration']);
           }
 
-          $save = new Test;
-          $save->session = $duration;
-          $save->media_url = $media['media_url'];
-          $save->save();
-
-          // $save = new Test;
-          // $save->session = $lastElement;
-          // $save->save();
-
           //ffmpeg -ss [start] -i in.mp4 -t [duration] -c copy out.mp4
           $cli = FFMPEG_LIB.' -y -i '.$srcPath.' -t '.$duration.' -c copy '.$tmpPath;
           exec($cli);
 
         }
 
+        $export = storage_path('app/public/video/sessions/'.$session_id.'/tfc_video_session.mp4');
+
+        $cli = FFMPEG_LIB.' -y -i "concat:';
+
         // faccio il render
+        foreach ($data as $key => $media) {
+          $mediaPath = $media['media_url'];
+          $srcFilename = str_replace("video/uploads/", "", $mediaPath);
+          $tmpFilename = $media['id'];
+          $srcPath = $storePath.'/src/'.$srcFilename;
+          $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
+          $intermediatePath = $storePath.'/tmp/'.$tmpFilename.'.ts';
 
+          $intermediateCli = FFMPEG_LIB.' -y -i '.$tmpPath.' -c copy -bsf:v h264_mp4toannexb -f mpegts '.$intermediatePath;
+          exec($intermediateCli);
 
-        // Se c'è qualcosa all'inizio della timeline li salvo
-        if ($data[0]['start'] == 0) {
-          // Li salvo nel db per debug
-          foreach ($data as $key => $media) {
-            $save = new Test;
-            $save->session = $media['session'];
-            $save->media_url = $media['file'];
-            $save->start = $Video->tToS($media['start']);
-            $save->duration = $Video->tToS($media['duration']);
-            $save->save();
-          }
-        } else {
-          // non c'è nulla all'inizio
-          $distance = $data[0]['start'];
-
-          foreach ($data as $key => $media) {
-            $newStart = $media['start'] - $distance;
-            $save = new Test;
-            $save->session = $media['session'];
-            $save->media_url = $media['media_url'];
-            $save->start = $Video->tTos($newStart);
-            $save->duration = $Video->tToS($media['duration']);
-            $save->save();
+          if ($key != ($dataLenght - 1)) {
+            $cli .= $intermediatePath.'|';
+          } else {
+            $cli .= $intermediatePath.'"';
           }
         }
+
+        $cli .= ' -c copy -bsf:a aac_adtstoasc '.$export;
+        $save = new Test;
+        $save->session = $cli;
+        $save->save();
+        exec($cli);
+
+
+        // $save = new Test;
+        // $save->session = $duration;
+        // $save->media_url = $media['media_url'];
+        // $save->save();
+
+        // $save = new Test;
+        // $save->session = $lastElement;
+        // $save->save();
+
+        // Se c'è qualcosa all'inizio della timeline li salvo
+        // if ($data[0]['start'] == 0) {
+        //   // Li salvo nel db per debug
+        //   foreach ($data as $key => $media) {
+        //     $save = new Test;
+        //     $save->session = $media['session'];
+        //     $save->media_url = $media['file'];
+        //     $save->start = $Video->tToS($media['start']);
+        //     $save->duration = $Video->tToS($media['duration']);
+        //     $save->save();
+        //   }
+        // } else {
+        //   // non c'è nulla all'inizio
+        //   $distance = $data[0]['start'];
+        //
+        //   foreach ($data as $key => $media) {
+        //     $newStart = $media['start'] - $distance;
+        //     $save = new Test;
+        //     $save->session = $media['session'];
+        //     $save->media_url = $media['media_url'];
+        //     $save->start = $Video->tTos($newStart);
+        //     $save->duration = $Video->tToS($media['duration']);
+        //     $save->save();
+        //   }
+        // }
 
 
 
