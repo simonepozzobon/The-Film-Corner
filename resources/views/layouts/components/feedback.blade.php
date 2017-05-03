@@ -1,5 +1,5 @@
 {{-- Feedback --}}
-<div class="feedback-popup pt-5">
+<div class="feedback-popup mt-4">
   <div class="d-block m-1">
     <a class="text-white text-align-center btn btn-success btn-lg" data-toggle="modal" data-target="#positiveFeedback">
       <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
