@@ -177,7 +177,13 @@ angular.module('videoCtrl', ['vjs.video'])
             $scope.editorRewind = function() {
               videoData.player.pause();
               var now = videoData.player.currentTime();
-              videoData.player.currentTime(now - 10);
+              videoData.player.currentTime(now - 2);
+            }
+
+            $scope.editorForward = function() {
+              videoData.player.pause();
+              var now = videoData.player.currentTime();
+              videoData.player.currentTime(now + 2);
             }
 
             videoData.player.on('timeupdate', function () {

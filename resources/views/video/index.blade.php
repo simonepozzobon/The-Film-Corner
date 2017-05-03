@@ -22,9 +22,6 @@
 @section('content')
   <div class="pt-5">
   </div>
-  <div class="clearfix pt-5">
-    session_id: {{ $session_id }}
-  </div>
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
       <div class="col-md-8" >
@@ -51,10 +48,10 @@
 
 
               <div class="btn-group">
-                <button type="button" name="button" class="btn btn-secondary">
+                <button type="button" name="button" class="btn btn-secondary" ng-click="editorRewind()">
                   <i class="fa fa-backward" aria-hidden="true"></i> Rewind
                 </button>
-                <button type="button" name="button" class="btn btn-secondary">
+                <button type="button" name="button" class="btn btn-secondary" ng-click="editorForward()">
                   <i class="fa fa-forward" aria-hidden="true"></i> Forward
                 </button>
               </div>
