@@ -15114,19 +15114,26 @@ __webpack_require__(63);
 'use strict';
 
 // Define the service
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Video', function ($http, CSRF_TOKEN, Timeline) {
-
-  // Get all the category
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Feedback', function ($http, CSRF_TOKEN) {
   return {
-    get: function get() {
-      return $http.get('test/api');
-    },
+    send: function send(feedbackData) {
+      return $http({
+        method: 'POST',
+        url: 'feedback/feedback-api',
+        data: feedbackData,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+      });
+    }
+  };
+}).factory('Video', function ($http, CSRF_TOKEN, Timeline) {
 
+  return {
     send: function send(timelines) {
       var media = [];
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
           session: timelines[i].session,
+          file: timelines[i].file,
           id: timelines[i].id,
           media_url: timelines[i].media_url,
           start: timelines[i].lines[0].events[0].start,
@@ -15135,23 +15142,10 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
         media.push(edit);
       }
 
-      console.log('-------');
-      console.log('sto per inviare');
-      console.log(media);
-      console.log(JSON.stringify(media));
-
-      console.log('-------');
       return $http({
         method: 'POST',
         url: 'video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
         data: media
-      });
-    },
-
-    destroy: function destroy(id) {
-      return $http({
-        method: 'DELETE',
-        url: '' //url: "{{ route('categories.index') }}/"+id
       });
     }
 
@@ -15185,11 +15179,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
         }
         $scope.$broadcast('startReset', distance);
       }
-
-      console.log('-------');
-      console.log('timelines');
-      console.log(timelines);
-      console.log('-------');
 
       return timelines;
     },
@@ -15226,16 +15215,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controlle
 
 // Define the video controller
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', 'Timeline', 'Video', function ($scope, Timeline, Video) {
-  // console.log('url '+$scope.session);
-  // $scope.mediaToggle = {
-  //   sources: [
-  //     {
-  //       src: 'img/helpers/poster.png'//,
-  //       //type: 'video/mp4'
-  //     }
-  //   ],
-  //   poster: 'img/helpers/poster.png'
-  // }
 
   $scope.$on('timelineChanged', function (e, timeline) {
     console.log('-----');
@@ -15244,42 +15223,56 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
     console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
-    Video.send(timelines);
+    Video.send(timelines).then(function successCallback(response) {
+      console.log(timelines);
+      console.log(response.data);
+      $scope.mediaToggle = {
+        sources: [{
+          src: response.data,
+          type: 'video/mp4'
+        }]
+      };
+    });
   });
 
   //listen for when the vjs-media object changes
   $scope.$on('vjsVideoReady', function (e, videoData) {
-    if (videoData.player.id() == 'vjs_video_3') {
+    // if (videoData.player.id() == 'vjs_video_3') {
 
-      $scope.editorPlay = function () {
-        var media = Timeline.getTimelines($scope);
-        // $scope.mediaToggle = {
-        //   sources: [
-        //     {
-        //       src: 'storage/'+media[0].media_url,
-        //       type: 'video/mp4'
-        //     }
-        //   ]
-        // };
-        videoData.player.play();
+    $scope.editorPlay = function () {
+      videoData.player.trigger('loadstart');
+      var media = Timeline.getTimelines($scope);
+      videoData.player.play();
+    };
+
+    $scope.editorPause = function () {
+      videoData.player.pause();
+    };
+
+    $scope.editorStop = function () {
+      videoData.player.pause();
+      videoData.player.currentTime(0);
+    };
+
+    $scope.editorRewind = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now - 2);
+    };
+
+    $scope.editorForward = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now + 2);
+    };
+
+    videoData.player.on('timeupdate', function () {
+      var time = {
+        time: this.currentTime()
       };
-
-      $scope.editorPause = function () {
-        videoData.player.pause();
-      };
-
-      $scope.editorStop = function () {
-        videoData.player.pause();
-        videoData.player.currentTime(0);
-      };
-
-      videoData.player.on('timeupdate', function () {
-        var time = {
-          time: this.currentTime()
-        };
-        $scope.$broadcast('editorPlay', time);
-      });
-    }
+      $scope.$broadcast('editorPlay', time);
+    });
+    //}
   });
 }]);
 
@@ -15336,11 +15329,12 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
 });
 
 __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, Timeline) {
-  $scope.addElement = function (session, id, title, duration, url) {
+  $scope.addElement = function (session, file, id, title, duration, url) {
     var d = duration * 100 / 5;
     var timeline = {
       session: session,
-      id: id,
+      file: file,
+      id: new Date().getTime(),
       name: title,
       media_url: url,
       data: { id: title + '-guid' },
@@ -15359,8 +15353,25 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
   };
 });
 
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
+  $scope.feedbackData = {};
+
+  $scope.setPositive = function () {
+    $scope.feedbackData.status = 'positive';
+  };
+
+  $scope.setNegative = function () {
+    $scope.feedbackData.status = 'negative';
+  };
+
+  $scope.sendFeedback = function () {
+    console.log($scope.feedbackData);
+    Feedback.send($scope.feedbackData);
+  };
+});
+
 // Define the Application
-var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
 
 /***/ }),
 /* 58 */,
