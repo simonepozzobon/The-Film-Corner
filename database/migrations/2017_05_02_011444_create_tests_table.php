@@ -15,7 +15,7 @@ class CreateTestsTable extends Migration
     {
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('session')->nullable();
+            $table->text('session')->nullable();
             $table->string('media_url')->nullable();
             $table->string('start')->nullable();
             $table->string('duration')->nullable();
