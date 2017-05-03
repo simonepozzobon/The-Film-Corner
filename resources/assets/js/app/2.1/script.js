@@ -46,14 +46,6 @@ angular.module('appService', [])
             media.push(edit);
           }
 
-
-
-          console.log('-------');
-          console.log('sto per inviare');
-          console.log(media);
-          console.log(JSON.stringify(media));
-
-          console.log('-------');
           return $http({
             method: 'POST',
             url: 'video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
@@ -100,12 +92,6 @@ angular.module('appService', [])
           }
           $scope.$broadcast('startReset', distance);
         }
-
-        console.log('-------');
-        console.log('timelines');
-        console.log(timelines);
-        console.log('-------');
-
 
         return timelines;
       },
@@ -155,14 +141,26 @@ angular.module('videoCtrl', ['vjs.video'])
           console.log('-----');
 
           var timelines = Timeline.getTimelines($scope);
-          Video.send(timelines);
+          Video.send(timelines).then(function successCallback(response) {
+            console.log(timelines);
+            console.log(response.data);
+            $scope.mediaToggle = {
+              sources: [
+                {
+                  src: response.data,
+                  type: 'video/mp4'
+                }
+              ]
+            }
+          });
         });
 
         //listen for when the vjs-media object changes
         $scope.$on('vjsVideoReady', function (e, videoData) {
-          if (videoData.player.id() == 'vjs_video_3') {
+          // if (videoData.player.id() == 'vjs_video_3') {
 
             $scope.editorPlay = function() {
+              videoData.player.trigger('loadstart');
               var media = Timeline.getTimelines($scope);
               videoData.player.play();
             };
@@ -176,13 +174,19 @@ angular.module('videoCtrl', ['vjs.video'])
               videoData.player.currentTime(0);
             }
 
+            $scope.editorRewind = function() {
+              videoData.player.pause();
+              var now = videoData.player.currentTime();
+              videoData.player.currentTime(now - 10);
+            }
+
             videoData.player.on('timeupdate', function () {
               var time = {
                 time: this.currentTime()
               };
               $scope.$broadcast('editorPlay', time);
             });
-          }
+          //}
         });
     }]);
 

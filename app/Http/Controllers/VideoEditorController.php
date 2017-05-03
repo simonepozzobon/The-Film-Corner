@@ -36,6 +36,7 @@ class VideoEditorController extends Controller
         $storePath = storage_path('app/public/video/sessions/'.$session_id);
         $srcPath = $storePath.'/src';
         $tmpPath = $storePath.'/tmp';
+        $expPath = $storePath.'/exp';
 
         // Se non esiste la cartella src la creo
         if (!file_exists($srcPath)) {
@@ -45,6 +46,10 @@ class VideoEditorController extends Controller
         // Se non esiste la cartella tmp la Creo
         if (!file_exists($tmpPath)) {
           $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/tmp', 0777, true);
+        }
+
+        if (!file_exists($expPath)) {
+          $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/exp', 0777, true);
         }
 
         // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
@@ -98,7 +103,9 @@ class VideoEditorController extends Controller
 
         }
 
-        $export = storage_path('app/public/video/sessions/'.$session_id.'/tfc_video_session.mp4');
+        $exportName = uniqid();
+        $export = storage_path('app/public/video/sessions/'.$session_id.'/exp/'.$exportName.'.mp4');
+        $exportPublicPath = 'storage/video/sessions/'.$session_id.'/exp/'.$exportName.'.mp4';
 
         $cli = FFMPEG_LIB.' -y -i "concat:';
 
@@ -127,47 +134,7 @@ class VideoEditorController extends Controller
         $save->save();
         exec($cli);
 
-
-        // $save = new Test;
-        // $save->session = $duration;
-        // $save->media_url = $media['media_url'];
-        // $save->save();
-
-        // $save = new Test;
-        // $save->session = $lastElement;
-        // $save->save();
-
-        // Se c'è qualcosa all'inizio della timeline li salvo
-        // if ($data[0]['start'] == 0) {
-        //   // Li salvo nel db per debug
-        //   foreach ($data as $key => $media) {
-        //     $save = new Test;
-        //     $save->session = $media['session'];
-        //     $save->media_url = $media['file'];
-        //     $save->start = $Video->tToS($media['start']);
-        //     $save->duration = $Video->tToS($media['duration']);
-        //     $save->save();
-        //   }
-        // } else {
-        //   // non c'è nulla all'inizio
-        //   $distance = $data[0]['start'];
-        //
-        //   foreach ($data as $key => $media) {
-        //     $newStart = $media['start'] - $distance;
-        //     $save = new Test;
-        //     $save->session = $media['session'];
-        //     $save->media_url = $media['media_url'];
-        //     $save->start = $Video->tTos($newStart);
-        //     $save->duration = $Video->tToS($media['duration']);
-        //     $save->save();
-        //   }
-        // }
-
-
-
-
-
-        return response()->json(compact('data'));
+        return response($exportPublicPath);
     }
 
 }
