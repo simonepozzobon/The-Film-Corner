@@ -9,11 +9,6 @@
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
   <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
   <style media="screen">
-    #video-editor button.vjs-play-control.vjs-control.vjs-button.vjs-paused,
-    #video-editor button.vjs-play-control.vjs-control.vjs-button.vjs-playing
-    {
-      display: none;
-    }
     #video-editor button.vjs-big-play-button {
       display: none;
     }
