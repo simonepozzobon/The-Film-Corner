@@ -16,6 +16,9 @@
     .feedback-popup {
       position: fixed;
       z-index: 2;
+      margin-left: -1rem;
+      top: 25%;
+      transform: translateY(-50%);
     }
   </style>
 @endsection
