@@ -24,14 +24,21 @@ require('angular-media-timeline/timeline.js');
 
 // Define the service
 angular.module('appService', [])
+  .factory('Feedback', function($http, CSRF_TOKEN) {
+    return {
+      send: function(feedbackData) {
+        return $http({
+              method: 'POST',
+              url: 'feedback/feedback-api',
+              data: feedbackData,
+              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
+      }
+    }
+  })
   .factory('Video', function($http, CSRF_TOKEN, Timeline){
 
-    // Get all the category
     return {
-      get : function() {
-        return $http.get('test/api');
-      },
-
       send : function(timelines) {
           var media = [];
           for (var i = 0; i < timelines.length; i++) {
@@ -51,16 +58,7 @@ angular.module('appService', [])
             url: 'video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
             data: media,
           });
-      },
-
-      destroy : function(id) {
-          return $http({
-            method: 'DELETE',
-            url: '' //url: "{{ route('categories.index') }}/"+id
-          });
       }
-
-
 
     }
   }).factory('Timeline', function(){
@@ -275,7 +273,26 @@ angular.module('toolCtrl', [])
       Timeline.getTimelines($scope);
       $scope.$emit('timelineChanged', timeline);
     }
-  });
+});
+
+angular.module('feedbackCtrl', [])
+  .controller('feedbackController', function($scope, $http, Feedback){
+    $scope.feedbackData = {};
+
+    $scope.setPositive = function() {
+      $scope.feedbackData.status = 'positive';
+    };
+
+    $scope.setNegative = function() {
+      $scope.feedbackData.status = 'negative';
+    }
+
+    $scope.sendFeedback = function() {
+      console.log($scope.feedbackData);
+      Feedback.send($scope.feedbackData);
+    };
+
+});
 
 
 // Define the Application
@@ -285,6 +302,7 @@ angular.module('App', [
           'videoCtrl',
           'mediaTimelineCtrl',
           'toolCtrl',
+          'feedbackCtrl',
           'appService',
         ])
         .constant("CSRF_TOKEN", '{{ csrf_token() }}');
