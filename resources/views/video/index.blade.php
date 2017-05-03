@@ -12,11 +12,19 @@
     #video-editor button.vjs-big-play-button {
       display: none;
     }
+
+    .feedback-popup {
+      position: fixed;
+      z-index: 2;
+    }
   </style>
 @endsection
 @section('content')
   <div class="pt-5">
   </div>
+
+  @include('layouts.components.feedback')
+
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
     <div class="row">
       <div class="col-md-8" >
