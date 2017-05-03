@@ -20,6 +20,11 @@
       top: 25%;
       transform: translateY(-50%);
     }
+
+    .scrollable {
+      height: 100%;
+      overflow: scroll;
+    }
   </style>
 @endsection
 @section('content')
@@ -75,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4 scrollable">
         {{-- Nav Tabs --}}
         <ul class="nav nav-tabs" role="tablist">
           <li class="nav-item">
