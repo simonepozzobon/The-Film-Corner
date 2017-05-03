@@ -40,6 +40,9 @@ Route::prefix('video-edit')->group(function() {
   })->name('video.index');
 });
 
+Route::prefix('feedback')->group(function() {
+  Route::post('feedback-api', 'FeedbackController@save')->name('save.feedback');
+});
 
 /*
 |--------------------------------------------------------------------------

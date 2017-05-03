@@ -22,10 +22,8 @@
 @section('content')
   <div class="pt-5">
   </div>
-
-  @include('layouts.components.feedback')
-
   <div class="clearfix pt-5 pb-5 pl-3 pr-3" ng-app="App" ng-cloak ng-controller="videoController">
+    @include('layouts.components.feedback')
     <div class="row">
       <div class="col-md-8" >
         <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
