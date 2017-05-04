@@ -68,7 +68,9 @@
               <h5>File</h5>
               <input type="file" name="video" class="form-control">
             </div>
-            <button type="submit" name="button" class="btn btn-primary">Invia</button>
+            <button type="submit" name="button" class="btn btn-primary">
+              <i class="fa fa-floppy-o" aria-hidden="true"></i> Send
+            </button>
           </form>
           {{-- <form ng-submit="submitVideo()" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
