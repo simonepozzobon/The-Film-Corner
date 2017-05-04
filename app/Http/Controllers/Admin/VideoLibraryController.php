@@ -59,26 +59,20 @@ class VideoLibraryController extends Controller
         $fileType = 'video';
         $path = storage_path('app/public/video/uploads');
 
-        if ($ext != 'mp4') {
-          // Salvo il file nella cartella tmp per la conversione
-          $file = $file->storeAs('public/video/tmp', $filename.'.'.$ext);
-          $filePath = $globalPath->applyPathPrefix($file);
+        // Salvo il file nella cartella tmp per la conversione
+        $file = $file->storeAs('public/video/tmp', $filename.'.'.$ext);
+        $filePath = $globalPath->applyPathPrefix($file);
 
-          // eseguo il comando FFMPEG
-          $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/video/uploads/').$filename.'.mp4';
-          exec($cli);
+        // eseguo il comando FFMPEG
+        $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/video/uploads/').$filename.'.mp4';
+        exec($cli);
 
-          // Cancello il file temporaneo
-          Storage::delete($file);
+        // Cancello il file temporaneo
+        Storage::delete($file);
 
-          // salvo la path del file converito per il DB
-          $path = 'video/uploads/'.$filename.'.mp4';
+        // salvo la path del file converito per il DB
+        $path = 'video/uploads/'.$filename.'.mp4';
 
-        } elseif ($ext == 'mp4') {
-          // se è già un mp4 lo salvo direttamente senza convertirlo
-          $file = $file->storeAs('public/video/uploads', $filename.'.mp4');
-          $path = 'video/uploads/'.$filename.'.mp4';
-        }
 
         // get duration
         $filePath = $globalPath->applyPathPrefix('public/'.$path);
