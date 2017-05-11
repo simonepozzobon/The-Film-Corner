@@ -217,7 +217,7 @@
               <div class="block-text">
                 <p class="text-justify">
                   The conference is part of The Film Corner project aimed to the creation of an online interactive platform for film education addressed to European schools.
-                  <br>
+                  <br><br>
                 </p>
               </div>
               <div class="block-container">
