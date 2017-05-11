@@ -214,6 +214,11 @@
               <div id="conference-title" class="title pb-5">
                 International Conference
               </div>
+              <div class="block-text">
+                <p class="text-justify">
+                  The conference is part of The Film Corner project aimed to the creation of an online interactive platform for film education addressed to European schools.
+                </p>
+              </div>
               <div class="block-container">
                 <div class="block-subtitle">
                   <h4>When and Where</h4>
