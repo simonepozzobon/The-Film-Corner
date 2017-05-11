@@ -135,7 +135,7 @@
                 <div class="block-subtitle mt-5">
                   <h4>Contacts and Informations</h4>
                 </div>
-                <div class="block-text">
+                <div class="block-text mb-5">
                   <p class="text-justify">
                     Fondazione Cineteca Italiana<br>
                     Viale Fulvio Testi, 121<br>
