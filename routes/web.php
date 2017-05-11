@@ -30,6 +30,10 @@ use App\Partner;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/conference', function() {
+  return view('public.conference');
+})->name('conference');
+
 Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
 Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
 // HTTP FOR STREAMING EDITOR

@@ -250,6 +250,15 @@
                     Keep updated through our <a href="https://www.facebook.com/TheFilmCorner/">facebook page</a>.
                   </p>
                 </div>
+                <div class="block-text mt-5">
+                  <div class="row">
+                    <div class="col-md-2 offset-md-5">
+                      <a href="{{ route('conference') }}" class="btn btn-primary">
+                        Read More
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
