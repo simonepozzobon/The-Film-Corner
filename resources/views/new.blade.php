@@ -216,38 +216,13 @@
               </div>
               <div class="block-container">
                 <div class="block-subtitle">
-                  <h4>Details</h4>
+                  <h4>When and Where</h4>
                 </div>
                 <div class="block-text">
                   <p class="text-justify">
-                    <b class="sp-bold">Managing institution:</b> Fondazione Cineteca Italiana, Milan, Italy<br>
-                    Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy<br>
-                    <b class="sp-bold">2017, Thu, November 9th, 6pm, italian time:</b> networking cocktail<br>
-                    <b class="sp-bold">2017, Fri, November, 10th, 9 am-6 pm:</b> conference<br>
-                  </p>
-                </div>
-                <div class="block-subtitle mt-5">
-                  <h4>About the conference</h4>
-                </div>
-                <div class="block-text">
-                  <p class="text-justify">
-                    The Film Corner International Conference will be open to public and will address both film  professionals and teachers and will  be held as part of the 9th edition of “Piccolo Grande Cinema” Festival in Milan. The main issues of the conference are:
-                    <ul>
-                      <li>Launch of The Film Corner platform;</li>
-                      <li>Pedagogical methodologies for Film Literacy in the digital era;</li>
-                      <li>Integrating online and offline Film Literacy actions;</li>
-                      <li>Crossmedia educational and promotional platforms in the digital film market.</li>
-                    </ul>
-                  </p>
-                </div>
-                <div class="block-subtitle mt-5">
-                  <h4>Registration</h4>
-                </div>
-                <div class="block-text">
-                  <p class="text-justify">
-                    Up to 180 people can attend the conference and it is completely free of charge. If you’d like to join us, you can register on the conference website from 2017, April 27th onwards.
-                    <br><br>
-                    Keep updated through our <a href="https://www.facebook.com/TheFilmCorner/">facebook page</a>.
+                    2017, Thu, November 9th, 5pm Italian time, MIC-Interactive Film Museum, viale Fulvio Testi, 121, Milan, Italy
+                    <br>
+                    2017, Fri, November, 10th, 9 am-6 pm Italian time, Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy
                   </p>
                 </div>
                 <div class="block-text mt-5">
