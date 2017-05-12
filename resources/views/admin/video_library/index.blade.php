@@ -40,12 +40,32 @@
                   <td class="align-middle">@{{ video.duration }}s</td>
                   <td class="align-middle">
                     <div class="btn-group">
-                      <a href="#" class="btn btn-info">
+                      <button href="#" class="btn btn-info" data-toggle="modal" data-target="#editModal">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-                      </a>
-                      <a href="#" class="btn btn-danger">
+                      </button>
+                      <button href="#" class="btn btn-danger" ng-click="deleteVideo(video.id)">
                         <i class="fa fa-trash" aria-hidden="true"></i> Delete
-                      </a>
+                      </button>
+                    </div>
+
+                    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit Video</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            ...
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </td>
                 </tr>
@@ -72,19 +92,6 @@
               <i class="fa fa-floppy-o" aria-hidden="true"></i> Send
             </button>
           </form>
-          {{-- <form ng-submit="submitVideo()" method="post" enctype="multipart/form-data">
-            {{ csrf_field() }}
-            <div class="form-group">
-              <h5>Title</h5>
-              <input type="text" name="title" class="form-control" ng-model="videoData.title">
-            </div>
-            <div class="form-group border-0">
-              <h5>Video</h5> --}}
-              {{-- <input type="file" data-file="param.file"/>
-              <div>param.file: @{{param.file}}</div>
-            </div>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-save" aria-hidden="true"></i> Save</button>
-          </form> --}}
         </div>
       </div>
     </div>
@@ -151,15 +158,24 @@
 
               $scope.submitVideo = function() {
                 $scope.videoData.video = $scope.param.file;
-                Video.save($scope.videoData)
-                        .then(function successCallback(response) {
-                          Video.get().then(function(response) {
-                            $scope.videos = response.data.videos;
-                          });
-                        }, function errorCallback(response) {
-                          console.log('errors '+response);
-                        });
+                Video.save($scope.videoData).then(function successCallback(response) {
+                  Video.get().then(function(response) {
+                    $scope.videos = response.data.videos;
+                  });
+                }, function errorCallback(response) {
+                  console.log('errors '+response);
+                });
               };
+
+              $scope.deleteVideo = function(id) {
+                Video.destroy(id).then(function successCallback(response) {
+                  Video.get().then(function(response) {
+                    $scope.videos = response.data.videos;
+                  });
+                }, function errorCallback(response) {
+                  console.log('errors '+response);
+                });
+              }
 
             });
 

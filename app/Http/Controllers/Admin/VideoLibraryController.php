@@ -128,11 +128,11 @@ class VideoLibraryController extends Controller
     public function destroy($id)
     {
         $video = VideoLibrary::find($id);
-        Storage::delete($video->path);
-        Storage::delete($video->thumb);
+        Storage::delete('app/public/'.$video->path);
+        Storage::delete('app/public/'.$video->thumb);
         $video->delete();
 
-        $request->session()->flash('success', 'Video Deleted!');
+        session()->flash('success', 'Video Deleted!');
         return redirect('admin/video-library');
 
     }
