@@ -16,25 +16,28 @@
                     </div>
                     <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md">
                       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#containerNavbarCenter" aria-controls="containerNavbarCenter" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+                        Menu <span class="navbar-toggler-icon"></span>
                       </button>
 
                       <div class="collapse navbar-collapse justify-content-md-center" id="containerNavbarCenter">
                         <ul class="navbar-nav">
                           <li class="nav-item active">
-                            <a class="nav-link" href="#">General Info <span class="sr-only">(current)</span></a>
+                            <a class="nav-link" href="{{ route('conference') }}">General Info <span class="sr-only">(current)</span></a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Schedule Draft</a>
+                            <a class="nav-link" href="{{ route('conference.about') }}">About</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Online Application</a>
+                            <a class="nav-link" href="{{ route('conference.schedule') }}">Schedule Draft</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Download</a>
+                            <a class="nav-link" href="{{ route('conference.application') }}">Online Application</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="#">Contact & Info</a>
+                            <a class="nav-link" href="{{ route('conference.download') }}">Download</a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="{{ route('conference.contact') }}">Contact & Info</a>
                           </li>
                         </ul>
                       </div>
@@ -47,6 +50,9 @@
           </div>
         </div>
       </main>
+      <div class="p-5">
+
+      </div>
       @include('layouts.main._footer')
       @include('layouts.main._scripts')
     </div>
