@@ -16,9 +16,11 @@
       20126 Milan<br>
       Tel. +39 02 87 24 21 14<br>
       <br>
+      Info:<br>
+      <a href="mailto:thefilmcorner@cinetecamilano.it">thefilmcorner@cinetecamilano.it</a><br>
+      <br>
       Press office:<br>
       Cristiana Ferrari<br>
-      <a href="mailto:thefilmcorner@cinetecamilano.it">thefilmcorner@cinetecamilano.it</a>
       <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
     </p>
   </div>

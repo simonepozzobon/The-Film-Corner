@@ -4,6 +4,7 @@
 @endsection
 @section('stylesheets')
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+  <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
 @endsection
 @section('content')
   <div class="block-subtitle mt-5">
@@ -65,7 +66,7 @@
             <div class="row">
               <label class="col-sm-1 col-form-label">Notes</label>
               <div class="col-sm-11">
-                <textarea name="name" rows="8" class="form-control"></textarea>
+                <textarea id="editor" name="name" rows="8" class="form-control"></textarea>
               </div>
             </div>
           </div>
@@ -78,4 +79,27 @@
       </form>
     </p>
   </div>
+@endsection
+@section('scripts')
+  <script type="text/javascript">
+    CKEDITOR.replace( 'editor', {
+      toolbarGroups: [
+        { name: 'styles', groups: [ 'styles' ] },
+    		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+    		{ name: 'links', groups: [ 'links' ] },
+    		{ name: 'insert', groups: [ 'insert' ] },
+    		{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+    		{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+    		{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+    		{ name: 'forms', groups: [ 'forms' ] },
+    		{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+    		{ name: 'tools', groups: [ 'tools' ] },
+    		{ name: 'others', groups: [ 'others' ] },
+    		{ name: 'colors', groups: [ 'colors' ] },
+    		{ name: 'about', groups: [ 'about' ] }
+			],
+			// Remove the redundant buttons from toolbar groups defined above.
+			removeButtons: 'Subscript,Superscript,Cut,Scayt,SpecialChar,Strike,RemoveFormat,About,Source,Styles,Format,Link,Unlink,Anchor,Image,Table,HorizontalRule,Copy,Paste,PasteText,PasteFromWord,Undo,Redo'
+    });
+  </script>
 @endsection
