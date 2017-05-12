@@ -21,22 +21,22 @@
 
                       <div class="collapse navbar-collapse justify-content-md-center" id="containerNavbarCenter">
                         <ul class="navbar-nav">
-                          <li class="nav-item active">
+                          <li class="nav-item {{ $active == 'home' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference') }}">General Info <span class="sr-only">(current)</span></a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item {{ $active == 'about' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.about') }}">About</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item {{ $active == 'schedule' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.schedule') }}">Schedule Draft</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item {{ $active == 'application' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.application') }}">Online Application</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item {{ $active == 'download' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.download') }}">Download</a>
                           </li>
-                          <li class="nav-item">
+                          <li class="nav-item {{ $active == 'contact' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.contact') }}">Contact & Info</a>
                           </li>
                         </ul>

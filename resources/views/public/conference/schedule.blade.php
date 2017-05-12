@@ -1,4 +1,4 @@
-@extends('layouts.conference')
+@extends('layouts.conference', ['active' => 'schedule'])
 @section('title')
   The Film Corner - International Conference
 @endsection
