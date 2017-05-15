@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Main;
 
 use Illuminate\Http\Request;
+use App\Mail\ConferenceApply;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+
 
 class ConferenceController extends Controller
 {
@@ -27,6 +30,32 @@ class ConferenceController extends Controller
       return view('public.conference.application');
     }
 
+    public function sendApplication(Request $request)
+    {
+      $this->validate($request, [
+        'name' => 'required|min:3',
+        'surname' => 'required|min:3',
+        'email' => 'required|email',
+      ]);
+
+      $data = [
+        'name' => $request->input('name'),
+        'email' => $request->input('email')
+      ];
+
+      // Mail::queue('public.conference.mail.confirmation', $data, function($message) {
+      //   $message->from('thefilmcorner@cinetecamilano.it', 'The Film Corner');
+      //   $message->replyTo('thefilmcorner@cinetecamilano.it', 'The Film Corner');
+      //   $message->subject('International Conference Application');
+      // });
+
+      Mail::to($request->input('email'))
+            ->send(new ConferenceApply($data));
+
+      return back();
+
+    }
+
     public function download()
     {
       return view('public.conference.download');
@@ -36,5 +65,5 @@ class ConferenceController extends Controller
     {
       return view('public.conference.contact');
     }
-    
+
 }

@@ -12,7 +12,7 @@
   </div>
   <div class="block-text">
     <p class="text-justify">
-      <form class="" action="" method="">
+      <form class="" action="{{ route('conference.application.send') }}" method="POST">
         {{ csrf_field() }}
         {{ method_field('POST') }}
         <div class="row">
@@ -28,7 +28,7 @@
             <div class="row">
               <label class="col-sm-2 col-form-label">Surname</label>
               <div class="col-sm-10">
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="surname" class="form-control">
               </div>
             </div>
           </div>
@@ -38,7 +38,7 @@
             <div class="row">
               <label class="col-sm-2 col-form-label">E-mail</label>
               <div class="col-sm-10">
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="email" class="form-control">
               </div>
             </div>
           </div>
@@ -48,7 +48,7 @@
             <div class="row">
               <label class="col-sm-2 col-form-label">Institution</label>
               <div class="col-sm-10">
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="institution" class="form-control">
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@
             <div class="row">
               <label class="col-sm-2 col-form-label">Role</label>
               <div class="col-sm-10">
-                <input type="text" name="name" class="form-control">
+                <input type="text" name="role" class="form-control">
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@
             <div class="row">
               <label class="col-sm-1 col-form-label">Notes</label>
               <div class="col-sm-11">
-                <textarea id="editor" name="name" rows="8" class="form-control"></textarea>
+                <textarea id="editor" name="notes" rows="8" class="form-control"></textarea>
               </div>
             </div>
           </div>

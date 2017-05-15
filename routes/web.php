@@ -32,6 +32,7 @@ use App\Partner;
 Route::prefix('conference')->group(function() {
   Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
   Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
+  Route::post('/application', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
   Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
   Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
   Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
