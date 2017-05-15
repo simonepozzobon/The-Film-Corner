@@ -19,7 +19,7 @@
         <tr>
           <td class="align-middle">General statement</td>
           <td class="align-middle">
-            <a href="#" class="btn btn-primary">
+            <a href="{{ asset('downloads/conference/TFC_General_Statement.pdf') }}" target="_blank" class="btn btn-primary">
               <i class="fa fa-download" aria-hidden="true"></i> Download
             </a>
           </td>
