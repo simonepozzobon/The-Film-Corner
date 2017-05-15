@@ -43,12 +43,6 @@ class ConferenceController extends Controller
         'email' => $request->input('email')
       ];
 
-      // Mail::queue('public.conference.mail.confirmation', $data, function($message) {
-      //   $message->from('thefilmcorner@cinetecamilano.it', 'The Film Corner');
-      //   $message->replyTo('thefilmcorner@cinetecamilano.it', 'The Film Corner');
-      //   $message->subject('International Conference Application');
-      // });
-
       Mail::to($request->input('email'))
             ->send(new ConferenceApply($data));
 
