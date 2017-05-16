@@ -54,6 +54,15 @@ class ConferenceController extends Controller
           'success'   => '<b>Thanks '.$request->input('name').',</b> We send you an email at <b>'.$request->input('email').'</b> with the confirmation of your application.'
         ];
 
+        $check = ConferenceApplication::where('email', '=', $request->input('email'))->first();
+
+        if ($check !== 0) {
+          return response()->json([
+            'info' => 'You already made an application. If you need further information write us an email.'
+          ]);
+        }
+
+
         $register = new ConferenceApplication;
         $register->name = $request->input('name');
         $register->surname = $request->input('surname');

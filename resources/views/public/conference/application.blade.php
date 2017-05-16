@@ -81,6 +81,7 @@
           </button>
         </div>
       </form>
+      <span id="info-message" class="alert alert-info invisible"></span>
       <span id="success-message" class="alert alert-success invisible"></span>
     </p>
   </div>
@@ -127,24 +128,27 @@
         success: function(data) {
           console.log(data);
           if ((data.errors)) {
-                if (data.errors.name) {
-                  $('.error.name').removeClass('invisible');
-                  $('.error.name').text(data.errors.name);
-                }
-                if (data.errors.surname) {
-                  $('.error.surname').removeClass('invisible');
-                  $('.error.surname').text(data.errors.surname);
-                }
-                if (data.errors.email) {
-                  $('.error.email').removeClass('invisible');
-                  $('.error.email').text(data.errors.email);
-                }
-
-            } else {
-                $('#application-form').hide();
-                $('#success-message').removeClass('invisible');
-                $('#success-message').html(data.success);
-                console.log(data.success);
+              if (data.errors.name) {
+                $('.error.name').removeClass('invisible');
+                $('.error.name').text(data.errors.name);
+              }
+              if (data.errors.surname) {
+                $('.error.surname').removeClass('invisible');
+                $('.error.surname').text(data.errors.surname);
+              }
+              if (data.errors.email) {
+                $('.error.email').removeClass('invisible');
+                $('.error.email').text(data.errors.email);
+              }
+          } else if ((data.info)) {
+              $('#application-form').hide();
+              $('#info-message').removeClass('invisible');
+              $('#info-message').html(data.info);
+          } else {
+              $('#application-form').hide();
+              $('#success-message').removeClass('invisible');
+              $('#success-message').html(data.success);
+              console.log(data.success);
           }
         }
       });

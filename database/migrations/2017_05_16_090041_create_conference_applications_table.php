@@ -17,7 +17,7 @@ class CreateConferenceApplicationsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('surname');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('institution')->nullable();
             $table->string('role')->nullable();
             $table->text('notes')->nullable();
