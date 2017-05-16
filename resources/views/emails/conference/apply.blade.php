@@ -5,9 +5,17 @@
 
 Hello {{ $data['name'] }},
 
-We received your application, it will be confirmed after 15th of July.
+Thank you for your subscription.
 
-If you need more information, feel free to contact us replying to this email.
+**Your participation to the conference is confirmed.**
+
+You will be contacted again in the next months.
+In the meanwhile, get in touch and keep updated through the conference website and facebook account.
+
+For further informations please don't hesitate to contact us.
+
+The Film Corner International Conference
+[thefilmcorner@cinetecamilano.it](mailto:thefilmcorner@cinetecamilano.it)
 
 Thanks,<br>
 {{ config('app.name') }}
