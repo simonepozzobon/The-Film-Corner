@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Main;
 
+use Validator;
 use Illuminate\Http\Request;
 use App\Mail\ConferenceApply;
 use App\Http\Controllers\Controller;
@@ -32,21 +33,32 @@ class ConferenceController extends Controller
 
     public function sendApplication(Request $request)
     {
-      $this->validate($request, [
+      $validator = Validator::make($request->all(), [
         'name' => 'required|min:3',
         'surname' => 'required|min:3',
         'email' => 'required|email',
       ]);
 
-      $data = [
-        'name' => $request->input('name'),
-        'email' => $request->input('email')
-      ];
+      if ($validator->fails()) {
 
-      Mail::to($request->input('email'))
-            ->send(new ConferenceApply($data));
+        return response()->json([
+          'errors' => $validator->getMessageBag()->toArray()
+        ]);
 
-      return back();
+      } else {
+
+        $data = [
+          'name'      => $request->input('name'),
+          'email'     => $request->input('email'),
+          'success'   => '<b>Thanks '.$request->input('name').',</b> We send you an email at <b>'.$request->input('email').'</b> with the confirmation of your application.'
+        ];
+        Mail::to($request->input('email'))->send(new ConferenceApply($data));
+        return response()->json([
+          'success' => $data['success']
+        ]);
+
+      }
+
 
     }
 
