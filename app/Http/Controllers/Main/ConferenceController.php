@@ -56,7 +56,7 @@ class ConferenceController extends Controller
 
         $check = ConferenceApplication::where('email', '=', $request->input('email'))->first();
 
-        if ($check !== 0) {
+        if ($check > 0) {
           return response()->json([
             'info' => 'You already made an application. If you need further information write us an email.'
           ]);
