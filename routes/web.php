@@ -29,15 +29,9 @@ use App\Partner;
 | PROGRESS
 |--------------------------------------------------------------------------
 */
-Route::prefix('conference')->group(function() {
-  Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
-  Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
-  Route::post('/application', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
-  Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
-  Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
-  Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
-  Route::get('/', 'Main\ConferenceController@index')->name('conference');
-});
+
+Route::get('/frame-counter', 'Admin\FrameController@index')->name('frame.index');
+
 
 Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
 Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
@@ -87,6 +81,16 @@ Route::get('/post/{id}', function ($id) {
 | DONE
 |--------------------------------------------------------------------------
 */
+
+Route::prefix('conference')->group(function() {
+  Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
+  Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
+  Route::post('/application', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
+  Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
+  Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
+  Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
+  Route::get('/', 'Main\ConferenceController@index')->name('conference');
+});
 
 Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
 
