@@ -18,7 +18,9 @@
 
   </div>
   <div class="clearfix pt-5 pb-5">
-    <div id="vrview" class="w-100 h-100"></div>
+    <div id="photosphere" class="">
+      {{-- <iframe id="contenuto" allowfullscreen="true" scrolling="no" src="{{ url('/plugins/vrview') }}/index.html?image={{ asset('img/frame-test/louvre.jpg') }}&amp;is_stereo=false&amp;" style="border: 0px;"></iframe> --}}
+    </div>
   </div>
   <div class="row">
     <div class="col-md-4 offset-md-4">
@@ -32,71 +34,42 @@
   </div>
 @endsection
 @section('scripts')
-  {{-- <script src="//storage.googleapis.com/vrview/2.0/build/vrview.min.js"></script>
-  <script type="text/javascript">
-    window.addEventListener('load', onVrViewLoad)
-      function onVrViewLoad() {
-        var vrView = new VRView.Player('#vrview', {
-          image: '{{ asset('img/frame-test/louvre.jpg') }}',
-          is_stereo: false
-        });
-      }
-  </script> --}}
-
   <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
-
   <script src="{{ asset('plugins/three.js/three.js') }}"></script>
-  <script src="{{ asset('plugins/D.js/D.min.js') }}"></script>
-  <script src="{{ asset('/plugins/uevent/uevent.js') }}"></script>
-  <script src="{{ asset('/plugins/doT/doT.min.js') }}"></script>
+  <script src="{{ asset('plugins/D.js/D.js') }}"></script>
+  <script src="{{ asset('plugins/doT/doT.js') }}"></script>
+  <script src="{{ asset('plugins/uevent/uevent.js') }}"></script>
   <script src="{{ asset('plugins/three.js/CanvasRenderer.js') }}"></script>
   <script src="{{ asset('plugins/three.js/Projector.js') }}"></script>
-  {{-- <script src="http://photo-sphere-viewer.js.org/dist/three.js-examples/examples/js/renderers/CanvasRenderer.js"></script> --}}
-  {{-- <script src="http://photo-sphere-viewer.js.org/dist/three.js-examples/examples/js/renderers/Projector.js"></script> --}}
   <script src="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.js') }}"></script>
-  <script src="{{ asset('plugins/html2canvas/html2canvas.js') }}"></script>
-
-  <script type="text/javascript">
+  <script>
     var PSV = new PhotoSphereViewer({
       panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
-      container: 'vrview',
+      container: 'photosphere',
+      loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+      navbar: 'zoom fullscreen',
+      min_fov: 50, //min zoom
+      max_fov: 179, //max zoom
+      default_fov: 50,
+      time_anim: false,
       size: {
         height: 500
       }
     });
-
-  //   // var PSV = new PhotoSphereViewer({
-  //   // panorama: 'http://photo-sphere-viewer.js.org/assets/Bryce-Canyon-National-Park-Mark-Doliner.jpg',
-  //   // container: 'vrview',
-  //   // caption: 'Bryce Canyon National Park <b>&copy; Mark Doliner</b>',
-  //   // loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
-  //   // navbar: 'autorotate zoom download caption fullscreen',
-  //   // default_fov: 70,
-  //   // mousewheel: false,
-  //   // size: {
-  //   //   height: 500
-  //   // }
-  // });
   </script>
 
+  <script src="{{ asset('plugins/html2canvas/html2canvas.js') }}"></script>
+
+
   <script type="text/javascript">
-  //var body = $('#vrview iframe').contents().find('body');
-  var element = $('#vrview iframe');
-
-  console.log(element);
-
-  $('#capture').on('click', function(e){
+  var element = $('#photosphere');
+  $('#capture').on('click', function(e) {
     e.preventDefault();
-    alert('triggeres');
-    html2canvas(element[0], {
+    html2canvas(element, {
       onrendered: function(canvas) {
         $('#rendered').html(canvas);
-        //document.body.appendChild(canvas);
       }
     });
   });
-
-
-
   </script>
 @endsection

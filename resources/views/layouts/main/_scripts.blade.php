@@ -11,7 +11,7 @@
 {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 @yield('scripts')
  {{-- SOCIAL --}}
- <script>
+ {{-- <script>
    window.fbAsyncInit = function() {
      FB.init({
        appId      : '150115568851139',
@@ -37,7 +37,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
- </script>
+ </script> --}}
 
  {{-- SEND FEEDBACK --}}
 <script type="text/javascript">
