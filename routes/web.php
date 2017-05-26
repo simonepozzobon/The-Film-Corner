@@ -30,7 +30,7 @@ use App\Partner;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/frame-counter', 'Admin\FrameController@index')->name('frame.index');
+Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
 
 
 Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
