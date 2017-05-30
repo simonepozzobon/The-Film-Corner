@@ -5,6 +5,7 @@
   </button>
   {{-- Logo --}}
   <a href="{{ url('/') }}" class="navbar-brand mr-4"><img src="/img/logo.png" height="50"></a>
+  <a href="#" class="navbar-brand mr-4"><img src="/img/europacreativa.jpg" height="50" alt=""></a>
 
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
