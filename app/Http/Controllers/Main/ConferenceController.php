@@ -51,7 +51,11 @@ class ConferenceController extends Controller
 
         $data = [
           'name'      => $request->input('name'),
+          'surname'   => $request->input('surname'),
           'email'     => $request->input('email'),
+          'institution' => $request->input('institution'),
+          'role'      => $request->input('role'),
+          'notes'     => $request->input('notes'),
           'success'   => '<b>Thanks '.$request->input('name').',</b> We send you an email at <b>'.$request->input('email').'</b> with the confirmation of your application.'
         ];
 
