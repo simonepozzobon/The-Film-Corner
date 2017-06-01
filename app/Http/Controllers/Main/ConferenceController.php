@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Mail\ConferenceApply;
 use App\ConferenceApplication;
+use App\Mail\ConferenceApplyAdmin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
@@ -73,6 +74,8 @@ class ConferenceController extends Controller
         $register->save();
 
         Mail::to($request->input('email'))->send(new ConferenceApply($data));
+        Mail::to('info@simonepozzobon.com')->send(new ConferenceApplyAdmin($data));
+
         return response()->json([
           'success' => $data['success']
         ]);
