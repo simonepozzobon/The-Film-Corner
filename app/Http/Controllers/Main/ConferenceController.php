@@ -78,7 +78,7 @@ class ConferenceController extends Controller
         $register->save();
 
         Mail::to($request->input('email'))->send(new ConferenceApply($data));
-        Mail::to('info@simonepozzobon.com')->send(new ConferenceApplyAdmin($data));
+        Mail::to('thefilmcorner@cinetecamilano.it')->send(new ConferenceApplyAdmin($data));
 
         return response()->json([
           'success' => $data['success']
