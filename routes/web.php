@@ -218,9 +218,16 @@ Route::prefix('teacher')->group(function() {
 
 // Student Panel Routes
 Route::prefix('student')->group(function() {
+
   // Auth
   Route::get('/login', 'Auth\StudentLoginController@showLoginForm')->name('student.login');
   Route::post('/login', 'Auth\StudentLoginController@login')->name('student.login.submit');
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
+
+  // Pagine Principali dei padiglioni
+  Route::get('/film-specific', 'StudentController@filmSpecific')->name('student.film-specific');
+  Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
+  Route::get('/creative-studio', 'StudentController@creativeStudio')->name('student.creative-studio');
+  
 });
