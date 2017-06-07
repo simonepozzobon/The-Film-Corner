@@ -1,29 +1,70 @@
 <head>
-  <meta charset="utf-8">
-  <meta name="description" content="Admin Template">
-  <meta name="author" content="Simone Pozzobon">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Admin Panel - @yield('title')</title>
+    <title>The Film Corner - @yield('title')</title>
 
-  {{-- Main Stylesheet --}}
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-  {{-- Image Picker --}}
-  <link rel="stylesheet" href="{{ asset('admin-assets/css/image-picker.css') }}">
-  {{-- Custom Style --}}
-  <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
+    {{-- Main Stylesheet --}}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  {{-- Google Analytics --}}
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    {{-- reCaptcha google --}}
+    {{-- <script src='//www.google.com/recaptcha/api.js'></script> --}}
 
-  ga('create', 'UA-92981271-1', 'auto');
-  ga('send', 'pageview');
+    {{-- Google Analytics --}}
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-</script>
+      ga('create', 'UA-92981271-1', 'auto');
+      ga('send', 'pageview');
 
-  @yield('stylesheets')
+    </script>
 
+    <style media="screen">
+
+    html, body {
+        color: #636b6f;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 200;
+        height: 100%;
+        margin: 0;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+    }
+
+    .full-height {
+        height: 100vh;
+    }
+
+    .flex-center {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .position-ref {
+        position: relative;
+    }
+
+    .top-right {
+        position: absolute;
+        right: 10px;
+        top: 18px;
+    }
+
+    .content {
+        text-align: center;
+    }
+
+    .m-b-md {
+        margin-bottom: 30px;
+    }
+    </style>
+    @yield('stylesheets')
 </head>

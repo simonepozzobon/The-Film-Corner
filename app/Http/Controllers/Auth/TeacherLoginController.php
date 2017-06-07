@@ -46,6 +46,6 @@ class TeacherLoginController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('teacher');
+        return redirect('/teacher');
     }
 }

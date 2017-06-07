@@ -1,42 +1,24 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
   {{-- Mobile --}}
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menu-main" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a href="{{ url('/admin') }}" class="navbar-brand"><img src="/img/logo.png" height="50" style="max-width: 40vw;"></a>
-  <div class="collapse navbar-collapse justify-content-start" id="">
-    @if (Auth::guard('teacher')->check())
-      <li class="nav-link">
-        <a href="{{ url('/') }}" target="_blank">Visit Website</a>
-      </li>
-    @endif
-  </div>
+  <a href="{{ url('/') }}" class="navbar-brand mr-4"><img src="/img/logo.png" height="50"></a>
+  <a href="#" class="navbar-brand mr-4"><img src="/img/creative-europe-media.png" height="50" alt=""></a>
+
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-
-    @if (Auth::guard('teacher')->check())
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li class="nav-link"><a href="{{ route('admin.admins.index') }}">Admins</a></li>
-          <li class="nav-link "><a href="{{ route('teachers.index') }}">Teachers</a></li>
-          <li class="nav-link"><a href="{{ route('students.index') }}">Students</a></li>
-          <li class="nav-link"><a href="{{ route('users.index') }}">Users</a></li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-link"><a href="{{ route('schools.index') }}">Schools</a></li>
-          <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
-        </ul>
+    <ul class="navbar-nav justify-content-end">
+      <li class="nav-item">
+        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
       </li>
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li class="nav-link">Edit Account<li>
-          <div class="dropdown-divider"></div>
-          <li class="nav-link"><a href="{{ url('teacher/logout') }}">Logout</a></li>
-        </ul>
+      <li class="nav-item">
+        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-film" aria-hidden="true"></i> Apps</a>
       </li>
-    @endif
-
+      <li class="nav-item">
+        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
+      </li>
+    </ul>
   </div>
 </nav>

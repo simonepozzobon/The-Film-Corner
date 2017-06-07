@@ -204,6 +204,11 @@ Route::prefix('teacher')->group(function() {
 
   // Apps
   Route::get('/app', 'AppController@firstApp')->name('app.first');
+
+  // Pagine Principali dei padiglioni
+  Route::get('/film-specific', 'TeacherController@filmSpecific')->name('teacher.film-specific');
+  Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
+  Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
 });
 
 
@@ -229,5 +234,5 @@ Route::prefix('student')->group(function() {
   Route::get('/film-specific', 'StudentController@filmSpecific')->name('student.film-specific');
   Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
   Route::get('/creative-studio', 'StudentController@creativeStudio')->name('student.creative-studio');
-  
+
 });
