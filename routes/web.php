@@ -89,6 +89,7 @@ Route::prefix('conference')->group(function() {
   Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
   Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
   Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
+  Route::get('/accomodation', 'Main\ConferenceController@accomodation')->name('conference.accomodation');
   Route::get('/', 'Main\ConferenceController@index')->name('conference');
 });
 

@@ -94,6 +94,11 @@ class ConferenceController extends Controller
       return view('public.conference.download');
     }
 
+    public function accomodation()
+    {
+      return view('public.conference.accomodation');
+    }
+
     public function contact()
     {
       return view('public.conference.contact');

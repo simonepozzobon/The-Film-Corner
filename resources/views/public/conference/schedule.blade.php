@@ -37,7 +37,7 @@
     </div>
     <div class="row pt-3">
       <div class="col">
-        <h5>2017, november, 10th</h5>
+        <h5>2017, November, 10th</h5>
       </div>
     </div>
     <div class="row pt-3">
@@ -108,7 +108,7 @@
         <b>14:30 to 16:00</b>
       </div>
       <div class="col-sm-9">
-        Best practices: a European panorama
+        Film literacy and critical skills improvement for students in the digital era
       </div>
     </div>
     <div class="row">
@@ -124,7 +124,7 @@
         <b>16:15 to 17:30</b>
       </div>
       <div class="col-sm-9">
-        The role of cinémathèques in film education and audience development in the digital era
+        Creativity in film education and the digital media
       </div>
     </div>
   </div>
