@@ -81,6 +81,118 @@
         map: map2,
         title: 'Hotel Ibis Cà Granda'
       });
+
+      var style = [
+        // Hide Features
+        {
+          featureType: 'poi.business',
+          stylers: [{visibility: 'off'}]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'labels.icon',
+          stylers: [{visibility: 'off'}]
+        },
+        {
+          featureType: 'road.arterial',
+          elementType: 'labels.icon',
+          stylers: [{visibility: 'off'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'labels.icon',
+          stylers: [{visibility: 'off'}]
+        },
+        // Styles Features
+        {elementType: 'geometry', stylers: [{color: '#FFF5D6'}]},
+        {elementType: 'labels.text.stroke', stylers: [{color: '#FFF5D6'}]},
+        {elementType: 'labels.text.fill', stylers: [{color: '#FAD86A'}]},
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{color: '#F8E9B0'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{color: '#F8E9B0'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#F8E9B0'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#F8E9B0'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'geometry',
+          stylers: [{color: '#F8E9B0'}]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{color: '#FFE47D'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#FAD86A'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.stroke',
+          stylers: [{color: '#FFF5D6'}]
+        }
+      ];
+
+      map1.setOptions({
+        styles: style
+      });
+
+      map2.setOptions({
+        styles: style
+      });
+
+
     }
   </script>
 @endsection
