@@ -35,4 +35,9 @@ class TeacherController extends Controller
     {
       return view('teacher.cinema.index');
     }
+
+    public function path()
+    {
+      return view('teacher.path.index');
+    }
 }

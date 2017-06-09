@@ -210,6 +210,7 @@ Route::prefix('teacher')->group(function() {
   Route::get('/film-specific', 'TeacherController@filmSpecific')->name('teacher.film-specific');
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
   Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
+  Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
 });
 
 
