@@ -28,9 +28,9 @@
         text-transform: uppercase;
       }
 
-      #login-form {
+      /*#login-form {
         box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-      }
+      }*/
     </style>
   </head>
   <body>

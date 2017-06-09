@@ -1,4 +1,4 @@
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+<nav id="main-menu" class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
   {{-- Mobile --}}
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menu-main" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
