@@ -2,8 +2,8 @@
 @section('content')
 <section id="title" class="pt-5">
   <div class="title sp-center pt-5 pb-5">
-    Film Specific
-    <h2 class="p-2 block-title">Editing</h2>
+    Editing
+    <h2 class="p-2 block-title">Film Specific</h2>
   </div>
 </section>
 <section class="pb-5 pr-5 pl-5">
