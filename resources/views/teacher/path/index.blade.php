@@ -28,17 +28,6 @@
             </div>
           </div>
           <div class="row pb-5">
-              <span class="badge badge-default mb-2 mr-2">Keyword 1</span>
-              <span class="badge badge-default mb-2 mr-2">Keyword più lunga 2</span>
-              <span class="badge badge-default mb-2 mr-2">Corta 3</span>
-              <span class="badge badge-default mb-2 mr-2">Keyword 4</span>
-              <span class="badge badge-default mb-2 mr-2">Keyword 5</span>
-              <span class="badge badge-default mb-2 mr-2">Keyword 6</span>
-          </div>
-          <div class="row pb-5">
-              <a href="#" class="btn btn-success btn-block">History</a>
-          </div>
-          <div class="row pb-5">
             <div class="container" style="background-color: #f5db5e; color: #252525">
               <div class="row" style="background-color: #e9c845; color: #252525">
                 <div class="col align-text-bottom">
@@ -57,6 +46,14 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row pb-5">
+              <span class="badge badge-default mb-2 mr-2">Keyword 1</span>
+              <span class="badge badge-default mb-2 mr-2">Keyword più lunga 2</span>
+              <span class="badge badge-default mb-2 mr-2">Corta 3</span>
+              <span class="badge badge-default mb-2 mr-2">Keyword 4</span>
+              <span class="badge badge-default mb-2 mr-2">Keyword 5</span>
+              <span class="badge badge-default mb-2 mr-2">Keyword 6</span>
           </div>
         </div>
       </div>
