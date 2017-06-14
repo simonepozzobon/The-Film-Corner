@@ -6,6 +6,13 @@
     <h2 class="p-2 block-title">Film Specific</h2>
   </div>
 </section>
+<section id="breadcrumbs">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Padiglioni</a></li>
+    <li class="breadcrumb-item"><a href="#">Percorsi</a></li>
+    <li class="breadcrumb-item active">Editing</li>
+  </ol>
+</section>
 <section class="pb-5 pr-5 pl-5">
   <div class="row">
     <div class="col">
