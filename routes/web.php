@@ -208,6 +208,8 @@ Route::prefix('teacher')->group(function() {
 
   // Pagine Principali dei padiglioni
   Route::get('/film-specific', 'TeacherController@filmSpecific')->name('teacher.film-specific');
+  Route::get('/film-specific/{category}', 'Teacher\AppController@index')->name('teacher.film-specific.index');
+
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
   Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
   Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
