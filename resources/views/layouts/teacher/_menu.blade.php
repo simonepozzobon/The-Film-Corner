@@ -11,13 +11,16 @@
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
     <ul class="navbar-nav justify-content-end">
       <li class="nav-item">
-        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+        <span class="nav-link"> Hello, {{ Auth::guard('teacher')->user()->name }}</span>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-film" aria-hidden="true"></i> Apps</a>
+        <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/student') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
+        <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-film" aria-hidden="true"></i> Apps</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
       </li>
     </ul>
   </div>
