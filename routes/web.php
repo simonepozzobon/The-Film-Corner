@@ -203,16 +203,23 @@ Route::prefix('teacher')->group(function() {
   Route::get('/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
 
-  // Apps
-  Route::get('/app', 'AppController@firstApp')->name('app.first');
-
   // Pagine Principali dei padiglioni
+
+  // Film Specific
   Route::get('/film-specific', 'TeacherController@filmSpecific')->name('teacher.film-specific');
-  Route::get('/film-specific/{category}', 'Teacher\AppController@index')->name('teacher.film-specific.index');
+  Route::get('/film-specific/{category}', 'Teacher\FilmSpecificController@index')->name('teacher.film-specific.index');
+  Route::get('/film-specific/{category}/{app_slug}/{token}', 'Teacher\FilmSpecificController@openSession')->name('teacher.film-specific.open.session');
+  Route::get('/film-specific/{category}/{app_slug}', 'Teacher\FilmSpecificController@app')->name('teacher.film-specific.app');
+
 
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
   Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
   Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
+
+  // Sessioni
+  Route::get('/session/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
+  Route::post('/session/new', 'Teacher\SessionController@newSession')->name('new.session');
+  Route::post('/session/update', 'Teacher\SessionController@updateSession')->name('update.session');
 });
 
 

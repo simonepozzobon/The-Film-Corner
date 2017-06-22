@@ -10,6 +10,6 @@ class App extends Model
 
     public function category()
     {
-      return $this->belongsTo('App\AppCategory');
+      return $this->belongsTo('App\AppCategory', 'app_category_id', 'id');
     }
 }

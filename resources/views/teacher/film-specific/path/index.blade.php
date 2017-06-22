@@ -93,30 +93,33 @@
                 <div class="container pl-2 pr-2">
                   @if ($apps->count() > 0)
                     @foreach ($apps as $key => $app)
-                          <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
-                            <div class="col">
-                              <div class="d-flex justify-content-start">
-                                <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
-                                <div class="p-4">fatto?</div>
-                              </div>
-                            </div>
+                      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
+                        <div class="col">
+                          <div class="d-flex justify-content-start">
+                            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
+                            <div class="p-4">fatto?</div>
                           </div>
-                          <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
-                            <div class="col pt-5 pr-5 pb-3">
-                              <p class="ml-2">
-                                {{ $app->description }}
-                              </p>
-                            </div>
+                        </div>
+                      </div>
+                      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
+                        <div class="col pt-5 pr-5 pb-3">
+                          <p class="ml-2">
+                            {{ $app->description }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="row pb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
+                        <div class="col-md-6 offset-md-3">
+                          <div class="btn-group btn-block">
+                            <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-primary w-50"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
+                            <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn btn-warning w-50"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
                           </div>
-                          <div class="row pb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
-                            <div class="col-md-6 offset-md-3">
-                              <div class="btn-group btn-block">
-                                <a href="#" class="btn btn-primary w-50"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
-                                <a href="#" class="btn btn-warning w-50"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
-                              </div>
-                            </div>
-                          </div>
+                        </div>
+                      </div>
                     @endforeach
+                    <div id="modalSession">
+
+                    </div>
                   @else
                     <div class="row">
                       <div class="container" style="background-color: #f5db5e; color: #252525">
@@ -139,4 +142,76 @@
               </div>
             </div>
   </section>
+@endsection
+@section('scripts')
+<script type="text/javascript">
+  function openSessions(teacherId, appId) {
+    $.ajax({
+      type: 'GET',
+      url:  '/teacher/session/'+teacherId+'/'+appId,
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      },
+      success: function (response) {
+        console.log(response);
+          var dataLenght = Object.keys(response.sessions).length;
+          var data = ''
+          data += '<div class="modal fade" id="sessionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+          data +=   '<div class="modal-dialog modal-lg" role="document">';
+          data +=     '<div class="modal-content">';
+          data +=       '<div class="modal-header">';
+          data +=         '<h5 class="modal-title" id="exampleModalLabel">'+response.app['title']+'</h5>';
+          data +=         '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+          data +=           '<i class="fa fa-times" aria-hidden="true"></i>';
+          data +=         '</button>';
+          data +=       '</div>';
+          data +=       '<div class="modal-body">';
+          data +=         '<table class="table table-hover">';
+          data +=           '<thead>';
+          data +=             '<th>id</th>';
+          data +=             '<th>date</th>';
+          data +=             '<th></th>';
+          data +=           '</thead>';
+          data +=           '<tbody>';
+
+          for (var i = 0; i < dataLenght; i++) {
+
+            data += '<tr>';
+            data +=   '<td>';
+            data +=     response.sessions[i]['title'];
+            data +=   '</td>';
+            data +=   '<td>';
+            data +=     response.sessions[i]['created_at'];
+            data +=   '</td>';
+            data +=   '<td>';
+            data +=     '<div class="btn-group">';
+            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
+            data +=       '<a class="btn btn-danger text-white"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
+            data +=     '</div>';
+            data +=   '</td>';
+            data += '</tr>';
+
+          }
+
+          data +=           '</tbody>';
+          data +=         '</table>';
+          data +=       '</div>';
+          data +=       '<div class="modal-footer">';
+          data +=         '<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>';
+          data +=       '</div>';
+          data +=     '</div>';
+          data +=   '</div>';
+          data += '</div>';
+
+          $('#modalSession').html(data);
+          $('#sessionModal').modal('show');
+      },
+      error: function (xhr, status) {
+          console.log(xhr);
+          console.log(status);
+      }
+    });
+
+  }
+</script>
 @endsection
