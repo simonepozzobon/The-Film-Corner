@@ -66,12 +66,14 @@ class SessionController extends Controller
 
   public function updateSession(Request $request)
   {
+    
     // Aggiorno la sessione
     $session = TeacherSession::where('token', '=', $request['token'])->first();
     $session->empty = 0;
     $session->title = $request['title'];
     $session->save();
     $path = base_path('storage/app/public/apps/frame-crop');
+
     // itero all'interno di ogni frame che arriva dall'app
     if (isset($request['frames'])) {
 
@@ -86,6 +88,7 @@ class SessionController extends Controller
           $frame->token = $session->token;
           $frame->order = $newFrame['order'];
           $frame->description = $newFrame['text'];
+
           // converto l'immagine
           $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
           $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
