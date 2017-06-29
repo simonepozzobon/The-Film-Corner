@@ -26,7 +26,6 @@
       <div class="col">
         <div class="d-flex justify-content-start">
           <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
-          <div class="p-4">fatto?</div>
         </div>
       </div>
     </div>
@@ -39,8 +38,8 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-4 p-5 offset-md-4">
-              <button id="capture" type="button" name="button" class="btn btn-primary btn-block"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
+            <div class="col-md-4 p-5 offset-md-4 text-center">
+              <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
             </div>
           </div>
         </div>
