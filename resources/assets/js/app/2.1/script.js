@@ -1,13 +1,5 @@
 import angular from 'angular';
 
-// // Video Playe Videogular
-// require('videogular/dist/videogular/videogular.js');
-// require('videogular/dist/controls/vg-controls.js');
-// require('videogular/dist/poster/vg-poster.js');
-// require('videogular-overlay-play');
-// require('videogular-buffering');
-//
-
 // VideoJS
 require('video.js/dist/video.js');
 

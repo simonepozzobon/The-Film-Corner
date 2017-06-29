@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
   <style media="screen">
@@ -11,85 +11,11 @@
       width: 100%;
       height: 100%;
     }
-
-    .feedback-popup {
-      position: fixed;
-      z-index: 2;
-      margin-left: -1rem;
-      top: 25%;
-      transform: translateY(-50%);
-    }
   </style>
 @endsection
 @section('content')
-  <div class="feedback-popup mt-4">
-    <div class="d-block m-1 pl-2">
-      <a class="text-white text-align-center btn btn-info btn-lg" data-toggle="modal" data-target="#positiveFeedback">
-        <i class="fa fa-question" aria-hidden="true"></i>
-      </a>
-    </div>
-    <div class="d-block m-1">
-      <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>
-      </a>
-    </div>
-    <div class="d-block m-1">
-      <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
-        <i class="fa fa-times" aria-hidden="true"></i>
-      </a>
-    </div>
-  </div>
-  <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </button>
-        </div>
-        <form>
-          {{ csrf_field() }}
-          {{ method_field('POST') }}
-
-          <div class="modal-body">
-            <div class="form-group">
-              <label for="">Title:</label>
-              <input type="text" name="title" class="form-control">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <div class="modal fade" id="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Close {{ $app->title }}</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="fa fa-times" aria-hidden="true"></i>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h4 class="text-center">Are you sure</h4>
-          <p class="text-center">
-            Do you want to exit without save?
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-          <a class="btn btn-danger text-white" href="{{ route('teacher.film-specific.index', $app->category->slug) }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Close Without Save</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  @include('components.apps.sidebar-menu', ['app' => $app, ])
   <div class="p-5">
-
   </div>
   <div class="clearfix pt-5 pb-5">
     <div class="row">
@@ -121,47 +47,8 @@
   <script src="{{ asset('plugins/photo-sphere/photo-sphere-viewer.js') }}"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
-    initSession({{ $app->id }})
-    function initSession(id)
-    {
-
-        var data = {
-          '_token'  : $('input[name=_token]').val(),
-          'app_id'  : id,
-        };
-
-        // Genero la sessione
-        $.ajax({
-          type: 'post',
-          url:  '/teacher/session/new',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          },
-          data: data,
-          success: function (response) {
-            var sessions = [];
-
-            if ($.cookie('tfc-sessions')) {
-              sessions = [];
-            }
-
-            var session = {
-              'app_id': id,
-              'token': response.token
-            };
-
-            sessions.push(session);
-            $.cookie('tfc-sessions', JSON.stringify(sessions));
-            console.log($.parseJSON($.cookie('tfc-sessions')));
-          },
-          error: function (xhr, status) {
-              console.log(xhr);
-              console.log(status);
-          }
-        });
-
-
-    }
+    var AppSession = new TfcSessions();
+    AppSession.initSession({{ $app->id }})
 
     var PSV = new PhotoSphereViewer({
       panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
@@ -230,55 +117,7 @@
 
     $('#rendered').sortable();
 
-    function updateSession(id) {
 
-      var sessions = $.parseJSON($.cookie('tfc-sessions'));
-      var count = Object.keys(sessions).length;
-      var token = null;
-
-      for (var i = 0; i < count; i++) {
-        if (sessions[i].app_id == {{ $app->id }}) {
-          token = sessions[i].token;
-        }
-      }
-
-      var frames = [];
-      $('.frames').each(function(k){
-        var frame = {
-          'text': $(this).find('textarea').val(),
-          'order': k,
-          'base64': $(this).find('img').attr('src')
-        };
-        frames.push(frame);
-      });
-
-      console.log(frames);
-
-      var data = {
-        '_token'  : $('input[name=_token]').val(),
-        'app_id'  : id,
-        'token'   : token,
-        'title'   : $('input[name="title"]').val(),
-        'frames'  : frames
-      };
-
-      $.ajax({
-        type: 'post',
-        url:  '/teacher/session/update',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-        },
-        data: data,
-        success: function (response) {
-          console.log(response);
-          $('#saveSession').modal('hide');
-        },
-        error: function (xhr, status) {
-            console.log(xhr);
-            console.log(status);
-        }
-      });
-    }
   </script>
 
 

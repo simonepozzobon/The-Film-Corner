@@ -90,7 +90,7 @@
                 </div>
               </div>
               <div class="col-md-9">
-                <div class="container pl-2 pr-2">
+                <div class="container-fluid pl-5">
                   @if ($apps->count() > 0)
                     @foreach ($apps as $key => $app)
                       <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
@@ -111,8 +111,8 @@
                       <div class="row pb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
                         <div class="col-md-6 offset-md-3">
                           <div class="btn-group btn-block">
-                            <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-primary w-50"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
-                            <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn btn-warning w-50"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
+                            <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-secondary text-primary w-50"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
+                            <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn btn-secondary text-warning w-50"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
                           </div>
                         </div>
                       </div>

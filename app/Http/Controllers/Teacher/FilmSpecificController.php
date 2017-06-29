@@ -51,6 +51,10 @@ class FilmSpecificController extends Controller
       case 'frame-crop':
         return view('teacher.film-specific.frame-crop.index', compact('app'));
         break;
+
+      case 'juxtaposition':
+        return view('teacher.film-specific.juxtaposition.index', compact('app'));
+        break;
     }
 
   }

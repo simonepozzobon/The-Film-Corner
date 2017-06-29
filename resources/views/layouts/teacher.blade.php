@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@if (!isset($type))
+  {{ $type = '' }}
+@endif
 <html>
   <head>
     <meta charset="utf-8">
@@ -14,6 +17,6 @@
   <body>
     @include('layouts.teacher._menu')
     @yield('content')
-    @include('layouts.teacher._scripts')
+    @include('layouts.teacher._scripts', ['type' => $type])
   </body>
 </html>

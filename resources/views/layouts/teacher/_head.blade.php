@@ -65,6 +65,14 @@
     .m-b-md {
         margin-bottom: 30px;
     }
+
+    .feedback-popup {
+      position: fixed;
+      z-index: 2;
+      margin-left: -1rem;
+      top: 25%;
+      transform: translateY(-50%);
+    }
     </style>
     @yield('stylesheets')
 </head>
