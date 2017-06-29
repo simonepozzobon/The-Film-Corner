@@ -11,29 +11,46 @@
       width: 100%;
       height: 100%;
     }
+
+    .frames .col.bg-faded {
+      box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
+    }
   </style>
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
   <div class="p-5">
   </div>
-  <div class="clearfix pt-5 pb-5">
-    <div class="row">
-      <div class="col-md-8 offset-md-2">
-        <div id="photosphere"></div>
+  <div class="container-fluid px-5">
+    <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
+      <div class="col">
+        <div class="d-flex justify-content-start">
+          <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
+          <div class="p-4">fatto?</div>
+        </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 p-5 offset-md-4">
-        <button id="capture" type="button" name="button" class="btn btn-primary btn-block"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
+    <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
+      <div class="col">
+        <div class="clearfix pt-5 pb-5">
+          <div class="row">
+            <div class="col-md-8 offset-md-2">
+              <div id="photosphere"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 p-5 offset-md-4">
+              <button id="capture" type="button" name="button" class="btn btn-primary btn-block"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <form class="" action="" method="">
+            <div id="rendered"></div>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
-  <div class="row">
-    <form class="" action="" method="">
-      <div id="rendered"></div>
-    </form>
   </div>
 @endsection
 @section('scripts')

@@ -46,6 +46,15 @@ class FilmSpecificController extends Controller
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->first();
     $app = App::where('slug', '=', $app_slug)->with('category')->first();
 
+    $colors = [
+      0 => ['#f5db5e', '#e9c845'],
+      1 => ['#d8ef8f', '#b7cc5e'],
+      2 => ['#f4c490', '#e8a360'],
+      3 => ['#d9f5fc', '#a6dbe2'],
+    ];
+
+    $app->colors = $colors[rand(0, 3)];
+
     switch ($app_slug) {
 
       case 'frame-crop':
