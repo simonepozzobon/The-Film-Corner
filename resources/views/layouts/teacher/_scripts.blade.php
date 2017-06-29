@@ -1,15 +1,10 @@
-{{-- <script src="//code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" crossorigin="anonymous"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" crossorigin="anonymous"></script> --}}
-
 <script src="{{ asset('js/jquery-3.2.0.min.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 <script src="{{ asset('js/tether.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
-{{-- Script --}}
-{{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
+{{-- Sessione --}}
 @if ($type == 'app')
 <script type="text/javascript">
   var TfcSessions = function () {
@@ -112,7 +107,6 @@
  {{-- SEND FEEDBACK --}}
 <script type="text/javascript">
   var url = "";
-
   // send function
   $('#fdbck-send').on('click', function(e) {
     alert('cliccato');
@@ -148,5 +142,27 @@
     })
 
   });
-
 </script>
+
+@if ($type == 'app')
+<script type="text/javascript">
+  var btn = $('#help-btn');
+    btn.on('click', function() {
+      // Agggiungo la classe
+      btn.toggleClass('panel-active');
+      $('#help').toggleClass('panel-active');
+      $('#app').toggleClass('panel-active');
+      $('#save-btn').toggleClass('panel-active');
+      $('#close-btn').toggleClass('panel-active');
+
+      if (btn.hasClass('panel-active')) {
+        $('#help-icon').removeClass('fa-question');
+        $('#help-icon').addClass('fa-arrow-left');
+      } else {
+        $('#help-icon').removeClass('fa-arrow-left');
+        $('#help-icon').addClass('fa-question');
+      }
+
+  });
+</script>
+@endif

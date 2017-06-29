@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
     @yield('section')
     @include('layouts.teacher._head')
+    <link rel="stylesheet" href="/css/teacher.css">
   </head>
   <style media="screen">
     body {
