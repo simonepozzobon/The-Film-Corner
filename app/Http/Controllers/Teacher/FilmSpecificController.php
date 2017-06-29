@@ -58,11 +58,11 @@ class FilmSpecificController extends Controller
     switch ($app_slug) {
 
       case 'frame-crop':
-        return view('teacher.film-specific.frame-crop.index', compact('app'));
+        return view('teacher.film-specific.frame-crop.index', compact('app', 'app_category'));
         break;
 
       case 'juxtaposition':
-        return view('teacher.film-specific.juxtaposition.index', compact('app'));
+        return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category'));
         break;
     }
 
