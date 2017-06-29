@@ -109,11 +109,13 @@
                         </div>
                       </div>
                       <div class="row pb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
-                        <div class="col-md-6 offset-md-3">
-                          <div class="btn-group btn-block">
-                            <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-secondary text-primary w-50"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
-                            <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn btn-secondary text-warning w-50"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
-                          </div>
+                        <div class="col-md-10 offset-md-1">
+                          {{-- <div class="btn-group btn-block"> --}}
+                          <p class="text-center">
+                            <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
+                            <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
+                          </p>
+                          {{-- </div> --}}
                         </div>
                       </div>
                     @endforeach
