@@ -12,13 +12,18 @@ use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-
+use App\AppsSessions\AppsSession;
 
 class SessionController extends Controller
 {
   public function openSessions($teacher_id, $app_id)
   {
-    $sessions = TeacherSession::where([
+    // $sessions = TeacherSession::where([
+    //   ['teacher_id', '=', $teacher_id],
+    //   ['app_id', '=', $app_id]
+    // ])->get();
+
+    $sessions = AppsSession::where([
       ['teacher_id', '=', $teacher_id],
       ['app_id', '=', $app_id]
     ])->get();
@@ -66,7 +71,7 @@ class SessionController extends Controller
 
   public function updateSession(Request $request)
   {
-    
+
     // Aggiorno la sessione
     $session = TeacherSession::where('token', '=', $request['token'])->first();
     $session->empty = 0;
@@ -90,8 +95,10 @@ class SessionController extends Controller
           $frame->description = $newFrame['text'];
 
           // converto l'immagine
-          $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
-          $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+          if (isset($newFram['base64'])) {
+            $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
+            $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+          }
 
           $frame->save();
         }
@@ -112,8 +119,11 @@ class SessionController extends Controller
           $frame->description = $newFrame['text'];
 
           // converto l'immagine
-          $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
-          $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+          if (isset($newFram['base64'])) {
+            $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
+            $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+          }
+
 
           $frame->save();
         }
@@ -124,6 +134,7 @@ class SessionController extends Controller
 
     $data = [
       'path' => $path,
+      'request' => $request->all(),
       'message' => 'success',
       'frames' => $request['frames'],
       'token' => $session->token

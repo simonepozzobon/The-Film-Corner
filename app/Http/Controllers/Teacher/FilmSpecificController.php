@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\AppsSessions\FilmSpecific\FrameCrop;
+use App\AppsSessions\AppsSession;
 
 class FilmSpecificController extends Controller
 {
@@ -71,14 +72,37 @@ class FilmSpecificController extends Controller
   public function openSession($category, $app_slug, $token)
   {
     $app = App::where('slug', '=', $app_slug)->with('category')->first();
+    $app_category = AppCategory::find($app->app_category_id);
 
-    $frames = FrameCrop::where('token', '=', $token)->get();
+    $app_session = AppsSession::where('token', '=', $token)->first();
+    $session = json_decode($app_session->content);
 
-    foreach ($frames as $key => $frame) {
-      $frame->img = str_replace('/storage', 'storage', $frame->img);
+    $colors = [
+      0 => ['#f5db5e', '#e9c845'],
+      1 => ['#d8ef8f', '#b7cc5e'],
+      2 => ['#f4c490', '#e8a360'],
+      3 => ['#d9f5fc', '#a6dbe2'],
+    ];
+
+    $app->colors = $colors[rand(0, 3)];
+
+    switch ($app_slug) {
+
+      case 'frame-crop':
+        return view('teacher.film-specific.frame-crop.open', compact('app', 'app_category', 'session'));
+        break;
+
+      case 'juxtaposition':
+        return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session'));
+        break;
     }
 
-    return view('teacher.film-specific.frame-crop.open', compact('app', 'frames'));
+    // $frames = FrameCrop::where('token', '=', $token)->get();
+    // foreach ($frames as $key => $frame) {
+    //   $frame->img = str_replace('/storage', 'storage', $frame->img);
+    // }
+
+    // return view('teacher.film-specific.frame-crop.open', compact('app', 'session'));
   }
 
 }

@@ -70,7 +70,7 @@
         };
         frames.push(frame);
       });
-
+      console.log('------frames');
       console.log(frames);
 
       var data = {
