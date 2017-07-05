@@ -61,25 +61,33 @@
         }
       }
 
-      var frames = [];
-      $('.frames').each(function(k){
-        var frame = {
-          'text': $(this).find('textarea').val(),
-          'order': k,
-          'base64': $(this).find('img').attr('src')
-        };
-        frames.push(frame);
-      });
-      console.log('------frames');
-      console.log(frames);
+      
+      // Frame-crop
+      if (id == 1) {
+        var frames = [];
+        $('.frames').each(function(k){
+          var frame = {
+            'text': $(this).find('textarea').val(),
+            'order': k,
+            'base64': $(this).find('img').attr('src')
+          };
+          frames.push(frame);
+        });
+        console.log('------frames');
+        console.log(frames);
 
-      var data = {
-        '_token'  : $('input[name=_token]').val(),
-        'app_id'  : id,
-        'token'   : token,
-        'title'   : $('input[name="title"]').val(),
-        'frames'  : frames
-      };
+        var data = {
+          '_token'  : $('input[name=_token]').val(),
+          'app_id'  : id,
+          'token'   : token,
+          'title'   : $('input[name="title"]').val(),
+          'frames'  : frames
+        };
+      }
+
+
+
+
 
       $.ajax({
         type: 'post',
@@ -90,11 +98,24 @@
         data: data,
         success: function (response) {
           console.log(response);
+          $('.form-control-danger').removeClass('form-control-danger');
+          $('.has-danger').removeClass('has-danger');
+          $('.form-control-feedback').remove();
           $('#saveSession').modal('hide');
         },
         error: function (xhr, status) {
             console.log(xhr);
             console.log(status);
+            $('.form-control-danger').removeClass('form-control-danger');
+            $('.has-danger').removeClass('has-danger');
+            $('.form-control-feedback').remove();
+            $.each(xhr.responseJSON.errors, function(k, v) {
+              var elem = $('input[name='+k+']');
+              elem.addClass('form-control-danger');
+              elem.parent().addClass('has-danger');
+              elem.parent().append('<div class="form-control-feedback">Error</div>');
+
+            });
         }
       });
     }
