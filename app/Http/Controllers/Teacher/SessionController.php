@@ -3,16 +3,18 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\App;
+use Validator;
+use App\Utility;
 use App\AppSection;
 use App\AppCategory;
 use App\TeacherSession;
 use Illuminate\Http\Request;
+use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\AppsSession;
 
 class SessionController extends Controller
 {
@@ -44,25 +46,6 @@ class SessionController extends Controller
   public function newSession(Request $request)
   {
     $teacher_id = Auth::guard('teacher')->Id();
-    //
-    // $sessions = TeacherSession::where([
-    //   ['app_id', '=', $request['app_id']],
-    //   ['teacher_id', '=', $teacher_id]
-    // ])->get();
-    //
-    // foreach ($sessions as $key => $session) {
-    //   if ($session->empty == 1) {
-    //     $session->delete();
-    //   }
-    // }
-    //
-    // $session = new TeacherSession;
-    // $session->teacher_id = $teacher_id;
-    // $session->app_id = $request['app_id'];
-    // $session->token = uniqid();
-    // $session->save();
-
-    // Nuovo sistema
 
     $sessions = AppsSession::where([
       ['app_id', '=', $request['app_id']],
@@ -70,7 +53,7 @@ class SessionController extends Controller
     ])->get();
 
     foreach ($sessions as $key => $session) {
-      if ($session->empty ==  1) {
+      if ($session->is_empty ==  1) {
         $session->delete();
       }
     }
@@ -90,72 +73,54 @@ class SessionController extends Controller
 
   public function updateSession(Request $request)
   {
-    $path = base_path('storage/app/public/apps/frame-crop');
+    // Deve avere un titolo
+    $validator = Validator::make($request->all(), [
+      'title' => 'required'
+    ]);
 
+    if ($validator->fails()) {
+      return response()->json([
+        'success' => false,
+        'errors' => $validator->getMessageBag()->toArray(),
+      ], 400);
+    }
+
+    $utility = new Utility;
+
+    // se la validazione funziona allora aggiorno la sessione
+    $path = base_path('storage/app/public/apps/frame-crop');
     $session = AppsSession::where('token', '=', $request['token'])->first();
-    $session->empty = 0;
+    $session->is_empty = 0;
     $session->title = $request['title'];
+    switch ($request['app_id']) {
+      // Frame-Crop
+      case 1:
+        if (isset($request['frames'])) {
+          $frames = collect();
+          foreach ($request['frames'] as $key => $newFrame) {
+            if (isset($newFrame['base64'])) {
+              if (strpos($newFrame['base64'], 'data:image/png;base64') !== false) {
+                //Base64
+                Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
+                $img = '/storage/apps/frame-crop/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+              } else {
+                // path
+                $img = $newFrame['base64'];
+              }
 
 
+            }
 
-    // Aggiorno la sessione
-    $session = TeacherSession::where('token', '=', $request['token'])->first();
-    $session->empty = 0;
-    $session->title = $request['title'];
-    $path = base_path('storage/app/public/apps/frame-crop');
-
-
-    // itero all'interno di ogni frame che arriva dall'app
-    if (isset($request['frames'])) {
-
-      $frames = FrameCrop::where('token', '=', $session->token)->get();
-
-      // se non ci sono già frame in questa sessione allora li inserisco
-      if ($frames->count() == 0) {
-
-        // Salvo i nuovi frames
-        foreach ($request['frames'] as $key => $newFrame) {
-          $frame = new FrameCrop;
-          $frame->token = $session->token;
-          $frame->order = $newFrame['order'];
-          $frame->description = $newFrame['text'];
-
-          // converto l'immagine
-          if (isset($newFram['base64'])) {
-            $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
-            $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
+            $data = [
+              'order' => $newFrame['order'],
+              'description' => $newFrame['text'],
+              'img' => $img
+            ];
+            $frames->push($data);
           }
-
-          $frame->save();
+          $session->content = json_encode($frames);
         }
-
-      } else {
-
-        // Elimino i vecchi
-        foreach ($frames as $key => $frame) {
-          Storage::delete($frame->img);
-          $frame->delete();
-        }
-
-        // Salvo i nuovi frames
-        foreach ($request['frames'] as $key => $newFrame) {
-          $frame = new FrameCrop;
-          $frame->token = $session->token;
-          $frame->order = $newFrame['order'];
-          $frame->description = $newFrame['text'];
-
-          // converto l'immagine
-          if (isset($newFram['base64'])) {
-            $img = Image::make($newFrame['base64'])->save($path.'/'.$session->token.'-frame-'.$newFrame['order'].'.png', 10);
-            $frame->img = Storage::disk('local')->url('apps/frame-crop').'/'.$session->token.'-frame-'.$newFrame['order'].'.png';
-          }
-
-
-          $frame->save();
-        }
-
-      }
-
+        break;
     }
 
     $data = [
