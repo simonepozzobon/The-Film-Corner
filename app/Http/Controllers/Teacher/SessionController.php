@@ -44,19 +44,38 @@ class SessionController extends Controller
   public function newSession(Request $request)
   {
     $teacher_id = Auth::guard('teacher')->Id();
+    //
+    // $sessions = TeacherSession::where([
+    //   ['app_id', '=', $request['app_id']],
+    //   ['teacher_id', '=', $teacher_id]
+    // ])->get();
+    //
+    // foreach ($sessions as $key => $session) {
+    //   if ($session->empty == 1) {
+    //     $session->delete();
+    //   }
+    // }
+    //
+    // $session = new TeacherSession;
+    // $session->teacher_id = $teacher_id;
+    // $session->app_id = $request['app_id'];
+    // $session->token = uniqid();
+    // $session->save();
 
-    $sessions = TeacherSession::where([
+    // Nuovo sistema
+
+    $sessions = AppsSession::where([
       ['app_id', '=', $request['app_id']],
       ['teacher_id', '=', $teacher_id]
     ])->get();
 
     foreach ($sessions as $key => $session) {
-      if ($session->empty == 1) {
+      if ($session->empty ==  1) {
         $session->delete();
       }
     }
 
-    $session = new TeacherSession;
+    $session = new AppsSession;
     $session->teacher_id = $teacher_id;
     $session->app_id = $request['app_id'];
     $session->token = uniqid();
@@ -71,13 +90,20 @@ class SessionController extends Controller
 
   public function updateSession(Request $request)
   {
+    $path = base_path('storage/app/public/apps/frame-crop');
+
+    $session = AppsSession::where('token', '=', $request['token'])->first();
+    $session->empty = 0;
+    $session->title = $request['title'];
+
+
 
     // Aggiorno la sessione
     $session = TeacherSession::where('token', '=', $request['token'])->first();
     $session->empty = 0;
     $session->title = $request['title'];
-    $session->save();
     $path = base_path('storage/app/public/apps/frame-crop');
+
 
     // itero all'interno di ogni frame che arriva dall'app
     if (isset($request['frames'])) {
@@ -139,6 +165,9 @@ class SessionController extends Controller
       'frames' => $request['frames'],
       'token' => $session->token
     ];
+
+    $session->save();
+
 
     return response()->json($data);
   }
