@@ -18,7 +18,7 @@ class TeacherAppsSessions extends Migration
           $table->integer('teacher_id');
           $table->integer('app_id');
           $table->string('title')->default('Untitled');
-          $table->boolean('empty')->default(1);
+          $table->boolean('is_empty')->default(1);
           $table->string('token');
           $table->json('content')->nullable();
           $table->timestamps();

@@ -61,25 +61,31 @@
         }
       }
 
-      var frames = [];
-      $('.frames').each(function(k){
-        var frame = {
-          'text': $(this).find('textarea').val(),
-          'order': k,
-          'base64': $(this).find('img').attr('src')
-        };
-        frames.push(frame);
-      });
-      console.log('------frames');
-      console.log(frames);
+      switch (id) {
+        case 1:
+          var frames = [];
+          $('.frames').each(function(k){
+            var frame = {
+              'text': $(this).find('textarea').val(),
+              'order': k,
+              'base64': $(this).find('img').attr('src')
+            };
+            frames.push(frame);
+          });
 
-      var data = {
-        '_token'  : $('input[name=_token]').val(),
-        'app_id'  : id,
-        'token'   : token,
-        'title'   : $('input[name="title"]').val(),
-        'frames'  : frames
-      };
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'frames'  : frames
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+      }
 
       $.ajax({
         type: 'post',
@@ -90,11 +96,28 @@
         data: data,
         success: function (response) {
           console.log(response);
+          $('.form-control-danger').removeClass('form-control-danger');
+          $('.has-danger').removeClass('has-danger');
+          $('.form-control-feedback').remove();
           $('#saveSession').modal('hide');
         },
-        error: function (xhr, status) {
-            console.log(xhr);
-            console.log(status);
+        error: function (errors) {
+          console.log(errors);
+            $('.form-control-danger').removeClass('form-control-danger');
+            $('.has-danger').removeClass('has-danger');
+            $('.form-control-feedback').remove();
+            if (errors.responseJSON) {
+              $.each(errors.responseJSON.errors, function(k, v) {
+                var elem = $('input[name='+k+']');
+                elem.addClass('form-control-danger');
+                elem.parent().addClass('has-danger');
+                elem.parent().append('<div class="form-control-feedback">Error</div>');
+
+              });
+            } else {
+              console.log(errors.responseText);
+            }
+
         }
       });
     }
