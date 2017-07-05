@@ -20,11 +20,6 @@ class SessionController extends Controller
 {
   public function openSessions($teacher_id, $app_id)
   {
-    // $sessions = TeacherSession::where([
-    //   ['teacher_id', '=', $teacher_id],
-    //   ['app_id', '=', $app_id]
-    // ])->get();
-
     $sessions = AppsSession::where([
       ['teacher_id', '=', $teacher_id],
       ['app_id', '=', $app_id]
@@ -92,8 +87,10 @@ class SessionController extends Controller
     $session = AppsSession::where('token', '=', $request['token'])->first();
     $session->is_empty = 0;
     $session->title = $request['title'];
+
     switch ($request['app_id']) {
-      // Frame-Crop
+
+      // Film Specific - Editing - App 1 - Frame Crop
       case 1:
         if (isset($request['frames'])) {
           $frames = collect();
@@ -119,6 +116,14 @@ class SessionController extends Controller
             $frames->push($data);
           }
           $session->content = json_encode($frames);
+        }
+        break;
+
+
+      // Film Specific - Editing - App 2 - Juxtaposition
+      case 2:
+        if (isset($request['notes'])) {
+          $session->content = json_encode($request['notes']);
         }
         break;
     }

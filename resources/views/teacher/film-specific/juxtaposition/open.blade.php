@@ -118,7 +118,7 @@
             <div class="row">
                 <div class="col">
                   <div class="form-group">
-                    <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                    <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session }}</textarea>
                   </div>
                 </div>
             </div>
@@ -134,7 +134,6 @@
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
 
     var playerL = videojs('video-left');
     var playerR = videojs('video-right');
