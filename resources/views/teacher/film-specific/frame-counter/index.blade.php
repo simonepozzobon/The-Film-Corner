@@ -82,11 +82,17 @@
                   </video>
                 </div>
               </div>
+              <div class="col-md-6">
+                <div class="form-group d-none">
+                  <textarea id="markerText" name="name" rows="8" class="form-control"></textarea>
+                </div>
+                <button id="markerSave" type="button" name="button" class="btn btn-secondary d-none">Save</button>
+              </div>
             </div>
             <div class="row py-4">
-              <div class="col">
+              <div class="col d-flex justify-content-around">
                 {{-- Control Bar --}}
-                <div class="btn-group d-flex justify-content-center">
+                <div class="btn-group">
                   <button id="comment" type="button" name="button" class="btn btn-secondary">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
                   </button>
@@ -133,7 +139,7 @@
         fullscreenToggle: false,
       }
     });
-    
+
     player.muted(true);
 
     player.markers({
@@ -145,16 +151,28 @@
       ]
     });
 
+    var markers = [];
+
     $('#comment').on('click', function() {
-      var totalSeconds = player.currentTime();
-      hours = Math.floor(totalSeconds / 3600);
-      totalSeconds %= 3600;
-      minutes = Math.floor(totalSeconds / 60);
-      seconds = totalSeconds % 60;
-      var current = $('#notes').val();
-      var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
-      $('#notes').val(current + newComment);
+      var playerTime = player.currentTime();
+      $('#markerText').parent('.form-group').removeClass('d-none');
+      $('#markerSave').removeClass('d-none');
+      $('#markerSave').on('click', function() {
+        player.markers.add([{
+          time: playerTime
+        }]);
+        var marker = {
+          time : playerTime,
+          text : $('#markerText').val()
+        };
+        markers.push(marker);
+        $('#markerText').val('');
+        $('#markerText').parent('.form-group').addClass('d-none')
+        $('#markerSave').addClass('d-none');
+        console.log(markers);
+      });
     });
+
 
     $('#play').on('click', function() {
       player.play();
