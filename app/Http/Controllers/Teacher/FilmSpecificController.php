@@ -42,6 +42,13 @@ class FilmSpecificController extends Controller
     return view('teacher.film-specific.path.index', compact('apps', 'app_category'));
   }
 
+
+  /**
+   *
+   * Start a new session on the app
+   *
+  **/
+
   public function app($category, $app_slug)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->first();
@@ -65,9 +72,20 @@ class FilmSpecificController extends Controller
       case 'juxtaposition':
         return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category'));
         break;
+
+      case 'frame-counter':
+        return view('teacher.film-specific.frame-counter.index', compact('app', 'app_category'));
+        break;
     }
 
   }
+
+
+  /**
+   *
+   * Open a saved session
+   *
+  **/
 
   public function openSession($category, $app_slug, $token)
   {
@@ -95,14 +113,12 @@ class FilmSpecificController extends Controller
       case 'juxtaposition':
         return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session'));
         break;
+
+      case 'frame-counter':
+        return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
+        break;
     }
 
-    // $frames = FrameCrop::where('token', '=', $token)->get();
-    // foreach ($frames as $key => $frame) {
-    //   $frame->img = str_replace('/storage', 'storage', $frame->img);
-    // }
-
-    // return view('teacher.film-specific.frame-crop.open', compact('app', 'session'));
   }
 
 }
