@@ -62,6 +62,7 @@
       }
 
       switch (id) {
+        // Film Specific - Editing - App 1 - Frame Crop
         case 1:
           var frames = [];
           $('.frames').each(function(k){
@@ -79,6 +80,21 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'frames'  : frames
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
+        // Film Specific - Editing - App 2 - Juxtaposition
+        case 2:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val()
           };
 
           console.log('--------');

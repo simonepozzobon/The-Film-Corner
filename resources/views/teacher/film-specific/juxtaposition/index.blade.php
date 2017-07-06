@@ -1,4 +1,7 @@
 @extends('layouts.teacher', ['type' => 'app'])
+@section('stylesheets')
+  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+@endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
   <div class="p-5">
@@ -69,56 +72,55 @@
       </div>
       <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
         <div class="col">
-          <div class="clearfix p-5" ng-app="App" ng-cloak ng-controller="videoController">
+          <div class="clearfix p-5">
             <div class="row">
               <div class="col-md-6">
-                <video id="video-left" class="video-js vjs-default-skin" controls preload="auto" aspect-ratio="16:9" vjs-video>
-                    <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                </video>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="video-left" class="embed-responsive-item video-js" preload="auto" width="640" height="264">
+                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                  </video>
+                </div>
               </div>
               <div class="col-md-6">
-                <video id="video-right" class="video-js vjs-default-skin" controls preload="auto" aspect-ratio="16:9" vjs-video>
-                    <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                </video>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="video-right" class="embed-responsive-item video-js" preload="auto" width="640" height="264">
+                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="row py-4">
+              <div class="col">
+                {{-- Control Bar --}}
+                <div class="btn-group d-flex justify-content-center">
+                  <button id="comment" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
+                  </button>
+                  <button id="play" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </button>
+                  <button id="pause" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-pause" aria-hidden="true"></i>
+                  </button>
+                  <button id="stop" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-stop" aria-hidden="true"></i>
+                  </button>
+                  <button id="rewind" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                  </button>
+                  <button id="forward" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-forward" aria-hidden="true"></i>
+                  </button>
+                </div>
+
               </div>
             </div>
             <div class="row">
-              <div class="col mt-3">
-                {{-- Control Bar --}}
-                <div class="btn-group">
-                  <button type="button" name="button" class="btn btn-secondary" ng-click="editorPlay()">
-                    <i class="fa fa-play" aria-hidden="true"></i> Play
-                  </button>
-                  <button type="button" name="button" class="btn btn-secondary" ng-click="editorPause()">
-                    <i class="fa fa-pause" aria-hidden="true"></i> Pause
-                  </button>
-                  <button type="button" name="button" class="btn btn-secondary" ng-click="editorStop()">
-                    <i class="fa fa-stop" aria-hidden="true"></i> Stop
-                  </button>
+                <div class="col">
+                  <div class="form-group">
+                    <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                  </div>
                 </div>
-
-
-                <div class="btn-group">
-                  <button type="button" name="button" class="btn btn-secondary" ng-click="editorRewind()">
-                    <i class="fa fa-backward" aria-hidden="true"></i> Rewind
-                  </button>
-                  <button type="button" name="button" class="btn btn-secondary" ng-click="editorForward()">
-                    <i class="fa fa-forward" aria-hidden="true"></i> Forward
-                  </button>
-                </div>
-
-                <button type="button" name="button" class="btn btn-secondary">
-                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
-                </button>
-
-                <button type="button" name="button" class="btn btn-secondary disabled">
-                  <i class="fa fa-save" aria-hidden="true"></i> Save
-                </button>
-
-                <button type="button" name="button" class="btn btn-secondary disabled">
-                  <i class="fa fa-share-square-o" aria-hidden="true"></i> Share
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -128,62 +130,55 @@
 
 @endsection
 @section('scripts')
-   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-   <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
-   <script src="//raw.githubusercontent.com/LonnyGomes/vjs-video/master/dist/vjs-video.js"></script>
+   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
 
-   <script type="text/javascript">
+  <script type="text/javascript">
+    var AppSession = new TfcSessions();
+    AppSession.initSession({{ $app->id }});
 
-   // Define the video controller
-   angular.module('videoCtrl', ['vjs.video'])
-     .controller('videoController', ['$scope', function ($scope) {
-           //listen for when the vjs-media object changes
-           $scope.$on('vjsVideoReady', function (e, videoData) {
+    var playerL = videojs('video-left');
+    var playerR = videojs('video-right');
+    playerL.muted(true);
+    playerR.muted(true);
 
-               $scope.editorPlay = function() {
-                 console.log(videoData);
-                 videoData.player.trigger('loadstart');
-                 videoData.player.play();
-               };
+    $('#comment').on('click', function() {
+      var totalSeconds = playerL.currentTime();
+      hours = Math.floor(totalSeconds / 3600);
+      totalSeconds %= 3600;
+      minutes = Math.floor(totalSeconds / 60);
+      seconds = totalSeconds % 60;
+      var current = $('#notes').val();
+      var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
+      $('#notes').val(current + newComment);
+    });
 
-               $scope.editorPause = function() {
-                 videoData.player.pause();
-               };
+    $('#play').on('click', function() {
+      playerL.play();
+      playerR.play();
+    });
 
-               $scope.editorStop = function() {
-                 videoData.player.pause();
-                 videoData.player.currentTime(0);
-               }
+    $('#pause').on('click', function() {
+      playerL.pause();
+      playerR.pause();
+    });
 
-               $scope.editorRewind = function() {
-                 videoData.player.pause();
-                 var now = videoData.player.currentTime();
-                 videoData.player.currentTime(now - 2);
-               }
+    $('#stop').on('click', function() {
+      playerL.pause().currentTime(0);
+      playerR.pause().currentTime(0);
 
-               $scope.editorForward = function() {
-                 videoData.player.pause();
-                 var now = videoData.player.currentTime();
-                 videoData.player.currentTime(now + 2);
-               }
+    });
 
-               videoData.player.on('timeupdate', function () {
-                 var time = {
-                   time: this.currentTime()
-                 };
-                 $scope.$broadcast('editorPlay', time);
-               });
-             //}
-           });
-       }]);
+    $('#rewind').on('click', function() {
+      var time = playerL.currentTime();
+      playerL.currentTime(time-5);
+      playerR.currentTime(time-5);
+    });
 
+    $('#forward').on('click', function() {
+      var time = playerL.currentTime();
+      playerL.currentTime(time+5);
+      playerR.currentTime(time+5);
+    });
 
-   // Define the Application
-   var App =
-   angular.module('App', [
-             'videoCtrl',
-           ])
-           .constant("CSRF_TOKEN", '{{ csrf_token() }}');
-   </script>
+  </script>
 @endsection
