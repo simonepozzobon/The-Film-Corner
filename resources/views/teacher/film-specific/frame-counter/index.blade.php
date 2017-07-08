@@ -2,6 +2,11 @@
 @section('stylesheets')
   <link rel="stylesheet" href="http://vjs.zencdn.net/5.8.8/video-js.css" >
   <link rel="stylesheet" href="{{ asset('plugins/videojs-markers/videojs.markers.css') }}">
+  <style media="screen">
+  .frame {
+    box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
+  }
+  </style>
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
@@ -83,10 +88,13 @@
                 </div>
               </div>
               <div class="col-md-6">
-                <div class="form-group d-none">
-                  <textarea id="markerText" name="name" rows="8" class="form-control"></textarea>
+                <div class="frame container bg-faded d-none p-3">
+                  <h6 class="text-center">Notes</h6>
+                  <div class="form-group pb-2">
+                    <textarea id="markerText" name="name" rows="8" class="form-control"></textarea>
+                  </div>
+                  <button id="markerSave" type="button" name="button" class="btn btn-primary justify-content-center">Save</button>
                 </div>
-                <button id="markerSave" type="button" name="button" class="btn btn-secondary d-none">Save</button>
               </div>
             </div>
             <div class="row py-4">
@@ -113,6 +121,26 @@
                   </button>
                 </div>
 
+              </div>
+            </div>
+            <div class="row">
+              <div class="frame col bg-faded">
+                <div class="container p-4">
+                  <table id="timetable" class="table table-hover">
+                    <thead>
+                      <th>Time</th>
+                      <th>Description</th>
+                      <th></th>
+                    </thead>
+                    <tbody>
+                      <tr id="no-markers">
+                        <td colspan="3" class="text-center">
+                          <span class="alert alert-warning d-block">No Markers Yet</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
@@ -154,25 +182,63 @@
     var markers = [];
 
     $('#comment').on('click', function() {
+      player.pause();
       var playerTime = player.currentTime();
-      $('#markerText').parent('.form-group').removeClass('d-none');
-      $('#markerSave').removeClass('d-none');
+      $('#markerText').parent('.form-group').parent('.container').removeClass('d-none');
       $('#markerSave').on('click', function() {
+        // Get Notes
+        var notes = $('#markerText').val();
+
+        // Add Marker
         player.markers.add([{
           time: playerTime
         }]);
+
+        // Marker Array Update
         var marker = {
           time : playerTime,
-          text : $('#markerText').val()
+          text : notes
         };
         markers.push(marker);
+
+        // Format time for marker table
+        var totalSeconds = player.currentTime();
+        hours = Math.floor(totalSeconds / 3600);
+        totalSeconds %= 3600;
+        minutes = Math.floor(totalSeconds / 60);
+        seconds = totalSeconds % 60;
+        var timecode = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2);
+
+        console.log('---------');
+        console.log(notes);
+        console.log('---------');
+
+        // Update Marker Table
+        var data;
+        data += '<tr class="marker">';
+        data += '<td>'+timecode+'</td>';
+        data += '<td>'+notes+'</td>';
+        data += '<td><button id="markerDelete" onclick="deleteMarker(this)" type="button" name="button" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>';
+        data += '</tr>';
+
+        $('#timetable').append(data);
+
+        // Count marker
+        var count = countMarker();
+        if (count > 0) {
+          $('#no-markers').remove();
+        }
+
+        // Reset Marker Notes
         $('#markerText').val('');
-        $('#markerText').parent('.form-group').addClass('d-none')
-        $('#markerSave').addClass('d-none');
+
+        // Hide Marker Notes
+        $('#markerText').parent('.form-group').parent('.container').addClass('d-none');
+
+        // Logging
         console.log(markers);
       });
     });
-
 
     $('#play').on('click', function() {
       player.play();
@@ -197,5 +263,37 @@
       player.currentTime(time+5);
     });
 
+    function notable()
+    {
+      if (player.currentTime() > 0) {
+        $('#comment').removeClasse('disabled');
+      } else {
+        $('#comment').addClass('disabled');
+      }
+    }
+
+    // Count Markers
+    function countMarker() {
+      var count = 0;
+      $('.marker').each(function() {
+        count = count + 1;
+      });
+      return count;
+    }
+
+    // Delete
+    function deleteMarker(obj) {
+      $(obj).parent('.marker').remove();
+      console.log(obj);
+      // Check count markers if 0 add warning
+      var count = countMarker();
+      if (count == 0) {
+        var data;
+        data += '<tr id="no-markers">';
+        data += '<td colspan="3" class="text-center"><span class="alert alert-warning d-block">No Markers Yet</span></td>';
+        data += '</tr>';
+        $('#timetable').append(data);
+      }
+    }
   </script>
 @endsection
