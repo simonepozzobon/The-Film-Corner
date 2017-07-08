@@ -85,9 +85,16 @@ class FilmSpecificController extends Controller
       **/
 
       case 'intercut-cross-cutting':
-
         $elements = VideoLibrary::all();
         return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        break;
+
+      case 'offscreen':
+        return view('teacher.film-specific.offscreen.index', compact('app', 'app_category'));
+        break;
+
+      case 'attractions':
+        return view('teacher.film-specific.attractions.index', compact('app', 'app_category'));
         break;
     }
 
@@ -129,6 +136,21 @@ class FilmSpecificController extends Controller
 
       case 'frame-counter':
         return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
+        break;
+
+      /*
+       *
+       * PATH EDITING
+       *
+      **/
+
+      case 'intercut-cross-cutting':
+        $elements = VideoLibrary::all();
+        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        break;
+
+      case 'offscreen':
+        return view('teacher.film-specific.offscreen.open', compact('app', 'app_category', 'session'));
         break;
     }
 

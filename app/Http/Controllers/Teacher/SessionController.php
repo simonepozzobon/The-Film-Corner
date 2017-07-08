@@ -90,7 +90,7 @@ class SessionController extends Controller
 
     switch ($request['app_id']) {
 
-      // Film Specific - Editing - App 1 - Frame Crop
+      // Film Specific - Framing - App 1 - Frame Crop
       case 1:
         if (isset($request['frames'])) {
           $frames = collect();
@@ -120,7 +120,7 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Editing - App 2 - Juxtaposition
+      // Film Specific - Framing - App 2 - Juxtaposition
       case 2:
         if (isset($request['notes'])) {
           $session->content = json_encode($request['notes']);
@@ -128,10 +128,26 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Editing - App 3 - Frame Counter
+      // Film Specific - Framing - App 3 - Frame Counter
       case 3:
         if (isset($request['markers'])) {
           $session->content = json_encode($request['markers']);
+        }
+        break;
+
+
+      // Film Specific - Editing - App 4 - Intercut Cross Cutting
+      case 4:
+        if (isset($request['markers'])) {
+          $session->content = json_encode($request['markers']);
+        }
+        break;
+
+
+      // Film Specific - Editing - App 5 - Offscreen
+      case 5:
+        if (isset($request['notes'])) {
+          $session->content = json_encode($request['notes']);
         }
         break;
 
