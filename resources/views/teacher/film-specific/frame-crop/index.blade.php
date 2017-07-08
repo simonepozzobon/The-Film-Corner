@@ -95,7 +95,7 @@
             </div>
             <div class="row">
               <div class="col-md-4 p-5 offset-md-4 text-center">
-                <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
+                <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-camera" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
