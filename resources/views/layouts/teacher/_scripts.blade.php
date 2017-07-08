@@ -101,6 +101,21 @@
           console.log(data);
           console.log('--------');
           break;
+
+        // Film Specific - Editing - App 3 - Frame Counter
+        case 3:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'markers' : markers
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
       }
 
       $.ajax({

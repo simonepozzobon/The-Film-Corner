@@ -126,6 +126,15 @@ class SessionController extends Controller
           $session->content = json_encode($request['notes']);
         }
         break;
+
+
+      // Film Specific - Editing - App 3 - Frame Counter
+      case 3:
+        if (isset($request['markers'])) {
+          $session->content = json_encode($request['markers']);
+        }
+        break;
+
     }
 
     $data = [
