@@ -6,6 +6,7 @@ use App\App;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
+use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -75,6 +76,18 @@ class FilmSpecificController extends Controller
 
       case 'frame-counter':
         return view('teacher.film-specific.frame-counter.index', compact('app', 'app_category'));
+        break;
+
+      /*
+       *
+       * PATH EDITING
+       *
+      **/
+
+      case 'intercut-cross-cutting':
+
+        $elements = VideoLibrary::all();
+        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
         break;
     }
 
