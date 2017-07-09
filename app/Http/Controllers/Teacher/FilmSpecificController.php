@@ -96,6 +96,21 @@ class FilmSpecificController extends Controller
       case 'attractions':
         return view('teacher.film-specific.attractions.index', compact('app', 'app_category'));
         break;
+
+      case 'attractions-viceversa':
+        $emotions = [
+          0 => 'Fear',
+          1 => 'Anger',
+          2 => 'Joy',
+          3 => 'Disgust',
+          4 => 'Surprise',
+          5 => 'Trust',
+        ];
+
+        $emotion = $emotions[rand(0, 5)];
+
+        return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
+        break;
     }
 
   }
@@ -155,6 +170,10 @@ class FilmSpecificController extends Controller
 
       case 'attractions':
         return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session'));
+        break;
+
+      case 'attractions-viceversa':
+        return view('teacher.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session'));
         break;
     }
 

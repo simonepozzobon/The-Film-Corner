@@ -166,6 +166,22 @@ class SessionController extends Controller
         }
         break;
 
+
+      // Film Specific - Editing - App 7 - attractions-viceversa
+      case 7:
+        if (isset($request['notes'])) {
+
+          $data = [
+            'emotion' => $request['emotion'],
+            'imgL' => $request['imgL'][0],
+            'imgR' => $request['imgR'][0],
+            'notes' => $request['notes']
+          ];
+
+          $session->content = json_encode($data);
+        }
+        break;
+
     }
 
     $data = [
