@@ -152,6 +152,10 @@ class FilmSpecificController extends Controller
       case 'offscreen':
         return view('teacher.film-specific.offscreen.open', compact('app', 'app_category', 'session'));
         break;
+
+      case 'attractions':
+        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session'));
+        break;
     }
 
   }

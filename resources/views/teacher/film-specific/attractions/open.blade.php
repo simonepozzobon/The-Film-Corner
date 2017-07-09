@@ -109,11 +109,13 @@
                 <div class="row pb-4">
                   <div class="col-md-6">
                     <div id="div1" class="sortable container border no-padding">
+                      <img src="{{ $session->imgL }}" class="img-fluid">
                       <span class="placeholder">Drop Here</span>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div id="div2" class="sortable container border no-padding">
+                      <img src="{{ $session->imgR }}" class="img-fluid">
                       <span class="placeholder">Drop Here</span>
                     </div>
                   </div>
@@ -122,7 +124,7 @@
                   <div class="col">
                     <div class="frame container bg-faded p-4">
                       <h3 class="text-center pb-4">Describe Feelings</h3>
-                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -150,7 +152,6 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
 
     $('#library, #div1, #div2').sortable({
       connectWith: ".sortable",

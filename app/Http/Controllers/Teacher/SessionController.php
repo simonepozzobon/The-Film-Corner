@@ -151,6 +151,21 @@ class SessionController extends Controller
         }
         break;
 
+
+      // Film Specific - Editing - App 6 - Attractions
+      case 6:
+        if (isset($request['notes'])) {
+
+          $data = [
+            'imgL' => $request['imgL'][0],
+            'imgR' => $request['imgR'][0],
+            'notes' => $request['notes']
+          ];
+
+          $session->content = json_encode($data);
+        }
+        break;
+
     }
 
     $data = [
