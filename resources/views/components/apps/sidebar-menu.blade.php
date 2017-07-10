@@ -11,7 +11,7 @@
   </div>
   <div id="close-btn" class="d-block m-1">
     <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
-      <i class="fa fa-times" aria-hidden="true"></i>
+      <i class="fa fa-sign-out" aria-hidden="true"></i>
     </a>
   </div>
 </div>
@@ -52,14 +52,15 @@
         </button>
       </div>
       <div class="modal-body">
-        <h4 class="text-center">Are you sure</h4>
+        <h4 class="text-center">Pay attention</h4>
         <p class="text-center">
-          Do you want to exit without save?
+          Usaved progress will be losed.<br>
+          If you want, go back and save them.
         </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-        <a class="btn btn-danger text-white" href="{{ route('teacher.film-specific.index', $app->category->slug) }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Close Without Save</a>
+        <a class="btn btn-danger text-white" href="{{ route('teacher.film-specific.index', $app->category->slug) }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Close</a>
       </div>
     </div>
   </div>

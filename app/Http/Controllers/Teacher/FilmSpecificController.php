@@ -6,6 +6,7 @@ use App\App;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
+use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -42,6 +43,13 @@ class FilmSpecificController extends Controller
     return view('teacher.film-specific.path.index', compact('apps', 'app_category'));
   }
 
+
+  /**
+   *
+   * Start a new session on the app
+   *
+  **/
+
   public function app($category, $app_slug)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->first();
@@ -65,9 +73,65 @@ class FilmSpecificController extends Controller
       case 'juxtaposition':
         return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category'));
         break;
+
+      case 'frame-counter':
+        return view('teacher.film-specific.frame-counter.index', compact('app', 'app_category'));
+        break;
+
+      /*
+       *
+       * PATH EDITING
+       *
+      **/
+
+      case 'intercut-cross-cutting':
+        $elements = VideoLibrary::all();
+        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        break;
+
+      case 'offscreen':
+        return view('teacher.film-specific.offscreen.index', compact('app', 'app_category'));
+        break;
+
+      case 'attractions':
+        return view('teacher.film-specific.attractions.index', compact('app', 'app_category'));
+        break;
+
+      case 'attractions-viceversa':
+        $emotions = [
+          0 => 'Fear',
+          1 => 'Anger',
+          2 => 'Joy',
+          3 => 'Disgust',
+          4 => 'Surprise',
+          5 => 'Trust',
+        ];
+
+        $emotion = $emotions[rand(0, 5)];
+
+        return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
+        break;
+
+
+      /*
+       *
+       * PATH CHARACTERS
+       *
+      **/
+
+      case 'character-analysis':
+        return view('teacher.film-specific.character-analysis.index', compact('app', 'app_category'));
+        break;
     }
 
   }
+
+
+  /**
+   *
+   * Open a saved session
+   *
+  **/
 
   public function openSession($category, $app_slug, $token)
   {
@@ -95,14 +159,46 @@ class FilmSpecificController extends Controller
       case 'juxtaposition':
         return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session'));
         break;
+
+      case 'frame-counter':
+        return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
+        break;
+
+      /*
+       *
+       * PATH EDITING
+       *
+      **/
+
+      case 'intercut-cross-cutting':
+        $elements = VideoLibrary::all();
+        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        break;
+
+      case 'offscreen':
+        return view('teacher.film-specific.offscreen.open', compact('app', 'app_category', 'session'));
+        break;
+
+      case 'attractions':
+        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session'));
+        break;
+
+      case 'attractions-viceversa':
+        return view('teacher.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session'));
+        break;
+
+
+      /*
+       *
+       * PATH CHARACTERS
+       *
+      **/
+
+      case 'character-analysis':
+        return view('teacher.film-specific.character-analysis.open', compact('app', 'app_category', 'session'));
+        break;
     }
 
-    // $frames = FrameCrop::where('token', '=', $token)->get();
-    // foreach ($frames as $key => $frame) {
-    //   $frame->img = str_replace('/storage', 'storage', $frame->img);
-    // }
-
-    // return view('teacher.film-specific.frame-crop.open', compact('app', 'session'));
   }
 
 }

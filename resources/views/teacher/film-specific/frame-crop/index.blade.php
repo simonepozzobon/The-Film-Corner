@@ -11,10 +11,6 @@
       width: 100%;
       height: 100%;
     }
-
-    .frames .col.bg-faded {
-      box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-    }
   </style>
 @endsection
 @section('content')
@@ -95,7 +91,7 @@
             </div>
             <div class="row">
               <div class="col-md-4 p-5 offset-md-4 text-center">
-                <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-camera" aria-hidden="true"></i> Capture Frame</button>
+                <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-camera" aria-hidden="true"></i></button>
               </div>
             </div>
           </div>
@@ -146,9 +142,9 @@
       var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
       var img = PSV.render();
       counter = counter + 1;
-      var elem = '<div id="frame-container-'+counter+'" class="frames col-md-4 p-5 d-inline-block">';
+      var elem = '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
       elem += '<div class="row">';
-      elem +=   '<div class="col bg-faded">';
+      elem +=   '<div class="frame col bg-faded">';
       elem +=     '<div class="container p-4">';
       elem +=       '<h3 class="frame-title text-center">Frame '+counter+'</h3>';
       elem +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';

@@ -76,23 +76,23 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-left" class="embed-responsive-item video-js" preload="auto" width="640" height="264">
+                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-right" class="embed-responsive-item video-js" preload="auto" width="640" height="264">
+                  <video id="video-right" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>
             </div>
             <div class="row py-4">
-              <div class="col">
+              <div class="col d-flex justify-content-around">
                 {{-- Control Bar --}}
-                <div class="btn-group d-flex justify-content-center">
+                <div class="btn-group">
                   <button id="comment" type="button" name="button" class="btn btn-secondary">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
                   </button>
@@ -117,8 +117,11 @@
             </div>
             <div class="row">
                 <div class="col">
-                  <div class="form-group">
-                    <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                  <div class="frame container-fluid bg-faded p-4">
+                    <h3 class="text-center pb-4">Write your notes</h3>
+                    <div class="form-group">
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -136,8 +139,20 @@
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
 
-    var playerL = videojs('video-left');
-    var playerR = videojs('video-right');
+    var playerL = videojs('video-left', {
+      controlBar: {
+        playToggle: false,
+        volumeMenuButton: false,
+        fullscreenToggle: false,
+      }
+    });
+    var playerR = videojs('video-right', {
+      controlBar: {
+        playToggle: false,
+        volumeMenuButton: false,
+        fullscreenToggle: false,
+      }
+    });
     playerL.muted(true);
     playerR.muted(true);
 

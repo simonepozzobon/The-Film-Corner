@@ -62,7 +62,7 @@
       }
 
       switch (id) {
-        // Film Specific - Editing - App 1 - Frame Crop
+        // Film Specific - Framing - App 1 - Frame Crop
         case 1:
           var frames = [];
           $('.frames').each(function(k){
@@ -87,7 +87,7 @@
           console.log('--------');
           break;
 
-        // Film Specific - Editing - App 2 - Juxtaposition
+        // Film Specific - Framing - App 2 - Juxtaposition
         case 2:
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -100,6 +100,113 @@
           console.log('--------');
           console.log(data);
           console.log('--------');
+          break;
+
+        // Film Specific - Framing - App 3 - Frame Counter
+        case 3:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'markers' : markers
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
+        // Film Specific - Editing - App 5 - Offscreen
+        case 5:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val()
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
+        // Film Specific - Editing - App 6 - Attractions
+        case 6:
+
+          var imgL = [];
+          var imgR = [];
+
+          $('#div1 img').each(function() {
+            var src = $(this).attr('src');
+            imgL.push(src);
+          });
+          $('#div2 img').each(function() {
+            var src = $(this).attr('src');
+            imgR.push(src);
+          });
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val(),
+            'imgL'    : imgL,
+            'imgR'    : imgR
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
+        // Film Specific - Editing - App 7 - attractions-viceversa
+        case 7:
+
+          var imgL = [];
+          var imgR = [];
+
+          $('#div1 img').each(function() {
+            var src = $(this).attr('src');
+            imgL.push(src);
+          });
+          $('#div2 img').each(function() {
+            var src = $(this).attr('src');
+            imgR.push(src);
+          });
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'emotion' : $('input[name="emotion"]').val(),
+            'notes'   : $('#notes').val(),
+            'imgL'    : imgL,
+            'imgR'    : imgR
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
+        // Film Specific - Editing - App 12 - character-analysis
+        case 12:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val()
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
           break;
       }
 
