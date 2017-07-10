@@ -83,13 +83,14 @@
               <div class="col-md-6">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
                   </video>
                 </div>
+                <canvas class="d-none"></canvas>
               </div>
               <div class="col-md-6">
                 <div class="frame container bg-faded d-none p-3">
-                  <h6 class="text-center">Notes</h6>
+                  <h3 class="text-center pb-4">Notes</h3>
                   <div class="form-group pb-2">
                     <textarea id="markerText" name="name" rows="8" class="form-control"></textarea>
                   </div>
@@ -128,6 +129,7 @@
                 <div class="container p-4">
                   <table id="timetable" class="table table-hover">
                     <thead>
+                      <th>Img</th>
                       <th>Time</th>
                       <th>Description</th>
                       <th></th>
@@ -181,6 +183,22 @@
 
     var markers = [];
 
+    // Set Snapshot vars
+    var video = document.querySelector('video');
+    var canvas = document.querySelector('canvas');
+    var ctx = canvas.getContext('2d');
+    var w, h, ratio;
+
+    video.addEventListener('loadedmetadata', function() {
+        ratio = video.videoWidth / video.videoHeight;
+
+        w = video.videoWidth - 100;
+        h = parseInt(w / ratio, 10);
+        canvas.width = w;
+        canvas.height = h;
+    }, false);
+
+    // Notes action
     $('#comment').on('click', function() {
       player.pause();
       var playerTime = player.currentTime();
@@ -194,34 +212,34 @@
           time: playerTime
         }]);
 
-        // Marker Array Update
-        var marker = {
-          time : playerTime,
-          text : notes
-        };
-        markers.push(marker);
-
         // Format time for marker table
         var totalSeconds = player.currentTime();
         hours = Math.floor(totalSeconds / 3600);
         totalSeconds %= 3600;
         minutes = Math.floor(totalSeconds / 60);
-        seconds = totalSeconds % 60;
-        var timecode = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2);
+        seconds = Math.round(totalSeconds % 60);
+        var timeCode = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2);
 
-        console.log('---------');
-        console.log(notes);
-        console.log('---------');
+        // Take snapshot
+        ctx.fillRect(0, 0, w, h);
+        ctx.drawImage(video, 0, 0, w, h);
+
+        // Marker Array Update
+        var marker = {
+          img   : canvas.toDataURL("image/jpeg"),
+          time  : timeCode,
+          text  : notes,
+        };
+        markers.push(marker);
 
         // Update Marker Table
-        var data;
+        var data = '';
         data += '<tr class="marker">';
-        data += '<td>'+timecode+'</td>';
+        data += '<td><img src="'+canvas.toDataURL("image/jpeg")+'" class="img-fluid" width="57"></td>'
+        data += '<td>'+timeCode+'</td>';
         data += '<td>'+notes+'</td>';
         data += '<td><button id="markerDelete" onclick="deleteMarker(this)" type="button" name="button" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>';
         data += '</tr>';
-
-        $('#timetable').append(data);
 
         // Count marker
         var count = countMarker();
@@ -229,14 +247,19 @@
           $('#no-markers').remove();
         }
 
+        $('#timetable').append(data);
+
         // Reset Marker Notes
         $('#markerText').val('');
 
         // Hide Marker Notes
         $('#markerText').parent('.form-group').parent('.container').addClass('d-none');
 
+
         // Logging
+        console.log('---------');
         console.log(markers);
+        console.log('---------');
       });
     });
 
@@ -283,17 +306,17 @@
 
     // Delete
     function deleteMarker(obj) {
-      $(obj).parent('.marker').remove();
-      console.log(obj);
-      // Check count markers if 0 add warning
-      var count = countMarker();
-      if (count == 0) {
-        var data;
-        data += '<tr id="no-markers">';
-        data += '<td colspan="3" class="text-center"><span class="alert alert-warning d-block">No Markers Yet</span></td>';
-        data += '</tr>';
-        $('#timetable').append(data);
-      }
+      // $(obj).parent('.marker').remove();
+      // console.log(obj);
+      // // Check count markers if 0 add warning
+      // var count = countMarker();
+      // if (count == 0) {
+      //   var data = '';
+      //   data += '<tr id="no-markers">';
+      //   data += '<td colspan="3" class="text-center"><span class="alert alert-warning d-block">No Markers Yet</span></td>';
+      //   data += '</tr>';
+      //   $('#timetable').append(data);
+      // }
     }
   </script>
 @endsection
