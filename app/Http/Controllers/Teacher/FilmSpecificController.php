@@ -111,6 +111,17 @@ class FilmSpecificController extends Controller
 
         return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
         break;
+
+
+      /*
+       *
+       * PATH CHARACTERS
+       *
+      **/
+
+      case 'character-analysis':
+        return view('teacher.film-specific.character-analysis.index', compact('app', 'app_category'));
+        break;
     }
 
   }
@@ -174,6 +185,17 @@ class FilmSpecificController extends Controller
 
       case 'attractions-viceversa':
         return view('teacher.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session'));
+        break;
+
+
+      /*
+       *
+       * PATH CHARACTERS
+       *
+      **/
+
+      case 'character-analysis':
+        return view('teacher.film-specific.character-analysis.open', compact('app', 'app_category', 'session'));
         break;
     }
 

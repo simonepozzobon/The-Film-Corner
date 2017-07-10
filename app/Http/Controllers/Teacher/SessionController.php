@@ -182,6 +182,14 @@ class SessionController extends Controller
         }
         break;
 
+
+      // Film Specific - Characters - App 12 - attractions-viceversa
+      case 12:
+        if (isset($request['notes'])) {
+          $session->content = json_encode($request['notes']);
+        }
+        break;
+
     }
 
     $data = [

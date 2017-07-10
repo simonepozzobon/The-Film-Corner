@@ -192,6 +192,22 @@
           console.log(data);
           console.log('--------');
           break;
+
+        // Film Specific - Editing - App 12 - character-analysis
+        case 12:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val()
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
       }
 
       $.ajax({
