@@ -2,9 +2,6 @@
 @section('stylesheets')
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
-  .frame {
-    box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-  }
   .border {
     width: 384px;
     height: 216px;

@@ -148,7 +148,7 @@
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var AppSession = new TfcSessions();
-    
+
     var PSV = new PhotoSphereViewer({
       panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
       container: 'photosphere',
@@ -171,9 +171,9 @@
       var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
       var img = PSV.render();
       counter = counter + 1;
-      var elem = '<div id="frame-container-'+counter+'" class="frames col-md-4 p-5 d-inline-block">';
+      var elem = '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
       elem += '<div class="row">';
-      elem +=   '<div class="col bg-faded">';
+      elem +=   '<div class="frame col bg-faded">';
       elem +=     '<div class="container p-4">';
       elem +=       '<h3 class="frame-title text-center">Frame '+counter+'</h3>';
       elem +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';

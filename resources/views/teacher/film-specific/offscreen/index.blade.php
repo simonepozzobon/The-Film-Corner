@@ -107,8 +107,11 @@
             </div>
             <div class="row">
                 <div class="col">
-                  <div class="form-group">
-                    <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                  <div class="frame container-fluid bg-faded p-4">
+                    <h3 class="text-center pb-4">Describe the scene outside the screen</h3>
+                    <div class="form-group">
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                    </div>
                   </div>
                 </div>
             </div>

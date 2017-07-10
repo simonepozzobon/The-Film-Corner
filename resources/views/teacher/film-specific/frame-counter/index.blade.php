@@ -2,11 +2,6 @@
 @section('stylesheets')
   <link rel="stylesheet" href="http://vjs.zencdn.net/5.8.8/video-js.css" >
   <link rel="stylesheet" href="{{ asset('plugins/videojs-markers/videojs.markers.css') }}">
-  <style media="screen">
-  .frame {
-    box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-  }
-  </style>
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
