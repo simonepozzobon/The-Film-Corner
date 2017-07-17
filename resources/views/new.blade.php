@@ -43,7 +43,7 @@
   {{-- END OF PARTNER MODAL --}}
   <div class="container">
     {{-- News --}} {{-- HIDDEN FOR NOW --}}
-    @if (isset($posts))
+    {{-- @if (isset($posts))
       <div class="row">
       <div class="col">
         <section id="news">
@@ -101,7 +101,43 @@
         </section>
       </div>
     </div>
-    @endif
+    @endif --}}
+    {{-- News --}}
+    <section id="news">
+      <div class="row pt-5">
+        <div class="col-md-10 offset-md-1">
+          <div class="container-fluid" style="background-color: {{ $colors[0][0] }}; color: #252525">
+            <div class="row" style="background-color: {{ $colors[0][1] }}; color: #252525">
+              <div class="col align-text-bottom">
+                <h2 class="p-4">Deadline extended</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col p-5">
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
+                  </div>
+                  <div class="col-md-8">
+                    <p class="text-justify pb-5">
+                      Dear visitors,<br>
+                      welcome to the website of the European project The Film Corner. Online and offline activities for film literacy, promoted by Fondazione Cineteca Italiana and supported by the Creative Europe Program of the European Union.<br>
+                      <br>
+                      As you could read on the website, the project is aimed at the design, development and testing of an interactive digital platform for film literacy addressed to students between 12 and 17 years old.<br>
+                      <br>
+                      The Film Corner International Conference will take place in Milan on 9th and 10th November 2017. Participation is completely free and the deadline for enrolment is 10th October.<br>
+                      Click <a href="{{ route('conference') }}">here</a> for all the information and follow us on our <a href="https://www.facebook.com/TheFilmCorner/" target="_blank">facebook</a> page.<br>
+
+                    </p>
+                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[0][1] }}; color: #252525; border: none;">Apply</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     {{-- Conference --}}
     <section id="conference">
       <div class="row pt-5">
