@@ -148,7 +148,7 @@
       hours = Math.floor(totalSeconds / 3600);
       totalSeconds %= 3600;
       minutes = Math.floor(totalSeconds / 60);
-      seconds = totalSeconds % 60;
+      seconds = Math.round(totalSeconds % 60);
       var current = $('#notes').val();
       var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
       $('#notes').val(current + newComment);

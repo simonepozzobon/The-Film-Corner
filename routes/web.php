@@ -60,9 +60,25 @@ Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
 Route::get('/', function () {
     $posts = Post::where('category_id', '=', 1)->latest()->limit(5)->get();
     $partners = Partner::all();
-    return view('new')
-                ->with('posts', $posts)
-                ->with('partners', $partners);
+    $colors = [
+      0 => ['#f5db5e', '#e9c845'],
+      1 => ['#d8ef8f', '#b7cc5e'],
+      2 => ['#f4c490', '#e8a360'],
+      3 => ['#d9f5fc', '#a6dbe2'],
+    ];
+
+    $counter = 0;
+    foreach ($posts as $key => $post) {
+      $post->colors = $colors[$counter];
+      $counter++;
+
+      if ($counter % 4 == 0) {
+        $counter = 0;
+      }
+    }
+
+
+    return view('new', compact('posts', 'partners', 'colors'));
 });
 
 Route::get('/posts', function () {
