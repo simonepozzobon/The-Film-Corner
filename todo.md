@@ -25,3 +25,4 @@ ___
 - Modificare scadenza conferenza dal 30 luglio al 10 ottobre (_http://www.thefilmcorner.eu/conference cambiare in registration timeline_)
 - add save function to video editor (_can be useful also for deleting sessions and unused rendering_)
 - add note system to write notes on video editor.
+- Aggiornato calendario conferenza (_schedule draft_)
