@@ -26,3 +26,6 @@ ___
 - add save function to video editor (_can be useful also for deleting sessions and unused rendering_)
 - add note system to write notes on video editor.
 - Aggiornato calendario conferenza (_schedule draft_)
+- Aggiornata immagine home
+- Rimosse animazioni palazzi da immagine home
+- Aggiunto un po' di colore alle nuvole
