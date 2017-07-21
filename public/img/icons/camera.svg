@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>camera</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="camera" stroke-width="1.2" stroke="#3A3A3A">
+            <g id="Page-1" transform="translate(9.000000, 12.000000)">
+                <polygon id="Stroke-1" points="0.6 29.5911 30.921 29.5911 30.921 14.2501 0.6 14.2501"></polygon>
+                <polyline id="Stroke-3" points="31.1436 24.0563 36.0156 25.9933 36.0156 16.4673 30.9206 18.5153"></polyline>
+                <path d="M16.1451,7.4245 C16.1451,11.1945 13.0891,14.2495 9.3201,14.2495 C5.5511,14.2495 2.4951,11.1945 2.4951,7.4245 C2.4951,3.6555 5.5511,0.5995 9.3201,0.5995 C13.0891,0.5995 16.1451,3.6555 16.1451,7.4245 Z" id="Stroke-4"></path>
+                <path d="M26.9771,8.7868 C26.9771,11.8038 24.5311,14.2498 21.5151,14.2498 C18.4981,14.2498 16.0521,11.8038 16.0521,8.7868 C16.0521,5.7698 18.4981,3.3248 21.5151,3.3248 C24.5311,3.3248 26.9771,5.7698 26.9771,8.7868 Z" id="Stroke-5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

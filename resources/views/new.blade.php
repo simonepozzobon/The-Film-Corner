@@ -116,7 +116,7 @@
               <div class="col p-5">
                 <div class="row">
                   <div class="col-md-4">
-                    <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
+                    <img src="{{ asset('img/icons/time.svg') }}" class="img-fluid w-100" >
                   </div>
                   <div class="col-md-8">
                     <p class="text-justify pb-5">
@@ -169,6 +169,36 @@
                       9 a.m. - 6 p.m. Italian time, Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy
                     </p>
                     <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[1][1] }}; color: #252525; border: none;">Apply</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="project">
+      <div class="row pt-5">
+        <div class="col-md-10 offset-md-1">
+          <div class="container-fluid" style="background-color: {{ $colors[3][0] }}; color: #252525">
+            <div class="row" style="background-color: {{ $colors[3][1] }}; color: #252525">
+              <div class="col align-text-bottom">
+                <h2 class="p-4">The Project</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col p-5">
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="{{ asset('img/icons/camera.svg') }}" class="img-fluid w-100" >
+                  </div>
+                  <div class="col-md-8">
+                    <p class="text-justify pb-5">
+                      “THE FILM CORNER. Online and offline activities for Film Literacy” project is aimed to the design, release and testing of an online digital virtual user-centered platform for Film Literacy, taking advantage of the opportunities offered by web 2.0 and crossmedia innovative approach in the digital era in order to raise the average film literacy level of EU young audiences. The general aim of the project is to contribute to draw an easy-going model for Film Literacy that could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience.<br>
+                      The project involves 5 European institutions in 4 EU countries: Fondazione Cineteca Italiana in Milan, Italy (leading partner); The Film Space, an innovative Film Literacy provider (Manchester, UK); The Nerve Centre, a Creative Learning Centre Derry, Northern Ireland; the National Cinèmatheque of Serbia (Belgrade, Serbia) one of the eldest cinèmatheques in the world and the University of Milano Bicocca,  Dipartimento di Scienze Umane per la Formazione “Riccardo Massa” (Milan, Italy).<br>
+                      The platform consists of an interactive narrative-based environmental layout with game-based didactical resources integrated as apps the user can interact with. Didactical resources will be both based on generic Film Literacy skills and on a set of EU national and non-national films. The platform is to be developed in at least 4 EU languages including english, french, italian and serbian.<br>
+                      In november 2017, an international conference will take place in the frame of the 10th edition of “Piccolo Grande Cinema” Festival, a film festival dedicated to young audience promoted by Fondazione Cineteca Italiana. During the international conference the platform blueprint will be officially presented and some panels discussing several issues concerning Film Literacy, cross-media and Audience Development and engagement will be discussed. A call for papers will be issued and keynote speakers, including representants from other film literacy project financed in the frame of the Creative Europe Programme will be invited.<br>
+                    </p>
                   </div>
                 </div>
               </div>
