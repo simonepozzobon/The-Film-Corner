@@ -54,14 +54,6 @@
       </div>
       <div class="col-sm-9">
         Institutional greetings
-        <ul>
-          <li>Matteo Zacchetti, EACEA-European Commission</li>
-          <li>Dario Franceschini, MIBACT-Ministry of Culture</li>
-          <li>Valeria Fedeli, MIUR-Ministry of Education</li>
-          <li>Cristina Cappellini, Regione Lombardia</li>
-          <li>Filippo Del Corno, Comune di Milano</li>
-          <li>Matteo Pavesi, Fondazione Cineteca Italiana</li>
-        </ul>
       </div>
     </div>
     <div class="row">
@@ -156,7 +148,7 @@
         Creativity in film education and the digital media
         <ul>
           <li>Núria Aidelman (A bao a Qu)</li>
-          <li>Ian Wall (The Film Space)</li>
+          <li>Nathalie Bourgeois (Cinémathèque Française)</li>
           <li>Marco Alessi (Dugong)</li>
           <li>Chairman: Maria Grazia Mattei (digital communication specialist)</li>
         </ul>
