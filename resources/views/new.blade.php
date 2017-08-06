@@ -109,6 +109,40 @@
           <div class="container-fluid" style="background-color: {{ $colors[0][0] }}; color: #252525">
             <div class="row" style="background-color: {{ $colors[0][1] }}; color: #252525">
               <div class="col align-text-bottom">
+                <h2 class="p-4">The Film Corner at #Venezia74</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col p-5">
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
+                  </div>
+                  <div class="col-md-8">
+                    <p class="text-justify pb-5">
+                      The Film Corner will be present at the 74th Venice International Film Festival!<br>
+                      <br>
+                      On Sunday, September 3rd at 11 am at the Italian Pavilion, the Film Corner International Conference will be presented at the festivalgoers.<br>
+                      the Film Corner International Conference will take place in 2017 on November 9th and 10th in Milan, as part of the X edition of the Piccolo Grande Cinema Festival, addressed to young audiences and organised by Cineteca Italiana, which is the leading organisation of the project.<br>
+                      The conference is open to the public and addressed to professionals and trainers of film education, media education, information and communication technology as well as gaming professionals.<br>
+                      <br>
+                      Our speakers: Matteo Pavesi (Fondazione Cineteca Italiana Director), Silvia Pareti, Simone Moraldi (Fondazione Cineteca Italiana Special Project Manager) and Gianni Canova (film critic).<br>
+                      <br>
+                      For further information and participation requests write to <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
+                    </p>
+                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[0][1] }}; color: #252525; border: none;">Apply</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row pt-5">
+        <div class="col-md-10 offset-md-1">
+          <div class="container-fluid" style="background-color: {{ $colors[1][0] }}; color: #252525">
+            <div class="row" style="background-color: {{ $colors[1][1] }}; color: #252525">
+              <div class="col align-text-bottom">
                 <h2 class="p-4">Deadline extended</h2>
               </div>
             </div>
@@ -129,7 +163,7 @@
                       Click <a href="{{ route('conference') }}">here</a> for all the information and follow us on our <a href="https://www.facebook.com/TheFilmCorner/" target="_blank">facebook</a> page.<br>
 
                     </p>
-                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[0][1] }}; color: #252525; border: none;">Apply</a>
+                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[1][1] }}; color: #252525; border: none;">Apply</a>
                   </div>
                 </div>
               </div>
@@ -142,8 +176,8 @@
     <section id="conference">
       <div class="row pt-5">
         <div class="col-md-10 offset-md-1">
-          <div class="container-fluid" style="background-color: {{ $colors[1][0] }}; color: #252525">
-            <div class="row" style="background-color: {{ $colors[1][1] }}; color: #252525">
+          <div class="container-fluid" style="background-color: {{ $colors[2][0] }}; color: #252525">
+            <div class="row" style="background-color: {{ $colors[2][1] }}; color: #252525">
               <div class="col align-text-bottom">
                 <h2 class="p-4">International Conference</h2>
               </div>
@@ -168,7 +202,7 @@
                     <p class="text-justify pb-5">
                       9 a.m. - 6 p.m. Italian time, Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy
                     </p>
-                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[1][1] }}; color: #252525; border: none;">Apply</a>
+                    <a href="{{ route('conference') }}" class="btn btn-secondary btn-block" style="background-color: {{ $colors[2][1] }}; color: #252525; border: none;">Apply</a>
                   </div>
                 </div>
               </div>
@@ -215,8 +249,8 @@
     <section id="partners">
       <div class="row pt-5">
         <div class="col-md-10 offset-md-1">
-          <div class="container-fluid" style="background-color: {{ $colors[2][0] }}; color: #252525">
-            <div class="row" style="background-color: {{ $colors[2][1] }}; color: #252525">
+          <div class="container-fluid" style="background-color: {{ $colors[0][0] }}; color: #252525">
+            <div class="row" style="background-color: {{ $colors[0][1] }}; color: #252525">
               <div class="col align-text-bottom">
                 <h2 class="p-4">Partners</h2>
               </div>
