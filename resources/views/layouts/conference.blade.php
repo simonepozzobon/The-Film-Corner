@@ -37,7 +37,7 @@
                             <a class="nav-link" href="{{ route('conference.accomodation') }}">Accomodation</a>
                           </li>
                           <li class="nav-item {{ $active == 'download' ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('conference.download') }}">Download</a>
+                            <a class="nav-link" href="{{ route('conference.download') }}">Download & Press</a>
                           </li>
                           <li class="nav-item {{ $active == 'contact' ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('conference.contact') }}">Contact & Info</a>
