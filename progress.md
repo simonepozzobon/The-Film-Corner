@@ -1,3 +1,20 @@
+16 Agosto
+_______
+
+- Conclusa configurazione definitiva
+- Creato nuovo controller per il creative-studio
+- Creata nuova view per i percorsi
+
+
+
+14 Agosto
+_______
+
+- Aggiunte nuove app e rimosse le vecchie
+- Configurato nuovo server
+- Creato db ed importato i dati dalla versione local
+
+
 
 21 Giugno 2017
 _______
