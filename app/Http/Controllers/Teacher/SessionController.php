@@ -201,11 +201,17 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Characters - App 12 - attractions-viceversa
+
+      /*
+       *
+       * CREATIVE STUDIO - PADIGLIONE 2
+       *
+      */
+
+      // Creative Studio - Warm Up - App 12 - Active Offscreen
       case 12:
-        if (isset($request['notes'])) {
-          $session->content = json_encode($request['notes']);
-        }
+        $data = [''];
+        $session->content = json_encode($data);
         break;
 
     }

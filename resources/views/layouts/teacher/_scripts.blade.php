@@ -193,14 +193,19 @@
           console.log('--------');
           break;
 
-        // Film Specific - Editing - App 12 - character-analysis
+        /*
+         *
+         * CREATIVE STUDIO - PADIGLIONE 2
+         *
+        */
+
+        // Creative Studio - Warm Up - App 12 - Active Offscreen
         case 12:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'notes'   : $('#notes').val()
           };
 
           console.log('--------');
