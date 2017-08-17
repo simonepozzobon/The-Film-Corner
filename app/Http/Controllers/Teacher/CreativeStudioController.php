@@ -13,13 +13,20 @@ use App\AppCategory;
 use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
+use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\AppsSession;
 
 class CreativeStudioController extends Controller
 {
+
+  public function __construct()
+  {
+      $this->middleware('auth:teacher', ['except' => 'logout']);
+  }
+
   public function index($category)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
@@ -229,6 +236,11 @@ class CreativeStudioController extends Controller
 
       $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
 
+      // $data = [
+      //   'request' => $request->input('session'),
+      //   'session' => $app_session
+      // ];
+
       //Creo il nome del file
       $filename = uniqid();
       $videoStore = $utility->storeVideo($file, $filename, $ext, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id.'/');
@@ -243,9 +255,10 @@ class CreativeStudioController extends Controller
       $teacher->videos()->save($video);
 
       $data = [
-        'session' => $request->input('session'),
-        'sessionObj' => $app_session->id,
         'message' => 'success',
+        'video_id' => $video->id,
+        'img' => Storage::disk('local')->url($videoStore['img']),
+        'src' => $videoStore['src']
       ];
 
       return response()->json($data);
