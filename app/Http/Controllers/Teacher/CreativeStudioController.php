@@ -162,51 +162,17 @@ class CreativeStudioController extends Controller
 
     switch ($app_slug) {
 
-      case 'frame-crop':
-        return view('teacher.creative-studio.frame-crop.open', compact('app', 'app_category', 'session'));
-        break;
-
-      case 'juxtaposition':
-        return view('teacher.creative-studio.juxtaposition.open', compact('app', 'app_category', 'session'));
-        break;
-
-      case 'frame-counter':
-        return view('teacher.creative-studio.frame-counter.open', compact('app', 'app_category', 'session'));
-        break;
 
       /*
        *
-       * PATH EDITING
+       * PATH WARM UP
        *
       **/
 
-      case 'intercut-cross-cutting':
-        $elements = VideoLibrary::all();
-        return view('teacher.creative-studio.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+      case 'active-offscreen':
+        return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
-      case 'offscreen':
-        return view('teacher.creative-studio.offscreen.open', compact('app', 'app_category', 'session'));
-        break;
-
-      case 'attractions':
-        return view('teacher.creative-studio.attractions.open', compact('app', 'app_category', 'session'));
-        break;
-
-      case 'attractions-viceversa':
-        return view('teacher.creative-studio.attractions-viceversa.open', compact('app', 'app_category', 'session'));
-        break;
-
-
-      /*
-       *
-       * PATH CHARACTERS
-       *
-      **/
-
-      case 'character-analysis':
-        return view('teacher.creative-studio.character-analysis.open', compact('app', 'app_category', 'session'));
-        break;
     }
 
   }
