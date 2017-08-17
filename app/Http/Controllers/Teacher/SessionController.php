@@ -210,8 +210,8 @@ class SessionController extends Controller
 
       // Creative Studio - Warm Up - App 12 - Active Offscreen
       case 12:
-        $data = [''];
-        $session->content = json_encode($data);
+        // $data = [''];
+        // $session->content = json_encode($data);
         break;
 
     }
