@@ -16,7 +16,7 @@ _______
 - Creata funzione nel controller per l'upload dei file
 - Aggiunto sistema upload per i video in active-offscreen
 - Corretto model Video e create le relazioni morphedByMany con appsSessions, TeacherSession, Teacher
--
+- Corretto sistema per le sessioni adattandolo ai video
 
 16 Agosto
 _______
