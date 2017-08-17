@@ -36,4 +36,8 @@ class Teacher extends Authenticatable
     public function school() {
       return $this->belongsTo('App\School');
     }
+
+    public function videos() {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
 }

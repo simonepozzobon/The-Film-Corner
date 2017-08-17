@@ -8,4 +8,8 @@ class AppsSession extends Model
 {
     protected $table = 'teacher_apps_sessions';
 
+    public function videos()
+    {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
 }

@@ -132,11 +132,11 @@
                     <h3 class="text-center pb-4">Upload your offscreen video</h3>
                     <div class="row">
                       <div class="col-md-4 offset-md-4">
-                        <form class="" action="{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" method="post" enctype="multipart/form-data">
                           {{ csrf_field() }}
                           {{ method_field('POST') }}
                           <div class="form-group">
-                            <input type="file" name="media" class="form-control">
+                            <input id="media" type="file" name="media" class="form-control">
                           </div>
                           <input id="videoRef" type="hidden" name="video_ref" value="21">
                           <div class="container-fluid d-flex justify-content-around">
@@ -160,7 +160,7 @@
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
+    var session = AppSession.initSession({{ $app->id }});
 
     var player = videojs('video-left', {
       controlBar: {
@@ -194,5 +194,44 @@
       player.currentTime(time+5);
     });
 
+    $(document).ready(function()
+    {
+      var session = $.parseJSON($.cookie('tfc-sessions'));
+      console.log('--------');
+      console.log(session[0].token);
+      console.log('--------');
+
+      $('form#uploadForm').submit(function(event) {
+        event.preventDefault();
+
+        var formData = new FormData();
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formData.append('media', $('#media')[0].files[0]);
+        formData.append('video_ref', $('#videoRef').val());
+        formData.append('session', session[0].token);
+
+        console.log(formData);
+        $.ajax({
+          type: 'post',
+          url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            console.log(response);
+            console.log('--------');
+            console.log(session[0].token);
+            console.log('--------');
+          },
+          error: function (errors) {
+            console.log(errors);
+          }
+        });
+      });
+    }
+    );
   </script>
 @endsection
