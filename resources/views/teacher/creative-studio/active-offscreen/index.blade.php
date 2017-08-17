@@ -127,33 +127,48 @@
               </div>
             </div>
             <div class="row">
-                <div class="col">
-                  <div class="frame container-fluid bg-faded p-4">
-                    <h3 class="text-center pb-4">Upload your offscreen video</h3>
-                    <div class="row">
-                      <div class="col-md-4 offset-md-4">
-                        <form id="uploadForm" method="post" enctype="multipart/form-data">
-                          {{ csrf_field() }}
-                          {{ method_field('POST') }}
-                          <div class="form-group">
-                            <input id="media" type="file" name="media" class="form-control">
-                          </div>
-                          <input id="videoRef" type="hidden" name="video_ref" value="21">
-                          <div class="container-fluid d-flex justify-content-around">
-                            <button type="submit" name="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-                          </div>
-                        </form>
-                      </div>
+              <div class="col-md-8">
+                <div class="frame container-fluid bg-faded p-4">
+                  <h3 class="text-center pb-4">Upload your offscreen video</h3>
+                  <div class="row pb-5">
+                    <div class="col-md-4 offset-md-4">
+                      <form id="uploadForm" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <div class="form-group">
+                          <input id="media" type="file" name="media" class="form-control">
+                        </div>
+                        <input id="videoRef" type="hidden" name="video_ref" value="21">
+                        <div class="container-fluid d-flex justify-content-around">
+                          <button type="submit" name="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="frame container-fluid bg-faded p-4">
+                  <h3 class="text-center pb-4">Video Uploaded</h3>
+                  <div id="no-video" class="pb-5">
+                    <span class="alert alert-warning d-block text-center">No video uploaded yet!</span>
+                  </div>
+                  <table id="videos" class="table table-hover d-none">
+                    <thead>
+                      <th>Video</th>
+                      <th></th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 @endsection
 @section('scripts')
    <script src="{{ asset('plugins/videojs/video.js') }}"></script>
@@ -222,9 +237,20 @@
           contentType: false,
           success: function (response) {
             console.log(response);
-            console.log('--------');
-            console.log(session[0].token);
-            console.log('--------');
+            $('#no-video').addClass('d-none');
+            $('#videos').removeClass('d-none');
+            var data = '';
+            data += '<tr id="video-'+response.video_id+'">';
+            data +=    '<td><img src="'+response.img+'" width="57" class="img-fluid"></td>';
+            data +=    '<td>';
+            data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
+            data +=     '<div class="btn-group">';
+            data +=        '<button type="button" class="btn btn-primary" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
+            data +=        '<button type="button" class="btn btn-danger" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+            data +=      '</div>';
+            data +=    '</td>';
+            data += '</tr>';
+            $('#videos').append(data);
           },
           error: function (errors) {
             console.log(errors);

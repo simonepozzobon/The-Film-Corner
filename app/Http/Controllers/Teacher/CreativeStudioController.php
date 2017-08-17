@@ -13,13 +13,20 @@ use App\AppCategory;
 use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
+use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\AppsSession;
 
 class CreativeStudioController extends Controller
 {
+
+  public function __construct()
+  {
+      $this->middleware('auth:teacher', ['except' => 'logout']);
+  }
+
   public function index($category)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
@@ -220,7 +227,6 @@ class CreativeStudioController extends Controller
         'msg' => 'Error, file not supported'
       ];
       return response()->json($data);
-      dd('file non supportato');
     } else {
 
       $teacher = Auth::guard('teacher')->user();
@@ -240,12 +246,18 @@ class CreativeStudioController extends Controller
 
       // creo il link tra video e sessione
       $app_session->videos()->save($video);
+      // $data = [
+      //   'request' => $request->input('session'),
+      //   'session' => $app_session
+      // ];
       $teacher->videos()->save($video);
 
+
       $data = [
-        'session' => $request->input('session'),
-        'sessionObj' => $app_session->id,
         'message' => 'success',
+        'video_id' => $video->id,
+        'img' => Storage::disk('local')->url($videoStore['img']),
+        'src' => $videoStore['src']
       ];
 
       return response()->json($data);
