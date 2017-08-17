@@ -227,7 +227,6 @@ class CreativeStudioController extends Controller
         'msg' => 'Error, file not supported'
       ];
       return response()->json($data);
-      dd('file non supportato');
     } else {
 
       $teacher = Auth::guard('teacher')->user();
@@ -235,11 +234,6 @@ class CreativeStudioController extends Controller
       $app_category = AppCategory::find($app->app_category_id);
 
       $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
-
-      // $data = [
-      //   'request' => $request->input('session'),
-      //   'session' => $app_session
-      // ];
 
       //Creo il nome del file
       $filename = uniqid();
@@ -252,7 +246,12 @@ class CreativeStudioController extends Controller
 
       // creo il link tra video e sessione
       $app_session->videos()->save($video);
+      // $data = [
+      //   'request' => $request->input('session'),
+      //   'session' => $app_session
+      // ];
       $teacher->videos()->save($video);
+
 
       $data = [
         'message' => 'success',

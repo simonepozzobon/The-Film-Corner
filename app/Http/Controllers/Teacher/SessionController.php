@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use App\App;
 use Validator;
+use App\Video;
 use App\Utility;
 use App\AppSection;
 use App\AppCategory;
@@ -40,21 +41,38 @@ class SessionController extends Controller
 
   public function newSession(Request $request)
   {
-    $teacher_id = Auth::guard('teacher')->Id();
+    $teacher = Auth::guard('teacher')->user();
 
     $sessions = AppsSession::where([
       ['app_id', '=', $request['app_id']],
-      ['teacher_id', '=', $teacher_id]
+      ['teacher_id', '=', $teacher->id]
     ])->get();
 
     foreach ($sessions as $key => $session) {
       if ($session->is_empty ==  1) {
+        // return response()->json(['video' => $session->videos()->get()]);
+        foreach ($session->videos()->get() as $key => $video) {
+          // Cancello il video
+          $videoObj = Video::findOrFail($video->id);
+          $videoObj->delete();
+          Storage::delete('public/'.$video->src);
+          Storage::delete('public/'.$video->img);
+
+          // Cancello il link del video con l'insegnante
+          $teacher->videos()->detach();
+
+          // Cancello il link del video con la sessione
+          $session->videos()->detach();
+
+
+        }
+
         $session->delete();
       }
     }
 
     $session = new AppsSession;
-    $session->teacher_id = $teacher_id;
+    $session->teacher_id = $teacher->id;
     $session->app_id = $request['app_id'];
     $session->token = uniqid();
     $session->save();

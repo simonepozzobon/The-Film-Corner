@@ -25,6 +25,10 @@
           },
           data: data,
           success: function (response) {
+            console.log('---------');
+            console.log('Sessione');
+            console.log(response);
+            console.log('---------');
             var sessions = [];
 
             if ($.cookie('tfc-sessions')) {
