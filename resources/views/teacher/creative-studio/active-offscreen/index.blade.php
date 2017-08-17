@@ -212,9 +212,6 @@
     $(document).ready(function()
     {
       var session = $.parseJSON($.cookie('tfc-sessions'));
-      console.log('--------');
-      console.log(session[0].token);
-      console.log('--------');
 
       $('form#uploadForm').submit(function(event) {
         event.preventDefault();
@@ -225,7 +222,6 @@
         formData.append('video_ref', $('#videoRef').val());
         formData.append('session', session[0].token);
 
-        console.log(formData);
         $.ajax({
           type: 'post',
           url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
