@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Teacher;
 
 use App\App;
+use Validator;
+use App\Video;
+use App\Teacher;
+use App\Utility;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
@@ -65,8 +69,8 @@ class CreativeStudioController extends Controller
 
     switch ($app_slug) {
 
-      case 'frame-crop':
-        return view('teacher.creative-studio.frame-crop.index', compact('app', 'app_category'));
+      case 'active-offscreen':
+        return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category'));
         break;
 
       case 'juxtaposition':
@@ -197,6 +201,37 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.character-analysis.open', compact('app', 'app_category', 'session'));
         break;
     }
+
+  }
+
+  public function uploadVideo($category, $app_slug, Request $request)
+  {
+    // manca aggiungere la sessione al form
+    // manca fare una verifica della dimensione del file
+    
+    $utility = new Utility;
+    $file = $request->file('media');
+    $ext = $file->getClientOriginalExtension();
+    $check = $utility->verifyExt($ext, ['video']);
+
+    // verify the extension
+    if ($check == false) {
+      $data = [
+        'msg' => 'Error, file not supported'
+      ];
+      // return response()->json($data);
+      dd('file non supportato');
+    } else {
+      $teacher = Auth::guard('teacher')->user();
+      $app = App::where('slug', '=', $app_slug)->with('category')->first();
+      $app_category = AppCategory::find($app->app_category_id);
+
+      // Creo il nome del file
+      $filename = uniqid();
+
+
+    }
+
 
   }
 }

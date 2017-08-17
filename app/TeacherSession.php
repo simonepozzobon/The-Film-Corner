@@ -17,4 +17,9 @@ class TeacherSession extends Model
     {
       return $this->belongsTo('App\App');
     }
+
+    public function videos()
+    {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
 }
