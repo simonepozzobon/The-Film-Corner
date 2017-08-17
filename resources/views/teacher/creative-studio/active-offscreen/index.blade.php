@@ -159,15 +159,6 @@
                       <th></th>
                     </thead>
                     <tbody>
-                      <tr id="video-id-">
-                        <td><img src="{{ asset('img/helpers/poster.png') }}" width="57" class="img-fluid"></td>
-                        <td>
-                          <div class="btn-group">
-                            <button type="button" name="button" class="btn btn-primary" onclick="videoPlay()"><i class="fa fa-play" aria-hidden="true"></i></button>
-                            <button type="button" name="button" class="btn btn-danger" onclick="videoDelete()"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                          </div>
-                        </td>
-                      </tr>
                     </tbody>
                   </table>
                 </div>
@@ -252,10 +243,10 @@
             data += '<tr id="video-'+response.video_id+'">';
             data +=    '<td><img src="'+response.img+'" width="57" class="img-fluid"></td>';
             data +=    '<td>';
+            data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
             data +=     '<div class="btn-group">';
-            data +=        '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
-            data +=        '<button type="button" name="button" class="btn btn-primary" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
-            data +=        '<button type="button" name="button" class="btn btn-danger" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+            data +=        '<button type="button" class="btn btn-primary" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
+            data +=        '<button type="button" class="btn btn-danger" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
             data +=      '</div>';
             data +=    '</td>';
             data += '</tr>';
