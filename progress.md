@@ -1,3 +1,12 @@
+17 Agosto
+_______
+
+- Sistemato Controller per creative-studio
+- Sistemato la view per creative-studio
+- Creata view per app active-offscreen
+- Creata funzione nel controller per l'upload dei file
+
+
 16 Agosto
 _______
 
