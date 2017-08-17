@@ -112,7 +112,7 @@
                 <div class="col-md-10 offset-md-1">
                   {{-- <div class="btn-group btn-block"> --}}
                   <p class="text-center">
-                    <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
+                    <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
                     <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
                   </p>
                   {{-- </div> --}}
@@ -148,6 +148,7 @@
 @section('scripts')
 <script type="text/javascript">
   function openSessions(teacherId, appId) {
+    console.log(appId);
     $.ajax({
       type: 'GET',
       url:  '/teacher/session/'+teacherId+'/'+appId,
