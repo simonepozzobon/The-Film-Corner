@@ -187,7 +187,7 @@
             data +=   '</td>';
             data +=   '<td>';
             data +=     '<div class="btn-group">';
-            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
+            data +=       '<a href="/teacher/creative-studio/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
             data +=       '<a class="btn btn-danger text-white"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
             data +=     '</div>';
             data +=   '</td>';
