@@ -148,7 +148,6 @@
 @section('scripts')
 <script type="text/javascript">
   function openSessions(teacherId, appId) {
-    console.log(appId);
     $.ajax({
       type: 'GET',
       url:  '/teacher/session/'+teacherId+'/'+appId,
