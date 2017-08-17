@@ -208,7 +208,7 @@ class CreativeStudioController extends Controller
   {
     // manca aggiungere la sessione al form
     // manca fare una verifica della dimensione del file
-    
+
     $utility = new Utility;
     $file = $request->file('media');
     $ext = $file->getClientOriginalExtension();
@@ -219,17 +219,36 @@ class CreativeStudioController extends Controller
       $data = [
         'msg' => 'Error, file not supported'
       ];
-      // return response()->json($data);
+      return response()->json($data);
       dd('file non supportato');
     } else {
+
       $teacher = Auth::guard('teacher')->user();
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
 
-      // Creo il nome del file
+      $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
+
+      //Creo il nome del file
       $filename = uniqid();
+      $videoStore = $utility->storeVideo($file, $filename, $ext, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id.'/');
 
+      $video = new Video;
+      $video->img = $videoStore['img'];
+      $video->src = $videoStore['src'];
+      $video->save();
 
+      // creo il link tra video e sessione
+      $app_session->videos()->save($video);
+      $teacher->videos()->save($video);
+
+      $data = [
+        'session' => $request->input('session'),
+        'sessionObj' => $app_session->id,
+        'message' => 'success',
+      ];
+
+      return response()->json($data);
     }
 
 
