@@ -16,7 +16,7 @@
   <div class="block-text">
     <div class="row">
       <div class="col">
-        <h5>2017, November, 9th</h5>
+        <h5>2017, November, 9th - Fondazione Cineteca Italiana HQ, viale Fulvio Testi, 121</h5>
       </div>
     </div>
     <div class="row pt-3">
@@ -24,12 +24,12 @@
         <b>17:00</b>
       </div>
       <div class="col-sm-9">
-        Visit to MIC
+        Visit to MIC-Interactive Film Museum and the Virtual Archive
       </div>
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>18:30</b>
+        <b>19:00</b>
       </div>
       <div class="col-sm-9">
         Networking cocktail
@@ -37,12 +37,12 @@
     </div>
     <div class="row pt-3">
       <div class="col">
-        <h5>2017, November, 10th</h5>
+        <h5>2017, November, 10th - Spazio Oberdan, Viale Vittorio Veneto, 2</h5>
       </div>
     </div>
     <div class="row pt-3">
       <div class="col-sm-2 offset-sm-1">
-        <b>9:30 to 9:45</b>
+        <b>9:15 to 9:30</b>
       </div>
       <div class="col-sm-9">
         Registration and welcome coffee
@@ -50,38 +50,30 @@
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>9:45 to 10:30</b>
+        <b>9:30 to 10:00</b>
       </div>
       <div class="col-sm-9">
         Institutional greetings
-        <ul>
-          <li>EACEA, European Commission</li>
-          <li>MIBACT-Ministry of Culture</li>
-          <li>USR, MIUR-Ministry of Education</li>
-          <li>Regione Lombardia</li>
-          <li>Comune di Milano</li>
-          <li>Fondazione Cineteca Italiana</li>
-        </ul>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>10:30 to 11:30</b>
+        <b>10:00 to 11:00</b>
       </div>
       <div class="col-sm-9">
         Introduction to The Film Corner platform
         <ul>
-          <li>Fondazione Cineteca Italiana</li>
-          <li>Jugoslovenska Kinoteka</li>
-          <li>University of Milano-Bicocca</li>
-          <li>The Nerve Centre</li>
-          <li>The Film space</li>
+          <li>Aleksandar Erdeljanovic, Jugoslovenska Kinoteka</li>
+          <li>Emanuela Mancino, University of Milano-Bicocca</li>
+          <li>Silvia Pareti, Fondazione Cineteca Italiana</li>
+          <li>John Peto, The Nerve Centre</li>
+          <li>Ian Wall, The Film space</li>
         </ul>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>11:30 to 11:45</b>
+        <b>11:15 to 11:30</b>
       </div>
       <div class="col-sm-9">
         Coffee break
@@ -89,15 +81,30 @@
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>11:45 to 13:30</b>
+        <b>11:15 to 12:30</b>
       </div>
       <div class="col-sm-9">
         Film education and audience development in the digital era
+        <ul>
+          <li>Christine Eloy (Europa Distribution)</li>
+          <li>Elisa Giovannelli (Fondazione Cineteca di Bologna/ECFA)</li>
+          <li>Fatima Djoumer (Europa Cinemas)</li>
+          <li>Chairman: Aleksandar Erdeljanovic (Jugoslovenska Kinoteka)</li>
+        </ul>
+
       </div>
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>13:30 to 14:30</b>
+        <b>12:30 to 13:00</b>
+      </div>
+      <div class="col-sm-9">
+        Q&A
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 offset-sm-1">
+        <b>13:00 to 14:00</b>
       </div>
       <div class="col-sm-9">
         Lunch break
@@ -105,15 +112,21 @@
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>14:30 to 16:00</b>
+        <b>14:00 to 15:30</b>
       </div>
       <div class="col-sm-9">
         Film literacy and critical skills improvement for students in the digital era
+        <ul>
+          <li>Mark Reid (British Film Institute)</li>
+          <li>Alessandra Guarino (Fondazione Centro Sperimentale di Cinematografia)</li>
+          <li>Marty Melarkey (The Nerve Centre)</li>
+          <li>Chairman: Ian Wall (The Film Space)</li>
+        </ul>
       </div>
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>16:00 to 16:15</b>
+        <b>15:30 to 16:00</b>
       </div>
       <div class="col-sm-9">
         Coffee break
@@ -121,10 +134,33 @@
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>16:15 to 17:30</b>
+        <b>16:00 to 16:30</b>
+      </div>
+      <div class="col-sm-9">
+        Q&A
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 offset-sm-1">
+        <b>16:30 to 18:00</b>
       </div>
       <div class="col-sm-9">
         Creativity in film education and the digital media
+        <ul>
+          <li>Núria Aidelman (A bao a Qu)</li>
+          <li>Nathalie Bourgeois (Cinémathèque Française)</li>
+          <li>Marco Alessi (Dugong)</li>
+          <li>Chairman: Maria Grazia Mattei (digital communication specialist)</li>
+        </ul>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2 offset-sm-1">
+        <b>18:00 to 18:30</b>
+      </div>
+      <div class="col-sm-9">
+        Closing remarks
       </div>
     </div>
   </div>

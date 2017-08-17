@@ -40,7 +40,7 @@
   </div>
   <div class="block-text">
     <p class="text-justify">
-      There are 180 places available for the conference and it is <b>free of charge</b>. If you’d like to join us, you can register using the form below <b>until 2017, july, 30th</b>. Keep updated through our social media accounts on Facebook and Twitter. Further details will be announced on the official website of The Film Corner.
+      There are 180 places available for the conference and it is <b>free of charge</b>. If you’d like to join us, you can register using the form below <b>until 2017, october, 10th</b>. Keep updated through our social media accounts on Facebook and Twitter. Further details will be announced on the official website of The Film Corner.
     </p>
   </div>
 </div>

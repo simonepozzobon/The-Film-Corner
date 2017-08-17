@@ -8,12 +8,24 @@
 - add loading to keep the user locked when rendering (pace.js)
 - add library settings per app (so admin can assign video to one app and manage from a unique panel)
 - add settings model for limiting using of resource per app
-- add save function to video editor (_can be useful also for deleting sessions and unused rendering_)
-- add note system to write notes on video editor.
+- Aggiungere setting per cambiare contrasto e luminosità (vd css filter)
+- (__entro venerdì__) Fare prova con testi generali per i padiglioni.
 
 
 ## Progress
 
 
 ## Done
+
+**18 Luglio**
+___
+
 - change Invia to Send on Video-library and add icon
+- Preparare rilancio per conferenza
+- Modificare scadenza conferenza dal 30 luglio al 10 ottobre (_http://www.thefilmcorner.eu/conference cambiare in registration timeline_)
+- add save function to video editor (_can be useful also for deleting sessions and unused rendering_)
+- add note system to write notes on video editor.
+- Aggiornato calendario conferenza (_schedule draft_)
+- Aggiornata immagine home
+- Rimosse animazioni palazzi da immagine home
+- Aggiunto un po' di colore alle nuvole

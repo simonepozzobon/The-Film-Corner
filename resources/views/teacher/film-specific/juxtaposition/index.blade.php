@@ -77,14 +77,14 @@
               <div class="col-md-6">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
                   </video>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video-right" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
                   </video>
                 </div>
               </div>
@@ -161,7 +161,7 @@
       hours = Math.floor(totalSeconds / 3600);
       totalSeconds %= 3600;
       minutes = Math.floor(totalSeconds / 60);
-      seconds = totalSeconds % 60;
+      seconds = Math.round(totalSeconds % 60);
       var current = $('#notes').val();
       var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
       $('#notes').val(current + newComment);

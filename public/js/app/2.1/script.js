@@ -15091,14 +15091,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
 
 
-// // Video Playe Videogular
-// require('videogular/dist/videogular/videogular.js');
-// require('videogular/dist/controls/vg-controls.js');
-// require('videogular/dist/poster/vg-poster.js');
-// require('videogular-overlay-play');
-// require('videogular-buffering');
-//
-
 // VideoJS
 __webpack_require__(98);
 

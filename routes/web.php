@@ -60,9 +60,25 @@ Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
 Route::get('/', function () {
     $posts = Post::where('category_id', '=', 1)->latest()->limit(5)->get();
     $partners = Partner::all();
-    return view('new')
-                ->with('posts', $posts)
-                ->with('partners', $partners);
+    $colors = [
+      0 => ['#f5db5e', '#e9c845'],
+      1 => ['#d8ef8f', '#b7cc5e'],
+      2 => ['#f4c490', '#e8a360'],
+      3 => ['#d9f5fc', '#a6dbe2'],
+    ];
+
+    $counter = 0;
+    foreach ($posts as $key => $post) {
+      $post->colors = $colors[$counter];
+      $counter++;
+
+      if ($counter % 4 == 0) {
+        $counter = 0;
+      }
+    }
+
+
+    return view('new', compact('posts', 'partners', 'colors'));
 });
 
 Route::get('/posts', function () {
@@ -211,9 +227,15 @@ Route::prefix('teacher')->group(function() {
   Route::get('/film-specific/{category}/{app_slug}/{token}', 'Teacher\FilmSpecificController@openSession')->name('teacher.film-specific.open.session');
   Route::get('/film-specific/{category}/{app_slug}', 'Teacher\FilmSpecificController@app')->name('teacher.film-specific.app');
 
+  // Film Specific
+  Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
+  Route::get('/creative-studio/{category}', 'Teacher\CreativeStudioController@index')->name('teacher.creative-studio.index');
+  Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Teacher\CreativeStudioController@openSession')->name('teacher.creative-studio.open.session');
+  Route::get('/creative-studio/{category}/{app_slug}', 'Teacher\CreativeStudioController@app')->name('teacher.creative-studio.app');
+  Route::post('/creative-studio/{category}/{app_slug}/upload', 'Teacher\CreativeStudioController@uploadVideo')->name('teacher.creative-studio.upload');
+
 
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
-  Route::get('/creative-studio', 'TeacherController@creativeStudio')->name('teacher.creative-studio');
   Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
 
   // Sessioni

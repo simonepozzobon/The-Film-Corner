@@ -1,3 +1,29 @@
+17 Agosto
+_______
+
+- Sistemato Controller per creative-studio
+- Sistemato la view per creative-studio
+- Creata view per app active-offscreen
+- Creata funzione nel controller per l'upload dei file
+
+
+16 Agosto
+_______
+
+- Conclusa configurazione definitiva
+- Creato nuovo controller per il creative-studio
+- Creata nuova view per i percorsi
+
+
+
+14 Agosto
+_______
+
+- Aggiunte nuove app e rimosse le vecchie
+- Configurato nuovo server
+- Creato db ed importato i dati dalla versione local
+
+
 
 21 Giugno 2017
 _______

@@ -10602,33 +10602,36 @@ var noiseCurve = __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.easing.path('M0, 
 
 // ZOOM ON BUILDING
 
-function zoomBuilding(el, i) {
-  __WEBPACK_IMPORTED_MODULE_1_jquery___default()(el).attr('id', 'element' + i);
-  __WEBPACK_IMPORTED_MODULE_1_jquery___default()(el).on('mouseenter', function (e) {
-    var element = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Html({
-      el: el,
-      y: { 0: -5 },
-      duration: 200,
-      easing: 'elastic.in'
-    }).replay();
-  });
+// function zoomBuilding(el, i) {
+//   $(el).attr('id', 'element'+i);
+//   $(el).on('mouseenter', function (e) {
+//     const element = new mojs.Html({
+//       el:             el,
+//       // y:              {0 : -5},
+//       duration:       200,
+//       easing:         'elastic.in',
+//     }).replay();
+//   });
+//
+//   $(el).on('mouseleave', function (e) {
+//     const element = new mojs.Html({
+//       el:             el,
+//       className:      el+'-left',
+//       // y:              {[-5] : 0},
+//       duration:       400,
+//       easing:         'elastic.out',
+//     }).replay();
+//
+//
+//   });
+// }
+//
+// var Mic = zoomBuilding('.mic-g', 1);
+// var Belgrado = zoomBuilding('.belgrado-g', 2);
+// var NerveCentre = zoomBuilding('.nerve-centre-g', 3);
+// var Bicocca = zoomBuilding('.bicocca-g', 4);
+// var FilmSpace = zoomBuilding('.film-space-g', 5);
 
-  __WEBPACK_IMPORTED_MODULE_1_jquery___default()(el).on('mouseleave', function (e) {
-    var element = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Html({
-      el: el,
-      className: el + '-left',
-      y: _defineProperty({}, -5, 0),
-      duration: 400,
-      easing: 'elastic.out'
-    }).replay();
-  });
-}
-
-var Mic = zoomBuilding('.mic-g', 1);
-var Belgrado = zoomBuilding('.belgrado-g', 2);
-var NerveCentre = zoomBuilding('.nerve-centre-g', 3);
-var Bicocca = zoomBuilding('.bicocca-g', 4);
-var FilmSpace = zoomBuilding('.film-space-g', 5);
 
 var circless = new __WEBPACK_IMPORTED_MODULE_0_mo_js___default.a.Burst({
   parent: '#logo-img',
