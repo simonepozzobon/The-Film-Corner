@@ -1,3 +1,12 @@
+## TODO
+
+- creare un model e un controller per le informazioni (JSON)
+- Creare impostazione per la dimensione massima di upload per gli utenti
+- Aggiungere un limite di dimensione per l'upload
+- Creare un sistema per le lingue
+- Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
+
+
 17 Agosto
 _______
 
@@ -5,7 +14,9 @@ _______
 - Sistemato la view per creative-studio
 - Creata view per app active-offscreen
 - Creata funzione nel controller per l'upload dei file
-
+- Aggiunto sistema upload per i video in active-offscreen
+- Corretto model Video e create le relazioni morphedByMany con appsSessions, TeacherSession, Teacher
+-
 
 16 Agosto
 _______
