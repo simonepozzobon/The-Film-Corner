@@ -84,7 +84,7 @@
                   <h3 class="text-center pb-4">Build Your Character</h3>
                   <div class="row pb-5">
                     <div id="container-canvas" class="col d-flex justify-content-around">
-                      <canvas class="image-editor" id="image-editor" height="500"></canvas>
+                      <canvas class="image-editor" id="image-editor" width="650" height="500"></canvas>
                     </div>
                   </div>
                 </div>
@@ -124,16 +124,21 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
-    var container = $('#container-canvas');
-    var sizeWidth = container.width();
-    var can = document.getElementById('image-editor');
-    can.width = sizeWidth;
 
+    responsiveCanvas();
+    $(window).resize( responsiveCanvas );
+
+    function responsiveCanvas()
+    {
+        $('.image-editor').each(function() {
+          var sizeWidth = $('#container-canvas').width();
+          $(this).attr('width', sizeWidth).width(sizeWidth);
+          $('.canvas-container').width(sizeWidth);
+        });
+    }
 
     $(document).ready(function($) {
-      // var canvas = this.__canvas = new fabric.Canvas('image-editor');
-      var canvas = new fabric.Canvas('image-editor');
-      canvas.width = sizeWidth;
+      var canvas = this.__canvas = new fabric.Canvas('image-editor');
       // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
       // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
