@@ -147,11 +147,6 @@
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
         var json_data = '';
 
-        console.log('-------');
-        console.log('LOG AFTER INIT');
-        console.log(json_data);
-        console.log('-------');
-
         responsiveCanvas();
         $(window).resize( responsiveCanvas );
 
@@ -165,10 +160,6 @@
 
             //SAVE JSON DATA
             json_data = saveCanvas(canvas);
-            console.log('-------');
-            console.log('LOG AFTER SAVE');
-            console.log(json_data);
-            console.log('-------');
 
             //LOAD JSON DATA
             canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
@@ -214,12 +205,7 @@
 
     function saveCanvas(canvas)
     {
-        canvas.renderAll();
         json_data = JSON.stringify(canvas.toDatalessJSON());
-        console.log('--------');
-        console.log('LOG INSIDE FUNCTION');
-        console.log(canvas.toDatalessJSON());
-        console.log('--------');
         $.cookie('tfc-canvas', JSON.stringify(json_data));
         return json_data;
     }
