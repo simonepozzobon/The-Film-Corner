@@ -78,13 +78,13 @@
         <div class="col">
           <div class="clearfix p-5">
 
-            <div class="row">
+            <div class="row pb-5">
               <div class="col-md-8">
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Build Your Character</h3>
                   <div class="row pb-5">
-                    <div class="col d-flex justify-content-around">
-                      <canvas class="image-editor" id="image-editor" width="960" height="640"></canvas>
+                    <div id="container-canvas" class="col d-flex justify-content-around">
+                      <canvas class="image-editor" id="image-editor" height="500"></canvas>
                     </div>
                   </div>
                 </div>
@@ -103,6 +103,14 @@
               </div>
             </div>
 
+            <div class="row">
+              <div class="col">
+                <div class="container-fluid frame bg-faded p-4">
+                  <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -116,8 +124,16 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
+    var container = $('#container-canvas');
+    var sizeWidth = container.width();
+    var can = document.getElementById('image-editor');
+    can.width = sizeWidth;
+
+
     $(document).ready(function($) {
-      var canvas = this.__canvas = new fabric.Canvas('image-editor');
+      // var canvas = this.__canvas = new fabric.Canvas('image-editor');
+      var canvas = new fabric.Canvas('image-editor');
+      canvas.width = sizeWidth;
       // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
       // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
@@ -133,20 +149,20 @@
       $('.assets li').click(function(e) {
         e.preventDefault();
         var $this = $(this);
-        var image_obj = $this.data( 'image-image-obj' );
+        var image_obj = $this.data('image-image-obj');
         if( !image_obj ) {
           var $image = $(this).find('img');
           // var width = $image.width() / $image.height() * canvas.height / 3;
-          var width = $image.prop("naturalWidth");
+          var width = $image.prop('naturalWidth');
           // var height = $image.height() / $image.width() * width;
-          var height = $image.prop("naturalHeight");
+          var height = $image.prop('naturalHeight');
           var imgInstance = new fabric.Image($image[0], {
             width  : width,
             height : height,
             transparentCorners : false,
           });
           $this.addClass('selected');
-          $this.data( 'image-image-obj', imgInstance );
+          $this.data('image-image-obj', imgInstance);
           canvas.add(imgInstance).setActiveObject( imgInstance );
         } else {
           // rimuove gli oggetti dal canvas e la classe "selected"
@@ -156,7 +172,6 @@
         }
       });
     });
-
 
   </script>
 @endsection
