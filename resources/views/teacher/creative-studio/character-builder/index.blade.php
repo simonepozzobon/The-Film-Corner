@@ -1,4 +1,11 @@
 @extends('layouts.teacher', ['type' => 'app'])
+@section('stylesheets')
+  <style media="screen">
+      canvas {
+        border: 2px dashed #252525;
+      }
+  </style>
+@endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app])
   <div class="p-5">
@@ -76,14 +83,20 @@
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Build Your Character</h3>
                   <div class="row pb-5">
-
+                    <div class="col d-flex justify-content-around">
+                      <canvas class="image-editor" id="image-editor" width="960" height="640"></canvas>
+                    </div>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Items</h3>
-
+                  <ul class="assets list-unstyled row">
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/></li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/></li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/></li>
+            			</ul>
                 </div>
               </div>
             </div>
@@ -95,10 +108,53 @@
   </div>
 @endsection
 @section('scripts')
+  <script src="{{ asset('plugins/fabric/fabric.min.js') }}"></script>
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
+
+    $(document).ready(function($) {
+      var canvas = this.__canvas = new fabric.Canvas('image-editor');
+      // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
+
+      // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
+      //   img.width      = 300;
+      //   img.height     = 111;
+      //   img.left       = canvas.width - 300 - 5;
+      //   img.top        = canvas.height - 111 - 5;
+      //   img.selectable = false;
+      //   img.transparentCorners = false;
+      //   canvas.add(img);
+      // });
+
+      $('.assets li').click(function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var image_obj = $this.data( 'image-image-obj' );
+        if( !image_obj ) {
+          var $image = $(this).find('img');
+          // var width = $image.width() / $image.height() * canvas.height / 3;
+          var width = $image.width();
+          // var height = $image.height() / $image.width() * width;
+          var height = $image.height();
+          var imgInstance = new fabric.Image($image[0], {
+            width  : width,
+            height : height,
+            transparentCorners : false,
+          });
+          $this.addClass('selected');
+          $this.data( 'image-image-obj', imgInstance );
+          canvas.add(imgInstance).setActiveObject( imgInstance );
+        } else {
+          // rimuove gli oggetti dal canvas e la classe "selected"
+          $this.removeClass('selected');
+          $this.data('image-image-obj', false);
+          canvas.remove(image_obj);
+        }
+      });
+    });
+
 
 
   </script>
