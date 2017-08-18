@@ -84,7 +84,7 @@
                   <h3 class="text-center pb-4">Build Your Character</h3>
                   <div class="row pb-5">
                     <div id="container-canvas" class="col d-flex justify-content-around">
-                      <canvas class="image-editor" id="image-editor" width="650" height="500"></canvas>
+                      <canvas class="image-editor" id="image-editor" width="2048" height="500"></canvas>
                     </div>
                   </div>
                 </div>
