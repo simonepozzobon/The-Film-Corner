@@ -153,9 +153,9 @@
 
         // Append Images
         $('#slot-1').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_'+s1+'.png">').children('input').val(s1);
-        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s1+'.png">').children('input').val(s2);
-        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s1+'.png">').children('input').val(s3);
-        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s1+'.png">').children('input').val(s4);
+        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s2+'.png">').children('input').val(s2);
+        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s3+'.png">').children('input').val(s3);
+        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s4+'.png">').children('input').val(s4);
 
     }
 

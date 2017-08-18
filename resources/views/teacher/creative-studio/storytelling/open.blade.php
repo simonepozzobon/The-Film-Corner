@@ -85,22 +85,26 @@
                   <div class="row pb-5">
                     <div class="col-md-3">
                       <div id="slot-1" class="container-fluid p-4 slot">
-                        <input id="slot-1-in" type="hidden" name="slot-1" value="">
+                        <input id="slot-1-in" type="text" name="slot-1" value="{{ $session->slot_1 }}">
+                        <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_{{ $session->slot_1 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-2" class="container-fluid p-4 slot">
-                        <input id="slot-2-in" type="hidden" name="slot-2" value="">
+                        <input id="slot-2-in" type="text" name="slot-2" value="{{ $session->slot_2 }}">
+                        <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_{{ $session->slot_2 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-3" class="container-fluid p-4 slot">
-                        <input id="slot-3-in" type="hidden" name="slot-3" value="">
+                        <input id="slot-3-in" type="text" name="slot-3" value="{{ $session->slot_3 }}">
+                        <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_{{ $session->slot_3 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-4" class="container-fluid p-4 slot">
-                        <input id="slot-4-in" type="hidden" name="slot-4" value="">
+                        <input id="slot-4-in" type="text" name="slot-4" value="{{ $session->slot_4 }}">
+                        <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_{{ $session->slot_4 }}.png">
                       </div>
                     </div>
                   </div>
@@ -118,7 +122,7 @@
               <div class="col">
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Write your story</h3>
-                  <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                  <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
                 </div>
               </div>
             </div>
@@ -131,9 +135,6 @@
 @section('scripts')
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    var session = AppSession.initSession({{ $app->id }});
-
-    loadImgs();
 
     $('#reload').on('click', function(e){
       e.preventDefault();
@@ -153,9 +154,9 @@
 
         // Append Images
         $('#slot-1').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_'+s1+'.png">').children('input').val(s1);
-        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s1+'.png">').children('input').val(s2);
-        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s1+'.png">').children('input').val(s3);
-        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s1+'.png">').children('input').val(s4);
+        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s2+'.png">').children('input').val(s2);
+        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s3+'.png">').children('input').val(s3);
+        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s4+'.png">').children('input').val(s4);
 
     }
 

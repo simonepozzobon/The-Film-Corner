@@ -146,7 +146,7 @@ class CreativeStudioController extends Controller
         break;
 
       case 'storytelling':
-        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
     }

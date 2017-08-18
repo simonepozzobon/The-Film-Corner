@@ -241,10 +241,10 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'slot-1'  : $('#slot-1-in').val(),
-            'slot-2'  : $('#slot-2-in').val(),
-            'slot-3'  : $('#slot-3-in').val(),
-            'slot-4'  : $('#slot-4-in').val(),
+            'slot_1'  : $('#slot-1-in').val(),
+            'slot_2'  : $('#slot-2-in').val(),
+            'slot_3'  : $('#slot-3-in').val(),
+            'slot_4'  : $('#slot-4-in').val(),
           };
 
           console.log('--------');
