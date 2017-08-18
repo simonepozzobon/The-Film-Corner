@@ -93,7 +93,8 @@
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Items</h3>
                   <ul class="assets list-unstyled row">
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/></li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/>
+                    <a href="" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a></li>
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/></li>
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/></li>
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80"/></li>
@@ -142,15 +143,6 @@
         // });
         var json_data = '';
 
-        $('#btn_edit').click(function(){
-          // var canvas_ = new fabric.Canvas('canvas');
-          console.log('Click Edit');
-
-
-
-
-        });
-
         responsiveCanvas();
         $(window).resize( responsiveCanvas );
 
@@ -162,7 +154,7 @@
               $('.canvas-container').width(sizeWidth);
             });
 
-            //JSON DATA
+            //SAVE JSON DATA
             json_data = JSON.stringify(canvas.toDatalessJSON());
             console.log(json_data);
 
@@ -209,7 +201,7 @@
               canvas.add(imgInstance).setActiveObject( imgInstance );
 
               // salvo in json
-              json = canvas.toJSON();
+              json_data = JSON.stringify(canvas.toDatalessJSON());
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
               $this.removeClass('selected');
@@ -217,7 +209,7 @@
               canvas.remove(image_obj);
 
               // salvo in json
-              json = canvas.toJSON();
+              json_data = JSON.stringify(canvas.toDatalessJSON());
             }
         });
     });
