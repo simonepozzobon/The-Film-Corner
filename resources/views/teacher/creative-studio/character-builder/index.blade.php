@@ -96,6 +96,8 @@
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/></li>
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/></li>
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/></li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80"/></li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80"/></li>
             			</ul>
                 </div>
               </div>
@@ -135,9 +137,9 @@
         if( !image_obj ) {
           var $image = $(this).find('img');
           // var width = $image.width() / $image.height() * canvas.height / 3;
-          var width = $image.width();
+          var width = $image.prop("naturalWidth");
           // var height = $image.height() / $image.width() * width;
-          var height = $image.height();
+          var height = $image.prop("naturalHeight");
           var imgInstance = new fabric.Image($image[0], {
             width  : width,
             height : height,
@@ -154,7 +156,6 @@
         }
       });
     });
-
 
 
   </script>
