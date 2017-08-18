@@ -163,19 +163,19 @@
                 canvas.renderAll();
                 console.log(' this is a callback. invoked when canvas is loaded!xxx ');
                 canvas.forEachObject(function(obj){
-                  console.log(obj.name);
-                  if(obj.name === 'recta'){
-                    obj.set({
-                              left: 100,
-                              top:200,
-                              height: 700,
-                              width: 700,
-                              scaleX: .35,
-                              scaleY:.35,
-                      lockScalingY: .35
-                          });
-                    canvas.add(obj);
-                  }
+                    console.log(obj.name);
+                    if(obj.name === 'recta'){
+                        obj.set({
+                            left: 100,
+                            top:200,
+                            height: 700,
+                            width: 700,
+                            scaleX: .35,
+                            scaleY:.35,
+                            lockScalingY: .35
+                        });
+                        canvas.add(obj);
+                    }
                 });
             });
         }
