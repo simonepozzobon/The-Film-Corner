@@ -95,6 +95,10 @@ class CreativeStudioController extends Controller
       case 'character-builder':
         return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category'));
         break;
+
+      case 'storytelling':
+        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
+        break;
     }
 
   }
@@ -138,6 +142,10 @@ class CreativeStudioController extends Controller
 
       case 'character-builder':
         $session->json_data = htmlspecialchars_decode($session->json_data);
+        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
+        break;
+
+      case 'storytelling':
         return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 

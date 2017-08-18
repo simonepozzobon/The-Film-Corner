@@ -14,6 +14,7 @@ _______
 - Creata view per l'app character-builder
 - Canvas Responsive
 - Aggiunta possibilità di salvare app character-builder
+- Aggiunta view per riaprire una sessione
 
 
 17 Agosto

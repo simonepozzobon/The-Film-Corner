@@ -214,11 +214,25 @@ class SessionController extends Controller
         // $session->content = json_encode($data);
         break;
 
+
       // Creative Studio - Warm Up - App 16 - Character Builder
       case 16:
         $data = [
           'json_data' => $request['canvas'],
           'notes' => $request['notes']
+        ];
+        $session->content = json_encode($data);
+        break;
+
+
+      // Creative Studio - Warm Up - App 17 - Storytelling
+      case 17:
+        $data = [
+          'notes' => $request['notes'],
+          'slot-1' => $request['slot-1'],
+          'slot-2' => $request['slot-2'],
+          'slot-3' => $request['slot-3'],
+          'slot-4' => $request['slot-4'],
         ];
         $session->content = json_encode($data);
         break;

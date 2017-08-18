@@ -217,11 +217,6 @@
         // Creative Studio - Warm Up - App 16 - Character Builder
         case 16:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
-          // $.removeCookie('tfc-canvas');
-          console.log('-------');
-          console.log('JSON DATA');
-          console.log(json_data);
-          console.log('-------');
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -230,6 +225,26 @@
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
             'canvas'  : json_data
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
+
+        // Creative Studio - Warm Up - App 17 - Storytelling
+        case 17:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val(),
+            'slot-1'  : $('#slot-1-in').val(),
+            'slot-2'  : $('#slot-2-in').val(),
+            'slot-3'  : $('#slot-3-in').val(),
+            'slot-4'  : $('#slot-4-in').val(),
           };
 
           console.log('--------');
