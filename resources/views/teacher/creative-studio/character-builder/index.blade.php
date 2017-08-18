@@ -161,9 +161,7 @@
             //LOAD JSON DATA
             canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
                 canvas.renderAll();
-                console.log(' this is a callback. invoked when canvas is loaded!xxx ');
                 canvas.forEachObject(function(obj){
-                    console.log(obj.name);
                     if(obj.name === 'recta'){
                         obj.set({
                             left: 100,
