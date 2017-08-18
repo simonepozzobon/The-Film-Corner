@@ -85,25 +85,25 @@
                   <div class="row pb-5">
                     <div class="col-md-3">
                       <div id="slot-1" class="container-fluid p-4 slot">
-                        <input id="slot-1-in" type="text" name="slot-1" value="{{ $session->slot_1 }}">
+                        <input id="slot-1-in" type="hidden" name="slot-1" value="{{ $session->slot_1 }}">
                         <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_{{ $session->slot_1 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-2" class="container-fluid p-4 slot">
-                        <input id="slot-2-in" type="text" name="slot-2" value="{{ $session->slot_2 }}">
+                        <input id="slot-2-in" type="hidden" name="slot-2" value="{{ $session->slot_2 }}">
                         <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_{{ $session->slot_2 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-3" class="container-fluid p-4 slot">
-                        <input id="slot-3-in" type="text" name="slot-3" value="{{ $session->slot_3 }}">
+                        <input id="slot-3-in" type="hidden" name="slot-3" value="{{ $session->slot_3 }}">
                         <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_{{ $session->slot_3 }}.png">
                       </div>
                     </div>
                     <div class="col-md-3">
                       <div id="slot-4" class="container-fluid p-4 slot">
-                        <input id="slot-4-in" type="text" name="slot-4" value="{{ $session->slot_4 }}">
+                        <input id="slot-4-in" type="hidden" name="slot-4" value="{{ $session->slot_4 }}">
                         <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_{{ $session->slot_4 }}.png">
                       </div>
                     </div>
