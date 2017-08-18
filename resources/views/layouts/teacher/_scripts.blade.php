@@ -217,7 +217,7 @@
         // Creative Studio - Warm Up - App 16 - Character Builder
         case 16:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
-          $.removeCookie('tfc-canvas');
+          // $.removeCookie('tfc-canvas');
           console.log('-------');
           console.log('JSON DATA');
           console.log(json_data);

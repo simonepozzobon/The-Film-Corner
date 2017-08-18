@@ -136,6 +136,11 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
+      case 'character-builder':
+        $session->json_data = htmlspecialchars_decode($session->json_data);
+        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
+        break;
+
     }
 
   }
