@@ -132,15 +132,6 @@
         var canvas = this.__canvas = new fabric.Canvas('image-editor');
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
-        // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
-        //   img.width      = 300;
-        //   img.height     = 111;
-        //   img.left       = canvas.width - 300 - 5;
-        //   img.top        = canvas.height - 111 - 5;
-        //   img.selectable = false;
-        //   img.transparentCorners = false;
-        //   canvas.add(img);
-        // });
         var json_data = '';
 
         responsiveCanvas();
