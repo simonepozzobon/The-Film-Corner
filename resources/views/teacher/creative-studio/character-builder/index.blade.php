@@ -188,7 +188,7 @@
             var $this = $(this);
             var image_obj = $this.data('image-image-obj');
             var parent = $this.closest('li');
-            console.log(parent);
+
             if( !image_obj ) {
               var $image = $(this).find('img');
               // var width = $image.width() / $image.height() * canvas.height / 3;
