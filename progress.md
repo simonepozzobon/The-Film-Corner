@@ -7,6 +7,15 @@
 - Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
 
 
+18 Agosto
+_______
+
+- Aggiunta Fabric.js per editing immagini
+- Creata view per l'app character-builder
+- Canvas Responsive
+- Aggiunta possibilità di salvare app character-builder
+
+
 17 Agosto
 _______
 
@@ -17,6 +26,7 @@ _______
 - Aggiunto sistema upload per i video in active-offscreen
 - Corretto model Video e create le relazioni morphedByMany con appsSessions, TeacherSession, Teacher
 - Corretto sistema per le sessioni adattandolo ai video
+
 
 16 Agosto
 _______

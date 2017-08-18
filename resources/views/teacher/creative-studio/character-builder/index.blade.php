@@ -162,7 +162,6 @@
 
             //SAVE JSON DATA
             json_data = JSON.stringify(canvas.toDatalessJSON());
-            console.log(json_data);
 
             //LOAD JSON DATA
             canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
@@ -207,7 +206,7 @@
               canvas.add(imgInstance).setActiveObject( imgInstance );
 
               // salvo in json
-              json_data = JSON.stringify(canvas.toDatalessJSON());
+              saveCanvas(canvas);
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
               parent.children('a').addClass('d-none');
@@ -215,10 +214,16 @@
               canvas.remove(image_obj);
 
               // salvo in json
-              json_data = JSON.stringify(canvas.toDatalessJSON());
+              saveCanvas(canvas);
             }
         });
     });
 
+    function saveCanvas(canvas)
+    {
+      json_data = JSON.stringify(canvas.toDatalessJSON());
+      $.cookie('tfc-canvas', JSON.stringify(json_data));
+      return json_data;
+    }
   </script>
 @endsection
