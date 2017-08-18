@@ -140,6 +140,16 @@
         //   img.transparentCorners = false;
         //   canvas.add(img);
         // });
+        var json_data = '';
+
+        $('#btn_edit').click(function(){
+          // var canvas_ = new fabric.Canvas('canvas');
+          console.log('Click Edit');
+
+
+
+
+        });
 
         responsiveCanvas();
         $(window).resize( responsiveCanvas );
@@ -150,6 +160,31 @@
               var sizeWidth = $('#container-canvas').width();
               $(this).attr('width', sizeWidth).width(sizeWidth);
               $('.canvas-container').width(sizeWidth);
+            });
+
+            //JSON DATA
+            json_data = JSON.stringify(canvas.toDatalessJSON());
+            console.log(json_data);
+
+            //LOAD JSON DATA
+            canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
+                canvas.renderAll();
+                console.log(' this is a callback. invoked when canvas is loaded!xxx ');
+                canvas.forEachObject(function(obj){
+                  console.log(obj.name);
+                  if(obj.name === 'recta'){
+                    obj.set({
+                              left: 100,
+                              top:200,
+                              height: 700,
+                              width: 700,
+                              scaleX: .35,
+                              scaleY:.35,
+                      lockScalingY: .35
+                          });
+                    canvas.add(obj);
+                  }
+                });
             });
         }
 
@@ -172,11 +207,17 @@
               $this.addClass('selected');
               $this.data('image-image-obj', imgInstance);
               canvas.add(imgInstance).setActiveObject( imgInstance );
+
+              // salvo in json
+              json = canvas.toJSON();
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
               $this.removeClass('selected');
               $this.data('image-image-obj', false);
               canvas.remove(image_obj);
+
+              // salvo in json
+              json = canvas.toJSON();
             }
         });
     });
