@@ -229,10 +229,10 @@ class SessionController extends Controller
       case 17:
         $data = [
           'notes' => $request['notes'],
-          'slot-1' => $request['slot-1'],
-          'slot-2' => $request['slot-2'],
-          'slot-3' => $request['slot-3'],
-          'slot-4' => $request['slot-4'],
+          'slot_1' => $request['slot-1'],
+          'slot_2' => $request['slot-2'],
+          'slot_3' => $request['slot-3'],
+          'slot_4' => $request['slot-4'],
         ];
         $session->content = json_encode($data);
         break;
