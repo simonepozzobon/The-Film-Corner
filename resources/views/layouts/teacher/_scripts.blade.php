@@ -213,6 +213,30 @@
           console.log('--------');
 
           break;
+
+        // Creative Studio - Warm Up - App 16 - Character Builder
+        case 16:
+          var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          $.removeCookie('tfc-canvas');
+          console.log('-------');
+          console.log('JSON DATA');
+          console.log(json_data);
+          console.log('-------');
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val(),
+            'canvas'  : json_data
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
       }
 
       $.ajax({
