@@ -4,6 +4,10 @@
       canvas {
         border: 2px dashed #252525;
       }
+
+      .abs-btn {
+        position: absolute;
+      }
   </style>
 @endsection
 @section('content')
@@ -94,11 +98,20 @@
                   <h3 class="text-center pb-4">Items</h3>
                   <ul class="assets list-unstyled row">
             				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/>
-                    <a href="" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i></a></li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/></li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/></li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80"/></li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80"/></li>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
             			</ul>
                 </div>
               </div>
@@ -174,6 +187,8 @@
             e.preventDefault();
             var $this = $(this);
             var image_obj = $this.data('image-image-obj');
+            var parent = $this.closest('li');
+            console.log(parent);
             if( !image_obj ) {
               var $image = $(this).find('img');
               // var width = $image.width() / $image.height() * canvas.height / 3;
@@ -185,7 +200,7 @@
                 height : height,
                 transparentCorners : false,
               });
-              $this.addClass('selected');
+              parent.children('a').removeClass('d-none')
               $this.data('image-image-obj', imgInstance);
               canvas.add(imgInstance).setActiveObject( imgInstance );
 
@@ -193,7 +208,7 @@
               json_data = JSON.stringify(canvas.toDatalessJSON());
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
-              $this.removeClass('selected');
+              parent.children('a').addClass('d-none');
               $this.data('image-image-obj', false);
               canvas.remove(image_obj);
 
