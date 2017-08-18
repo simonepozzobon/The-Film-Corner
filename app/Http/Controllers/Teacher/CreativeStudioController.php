@@ -75,62 +75,25 @@ class CreativeStudioController extends Controller
     $app->colors = $colors[rand(0, 3)];
 
     switch ($app_slug) {
+      /*
+       *
+       * PATH WARM UP
+       *
+      **/
 
       case 'active-offscreen':
         return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category'));
         break;
 
-      case 'juxtaposition':
-        return view('teacher.creative-studio.juxtaposition.index', compact('app', 'app_category'));
-        break;
-
-      case 'frame-counter':
-        return view('teacher.creative-studio.frame-counter.index', compact('app', 'app_category'));
-        break;
 
       /*
        *
-       * PATH EDITING
+       * PATH STORY TELLING
        *
       **/
 
-      case 'intercut-cross-cutting':
-        $elements = VideoLibrary::all();
-        return view('teacher.creative-studio.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
-        break;
-
-      case 'offscreen':
-        return view('teacher.creative-studio.offscreen.index', compact('app', 'app_category'));
-        break;
-
-      case 'attractions':
-        return view('teacher.creative-studio.attractions.index', compact('app', 'app_category'));
-        break;
-
-      case 'attractions-viceversa':
-        $emotions = [
-          0 => 'Fear',
-          1 => 'Anger',
-          2 => 'Joy',
-          3 => 'Disgust',
-          4 => 'Surprise',
-          5 => 'Trust',
-        ];
-
-        $emotion = $emotions[rand(0, 5)];
-
-        return view('teacher.creative-studio.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
-        break;
-
-
-      /*
-       *
-       * PATH CHARACTERS
-       *
-      **/
-
-      case 'character-analysis':
-        return view('teacher.creative-studio.character-analysis.index', compact('app', 'app_category'));
+      case 'character-builder':
+        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category'));
         break;
     }
 
