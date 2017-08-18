@@ -7,6 +7,8 @@
 
       .abs-btn {
         position: absolute;
+        top: -5%;
+        right: 5%;
       }
   </style>
 @endsection
@@ -97,19 +99,19 @@
                 <div class="frame container-fluid bg-faded p-4">
                   <h3 class="text-center pb-4">Items</h3>
                   <ul class="assets list-unstyled row">
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80"/>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
                       <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80"/>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
                       <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80"/>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
                       <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80"/>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
                       <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </li>
-            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80"/>
+            				<li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
                       <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
                     </li>
             			</ul>
