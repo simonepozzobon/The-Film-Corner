@@ -125,57 +125,60 @@
     var session = AppSession.initSession({{ $app->id }});
 
 
-    responsiveCanvas();
-    $(window).resize( responsiveCanvas );
 
-    function responsiveCanvas()
-    {
-        $('.image-editor').each(function() {
-          var sizeWidth = $('#container-canvas').width();
-          $(this).attr('width', sizeWidth).width(sizeWidth);
-          $('.canvas-container').width(sizeWidth);
-        });
-    }
 
     $(document).ready(function($) {
-      var canvas = this.__canvas = new fabric.Canvas('image-editor');
-      // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
+        var canvas = this.__canvas = new fabric.Canvas('image-editor');
+        // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
-      // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
-      //   img.width      = 300;
-      //   img.height     = 111;
-      //   img.left       = canvas.width - 300 - 5;
-      //   img.top        = canvas.height - 111 - 5;
-      //   img.selectable = false;
-      //   img.transparentCorners = false;
-      //   canvas.add(img);
-      // });
+        // fabric.Image.fromURL('https://i.imgur.com/kSL2Njv.png', function(img) {
+        //   img.width      = 300;
+        //   img.height     = 111;
+        //   img.left       = canvas.width - 300 - 5;
+        //   img.top        = canvas.height - 111 - 5;
+        //   img.selectable = false;
+        //   img.transparentCorners = false;
+        //   canvas.add(img);
+        // });
 
-      $('.assets li').click(function(e) {
-        e.preventDefault();
-        var $this = $(this);
-        var image_obj = $this.data('image-image-obj');
-        if( !image_obj ) {
-          var $image = $(this).find('img');
-          // var width = $image.width() / $image.height() * canvas.height / 3;
-          var width = $image.prop('naturalWidth');
-          // var height = $image.height() / $image.width() * width;
-          var height = $image.prop('naturalHeight');
-          var imgInstance = new fabric.Image($image[0], {
-            width  : width,
-            height : height,
-            transparentCorners : false,
-          });
-          $this.addClass('selected');
-          $this.data('image-image-obj', imgInstance);
-          canvas.add(imgInstance).setActiveObject( imgInstance );
-        } else {
-          // rimuove gli oggetti dal canvas e la classe "selected"
-          $this.removeClass('selected');
-          $this.data('image-image-obj', false);
-          canvas.remove(image_obj);
+        responsiveCanvas();
+        $(window).resize( responsiveCanvas );
+
+        function responsiveCanvas()
+        {
+            $('.image-editor').each(function() {
+              var sizeWidth = $('#container-canvas').width();
+              $(this).attr('width', sizeWidth).width(sizeWidth);
+              $('.canvas-container').width(sizeWidth);
+            });
         }
-      });
+
+
+        $('.assets li').click(function(e) {
+            e.preventDefault();
+            var $this = $(this);
+            var image_obj = $this.data('image-image-obj');
+            if( !image_obj ) {
+              var $image = $(this).find('img');
+              // var width = $image.width() / $image.height() * canvas.height / 3;
+              var width = $image.prop('naturalWidth');
+              // var height = $image.height() / $image.width() * width;
+              var height = $image.prop('naturalHeight');
+              var imgInstance = new fabric.Image($image[0], {
+                width  : width,
+                height : height,
+                transparentCorners : false,
+              });
+              $this.addClass('selected');
+              $this.data('image-image-obj', imgInstance);
+              canvas.add(imgInstance).setActiveObject( imgInstance );
+            } else {
+              // rimuove gli oggetti dal canvas e la classe "selected"
+              $this.removeClass('selected');
+              $this.data('image-image-obj', false);
+              canvas.remove(image_obj);
+            }
+        });
     });
 
   </script>
