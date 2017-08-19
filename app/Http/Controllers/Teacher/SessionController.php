@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\App;
 use Validator;
 use App\Video;
+use App\Media;
 use App\Utility;
 use App\AppSection;
 use App\AppCategory;
@@ -59,12 +60,26 @@ class SessionController extends Controller
           Storage::delete('public/'.$video->img);
 
           // Cancello il link del video con l'insegnante
-          $teacher->videos()->detach();
+          $teacher->videos()->detach($video);
 
           // Cancello il link del video con la sessione
-          $session->videos()->detach();
+          $session->videos()->detach($video);
+        }
 
+        foreach ($session->medias()->get() as $key => $mediaObj) {
+          // Cancello l'immagine
+          $media = Media::findOrFail($mediaObj->id);
+          $media->delete();
+          Storage::delete($mediaObj->src);
+          Storage::delete($mediaObj->thumb);
+          Storage::delete($mediaObj->landscape);
+          Storage::delete($mediaObj->portrait);
 
+          // Cancello il link dell'immagine con l'insegnante
+          $teacher->medias()->detach($media);
+
+          // Cancello il link dell'immagine con la sessione
+          $session->medias()->detach($media);
         }
 
         $session->delete();
