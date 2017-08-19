@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -100,5 +101,47 @@ class Utility extends Model
     ];
 
     return $data;
+  }
+
+
+  public function storeImg($file, $filename, $destFolder)
+  {
+      // Salvo il file
+      $ext = $file->getClientOriginalExtension();
+      // return $filename.'.'.$ext;
+
+      $src = $file->storeAs('public/'.$destFolder, $filename);
+
+      // preparo gli altri formati
+      $thumb = $file->storeAs('public/'.$destFolder.'/thumb', $filename);
+      $portrait = $file->storeAs('public/'.$destFolder.'/portrait', $filename);
+      $landscape = $file->storeAs('public/'.$destFolder.'/landscape', $filename);
+
+      // genero gli altri formati
+      $path = storage_path('app/public/'.$destFolder);
+
+      // Thumb
+      Image::make($path.'/thumb/'.$filename.'.'.$ext)->fit(500, 500, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      // portrait
+      Image::make($path.'/portrait/'.$filename.'.'.$ext)->fit(720, 960, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      // landscape 960 540
+      Image::make($path.'/landscape/'.$filename.'.'.$ext)->fit(960, 540, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      $data = [
+        'src' => $src,
+        'thumb' => $thumb,
+        'portrait' => $portrait,
+        'landscape' => $landscape,
+      ];
+
+      return $data;
   }
 }

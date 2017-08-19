@@ -233,6 +233,7 @@ Route::prefix('teacher')->group(function() {
   Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Teacher\CreativeStudioController@openSession')->name('teacher.creative-studio.open.session');
   Route::get('/creative-studio/{category}/{app_slug}', 'Teacher\CreativeStudioController@app')->name('teacher.creative-studio.app');
   Route::post('/creative-studio/{category}/{app_slug}/upload', 'Teacher\CreativeStudioController@uploadVideo')->name('teacher.creative-studio.upload');
+  Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Teacher\CreativeStudioController@uploadImg')->name('teacher.creative-studio.upload.img');
 
 
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');

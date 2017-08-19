@@ -248,6 +248,9 @@ return [
         // HTML Purifier
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
 
+        // Image Intervention
+        'Image' => Intervention\Image\Facades\Image::class,
+
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
         'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
