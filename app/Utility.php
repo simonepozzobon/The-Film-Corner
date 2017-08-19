@@ -110,12 +110,12 @@ class Utility extends Model
       $ext = $file->getClientOriginalExtension();
       // return $filename.'.'.$ext;
 
-      $src = $file->storeAs('public/'.$destFolder, $filename);
+      $src = $file->storeAs('public/'.$destFolder, $filename.'.'.$ext);
 
       // preparo gli altri formati
-      $thumb = $file->storeAs('public/'.$destFolder.'/thumb', $filename);
-      $portrait = $file->storeAs('public/'.$destFolder.'/portrait', $filename);
-      $landscape = $file->storeAs('public/'.$destFolder.'/landscape', $filename);
+      $thumb = $file->storeAs('public/'.$destFolder.'/thumb', $filename.'.'.$ext);
+      $portrait = $file->storeAs('public/'.$destFolder.'/portrait', $filename.'.'.$ext);
+      $landscape = $file->storeAs('public/'.$destFolder.'/landscape', $filename.'.'.$ext);
 
       // genero gli altri formati
       $path = storage_path('app/public/'.$destFolder);
