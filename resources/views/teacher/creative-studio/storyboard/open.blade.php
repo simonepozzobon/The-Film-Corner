@@ -196,7 +196,7 @@
           data +=   '</div>';
           data += '</div>';
 
-          $('#storyboard').prepend(data);
+          $('#storyboard').append(data);
 
       });
 
@@ -225,7 +225,7 @@
             data +=  '<img src="'+response.img+'" class="img-fluid w-100">';
             data += '</li>';
 
-            $('#assets').append(data);
+            $('#assets').prepend(data);
           },
           error: function (errors) {
             console.log(errors);
