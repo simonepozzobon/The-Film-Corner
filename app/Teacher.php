@@ -40,4 +40,8 @@ class Teacher extends Authenticatable
     public function videos() {
       return $this->morphToMany('App\Video', 'videoable');
     }
+
+    public function medias() {
+      return $this->morphToMany('App\Media', 'mediaable');
+    }
 }

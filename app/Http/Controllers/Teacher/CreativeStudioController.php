@@ -99,6 +99,10 @@ class CreativeStudioController extends Controller
       case 'storytelling':
         return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
         break;
+
+      case 'storyboard':
+        return view('teacher.creative-studio.storyboard.index', compact('app', 'app_category'));
+        break;
     }
 
   }
@@ -188,15 +192,10 @@ class CreativeStudioController extends Controller
 
       // creo il link tra video e sessione
       $app_session->videos()->save($video);
-      // $data = [
-      //   'request' => $request->input('session'),
-      //   'session' => $app_session
-      // ];
       $teacher->videos()->save($video);
 
 
       $data = [
-        'message' => 'success',
         'video_id' => $video->id,
         'img' => Storage::disk('local')->url($videoStore['img']),
         'src' => $videoStore['src']

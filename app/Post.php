@@ -11,10 +11,10 @@ class Post extends Model
       return $this->belongsTo('App\Admin', 'user_id');
     }
 
-    public function featuredImage()
-    {
-      return $this->belongsTo('App\Media', 'media_id');
-    }
+    // public function featuredImage()
+    // {
+    //   return $this->belongsTo('App\Media', 'media_id');
+    // }
 
     public function category()
     {
