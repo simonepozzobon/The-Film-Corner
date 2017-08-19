@@ -155,7 +155,7 @@
         function responsiveCanvas()
         {
             $('.image-editor').each(function() {
-              var sizeWidth = $('#container-canvas').width();
+              var sizeWidth = ($('#container-canvas').width())-30;
               $(this).attr('width', sizeWidth).width(sizeWidth);
               $('.canvas-container').width(sizeWidth);
             });
