@@ -252,6 +252,30 @@
           console.log('--------');
 
           break;
+
+        case 18:
+          var stories = [];
+          $('.story').each(function(k){
+            var story = {
+              'content': $(this).find('textarea').val(),
+              'img': $(this).find('img').attr('src'),
+              'order': k,
+            };
+            stories.push(story);
+          });
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'stories'  : stories
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
       }
 
       $.ajax({

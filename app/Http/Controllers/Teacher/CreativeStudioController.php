@@ -154,6 +154,10 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
+      case 'storyboard':
+        return view('teacher.creative-studio.storyboard.open', compact('app', 'app_category', 'app_session', 'session'));
+        break;
+
     }
 
   }

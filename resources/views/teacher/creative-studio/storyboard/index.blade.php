@@ -83,6 +83,9 @@
               <div class="col-md-4">
                 <div class="container-fluid frame p-4 bg-faded">
                   <h3 class="text-center pb-4">Frames</h3>
+                  {{-- <div class="test">
+                    <a id="test" href="#" class="btn btn-primary">Test</a>
+                  </div> --}}
                     <form id="uploadForm" method="post" enctype="multipart/form-data">
                       {{ csrf_field() }}
                       {{ method_field('POST') }}
@@ -133,10 +136,6 @@
 
 @endsection
 @section('scripts')
-  {{-- <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
-  <script src="{{ asset('plugins/D.js/D.js') }}"></script>
-  <script src="{{ asset('plugins/doT/doT.js') }}"></script>
-  <script src="{{ asset('plugins/uevent/uevent.js') }}"></script> --}}
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var AppSession = new TfcSessions();
@@ -150,9 +149,6 @@
     $(document).ready(function(){
 
       var session = $.parseJSON($.cookie('tfc-sessions'));
-      console.log('-------');
-      console.log(session[0].token);
-      console.log('-------');
 
       // Storyboard appen frame
       $('#assets').on('click', 'li', function(e){
@@ -163,7 +159,7 @@
 
           var data = '';
           data += '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
-          data +=   '<div class="container-fluid frame bg-faded p-4">';
+          data +=   '<div class="container-fluid frame story bg-faded p-4">';
           data +=     '<h6 class="frame-title text-center">Frame '+counter+'</h6>';
           data +=     '<input type="hidden" name="frame_title" value="Frame 1">';
           data +=     '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';

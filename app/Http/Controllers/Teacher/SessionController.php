@@ -237,6 +237,23 @@ class SessionController extends Controller
         $session->content = json_encode($data);
         break;
 
+
+      // Creative Studio - Warm Up - App 18 - storyboard
+      case 18:
+        if (isset($request['stories'])) {
+          $stories = collect();
+          foreach ($request['stories'] as $key => $newStory) {
+            $data = [
+              'order' => $newStory['order'],
+              'description' => $newStory['content'],
+              'img' => $newStory['img']
+            ];
+            $stories->push($data);
+          }
+          $session->content = json_encode($stories);
+        }
+        break;
+
     }
 
     $data = [
