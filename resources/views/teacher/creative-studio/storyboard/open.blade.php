@@ -77,7 +77,26 @@
             <div class="row">
               <div class="col-md-8">
                 <form class="" action="" method="">
-                  <div id="storyboard"></div>
+                  <div id="storyboard">
+                    @foreach ($session as $key => $story)
+                      <div id="frame-container-{{ $story->order }}" class="col-md-4 p-5 d-inline-block">
+                        <div class="container-fluid frame story bg-faded p-4">
+                          <h6 class="frame-title text-center">Frame {{ $story->order }}</h6>
+                          <input type="hidden" name="frame_title" value="Frame {{ $story->order }}">
+                          <img id="frame-img-{{ $story->order }}" src="{{ $story->img }}" class="img-fluid">
+                          <div class="form-group pt-3">
+                            <textarea id="frame-{{ $story->order }}" name="frame-{{ $story->order }}" class="form-control" rows="8">{{ $story->description }}</textarea>
+                            <p id="frame-content-{{ $story->order }}" class="invisible"></p>
+                          </div>
+                          <div class="btn-group btn-block">
+                            <a onclick="save({{ $story->order }})" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+                            <a onclick="edit({{ $story->order }})" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                            <a onclick="destroy({{ $story->order }})" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    @endforeach
+                  </div>
                 </form>
               </div>
               <div class="col-md-4">
@@ -95,6 +114,11 @@
                       </div>
                     </form>
                   <ul id="assets" class="assets row list-unstyled">
+                    @foreach ($app_session->medias()->get() as $key => $media)
+                      <li class="col-md-3 pb-4 asset">
+                        <img src="{{ Storage::disk('local')->url($media->src) }}" class="img-fluid w-100">
+                      </li>
+                    @endforeach
                     <li class="col-md-3 pb-4 asset">
                       <img src="{{ asset('img/helpers/apps/storyboard/story_1.png') }}" class="img-fluid w-100">
                     </li>
@@ -139,9 +163,6 @@
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var AppSession = new TfcSessions();
-    var session = AppSession.initSession({{ $app->id }});
-
-
 
     $('#storyboard').sortable();
     var counter = 0;
@@ -161,7 +182,7 @@
           data += '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
           data +=   '<div class="container-fluid frame story bg-faded p-4">';
           data +=     '<h6 class="frame-title text-center">Frame '+counter+'</h6>';
-          data +=     '<input type="hidden" name="frame_title" value="Frame 1">';
+          data +=     '<input type="hidden" name="frame_title" value="Frame '+counter+'">';
           data +=     '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
           data +=     '<div class="form-group pt-3">';
           data +=       '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
