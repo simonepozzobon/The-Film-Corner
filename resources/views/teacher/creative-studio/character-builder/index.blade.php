@@ -166,20 +166,6 @@
             //LOAD JSON DATA
             canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
                 canvas.renderAll();
-                canvas.forEachObject(function(obj){
-                    if(obj.name === 'recta'){
-                        obj.set({
-                            left: 100,
-                            top:200,
-                            height: 700,
-                            width: 700,
-                            scaleX: .35,
-                            scaleY:.35,
-                            lockScalingY: .35
-                        });
-                        canvas.add(obj);
-                    }
-                });
             });
         }
 
