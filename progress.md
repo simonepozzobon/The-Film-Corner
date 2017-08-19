@@ -6,6 +6,11 @@
 - Creare un sistema per le lingue
 - Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
 
+19 Agosto
+_______
+
+- Conclusa app Storyboard
+
 
 18 Agosto
 _______
