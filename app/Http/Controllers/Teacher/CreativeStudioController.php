@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\App;
 use Validator;
 use App\Video;
+use App\Media;
 use App\Teacher;
 use App\Utility;
 use App\AppSection;
@@ -226,16 +227,16 @@ class CreativeStudioController extends Controller
       $teacher = Auth::guard('teacher')->user();
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
+      $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
 
-      $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
-
+      // Se c'è un problema con la sessione ritorno un errore
+      if ($app_session == null || $teacher == null) {
+        return response()->json(['Session is corrupted'], 404);
+      }
 
       //Creo il nome del file
       $filename = uniqid();
       $imgStore = $utility->storeImg($file, $filename, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id);
-
-      dd($imgStore);
-      // return response()->json(['data' => $data]);
 
       $img = new Media;
       $img->src = $imgStore['src'];
@@ -247,7 +248,6 @@ class CreativeStudioController extends Controller
       // creo il link tra video e sessione
       $app_session->medias()->save($img);
       $teacher->medias()->save($img);
-
 
       $data = [
         'img_id' => $img->id,

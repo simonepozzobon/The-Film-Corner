@@ -108,7 +108,6 @@ class Utility extends Model
   {
       // Salvo il file
       $ext = $file->getClientOriginalExtension();
-      // return $filename.'.'.$ext;
 
       $src = $file->storeAs('public/'.$destFolder, $filename.'.'.$ext);
 
