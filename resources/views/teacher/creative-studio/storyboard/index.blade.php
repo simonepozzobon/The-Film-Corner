@@ -75,46 +75,49 @@
         <div class="col">
           <div class="clearfix pt-5 pb-5">
             <div class="row">
-              <div class="col d-flex justify-content-around">
-                <button id="addFrame" type="button" name="button" class="btn btn-secondary btn-lg" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-plus" aria-hidden="true"></i> Add Frame</button>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <form class="" action="" method="">
-              <div id="storyboard">
-                <div id="frame-container-1" class="col-md-4 p-5 d-inline-block">
-                  <div class="row">
-                      <div class="frame col bg-faded">
-                        <div class="container p-4">
-                          <h3 class="frame-title text-center">Frame 1</h3>
-                          <input type="hidden" name="frame-title" value="Frame 1">
-                          <img id="frame-img-1"src="" class="img-fluid">
-                          <div class="container-fluid d-flex justify-content-around">
-                            <form class="" action="" method="post" enctype="multipart/form-data">
-                              {{ csrf_field() }}
-                              {{ method_field('POST') }}
-                              <input id="frame-media-1" type="file" name="media" class="form-control mr-3">
-                              <a id="frame-upload-1" onclick="upload(1)" class="btn btn-primary text-white"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                            </form>
-
-                          </div>
-                          <div class="form-group pt-3">
-                            <textarea id="frame-1" name="frame-1" class="form-control" rows="8"></textarea>
-                            <p id="frame-content-1" class="invisible"></p>
-                          </div>
-                          <div class="btn-group btn-block">
-                            <a onclick="save(1)" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
-                            <a onclick="edit(1)" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                            <a onclick="destroy(1)" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                          </div>
+              <div class="col-md-8">
+                <form class="" action="" method="">
+                  <div id="storyboard">
+                    <div id="frame-container-1" class="col-md-4 p-5 d-inline-block">
+                      <div class="container-fluid frame bg-faded p-4">
+                        <h6 class="frame-title text-center">Frame 1</h6>
+                        <input type="hidden" name="frame-title" value="Frame 1">
+                        <img id="frame-img-1" src="{{ asset('img/helpers/null-image.png') }}" class="img-fluid">
+                        <div class="form-group pt-3">
+                          <textarea id="frame-1" name="frame-1" class="form-control" rows="8"></textarea>
+                          <p id="frame-content-1" class="invisible"></p>
+                        </div>
+                        <div class="btn-group btn-block">
+                          <a onclick="save(1)" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+                          <a onclick="edit(1)" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                          <a onclick="destroy(1)" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
                         </div>
                       </div>
+                    </div>
                   </div>
+                </form>
+              </div>
+              <div class="col-md-4">
+                <div class="container-fluid frame p-4 bg-faded">
+                  <h3 class="text-center pb-4">Frames</h3>
+                  <div class="d-flex justify-content-between">
+                    <input id="media" type="file" name="media">
+                    <a id="upload" href="#" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i></a>
+                  </div>
+                  <ul class="row">
+                    <li class="col-md-3 asset">
+                      <img src="" alt="">
+                    </li>
+                  </ul>
+                  {{-- <button id="addFrame" type="button" name="button" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Add Frame</button> --}}
                 </div>
               </div>
-            </form>
+
+
+
+            </div>
           </div>
+
         </div>
       </div>
     </div>
