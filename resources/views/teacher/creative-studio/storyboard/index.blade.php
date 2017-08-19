@@ -77,36 +77,44 @@
             <div class="row">
               <div class="col-md-8">
                 <form class="" action="" method="">
-                  <div id="storyboard">
-                    <div id="frame-container-1" class="col-md-4 p-5 d-inline-block">
-                      <div class="container-fluid frame bg-faded p-4">
-                        <h6 class="frame-title text-center">Frame 1</h6>
-                        <input type="hidden" name="frame-title" value="Frame 1">
-                        <img id="frame-img-1" src="{{ asset('img/helpers/null-image.png') }}" class="img-fluid">
-                        <div class="form-group pt-3">
-                          <textarea id="frame-1" name="frame-1" class="form-control" rows="8"></textarea>
-                          <p id="frame-content-1" class="invisible"></p>
-                        </div>
-                        <div class="btn-group btn-block">
-                          <a onclick="save(1)" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
-                          <a onclick="edit(1)" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                          <a onclick="destroy(1)" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <div id="storyboard"></div>
                 </form>
               </div>
               <div class="col-md-4">
                 <div class="container-fluid frame p-4 bg-faded">
                   <h3 class="text-center pb-4">Frames</h3>
-                  <div class="d-flex justify-content-between">
-                    <input id="media" type="file" name="media">
-                    <a id="upload" href="#" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                  </div>
-                  <ul class="row">
-                    <li class="col-md-3 asset">
-                      <img src="" alt="">
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                      {{ csrf_field() }}
+                      {{ method_field('POST') }}
+                      <div class="d-flex justify-content-between pb-4">
+                        <input id="media" type="file" name="media">
+                        <button id="upload" type="submit" name="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                      </div>
+                    </form>
+                  <ul id="assets" class="assets row list-unstyled">
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_1.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_2.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_3.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_4.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_5.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_6.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_7.png') }}" class="img-fluid w-100">
+                    </li>
+                    <li class="col-md-3 pb-4 asset">
+                      <img src="{{ asset('img/helpers/apps/storyboard/story_8.png') }}" class="img-fluid w-100">
                     </li>
                   </ul>
                   {{-- <button id="addFrame" type="button" name="button" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Add Frame</button> --}}
@@ -125,41 +133,90 @@
 
 @endsection
 @section('scripts')
-  <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
   <script src="{{ asset('plugins/D.js/D.js') }}"></script>
   <script src="{{ asset('plugins/doT/doT.js') }}"></script>
-  <script src="{{ asset('plugins/uevent/uevent.js') }}"></script>
+  <script src="{{ asset('plugins/uevent/uevent.js') }}"></script> --}}
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
+    var session = AppSession.initSession({{ $app->id }});
+
+
+
     $('#storyboard').sortable();
     var counter = 0;
-    $('#addFrame').on('click', function(e) {
-      e.preventDefault();
-      counter = counter + 1;
-      var data = '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
-      data += '<div class="row">';
-      data +=   '<div class="frame col bg-faded">';
-      data +=     '<div class="container p-4">';
-      data +=       '<h3 class="frame-title text-center">Frame '+counter+'</h3>';
-      data +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';
-      // data +=       '<img src="'+img+'" class="img-fluid">';
-      data +=       '<div class="form-group pt-3">';
-      data +=         '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
-      data +=         '<p id="frame-content-'+counter+'" class="invisible"></p>';
-      data +=       '</div>';
-      data +=       '<div class="btn-group btn-block">';
-      data +=         '<a onclick="save('+counter+')" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
-      data +=         '<a onclick="edit('+counter+')" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-      data +=         '<a onclick="destroy('+counter+')" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
-      data +=       '</div>';
-      data +=     '</div>';
-      data +=   '</div>';
-      data += '</div>';
-      data += '</div>';
-      $('#storyboard').append(data);
+
+    $(document).ready(function(){
+
+      var session = $.parseJSON($.cookie('tfc-sessions'));
+      console.log('-------');
+      console.log(session[0].token);
+      console.log('-------');
+
+      // Storyboard appen frame
+      $('#assets').on('click', 'li', function(e){
+          e.preventDefault();
+          counter++;
+
+          var src = $(this).children('img').attr('src');
+
+          var data = '';
+          data += '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
+          data +=   '<div class="container-fluid frame bg-faded p-4">';
+          data +=     '<h6 class="frame-title text-center">Frame '+counter+'</h6>';
+          data +=     '<input type="hidden" name="frame_title" value="Frame 1">';
+          data +=     '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
+          data +=     '<div class="form-group pt-3">';
+          data +=       '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
+          data +=       '<p id="frame-content-'+counter+'" class="invisible"></p>';
+          data +=     '</div>';
+          data +=     '<div class="btn-group btn-block">';
+          data +=       '<a onclick="save('+counter+')" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
+          data +=       '<a onclick="edit('+counter+')" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+          data +=       '<a onclick="destroy('+counter+')" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+          data +=     '</div>';
+          data +=   '</div>';
+          data += '</div>';
+
+          $('#storyboard').append(data);
+
+      });
+
+      $('form#uploadForm').submit(function(e) {
+        e.preventDefault();
+
+        var formData = new FormData();
+        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+        formData.append('media', $('#media')[0].files[0]);
+        formData.append('session_token', session[0].token);
+
+        $.ajax({
+          type: 'post',
+          url:  '{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}',
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: function (response) {
+            console.log(response);
+
+            var data = '';
+            data += '<li class="col-md-3 pb-4 asset">';
+            data +=  '<img src="'+response.img+'" class="img-fluid w-100">';
+            data += '</li>';
+
+            $('#assets').append(data);
+          },
+          error: function (errors) {
+            console.log(errors);
+          }
+        });
+      });
     });
+
     function save(id) {
       var elem = $('#frame-'+id);
       var container = $('#frame-content-'+id);
@@ -168,6 +225,7 @@
       elem.hide();
       container.removeClass('invisible');
     }
+
     function edit(id) {
       var elem = $('#frame-'+id);
       var container = $('#frame-content-'+id);
@@ -177,30 +235,6 @@
     function destroy(id) {
       $('#frame-container-'+id).remove();
     }
-    function upload(id) {
-      var formData = new FormData();
-      formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-      formData.append('media', $('#frame-media'+id)[0].files[0]);
-      formData.append('session', session[0].token);
-
-      $.ajax({
-        type: 'post',
-        url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          console.log(response);
-        },
-        error: function (errors) {
-          console.log(errors);
-        }
-      });
-    }
-
 
   </script>
 @endsection
