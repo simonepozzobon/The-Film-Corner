@@ -104,6 +104,22 @@ class CreativeStudioController extends Controller
       case 'storyboard':
         return view('teacher.creative-studio.storyboard.index', compact('app', 'app_category'));
         break;
+
+
+      /*
+       *
+       * PATH MY CORNER CONTEST
+       *
+      **/
+
+      case 'lumiere-minute':
+        return view('teacher.creative-studio.lumiere-minute.index', compact('app', 'app_category'));
+        break;
+
+      case 'make-your-own-film':
+        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
+        break;
+
     }
 
   }
@@ -166,6 +182,12 @@ class CreativeStudioController extends Controller
   {
     // manca aggiungere la sessione al form
     // manca fare una verifica della dimensione del file
+    if ($request->file('media') == null) {
+      $data = [
+        'msg' => 'Error, No file selected'
+      ];
+      return response()->json($data);
+    }
 
     $utility = new Utility;
     $file = $request->file('media');
