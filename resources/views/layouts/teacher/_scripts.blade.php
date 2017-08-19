@@ -233,7 +233,6 @@
 
           break;
 
-
         // Creative Studio - Warm Up - App 17 - Storytelling
         case 17:
           var data = {
@@ -254,8 +253,7 @@
 
           break;
 
-
-        // Creative Studio - Warm Up - App 17 - Storytelling
+        // Creative Studio - Warm Up - App 18 - Storyboard
         case 18:
           var stories = [];
           $('.story').each(function(k){
