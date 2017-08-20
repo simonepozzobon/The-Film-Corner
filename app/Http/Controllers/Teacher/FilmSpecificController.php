@@ -66,6 +66,10 @@ class FilmSpecificController extends Controller
 
     switch ($app_slug) {
 
+      case 'frame-composer':
+        return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category'));
+        break;
+
       case 'frame-crop':
         return view('teacher.film-specific.frame-crop.index', compact('app', 'app_category'));
         break;
@@ -74,9 +78,9 @@ class FilmSpecificController extends Controller
         return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category'));
         break;
 
-      case 'frame-counter':
-        return view('teacher.film-specific.frame-counter.index', compact('app', 'app_category'));
-        break;
+      // case 'frame-counter':
+      //   return view('teacher.film-specific.frame-counter.index', compact('app', 'app_category'));
+      //   break;
 
       /*
        *
@@ -152,6 +156,10 @@ class FilmSpecificController extends Controller
 
     switch ($app_slug) {
 
+      case 'frame-composer':
+        return view('teacher.film-specific.frame-composer.open', compact('app', 'app_category', 'session'));
+        break;
+
       case 'frame-crop':
         return view('teacher.film-specific.frame-crop.open', compact('app', 'app_category', 'session'));
         break;
@@ -160,9 +168,9 @@ class FilmSpecificController extends Controller
         return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session'));
         break;
 
-      case 'frame-counter':
-        return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
-        break;
+      // case 'frame-counter':
+      //   return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
+      //   break;
 
       /*
        *
