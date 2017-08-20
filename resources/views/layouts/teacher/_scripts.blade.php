@@ -294,6 +294,22 @@
           console.log(data);
           console.log('--------');
           break;
+
+        // Creative Studio - My Corner Contest - App 20 - Make Your Own Film
+        case 20:
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+          };
+
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
       }
 
       $.ajax({

@@ -117,7 +117,7 @@ class CreativeStudioController extends Controller
         break;
 
       case 'make-your-own-film':
-        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
+        return view('teacher.creative-studio.make-your-own-film.index', compact('app', 'app_category'));
         break;
 
     }
@@ -183,6 +183,10 @@ class CreativeStudioController extends Controller
 
       case 'lumiere-minute':
         return view('teacher.creative-studio.lumiere-minute.open', compact('app', 'app_category', 'app_session', 'session'));
+        break;
+
+      case 'make-your-own-film':
+        return view('teacher.creative-studio.make-your-own-film.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
     }
