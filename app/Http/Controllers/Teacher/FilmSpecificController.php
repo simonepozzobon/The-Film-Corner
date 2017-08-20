@@ -221,6 +221,17 @@ class FilmSpecificController extends Controller
 
       /*
        *
+       * PATH SOUND
+       *
+      **/
+
+      case 'whats-going-on':
+        return view('teacher.film-specific.whats-going-on.open', compact('app', 'app_category', 'session'));
+        break;
+
+
+      /*
+       *
        * PATH CHARACTERS
        *
       **/
