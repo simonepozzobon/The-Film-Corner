@@ -63,8 +63,28 @@
       }
 
       switch (id) {
-        // Film Specific - Framing - App 1 - Frame Crop
+
+        // Film Specific - Framing - App 2 - Frame Composer
         case 1:
+          var json_data = $.parseJSON($.cookie('tfc-canvas'));
+
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val(),
+            'canvas'  : json_data
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
+
+        // Film Specific - Framing - App 2 - Frame Crop
+        case 2:
           var frames = [];
           $('.frames').each(function(k){
             var frame = {
@@ -88,8 +108,8 @@
           console.log('--------');
           break;
 
-        // Film Specific - Framing - App 2 - Juxtaposition
-        case 2:
+        // Film Specific - Framing - App 3 - Juxtaposition
+        case 3:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
@@ -104,19 +124,19 @@
           break;
 
         // Film Specific - Framing - App 3 - Frame Counter
-        case 3:
-          var data = {
-            '_token'  : $('input[name=_token]').val(),
-            'app_id'  : id,
-            'token'   : token,
-            'title'   : $('input[name="title"]').val(),
-            'markers' : markers
-          };
-
-          console.log('--------');
-          console.log(data);
-          console.log('--------');
-          break;
+        // case 3:
+        //   var data = {
+        //     '_token'  : $('input[name=_token]').val(),
+        //     'app_id'  : id,
+        //     'token'   : token,
+        //     'title'   : $('input[name="title"]').val(),
+        //     'markers' : markers
+        //   };
+        //
+        //   console.log('--------');
+        //   console.log(data);
+        //   console.log('--------');
+        //   break;
 
         // Film Specific - Editing - App 5 - Offscreen
         case 5:

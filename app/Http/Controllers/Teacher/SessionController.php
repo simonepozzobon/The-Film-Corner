@@ -123,8 +123,18 @@ class SessionController extends Controller
 
     switch ($request['app_id']) {
 
-      // Film Specific - Framing - App 1 - Frame Crop
+      // Film Specific - Framing - App 1 - Frame Composer
       case 1:
+        $data = [
+          'json_data' => $request['canvas'],
+          'notes' => $request['notes']
+        ];
+        $session->content = json_encode($data);
+        break;
+
+
+      // Film Specific - Framing - App 2 - Frame Crop
+      case 2:
         if (isset($request['frames'])) {
           $frames = collect();
           foreach ($request['frames'] as $key => $newFrame) {
@@ -153,20 +163,20 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Framing - App 2 - Juxtaposition
-      case 2:
+      // Film Specific - Framing - App 3 - Juxtaposition
+      case 3:
         if (isset($request['notes'])) {
           $session->content = json_encode($request['notes']);
         }
         break;
 
 
-      // Film Specific - Framing - App 3 - Frame Counter
-      case 3:
-        if (isset($request['markers'])) {
-          $session->content = json_encode($request['markers']);
-        }
-        break;
+      // // Film Specific - Framing - App 3 - Frame Counter
+      // case 3:
+      //   if (isset($request['markers'])) {
+      //     $session->content = json_encode($request['markers']);
+      //   }
+      //   break;
 
 
       // Film Specific - Editing - App 4 - Intercut Cross Cutting
