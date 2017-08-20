@@ -16,6 +16,11 @@ use App\AppsSessions\AppsSession;
 
 class FilmSpecificController extends Controller
 {
+  public function __construct()
+  {
+      $this->middleware('auth:teacher', ['except' => 'logout']);
+  }
+
   public function index($category)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
