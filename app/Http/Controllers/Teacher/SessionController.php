@@ -238,6 +238,18 @@ class SessionController extends Controller
         break;
 
 
+      // Film Specific - Sound - App 10 - Stop and Go
+      case 10:
+        $data = [
+          'notes' => $request['notes'],
+          'video' => $request['video']
+        ];
+
+        $session->content = json_encode($data);
+
+        break;
+
+
       /*
        *
        * CREATIVE STUDIO - PADIGLIONE 2
