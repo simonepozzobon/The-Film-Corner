@@ -123,21 +123,6 @@
           console.log('--------');
           break;
 
-        // Film Specific - Framing - App 3 - Frame Counter
-        // case 3:
-        //   var data = {
-        //     '_token'  : $('input[name=_token]').val(),
-        //     'app_id'  : id,
-        //     'token'   : token,
-        //     'title'   : $('input[name="title"]').val(),
-        //     'markers' : markers
-        //   };
-        //
-        //   console.log('--------');
-        //   console.log(data);
-        //   console.log('--------');
-        //   break;
-
         // Film Specific - Editing - App 5 - Offscreen
         case 5:
           var data = {
@@ -183,39 +168,8 @@
           console.log('--------');
           break;
 
-        // Film Specific - Editing - App 7 - attractions-viceversa
+        // Film Specific - Sound - App 7 - What's Going On
         case 7:
-
-          var imgL = [];
-          var imgR = [];
-
-          $('#div1 img').each(function() {
-            var src = $(this).attr('src');
-            imgL.push(src);
-          });
-          $('#div2 img').each(function() {
-            var src = $(this).attr('src');
-            imgR.push(src);
-          });
-
-          var data = {
-            '_token'  : $('input[name=_token]').val(),
-            'app_id'  : id,
-            'token'   : token,
-            'title'   : $('input[name="title"]').val(),
-            'emotion' : $('input[name="emotion"]').val(),
-            'notes'   : $('#notes').val(),
-            'imgL'    : imgL,
-            'imgR'    : imgR
-          };
-
-          console.log('--------');
-          console.log(data);
-          console.log('--------');
-          break;
-
-        // Film Specific - Sound - App 8 - What's Going On
-        case 8:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
@@ -231,14 +185,15 @@
 
           break;
 
-        // Film Specific - Sound - App 10 - Stop and Go
-        case 10:
+        // Film Specific - Sound - App 8 - Sound Atmospheres
+        case 8:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
+            'audio'   : $.parseJSON($.cookie('tfc-audio')),
             'video'   : $('video source').attr('src')
           };
 
@@ -255,8 +210,8 @@
          *
         */
 
-        // Creative Studio - Warm Up - App 12 - Active Offscreen
-        case 12:
+        // Creative Studio - Warm Up - App 10 - Active Offscreen
+        case 10:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
@@ -270,8 +225,8 @@
 
           break;
 
-        // Creative Studio - Warm Up - App 16 - Character Builder
-        case 16:
+        // Creative Studio - Warm Up - App 13 - Character Builder
+        case 13:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
 
           var data = {
@@ -289,8 +244,8 @@
 
           break;
 
-        // Creative Studio - Warm Up - App 17 - Storytelling
-        case 17:
+        // Creative Studio - Warm Up - App 14 - Storytelling
+        case 14:
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
@@ -309,8 +264,8 @@
 
           break;
 
-        // Creative Studio - Warm Up - App 18 - Storyboard
-        case 18:
+        // Creative Studio - Warm Up - App 15 - Storyboard
+        case 15:
           var stories = [];
           $('.story').each(function(k){
             var story = {
@@ -334,8 +289,8 @@
           console.log('--------');
           break;
 
-        // Creative Studio - My Corner Contest - App 19 - Lumiere Minute
-        case 19:
+        // Creative Studio - My Corner Contest - App 16 - Lumiere Minute
+        case 16:
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -350,8 +305,8 @@
           console.log('--------');
           break;
 
-        // Creative Studio - My Corner Contest - App 20 - Make Your Own Film
-        case 20:
+        // Creative Studio - My Corner Contest - App 17 - Make Your Own Film
+        case 17:
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -365,6 +320,77 @@
           console.log(data);
           console.log('--------');
           break;
+
+
+        /*
+         *
+         * DEPRECATED
+         *
+        */
+
+        // Film Specific - Framing - App 3 - Frame Counter
+        // case 3:
+        //   var data = {
+        //     '_token'  : $('input[name=_token]').val(),
+        //     'app_id'  : id,
+        //     'token'   : token,
+        //     'title'   : $('input[name="title"]').val(),
+        //     'markers' : markers
+        //   };
+        //
+        //   console.log('--------');
+        //   console.log(data);
+        //   console.log('--------');
+        //   break;
+
+        // // Film Specific - Sound - App 10 - Stop and Go
+        // case 10:
+        //   var data = {
+        //     '_token'  : $('input[name=_token]').val(),
+        //     'app_id'  : id,
+        //     'token'   : token,
+        //     'title'   : $('input[name="title"]').val(),
+        //     'notes'   : $('#notes').val(),
+        //     'video'   : $('video source').attr('src')
+        //   };
+        //
+        //   console.log('--------');
+        //   console.log(data);
+        //   console.log('--------');
+        //
+        //   break;
+
+        // Film Specific - Editing - App 7 - attractions-viceversa
+        // case 7:
+        //
+        //   var imgL = [];
+        //   var imgR = [];
+        //
+        //   $('#div1 img').each(function() {
+        //     var src = $(this).attr('src');
+        //     imgL.push(src);
+        //   });
+        //   $('#div2 img').each(function() {
+        //     var src = $(this).attr('src');
+        //     imgR.push(src);
+        //   });
+        //
+        //   var data = {
+        //     '_token'  : $('input[name=_token]').val(),
+        //     'app_id'  : id,
+        //     'token'   : token,
+        //     'title'   : $('input[name="title"]').val(),
+        //     'emotion' : $('input[name="emotion"]').val(),
+        //     'notes'   : $('#notes').val(),
+        //     'imgL'    : imgL,
+        //     'imgR'    : imgR
+        //   };
+        //
+        //   console.log('--------');
+        //   console.log(data);
+        //   console.log('--------');
+        //   break;
+
       }
 
       $.ajax({

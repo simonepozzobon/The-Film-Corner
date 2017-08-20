@@ -139,6 +139,10 @@ class FilmSpecificController extends Controller
         return view('teacher.film-specific.whats-going-on.index', compact('app', 'app_category'));
         break;
 
+      case 'sound-atmospheres':
+        return view('teacher.film-specific.sound-atmosphere.index', compact('app', 'app_category'));
+         break;
+
       case 'stop-and-go':
         return view('teacher.film-specific.stop-and-go.index', compact('app', 'app_category'));
         break;
@@ -231,6 +235,10 @@ class FilmSpecificController extends Controller
 
       case 'whats-going-on':
         return view('teacher.film-specific.whats-going-on.open', compact('app', 'app_category', 'session'));
+        break;
+
+      case 'sound-atmospheres':
+        return view('teacher.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session'));
         break;
 
       case 'stop-and-go':

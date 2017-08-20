@@ -171,14 +171,6 @@ class SessionController extends Controller
         break;
 
 
-      // // Film Specific - Framing - App 3 - Frame Counter
-      // case 3:
-      //   if (isset($request['markers'])) {
-      //     $session->content = json_encode($request['markers']);
-      //   }
-      //   break;
-
-
       // Film Specific - Editing - App 4 - Intercut Cross Cutting
       case 4:
         if (isset($request['markers'])) {
@@ -210,24 +202,8 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Editing - App 7 - attractions-viceversa
+      // Film Specific - Sound - App 7 - What's Going On
       case 7:
-        if (isset($request['notes'])) {
-
-          $data = [
-            'emotion' => $request['emotion'],
-            'imgL' => $request['imgL'][0],
-            'imgR' => $request['imgR'][0],
-            'notes' => $request['notes']
-          ];
-
-          $session->content = json_encode($data);
-        }
-        break;
-
-
-      // Film Specific - Sound - App 8 - What's Going On
-      case 8:
         $data = [
           'notes' => $request['notes'],
           'audio' => $request['audio']
@@ -238,10 +214,11 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Sound - App 10 - Stop and Go
-      case 10:
+      // Film Specific - Sound - App 8 - Sound Atmosphere
+      case 8:
         $data = [
           'notes' => $request['notes'],
+          'audio' => $request['audio'],
           'video' => $request['video']
         ];
 
@@ -249,22 +226,25 @@ class SessionController extends Controller
 
         break;
 
-
       /*
        *
        * CREATIVE STUDIO - PADIGLIONE 2
        *
       */
 
-      // Creative Studio - Warm Up - App 12 - Active Offscreen
-      case 12:
-        // $data = [''];
-        // $session->content = json_encode($data);
+      // Creative Studio - Warm Up - App 10 - Active Offscreen
+      case 10:
+        $data = [
+          'nodata' => 'nodata'
+        ];
+
+        $session->content = json_encode($data);
+
         break;
 
 
-      // Creative Studio - Warm Up - App 16 - Character Builder
-      case 16:
+      // Creative Studio - Warm Up - App 13 - Character Builder
+      case 13:
         $data = [
           'json_data' => $request['canvas'],
           'notes' => $request['notes']
@@ -273,8 +253,8 @@ class SessionController extends Controller
         break;
 
 
-      // Creative Studio - Warm Up - App 17 - Storytelling
-      case 17:
+      // Creative Studio - Warm Up - App 14 - Storytelling
+      case 14:
         $data = [
           'notes' => $request['notes'],
           'slot_1' => $request['slot_1'],
@@ -286,8 +266,8 @@ class SessionController extends Controller
         break;
 
 
-      // Creative Studio - Warm Up - App 18 - storyboard
-      case 18:
+      // Creative Studio - Warm Up - App 15 - storyboard
+      case 15:
         if (isset($request['stories'])) {
           $stories = collect();
           foreach ($request['stories'] as $key => $newStory) {
@@ -303,20 +283,60 @@ class SessionController extends Controller
         break;
 
 
-      // Creative Studio - My Corner Contest - App 19 - Lumiere Minute
-      case 19:
+      // Creative Studio - My Corner Contest - App 16 - Lumiere Minute
+      case 16:
 
         $session->content = json_encode(['contest']);
 
         break;
 
 
-      // Creative Studio - My Corner Contest - App 20 - Make Your Own Film
-      case 20:
+      // Creative Studio - My Corner Contest - App 17 - Make Your Own Film
+      case 17:
 
         $session->content = json_encode(['contest']);
 
         break;
+
+
+      /*
+       *
+       * DEPRECATED
+       *
+      */
+
+      // Film Specific - Sound - App 8 - Stop and Go
+      // case 8:
+      //   $data = [
+      //     'notes' => $request['notes'],
+      //     'video' => $request['video']
+      //   ];
+      //
+      //   $session->content = json_encode($data);
+      //
+      //   break;
+
+      // Film Specific - Editing - App 7 - attractions-viceversa
+      // case 7:
+      //   if (isset($request['notes'])) {
+      //
+      //     $data = [
+      //       'emotion' => $request['emotion'],
+      //       'imgL' => $request['imgL'][0],
+      //       'imgR' => $request['imgR'][0],
+      //       'notes' => $request['notes']
+      //     ];
+      //
+      //     $session->content = json_encode($data);
+      //   }
+      //   break;
+
+      // // Film Specific - Framing - App 3 - Frame Counter
+      // case 3:
+      //   if (isset($request['markers'])) {
+      //     $session->content = json_encode($request['markers']);
+      //   }
+      //   break;
 
     }
 
