@@ -1,7 +1,7 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
-
+  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
@@ -79,13 +79,38 @@
                 <div class="row pb-5">
                   <div class="col">
                     <div class="container-fluid frame bg-faded p-4">
-                      <h3 class="text-center pb-4">Audio</h3>
-                      <div id="waveform" class="pb-5"></div>
-                      <div class="d-flex justify-content-around">
-                        <button class="btn btn-primary" onclick="wavesurfer.playPause()">
-                          <i class="fa fa-play" aria-hidden="true"></i>
-                          Play
-                        </button>
+                      <div class="embed-responsive embed-responsive-16by9">
+                        <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                            <source src="{{ $session->video }}" type="video/mp4">
+                        </video>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div id="waveform"></div>
+                        </div>
+                      </div>
+                      <div class="row py-4">
+                        <div class="col d-flex justify-content-around">
+                          {{-- Control Bar --}}
+                          <div class="btn-group">
+                            <button id="play" type="button" name="button" class="btn btn-secondary">
+                              <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>
+                            <button id="pause" type="button" name="button" class="btn btn-secondary">
+                              <i class="fa fa-pause" aria-hidden="true"></i>
+                            </button>
+                            <button id="stop" type="button" name="button" class="btn btn-secondary">
+                              <i class="fa fa-stop" aria-hidden="true"></i>
+                            </button>
+                            <button id="rewind" type="button" name="button" class="btn btn-secondary">
+                              <i class="fa fa-backward" aria-hidden="true"></i>
+                            </button>
+                            <button id="forward" type="button" name="button" class="btn btn-secondary">
+                              <i class="fa fa-forward" aria-hidden="true"></i>
+                            </button>
+                          </div>
+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -94,7 +119,7 @@
                   <div class="col">
                     <div class="container-fluid frame bg-faded p-4">
                       <h3 class="text-center pb-4">Describe the scenario</h3>
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -136,10 +161,22 @@
 
 @endsection
 @section('scripts')
+  <script src="{{ asset('plugins/videojs/video.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
   <script>
     var AppSession = new TfcSessions();
 
+    // Video Init
+    var player = videojs('video', {
+      controlBar: {
+        playToggle: false,
+        volumeMenuButton: false,
+        fullscreenToggle: false,
+      }
+    });
+    player.muted(true);
+
+    // Audio Init
     var wavesurfer = WaveSurfer.create({
       container: '#waveform',
       waveColor: '#252525',
@@ -147,10 +184,41 @@
       splitChannels: true,
       height: 64
     });
-    
-    var src = '{{ $session->audio }}';
+
+    // Load audio file
+    var src = '{{ $session->audio }}'
     wavesurfer.load(src);
     $.cookie('tfc-audio', JSON.stringify(src));
+
+    // Video and Audio Players Controller
+    $('#play').on('click', function() {
+      player.play();
+      wavesurfer.play();
+    });
+
+    $('#pause').on('click', function() {
+      player.pause();
+      wavesurfer.pause();
+    });
+
+    $('#stop').on('click', function() {
+      player.pause().currentTime(0);
+      wavesurfer.pause();
+      wavesurfer.seekTo(0);
+    });
+
+    $('#rewind').on('click', function() {
+      var time = player.currentTime();
+      console.log(time);
+      player.currentTime(time-5);
+      wavesurfer.skipBackward(5);
+    });
+
+    $('#forward').on('click', function() {
+      var time = player.currentTime();
+      player.currentTime(time+5);
+      wavesurfer.skipForward(5);
+      });
 
   </script>
 @endsection
