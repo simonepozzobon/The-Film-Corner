@@ -243,10 +243,12 @@ angular.module('mediaTimelineCtrl', ['mt.media-timeline'])
 
 angular.module('toolCtrl', [])
   .controller('toolController', function($scope, Timeline) {
-    $scope.addElement = function(session, file, id, title, duration, url) {
+
+    // Aggiunge un elemento dalla libreria alla timeline
+    $scope.addElement = function( file, id, title, duration, url) {
       var d = (duration * 100) / 5;
       var timeline = {
-        session:    session,
+        session:    session.token,
         file:       file,
         id:         (new Date()).getTime(),
         name:       title,

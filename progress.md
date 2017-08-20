@@ -14,6 +14,9 @@ _______
 - Conclusa app make your own film
 - Conclusa app frame composer
 - Installato waveform.js com player audio
+- Corretto ordinamento e titoli app, rimosse quelle di troppo (solo dal db)
+- Conclusa App Sound Atmospheres
+- Conclusa App Whats going on
 
 
 19 Agosto
