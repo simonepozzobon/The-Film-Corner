@@ -143,7 +143,7 @@
                 <div class="container-fluid frame bg-faded p-4">
                   <h3 class="text-center pb-4">Upload</h3>
                   <div class="row pb-5">
-                    <div class="col-md-4 offset-md-4">
+                    <div id="response" class="col-md-4 offset-md-4">
                       <form id="uploadForm" method="post" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
@@ -199,6 +199,10 @@
           success: function (response) {
             console.log(response);
             $('#uploadForm').remove();
+            var data = '';
+            data += '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>';
+            data += '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
+            $('#response').append(data);
           },
           error: function (errors) {
             console.log(errors);

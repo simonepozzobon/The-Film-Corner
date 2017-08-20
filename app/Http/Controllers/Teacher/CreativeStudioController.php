@@ -174,6 +174,17 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.storyboard.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
+
+      /*
+       *
+       * PATH MY CORNER CONTEST
+       *
+      **/
+
+      case 'lumiere-minute':
+        return view('teacher.creative-studio.lumiere-minute.open', compact('app', 'app_category', 'app_session', 'session'));
+        break;
+
     }
 
   }
@@ -194,10 +205,12 @@ class CreativeStudioController extends Controller
     $ext = $file->getClientOriginalExtension();
     $check = $utility->verifyExt($ext, ['video']);
 
+    // return response()->json([$ext]);
+
     // verify the extension
     if ($check == false) {
       $data = [
-        'msg' => 'Error, file not supported'
+        'msg' => 'Error. File not supported'
       ];
       return response()->json($data);
     } else {
@@ -205,8 +218,14 @@ class CreativeStudioController extends Controller
       $teacher = Auth::guard('teacher')->user();
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
-
       $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
+
+      if ($app_session == null || $request->input('session') == null || $teacher == null) {
+        $data = [
+          'msg' => 'Error. Session is corrupted, must create a new one'
+        ];
+        return response()->json($data);
+      }
 
       //Creo il nome del file
       $filename = uniqid();

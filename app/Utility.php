@@ -68,7 +68,11 @@ class Utility extends Model
     Storage::makeDirectory('public/'.$destFolder, 0777, true);
 
     // eseguo il comando FFMPEG
-    $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+    if ($ext == '.mp4') {
+      $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+    } else {
+      $cli = FFMPEG_LIB.' -i '.$filePath.' -vcodec h264 -acodec aac -strict -2 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+    }
     exec($cli);
 
     // Cancello il file temporaneo

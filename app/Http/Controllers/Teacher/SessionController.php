@@ -269,6 +269,14 @@ class SessionController extends Controller
         }
         break;
 
+
+      // Creative Studio - My Corner Contest - App 19 - Lumiere Minute
+      case 19:
+
+        $session->content = json_encode(['contest']);
+
+        break;
+
     }
 
     $data = [
