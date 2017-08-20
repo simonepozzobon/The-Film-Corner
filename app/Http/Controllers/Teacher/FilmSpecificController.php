@@ -66,6 +66,13 @@ class FilmSpecificController extends Controller
 
     switch ($app_slug) {
 
+      /*
+       *
+       * PATH FRAMING
+       *
+      **/
+
+
       case 'frame-composer':
         return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category'));
         break;
@@ -114,6 +121,17 @@ class FilmSpecificController extends Controller
         $emotion = $emotions[rand(0, 5)];
 
         return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
+        break;
+
+
+      /*
+       *
+       * PATH SOUND
+       *
+      **/
+
+      case 'whats-going-on':
+        return view('teacher.film-specific.whats-going-on.index', compact('app', 'app_category'));
         break;
 
 
