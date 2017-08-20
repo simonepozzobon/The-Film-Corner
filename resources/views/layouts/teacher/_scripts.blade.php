@@ -123,6 +123,21 @@
           console.log('--------');
           break;
 
+        // Film Specific - Framing - App 3 - Juxtaposition
+        case 4:
+          var data = {
+            '_token'    : $('input[name=_token]').val(),
+            'app_id'    : id,
+            'token'     : token,
+            'title'     : $('input[name="title"]').val(),
+            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
         // Film Specific - Editing - App 5 - Offscreen
         case 5:
           var data = {

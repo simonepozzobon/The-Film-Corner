@@ -173,9 +173,8 @@ class SessionController extends Controller
 
       // Film Specific - Editing - App 4 - Intercut Cross Cutting
       case 4:
-        if (isset($request['markers'])) {
-          $session->content = json_encode($request['markers']);
-        }
+
+        $session->content = json_encode($request['timelines']);
         break;
 
 
@@ -304,6 +303,12 @@ class SessionController extends Controller
        * DEPRECATED
        *
       */
+
+      // case 4:
+      //   if (isset($request['markers'])) {
+      //     $session->content = json_encode($request['markers']);
+      //   }
+      //   break;
 
       // Film Specific - Sound - App 8 - Stop and Go
       // case 8:
