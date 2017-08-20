@@ -11,7 +11,9 @@ _______
 
 - Creato nuovo sistema per le sessioni con trigger di evento custom, senza cookies
 - Aggiunto sistema di errori per Ajax su minuto lumiere
-
+- Conclusa app make your own film
+- Conclusa app frame composer
+- Installato waveform.js com player audio
 
 
 19 Agosto
