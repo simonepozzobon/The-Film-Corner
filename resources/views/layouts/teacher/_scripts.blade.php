@@ -31,13 +31,16 @@
               sessions = [];
             }
 
-            var session = {
+            session = {
               'app_id': id,
               'token': response.token
             };
 
             sessions.push(session);
+            // Vecchio sistema con i cookies
             $.cookie('tfc-sessions', JSON.stringify(sessions));
+            // Nuovo sistema per la sessione
+            $('body').trigger('session-loaded', session);
             console.log($.parseJSON($.cookie('tfc-sessions')));
           },
           error: function (xhr, status) {
@@ -45,8 +48,6 @@
               console.log(status);
           }
         });
-
-
     }
 
     this.updateSession = function (id)

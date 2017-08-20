@@ -1,7 +1,7 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
-
+  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
@@ -80,10 +80,12 @@
                   <h3 class="text-center pb-4">Your Submission</h3>
                   @foreach ($app_session->videos()->get() as $key => $video)
                     <div class="row">
-                      <div class="col embed-responsive embed-responsive-16by9">
-                        <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                            <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-                        </video>
+                      <div class="col">
+                        <div class="embed-responsive embed-responsive-16by9">
+                          <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                              <source src="{{ Storage::disk('local')->url($video->src) }}" type="video/mp4">
+                          </video>
+                        </div>
                       </div>
                     </div>
                   @endforeach
@@ -99,7 +101,9 @@
 
 @endsection
 @section('scripts')
+  <script src="{{ asset('plugins/videojs/video.js') }}"></script>
   <script>
     var AppSession = new TfcSessions();
+    var player = videojs('video');
   </script>
 @endsection

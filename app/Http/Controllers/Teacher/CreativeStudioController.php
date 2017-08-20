@@ -197,7 +197,7 @@ class CreativeStudioController extends Controller
       $data = [
         'msg' => 'Error, No file selected'
       ];
-      return response()->json($data);
+      return response()->json($data, 400);
     }
 
     $utility = new Utility;
@@ -212,7 +212,7 @@ class CreativeStudioController extends Controller
       $data = [
         'msg' => 'Error. File not supported'
       ];
-      return response()->json($data);
+      return response()->json($data, 400);
     } else {
 
       $teacher = Auth::guard('teacher')->user();
@@ -220,11 +220,13 @@ class CreativeStudioController extends Controller
       $app_category = AppCategory::find($app->app_category_id);
       $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
 
+      // return response()->json([$app_session, $request->input('session'), $teacher]);
+
       if ($app_session == null || $request->input('session') == null || $teacher == null) {
         $data = [
           'msg' => 'Error. Session is corrupted, must create a new one'
         ];
-        return response()->json($data);
+        return response()->json($data, 400);
       }
 
       //Creo il nome del file

@@ -4,12 +4,23 @@
 - Creare impostazione per la dimensione massima di upload per gli utenti
 - Aggiungere un limite di dimensione per l'upload
 - Creare un sistema per le lingue
-- Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
+
+
+20 Agosto
+_______
+
+- Creato nuovo sistema per le sessioni con trigger di evento custom, senza cookies
+- Aggiunto sistema di errori per Ajax su minuto lumiere
+
+
 
 19 Agosto
 _______
 
 - Conclusa app Storyboard
+- Iniziata app per minuto lumiere
+- Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
+- Aggiungere sistema che se non si salva la sessione, le immagini vengono cancellate
 
 
 18 Agosto

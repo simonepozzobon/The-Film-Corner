@@ -173,19 +173,17 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
-    $(document).ready(function()
-    {
-      var session = $.parseJSON($.cookie('tfc-sessions'));
+    $('body').on('session-loaded', function(e, session){
+      console.log('sessione caricata '+session.token);
 
       $('form#uploadForm').submit(function(event) {
         event.preventDefault();
-        $(this).addClass('disabled');
+        $(this).addClass('disable');
 
         var formData = new FormData();
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
         formData.append('media', $('#media')[0].files[0]);
-        formData.append('video_ref', $('#videoRef').val());
-        formData.append('session', session[0].token);
+        formData.append('session', session.token);
 
         $.ajax({
           type: 'post',
@@ -198,6 +196,7 @@
           contentType: false,
           success: function (response) {
             console.log(response);
+            $('#error').remove();
             $('#uploadForm').remove();
             var data = '';
             data += '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>';
@@ -206,7 +205,10 @@
           },
           error: function (errors) {
             console.log(errors);
-            $(this).removeClass('disabled');
+            $('#error').remove();
+            var data = '';
+            data += '<h6 id="error" class="text-center py-4 text-danger">'+errors.responseJSON.msg+'</h6>'
+            $('#response').append(data);
           }
         });
       });
