@@ -76,36 +76,50 @@
           <div class="clearfix pt-5 pb-5">
             <div class="row pb-5">
               <div class="col-md-8">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Audio</h3>
-                  <div id="waveform"></div>
-                  <button class="btn btn-primary" onclick="wavesurfer.playPause()">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                    Play
-                  </button>
+                <div class="row pb-5">
+                  <div class="col">
+                    <div class="container-fluid frame bg-faded p-4">
+                      <h3 class="text-center pb-4">Audio</h3>
+                      <div id="waveform" class="pb-5"></div>
+                      <div class="d-flex justify-content-around">
+                        <button class="btn btn-primary" onclick="wavesurfer.playPause()">
+                          <i class="fa fa-play" aria-hidden="true"></i>
+                          Play
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row pb-5">
+                  <div class="col">
+                    <div class="container-fluid frame bg-faded p-4">
+                      <h3 class="text-center pb-4">Describe the scenario</h3>
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="container-fluid frame bg-faded p-4">
                   <h3 class="text-center pb-4">Library</h3>
                   <ul class="list-unstyled">
-                    <li>
+                    <li class="pb-3">
                       <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio</p>
+                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 1</p>
                         <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
                         <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
                       </div>
                     </li>
-                    <li>
+                    <li class="pb-3">
                       <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio</p>
+                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 2</p>
                         <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
                         <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
                       </div>
                     </li>
-                    <li>
+                    <li class="pb-3">
                       <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio</p>
+                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 3</p>
                         <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
                         <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
                       </div>
