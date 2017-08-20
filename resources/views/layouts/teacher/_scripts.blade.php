@@ -214,6 +214,24 @@
           console.log('--------');
           break;
 
+        // Film Specific - Sound - App 8 - What's Going On
+        case 8:
+          var data = {
+            '_token'  : $('input[name=_token]').val(),
+            'app_id'  : id,
+            'token'   : token,
+            'title'   : $('input[name="title"]').val(),
+            'notes'   : $('#notes').val(),
+            'audio'   : $.parseJSON($.cookie('tfc-audio'))
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
+
+
         /*
          *
          * CREATIVE STUDIO - PADIGLIONE 2

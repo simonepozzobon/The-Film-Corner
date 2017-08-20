@@ -226,6 +226,17 @@ class SessionController extends Controller
         break;
 
 
+      // Film Specific - Sound - App 8 - What's Going On
+      case 8:
+        $data = [
+          'notes' => $request['notes'],
+          'audio' => $request['audio']
+        ];
+
+        $session->content = json_encode($data);
+
+        break;
+
 
       /*
        *

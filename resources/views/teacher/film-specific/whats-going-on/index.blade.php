@@ -136,8 +136,6 @@
 
 @endsection
 @section('scripts')
-  {{-- <script src="{{ asset('plugins/wavesurfer/wavesurfer-html-init.js') }}"></script> --}}
-  {{-- <script src="{{ asset('plugins/wavesurfer/wavesurfer.min.js') }}"></script> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
   <script>
     var AppSession = new TfcSessions();
@@ -149,10 +147,13 @@
       splitChannels: true,
       height: 64
     });
-    wavesurfer.load('https://wavesurfer-js.org/example/split-channels/stereo.mp3');
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
+
+      var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
+      wavesurfer.load(src);
+      $.cookie('tfc-audio', JSON.stringify(src));
 
     });
   </script>
