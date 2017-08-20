@@ -219,6 +219,9 @@ Route::prefix('teacher')->group(function() {
   Route::get('/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
 
+  // Video Editor
+  Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
+
   // Pagine Principali dei padiglioni
 
   // Film Specific

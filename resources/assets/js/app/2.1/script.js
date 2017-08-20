@@ -47,7 +47,7 @@ angular.module('appService', [])
 
           return $http({
             method: 'POST',
-            url: 'video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
+            url: '/video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
             data: media,
           });
       }
@@ -134,10 +134,14 @@ angular.module('videoCtrl', ['vjs.video'])
           Video.send(timelines).then(function successCallback(response) {
             console.log(timelines);
             console.log(response.data);
+            console.log('-------');
+            console.log('DEBUG');
+            console.log(response);
+            console.log('-------');
             $scope.mediaToggle = {
               sources: [
                 {
-                  src: response.data,
+                  src: '/'+response.data,
                   type: 'video/mp4'
                 }
               ]
@@ -245,11 +249,12 @@ angular.module('toolCtrl', [])
   .controller('toolController', function($scope, Timeline) {
 
     // Aggiunge un elemento dalla libreria alla timeline
-    $scope.addElement = function( file, id, title, duration, url) {
+    $scope.addElement = function(id, title, duration, url) {
       var d = (duration * 100) / 5;
+      var expPath = 'storage/video/sessions/'+session.token+'/tfc_video_session.mp4';
       var timeline = {
         session:    session.token,
-        file:       file,
+        file:       expPath,
         id:         (new Date()).getTime(),
         name:       title,
         media_url:  url,

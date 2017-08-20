@@ -163,7 +163,7 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                       </button>
                                       {{-- <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline"> --}}
-                                      <button ng-click="addElement('1','kgjdkgkjdhgkf','1','Giani', '100', 'wghgewgeg')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                                      <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                                         <i class="fa fa-plus" aria-hidden="true"></i>
                                       </button>
                                     </div>

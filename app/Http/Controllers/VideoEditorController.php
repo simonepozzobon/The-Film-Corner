@@ -103,6 +103,10 @@ class VideoEditorController extends Controller
 
         }
 
+        // pulisco la directory degli export
+        // $success = File::deleteDirectory($expPath);
+
+        // Creo il nuovo export
         $exportName = uniqid();
         $export = storage_path('app/public/video/sessions/'.$session_id.'/exp/'.$exportName.'.mp4');
         $exportPublicPath = 'storage/video/sessions/'.$session_id.'/exp/'.$exportName.'.mp4';
@@ -129,9 +133,12 @@ class VideoEditorController extends Controller
         }
 
         $cli .= ' -c copy -bsf:a aac_adtstoasc '.$export;
+
+        // Save the cli on the DB for testing purposes
         $save = new Test;
         $save->session = $cli;
         $save->save();
+
         exec($cli);
 
         return response($exportPublicPath);
