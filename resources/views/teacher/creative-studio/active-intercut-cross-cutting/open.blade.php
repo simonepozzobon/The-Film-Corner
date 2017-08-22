@@ -218,7 +218,21 @@
                               <th>Tools</th>
                             </thead>
                             <tbody>
-
+                              @foreach ($app_session->videos()->get() as $key => $video)
+                                <tr>
+                                  <td class="align-middle">
+                                    <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
+                                  </td>
+                                  <td class="align-middle">{{ $video->title }}</td>
+                                  <td class="align-middle" ng-controller="toolController">
+                                    <div class="btn-group">
+                                      <button ng-click="addElement('{{ $video->id }}','{{ $video->title }}', '{{ $video->duration }}', '{{ $video->src }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                      </button>
+                                    </div>
+                                  </td>
+                                </tr>
+                              @endforeach
                             </tbody>
                           </table>
                         </div>

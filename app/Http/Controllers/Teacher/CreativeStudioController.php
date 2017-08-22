@@ -174,7 +174,7 @@ class CreativeStudioController extends Controller
       case 'active-intercut-cross-cutting':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
+        return view('teacher.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
         break;
 
       case 'storytelling':

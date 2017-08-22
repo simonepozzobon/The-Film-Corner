@@ -224,14 +224,9 @@ angular.module('videoCtrl', ['vjs.video'])
         var counter = 0;
 
         if (typeof session == 'undefined') {
-          // console.log('non trovata');
+
           // Rigenera Il video
           Video.send(init, counter).then(function successCallback(response) {
-            // console.log('-------------');
-            // console.log('Init working?');
-            // console.log(response);
-            // console.log('-------------');
-            // Timeline.getTimelines($scope);
             $scope.mediaToggle = {
               sources: [
                 {
@@ -241,10 +236,6 @@ angular.module('videoCtrl', ['vjs.video'])
               ]
             };
             counter = 1;
-            // console.log('------');
-            // console.log('Contatore');
-            // console.log(counter);
-            // console.log('------');
           });
 
         }
