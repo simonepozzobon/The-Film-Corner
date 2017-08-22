@@ -34,14 +34,14 @@ angular.module('appService', [])
       send : function(timelines) {
           var media = [];
 
-          if (typeof(session) == 'undefined') {
-            if (typeof(timelines) == 'object') {
-              console.log('oggetto');
-              timelines = [timelines];
-              console.log('convertito');
-              console.log(timelines);
-            }
-          }
+          // if (typeof(session) == 'undefined') {
+          //   if (typeof(timelines) == 'object') {
+          //     console.log('oggetto');
+          //     timelines = [timelines];
+          //     console.log('convertito');
+          //     console.log(timelines);
+          //   }
+          // }
 
           for (var i = 0; i < timelines.length; i++) {
             var edit = {
@@ -66,8 +66,8 @@ angular.module('appService', [])
           for (var i = 0; i < timelines.length; i++) {
             var timeline = {
               session:    timelines[i].session,
-              file:       expPath,
-              id:         (new Date()).getTime(),
+              file:       timelines[i].file,
+              id:         timelines[i].id,
               // name:       title,
               name:       timelines[i].name,
               media_url:  timelines[i].media_url,
@@ -75,9 +75,9 @@ angular.module('appService', [])
               data:       { id : timelines[i].data.id },
               lines:  [{
                   events: [{
-                      name :      'animation'+timelines[i].id,
+                      name :      timelines[i].lines[0].events.name,
                       data :      { id : timelines[i].lines[0].events[0].data.id },
-                      start :     0,
+                      start :     timelines[i].lines[0].events[0].start,
                       duration :  timelines[i].lines[0].events[0].duration
                   }]
               }]

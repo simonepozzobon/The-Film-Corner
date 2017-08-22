@@ -15089,8 +15089,6 @@ function noop() {}
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 
 
 // VideoJS
@@ -15125,14 +15123,14 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
     send: function send(timelines) {
       var media = [];
 
-      if (typeof session == 'undefined') {
-        if ((typeof timelines === 'undefined' ? 'undefined' : _typeof(timelines)) == 'object') {
-          console.log('oggetto');
-          timelines = [timelines];
-          console.log('convertito');
-          console.log(timelines);
-        }
-      }
+      // if (typeof(session) == 'undefined') {
+      //   if (typeof(timelines) == 'object') {
+      //     console.log('oggetto');
+      //     timelines = [timelines];
+      //     console.log('convertito');
+      //     console.log(timelines);
+      //   }
+      // }
 
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
@@ -15157,8 +15155,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
       for (var i = 0; i < timelines.length; i++) {
         var timeline = {
           session: timelines[i].session,
-          file: expPath,
-          id: new Date().getTime(),
+          file: timelines[i].file,
+          id: timelines[i].id,
           // name:       title,
           name: timelines[i].name,
           media_url: timelines[i].media_url,
@@ -15166,9 +15164,9 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
           data: { id: timelines[i].data.id },
           lines: [{
             events: [{
-              name: 'animation' + timelines[i].id,
+              name: timelines[i].lines[0].events.name,
               data: { id: timelines[i].lines[0].events[0].data.id },
-              start: 0,
+              start: timelines[i].lines[0].events[0].start,
               duration: timelines[i].lines[0].events[0].duration
             }]
           }]

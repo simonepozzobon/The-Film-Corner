@@ -238,8 +238,13 @@
     var AppSession = new TfcSessions();
 
     // Pass the variable to angular JS for init
-    var timelines = {!! json_encode($session) !!};
+    var timelines = {!! $session !!};
     var token = '{{ $token }}';
+
+    console.log('---------');
+    console.log('Logging all\'inizio');
+    console.log(timelines);
+    console.log('---------');
 
   </script>
   <script src="{{ mix('js/app/2.1/script.js') }}"></script>

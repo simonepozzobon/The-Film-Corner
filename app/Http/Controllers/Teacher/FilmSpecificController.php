@@ -211,7 +211,7 @@ class FilmSpecificController extends Controller
 
       case 'intercut-cross-cutting':
         $elements = VideoLibrary::all();
-        $session = $session[0];
+        $session = json_encode($session);
         return view('teacher.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
         break;
 
