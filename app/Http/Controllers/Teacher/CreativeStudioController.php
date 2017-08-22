@@ -211,6 +211,7 @@ class CreativeStudioController extends Controller
 
     $utility = new Utility;
     $file = $request->file('media');
+    $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
     $ext = $file->getClientOriginalExtension();
     $check = $utility->verifyExt($ext, ['video']);
 
@@ -243,8 +244,10 @@ class CreativeStudioController extends Controller
       $videoStore = $utility->storeVideo($file, $filename, $ext, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id.'/');
 
       $video = new Video;
+      $video->title = $title;
       $video->img = $videoStore['img'];
       $video->src = $videoStore['src'];
+      $video->duration = $videoStore['duration'];
       $video->save();
 
       // creo il link tra video e sessione
@@ -253,6 +256,8 @@ class CreativeStudioController extends Controller
 
 
       $data = [
+        'name' => $title,
+        'duration' => $videoStore['duration'],
         'video_id' => $video->id,
         'img' => Storage::disk('local')->url($videoStore['img']),
         'src' => $videoStore['src']

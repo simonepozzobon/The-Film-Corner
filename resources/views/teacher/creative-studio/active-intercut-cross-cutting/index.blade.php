@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
   <style media="screen">
     #video-editor button.vjs-big-play-button {
       display: none;
@@ -187,9 +186,6 @@
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                            {{-- <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
-                                              Add to timeline
-                                            </button> --}}
                                           </div>
                                         </div>
                                       </div>
@@ -201,10 +197,31 @@
                           </table>
                       </div>
                       <div class="tab-pane pt-3" id="upload" role="tabpanel">
-                        <form class="dropzone" action="{{ route('video-test.upload') }}" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
                           {{ csrf_field() }}
                           {{ method_field('POST') }}
+                          <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
+                          <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
+                          <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
+                          <div class="form-group">
+                            <input id="media" type="file" name="media" class="form-control" ng-model="media">
+                          </div>
+                          <div class="container-fluid d-flex justify-content-around">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                          </div>
                         </form>
+                        <div class="container-fluid">
+                          <table id="uploads" class="table table-hover">
+                            <thead>
+                              <th>Preview</th>
+                              <th>Title</th>
+                              <th>Tools</th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -241,6 +258,65 @@
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
+
+      $('#token').val(session.token);
+      // var session_token = session.token;
+
+      // $('form#uploadForm').submit(function(event) {
+      //   event.preventDefault();
+      //
+      //   var formData = new FormData();
+      //   formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+      //   formData.append('media', $('#media')[0].files[0]);
+      //   formData.append('session', session.token);
+      //
+          // $.ajax({
+          //   type: 'post',
+          //   url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
+          //   headers: {
+          //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          //   },
+          //   data: formData,
+          //   processData: false,
+          //   contentType: false,
+          //   success: function (response) {
+          //     console.log(response);
+          //
+          //     var data = '';
+          //     data += '<tr>';
+          //     data +=   '<td class="align-middle">';
+          //     data +=     '<img src="'+response.img+'" width="57">';
+          //     data +=   '</td>';
+          //     data +=   '<td class="align-middle">'+response.name+'</td>';
+          //     data +=   '<td class="align-middle" ng-controller="toolController">';
+          //     data +=     '<div class="btn-group">';
+          //     data +=       '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">';
+          //     data +=         '<i class="fa fa-plus" aria-hidden="true"></i>';
+          //     data +=       '</button>';
+          //     data +=     '</div>';
+          //     data +=   '</td>';
+          //     data += '</tr>';
+          //
+          //     $('#uploads').append(data);
+          //
+          //     // var data = '';
+          //     // data += '<tr id="video-'+response.video_id+'">';
+          //     // data +=    '<td><img src="'+response.img+'" width="57" class="img-fluid"></td>';
+          //     // data +=    '<td>';
+          //     // data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
+          //     // data +=     '<div class="btn-group">';
+          //     // data +=        '<button type="button" class="btn btn-primary" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
+          //     // data +=        '<button type="button" class="btn btn-danger" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+          //     // data +=      '</div>';
+          //     // data +=    '</td>';
+          //     // data += '</tr>';
+          //     // $('#videos').append(data);
+          //   },
+          //   error: function (errors) {
+          //     console.log(errors);
+          //   }
+          // });
+      // });
     });
   </script>
   <script src="{{ mix('js/app/2.1/script.js') }}"></script>

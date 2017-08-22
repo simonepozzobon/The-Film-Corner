@@ -1,5 +1,7 @@
 import angular from 'angular';
 
+import jQuery from 'jquery';
+
 // VideoJS
 require('video.js/dist/video.js');
 
@@ -46,10 +48,10 @@ angular.module('appService', [])
             media.push(edit);
           }
 
-          console.log('---------');
-          console.log('Dati da inviare');
-          console.log(media);
-          console.log('---------');
+          // console.log('---------');
+          // console.log('Dati da inviare');
+          // console.log(media);
+          // console.log('---------');
 
           // Ricompone la timelines
           if (typeof(session) == 'undefined' && counter == 0) {
@@ -58,10 +60,8 @@ angular.module('appService', [])
                 session:    timelines[i].session,
                 file:       timelines[i].file,
                 id:         timelines[i].id,
-                // name:       title,
                 name:       timelines[i].name,
                 media_url:  timelines[i].media_url,
-                // data:       { id : title+'-guid' },
                 data:       { id : timelines[i].data.id },
                 lines:  [{
                     events: [{
@@ -82,7 +82,7 @@ angular.module('appService', [])
             url: '/video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
             data: media,
           });
-      }
+      },
     }
   }).factory('Timeline', function(){
     var timelines = [];
@@ -151,6 +151,70 @@ angular.module('mainCtrl', [])
 
   });
 
+
+// Define the upload Controller
+angular.module('uploadCtrl', [])
+  .controller('uploadController', ['$scope', '$window', '$compile', function($scope, $window, $compile, $http, Video) {
+    // models
+
+
+    $scope.uploadForm = function() {
+      console.log('---------');
+      console.log('Session token');
+      console.log($('#token').val());
+      console.log('---------');
+
+      // Preparo i dati da inviare sotto forma di form
+      var formData = new FormData();
+      formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+      formData.append('media', $('#media')[0].files[0]);
+      formData.append('session', $('#token').val());
+
+      // prendo il nome della cateogria e lo slug dell'applicazione
+      var app_category = $('#app_category').val();
+      var app_slug = $('#app_slug').val();
+
+      // effettuo l'invio ajax
+      $.ajax({
+        type: 'post',
+        url:  '/teacher/creative-studio/'+app_category+'/'+app_slug+'/upload',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log(response);
+          var data = $('<tr>' +
+                          '<td class="align-middle">' +
+                            '<img src="'+response.img+'" width="57">' +
+                          '</td>' +
+                          '<td class="align-middle">'+response.name+'</td>' +
+                          '<td class="align-middle" ng-controller="toolController">' +
+                            '<div class="btn-group">' +
+                              '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
+                                '<i class="fa fa-plus" aria-hidden="true"></i>' +
+                              '</button>' +
+                            '</div>' +
+                          '</td>' +
+                        '</tr>').appendTo('#uploads');
+
+          $compile(data)($scope);
+          $scope.$apply();
+        },
+        error: function (errors) {
+          console.log(errors);
+        }
+      });
+
+
+      console.log('invio dati');
+      console.log($('#media')[0].files[0]);
+    }
+
+  }]);
+
 // Define the video controller
 angular.module('videoCtrl', ['vjs.video'])
   .controller('videoController', ['$scope', '$window', 'Timeline', 'Video', function ($scope, $window, Timeline, Video) {
@@ -160,13 +224,13 @@ angular.module('videoCtrl', ['vjs.video'])
         var counter = 0;
 
         if (typeof session == 'undefined') {
-          console.log('non trovata');
+          // console.log('non trovata');
           // Rigenera Il video
           Video.send(init, counter).then(function successCallback(response) {
-            console.log('-------------');
-            console.log('Init working?');
-            console.log(response);
-            console.log('-------------');
+            // console.log('-------------');
+            // console.log('Init working?');
+            // console.log(response);
+            // console.log('-------------');
             // Timeline.getTimelines($scope);
             $scope.mediaToggle = {
               sources: [
@@ -177,10 +241,10 @@ angular.module('videoCtrl', ['vjs.video'])
               ]
             };
             counter = 1;
-            console.log('------');
-            console.log('Contatore');
-            console.log(counter);
-            console.log('------');
+            // console.log('------');
+            // console.log('Contatore');
+            // console.log(counter);
+            // console.log('------');
           });
 
         }
@@ -198,12 +262,12 @@ angular.module('videoCtrl', ['vjs.video'])
           //   timelines = $window.timelines;
           // }
           Video.send(timelines).then(function successCallback(response) {
-            console.log(timelines);
-            console.log(response.data);
-            console.log('-------');
-            console.log('DEBUG');
-            console.log(response);
-            console.log('-------');
+            // console.log(timelines);
+            // console.log(response.data);
+            // console.log('-------');
+            // console.log('DEBUG');
+            // console.log(response);
+            // console.log('-------');
             $scope.mediaToggle = {
               sources: [
                 {
@@ -372,6 +436,7 @@ var App =
 angular.module('App', [
           'mainCtrl',
           'videoCtrl',
+          'uploadCtrl',
           'mediaTimelineCtrl',
           'toolCtrl',
           'feedbackCtrl',

@@ -101,7 +101,8 @@ class Utility extends Model
 
     $data = [
       'src' => $path,
-      'img' => $thumbPath
+      'img' => $thumbPath,
+      'duration' => $duration,
     ];
 
     return $data;

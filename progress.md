@@ -5,6 +5,18 @@
 - Aggiungere un limite di dimensione per l'upload
 - Creare un sistema per le lingue
 
+22 Agosto
+_______
+
+- Termine adattamento app intercut-cross-cutting
+- Adattamento script uplaod per app active-intercut-cross-cutting
+
+
+21 Agosto
+_______
+
+- Adattamento vecchio script per l'app intercut-cross-cutting
+
 
 20 Agosto
 _______

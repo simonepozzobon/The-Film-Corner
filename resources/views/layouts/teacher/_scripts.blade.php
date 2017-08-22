@@ -240,6 +240,21 @@
 
           break;
 
+        // Creative Studio - Warm Up - App 11 - Active Intercut Cross-Cutting
+        case 11:
+          var data = {
+            '_token'    : $('input[name=_token]').val(),
+            'app_id'    : id,
+            'token'     : token,
+            'title'     : $('input[name="title"]').val(),
+            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
         // Creative Studio - Warm Up - App 13 - Character Builder
         case 13:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
