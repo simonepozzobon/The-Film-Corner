@@ -86,6 +86,11 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category'));
         break;
 
+      case 'active-intercut-cross-cutting':
+        $elements = VideoLibrary::all();
+        return view('teacher.creative-studio.active-intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        break;
+
 
       /*
        *
