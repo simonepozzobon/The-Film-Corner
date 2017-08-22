@@ -258,65 +258,7 @@
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
-
       $('#token').val(session.token);
-      // var session_token = session.token;
-
-      // $('form#uploadForm').submit(function(event) {
-      //   event.preventDefault();
-      //
-      //   var formData = new FormData();
-      //   formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-      //   formData.append('media', $('#media')[0].files[0]);
-      //   formData.append('session', session.token);
-      //
-          // $.ajax({
-          //   type: 'post',
-          //   url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
-          //   headers: {
-          //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          //   },
-          //   data: formData,
-          //   processData: false,
-          //   contentType: false,
-          //   success: function (response) {
-          //     console.log(response);
-          //
-          //     var data = '';
-          //     data += '<tr>';
-          //     data +=   '<td class="align-middle">';
-          //     data +=     '<img src="'+response.img+'" width="57">';
-          //     data +=   '</td>';
-          //     data +=   '<td class="align-middle">'+response.name+'</td>';
-          //     data +=   '<td class="align-middle" ng-controller="toolController">';
-          //     data +=     '<div class="btn-group">';
-          //     data +=       '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">';
-          //     data +=         '<i class="fa fa-plus" aria-hidden="true"></i>';
-          //     data +=       '</button>';
-          //     data +=     '</div>';
-          //     data +=   '</td>';
-          //     data += '</tr>';
-          //
-          //     $('#uploads').append(data);
-          //
-          //     // var data = '';
-          //     // data += '<tr id="video-'+response.video_id+'">';
-          //     // data +=    '<td><img src="'+response.img+'" width="57" class="img-fluid"></td>';
-          //     // data +=    '<td>';
-          //     // data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
-          //     // data +=     '<div class="btn-group">';
-          //     // data +=        '<button type="button" class="btn btn-primary" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
-          //     // data +=        '<button type="button" class="btn btn-danger" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-          //     // data +=      '</div>';
-          //     // data +=    '</td>';
-          //     // data += '</tr>';
-          //     // $('#videos').append(data);
-          //   },
-          //   error: function (errors) {
-          //     console.log(errors);
-          //   }
-          // });
-      // });
     });
   </script>
   <script src="{{ mix('js/app/2.1/script.js') }}"></script>
