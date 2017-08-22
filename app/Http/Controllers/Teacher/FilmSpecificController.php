@@ -113,20 +113,20 @@ class FilmSpecificController extends Controller
         return view('teacher.film-specific.attractions.index', compact('app', 'app_category'));
         break;
 
-      case 'attractions-viceversa':
-        $emotions = [
-          0 => 'Fear',
-          1 => 'Anger',
-          2 => 'Joy',
-          3 => 'Disgust',
-          4 => 'Surprise',
-          5 => 'Trust',
-        ];
-
-        $emotion = $emotions[rand(0, 5)];
-
-        return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
-        break;
+      // case 'attractions-viceversa':
+      //   $emotions = [
+      //     0 => 'Fear',
+      //     1 => 'Anger',
+      //     2 => 'Joy',
+      //     3 => 'Disgust',
+      //     4 => 'Surprise',
+      //     5 => 'Trust',
+      //   ];
+      //
+      //   $emotion = $emotions[rand(0, 5)];
+      //
+      //   return view('teacher.film-specific.attractions-viceversa.index', compact('app', 'app_category', 'emotion'));
+      //   break;
 
 
       /*
@@ -211,7 +211,8 @@ class FilmSpecificController extends Controller
 
       case 'intercut-cross-cutting':
         $elements = VideoLibrary::all();
-        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        $session = $session[0];
+        return view('teacher.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
         break;
 
       case 'offscreen':
