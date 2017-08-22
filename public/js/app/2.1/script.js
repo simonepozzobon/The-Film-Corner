@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 162);
+/******/ 	return __webpack_require__(__webpack_require__.s = 161);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2891,7 +2891,7 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(160);
+var minDoc = __webpack_require__(159);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -14847,7 +14847,7 @@ exports['default'] = videojs;
 var window = __webpack_require__(4)
 var isFunction = __webpack_require__(39)
 var parseHeaders = __webpack_require__(90)
-var xtend = __webpack_require__(159)
+var xtend = __webpack_require__(158)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -15120,17 +15120,8 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 }).factory('Video', function ($http, CSRF_TOKEN, Timeline) {
 
   return {
-    send: function send(timelines) {
+    send: function send(timelines, counter) {
       var media = [];
-
-      // if (typeof(session) == 'undefined') {
-      //   if (typeof(timelines) == 'object') {
-      //     console.log('oggetto');
-      //     timelines = [timelines];
-      //     console.log('convertito');
-      //     console.log(timelines);
-      //   }
-      // }
 
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
@@ -15150,28 +15141,28 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
       console.log('---------');
 
       // Ricompone la timelines
-      // var token = $window.token;
-      var expPath = 'storage/video/sessions/' + token + '/tfc_video_session.mp4';
-      for (var i = 0; i < timelines.length; i++) {
-        var timeline = {
-          session: timelines[i].session,
-          file: timelines[i].file,
-          id: timelines[i].id,
-          // name:       title,
-          name: timelines[i].name,
-          media_url: timelines[i].media_url,
-          // data:       { id : title+'-guid' },
-          data: { id: timelines[i].data.id },
-          lines: [{
-            events: [{
-              name: timelines[i].lines[0].events.name,
-              data: { id: timelines[i].lines[0].events[0].data.id },
-              start: timelines[i].lines[0].events[0].start,
-              duration: timelines[i].lines[0].events[0].duration
+      if (typeof session == 'undefined' && counter == 0) {
+        for (var i = 0; i < timelines.length; i++) {
+          var timeline = {
+            session: timelines[i].session,
+            file: timelines[i].file,
+            id: timelines[i].id,
+            // name:       title,
+            name: timelines[i].name,
+            media_url: timelines[i].media_url,
+            // data:       { id : title+'-guid' },
+            data: { id: timelines[i].data.id },
+            lines: [{
+              events: [{
+                name: timelines[i].lines[0].events.name,
+                data: { id: timelines[i].lines[0].events[0].data.id },
+                start: timelines[i].lines[0].events[0].start,
+                duration: timelines[i].lines[0].events[0].duration
+              }]
             }]
-          }]
-        };
-        Timeline.addTimeline(timeline);
+          };
+          Timeline.addTimeline(timeline);
+        }
       }
 
       return $http({
@@ -15249,26 +15240,28 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
 
   // Inizializzo la sessione
   var init = $window.timelines;
-
-  console.log('-------');
-  console.log('inizio');
-  console.log(init);
-  console.log('-------');
+  var counter = 0;
 
   if (typeof session == 'undefined') {
     console.log('non trovata');
     // Rigenera Il video
-    Video.send(init).then(function successCallback(response) {
+    Video.send(init, counter).then(function successCallback(response) {
       console.log('-------------');
       console.log('Init working?');
       console.log(response);
       console.log('-------------');
+      // Timeline.getTimelines($scope);
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,
           type: 'video/mp4'
         }]
       };
+      counter = 1;
+      console.log('------');
+      console.log('Contatore');
+      console.log(counter);
+      console.log('------');
     });
   }
 
@@ -15279,10 +15272,10 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
     console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
-    if (typeof session == 'undefined') {
-      console.log('non trovata la sessions');
-      timelines = $window.timelines;
-    }
+    // if (typeof session == 'undefined') {
+    //   console.log('non trovata la sessions');
+    //   timelines = $window.timelines;
+    // }
     Video.send(timelines).then(function successCallback(response) {
       console.log(timelines);
       console.log(response.data);
@@ -79154,7 +79147,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function (root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(158)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(157)) {
         //AMD type module loader detected
         !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(23), __webpack_require__(54)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -89779,8 +89772,7 @@ exports['default'] = VideoTrack;
 
 /***/ }),
 /* 156 */,
-/* 157 */,
-/* 158 */
+/* 157 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -89789,7 +89781,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 159 */
+/* 158 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -89814,14 +89806,14 @@ function extend() {
 
 
 /***/ }),
-/* 160 */
+/* 159 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 161 */,
-/* 162 */
+/* 160 */,
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(57);

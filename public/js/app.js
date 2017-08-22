@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 161);
+/******/ 	return __webpack_require__(__webpack_require__.s = 160);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -12219,7 +12219,7 @@ __webpack_require__(84);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(157);
+window.Vue = __webpack_require__(156);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -34797,8 +34797,7 @@ return Tether;
 /* 153 */,
 /* 154 */,
 /* 155 */,
-/* 156 */,
-/* 157 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44893,10 +44892,10 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), __webpack_require__(14)))
 
 /***/ }),
+/* 157 */,
 /* 158 */,
 /* 159 */,
-/* 160 */,
-/* 161 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(56);

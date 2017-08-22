@@ -31,17 +31,8 @@ angular.module('appService', [])
   .factory('Video', function($http, CSRF_TOKEN, Timeline){
 
     return {
-      send : function(timelines) {
+      send : function(timelines, counter) {
           var media = [];
-
-          // if (typeof(session) == 'undefined') {
-          //   if (typeof(timelines) == 'object') {
-          //     console.log('oggetto');
-          //     timelines = [timelines];
-          //     console.log('convertito');
-          //     console.log(timelines);
-          //   }
-          // }
 
           for (var i = 0; i < timelines.length; i++) {
             var edit = {
@@ -61,28 +52,28 @@ angular.module('appService', [])
           console.log('---------');
 
           // Ricompone la timelines
-          // var token = $window.token;
-          var expPath = 'storage/video/sessions/'+token+'/tfc_video_session.mp4';
-          for (var i = 0; i < timelines.length; i++) {
-            var timeline = {
-              session:    timelines[i].session,
-              file:       timelines[i].file,
-              id:         timelines[i].id,
-              // name:       title,
-              name:       timelines[i].name,
-              media_url:  timelines[i].media_url,
-              // data:       { id : title+'-guid' },
-              data:       { id : timelines[i].data.id },
-              lines:  [{
-                  events: [{
-                      name :      timelines[i].lines[0].events.name,
-                      data :      { id : timelines[i].lines[0].events[0].data.id },
-                      start :     timelines[i].lines[0].events[0].start,
-                      duration :  timelines[i].lines[0].events[0].duration
-                  }]
-              }]
-            };
-            Timeline.addTimeline(timeline);
+          if (typeof(session) == 'undefined' && counter == 0) {
+            for (var i = 0; i < timelines.length; i++) {
+              var timeline = {
+                session:    timelines[i].session,
+                file:       timelines[i].file,
+                id:         timelines[i].id,
+                // name:       title,
+                name:       timelines[i].name,
+                media_url:  timelines[i].media_url,
+                // data:       { id : title+'-guid' },
+                data:       { id : timelines[i].data.id },
+                lines:  [{
+                    events: [{
+                        name :      timelines[i].lines[0].events.name,
+                        data :      { id : timelines[i].lines[0].events[0].data.id },
+                        start :     timelines[i].lines[0].events[0].start,
+                        duration :  timelines[i].lines[0].events[0].duration
+                    }]
+                }]
+              };
+              Timeline.addTimeline(timeline);
+            }
           }
 
 
@@ -166,20 +157,17 @@ angular.module('videoCtrl', ['vjs.video'])
 
     // Inizializzo la sessione
         var init = $window.timelines;
-
-        console.log('-------');
-        console.log('inizio');
-        console.log(init);
-        console.log('-------');
+        var counter = 0;
 
         if (typeof session == 'undefined') {
           console.log('non trovata');
           // Rigenera Il video
-          Video.send(init).then(function successCallback(response) {
+          Video.send(init, counter).then(function successCallback(response) {
             console.log('-------------');
             console.log('Init working?');
             console.log(response);
             console.log('-------------');
+            // Timeline.getTimelines($scope);
             $scope.mediaToggle = {
               sources: [
                 {
@@ -187,7 +175,12 @@ angular.module('videoCtrl', ['vjs.video'])
                   type: 'video/mp4'
                 }
               ]
-            }
+            };
+            counter = 1;
+            console.log('------');
+            console.log('Contatore');
+            console.log(counter);
+            console.log('------');
           });
 
         }
@@ -200,10 +193,10 @@ angular.module('videoCtrl', ['vjs.video'])
           console.log('-----');
 
           var timelines = Timeline.getTimelines($scope);
-          if (typeof session == 'undefined') {
-            console.log('non trovata la sessions');
-            timelines = $window.timelines;
-          }
+          // if (typeof session == 'undefined') {
+          //   console.log('non trovata la sessions');
+          //   timelines = $window.timelines;
+          // }
           Video.send(timelines).then(function successCallback(response) {
             console.log(timelines);
             console.log(response.data);
