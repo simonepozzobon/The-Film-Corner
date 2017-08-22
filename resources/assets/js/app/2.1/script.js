@@ -7,7 +7,7 @@ require('video.js/dist/video.js');
 require('vjs-video/dist/vjs-video.js');
 
 // dropzone
-require('dropzone/dist/dropzone.js');
+// require('dropzone/dist/dropzone.js');
 
 // Angular Media Timeline
 require('angular-media-timeline/timeline.js');
