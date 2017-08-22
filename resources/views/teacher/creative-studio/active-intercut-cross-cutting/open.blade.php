@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
   <style media="screen">
     #video-editor button.vjs-big-play-button {
       display: none;
@@ -187,9 +186,6 @@
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                            {{-- <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
-                                              Add to timeline
-                                            </button> --}}
                                           </div>
                                         </div>
                                       </div>
@@ -201,10 +197,31 @@
                           </table>
                       </div>
                       <div class="tab-pane pt-3" id="upload" role="tabpanel">
-                        <form class="dropzone" action="{{ route('video-test.upload') }}" method="post" enctype="multipart/form-data">
+                        <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
                           {{ csrf_field() }}
                           {{ method_field('POST') }}
+                          <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
+                          <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
+                          <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
+                          <div class="form-group">
+                            <input id="media" type="file" name="media" class="form-control" ng-model="media">
+                          </div>
+                          <div class="container-fluid d-flex justify-content-around">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                          </div>
                         </form>
+                        <div class="container-fluid">
+                          <table id="uploads" class="table table-hover">
+                            <thead>
+                              <th>Preview</th>
+                              <th>Title</th>
+                              <th>Tools</th>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -232,20 +249,17 @@
       </div>
     </div>
   </div>
+
 @endsection
 @section('scripts')
   <script type="text/javascript">
     var AppSession = new TfcSessions();
+    AppSession.initSession({{ $app->id }});
 
-    // Pass the variable to angular JS for init
-    var timelines = {!! $session !!};
-    var token = '{{ $token }}';
-
-    console.log('---------');
-    console.log('Logging all\'inizio');
-    console.log(timelines);
-    console.log('---------');
-
+    $('body').on('session-loaded', function(e, session){
+      console.log('sessione caricata '+session.token);
+      $('#token').val(session.token);
+    });
   </script>
   <script src="{{ mix('js/app/2.1/script.js') }}"></script>
 @endsection

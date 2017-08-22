@@ -171,6 +171,12 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
+      case 'active-intercut-cross-cutting':
+        $elements = VideoLibrary::all();
+        $session = json_encode($session);
+        return view('teacher.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
+        break;
+
       case 'storytelling':
         return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
