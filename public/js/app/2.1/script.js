@@ -25553,7 +25553,10 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
     console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
-
+    // if (typeof session == 'undefined') {
+    //   console.log('non trovata la sessions');
+    //   timelines = $window.timelines;
+    // }
     Video.send(timelines).then(function successCallback(response) {
       console.log(timelines);
       console.log(response.data);
@@ -25663,7 +25666,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
   };
 });
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, Timeline) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
 
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
