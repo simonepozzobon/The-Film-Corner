@@ -241,6 +241,11 @@ class SessionController extends Controller
 
         break;
 
+      // Creative Studio - Warm Up - App 11 - Active Intercut Cross-Cutting
+      case 11:
+
+        $session->content = json_encode($request['timelines']);
+        break;
 
       // Creative Studio - Warm Up - App 13 - Character Builder
       case 13:

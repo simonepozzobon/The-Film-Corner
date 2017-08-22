@@ -257,17 +257,14 @@ angular.module('videoCtrl', ['vjs.video'])
           console.log('-----');
 
           var timelines = Timeline.getTimelines($scope);
-          // if (typeof session == 'undefined') {
-          //   console.log('non trovata la sessions');
-          //   timelines = $window.timelines;
-          // }
+          
           Video.send(timelines).then(function successCallback(response) {
-            // console.log(timelines);
-            // console.log(response.data);
-            // console.log('-------');
-            // console.log('DEBUG');
-            // console.log(response);
-            // console.log('-------');
+            console.log(timelines);
+            console.log(response.data);
+            console.log('-------');
+            console.log('DEBUG');
+            console.log(response);
+            console.log('-------');
             $scope.mediaToggle = {
               sources: [
                 {

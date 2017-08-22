@@ -254,7 +254,15 @@
 @section('scripts')
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
+
+    // Pass the variable to angular JS for init
+    var timelines = {!! $session !!};
+    var token = '{{ $token }}';
+
+    console.log('---------');
+    console.log('Logging all\'inizio');
+    console.log(timelines);
+    console.log('---------');
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
