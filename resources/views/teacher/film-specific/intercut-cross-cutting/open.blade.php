@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
-  <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}">
+  {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}"> --}}
   <style media="screen">
     #video-editor button.vjs-big-play-button {
       display: none;
