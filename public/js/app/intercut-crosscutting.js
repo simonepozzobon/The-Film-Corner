@@ -25524,14 +25524,9 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   var counter = 0;
 
   if (typeof session == 'undefined') {
-    // console.log('non trovata');
+
     // Rigenera Il video
     Video.send(init, counter).then(function successCallback(response) {
-      // console.log('-------------');
-      // console.log('Init working?');
-      // console.log(response);
-      // console.log('-------------');
-      // Timeline.getTimelines($scope);
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,
@@ -25539,10 +25534,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
         }]
       };
       counter = 1;
-      // console.log('------');
-      // console.log('Contatore');
-      // console.log(counter);
-      // console.log('------');
     });
   }
 
