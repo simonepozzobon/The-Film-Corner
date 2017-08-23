@@ -11,6 +11,7 @@ use App\Utility;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
+use App\AudioLibrary;
 use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
@@ -91,10 +92,15 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
         break;
 
+      case 'sound-studio':
+        $elements = AudioLibrary::all();
+        return view('teacher.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements'));
+        break;
+
 
       /*
        *
-       * PATH STORY TELLING
+       * PATH STORYTELLING
        *
       **/
 
@@ -166,15 +172,28 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
-      case 'character-builder':
-        $session->json_data = htmlspecialchars_decode($session->json_data);
-        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
-        break;
-
       case 'active-intercut-cross-cutting':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
         return view('teacher.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        break;
+
+      case 'sound-studio':
+        $elements = AudioLibrary::all();
+        $session = json_encode($session);
+        return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        break;
+
+
+      /*
+       *
+       * PATH STORYTELLING
+       *
+      **/
+
+      case 'character-builder':
+        $session->json_data = htmlspecialchars_decode($session->json_data);
+        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
       case 'storytelling':

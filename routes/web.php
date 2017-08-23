@@ -153,6 +153,12 @@ Route::prefix('admin')->group(function () {
   // Apps menu settings
   Route::prefix('app')->group(function () {
     Route::resource('app_1', 'Admin\App\App1Controller');
+
+    // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
+    Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
+    Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
+    Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
+    Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
   });
 
   /*
