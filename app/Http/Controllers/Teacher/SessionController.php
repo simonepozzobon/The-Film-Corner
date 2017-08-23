@@ -230,8 +230,8 @@ class SessionController extends Controller
       case 9:
         $data = [
           'notes' => $request['notes'],
-          'audio-src' => $request['audio-src'],
-          'audio-vol' => $request['audio-vol'],
+          'audio_src' => $request['audio-src'],
+          'audio_vol' => $request['audio-vol'],
           'video' => $request['video']
         ];
 
