@@ -26,7 +26,7 @@ const { mix } = require('laravel-mix');
     // App 2.1
     // intercut/cross-cutting: take 2 sequences from different
     // libraries and edit them as an intercut.
-    .js('resources/assets/js/app/2.1/script.js', 'public/js/app/2.1/script.js')
+    .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
     // .sass('resources/assets/sass/app/2.1/videogular.scss', 'public/css/app/2.1/style.css')
     // .sass('node_modules/video.js/src/css/vjs-cdn.scss', 'public/css/app/2.1/video-js.css')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
