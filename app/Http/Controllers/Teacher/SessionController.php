@@ -225,6 +225,20 @@ class SessionController extends Controller
 
         break;
 
+
+      // Film Specific - Sound - App 9 - Soundscapes
+      case 9:
+        $data = [
+          'notes' => $request['notes'],
+          'audio-src' => $request['audio-src'],
+          'audio-vol' => $request['audio-vol'],
+          'video' => $request['video']
+        ];
+
+        $session->content = json_encode($data);
+
+        break;
+
       /*
        *
        * CREATIVE STUDIO - PADIGLIONE 2

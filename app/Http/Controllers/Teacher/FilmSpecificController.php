@@ -246,6 +246,10 @@ class FilmSpecificController extends Controller
         return view('teacher.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session'));
         break;
 
+      case 'soundscapes':
+        return view('teacher.film-specific.soundscapes.open', compact('app', 'app_category', 'session'));
+        break;
+
       case 'stop-and-go':
         return view('teacher.film-specific.stop-and-go.open', compact('app', 'app_category', 'session'));
         break;

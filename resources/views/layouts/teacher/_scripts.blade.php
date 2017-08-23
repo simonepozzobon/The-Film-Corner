@@ -218,6 +218,25 @@
 
           break;
 
+        // Film Specific - Sound - App 9 - Soundscapes
+        case 9:
+          var data = {
+            '_token'      : $('input[name=_token]').val(),
+            'app_id'      : id,
+            'token'       : token,
+            'title'       : $('input[name="title"]').val(),
+            'notes'       : $('#notes').val(),
+            'audio-src'   : $.parseJSON($.cookie('tfc-audio-src')),
+            'audio-vol'   : $.parseJSON($.cookie('tfc-audio-vol')),
+            'video'       : $('video source').attr('src')
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+
+          break;
+
 
         /*
          *

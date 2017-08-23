@@ -3,6 +3,35 @@
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style media="screen">
+  .ui-slider {
+    background: #e6e6e6;
+    border: none;
+    height: 1em;
+  }
+  .ui-slider-handle {
+    margin-left: .1em !important;
+    cursor: -webkit-grab;
+    cursor: grab;
+  }
+
+  .ui-widget.ui-widget-content {
+    border: none;
+  }
+
+  .ui-slider-handle.ui-corner-all {
+    border-radius: 50%;
+  }
+
+  .ui-state-default, .ui-widget-content .ui-state-default {
+    background-color: {{ $app->colors[1] }};
+    border: none;
+  }
+
+  .ui-slider-range {
+    background: {{ $app->colors[0] }};
+  }
+  </style>
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, ])
@@ -178,6 +207,7 @@
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/plugin/wavesurfer.regions.min.js"></script>
   <script>
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
@@ -206,6 +236,44 @@
       container: '#waveform-4'
     });
 
+    // Set loops
+    wavesurfer_1.on('ready', function () {
+        var duration = wavesurfer_1.getDuration();
+        wavesurfer_1.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
+    wavesurfer_2.on('ready', function () {
+        var duration = wavesurfer_2.getDuration();
+        wavesurfer_2.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
+    wavesurfer_3.on('ready', function () {
+        var duration = wavesurfer_3.getDuration();
+        wavesurfer_3.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
+    wavesurfer_4.on('ready', function () {
+        var duration = wavesurfer_4.getDuration();
+        wavesurfer_4.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
+
 
     // Mixer Init
     var vol_1 = 0;
@@ -218,10 +286,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: 100,
+      value: 0,
       slide: function( event, ui ) {
           vol_1 = ui.value/100;
           wavesurfer_1.setVolume(vol_1);
+          saveVol(vol_1, vol_2, vol_3, vol_4);
       }
     });
     $( "#waveform-2-vol" ).slider({
@@ -229,10 +298,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: 100,
+      value: 0,
       slide: function( event, ui ) {
           vol_2 = ui.value/100;
           wavesurfer_2.setVolume(vol_2);
+          saveVol(vol_1, vol_2, vol_3, vol_4);
       }
     });
     $( "#waveform-3-vol" ).slider({
@@ -240,10 +310,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: 100,
+      value: 0,
       slide: function( event, ui ) {
           vol_3 = ui.value/100;
           wavesurfer_3.setVolume(vol_3);
+          saveVol(vol_1, vol_2, vol_3, vol_4);
       }
     });
     $( "#waveform-4-vol" ).slider({
@@ -251,10 +322,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: 100,
+      value: 0,
       slide: function( event, ui ) {
           vol_4 = ui.value/100;
           wavesurfer_4.setVolume(vol_4);
+          saveVol(vol_1, vol_2, vol_3, vol_4);
       }
     });
 
@@ -262,12 +334,23 @@
       console.log('sessione caricata '+session.token);
 
       // Load audio file
-      var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
-      wavesurfer_1.load(src);
-      wavesurfer_2.load(src);
-      wavesurfer_3.load(src);
-      wavesurfer_4.load(src);
-      $.cookie('tfc-audio', JSON.stringify(src));
+      var src_1 = 'https://ia802606.us.archive.org/24/items/MissCoyoteGirl2010/Miss_Coyote_Girl.mp3'; //musica
+      var src_2 = 'https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3'; // Dialogo
+      var src_3 = 'https://ia601903.us.archive.org/33/items/aporee_7056_8757/DFF01241N6varand.mp3'; // Sottofondo Spiaggia
+      var src_4 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
+      wavesurfer_1.load(src_1);
+      wavesurfer_2.load(src_2);
+      wavesurfer_3.load(src_3);
+      wavesurfer_4.load(src_4);
+
+      var src = {
+        'src_1' : src_1,
+        'src_2' : src_2,
+        'src_3' : src_3,
+        'src_4' : src_4
+      };
+
+      $.cookie('tfc-audio-src', JSON.stringify(src));
 
       // Video and Audio Players Controller
       $('#play').on('click', function() {
@@ -300,7 +383,6 @@
 
       $('#rewind').on('click', function() {
         var time = player.currentTime();
-        console.log(time);
         player.currentTime(time-5);
         wavesurfer_1.skipBackward(5);
         wavesurfer_2.skipBackward(5);
@@ -316,7 +398,17 @@
         wavesurfer_3.skipForward(5);
         wavesurfer_4.skipForward(5);
       });
-
     });
+
+    function saveVol(vol_1, vol_2, vol_3, vol_4)
+    {
+        var vol = {
+          'vol_1' : vol_1,
+          'vol_2' : vol_2,
+          'vol_3' : vol_3,
+          'vol_4' : vol_4,
+        };
+        $.cookie('tfc-audio-vol', JSON.stringify(vol));
+    }
   </script>
 @endsection
