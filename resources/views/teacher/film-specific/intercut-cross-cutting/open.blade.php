@@ -231,5 +231,5 @@
     console.log('---------');
 
   </script>
-  <script src="{{ mix('js/app/2.1/script.js') }}"></script>
+  <script src="{{ mix('js/app/intercut-crosscutting.js') }}"></script>
 @endsection
