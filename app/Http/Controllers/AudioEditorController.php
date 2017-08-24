@@ -31,6 +31,7 @@ class AudioEditorController extends Controller
             $start[$key] = $audio['start'];
           }
           array_multisort($start, SORT_ASC, $data);
+          // array_multisort($start, SORT_DESC, $data);
 
           // Cartelle della sessione
           $storePath = storage_path('app/public/audio/sessions/'.$session_id);
@@ -75,10 +76,10 @@ class AudioEditorController extends Controller
 
               // Se il formato non corrisponde lo uniformo ai requisiti della sessione
               if ($sampleRate !== '44100') {
-                $cli = SOX_LIB.' '.$convPath.' -r 44.1k -b 16 -e float -e signed -c 2 '.$convPath.' -D';
+                $cli = SOX_LIB.' '.$convPath.' -r 44.1k -c 2 '.$convPath.' -D';
                 exec($cli);
               } elseif ($channels !== '2') {
-                $cli = SOX_LIB.' '.$convPath.' -b 16 -e float -e signed -c 2 '.$convPath.' -D';
+                $cli = SOX_LIB.' '.$convPath.' -c 2 '.$convPath.' -D';
                 exec($cli);
               }
 
@@ -87,10 +88,7 @@ class AudioEditorController extends Controller
 
           $dataLenght = count($data);
 
-          // Testing
-          $startPos = collect();
-          // Fine
-
+          // $cli = SOX_LIB.' -m ';
           $cli = SOX_LIB.' -m ';
 
           // taglio i files e li salvo nella cartella tmp
@@ -101,21 +99,24 @@ class AudioEditorController extends Controller
             $srcPath = $storePath.'/src/'.$srcFilename;
             $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp3';
 
-            // Testing
             $var = [
               'duration' => $Audio->tToS($audio['duration']),
               'start' => $Audio->tToS($audio['start']),
             ];
 
-            $startPos->push($var);
-            // Fine
-
+            // if ($key === 0) {
+            //   $cli .= '-t mp3 '.$srcPath.' - ';
+            // } elseif ($key != ($dataLenght - 1)) {
+            //   $cli .= ' -t mp3 '.$srcPath.' pad '.$var['start'].' 0 - ';
+            // } else {
+            //   $cli .= ' -t mp3 '.$srcPath.' pad '.$var['start'].' 0 - ';
+            // }
 
             // tranne il primo
             if ($key == 0) {
               $cli .= $srcPath.' ';
             } else {
-              $cli .= $srcPath.' -p pad '.$var['start'].' 0 "';
+              $cli .= $srcPath.' -p pad '.$var['start'].' "';
 
             }
 
