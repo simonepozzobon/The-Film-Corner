@@ -102,8 +102,8 @@
                       <rect id="Rectangle-path" fill="#6ACCC2" fill-rule="nonzero" x="1451.24" y="169.98" width="49.01" height="917.02"></rect>
                       <rect id="Rectangle-path" fill="#6ACCC2" fill-rule="nonzero" x="1451.24" y="161.51" width="49.01" height="8.46"></rect>
                       <polygon id="DidPath1" onclick="goPage('warm-up')" fill="#9BE2DA" fill-rule="nonzero" points="1792.7 340.59 1143.33 367.63 1039.26 298.95 1137.27 221.86 1786.64 194.82"></polygon>
-                      <polygon id="DidPath2" onclick="goPage('story-telling')" fill="#9BE2DA" fill-rule="nonzero" points="1804.9 820.32 1156.57 774.65 1060.81 694.77 1166.82 629.11 1815.15 674.78"></polygon>
-                      <polygon id="DidPath3" onclick="goPage('mycorner-contest')" fill="#9AE2D9" fill-rule="nonzero" points="1089.06 551.97 1738.85 538.29 1838.42 463.23 1735.78 392.43 1085.99 406.1"></polygon>
+                      <polygon id="DidPath2" onclick="goPage('mycorner-contest')" fill="#9BE2DA" fill-rule="nonzero" points="1804.9 820.32 1156.57 774.65 1060.81 694.77 1166.82 629.11 1815.15 674.78"></polygon>
+                      <polygon id="DidPath3" onclick="goPage('story-telling')" fill="#9AE2D9" fill-rule="nonzero" points="1089.06 551.97 1738.85 538.29 1838.42 463.23 1735.78 392.43 1085.99 406.1"></polygon>
                       <rect id="Rectangle-path" fill="#FF888E" fill-rule="nonzero" x="124.54" y="0" width="14.96" height="67.7"></rect>
                       <rect id="Rectangle-path" fill="#FF888E" fill-rule="nonzero" x="940.68" y="0" width="14.96" height="67.7"></rect>
                       <rect id="Rectangle-path" fill="#F2AF7C" fill-rule="nonzero" x="68.06" y="61.73" width="944.05" height="120.05"></rect>
