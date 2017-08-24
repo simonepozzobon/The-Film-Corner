@@ -227,6 +227,7 @@ Route::prefix('teacher')->group(function() {
 
   // Video Editor
   Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
+  Route::post('/audio-edit/audio-edit-api', 'AudioEditorController@updateEditor')->name('update.teacher.audio.editor');
 
   // Pagine Principali dei padiglioni
 

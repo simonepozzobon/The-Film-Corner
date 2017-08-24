@@ -97624,18 +97624,7 @@ __webpack_require__(48);
 'use strict';
 
 // Define the service
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Feedback', function ($http, CSRF_TOKEN) {
-  return {
-    send: function send(feedbackData) {
-      return $http({
-        method: 'POST',
-        url: 'feedback/feedback-api',
-        data: feedbackData,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-      });
-    }
-  };
-}).factory('Video', function ($http, CSRF_TOKEN, Timeline) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
 
   return {
     send: function send(timelines, counter) {
@@ -97652,11 +97641,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
         };
         media.push(edit);
       }
-
-      // console.log('---------');
-      // console.log('Dati da inviare');
-      // console.log(media);
-      // console.log('---------');
 
       // Ricompone la timelines
       if (typeof session == 'undefined' && counter == 0) {
@@ -97681,9 +97665,14 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
         }
       }
 
+      console.log('---------');
+      console.log('prima inviio');
+      console.log(media);
+      console.log('---------');
+
       return $http({
         method: 'POST',
-        url: '/video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
+        url: '/teacher/audio-edit/audio-edit-api', //url: "{{ route('categories.index') }}",
         data: media
       });
     }
@@ -97721,12 +97710,6 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
       return timelines;
     },
 
-    // getTimelinesOrdered: function() {
-    // // ordino gli oggetti nella timeline
-    // var timelinesOrdered = timelines.sort((a,b) => a.lines[0].events[0].start - b.lines[0].events[0].start);
-    // return timelinesOrdered;
-    // },
-
     addTimeline: function addTimeline(timeline) {
       timelines.push(timeline);
     },
@@ -97741,18 +97724,18 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
 });
 
 // Define the controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controller('mainController', function ($scope, $http, Video) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
   // models
   $scope.videoData = {}; // Initialize the object
 
-  // get function from factory of the Video service
-  // Video.get().then(function(response) {
+  // get function from factory of the Audio service
+  // Audio.get().then(function(response) {
   //     $scope.categories = response.data;
   //   });
 });
 
 // Define the upload Controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Video) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
   // models
 
 
@@ -97800,7 +97783,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('uploadCtrl', []).control
 }]);
 
 // Define the video controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Video', function ($scope, $window, Timeline, Video) {
+__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
 
   // Inizializzo la sessione
   var init = $window.timelines;
@@ -97809,7 +97792,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   if (typeof session == 'undefined') {
 
     // Rigenera Il video
-    Video.send(init, counter).then(function successCallback(response) {
+    Audio.send(init, counter).then(function successCallback(response) {
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,
@@ -97827,13 +97810,9 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
     console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
-    // if (typeof session == 'undefined') {
-    //   console.log('non trovata la sessions');
-    //   timelines = $window.timelines;
-    // }
-    Video.send(timelines).then(function successCallback(response) {
+    Audio.send(timelines).then(function successCallback(response) {
       console.log(timelines);
-      console.log(response.data);
+      console.log(response.data[2]);
       console.log('-------');
       console.log('DEBUG');
       console.log(response);
@@ -97848,7 +97827,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   });
 
   //listen for when the vjs-media object changes
-  $scope.$on('vjsVideoReady', function (e, videoData) {
+  $scope.$on('vjsAudioReady', function (e, videoData) {
 
     // if (videoData.player.id() == 'vjs_video_3') {
     $scope.editorPlay = function () {
@@ -97952,7 +97931,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
       var token = session.token;
     }
 
-    var expPath = 'storage/video/sessions/' + token + '/tfc_video_session.mp4';
+    var expPath = 'app/public/video/oceans.mp4';
     var timeline = {
       session: token,
       file: expPath,
@@ -97993,7 +97972,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('feedbackCtrl', []).contr
 });
 
 // Define the Application
-var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
 
 /***/ }),
 /* 129 */,

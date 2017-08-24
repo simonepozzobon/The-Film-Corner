@@ -8,9 +8,17 @@
 22 Agosto
 _______
 
+- Installazione e compilazione di Sox per l'editing Audio
+- Adattamento, model, migration e controller per l'audio
+
+
+22 Agosto
+_______
+
 - Termine adattamento app intercut-cross-cutting
 - Adattamento script uplaod per app active-intercut-cross-cutting
-
+- Terminata l'app active-intercut-cross-cutting
+- Terminata l'app soundscapes
 
 21 Agosto
 _______
