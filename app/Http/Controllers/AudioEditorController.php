@@ -63,25 +63,32 @@ class AudioEditorController extends Controller
               // qui copio i file nella cartella src
               Storage::copy('public/'.$audioPath, 'public/audio/sessions/'.$session_id.'/src/'.$srcFilename);
               $convPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$srcFilename);
+              $basename = pathinfo($srcFilename, PATHINFO_FILENAME);;
+              $outPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$basename.'.wav');
               // lo converto allo stesso sample rate
               // sox input.mp3 output.wav channels 1 rate 8000
 
-              // Prendo il sample Rate
-              $cli = SOX_LIB.' --i -r '.$convPath;
-              $sampleRate = exec($cli);
+              // // Prendo il sample Rate
+              // $cli = SOX_LIB.' --i -r '.$convPath;
+              // $sampleRate = exec($cli);
+              //
+              // // Prendo il numero di canali
+              // $cli = SOX_LIB.' --i -c '.$convPath;
+              // $channels = exec($cli);
+              //
+              // // Se il formato non corrisponde lo uniformo ai requisiti della sessione
+              // if ($sampleRate !== '44100') {
+              //   $cli = SOX_LIB.' '.$convPath.' -r 44.1k -c 2 -C 320 '.$convPath.' -D';
+              //   exec($cli);
+              // } elseif ($channels !== '2') {
+              //   $cli = SOX_LIB.' '.$convPath.' -c 2 -C 320 '.$convPath.' -D';
+              //   exec($cli);
+              // }
 
-              // Prendo il numero di canali
-              $cli = SOX_LIB.' --i -c '.$convPath;
-              $channels = exec($cli);
+              // -r 48k  -b 16 -L -c 1
 
-              // Se il formato non corrisponde lo uniformo ai requisiti della sessione
-              if ($sampleRate !== '44100') {
-                $cli = SOX_LIB.' '.$convPath.' -r 44.1k -c 2 '.$convPath.' -D';
-                exec($cli);
-              } elseif ($channels !== '2') {
-                $cli = SOX_LIB.' '.$convPath.' -c 2 '.$convPath.' -D';
-                exec($cli);
-              }
+              $cli = SOX_LIB.' '.$convPath.' -r 44.1k -b 16 -c 2 '.$outPath.' -D';
+              exec($cli);
 
             }
           }
@@ -89,15 +96,19 @@ class AudioEditorController extends Controller
           $dataLenght = count($data);
 
           // $cli = SOX_LIB.' -m ';
-          $cli = SOX_LIB.' -m ';
+          $cli = SOX_LIB.' -V -m ';
 
           // taglio i files e li salvo nella cartella tmp
           foreach ($data as $key => $audio) {
             $audioPath = $audio['media_url'];
             $srcFilename = str_replace("audio/uploads/", "", $audioPath);
             $tmpFilename = $audio['id'];
-            $srcPath = $storePath.'/src/'.$srcFilename;
-            $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp3';
+
+            $basename = pathinfo($srcFilename, PATHINFO_FILENAME);;
+            $srcPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$basename.'.wav');
+            // $srcPath = $storePath.'/src/'.$srcFilename;
+
+            $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.wav';
 
             $var = [
               'duration' => $Audio->tToS($audio['duration']),
@@ -116,13 +127,13 @@ class AudioEditorController extends Controller
             if ($key == 0) {
               $cli .= $srcPath.' ';
             } else {
-              $cli .= $srcPath.' -p pad '.$var['start'].' "';
+              $cli .= ''.$srcPath.' -p pad '.$var['start'].' "';
 
             }
 
             // tranne l'ultimo
             if ($key != ($dataLenght - 1)) {
-              $cli .= '"|sox ';
+              $cli .= ' "|sox -t wav ';
             }
           }
 

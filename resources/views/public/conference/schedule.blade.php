@@ -73,7 +73,7 @@
     </div>
     <div class="row">
       <div class="col-sm-2 offset-sm-1">
-        <b>11:15 to 11:30</b>
+        <b>11:00 to 11:15</b>
       </div>
       <div class="col-sm-9">
         Coffee break
@@ -88,7 +88,7 @@
         <ul>
           <li>Christine Eloy (Europa Distribution)</li>
           <li>Elisa Giovannelli (Fondazione Cineteca di Bologna/ECFA)</li>
-          <li>Fatima Djoumer (Europa Cinemas)</li>
+          <li>Alessandro Bollo (Fondazione San Paolo – Polo del ‘900)</li>
           <li>Chairman: Aleksandar Erdeljanovic (Jugoslovenska Kinoteka)</li>
         </ul>
 
