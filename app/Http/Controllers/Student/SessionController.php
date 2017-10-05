@@ -12,7 +12,7 @@ use App\AppCategory;
 use App\SharedSession;
 use App\StudentSession;
 use Illuminate\Http\Request;
-use App\AppSessions\StudentAppSession;
+use App\AppsSessions\StudentAppSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
