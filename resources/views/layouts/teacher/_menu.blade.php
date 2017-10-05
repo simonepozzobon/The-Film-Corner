@@ -20,8 +20,21 @@
         <a href="{{ route('teacher.network.index') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('teacher.settings.index') }}" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+        <a href="{{ route('teacher.settings.index') }}" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i> Panel</a>
       </li>
     </ul>
+    <div class="dropdown mt-2">
+      @php
+        $count = count(Auth::guard('teacher')->user()->unreadNotifications()->get())
+      @endphp
+      <span class="badge {{ $count > 0 ? 'badge-danger' : 'badge-default' }}" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ $count }}</span>
+      <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
+        <h4 class="dropdown-header">Notifications</h4>
+        <hr>
+        @foreach (Auth::guard('teacher')->user()->unreadNotifications()->get() as $key => $notification)
+          <a class="dropdown-item" href="#">You have a new notification from {{ $notification->data['student'] }} - {{ $notification->data['app_category'] }} - {{ $notification->data['app_name'] }}</a>
+        @endforeach
+      </div>
+    </div>
   </div>
 </nav>

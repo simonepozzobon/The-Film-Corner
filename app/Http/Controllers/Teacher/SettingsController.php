@@ -22,7 +22,9 @@ class SettingsController extends Controller
       $teacher = Auth::guard('teacher')->user();
       $students = Student::where('teacher_id', '=', $teacher->id)->get();
 
-      return view('teacher.settings.index', compact('students', 'teacher'));
+      $notifications = $teacher->notifications()->get();
+
+      return view('teacher.settings.index', compact('students', 'teacher', 'notifications'));
     }
 
     public function storeStudent(Request $request)

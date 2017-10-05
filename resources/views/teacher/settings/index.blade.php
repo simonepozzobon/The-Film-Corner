@@ -34,24 +34,20 @@
                     <th></th>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>Gianni</td>
-                      <td>Nome App</td>
-                      <td>Non visualizzato</td>
-                      <td>tools</td>
-                    </tr>
-                    <tr>
-                      <td>Gianni</td>
-                      <td>Nome App</td>
-                      <td>Non visualizzato</td>
-                      <td>tools</td>
-                    </tr>
-                    <tr>
-                      <td>Gianni</td>
-                      <td>Nome App</td>
-                      <td>Non visualizzato</td>
-                      <td>tools</td>
-                    </tr>
+                    @foreach ($notifications as $key => $notification)
+                      <tr>
+                        <td class="align-middle">{{ $notification->data['student'] }}</td>
+                        <td class="align-middle">{{ $notification->data['app_name'] }}</td>
+                        <td class="align-middle">
+                          @if ($notification->read_at == null)
+                            <h4><i class="fa fa-hand-o-right text-danger" aria-hidden="true"></i></h4>
+                          @else
+                            <h4><i class="fa fa-check text-success" aria-hidden="true"></i></h4>
+                          @endif
+                        </td>
+                        <td class="align-middle">Tools</td>
+                      </tr>
+                    @endforeach
                   </tbody>
                 </table>
               </div>
