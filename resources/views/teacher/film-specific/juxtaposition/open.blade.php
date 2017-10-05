@@ -120,7 +120,7 @@
                   <div class="frame container-fluid bg-faded p-4">
                     <h3 class="text-center pb-4">Write your notes</h3>
                     <div class="form-group">
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session }}</textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
                     </div>
                   </div>
                 </div>
