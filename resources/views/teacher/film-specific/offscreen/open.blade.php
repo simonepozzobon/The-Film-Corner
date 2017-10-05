@@ -76,7 +76,7 @@
             <div class="row">
               <div class="col-md-6 offset-md-3">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                  <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>

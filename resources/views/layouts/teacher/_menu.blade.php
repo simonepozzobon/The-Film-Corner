@@ -14,13 +14,13 @@
         <span class="nav-link"> Hello, {{ Auth::guard('teacher')->user()->name }}</span>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
-      </li>
-      <li class="nav-item">
         <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-film" aria-hidden="true"></i> Apps</a>
       </li>
       <li class="nav-item">
-        <a href="{{ url('/teacher') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
+        <a href="{{ route('teacher.network.index') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ route('teacher.settings.index') }}" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
       </li>
     </ul>
   </div>

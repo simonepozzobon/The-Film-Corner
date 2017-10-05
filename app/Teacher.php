@@ -44,4 +44,9 @@ class Teacher extends Authenticatable
     public function medias() {
       return $this->morphToMany('App\Media', 'mediaable');
     }
+
+    public function sessions()
+    {
+      return $this->hasMany('App\TeacherSession');
+    }
 }

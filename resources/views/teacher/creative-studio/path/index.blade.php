@@ -108,12 +108,12 @@
                   </p>
                 </div>
               </div>
-              <div class="row pb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
+              <div class="row pb-5 mb-5" style="background-color: {{ $app->colors[0] }}; color: #252525">
                 <div class="col-md-10 offset-md-1">
                   {{-- <div class="btn-group btn-block"> --}}
                   <p class="text-center">
                     <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
-                    <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>
+                    <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-floppy-o" aria-hidden="true"></i> Saved</a>
                   </p>
                   {{-- </div> --}}
                 </div>
@@ -188,6 +188,7 @@
             data +=   '<td>';
             data +=     '<div class="btn-group">';
             data +=       '<a href="/teacher/creative-studio/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
+            data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-success text-white"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
             data +=       '<a class="btn btn-danger text-white"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
             data +=     '</div>';
             data +=   '</td>';
@@ -213,7 +214,74 @@
           console.log(status);
       }
     });
+  }
 
+  function shareSession(teacherId, appId, sessionToken)
+  {
+    // Remove previous modal
+    $('#sessionModal').modal('hide');
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
+
+    var data = ''
+    data += '<div class="modal fade" id="sessionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+    data +=   '<div class="modal-dialog modal-lg" role="document">';
+    data +=     '<div class="modal-content">';
+    data +=       '<div class="modal-header">';
+    data +=         '<h5 class="modal-title" id="exampleModalLabel">Share your work</h5>';
+    data +=         '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+    data +=           '<i class="fa fa-times" aria-hidden="true"></i>';
+    data +=         '</button>';
+    data +=       '</div>';
+    data +=       '<div class="modal-body">';
+
+    data +=         '<h4 class="text-center">Are You Shure?</h4>'
+    data +=         '<p class="text-center">'
+    data +=           'This will make your work public!'
+    data +=           '{{ csrf_field() }}';
+    data +=         '</p>';
+
+    data +=       '</div>';
+    data +=       '<div class="modal-footer">';
+    data +=         '<button id="share-confirm" type="button" class="btn btn-primary" edata-dismiss="modal"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button>';
+    data +=         '<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>';
+    data +=       '</div>';
+    data +=     '</div>';
+    data +=   '</div>';
+    data += '</div>';
+
+    $('#modalSession').html(data);
+    $('#sessionModal').modal('show');
+
+    $('#share-confirm').on('click', function(e){
+      // e.preventDefault();
+      $.ajax({
+        type: 'POST',
+        url:  '{{ route('teacher.session.share') }}',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        },
+        data: {
+          '_token'  : $('input[name=_token]').val(),
+          'teacher_id' : teacherId,
+          'app_id' : appId,
+          'token' : sessionToken
+        },
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (xhr, status) {
+            console.log(xhr);
+            console.log(status);
+        }
+      });
+    });
+      console.log('--------');
+      console.log('DATA TO SHARE');
+      console.log(teacherId);
+      console.log(appId);
+      console.log(sessionToken);
+      console.log('--------');
   }
 </script>
 @endsection

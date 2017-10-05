@@ -72,3 +72,150 @@ main {
 .building-link {
   cursor: pointer;
 }
+
+
+/**
+ *
+ * COLORS
+ *
+ */
+
+ .blue {
+   background-color: #d9f5fc;
+   color: #252525;
+ }
+ .dark-blue {
+   background-color: #a6dbe2;
+   color: #252525;
+ }
+ .btn-blue {
+   background-color: #a6dbe2;
+   color: #252525;
+   border: none;
+ }
+ .form-yellow input {
+   background-color: #d9f5fc;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+ }
+ .form-yellow input:focus {
+   background-color: #a6dbe2;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom-style: dashed;
+ }
+
+ .yellow {
+   background-color: #f5db5e;
+   color: #252525;
+ }
+ .dark-yellow {
+   background-color: #e9c845;
+   color: #252525;
+ }
+ .btn-yellow {
+   background-color: #e9c845;
+   color: #252525;
+   border: none;
+ }
+ .form-yellow input {
+   background-color: #f5db5e;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+ }
+ .form-yellow input:focus {
+   background-color: #e9c845;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom-style: dashed;
+ }
+
+ .green {
+   background-color: #d8ef8f;
+   color: #252525;
+ }
+ .dark-green {
+   background-color: #b7cc5e; -
+   color: #252525;
+ }
+ .btn-green {
+   background-color: #b7cc5e;
+   color: #252525;
+   border: none;
+ }
+ .form-green input {
+   background-color: #d8ef8f;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+ }
+ .form-green input:focus {
+   background-color: #b7cc5e;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom-style: dashed;
+ }
+
+ .orange {
+   background-color: #f4c490;
+   color: #252525;
+ }
+ .dark-orange {
+   background-color: #e8a360;
+   color: #252525;
+ }
+ .btn-orange {
+   background-color: #e8a360;
+   color: #252525;
+   border: none;
+ }
+ .form-orange input {
+   background-color: #f4c490;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+ }
+ .form-orange input:focus {
+   background-color: #e8a360;
+   border-radius: 0;
+   border-top: none;
+   border-left: none;
+   border-right: none;
+   border-bottom-style: dashed;
+ }
+
+ .visible {
+   height: 100%;
+   overflow: inherit;
+   opacity: 1;
+
+   -webkit-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+      -moz-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+       -ms-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+        -o-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+           transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+ }
+
+ .not-visible {
+   height: 0;
+   overflow: hidden;
+   opacity: 0;
+
+   -webkit-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+      -moz-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+       -ms-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+        -o-transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+           transition: 0.2s opacity cubic-bezier(0.785, 0.135, 0.150, 0.860) 0.1s;
+ }

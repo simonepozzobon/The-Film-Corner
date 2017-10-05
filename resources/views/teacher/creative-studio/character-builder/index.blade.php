@@ -87,7 +87,7 @@
             <div class="row pb-5">
               <div class="col-md-8">
                 <div class="frame container-fluid bg-faded p-4">
-                  <h3 class="text-center pb-4">Build Your Character</h3>
+                  <h3 class="text-center pb-4">Build Your Scene</h3>
                   <div class="row pb-5">
                     <div id="container-canvas" class="col d-flex justify-content-around">
                       <canvas class="image-editor" id="image-editor" width="2048" height="500"></canvas>
@@ -207,8 +207,13 @@
 
     function saveCanvas(canvas)
     {
+      // Save canvas to JSON for future edit
       json_data = JSON.stringify(canvas.toDatalessJSON());
       $.cookie('tfc-canvas', JSON.stringify(json_data));
+
+      // Save image to local storage
+      localStorage.setItem('app-13-image', canvas.toDataURL('png'));
+
       return json_data;
     }
   </script>

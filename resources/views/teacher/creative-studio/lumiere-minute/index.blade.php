@@ -202,6 +202,13 @@
             data += '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>';
             data += '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
             $('#response').append(data);
+
+            var video = {
+                'img' : response.img,
+                'video' : response.src
+            };
+
+            localStorage.setItem('app-16-video', JSON.stringify(video));
           },
           error: function (errors) {
             console.log(errors);

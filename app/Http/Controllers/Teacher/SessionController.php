@@ -9,6 +9,7 @@ use App\Media;
 use App\Utility;
 use App\AppSection;
 use App\AppCategory;
+use App\SharedSession;
 use App\TeacherSession;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
@@ -116,17 +117,29 @@ class SessionController extends Controller
     $utility = new Utility;
 
     // se la validazione funziona allora aggiorno la sessione
-    $path = base_path('storage/app/public/apps/frame-crop');
     $session = AppsSession::where('token', '=', $request['token'])->first();
     $session->is_empty = 0;
     $session->title = $request['title'];
+
+    $path = base_path('storage/app/public/apps/frame-crop');
 
     switch ($request['app_id']) {
 
       // Film Specific - Framing - App 1 - Frame Composer
       case 1:
+        // Save the image
+        if ($request['rendered'] != null) {
+          $path = base_path('storage/app/public/network/frame-composer');
+          if (!file_exists($path)) {
+            $mkdir = Storage::makeDirectory('public/network/frame-composer', 0777, true);
+          }
+          Image::make($request['rendered'])->save($path.'/'.$session->token.'.png');
+          $img = '/storage/network/frame-composer/'.$session->token.'.png';
+        }
+
         $data = [
           'json_data' => $request['canvas'],
+          'rendered' => $img,
           'notes' => $request['notes']
         ];
         $session->content = json_encode($data);
@@ -135,6 +148,7 @@ class SessionController extends Controller
 
       // Film Specific - Framing - App 2 - Frame Crop
       case 2:
+        $path = base_path('storage/app/public/apps/frame-crop');
         if (isset($request['frames'])) {
           $frames = collect();
           foreach ($request['frames'] as $key => $newFrame) {
@@ -166,7 +180,12 @@ class SessionController extends Controller
       // Film Specific - Framing - App 3 - Juxtaposition
       case 3:
         if (isset($request['notes'])) {
-          $session->content = json_encode($request['notes']);
+          $data = [
+            'videos' => $request['videos'],
+            'notes' => $request['notes']
+          ];
+
+          $session->content = json_encode($data);
         }
         break;
 
@@ -181,7 +200,11 @@ class SessionController extends Controller
       // Film Specific - Editing - App 5 - Offscreen
       case 5:
         if (isset($request['notes'])) {
-          $session->content = json_encode($request['notes']);
+          $data = [
+            'video' => $request['video'],
+            'notes' => $request['notes']
+          ];
+          $session->content = json_encode($data);
         }
         break;
 
@@ -248,7 +271,8 @@ class SessionController extends Controller
       // Creative Studio - Warm Up - App 10 - Active Offscreen
       case 10:
         $data = [
-          'nodata' => 'nodata'
+          'main_video' => $request['main_video'],
+          'videos' => $request['videos'],
         ];
 
         $session->content = json_encode($data);
@@ -263,8 +287,19 @@ class SessionController extends Controller
 
       // Creative Studio - Warm Up - App 13 - Character Builder
       case 13:
+        // Save the image
+        if ($request['rendered'] != null) {
+          $path = base_path('storage/app/public/network/character-builder');
+          if (!file_exists($path)) {
+            $mkdir = Storage::makeDirectory('public/network/character-builder', 0777, true);
+          }
+          Image::make($request['rendered'])->save($path.'/'.$session->token.'.png');
+          $img = '/storage/network/character-builder/'.$session->token.'.png';
+        }
+
         $data = [
           'json_data' => $request['canvas'],
+          'rendered' => $img,
           'notes' => $request['notes']
         ];
         $session->content = json_encode($data);
@@ -303,17 +338,19 @@ class SessionController extends Controller
 
       // Creative Studio - My Corner Contest - App 16 - Lumiere Minute
       case 16:
-
-        $session->content = json_encode(['contest']);
-
+        $data = [
+          'video' => $request['video'],
+        ];
+        $session->content = json_encode($data);
         break;
 
 
       // Creative Studio - My Corner Contest - App 17 - Make Your Own Film
       case 17:
-
-        $session->content = json_encode(['contest']);
-
+        $data = [
+          'video' => $request['video'],
+        ];
+        $session->content = json_encode($data);
         break;
 
 
@@ -374,6 +411,124 @@ class SessionController extends Controller
 
     $session->save();
 
+
+    return response()->json($data);
+  }
+
+  public function shareSession(Request $request)
+  {
+    // $teacher = Teacher::find($request['teacher_id']);
+    // $app = App::find($request['app_id']);
+    $session = AppsSession::where('token', '=', $request['token'])->with('teacher', 'app')->first();
+    $teacher = $session->teacher()->first();
+    $app = $session->app()->first();
+
+    // Creo la sessione condivisa
+    $shared = new SharedSession;
+    $shared->app_id = $request['app_id'];
+    $shared->token = $session->token;
+    $shared->title = $session->title;
+
+    switch ($request['app_id']) {
+      // Film Specific - Framing - Frame Composer
+      case '1':
+        // estraggo l'immagine dalla sessione
+        $obj = json_decode($session->content);
+        $img = $obj->rendered;
+        $notes = $obj->notes;
+
+        $content = [
+          'img' => $img,
+          'notes' => $notes,
+        ];
+
+        // condivido la sessione
+        $shared->content = json_encode($content);
+        break;
+
+      // Film Specific - Framing - Frame Crop
+      case '2':
+        // estraggo i frame dalla sessione e li salvo in quella condivisa
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Framing - Juxtaposition
+      case '3':
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Editing - Offscreen
+      case '5':
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Editing - Attractions
+      case '6':
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Sound - What's Going On
+      case '7':
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Sound - Sound Atmosphere
+      case '8':
+        $shared->content = $session->content;
+        break;
+
+      // Film Specific - Sound - Soundscapes
+      case '9':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Warm Up - Active Offscreen
+      case '10':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Story Telling - Character Builder
+      case '13':
+        // estraggo l'immagine dalla sessione
+        $obj = json_decode($session->content);
+        $img = $obj->rendered;
+        $notes = $obj->notes;
+
+        $content = [
+          'img' => $img,
+          'notes' => $notes,
+        ];
+
+        // condivido la sessione
+        $shared->content = json_encode($content);
+        break;
+
+      // Creative Studio - Story Telling - Storytelling
+      case '14':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Story Telling - Storyboard
+      case '15':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Contest - Lumiere Minute
+      case '16':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Contest - Make Your Own Film
+      case '17':
+        $shared->content = $session->content;
+        break;
+    }
+
+    $shared->save();
+
+    $data = [
+      'status' => 'success'
+    ];
 
     return response()->json($data);
   }

@@ -30,6 +30,7 @@ use App\Partner;
 |--------------------------------------------------------------------------
 */
 
+
 Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
 
 
@@ -245,14 +246,22 @@ Route::prefix('teacher')->group(function() {
   Route::post('/creative-studio/{category}/{app_slug}/upload', 'Teacher\CreativeStudioController@uploadVideo')->name('teacher.creative-studio.upload');
   Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Teacher\CreativeStudioController@uploadImg')->name('teacher.creative-studio.upload.img');
 
-
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
   Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
+
+  // Settings
+  Route::get('/settings', 'Teacher\SettingsController@index')->name('teacher.settings.index');
+  Route::post('/settings/store-student', 'Teacher\SettingsController@storeStudent')->name('teacher.student.store');
+  Route::post('/settings/delete-student', 'Teacher\SettingsController@deleteStudent')->name('teacher.student.delete');
+
+  // Network
+  Route::get('/network', 'Teacher\NetworkController@index')->name('teacher.network.index');
 
   // Sessioni
   Route::get('/session/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
   Route::post('/session/new', 'Teacher\SessionController@newSession')->name('new.session');
   Route::post('/session/update', 'Teacher\SessionController@updateSession')->name('update.session');
+  Route::post('/session/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
 });
 
 

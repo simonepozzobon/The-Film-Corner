@@ -13,7 +13,18 @@ class AppsSession extends Model
       return $this->morphToMany('App\Video', 'videoable');
     }
 
-    public function medias() {
+    public function medias()
+    {
       return $this->morphToMany('App\Media', 'mediaable');
+    }
+
+    public function teacher()
+    {
+      return $this->belongsTo('App\Teacher');
+    }
+
+    public function app()
+    {
+      return $this->belongsTo('App\App');
     }
 }

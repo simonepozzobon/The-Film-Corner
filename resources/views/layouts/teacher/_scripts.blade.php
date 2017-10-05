@@ -64,17 +64,23 @@
 
       switch (id) {
 
-        // Film Specific - Framing - App 2 - Frame Composer
+        // Film Specific - Framing - App 1 - Frame Composer
         case 1:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          var rendered = null;
+
+          if (localStorage.getItem('app-1-image')) {
+            rendered = localStorage.getItem('app-1-image');
+          }
 
           var data = {
-            '_token'  : $('input[name=_token]').val(),
-            'app_id'  : id,
-            'token'   : token,
-            'title'   : $('input[name="title"]').val(),
-            'notes'   : $('#notes').val(),
-            'canvas'  : json_data
+            '_token'    : $('input[name=_token]').val(),
+            'app_id'    : id,
+            'token'     : token,
+            'title'     : $('input[name="title"]').val(),
+            'notes'     : $('#notes').val(),
+            'rendered'  : rendered,
+            'canvas'    : json_data
           };
 
           console.log('--------');
@@ -86,7 +92,7 @@
         // Film Specific - Framing - App 2 - Frame Crop
         case 2:
           var frames = [];
-          $('.frames').each(function(k){
+          $('.frame').each(function(k){
             var frame = {
               'text': $(this).find('textarea').val(),
               'order': k,
@@ -110,12 +116,17 @@
 
         // Film Specific - Framing - App 3 - Juxtaposition
         case 3:
+          var videos = [
+            $('#video-left source').attr('src'),
+            $('#video-right source').attr('src'),
+          ];
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'notes'   : $('#notes').val()
+            'notes'   : $('#notes').val(),
+            'videos'  : videos
           };
 
           console.log('--------');
@@ -123,7 +134,7 @@
           console.log('--------');
           break;
 
-        // Film Specific - Framing - App 3 - Juxtaposition
+        // Film Specific - Editing - App 4 - Intercut Cross-Cutting
         case 4:
           var data = {
             '_token'    : $('input[name=_token]').val(),
@@ -145,6 +156,7 @@
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
+            'video'   : $('#video source').attr('src'),
             'notes'   : $('#notes').val()
           };
 
@@ -246,11 +258,17 @@
 
         // Creative Studio - Warm Up - App 10 - Active Offscreen
         case 10:
+          if (localStorage.getItem('app-10-videos')) {
+            var videos = $.parseJSON(localStorage.getItem('app-10-videos'));
+          }
+
           var data = {
-            '_token'  : $('input[name=_token]').val(),
-            'app_id'  : id,
-            'token'   : token,
-            'title'   : $('input[name="title"]').val(),
+            '_token'      : $('input[name=_token]').val(),
+            'app_id'      : id,
+            'token'       : token,
+            'title'       : $('input[name="title"]').val(),
+            'main_video'  : $('#video-main source').attr('src'),
+            'videos'      : videos
           };
 
           console.log('--------');
@@ -277,14 +295,20 @@
         // Creative Studio - Warm Up - App 13 - Character Builder
         case 13:
           var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          var rendered = null;
+
+          if (localStorage.getItem('app-13-image')) {
+            rendered = localStorage.getItem('app-13-image');
+          }
 
           var data = {
-            '_token'  : $('input[name=_token]').val(),
-            'app_id'  : id,
-            'token'   : token,
-            'title'   : $('input[name="title"]').val(),
-            'notes'   : $('#notes').val(),
-            'canvas'  : json_data
+            '_token'    : $('input[name=_token]').val(),
+            'app_id'    : id,
+            'token'     : token,
+            'title'     : $('input[name="title"]').val(),
+            'notes'     : $('#notes').val(),
+            'rendered'  : rendered,
+            'canvas'    : json_data
           };
 
           console.log('--------');
@@ -340,12 +364,16 @@
 
         // Creative Studio - My Corner Contest - App 16 - Lumiere Minute
         case 16:
+          if (localStorage.getItem('app-16-video')) {
+            var video = $.parseJSON(localStorage.getItem('app-16-video'));
+          }
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
+            'video'   : video
           };
 
 
@@ -356,12 +384,16 @@
 
         // Creative Studio - My Corner Contest - App 17 - Make Your Own Film
         case 17:
+          if (localStorage.getItem('app-17-video')) {
+            var video = $.parseJSON(localStorage.getItem('app-17-video'));
+          }
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
+            'video'   : video
           };
 
 

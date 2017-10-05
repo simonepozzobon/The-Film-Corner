@@ -76,7 +76,7 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                  <video id="video-main" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>
@@ -177,13 +177,15 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
-    var player = videojs('video-left', {
+    var player = videojs('video-main', {
       controlBar: {
         playToggle: false,
         volumeMenuButton: false,
         fullscreenToggle: false,
       }
     });
+
+    var videos = [];
 
     player.muted(true);
 
@@ -247,6 +249,14 @@
             data +=    '</td>';
             data += '</tr>';
             $('#videos').append(data);
+
+            var video = {
+                'img' : response.img,
+                'video' : response.src
+            };
+
+            videos.push(video);
+            localStorage.setItem('app-10-videos', JSON.stringify(videos));
           },
           error: function (errors) {
             console.log(errors);

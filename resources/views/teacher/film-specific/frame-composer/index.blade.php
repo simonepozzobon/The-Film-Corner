@@ -207,8 +207,13 @@
 
     function saveCanvas(canvas)
     {
+      // Save canvas to JSON for future edit
       json_data = JSON.stringify(canvas.toDatalessJSON());
       $.cookie('tfc-canvas', JSON.stringify(json_data));
+
+      // Save image to local storage
+      localStorage.setItem('app-1-image', canvas.toDataURL('png'));
+
       return json_data;
     }
   </script>
