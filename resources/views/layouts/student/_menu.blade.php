@@ -19,9 +19,9 @@
       <li class="nav-item">
         <a href="{{ route('student.network.index') }}" class="nav-link"><i class="fa fa-share-alt" aria-hidden="true"></i> Network</a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="{{ route('student.settings.index') }}" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-      </li>
+      </li> --}}
     </ul>
   </div>
 </nav>
