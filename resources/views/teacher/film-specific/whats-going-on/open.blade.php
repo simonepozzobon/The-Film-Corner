@@ -4,7 +4,7 @@
 
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, ])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher])
   <div class="p-5">
   </div>
   <div class="row row-custom">
