@@ -15,7 +15,7 @@
         <div class="box col-md-3 mb-5">
           <div class="container-fluid">
             <div class="row">
-              <div class="col blue">
+              <div class="col {{ $item->colors[0] }}">
                 @if ($item->media_type == 'image')
                   <img src="{{ $item->featured_media }}" alt="" class="img-fluid w-100">
                 @elseif ($item->media_type == 'video')
@@ -26,12 +26,12 @@
               </div>
             </div>
             <div class="row">
-              <div class="col dark-blue py-3 px-5">
+              <div class="col {{ $item->colors[1] }} py-3 px-5" >
                 <h3>{{ $item->title }}</h3>
               </div>
             </div>
             <div class="row">
-              <div class="col blue px-5 pt-3 pb-5">
+              <div class="col {{ $item->colors[0] }} px-5 pt-3 pb-5">
                 <span class="badge badge-default mb-3">{{ $item->app_category }}</span>
                 <span class="badge badge-default mb-3">{{ $item->app_name }}</span>
                 <p>{{ $item->notes }}</p>
