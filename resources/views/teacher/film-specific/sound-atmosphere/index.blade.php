@@ -4,7 +4,7 @@
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
   <div class="p-5">
   </div>
   <div class="row row-custom">
