@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
 

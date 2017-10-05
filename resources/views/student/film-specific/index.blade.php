@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('title', 'Film Specific')
 @section('stylesheets')
   <style media="screen">
@@ -170,13 +170,13 @@
 
       // check what part is clicked
       if (type === 'framing') {
-        loc = '{{ route('teacher.film-specific.index', 'framing') }}';
+        loc = '{{ route('student.film-specific.index', 'framing') }}';
       } else if (type === 'editing') {
-        loc = '{{ route('teacher.film-specific.index', 'editing') }}';
+        loc = '{{ route('student.film-specific.index', 'editing') }}';
       } else if (type === 'sound') {
-        loc = '{{ route('teacher.film-specific.index', 'sound') }}';
+        loc = '{{ route('student.film-specific.index', 'sound') }}';
       } else if (type === 'characters') {
-        loc = '{{ route('teacher.film-specific.index', 'characters') }}';
+        loc = '{{ route('student.film-specific.index', 'characters') }}';
       }
 
       window.location.href = loc;

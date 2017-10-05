@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('stylesheets')
   <style media="screen">
   svg {
@@ -162,11 +162,11 @@
 
       // check what part is clicked
       if (type === 'warm-up') {
-        loc = '{{ route('teacher.creative-studio.index', 'warm-up') }}';
+        loc = '{{ route('student.creative-studio.index', 'warm-up') }}';
       } else if (type === 'story-telling') {
-        loc = '{{ route('teacher.creative-studio.index', 'story-telling') }}';
+        loc = '{{ route('student.creative-studio.index', 'story-telling') }}';
       } else if (type === 'mycorner-contest') {
-        loc = '{{ route('teacher.creative-studio.index', 'mycorner-contest') }}';
+        loc = '{{ route('student.creative-studio.index', 'mycorner-contest') }}';
       }
 
       window.location.href = loc;

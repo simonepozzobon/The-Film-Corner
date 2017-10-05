@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('stylesheets')
   <style media="screen">
   svg {

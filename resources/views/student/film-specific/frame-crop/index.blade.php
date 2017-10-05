@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
   <style media="screen">

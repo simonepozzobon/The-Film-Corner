@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Intercut - Cross Cutting')
 @section('stylesheets')
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}

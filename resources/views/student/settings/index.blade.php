@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('content')
   {{-- <section id="title" class="pt-5">
     <div class="title sp-center pt-5 pb-5">
@@ -169,7 +169,7 @@
     // Panels
     var u_info = $('#students-info');
     var u_add = $('#students-add');
-    var max_students = {{ $teacher->students_slots }};
+    var max_students = {{ $student->students_slots }};
 
     studentCheck();
 
@@ -194,7 +194,7 @@
       };
       $.ajax({
         type: 'post',
-        url:  '{{ route('teacher.student.store') }}',
+        url:  '{{ route('student.student.store') }}',
         headers: {
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
         },
@@ -238,7 +238,7 @@
     {
       $.ajax({
         type: 'post',
-        url:  '{{ route('teacher.student.delete') }}',
+        url:  '{{ route('student.student.delete') }}',
         headers: {
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
         },

@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">

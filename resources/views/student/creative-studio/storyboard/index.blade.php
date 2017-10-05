@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
 
@@ -189,7 +189,7 @@
 
         $.ajax({
           type: 'post',
-          url:  '{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}',
+          url:  '{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
