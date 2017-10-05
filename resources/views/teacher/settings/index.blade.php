@@ -15,6 +15,12 @@
       </div>
     </div>
   </section>
+  <section>
+    @foreach ($notifications as $key => $notification)
+      {{ print_r('<pre>') }}
+      {{ print_r($notification->data['session']) }}
+    @endforeach
+  </section>
   <section id="main" class="pb-5 px-5">
     <div class="row">
       <div class="col-md-9">
@@ -36,8 +42,8 @@
                   <tbody>
                     @foreach ($notifications as $key => $notification)
                       <tr>
-                        <td class="align-middle">{{ $notification->data['student'] }}</td>
-                        <td class="align-middle">{{ $notification->data['app_name'] }}</td>
+                        <td class="align-middle">{{ $notification->data['session']['student']['name'] }}</td>
+                        <td class="align-middle">{{ $notification->data['session']['app']['title'] }}</td>
                         <td class="align-middle">
                           @if ($notification->read_at == null)
                             <h4><i class="fa fa-hand-o-right text-danger" aria-hidden="true"></i></h4>
@@ -45,7 +51,17 @@
                             <h4><i class="fa fa-check text-success" aria-hidden="true"></i></h4>
                           @endif
                         </td>
-                        <td class="align-middle">Tools</td>
+                        <td class="align-middle">
+                          @php
+                            $section_slug = $notification->data['session']['app']['category']['section']['slug'];
+                            $category_slug = $notification->data['session']['app']['category']['slug'];
+                            $app_slug = $notification->data['session']['app']['slug'];
+                            $token = $notification->data['session']['token'];
+                          @endphp
+                          <a class="btn btn-secondary btn-blue" href="{{ url('/') }}/teacher/{{ $section_slug }}/{{ $category_slug }}/{{ $app_slug }}/{{ $token }}">
+                            <i class="fa fa-folder-open-o"></i>
+                          </a>
+                        </td>
                       </tr>
                     @endforeach
                   </tbody>

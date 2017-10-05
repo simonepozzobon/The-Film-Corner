@@ -91,7 +91,11 @@ main {
  .btn-blue {
    background-color: #a6dbe2;
    color: #252525;
-   border: none;
+   border-color: transparent;
+ }
+ .btn-blue:hover {
+   background-color: #d9f5fc;
+   border: 1px solid;
  }
  .form-yellow input {
    background-color: #d9f5fc;
@@ -120,7 +124,11 @@ main {
  .btn-yellow {
    background-color: #e9c845;
    color: #252525;
-   border: none;
+   border-color: transparent;
+ }
+ .btn-yellow:hover {
+   background-color: #f5db5e;
+   border: 1px solid;
  }
  .form-yellow input {
    background-color: #f5db5e;
@@ -149,7 +157,12 @@ main {
  .btn-green {
    background-color: #b7cc5e;
    color: #252525;
-   border: none;
+   border-color: transparent;
+   border-color: transparent;
+ }
+ .btn-green:hover {
+   background-color: #d8ef8f;
+   border: 1px solid;
  }
  .form-green input {
    background-color: #d8ef8f;
@@ -178,7 +191,11 @@ main {
  .btn-orange {
    background-color: #e8a360;
    color: #252525;
-   border: none;
+   border-color: transparent;
+ }
+ .btn-orange:hover {
+   background-color: #f4c490;
+   border: 1px solid;
  }
  .form-orange input {
    background-color: #f4c490;

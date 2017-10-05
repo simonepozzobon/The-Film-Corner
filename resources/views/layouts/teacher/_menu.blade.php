@@ -32,7 +32,7 @@
         <h4 class="dropdown-header">Notifications</h4>
         <hr>
         @foreach (Auth::guard('teacher')->user()->unreadNotifications()->get() as $key => $notification)
-          <a class="dropdown-item" href="#">You have a new notification from {{ $notification->data['student'] }} - {{ $notification->data['app_category'] }} - {{ $notification->data['app_name'] }}</a>
+          <a class="dropdown-item" href="#">You have a new notification from {{ $notification->data['session']['student']['name'] }} - {{ $notification->data['session']['app']['title'] }} - {{ $notification->data['session']['app']['category']['name'] }}</a>
         @endforeach
       </div>
     </div>
