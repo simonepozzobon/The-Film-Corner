@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Student;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -14,7 +16,9 @@ class StudentController extends Controller
 
     public function index()
     {
-        return view('student');
+        $id = Auth::id();
+        $student = Student::find($id);
+        return view('student')->with('student', $student);
     }
 
     public function filmSpecific()
@@ -30,5 +34,10 @@ class StudentController extends Controller
     public function cinemaPav()
     {
       return view('student.cinema.index');
+    }
+
+    public function path()
+    {
+      return view('teacher.path.index');
     }
 }

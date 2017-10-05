@@ -21,4 +21,9 @@ class Media extends Model
     {
         return $this->morphedByMany('App\Teacher', 'mediaable');
     }
+
+    public function students()
+    {
+        return $this->morphedByMany('App\Student', 'mediaable');
+    }
 }
