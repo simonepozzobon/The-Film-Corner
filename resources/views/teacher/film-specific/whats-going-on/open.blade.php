@@ -4,7 +4,7 @@
 
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -147,7 +147,7 @@
       splitChannels: true,
       height: 64
     });
-    
+
     var src = '{{ $session->audio }}';
     wavesurfer.load(src);
     $.cookie('tfc-audio', JSON.stringify(src));

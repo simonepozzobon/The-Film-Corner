@@ -179,11 +179,14 @@ class FilmSpecificController extends Controller
     $app_category = AppCategory::find($app->app_category_id);
 
     $app_session = AppsSession::where('token', '=', $token)->first();
+
+    $is_student = false;
     if ($app_session == null) {
       // Student Session
       $app_session = StudentAppSession::where('token', '=', $token)->first();
       $is_student = true;
     }
+    
     $session = json_decode($app_session->content);
 
     $colors = [

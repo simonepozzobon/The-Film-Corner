@@ -1,14 +1,22 @@
+@php
+  if (!isset($student)) {
+    $student = false;
+    echo "false";
+  }
+@endphp
 <div class="feedback-popup mt-4">
   <div id="help-btn" class="d-block m-1 pl-2">
     <a class="text-white text-align-center btn btn-info btn-lg">
       <i id="help-icon" class="fa fa-question" aria-hidden="true"></i>
     </a>
   </div>
-  <div id="save-btn" class="d-block m-1">
-    <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
-      <i class="fa fa-floppy-o" aria-hidden="true"></i>
-    </a>
-  </div>
+  @if ($student == false)
+    <div id="save-btn" class="d-block m-1">
+      <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      </a>
+    </div>
+  @endif
   <div id="close-btn" class="d-block m-1">
     <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
