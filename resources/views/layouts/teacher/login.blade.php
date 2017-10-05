@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@if (!isset($type))
+  {{ $type = '' }}
+@endif
 <html>
   <head>
     <meta charset="utf-8">
