@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\AppsSession;
+use App\AppsSessions\StudentAppSession;
 
 class FilmSpecificController extends Controller
 {
@@ -177,7 +177,7 @@ class FilmSpecificController extends Controller
     $app = App::where('slug', '=', $app_slug)->with('category')->first();
     $app_category = AppCategory::find($app->app_category_id);
 
-    $app_session = AppsSession::where('token', '=', $token)->first();
+    $app_session = StudentAppSession::where('token', '=', $token)->first();
     $session = json_decode($app_session->content);
 
     $colors = [

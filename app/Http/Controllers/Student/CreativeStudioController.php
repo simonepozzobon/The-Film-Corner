@@ -15,7 +15,7 @@ use App\AudioLibrary;
 use App\VideoLibrary;
 use App\StudentSession;
 use Illuminate\Http\Request;
-use App\AppsSessions\AppsSession;
+use App\AppsSessions\StudentAppSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -147,7 +147,7 @@ class CreativeStudioController extends Controller
     $app = App::where('slug', '=', $app_slug)->with('category')->first();
     $app_category = AppCategory::find($app->app_category_id);
 
-    $app_session = AppsSession::where('token', '=', $token)->first();
+    $app_session = StudentAppSession::where('token', '=', $token)->first();
     $session = json_decode($app_session->content);
 
     $colors = [
@@ -253,7 +253,7 @@ class CreativeStudioController extends Controller
       $student = Auth::guard('student')->user();
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
-      $app_session = AppsSession::where('token', '=', $request->input('session'))->first();
+      $app_session = StudentAppSession::where('token', '=', $request->input('session'))->first();
 
       // return response()->json([$app_session, $request->input('session'), $student]);
 
@@ -313,7 +313,7 @@ class CreativeStudioController extends Controller
       $student = Auth::guard('student')->user();
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
-      $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
+      $app_session = StudentAppSession::where('token', '=', $request->input('session_token'))->first();
 
       // Se c'è un problema con la sessione ritorno un errore
       if ($app_session == null || $student == null) {

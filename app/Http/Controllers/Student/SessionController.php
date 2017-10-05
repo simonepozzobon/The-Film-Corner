@@ -12,7 +12,7 @@ use App\AppCategory;
 use App\SharedSession;
 use App\StudentSession;
 use Illuminate\Http\Request;
-use App\AppsSessions\AppsSession;
+use App\AppSessions\StudentAppSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -23,7 +23,7 @@ class SessionController extends Controller
 {
   public function openSessions($student_id, $app_id)
   {
-    $sessions = AppsSession::where([
+    $sessions = StudentAppSession::where([
       ['student_id', '=', $student_id],
       ['app_id', '=', $app_id]
     ])->get();
@@ -45,7 +45,7 @@ class SessionController extends Controller
   {
     $student = Auth::guard('student')->user();
 
-    $sessions = AppsSession::where([
+    $sessions = StudentAppSession::where([
       ['app_id', '=', $request['app_id']],
       ['student_id', '=', $student->id]
     ])->get();
@@ -87,7 +87,7 @@ class SessionController extends Controller
       }
     }
 
-    $session = new AppsSession;
+    $session = new StudentAppSession;
     $session->student_id = $student->id;
     $session->app_id = $request['app_id'];
     $session->token = uniqid();
@@ -117,7 +117,7 @@ class SessionController extends Controller
     $utility = new Utility;
 
     // se la validazione funziona allora aggiorno la sessione
-    $session = AppsSession::where('token', '=', $request['token'])->first();
+    $session = StudentAppSession::where('token', '=', $request['token'])->first();
     $session->is_empty = 0;
     $session->title = $request['title'];
 
@@ -419,7 +419,7 @@ class SessionController extends Controller
   {
     // $student = Student::find($request['student_id']);
     // $app = App::find($request['app_id']);
-    $session = AppsSession::where('token', '=', $request['token'])->with('student', 'app')->first();
+    $session = StudentAppSession::where('token', '=', $request['token'])->with('student', 'app')->first();
     $student = $session->student()->first();
     $app = $session->app()->first();
 
