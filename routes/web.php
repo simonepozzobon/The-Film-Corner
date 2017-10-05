@@ -283,9 +283,41 @@ Route::prefix('student')->group(function() {
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
 
+  // Video Editor
+  Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.student.editor');
+  Route::post('/audio-edit/audio-edit-api', 'AudioEditorController@updateEditor')->name('update.student.audio.editor');
+
   // Pagine Principali dei padiglioni
+
+  // Film Specific
   Route::get('/film-specific', 'StudentController@filmSpecific')->name('student.film-specific');
-  Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
+  Route::get('/film-specific/{category}', 'Student\FilmSpecificController@index')->name('student.film-specific.index');
+  Route::get('/film-specific/{category}/{app_slug}/{token}', 'Student\FilmSpecificController@openSession')->name('student.film-specific.open.session');
+  Route::get('/film-specific/{category}/{app_slug}', 'Student\FilmSpecificController@app')->name('student.film-specific.app');
+
+  // Film Specific
   Route::get('/creative-studio', 'StudentController@creativeStudio')->name('student.creative-studio');
+  Route::get('/creative-studio/{category}', 'Student\CreativeStudioController@index')->name('student.creative-studio.index');
+  Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Student\CreativeStudioController@openSession')->name('student.creative-studio.open.session');
+  Route::get('/creative-studio/{category}/{app_slug}', 'Student\CreativeStudioController@app')->name('student.creative-studio.app');
+  Route::post('/creative-studio/{category}/{app_slug}/upload', 'Student\CreativeStudioController@uploadVideo')->name('student.creative-studio.upload');
+  Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Student\CreativeStudioController@uploadImg')->name('student.creative-studio.upload.img');
+
+  Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
+  Route::get('/path_1', 'StudentController@path')->name('student.path');
+
+  // Settings
+  Route::get('/settings', 'Student\SettingsController@index')->name('student.settings.index');
+  Route::post('/settings/store-student', 'Student\SettingsController@storeStudent')->name('student.student.store');
+  Route::post('/settings/delete-student', 'Student\SettingsController@deleteStudent')->name('student.student.delete');
+
+  // Network
+  Route::get('/network', 'Student\NetworkController@index')->name('student.network.index');
+
+  // Sessioni
+  Route::get('/session/{student_id}/{app_id}', 'Student\SessionController@openSessions')->name('open.sessions');
+  Route::post('/session/new', 'Student\SessionController@newSession')->name('new.session');
+  Route::post('/session/update', 'Student\SessionController@updateSession')->name('update.session');
+  Route::post('/session/share', 'Student\SessionController@shareSession')->name('student.session.share');
 
 });
