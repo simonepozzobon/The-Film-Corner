@@ -579,6 +579,52 @@
       }
     });
   });
+
+  var notifications = new Array();
+  var $notif_menu = $('#notifications .dropdown-menu');
+  var $main_menu = $('#main-menu');
+
+  $notif_menu.find('.dropdown-item').each(function(){
+      var item = $(this).data('notif-id');
+      notifications.push(item);
+  });
+
+  var menu_height = $main_menu.outerHeight();
+
+  var getNotifications = function() {
+      $.get('/teacher/notifications/get', function(response) {
+          $.each(response, function(k, item) {
+              // escludo tutto quello che non va bene
+              if (item.id) {
+                var check = $.inArray(item.id, notifications);
+                if (check == -1) {
+                  notifications.push(item.id);
+                  var session = item.data.session
+                  var section_slug = session.app.category.section.slug;
+                  var category_slug = session.app.category.slug;
+                  var app_slug = session.app.slug;
+                  var token = session.token;
+                  var message = 'You have a new notification from '+session.student.name+' - '+session.app.title+' - '+session.app.category.name;
+
+                  var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/teacher/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
+                  $notif_menu.append(data);
+                  var data = ''
+                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert" style="top: calc('+menu_height+'px + 1.5rem); right: 1.5rem;">';
+                  data +=   '<span class="bg-warning"></span>';
+                  data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                  data +=     '<span aria-hidden="true">&times;</span>';
+                  data +=   '</button>';
+                  data +=   '<i class="fa fa-globe"></i> '+message;
+                  data += '</div>'
+                  $main_menu.append(data);
+                  console.log(item);
+                }
+              }
+          });
+      });
+  };
+
+  setInterval(getNotifications, 3000);
 </script>
 
 @if ($type == 'app')

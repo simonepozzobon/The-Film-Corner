@@ -19,4 +19,10 @@ class NotificationController extends Controller
       $notification = Auth::guard('teacher')->user()->notifications()->where('id', $request['id'])->first()->delete();
       return response('success');
     }
+
+    public function getNotifications()
+    {
+      $notifications = Auth::guard('teacher')->user()->unreadNotifications()->get();
+      return response()->json($notifications);
+    }
 }

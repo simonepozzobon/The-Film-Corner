@@ -1,5 +1,15 @@
 @extends('layouts.teacher')
 @section('content')
+  <div class="alert alert-success alert-dismissible fade show fixed-top mt-5 w-25 ml-auto" role="alert">
+    <span class="bg-warning"></span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-flex justify-content-between">
+      <h1 class="d-inline-block"><i class="fa fa-globe"></i></h1>
+      <p class"m-5 d-inline-block" ><strong>Holy guacamole!</strong> You should check in on some of those fields below.</p>
+    </div>
+  </div>
   <section id="breadcrumbs mt-5 pt-5 px-5">
     <div class="row pt-5">
       <div class="col pt-5 px-5">

@@ -265,6 +265,7 @@ Route::prefix('teacher')->group(function() {
 
   // Notifications
   Route::get('/notifications/markasread/{id}', 'Teacher\NotificationController@markAsRead')->name('teacher.notifications.markasread');
+  Route::get('/notifications/get', 'Teacher\NotificationController@getNotifications')->name('teacher.notifications.getnew');
   Route::post('/notifications/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
 });
 
