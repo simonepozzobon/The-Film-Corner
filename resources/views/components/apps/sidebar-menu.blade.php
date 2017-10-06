@@ -11,11 +11,22 @@
     </a>
   </div>
   @if ($student == false)
-    <div id="save-btn" class="d-block m-1">
-      <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
-        <i class="fa fa-floppy-o" aria-hidden="true"></i>
-      </a>
-    </div>
+      <div id="save-btn" class="d-block m-1">
+        <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        </a>
+      </div>
+  @else
+      <div id="approve-btn" class="d-block m-1">
+        <a class="text-white text-align-center btn btn-success btn-lg" data-toggle="modal" data-target="#saveSession">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div id="comment-btn" class="d-block m-1">
+        <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="modal" data-target="#saveSession">
+          <i class="fa fa-comment-o" aria-hidden="true"></i>
+        </a>
+      </div>
   @endif
   <div id="close-btn" class="d-block m-1">
     <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
@@ -23,33 +34,35 @@
     </a>
   </div>
 </div>
-<div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <i class="fa fa-times" aria-hidden="true"></i>
-        </button>
-      </div>
-      <form>
-        {{ csrf_field() }}
-        {{ method_field('POST') }}
+@if ($student == false)
+  <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <form>
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
 
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="">Title:</label>
-            <input type="text" name="title" class="form-control">
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="">Title:</label>
+              <input type="text" name="title" class="form-control">
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-          <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
-        </div>
-      </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+            <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-</div>
+@endif
 <div class="modal fade" id="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

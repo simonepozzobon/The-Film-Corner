@@ -262,6 +262,10 @@ Route::prefix('teacher')->group(function() {
   Route::post('/session/new', 'Teacher\SessionController@newSession')->name('new.session');
   Route::post('/session/update', 'Teacher\SessionController@updateSession')->name('update.session');
   Route::post('/session/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
+
+  // Notifications
+  Route::get('/notifications/markasread/{id}', 'Teacher\NotificationController@markAsRead')->name('teacher.notifications.markasread');
+  Route::post('/notifications/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
 });
 
 

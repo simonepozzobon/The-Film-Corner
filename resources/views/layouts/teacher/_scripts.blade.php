@@ -554,6 +554,33 @@
   });
 </script>
 
+{{-- NOTIFICATIONS --}}
+<script type="text/javascript">
+  $('.markasread').on('click', function(e) {
+    var notification_id = $(this).data('notif-id');
+    $.get('/teacher/notifications/markasread/'+notification_id);
+  });
+
+  $('.delete-notif').on('click', function(e) {
+    var notification_id = $(this).data('notif-id');
+    $.ajax({
+      method: 'POST',
+      url: '/teacher/notifications/delete',
+      data: {
+          '_token' : '{{ csrf_token() }}',
+          'id' : notification_id,
+      },
+      success: function(response) {
+        console.log(response);
+        $('*[data-notif-id="'+notification_id+'"]').remove();
+      },
+      error: function(errors) {
+        console.error(errors);
+      }
+    });
+  });
+</script>
+
 @if ($type == 'app')
 <script type="text/javascript">
   var btn = $('#help-btn');
@@ -564,6 +591,8 @@
       $('#app').toggleClass('panel-active');
       $('#save-btn').toggleClass('panel-active');
       $('#close-btn').toggleClass('panel-active');
+      $('#approve-btn').toggleClass('panel-active');
+      $('#comment-btn').toggleClass('panel-active');
 
       if (btn.hasClass('panel-active')) {
         $('#help-icon').removeClass('fa-question');
@@ -572,7 +601,6 @@
         $('#help-icon').removeClass('fa-arrow-left');
         $('#help-icon').addClass('fa-question');
       }
-
   });
 </script>
 @endif

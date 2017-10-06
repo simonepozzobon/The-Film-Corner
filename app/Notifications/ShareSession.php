@@ -21,6 +21,7 @@ class ShareSession extends Notification
     public function __construct($session)
     {
         $this->session = $session;
+        $this->app_category = $session->app->category->section;
     }
 
     /**

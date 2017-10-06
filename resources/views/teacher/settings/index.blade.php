@@ -1,11 +1,5 @@
 @extends('layouts.teacher')
 @section('content')
-  {{-- <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      Editing
-      <h2 class="p-2 block-title">Film Specific</h2>
-    </div>
-  </section> --}}
   <section id="breadcrumbs mt-5 pt-5 px-5">
     <div class="row pt-5">
       <div class="col pt-5 px-5">
@@ -16,10 +10,10 @@
     </div>
   </section>
   <section>
-    @foreach ($notifications as $key => $notification)
-      {{ print_r('<pre>') }}
-      {{ print_r($notification->data['session']) }}
-    @endforeach
+    {{-- @php
+      print_r('<pre>');
+      print_r($notifications[0]->data['session']);
+    @endphp --}}
   </section>
   <section id="main" class="pb-5 px-5">
     <div class="row">
@@ -41,7 +35,7 @@
                   </thead>
                   <tbody>
                     @foreach ($notifications as $key => $notification)
-                      <tr>
+                      <tr data-notif-id="{{ $notification->id }}">
                         <td class="align-middle">{{ $notification->data['session']['student']['name'] }}</td>
                         <td class="align-middle">{{ $notification->data['session']['app']['title'] }}</td>
                         <td class="align-middle">
@@ -58,9 +52,46 @@
                             $app_slug = $notification->data['session']['app']['slug'];
                             $token = $notification->data['session']['token'];
                           @endphp
-                          <a class="btn btn-secondary btn-blue" href="{{ url('/') }}/teacher/{{ $section_slug }}/{{ $category_slug }}/{{ $app_slug }}/{{ $token }}">
-                            <i class="fa fa-folder-open-o"></i>
-                          </a>
+                          <div class="btn-group">
+                            <a class="btn btn-secondary btn-blue markasread" data-notif-id="{{ $notification->id }}" href="{{ url('/') }}/teacher/{{ $section_slug }}/{{ $category_slug }}/{{ $app_slug }}/{{ $token }}">
+                              <i class="fa fa-folder-open-o"></i>
+                            </a>
+                            <a class="btn btn-secondary btn-blue comment-notif" data-notif-id="{{ $notification->id }}" href="#">
+                              <i class="fa fa-comment-o"></i>
+                            </a>
+                            <a class="btn btn-secondary btn-blue approve-notif" data-notif-id="{{ $notification->id }}" href="#">
+                              <i class="fa fa-check-square-o"></i>
+                            </a>
+                            <a class="btn btn-secondary btn-blue" data-toggle="modal" data-target="#delete-notif" href="#">
+                              <i class="fa fa-trash-o"></i>
+                            </a>
+                          </div>
+                          <div class="modal fade" id="delete-notif" tabindex="-1" role="dialog" aria-labelledby="targetLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="targetLabel">Delete Notification</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <h4 class="text-center">Pay attention</h4>
+                                  <p class="text-center">
+                                    This action can't be undone!
+                                  </p>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                    <i class="fa fa-times"></i> Close
+                                  </button>
+                                  <button type="submit" class="btn btn-danger delete-notif" data-notif-id="{{ $notification->id }}" data-dismiss="modal">
+                                    <i class="fa fa-trash-o"></i> Delete
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                       </tr>
                     @endforeach
