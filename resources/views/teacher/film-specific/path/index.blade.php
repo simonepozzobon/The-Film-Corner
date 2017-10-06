@@ -27,7 +27,26 @@
     <div class="row" style="background-color: #d9f5fc; color: #252525">
       <div class="col pt-5 pr-5 pb-5">
         <p class="pl-2">
-          Testo informativo
+          The first step in the world of cinematographic language concerns, of course, framing. We are all more or less familiar with this word, but maybe we have never taken the time to ask ourselves what framing really is. How could we define it? Try to give a definition of framing and write it in the grid below.
+<br><br>
+We decided to start with framing because, like great philosopher and cinema scholar Christian Metz once said, framing is “the minimum meaningful unit of cinematographic language”. To put it simply, framing is where everything starts. In fact, framing is the aspect of cinematographic language with the oldest roots. The laws that underpin the composition of framing go back to photography and, centuries earlier, to geometry. But even before then, they go back to pictorial arts: after all, what is a painting if not the product of an artist who, with his/her own eyes, observes a portion of reality and tries to reproduce it from his/her own point of view? Isn’t a painting, in its own way, a first example of framing? Also, if we think of great figurative artists in art history, we realize how the action of framing is indissolubly linked with the quest for beauty: for centuries, in fact, framing couldn’t be considered as such if it wasn’t beautiful and harmonious.
+<br><br>
+(EXAMPLES OF FRAMES)
+<br><br>
+The ancestral character of cinematographic framing can be found in the first films that followed the birth of cinema in 1895. In the early days filmmakers used a single camera, they fixed it in one position and shot a single long shot of what was happening in front of it. Consequently, the viewer experienced the whole film (normally only a couple of minutes) from a single point of view (or perspective).
+<br><br>
+(LINK)
+<br><br>
+Ever since, cinema and its artists have gradually learnt to create increasingly beautiful, harmonious and meaningful frames, able to evoke emotions and feelings. Directors like Stanley Kubrick, Andreij Tarkovskij and Luchino Visconti made of visual composition the focal part of their art.
+<br><br>
+(EXAMPLES)
+<br><br>
+Take a few minutes and imagine being a director, armed with lens, in a very crowded environment. Picture being in a very crowded ballroom and wanting to focus on a couple of dancers in the very middle of the dance floor. How many frames can you imagine using? Would you like to film the dancers close up or farther away? Which angles can you use to film them? Would the camera be still or would it be moving? And if it were indeed moving, what direction would it go? The same the dancers are going, or a different one? Think about it and, with the help of your friends, list every way in which you could film the dancing couple.
+<br><br>
+In this section of the platform we’ll explore two fundamental aspects that rotate around the concept of framing: its composition and the disposition of the elements in space, the complex relationship between the camera’s lens and the subjects of the frame, the infinite possibilities cinema has to approach the subject of its art: reality.
+<br><br>
+Enjoy your journey in this first section of The Film Corner!
+
         </p>
       </div>
     </div>
