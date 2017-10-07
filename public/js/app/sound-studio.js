@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 162);
+/******/ 	return __webpack_require__(__webpack_require__.s = 161);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -2533,7 +2533,7 @@ function getElAttributes(tag) {
   // known boolean attributes
   // we can check for matching boolean properties, but older browsers
   // won't know about HTML5 boolean attributes that we still read from
-  var knownBooleans = ',' + 'autoplay,controls,loop,muted,default' + ',';
+  var knownBooleans = ',' + 'autoplay,controls,playsinline,loop,muted,default,defaultMuted' + ',';
 
   if (tag && tag.attributes && tag.attributes.length > 0) {
     var attrs = tag.attributes;
@@ -2891,7 +2891,7 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(120);
+var minDoc = __webpack_require__(119);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -2905,7 +2905,7 @@ if (typeof document !== 'undefined') {
     module.exports = doccy;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ }),
 /* 4 */
@@ -2921,7 +2921,7 @@ if (typeof document !== 'undefined') {
     module.exports = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ }),
 /* 5 */
@@ -2931,7 +2931,7 @@ if (typeof document !== 'undefined') {
 
 
 exports.__esModule = true;
-exports.BACKGROUND_SIZE_SUPPORTED = exports.TOUCH_ENABLED = exports.IS_ANY_SAFARI = exports.IS_SAFARI = exports.IE_VERSION = exports.IS_IE8 = exports.IS_CHROME = exports.IS_EDGE = exports.IS_FIREFOX = exports.IS_NATIVE_ANDROID = exports.IS_OLD_ANDROID = exports.ANDROID_VERSION = exports.IS_ANDROID = exports.IOS_VERSION = exports.IS_IOS = exports.IS_IPOD = exports.IS_IPHONE = exports.IS_IPAD = undefined;
+exports.BACKGROUND_SIZE_SUPPORTED = exports.TOUCH_ENABLED = exports.IS_ANY_SAFARI = exports.IS_SAFARI = exports.IE_VERSION = exports.IS_IE8 = exports.CHROME_VERSION = exports.IS_CHROME = exports.IS_EDGE = exports.IS_FIREFOX = exports.IS_NATIVE_ANDROID = exports.IS_OLD_ANDROID = exports.ANDROID_VERSION = exports.IS_ANDROID = exports.IOS_VERSION = exports.IS_IOS = exports.IS_IPOD = exports.IS_IPHONE = exports.IS_IPAD = undefined;
 
 var _dom = __webpack_require__(2);
 
@@ -3006,6 +3006,14 @@ var IS_NATIVE_ANDROID = exports.IS_NATIVE_ANDROID = IS_ANDROID && ANDROID_VERSIO
 var IS_FIREFOX = exports.IS_FIREFOX = /Firefox/i.test(USER_AGENT);
 var IS_EDGE = exports.IS_EDGE = /Edge/i.test(USER_AGENT);
 var IS_CHROME = exports.IS_CHROME = !IS_EDGE && /Chrome/i.test(USER_AGENT);
+var CHROME_VERSION = exports.CHROME_VERSION = function () {
+  var match = USER_AGENT.match(/Chrome\/(\d+)/);
+
+  if (match && match[1]) {
+    return parseFloat(match[1]);
+  }
+  return null;
+}();
 var IS_IE8 = exports.IS_IE8 = /MSIE\s8\.0/.test(USER_AGENT);
 var IE_VERSION = exports.IE_VERSION = function () {
   var result = /MSIE\s(\d+)\.\d/.exec(USER_AGENT);
@@ -3616,6 +3624,30 @@ function fixEvent(event) {
 }
 
 /**
+ * Whether passive event listeners are supported
+ */
+var _supportsPassive = false;
+
+(function () {
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+      get: function get() {
+        _supportsPassive = true;
+      }
+    });
+
+    _window2['default'].addEventListener('test', null, opts);
+  } catch (e) {
+    // disregard
+  }
+})();
+
+/**
+ * Touch events Chrome expects to be passive
+ */
+var passiveEvents = ['touchstart', 'touchmove'];
+
+/**
  * Add an event listener to element
  * It stores the handler function in a separate cache object
  * and adds a generic handler to the element's event,
@@ -3686,7 +3718,12 @@ function on(elem, type, fn) {
 
   if (data.handlers[type].length === 1) {
     if (elem.addEventListener) {
-      elem.addEventListener(type, data.dispatcher, false);
+      var options = false;
+
+      if (_supportsPassive && passiveEvents.indexOf(type) > -1) {
+        options = { passive: true };
+      }
+      elem.addEventListener(type, data.dispatcher, options);
     } else if (elem.attachEvent) {
       elem.attachEvent('on' + type, data.dispatcher);
     }
@@ -3978,6 +4015,33 @@ exports['default'] = toTitleCase;
 /***/ }),
 /* 13 */,
 /* 14 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3985,7 +4049,7 @@ exports['default'] = toTitleCase;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(15);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4160,7 +4224,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4370,8 +4434,10 @@ var ClickableComponent = function (_Component) {
     if (typeof this.tabIndex_ !== 'undefined') {
       this.el_.setAttribute('tabIndex', this.tabIndex_);
     }
-    this.on('tap', this.handleClick);
-    this.on('click', this.handleClick);
+    this.off(['tap', 'click'], this.handleClick);
+    this.off('focus', this.handleFocus);
+    this.off('blur', this.handleBlur);
+    this.on(['tap', 'click'], this.handleClick);
     this.on('focus', this.handleFocus);
     this.on('blur', this.handleBlur);
     return this;
@@ -4391,8 +4457,7 @@ var ClickableComponent = function (_Component) {
     if (typeof this.tabIndex_ !== 'undefined') {
       this.el_.removeAttribute('tabIndex');
     }
-    this.off('tap', this.handleClick);
-    this.off('click', this.handleClick);
+    this.off(['tap', 'click'], this.handleClick);
     this.off('focus', this.handleFocus);
     this.off('blur', this.handleBlur);
     return this;
@@ -4487,7 +4552,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4499,11 +4564,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(111);
+var _htmlTrackElement = __webpack_require__(110);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(110);
+var _htmlTrackElementList = __webpack_require__(109);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
@@ -4515,7 +4580,7 @@ var _textTrack = __webpack_require__(26);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(115);
+var _textTrackList = __webpack_require__(114);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
@@ -4535,7 +4600,7 @@ var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(17);
+var _timeRanges = __webpack_require__(18);
 
 var _buffer = __webpack_require__(44);
 
@@ -5142,7 +5207,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(57);
+      var vtt = __webpack_require__(58);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -5156,7 +5221,7 @@ var Tech = function (_Component) {
       // passed in
       var script = _document2['default'].createElement('script');
 
-      script.src = this.options_['vtt.js'] || 'https://vjs.zencdn.net/vttjs/0.12.3/vtt.min.js';
+      script.src = this.options_['vtt.js'] || 'https://vjs.zencdn.net/vttjs/0.12.4/vtt.min.js';
       script.onload = function () {
         /**
          * Fired when vtt.js is loaded.
@@ -5441,6 +5506,23 @@ var Tech = function (_Component) {
   };
 
   /**
+   * Gets available media playback quality metrics as specified by the W3C's Media
+   * Playback Quality API.
+   *
+   * @see [Spec]{@link https://wicg.github.io/media-playback-quality}
+   *
+   * @return {Object}
+   *         An object with supported media playback quality metrics
+   *
+   * @abstract
+   */
+
+
+  Tech.prototype.getVideoPlaybackQuality = function getVideoPlaybackQuality() {
+    return {};
+  };
+
+  /**
    * A method to set a poster from a `Tech`.
    *
    * @abstract
@@ -5448,6 +5530,24 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.setPoster = function setPoster() {};
+
+  /**
+   * A method to check for the presence of the 'playsinine' <video> attribute.
+   *
+   * @abstract
+   */
+
+
+  Tech.prototype.playsinline = function playsinline() {};
+
+  /**
+   * A method to set or unset the 'playsinine' <video> attribute.
+   *
+   * @abstract
+   */
+
+
+  Tech.prototype.setPlaysinline = function setPlaysinline() {};
 
   /*
    * Check if the tech can support the given mime-type.
@@ -5874,7 +5974,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6026,33 +6126,6 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
 /* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6073,7 +6146,7 @@ var _textTrackMenuItem = __webpack_require__(25);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _offTextTrackMenuItem = __webpack_require__(87);
+var _offTextTrackMenuItem = __webpack_require__(86);
 
 var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
 
@@ -6347,7 +6420,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(15);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -17077,8 +17150,10 @@ var TextTrackMenuItem = function (_MenuItem) {
       }
 
       if (track === this.track) {
-        track.mode = 'showing';
-      } else {
+        if (track.mode !== 'showing') {
+          track.mode = 'showing';
+        }
+      } else if (track.mode !== 'disabled') {
         track.mode = 'disabled';
       }
     }
@@ -17114,7 +17189,7 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(112);
+var _textTrackCueList = __webpack_require__(111);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
@@ -18121,7 +18196,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(14);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -18232,7 +18307,7 @@ var MuteToggle = function (_Button) {
     var vol = this.player_.volume();
     var level = 3;
 
-    if (vol === 0 || this.player_.muted()) {
+    if (this.player_.muted()) {
       level = 0;
     } else if (vol < 0.33) {
       level = 1;
@@ -18379,7 +18454,7 @@ var _fn = __webpack_require__(1);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(94);
+__webpack_require__(93);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -18773,7 +18848,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(15);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -19881,7 +19956,7 @@ var _toTitleCase = __webpack_require__(12);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(17);
+var _timeRanges = __webpack_require__(18);
 
 var _buffer = __webpack_require__(44);
 
@@ -19889,7 +19964,7 @@ var _stylesheet = __webpack_require__(45);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(98);
+var _fullscreenApi = __webpack_require__(97);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
@@ -19897,7 +19972,7 @@ var _mediaError = __webpack_require__(36);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(54);
+var _tuple = __webpack_require__(55);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
@@ -19907,7 +19982,7 @@ var _mergeOptions = __webpack_require__(8);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(114);
+var _textTrackListConverter = __webpack_require__(113);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
@@ -19915,7 +19990,7 @@ var _modalDialog = __webpack_require__(39);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(16);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -19927,27 +20002,27 @@ var _videoTrackList = __webpack_require__(43);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-__webpack_require__(108);
+__webpack_require__(107);
 
-__webpack_require__(106);
+__webpack_require__(105);
 
-__webpack_require__(103);
+__webpack_require__(102);
 
-__webpack_require__(113);
+__webpack_require__(112);
 
-__webpack_require__(99);
+__webpack_require__(98);
+
+__webpack_require__(63);
 
 __webpack_require__(64);
 
-__webpack_require__(65);
+__webpack_require__(67);
 
-__webpack_require__(68);
+__webpack_require__(95);
 
-__webpack_require__(96);
+__webpack_require__(115);
 
-__webpack_require__(116);
-
-__webpack_require__(107);
+__webpack_require__(106);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -20339,6 +20414,11 @@ var Player = function (_Component) {
 
     // Make player easily findable by ID
     Player.players[_this.id_] = _this;
+
+    // Add a major version class to aid css in plugins
+    var majorVersion = '5.20.4'.split('.')[0];
+
+    _this.addClass('vjs-v' + majorVersion);
 
     // When the player is first initialized, trigger activity so components
     // like the control bar show themselves if needed
@@ -20760,6 +20840,7 @@ var Player = function (_Component) {
       'textTracks': this.textTracks_,
       'audioTracks': this.audioTracks_,
       'autoplay': this.options_.autoplay,
+      'playsinline': this.options_.playsinline,
       'preload': this.options_.preload,
       'loop': this.options_.loop,
       'muted': this.options_.muted,
@@ -21699,10 +21780,11 @@ var Player = function (_Component) {
 
   Player.prototype.duration = function duration(seconds) {
     if (seconds === undefined) {
-      return this.cache_.duration || 0;
+      // return NaN if the duration is not known
+      return this.cache_.duration !== undefined ? this.cache_.duration : NaN;
     }
 
-    seconds = parseFloat(seconds) || 0;
+    seconds = parseFloat(seconds);
 
     // Standardize on Inifity for signaling video is live
     if (seconds < 0) {
@@ -22449,6 +22531,33 @@ var Player = function (_Component) {
   };
 
   /**
+   * Set or unset the playsinline attribute.
+   * Playsinline tells the browser that non-fullscreen playback is preferred.
+   *
+   * @param {boolean} [value]
+   *        - true means that we should try to play inline by default
+   *        - false means that we should use the browser's default playback mode,
+   *          which in most cases is inline. iOS Safari is a notable exception
+   *          and plays fullscreen by default.
+   *
+   * @return {string|Player}
+   *         - the current value of playsinline
+   *         - the player when setting
+   *
+   * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
+   */
+
+
+  Player.prototype.playsinline = function playsinline(value) {
+    if (value !== undefined) {
+      this.techCall_('setPlaysinline', value);
+      this.options_.playsinline = value;
+      return this;
+    }
+    return this.techGet_('playsinline');
+  };
+
+  /**
    * Get or set the loop attribute on the video element.
    *
    * @param {boolean} [value]
@@ -23096,6 +23205,22 @@ var Player = function (_Component) {
     if (this.tech_) {
       return this.tech_.removeRemoteTextTrack(track);
     }
+  };
+
+  /**
+   * Gets available media playback quality metrics as specified by the W3C's Media
+   * Playback Quality API.
+   *
+   * @see [Spec]{@link https://wicg.github.io/media-playback-quality}
+   *
+   * @return {Object|undefined}
+   *         An object with supported media playback quality metrics or undefined if there
+   *         is no tech or the tech does not support it.
+   */
+
+
+  Player.prototype.getVideoPlaybackQuality = function getVideoPlaybackQuality() {
+    return this.techGet_('getVideoPlaybackQuality');
   };
 
   /**
@@ -24232,7 +24357,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(17);
+var _timeRanges = __webpack_require__(18);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -24360,7 +24485,15 @@ var _document = __webpack_require__(3);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _setup = __webpack_require__(104);
+var _browser = __webpack_require__(5);
+
+var browser = _interopRequireWildcard(_browser);
+
+var _dom = __webpack_require__(2);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _setup = __webpack_require__(103);
 
 var setup = _interopRequireWildcard(_setup);
 
@@ -24384,7 +24517,7 @@ var _player = __webpack_require__(40);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(100);
+var _plugins = __webpack_require__(99);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
@@ -24400,15 +24533,15 @@ var _textTrack = __webpack_require__(26);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(109);
+var _audioTrack = __webpack_require__(108);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(117);
+var _videoTrack = __webpack_require__(116);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(17);
+var _timeRanges = __webpack_require__(18);
 
 var _formatTime = __webpack_require__(10);
 
@@ -24417,14 +24550,6 @@ var _formatTime2 = _interopRequireDefault(_formatTime);
 var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
-
-var _dom = __webpack_require__(2);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _browser = __webpack_require__(5);
-
-var browser = _interopRequireWildcard(_browser);
 
 var _url = __webpack_require__(22);
 
@@ -24436,7 +24561,7 @@ var _computedStyle = __webpack_require__(30);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(97);
+var _extend = __webpack_require__(96);
 
 var _extend2 = _interopRequireDefault(_extend);
 
@@ -24444,7 +24569,7 @@ var _xhr = __webpack_require__(47);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(16);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -24638,7 +24763,7 @@ setup.autoSetupTimeout(1, videojs);
  *
  * @type {string}
  */
-videojs.VERSION = '5.19.2';
+videojs.VERSION = '5.20.4';
 
 /**
  * The global options object. These are the settings that take effect
@@ -25070,8 +25195,8 @@ exports['default'] = videojs;
 
 var window = __webpack_require__(4)
 var isFunction = __webpack_require__(31)
-var parseHeaders = __webpack_require__(53)
-var xtend = __webpack_require__(119)
+var parseHeaders = __webpack_require__(54)
+var xtend = __webpack_require__(118)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -60025,11 +60150,31 @@ function forEachObject(object, iterator, context) {
 
 
 /***/ }),
-/* 52 */,
-/* 53 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(55)
+/* WEBPACK VAR INJECTION */(function(global) {var win;
+
+if (typeof window !== "undefined") {
+    win = window;
+} else if (typeof global !== "undefined") {
+    win = global;
+} else if (typeof self !== "undefined"){
+    win = self;
+} else {
+    win = {};
+}
+
+module.exports = win;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
+
+/***/ }),
+/* 53 */,
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var trim = __webpack_require__(56)
   , forEach = __webpack_require__(51)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
@@ -60062,7 +60207,7 @@ module.exports = function (headers) {
 }
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -60082,7 +60227,7 @@ function SafeParseTuple(obj, reviver) {
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports) {
 
 
@@ -60102,12 +60247,12 @@ exports.right = function(str){
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * @license
- * Video.js 6.2.6 <http://videojs.com/>
+ * Video.js 6.2.7 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/master/LICENSE>
@@ -60123,7 +60268,7 @@ exports.right = function(str){
 	(global.videojs = factory());
 }(this, (function () {
 
-var version = "6.2.6";
+var version = "6.2.7";
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -66929,7 +67074,7 @@ var Url = (Object.freeze || Object)({
 	isCrossOrigin: isCrossOrigin
 });
 
-var index$1 = isFunction;
+var isFunction_1 = isFunction;
 
 var toString$1 = Object.prototype.toString;
 
@@ -66945,7 +67090,7 @@ function isFunction (fn) {
       fn === window.prompt))
 }
 
-var index$3 = createCommonjsModule(function (module, exports) {
+var trim_1 = createCommonjsModule(function (module, exports) {
 exports = module.exports = trim;
 
 function trim(str){
@@ -66961,13 +67106,13 @@ exports.right = function(str){
 };
 });
 
-var index$5 = forEach;
+var forEach_1 = forEach;
 
 var toString$2 = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function forEach(list, iterator, context) {
-    if (!index$1(iterator)) {
+    if (!isFunction_1(iterator)) {
         throw new TypeError('iterator must be a function')
     }
 
@@ -67016,12 +67161,12 @@ var parseHeaders = function (headers) {
 
   var result = {};
 
-  index$5(
-      index$3(headers).split('\n')
+  forEach_1(
+      trim_1(headers).split('\n')
     , function (row) {
         var index = row.indexOf(':')
-          , key = index$3(row.slice(0, index)).toLowerCase()
-          , value = index$3(row.slice(index + 1));
+          , key = trim_1(row.slice(0, index)).toLowerCase()
+          , value = trim_1(row.slice(index + 1));
 
         if (typeof(result[key]) === 'undefined') {
           result[key] = value;
@@ -67056,7 +67201,7 @@ function extend() {
     return target
 }
 
-var index = createXHR;
+var xhr = createXHR;
 createXHR.XMLHttpRequest = window_1.XMLHttpRequest || noop;
 createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window_1.XDomainRequest;
 
@@ -67084,7 +67229,7 @@ function isEmpty(obj){
 function initParams(uri, options, callback) {
     var params = uri;
 
-    if (index$1(options)) {
+    if (isFunction_1(options)) {
         callback = options;
         if (typeof uri === "string") {
             params = {uri:uri};
@@ -67362,7 +67507,7 @@ var loadTrack = function loadTrack(src, track) {
     opts.cors = crossOrigin;
   }
 
-  index(opts, bind(this, function (err, response, responseBody) {
+  xhr(opts, bind(this, function (err, response, responseBody) {
     if (err) {
       return log$1.error(err, response);
     }
@@ -78482,7 +78627,7 @@ var Html5 = function (_Tech) {
       el.playerId = this.options_.playerId;
     }
 
-    if (this.options_.preload !== 'undefined') {
+    if (typeof this.options_.preload !== 'undefined') {
       setAttribute(el, 'preload', this.options_.preload);
     }
 
@@ -84418,14 +84563,14 @@ videojs.hook = function (type, fn) {
  *         The function that was removed or undef
  */
 videojs.removeHook = function (type, fn) {
-  var index$$1 = videojs.hooks(type).indexOf(fn);
+  var index = videojs.hooks(type).indexOf(fn);
 
-  if (index$$1 <= -1) {
+  if (index <= -1) {
     return false;
   }
 
   videojs.hooks_[type] = videojs.hooks_[type].slice();
-  videojs.hooks_[type].splice(index$$1, 1);
+  videojs.hooks_[type].splice(index, 1);
 
   return true;
 };
@@ -84762,7 +84907,7 @@ videojs.trigger = trigger;
  *
  * @see https://github.com/Raynos/xhr
  */
-videojs.xhr = index;
+videojs.xhr = xhr;
 
 /**
  * TextTrack class
@@ -84944,10 +85089,10 @@ return videojs;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(18)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -84970,10 +85115,13 @@ return videojs;
 // VTTRegion in Node since we likely want the capability to convert back and
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
+
+var window = __webpack_require__(52);
+
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(58).WebVTT,
-  VTTCue: __webpack_require__(59).VTTCue,
-  VTTRegion: __webpack_require__(61).VTTRegion
+  WebVTT: __webpack_require__(59),
+  VTTCue: __webpack_require__(60),
+  VTTRegion: __webpack_require__(61)
 };
 
 window.vttjs = vttjs;
@@ -85000,7 +85148,7 @@ if (!window.VTTCue) {
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports) {
 
 /**
@@ -85021,1388 +85169,1317 @@ if (!window.VTTCue) {
 
 /* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-
-(function(global) {
-
-  var _objCreate = Object.create || (function() {
-    function F() {}
-    return function(o) {
-      if (arguments.length !== 1) {
-        throw new Error('Object.create shim only accepts one parameter.');
-      }
-      F.prototype = o;
-      return new F();
-    };
-  })();
-
-  // Creates a new ParserError object from an errorData object. The errorData
-  // object should have default code and message properties. The default message
-  // property can be overriden by passing in a message parameter.
-  // See ParsingError.Errors below for acceptable errors.
-  function ParsingError(errorData, message) {
-    this.name = "ParsingError";
-    this.code = errorData.code;
-    this.message = message || errorData.message;
-  }
-  ParsingError.prototype = _objCreate(Error.prototype);
-  ParsingError.prototype.constructor = ParsingError;
-
-  // ParsingError metadata for acceptable ParsingErrors.
-  ParsingError.Errors = {
-    BadSignature: {
-      code: 0,
-      message: "Malformed WebVTT signature."
-    },
-    BadTimeStamp: {
-      code: 1,
-      message: "Malformed time stamp."
+var _objCreate = Object.create || (function() {
+  function F() {}
+  return function(o) {
+    if (arguments.length !== 1) {
+      throw new Error('Object.create shim only accepts one parameter.');
     }
+    F.prototype = o;
+    return new F();
   };
+})();
 
-  // Try to parse input as a time stamp.
-  function parseTimeStamp(input) {
+// Creates a new ParserError object from an errorData object. The errorData
+// object should have default code and message properties. The default message
+// property can be overriden by passing in a message parameter.
+// See ParsingError.Errors below for acceptable errors.
+function ParsingError(errorData, message) {
+  this.name = "ParsingError";
+  this.code = errorData.code;
+  this.message = message || errorData.message;
+}
+ParsingError.prototype = _objCreate(Error.prototype);
+ParsingError.prototype.constructor = ParsingError;
 
-    function computeSeconds(h, m, s, f) {
-      return (h | 0) * 3600 + (m | 0) * 60 + (s | 0) + (f | 0) / 1000;
+// ParsingError metadata for acceptable ParsingErrors.
+ParsingError.Errors = {
+  BadSignature: {
+    code: 0,
+    message: "Malformed WebVTT signature."
+  },
+  BadTimeStamp: {
+    code: 1,
+    message: "Malformed time stamp."
+  }
+};
+
+// Try to parse input as a time stamp.
+function parseTimeStamp(input) {
+
+  function computeSeconds(h, m, s, f) {
+    return (h | 0) * 3600 + (m | 0) * 60 + (s | 0) + (f | 0) / 1000;
+  }
+
+  var m = input.match(/^(\d+):(\d{2})(:\d{2})?\.(\d{3})/);
+  if (!m) {
+    return null;
+  }
+
+  if (m[3]) {
+    // Timestamp takes the form of [hours]:[minutes]:[seconds].[milliseconds]
+    return computeSeconds(m[1], m[2], m[3].replace(":", ""), m[4]);
+  } else if (m[1] > 59) {
+    // Timestamp takes the form of [hours]:[minutes].[milliseconds]
+    // First position is hours as it's over 59.
+    return computeSeconds(m[1], m[2], 0,  m[4]);
+  } else {
+    // Timestamp takes the form of [minutes]:[seconds].[milliseconds]
+    return computeSeconds(0, m[1], m[2], m[4]);
+  }
+}
+
+// A settings object holds key/value pairs and will ignore anything but the first
+// assignment to a specific key.
+function Settings() {
+  this.values = _objCreate(null);
+}
+
+Settings.prototype = {
+  // Only accept the first assignment to any key.
+  set: function(k, v) {
+    if (!this.get(k) && v !== "") {
+      this.values[k] = v;
     }
+  },
+  // Return the value for a key, or a default value.
+  // If 'defaultKey' is passed then 'dflt' is assumed to be an object with
+  // a number of possible default values as properties where 'defaultKey' is
+  // the key of the property that will be chosen; otherwise it's assumed to be
+  // a single value.
+  get: function(k, dflt, defaultKey) {
+    if (defaultKey) {
+      return this.has(k) ? this.values[k] : dflt[defaultKey];
+    }
+    return this.has(k) ? this.values[k] : dflt;
+  },
+  // Check whether we have a value for a key.
+  has: function(k) {
+    return k in this.values;
+  },
+  // Accept a setting if its one of the given alternatives.
+  alt: function(k, v, a) {
+    for (var n = 0; n < a.length; ++n) {
+      if (v === a[n]) {
+        this.set(k, v);
+        break;
+      }
+    }
+  },
+  // Accept a setting if its a valid (signed) integer.
+  integer: function(k, v) {
+    if (/^-?\d+$/.test(v)) { // integer
+      this.set(k, parseInt(v, 10));
+    }
+  },
+  // Accept a setting if its a valid percentage.
+  percent: function(k, v) {
+    var m;
+    if ((m = v.match(/^([\d]{1,3})(\.[\d]*)?%$/))) {
+      v = parseFloat(v);
+      if (v >= 0 && v <= 100) {
+        this.set(k, v);
+        return true;
+      }
+    }
+    return false;
+  }
+};
 
-    var m = input.match(/^(\d+):(\d{2})(:\d{2})?\.(\d{3})/);
-    if (!m) {
+// Helper function to parse input into groups separated by 'groupDelim', and
+// interprete each group as a key/value pair separated by 'keyValueDelim'.
+function parseOptions(input, callback, keyValueDelim, groupDelim) {
+  var groups = groupDelim ? input.split(groupDelim) : [input];
+  for (var i in groups) {
+    if (typeof groups[i] !== "string") {
+      continue;
+    }
+    var kv = groups[i].split(keyValueDelim);
+    if (kv.length !== 2) {
+      continue;
+    }
+    var k = kv[0];
+    var v = kv[1];
+    callback(k, v);
+  }
+}
+
+function parseCue(input, cue, regionList) {
+  // Remember the original input if we need to throw an error.
+  var oInput = input;
+  // 4.1 WebVTT timestamp
+  function consumeTimeStamp() {
+    var ts = parseTimeStamp(input);
+    if (ts === null) {
+      throw new ParsingError(ParsingError.Errors.BadTimeStamp,
+                            "Malformed timestamp: " + oInput);
+    }
+    // Remove time stamp from input.
+    input = input.replace(/^[^\sa-zA-Z-]+/, "");
+    return ts;
+  }
+
+  // 4.4.2 WebVTT cue settings
+  function consumeCueSettings(input, cue) {
+    var settings = new Settings();
+
+    parseOptions(input, function (k, v) {
+      switch (k) {
+      case "region":
+        // Find the last region we parsed with the same region id.
+        for (var i = regionList.length - 1; i >= 0; i--) {
+          if (regionList[i].id === v) {
+            settings.set(k, regionList[i].region);
+            break;
+          }
+        }
+        break;
+      case "vertical":
+        settings.alt(k, v, ["rl", "lr"]);
+        break;
+      case "line":
+        var vals = v.split(","),
+            vals0 = vals[0];
+        settings.integer(k, vals0);
+        settings.percent(k, vals0) ? settings.set("snapToLines", false) : null;
+        settings.alt(k, vals0, ["auto"]);
+        if (vals.length === 2) {
+          settings.alt("lineAlign", vals[1], ["start", "middle", "end"]);
+        }
+        break;
+      case "position":
+        vals = v.split(",");
+        settings.percent(k, vals[0]);
+        if (vals.length === 2) {
+          settings.alt("positionAlign", vals[1], ["start", "middle", "end"]);
+        }
+        break;
+      case "size":
+        settings.percent(k, v);
+        break;
+      case "align":
+        settings.alt(k, v, ["start", "middle", "end", "left", "right"]);
+        break;
+      }
+    }, /:/, /\s/);
+
+    // Apply default values for any missing fields.
+    cue.region = settings.get("region", null);
+    cue.vertical = settings.get("vertical", "");
+    cue.line = settings.get("line", "auto");
+    cue.lineAlign = settings.get("lineAlign", "start");
+    cue.snapToLines = settings.get("snapToLines", true);
+    cue.size = settings.get("size", 100);
+    cue.align = settings.get("align", "middle");
+    cue.position = settings.get("position", {
+      start: 0,
+      left: 0,
+      middle: 50,
+      end: 100,
+      right: 100
+    }, cue.align);
+    cue.positionAlign = settings.get("positionAlign", {
+      start: "start",
+      left: "start",
+      middle: "middle",
+      end: "end",
+      right: "end"
+    }, cue.align);
+  }
+
+  function skipWhitespace() {
+    input = input.replace(/^\s+/, "");
+  }
+
+  // 4.1 WebVTT cue timings.
+  skipWhitespace();
+  cue.startTime = consumeTimeStamp();   // (1) collect cue start time
+  skipWhitespace();
+  if (input.substr(0, 3) !== "-->") {     // (3) next characters must match "-->"
+    throw new ParsingError(ParsingError.Errors.BadTimeStamp,
+                           "Malformed time stamp (time stamps must be separated by '-->'): " +
+                           oInput);
+  }
+  input = input.substr(3);
+  skipWhitespace();
+  cue.endTime = consumeTimeStamp();     // (5) collect cue end time
+
+  // 4.1 WebVTT cue settings list.
+  skipWhitespace();
+  consumeCueSettings(input, cue);
+}
+
+var ESCAPE = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&lrm;": "\u200e",
+  "&rlm;": "\u200f",
+  "&nbsp;": "\u00a0"
+};
+
+var TAG_NAME = {
+  c: "span",
+  i: "i",
+  b: "b",
+  u: "u",
+  ruby: "ruby",
+  rt: "rt",
+  v: "span",
+  lang: "span"
+};
+
+var TAG_ANNOTATION = {
+  v: "title",
+  lang: "lang"
+};
+
+var NEEDS_PARENT = {
+  rt: "ruby"
+};
+
+// Parse content into a document fragment.
+function parseContent(window, input) {
+  function nextToken() {
+    // Check for end-of-string.
+    if (!input) {
       return null;
     }
 
-    if (m[3]) {
-      // Timestamp takes the form of [hours]:[minutes]:[seconds].[milliseconds]
-      return computeSeconds(m[1], m[2], m[3].replace(":", ""), m[4]);
-    } else if (m[1] > 59) {
-      // Timestamp takes the form of [hours]:[minutes].[milliseconds]
-      // First position is hours as it's over 59.
-      return computeSeconds(m[1], m[2], 0,  m[4]);
-    } else {
-      // Timestamp takes the form of [minutes]:[seconds].[milliseconds]
-      return computeSeconds(0, m[1], m[2], m[4]);
+    // Consume 'n' characters from the input.
+    function consume(result) {
+      input = input.substr(result.length);
+      return result;
+    }
+
+    var m = input.match(/^([^<]*)(<[^>]+>?)?/);
+    // If there is some text before the next tag, return it, otherwise return
+    // the tag.
+    return consume(m[1] ? m[1] : m[2]);
+  }
+
+  // Unescape a string 's'.
+  function unescape1(e) {
+    return ESCAPE[e];
+  }
+  function unescape(s) {
+    while ((m = s.match(/&(amp|lt|gt|lrm|rlm|nbsp);/))) {
+      s = s.replace(m[0], unescape1);
+    }
+    return s;
+  }
+
+  function shouldAdd(current, element) {
+    return !NEEDS_PARENT[element.localName] ||
+           NEEDS_PARENT[element.localName] === current.localName;
+  }
+
+  // Create an element for this tag.
+  function createElement(type, annotation) {
+    var tagName = TAG_NAME[type];
+    if (!tagName) {
+      return null;
+    }
+    var element = window.document.createElement(tagName);
+    element.localName = tagName;
+    var name = TAG_ANNOTATION[type];
+    if (name && annotation) {
+      element[name] = annotation.trim();
+    }
+    return element;
+  }
+
+  var rootDiv = window.document.createElement("div"),
+      current = rootDiv,
+      t,
+      tagStack = [];
+
+  while ((t = nextToken()) !== null) {
+    if (t[0] === '<') {
+      if (t[1] === "/") {
+        // If the closing tag matches, move back up to the parent node.
+        if (tagStack.length &&
+            tagStack[tagStack.length - 1] === t.substr(2).replace(">", "")) {
+          tagStack.pop();
+          current = current.parentNode;
+        }
+        // Otherwise just ignore the end tag.
+        continue;
+      }
+      var ts = parseTimeStamp(t.substr(1, t.length - 2));
+      var node;
+      if (ts) {
+        // Timestamps are lead nodes as well.
+        node = window.document.createProcessingInstruction("timestamp", ts);
+        current.appendChild(node);
+        continue;
+      }
+      var m = t.match(/^<([^.\s/0-9>]+)(\.[^\s\\>]+)?([^>\\]+)?(\\?)>?$/);
+      // If we can't parse the tag, skip to the next tag.
+      if (!m) {
+        continue;
+      }
+      // Try to construct an element, and ignore the tag if we couldn't.
+      node = createElement(m[1], m[3]);
+      if (!node) {
+        continue;
+      }
+      // Determine if the tag should be added based on the context of where it
+      // is placed in the cuetext.
+      if (!shouldAdd(current, node)) {
+        continue;
+      }
+      // Set the class list (as a list of classes, separated by space).
+      if (m[2]) {
+        node.className = m[2].substr(1).replace('.', ' ');
+      }
+      // Append the node to the current node, and enter the scope of the new
+      // node.
+      tagStack.push(m[1]);
+      current.appendChild(node);
+      current = node;
+      continue;
+    }
+
+    // Text nodes are leaf nodes.
+    current.appendChild(window.document.createTextNode(unescape(t)));
+  }
+
+  return rootDiv;
+}
+
+// This is a list of all the Unicode characters that have a strong
+// right-to-left category. What this means is that these characters are
+// written right-to-left for sure. It was generated by pulling all the strong
+// right-to-left characters out of the Unicode data table. That table can
+// found at: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+var strongRTLRanges = [[0x5be, 0x5be], [0x5c0, 0x5c0], [0x5c3, 0x5c3], [0x5c6, 0x5c6],
+ [0x5d0, 0x5ea], [0x5f0, 0x5f4], [0x608, 0x608], [0x60b, 0x60b], [0x60d, 0x60d],
+ [0x61b, 0x61b], [0x61e, 0x64a], [0x66d, 0x66f], [0x671, 0x6d5], [0x6e5, 0x6e6],
+ [0x6ee, 0x6ef], [0x6fa, 0x70d], [0x70f, 0x710], [0x712, 0x72f], [0x74d, 0x7a5],
+ [0x7b1, 0x7b1], [0x7c0, 0x7ea], [0x7f4, 0x7f5], [0x7fa, 0x7fa], [0x800, 0x815],
+ [0x81a, 0x81a], [0x824, 0x824], [0x828, 0x828], [0x830, 0x83e], [0x840, 0x858],
+ [0x85e, 0x85e], [0x8a0, 0x8a0], [0x8a2, 0x8ac], [0x200f, 0x200f],
+ [0xfb1d, 0xfb1d], [0xfb1f, 0xfb28], [0xfb2a, 0xfb36], [0xfb38, 0xfb3c],
+ [0xfb3e, 0xfb3e], [0xfb40, 0xfb41], [0xfb43, 0xfb44], [0xfb46, 0xfbc1],
+ [0xfbd3, 0xfd3d], [0xfd50, 0xfd8f], [0xfd92, 0xfdc7], [0xfdf0, 0xfdfc],
+ [0xfe70, 0xfe74], [0xfe76, 0xfefc], [0x10800, 0x10805], [0x10808, 0x10808],
+ [0x1080a, 0x10835], [0x10837, 0x10838], [0x1083c, 0x1083c], [0x1083f, 0x10855],
+ [0x10857, 0x1085f], [0x10900, 0x1091b], [0x10920, 0x10939], [0x1093f, 0x1093f],
+ [0x10980, 0x109b7], [0x109be, 0x109bf], [0x10a00, 0x10a00], [0x10a10, 0x10a13],
+ [0x10a15, 0x10a17], [0x10a19, 0x10a33], [0x10a40, 0x10a47], [0x10a50, 0x10a58],
+ [0x10a60, 0x10a7f], [0x10b00, 0x10b35], [0x10b40, 0x10b55], [0x10b58, 0x10b72],
+ [0x10b78, 0x10b7f], [0x10c00, 0x10c48], [0x1ee00, 0x1ee03], [0x1ee05, 0x1ee1f],
+ [0x1ee21, 0x1ee22], [0x1ee24, 0x1ee24], [0x1ee27, 0x1ee27], [0x1ee29, 0x1ee32],
+ [0x1ee34, 0x1ee37], [0x1ee39, 0x1ee39], [0x1ee3b, 0x1ee3b], [0x1ee42, 0x1ee42],
+ [0x1ee47, 0x1ee47], [0x1ee49, 0x1ee49], [0x1ee4b, 0x1ee4b], [0x1ee4d, 0x1ee4f],
+ [0x1ee51, 0x1ee52], [0x1ee54, 0x1ee54], [0x1ee57, 0x1ee57], [0x1ee59, 0x1ee59],
+ [0x1ee5b, 0x1ee5b], [0x1ee5d, 0x1ee5d], [0x1ee5f, 0x1ee5f], [0x1ee61, 0x1ee62],
+ [0x1ee64, 0x1ee64], [0x1ee67, 0x1ee6a], [0x1ee6c, 0x1ee72], [0x1ee74, 0x1ee77],
+ [0x1ee79, 0x1ee7c], [0x1ee7e, 0x1ee7e], [0x1ee80, 0x1ee89], [0x1ee8b, 0x1ee9b],
+ [0x1eea1, 0x1eea3], [0x1eea5, 0x1eea9], [0x1eeab, 0x1eebb], [0x10fffd, 0x10fffd]];
+
+function isStrongRTLChar(charCode) {
+  for (var i = 0; i < strongRTLRanges.length; i++) {
+    var currentRange = strongRTLRanges[i];
+    if (charCode >= currentRange[0] && charCode <= currentRange[1]) {
+      return true;
     }
   }
 
-  // A settings object holds key/value pairs and will ignore anything but the first
-  // assignment to a specific key.
-  function Settings() {
-    this.values = _objCreate(null);
+  return false;
+}
+
+function determineBidi(cueDiv) {
+  var nodeStack = [],
+      text = "",
+      charCode;
+
+  if (!cueDiv || !cueDiv.childNodes) {
+    return "ltr";
   }
 
-  Settings.prototype = {
-    // Only accept the first assignment to any key.
-    set: function(k, v) {
-      if (!this.get(k) && v !== "") {
-        this.values[k] = v;
-      }
-    },
-    // Return the value for a key, or a default value.
-    // If 'defaultKey' is passed then 'dflt' is assumed to be an object with
-    // a number of possible default values as properties where 'defaultKey' is
-    // the key of the property that will be chosen; otherwise it's assumed to be
-    // a single value.
-    get: function(k, dflt, defaultKey) {
-      if (defaultKey) {
-        return this.has(k) ? this.values[k] : dflt[defaultKey];
-      }
-      return this.has(k) ? this.values[k] : dflt;
-    },
-    // Check whether we have a value for a key.
-    has: function(k) {
-      return k in this.values;
-    },
-    // Accept a setting if its one of the given alternatives.
-    alt: function(k, v, a) {
-      for (var n = 0; n < a.length; ++n) {
-        if (v === a[n]) {
-          this.set(k, v);
-          break;
-        }
-      }
-    },
-    // Accept a setting if its a valid (signed) integer.
-    integer: function(k, v) {
-      if (/^-?\d+$/.test(v)) { // integer
-        this.set(k, parseInt(v, 10));
-      }
-    },
-    // Accept a setting if its a valid percentage.
-    percent: function(k, v) {
-      var m;
-      if ((m = v.match(/^([\d]{1,3})(\.[\d]*)?%$/))) {
-        v = parseFloat(v);
-        if (v >= 0 && v <= 100) {
-          this.set(k, v);
-          return true;
-        }
-      }
-      return false;
+  function pushNodes(nodeStack, node) {
+    for (var i = node.childNodes.length - 1; i >= 0; i--) {
+      nodeStack.push(node.childNodes[i]);
     }
+  }
+
+  function nextTextNode(nodeStack) {
+    if (!nodeStack || !nodeStack.length) {
+      return null;
+    }
+
+    var node = nodeStack.pop(),
+        text = node.textContent || node.innerText;
+    if (text) {
+      // TODO: This should match all unicode type B characters (paragraph
+      // separator characters). See issue #115.
+      var m = text.match(/^.*(\n|\r)/);
+      if (m) {
+        nodeStack.length = 0;
+        return m[0];
+      }
+      return text;
+    }
+    if (node.tagName === "ruby") {
+      return nextTextNode(nodeStack);
+    }
+    if (node.childNodes) {
+      pushNodes(nodeStack, node);
+      return nextTextNode(nodeStack);
+    }
+  }
+
+  pushNodes(nodeStack, cueDiv);
+  while ((text = nextTextNode(nodeStack))) {
+    for (var i = 0; i < text.length; i++) {
+      charCode = text.charCodeAt(i);
+      if (isStrongRTLChar(charCode)) {
+        return "rtl";
+      }
+    }
+  }
+  return "ltr";
+}
+
+function computeLinePos(cue) {
+  if (typeof cue.line === "number" &&
+      (cue.snapToLines || (cue.line >= 0 && cue.line <= 100))) {
+    return cue.line;
+  }
+  if (!cue.track || !cue.track.textTrackList ||
+      !cue.track.textTrackList.mediaElement) {
+    return -1;
+  }
+  var track = cue.track,
+      trackList = track.textTrackList,
+      count = 0;
+  for (var i = 0; i < trackList.length && trackList[i] !== track; i++) {
+    if (trackList[i].mode === "showing") {
+      count++;
+    }
+  }
+  return ++count * -1;
+}
+
+function StyleBox() {
+}
+
+// Apply styles to a div. If there is no div passed then it defaults to the
+// div on 'this'.
+StyleBox.prototype.applyStyles = function(styles, div) {
+  div = div || this.div;
+  for (var prop in styles) {
+    if (styles.hasOwnProperty(prop)) {
+      div.style[prop] = styles[prop];
+    }
+  }
+};
+
+StyleBox.prototype.formatStyle = function(val, unit) {
+  return val === 0 ? 0 : val + unit;
+};
+
+// Constructs the computed display state of the cue (a div). Places the div
+// into the overlay which should be a block level element (usually a div).
+function CueStyleBox(window, cue, styleOptions) {
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+  var color = "rgba(255, 255, 255, 1)";
+  var backgroundColor = "rgba(0, 0, 0, 0.8)";
+
+  if (isIE8) {
+    color = "rgb(255, 255, 255)";
+    backgroundColor = "rgb(0, 0, 0)";
+  }
+
+  StyleBox.call(this);
+  this.cue = cue;
+
+  // Parse our cue's text into a DOM tree rooted at 'cueDiv'. This div will
+  // have inline positioning and will function as the cue background box.
+  this.cueDiv = parseContent(window, cue.text);
+  var styles = {
+    color: color,
+    backgroundColor: backgroundColor,
+    position: "relative",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    display: "inline"
   };
 
-  // Helper function to parse input into groups separated by 'groupDelim', and
-  // interprete each group as a key/value pair separated by 'keyValueDelim'.
-  function parseOptions(input, callback, keyValueDelim, groupDelim) {
-    var groups = groupDelim ? input.split(groupDelim) : [input];
-    for (var i in groups) {
-      if (typeof groups[i] !== "string") {
-        continue;
-      }
-      var kv = groups[i].split(keyValueDelim);
-      if (kv.length !== 2) {
-        continue;
-      }
-      var k = kv[0];
-      var v = kv[1];
-      callback(k, v);
-    }
+  if (!isIE8) {
+    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
+                                             : cue.vertical === "lr" ? "vertical-lr"
+                                                                     : "vertical-rl";
+    styles.unicodeBidi = "plaintext";
+  }
+  this.applyStyles(styles, this.cueDiv);
+
+  // Create an absolutely positioned div that will be used to position the cue
+  // div. Note, all WebVTT cue-setting alignments are equivalent to the CSS
+  // mirrors of them except "middle" which is "center" in CSS.
+  this.div = window.document.createElement("div");
+  styles = {
+    textAlign: cue.align === "middle" ? "center" : cue.align,
+    font: styleOptions.font,
+    whiteSpace: "pre-line",
+    position: "absolute"
+  };
+
+  if (!isIE8) {
+    styles.direction = determineBidi(this.cueDiv);
+    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
+                                             : cue.vertical === "lr" ? "vertical-lr"
+                                                                     : "vertical-rl".
+    stylesunicodeBidi =  "plaintext";
   }
 
-  function parseCue(input, cue, regionList) {
-    // Remember the original input if we need to throw an error.
-    var oInput = input;
-    // 4.1 WebVTT timestamp
-    function consumeTimeStamp() {
-      var ts = parseTimeStamp(input);
-      if (ts === null) {
-        throw new ParsingError(ParsingError.Errors.BadTimeStamp,
-                              "Malformed timestamp: " + oInput);
+  this.applyStyles(styles);
+
+  this.div.appendChild(this.cueDiv);
+
+  // Calculate the distance from the reference edge of the viewport to the text
+  // position of the cue box. The reference edge will be resolved later when
+  // the box orientation styles are applied.
+  var textPos = 0;
+  switch (cue.positionAlign) {
+  case "start":
+    textPos = cue.position;
+    break;
+  case "middle":
+    textPos = cue.position - (cue.size / 2);
+    break;
+  case "end":
+    textPos = cue.position - cue.size;
+    break;
+  }
+
+  // Horizontal box orientation; textPos is the distance from the left edge of the
+  // area to the left edge of the box and cue.size is the distance extending to
+  // the right from there.
+  if (cue.vertical === "") {
+    this.applyStyles({
+      left:  this.formatStyle(textPos, "%"),
+      width: this.formatStyle(cue.size, "%")
+    });
+  // Vertical box orientation; textPos is the distance from the top edge of the
+  // area to the top edge of the box and cue.size is the height extending
+  // downwards from there.
+  } else {
+    this.applyStyles({
+      top: this.formatStyle(textPos, "%"),
+      height: this.formatStyle(cue.size, "%")
+    });
+  }
+
+  this.move = function(box) {
+    this.applyStyles({
+      top: this.formatStyle(box.top, "px"),
+      bottom: this.formatStyle(box.bottom, "px"),
+      left: this.formatStyle(box.left, "px"),
+      right: this.formatStyle(box.right, "px"),
+      height: this.formatStyle(box.height, "px"),
+      width: this.formatStyle(box.width, "px")
+    });
+  };
+}
+CueStyleBox.prototype = _objCreate(StyleBox.prototype);
+CueStyleBox.prototype.constructor = CueStyleBox;
+
+// Represents the co-ordinates of an Element in a way that we can easily
+// compute things with such as if it overlaps or intersects with another Element.
+// Can initialize it with either a StyleBox or another BoxPosition.
+function BoxPosition(obj) {
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+
+  // Either a BoxPosition was passed in and we need to copy it, or a StyleBox
+  // was passed in and we need to copy the results of 'getBoundingClientRect'
+  // as the object returned is readonly. All co-ordinate values are in reference
+  // to the viewport origin (top left).
+  var lh, height, width, top;
+  if (obj.div) {
+    height = obj.div.offsetHeight;
+    width = obj.div.offsetWidth;
+    top = obj.div.offsetTop;
+
+    var rects = (rects = obj.div.childNodes) && (rects = rects[0]) &&
+                rects.getClientRects && rects.getClientRects();
+    obj = obj.div.getBoundingClientRect();
+    // In certain cases the outter div will be slightly larger then the sum of
+    // the inner div's lines. This could be due to bold text, etc, on some platforms.
+    // In this case we should get the average line height and use that. This will
+    // result in the desired behaviour.
+    lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length)
+               : 0;
+
+  }
+  this.left = obj.left;
+  this.right = obj.right;
+  this.top = obj.top || top;
+  this.height = obj.height || height;
+  this.bottom = obj.bottom || (top + (obj.height || height));
+  this.width = obj.width || width;
+  this.lineHeight = lh !== undefined ? lh : obj.lineHeight;
+
+  if (isIE8 && !this.lineHeight) {
+    this.lineHeight = 13;
+  }
+}
+
+// Move the box along a particular axis. Optionally pass in an amount to move
+// the box. If no amount is passed then the default is the line height of the
+// box.
+BoxPosition.prototype.move = function(axis, toMove) {
+  toMove = toMove !== undefined ? toMove : this.lineHeight;
+  switch (axis) {
+  case "+x":
+    this.left += toMove;
+    this.right += toMove;
+    break;
+  case "-x":
+    this.left -= toMove;
+    this.right -= toMove;
+    break;
+  case "+y":
+    this.top += toMove;
+    this.bottom += toMove;
+    break;
+  case "-y":
+    this.top -= toMove;
+    this.bottom -= toMove;
+    break;
+  }
+};
+
+// Check if this box overlaps another box, b2.
+BoxPosition.prototype.overlaps = function(b2) {
+  return this.left < b2.right &&
+         this.right > b2.left &&
+         this.top < b2.bottom &&
+         this.bottom > b2.top;
+};
+
+// Check if this box overlaps any other boxes in boxes.
+BoxPosition.prototype.overlapsAny = function(boxes) {
+  for (var i = 0; i < boxes.length; i++) {
+    if (this.overlaps(boxes[i])) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// Check if this box is within another box.
+BoxPosition.prototype.within = function(container) {
+  return this.top >= container.top &&
+         this.bottom <= container.bottom &&
+         this.left >= container.left &&
+         this.right <= container.right;
+};
+
+// Check if this box is entirely within the container or it is overlapping
+// on the edge opposite of the axis direction passed. For example, if "+x" is
+// passed and the box is overlapping on the left edge of the container, then
+// return true.
+BoxPosition.prototype.overlapsOppositeAxis = function(container, axis) {
+  switch (axis) {
+  case "+x":
+    return this.left < container.left;
+  case "-x":
+    return this.right > container.right;
+  case "+y":
+    return this.top < container.top;
+  case "-y":
+    return this.bottom > container.bottom;
+  }
+};
+
+// Find the percentage of the area that this box is overlapping with another
+// box.
+BoxPosition.prototype.intersectPercentage = function(b2) {
+  var x = Math.max(0, Math.min(this.right, b2.right) - Math.max(this.left, b2.left)),
+      y = Math.max(0, Math.min(this.bottom, b2.bottom) - Math.max(this.top, b2.top)),
+      intersectArea = x * y;
+  return intersectArea / (this.height * this.width);
+};
+
+// Convert the positions from this box to CSS compatible positions using
+// the reference container's positions. This has to be done because this
+// box's positions are in reference to the viewport origin, whereas, CSS
+// values are in referecne to their respective edges.
+BoxPosition.prototype.toCSSCompatValues = function(reference) {
+  return {
+    top: this.top - reference.top,
+    bottom: reference.bottom - this.bottom,
+    left: this.left - reference.left,
+    right: reference.right - this.right,
+    height: this.height,
+    width: this.width
+  };
+};
+
+// Get an object that represents the box's position without anything extra.
+// Can pass a StyleBox, HTMLElement, or another BoxPositon.
+BoxPosition.getSimpleBoxPosition = function(obj) {
+  var height = obj.div ? obj.div.offsetHeight : obj.tagName ? obj.offsetHeight : 0;
+  var width = obj.div ? obj.div.offsetWidth : obj.tagName ? obj.offsetWidth : 0;
+  var top = obj.div ? obj.div.offsetTop : obj.tagName ? obj.offsetTop : 0;
+
+  obj = obj.div ? obj.div.getBoundingClientRect() :
+                obj.tagName ? obj.getBoundingClientRect() : obj;
+  var ret = {
+    left: obj.left,
+    right: obj.right,
+    top: obj.top || top,
+    height: obj.height || height,
+    bottom: obj.bottom || (top + (obj.height || height)),
+    width: obj.width || width
+  };
+  return ret;
+};
+
+// Move a StyleBox to its specified, or next best, position. The containerBox
+// is the box that contains the StyleBox, such as a div. boxPositions are
+// a list of other boxes that the styleBox can't overlap with.
+function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
+
+  // Find the best position for a cue box, b, on the video. The axis parameter
+  // is a list of axis, the order of which, it will move the box along. For example:
+  // Passing ["+x", "-x"] will move the box first along the x axis in the positive
+  // direction. If it doesn't find a good position for it there it will then move
+  // it along the x axis in the negative direction.
+  function findBestPosition(b, axis) {
+    var bestPosition,
+        specifiedPosition = new BoxPosition(b),
+        percentage = 1; // Highest possible so the first thing we get is better.
+
+    for (var i = 0; i < axis.length; i++) {
+      while (b.overlapsOppositeAxis(containerBox, axis[i]) ||
+             (b.within(containerBox) && b.overlapsAny(boxPositions))) {
+        b.move(axis[i]);
       }
-      // Remove time stamp from input.
-      input = input.replace(/^[^\sa-zA-Z-]+/, "");
-      return ts;
+      // We found a spot where we aren't overlapping anything. This is our
+      // best position.
+      if (b.within(containerBox)) {
+        return b;
+      }
+      var p = b.intersectPercentage(containerBox);
+      // If we're outside the container box less then we were on our last try
+      // then remember this position as the best position.
+      if (percentage > p) {
+        bestPosition = new BoxPosition(b);
+        percentage = p;
+      }
+      // Reset the box position to the specified position.
+      b = new BoxPosition(specifiedPosition);
+    }
+    return bestPosition || specifiedPosition;
+  }
+
+  var boxPosition = new BoxPosition(styleBox),
+      cue = styleBox.cue,
+      linePos = computeLinePos(cue),
+      axis = [];
+
+  // If we have a line number to align the cue to.
+  if (cue.snapToLines) {
+    var size;
+    switch (cue.vertical) {
+    case "":
+      axis = [ "+y", "-y" ];
+      size = "height";
+      break;
+    case "rl":
+      axis = [ "+x", "-x" ];
+      size = "width";
+      break;
+    case "lr":
+      axis = [ "-x", "+x" ];
+      size = "width";
+      break;
     }
 
-    // 4.4.2 WebVTT cue settings
-    function consumeCueSettings(input, cue) {
+    var step = boxPosition.lineHeight,
+        position = step * Math.round(linePos),
+        maxPosition = containerBox[size] + step,
+        initialAxis = axis[0];
+
+    // If the specified intial position is greater then the max position then
+    // clamp the box to the amount of steps it would take for the box to
+    // reach the max position.
+    if (Math.abs(position) > maxPosition) {
+      position = position < 0 ? -1 : 1;
+      position *= Math.ceil(maxPosition / step) * step;
+    }
+
+    // If computed line position returns negative then line numbers are
+    // relative to the bottom of the video instead of the top. Therefore, we
+    // need to increase our initial position by the length or width of the
+    // video, depending on the writing direction, and reverse our axis directions.
+    if (linePos < 0) {
+      position += cue.vertical === "" ? containerBox.height : containerBox.width;
+      axis = axis.reverse();
+    }
+
+    // Move the box to the specified position. This may not be its best
+    // position.
+    boxPosition.move(initialAxis, position);
+
+  } else {
+    // If we have a percentage line value for the cue.
+    var calculatedPercentage = (boxPosition.lineHeight / containerBox.height) * 100;
+
+    switch (cue.lineAlign) {
+    case "middle":
+      linePos -= (calculatedPercentage / 2);
+      break;
+    case "end":
+      linePos -= calculatedPercentage;
+      break;
+    }
+
+    // Apply initial line position to the cue box.
+    switch (cue.vertical) {
+    case "":
+      styleBox.applyStyles({
+        top: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    case "rl":
+      styleBox.applyStyles({
+        left: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    case "lr":
+      styleBox.applyStyles({
+        right: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    }
+
+    axis = [ "+y", "-x", "+x", "-y" ];
+
+    // Get the box position again after we've applied the specified positioning
+    // to it.
+    boxPosition = new BoxPosition(styleBox);
+  }
+
+  var bestPosition = findBestPosition(boxPosition, axis);
+  styleBox.move(bestPosition.toCSSCompatValues(containerBox));
+}
+
+function WebVTT() {
+  // Nothing
+}
+
+// Helper to allow strings to be decoded instead of the default binary utf8 data.
+WebVTT.StringDecoder = function() {
+  return {
+    decode: function(data) {
+      if (!data) {
+        return "";
+      }
+      if (typeof data !== "string") {
+        throw new Error("Error - expected string data.");
+      }
+      return decodeURIComponent(encodeURIComponent(data));
+    }
+  };
+};
+
+WebVTT.convertCueToDOMTree = function(window, cuetext) {
+  if (!window || !cuetext) {
+    return null;
+  }
+  return parseContent(window, cuetext);
+};
+
+var FONT_SIZE_PERCENT = 0.05;
+var FONT_STYLE = "sans-serif";
+var CUE_BACKGROUND_PADDING = "1.5%";
+
+// Runs the processing model over the cues and regions passed to it.
+// @param overlay A block level element (usually a div) that the computed cues
+//                and regions will be placed into.
+WebVTT.processCues = function(window, cues, overlay) {
+  if (!window || !cues || !overlay) {
+    return null;
+  }
+
+  // Remove all previous children.
+  while (overlay.firstChild) {
+    overlay.removeChild(overlay.firstChild);
+  }
+
+  var paddedOverlay = window.document.createElement("div");
+  paddedOverlay.style.position = "absolute";
+  paddedOverlay.style.left = "0";
+  paddedOverlay.style.right = "0";
+  paddedOverlay.style.top = "0";
+  paddedOverlay.style.bottom = "0";
+  paddedOverlay.style.margin = CUE_BACKGROUND_PADDING;
+  overlay.appendChild(paddedOverlay);
+
+  // Determine if we need to compute the display states of the cues. This could
+  // be the case if a cue's state has been changed since the last computation or
+  // if it has not been computed yet.
+  function shouldCompute(cues) {
+    for (var i = 0; i < cues.length; i++) {
+      if (cues[i].hasBeenReset || !cues[i].displayState) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // We don't need to recompute the cues' display states. Just reuse them.
+  if (!shouldCompute(cues)) {
+    for (var i = 0; i < cues.length; i++) {
+      paddedOverlay.appendChild(cues[i].displayState);
+    }
+    return;
+  }
+
+  var boxPositions = [],
+      containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay),
+      fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
+  var styleOptions = {
+    font: fontSize + "px " + FONT_STYLE
+  };
+
+  (function() {
+    var styleBox, cue;
+
+    for (var i = 0; i < cues.length; i++) {
+      cue = cues[i];
+
+      // Compute the intial position and styles of the cue div.
+      styleBox = new CueStyleBox(window, cue, styleOptions);
+      paddedOverlay.appendChild(styleBox.div);
+
+      // Move the cue div to it's correct line position.
+      moveBoxToLinePosition(window, styleBox, containerBox, boxPositions);
+
+      // Remember the computed div so that we don't have to recompute it later
+      // if we don't have too.
+      cue.displayState = styleBox.div;
+
+      boxPositions.push(BoxPosition.getSimpleBoxPosition(styleBox));
+    }
+  })();
+};
+
+WebVTT.Parser = function(window, vttjs, decoder) {
+  if (!decoder) {
+    decoder = vttjs;
+    vttjs = {};
+  }
+  if (!vttjs) {
+    vttjs = {};
+  }
+
+  this.window = window;
+  this.vttjs = vttjs;
+  this.state = "INITIAL";
+  this.buffer = "";
+  this.decoder = decoder || new TextDecoder("utf8");
+  this.regionList = [];
+};
+
+WebVTT.Parser.prototype = {
+  // If the error is a ParsingError then report it to the consumer if
+  // possible. If it's not a ParsingError then throw it like normal.
+  reportOrThrowError: function(e) {
+    if (e instanceof ParsingError) {
+      this.onparsingerror && this.onparsingerror(e);
+    } else {
+      throw e;
+    }
+  },
+  parse: function (data) {
+    var self = this;
+
+    // If there is no data then we won't decode it, but will just try to parse
+    // whatever is in buffer already. This may occur in circumstances, for
+    // example when flush() is called.
+    if (data) {
+      // Try to decode the data that we received.
+      self.buffer += self.decoder.decode(data, {stream: true});
+    }
+
+    function collectNextLine() {
+      var buffer = self.buffer;
+      var pos = 0;
+      while (pos < buffer.length && buffer[pos] !== '\r' && buffer[pos] !== '\n') {
+        ++pos;
+      }
+      var line = buffer.substr(0, pos);
+      // Advance the buffer early in case we fail below.
+      if (buffer[pos] === '\r') {
+        ++pos;
+      }
+      if (buffer[pos] === '\n') {
+        ++pos;
+      }
+      self.buffer = buffer.substr(pos);
+      return line;
+    }
+
+    // 3.4 WebVTT region and WebVTT region settings syntax
+    function parseRegion(input) {
       var settings = new Settings();
 
       parseOptions(input, function (k, v) {
         switch (k) {
-        case "region":
-          // Find the last region we parsed with the same region id.
-          for (var i = regionList.length - 1; i >= 0; i--) {
-            if (regionList[i].id === v) {
-              settings.set(k, regionList[i].region);
-              break;
-            }
-          }
+        case "id":
+          settings.set(k, v);
           break;
-        case "vertical":
-          settings.alt(k, v, ["rl", "lr"]);
-          break;
-        case "line":
-          var vals = v.split(","),
-              vals0 = vals[0];
-          settings.integer(k, vals0);
-          settings.percent(k, vals0) ? settings.set("snapToLines", false) : null;
-          settings.alt(k, vals0, ["auto"]);
-          if (vals.length === 2) {
-            settings.alt("lineAlign", vals[1], ["start", "middle", "end"]);
-          }
-          break;
-        case "position":
-          vals = v.split(",");
-          settings.percent(k, vals[0]);
-          if (vals.length === 2) {
-            settings.alt("positionAlign", vals[1], ["start", "middle", "end"]);
-          }
-          break;
-        case "size":
+        case "width":
           settings.percent(k, v);
           break;
-        case "align":
-          settings.alt(k, v, ["start", "middle", "end", "left", "right"]);
+        case "lines":
+          settings.integer(k, v);
+          break;
+        case "regionanchor":
+        case "viewportanchor":
+          var xy = v.split(',');
+          if (xy.length !== 2) {
+            break;
+          }
+          // We have to make sure both x and y parse, so use a temporary
+          // settings object here.
+          var anchor = new Settings();
+          anchor.percent("x", xy[0]);
+          anchor.percent("y", xy[1]);
+          if (!anchor.has("x") || !anchor.has("y")) {
+            break;
+          }
+          settings.set(k + "X", anchor.get("x"));
+          settings.set(k + "Y", anchor.get("y"));
+          break;
+        case "scroll":
+          settings.alt(k, v, ["up"]);
           break;
         }
-      }, /:/, /\s/);
+      }, /=/, /\s/);
 
-      // Apply default values for any missing fields.
-      cue.region = settings.get("region", null);
-      cue.vertical = settings.get("vertical", "");
-      cue.line = settings.get("line", "auto");
-      cue.lineAlign = settings.get("lineAlign", "start");
-      cue.snapToLines = settings.get("snapToLines", true);
-      cue.size = settings.get("size", 100);
-      cue.align = settings.get("align", "middle");
-      cue.position = settings.get("position", {
-        start: 0,
-        left: 0,
-        middle: 50,
-        end: 100,
-        right: 100
-      }, cue.align);
-      cue.positionAlign = settings.get("positionAlign", {
-        start: "start",
-        left: "start",
-        middle: "middle",
-        end: "end",
-        right: "end"
-      }, cue.align);
-    }
-
-    function skipWhitespace() {
-      input = input.replace(/^\s+/, "");
-    }
-
-    // 4.1 WebVTT cue timings.
-    skipWhitespace();
-    cue.startTime = consumeTimeStamp();   // (1) collect cue start time
-    skipWhitespace();
-    if (input.substr(0, 3) !== "-->") {     // (3) next characters must match "-->"
-      throw new ParsingError(ParsingError.Errors.BadTimeStamp,
-                             "Malformed time stamp (time stamps must be separated by '-->'): " +
-                             oInput);
-    }
-    input = input.substr(3);
-    skipWhitespace();
-    cue.endTime = consumeTimeStamp();     // (5) collect cue end time
-
-    // 4.1 WebVTT cue settings list.
-    skipWhitespace();
-    consumeCueSettings(input, cue);
-  }
-
-  var ESCAPE = {
-    "&amp;": "&",
-    "&lt;": "<",
-    "&gt;": ">",
-    "&lrm;": "\u200e",
-    "&rlm;": "\u200f",
-    "&nbsp;": "\u00a0"
-  };
-
-  var TAG_NAME = {
-    c: "span",
-    i: "i",
-    b: "b",
-    u: "u",
-    ruby: "ruby",
-    rt: "rt",
-    v: "span",
-    lang: "span"
-  };
-
-  var TAG_ANNOTATION = {
-    v: "title",
-    lang: "lang"
-  };
-
-  var NEEDS_PARENT = {
-    rt: "ruby"
-  };
-
-  // Parse content into a document fragment.
-  function parseContent(window, input) {
-    function nextToken() {
-      // Check for end-of-string.
-      if (!input) {
-        return null;
+      // Create the region, using default values for any values that were not
+      // specified.
+      if (settings.has("id")) {
+        var region = new (self.vttjs.VTTRegion || self.window.VTTRegion)();
+        region.width = settings.get("width", 100);
+        region.lines = settings.get("lines", 3);
+        region.regionAnchorX = settings.get("regionanchorX", 0);
+        region.regionAnchorY = settings.get("regionanchorY", 100);
+        region.viewportAnchorX = settings.get("viewportanchorX", 0);
+        region.viewportAnchorY = settings.get("viewportanchorY", 100);
+        region.scroll = settings.get("scroll", "");
+        // Register the region.
+        self.onregion && self.onregion(region);
+        // Remember the VTTRegion for later in case we parse any VTTCues that
+        // reference it.
+        self.regionList.push({
+          id: settings.get("id"),
+          region: region
+        });
       }
-
-      // Consume 'n' characters from the input.
-      function consume(result) {
-        input = input.substr(result.length);
-        return result;
-      }
-
-      var m = input.match(/^([^<]*)(<[^>]+>?)?/);
-      // If there is some text before the next tag, return it, otherwise return
-      // the tag.
-      return consume(m[1] ? m[1] : m[2]);
     }
 
-    // Unescape a string 's'.
-    function unescape1(e) {
-      return ESCAPE[e];
-    }
-    function unescape(s) {
-      while ((m = s.match(/&(amp|lt|gt|lrm|rlm|nbsp);/))) {
-        s = s.replace(m[0], unescape1);
-      }
-      return s;
-    }
+    // draft-pantos-http-live-streaming-20
+    // https://tools.ietf.org/html/draft-pantos-http-live-streaming-20#section-3.5
+    // 3.5 WebVTT
+    function parseTimestampMap(input) {
+      var settings = new Settings();
 
-    function shouldAdd(current, element) {
-      return !NEEDS_PARENT[element.localName] ||
-             NEEDS_PARENT[element.localName] === current.localName;
-    }
-
-    // Create an element for this tag.
-    function createElement(type, annotation) {
-      var tagName = TAG_NAME[type];
-      if (!tagName) {
-        return null;
-      }
-      var element = window.document.createElement(tagName);
-      element.localName = tagName;
-      var name = TAG_ANNOTATION[type];
-      if (name && annotation) {
-        element[name] = annotation.trim();
-      }
-      return element;
-    }
-
-    var rootDiv = window.document.createElement("div"),
-        current = rootDiv,
-        t,
-        tagStack = [];
-
-    while ((t = nextToken()) !== null) {
-      if (t[0] === '<') {
-        if (t[1] === "/") {
-          // If the closing tag matches, move back up to the parent node.
-          if (tagStack.length &&
-              tagStack[tagStack.length - 1] === t.substr(2).replace(">", "")) {
-            tagStack.pop();
-            current = current.parentNode;
-          }
-          // Otherwise just ignore the end tag.
-          continue;
+      parseOptions(input, function(k, v) {
+        switch(k) {
+        case "MPEGT":
+          settings.integer(k + 'S', v);
+          break;
+        case "LOCA":
+          settings.set(k + 'L', parseTimeStamp(v));
+          break;
         }
-        var ts = parseTimeStamp(t.substr(1, t.length - 2));
-        var node;
-        if (ts) {
-          // Timestamps are lead nodes as well.
-          node = window.document.createProcessingInstruction("timestamp", ts);
-          current.appendChild(node);
-          continue;
-        }
-        var m = t.match(/^<([^.\s/0-9>]+)(\.[^\s\\>]+)?([^>\\]+)?(\\?)>?$/);
-        // If we can't parse the tag, skip to the next tag.
-        if (!m) {
-          continue;
-        }
-        // Try to construct an element, and ignore the tag if we couldn't.
-        node = createElement(m[1], m[3]);
-        if (!node) {
-          continue;
-        }
-        // Determine if the tag should be added based on the context of where it
-        // is placed in the cuetext.
-        if (!shouldAdd(current, node)) {
-          continue;
-        }
-        // Set the class list (as a list of classes, separated by space).
-        if (m[2]) {
-          node.className = m[2].substr(1).replace('.', ' ');
-        }
-        // Append the node to the current node, and enter the scope of the new
-        // node.
-        tagStack.push(m[1]);
-        current.appendChild(node);
-        current = node;
-        continue;
-      }
+      }, /[^\d]:/, /,/);
 
-      // Text nodes are leaf nodes.
-      current.appendChild(window.document.createTextNode(unescape(t)));
-    }
-
-    return rootDiv;
-  }
-
-  // This is a list of all the Unicode characters that have a strong
-  // right-to-left category. What this means is that these characters are
-  // written right-to-left for sure. It was generated by pulling all the strong
-  // right-to-left characters out of the Unicode data table. That table can
-  // found at: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
-  var strongRTLRanges = [[0x5be, 0x5be], [0x5c0, 0x5c0], [0x5c3, 0x5c3], [0x5c6, 0x5c6],
-   [0x5d0, 0x5ea], [0x5f0, 0x5f4], [0x608, 0x608], [0x60b, 0x60b], [0x60d, 0x60d],
-   [0x61b, 0x61b], [0x61e, 0x64a], [0x66d, 0x66f], [0x671, 0x6d5], [0x6e5, 0x6e6],
-   [0x6ee, 0x6ef], [0x6fa, 0x70d], [0x70f, 0x710], [0x712, 0x72f], [0x74d, 0x7a5],
-   [0x7b1, 0x7b1], [0x7c0, 0x7ea], [0x7f4, 0x7f5], [0x7fa, 0x7fa], [0x800, 0x815],
-   [0x81a, 0x81a], [0x824, 0x824], [0x828, 0x828], [0x830, 0x83e], [0x840, 0x858],
-   [0x85e, 0x85e], [0x8a0, 0x8a0], [0x8a2, 0x8ac], [0x200f, 0x200f],
-   [0xfb1d, 0xfb1d], [0xfb1f, 0xfb28], [0xfb2a, 0xfb36], [0xfb38, 0xfb3c],
-   [0xfb3e, 0xfb3e], [0xfb40, 0xfb41], [0xfb43, 0xfb44], [0xfb46, 0xfbc1],
-   [0xfbd3, 0xfd3d], [0xfd50, 0xfd8f], [0xfd92, 0xfdc7], [0xfdf0, 0xfdfc],
-   [0xfe70, 0xfe74], [0xfe76, 0xfefc], [0x10800, 0x10805], [0x10808, 0x10808],
-   [0x1080a, 0x10835], [0x10837, 0x10838], [0x1083c, 0x1083c], [0x1083f, 0x10855],
-   [0x10857, 0x1085f], [0x10900, 0x1091b], [0x10920, 0x10939], [0x1093f, 0x1093f],
-   [0x10980, 0x109b7], [0x109be, 0x109bf], [0x10a00, 0x10a00], [0x10a10, 0x10a13],
-   [0x10a15, 0x10a17], [0x10a19, 0x10a33], [0x10a40, 0x10a47], [0x10a50, 0x10a58],
-   [0x10a60, 0x10a7f], [0x10b00, 0x10b35], [0x10b40, 0x10b55], [0x10b58, 0x10b72],
-   [0x10b78, 0x10b7f], [0x10c00, 0x10c48], [0x1ee00, 0x1ee03], [0x1ee05, 0x1ee1f],
-   [0x1ee21, 0x1ee22], [0x1ee24, 0x1ee24], [0x1ee27, 0x1ee27], [0x1ee29, 0x1ee32],
-   [0x1ee34, 0x1ee37], [0x1ee39, 0x1ee39], [0x1ee3b, 0x1ee3b], [0x1ee42, 0x1ee42],
-   [0x1ee47, 0x1ee47], [0x1ee49, 0x1ee49], [0x1ee4b, 0x1ee4b], [0x1ee4d, 0x1ee4f],
-   [0x1ee51, 0x1ee52], [0x1ee54, 0x1ee54], [0x1ee57, 0x1ee57], [0x1ee59, 0x1ee59],
-   [0x1ee5b, 0x1ee5b], [0x1ee5d, 0x1ee5d], [0x1ee5f, 0x1ee5f], [0x1ee61, 0x1ee62],
-   [0x1ee64, 0x1ee64], [0x1ee67, 0x1ee6a], [0x1ee6c, 0x1ee72], [0x1ee74, 0x1ee77],
-   [0x1ee79, 0x1ee7c], [0x1ee7e, 0x1ee7e], [0x1ee80, 0x1ee89], [0x1ee8b, 0x1ee9b],
-   [0x1eea1, 0x1eea3], [0x1eea5, 0x1eea9], [0x1eeab, 0x1eebb], [0x10fffd, 0x10fffd]];
-
-  function isStrongRTLChar(charCode) {
-    for (var i = 0; i < strongRTLRanges.length; i++) {
-      var currentRange = strongRTLRanges[i];
-      if (charCode >= currentRange[0] && charCode <= currentRange[1]) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  function determineBidi(cueDiv) {
-    var nodeStack = [],
-        text = "",
-        charCode;
-
-    if (!cueDiv || !cueDiv.childNodes) {
-      return "ltr";
-    }
-
-    function pushNodes(nodeStack, node) {
-      for (var i = node.childNodes.length - 1; i >= 0; i--) {
-        nodeStack.push(node.childNodes[i]);
-      }
-    }
-
-    function nextTextNode(nodeStack) {
-      if (!nodeStack || !nodeStack.length) {
-        return null;
-      }
-
-      var node = nodeStack.pop(),
-          text = node.textContent || node.innerText;
-      if (text) {
-        // TODO: This should match all unicode type B characters (paragraph
-        // separator characters). See issue #115.
-        var m = text.match(/^.*(\n|\r)/);
-        if (m) {
-          nodeStack.length = 0;
-          return m[0];
-        }
-        return text;
-      }
-      if (node.tagName === "ruby") {
-        return nextTextNode(nodeStack);
-      }
-      if (node.childNodes) {
-        pushNodes(nodeStack, node);
-        return nextTextNode(nodeStack);
-      }
-    }
-
-    pushNodes(nodeStack, cueDiv);
-    while ((text = nextTextNode(nodeStack))) {
-      for (var i = 0; i < text.length; i++) {
-        charCode = text.charCodeAt(i);
-        if (isStrongRTLChar(charCode)) {
-          return "rtl";
-        }
-      }
-    }
-    return "ltr";
-  }
-
-  function computeLinePos(cue) {
-    if (typeof cue.line === "number" &&
-        (cue.snapToLines || (cue.line >= 0 && cue.line <= 100))) {
-      return cue.line;
-    }
-    if (!cue.track || !cue.track.textTrackList ||
-        !cue.track.textTrackList.mediaElement) {
-      return -1;
-    }
-    var track = cue.track,
-        trackList = track.textTrackList,
-        count = 0;
-    for (var i = 0; i < trackList.length && trackList[i] !== track; i++) {
-      if (trackList[i].mode === "showing") {
-        count++;
-      }
-    }
-    return ++count * -1;
-  }
-
-  function StyleBox() {
-  }
-
-  // Apply styles to a div. If there is no div passed then it defaults to the
-  // div on 'this'.
-  StyleBox.prototype.applyStyles = function(styles, div) {
-    div = div || this.div;
-    for (var prop in styles) {
-      if (styles.hasOwnProperty(prop)) {
-        div.style[prop] = styles[prop];
-      }
-    }
-  };
-
-  StyleBox.prototype.formatStyle = function(val, unit) {
-    return val === 0 ? 0 : val + unit;
-  };
-
-  // Constructs the computed display state of the cue (a div). Places the div
-  // into the overlay which should be a block level element (usually a div).
-  function CueStyleBox(window, cue, styleOptions) {
-    var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-    var color = "rgba(255, 255, 255, 1)";
-    var backgroundColor = "rgba(0, 0, 0, 0.8)";
-
-    if (isIE8) {
-      color = "rgb(255, 255, 255)";
-      backgroundColor = "rgb(0, 0, 0)";
-    }
-
-    StyleBox.call(this);
-    this.cue = cue;
-
-    // Parse our cue's text into a DOM tree rooted at 'cueDiv'. This div will
-    // have inline positioning and will function as the cue background box.
-    this.cueDiv = parseContent(window, cue.text);
-    var styles = {
-      color: color,
-      backgroundColor: backgroundColor,
-      position: "relative",
-      left: 0,
-      right: 0,
-      top: 0,
-      bottom: 0,
-      display: "inline"
-    };
-
-    if (!isIE8) {
-      styles.writingMode = cue.vertical === "" ? "horizontal-tb"
-                                               : cue.vertical === "lr" ? "vertical-lr"
-                                                                       : "vertical-rl";
-      styles.unicodeBidi = "plaintext";
-    }
-    this.applyStyles(styles, this.cueDiv);
-
-    // Create an absolutely positioned div that will be used to position the cue
-    // div. Note, all WebVTT cue-setting alignments are equivalent to the CSS
-    // mirrors of them except "middle" which is "center" in CSS.
-    this.div = window.document.createElement("div");
-    styles = {
-      textAlign: cue.align === "middle" ? "center" : cue.align,
-      font: styleOptions.font,
-      whiteSpace: "pre-line",
-      position: "absolute"
-    };
-
-    if (!isIE8) {
-      styles.direction = determineBidi(this.cueDiv);
-      styles.writingMode = cue.vertical === "" ? "horizontal-tb"
-                                               : cue.vertical === "lr" ? "vertical-lr"
-                                                                       : "vertical-rl".
-      stylesunicodeBidi =  "plaintext";
-    }
-
-    this.applyStyles(styles);
-
-    this.div.appendChild(this.cueDiv);
-
-    // Calculate the distance from the reference edge of the viewport to the text
-    // position of the cue box. The reference edge will be resolved later when
-    // the box orientation styles are applied.
-    var textPos = 0;
-    switch (cue.positionAlign) {
-    case "start":
-      textPos = cue.position;
-      break;
-    case "middle":
-      textPos = cue.position - (cue.size / 2);
-      break;
-    case "end":
-      textPos = cue.position - cue.size;
-      break;
-    }
-
-    // Horizontal box orientation; textPos is the distance from the left edge of the
-    // area to the left edge of the box and cue.size is the distance extending to
-    // the right from there.
-    if (cue.vertical === "") {
-      this.applyStyles({
-        left:  this.formatStyle(textPos, "%"),
-        width: this.formatStyle(cue.size, "%")
-      });
-    // Vertical box orientation; textPos is the distance from the top edge of the
-    // area to the top edge of the box and cue.size is the height extending
-    // downwards from there.
-    } else {
-      this.applyStyles({
-        top: this.formatStyle(textPos, "%"),
-        height: this.formatStyle(cue.size, "%")
+      self.ontimestampmap && self.ontimestampmap({
+        "MPEGTS": settings.get("MPEGTS"),
+        "LOCAL": settings.get("LOCAL")
       });
     }
 
-    this.move = function(box) {
-      this.applyStyles({
-        top: this.formatStyle(box.top, "px"),
-        bottom: this.formatStyle(box.bottom, "px"),
-        left: this.formatStyle(box.left, "px"),
-        right: this.formatStyle(box.right, "px"),
-        height: this.formatStyle(box.height, "px"),
-        width: this.formatStyle(box.width, "px")
-      });
-    };
-  }
-  CueStyleBox.prototype = _objCreate(StyleBox.prototype);
-  CueStyleBox.prototype.constructor = CueStyleBox;
-
-  // Represents the co-ordinates of an Element in a way that we can easily
-  // compute things with such as if it overlaps or intersects with another Element.
-  // Can initialize it with either a StyleBox or another BoxPosition.
-  function BoxPosition(obj) {
-    var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-
-    // Either a BoxPosition was passed in and we need to copy it, or a StyleBox
-    // was passed in and we need to copy the results of 'getBoundingClientRect'
-    // as the object returned is readonly. All co-ordinate values are in reference
-    // to the viewport origin (top left).
-    var lh, height, width, top;
-    if (obj.div) {
-      height = obj.div.offsetHeight;
-      width = obj.div.offsetWidth;
-      top = obj.div.offsetTop;
-
-      var rects = (rects = obj.div.childNodes) && (rects = rects[0]) &&
-                  rects.getClientRects && rects.getClientRects();
-      obj = obj.div.getBoundingClientRect();
-      // In certain cases the outter div will be slightly larger then the sum of
-      // the inner div's lines. This could be due to bold text, etc, on some platforms.
-      // In this case we should get the average line height and use that. This will
-      // result in the desired behaviour.
-      lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length)
-                 : 0;
-
-    }
-    this.left = obj.left;
-    this.right = obj.right;
-    this.top = obj.top || top;
-    this.height = obj.height || height;
-    this.bottom = obj.bottom || (top + (obj.height || height));
-    this.width = obj.width || width;
-    this.lineHeight = lh !== undefined ? lh : obj.lineHeight;
-
-    if (isIE8 && !this.lineHeight) {
-      this.lineHeight = 13;
-    }
-  }
-
-  // Move the box along a particular axis. Optionally pass in an amount to move
-  // the box. If no amount is passed then the default is the line height of the
-  // box.
-  BoxPosition.prototype.move = function(axis, toMove) {
-    toMove = toMove !== undefined ? toMove : this.lineHeight;
-    switch (axis) {
-    case "+x":
-      this.left += toMove;
-      this.right += toMove;
-      break;
-    case "-x":
-      this.left -= toMove;
-      this.right -= toMove;
-      break;
-    case "+y":
-      this.top += toMove;
-      this.bottom += toMove;
-      break;
-    case "-y":
-      this.top -= toMove;
-      this.bottom -= toMove;
-      break;
-    }
-  };
-
-  // Check if this box overlaps another box, b2.
-  BoxPosition.prototype.overlaps = function(b2) {
-    return this.left < b2.right &&
-           this.right > b2.left &&
-           this.top < b2.bottom &&
-           this.bottom > b2.top;
-  };
-
-  // Check if this box overlaps any other boxes in boxes.
-  BoxPosition.prototype.overlapsAny = function(boxes) {
-    for (var i = 0; i < boxes.length; i++) {
-      if (this.overlaps(boxes[i])) {
-        return true;
-      }
-    }
-    return false;
-  };
-
-  // Check if this box is within another box.
-  BoxPosition.prototype.within = function(container) {
-    return this.top >= container.top &&
-           this.bottom <= container.bottom &&
-           this.left >= container.left &&
-           this.right <= container.right;
-  };
-
-  // Check if this box is entirely within the container or it is overlapping
-  // on the edge opposite of the axis direction passed. For example, if "+x" is
-  // passed and the box is overlapping on the left edge of the container, then
-  // return true.
-  BoxPosition.prototype.overlapsOppositeAxis = function(container, axis) {
-    switch (axis) {
-    case "+x":
-      return this.left < container.left;
-    case "-x":
-      return this.right > container.right;
-    case "+y":
-      return this.top < container.top;
-    case "-y":
-      return this.bottom > container.bottom;
-    }
-  };
-
-  // Find the percentage of the area that this box is overlapping with another
-  // box.
-  BoxPosition.prototype.intersectPercentage = function(b2) {
-    var x = Math.max(0, Math.min(this.right, b2.right) - Math.max(this.left, b2.left)),
-        y = Math.max(0, Math.min(this.bottom, b2.bottom) - Math.max(this.top, b2.top)),
-        intersectArea = x * y;
-    return intersectArea / (this.height * this.width);
-  };
-
-  // Convert the positions from this box to CSS compatible positions using
-  // the reference container's positions. This has to be done because this
-  // box's positions are in reference to the viewport origin, whereas, CSS
-  // values are in referecne to their respective edges.
-  BoxPosition.prototype.toCSSCompatValues = function(reference) {
-    return {
-      top: this.top - reference.top,
-      bottom: reference.bottom - this.bottom,
-      left: this.left - reference.left,
-      right: reference.right - this.right,
-      height: this.height,
-      width: this.width
-    };
-  };
-
-  // Get an object that represents the box's position without anything extra.
-  // Can pass a StyleBox, HTMLElement, or another BoxPositon.
-  BoxPosition.getSimpleBoxPosition = function(obj) {
-    var height = obj.div ? obj.div.offsetHeight : obj.tagName ? obj.offsetHeight : 0;
-    var width = obj.div ? obj.div.offsetWidth : obj.tagName ? obj.offsetWidth : 0;
-    var top = obj.div ? obj.div.offsetTop : obj.tagName ? obj.offsetTop : 0;
-
-    obj = obj.div ? obj.div.getBoundingClientRect() :
-                  obj.tagName ? obj.getBoundingClientRect() : obj;
-    var ret = {
-      left: obj.left,
-      right: obj.right,
-      top: obj.top || top,
-      height: obj.height || height,
-      bottom: obj.bottom || (top + (obj.height || height)),
-      width: obj.width || width
-    };
-    return ret;
-  };
-
-  // Move a StyleBox to its specified, or next best, position. The containerBox
-  // is the box that contains the StyleBox, such as a div. boxPositions are
-  // a list of other boxes that the styleBox can't overlap with.
-  function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
-
-    // Find the best position for a cue box, b, on the video. The axis parameter
-    // is a list of axis, the order of which, it will move the box along. For example:
-    // Passing ["+x", "-x"] will move the box first along the x axis in the positive
-    // direction. If it doesn't find a good position for it there it will then move
-    // it along the x axis in the negative direction.
-    function findBestPosition(b, axis) {
-      var bestPosition,
-          specifiedPosition = new BoxPosition(b),
-          percentage = 1; // Highest possible so the first thing we get is better.
-
-      for (var i = 0; i < axis.length; i++) {
-        while (b.overlapsOppositeAxis(containerBox, axis[i]) ||
-               (b.within(containerBox) && b.overlapsAny(boxPositions))) {
-          b.move(axis[i]);
-        }
-        // We found a spot where we aren't overlapping anything. This is our
-        // best position.
-        if (b.within(containerBox)) {
-          return b;
-        }
-        var p = b.intersectPercentage(containerBox);
-        // If we're outside the container box less then we were on our last try
-        // then remember this position as the best position.
-        if (percentage > p) {
-          bestPosition = new BoxPosition(b);
-          percentage = p;
-        }
-        // Reset the box position to the specified position.
-        b = new BoxPosition(specifiedPosition);
-      }
-      return bestPosition || specifiedPosition;
-    }
-
-    var boxPosition = new BoxPosition(styleBox),
-        cue = styleBox.cue,
-        linePos = computeLinePos(cue),
-        axis = [];
-
-    // If we have a line number to align the cue to.
-    if (cue.snapToLines) {
-      var size;
-      switch (cue.vertical) {
-      case "":
-        axis = [ "+y", "-y" ];
-        size = "height";
-        break;
-      case "rl":
-        axis = [ "+x", "-x" ];
-        size = "width";
-        break;
-      case "lr":
-        axis = [ "-x", "+x" ];
-        size = "width";
-        break;
-      }
-
-      var step = boxPosition.lineHeight,
-          position = step * Math.round(linePos),
-          maxPosition = containerBox[size] + step,
-          initialAxis = axis[0];
-
-      // If the specified intial position is greater then the max position then
-      // clamp the box to the amount of steps it would take for the box to
-      // reach the max position.
-      if (Math.abs(position) > maxPosition) {
-        position = position < 0 ? -1 : 1;
-        position *= Math.ceil(maxPosition / step) * step;
-      }
-
-      // If computed line position returns negative then line numbers are
-      // relative to the bottom of the video instead of the top. Therefore, we
-      // need to increase our initial position by the length or width of the
-      // video, depending on the writing direction, and reverse our axis directions.
-      if (linePos < 0) {
-        position += cue.vertical === "" ? containerBox.height : containerBox.width;
-        axis = axis.reverse();
-      }
-
-      // Move the box to the specified position. This may not be its best
-      // position.
-      boxPosition.move(initialAxis, position);
-
-    } else {
-      // If we have a percentage line value for the cue.
-      var calculatedPercentage = (boxPosition.lineHeight / containerBox.height) * 100;
-
-      switch (cue.lineAlign) {
-      case "middle":
-        linePos -= (calculatedPercentage / 2);
-        break;
-      case "end":
-        linePos -= calculatedPercentage;
-        break;
-      }
-
-      // Apply initial line position to the cue box.
-      switch (cue.vertical) {
-      case "":
-        styleBox.applyStyles({
-          top: styleBox.formatStyle(linePos, "%")
-        });
-        break;
-      case "rl":
-        styleBox.applyStyles({
-          left: styleBox.formatStyle(linePos, "%")
-        });
-        break;
-      case "lr":
-        styleBox.applyStyles({
-          right: styleBox.formatStyle(linePos, "%")
-        });
-        break;
-      }
-
-      axis = [ "+y", "-x", "+x", "-y" ];
-
-      // Get the box position again after we've applied the specified positioning
-      // to it.
-      boxPosition = new BoxPosition(styleBox);
-    }
-
-    var bestPosition = findBestPosition(boxPosition, axis);
-    styleBox.move(bestPosition.toCSSCompatValues(containerBox));
-  }
-
-  function WebVTT() {
-    // Nothing
-  }
-
-  // Helper to allow strings to be decoded instead of the default binary utf8 data.
-  WebVTT.StringDecoder = function() {
-    return {
-      decode: function(data) {
-        if (!data) {
-          return "";
-        }
-        if (typeof data !== "string") {
-          throw new Error("Error - expected string data.");
-        }
-        return decodeURIComponent(encodeURIComponent(data));
-      }
-    };
-  };
-
-  WebVTT.convertCueToDOMTree = function(window, cuetext) {
-    if (!window || !cuetext) {
-      return null;
-    }
-    return parseContent(window, cuetext);
-  };
-
-  var FONT_SIZE_PERCENT = 0.05;
-  var FONT_STYLE = "sans-serif";
-  var CUE_BACKGROUND_PADDING = "1.5%";
-
-  // Runs the processing model over the cues and regions passed to it.
-  // @param overlay A block level element (usually a div) that the computed cues
-  //                and regions will be placed into.
-  WebVTT.processCues = function(window, cues, overlay) {
-    if (!window || !cues || !overlay) {
-      return null;
-    }
-
-    // Remove all previous children.
-    while (overlay.firstChild) {
-      overlay.removeChild(overlay.firstChild);
-    }
-
-    var paddedOverlay = window.document.createElement("div");
-    paddedOverlay.style.position = "absolute";
-    paddedOverlay.style.left = "0";
-    paddedOverlay.style.right = "0";
-    paddedOverlay.style.top = "0";
-    paddedOverlay.style.bottom = "0";
-    paddedOverlay.style.margin = CUE_BACKGROUND_PADDING;
-    overlay.appendChild(paddedOverlay);
-
-    // Determine if we need to compute the display states of the cues. This could
-    // be the case if a cue's state has been changed since the last computation or
-    // if it has not been computed yet.
-    function shouldCompute(cues) {
-      for (var i = 0; i < cues.length; i++) {
-        if (cues[i].hasBeenReset || !cues[i].displayState) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    // We don't need to recompute the cues' display states. Just reuse them.
-    if (!shouldCompute(cues)) {
-      for (var i = 0; i < cues.length; i++) {
-        paddedOverlay.appendChild(cues[i].displayState);
-      }
-      return;
-    }
-
-    var boxPositions = [],
-        containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay),
-        fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
-    var styleOptions = {
-      font: fontSize + "px " + FONT_STYLE
-    };
-
-    (function() {
-      var styleBox, cue;
-
-      for (var i = 0; i < cues.length; i++) {
-        cue = cues[i];
-
-        // Compute the intial position and styles of the cue div.
-        styleBox = new CueStyleBox(window, cue, styleOptions);
-        paddedOverlay.appendChild(styleBox.div);
-
-        // Move the cue div to it's correct line position.
-        moveBoxToLinePosition(window, styleBox, containerBox, boxPositions);
-
-        // Remember the computed div so that we don't have to recompute it later
-        // if we don't have too.
-        cue.displayState = styleBox.div;
-
-        boxPositions.push(BoxPosition.getSimpleBoxPosition(styleBox));
-      }
-    })();
-  };
-
-  WebVTT.Parser = function(window, vttjs, decoder) {
-    if (!decoder) {
-      decoder = vttjs;
-      vttjs = {};
-    }
-    if (!vttjs) {
-      vttjs = {};
-    }
-
-    this.window = window;
-    this.vttjs = vttjs;
-    this.state = "INITIAL";
-    this.buffer = "";
-    this.decoder = decoder || new TextDecoder("utf8");
-    this.regionList = [];
-  };
-
-  WebVTT.Parser.prototype = {
-    // If the error is a ParsingError then report it to the consumer if
-    // possible. If it's not a ParsingError then throw it like normal.
-    reportOrThrowError: function(e) {
-      if (e instanceof ParsingError) {
-        this.onparsingerror && this.onparsingerror(e);
-      } else {
-        throw e;
-      }
-    },
-    parse: function (data) {
-      var self = this;
-
-      // If there is no data then we won't decode it, but will just try to parse
-      // whatever is in buffer already. This may occur in circumstances, for
-      // example when flush() is called.
-      if (data) {
-        // Try to decode the data that we received.
-        self.buffer += self.decoder.decode(data, {stream: true});
-      }
-
-      function collectNextLine() {
-        var buffer = self.buffer;
-        var pos = 0;
-        while (pos < buffer.length && buffer[pos] !== '\r' && buffer[pos] !== '\n') {
-          ++pos;
-        }
-        var line = buffer.substr(0, pos);
-        // Advance the buffer early in case we fail below.
-        if (buffer[pos] === '\r') {
-          ++pos;
-        }
-        if (buffer[pos] === '\n') {
-          ++pos;
-        }
-        self.buffer = buffer.substr(pos);
-        return line;
-      }
-
-      // 3.4 WebVTT region and WebVTT region settings syntax
-      function parseRegion(input) {
-        var settings = new Settings();
-
-        parseOptions(input, function (k, v) {
-          switch (k) {
-          case "id":
-            settings.set(k, v);
-            break;
-          case "width":
-            settings.percent(k, v);
-            break;
-          case "lines":
-            settings.integer(k, v);
-            break;
-          case "regionanchor":
-          case "viewportanchor":
-            var xy = v.split(',');
-            if (xy.length !== 2) {
-              break;
-            }
-            // We have to make sure both x and y parse, so use a temporary
-            // settings object here.
-            var anchor = new Settings();
-            anchor.percent("x", xy[0]);
-            anchor.percent("y", xy[1]);
-            if (!anchor.has("x") || !anchor.has("y")) {
-              break;
-            }
-            settings.set(k + "X", anchor.get("x"));
-            settings.set(k + "Y", anchor.get("y"));
-            break;
-          case "scroll":
-            settings.alt(k, v, ["up"]);
-            break;
-          }
-        }, /=/, /\s/);
-
-        // Create the region, using default values for any values that were not
-        // specified.
-        if (settings.has("id")) {
-          var region = new (self.vttjs.VTTRegion || self.window.VTTRegion)();
-          region.width = settings.get("width", 100);
-          region.lines = settings.get("lines", 3);
-          region.regionAnchorX = settings.get("regionanchorX", 0);
-          region.regionAnchorY = settings.get("regionanchorY", 100);
-          region.viewportAnchorX = settings.get("viewportanchorX", 0);
-          region.viewportAnchorY = settings.get("viewportanchorY", 100);
-          region.scroll = settings.get("scroll", "");
-          // Register the region.
-          self.onregion && self.onregion(region);
-          // Remember the VTTRegion for later in case we parse any VTTCues that
-          // reference it.
-          self.regionList.push({
-            id: settings.get("id"),
-            region: region
-          });
-        }
-      }
-
-      // draft-pantos-http-live-streaming-20
-      // https://tools.ietf.org/html/draft-pantos-http-live-streaming-20#section-3.5
-      // 3.5 WebVTT
-      function parseTimestampMap(input) {
-        var settings = new Settings();
-
+    // 3.2 WebVTT metadata header syntax
+    function parseHeader(input) {
+      if (input.match(/X-TIMESTAMP-MAP/)) {
+        // This line contains HLS X-TIMESTAMP-MAP metadata
         parseOptions(input, function(k, v) {
           switch(k) {
-          case "MPEGT":
-            settings.integer(k + 'S', v);
-            break;
-          case "LOCA":
-            settings.set(k + 'L', parseTimeStamp(v));
+          case "X-TIMESTAMP-MAP":
+            parseTimestampMap(v);
             break;
           }
-        }, /[^\d]:/, /,/);
-
-        self.ontimestampmap && self.ontimestampmap({
-          "MPEGTS": settings.get("MPEGTS"),
-          "LOCAL": settings.get("LOCAL")
-        });
+        }, /=/);
+      } else {
+        parseOptions(input, function (k, v) {
+          switch (k) {
+          case "Region":
+            // 3.3 WebVTT region metadata header syntax
+            parseRegion(v);
+            break;
+          }
+        }, /:/);
       }
 
-      // 3.2 WebVTT metadata header syntax
-      function parseHeader(input) {
-        if (input.match(/X-TIMESTAMP-MAP/)) {
-          // This line contains HLS X-TIMESTAMP-MAP metadata
-          parseOptions(input, function(k, v) {
-            switch(k) {
-            case "X-TIMESTAMP-MAP":
-              parseTimestampMap(v);
-              break;
-            }
-          }, /=/);
-        } else {
-          parseOptions(input, function (k, v) {
-            switch (k) {
-            case "Region":
-              // 3.3 WebVTT region metadata header syntax
-              parseRegion(v);
-              break;
-            }
-          }, /:/);
+    }
+
+    // 5.1 WebVTT file parsing.
+    try {
+      var line;
+      if (self.state === "INITIAL") {
+        // We can't start parsing until we have the first line.
+        if (!/\r\n|\n/.test(self.buffer)) {
+          return this;
         }
 
-      }
+        line = collectNextLine();
 
-      // 5.1 WebVTT file parsing.
-      try {
-        var line;
-        if (self.state === "INITIAL") {
-          // We can't start parsing until we have the first line.
-          if (!/\r\n|\n/.test(self.buffer)) {
-            return this;
-          }
-
-          line = collectNextLine();
-
-          var m = line.match(/^WEBVTT([ \t].*)?$/);
-          if (!m || !m[0]) {
-            throw new ParsingError(ParsingError.Errors.BadSignature);
-          }
-
-          self.state = "HEADER";
-        }
-
-        var alreadyCollectedLine = false;
-        while (self.buffer) {
-          // We can't parse a line until we have the full line.
-          if (!/\r\n|\n/.test(self.buffer)) {
-            return this;
-          }
-
-          if (!alreadyCollectedLine) {
-            line = collectNextLine();
-          } else {
-            alreadyCollectedLine = false;
-          }
-
-          switch (self.state) {
-          case "HEADER":
-            // 13-18 - Allow a header (metadata) under the WEBVTT line.
-            if (/:/.test(line)) {
-              parseHeader(line);
-            } else if (!line) {
-              // An empty line terminates the header and starts the body (cues).
-              self.state = "ID";
-            }
-            continue;
-          case "NOTE":
-            // Ignore NOTE blocks.
-            if (!line) {
-              self.state = "ID";
-            }
-            continue;
-          case "ID":
-            // Check for the start of NOTE blocks.
-            if (/^NOTE($|[ \t])/.test(line)) {
-              self.state = "NOTE";
-              break;
-            }
-            // 19-29 - Allow any number of line terminators, then initialize new cue values.
-            if (!line) {
-              continue;
-            }
-            self.cue = new (self.vttjs.VTTCue || self.window.VTTCue)(0, 0, "");
-            self.state = "CUE";
-            // 30-39 - Check if self line contains an optional identifier or timing data.
-            if (line.indexOf("-->") === -1) {
-              self.cue.id = line;
-              continue;
-            }
-            // Process line as start of a cue.
-            /*falls through*/
-          case "CUE":
-            // 40 - Collect cue timings and settings.
-            try {
-              parseCue(line, self.cue, self.regionList);
-            } catch (e) {
-              self.reportOrThrowError(e);
-              // In case of an error ignore rest of the cue.
-              self.cue = null;
-              self.state = "BADCUE";
-              continue;
-            }
-            self.state = "CUETEXT";
-            continue;
-          case "CUETEXT":
-            var hasSubstring = line.indexOf("-->") !== -1;
-            // 34 - If we have an empty line then report the cue.
-            // 35 - If we have the special substring '-->' then report the cue,
-            // but do not collect the line as we need to process the current
-            // one as a new cue.
-            if (!line || hasSubstring && (alreadyCollectedLine = true)) {
-              // We are done parsing self cue.
-              self.oncue && self.oncue(self.cue);
-              self.cue = null;
-              self.state = "ID";
-              continue;
-            }
-            if (self.cue.text) {
-              self.cue.text += "\n";
-            }
-            self.cue.text += line;
-            continue;
-          case "BADCUE": // BADCUE
-            // 54-62 - Collect and discard the remaining cue.
-            if (!line) {
-              self.state = "ID";
-            }
-            continue;
-          }
-        }
-      } catch (e) {
-        self.reportOrThrowError(e);
-
-        // If we are currently parsing a cue, report what we have.
-        if (self.state === "CUETEXT" && self.cue && self.oncue) {
-          self.oncue(self.cue);
-        }
-        self.cue = null;
-        // Enter BADWEBVTT state if header was not parsed correctly otherwise
-        // another exception occurred so enter BADCUE state.
-        self.state = self.state === "INITIAL" ? "BADWEBVTT" : "BADCUE";
-      }
-      return this;
-    },
-    flush: function () {
-      var self = this;
-      try {
-        // Finish decoding the stream.
-        self.buffer += self.decoder.decode();
-        // Synthesize the end of the current cue or region.
-        if (self.cue || self.state === "HEADER") {
-          self.buffer += "\n\n";
-          self.parse();
-        }
-        // If we've flushed, parsed, and we're still on the INITIAL state then
-        // that means we don't have enough of the stream to parse the first
-        // line.
-        if (self.state === "INITIAL") {
+        var m = line.match(/^WEBVTT([ \t].*)?$/);
+        if (!m || !m[0]) {
           throw new ParsingError(ParsingError.Errors.BadSignature);
         }
-      } catch(e) {
-        self.reportOrThrowError(e);
+
+        self.state = "HEADER";
       }
-      self.onflush && self.onflush();
-      return this;
-    }
-  };
 
-  global.WebVTT = WebVTT;
+      var alreadyCollectedLine = false;
+      while (self.buffer) {
+        // We can't parse a line until we have the full line.
+        if (!/\r\n|\n/.test(self.buffer)) {
+          return this;
+        }
 
-}(this, (this.vttjs || {})));
+        if (!alreadyCollectedLine) {
+          line = collectNextLine();
+        } else {
+          alreadyCollectedLine = false;
+        }
 
-
-/***/ }),
-/* 59 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// If we're in Node.js then require VTTCue so we can extend it, otherwise assume
-// VTTCue is on the global.
-if (typeof module !== "undefined" && module.exports) {
-  this.VTTCue = this.VTTCue || __webpack_require__(60).VTTCue;
-}
-
-// Extend VTTCue with methods to convert to JSON, from JSON, and construct a
-// VTTCue from an options object. The primary purpose of this is for use in the
-// vtt.js test suite (for testing only properties that we care about). It's also
-// useful if you need to work with VTTCues in JSON format.
-(function(root) {
-
-  root.VTTCue.prototype.toJSON = function() {
-    var cue = {},
-        self = this;
-    // Filter out getCueAsHTML as it's a function and hasBeenReset and displayState as
-    // they're only used when running the processing model algorithm.
-    Object.keys(this).forEach(function(key) {
-      if (key !== "getCueAsHTML" && key !== "hasBeenReset" && key !== "displayState") {
-        cue[key] = self[key];
+        switch (self.state) {
+        case "HEADER":
+          // 13-18 - Allow a header (metadata) under the WEBVTT line.
+          if (/:/.test(line)) {
+            parseHeader(line);
+          } else if (!line) {
+            // An empty line terminates the header and starts the body (cues).
+            self.state = "ID";
+          }
+          continue;
+        case "NOTE":
+          // Ignore NOTE blocks.
+          if (!line) {
+            self.state = "ID";
+          }
+          continue;
+        case "ID":
+          // Check for the start of NOTE blocks.
+          if (/^NOTE($|[ \t])/.test(line)) {
+            self.state = "NOTE";
+            break;
+          }
+          // 19-29 - Allow any number of line terminators, then initialize new cue values.
+          if (!line) {
+            continue;
+          }
+          self.cue = new (self.vttjs.VTTCue || self.window.VTTCue)(0, 0, "");
+          self.state = "CUE";
+          // 30-39 - Check if self line contains an optional identifier or timing data.
+          if (line.indexOf("-->") === -1) {
+            self.cue.id = line;
+            continue;
+          }
+          // Process line as start of a cue.
+          /*falls through*/
+        case "CUE":
+          // 40 - Collect cue timings and settings.
+          try {
+            parseCue(line, self.cue, self.regionList);
+          } catch (e) {
+            self.reportOrThrowError(e);
+            // In case of an error ignore rest of the cue.
+            self.cue = null;
+            self.state = "BADCUE";
+            continue;
+          }
+          self.state = "CUETEXT";
+          continue;
+        case "CUETEXT":
+          var hasSubstring = line.indexOf("-->") !== -1;
+          // 34 - If we have an empty line then report the cue.
+          // 35 - If we have the special substring '-->' then report the cue,
+          // but do not collect the line as we need to process the current
+          // one as a new cue.
+          if (!line || hasSubstring && (alreadyCollectedLine = true)) {
+            // We are done parsing self cue.
+            self.oncue && self.oncue(self.cue);
+            self.cue = null;
+            self.state = "ID";
+            continue;
+          }
+          if (self.cue.text) {
+            self.cue.text += "\n";
+          }
+          self.cue.text += line;
+          continue;
+        case "BADCUE": // BADCUE
+          // 54-62 - Collect and discard the remaining cue.
+          if (!line) {
+            self.state = "ID";
+          }
+          continue;
+        }
       }
-    });
-    return cue;
-  };
+    } catch (e) {
+      self.reportOrThrowError(e);
 
-  root.VTTCue.create = function(options) {
-    if (!options.hasOwnProperty("startTime") || !options.hasOwnProperty("endTime") ||
-        !options.hasOwnProperty("text")) {
-      throw new Error("You must at least have start time, end time, and text.");
-    }
-    var cue = new root.VTTCue(options.startTime, options.endTime, options.text);
-    for (var key in options) {
-      if (cue.hasOwnProperty(key)) {
-        cue[key] = options[key];
+      // If we are currently parsing a cue, report what we have.
+      if (self.state === "CUETEXT" && self.cue && self.oncue) {
+        self.oncue(self.cue);
       }
+      self.cue = null;
+      // Enter BADWEBVTT state if header was not parsed correctly otherwise
+      // another exception occurred so enter BADCUE state.
+      self.state = self.state === "INITIAL" ? "BADWEBVTT" : "BADCUE";
     }
-    return cue;
-  };
+    return this;
+  },
+  flush: function () {
+    var self = this;
+    try {
+      // Finish decoding the stream.
+      self.buffer += self.decoder.decode();
+      // Synthesize the end of the current cue or region.
+      if (self.cue || self.state === "HEADER") {
+        self.buffer += "\n\n";
+        self.parse();
+      }
+      // If we've flushed, parsed, and we're still on the INITIAL state then
+      // that means we don't have enough of the stream to parse the first
+      // line.
+      if (self.state === "INITIAL") {
+        throw new ParsingError(ParsingError.Errors.BadSignature);
+      }
+    } catch(e) {
+      self.reportOrThrowError(e);
+    }
+    self.onflush && self.onflush();
+    return this;
+  }
+};
 
-  root.VTTCue.fromJSON = function(json) {
-    return this.create(JSON.parse(json));
-  };
-
-}(this));
+module.exports = WebVTT;
 
 
 /***/ }),
@@ -86425,352 +86502,299 @@ if (typeof module !== "undefined" && module.exports) {
  * limitations under the License.
  */
 
-(function(root, vttjs) {
+var autoKeyword = "auto";
+var directionSetting = {
+  "": true,
+  "lr": true,
+  "rl": true
+};
+var alignSetting = {
+  "start": true,
+  "middle": true,
+  "end": true,
+  "left": true,
+  "right": true
+};
 
-  var autoKeyword = "auto";
-  var directionSetting = {
-    "": true,
-    "lr": true,
-    "rl": true
-  };
-  var alignSetting = {
-    "start": true,
-    "middle": true,
-    "end": true,
-    "left": true,
-    "right": true
-  };
+function findDirectionSetting(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  var dir = directionSetting[value.toLowerCase()];
+  return dir ? value.toLowerCase() : false;
+}
 
-  function findDirectionSetting(value) {
-    if (typeof value !== "string") {
-      return false;
+function findAlignSetting(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  var align = alignSetting[value.toLowerCase()];
+  return align ? value.toLowerCase() : false;
+}
+
+function extend(obj) {
+  var i = 1;
+  for (; i < arguments.length; i++) {
+    var cobj = arguments[i];
+    for (var p in cobj) {
+      obj[p] = cobj[p];
     }
-    var dir = directionSetting[value.toLowerCase()];
-    return dir ? value.toLowerCase() : false;
   }
 
-  function findAlignSetting(value) {
-    if (typeof value !== "string") {
-      return false;
-    }
-    var align = alignSetting[value.toLowerCase()];
-    return align ? value.toLowerCase() : false;
-  }
+  return obj;
+}
 
-  function extend(obj) {
-    var i = 1;
-    for (; i < arguments.length; i++) {
-      var cobj = arguments[i];
-      for (var p in cobj) {
-        obj[p] = cobj[p];
-      }
-    }
+function VTTCue(startTime, endTime, text) {
+  var cue = this;
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+  var baseObj = {};
 
-    return obj;
-  }
-
-  function VTTCue(startTime, endTime, text) {
-    var cue = this;
-    var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-    var baseObj = {};
-
-    if (isIE8) {
-      cue = document.createElement('custom');
-    } else {
-      baseObj.enumerable = true;
-    }
-
-    /**
-     * Shim implementation specific properties. These properties are not in
-     * the spec.
-     */
-
-    // Lets us know when the VTTCue's data has changed in such a way that we need
-    // to recompute its display state. This lets us compute its display state
-    // lazily.
-    cue.hasBeenReset = false;
-
-    /**
-     * VTTCue and TextTrackCue properties
-     * http://dev.w3.org/html5/webvtt/#vttcue-interface
-     */
-
-    var _id = "";
-    var _pauseOnExit = false;
-    var _startTime = startTime;
-    var _endTime = endTime;
-    var _text = text;
-    var _region = null;
-    var _vertical = "";
-    var _snapToLines = true;
-    var _line = "auto";
-    var _lineAlign = "start";
-    var _position = 50;
-    var _positionAlign = "middle";
-    var _size = 50;
-    var _align = "middle";
-
-    Object.defineProperty(cue,
-      "id", extend({}, baseObj, {
-        get: function() {
-          return _id;
-        },
-        set: function(value) {
-          _id = "" + value;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "pauseOnExit", extend({}, baseObj, {
-        get: function() {
-          return _pauseOnExit;
-        },
-        set: function(value) {
-          _pauseOnExit = !!value;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "startTime", extend({}, baseObj, {
-        get: function() {
-          return _startTime;
-        },
-        set: function(value) {
-          if (typeof value !== "number") {
-            throw new TypeError("Start time must be set to a number.");
-          }
-          _startTime = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "endTime", extend({}, baseObj, {
-        get: function() {
-          return _endTime;
-        },
-        set: function(value) {
-          if (typeof value !== "number") {
-            throw new TypeError("End time must be set to a number.");
-          }
-          _endTime = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "text", extend({}, baseObj, {
-        get: function() {
-          return _text;
-        },
-        set: function(value) {
-          _text = "" + value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "region", extend({}, baseObj, {
-        get: function() {
-          return _region;
-        },
-        set: function(value) {
-          _region = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "vertical", extend({}, baseObj, {
-        get: function() {
-          return _vertical;
-        },
-        set: function(value) {
-          var setting = findDirectionSetting(value);
-          // Have to check for false because the setting an be an empty string.
-          if (setting === false) {
-            throw new SyntaxError("An invalid or illegal string was specified.");
-          }
-          _vertical = setting;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "snapToLines", extend({}, baseObj, {
-        get: function() {
-          return _snapToLines;
-        },
-        set: function(value) {
-          _snapToLines = !!value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "line", extend({}, baseObj, {
-        get: function() {
-          return _line;
-        },
-        set: function(value) {
-          if (typeof value !== "number" && value !== autoKeyword) {
-            throw new SyntaxError("An invalid number or illegal string was specified.");
-          }
-          _line = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "lineAlign", extend({}, baseObj, {
-        get: function() {
-          return _lineAlign;
-        },
-        set: function(value) {
-          var setting = findAlignSetting(value);
-          if (!setting) {
-            throw new SyntaxError("An invalid or illegal string was specified.");
-          }
-          _lineAlign = setting;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "position", extend({}, baseObj, {
-        get: function() {
-          return _position;
-        },
-        set: function(value) {
-          if (value < 0 || value > 100) {
-            throw new Error("Position must be between 0 and 100.");
-          }
-          _position = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "positionAlign", extend({}, baseObj, {
-        get: function() {
-          return _positionAlign;
-        },
-        set: function(value) {
-          var setting = findAlignSetting(value);
-          if (!setting) {
-            throw new SyntaxError("An invalid or illegal string was specified.");
-          }
-          _positionAlign = setting;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "size", extend({}, baseObj, {
-        get: function() {
-          return _size;
-        },
-        set: function(value) {
-          if (value < 0 || value > 100) {
-            throw new Error("Size must be between 0 and 100.");
-          }
-          _size = value;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    Object.defineProperty(cue,
-      "align", extend({}, baseObj, {
-        get: function() {
-          return _align;
-        },
-        set: function(value) {
-          var setting = findAlignSetting(value);
-          if (!setting) {
-            throw new SyntaxError("An invalid or illegal string was specified.");
-          }
-          _align = setting;
-          this.hasBeenReset = true;
-        }
-      }));
-
-    /**
-     * Other <track> spec defined properties
-     */
-
-    // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
-    cue.displayState = undefined;
-
-    if (isIE8) {
-      return cue;
-    }
+  if (isIE8) {
+    cue = document.createElement('custom');
+  } else {
+    baseObj.enumerable = true;
   }
 
   /**
-   * VTTCue methods
+   * Shim implementation specific properties. These properties are not in
+   * the spec.
    */
 
-  VTTCue.prototype.getCueAsHTML = function() {
-    // Assume WebVTT.convertCueToDOMTree is on the global.
-    return WebVTT.convertCueToDOMTree(window, this.text);
-  };
+  // Lets us know when the VTTCue's data has changed in such a way that we need
+  // to recompute its display state. This lets us compute its display state
+  // lazily.
+  cue.hasBeenReset = false;
 
-  root.VTTCue = root.VTTCue || VTTCue;
-  vttjs.VTTCue = VTTCue;
-}(this, (this.vttjs || {})));
+  /**
+   * VTTCue and TextTrackCue properties
+   * http://dev.w3.org/html5/webvtt/#vttcue-interface
+   */
+
+  var _id = "";
+  var _pauseOnExit = false;
+  var _startTime = startTime;
+  var _endTime = endTime;
+  var _text = text;
+  var _region = null;
+  var _vertical = "";
+  var _snapToLines = true;
+  var _line = "auto";
+  var _lineAlign = "start";
+  var _position = 50;
+  var _positionAlign = "middle";
+  var _size = 50;
+  var _align = "middle";
+
+  Object.defineProperty(cue,
+    "id", extend({}, baseObj, {
+      get: function() {
+        return _id;
+      },
+      set: function(value) {
+        _id = "" + value;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "pauseOnExit", extend({}, baseObj, {
+      get: function() {
+        return _pauseOnExit;
+      },
+      set: function(value) {
+        _pauseOnExit = !!value;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "startTime", extend({}, baseObj, {
+      get: function() {
+        return _startTime;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("Start time must be set to a number.");
+        }
+        _startTime = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "endTime", extend({}, baseObj, {
+      get: function() {
+        return _endTime;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("End time must be set to a number.");
+        }
+        _endTime = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "text", extend({}, baseObj, {
+      get: function() {
+        return _text;
+      },
+      set: function(value) {
+        _text = "" + value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "region", extend({}, baseObj, {
+      get: function() {
+        return _region;
+      },
+      set: function(value) {
+        _region = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "vertical", extend({}, baseObj, {
+      get: function() {
+        return _vertical;
+      },
+      set: function(value) {
+        var setting = findDirectionSetting(value);
+        // Have to check for false because the setting an be an empty string.
+        if (setting === false) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _vertical = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "snapToLines", extend({}, baseObj, {
+      get: function() {
+        return _snapToLines;
+      },
+      set: function(value) {
+        _snapToLines = !!value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "line", extend({}, baseObj, {
+      get: function() {
+        return _line;
+      },
+      set: function(value) {
+        if (typeof value !== "number" && value !== autoKeyword) {
+          throw new SyntaxError("An invalid number or illegal string was specified.");
+        }
+        _line = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "lineAlign", extend({}, baseObj, {
+      get: function() {
+        return _lineAlign;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _lineAlign = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "position", extend({}, baseObj, {
+      get: function() {
+        return _position;
+      },
+      set: function(value) {
+        if (value < 0 || value > 100) {
+          throw new Error("Position must be between 0 and 100.");
+        }
+        _position = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "positionAlign", extend({}, baseObj, {
+      get: function() {
+        return _positionAlign;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _positionAlign = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "size", extend({}, baseObj, {
+      get: function() {
+        return _size;
+      },
+      set: function(value) {
+        if (value < 0 || value > 100) {
+          throw new Error("Size must be between 0 and 100.");
+        }
+        _size = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "align", extend({}, baseObj, {
+      get: function() {
+        return _align;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _align = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  /**
+   * Other <track> spec defined properties
+   */
+
+  // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
+  cue.displayState = undefined;
+
+  if (isIE8) {
+    return cue;
+  }
+}
+
+/**
+ * VTTCue methods
+ */
+
+VTTCue.prototype.getCueAsHTML = function() {
+  // Assume WebVTT.convertCueToDOMTree is on the global.
+  return WebVTT.convertCueToDOMTree(window, this.text);
+};
+
+module.exports = VTTCue;
 
 
 /***/ }),
 /* 61 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// If we're in Node.js then require VTTRegion so we can extend it, otherwise assume
-// VTTRegion is on the global.
-if (typeof module !== "undefined" && module.exports) {
-  this.VTTRegion = __webpack_require__(62).VTTRegion;
-}
-
-// Extend VTTRegion with methods to convert to JSON, from JSON, and construct a
-// VTTRegion from an options object. The primary purpose of this is for use in the
-// vtt.js test suite. It's also useful if you need to work with VTTRegions in
-// JSON format.
-(function(root) {
-
-  root.VTTRegion.create = function(options) {
-    var region = new root.VTTRegion();
-    for (var key in options) {
-      if (region.hasOwnProperty(key)) {
-        region[key] = options[key];
-      }
-    }
-    return region;
-  };
-
-  root.VTTRegion.fromJSON = function(json) {
-    return this.create(JSON.parse(json));
-  };
-
-}(this));
-
-
-/***/ }),
-/* 62 */
 /***/ (function(module, exports) {
 
 /**
@@ -86789,132 +86813,128 @@ if (typeof module !== "undefined" && module.exports) {
  * limitations under the License.
  */
 
-(function(root, vttjs) {
+var scrollSetting = {
+  "": true,
+  "up": true
+};
 
-  var scrollSetting = {
-    "": true,
-    "up": true
-  };
-
-  function findScrollSetting(value) {
-    if (typeof value !== "string") {
-      return false;
-    }
-    var scroll = scrollSetting[value.toLowerCase()];
-    return scroll ? value.toLowerCase() : false;
+function findScrollSetting(value) {
+  if (typeof value !== "string") {
+    return false;
   }
+  var scroll = scrollSetting[value.toLowerCase()];
+  return scroll ? value.toLowerCase() : false;
+}
 
-  function isValidPercentValue(value) {
-    return typeof value === "number" && (value >= 0 && value <= 100);
-  }
+function isValidPercentValue(value) {
+  return typeof value === "number" && (value >= 0 && value <= 100);
+}
 
-  // VTTRegion shim http://dev.w3.org/html5/webvtt/#vttregion-interface
-  function VTTRegion() {
-    var _width = 100;
-    var _lines = 3;
-    var _regionAnchorX = 0;
-    var _regionAnchorY = 100;
-    var _viewportAnchorX = 0;
-    var _viewportAnchorY = 100;
-    var _scroll = "";
+// VTTRegion shim http://dev.w3.org/html5/webvtt/#vttregion-interface
+function VTTRegion() {
+  var _width = 100;
+  var _lines = 3;
+  var _regionAnchorX = 0;
+  var _regionAnchorY = 100;
+  var _viewportAnchorX = 0;
+  var _viewportAnchorY = 100;
+  var _scroll = "";
 
-    Object.defineProperties(this, {
-      "width": {
-        enumerable: true,
-        get: function() {
-          return _width;
-        },
-        set: function(value) {
-          if (!isValidPercentValue(value)) {
-            throw new Error("Width must be between 0 and 100.");
-          }
-          _width = value;
-        }
+  Object.defineProperties(this, {
+    "width": {
+      enumerable: true,
+      get: function() {
+        return _width;
       },
-      "lines": {
-        enumerable: true,
-        get: function() {
-          return _lines;
-        },
-        set: function(value) {
-          if (typeof value !== "number") {
-            throw new TypeError("Lines must be set to a number.");
-          }
-          _lines = value;
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("Width must be between 0 and 100.");
         }
-      },
-      "regionAnchorY": {
-        enumerable: true,
-        get: function() {
-          return _regionAnchorY;
-        },
-        set: function(value) {
-          if (!isValidPercentValue(value)) {
-            throw new Error("RegionAnchorX must be between 0 and 100.");
-          }
-          _regionAnchorY = value;
-        }
-      },
-      "regionAnchorX": {
-        enumerable: true,
-        get: function() {
-          return _regionAnchorX;
-        },
-        set: function(value) {
-          if(!isValidPercentValue(value)) {
-            throw new Error("RegionAnchorY must be between 0 and 100.");
-          }
-          _regionAnchorX = value;
-        }
-      },
-      "viewportAnchorY": {
-        enumerable: true,
-        get: function() {
-          return _viewportAnchorY;
-        },
-        set: function(value) {
-          if (!isValidPercentValue(value)) {
-            throw new Error("ViewportAnchorY must be between 0 and 100.");
-          }
-          _viewportAnchorY = value;
-        }
-      },
-      "viewportAnchorX": {
-        enumerable: true,
-        get: function() {
-          return _viewportAnchorX;
-        },
-        set: function(value) {
-          if (!isValidPercentValue(value)) {
-            throw new Error("ViewportAnchorX must be between 0 and 100.");
-          }
-          _viewportAnchorX = value;
-        }
-      },
-      "scroll": {
-        enumerable: true,
-        get: function() {
-          return _scroll;
-        },
-        set: function(value) {
-          var setting = findScrollSetting(value);
-          // Have to check for false as an empty string is a legal value.
-          if (setting === false) {
-            throw new SyntaxError("An invalid or illegal string was specified.");
-          }
-          _scroll = setting;
-        }
+        _width = value;
       }
-    });
-  }
+    },
+    "lines": {
+      enumerable: true,
+      get: function() {
+        return _lines;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("Lines must be set to a number.");
+        }
+        _lines = value;
+      }
+    },
+    "regionAnchorY": {
+      enumerable: true,
+      get: function() {
+        return _regionAnchorY;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("RegionAnchorX must be between 0 and 100.");
+        }
+        _regionAnchorY = value;
+      }
+    },
+    "regionAnchorX": {
+      enumerable: true,
+      get: function() {
+        return _regionAnchorX;
+      },
+      set: function(value) {
+        if(!isValidPercentValue(value)) {
+          throw new Error("RegionAnchorY must be between 0 and 100.");
+        }
+        _regionAnchorX = value;
+      }
+    },
+    "viewportAnchorY": {
+      enumerable: true,
+      get: function() {
+        return _viewportAnchorY;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("ViewportAnchorY must be between 0 and 100.");
+        }
+        _viewportAnchorY = value;
+      }
+    },
+    "viewportAnchorX": {
+      enumerable: true,
+      get: function() {
+        return _viewportAnchorX;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("ViewportAnchorX must be between 0 and 100.");
+        }
+        _viewportAnchorX = value;
+      }
+    },
+    "scroll": {
+      enumerable: true,
+      get: function() {
+        return _scroll;
+      },
+      set: function(value) {
+        var setting = findScrollSetting(value);
+        // Have to check for false as an empty string is a legal value.
+        if (setting === false) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _scroll = setting;
+      }
+    }
+  });
+}
 
-  root.VTTRegion = root.VTTRegion || VTTRegion;
-  vttjs.VTTRegion = VTTRegion;
-}(this, (this.vttjs || {})));
+module.exports = VTTRegion;
 
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -86925,7 +86945,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function (root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(118)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(117)) {
         //AMD type module loader detected
         !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(23), __webpack_require__(46)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
@@ -87373,7 +87393,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87381,7 +87401,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(14);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -87409,10 +87429,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var BigPlayButton = function (_Button) {
   _inherits(BigPlayButton, _Button);
 
-  function BigPlayButton() {
+  function BigPlayButton(player, options) {
     _classCallCheck(this, BigPlayButton);
 
-    return _possibleConstructorReturn(this, _Button.apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, _Button.call(this, player, options));
+
+    _this.mouseused_ = false;
+
+    _this.on('mousedown', _this.handleMouseDown);
+    return _this;
   }
 
   /**
@@ -87421,6 +87446,8 @@ var BigPlayButton = function (_Button) {
    * @return {string}
    *         The DOM `className` for this object. Always returns 'vjs-big-play-button'.
    */
+
+
   BigPlayButton.prototype.buildCSSClass = function buildCSSClass() {
     return 'vjs-big-play-button';
   };
@@ -87439,7 +87466,12 @@ var BigPlayButton = function (_Button) {
 
 
   BigPlayButton.prototype.handleClick = function handleClick(event) {
-    this.player_.play();
+    var playPromise = this.player_.play();
+
+    // exit early if clicked via the mouse
+    if (this.mouseused_ && event.clientX && event.clientY) {
+      return;
+    }
 
     var cb = this.player_.getChild('controlBar');
     var playToggle = cb && cb.getChild('playToggle');
@@ -87449,9 +87481,27 @@ var BigPlayButton = function (_Button) {
       return;
     }
 
-    this.setTimeout(function () {
-      playToggle.focus();
-    }, 1);
+    var playFocus = function playFocus() {
+      return playToggle.focus();
+    };
+
+    if (playPromise && playPromise.then) {
+      var ignoreRejectedPlayPromise = function ignoreRejectedPlayPromise() {};
+
+      playPromise.then(playFocus, ignoreRejectedPlayPromise);
+    } else {
+      this.setTimeout(playFocus, 1);
+    }
+  };
+
+  BigPlayButton.prototype.handleKeyPress = function handleKeyPress(event) {
+    this.mouseused_ = false;
+
+    _Button.prototype.handleKeyPress.call(this, event);
+  };
+
+  BigPlayButton.prototype.handleMouseDown = function handleMouseDown(event) {
+    this.mouseused_ = true;
   };
 
   return BigPlayButton;
@@ -87472,7 +87522,7 @@ exports['default'] = BigPlayButton;
 
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87480,7 +87530,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(14);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -87576,7 +87626,7 @@ exports['default'] = CloseButton;
 
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87592,7 +87642,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(67);
+var _audioTrackMenuItem = __webpack_require__(66);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -87702,7 +87752,7 @@ exports['default'] = AudioTrackButton;
 
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87828,7 +87878,7 @@ exports['default'] = AudioTrackMenuItem;
 
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87840,41 +87890,41 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(71);
-
-__webpack_require__(89);
-
-__webpack_require__(90);
-
-__webpack_require__(92);
-
-__webpack_require__(91);
-
 __webpack_require__(70);
-
-__webpack_require__(77);
-
-__webpack_require__(69);
-
-__webpack_require__(93);
-
-__webpack_require__(95);
-
-__webpack_require__(33);
-
-__webpack_require__(84);
-
-__webpack_require__(86);
 
 __webpack_require__(88);
 
+__webpack_require__(89);
+
+__webpack_require__(91);
+
+__webpack_require__(90);
+
+__webpack_require__(69);
+
+__webpack_require__(76);
+
+__webpack_require__(68);
+
+__webpack_require__(92);
+
+__webpack_require__(94);
+
+__webpack_require__(33);
+
 __webpack_require__(83);
 
-__webpack_require__(66);
+__webpack_require__(85);
 
-__webpack_require__(72);
+__webpack_require__(87);
 
-__webpack_require__(80);
+__webpack_require__(82);
+
+__webpack_require__(65);
+
+__webpack_require__(71);
+
+__webpack_require__(79);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -87940,7 +87990,7 @@ exports['default'] = ControlBar;
 
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87948,7 +87998,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(14);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -88063,7 +88113,7 @@ exports['default'] = FullscreenToggle;
 
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88172,7 +88222,7 @@ exports['default'] = LiveDisplay;
 
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88180,7 +88230,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(14);
+var _button = __webpack_require__(15);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -88311,7 +88361,7 @@ exports['default'] = PlayToggle;
 
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88327,7 +88377,7 @@ var _menu = __webpack_require__(38);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(73);
+var _playbackRateMenuItem = __webpack_require__(72);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
@@ -88553,7 +88603,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88667,7 +88717,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88796,7 +88846,7 @@ exports['default'] = LoadProgressBar;
 
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88997,7 +89047,7 @@ exports['default'] = MouseTimeDisplay;
 
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89105,7 +89155,7 @@ exports['default'] = PlayProgressBar;
 
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89117,9 +89167,9 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(78);
+__webpack_require__(77);
 
-__webpack_require__(75);
+__webpack_require__(74);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -89179,7 +89229,7 @@ exports['default'] = ProgressControl;
 
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89207,11 +89257,11 @@ var _computedStyle = __webpack_require__(30);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(74);
+__webpack_require__(73);
 
-__webpack_require__(76);
+__webpack_require__(75);
 
-__webpack_require__(79);
+__webpack_require__(78);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -89446,7 +89496,7 @@ exports['default'] = SeekBar;
 
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89552,7 +89602,7 @@ exports['default'] = TooltipProgressBar;
 
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89560,7 +89610,7 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(81);
+var _spacer = __webpack_require__(80);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
@@ -89630,7 +89680,7 @@ exports['default'] = CustomControlSpacer;
 
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89701,7 +89751,7 @@ exports['default'] = Spacer;
 
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89793,7 +89843,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89809,7 +89859,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(82);
+var _captionSettingsMenuItem = __webpack_require__(81);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -89911,7 +89961,7 @@ exports['default'] = CaptionsButton;
 
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89927,7 +89977,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(85);
+var _chaptersTrackMenuItem = __webpack_require__(84);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
@@ -90158,7 +90208,7 @@ exports['default'] = ChaptersButton;
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90273,7 +90323,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90416,7 +90466,7 @@ exports['default'] = DescriptionsButton;
 
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90514,7 +90564,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90608,7 +90658,7 @@ exports['default'] = SubtitlesButton;
 
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90723,7 +90773,7 @@ exports['default'] = CurrentTimeDisplay;
 
 
 /***/ }),
-/* 90 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90848,7 +90898,7 @@ exports['default'] = DurationDisplay;
 
 
 /***/ }),
-/* 91 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90969,7 +91019,7 @@ exports['default'] = RemainingTimeDisplay;
 
 
 /***/ }),
-/* 92 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91028,7 +91078,7 @@ exports['default'] = TimeDivider;
 
 
 /***/ }),
-/* 93 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91126,7 +91176,7 @@ exports['default'] = VolumeControl;
 
 
 /***/ }),
-/* 94 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91184,7 +91234,7 @@ exports['default'] = VolumeLevel;
 
 
 /***/ }),
-/* 95 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91200,11 +91250,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(102);
+var _popup = __webpack_require__(101);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(101);
+var _popupButton = __webpack_require__(100);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
@@ -91434,7 +91484,7 @@ exports['default'] = VolumeMenuButton;
 
 
 /***/ }),
-/* 96 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91542,7 +91592,7 @@ exports['default'] = ErrorDisplay;
 
 
 /***/ }),
-/* 97 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91649,7 +91699,7 @@ exports['default'] = extendFn;
 
 
 /***/ }),
-/* 98 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91711,7 +91761,7 @@ exports['default'] = FullscreenApi;
 
 
 /***/ }),
-/* 99 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91769,7 +91819,7 @@ exports['default'] = LoadingSpinner;
 
 
 /***/ }),
-/* 100 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91802,7 +91852,7 @@ exports['default'] = plugin;
 
 
 /***/ }),
-/* 101 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91810,7 +91860,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(15);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -91931,7 +91981,7 @@ exports['default'] = PopupButton;
 
 
 /***/ }),
-/* 102 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92036,7 +92086,7 @@ exports['default'] = Popup;
 
 
 /***/ }),
-/* 103 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92044,7 +92094,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(15);
+var _clickableComponent = __webpack_require__(16);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -92224,7 +92274,7 @@ exports['default'] = PosterImage;
 
 
 /***/ }),
-/* 104 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92375,7 +92425,7 @@ exports.hasLoaded = hasLoaded;
 
 
 /***/ }),
-/* 105 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92584,7 +92634,7 @@ exports['default'] = FlashRtmpDecorator;
 
 
 /***/ }),
-/* 106 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -92592,7 +92642,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(16);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -92604,9 +92654,9 @@ var _url = __webpack_require__(22);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(17);
+var _timeRanges = __webpack_require__(18);
 
-var _flashRtmp = __webpack_require__(105);
+var _flashRtmp = __webpack_require__(104);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
@@ -92712,7 +92762,7 @@ var Flash = function (_Tech) {
     // Otherwise this adds a CDN url.
     // The CDN also auto-adds a swf URL for that specific version.
     if (!options.swf) {
-      var ver = '5.3.0';
+      var ver = '5.4.1';
 
       options.swf = '//vjs.zencdn.net/swf/' + ver + '/video-js.swf';
     }
@@ -93003,6 +93053,29 @@ var Flash = function (_Tech) {
 
   Flash.prototype.enterFullScreen = function enterFullScreen() {
     return false;
+  };
+
+  /**
+   * Gets available media playback quality metrics as specified by the W3C's Media
+   * Playback Quality API.
+   *
+   * @see [Spec]{@link https://wicg.github.io/media-playback-quality}
+   *
+   * @return {Object}
+   *         An object with supported media playback quality metrics
+   */
+
+
+  Flash.prototype.getVideoPlaybackQuality = function getVideoPlaybackQuality() {
+    var videoPlaybackQuality = this.el_.vjs_getProperty('getVideoPlaybackQuality');
+
+    if (_window2['default'].performance && typeof _window2['default'].performance.now === 'function') {
+      videoPlaybackQuality.creationTime = _window2['default'].performance.now();
+    } else if (_window2['default'].performance && _window2['default'].performance.timing && typeof _window2['default'].performance.timing.navigationStart === 'number') {
+      videoPlaybackQuality.creationTime = _window2['default'].Date.now() - _window2['default'].performance.timing.navigationStart;
+    }
+
+    return videoPlaybackQuality;
   };
 
   return Flash;
@@ -93748,7 +93821,7 @@ exports['default'] = Flash;
 
 
 /***/ }),
-/* 107 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -93758,7 +93831,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(16);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -93943,6 +94016,9 @@ var Html5 = function (_Tech) {
       _this.proxyNativeTextTracks_();
     }
 
+    // prevent iOS Safari from disabling metadata text tracks during native playback
+    _this.restoreMetadataTracksInIOSNativePlayer_();
+
     // Determine if native controls should be used
     // Our goal should be to get the custom controls on mobile solid everywhere
     // so we can remove this all together. Right now this will block custom
@@ -93987,6 +94063,74 @@ var Html5 = function (_Tech) {
     Html5.disposeMediaElement(this.el_);
     // tech will handle clearing of the emulated track list
     _Tech.prototype.dispose.call(this);
+  };
+
+  /**
+   * When a captions track is enabled in the iOS Safari native player, all other
+   * tracks are disabled (including metadata tracks), which nulls all of their
+   * associated cue points. This will restore metadata tracks to their pre-fullscreen
+   * state in those cases so that cue points are not needlessly lost.
+   *
+   * @private
+   */
+
+
+  Html5.prototype.restoreMetadataTracksInIOSNativePlayer_ = function restoreMetadataTracksInIOSNativePlayer_() {
+    var textTracks = this.textTracks();
+    var metadataTracksPreFullscreenState = void 0;
+
+    // captures a snapshot of every metadata track's current state
+    var takeMetadataTrackSnapshot = function takeMetadataTrackSnapshot() {
+      metadataTracksPreFullscreenState = [];
+
+      for (var i = 0; i < textTracks.length; i++) {
+        var track = textTracks[i];
+
+        if (track.kind === 'metadata') {
+          metadataTracksPreFullscreenState.push({
+            track: track,
+            storedMode: track.mode
+          });
+        }
+      }
+    };
+
+    // snapshot each metadata track's initial state, and update the snapshot
+    // each time there is a track 'change' event
+    takeMetadataTrackSnapshot();
+    textTracks.addEventListener('change', takeMetadataTrackSnapshot);
+
+    var restoreTrackMode = function restoreTrackMode() {
+      for (var i = 0; i < metadataTracksPreFullscreenState.length; i++) {
+        var storedTrack = metadataTracksPreFullscreenState[i];
+
+        if (storedTrack.track.mode === 'disabled' && storedTrack.track.mode !== storedTrack.storedMode) {
+          storedTrack.track.mode = storedTrack.storedMode;
+        }
+      }
+      // we only want this handler to be executed on the first 'change' event
+      textTracks.removeEventListener('change', restoreTrackMode);
+    };
+
+    // when we enter fullscreen playback, stop updating the snapshot and
+    // restore all track modes to their pre-fullscreen state
+    this.on('webkitbeginfullscreen', function () {
+      textTracks.removeEventListener('change', takeMetadataTrackSnapshot);
+
+      // remove the listener before adding it just in case it wasn't previously removed
+      textTracks.removeEventListener('change', restoreTrackMode);
+      textTracks.addEventListener('change', restoreTrackMode);
+    });
+
+    // start updating the snapshot again after leaving fullscreen
+    this.on('webkitendfullscreen', function () {
+      // remove the listener before adding it just in case it wasn't previously removed
+      textTracks.removeEventListener('change', takeMetadataTrackSnapshot);
+      textTracks.addEventListener('change', takeMetadataTrackSnapshot);
+
+      // remove the restoreTrackMode handler in case it wasn't triggered during fullscreen playback
+      textTracks.removeEventListener('change', restoreTrackMode);
+    });
   };
 
   /**
@@ -94035,17 +94179,27 @@ var Html5 = function (_Tech) {
       el.playerId = this.options_.playerId;
     }
 
+    if (typeof this.options_.preload !== 'undefined') {
+      Dom.setAttribute(el, 'preload', this.options_.preload);
+    }
+
     // Update specific tag settings, in case they were overridden
-    var settingsAttrs = ['autoplay', 'preload', 'loop', 'muted'];
+    // `autoplay` has to be *last* so that `muted` and `playsinline` are present
+    // when iOS/Safari or other browsers attempt to autoplay.
+    var settingsAttrs = ['loop', 'muted', 'playsinline', 'autoplay'];
 
     for (var i = settingsAttrs.length - 1; i >= 0; i--) {
       var attr = settingsAttrs[i];
-      var overwriteAttrs = {};
+      var value = this.options_[attr];
 
-      if (typeof this.options_[attr] !== 'undefined') {
-        overwriteAttrs[attr] = this.options_[attr];
+      if (typeof value !== 'undefined') {
+        if (value) {
+          Dom.setAttribute(el, attr, attr);
+        } else {
+          Dom.removeAttribute(el, attr);
+        }
+        el[attr] = value;
       }
-      Dom.setElAttributes(el, overwriteAttrs);
     }
 
     return el;
@@ -94399,9 +94553,11 @@ var Html5 = function (_Tech) {
     };
 
     var beginFn = function beginFn() {
-      this.one('webkitendfullscreen', endFn);
+      if ('webkitPresentationMode' in this.el_ && this.el_.webkitPresentationMode !== 'picture-in-picture') {
+        this.one('webkitendfullscreen', endFn);
 
-      this.trigger('fullscreenchange', { isFullscreen: true });
+        this.trigger('fullscreenchange', { isFullscreen: true });
+      }
     };
 
     this.on('webkitbeginfullscreen', beginFn);
@@ -94659,6 +94815,38 @@ var Html5 = function (_Tech) {
     }
   };
 
+  /**
+   * Gets available media playback quality metrics as specified by the W3C's Media
+   * Playback Quality API.
+   *
+   * @see [Spec]{@link https://wicg.github.io/media-playback-quality}
+   *
+   * @return {Object}
+   *         An object with supported media playback quality metrics
+   */
+
+
+  Html5.prototype.getVideoPlaybackQuality = function getVideoPlaybackQuality() {
+    if (typeof this.el().getVideoPlaybackQuality === 'function') {
+      return this.el().getVideoPlaybackQuality();
+    }
+
+    var videoPlaybackQuality = {};
+
+    if (typeof this.el().webkitDroppedFrameCount !== 'undefined' && typeof this.el().webkitDecodedFrameCount !== 'undefined') {
+      videoPlaybackQuality.droppedVideoFrames = this.el().webkitDroppedFrameCount;
+      videoPlaybackQuality.totalVideoFrames = this.el().webkitDecodedFrameCount;
+    }
+
+    if (_window2['default'].performance && typeof _window2['default'].performance.now === 'function') {
+      videoPlaybackQuality.creationTime = _window2['default'].performance.now();
+    } else if (_window2['default'].performance && _window2['default'].performance.timing && typeof _window2['default'].performance.timing.navigationStart === 'number') {
+      videoPlaybackQuality.creationTime = _window2['default'].Date.now() - _window2['default'].performance.timing.navigationStart;
+    }
+
+    return videoPlaybackQuality;
+  };
+
   return Html5;
 }(_tech2['default']);
 
@@ -94731,7 +94919,7 @@ Html5.canControlVolume = function () {
 Html5.canControlPlaybackRate = function () {
   // Playback rate API is implemented in Android Chrome, but doesn't do anything
   // https://github.com/videojs/video.js/issues/3180
-  if (browser.IS_ANDROID && browser.IS_CHROME) {
+  if (browser.IS_ANDROID && browser.IS_CHROME && browser.CHROME_VERSION < 58) {
     return false;
   }
   // IE will error if Windows Media Player not installed #3315
@@ -94965,7 +95153,193 @@ Html5.resetMediaElement = function (el) {
 };
 
 /* Native HTML5 element property wrapping ----------------------------------- */
+// Wrap native boolean attributes with getters that check both property and attribute
+// The list is as followed:
+// muted, defaultMuted, autoplay, controls, loop, playsinline
+[
+/**
+ * Get the value of `muted` from the media element. `muted` indicates
+ * that the volume for the media should be set to silent. This does not actually change
+ * the `volume` attribute.
+ *
+ * @method Html5#muted
+ * @return {boolean}
+ *         - True if the value of `volume` should be ignored and the audio set to silent.
+ *         - False if the value of `volume` should be used.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-muted}
+ */
+'muted',
+
+/**
+ * Get the value of `defaultMuted` from the media element. `defaultMuted` indicates
+ * whether the media should start muted or not. Only changes the default state of the
+ * media. `muted` and `defaultMuted` can have different values. {@link Html5#muted} indicates the
+ * current state.
+ *
+ * @method Html5#defaultMuted
+ * @return {boolean}
+ *         - The value of `defaultMuted` from the media element.
+ *         - True indicates that the media should start muted.
+ *         - False indicates that the media should not start muted
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-defaultmuted}
+ */
+'defaultMuted',
+
+/**
+ * Get the value of `autoplay` from the media element. `autoplay` indicates
+ * that the media should start to play as soon as the page is ready.
+ *
+ * @method Html5#autoplay
+ * @return {boolean}
+ *         - The value of `autoplay` from the media element.
+ *         - True indicates that the media should start as soon as the page loads.
+ *         - False indicates that the media should not start as soon as the page loads.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-autoplay}
+ */
+'autoplay',
+
+/**
+ * Get the value of `controls` from the media element. `controls` indicates
+ * whether the native media controls should be shown or hidden.
+ *
+ * @method Html5#controls
+ * @return {boolean}
+ *         - The value of `controls` from the media element.
+ *         - True indicates that native controls should be showing.
+ *         - False indicates that native controls should be hidden.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-controls}
+ */
+'controls',
+
+/**
+ * Get the value of `loop` from the media element. `loop` indicates
+ * that the media should return to the start of the media and continue playing once
+ * it reaches the end.
+ *
+ * @method Html5#loop
+ * @return {boolean}
+ *         - The value of `loop` from the media element.
+ *         - True indicates that playback should seek back to start once
+ *           the end of a media is reached.
+ *         - False indicates that playback should not loop back to the start when the
+ *           end of the media is reached.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-loop}
+ */
+'loop',
+
+/**
+ * Get the value of `playsinline` from the media element. `playsinline` indicates
+ * to the browser that non-fullscreen playback is preferred when fullscreen
+ * playback is the native default, such as in iOS Safari.
+ *
+ * @method Html5#playsinline
+ * @return {boolean}
+ *         - The value of `playsinline` from the media element.
+ *         - True indicates that the media should play inline.
+ *         - False indicates that the media should not play inline.
+ *
+ * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
+ */
+'playsinline'].forEach(function (prop) {
+  Html5.prototype[prop] = function () {
+    return this.el_[prop] || this.el_.hasAttribute(prop);
+  };
+});
+
+// Wrap native boolean attributes with setters that set both property and attribute
+// The list is as followed:
+// setMuted, setDefaultMuted, setAutoplay, setLoop, setPlaysinline
+// setControls is special-cased above
+[
+/**
+ * Set the value of `muted` on the media element. `muted` indicates that the current
+ * audio level should be silent.
+ *
+ * @method Html5#setMuted
+ * @param {boolean} muted
+ *        - True if the audio should be set to silent
+ *        - False otherwise
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-muted}
+ */
+'muted',
+
+/**
+ * Set the value of `defaultMuted` on the media element. `defaultMuted` indicates that the current
+ * audio level should be silent, but will only effect the muted level on intial playback..
+ *
+ * @method Html5.prototype.setDefaultMuted
+ * @param {boolean} defaultMuted
+ *        - True if the audio should be set to silent
+ *        - False otherwise
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-defaultmuted}
+ */
+'defaultMuted',
+
+/**
+ * Set the value of `autoplay` on the media element. `autoplay` indicates
+ * that the media should start to play as soon as the page is ready.
+ *
+ * @method Html5#setAutoplay
+ * @param {boolean} autoplay
+ *         - True indicates that the media should start as soon as the page loads.
+ *         - False indicates that the media should not start as soon as the page loads.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-autoplay}
+ */
+'autoplay',
+
+/**
+ * Set the value of `loop` on the media element. `loop` indicates
+ * that the media should return to the start of the media and continue playing once
+ * it reaches the end.
+ *
+ * @method Html5#setLoop
+ * @param {boolean} loop
+ *         - True indicates that playback should seek back to start once
+ *           the end of a media is reached.
+ *         - False indicates that playback should not loop back to the start when the
+ *           end of the media is reached.
+ *
+ * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-loop}
+ */
+'loop',
+
+/**
+ * Set the value of `playsinline` from the media element. `playsinline` indicates
+ * to the browser that non-fullscreen playback is preferred when fullscreen
+ * playback is the native default, such as in iOS Safari.
+ *
+ * @method Html5#setPlaysinline
+ * @param {boolean} playsinline
+ *         - True indicates that the media should play inline.
+ *         - False indicates that the media should not play inline.
+ *
+ * @see [Spec]{@link https://html.spec.whatwg.org/#attr-video-playsinline}
+ */
+'playsinline'].forEach(function (prop) {
+  Html5.prototype['set' + (0, _toTitleCase2['default'])(prop)] = function (v) {
+    this.el_[prop] = v;
+
+    if (v) {
+      this.el_.setAttribute(prop, prop);
+    } else {
+      this.el_.removeAttribute(prop);
+    }
+  };
+});
+
 // Wrap native properties with a getter
+// The list is as followed
+// paused, currentTime, buffered, volume, poster, preload, error, seeking
+// seekable, ended, playbackRate, defaultPlaybackRate, played, networkState
+// readyState, videoWidth, videoHeight
 [
 /**
  * Get the value of `paused` from the media element. `paused` indicates whether the media element
@@ -95018,20 +95392,6 @@ Html5.resetMediaElement = function (el) {
 'volume',
 
 /**
- * Get the value of `muted` from the media element. `muted` indicates
- * that the volume for the media should be set to silent. This does not actually change
- * the `volume` attribute.
- *
- * @method Html5#muted
- * @return {boolean}
- *         - True if the value of `volume` should be ignored and the audio set to silent.
- *         - False if the value of `volume` should be used.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-muted}
- */
-'muted',
-
-/**
  * Get the value of `poster` from the media element. `poster` indicates
  * that the url of an image file that can/will be shown when no media data is available.
  *
@@ -95062,51 +95422,6 @@ Html5.resetMediaElement = function (el) {
  * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-preload}
  */
 'preload',
-
-/**
- * Get the value of `autoplay` from the media element. `autoplay` indicates
- * that the media should start to play as soon as the page is ready.
- *
- * @method Html5#autoplay
- * @return {boolean}
- *         - The value of `autoplay` from the media element.
- *         - True indicates that the media should start as soon as the page loads.
- *         - False indicates that the media should not start as soon as the page loads.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-autoplay}
- */
-'autoplay',
-
-/**
- * Get the value of `controls` from the media element. `controls` indicates
- * whether the native media controls should be shown or hidden.
- *
- * @method Html5#controls
- * @return {boolean}
- *         - The value of `controls` from the media element.
- *         - True indicates that native controls should be showing.
- *         - False indicates that native controls should be hidden.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-controls}
- */
-'controls',
-
-/**
- * Get the value of `loop` from the media element. `loop` indicates
- * that the media should return to the start of the media and continue playing once
- * it reaches the end.
- *
- * @method Html5#loop
- * @return {boolean}
- *         - The value of `loop` from the media element.
- *         - True indicates that playback should seek back to start once
- *           the end of a media is reached.
- *         - False indicates that playback should not loop back to the start when the
- *           end of the media is reached.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-loop}
- */
-'loop',
 
 /**
  * Get the value of the `error` from the media element. `error` indicates any
@@ -95162,22 +95477,6 @@ Html5.resetMediaElement = function (el) {
  * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-ended}
  */
 'ended',
-
-/**
- * Get the value of `defaultMuted` from the media element. `defaultMuted` indicates
- * whether the media should start muted or not. Only changes the default state of the
- * media. `muted` and `defaultMuted` can have different values. `muted` indicates the
- * current state.
- *
- * @method Html5#defaultMuted
- * @return {boolean}
- *         - The value of `defaultMuted` from the media element.
- *         - True indicates that the media should start muted.
- *         - False indicates that the media should not start muted
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-defaultmuted}
- */
-'defaultMuted',
 
 /**
  * Get the value of `playbackRate` from the media element. `playbackRate` indicates
@@ -95275,6 +95574,8 @@ Html5.resetMediaElement = function (el) {
 
 // Wrap native properties with a setter in this format:
 // set + toTitleCase(name)
+// The list is as follows:
+// setVolume, setSrc, setPoster, setPreload, setPlaybackRate, setDefaultPlaybackRate
 [
 /**
  * Set the value of `volume` on the media element. `volume` indicates the current
@@ -95288,19 +95589,6 @@ Html5.resetMediaElement = function (el) {
  * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-a-volume}
  */
 'volume',
-
-/**
- * Set the value of `muted` on the media element. `muted` indicates the current
- * audio level should be silent.
- *
- * @method Html5#setMuted
- * @param {boolean} muted
- *        - True if the audio should be set to silent
- *        - False otherwise
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#dom-media-muted}
- */
-'muted',
 
 /**
  * Set the value of `src` on the media element. `src` indicates the current
@@ -95347,35 +95635,6 @@ Html5.resetMediaElement = function (el) {
 'preload',
 
 /**
- * Set the value of `autoplay` on the media element. `autoplay` indicates
- * that the media should start to play as soon as the page is ready.
- *
- * @method Html5#setAutoplay
- * @param {boolean} autoplay
- *         - True indicates that the media should start as soon as the page loads.
- *         - False indicates that the media should not start as soon as the page loads.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-autoplay}
- */
-'autoplay',
-
-/**
- * Set the value of `loop` on the media element. `loop` indicates
- * that the media should return to the start of the media and continue playing once
- * it reaches the end.
- *
- * @method Html5#setLoop
- * @param {boolean} loop
- *         - True indicates that playback should seek back to start once
- *           the end of a media is reached.
- *         - False indicates that playback should not loop back to the start when the
- *           end of the media is reached.
- *
- * @see [Spec]{@link https://www.w3.org/TR/html5/embedded-content-0.html#attr-media-loop}
- */
-'loop',
-
-/**
  * Set the value of `playbackRate` on the media element. `playbackRate` indicates
  * the rate at which the media should play back. Examples:
  *   - if playbackRate is set to 2, media will play twice as fast.
@@ -95395,6 +95654,8 @@ Html5.resetMediaElement = function (el) {
 });
 
 // wrap native functions with a function
+// The list is as follows:
+// pause, load play
 [
 /**
  * A wrapper around the media elements `pause` function. This will call the `HTML5`
@@ -95508,7 +95769,7 @@ exports['default'] = Html5;
 
 
 /***/ }),
-/* 108 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95520,7 +95781,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(16);
+var _tech = __webpack_require__(17);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -95603,7 +95864,7 @@ exports['default'] = MediaLoader;
 
 
 /***/ }),
-/* 109 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95739,7 +96000,7 @@ exports['default'] = AudioTrack;
 
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -95894,7 +96155,7 @@ exports['default'] = HtmlTrackElementList;
 
 
 /***/ }),
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96070,7 +96331,7 @@ exports['default'] = HTMLTrackElement;
 
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96229,7 +96490,7 @@ exports['default'] = TextTrackCueList;
 
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96586,7 +96847,7 @@ exports['default'] = TextTrackDisplay;
 
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96695,7 +96956,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -96806,7 +97067,7 @@ exports['default'] = TextTrackList;
 
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97414,7 +97675,7 @@ exports['default'] = TextTrackSettings;
 
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -97549,7 +97810,7 @@ exports['default'] = VideoTrack;
 
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -97558,7 +97819,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -97583,37 +97844,40 @@ function extend() {
 
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
+/* 120 */,
 /* 121 */,
 /* 122 */,
 /* 123 */,
 /* 124 */,
 /* 125 */,
 /* 126 */,
-/* 127 */,
-/* 128 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angular___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angular__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
 
 
+var _angular = __webpack_require__(23);
 
+var _angular2 = _interopRequireDefault(_angular);
+
+var _jquery = __webpack_require__(24);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // VideoJS
-__webpack_require__(56);
+__webpack_require__(57);
 
 // Angular VideoJS
-__webpack_require__(63);
+__webpack_require__(62);
 
 // dropzone
 // require('dropzone/dist/dropzone.js');
@@ -97624,7 +97888,7 @@ __webpack_require__(48);
 'use strict';
 
 // Define the service
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
+_angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
 
   return {
     send: function send(timelines, counter) {
@@ -97720,11 +97984,13 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('appService', []).factory
       return s;
     }
 
+    // getCurrentPos: function () {
+    // }
   };
 });
 
 // Define the controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
+_angular2.default.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
   // models
   $scope.videoData = {}; // Initialize the object
 
@@ -97735,7 +98001,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mainCtrl', []).controlle
 });
 
 // Define the upload Controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
+_angular2.default.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
   // models
 
 
@@ -97783,7 +98049,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('uploadCtrl', []).control
 }]);
 
 // Define the video controller
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
+_angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
 
   // Inizializzo la sessione
   var init = $window.timelines;
@@ -97867,7 +98133,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('videoCtrl', ['vjs.video'
   });
 }]);
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
+_angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
   $scope.tick = 0;
   $scope.disable = false;
   $scope.timelines = Timeline.getTimelines($scope);
@@ -97919,7 +98185,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('mediaTimelineCtrl', ['mt
   };
 });
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
+_angular2.default.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
 
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
@@ -97954,7 +98220,7 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('toolCtrl', []).controlle
   };
 });
 
-__WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
+_angular2.default.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
   $scope.feedbackData = {};
 
   $scope.setPositive = function () {
@@ -97972,9 +98238,10 @@ __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('feedbackCtrl', []).contr
 });
 
 // Define the Application
-var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
 
 /***/ }),
+/* 128 */,
 /* 129 */,
 /* 130 */,
 /* 131 */,
@@ -98007,11 +98274,10 @@ var App = __WEBPACK_IMPORTED_MODULE_0_angular___default.a.module('App', ['mainCt
 /* 158 */,
 /* 159 */,
 /* 160 */,
-/* 161 */,
-/* 162 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(128);
+module.exports = __webpack_require__(127);
 
 
 /***/ })
