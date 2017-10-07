@@ -337,8 +337,8 @@ $(window).resize(function() {
  */
 
 const manScale      = 0.5;                                // dimensione
-const manNumber     = 70;                                 // total people
-const refreshMans   = 10;                                 // Range for random new people
+const manNumber     = 40;                                 // total people
+const refreshMans   = 5;                                 // Range for random new people
 const refreshTime   = 10000;                              // time for new people in ms
 const leftStreet    = .3;                                 // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
 const walkDuration  = 200000;                             // Durata dell'animazione totale
