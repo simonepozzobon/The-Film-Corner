@@ -1533,6 +1533,21 @@
 
           <path id="path-1" d="M1920 880 890 880 640 605 500 605" style="opacity: 0; stroke: #0000FF; stroke-width: 6; fill: none;"></path>
           <path id="path-2" d="M0 880 435 880 510 635 495 635" style="opacity: 0; stroke: #0000FF; stroke-width: 6; fill: none;"></path>
+
+          <path id="path-3" stroke="#D700FF"  d="M0 870.846634 296.003976 870.846634 338.17617 799.511364" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-4" stroke="#F200FF"  d="M1920 892.006556 1438.36601 892.006556 1389.83733 845.222381 1368.27481 845.222381" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-5" stroke="#BD0FE1"  d="M497.591242 610.118337 655.459527 610.118337 920.788455 890.319231 1262.46124 890.319231 1274.22589 840.393009 1288.47618 840.393009" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-6" stroke="#BD0FE1"  d="M497.46217 641.353781 518.964651 641.353781 457.997343 868.301956 310.619105 868.301956 339.190996 816.357056" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-7" stroke="#F6A623"  d="M1920 871.216828 1355.21457 871.216828 1325.27694 841.816952 1306.00762 841.816952" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-8" stroke="#F6A623"  d="M497.64566 606.080392 636.795816 606.080392 856.76683 870.484249 1319.0774 870.484249 1337.226 843.535914 1350.913 843.535914" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-9" stroke="#7ED321"  d="M1920 904.347142 872.030108 904.347142 734.475992 731.793782 795.817688 731.793782" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-10" stroke="#7ED321" d="M795.315607 724.573205 756.292354 724.573205 915.401814 897.488508 1197.81928 897.488508 1210.41035 843.622852 1226.11857 843.622852" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-11" stroke="#F6A623" d="M497.984028 612.074294 651.422971 612.074294 881.736103 895.467594 1394.79167 895.467594 1402.16583 849.528855 1412.88996 849.528855" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-12" stroke="#50E3C2" d="M1920 885.821043 1284.66705 885.821043 1261.52113 843.873126 1245.33456 843.873126" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-13" stroke="#50E3C2" d="M1920.71366 897.909251 1415.14833 897.909251 1380.06462 849.819877 1368.0423 849.819877" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-14" stroke="#50E3C2" d="M795.388416 717.260021 742.194814 717.260021 884.386389 886.216337 1190.46058 886.216337 1199.3377 847.820477 1226.45795 847.820477" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+          <path id="path-15" stroke="#50E3C2" d="M795.339523 728.572346 730.202741 728.572346 633.355283 609.404284 497.133604 609.404284" style="opacity: 0; stroke-width: 6; fill: none;"></path>
+
         </svg>
       </div>
     </div>

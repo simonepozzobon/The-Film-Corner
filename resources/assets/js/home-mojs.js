@@ -337,10 +337,10 @@ $(window).resize(function() {
  */
 
 const manScale      = 0.5;                                // dimensione
-const manNumber     = 100;                                 // total people
+const manNumber     = 70;                                 // total people
 const refreshMans   = 10;                                 // Range for random new people
 const refreshTime   = 10000;                              // time for new people in ms
-const leftStreet    = .4;                                 // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
+const leftStreet    = .3;                                 // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
 const walkDuration  = 200000;                             // Durata dell'animazione totale
 const left_path     = document.getElementById('path-2');  // Percorso di sinistra
 const right_path    = document.getElementById('path-1');  // Percorso di destra
@@ -363,9 +363,23 @@ const colors        = [
                         '#686868',
                       ];
 const paths           = [
-  // ['direzione camminata omini', 'direzione della path', path],
-  ['right_to_left', document.getElementById('path-1')],
-  ['left_to_right', document.getElementById('path-2')],
+  // ['direzione della path', 'direzione camminata omini', path],
+  ['right_to_left', 'right', document.getElementById('path-1')],
+  ['left_to_right', 'left', document.getElementById('path-2')],
+  ['left_to_right', 'left', document.getElementById('path-3')],
+  ['right_to_left', 'right', document.getElementById('path-4')],
+  ['left_to_right', 'right', document.getElementById('path-5')],
+  ['right_to_left', 'left', document.getElementById('path-6')],
+  ['right_to_left', 'right', document.getElementById('path-7')],
+  ['left_to_right', 'right', document.getElementById('path-8')],
+  ['right_to_left', 'right', document.getElementById('path-9')],
+  ['left_to_right', 'right', document.getElementById('path-10')],
+  ['left_to_right', 'right', document.getElementById('path-11')],
+  ['right_to_left', 'right', document.getElementById('path-12')],
+  ['right_to_left', 'right', document.getElementById('path-12')],
+  ['right_to_left', 'right', document.getElementById('path-13')],
+  ['left_to_right', 'right', document.getElementById('path-14')],
+  ['left_to_right', 'right', document.getElementById('path-15')],
 ];
 
 let counter = 0;
@@ -741,12 +755,10 @@ const Lemming = function()
     {
       console.log('Go Lemmings');
       for (var i = 0; i < number; i++) {
+        let _pathIndex = Math.floor(Math.random() * n_paths);
         let direction = Math.random() >= 0.5;
         let timeline = null;
         let index = counter;
-        let _pathIndex = Math.floor(Math.random() * n_paths)
-        let _pathDirection = paths[_pathIndex][0];
-        let _path = paths[_pathIndex][1];
 
 
         // Assegno la direzione
@@ -756,15 +768,34 @@ const Lemming = function()
             direction = 1;
         }
 
-        if (_pathDirection == 'left_to_right' && direction == -1) {
-          timeline = this.generateLemming(index)
-        } else if (_pathDirection == 'left_to_right' && direction == 1) {
-          timeline = this.generateLemmingBackward(index)
-        } else if (_pathDirection == 'right_to_left' && direction == -1) {
-          timeline = this.generateLemmingBackward(index)
-        } else if (_pathDirection == 'right_to_left' && direction == 1) {
-          timeline = this.generateLemming(index)
+        if (i < (number * leftStreet)) {
+          while (paths[_pathIndex][1] == 'right') {
+              _pathIndex = Math.floor(Math.random() * n_paths);
+          }
+        } else {
+          while (paths[_pathIndex][1] == 'left') {
+              _pathIndex = Math.floor(Math.random() * n_paths);
+          }
         }
+
+        let _pathDirection = paths[_pathIndex][0];
+        let _pathSide = paths[_pathIndex][1];
+        let _path = paths[_pathIndex][2];
+
+        if (_pathDirection == 'left_to_right') {
+            if (direction == -1) {
+                timeline = this.generateLemming(index)
+            } else {
+                timeline = this.generateLemmingBackward(index)
+            }
+        } else if (_pathDirection == 'right_to_left') {
+            if (direction == -1) {
+                timeline = this.generateLemmingBackward(index)
+            } else {
+                timeline = this.generateLemming(index)
+            }
+        }
+
 
         if (isStart == true) {
           let shift = Math.floor((Math.random() * walkDuration) + 1);
