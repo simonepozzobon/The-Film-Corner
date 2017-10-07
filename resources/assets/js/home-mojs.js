@@ -336,10 +336,11 @@ $(window).resize(function() {
  *
  */
 
-const _color        = '#696759';                          // '#bdbfc1';
 const manScale      = 0.5;                                // dimensione
-const manNumber     = 50;                                  // total people
-const leftStreet    = .4;                                  // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
+const manNumber     = 100;                                 // total people
+const refreshMans   = 10;                                 // Range for random new people
+const refreshTime   = 10000;                              // time for new people in ms
+const leftStreet    = .4;                                 // quanti nella strada di sinistra (es: 0.5 -> metà saranno su quella di sinistra, 0.4 -> il 40%)
 const walkDuration  = 200000;                             // Durata dell'animazione totale
 const left_path     = document.getElementById('path-2');  // Percorso di sinistra
 const right_path    = document.getElementById('path-1');  // Percorso di destra
@@ -347,14 +348,36 @@ const repeat        = {
                         isYoyo: true,
                         repeat: 999,
                       };
-const _angle        = 30;
+const angle         = 30;
+const colors        = [
+                        '#939393',
+                        '#7e7e7e',
+                        '#696969',
+                        '#545454',
+                        '#3f3f3f',
+                        '#2a2a2a',
+                        '#151515',
+                        '#808080',
+                        '#585858',
+                        '#383838',
+                        '#686868',
+                      ];
+const paths           = [
+  // ['direzione camminata omini', 'direzione della path', path],
+  ['right_to_left', document.getElementById('path-1')],
+  ['left_to_right', document.getElementById('path-2')],
+];
 
 let counter = 0;
+const n_colors = colors.length;
+const n_paths = paths.length;
+console.log(n_paths);
 
 const Lemming = function()
 {
-    this.generateLemming = function ( _color, i )
+    this.generateLemming = function ( i )
     {
+        let _color = colors[Math.floor(Math.random() * n_colors)];
         let _position = -1.5 + (Math.floor((Math.random() * 100) + 1) / 100);
         let _duration = Math.floor((Math.random() * 2000) + 2000);
         let _wrapper = new mojs.Shape({
@@ -496,8 +519,9 @@ const Lemming = function()
         return man;
     }
 
-    this.generateLemmingBackward = function ( _color, i )
+    this.generateLemmingBackward = function ( i )
     {
+        let _color = colors[Math.floor(Math.random() * n_colors)];
         let _position = -1.5 + (Math.floor((Math.random() * 100) + 1) / 100);
         let _duration = Math.floor((Math.random() * 2000) + 2000);
         let _wrapper = new mojs.Shape({
@@ -649,19 +673,12 @@ const Lemming = function()
             direction: _direction,
             delay: _delay,
             onUpdate (ep, p, isForward, isYoyo) {
-                // normalization
-
                 let v = _pathLenght * (p - 1) + _pathLenght;
-                // non sono sicuro che quella sopra vada bene al massimo ripristinarla con quella sotto
-                // let v = p*_pathLenght;
-
-                // calcolo le dimensioni della pagina ogni volta che si ridimensiona
-
                 let w = $('#logo-img').outerWidth();
                 let h = $('#logo-img').outerHeight();
 
                 let point = _path.getPointAtLength(v);
-                let startPoint = _path.getPointAtLength(-_pathLenght);
+                let startPoint = _path.getPointAtLength(0);
                 let endPoint = _path.getPointAtLength(_pathLenght);
 
 
@@ -675,10 +692,9 @@ const Lemming = function()
                 let endY = endPoint.y *ky;
                 let sx = manScale * (w / 1920) * (y/h);
 
-                // Giro l'omino quando sale
-                let angle = 0;
+                let _angle = 0;
                 if (y < startY && y > endY) {
-                    angle = _angle;
+                    _angle = angle;
                 }
 
                 let obj = new mojs.Html({
@@ -690,14 +706,31 @@ const Lemming = function()
                     scaleY: sx
                 }).play();
 
-                _timeline.play();
+                // rimuove gli omini quando arrivano a fine corsa o all'inizio se la direzione è inversa altrimenti li manda in play
+                if (_direction == 1 && y == endY && x == endX) {
+                    _timeline.stop();
+                    _walk.reset();
+                    $('.wrapper-'+index).remove();
+                }
+                else if (_direction == -1 && y == startY && x == startX) {
+                  _timeline.stop();
+                  _walk.reset();
+                  $('.wrapper-'+index).remove();
+                } else {
+                  _timeline.play();
+                }
             },
+            onPlaybackComplete () {
+                _timeline.reset();
+                _walk.reset();
+                $('.wrapper-'+index).remove();
+            }
         });
         if (_direction == 1) {
             _walk.play(shift);
         }
         else {
-            // if (shift) {
+            // if (shift != 0) {
             //   shift = shift + walkDuration;
             // }
             _walk.playBackward(shift);
@@ -710,9 +743,11 @@ const Lemming = function()
       for (var i = 0; i < number; i++) {
         let direction = Math.random() >= 0.5;
         let timeline = null;
-        let path = null;
-
         let index = counter;
+        let _pathIndex = Math.floor(Math.random() * n_paths)
+        let _pathDirection = paths[_pathIndex][0];
+        let _path = paths[_pathIndex][1];
+
 
         // Assegno la direzione
         if (direction == false) {
@@ -721,29 +756,21 @@ const Lemming = function()
             direction = 1;
         }
 
-        // Assegno il percorso
-        if (i < (number * leftStreet)) {
-            path = left_path;
-            // Se il percorso è quello di sinistra allora gli omini si muovo nel verso opposto rispetto a quelli di destra
-            if (direction == -1) {
-                timeline = this.generateLemming(_color, index)
-            } else {
-                timeline = this.generateLemmingBackward(_color, index)
-            }
-        } else {
-            path = right_path;
-            if (direction == -1) {
-                timeline = this.generateLemmingBackward(_color, index)
-            } else {
-                timeline = this.generateLemming(_color, index)
-            }
+        if (_pathDirection == 'left_to_right' && direction == -1) {
+          timeline = this.generateLemming(index)
+        } else if (_pathDirection == 'left_to_right' && direction == 1) {
+          timeline = this.generateLemmingBackward(index)
+        } else if (_pathDirection == 'right_to_left' && direction == -1) {
+          timeline = this.generateLemmingBackward(index)
+        } else if (_pathDirection == 'right_to_left' && direction == 1) {
+          timeline = this.generateLemming(index)
         }
 
         if (isStart == true) {
           let shift = Math.floor((Math.random() * walkDuration) + 1);
-          this.walks(timeline, direction, path, index, shift);
+          this.walks(timeline, direction, _path, index, shift);
         } else {
-          this.walks(timeline, direction, path, index, 0);
+          this.walks(timeline, direction, _path, index, 0);
         }
 
         counter = counter + 1;
@@ -766,4 +793,9 @@ $(window).resize(function(){
 const Animation = new Lemming();
 
 Animation.goGoLemmmings(manNumber, true);
-setInterval(Animation.goGoLemmmings(20, false), 3000);
+var newLemmings = function ()
+{
+  let random = Math.floor((Math.random() * refreshMans) + 1);
+  Animation.goGoLemmmings(random, false);
+}
+setInterval(newLemmings, refreshTime)
