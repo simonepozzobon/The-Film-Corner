@@ -1,7 +1,6 @@
 @php
   if (!isset($student)) {
     $student = false;
-    echo "false";
   }
 @endphp
 <div class="feedback-popup mt-4">

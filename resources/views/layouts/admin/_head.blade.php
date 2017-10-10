@@ -5,14 +5,15 @@
 
   <title>Admin Panel - @yield('title')</title>
 
+  <link rel="stylesheet" href="{{ mix('css/admin/admin.css') }}">
   {{-- Main Stylesheet --}}
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
   {{-- Image Picker --}}
-  <link rel="stylesheet" href="{{ asset('admin-assets/css/image-picker.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('admin-assets/css/image-picker.css') }}"> --}}
   {{-- Custom Style --}}
-  <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('admin-assets/css/style.css') }}"> --}}
   {{-- Font Awesome --}}
-  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
+  {{-- <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"> --}}
 
   {{-- Google Analytics --}}
   <script>
