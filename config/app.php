@@ -188,6 +188,9 @@ return [
         // HTML purifier
         Mews\Purifier\PurifierServiceProvider::class,
 
+        // Mattwebsite Excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
         // Debug
         Lanin\Laravel\ApiDebugger\ServiceProvider::class,
         'Barryvdh\Debugbar\ServiceProvider',
@@ -251,6 +254,9 @@ return [
 
         // Image Intervention
         'Image' => Intervention\Image\Facades\Image::class,
+
+        // Mattwebsite Excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
