@@ -10,6 +10,10 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
+[v-cloak] {
+  display: none;
+}
+
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

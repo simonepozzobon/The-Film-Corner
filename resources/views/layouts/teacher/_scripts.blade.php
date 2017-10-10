@@ -92,7 +92,7 @@
         // Film Specific - Framing - App 2 - Frame Crop
         case 2:
           var frames = [];
-          $('.frame').each(function(k){
+          $('#rendered .box').each(function(k){
             var frame = {
               'text': $(this).find('textarea').val(),
               'order': k,
@@ -171,11 +171,11 @@
           var imgL = [];
           var imgR = [];
 
-          $('#div1 img').each(function() {
+          $('#div1 li img').each(function() {
             var src = $(this).attr('src');
             imgL.push(src);
           });
-          $('#div2 img').each(function() {
+          $('#div2 li img').each(function() {
             var src = $(this).attr('src');
             imgR.push(src);
           });
