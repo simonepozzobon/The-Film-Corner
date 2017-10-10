@@ -3,56 +3,15 @@
 use App\Post;
 use App\Partner;
 
-// use Symfony\Component\Debug\Debug;
-// Debug::enable();
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 /*
 |--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
 
-
-/*
-|--------------------------------------------------------------------------
-| PROGRESS
-|--------------------------------------------------------------------------
-*/
-
-
-Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
-
-
-Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
-Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
-// HTTP FOR STREAMING EDITOR
-Route::prefix('video-edit')->group(function() {
-  Route::post('video-edit-api', 'VideoEditorController@updateEditor')->name('update.editor');
-  Route::get('/', function() {
-    return view('video.index');
-  })->name('video.index');
-});
-
 Route::prefix('feedback')->group(function() {
   Route::post('feedback-api', 'FeedbackController@save')->name('save.feedback');
 });
-
-/*
-|--------------------------------------------------------------------------
-| NEED UPDATE
-|--------------------------------------------------------------------------
-*/
 
 // Feedback controller
 Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
@@ -77,25 +36,12 @@ Route::get('/', function () {
         $counter = 0;
       }
     }
-
-
     return view('new', compact('posts', 'partners', 'colors'));
 });
 
-Route::get('/posts', function () {
-  $posts = Post::with('author')->get();
-  return view('blog.list')->with('posts', $posts);
-});
-
-Route::get('/post/{id}', function ($id) {
-  $post = Post::findOrFail($id);
-  return view('blog.post')->with('post', $post);
-});
-
-
 /*
 |--------------------------------------------------------------------------
-| DONE
+| COMPLETED
 |--------------------------------------------------------------------------
 */
 
@@ -112,8 +58,7 @@ Route::prefix('conference')->group(function() {
 
 Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
 
-// Map Public Route
-Route::get('/map', 'MapController@index')->name('map.index');
+
 // Auth
 Auth::routes();
 // Logout
@@ -326,3 +271,39 @@ Route::prefix('student')->group(function() {
   Route::post('/session/share', 'Student\SessionController@shareSession')->name('student.session.share');
 
 });
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| DEPRECATED
+|--------------------------------------------------------------------------
+|
+*/
+
+// Route::get('/posts', function () {
+//   $posts = Post::with('author')->get();
+//   return view('blog.list')->with('posts', $posts);
+// });
+
+// Route::get('/post/{id}', function ($id) {
+//   $post = Post::findOrFail($id);
+//   return view('blog.post')->with('post', $post);
+// });
+
+// Map Public Route
+// Route::get('/map', 'MapController@index')->name('map.index');
+
+// Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
+
+
+// Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
+// Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
+// HTTP FOR STREAMING EDITOR
+// Route::prefix('video-edit')->group(function() {
+//   Route::post('video-edit-api', 'VideoEditorController@updateEditor')->name('update.editor');
+//   Route::get('/', function() {
+//     return view('video.index');
+//   })->name('video.index');
+// });
