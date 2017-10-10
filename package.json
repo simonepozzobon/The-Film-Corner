@@ -24,7 +24,6 @@
     "laravel-mix": "^0.10.0",
     "lodash": "^4.16.2",
     "tether": "^1.4.0",
-    "vue": "^2.4.2",
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
@@ -32,9 +31,10 @@
     "angular-media-timeline": "*",
     "dropzone": "^5.1.1",
     "fabric": "^2.0.0-beta0",
+    "font-awesome": "^4.7.0",
     "mo-js": "*",
-    "pace": "0.0.4",
     "video.js": "^6.2.6",
-    "vjs-video": "*"
+    "vjs-video": "*",
+    "vue": "^2.4.4"
   }
 }
