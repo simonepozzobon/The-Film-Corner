@@ -7,7 +7,7 @@
         </button>
       </div>
 
-      <div @click="hideModal" class="d-flex justify-content-end close-btn" ref="close-form-btn">
+      <div @click="closeModal" class="d-flex justify-content-end close-btn" ref="close-form-btn">
         <h3><i class="fa fa-times"></i></h3>
       </div>
 
@@ -134,6 +134,50 @@
             delay: 100
         });
 
+        class Check extends mojs.CustomShape {
+          getShape() {
+            return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
+          }
+          getLength() { return 76.5; }
+
+        }
+
+        mojs.addShape( 'check', Check );
+
+        this.circle = new mojs.Shape({
+          shape: 'circle',
+          className: 'success-circle',
+          fill: 'grey',
+          radius: {0 : 40},
+          easing: 'sin.in',
+          duration: 350
+        });
+
+        this.check = new mojs.Shape({
+          shape: 'check',
+          parent: '.success-circle',
+          radius: {0 : 20},
+          opacity: {0 : 1},
+          stroke: 'white',
+          strokeWidth: 6,
+          strokeLinecap: 'round',
+          fill: 'none',
+          easing: 'sin.in',
+          delay: 100
+        });
+
+        this.burst = new mojs.Burst({
+          parent: '.success-circle',
+          radius: { 20 : 80 },
+          count: 10,
+          duration: 200,
+          children: {
+            shape: 'line',
+            stroke: 'grey',
+            delay: 50
+          },
+        });
+
       },
       methods: {
           fileChange (e)
@@ -146,9 +190,11 @@
 
           showModal (e)
           {
+            var vue = this;
+
             let showForm = new mojs.Html({
                 el: this.form,
-                height: {0 : this.formOriginalHeight, delay: 150},
+                height: {0 : vue.formOriginalHeight, delay: 150},
                 opacity: {0 : 1, delay: 150},
                 y: {'-100' : 0},
                 easing: 'sin.out',
@@ -176,14 +222,16 @@
                   showFormTimeline.play();
                 }
             }).play();
+
           },
 
-          hideModal()
+          closeModal()
           {
+              var vue = this;
               let showSendBtn = new mojs.Html({
                   el: this.showFormBtn,
                   opacity: {0 : 1},
-                  height: {50 : this.showFormOriginalHeight},
+                  height: {50 : vue.showFormOriginalHeight},
                   easing: 'sin.out',
                   delay: 100
               });
@@ -232,13 +280,19 @@
 
 
               axios.post('/api/apps/video', formData)
-
                   .then(function(response){
                     console.log(response);
+                    vue.title = '';
+                    vue.video = '';
+                    vue.category = '';
+                    vue.section = '';
+                    vue.app_category = '';
+                    vue.app_name = '';
+
                     vue.animationHideDots();
+                    vue.animationShowSuccess();
                     vue.showModal();
                   })
-
                   .catch(function (error) {
                     console.log(error);
                     vue.animationHideDots();
@@ -251,7 +305,6 @@
 
           animationBeforeSend()
           {
-
 
               let dotTimeline = new mojs.Timeline().add(this.dot,this.dot2,this.dot3);
 
@@ -295,6 +348,24 @@
             }).play();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+          },
+
+          animationShowSuccess()
+          {
+            let successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+
+            this.circle.tune({
+              radius: {40 : 0},
+              delay: 1500,
+            });
+
+            this.check.tune({
+              radius: {20 : 0},
+              delay: 1500
+            });
+
+            let close = new mojs.Timeline().add(this.circle).appen(this.check).play();
+
           },
       }
   }

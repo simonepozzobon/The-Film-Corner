@@ -1767,6 +1767,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
@@ -1843,6 +1845,12 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 exports.default = {
     props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
     data: function data() {
@@ -1902,6 +1910,66 @@ exports.default = {
             x: 40,
             delay: 100
         }));
+
+        var Check = function (_mojs$CustomShape) {
+            _inherits(Check, _mojs$CustomShape);
+
+            function Check() {
+                _classCallCheck(this, Check);
+
+                return _possibleConstructorReturn(this, (Check.__proto__ || Object.getPrototypeOf(Check)).apply(this, arguments));
+            }
+
+            _createClass(Check, [{
+                key: 'getShape',
+                value: function getShape() {
+                    return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
+                }
+            }, {
+                key: 'getLength',
+                value: function getLength() {
+                    return 76.5;
+                }
+            }]);
+
+            return Check;
+        }(mojs.CustomShape);
+
+        mojs.addShape('check', Check);
+
+        this.circle = new mojs.Shape({
+            shape: 'circle',
+            className: 'success-circle',
+            fill: 'grey',
+            radius: { 0: 40 },
+            easing: 'sin.in',
+            duration: 350
+        });
+
+        this.check = new mojs.Shape({
+            shape: 'check',
+            parent: '.success-circle',
+            radius: { 0: 20 },
+            opacity: { 0: 1 },
+            stroke: 'white',
+            strokeWidth: 6,
+            strokeLinecap: 'round',
+            fill: 'none',
+            easing: 'sin.in',
+            delay: 100
+        });
+
+        this.burst = new mojs.Burst({
+            parent: '.success-circle',
+            radius: { 20: 80 },
+            count: 10,
+            duration: 200,
+            children: {
+                shape: 'line',
+                stroke: 'grey',
+                delay: 50
+            }
+        });
     },
 
     methods: {
@@ -1911,9 +1979,11 @@ exports.default = {
             this.video = files[0];
         },
         showModal: function showModal(e) {
+            var vue = this;
+
             var showForm = new mojs.Html({
                 el: this.form,
-                height: { 0: this.formOriginalHeight, delay: 150 },
+                height: { 0: vue.formOriginalHeight, delay: 150 },
                 opacity: { 0: 1, delay: 150 },
                 y: { '-100': 0 },
                 easing: 'sin.out',
@@ -1942,11 +2012,12 @@ exports.default = {
                 }
             }).play();
         },
-        hideModal: function hideModal() {
+        closeModal: function closeModal() {
+            var vue = this;
             var showSendBtn = new mojs.Html({
                 el: this.showFormBtn,
                 opacity: { 0: 1 },
-                height: { 50: this.showFormOriginalHeight },
+                height: { 50: vue.showFormOriginalHeight },
                 easing: 'sin.out',
                 delay: 100
             });
@@ -1991,7 +2062,15 @@ exports.default = {
 
             _axios2.default.post('/api/apps/video', formData).then(function (response) {
                 console.log(response);
+                vue.title = '';
+                vue.video = '';
+                vue.category = '';
+                vue.section = '';
+                vue.app_category = '';
+                vue.app_name = '';
+
                 vue.animationHideDots();
+                vue.animationShowSuccess();
                 vue.showModal();
             }).catch(function (error) {
                 console.log(error);
@@ -2037,6 +2116,21 @@ exports.default = {
             this.dot3.tune(_extends({}, hide_dots)).play();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+        },
+        animationShowSuccess: function animationShowSuccess() {
+            var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+
+            this.circle.tune({
+                radius: { 40: 0 },
+                delay: 1500
+            });
+
+            this.check.tune({
+                radius: { 20: 0 },
+                delay: 1500
+            });
+
+            var close = new mojs.Timeline().add(this.circle).appen(this.check).play();
         }
     }
 };
@@ -14266,7 +14360,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: "close-form-btn",
     staticClass: "d-flex justify-content-end close-btn",
     on: {
-      "click": _vm.hideModal
+      "click": _vm.closeModal
     }
   }, [_vm._m(0)]), _vm._v(" "), _c('form', {
     ref: "this-form",
