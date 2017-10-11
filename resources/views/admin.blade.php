@@ -12,7 +12,15 @@
         </div>
         <div class="row">
           <div class="col blue p-5">
-            <video-form-upload diocane="diocat">
+            <video-form-upload
+                action=""
+                method="POST"
+                token="{{ csrf_token() }}"
+                options="{{ $categories }}"
+                sections="{{ $sections }}"
+                app_categories="{{ $app_categories }}"
+                apps="{{ $apps }}"
+              >
             </video-form-upload>
           </div>
         </div>
@@ -22,9 +30,5 @@
 </div>
 @endsection
 @section('scripts')
-  {{-- <script type="text/javascript">
-
-
-  </script> --}}
   <script src="{{ mix('js/admin/test.js') }}"></script>
 @endsection

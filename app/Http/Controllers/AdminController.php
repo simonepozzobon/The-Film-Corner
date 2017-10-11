@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\App;
+use App\AppSection;
+use App\AppCategory;
+use App\VideoCategory;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -23,6 +27,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin');
+        $categories = VideoCategory::all();
+        $sections = AppSection::all();
+        $app_categories = AppCategory::all();
+        $apps = App::all();
+
+        return view('admin', compact('categories', 'sections', 'app_categories', 'apps'));
     }
 }

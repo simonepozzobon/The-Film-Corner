@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import mojs from 'mo-js';
+import axios from 'axios';
 
 import VideoFormUpload from './components/VideoFormUpload.vue'
 
