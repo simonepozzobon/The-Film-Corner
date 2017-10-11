@@ -49,4 +49,9 @@ class Video extends Model
         return $data;
       }
     }
+
+    public function videoCategory()
+    {
+      return $this->belongsTo('App\VideoCategory');
+    }
 }

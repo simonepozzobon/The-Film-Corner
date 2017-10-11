@@ -3,59 +3,87 @@
       <!-- Button -->
       <div class="d-flex justify-content-around">
         <button @click="showModal" type="button" name="button" class="btn btn-lg btn-secondary btn-blue" ref="show-modal-btn">
-            Carica video {{diocane}}
+            Carica Video
         </button>
       </div>
 
       <div @click="hideModal" class="d-flex justify-content-end close-btn" ref="close-form-btn">
-        <h3><i class="fa fa-times-circle"></i></h3>
+        <h3><i class="fa fa-times"></i></h3>
       </div>
 
       <!-- form -->
-      <form  method="post" enctype="multipart/form-data" ref="this-form">
-        <input type="hidden" name="_token" v-model="_token">
-        <input type="hidden" name="_method" v-model="_method">
+      <form :action="action" method="post" enctype="multipart/form-data" ref="this-form">
+        <input type="hidden" name="_token" :value="token">
+        <input type="hidden" name="_method" :value="method">
 
+        <div class="row">
+          <div class="col-md-6 form-group">
+            <h6>Titolo</h6>
+            <input type="text" name="title" class="form-control" v-model="title" required>
+          </div>
+          <div class="col-md-6 form-group">
+            <h6>Categoria Video</h6>
+            <select class="form-control" name="category" v-model="category" required>
+              <option v-for="opt in opts" :value="opt.id">
+                {{ opt.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 form-group">
+            <h6>Padiglione</h6>
+            <select class="form-control" name="section" v-model="section" required>
+              <option v-for="sec in secs" :value="sec.id">
+                {{ sec.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 form-group">
+            <h6>Categoria</h6>
+            <select class="form-control" name="app_category" v-model="app_category">
+              <option v-for="a_cat in a_cats" :value="a_cat.id">
+                {{ a_cat.name }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-4 form-group">
+            <h6>App</h6>
+            <select class="form-control" name="app_name" v-model="app_name">
+              <option v-for="a_name in a_names" :value="a_name.id">
+                {{ a_name.title }}
+              </option>
+            </select>
+          </div>
+        </div>
         <div class="form-group">
-          <div class="row">
-            <div class="col-md-6 form-group">
-              <h6>Titolo</h6>
-              <input type="text" name="title" class="form-control" v-model="title">
-            </div>
-            <div class="col-md-6 form-group">
-              <h6>App</h6>
-              <select class="form-control" name="category" v-model="categories">
-                <option v-for="opt in opts" :value="opt.value">
-                  {{ opt.text }}
-                </option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <h6>File</h6>
-            <input type="file" name="file" class="form-control">
-          </div>
-          <div class="d-flex justify-content-around">
-            <button @click="sendForm" type="button" name="button" class="btn btn-lg btn-secondary btn-blue" ref="send-btn">Aggiungi</button>
-          </div>
+          <h6>File</h6>
+          <input type="file" name="file" class="form-control" @change="fileChange">
+        </div>
+        <div class="d-flex justify-content-around">
+          <button @click="sendForm" type="button" name="button" class="btn btn-lg btn-secondary btn-blue" ref="send-btn">Aggiungi</button>
         </div>
       </form>
     </div>
 </template>
 
 <script>
+  import axios from 'axios';
 
   export default {
-      props: ['_token', '_method', 'diocane'],
+      props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
       data () {
           return {
               title: '',
-              file: '',
-              categories: '',
-              opts: [
-                {text: 'ciao', value: 1},
-                {text: 'Gianni', value: 2}
-              ]
+              category: '',
+              opts: '',
+              video: '',
+              secs: '',
+              section: '',
+              a_cats: '',
+              app_category: '',
+              a_names: '',
+              app_name: ''
           }
       },
       mounted () {
@@ -74,11 +102,47 @@
         this.form.style.display = 'none';
         this.closeFormBtn.style.opacity = '0';
 
+        // var Settings
+        this.opts = JSON.parse(this.options);
+        this.secs = JSON.parse(this.sections);
+        this.a_cats = JSON.parse(this.app_categories);
+        this.a_names = JSON.parse(this.apps);
 
-        console.log(this.form.style.opacity);
+        this.dot_opts = {
+          shape: 'circle',
+          radius: 10,
+          y: {20 : 0},
+          fill: 'grey',
+          isYoyo: true,
+          repeat: 9999,
+          duration: 300,
+        }
+
+        this.dot = new mojs.Shape({
+            ...this.dot_opts,
+        });
+
+        this.dot2 = new mojs.Shape({
+            ...this.dot_opts,
+            x: -40,
+            delay: 150
+        });
+
+        this.dot3 = new mojs.Shape({
+            ...this.dot_opts,
+            x: 40,
+            delay: 100
+        });
 
       },
       methods: {
+          fileChange (e)
+          {
+            let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+            this.video = files[0];
+          },
 
           showModal (e)
           {
@@ -151,29 +215,92 @@
 
           sendForm (e)
           {
+              var vue = this;
               e.preventDefault();
 
-              let button = new mojs.Html({
-                  el: this.sendBtn,
+              var formData = new FormData();
+              formData.append('_token', this.token);
+              formData.append('title', this.title);
+              formData.append('video', this.video);
+              formData.append('category', this.category);
+              formData.append('section', this.section);
+              formData.append('app_category', this.app_category);
+              formData.append('app_name', this.app_name);
+
+
+              this.animationBeforeSend();
+
+
+              axios.post('/api/apps/video', formData)
+
+                  .then(function(response){
+                    console.log(response);
+                    vue.animationHideDots();
+                    vue.showModal();
+                  })
+
+                  .catch(function (error) {
+                    console.log(error);
+                    vue.animationHideDots();
+                    vue.showModal(e);
+                  });
+
+              return false;
+
+          },
+
+          animationBeforeSend()
+          {
+
+
+              let dotTimeline = new mojs.Timeline().add(this.dot,this.dot2,this.dot3);
+
+              const hideFormBtnClose = new mojs.Html({
+                  el: this.closeFormBtn,
                   opacity: {1 : 0},
-                  scale: {1 : 0},
-                  height: {'100%' : 0}
+                  easing: 'sin.out',
               });
 
-              let element = new mojs.Html({
+              const hideForm = new mojs.Html({
                   el: this.form,
                   opacity: {1 : 0},
-                  scale: {1 : 0},
-                  height: {'100%' : 0}
-              });
+                  easing: 'sin.out',
+                  onComplete() {
+                    dotTimeline.play();
+                  }
+              }).play();
 
-              let timeline = new mojs.Timeline().add(button, element).play();
-          }
+              const hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
+          },
+
+          animationHideDots ()
+          {
+            let hide_dots = {
+                opacity: {1 : 0},
+                y: {20 : 0},
+                isYoyo: false,
+                repeat: 0,
+                duration: 300
+            }
+            this.dot.tune({
+                ...hide_dots
+            }).play();
+
+            this.dot2.tune({
+                ...hide_dots
+            }).play();
+
+            this.dot3.tune({
+                ...hide_dots
+            }).play();
+
+            // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+          },
       }
   }
 </script>
 
-<style scope>
+<style scoped>
   .close-btn {
     position: absolute;
     right: 1.5rem;
