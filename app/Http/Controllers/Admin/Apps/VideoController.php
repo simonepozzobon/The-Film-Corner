@@ -22,8 +22,8 @@ class VideoController extends Controller
       $filename = pathinfo($r['video']->getClientOriginalName(), PATHINFO_FILENAME);
       $ext = $r['video']->getClientOriginalExtension();
 
-      // $check = $utility->verifyExt($ext, ['video']);
-      $check = true;
+      $check = $utility->verifyExt($ext, ['video']);
+      // $check = true;
 
       $pavilion = AppSection::find($r->section);
       $app_category = AppCategory::find($r->app_category);
