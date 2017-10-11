@@ -22,7 +22,8 @@ class VideoController extends Controller
       $filename = pathinfo($r['video']->getClientOriginalName(), PATHINFO_FILENAME);
       $ext = $r['video']->getClientOriginalExtension();
 
-      $check = $utility->verifyExt($ext, ['video']);
+      // $check = $utility->verifyExt($ext, ['video']);
+      $check = true;
 
       $pavilion = AppSection::find($r->section);
       $app_category = AppCategory::find($r->app_category);
@@ -34,13 +35,13 @@ class VideoController extends Controller
 
         switch ($r->category) {
           case 1:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder);
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/general/');
             break;
           case 2:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder);
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/app/');
             break;
           case 3:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder);
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/example/');
             break;
         }
 
