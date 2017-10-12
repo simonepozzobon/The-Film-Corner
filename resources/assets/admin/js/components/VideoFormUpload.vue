@@ -7,7 +7,7 @@
         </button>
       </div>
 
-      <div @click="hideModal" class="d-flex justify-content-end close-btn" ref="close-form-btn">
+      <div @click="closeModal" class="d-flex justify-content-end close-btn" ref="close-form-btn">
         <h3><i class="fa fa-times"></i></h3>
       </div>
 
@@ -72,7 +72,9 @@
 
   export default {
       props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
-      data () {
+
+      data ()
+      {
           return {
               title: '',
               category: '',
@@ -86,7 +88,10 @@
               app_name: ''
           }
       },
-      mounted () {
+
+      mounted ()
+      {
+
         this.showFormBtn = this.$refs['show-modal-btn'];
         this.sendBtn = this.$refs['send-btn'];
         this.form = this.$refs['this-form'];
@@ -134,7 +139,52 @@
             delay: 100
         });
 
+        class Check extends mojs.CustomShape {
+          getShape() {
+            return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
+          }
+          getLength() { return 76.5; }
+
+        }
+
+        mojs.addShape( 'check', Check );
+
+        this.circle = new mojs.Shape({
+          shape: 'circle',
+          className: 'success-circle',
+          fill: 'grey',
+          radius: {0 : 40},
+          easing: 'sin.in',
+          duration: 350
+        });
+
+        this.check = new mojs.Shape({
+          shape: 'check',
+          parent: '.success-circle',
+          radius: {0 : 20},
+          opacity: {0 : 1},
+          stroke: 'white',
+          strokeWidth: 6,
+          strokeLinecap: 'round',
+          fill: 'none',
+          easing: 'sin.in',
+          delay: 100
+        });
+
+        this.burst = new mojs.Burst({
+          parent: '.success-circle',
+          radius: { 20 : 80 },
+          count: 10,
+          duration: 200,
+          children: {
+            shape: 'line',
+            stroke: 'grey',
+            delay: 50
+          },
+        });
+
       },
+
       methods: {
           fileChange (e)
           {
@@ -144,11 +194,13 @@
             this.video = files[0];
           },
 
-          showModal (e)
+          showModal ()
           {
+            var vue = this;
+
             let showForm = new mojs.Html({
                 el: this.form,
-                height: {0 : this.formOriginalHeight, delay: 150},
+                height: {0 : vue.formOriginalHeight, delay: 150},
                 opacity: {0 : 1, delay: 150},
                 y: {'-100' : 0},
                 easing: 'sin.out',
@@ -176,14 +228,16 @@
                   showFormTimeline.play();
                 }
             }).play();
+
           },
 
-          hideModal()
+          closeModal()
           {
+              var vue = this;
               let showSendBtn = new mojs.Html({
                   el: this.showFormBtn,
                   opacity: {0 : 1},
-                  height: {50 : this.showFormOriginalHeight},
+                  height: {50 : vue.showFormOriginalHeight},
                   easing: 'sin.out',
                   delay: 100
               });
@@ -227,18 +281,26 @@
               formData.append('app_category', this.app_category);
               formData.append('app_name', this.app_name);
 
-
               this.animationBeforeSend();
 
-
               axios.post('/api/apps/video', formData)
-
                   .then(function(response){
                     console.log(response);
-                    vue.animationHideDots();
-                    vue.showModal();
-                  })
+                    vue.title = '';
+                    vue.video = '';
+                    vue.category = '';
+                    vue.section = '';
+                    vue.app_category = '';
+                    vue.app_name = '';
 
+                    vue.animationHideDots();
+                    vue.animationShowSuccess();
+                    setTimeout(function(){vue.closeModal()}, 2000);
+
+                    vue.$parent.$emit('newVideoLoaded', response.data);
+                    // Bus.$emit('newVideoLoaded', 'Videofile');
+
+                  })
                   .catch(function (error) {
                     console.log(error);
                     vue.animationHideDots();
@@ -251,7 +313,6 @@
 
           animationBeforeSend()
           {
-
 
               let dotTimeline = new mojs.Timeline().add(this.dot,this.dot2,this.dot3);
 
@@ -295,6 +356,22 @@
             }).play();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+          },
+
+          animationShowSuccess()
+          {
+            let successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+
+            this.circle.tune({
+              radius: {40 : 0},
+            });
+
+            this.check.tune({
+              radius: {20 : 0},
+            });
+
+            let close = new mojs.Timeline().add(this.circle, this.check).play();
+
           },
       }
   }

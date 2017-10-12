@@ -900,17 +900,18 @@ var _VideoFormUpload = __webpack_require__(38);
 
 var _VideoFormUpload2 = _interopRequireDefault(_VideoFormUpload);
 
+var _VideoCrud = __webpack_require__(58);
+
+var _VideoCrud2 = _interopRequireDefault(_VideoCrud);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _vue2.default({
-    el: '#app',
-    data: {
-        content: ''
-    },
-    methods: {},
-    components: {
-        VideoFormUpload: _VideoFormUpload2.default
-    }
+  el: '#app',
+  components: {
+    VideoFormUpload: _VideoFormUpload2.default,
+    VideoCrud: _VideoCrud2.default
+  }
 });
 
 /***/ }),
@@ -1767,6 +1768,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
 //
 //
@@ -1843,8 +1846,15 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 exports.default = {
     props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
+
     data: function data() {
         return {
             title: '',
@@ -1860,6 +1870,7 @@ exports.default = {
         };
     },
     mounted: function mounted() {
+
         this.showFormBtn = this.$refs['show-modal-btn'];
         this.sendBtn = this.$refs['send-btn'];
         this.form = this.$refs['this-form'];
@@ -1902,7 +1913,68 @@ exports.default = {
             x: 40,
             delay: 100
         }));
+
+        var Check = function (_mojs$CustomShape) {
+            _inherits(Check, _mojs$CustomShape);
+
+            function Check() {
+                _classCallCheck(this, Check);
+
+                return _possibleConstructorReturn(this, (Check.__proto__ || Object.getPrototypeOf(Check)).apply(this, arguments));
+            }
+
+            _createClass(Check, [{
+                key: 'getShape',
+                value: function getShape() {
+                    return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
+                }
+            }, {
+                key: 'getLength',
+                value: function getLength() {
+                    return 76.5;
+                }
+            }]);
+
+            return Check;
+        }(mojs.CustomShape);
+
+        mojs.addShape('check', Check);
+
+        this.circle = new mojs.Shape({
+            shape: 'circle',
+            className: 'success-circle',
+            fill: 'grey',
+            radius: { 0: 40 },
+            easing: 'sin.in',
+            duration: 350
+        });
+
+        this.check = new mojs.Shape({
+            shape: 'check',
+            parent: '.success-circle',
+            radius: { 0: 20 },
+            opacity: { 0: 1 },
+            stroke: 'white',
+            strokeWidth: 6,
+            strokeLinecap: 'round',
+            fill: 'none',
+            easing: 'sin.in',
+            delay: 100
+        });
+
+        this.burst = new mojs.Burst({
+            parent: '.success-circle',
+            radius: { 20: 80 },
+            count: 10,
+            duration: 200,
+            children: {
+                shape: 'line',
+                stroke: 'grey',
+                delay: 50
+            }
+        });
     },
+
 
     methods: {
         fileChange: function fileChange(e) {
@@ -1910,10 +1982,12 @@ exports.default = {
             if (!files.length) return;
             this.video = files[0];
         },
-        showModal: function showModal(e) {
+        showModal: function showModal() {
+            var vue = this;
+
             var showForm = new mojs.Html({
                 el: this.form,
-                height: { 0: this.formOriginalHeight, delay: 150 },
+                height: { 0: vue.formOriginalHeight, delay: 150 },
                 opacity: { 0: 1, delay: 150 },
                 y: { '-100': 0 },
                 easing: 'sin.out',
@@ -1942,11 +2016,12 @@ exports.default = {
                 }
             }).play();
         },
-        hideModal: function hideModal() {
+        closeModal: function closeModal() {
+            var vue = this;
             var showSendBtn = new mojs.Html({
                 el: this.showFormBtn,
                 opacity: { 0: 1 },
-                height: { 50: this.showFormOriginalHeight },
+                height: { 50: vue.showFormOriginalHeight },
                 easing: 'sin.out',
                 delay: 100
             });
@@ -1991,8 +2066,21 @@ exports.default = {
 
             _axios2.default.post('/api/apps/video', formData).then(function (response) {
                 console.log(response);
+                vue.title = '';
+                vue.video = '';
+                vue.category = '';
+                vue.section = '';
+                vue.app_category = '';
+                vue.app_name = '';
+
                 vue.animationHideDots();
-                vue.showModal();
+                vue.animationShowSuccess();
+                setTimeout(function () {
+                    vue.closeModal();
+                }, 2000);
+
+                vue.$parent.$emit('newVideoLoaded', response.data);
+                // Bus.$emit('newVideoLoaded', 'Videofile');
             }).catch(function (error) {
                 console.log(error);
                 vue.animationHideDots();
@@ -2037,6 +2125,19 @@ exports.default = {
             this.dot3.tune(_extends({}, hide_dots)).play();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+        },
+        animationShowSuccess: function animationShowSuccess() {
+            var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+
+            this.circle.tune({
+                radius: { 40: 0 }
+            });
+
+            this.check.tune({
+                radius: { 20: 0 }
+            });
+
+            var close = new mojs.Timeline().add(this.circle, this.check).play();
         }
     }
 };
@@ -14266,7 +14367,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     ref: "close-form-btn",
     staticClass: "d-flex justify-content-end close-btn",
     on: {
-      "click": _vm.hideModal
+      "click": _vm.closeModal
     }
   }, [_vm._m(0)]), _vm._v(" "), _c('form', {
     ref: "this-form",
@@ -24992,6 +25093,204 @@ module.exports = g;
 
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = __webpack_require__(5);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  props: ['items', 'msg'],
+  data: function data() {
+    return {
+      videos: ''
+      // msg: '',
+    };
+  },
+  mounted: function mounted() {
+    var vue = this;
+
+    this.$parent.$on('newVideoLoaded', function (response) {
+      vue.addVideo(response);
+    });
+
+    this.videos = JSON.parse(this.items);
+  },
+
+  methods: {
+    addVideo: function addVideo(response) {
+      console.log('triggered method inside');
+      console.log(response);
+      var newVideo = {
+        id: response.video.id,
+        title: response.video.title,
+        img: response.video.img
+      };
+      this.videos.unshift(newVideo);
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(35)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(60)
+
+var Component = __webpack_require__(39)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(59),
+  /* scopeId */
+  "data-v-9d73bdf0",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/VideoCrud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VideoCrud.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9d73bdf0", Component.options)
+  } else {
+    hotAPI.reload("data-v-9d73bdf0", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.videos), function(video) {
+    return _c('tr', [_c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(video.id))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(video.title))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_c('img', {
+      staticClass: "img-fluid",
+      attrs: {
+        "src": video.img,
+        "width": "57"
+      }
+    })]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v("Path")]), _vm._v(" "), _vm._m(1, true)])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Image")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', {
+    staticClass: "align-middle"
+  }, [_c('button', {
+    staticClass: "btn btn-secondary btn-orange",
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o"
+  })])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9d73bdf0", module.exports)
+  }
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(57);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(42)("7fcd6c64", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9d73bdf0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoCrud.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9d73bdf0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoCrud.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 ],[47]);

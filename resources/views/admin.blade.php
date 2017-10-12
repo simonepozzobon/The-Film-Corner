@@ -7,7 +7,7 @@
       <div class="box container-fluid mb-4">
         <div class="row">
           <div class="col dark-blue py-3 px-5">
-            <h3>Welcome</h3>
+            <h3>Nuovo Video</h3>
           </div>
         </div>
         <div class="row">
@@ -22,6 +22,22 @@
                 apps="{{ $apps }}"
               >
             </video-form-upload>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="box container-fluid mb-4">
+        <div class="row">
+          <div class="col dark-orange py-3 px-5">
+            <h3>Video Caricati</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col orange p-5">
+            <video-crud items="{{ $videos }}"></video-crud>
           </div>
         </div>
       </div>
