@@ -24,6 +24,21 @@ class Video extends Model
         return $this->morphedByMany('App\Student', 'videoable');
     }
 
+    public function apps()
+    {
+        return $this->morphedByMany('App\App', 'videoable');
+    }
+
+    public function appCategories()
+    {
+        return $this->morphedByMany('App\AppCategory', 'videoable');
+    }
+
+    public function appSection()
+    {
+        return $this->morphedByMany('App\AppCategory', 'videoable');
+    }
+
     public function tToS ($t)
     {
 

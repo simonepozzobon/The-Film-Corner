@@ -900,17 +900,18 @@ var _VideoFormUpload = __webpack_require__(38);
 
 var _VideoFormUpload2 = _interopRequireDefault(_VideoFormUpload);
 
+var _VideoCrud = __webpack_require__(58);
+
+var _VideoCrud2 = _interopRequireDefault(_VideoCrud);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _vue2.default({
-    el: '#app',
-    data: {
-        content: ''
-    },
-    methods: {},
-    components: {
-        VideoFormUpload: _VideoFormUpload2.default
-    }
+  el: '#app',
+  components: {
+    VideoFormUpload: _VideoFormUpload2.default,
+    VideoCrud: _VideoCrud2.default
+  }
 });
 
 /***/ }),
@@ -1853,6 +1854,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 exports.default = {
     props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
+
     data: function data() {
         return {
             title: '',
@@ -1868,6 +1870,7 @@ exports.default = {
         };
     },
     mounted: function mounted() {
+
         this.showFormBtn = this.$refs['show-modal-btn'];
         this.sendBtn = this.$refs['send-btn'];
         this.form = this.$refs['this-form'];
@@ -1972,13 +1975,14 @@ exports.default = {
         });
     },
 
+
     methods: {
         fileChange: function fileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
             this.video = files[0];
         },
-        showModal: function showModal(e) {
+        showModal: function showModal() {
             var vue = this;
 
             var showForm = new mojs.Html({
@@ -2071,7 +2075,12 @@ exports.default = {
 
                 vue.animationHideDots();
                 vue.animationShowSuccess();
-                vue.showModal();
+                setTimeout(function () {
+                    vue.closeModal();
+                }, 2000);
+
+                vue.$parent.$emit('newVideoLoaded', response.data);
+                // Bus.$emit('newVideoLoaded', 'Videofile');
             }).catch(function (error) {
                 console.log(error);
                 vue.animationHideDots();
@@ -2121,16 +2130,14 @@ exports.default = {
             var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
 
             this.circle.tune({
-                radius: { 40: 0 },
-                delay: 1500
+                radius: { 40: 0 }
             });
 
             this.check.tune({
-                radius: { 20: 0 },
-                delay: 1500
+                radius: { 20: 0 }
             });
 
-            var close = new mojs.Timeline().add(this.circle).appen(this.check).play();
+            var close = new mojs.Timeline().add(this.circle, this.check).play();
         }
     }
 };
@@ -25086,6 +25093,204 @@ module.exports = g;
 
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _axios = __webpack_require__(5);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  props: ['items', 'msg'],
+  data: function data() {
+    return {
+      videos: ''
+      // msg: '',
+    };
+  },
+  mounted: function mounted() {
+    var vue = this;
+
+    this.$parent.$on('newVideoLoaded', function (response) {
+      vue.addVideo(response);
+    });
+
+    this.videos = JSON.parse(this.items);
+  },
+
+  methods: {
+    addVideo: function addVideo(response) {
+      console.log('triggered method inside');
+      console.log(response);
+      var newVideo = {
+        id: response.video.id,
+        title: response.video.title,
+        img: response.video.img
+      };
+      this.videos.unshift(newVideo);
+    }
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(35)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(60)
+
+var Component = __webpack_require__(39)(
+  /* script */
+  __webpack_require__(56),
+  /* template */
+  __webpack_require__(59),
+  /* scopeId */
+  "data-v-9d73bdf0",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/VideoCrud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] VideoCrud.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9d73bdf0", Component.options)
+  } else {
+    hotAPI.reload("data-v-9d73bdf0", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.videos), function(video) {
+    return _c('tr', [_c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(video.id))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(video.title))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_c('img', {
+      staticClass: "img-fluid",
+      attrs: {
+        "src": video.img,
+        "width": "57"
+      }
+    })]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v("Path")]), _vm._v(" "), _vm._m(1, true)])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Image")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', {
+    staticClass: "align-middle"
+  }, [_c('button', {
+    staticClass: "btn btn-secondary btn-orange",
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o"
+  })])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9d73bdf0", module.exports)
+  }
+}
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(57);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(42)("7fcd6c64", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9d73bdf0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoCrud.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-9d73bdf0\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./VideoCrud.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 ],[47]);

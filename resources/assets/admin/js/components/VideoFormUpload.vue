@@ -72,7 +72,9 @@
 
   export default {
       props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
-      data () {
+
+      data ()
+      {
           return {
               title: '',
               category: '',
@@ -86,7 +88,10 @@
               app_name: ''
           }
       },
-      mounted () {
+
+      mounted ()
+      {
+
         this.showFormBtn = this.$refs['show-modal-btn'];
         this.sendBtn = this.$refs['send-btn'];
         this.form = this.$refs['this-form'];
@@ -179,6 +184,7 @@
         });
 
       },
+
       methods: {
           fileChange (e)
           {
@@ -188,7 +194,7 @@
             this.video = files[0];
           },
 
-          showModal (e)
+          showModal ()
           {
             var vue = this;
 
@@ -275,9 +281,7 @@
               formData.append('app_category', this.app_category);
               formData.append('app_name', this.app_name);
 
-
               this.animationBeforeSend();
-
 
               axios.post('/api/apps/video', formData)
                   .then(function(response){
@@ -291,7 +295,11 @@
 
                     vue.animationHideDots();
                     vue.animationShowSuccess();
-                    vue.showModal();
+                    setTimeout(function(){vue.closeModal()}, 2000);
+
+                    vue.$parent.$emit('newVideoLoaded', response.data);
+                    // Bus.$emit('newVideoLoaded', 'Videofile');
+
                   })
                   .catch(function (error) {
                     console.log(error);
@@ -356,15 +364,13 @@
 
             this.circle.tune({
               radius: {40 : 0},
-              delay: 1500,
             });
 
             this.check.tune({
               radius: {20 : 0},
-              delay: 1500
             });
 
-            let close = new mojs.Timeline().add(this.circle).appen(this.check).play();
+            let close = new mojs.Timeline().add(this.circle, this.check).play();
 
           },
       }

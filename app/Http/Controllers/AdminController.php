@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\App;
+use App\Video;
 use App\AppSection;
 use App\AppCategory;
 use App\VideoCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -31,7 +33,12 @@ class AdminController extends Controller
         $sections = AppSection::all();
         $app_categories = AppCategory::all();
         $apps = App::all();
+        $videos = Video::orderBy('id', 'desc')->get();
 
-        return view('admin', compact('categories', 'sections', 'app_categories', 'apps'));
+        foreach ($videos as $key => $video) {
+          $video->img = Storage::disk('local')->url($video->img);
+        }
+
+        return view('admin', compact('categories', 'sections', 'app_categories', 'apps', 'videos'));
     }
 }

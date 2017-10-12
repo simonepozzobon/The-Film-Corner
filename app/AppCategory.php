@@ -22,4 +22,9 @@ class AppCategory extends Model
     {
       return $this->hasMany('App\App');
     }
+
+    public function videos()
+    {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
 }

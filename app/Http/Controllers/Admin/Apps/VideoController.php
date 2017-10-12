@@ -10,6 +10,7 @@ use App\AppCategory;
 use App\VideoCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class VideoController extends Controller
 {
@@ -52,11 +53,17 @@ class VideoController extends Controller
         $video->duration = $library['duration'];
         $video->save();
 
+        $pavilion->videos()->save($video);
+        $app_category->videos()->save($video);
+        $app_name->videos()->save($video);
+
+        // riformatto il link dell'immagine per renderlo accessibile in vue
+        $video->img = Storage::disk('local')->url($video->img);
+
         $data = [
-          'success' => 'true',
+          'success' => true,
           'message' => 'success',
-          'request' => $r->all(),
-          'response' => $library['img']
+          'video' => $video
         ];
 
         return response()->json($data);
