@@ -36,13 +36,13 @@ class VideoController extends Controller
 
         switch ($r->category) {
           case 1:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/general/');
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'general/');
             break;
           case 2:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/app/');
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'app/');
             break;
           case 3:
-            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'/example/');
+            $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'example/');
             break;
         }
 
@@ -79,5 +79,88 @@ class VideoController extends Controller
 
       }
 
+    }
+
+    public function deleteVideo($id)
+    {
+        $video = Video::findOrFail($id);
+
+        $video->appsSessions()->detach($video);
+        $video->teachers()->detach($video);
+        $video->students()->detach($video);
+        $video->apps()->detach($video);
+        $video->appCategories()->detach($video);
+        $video->appSection()->detach($video);
+
+        $video_path = storage_path('app/public/'.$video->src);
+        $img_path = storage_path('app/public/'.$video->img);
+
+        if (file_exists($video_path)) {
+          $r_video = unlink($video_path);
+        }
+        if (file_exists($img_path)) {
+          $r_img = unlink($img_path);
+        }
+
+        $video->delete();
+
+        $data = [
+            'success' => true,
+            'message' => 'video deleted!',
+            'path' => $video_path,
+            'r_video' => $r_video
+        ];
+        return response()->json($data, 200);
+    }
+
+    public function getRelations(string $type, $id)
+    {
+        switch ($type) {
+          case 'pavilion':
+              $section = AppSection::find($id);
+              $categories = $section->appCategories()->get();
+              $apps = collect();
+
+              foreach ($categories as $key => $category) {
+                $items = $category->apps()->get();
+                foreach ($items as $key => $app) {
+                  $apps->push($app);
+                }
+              }
+
+              $data = [
+                'categories' => $categories,
+                'apps' => $apps
+              ];
+
+              return response()->json($data, 200);
+            break;
+
+          case 'category':
+              $category = AppCategory::find($id);
+              $section = $category->section()->first();
+              $apps = $category->apps()->get();
+
+              $data = [
+                'pavilion' => $section,
+                'apps' => $apps
+              ];
+
+              return response()->json($data, 200);
+            break;
+
+          case 'app':
+              $app = App::find($id);
+              $category = $app->category()->first();
+              $section = $app->category()->first();
+
+              $data = [
+                'category' => $category,
+                'pavilion' => $section
+              ];
+
+              return response()->json($data, 200);
+            break;
+        }
     }
 }

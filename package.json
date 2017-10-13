@@ -23,6 +23,8 @@
     "jquery": "^3.1.0",
     "laravel-mix": "^0.10.0",
     "lodash": "^4.16.2",
+    "mojs-curve-editor": "^1.5.0",
+    "mojs-player": "^0.43.16",
     "tether": "^1.4.0",
     "webpack-dev-server": "^2.7.1"
   },

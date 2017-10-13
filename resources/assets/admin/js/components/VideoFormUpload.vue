@@ -68,6 +68,7 @@
 </template>
 
 <script>
+  import _ from 'lodash';
   import axios from 'axios';
 
   export default {
@@ -373,6 +374,57 @@
             let close = new mojs.Timeline().add(this.circle, this.check).play();
 
           },
+
+          pavilionRelations(id)
+          {
+            var vue = this;
+                axios.get('/api/apps/relations/pavilion/'+id)
+                .then(function(response) {
+                    vue.a_cats = response.data.categories;
+                    vue.a_names = response.data.apps;
+                });
+          },
+
+          categoryRelations(id)
+          {
+              var vue = this;
+              axios.get('/api/apps/relations/category/'+id)
+              .then(function(response) {
+                console.log(response);
+                  vue.secs = [response.data.pavilion];
+                  vue.section = response.data.pavilion.id;
+                  vue.a_names = response.data.apps;
+              });
+          },
+
+          appRelations(id)
+          {
+              var vue = this;
+              axios.get('/api/apps/relations/app/'+id)
+              .then(function(response) {
+                  vue.a_cats = [response.data.category];
+                  vue.app_category = response.data.category.id;
+                  vue.a_names = [response.data.pavilion];
+                  vue.section = response.data.pavilion.id
+              });
+          },
+      },
+
+      watch: {
+        section: function(id)
+        {
+          this.pavilionRelations(id);
+        },
+
+        app_category: function(id)
+        {
+          this.categoryRelations(id);
+        },
+
+        app_name: function(id)
+        {
+          this.appRelations(id);
+        }
       }
   }
 </script>

@@ -37,7 +37,7 @@
         </div>
         <div class="row">
           <div class="col orange p-5">
-            <video-crud items="{{ $videos }}"></video-crud>
+            <video-crud items="{{ $videos }}" token="{{ csrf_token() }}"></video-crud>
           </div>
         </div>
       </div>

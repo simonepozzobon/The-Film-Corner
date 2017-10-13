@@ -9,7 +9,7 @@ class Video extends Model
 
     protected $table = 'videos';
 
-    public function apssSessions()
+    public function appsSessions()
     {
         return $this->morphedByMany('App\AppsSessions\AppsSession', 'videoable');
     }
