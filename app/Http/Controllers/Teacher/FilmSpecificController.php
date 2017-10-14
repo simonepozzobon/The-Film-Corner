@@ -101,9 +101,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      // case 'parallel-action':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
-        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('teacher.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'offscreen':
@@ -186,7 +187,7 @@ class FilmSpecificController extends Controller
       $app_session = StudentAppSession::where('token', '=', $token)->first();
       $is_student = true;
     }
-    
+
     $session = json_decode($app_session->content);
 
     $colors = [
@@ -222,10 +223,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token', 'is_student'));
+        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token', 'is_student'));
         break;
 
       case 'offscreen':

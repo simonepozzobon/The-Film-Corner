@@ -46,8 +46,8 @@ class NetworkController extends Controller
           case '3':
             $obj = json_decode($share->content);
 
-            $item->media_type = 'video';
-            $item->featured_media = $obj->videos[0];
+            $item->media_type = 'image';
+            $item->featured_media = $obj->images[0];
             $item->notes = $obj->notes;
             break;
 

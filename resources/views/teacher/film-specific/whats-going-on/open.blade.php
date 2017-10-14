@@ -145,7 +145,7 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-green py-3 px-5">
-                <h3>Describe the scenario</h3>
+                <h3>Listen to the audioclip and try to guess what’s happening</h3>
               </div>
             </div>
             <div class="row">

@@ -72,16 +72,12 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-blue py-3 px-5">
-                <h3>First video</h3>
+                <h3>First Image</h3>
               </div>
             </div>
             <div class="row">
               <div class="col blue p-5">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
-                  </video>
-                </div>
+                <img id="img-left" src="{{ $session->images[0] }}" alt="" class="img-fluid">
               </div>
             </div>
           </div>
@@ -90,16 +86,12 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-yellow py-3 px-5">
-                <h3>Second video</h3>
+                <h3>Second Image</h3>
               </div>
             </div>
             <div class="row">
               <div class="col yellow p-5">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-right" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
-                  </video>
-                </div>
+                <img id="img-right" src="{{ $session->images[1] }}" alt="" class="img-fluid">
               </div>
             </div>
           </div>
@@ -112,23 +104,8 @@
               <div class="col d-flex justify-content-around">
                 {{-- Control Bar --}}
                 <div class="btn-group">
-                  <button id="comment" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
-                  </button>
-                  <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                  </button>
-                  <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-pause" aria-hidden="true"></i>
-                  </button>
-                  <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-stop" aria-hidden="true"></i>
-                  </button>
-                  <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-backward" aria-hidden="true"></i>
-                  </button>
-                  <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
-                    <i class="fa fa-forward" aria-hidden="true"></i>
+                  <button id="reload" type="button" name="button" class="btn btn-secondary btn-orange">
+                    <i class="fa fa-refresh" aria-hidden="true"></i> Change images
                   </button>
                 </div>
               </div>
@@ -140,7 +117,7 @@
         <div class="col-12 box container-fluid mb-4">
           <div class="row">
             <div class="col dark-green py-3 px-5">
-              <h3>Notes</h3>
+              <h3>What are the differences between two pictures?</h3>
             </div>
           </div>
           <div class="row">
@@ -154,54 +131,11 @@
   </div>
 @endsection
 @section('scripts')
-   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
-
   <script type="text/javascript">
     var AppSession = new TfcSessions();
 
-    var playerL = videojs('video-left');
-    var playerR = videojs('video-right');
-    playerL.muted(true);
-    playerR.muted(true);
-
-    $('#comment').on('click', function() {
-      var totalSeconds = playerL.currentTime();
-      hours = Math.floor(totalSeconds / 3600);
-      totalSeconds %= 3600;
-      minutes = Math.floor(totalSeconds / 60);
-      seconds = Math.round(totalSeconds % 60);
-      var current = $('#notes').val();
-      var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
-      $('#notes').val(current + newComment);
+    $('#reload').on('click', function() {
+      // Reload Pictures
     });
-
-    $('#play').on('click', function() {
-      playerL.play();
-      playerR.play();
-    });
-
-    $('#pause').on('click', function() {
-      playerL.pause();
-      playerR.pause();
-    });
-
-    $('#stop').on('click', function() {
-      playerL.pause().currentTime(0);
-      playerR.pause().currentTime(0);
-
-    });
-
-    $('#rewind').on('click', function() {
-      var time = playerL.currentTime();
-      playerL.currentTime(time-5);
-      playerR.currentTime(time-5);
-    });
-
-    $('#forward').on('click', function() {
-      var time = playerL.currentTime();
-      playerL.currentTime(time+5);
-      playerR.currentTime(time+5);
-    });
-
   </script>
 @endsection

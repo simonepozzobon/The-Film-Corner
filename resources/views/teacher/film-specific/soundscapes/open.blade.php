@@ -5,8 +5,8 @@
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
     .ui-slider {
-      background: #e6e6e6;
-      border: none;
+      background: #f4c490;
+      border: 1px solid #e8a360 !important;
       height: 1em;
     }
     .ui-slider-handle {
@@ -24,12 +24,12 @@
     }
 
     .ui-state-default, .ui-widget-content .ui-state-default {
-      background-color: {{ $app->colors[1] }};
-      border: none;
+      background-color: #f4c490;
+      border: 1px solid #e8a360;
     }
 
     .ui-slider-range {
-      background: {{ $app->colors[0] }};
+      background: #e8a360;
     }
   </style>
 @endsection
@@ -110,15 +110,13 @@
                 </div>
                 <div class="row">
                   <div class="col blue p-5">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                          <source src="{{ $session->video }}" type="video/mp4">
-                      </video>
-                    </div>
+                    <img id="image" src="{{ $session->image }}" alt="" class="img-fluid">
                     <div id="waveform-1" class="d-none"></div>
                     <div id="waveform-2" class="d-none"></div>
                     <div id="waveform-3" class="d-none"></div>
                     <div id="waveform-4" class="d-none"></div>
+                    <div id="waveform-5" class="d-none"></div>
+                    <div id="waveform-6" class="d-none"></div>
                   </div>
                 </div>
               </div>
@@ -154,6 +152,8 @@
                       <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
                       <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
                       <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
+                      <div id="waveform-5-vol" style="height:100px;" class="mx-2"></div>
+                      <div id="waveform-6-vol" style="height:100px;" class="mx-2"></div>
                     </div>
                   </div>
                 </div>
@@ -226,15 +226,7 @@
   <script>
     var AppSession = new TfcSessions();
 
-    // Video Init
-    var player = videojs('video', {
-      controlBar: {
-        playToggle: false,
-        volumeMenuButton: false,
-        fullscreenToggle: false,
-      }
-    });
-    player.muted(true);
+
 
     // Audio Init
     var wavesurfer_1 = WaveSurfer.create({
@@ -248,6 +240,12 @@
     });
     var wavesurfer_4 = WaveSurfer.create({
       container: '#waveform-4'
+    });
+    var wavesurfer_5 = WaveSurfer.create({
+      container: '#waveform-5'
+    });
+    var wavesurfer_6 = WaveSurfer.create({
+      container: '#waveform-6'
     });
 
     // Set loops
@@ -287,24 +285,45 @@
             color: 'hsla(100, 100%, 30%, 0.1)'
         });
     });
+    wavesurfer_5.on('ready', function () {
+        var duration = wavesurfer_5.getDuration();
+        wavesurfer_5.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
+    wavesurfer_6.on('ready', function () {
+        var duration = wavesurfer_6.getDuration();
+        wavesurfer_6.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
+    });
 
 
+    // Mixer Init
     // Mixer Init
     var vol_1 = {{ $session->audio_vol->vol_1 }};
     var vol_2 = {{ $session->audio_vol->vol_2 }};
     var vol_3 = {{ $session->audio_vol->vol_3 }};
     var vol_4 = {{ $session->audio_vol->vol_4 }};
+    var vol_5 = {{ $session->audio_vol->vol_5 }};
+    var vol_6 = {{ $session->audio_vol->vol_6 }};
 
     $( "#waveform-1-vol" ).slider({
       orientation: "vertical",
       range: "min",
       min: 0,
       max: 100,
-      value: vol_1*100,
+      value: 0,
       slide: function( event, ui ) {
           vol_1 = ui.value/100;
           wavesurfer_1.setVolume(vol_1);
-          saveVol(vol_1, vol_2, vol_3, vol_4);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
       }
     });
     $( "#waveform-2-vol" ).slider({
@@ -312,11 +331,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: vol_2*100,
+      value: 0,
       slide: function( event, ui ) {
           vol_2 = ui.value/100;
           wavesurfer_2.setVolume(vol_2);
-          saveVol(vol_1, vol_2, vol_3, vol_4);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
       }
     });
     $( "#waveform-3-vol" ).slider({
@@ -324,11 +343,11 @@
       range: "min",
       min: 0,
       max: 100,
-      value: vol_3*100,
+      value: 0,
       slide: function( event, ui ) {
           vol_3 = ui.value/100;
           wavesurfer_3.setVolume(vol_3);
-          saveVol(vol_1, vol_2, vol_3, vol_4);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
       }
     });
     $( "#waveform-4-vol" ).slider({
@@ -336,11 +355,35 @@
       range: "min",
       min: 0,
       max: 100,
-      value: vol_4*100,
+      value: 0,
       slide: function( event, ui ) {
           vol_4 = ui.value/100;
           wavesurfer_4.setVolume(vol_4);
-          saveVol(vol_1, vol_2, vol_3, vol_4);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+      }
+    });
+    $( "#waveform-5-vol" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: function( event, ui ) {
+          vol_5 = ui.value/100;
+          wavesurfer_5.setVolume(vol_5);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+      }
+    });
+    $( "#waveform-6-vol" ).slider({
+      orientation: "vertical",
+      range: "min",
+      min: 0,
+      max: 100,
+      value: 0,
+      slide: function( event, ui ) {
+          vol_6 = ui.value/100;
+          wavesurfer_6.setVolume(vol_6);
+          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
       }
     });
 
@@ -348,79 +391,92 @@
       console.log('sessione caricata '+session.token);
 
       // Load audio file
-      var src_1 = '{{ $session->audio_src->src_1 }}'; //musica
-      var src_2 = '{{ $session->audio_src->src_2 }}'; // Dialogo
-      var src_3 = '{{ $session->audio_src->src_3 }}'; // Sottofondo Spiaggia
-      var src_4 = '{{ $session->audio_src->src_4 }}'; // Versi gabbiani
+      var src_1 = 'https://ia802606.us.archive.org/24/items/MissCoyoteGirl2010/Miss_Coyote_Girl.mp3'; //musica
+      var src_2 = 'https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3'; // Dialogo
+      var src_3 = 'https://ia601903.us.archive.org/33/items/aporee_7056_8757/DFF01241N6varand.mp3'; // Sottofondo Spiaggia
+      var src_4 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
+      var src_5 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
+      var src_6 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
       wavesurfer_1.load(src_1);
       wavesurfer_2.load(src_2);
       wavesurfer_3.load(src_3);
       wavesurfer_4.load(src_4);
+      wavesurfer_5.load(src_5);
+      wavesurfer_6.load(src_6);
 
       var src = {
         'src_1' : src_1,
         'src_2' : src_2,
         'src_3' : src_3,
-        'src_4' : src_4
+        'src_4' : src_4,
+        'src_5' : src_5,
+        'src_6' : src_6,
       };
 
       $.cookie('tfc-audio-src', JSON.stringify(src));
 
       // Video and Audio Players Controller
       $('#play').on('click', function() {
-        player.play();
         wavesurfer_1.play();
         wavesurfer_2.play();
         wavesurfer_3.play();
         wavesurfer_4.play();
+        wavesurfer_5.play();
+        wavesurfer_6.play();
       });
 
       $('#pause').on('click', function() {
-        player.pause();
         wavesurfer_1.pause();
         wavesurfer_2.pause();
         wavesurfer_3.pause();
         wavesurfer_4.pause();
+        wavesurfer_5.pause();
+        wavesurfer_6.pause();
       });
 
       $('#stop').on('click', function() {
-        player.pause().currentTime(0);
         wavesurfer_1.pause();
         wavesurfer_2.pause();
         wavesurfer_3.pause();
         wavesurfer_4.pause();
+        wavesurfer_5.pause();
+        wavesurfer_6.pause();
         wavesurfer_1.seekTo(0);
         wavesurfer_2.seekTo(0);
         wavesurfer_3.seekTo(0);
         wavesurfer_4.seekTo(0);
+        wavesurfer_5.seekTo(0);
+        wavesurfer_6.seekTo(0);
       });
 
       $('#rewind').on('click', function() {
-        var time = player.currentTime();
-        player.currentTime(time-5);
         wavesurfer_1.skipBackward(5);
         wavesurfer_2.skipBackward(5);
         wavesurfer_3.skipBackward(5);
         wavesurfer_4.skipBackward(5);
+        wavesurfer_5.skipBackward(5);
+        wavesurfer_6.skipBackward(5);
       });
 
       $('#forward').on('click', function() {
-        var time = player.currentTime();
-        player.currentTime(time+5);
         wavesurfer_1.skipForward(5);
         wavesurfer_2.skipForward(5);
         wavesurfer_3.skipForward(5);
         wavesurfer_4.skipForward(5);
+        wavesurfer_5.skipForward(5);
+        wavesurfer_6.skipForward(5);
       });
     });
 
-    function saveVol(vol_1, vol_2, vol_3, vol_4)
+    function saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6)
     {
         var vol = {
           'vol_1' : vol_1,
           'vol_2' : vol_2,
           'vol_3' : vol_3,
           'vol_4' : vol_4,
+          'vol_5' : vol_5,
+          'vol_6' : vol_6,
         };
         $.cookie('tfc-audio-vol', JSON.stringify(vol));
     }
