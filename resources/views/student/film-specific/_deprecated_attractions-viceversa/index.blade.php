@@ -1,9 +1,37 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <style media="screen">
+  .border {
+    width: 384px;
+    height: 216px;
+    border: 3px dashed rgba(37, 37, 37, 0.15);
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  .no-padding {
+    padding: 0;
+  }
+  #library img {
+    padding-bottom: 1rem;
+  }
+  #div1 img, #div2 img {
+    width: 100%;
+    height: 100%;
+  }
+  .placeholder {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(37, 37, 37, 0.15);
+  }
+  </style>
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -74,46 +102,46 @@
         <div class="col">
           <div class="clearfix p-5">
             <div class="row">
-              <div class="col-md-6 offset-md-3">
-                <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
-                  </video>
+              <div class="col-md-8">
+                <div class="row pb-4">
+                  <div class="col">
+                    <div class="frame container bg-faded p-4">
+                      <h3 class="text-center">Describe {{ $emotion }}</h3>
+                      <input type="hidden" name="emotion" value="{{ $emotion }}">
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="row py-4">
-              <div class="col d-flex justify-content-around">
-                {{-- Control Bar --}}
-                <div class="btn-group">
-                  <button id="play" type="button" name="button" class="btn btn-secondary">
-                    <i class="fa fa-play" aria-hidden="true"></i>
-                  </button>
-                  <button id="pause" type="button" name="button" class="btn btn-secondary">
-                    <i class="fa fa-pause" aria-hidden="true"></i>
-                  </button>
-                  <button id="stop" type="button" name="button" class="btn btn-secondary">
-                    <i class="fa fa-stop" aria-hidden="true"></i>
-                  </button>
-                  <button id="rewind" type="button" name="button" class="btn btn-secondary">
-                    <i class="fa fa-backward" aria-hidden="true"></i>
-                  </button>
-                  <button id="forward" type="button" name="button" class="btn btn-secondary">
-                    <i class="fa fa-forward" aria-hidden="true"></i>
-                  </button>
+                <div class="row pb-4">
+                  <div class="col-md-6">
+                    <div id="div1" class="sortable container border no-padding">
+                      <span class="placeholder">Drop Here</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div id="div2" class="sortable container border no-padding">
+                      <span class="placeholder">Drop Here</span>
+                    </div>
+                  </div>
                 </div>
-
-              </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                  <div class="frame container-fluid bg-faded p-4">
-                    <h3 class="text-center pb-4">Make an analysis of the video</h3>
-                    <div class="form-group">
+                <div class="row pb-4">
+                  <div class="col">
+                    <div class="frame container bg-faded p-4">
                       <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="col-md-4">
+                <div class="frame container bg-faded p-4">
+                  <h3 class="text-center">Pick an image</h3>
+                  <ul id="library" class="row sortable no-padding">
+                    <img src="{{ asset('img/test-app/1.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/2.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/3.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/4.png') }}" class="img-fluid">
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -123,43 +151,43 @@
 
 @endsection
 @section('scripts')
-   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
-
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
 
-    var player = videojs('video', {
-      controlBar: {
-        playToggle: false,
-        volumeMenuButton: false,
-        fullscreenToggle: false,
+    $('#library, #div1, #div2').sortable({
+      connectWith: ".sortable",
+      update: function(event, ui) {
+        var countL = countLImg();
+        var countR = countRImg();
+
+        if (countL > 1) {
+          var data = $('#div1 img').last();
+          $('#library').append(data);
+        }
+        if (countR > 1) {
+          var data = $('#div2 img').last();
+          $('#library').append(data);
+        }
       }
     });
 
-    player.muted(true);
+    function countLImg() {
+      var count = 0;
+      $('#div1 img').each(function() {
+        count = count + 1;
+      });
+      return count;
+    }
 
-    $('#play').on('click', function() {
-      player.play();
-    });
-
-    $('#pause').on('click', function() {
-      player.pause();
-    });
-
-    $('#stop').on('click', function() {
-      player.pause().currentTime(0);
-    });
-
-    $('#rewind').on('click', function() {
-      var time = player.currentTime();
-      player.currentTime(time-5);
-    });
-
-    $('#forward').on('click', function() {
-      var time = player.currentTime();
-      player.currentTime(time+5);
-    });
+    function countRImg() {
+      var count = 0;
+      $('#div2 img').each(function() {
+        count = count + 1;
+      });
+      return count;
+    }
 
   </script>
 @endsection

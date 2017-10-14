@@ -1,9 +1,9 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -73,59 +73,36 @@
       <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
         <div class="col">
           <div class="clearfix p-5">
-            <div class="row pb-5">
-              <div class="col-md-8">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Video</h3>
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                        <source src="{{ $session->video }}" type="video/mp4">
-                    </video>
-                  </div>
-                  <div class="row py-4">
-                    <div class="col d-flex justify-content-around">
-                      {{-- Control Bar --}}
-                      <div class="btn-group">
-                        <button id="play" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-play" aria-hidden="true"></i>
-                        </button>
-                        <button id="pause" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-pause" aria-hidden="true"></i>
-                        </button>
-                        <button id="stop" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-stop" aria-hidden="true"></i>
-                        </button>
-                        <button id="rewind" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-backward" aria-hidden="true"></i>
-                        </button>
-                        <button id="forward" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-forward" aria-hidden="true"></i>
-                        </button>
-                      </div>
-
-                    </div>
-                  </div>
+            <div class="row">
+              <div class="col-md-6 offset-md-3">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                  </video>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Library</h3>
-                  <table class="table table-hover">
-                    <thead>
-                      <th colspan="2">Video</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><img src="{{ asset('img/helpers/null-image.png') }}" width="57"></td>
-                        <td>Title of the video</td>
-                        <td>
-                          <button type="button" name="button" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+            </div>
+            <div class="row py-4">
+              <div class="col d-flex justify-content-around">
+                {{-- Control Bar --}}
+                <div class="btn-group">
+                  <button id="play" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </button>
+                  <button id="pause" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-pause" aria-hidden="true"></i>
+                  </button>
+                  <button id="stop" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-stop" aria-hidden="true"></i>
+                  </button>
+                  <button id="rewind" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                  </button>
+                  <button id="forward" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-forward" aria-hidden="true"></i>
+                  </button>
                 </div>
+
               </div>
             </div>
             <div class="row">
@@ -133,7 +110,7 @@
                   <div class="frame container-fluid bg-faded p-4">
                     <h3 class="text-center pb-4">Describe the scene outside the screen</h3>
                     <div class="form-group">
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session }}</textarea>
                     </div>
                   </div>
                 </div>
@@ -150,6 +127,7 @@
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
+    AppSession.initSession({{ $app->id }});
 
     var player = videojs('video-left', {
       controlBar: {
@@ -158,6 +136,8 @@
         fullscreenToggle: false,
       }
     });
+
+    player.muted(true);
 
     $('#play').on('click', function() {
       player.play();

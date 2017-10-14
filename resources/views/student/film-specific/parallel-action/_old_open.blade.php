@@ -1,10 +1,11 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Intercut - Cross Cutting')
 @section('stylesheets')
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline-main.css') }}"> --}}
   <link rel="stylesheet" href="{{ mix('css/app/2.1/timeline.css') }}">
+  {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/dropzone.css') }}"> --}}
   <style media="screen">
     #video-editor button.vjs-big-play-button {
       display: none;
@@ -17,7 +18,7 @@
   </style>
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -131,98 +132,64 @@
                 </div>
                 <div class="col-md-4">
                   <div class="container-fluid frame bg-faded p-4 scrollable">
-                    <ul class="nav nav-tabs" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#library" role="tab">Library</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#upload" role="tab">Upload</a>
-                      </li>
-                    </ul>
-                    {{-- Tabs Content --}}
-                    <div class="tab-content">
-                      <div class="tab-pane active pt-3" id="library" role="tabpanel">
-                          <table class="table table-hover">
-                            <thead>
-                              <th>Preview</th>
-                              <th>Title</th>
-                              <th>Tools</th>
-                            </thead>
-                            <tbody>
-                              @foreach ($elements as $key => $element)
-                                <tr>
-                                  <td class="align-middle">
-                                    <img src="{{ Storage::disk('local')->url($element->thumb) }}" width="57">
-                                  </td>
-                                  <td class="align-middle">{{ $element->title }}</td>
-                                  <td class="align-middle" ng-controller="toolController">
-                                    <div class="btn-group">
-                                      {{-- Trigger Modal --}}
-                                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                      </button>
-                                      {{-- <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline"> --}}
-                                      <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                      </button>
-                                    </div>
+                    {{-- Library --}}
+                    <div class="pt-3" id="library">
+                      <table class="table table-hover">
+                        <thead>
+                          <th>Preview</th>
+                          <th>Title</th>
+                          <th>Tools</th>
+                        </thead>
+                        <tbody>
+                          @foreach ($elements as $key => $element)
+                            <tr>
+                              <td class="align-middle">
+                                <img src="{{ Storage::disk('local')->url($element->thumb) }}" width="57">
+                              </td>
+                              <td class="align-middle">{{ $element->title }}</td>
+                              <td class="align-middle" ng-controller="toolController">
+                                <div class="btn-group">
+                                  {{-- Trigger Modal --}}
+                                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                  </button>
+                                  {{-- <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline"> --}}
+                                  <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                  </button>
+                                </div>
 
-                                    {{-- Modal Preview --}}
-                                    <div class="modal fade" id="preview-{{ $element->id }}" tabindex="-1" role="dialog" aria-labelledby="modalPreview-{{ $element->id }}" aria-hidden="true">
-                                      <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                          <div class="modal-header">
-                                            <h5 class="modal-title" id="modalPreview-{{ $element->id }}">{{ $element->title }} - Preview</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                            </button>
-                                          </div>
-                                          <div class="modal-body">
-                                            <vjs-video-container vjs-ratio="16:9">
-                                                <video class="video-js vjs-default-skin" controls preload="auto" poster="{{ Storage::disk('local')->url($element->thumb) }}">
-                                                    <source src="{{ Storage::disk('local')->url($element->path) }}" type="video/mp4">
-                                                </video>
-                                            </vjs-video-container>
-                                          </div>
-                                          <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                          </div>
-                                        </div>
+                                {{-- Modal Preview --}}
+                                <div class="modal fade" id="preview-{{ $element->id }}" tabindex="-1" role="dialog" aria-labelledby="modalPreview-{{ $element->id }}" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="modalPreview-{{ $element->id }}">{{ $element->title }} - Preview</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <vjs-video-container vjs-ratio="16:9">
+                                            <video class="video-js vjs-default-skin" controls preload="auto" poster="{{ Storage::disk('local')->url($element->thumb) }}">
+                                                <source src="{{ Storage::disk('local')->url($element->path) }}" type="video/mp4">
+                                            </video>
+                                        </vjs-video-container>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        {{-- <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
+                                          Add to timeline
+                                        </button> --}}
                                       </div>
                                     </div>
-                                  </td>
-                                </tr>
-                              @endforeach
-                            </tbody>
-                          </table>
-                      </div>
-                      <div class="tab-pane pt-3" id="upload" role="tabpanel">
-                        <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
-                          {{ csrf_field() }}
-                          {{ method_field('POST') }}
-                          <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
-                          <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
-                          <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
-                          <div class="form-group">
-                            <input id="media" type="file" name="media" class="form-control" ng-model="media">
-                          </div>
-                          <div class="container-fluid d-flex justify-content-around">
-                            <button type="submit" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-                          </div>
-                        </form>
-                        <div class="container-fluid">
-                          <table id="uploads" class="table table-hover">
-                            <thead>
-                              <th>Preview</th>
-                              <th>Title</th>
-                              <th>Tools</th>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
+                                  </div>
+                                </div>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -249,17 +216,20 @@
       </div>
     </div>
   </div>
-
 @endsection
 @section('scripts')
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
 
-    $('body').on('session-loaded', function(e, session){
-      console.log('sessione caricata '+session.token);
-      $('#token').val(session.token);
-    });
+    // Pass the variable to angular JS for init
+    var timelines = {!! $session !!};
+    var token = '{{ $token }}';
+
+    console.log('---------');
+    console.log('Logging all\'inizio');
+    console.log(timelines);
+    console.log('---------');
+
   </script>
   <script src="{{ mix('js/app/intercut-crosscutting.js') }}"></script>
 @endsection

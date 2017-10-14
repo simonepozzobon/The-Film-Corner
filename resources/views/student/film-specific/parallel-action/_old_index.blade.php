@@ -1,4 +1,4 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Intercut - Cross Cutting')
 @section('stylesheets')
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}
@@ -18,7 +18,7 @@
   </style>
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
   <div class="p-5">
   </div>
   <div class="row row-custom">

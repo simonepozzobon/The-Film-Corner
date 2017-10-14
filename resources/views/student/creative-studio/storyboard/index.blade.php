@@ -1,12 +1,16 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
 
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
-  <div class="p-5">
-  </div>
+  <section id="title" class="pt-5">
+    <div class="title sp-center pt-5 pb-5">
+      {{ $app->title }}
+      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
+    </div>
+  </section>
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-2 pr-2">
@@ -64,71 +68,60 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
-        <div class="col">
-          <div class="d-flex justify-content-start">
-            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
-          </div>
-        </div>
-      </div>
-      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
-        <div class="col">
-          <div class="clearfix pt-5 pb-5">
-            <div class="row">
-              <div class="col-md-8">
-                <form class="" action="" method="">
-                  <div id="storyboard"></div>
-                </form>
-              </div>
-              <div class="col-md-4">
-                <div class="container-fluid frame p-4 bg-faded">
-                  <h3 class="text-center pb-4">Frames</h3>
-                  {{-- <div class="test">
-                    <a id="test" href="#" class="btn btn-primary">Test</a>
-                  </div> --}}
-                    <form id="uploadForm" method="post" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      {{ method_field('POST') }}
-                      <div class="d-flex justify-content-between pb-4">
-                        <input id="media" type="file" name="media">
-                        <button id="upload" type="submit" name="button" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                      </div>
-                    </form>
-                  <ul id="assets" class="assets row list-unstyled">
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_1.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_2.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_3.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_4.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_5.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_6.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_7.png') }}" class="img-fluid w-100">
-                    </li>
-                    <li class="col-md-3 pb-4 asset">
-                      <img src="{{ asset('img/helpers/apps/storyboard/story_8.png') }}" class="img-fluid w-100">
-                    </li>
-                  </ul>
-                  {{-- <button id="addFrame" type="button" name="button" class="btn btn-primary" ><i class="fa fa-plus" aria-hidden="true"></i> Add Frame</button> --}}
-                </div>
-              </div>
-
-
+      <div class="row">
+        <div class="col-md-8">
+          <form class="" action="" method="">
+            <div id="storyboard" class="row">
 
             </div>
+          </form>
+        </div>
+        <div class="col-md-4">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col dark-yellow py-3 px-5">
+                <h3>Library</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col yellow p-5">
+                <form id="uploadForm" method="post" enctype="multipart/form-data">
+                  {{ csrf_field() }}
+                  {{ method_field('POST') }}
+                  <div class="d-flex justify-content-between pb-4">
+                    <input id="media" type="file" name="media" class="form-control">
+                    <button id="upload" type="submit" name="button" class="btn btn-secondary btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                  </div>
+                </form>
+                <ul id="assets" class="assets row list-unstyled">
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_1.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_2.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_3.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_4.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_5.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_6.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_7.png') }}" class="img-fluid w-100">
+                  </li>
+                  <li class="col-md-3 pb-4 asset">
+                    <img src="{{ asset('img/helpers/apps/storyboard/story_8.png') }}" class="img-fluid w-100">
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -158,19 +151,29 @@
           var src = $(this).children('img').attr('src');
 
           var data = '';
-          data += '<div id="frame-container-'+counter+'" class="col-md-4 p-5 d-inline-block">';
-          data +=   '<div class="container-fluid frame story bg-faded p-4">';
-          data +=     '<h6 class="frame-title text-center">Frame '+counter+'</h6>';
-          data +=     '<input type="hidden" name="frame_title" value="Frame 1">';
-          data +=     '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
-          data +=     '<div class="form-group pt-3">';
-          data +=       '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
-          data +=       '<p id="frame-content-'+counter+'" class="invisible"></p>';
+          data += '<div id="frame-container-'+counter+'" class="col-md-6 story">';
+          data +=   '<div class="box container-fluid mb-4">';
+          data +=     '<div class="row">';
+          data +=       '<div class="col dark-blue py-3 px-5">';
+          data +=         '<h3>Frame '+counter+'</h3>';
+          data +=         '<input type="hidden" name="frame_title" value="Frame 1">';
+          data +=       '</div>';
           data +=     '</div>';
-          data +=     '<div class="btn-group btn-block">';
-          data +=       '<a onclick="save('+counter+')" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
-          data +=       '<a onclick="edit('+counter+')" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-          data +=       '<a onclick="destroy('+counter+')" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+          data +=     '<div class="row">';
+          data +=       '<div class="col blue p-5">';
+          data +=         '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
+          data +=         '<div class="form-group pt-3">';;
+          data +=           '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
+          data +=           '<p id="frame-content-'+counter+'" class="invisible"></p>';
+          data +=         '</div>';
+          data +=         '<div class=" d-flex justify-content-around">';
+          data +=           '<div class="btn-group">';
+          data +=             '<a onclick="save('+counter+')" class="btn btn-secondary btn-blue"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
+          data +=             '<a onclick="edit('+counter+')" class="btn btn-secondary btn-blue"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+          data +=             '<a onclick="destroy('+counter+')" class="btn btn-secondary btn-blue"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+          data +=           '</div>';
+          data +=         '</div>';
+          data +=       '</div>';
           data +=     '</div>';
           data +=   '</div>';
           data += '</div>';
@@ -189,7 +192,7 @@
 
         $.ajax({
           type: 'post',
-          url:  '{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}',
+          url:  '{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },

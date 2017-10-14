@@ -1,9 +1,9 @@
-@extends('layouts.student', ['type' => 'app'])
+@extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -76,7 +76,7 @@
             <div class="row">
               <div class="col-md-6 offset-md-3">
                 <div class="embed-responsive embed-responsive-16by9">
-                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                  <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>
@@ -108,9 +108,9 @@
             <div class="row">
                 <div class="col">
                   <div class="frame container-fluid bg-faded p-4">
-                    <h3 class="text-center pb-4">Make an analysis of the video</h3>
+                    <h3 class="text-center pb-4">Describe the scene outside the screen</h3>
                     <div class="form-group">
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session }}</textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
