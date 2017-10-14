@@ -77,79 +77,65 @@ Route::get('/logout', 'Auth\LoginController@logout');
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {
 
-  /*
-  |--------------------------------------------------------------------------
-  | WORKING
-  |--------------------------------------------------------------------------
-  | - add video library to manage all the video in once then assign to apps.
-  */
-  Route::prefix('/video-library')->group(function() {
-    Route::resource('/video-api-library', 'Admin\VideoLibraryController');
-    Route::get('/', function() {
-      return view('admin.video_library.index');
-    })->name('video-library.index');
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | NEED UPDATE
-  |--------------------------------------------------------------------------
-  */
-
-  // Apps menu settings
-  Route::prefix('app')->group(function () {
-    Route::resource('app_1', 'Admin\App\App1Controller');
-
-    // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
-    Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
-    Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
-    Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
-    Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | DONE
-  |--------------------------------------------------------------------------
-  */
-  // Auth
-  Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-  Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-  Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
-  Route::get('/', 'AdminController@index')->name('admin');
-
-  // Web menu routes
-  Route::resource('posts', 'Admin\PostController');
-  Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
-  Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
-  Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
-
-  // Maps settings
-  Route::prefix('map')->group( function() {
-    Route::prefix('api')->group(function() {
-      Route::get('/{id}/edit', 'Admin\PointController@edit')->name('api.map.edit');
-      Route::put('/{id}', 'Admin\PointController@update')->name('api.map.update');
-      Route::post('/', 'Admin\PointController@store')->name('api.map.store');
-      Route::delete('/{id}', 'Admin\PointController@destroy')->name('api.map.delete');
-      Route::get('/', 'Admin\PointController@index')->name('api.map.index');
+    Route::prefix('/video-library')->group(function() {
+      Route::resource('/video-api-library', 'Admin\VideoLibraryController');
+      Route::get('/', function() {
+        return view('admin.video_library.index');
+      })->name('video-library.index');
     });
 
-    // ...admin/map/ to show index
-    Route::get('/', function() {
-      return view('admin.map.index');
+    // Apps menu settings
+    Route::prefix('app')->group(function () {
+      Route::resource('app_1', 'Admin\App\App1Controller');
+
+      // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
+      Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
+      Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
+      Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
+      Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
     });
-  });
 
-  // Users menu routes
-  Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
-  Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
-  Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
-  Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
-  Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
-  Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+    // Auth
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::get('/', 'AdminController@index')->name('admin');
 
-  // Settings menu routes
-  Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
+    // Web menu routes
+    Route::resource('posts', 'Admin\PostController');
+    Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
+    Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
+    Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
+
+    // Maps settings
+    Route::prefix('map')->group( function() {
+      Route::prefix('api')->group(function() {
+        Route::get('/{id}/edit', 'Admin\PointController@edit')->name('api.map.edit');
+        Route::put('/{id}', 'Admin\PointController@update')->name('api.map.update');
+        Route::post('/', 'Admin\PointController@store')->name('api.map.store');
+        Route::delete('/{id}', 'Admin\PointController@destroy')->name('api.map.delete');
+        Route::get('/', 'Admin\PointController@index')->name('api.map.index');
+      });
+
+      // ...admin/map/ to show index
+      Route::get('/', function() {
+        return view('admin.map.index');
+      });
+    });
+
+    // Users menu routes
+    Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
+    Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
+    Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
+    Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
+    Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
+    Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+
+    // Settings menu routes
+    Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
+
+    // Tools
+    Route::get('conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
 
 });
 

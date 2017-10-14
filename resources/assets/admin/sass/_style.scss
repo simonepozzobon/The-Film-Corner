@@ -107,6 +107,17 @@ main {
   border: 1px solid;
 }
 
+.btn-blue-inverse {
+  background-color: #d9f5fc;
+  color: #252525;
+  border-color: transparent;
+}
+
+.btn-blue-inverse:hover {
+  background-color: #a6dbe2;
+  border: 1px solid;
+}
+
 .form-yellow input {
   background-color: #d9f5fc;
   border-radius: 0;
@@ -142,6 +153,17 @@ main {
 
 .btn-yellow:hover {
   background-color: #f5db5e;
+  border: 1px solid;
+}
+
+.btn-yellow-inverse {
+  background-color: #f5db5e;
+  color: #252525;
+  border-color: transparent;
+}
+
+.btn-yellow-inverse:hover {
+  background-color: #e9c845;
   border: 1px solid;
 }
 
@@ -184,6 +206,18 @@ main {
   border: 1px solid;
 }
 
+.btn-green-inverse {
+  background-color: #d8ef8f;
+  color: #252525;
+  border-color: transparent;
+  border-color: transparent;
+}
+
+.btn-green-inverse:hover {
+  background-color: #b7cc5e;
+  border: 1px solid;
+}
+
 .form-green input {
   background-color: #d8ef8f;
   border-radius: 0;
@@ -219,6 +253,17 @@ main {
 
 .btn-orange:hover {
   background-color: #f4c490;
+  border: 1px solid;
+}
+
+.btn-orange-inverse {
+  background-color: #f4c490;
+  color: #252525;
+  border-color: transparent;
+}
+
+.btn-orange-inverse:hover {
+  background-color: #e8a360;
   border: 1px solid;
 }
 
@@ -277,4 +322,9 @@ main {
   -ms-transition: 1s all;
   -o-transition: 1s all;
   transition: 1s all;
+}
+
+
+.custom-modal {
+  min-width: 340px;
 }

@@ -12,4 +12,9 @@ class AppSection extends Model
     {
       return $this->hasMany('App\AppCategory');
     }
+
+    public function videos()
+    {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
 }

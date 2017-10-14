@@ -69,9 +69,9 @@ class Utility extends Model
 
     // eseguo il comando FFMPEG
     if ($ext == '.mp4') {
-      $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+      $cli = FFMPEG_LIB.' -i "'.$filePath.'" "'.storage_path('app/public/'.$destFolder).$filename.'.mp4"';
     } else {
-      $cli = FFMPEG_LIB.' -i '.$filePath.' -vcodec h264 -acodec aac -strict -2 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+      $cli = FFMPEG_LIB.' -i "'.$filePath.'" -vcodec h264 -acodec aac -strict -2 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "'.storage_path('app/public/'.$destFolder).$filename.'.mp4"';
     }
     exec($cli);
 
@@ -81,10 +81,9 @@ class Utility extends Model
     // salvo la path del file converito per il DB
     $path = $destFolder.$filename.'.mp4';
 
-
     // get duration
     $filePath = $globalPath->applyPathPrefix('public/'.$path);
-    $cli = FFMPEG_LIB.' -i '.$filePath.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+    $cli = FFMPEG_LIB.' -i "'.$filePath.'" 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
     $duration =  exec($cli);
 
     // Converto la durata in secondi
@@ -93,7 +92,7 @@ class Utility extends Model
     $timeToSnap = $duration / 2;
 
     // prendo il frame e lo salvo
-    $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.storage_path('app/public/'.$destFolder).$filename.'-thumb.jpg';
+    $cli = FFMPEG_LIB.' -y -i "'.$filePath.'" -f mjpeg -vframes 1 -ss '.$timeToSnap.' "'.storage_path('app/public/'.$destFolder).$filename.'-thumb.jpg"';
     exec($cli);
 
     // salvo la path del frame
