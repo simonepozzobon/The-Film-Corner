@@ -15,7 +15,7 @@
         <td class="align-middle">
             <img :src="video.img" class="img-fluid" width="57">
         </td>
-        <td class="align-middle">Path</td>
+        <td class="align-middle">{{video.path}}</td>
         <td  class="align-middle">
           <button :id="'button-'+video.id" @click="toggleModal(video.id)" class="btn btn-secondary btn-orange btn-target" :data-target="video.id"><i class="fa fa-trash-o"></i></button>
               <div :id="'modal-'+video.id" class="custom-modal" style="display: none; position: absolute;">
@@ -90,7 +90,8 @@ export default {
           var newVideo = {
             id: response.video.id,
             title: response.video.title,
-            img: response.video.img
+            img: response.video.img,
+            path: response.video.path
           }
           this.videos.unshift(newVideo);
       },
@@ -281,5 +282,5 @@ export default {
 </script>
 
 <style scoped>
-  
+
 </style>
