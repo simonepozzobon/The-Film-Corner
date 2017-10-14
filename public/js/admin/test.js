@@ -2228,7 +2228,8 @@ exports.default = {
             var newVideo = {
                 id: response.video.id,
                 title: response.video.title,
-                img: response.video.img
+                img: response.video.img,
+                path: response.video.path
             };
             this.videos.unshift(newVideo);
         },
@@ -2409,75 +2410,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _lodash = __webpack_require__(42);
 
@@ -2487,6 +2420,10 @@ var _axios = __webpack_require__(2);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _mojsPlayer = __webpack_require__(44);
+
+var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2494,6 +2431,76 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
@@ -2535,27 +2542,45 @@ exports.default = {
         this.a_cats = JSON.parse(this.app_categories);
         this.a_names = JSON.parse(this.apps);
 
+        this._top = this.getOffsetTop(this.form);
+
         this.dot_opts = {
             shape: 'circle',
             radius: 10,
-            y: { 20: 0 },
+            y: _defineProperty({}, this._top, this._top - 20),
             fill: 'grey',
             isYoyo: true,
-            repeat: 9999,
-            duration: 300
+            duration: 500,
+            easing: 'sin.in.out'
         };
 
-        this.dot = new mojs.Shape(_extends({}, this.dot_opts));
+        this.dot = new mojs.Shape(_extends({}, this.dot_opts, {
+            x: -40
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
 
         this.dot2 = new mojs.Shape(_extends({}, this.dot_opts, {
-            x: -40,
-            delay: 150
-        }));
+            delay: 50
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
 
         this.dot3 = new mojs.Shape(_extends({}, this.dot_opts, {
             x: 40,
             delay: 100
-        }));
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
 
         var Check = function (_mojs$CustomShape) {
             _inherits(Check, _mojs$CustomShape);
@@ -2630,11 +2655,14 @@ exports.default = {
 
             var showForm = new mojs.Html({
                 el: this.form,
-                height: { 0: vue.formOriginalHeight, delay: 150 },
-                opacity: { 0: 1, delay: 150 },
+                height: { 0: vue.formOriginalHeight },
+                opacity: { 0: 1 },
                 y: { '-100': 0 },
-                easing: 'sin.out',
-                delay: 100
+                easing: 'sin.in.out',
+                delay: 100,
+                onStart: function onStart() {
+                    vue.form.style.display = 'inherit';
+                }
             });
 
             var showCloseFormBtn = new mojs.Html({
@@ -2646,17 +2674,18 @@ exports.default = {
                 delay: 200
             });
 
-            var showFormTimeline = new mojs.Timeline().add(showForm, showCloseFormBtn);
-
-            this.form.style.display = 'inherit';
+            var showFormTimeline = new mojs.Timeline().add(showForm).append(showCloseFormBtn);
 
             new mojs.Html({
                 el: this.showFormBtn,
                 opacity: { 1: 0 },
-                height: { 55: 0 },
+                duration: 150,
+                easing: 'sin.in.out',
                 onComplete: function onComplete() {
                     showFormTimeline.play();
                 }
+            }).then({
+                height: _defineProperty({}, this.showFormBtn.offsetHeight, 0)
             }).play();
         },
         closeModal: function closeModal() {
@@ -2664,20 +2693,22 @@ exports.default = {
             var showSendBtn = new mojs.Html({
                 el: this.showFormBtn,
                 opacity: { 0: 1 },
-                height: { 50: vue.showFormOriginalHeight },
-                easing: 'sin.out',
-                delay: 100
+                height: _defineProperty({}, vue.showFormBtn.offsetHeight, vue.showFormOriginalHeight),
+                easing: 'sin.out'
             });
 
             var hideForm = new mojs.Html({
                 el: this.form,
-                height: { 100: 0 },
-                opacity: { 1: 0 },
+                opacity: { 1: 0, duration: 350 },
                 y: { 0: '-100' },
-                easing: 'sin.in',
+                easing: 'sin.in.out',
+                duration: 500,
                 onComplete: function onComplete() {
                     showSendBtn.play();
+                    vue.form.style.display = 'none';
                 }
+            }).then({
+                height: _defineProperty({}, vue.showFormOriginalHeight, 0)
             });
 
             var hideCloseFormBtn = new mojs.Html({
@@ -2689,8 +2720,9 @@ exports.default = {
                 duration: 100
             });
 
-            var hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn, hideForm).play();
-            this.form.style.display = 'none';
+            var hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn).append(hideForm).play();
+
+            // new MojsPlayer({add:hideFormTimeline});
         },
         sendForm: function sendForm(e) {
             var vue = this;
@@ -2718,23 +2750,23 @@ exports.default = {
 
                 vue.animationHideDots();
                 vue.animationShowSuccess();
-                setTimeout(function () {
+                _lodash2.default.delay(function () {
                     vue.closeModal();
-                }, 2000);
-
-                vue.$parent.$emit('newVideoLoaded', response.data);
-                // Bus.$emit('newVideoLoaded', 'Videofile');
+                    vue.$parent.$emit('newVideoLoaded', response.data);
+                }, 1000);
             }).catch(function (error) {
                 console.log(error);
-                vue.animationHideDots();
-                vue.showModal(e);
+                _lodash2.default.delay(function () {
+                    vue.animationHideDots();
+                    vue.showModal();
+                }, 250);
             });
-
-            return false;
         },
         animationBeforeSend: function animationBeforeSend() {
-
-            var dotTimeline = new mojs.Timeline().add(this.dot, this.dot2, this.dot3);
+            var vue = this;
+            this.dot.play();
+            this.dot2.play();
+            this.dot3.play();
 
             var hideFormBtnClose = new mojs.Html({
                 el: this.closeFormBtn,
@@ -2747,40 +2779,45 @@ exports.default = {
                 opacity: { 1: 0 },
                 easing: 'sin.out',
                 onComplete: function onComplete() {
-                    dotTimeline.play();
+                    vue.dot.play();
+                    vue.dot2.play();
+                    vue.dot3.play();
                 }
             }).play();
 
             var hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
         },
         animationHideDots: function animationHideDots() {
-            var hide_dots = {
-                opacity: { 1: 0 },
-                y: { 20: 0 },
-                isYoyo: false,
-                repeat: 0,
-                duration: 300
-            };
-            this.dot.tune(_extends({}, hide_dots)).play();
+            var vue = this;
+            this.dot.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
 
-            this.dot2.tune(_extends({}, hide_dots)).play();
+            this.dot2.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
 
-            this.dot3.tune(_extends({}, hide_dots)).play();
+            this.dot3.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
         },
         animationShowSuccess: function animationShowSuccess() {
+            var _this2 = this;
+
             var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+            _lodash2.default.delay(function () {
+                _this2.circle.tune({
+                    radius: { 40: 0 }
+                });
 
-            this.circle.tune({
-                radius: { 40: 0 }
-            });
+                _this2.check.tune({
+                    radius: { 20: 0 }
+                });
 
-            this.check.tune({
-                radius: { 20: 0 }
-            });
-
-            var close = new mojs.Timeline().add(this.circle, this.check).play();
+                var close = new mojs.Timeline().add(_this2.circle, _this2.check).play();
+            }, 800);
         },
         pavilionRelations: function pavilionRelations(id) {
             var vue = this;
@@ -2806,6 +2843,29 @@ exports.default = {
                 vue.a_names = [response.data.pavilion];
                 vue.section = response.data.pavilion.id;
             });
+        },
+        getOffsetLeft: function getOffsetLeft(elem) {
+            var offsetLeft = 0;
+            do {
+                if (!isNaN(elem.offsetLeft)) {
+                    offsetLeft += elem.offsetLeft;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetLeft;
+        },
+        getOffsetTop: function getOffsetTop(elem) {
+            var offsetTop = 0;
+            do {
+                if (!isNaN(elem.offsetTop)) {
+                    offsetTop += elem.offsetTop;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetTop;
+        },
+        deleteEl: function deleteEl(el) {
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
         }
     },
 
@@ -2836,7 +2896,7 @@ exports.push([module.i, "\n.close-btn[data-v-4b6830af] {\n  position: absolute;\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(11)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 /* 41 */
@@ -41606,7 +41666,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     })]), _vm._v(" "), _c('td', {
       staticClass: "align-middle"
-    }, [_vm._v("Path")]), _vm._v(" "), _c('td', {
+    }, [_vm._v(_vm._s(video.path))]), _vm._v(" "), _c('td', {
       staticClass: "align-middle"
     }, [_c('button', {
       staticClass: "btn btn-secondary btn-orange btn-target",
