@@ -1,10 +1,10 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('stylesheets')
   <link rel="stylesheet" href="http://vjs.zencdn.net/5.8.8/video-js.css" >
   <link rel="stylesheet" href="{{ asset('plugins/videojs-markers/videojs.markers.css') }}">
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
   <div class="p-5">
   </div>
   <div class="row row-custom">

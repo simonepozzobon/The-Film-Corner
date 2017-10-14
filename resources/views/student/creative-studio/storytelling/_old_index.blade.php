@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('stylesheets')
 <style media="screen">
   .slot {
@@ -7,7 +7,7 @@
 </style>
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
   <div class="p-5">
   </div>
   <div class="row row-custom">

@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.student')
 @section('title', 'Editing')
 @section('content')
   <section id="title" class="pt-5">
@@ -11,8 +11,8 @@
     <div class="row">
       <div class="col pr-5 pl-5 pb-5">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('teacher') }}">Pavilions</a></li>
-          <li class="breadcrumb-item"><a href="{{ route('teacher') }}/{{ $app_category->section->slug }}">{{ $app_category->section->name }}</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('student') }}">Pavilions</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('student') }}/{{ $app_category->section->slug }}">{{ $app_category->section->name }}</a></li>
           <li class="breadcrumb-item active">{{ $app_category->name }}</li>
         </ol>
       </div>
@@ -131,8 +131,8 @@ Enjoy your journey in this first section of The Film Corner!
                 <div class="col-md-10 offset-md-1">
                   {{-- <div class="btn-group btn-block"> --}}
                   <p class="text-center">
-                    <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
-                    <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-floppy-o" aria-hidden="true"></i> Saved</a>
+                    <a href="{{ route('student.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn w-25 btn-secondary d-inline-block mr-5" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-file-o" aria-hidden="true"></i> New</a>
+                    <a href="#" onclick="openSessions({{ Auth::guard('student')->Id() }}, {{ $app->id }})" class="btn w-25 btn-secondary d-inline-block" style="background-color: {{ $app->colors[1] }}; color: #252525; border: none;"><i class="fa fa-floppy-o" aria-hidden="true"></i> Saved</a>
                   </p>
                   {{-- </div> --}}
                 </div>
@@ -166,10 +166,10 @@ Enjoy your journey in this first section of The Film Corner!
 @endsection
 @section('scripts')
 <script type="text/javascript">
-  function openSessions(teacherId, appId) {
+  function openSessions(studentId, appId) {
     $.ajax({
       type: 'GET',
-      url:  '/teacher/session/'+teacherId+'/'+appId,
+      url:  '/student/session/'+studentId+'/'+appId,
       headers: {
         'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
       },
@@ -206,8 +206,8 @@ Enjoy your journey in this first section of The Film Corner!
             data +=   '</td>';
             data +=   '<td>';
             data +=     '<div class="btn-group">';
-            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
-            data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-success text-white"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
+            data +=       '<a href="/student/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-primary text-white"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
+            data +=       '<a href="#" id="share-session" onclick="shareSession('+studentId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-success text-white"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
             data +=       '<a class="btn btn-danger text-white"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
             data +=     '</div>';
             data +=   '</td>';
@@ -235,7 +235,7 @@ Enjoy your journey in this first section of The Film Corner!
     });
   }
 
-  function shareSession(teacherId, appId, sessionToken)
+  function shareSession(studentId, appId, sessionToken)
   {
     // Remove previous modal
     $('#sessionModal').modal('hide');
@@ -276,13 +276,13 @@ Enjoy your journey in this first section of The Film Corner!
       // e.preventDefault();
       $.ajax({
         type: 'POST',
-        url:  '{{ route('teacher.session.share') }}',
+        url:  '{{ route('student.session.share') }}',
         headers: {
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
         },
         data: {
           '_token'  : $('input[name=_token]').val(),
-          'teacher_id' : teacherId,
+          'student_id' : studentId,
           'app_id' : appId,
           'token' : sessionToken
         },
@@ -297,7 +297,7 @@ Enjoy your journey in this first section of The Film Corner!
     });
       console.log('--------');
       console.log('DATA TO SHARE');
-      console.log(teacherId);
+      console.log(studentId);
       console.log(appId);
       console.log(sessionToken);
       console.log('--------');

@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
@@ -9,7 +9,7 @@
       <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
     </div>
   </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-5">
@@ -269,7 +269,7 @@
 
         $.ajax({
           type: 'post',
-          url:  '{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}',
+          url:  '{{ route('student.creative-studio.upload', [$app_category, $app->slug]) }}',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },

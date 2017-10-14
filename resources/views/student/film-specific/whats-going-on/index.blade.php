@@ -1,4 +1,4 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
 
@@ -10,7 +10,7 @@
       <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
     </div>
   </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-2 pr-2">

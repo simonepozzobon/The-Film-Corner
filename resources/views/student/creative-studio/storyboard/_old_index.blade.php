@@ -1,10 +1,10 @@
-@extends('layouts.teacher', ['type' => 'app'])
+@extends('layouts.student', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
 
 @endsection
 @section('content')
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
   <div class="p-5">
   </div>
   <div class="row row-custom">
@@ -189,7 +189,7 @@
 
         $.ajax({
           type: 'post',
-          url:  '{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}',
+          url:  '{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}',
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
