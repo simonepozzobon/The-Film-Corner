@@ -10261,7 +10261,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, Tether) {/*!
@@ -15631,7 +15631,7 @@ return Tether;
 
 __webpack_require__(1);
 __webpack_require__(5);
-module.exports = __webpack_require__(18);
+module.exports = __webpack_require__(19);
 
 
 /***/ })

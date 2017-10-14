@@ -73,67 +73,54 @@
       <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
         <div class="col">
           <div class="clearfix p-5">
-            <div class="row pb-5">
-              <div class="col-md-8">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Video</h3>
-                  <div class="embed-responsive embed-responsive-16by9">
-                    <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                        <source src="{{ $session->video }}" type="video/mp4">
-                    </video>
-                  </div>
-                  <div class="row py-4">
-                    <div class="col d-flex justify-content-around">
-                      {{-- Control Bar --}}
-                      <div class="btn-group">
-                        <button id="play" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-play" aria-hidden="true"></i>
-                        </button>
-                        <button id="pause" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-pause" aria-hidden="true"></i>
-                        </button>
-                        <button id="stop" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-stop" aria-hidden="true"></i>
-                        </button>
-                        <button id="rewind" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-backward" aria-hidden="true"></i>
-                        </button>
-                        <button id="forward" type="button" name="button" class="btn btn-secondary">
-                          <i class="fa fa-forward" aria-hidden="true"></i>
-                        </button>
-                      </div>
-
-                    </div>
-                  </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
+                  </video>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Library</h3>
-                  <table class="table table-hover">
-                    <thead>
-                      <th colspan="2">Video</th>
-                      <th></th>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td><img src="{{ asset('img/helpers/null-image.png') }}" width="57"></td>
-                        <td>Title of the video</td>
-                        <td>
-                          <button type="button" name="button" class="btn btn-primary"><i class="fa fa-play" aria-hidden="true"></i></button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+              <div class="col-md-6">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="video-right" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                      <source src="{{ asset('img/test-app/oceans.mp4') }}" type="video/mp4">
+                  </video>
                 </div>
+              </div>
+            </div>
+            <div class="row py-4">
+              <div class="col d-flex justify-content-around">
+                {{-- Control Bar --}}
+                <div class="btn-group">
+                  <button id="comment" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
+                  </button>
+                  <button id="play" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                  </button>
+                  <button id="pause" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-pause" aria-hidden="true"></i>
+                  </button>
+                  <button id="stop" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-stop" aria-hidden="true"></i>
+                  </button>
+                  <button id="rewind" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                  </button>
+                  <button id="forward" type="button" name="button" class="btn btn-secondary">
+                    <i class="fa fa-forward" aria-hidden="true"></i>
+                  </button>
+                </div>
+
               </div>
             </div>
             <div class="row">
                 <div class="col">
                   <div class="frame container-fluid bg-faded p-4">
-                    <h3 class="text-center pb-4">Describe the scene outside the screen</h3>
+                    <h3 class="text-center pb-4">Write your notes</h3>
                     <div class="form-group">
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
+                      <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
                     </div>
                   </div>
                 </div>
@@ -150,35 +137,62 @@
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
+    AppSession.initSession({{ $app->id }});
 
-    var player = videojs('video-left', {
+    var playerL = videojs('video-left', {
       controlBar: {
         playToggle: false,
         volumeMenuButton: false,
         fullscreenToggle: false,
       }
     });
+    var playerR = videojs('video-right', {
+      controlBar: {
+        playToggle: false,
+        volumeMenuButton: false,
+        fullscreenToggle: false,
+      }
+    });
+    playerL.muted(true);
+    playerR.muted(true);
+
+    $('#comment').on('click', function() {
+      var totalSeconds = playerL.currentTime();
+      hours = Math.floor(totalSeconds / 3600);
+      totalSeconds %= 3600;
+      minutes = Math.floor(totalSeconds / 60);
+      seconds = Math.round(totalSeconds % 60);
+      var current = $('#notes').val();
+      var newComment = '\n 0'+hours+':'+('0'+minutes).slice(-2)+':'+ ('0'+seconds).slice(-2)+' - ';
+      $('#notes').val(current + newComment);
+    });
 
     $('#play').on('click', function() {
-      player.play();
+      playerL.play();
+      playerR.play();
     });
 
     $('#pause').on('click', function() {
-      player.pause();
+      playerL.pause();
+      playerR.pause();
     });
 
     $('#stop').on('click', function() {
-      player.pause().currentTime(0);
+      playerL.pause().currentTime(0);
+      playerR.pause().currentTime(0);
+
     });
 
     $('#rewind').on('click', function() {
-      var time = player.currentTime();
-      player.currentTime(time-5);
+      var time = playerL.currentTime();
+      playerL.currentTime(time-5);
+      playerR.currentTime(time-5);
     });
 
     $('#forward').on('click', function() {
-      var time = player.currentTime();
-      player.currentTime(time+5);
+      var time = playerL.currentTime();
+      playerL.currentTime(time+5);
+      playerR.currentTime(time+5);
     });
 
   </script>

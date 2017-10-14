@@ -87,9 +87,9 @@ class CreativeStudioController extends Controller
         return view('student.creative-studio.active-offscreen.index', compact('app', 'app_category'));
         break;
 
-      case 'active-intercut-cross-cutting':
+      case 'active-parallel-action':
         $elements = VideoLibrary::all();
-        return view('student.creative-studio.active-intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('student.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
@@ -172,10 +172,10 @@ class CreativeStudioController extends Controller
         return view('student.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
-      case 'active-intercut-cross-cutting':
+      case 'active-parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('student.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        return view('student.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
         break;
 
       case 'sound-studio':
