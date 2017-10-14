@@ -100,9 +100,9 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
-        return view('student.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('student.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'offscreen':
@@ -213,10 +213,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('student.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
+        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token'));
         break;
 
       case 'offscreen':
