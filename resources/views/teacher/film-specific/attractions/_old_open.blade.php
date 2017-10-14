@@ -31,13 +31,9 @@
   </style>
 @endsection
 @section('content')
-  <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      {{ $app->title }}
-      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
-    </div>
-  </section>
   @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
+  <div class="p-5">
+  </div>
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-5">
@@ -95,71 +91,51 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row">
-        <div class="col-12">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col dark-blue py-3 px-5">
-                    <h3>First Image</h3>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col blue p-5">
+      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
+        <div class="col">
+          <div class="d-flex justify-content-start">
+            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
+        <div class="col">
+          <div class="clearfix p-5">
+            <div class="row">
+              <div class="col-md-8">
+                <div class="row pb-4">
+                  <div class="col-md-6">
                     <div id="div1" class="sortable container border no-padding">
                       <img src="{{ $session->imgL }}" class="img-fluid">
                       <span class="placeholder">Drop Here</span>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col dark-yellow py-3 px-5">
-                    <h3>Second Image</h3>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col yellow p-5">
+                  <div class="col-md-6">
                     <div id="div2" class="sortable container border no-padding">
                       <img src="{{ $session->imgR }}" class="img-fluid">
                       <span class="placeholder">Drop Here</span>
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col">
+                    <div class="frame container bg-faded p-4">
+                      <h3 class="text-center pb-4">Describe Feelings</h3>
+                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <div class="box container-fluid mb-4">
-                <div class="green p-5 d-flex justify-content-around">
-                  <ul id="library" class="sortable list-inline">
-                    <li class="list-unstyled list-inline-item"><img src="{{ asset('img/test-app/1.png') }}" class="img-fluid"></li>
-                    <li class="list-unstyled list-inline-item"><img src="{{ asset('img/test-app/2.png') }}" class="img-fluid"></li>
-                    <li class="list-unstyled list-inline-item"><img src="{{ asset('img/test-app/3.png') }}" class="img-fluid"></li>
-                    <li class="list-unstyled list-inline-item"><img src="{{ asset('img/test-app/4.png') }}" class="img-fluid"></li>
+              <div class="col-md-4">
+                <div class="frame container bg-faded p-4">
+                  <h3 class="text-center">Pick an image</h3>
+                  <ul id="library" class="row sortable no-padding">
+                    <img src="{{ asset('img/test-app/1.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/2.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/3.png') }}" class="img-fluid">
+                    <img src="{{ asset('img/test-app/4.png') }}" class="img-fluid">
                   </ul>
                 </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-orange py-3 px-5">
-                <h3>Notes</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col orange p-5">
-                <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
               </div>
             </div>
           </div>

@@ -4,39 +4,43 @@
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
-  .ui-slider {
-    background: #e6e6e6;
-    border: none;
-    height: 1em;
-  }
-  .ui-slider-handle {
-    margin-left: .1em !important;
-    cursor: -webkit-grab;
-    cursor: grab;
-  }
+    .ui-slider {
+      background: #e6e6e6;
+      border: none;
+      height: 1em;
+    }
+    .ui-slider-handle {
+      margin-left: .1em !important;
+      cursor: -webkit-grab;
+      cursor: grab;
+    }
 
-  .ui-widget.ui-widget-content {
-    border: none;
-  }
+    .ui-widget.ui-widget-content {
+      border: none;
+    }
 
-  .ui-slider-handle.ui-corner-all {
-    border-radius: 50%;
-  }
+    .ui-slider-handle.ui-corner-all {
+      border-radius: 50%;
+    }
 
-  .ui-state-default, .ui-widget-content .ui-state-default {
-    background-color: {{ $app->colors[1] }};
-    border: none;
-  }
+    .ui-state-default, .ui-widget-content .ui-state-default {
+      background-color: {{ $app->colors[1] }};
+      border: none;
+    }
 
-  .ui-slider-range {
-    background: {{ $app->colors[0] }};
-  }
+    .ui-slider-range {
+      background: {{ $app->colors[0] }};
+    }
   </style>
 @endsection
 @section('content')
+  <section id="title" class="pt-5">
+    <div class="title sp-center pt-5 pb-5">
+      {{ $app->title }}
+      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
+    </div>
+  </section>
   @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
-  <div class="p-5">
-  </div>
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-2 pr-2">
@@ -94,106 +98,117 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
-        <div class="col">
-          <div class="d-flex justify-content-start">
-            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
-          </div>
-        </div>
-      </div>
-      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
-        <div class="col">
-          <div class="clearfix pt-5 pb-5">
-            <div class="row pb-5">
-              <div class="col-md-8">
-                <div class="row pb-5">
-                  <div class="col">
-                    <div class="container-fluid frame bg-faded p-4">
-                      <div class="embed-responsive embed-responsive-16by9">
-                        <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                            <source src="{{ $session->video }}" type="video/mp4">
-                        </video>
-                      </div>
-                      <div class="rowpt-4">
-                        <div class="col">
-                          <div id="waveform-1" class="d-none"></div>
-                          <div id="waveform-2" class="d-none"></div>
-                          <div id="waveform-3" class="d-none"></div>
-                          <div id="waveform-4" class="d-none"></div>
-                        </div>
-                      </div>
-                      <div class="row py-4">
-                        <div class="col d-flex justify-content-around">
-                          {{-- Control Bar --}}
-                          <div class="btn-group">
-                            <button id="play" type="button" name="button" class="btn btn-secondary">
-                              <i class="fa fa-play" aria-hidden="true"></i>
-                            </button>
-                            <button id="pause" type="button" name="button" class="btn btn-secondary">
-                              <i class="fa fa-pause" aria-hidden="true"></i>
-                            </button>
-                            <button id="stop" type="button" name="button" class="btn btn-secondary">
-                              <i class="fa fa-stop" aria-hidden="true"></i>
-                            </button>
-                            <button id="rewind" type="button" name="button" class="btn btn-secondary">
-                              <i class="fa fa-backward" aria-hidden="true"></i>
-                            </button>
-                            <button id="forward" type="button" name="button" class="btn btn-secondary">
-                              <i class="fa fa-forward" aria-hidden="true"></i>
-                            </button>
-                          </div>
-
-                        </div>
-                      </div>
-                      <div class="row pt-4">
-                        <div class="col-md-6 offset-md-3">
-                          <div id="mixer" class="container-fluid d-flex justify-content-around">
-                            <div id="waveform-1-vol" style="height:100px;" class="mx-2"></div>
-                            <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
-                            <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
-                            <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col">
+              <div class="box container-fluid mb-4">
+                <div class="row">
+                  <div class="col dark-blue py-3 px-5">
+                    <h3>Your scene</h3>
                   </div>
                 </div>
-                <div class="row pb-5">
-                  <div class="col">
-                    <div class="container-fluid frame bg-faded p-4">
-                      <h3 class="text-center pb-4">Describe the scenario</h3>
-                      <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
+                <div class="row">
+                  <div class="col blue p-5">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                          <source src="{{ $session->video }}" type="video/mp4">
+                      </video>
+                    </div>
+                    <div id="waveform-1" class="d-none"></div>
+                    <div id="waveform-2" class="d-none"></div>
+                    <div id="waveform-3" class="d-none"></div>
+                    <div id="waveform-4" class="d-none"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="box container-fluid mb-4">
+                <div class="row">
+                  <div class="col orange p-5">
+                    <div class="col d-flex justify-content-around pb-4">
+                      {{-- Control Bar --}}
+                      <div class="btn-group">
+                        <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-play" aria-hidden="true"></i>
+                        </button>
+                        <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-pause" aria-hidden="true"></i>
+                        </button>
+                        <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-stop" aria-hidden="true"></i>
+                        </button>
+                        <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-backward" aria-hidden="true"></i>
+                        </button>
+                        <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-forward" aria-hidden="true"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div id="mixer" class="container-fluid d-flex justify-content-around">
+                      <div id="waveform-1-vol" style="height:100px;" class="mx-2"></div>
+                      <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
+                      <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
+                      <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Library</h3>
-                  <ul class="list-unstyled">
-                    <li class="pb-3">
-                      <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 1</p>
-                        <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                        <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
-                    </li>
-                    <li class="pb-3">
-                      <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 2</p>
-                        <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                        <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
-                    </li>
-                    <li class="pb-3">
-                      <div class="d-flex justify-content-between">
-                        <p id="audio-title-1" class="d-block">Title of the audio - Scene 3</p>
-                        <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                        <a id="audio-1" href="#" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col dark-yellow py-3 px-5">
+                <h3>Library</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col yellow p-5">
+                <ul class="list-unstyled">
+                  <li class="pb-3">
+                    <div class="d-flex justify-content-between">
+                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 1</p>
+                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
+                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                  </li>
+                  <li class="pb-3">
+                    <div class="d-flex justify-content-between">
+                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 2</p>
+                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
+                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                  </li>
+                  <li class="pb-3">
+                    <div class="d-flex justify-content-between">
+                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 3</p>
+                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
+                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col dark-green py-3 px-5">
+                <h3>Take your notes</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col green p-5">
+                <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>
               </div>
             </div>
           </div>
