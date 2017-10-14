@@ -70,6 +70,7 @@
 <script>
   import _ from 'lodash';
   import axios from 'axios';
+  import MojsPlayer from 'mojs-player';
 
   export default {
       props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
@@ -114,30 +115,50 @@
         this.a_cats = JSON.parse(this.app_categories);
         this.a_names = JSON.parse(this.apps);
 
+        this._top = this.getOffsetTop(this.form);
+
         this.dot_opts = {
           shape: 'circle',
           radius: 10,
-          y: {20 : 0},
+          y: {[this._top] : this._top - 20},
           fill: 'grey',
           isYoyo: true,
-          repeat: 9999,
-          duration: 300,
+          duration: 500,
+          easing: 'sin.in.out',
         }
 
         this.dot = new mojs.Shape({
             ...this.dot_opts,
+            x: -40,
+        })
+        .then({
+            y: {[this._top - 20] : this._top},
+            onComplete(isForward, isYoyo) {
+                this.replay();
+            }
         });
 
         this.dot2 = new mojs.Shape({
             ...this.dot_opts,
-            x: -40,
-            delay: 150
+            delay: 50,
+        })
+        .then({
+            y: {[this._top - 20] : this._top},
+            onComplete(isForward, isYoyo) {
+                this.replay();
+            }
         });
 
         this.dot3 = new mojs.Shape({
             ...this.dot_opts,
             x: 40,
-            delay: 100
+            delay: 100,
+        })
+        .then({
+            y: {[this._top - 20] : this._top},
+            onComplete(isForward, isYoyo) {
+                this.replay();
+            }
         });
 
         class Check extends mojs.CustomShape {
@@ -201,11 +222,14 @@
 
             let showForm = new mojs.Html({
                 el: this.form,
-                height: {0 : vue.formOriginalHeight, delay: 150},
-                opacity: {0 : 1, delay: 150},
+                height: {0 : vue.formOriginalHeight},
+                opacity: {0 : 1},
                 y: {'-100' : 0},
-                easing: 'sin.out',
-                delay: 100
+                easing: 'sin.in.out',
+                delay: 100,
+                onStart() {
+                  vue.form.style.display = 'inherit';
+                }
             });
 
             let showCloseFormBtn = new mojs.Html({
@@ -217,18 +241,22 @@
                 delay: 200,
             });
 
-            let showFormTimeline = new mojs.Timeline().add(showForm, showCloseFormBtn);
+            let showFormTimeline = new mojs.Timeline().add(showForm).append(showCloseFormBtn);
 
-            this.form.style.display = 'inherit';
 
             new mojs.Html({
                 el: this.showFormBtn,
                 opacity: {1 : 0},
-                height: {55 : 0},
+                duration: 150,
+                easing: 'sin.in.out',
                 onComplete () {
                   showFormTimeline.play();
                 }
-            }).play();
+            })
+            .then({
+                height: {[this.showFormBtn.offsetHeight] : 0},
+            })
+            .play();
 
           },
 
@@ -238,20 +266,22 @@
               let showSendBtn = new mojs.Html({
                   el: this.showFormBtn,
                   opacity: {0 : 1},
-                  height: {50 : vue.showFormOriginalHeight},
+                  height: {[vue.showFormBtn.offsetHeight] : vue.showFormOriginalHeight},
                   easing: 'sin.out',
-                  delay: 100
               });
 
               let hideForm = new mojs.Html({
                   el: this.form,
-                  height: {100 : 0},
-                  opacity: {1 : 0},
+                  opacity: {1 : 0, duration: 350},
                   y: {0 : '-100'},
-                  easing: 'sin.in',
+                  easing: 'sin.in.out',
+                  duration: 500,
                   onComplete () {
                       showSendBtn.play();
+                      vue.form.style.display = 'none';
                   }
+              }).then({
+                  height: {[vue.showFormOriginalHeight] : 0},
               });
 
               let hideCloseFormBtn = new mojs.Html({
@@ -263,9 +293,9 @@
                   duration: 100,
               });
 
-              let hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn, hideForm).play();
-              this.form.style.display = 'none';
+              let hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn).append(hideForm).play();
 
+              // new MojsPlayer({add:hideFormTimeline});
           },
 
           sendForm (e)
@@ -285,76 +315,75 @@
               this.animationBeforeSend();
 
               axios.post('/api/apps/video', formData)
-                  .then(function(response){
-                    console.log(response);
-                    vue.title = '';
-                    vue.video = '';
-                    vue.category = '';
-                    vue.section = '';
-                    vue.app_category = '';
-                    vue.app_name = '';
+              .then(function(response){
+                console.log(response);
+                vue.title = '';
+                vue.video = '';
+                vue.category = '';
+                vue.section = '';
+                vue.app_category = '';
+                vue.app_name = '';
 
-                    vue.animationHideDots();
-                    vue.animationShowSuccess();
-                    setTimeout(function(){vue.closeModal()}, 2000);
+                vue.animationHideDots();
+                vue.animationShowSuccess();
+                _.delay(() => {
+                  vue.closeModal();
+                  vue.$parent.$emit('newVideoLoaded', response.data);
+                }, 1000);
 
-                    vue.$parent.$emit('newVideoLoaded', response.data);
-                    // Bus.$emit('newVideoLoaded', 'Videofile');
-
-                  })
-                  .catch(function (error) {
-                    console.log(error);
-                    vue.animationHideDots();
-                    vue.showModal(e);
-                  });
-
-              return false;
+              })
+              .catch(function (error) {
+                console.log(error);
+                _.delay(() => {
+                  vue.animationHideDots();
+                  vue.showModal()
+                }, 250);
+              });
 
           },
 
           animationBeforeSend()
           {
+              var vue = this;
+              this.dot.play();
+              this.dot2.play();
+              this.dot3.play();
 
-              let dotTimeline = new mojs.Timeline().add(this.dot,this.dot2,this.dot3);
-
-              const hideFormBtnClose = new mojs.Html({
+              let hideFormBtnClose = new mojs.Html({
                   el: this.closeFormBtn,
                   opacity: {1 : 0},
                   easing: 'sin.out',
               });
 
-              const hideForm = new mojs.Html({
+              let hideForm = new mojs.Html({
                   el: this.form,
                   opacity: {1 : 0},
                   easing: 'sin.out',
                   onComplete() {
-                    dotTimeline.play();
+                    vue.dot.play();
+                    vue.dot2.play();
+                    vue.dot3.play();
                   }
               }).play();
 
-              const hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
+              let hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
+
           },
 
           animationHideDots ()
           {
-            let hide_dots = {
-                opacity: {1 : 0},
-                y: {20 : 0},
-                isYoyo: false,
-                repeat: 0,
-                duration: 300
-            }
+            var vue = this;
             this.dot.tune({
-                ...hide_dots
-            }).play();
+                opacity: {1 : 0},
+            }).play().stop();
 
             this.dot2.tune({
-                ...hide_dots
-            }).play();
+                opacity: {1 : 0},
+            }).play().stop();
 
             this.dot3.tune({
-                ...hide_dots
-            }).play();
+                opacity: {1 : 0},
+            }).play().stop();
 
             // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
           },
@@ -362,16 +391,18 @@
           animationShowSuccess()
           {
             let successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+            _.delay(() => {
+              this.circle.tune({
+                radius: {40 : 0},
+              });
 
-            this.circle.tune({
-              radius: {40 : 0},
-            });
+              this.check.tune({
+                radius: {20 : 0},
+              });
 
-            this.check.tune({
-              radius: {20 : 0},
-            });
+              let close = new mojs.Timeline().add(this.circle, this.check).play();
+            }, 800);
 
-            let close = new mojs.Timeline().add(this.circle, this.check).play();
 
           },
 
@@ -407,6 +438,36 @@
                   vue.a_names = [response.data.pavilion];
                   vue.section = response.data.pavilion.id
               });
+          },
+
+          getOffsetLeft (elem)
+          {
+              var offsetLeft = 0;
+              do {
+                if ( !isNaN( elem.offsetLeft ) )
+                {
+                    offsetLeft += elem.offsetLeft;
+                }
+              } while( elem = elem.offsetParent );
+              return offsetLeft;
+          },
+
+          getOffsetTop (elem)
+          {
+              var offsetTop = 0;
+              do {
+                if ( !isNaN( elem.offsetTop ) )
+                {
+                    offsetTop += elem.offsetTop;
+                }
+              } while( elem = elem.offsetParent );
+              return offsetTop;
+          },
+
+          deleteEl(el) {
+              if (el) {
+                   el.parentNode.removeChild(el);
+              }
           },
       },
 

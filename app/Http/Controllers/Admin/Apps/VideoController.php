@@ -60,6 +60,8 @@ class VideoController extends Controller
 
         // riformatto il link dell'immagine per renderlo accessibile in vue
         $video->img = Storage::disk('local')->url($video->img);
+        $video->path = $pavilion->name.' > '.$app_category->name.' > '.$app_name->title;
+
 
         $data = [
           'success' => true,
