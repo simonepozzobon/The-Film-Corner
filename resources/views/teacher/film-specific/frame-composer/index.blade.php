@@ -130,7 +130,7 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-orange py-3 px-5">
-                <h3>Notes</h3>
+                <h3>What criteria did you use in your composition?</h3>
               </div>
             </div>
             <div class="row">

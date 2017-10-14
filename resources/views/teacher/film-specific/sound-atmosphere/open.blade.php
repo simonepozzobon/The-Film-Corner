@@ -164,7 +164,7 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-green py-3 px-5">
-                <h3>Take your notes</h3>
+                <h3>Why you choose this soundtrack?</h3>
               </div>
             </div>
             <div class="row">

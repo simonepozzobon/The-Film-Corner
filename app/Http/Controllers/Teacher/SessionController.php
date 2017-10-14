@@ -181,7 +181,7 @@ class SessionController extends Controller
       case 3:
         if (isset($request['notes'])) {
           $data = [
-            'videos' => $request['videos'],
+            'images' => $request['images'],
             'notes' => $request['notes']
           ];
 
@@ -255,7 +255,7 @@ class SessionController extends Controller
           'notes' => $request['notes'],
           'audio_src' => $request['audio-src'],
           'audio_vol' => $request['audio-vol'],
-          'video' => $request['video']
+          'image' => $request['image']
         ];
 
         $session->content = json_encode($data);

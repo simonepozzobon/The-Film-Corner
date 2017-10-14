@@ -12,7 +12,7 @@
   <section id="main" class="pb-5 px-5">
     <div class="row">
       @foreach ($items as $key => $item)
-        <div class="box col-md-3 mb-5">
+        <div class="box col-md-4 mb-5">
           <div class="container-fluid">
             <div class="row">
               <div class="col {{ $item->colors[0] }}">

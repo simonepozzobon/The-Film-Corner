@@ -86,42 +86,77 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="box container-fluid mb-5">
-        <div class="row">
-          <div class="col dark-blue py-3 px-5">
-            <h3>Your scene</h3>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col">
+              <div class="box container-fluid mb-5">
+                <div class="row">
+                  <div class="col dark-blue py-3 px-5">
+                    <h3>Your scene</h3>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col blue p-5">
+                    <div id="photosphere"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <div class="row">
+            <div class="col">
+              <div class="box container-fluid mb-4">
+                <div class="row">
+                  <div class="col orange p-5">
+                    <div class="d-flex justify-content-around pt-3">
+                      <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div class="row">
-          <div class="col blue p-5">
-            <div id="photosphere"></div>
-            <div class="d-flex justify-content-around pt-3">
-              <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg btn-blue" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+        <div class="col-md-4">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col dark-yellow py-3 px-5">
+                <h3>Library</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col yellow p-5">
+                <p>Content</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <form class="" action="" method="">
-        <div id="rendered" class="row">
+        <div id="rendered" class="row row-eq-height">
           @foreach ($session as $key => $frame)
-            <div id="frame-container-{{ $key }}" class="col-md-4 box container-fluid mb-5 px-4">
-              <div class="row">
-                <div class="col dark-blue py-3 px-5">
-                  <h3>Frame {{ $key }}</h3>
-                  <input type="hidden" name="frame-title" value="Frame {{ $frame->order }}">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col blue p-5">
-                  <img src="{{ $frame->img }}" class="img-fluid">
-                  <div class="form-group pt-3">
-                    <textarea id="frame-{{ $key }}" name="frame-{{ $key }}" class="form-control" rows="8">{{ $frame->description }}</textarea>
-                    <p id="frame-content-{{ $key }}" class="d-none">{{ $frame->description }}</p>
+            <div class="col-md-4">
+              <div id="frame-container-{{ $key }}" class="box container-fluid mb-5 px-4">
+                <div class="row">
+                  <div class="col dark-green py-3 px-5">
+                    <h3>Frame {{ $key }}</h3>
+                    <input type="hidden" name="frame-title" value="Frame {{ $frame->order }}">
                   </div>
-                  <div class="btn-group btn-block">
-                    <a onclick="save({{ $key }})" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
-                    <a onclick="edit({{ $key }})" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a onclick="destroy({{ $key }})" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                </div>
+                <div class="row">
+                  <div class="col green p-5">
+                    <img src="{{ $frame->img }}" class="img-fluid">
+                    <div class="form-group pt-3">
+                      <textarea id="frame-{{ $key }}" name="frame-{{ $key }}" class="form-control" rows="8">{{ $frame->description }}</textarea>
+                      <p id="frame-content-{{ $key }}" class="d-none">{{ $frame->description }}</p>
+                    </div>
+                    <div class="btn-group btn-block">
+                      <a onclick="save({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+                      <a onclick="edit({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      <a onclick="destroy({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -165,53 +200,67 @@
 
     $('#rendered .box').each(function(k) {
       console.log(k);
-    });
-
-
-    $('#capture').on('click', function(e) {
-      e.preventDefault();
-      var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
-      var img = PSV.render();
       counter = counter + 1;
-      var elem = '<div id="frame-container-'+counter+'" class="col-md-4 box container-fluid mb-5 px-4">'
-      elem +=   '<div class="row">';
-      elem +=     '<div class="col dark-blue py-3 px-5">';
-      elem +=       '<h3>Frame '+counter+'</h3>';
-      elem +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';
-      elem +=     '</div>';
-      elem +=   '</div>';
-      elem +=   '<div class="row">';
-      elem +=     '<div class="col blue p-5">';
-      elem +=       '<img src="'+img+'" class="img-fluid">';
-      elem +=       '<div class="form-group pt-3">';
-      elem +=         '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
-      elem +=         '<p id="frame-content-'+counter+'" class="d-none"></p>';
-      elem +=       '</div>';
-      elem +=       '<div class="btn-group btn-block">';
-      elem +=         '<a onclick="save('+counter+')" class="btn btn-primary w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
-      elem +=         '<a onclick="edit('+counter+')" class="btn btn-info w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-      elem +=         '<a onclick="destroy('+counter+')" class="btn btn-danger w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
-      elem +=       '</div>';
-      elem +=     '</div>';
-      elem +=   '</div>';
-      elem += '</div>';
-      $('#rendered').append(elem);
     });
 
-    function save(id) {
-      var elem = $('#frame-'+id);
-      var container = $('#frame-content-'+id);
-      var content = elem.val();
-      container.html(content);
-      elem.hide();
-      container.removeClass('invisible');
+    $('#capture').on('click', function(event) {
+      snapshot(event);
+    });
+
+    function snapshot(e)
+    {
+        if (counter <= 9) {
+            e.preventDefault();
+            var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
+            var img = PSV.render();
+            counter = counter + 1;
+            var elem = '<div class="col-md-4">';
+            elem += '<div id="frame-container-'+counter+'" class="box container-fluid mb-5 px-4">'
+            elem +=   '<div class="row">';
+            elem +=     '<div class="col dark-green py-3 px-5">';
+            elem +=       '<h3>Frame '+counter+'</h3>';
+            elem +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';
+            elem +=     '</div>';
+            elem +=   '</div>';
+            elem +=   '<div class="row">';
+            elem +=     '<div class="col green p-5">';
+            elem +=       '<img src="'+img+'" class="img-fluid">';
+            elem +=       '<div class="form-group pt-3">';
+            elem +=         '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
+            elem +=         '<p id="frame-content-'+counter+'" class="d-none"></p>';
+            elem +=       '</div>';
+            elem +=       '<div class="btn-group btn-block">';
+            elem +=         '<a onclick="save('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
+            elem +=         '<a onclick="edit('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+            elem +=         '<a onclick="destroy('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            elem +=       '</div>';
+            elem +=     '</div>';
+            elem +=   '</div>';
+            elem += '</div>';
+            elem += '</div>';
+
+            $('#rendered').append(elem);
+        } else {
+            alert('limit reached');
+        }
     }
 
-    function edit(id) {
-      var elem = $('#frame-'+id);
-      var container = $('#frame-content-'+id);
-      container.addClass('invisible');
-      elem.show();
+    function save(id)
+    {
+        var elem = $('#frame-'+id);
+        var container = $('#frame-content-'+id);
+        var content = elem.val();
+        container.html(content);
+        elem.hide();
+        container.removeClass('invisible');
+    }
+
+    function edit(id)
+    {
+        var elem = $('#frame-'+id);
+        var container = $('#frame-content-'+id);
+        container.addClass('invisible');
+        elem.show();
     }
 
     function destroy(id) {
