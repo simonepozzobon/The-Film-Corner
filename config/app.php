@@ -191,6 +191,9 @@ return [
         // Mattwebsite Excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        // Activity log
+        'Spatie\Activitylog\ActivitylogServiceProvider',
+
         // Debug
         Lanin\Laravel\ApiDebugger\ServiceProvider::class,
         'Barryvdh\Debugbar\ServiceProvider',
@@ -257,6 +260,9 @@ return [
 
         // Mattwebsite Excel
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        // Activity Log
+        'Activity' => 'Spatie\Activitylog\ActivitylogFacade',
 
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
