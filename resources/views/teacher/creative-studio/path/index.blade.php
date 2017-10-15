@@ -21,10 +21,11 @@
   <section class="pb-5 pr-5 pl-5">
     <div class="row" style="background-color: #a6dbe2; color: #252525">
       <div class="col align-text-bottom">
-        <h3 class="pl-2 pt-4 pb-2 pr-2">Info</h3>
+          <h3 class="px-2 pt-4 pb-2 d-inline-block">Info</h3>
+          <h3 class="d-inline-block float-right mt-4 mr-2"><a data-toggle="collapse" href="#info-text" aria-expanded="false" aria-controls="collapseExample" class="text-blue"><i class="fa fa-minus"></i></a><h3>
       </div>
     </div>
-    <div class="row" style="background-color: #d9f5fc; color: #252525">
+    <div class="row  {{ isset($visited) ? 'collapse' : 'collapse.show' }}" id="info-text" style="background-color: #d9f5fc; color: #252525">
       <div class="col pt-5 pr-5 pb-5">
         <p class="pl-2">
           Testo informativo

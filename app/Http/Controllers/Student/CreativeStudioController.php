@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
+use Spatie\Activitylog\Models\Activity;
 
 class CreativeStudioController extends Controller
 {
@@ -35,6 +36,18 @@ class CreativeStudioController extends Controller
     $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
 
     $student = Auth::guard('student')->user();
+
+    $activities = Activity::where('description', '=', 'visited')->causedBy($student)->forSubject($app_category)->get();
+
+    if ($activities->count() == 0) {
+      activity()
+        ->causedBy($student)
+        ->performedOn($app_category)
+        ->withProperties('visited', true)
+        ->log('visited');
+    } else {
+      $visited = true;
+    }
 
     $colors = [
       0 => ['#f5db5e', '#e9c845'],
@@ -53,7 +66,7 @@ class CreativeStudioController extends Controller
       }
     }
 
-    return view('student.creative-studio.path.index', compact('apps', 'app_category'));
+    return view('student.creative-studio.path.index', compact('apps', 'app_category', 'visited'));
   }
 
   /**
