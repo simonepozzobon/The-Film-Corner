@@ -10264,12 +10264,13 @@ module.exports = function(module) {
 "use strict";
 
 
+window.$ = window.jQuery = __webpack_require__(15);
+window.Tether = __webpack_require__(56);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
 __webpack_require__(168);
 
 /**
@@ -10286,41 +10287,6 @@ __webpack_require__(168);
 
 /***/ }),
 
-/***/ 161:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 162:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 163:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 164:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10334,7 +10300,7 @@ window._ = __webpack_require__(79);
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-window.$ = window.jQuery = __webpack_require__(19);
+window.$ = window.jQuery = __webpack_require__(15);
 
 window.Tether = __webpack_require__(56);
 
@@ -10357,7 +10323,7 @@ window.Vue = __webpack_require__(144);
 window.axios = __webpack_require__(33);
 
 window.axios.defaults.headers.common = {
-  'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
   'X-Requested-With': 'XMLHttpRequest'
 };
 
@@ -10379,12 +10345,7 @@ window.axios.defaults.headers.common = {
 /***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(157);
-__webpack_require__(164);
-__webpack_require__(165);
-__webpack_require__(161);
-__webpack_require__(162);
-module.exports = __webpack_require__(163);
+module.exports = __webpack_require__(157);
 
 
 /***/ }),

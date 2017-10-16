@@ -1,4 +1,4 @@
-webpackJsonp([5],{
+webpackJsonp([6],{
 
 /***/ 160:
 /***/ (function(module, exports, __webpack_require__) {
@@ -14,7 +14,7 @@ var _moJs = __webpack_require__(80);
 
 var _moJs2 = _interopRequireDefault(_moJs);
 
-var _jquery = __webpack_require__(19);
+var _jquery = __webpack_require__(15);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 

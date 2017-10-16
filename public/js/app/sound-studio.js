@@ -3973,7 +3973,8 @@ exports['default'] = toTitleCase;
 
 
 /***/ }),
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3981,7 +3982,7 @@ exports['default'] = toTitleCase;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(16);
+var _clickableComponent = __webpack_require__(17);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4156,7 +4157,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4484,7 +4485,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4532,7 +4533,7 @@ var _log = __webpack_require__(7);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(18);
+var _timeRanges = __webpack_require__(19);
 
 var _buffer = __webpack_require__(52);
 
@@ -5906,7 +5907,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6058,7 +6059,6 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 19 */,
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6353,7 +6353,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(16);
+var _clickableComponent = __webpack_require__(17);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -7877,7 +7877,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(15);
+var _button = __webpack_require__(16);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -8529,7 +8529,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(16);
+var _clickableComponent = __webpack_require__(17);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -9637,7 +9637,7 @@ var _toTitleCase = __webpack_require__(14);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(18);
+var _timeRanges = __webpack_require__(19);
 
 var _buffer = __webpack_require__(52);
 
@@ -9671,7 +9671,7 @@ var _modalDialog = __webpack_require__(47);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(17);
+var _tech = __webpack_require__(18);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -14038,7 +14038,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(18);
+var _timeRanges = __webpack_require__(19);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -14222,7 +14222,7 @@ var _videoTrack = __webpack_require__(143);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(18);
+var _timeRanges = __webpack_require__(19);
 
 var _formatTime = __webpack_require__(11);
 
@@ -14250,7 +14250,7 @@ var _xhr = __webpack_require__(55);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(17);
+var _tech = __webpack_require__(18);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -77101,7 +77101,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(15);
+var _button = __webpack_require__(16);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77230,7 +77230,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(15);
+var _button = __webpack_require__(16);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77698,7 +77698,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(15);
+var _button = __webpack_require__(16);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77930,7 +77930,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(15);
+var _button = __webpack_require__(16);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -81560,7 +81560,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(16);
+var _clickableComponent = __webpack_require__(17);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -81794,7 +81794,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(16);
+var _clickableComponent = __webpack_require__(17);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -82342,7 +82342,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(17);
+var _tech = __webpack_require__(18);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -82354,7 +82354,7 @@ var _url = __webpack_require__(23);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(18);
+var _timeRanges = __webpack_require__(19);
 
 var _flashRtmp = __webpack_require__(131);
 
@@ -83531,7 +83531,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(17);
+var _tech = __webpack_require__(18);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -85481,7 +85481,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(17);
+var _tech = __webpack_require__(18);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -87572,7 +87572,7 @@ var _angular = __webpack_require__(24);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(19);
+var _jquery = __webpack_require__(15);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -87944,7 +87944,7 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(19)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15)))
 
 /***/ }),
 /* 160 */,
