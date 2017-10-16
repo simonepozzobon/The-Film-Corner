@@ -17,6 +17,7 @@
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^2.1",
         "mews/purifier": "^2.0",
+        "pragmarx/tracker": "^3.2",
         "rairlie/laravel-locking-session": "^1.0",
         "spatie/laravel-activitylog": "*",
         "teamtnt/laravel-scout-tntsearch-driver": "^3.0",
