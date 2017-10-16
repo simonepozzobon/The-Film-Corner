@@ -1,10 +1,16 @@
 {
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
+  "/js/admin/test.js": "/js/admin/test.js",
   "/js/app.js": "/js/app.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",
   "/css/app/2.1/dropzone.css": "/css/app/2.1/dropzone.css",
   "/css/app.css": "/css/app.css",
-  "/js/city.js": "/js/city.js"
+  "/css/admin/admin.css": "/css/admin/admin.css",
+  "/js/admin/vendor.js": "/js/admin/vendor.js",
+  "/js/city.js": "/js/city.js",
+  "/js/admin/admin.js": "/js/admin/admin.js",
+  "/js/admin/manifest.js": "/js/admin/manifest.js",
+  "/js/admin/admin.min.js": "/js/admin/admin.min.js"
 }

@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		3: 0
+/******/ 		7: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/admin/" + ({"0":"/js/admin/test","1":"/js/admin/vendor","2":"/js/admin/admin"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/admin/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/admin/test","3":"/js/app","4":"/js/admin/vendor","5":"/js/city","6":"/js/admin/admin"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
