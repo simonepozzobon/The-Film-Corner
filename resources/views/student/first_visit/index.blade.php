@@ -75,7 +75,7 @@
             <strong class="">Enjoy your trip in The Film Corner! See you outside!</strong>
           </p>
           <div class="pt-3 d-flex justify-content-around">
-            <a href="{{ route('teacher') }}" class="btn btn-lg btn-secondary btn-orange"><i class="fa fa-hand-o-right"></i> Start</a>
+            <a href="{{ route('student') }}" class="btn btn-lg btn-secondary btn-orange"><i class="fa fa-hand-o-right"></i> Start</a>
           </div>
         </div>
       </div>

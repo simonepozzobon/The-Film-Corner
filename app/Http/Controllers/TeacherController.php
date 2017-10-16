@@ -58,4 +58,9 @@ class TeacherController extends Controller
     {
       return view('teacher.path.index');
     }
+
+    public function welcome()
+    {
+      return view('teacher.first_visit.index');
+    }
 }

@@ -34,7 +34,7 @@ class StudentController extends Controller
 
         } else {
             $visited = true;
-            return view('teacher')->with('teacher', $student);
+            return view('student')->with('teacher', $student);
         }
 
     }
@@ -57,5 +57,10 @@ class StudentController extends Controller
     public function path()
     {
       return view('teacher.path.index');
+    }
+
+    public function welcome()
+    {
+      return view('student.first_visit.index');
     }
 }

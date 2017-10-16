@@ -156,6 +156,7 @@ Route::prefix('teacher')->group(function() {
   Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
   Route::get('/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
+  Route::get('/welcome','TeacherController@welcome')->name('teacher.welcome');
 
   // Video Editor
   Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
@@ -218,6 +219,7 @@ Route::prefix('student')->group(function() {
   Route::post('/login', 'Auth\StudentLoginController@login')->name('student.login.submit');
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
+  Route::get('/welcome','StudentController@welcome')->name('student.welcome');
 
   // Video Editor
   Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.student.editor');
