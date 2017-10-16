@@ -1,5 +1,6 @@
 const { mix } = require('laravel-mix');
 
+
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -12,39 +13,25 @@ const { mix } = require('laravel-mix');
  */
 //
  mix
-    // Install (copy css to resources folder)
-    // .copy('node_modules/videogular-themes-default/videogular.css', 'resources/assets/sass/app/2.1/videogular.scss')
-    // .copy('node_modules/angular-media-timeline/main.css', 'resources/assets/sass/app/2.1/angular-media-timeline.scss')
-    // .copy('node_modules/angular-media-timeline/timeline.less', 'resources/assets/sass/app/2.1/timeline.less')
-
-    // Main App js
-    .js('resources/assets/js/app.js', 'public/js')
-
-    // Home Animation
+    .js([
+      'resources/assets/admin/js/plugins/image-picker.js',
+      'resources/assets/admin/js/custom.js'
+    ], 'public/js/admin/admin.js').minify('public/js/admin/admin.js')
+    .js('resources/assets/admin/js/test.js', 'public/js/admin/test.js')
     .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
-
-    // App 2.1
-    // intercut/cross-cutting: take 2 sequences from different
-    // libraries and edit them as an intercut.
     .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
-    // .sass('resources/assets/sass/app/2.1/videogular.scss', 'public/css/app/2.1/style.css')
-    // .sass('node_modules/video.js/src/css/vjs-cdn.scss', 'public/css/app/2.1/video-js.css')
+    .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')
     .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
-    // .sass('node_modules/dropzone/src/dropzone.scss', 'public/css/app/2.1/dropzone.css')
-
-    // ADMIN SCRIPTS
-
-    // CSS
     .sass('resources/assets/sass/app.scss', 'public/css')
+    .sass('resources/assets/admin/sass/app.scss', 'public/css/admin/admin.css')
+    .extract(['jquery', 'tether', 'bootstrap'])
+    .autoload({
+        jquery: ['$', 'jQuery', 'jquery'],
+        tether: ['Tether'],
+    })
     .browserSync({
       proxy: 'http://www.simonepozzobon.dev:8888/'
-      // proxy: {
-      //           target: '127.0.0.1',
-      //           reqHeaders: function () {
-      //               return { host: 'http://www.simonepozzobon.dev:8888/' };
-      //           }
-      //       }
     });

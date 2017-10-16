@@ -20,10 +20,4 @@ mix
 })
 .browserSync({
   proxy: 'http://www.simonepozzobon.dev:8888/'
-  // proxy: {
-  //           target: '127.0.0.1',
-  //           reqHeaders: function () {
-  //               return { host: 'http://www.simonepozzobon.dev:8888/' };
-  //           }
-  //       }
 });
