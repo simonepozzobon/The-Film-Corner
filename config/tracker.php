@@ -56,7 +56,7 @@ return [
      *     '172.17.0.0/255.255.0.0'
      */
     'do_not_track_ips' => [
-        '127.0.0.0/24', /// range 127.0.0.1 - 127.0.0.255
+        //'127.0.0.0/24', /// range 127.0.0.1 - 127.0.0.255
     ],
 
     /*
@@ -76,7 +76,7 @@ return [
      *    - Error log
      *    - URL queries (including values)
      */
-    'log_enabled' => false,
+    'log_enabled' => true,
 
     /*
      * Log artisan commands?
@@ -186,7 +186,7 @@ return [
     /*
      * Do you wish to log the user agent?
      */
-    'log_user_agents' => false,
+    'log_user_agents' => true,
 
     /*
      * Do you wish to log your users?
@@ -196,22 +196,22 @@ return [
     /*
      * Do you wish to log devices?
      */
-    'log_devices' => false,
+    'log_devices' => true,
 
     /*
      * Do you wish to log languages?
      */
-    'log_languages' => false,
+    'log_languages' => true,
 
     /*
      * Do you wish to log HTTP referers?
      */
-    'log_referers' => false,
+    'log_referers' => true,
 
     /*
      * Do you wish to log url paths?
      */
-    'log_paths' => false,
+    'log_paths' => true,
 
     /*
      * Do you wish to log url queries and query arguments?
@@ -221,28 +221,28 @@ return [
     /*
      * Do you wish to log routes and route parameters?
      */
-    'log_routes' => false,
+    'log_routes' => true,
 
     /*
      * Log errors and exceptions?
      */
-    'log_exceptions' => false,
+    'log_exceptions' => true,
 
     /*
      * A cookie may be created on your visitor device, so you can have information
      * on everything made using that device on your site.	 *
      */
-    'store_cookie_tracker' => false,
+    'store_cookie_tracker' => true,
 
     /*
      * If you are storing cookies, you better change it to a name you of your own.
      */
-    'tracker_cookie_name' => 'please_change_this_cookie_name',
+    'tracker_cookie_name' => 'tfc_analytics',
 
     /*
      * Internal tracker session name.
      */
-    'tracker_session_name' => 'tracker_session',
+    'tracker_session_name' => 'tfc_analytics_session',
 
     /*
      * ** IMPORTANT **
@@ -311,7 +311,7 @@ return [
 
     'authenticated_check_method' => 'check', // to Auth::check()
 
-    'authenticated_user_method' => 'user', // to Auth::user()
+    'authenticated_user_method' => 'admin', // to Auth::user()
 
     'authenticated_user_id_column' => 'id', // to Auth::user()->id
 
