@@ -194,6 +194,9 @@ return [
         // Activity log
         'Spatie\Activitylog\ActivitylogServiceProvider',
 
+        // Tracker
+        'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider',
+
         // Debug
         Lanin\Laravel\ApiDebugger\ServiceProvider::class,
         'Barryvdh\Debugbar\ServiceProvider',
@@ -263,6 +266,9 @@ return [
 
         // Activity Log
         'Activity' => 'Spatie\Activitylog\ActivitylogFacade',
+
+        // Tracker
+        'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
 
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',
