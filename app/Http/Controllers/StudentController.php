@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Student;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class StudentController extends Controller
 {
@@ -16,9 +17,26 @@ class StudentController extends Controller
 
     public function index()
     {
-        $id = Auth::id();
-        $student = Student::find($id);
-        return view('student')->with('student', $student);
+        $student = Auth::guard('student')->user();
+
+        $activities = Activity::where([
+          ['log_name', '=', 'first-visit'],
+          ['description', '=', 'visited']
+        ])->causedBy($student)->get();
+
+        if ($activities->count() == 0) {
+            activity()
+                ->causedBy($student)
+                ->useLog('first-visit')
+                ->log('visited');
+
+            return view('student.first_visit.index', $student);
+
+        } else {
+            $visited = true;
+            return view('teacher')->with('teacher', $student);
+        }
+
     }
 
     public function filmSpecific()
