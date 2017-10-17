@@ -198,8 +198,8 @@ return [
         'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider',
 
         // Debug
-        Lanin\Laravel\ApiDebugger\ServiceProvider::class,
-        'Barryvdh\Debugbar\ServiceProvider',
+        // Lanin\Laravel\ApiDebugger\ServiceProvider::class,
+        // 'Barryvdh\Debugbar\ServiceProvider',
 
     ],
 
@@ -271,8 +271,8 @@ return [
         'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
 
         // Debug
-        'Debugbar' => 'Barryvdh\Debugbar\Facade',
-        'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
+        // 'Debugbar' => 'Barryvdh\Debugbar\Facade',
+        // 'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
     ],
 
 ];
