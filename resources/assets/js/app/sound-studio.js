@@ -19,7 +19,7 @@ require('angular-media-timeline/timeline.js');
 // Define the service
 angular.module('appService', [])
   .factory('Audio', function($http, CSRF_TOKEN, Timeline){
- 
+
     return {
       send : function(timelines, counter) {
           var media = [];
@@ -190,8 +190,8 @@ angular.module('uploadCtrl', [])
       });
 
 
-      console.log('invio dati');
-      console.log($('#media')[0].files[0]);
+      // console.log('invio dati');
+      // console.log($('#media')[0].files[0]);
     }
 
   }]);
@@ -223,19 +223,19 @@ angular.module('videoCtrl', ['vjs.video'])
 
 
         $scope.$on('timelineChanged', function(e, timeline) {
-          console.log('-----');
-          console.log('timelineChanged Event Before Send');
-          console.log(timeline);
-          console.log('-----');
+          // console.log('-----');
+          // console.log('timelineChanged Event Before Send');
+          // console.log(timeline);
+          // console.log('-----');
 
           var timelines = Timeline.getTimelines($scope);
           Audio.send(timelines).then(function successCallback(response) {
-            console.log(timelines);
-            console.log(response.data[2]);
-            console.log('-------');
-            console.log('DEBUG');
-            console.log(response);
-            console.log('-------');
+            // console.log(timelines);
+            // console.log(response.data[2]);
+            // console.log('-------');
+            // console.log('DEBUG');
+            // console.log(response);
+            // console.log('-------');
             $scope.mediaToggle = {
               sources: [
                 {

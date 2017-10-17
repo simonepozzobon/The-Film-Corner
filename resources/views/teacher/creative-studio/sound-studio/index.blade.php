@@ -110,31 +110,33 @@
                 <div class="row">
                   <div class="col orange p-5">
                     <div class="d-flex justify-content-around">
-                      <div class="btn-group">
-                        <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPlay()">
-                          <i class="fa fa-play" aria-hidden="true"></i> Play
-                        </button>
-                        <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPause()">
-                          <i class="fa fa-pause" aria-hidden="true"></i> Pause
-                        </button>
-                        <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorStop()">
-                          <i class="fa fa-stop" aria-hidden="true"></i> Stop
+                      <div class="">
+                        <div class="btn-group">
+                          <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPlay()">
+                            <i class="fa fa-play" aria-hidden="true"></i> Play
+                          </button>
+                          <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPause()">
+                            <i class="fa fa-pause" aria-hidden="true"></i> Pause
+                          </button>
+                          <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorStop()">
+                            <i class="fa fa-stop" aria-hidden="true"></i> Stop
+                          </button>
+                        </div>
+
+
+                        <div class="btn-group">
+                          <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorRewind()">
+                            <i class="fa fa-backward" aria-hidden="true"></i> Rewind
+                          </button>
+                          <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorForward()">
+                            <i class="fa fa-forward" aria-hidden="true"></i> Forward
+                          </button>
+                        </div>
+
+                        <button type="button" name="button" class="btn btn-secondary btn-orange">
+                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
                         </button>
                       </div>
-
-
-                      <div class="btn-group">
-                        <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorRewind()">
-                          <i class="fa fa-backward" aria-hidden="true"></i> Rewind
-                        </button>
-                        <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorForward()">
-                          <i class="fa fa-forward" aria-hidden="true"></i> Forward
-                        </button>
-                      </div>
-
-                      <button type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
-                      </button>
                     </div>
                   </div>
                 </div>
@@ -168,7 +170,7 @@
                           <td class="align-middle" ng-controller="toolController">
                             <div class="btn-group">
                               {{-- <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline"> --}}
-                              <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                              <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                               </button>
                             </div>
