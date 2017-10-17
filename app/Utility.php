@@ -107,6 +107,45 @@ class Utility extends Model
     return $data;
   }
 
+  /*
+   *
+   * $filename = nome del file senza estensione
+   * $ext = estensione del file originale
+   * $destFolder = video/uploads/ cartella di destinazione con / alla fine
+   *
+   * ritorna la path dell'immagine catturata a metà video e la path del video
+   *
+  */
+  public function storeAudio($file, $filename, $ext, $destFolder)
+  {
+    // definisco la library di FFMPEG
+    define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
+
+    // definisco la path global
+    $globalPath = Storage::disk('local')->getDriver()->getAdapter();
+
+    $file = $file->storeAs('public/'.$destFolder, $filename.'.'.$ext);
+
+    $path = $destFolder.$filename.'.'.$ext;
+
+    // get duration
+    $filePath = $globalPath->applyPathPrefix('public/'.$path);
+    $cli = FFMPEG_LIB.' -i "'.$filePath.'" 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+    $duration =  exec($cli);
+
+    // Converto la durata in secondi
+    $duration = explode(":",$duration);
+    $duration = $duration[0]*3600 + $duration[1]*60+ round($duration[2]);
+    $timeToSnap = $duration / 2;
+
+    $data = [
+      'src' => $path,
+      'duration' => $duration,
+    ];
+
+    return $data;
+  }
+
 
   public function storeImg($file, $filename, $destFolder)
   {
