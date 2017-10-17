@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Teacher;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class TeacherController extends Controller
 {
@@ -16,14 +17,31 @@ class TeacherController extends Controller
 
     public function index()
     {
-        $id = Auth::id();
-        $teacher = Teacher::find($id);
-        return view('teacher')->with('teacher', $teacher);
+        $teacher = Auth::guard('teacher')->user();
+
+        $activities = Activity::where([
+          ['log_name', '=', 'first-visit'],
+          ['description', '=', 'visited']
+        ])->causedBy($teacher)->get();
+
+        if ($activities->count() == 0) {
+            activity()
+                ->causedBy($teacher)
+                ->useLog('first-visit')
+                ->log('visited');
+
+            return view('teacher.first_visit.index', $teacher);
+
+        } else {
+            $visited = true;
+            return view('teacher')->with('teacher', $teacher);
+        }
+
     }
 
     public function filmSpecific()
     {
-      return view('teacher.film-specific.index');
+      return view('teacher.film-specific.index', compact('visited'));
     }
 
     public function creativeStudio()
@@ -39,5 +57,10 @@ class TeacherController extends Controller
     public function path()
     {
       return view('teacher.path.index');
+    }
+
+    public function welcome()
+    {
+      return view('teacher.first_visit.index');
     }
 }

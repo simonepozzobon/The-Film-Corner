@@ -16,3 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('apps/relations/{type}/{id}', 'Admin\Apps\VideoController@getRelations');
+Route::post('apps/video', 'Admin\Apps\VideoController@uploadVideo');
+Route::delete('apps/video/{id}', 'Admin\Apps\VideoController@deleteVideo');

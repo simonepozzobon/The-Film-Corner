@@ -16,10 +16,10 @@
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 
-    @if (Auth::guard('admin')->check())
+    {{-- @if (Auth::guard('admin')->check()) --}}
       {{-- Web --}}
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Web <span class="caret"></span></a>
+      {{-- <li class="nav-link dropdown disabled">
+        <a href="#" class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Web <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('posts.index') }}">Posts</a></li>
           <li class="nav-link "><a href="{{ route('media.index') }}">Media</a></li>
@@ -29,17 +29,17 @@
           <div class="dropdown-divider"></div>
           <li class="nav-link disabled">Pages</li>
         </ul>
-      </li>
+      </li> --}}
       {{-- Apps --}}
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps <span class="caret"></span></a>
+      {{-- <li class="nav-link dropdown disabled">
+        <a href="#" class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Apps <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('app_1.index') }}">1 - Frame Painter</a></li>
         </ul>
-      </li>
+      </li> --}}
       {{-- Users --}}
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
+      {{-- <li class="nav-link dropdown disabled">
+        <a href="#" class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Users <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('admin.admins.index') }}">Admins</a></li>
           <li class="nav-link "><a href="{{ route('teachers.index') }}">Teachers</a></li>
@@ -48,17 +48,17 @@
           <div class="dropdown-divider"></div>
           <li class="nav-link"><a href="{{ route('schools.index') }}">Schools</a></li>
         </ul>
-      </li>
+      </li> --}}
       {{-- Settings --}}
-      <li class="nav-link dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
+      {{-- <li class="nav-link dropdown disabled">
+        <a href="#" class="dropdown-toggle disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Settings <span class="caret"></span></a>
         <ul class="dropdown-menu">
           <li class="nav-link"><a href="{{ route('partners.index') }}">Partners</a></li>
         </ul>
-      </li>
+      </li> --}}
       {{-- Account Actions --}}
       <li class="nav-link"><a href="{{ url('admin/logout') }}">Logout</a></li>
-    @endif
+    {{-- @endif --}}
 
   </div>
 </nav>

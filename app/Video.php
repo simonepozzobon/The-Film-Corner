@@ -9,7 +9,7 @@ class Video extends Model
 
     protected $table = 'videos';
 
-    public function apssSessions()
+    public function appsSessions()
     {
         return $this->morphedByMany('App\AppsSessions\AppsSession', 'videoable');
     }
@@ -17,6 +17,26 @@ class Video extends Model
     public function teachers()
     {
         return $this->morphedByMany('App\Teacher', 'videoable');
+    }
+
+    public function students()
+    {
+        return $this->morphedByMany('App\Student', 'videoable');
+    }
+
+    public function apps()
+    {
+        return $this->morphedByMany('App\App', 'videoable');
+    }
+
+    public function appCategories()
+    {
+        return $this->morphedByMany('App\AppCategory', 'videoable');
+    }
+
+    public function appSection()
+    {
+        return $this->morphedByMany('App\AppCategory', 'videoable');
     }
 
     public function tToS ($t)
@@ -43,5 +63,10 @@ class Video extends Model
         }
         return $data;
       }
+    }
+
+    public function videoCategory()
+    {
+      return $this->belongsTo('App\VideoCategory');
     }
 }

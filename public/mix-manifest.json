@@ -1,9 +1,16 @@
 {
-  "/js/app/2.1/script.js": "/js/app/2.1/script.js",
+  "/js/app/sound-studio.js": "/js/app/sound-studio.js",
+  "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
+  "/js/admin/test.js": "/js/admin/test.js",
   "/js/app.js": "/js/app.js",
+  "/js/admin/admin.js": "/js/admin/admin.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",
   "/css/app/2.1/dropzone.css": "/css/app/2.1/dropzone.css",
   "/css/app.css": "/css/app.css",
-  "/js/city.js": "/js/city.js"
+  "/css/admin/admin.css": "/css/admin/admin.css",
+  "/js/vendor.js": "/js/vendor.js",
+  "/js/city.js": "/js/city.js",
+  "/js/manifest.js": "/js/manifest.js",
+  "/js/admin/admin.min.js": "/js/admin/admin.min.js"
 }

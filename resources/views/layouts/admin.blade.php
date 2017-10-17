@@ -5,7 +5,7 @@
     @include('layouts.admin._menu')
     <div class="m-4">
       <div class="clearfix mb-4">
-        <h1 class="bg-faded p-3">@yield('page-title')</h1>
+        @yield('page-title')
       </div>
 
       @if (session()->has('success'))

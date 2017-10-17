@@ -4,7 +4,58 @@
 - Creare impostazione per la dimensione massima di upload per gli utenti
 - Aggiungere un limite di dimensione per l'upload
 - Creare un sistema per le lingue
+
+22 Agosto
+_______
+
+- Installazione e compilazione di Sox per l'editing Audio
+- Adattamento, model, migration e controller per l'audio
+
+
+22 Agosto
+_______
+
+- Termine adattamento app intercut-cross-cutting
+- Adattamento script uplaod per app active-intercut-cross-cutting
+- Terminata l'app active-intercut-cross-cutting
+- Terminata l'app soundscapes
+
+21 Agosto
+_______
+
+- Adattamento vecchio script per l'app intercut-cross-cutting
+
+
+20 Agosto
+_______
+
+- Creato nuovo sistema per le sessioni con trigger di evento custom, senza cookies
+- Aggiunto sistema di errori per Ajax su minuto lumiere
+- Conclusa app make your own film
+- Conclusa app frame composer
+- Installato waveform.js com player audio
+- Corretto ordinamento e titoli app, rimosse quelle di troppo (solo dal db)
+- Conclusa App Sound Atmospheres
+- Conclusa App Whats going on
+
+
+19 Agosto
+_______
+
+- Conclusa app Storyboard
+- Iniziata app per minuto lumiere
 - Aggiungere sistema che se non si salva la sessione, i video vengono cancellati
+- Aggiungere sistema che se non si salva la sessione, le immagini vengono cancellate
+
+
+18 Agosto
+_______
+
+- Aggiunta Fabric.js per editing immagini
+- Creata view per l'app character-builder
+- Canvas Responsive
+- Aggiunta possibilità di salvare app character-builder
+- Aggiunta view per riaprire una sessione
 
 
 17 Agosto
@@ -16,7 +67,8 @@ _______
 - Creata funzione nel controller per l'upload dei file
 - Aggiunto sistema upload per i video in active-offscreen
 - Corretto model Video e create le relazioni morphedByMany con appsSessions, TeacherSession, Teacher
--
+- Corretto sistema per le sessioni adattandolo ai video
+
 
 16 Agosto
 _______

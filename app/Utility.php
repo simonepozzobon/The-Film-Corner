@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Intervention\Image\Facades\Image;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -67,7 +68,11 @@ class Utility extends Model
     Storage::makeDirectory('public/'.$destFolder, 0777, true);
 
     // eseguo il comando FFMPEG
-    $cli = FFMPEG_LIB.' -i '.$filePath.' '.storage_path('app/public/'.$destFolder).$filename.'.mp4';
+    if ($ext == '.mp4') {
+      $cli = FFMPEG_LIB.' -i "'.$filePath.'" "'.storage_path('app/public/'.$destFolder).$filename.'.mp4"';
+    } else {
+      $cli = FFMPEG_LIB.' -i "'.$filePath.'" -vcodec h264 -acodec aac -strict -2 -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" "'.storage_path('app/public/'.$destFolder).$filename.'.mp4"';
+    }
     exec($cli);
 
     // Cancello il file temporaneo
@@ -76,10 +81,9 @@ class Utility extends Model
     // salvo la path del file converito per il DB
     $path = $destFolder.$filename.'.mp4';
 
-
     // get duration
     $filePath = $globalPath->applyPathPrefix('public/'.$path);
-    $cli = FFMPEG_LIB.' -i '.$filePath.' 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
+    $cli = FFMPEG_LIB.' -i "'.$filePath.'" 2>&1 | grep \'Duration\' | cut -d \' \' -f 4 | sed s/,//';
     $duration =  exec($cli);
 
     // Converto la durata in secondi
@@ -88,7 +92,7 @@ class Utility extends Model
     $timeToSnap = $duration / 2;
 
     // prendo il frame e lo salvo
-    $cli = FFMPEG_LIB.' -y -i '.$filePath.' -f mjpeg -vframes 1 -ss '.$timeToSnap.' '.storage_path('app/public/'.$destFolder).$filename.'-thumb.jpg';
+    $cli = FFMPEG_LIB.' -y -i "'.$filePath.'" -f mjpeg -vframes 1 -ss '.$timeToSnap.' "'.storage_path('app/public/'.$destFolder).$filename.'-thumb.jpg"';
     exec($cli);
 
     // salvo la path del frame
@@ -96,9 +100,51 @@ class Utility extends Model
 
     $data = [
       'src' => $path,
-      'img' => $thumbPath
+      'img' => $thumbPath,
+      'duration' => $duration,
     ];
 
     return $data;
+  }
+
+
+  public function storeImg($file, $filename, $destFolder)
+  {
+      // Salvo il file
+      $ext = $file->getClientOriginalExtension();
+
+      $src = $file->storeAs('public/'.$destFolder, $filename.'.'.$ext);
+
+      // preparo gli altri formati
+      $thumb = $file->storeAs('public/'.$destFolder.'/thumb', $filename.'.'.$ext);
+      $portrait = $file->storeAs('public/'.$destFolder.'/portrait', $filename.'.'.$ext);
+      $landscape = $file->storeAs('public/'.$destFolder.'/landscape', $filename.'.'.$ext);
+
+      // genero gli altri formati
+      $path = storage_path('app/public/'.$destFolder);
+
+      // Thumb
+      Image::make($path.'/thumb/'.$filename.'.'.$ext)->fit(500, 500, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      // portrait
+      Image::make($path.'/portrait/'.$filename.'.'.$ext)->fit(720, 960, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      // landscape 960 540
+      Image::make($path.'/landscape/'.$filename.'.'.$ext)->fit(960, 540, function ($constraint) {
+          $constraint->upsize();
+      })->save();
+
+      $data = [
+        'src' => $src,
+        'thumb' => $thumb,
+        'portrait' => $portrait,
+        'landscape' => $landscape,
+      ];
+
+      return $data;
   }
 }

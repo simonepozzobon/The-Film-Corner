@@ -3,55 +3,15 @@
 use App\Post;
 use App\Partner;
 
-// use Symfony\Component\Debug\Debug;
-// Debug::enable();
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 /*
 |--------------------------------------------------------------------------
 | Public Routes
 |--------------------------------------------------------------------------
 */
 
-
-/*
-|--------------------------------------------------------------------------
-| PROGRESS
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
-
-
-Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
-Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
-// HTTP FOR STREAMING EDITOR
-Route::prefix('video-edit')->group(function() {
-  Route::post('video-edit-api', 'VideoEditorController@updateEditor')->name('update.editor');
-  Route::get('/', function() {
-    return view('video.index');
-  })->name('video.index');
-});
-
 Route::prefix('feedback')->group(function() {
   Route::post('feedback-api', 'FeedbackController@save')->name('save.feedback');
 });
-
-/*
-|--------------------------------------------------------------------------
-| NEED UPDATE
-|--------------------------------------------------------------------------
-*/
 
 // Feedback controller
 Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
@@ -76,25 +36,12 @@ Route::get('/', function () {
         $counter = 0;
       }
     }
-
-
     return view('new', compact('posts', 'partners', 'colors'));
 });
 
-Route::get('/posts', function () {
-  $posts = Post::with('author')->get();
-  return view('blog.list')->with('posts', $posts);
-});
-
-Route::get('/post/{id}', function ($id) {
-  $post = Post::findOrFail($id);
-  return view('blog.post')->with('post', $post);
-});
-
-
 /*
 |--------------------------------------------------------------------------
-| DONE
+| COMPLETED
 |--------------------------------------------------------------------------
 */
 
@@ -111,8 +58,7 @@ Route::prefix('conference')->group(function() {
 
 Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
 
-// Map Public Route
-Route::get('/map', 'MapController@index')->name('map.index');
+
 // Auth
 Auth::routes();
 // Logout
@@ -131,73 +77,68 @@ Route::get('/logout', 'Auth\LoginController@logout');
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {
 
-  /*
-  |--------------------------------------------------------------------------
-  | WORKING
-  |--------------------------------------------------------------------------
-  | - add video library to manage all the video in once then assign to apps.
-  */
-  Route::prefix('/video-library')->group(function() {
-    Route::resource('/video-api-library', 'Admin\VideoLibraryController');
-    Route::get('/', function() {
-      return view('admin.video_library.index');
-    })->name('video-library.index');
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | NEED UPDATE
-  |--------------------------------------------------------------------------
-  */
-
-  // Apps menu settings
-  Route::prefix('app')->group(function () {
-    Route::resource('app_1', 'Admin\App\App1Controller');
-  });
-
-  /*
-  |--------------------------------------------------------------------------
-  | DONE
-  |--------------------------------------------------------------------------
-  */
-  // Auth
-  Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
-  Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
-  Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
-  Route::get('/', 'AdminController@index')->name('admin');
-
-  // Web menu routes
-  Route::resource('posts', 'Admin\PostController');
-  Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
-  Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
-  Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
-
-  // Maps settings
-  Route::prefix('map')->group( function() {
-    Route::prefix('api')->group(function() {
-      Route::get('/{id}/edit', 'Admin\PointController@edit')->name('api.map.edit');
-      Route::put('/{id}', 'Admin\PointController@update')->name('api.map.update');
-      Route::post('/', 'Admin\PointController@store')->name('api.map.store');
-      Route::delete('/{id}', 'Admin\PointController@destroy')->name('api.map.delete');
-      Route::get('/', 'Admin\PointController@index')->name('api.map.index');
+    Route::prefix('/video-library')->group(function() {
+      Route::resource('/video-api-library', 'Admin\VideoLibraryController');
+      Route::get('/', function() {
+        return view('admin.video_library.index');
+      })->name('video-library.index');
     });
 
-    // ...admin/map/ to show index
-    Route::get('/', function() {
-      return view('admin.map.index');
+    // Apps menu settings
+    Route::prefix('app')->group(function () {
+      Route::resource('app_1', 'Admin\App\App1Controller');
+
+      // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
+      Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
+      Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
+      Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
+      Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
     });
-  });
 
-  // Users menu routes
-  Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
-  Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
-  Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
-  Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
-  Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
-  Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+    // Auth
+    Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
+    Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
+    Route::get('/', 'AdminController@index')->name('admin');
 
-  // Settings menu routes
-  Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
+    // Web menu routes
+    Route::resource('posts', 'Admin\PostController');
+    Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
+    Route::resource('categories', 'Admin\CategoryController', ['except' => ['show', 'create'] ]);
+    Route::resource('tags', 'Admin\TagController', ['except' => ['show', 'create'] ]);
+
+    // Maps settings
+    Route::prefix('map')->group( function() {
+      Route::prefix('api')->group(function() {
+        Route::get('/{id}/edit', 'Admin\PointController@edit')->name('api.map.edit');
+        Route::put('/{id}', 'Admin\PointController@update')->name('api.map.update');
+        Route::post('/', 'Admin\PointController@store')->name('api.map.store');
+        Route::delete('/{id}', 'Admin\PointController@destroy')->name('api.map.delete');
+        Route::get('/', 'Admin\PointController@index')->name('api.map.index');
+      });
+
+      // ...admin/map/ to show index
+      Route::get('/', function() {
+        return view('admin.map.index');
+      });
+    });
+
+    // Users menu routes
+    Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
+    Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
+    Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
+    Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
+    Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
+    Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
+
+    // Settings menu routes
+    Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
+
+    // Stats
+    Route::get('/stats', 'Admin\StatsController@index')->name('stats.index');
+
+    // Tools
+    Route::get('conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
 
 });
 
@@ -218,6 +159,11 @@ Route::prefix('teacher')->group(function() {
   Route::post('/login', 'Auth\TeacherLoginController@login')->name('teacher.login.submit');
   Route::get('/logout', 'Auth\TeacherLoginController@logout')->name('teacher.logout');
   Route::get('/', 'TeacherController@index')->name('teacher');
+  Route::get('/welcome','TeacherController@welcome')->name('teacher.welcome');
+
+  // Video Editor
+  Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
+  Route::post('/audio-edit/audio-edit-api', 'AudioEditorController@updateEditor')->name('update.teacher.audio.editor');
 
   // Pagine Principali dei padiglioni
 
@@ -233,15 +179,29 @@ Route::prefix('teacher')->group(function() {
   Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Teacher\CreativeStudioController@openSession')->name('teacher.creative-studio.open.session');
   Route::get('/creative-studio/{category}/{app_slug}', 'Teacher\CreativeStudioController@app')->name('teacher.creative-studio.app');
   Route::post('/creative-studio/{category}/{app_slug}/upload', 'Teacher\CreativeStudioController@uploadVideo')->name('teacher.creative-studio.upload');
-
+  Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Teacher\CreativeStudioController@uploadImg')->name('teacher.creative-studio.upload.img');
 
   Route::get('/cinema', 'TeacherController@cinemaPav')->name('teacher.cinema-pav');
   Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
+
+  // Settings
+  Route::get('/settings', 'Teacher\SettingsController@index')->name('teacher.settings.index');
+  Route::post('/settings/store-student', 'Teacher\SettingsController@storeStudent')->name('teacher.student.store');
+  Route::post('/settings/delete-student', 'Teacher\SettingsController@deleteStudent')->name('teacher.student.delete');
+
+  // Network
+  Route::get('/network', 'Teacher\NetworkController@index')->name('teacher.network.index');
 
   // Sessioni
   Route::get('/session/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
   Route::post('/session/new', 'Teacher\SessionController@newSession')->name('new.session');
   Route::post('/session/update', 'Teacher\SessionController@updateSession')->name('update.session');
+  Route::post('/session/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
+
+  // Notifications
+  Route::get('/notifications/markasread/{id}', 'Teacher\NotificationController@markAsRead')->name('teacher.notifications.markasread');
+  Route::get('/notifications/get', 'Teacher\NotificationController@getNotifications')->name('teacher.notifications.getnew');
+  Route::post('/notifications/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
 });
 
 
@@ -262,10 +222,79 @@ Route::prefix('student')->group(function() {
   Route::post('/login', 'Auth\StudentLoginController@login')->name('student.login.submit');
   Route::get('/logout', 'Auth\StudentLoginController@logout');
   Route::get('/', 'StudentController@index')->name('student');
+  Route::get('/welcome','StudentController@welcome')->name('student.welcome');
+
+  // Video Editor
+  Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.student.editor');
+  Route::post('/audio-edit/audio-edit-api', 'AudioEditorController@updateEditor')->name('update.student.audio.editor');
 
   // Pagine Principali dei padiglioni
+
+  // Film Specific
   Route::get('/film-specific', 'StudentController@filmSpecific')->name('student.film-specific');
-  Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
+  Route::get('/film-specific/{category}', 'Student\FilmSpecificController@index')->name('student.film-specific.index');
+  Route::get('/film-specific/{category}/{app_slug}/{token}', 'Student\FilmSpecificController@openSession')->name('student.film-specific.open.session');
+  Route::get('/film-specific/{category}/{app_slug}', 'Student\FilmSpecificController@app')->name('student.film-specific.app');
+
+  // Film Specific
   Route::get('/creative-studio', 'StudentController@creativeStudio')->name('student.creative-studio');
+  Route::get('/creative-studio/{category}', 'Student\CreativeStudioController@index')->name('student.creative-studio.index');
+  Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Student\CreativeStudioController@openSession')->name('student.creative-studio.open.session');
+  Route::get('/creative-studio/{category}/{app_slug}', 'Student\CreativeStudioController@app')->name('student.creative-studio.app');
+  Route::post('/creative-studio/{category}/{app_slug}/upload', 'Student\CreativeStudioController@uploadVideo')->name('student.creative-studio.upload');
+  Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Student\CreativeStudioController@uploadImg')->name('student.creative-studio.upload.img');
+
+  Route::get('/cinema', 'StudentController@cinemaPav')->name('student.cinema-pav');
+  Route::get('/path_1', 'StudentController@path')->name('student.path');
+
+  // Settings
+  Route::get('/settings', 'Student\SettingsController@index')->name('student.settings.index');
+  Route::post('/settings/store-student', 'Student\SettingsController@storeStudent')->name('student.student.store');
+  Route::post('/settings/delete-student', 'Student\SettingsController@deleteStudent')->name('student.student.delete');
+
+  // Network
+  Route::get('/network', 'Student\NetworkController@index')->name('student.network.index');
+
+  // Sessioni
+  Route::get('/session/{student_id}/{app_id}', 'Student\SessionController@openSessions')->name('open.sessions');
+  Route::post('/session/new', 'Student\SessionController@newSession')->name('new.session');
+  Route::post('/session/update', 'Student\SessionController@updateSession')->name('update.session');
+  Route::post('/session/share', 'Student\SessionController@shareSession')->name('student.session.share');
 
 });
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| DEPRECATED
+|--------------------------------------------------------------------------
+|
+*/
+
+// Route::get('/posts', function () {
+//   $posts = Post::with('author')->get();
+//   return view('blog.list')->with('posts', $posts);
+// });
+
+// Route::get('/post/{id}', function ($id) {
+//   $post = Post::findOrFail($id);
+//   return view('blog.post')->with('post', $post);
+// });
+
+// Map Public Route
+// Route::get('/map', 'MapController@index')->name('map.index');
+
+// Route::get('/frame-crop', 'Admin\FrameController@index')->name('frame.index');
+
+
+// Route::get('/video-test', 'Admin\VideoController@index')->name('video-test.index');
+// Route::post('/video-upload', 'Admin\VideoController@upload')->name('video-test.upload');
+// HTTP FOR STREAMING EDITOR
+// Route::prefix('video-edit')->group(function() {
+//   Route::post('video-edit-api', 'VideoEditorController@updateEditor')->name('update.editor');
+//   Route::get('/', function() {
+//     return view('video.index');
+//   })->name('video.index');
+// });

@@ -158,7 +158,8 @@ return [
         Illuminate\Queue\QueueServiceProvider::class,
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
-        Illuminate\Session\SessionServiceProvider::class,
+        // Illuminate\Session\SessionServiceProvider::class,
+        Rairlie\LockingSession\LockingSessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
@@ -186,6 +187,15 @@ return [
 
         // HTML purifier
         Mews\Purifier\PurifierServiceProvider::class,
+
+        // Mattwebsite Excel
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        // Activity log
+        'Spatie\Activitylog\ActivitylogServiceProvider',
+
+        // Tracker
+        'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider',
 
         // Debug
         Lanin\Laravel\ApiDebugger\ServiceProvider::class,
@@ -247,6 +257,18 @@ return [
 
         // HTML Purifier
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
+
+        // Image Intervention
+        'Image' => Intervention\Image\Facades\Image::class,
+
+        // Mattwebsite Excel
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
+        // Activity Log
+        'Activity' => 'Spatie\Activitylog\ActivitylogFacade',
+
+        // Tracker
+        'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
 
         // Debug
         'Debugbar' => 'Barryvdh\Debugbar\Facade',

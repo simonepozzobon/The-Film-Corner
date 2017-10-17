@@ -37,4 +37,18 @@ class Student extends Authenticatable
     {
       return $this->belongsTo('App\School');
     }
+
+    public function videos() {
+      return $this->morphToMany('App\Video', 'videoable');
+    }
+
+    public function medias() {
+      return $this->morphToMany('App\Media', 'mediaable');
+    }
+
+    public function sessions()
+    {
+      return $this->hasMany('App\StudentSession');
+    }
+
 }

@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+@if (!isset($type))
+  {{ $type = '' }}
+@endif
 <html>
   <head>
     <meta charset="utf-8">
@@ -28,9 +31,9 @@
         text-transform: uppercase;
       }
 
-      /*#login-form {
+      #login-form {
         box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-      }*/
+      }
     </style>
   </head>
   <body>

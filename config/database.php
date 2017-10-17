@@ -47,6 +47,20 @@ return [
             'engine' => null,
         ],
 
+        'tracker' => [
+            'driver' => 'mysql',
+            'host' => env('DB_TRACKER_HOST', '127.0.0.1'),
+            'port' => env('DB_TRACKER_PORT', '8889'),
+            'database' => env('DB_TRACKER_DATABASE', 'tfc_analytics'),
+            'username' => env('DB_TRACKER_USERNAME', 'tfc_analytics'),
+            'password' => env('DB_TRACKER_PASSWORD', 'password'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => 'tfc_',
+            'strict' => false,
+            'engine' => null,
+        ],
+
     ],
 
     /*
