@@ -101,6 +101,10 @@ Route::prefix('admin')->group(function () {
     Route::get('/logout', 'Auth\AdminLoginController@logout')->name('admin.logout');
     Route::get('/', 'AdminController@index')->name('admin');
 
+    // Nuovo pannello video
+    Route::get('/video', 'Admin\VideoController@adminVideo')->name('admin.video');
+    Route::get('/audio', 'Admin\AudioController@adminAudio')->name('admin.audio');
+
     // Web menu routes
     Route::resource('posts', 'Admin\PostController');
     Route::resource('media', 'Admin\MediaController', ['except' => ['show', 'create']]);
