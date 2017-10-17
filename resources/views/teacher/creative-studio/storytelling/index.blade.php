@@ -7,9 +7,13 @@
 </style>
 @endsection
 @section('content')
+  <section id="title" class="pt-5">
+    <div class="title sp-center pt-5 pb-5">
+      {{ $app->title }}
+      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
+    </div>
+  </section>
   @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
-  <div class="p-5">
-  </div>
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-5">
@@ -67,59 +71,65 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
-        <div class="col">
-          <div class="d-flex justify-content-start">
-            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
+      <div class="row">
+        <div class="box container-fluid mb-4">
+          <div class="row">
+            <div class="col dark-blue py-3 px-5">
+              <h3>Ideas</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col blue p-5">
+              <div class="row pb-5">
+                <div class="col-md-3">
+                  <div id="slot-1" class="container-fluid p-4 slot">
+                    <input id="slot-1-in" type="hidden" name="slot-1" value="">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div id="slot-2" class="container-fluid p-4 slot">
+                    <input id="slot-2-in" type="hidden" name="slot-2" value="">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div id="slot-3" class="container-fluid p-4 slot">
+                    <input id="slot-3-in" type="hidden" name="slot-3" value="">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div id="slot-4" class="container-fluid p-4 slot">
+                    <input id="slot-4-in" type="hidden" name="slot-4" value="">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
+      <div class="row">
         <div class="col">
-          <div class="clearfix p-5">
-
-            <div class="row pb-5">
-              <div class="col">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Main Frame</h3>
-                  <div class="row pb-5">
-                    <div class="col-md-3">
-                      <div id="slot-1" class="container-fluid p-4 slot">
-                        <input id="slot-1-in" type="hidden" name="slot-1" value="">
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div id="slot-2" class="container-fluid p-4 slot">
-                        <input id="slot-2-in" type="hidden" name="slot-2" value="">
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div id="slot-3" class="container-fluid p-4 slot">
-                        <input id="slot-3-in" type="hidden" name="slot-3" value="">
-                      </div>
-                    </div>
-                    <div class="col-md-3">
-                      <div id="slot-4" class="container-fluid p-4 slot">
-                        <input id="slot-4-in" type="hidden" name="slot-4" value="">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col d-flex justify-content-around">
-                      <button id="reload" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i> Reload</button>
-                    </div>
-                  </div>
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col orange p-5">
+                <div class="d-flex justify-content-around">
+                  <button id="reload" class="btn btn-secondary btn-orange"><i class="fa fa-refresh" aria-hidden="true"></i> Reload</button>
                 </div>
-
               </div>
             </div>
-
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="box container-fluid mb-4">
             <div class="row">
-              <div class="col">
-                <div class="frame container-fluid bg-faded p-4">
-                  <h3 class="text-center pb-4">Write your story</h3>
-                  <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
-                </div>
+              <div class="col dark-green py-3 px-5">
+                <h3>Write you story</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col green p-5">
+                <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
               </div>
             </div>
           </div>

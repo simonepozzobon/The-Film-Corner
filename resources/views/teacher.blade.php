@@ -70,7 +70,7 @@
     	<polygon class="st5" points="1223.5,653.1 1564.2,749.2 1564.2,299.7 1223.5,355.6 	"/>
   		<rect x="1564.2" y="299.7" transform="matrix(-1 3.215238e-11 -3.215238e-11 -1 3445.0547 1048.8899)" class="st6" width="316.6" height="449.5"/>
     </g>
-    <g id="cinema" class="building-link" onclick="goPage('cinema')">
+    <g id="welcome" class="building-link" onclick="goPage('welcome')">
       <rect x="722" y="365.3" class="st4" width="473.9" height="287.4"/>
     </g>
 
@@ -627,8 +627,8 @@
       // check what part is clicked
       if (type === 'film-specific') {
         loc = '{{ route('teacher.film-specific') }}';
-      } else if (type === 'cinema') {
-        loc = '{{ route('teacher.cinema-pav') }}';
+      } else if (type === 'welcome') {
+        loc = '{{ route('teacher.welcome') }}';
       } else if (type === 'creative-studio') {
         loc = '{{ route('teacher.creative-studio') }}';
       }

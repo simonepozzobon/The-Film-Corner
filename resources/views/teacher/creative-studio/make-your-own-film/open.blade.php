@@ -4,9 +4,13 @@
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
+  <section id="title" class="pt-5">
+    <div class="title sp-center pt-5 pb-5">
+      {{ $app->title }}
+      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
+    </div>
+  </section>
   @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
-  <div class="p-5">
-  </div>
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-2 pr-2">
@@ -64,35 +68,29 @@
         </div>
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row" style="background-color: {{ $app->colors[1] }}; color: #252525">
+      <div class="row">
         <div class="col">
-          <div class="d-flex justify-content-start">
-            <div class="mr-auto"><h3 class="ml-2 pt-4 pb-1">{{ $app->title }}</h3></div>
-          </div>
-        </div>
-      </div>
-      <div class="row" style="background-color: {{ $app->colors[0] }}; color: #252525">
-        <div class="col">
-          <div class="clearfix pt-5 pb-5">
-            <div class="row pb-5">
-              <div class="col-md-10 offset-md-1">
-                <div class="container-fluid frame bg-faded p-4">
-                  <h3 class="text-center pb-4">Your Submission</h3>
-                  @foreach ($app_session->videos()->get() as $key => $video)
-                    <div class="row">
-                      <div class="col">
-                        <div class="embed-responsive embed-responsive-16by9">
-                          <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                              <source src="{{ Storage::disk('local')->url($video->src) }}" type="video/mp4">
-                          </video>
-                        </div>
-                      </div>
-                    </div>
-                  @endforeach
-                </div>
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col dark-blue py-3 px-5">
+                <h3>Your Submission</h3>
               </div>
             </div>
-
+            <div class="row">
+              <div class="col blue p-5">
+                @foreach ($app_session->videos()->get() as $key => $video)
+                  <div class="row">
+                    <div class="col">
+                      <div class="embed-responsive embed-responsive-16by9">
+                        <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                            <source src="{{ Storage::disk('local')->url($video->src) }}" type="video/mp4">
+                        </video>
+                      </div>
+                    </div>
+                  </div>
+                @endforeach
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -9,11 +9,12 @@ use App\AppCategory;
 use App\VideoLibrary;
 use App\TeacherSession;
 use Illuminate\Http\Request;
+use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 use App\AppsSessions\StudentAppSession;
 use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\AppsSession;
 
 class FilmSpecificController extends Controller
 {
@@ -28,6 +29,17 @@ class FilmSpecificController extends Controller
     $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
 
     $teacher = Auth::guard('teacher')->user();
+    $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
+
+    if ($activities->count() == 0) {
+      activity()
+        ->causedBy($teacher)
+        ->performedOn($app_category)
+        ->withProperties('visited', true)
+        ->log('visited');
+    } else {
+      $visited = true;
+    }
 
     $colors = [
       0 => ['#f5db5e', '#e9c845'],
@@ -46,7 +58,7 @@ class FilmSpecificController extends Controller
       }
     }
 
-    return view('teacher.film-specific.path.index', compact('apps', 'app_category'));
+    return view('teacher.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
 
 
@@ -101,9 +113,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      // case 'parallel-action':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
-        return view('teacher.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('teacher.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'offscreen':
@@ -186,7 +199,7 @@ class FilmSpecificController extends Controller
       $app_session = StudentAppSession::where('token', '=', $token)->first();
       $is_student = true;
     }
-    
+
     $session = json_decode($app_session->content);
 
     $colors = [
@@ -222,10 +235,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token', 'is_student'));
+        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token', 'is_student'));
         break;
 
       case 'offscreen':

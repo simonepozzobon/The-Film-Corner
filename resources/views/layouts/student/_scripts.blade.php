@@ -1,7 +1,8 @@
-<script src="{{ asset('js/jquery-3.2.0.min.js') }}"></script>
+<script src="{{ mix('js/manifest.js') }}"></script>
+<script src="{{ mix('js/vendor.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-<script src="{{ asset('js/tether.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
 
 
 {{-- Sessione --}}
@@ -116,9 +117,9 @@
 
         // Film Specific - Framing - App 3 - Juxtaposition
         case 3:
-          var videos = [
-            $('#video-left source').attr('src'),
-            $('#video-right source').attr('src'),
+          var images = [
+              $('#img-left').attr('src'),
+              $('#img-right').attr('src'),
           ];
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -126,7 +127,7 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'videos'  : videos
+            'images'  : images
           };
 
           console.log('--------');
@@ -240,7 +241,7 @@
             'notes'       : $('#notes').val(),
             'audio-src'   : $.parseJSON($.cookie('tfc-audio-src')),
             'audio-vol'   : $.parseJSON($.cookie('tfc-audio-vol')),
-            'video'       : $('video source').attr('src')
+            'image'       : $('#image').attr('src')
           };
 
           console.log('--------');

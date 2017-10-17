@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 use App\AppsSessions\StudentAppSession;
+use Spatie\Activitylog\Models\Activity;
 
 class FilmSpecificController extends Controller
 {
@@ -27,6 +28,18 @@ class FilmSpecificController extends Controller
     $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
 
     $student = Auth::guard('student')->user();
+
+    $activities = Activity::where('description', '=', 'visited')->causedBy($student)->forSubject($app_category)->get();
+
+    if ($activities->count() == 0) {
+      activity()
+        ->causedBy($student)
+        ->performedOn($app_category)
+        ->withProperties('visited', true)
+        ->log('visited');
+    } else {
+      $visited = true;
+    }
 
     $colors = [
       0 => ['#f5db5e', '#e9c845'],
@@ -45,7 +58,7 @@ class FilmSpecificController extends Controller
       }
     }
 
-    return view('student.film-specific.path.index', compact('apps', 'app_category'));
+    return view('student.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
 
 
@@ -100,9 +113,9 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
-        return view('student.film-specific.intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('student.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'offscreen':
@@ -213,10 +226,10 @@ class FilmSpecificController extends Controller
        *
       **/
 
-      case 'intercut-cross-cutting':
+      case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('student.film-specific.intercut-cross-cutting.open', compact('app', 'app_category', 'elements', 'session', 'token'));
+        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token'));
         break;
 
       case 'offscreen':

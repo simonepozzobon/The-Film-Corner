@@ -28,6 +28,6 @@ class CreatePivotPostTag extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags_posts');
+        Schema::dropIfExists('post_tag');
     }
 }

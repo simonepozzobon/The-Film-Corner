@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
+use Spatie\Activitylog\Models\Activity;
 
 class CreativeStudioController extends Controller
 {
@@ -33,8 +34,18 @@ class CreativeStudioController extends Controller
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
     $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
-
     $teacher = Auth::guard('teacher')->user();
+    $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
+
+    if ($activities->count() == 0) {
+      activity()
+        ->causedBy($teacher)
+        ->performedOn($app_category)
+        ->withProperties('visited', true)
+        ->log('visited');
+    } else {
+      $visited = true;
+    }
 
     $colors = [
       0 => ['#f5db5e', '#e9c845'],
@@ -53,7 +64,7 @@ class CreativeStudioController extends Controller
       }
     }
 
-    return view('teacher.creative-studio.path.index', compact('apps', 'app_category'));
+    return view('teacher.creative-studio.path.index', compact('apps', 'app_category', 'visited'));
   }
 
   /**
@@ -87,9 +98,9 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category'));
         break;
 
-      case 'active-intercut-cross-cutting':
+      case 'active-parallel-action':
         $elements = VideoLibrary::all();
-        return view('teacher.creative-studio.active-intercut-cross-cutting.index', compact('app', 'app_category', 'elements'));
+        return view('teacher.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
@@ -172,10 +183,10 @@ class CreativeStudioController extends Controller
         return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
         break;
 
-      case 'active-intercut-cross-cutting':
+      case 'active-parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.creative-studio.active-intercut-cross-cutting.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
         break;
 
       case 'sound-studio':
