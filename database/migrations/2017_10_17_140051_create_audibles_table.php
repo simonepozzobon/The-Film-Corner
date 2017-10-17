@@ -13,14 +13,23 @@ class CreateAudiblesTable extends Migration
      */
     public function up()
     {
-        Schema::create('audibles', function (Blueprint $table) {
+        Schema::create('audios', function (Blueprint $table) {
+          $table->increments('id');
+          $table->integer('category_id');
+          $table->string('title');
+          $table->string('src');
+          $table->float('duration', 8, 4);
+          $table->timestamps();
+        });
+
+        Schema::create('audioables', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('audio_id')->unsigned();
-            $table->integer('audible_id')->unsigned();
-            $table->integer('audible_type')->unsigned();
+            $table->integer('audioable_id')->unsigned();
+            $table->string('audioable_type');
             $table->index('audio_id');
-            $table->index('audible_id');
-            $table->index('audible_type');
+            $table->index('audioable_id');
+            $table->index('audioable_type');
             $table->timestamps();
         });
     }
@@ -32,6 +41,7 @@ class CreateAudiblesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audibles');
+        Schema::dropIfExists('audios');
+        Schema::dropIfExists('audioables');
     }
 }
