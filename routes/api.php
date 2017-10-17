@@ -26,5 +26,5 @@ Route::post('apps/audio', 'Admin\Apps\AudioController@uploadAudio');
 Route::delete('apps/audio/{id}', 'Admin\Apps\AudioController@deleteAudio');
 
 // Images
-Route::post('apps/media', 'Admin\Apps\MediaController@uploadMedia');
-Route::delete('apps/media/{id}', 'Admin\Apps\MediaController@deleteMedia');
+Route::post('apps/image', 'Admin\Apps\MediaController@uploadMedia');
+Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');

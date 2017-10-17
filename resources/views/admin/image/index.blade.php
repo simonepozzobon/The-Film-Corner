@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Video')
+@section('title', 'Images')
 @section('content')
 <div id="app">
   <div class="row">
@@ -7,12 +7,12 @@
       <div class="box container-fluid mb-4">
         <div class="row">
           <div class="col dark-blue py-3 px-5">
-            <h3>Nuovo Video</h3>
+            <h3>Nuova Immagine</h3>
           </div>
         </div>
         <div class="row">
           <div class="col blue p-5">
-            <video-form-upload
+            <image-form-upload
                 action=""
                 method="POST"
                 token="{{ csrf_token() }}"
@@ -21,7 +21,7 @@
                 app_categories="{{ $app_categories }}"
                 apps="{{ $apps }}"
               >
-            </video-form-upload>
+            </image-form-upload>
           </div>
         </div>
       </div>
@@ -32,12 +32,12 @@
       <div class="box container-fluid mb-4">
         <div class="row">
           <div class="col dark-orange py-3 px-5">
-            <h3>Video Caricati</h3>
+            <h3>Immagini Caricati</h3>
           </div>
         </div>
         <div class="row">
           <div class="col orange p-5">
-            <video-crud items="{{ $videos }}" token="{{ csrf_token() }}"></video-crud>
+            <image-crud items="{{ $medias }}" token="{{ csrf_token() }}"></image-crud>
           </div>
         </div>
       </div>
@@ -46,5 +46,5 @@
 </div>
 @endsection
 @section('scripts')
-  <script src="{{ mix('js/admin/video.js') }}"></script>
+  <script src="{{ mix('js/admin/image.js') }}"></script>
 @endsection

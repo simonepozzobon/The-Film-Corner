@@ -1,9 +1,9 @@
 <template>
-    <div class="audio-form-upload">
+    <div class="image-form-upload">
       <!-- Button -->
       <div class="d-flex justify-content-around">
         <button @click="showModal" type="button" name="button" class="btn btn-lg btn-secondary btn-blue" ref="show-modal-btn">
-            Carica Audio
+            Carica Immagine
         </button>
       </div>
 
@@ -22,7 +22,7 @@
             <input type="text" name="title" class="form-control" v-model="title" required>
           </div>
           <div class="col-md-6 form-group">
-            <h6>Categoria Audio</h6>
+            <h6>Categoria Immagine</h6>
             <select class="form-control" name="category" v-model="category" required>
               <option v-for="opt in opts" :value="opt.id">
                 {{ opt.name }}
@@ -81,7 +81,7 @@
               title: '',
               category: '',
               opts: '',
-              audio: '',
+              image: '',
               secs: '',
               section: '',
               a_cats: '',
@@ -213,8 +213,8 @@
             let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
                     return;
-            this.audio = files[0];
-            console.log(this.audio);
+            this.image = files[0];
+            console.log(this.image);
           },
 
           showModal ()
@@ -307,7 +307,7 @@
               var formData = new FormData();
               formData.append('_token', this.token);
               formData.append('title', this.title);
-              formData.append('audio', this.audio);
+              formData.append('image', this.image);
               formData.append('category', this.category);
               formData.append('section', this.section);
               formData.append('app_category', this.app_category);
@@ -315,10 +315,12 @@
 
               this.animationBeforeSend();
 
-              axios.post('/api/apps/audio', formData)
+              axios.post('/api/apps/image', formData)
               .then(function(response){
+                console.log('----------');
+                console.log(response);
                 vue.title = '';
-                vue.audio = '';
+                vue.image = '';
                 vue.category = '';
                 vue.section = '';
                 vue.app_category = '';
@@ -328,7 +330,7 @@
                 vue.animationShowSuccess();
                 _.delay(() => {
                   vue.closeModal();
-                  vue.$parent.$emit('newAudioLoaded', response.data);
+                  vue.$parent.$emit('newImageLoaded', response.data);
                 }, 1000);
 
               })

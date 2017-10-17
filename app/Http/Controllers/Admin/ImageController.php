@@ -9,6 +9,7 @@ use App\AppCategory;
 use App\MediaCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -21,14 +22,13 @@ class ImageController extends Controller
       $medias = Media::orderBy('id', 'desc')->with('apps')->get();
 
       foreach ($medias as $key => $media) {
-        $media->img = Storage::disk('local')->url($media->src);
+        $media->img = Storage::disk('local')->url($media->thumb);
         $app = $media->apps()->first();
         $category = $app->category()->first();
         $pavilion = $category->section()->first();
         $media->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
       }
 
-      dd('immagini');
-      return view('admin.media.index', compact('categories', 'sections', 'app_categories', 'apps', 'medias'));
+      return view('admin.image.index', compact('categories', 'sections', 'app_categories', 'apps', 'medias'));
     }
 }

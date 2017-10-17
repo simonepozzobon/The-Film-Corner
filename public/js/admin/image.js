@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([3],{
 
 /***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
@@ -610,7 +610,7 @@ module.exports = __webpack_require__(32);
 
 /***/ }),
 
-/***/ 155:
+/***/ 157:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,21 +628,21 @@ var _axios = __webpack_require__(15);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(190);
+var _ImageFormUpload = __webpack_require__(192);
 
-var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
+var _ImageFormUpload2 = _interopRequireDefault(_ImageFormUpload);
 
-var _AudioCrud = __webpack_require__(189);
+var _ImageCrud = __webpack_require__(191);
 
-var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
+var _ImageCrud2 = _interopRequireDefault(_ImageCrud);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _vue2.default({
   el: '#app',
   components: {
-    AudioFormUpload: _AudioFormUpload2.default,
-    AudioCrud: _AudioCrud2.default
+    ImageFormUpload: _ImageFormUpload2.default,
+    ImageCrud: _ImageCrud2.default
   }
 });
 
@@ -864,7 +864,7 @@ module.exports = Cancel;
 
 /***/ }),
 
-/***/ 172:
+/***/ 174:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -936,6 +936,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 // import MojsCurveEditor from 'mojs-curve-editor';
 
@@ -943,7 +945,7 @@ exports.default = {
     props: ['items', 'msg', 'token'],
     data: function data() {
         return {
-            audios: '',
+            images: '',
             opened: false,
             t_position: '',
             modal: '',
@@ -955,35 +957,35 @@ exports.default = {
     mounted: function mounted() {
         var vue = this;
 
-        this.$parent.$on('newAudioLoaded', function (response) {
-            vue.addAudio(response);
+        this.$parent.$on('newImageLoaded', function (response) {
+            vue.addImage(response);
         });
 
-        this.audios = JSON.parse(this.items);
+        this.images = JSON.parse(this.items);
         console.log(this.$refs['table']);
         this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
     },
 
     methods: {
-        addAudio: function addAudio(response) {
+        addImage: function addImage(response) {
             console.log('triggered method inside');
             console.log(response);
-            var newAudio = {
-                id: response.audio.id,
-                title: response.audio.title,
-                duration: response.audio.duration,
-                path: response.audio.path
+            var newImage = {
+                id: response.image.id,
+                title: response.image.title,
+                img: response.image.img,
+                path: response.image.path
             };
-            this.audios.unshift(newAudio);
+            this.images.unshift(newImage);
         },
-        deleteAudio: function deleteAudio(id) {
+        deleteImage: function deleteImage(id) {
             var vue = this;
             var formData = new FormData();
             formData.append('_token', this.token);
 
             (0, _axios2.default)({
                 method: 'delete',
-                url: '/api/apps/audio/' + id,
+                url: '/api/apps/image/' + id,
                 data: formData
             }).then(function (response) {
                 console.log(response);
@@ -1142,7 +1144,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 173:
+/***/ 175:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1254,7 +1256,7 @@ exports.default = {
             title: '',
             category: '',
             opts: '',
-            audio: '',
+            image: '',
             secs: '',
             section: '',
             a_cats: '',
@@ -1392,8 +1394,8 @@ exports.default = {
         fileChange: function fileChange(e) {
             var files = e.target.files || e.dataTransfer.files;
             if (!files.length) return;
-            this.audio = files[0];
-            console.log(this.audio);
+            this.image = files[0];
+            console.log(this.image);
         },
         showModal: function showModal() {
             var vue = this;
@@ -1476,7 +1478,7 @@ exports.default = {
             var formData = new FormData();
             formData.append('_token', this.token);
             formData.append('title', this.title);
-            formData.append('audio', this.audio);
+            formData.append('image', this.image);
             formData.append('category', this.category);
             formData.append('section', this.section);
             formData.append('app_category', this.app_category);
@@ -1484,9 +1486,11 @@ exports.default = {
 
             this.animationBeforeSend();
 
-            _axios2.default.post('/api/apps/audio', formData).then(function (response) {
+            _axios2.default.post('/api/apps/image', formData).then(function (response) {
+                console.log('----------');
+                console.log(response);
                 vue.title = '';
-                vue.audio = '';
+                vue.image = '';
                 vue.category = '';
                 vue.section = '';
                 vue.app_category = '';
@@ -1496,7 +1500,7 @@ exports.default = {
                 vue.animationShowSuccess();
                 _lodash2.default.delay(function () {
                     vue.closeModal();
-                    vue.$parent.$emit('newAudioLoaded', response.data);
+                    vue.$parent.$emit('newImageLoaded', response.data);
                 }, 1000);
             }).catch(function (error) {
                 console.log(error);
@@ -1643,58 +1647,19 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 181:
+/***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(24)();
-exports.push([module.i, "\n.close-btn[data-v-298c3cca] {\n  position: absolute;\n  right: 1.5rem;\n  top: 1.5rem;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
-/***/ 184:
+/***/ 182:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(24)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-/***/ }),
-
-/***/ 189:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(208)
-
-var Component = __webpack_require__(29)(
-  /* script */
-  __webpack_require__(172),
-  /* template */
-  __webpack_require__(200),
-  /* scopeId */
-  "data-v-4e001d63",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioCrud.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AudioCrud.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4e001d63", Component.options)
-  } else {
-    hotAPI.reload("data-v-4e001d63", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
+exports.push([module.i, "\n.close-btn[data-v-3a9cbd8f] {\n  position: absolute;\n  right: 1.5rem;\n  top: 1.5rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -1724,26 +1689,26 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ 190:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(205)
+__webpack_require__(204)
 
 var Component = __webpack_require__(29)(
   /* script */
-  __webpack_require__(173),
+  __webpack_require__(174),
   /* template */
-  __webpack_require__(197),
+  __webpack_require__(196),
   /* scopeId */
-  "data-v-298c3cca",
+  "data-v-129dd5e8",
   /* cssModules */
   null
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioFormUpload.vue"
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/ImageCrud.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AudioFormUpload.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] ImageCrud.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -1752,9 +1717,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-298c3cca", Component.options)
+    hotAPI.createRecord("data-v-129dd5e8", Component.options)
   } else {
-    hotAPI.reload("data-v-298c3cca", Component.options)
+    hotAPI.reload("data-v-129dd5e8", Component.options)
   }
 })()}
 
@@ -1763,12 +1728,185 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 197:
+/***/ 192:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(206)
+
+var Component = __webpack_require__(29)(
+  /* script */
+  __webpack_require__(175),
+  /* template */
+  __webpack_require__(198),
+  /* scopeId */
+  "data-v-3a9cbd8f",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/ImageFormUpload.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ImageFormUpload.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3a9cbd8f", Component.options)
+  } else {
+    hotAPI.reload("data-v-3a9cbd8f", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 196:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    ref: "table",
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.images), function(image) {
+    return _c('tr', {
+      ref: "test",
+      refInFor: true,
+      attrs: {
+        "id": 'row-' + image.id
+      }
+    }, [_c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(image.id))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(image.title))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_c('img', {
+      staticClass: "img-fluid",
+      attrs: {
+        "src": image.img,
+        "width": "57"
+      }
+    })]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(image.path))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-orange btn-target",
+      attrs: {
+        "id": 'button-' + image.id,
+        "data-target": image.id
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggleModal(image.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash-o"
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "custom-modal",
+      staticStyle: {
+        "display": "none",
+        "position": "absolute"
+      },
+      attrs: {
+        "id": 'modal-' + image.id
+      }
+    }, [_c('div', {
+      staticClass: "box container-fluid"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col dark-blue py-3"
+    }, [_c('div', {
+      staticClass: "col d-flex justify-content-end"
+    }, [_c('a', {
+      attrs: {
+        "data-modal": "close"
+      },
+      on: {
+        "click": function($event) {
+          _vm.closeModal(image.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-times",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    })])])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col blue px-5 py-4"
+    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-6"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-blue btn-left",
+      attrs: {
+        "data-modal": "close"
+      },
+      on: {
+        "click": function($event) {
+          _vm.closeModal(image.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-undo",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Undo")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-6"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-blue btn-right",
+      on: {
+        "click": function($event) {
+          _vm.deleteImage(image.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash-o",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])])])])])])])])])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Image")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row pb-4"
+  }, [_c('div', {
+    staticClass: "col"
+  }, [_c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Are you shure")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-129dd5e8", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "audio-form-upload"
+    staticClass: "image-form-upload"
   }, [_c('div', {
     staticClass: "d-flex justify-content-around"
   }, [_c('button', {
@@ -1781,7 +1919,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.showModal
     }
-  }, [_vm._v("\n        Carica Audio\n    ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        Carica Immagine\n    ")])]), _vm._v(" "), _c('div', {
     ref: "close-form-btn",
     staticClass: "d-flex justify-content-end close-btn",
     on: {
@@ -1838,7 +1976,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), _c('div', {
     staticClass: "col-md-6 form-group"
-  }, [_c('h6', [_vm._v("Categoria Audio")]), _vm._v(" "), _c('select', {
+  }, [_c('h6', [_vm._v("Categoria Immagine")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -1993,7 +2131,7 @@ module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-298c3cca", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-3a9cbd8f", module.exports)
   }
 }
 
@@ -2018,151 +2156,23 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 200:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
-    ref: "table",
-    staticClass: "table table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.audios), function(audio) {
-    return _c('tr', {
-      ref: "test",
-      refInFor: true,
-      attrs: {
-        "id": 'row-' + audio.id
-      }
-    }, [_c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.id))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.title))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.duration))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.path))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-orange btn-target",
-      attrs: {
-        "id": 'button-' + audio.id,
-        "data-target": audio.id
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggleModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-trash-o"
-    })]), _vm._v(" "), _c('div', {
-      staticClass: "custom-modal",
-      staticStyle: {
-        "display": "none",
-        "position": "absolute"
-      },
-      attrs: {
-        "id": 'modal-' + audio.id
-      }
-    }, [_c('div', {
-      staticClass: "box container-fluid"
-    }, [_c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col dark-blue py-3"
-    }, [_c('div', {
-      staticClass: "col d-flex justify-content-end"
-    }, [_c('a', {
-      attrs: {
-        "data-modal": "close"
-      },
-      on: {
-        "click": function($event) {
-          _vm.closeModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-times",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    })])])])]), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col blue px-5 py-4"
-    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col-6"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-blue btn-left",
-      attrs: {
-        "data-modal": "close"
-      },
-      on: {
-        "click": function($event) {
-          _vm.closeModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-undo",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }), _vm._v(" Undo")])]), _vm._v(" "), _c('div', {
-      staticClass: "col-6"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-blue btn-right",
-      on: {
-        "click": function($event) {
-          _vm.deleteAudio(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-trash-o",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }), _vm._v(" Delete")])])])])])])])])])
-  }))])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Duration")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row pb-4"
-  }, [_c('div', {
-    staticClass: "col"
-  }, [_c('h3', {
-    staticClass: "text-center"
-  }, [_vm._v("Are you shure")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4e001d63", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 205:
+/***/ 204:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(181);
+var content = __webpack_require__(180);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(30)("1950240e", content, false);
+var update = __webpack_require__(30)("6a7a036b", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-129dd5e8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageCrud.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-129dd5e8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageCrud.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -2173,23 +2183,23 @@ if(false) {
 
 /***/ }),
 
-/***/ 208:
+/***/ 206:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(184);
+var content = __webpack_require__(182);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(30)("319fe6e1", content, false);
+var update = __webpack_require__(30)("361e237c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3a9cbd8f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageFormUpload.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-3a9cbd8f\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ImageFormUpload.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -2200,10 +2210,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(155);
+module.exports = __webpack_require__(157);
 
 
 /***/ }),
@@ -52127,4 +52137,4 @@ module.exports = g;
 
 /***/ })
 
-},[211]);
+},[212]);

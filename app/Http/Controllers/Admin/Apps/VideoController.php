@@ -30,7 +30,7 @@ class VideoController extends Controller
       $app_category = AppCategory::find($r->app_category);
       $app_name = App::find($r->app_name);
 
-      $destFolder = 'apps/library/'.$pavilion->slug.'/'.$app_category->slug.'/'.$app_name->slug.'/';
+      $destFolder = 'apps/library/'.$pavilion->slug.'/'.$app_category->slug.'/'.$app_name->slug.'/video/';
 
       if ($check) {
 

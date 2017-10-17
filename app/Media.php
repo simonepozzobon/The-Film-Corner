@@ -17,7 +17,7 @@ class Media extends Model
         return $this->belongsTo('App\MediaCategory');
     }
 
-    public function apssSessions()
+    public function appsSessions()
     {
         return $this->morphedByMany('App\AppsSessions\AppsSession', 'mediaable');
     }

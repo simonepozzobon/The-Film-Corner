@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddRoleIdToUsersTable extends Migration
+class AddTitleToMediaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddRoleIdToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->after('id');
+        Schema::table('medias', function (Blueprint $table) {
+            $table->string('title')->nullable()->after('id');
         });
     }
 
@@ -25,8 +25,8 @@ class AddRoleIdToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-          $table->dropColumn('role_id');
+        Schema::table('medias', function (Blueprint $table) {
+            $table->dropColumn('title');
         });
     }
 }
