@@ -98,7 +98,7 @@
           <div class="box container-fluid mb-4">
             <div class="row">
               <div class="col dark-yellow py-3 px-5">
-                <h3>Library</h3>
+                <h3>Library Characters</h3>
               </div>
             </div>
             <div class="row">

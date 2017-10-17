@@ -11,7 +11,7 @@
     <div class="row">
       <div class="col pr-5 pl-5 pb-5">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="{{ route('teacher') }}">Pavilions</a></li>
+          <li class="breadcrumb-item"><a href="{{ route('teacher') }}">Studios</a></li>
           <li class="breadcrumb-item"><a href="{{ route('teacher') }}/{{ $app_category->section->slug }}">{{ $app_category->section->name }}</a></li>
           <li class="breadcrumb-item active">{{ $app_category->name }}</li>
         </ol>
