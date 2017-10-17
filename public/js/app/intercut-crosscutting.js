@@ -15,15 +15,15 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -31,11 +31,11 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -1832,7 +1832,8 @@ exports['default'] = Component;
 
 
 /***/ }),
-/* 1 */
+/* 1 */,
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1841,7 +1842,7 @@ exports['default'] = Component;
 exports.__esModule = true;
 exports.throttle = exports.bind = undefined;
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 /**
  * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
@@ -1914,7 +1915,6 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 
 
 /***/ }),
-/* 2 */,
 /* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1962,7 +1962,7 @@ var _window = __webpack_require__(5);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -1970,7 +1970,7 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(66);
+var _tsml = __webpack_require__(67);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -3302,7 +3302,9 @@ module.exports = g;
 
 
 /***/ }),
-/* 10 */
+/* 10 */,
+/* 11 */,
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3357,7 +3359,7 @@ function mergeOptions() {
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3374,7 +3376,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -3850,7 +3852,7 @@ function one(elem, type, fn) {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3909,9 +3911,13 @@ exports['default'] = formatTime;
 
 
 /***/ }),
-/* 13 */,
-/* 14 */,
-/* 15 */
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */,
+/* 20 */,
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3942,7 +3948,7 @@ function newGUID() {
 
 
 /***/ }),
-/* 16 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3975,14 +3981,9 @@ exports['default'] = toTitleCase;
 
 
 /***/ }),
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */,
-/* 22 */,
 /* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3990,7 +3991,7 @@ exports['default'] = toTitleCase;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(25);
+var _clickableComponent = __webpack_require__(26);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4165,7 +4166,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4181,11 +4182,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -4493,7 +4494,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4513,11 +4514,11 @@ var _htmlTrackElementList = __webpack_require__(143);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(57);
+var _textTrack = __webpack_require__(60);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -4525,15 +4526,15 @@ var _textTrackList = __webpack_require__(148);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(77);
+var _videoTrackList = __webpack_require__(78);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(76);
+var _audioTrackList = __webpack_require__(77);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -4541,11 +4542,11 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(27);
+var _timeRanges = __webpack_require__(28);
 
-var _buffer = __webpack_require__(78);
+var _buffer = __webpack_require__(79);
 
-var _mediaError = __webpack_require__(70);
+var _mediaError = __webpack_require__(71);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -5915,7 +5916,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6067,7 +6068,29 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 28 */
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6075,7 +6098,7 @@ exports.createTimeRange = createTimeRanges;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(68);
+var _trackButton = __webpack_require__(69);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -6083,7 +6106,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _textTrackMenuItem = __webpack_require__(56);
+var _textTrackMenuItem = __webpack_require__(59);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -6177,7 +6200,7 @@ exports['default'] = TextTrackButton;
 
 
 /***/ }),
-/* 29 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6185,7 +6208,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -6353,7 +6376,7 @@ exports['default'] = EventTarget;
 
 
 /***/ }),
-/* 30 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6361,7 +6384,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(25);
+var _clickableComponent = __webpack_require__(26);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -6498,7 +6521,7 @@ exports['default'] = MenuItem;
 
 
 /***/ }),
-/* 31 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6678,11 +6701,10 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 
 /***/ }),
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */
+/* 55 */,
+/* 56 */,
+/* 57 */,
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(85);
@@ -6690,26 +6712,7 @@ module.exports = angular;
 
 
 /***/ }),
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6719,7 +6722,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(30);
+var _menuItem = __webpack_require__(53);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -6727,7 +6730,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -6885,7 +6888,7 @@ exports['default'] = TextTrackMenuItem;
 
 
 /***/ }),
-/* 57 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6897,11 +6900,11 @@ var _textTrackCueList = __webpack_require__(145);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(58);
+var _trackEnums = __webpack_require__(61);
 
 var _log = __webpack_require__(8);
 
@@ -6911,17 +6914,17 @@ var _window = __webpack_require__(5);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(60);
+var _track = __webpack_require__(63);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(31);
+var _url = __webpack_require__(54);
 
-var _xhr = __webpack_require__(81);
+var _xhr = __webpack_require__(82);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -7341,7 +7344,7 @@ exports['default'] = TextTrack;
 
 
 /***/ }),
-/* 58 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7414,7 +7417,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 
 /***/ }),
-/* 59 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7422,7 +7425,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(29);
+var _eventTarget = __webpack_require__(52);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -7654,7 +7657,7 @@ exports['default'] = TrackList;
 
 
 /***/ }),
-/* 60 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7670,11 +7673,11 @@ var _document = __webpack_require__(4);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(29);
+var _eventTarget = __webpack_require__(52);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -7803,7 +7806,7 @@ exports['default'] = Track;
 
 
 /***/ }),
-/* 61 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7852,9 +7855,8 @@ function computedStyle(el, prop) {
 
 
 /***/ }),
-/* 62 */,
-/* 63 */,
-/* 64 */
+/* 65 */,
+/* 66 */
 /***/ (function(module, exports) {
 
 module.exports = isFunction
@@ -7875,8 +7877,7 @@ function isFunction (fn) {
 
 
 /***/ }),
-/* 65 */,
-/* 66 */
+/* 67 */
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -7895,7 +7896,7 @@ module.exports = function tsml (sa) {
 }
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7903,7 +7904,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(24);
+var _button = __webpack_require__(25);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -8056,7 +8057,7 @@ exports['default'] = MuteToggle;
 
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8064,7 +8065,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(71);
+var _menuButton = __webpack_require__(72);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -8072,7 +8073,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -8141,7 +8142,7 @@ exports['default'] = TrackButton;
 
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8149,7 +8150,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(75);
+var _slider = __webpack_require__(76);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -8157,7 +8158,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -8329,7 +8330,7 @@ exports['default'] = VolumeBar;
 
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8547,7 +8548,7 @@ exports['default'] = MediaError;
 
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8555,7 +8556,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(25);
+var _clickableComponent = __webpack_require__(26);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -8563,7 +8564,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(72);
+var _menu = __webpack_require__(73);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -8571,11 +8572,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -8906,7 +8907,7 @@ exports['default'] = MenuButton;
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8922,11 +8923,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9115,7 +9116,7 @@ exports['default'] = Menu;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9127,7 +9128,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -9615,7 +9616,7 @@ exports['default'] = ModalDialog;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9635,7 +9636,7 @@ var _window = __webpack_require__(5);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9643,11 +9644,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(15);
+var _guid = __webpack_require__(21);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -9659,15 +9660,15 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(27);
+var _timeRanges = __webpack_require__(28);
 
-var _buffer = __webpack_require__(78);
+var _buffer = __webpack_require__(79);
 
-var _stylesheet = __webpack_require__(79);
+var _stylesheet = __webpack_require__(80);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -9675,7 +9676,7 @@ var _fullscreenApi = __webpack_require__(131);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(70);
+var _mediaError = __webpack_require__(71);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -9685,7 +9686,7 @@ var _tuple2 = _interopRequireDefault(_tuple);
 
 var _obj = __webpack_require__(7);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -9693,19 +9694,19 @@ var _textTrackListConverter = __webpack_require__(147);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(73);
+var _modalDialog = __webpack_require__(74);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(26);
+var _tech = __webpack_require__(27);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(76);
+var _audioTrackList = __webpack_require__(77);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(77);
+var _videoTrackList = __webpack_require__(78);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
@@ -13307,7 +13308,7 @@ exports['default'] = Player;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13667,7 +13668,7 @@ exports['default'] = Slider;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13675,7 +13676,7 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(59);
+var _trackList = __webpack_require__(62);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -13855,7 +13856,7 @@ exports['default'] = AudioTrackList;
 
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13863,7 +13864,7 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(59);
+var _trackList = __webpack_require__(62);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -14055,7 +14056,7 @@ exports['default'] = VideoTrackList;
 
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14064,7 +14065,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(27);
+var _timeRanges = __webpack_require__(28);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -14111,7 +14112,7 @@ function bufferedPercent(buffered, duration) {
 
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14166,7 +14167,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14204,7 +14205,7 @@ var _setup = __webpack_require__(137);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(79);
+var _stylesheet = __webpack_require__(80);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -14212,15 +14213,15 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(29);
+var _eventTarget = __webpack_require__(52);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(74);
+var _player = __webpack_require__(75);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -14228,15 +14229,15 @@ var _plugins = __webpack_require__(133);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(10);
+var _mergeOptions2 = __webpack_require__(12);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(57);
+var _textTrack = __webpack_require__(60);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -14248,9 +14249,9 @@ var _videoTrack = __webpack_require__(150);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(27);
+var _timeRanges = __webpack_require__(28);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -14258,13 +14259,13 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(31);
+var _url = __webpack_require__(54);
 
 var Url = _interopRequireWildcard(_url);
 
 var _obj = __webpack_require__(7);
 
-var _computedStyle = __webpack_require__(61);
+var _computedStyle = __webpack_require__(64);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -14272,11 +14273,11 @@ var _extend = __webpack_require__(130);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(81);
+var _xhr = __webpack_require__(82);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(26);
+var _tech = __webpack_require__(27);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -14895,13 +14896,13 @@ exports['default'] = videojs;
 
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var window = __webpack_require__(5)
-var isFunction = __webpack_require__(64)
+var isFunction = __webpack_require__(66)
 var parseHeaders = __webpack_require__(88)
 var xtend = __webpack_require__(152)
 
@@ -15137,7 +15138,6 @@ function noop() {}
 
 
 /***/ }),
-/* 82 */,
 /* 83 */,
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -49809,7 +49809,7 @@ $provide.value("$locale", {
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(64)
+var isFunction = __webpack_require__(66)
 
 module.exports = forEach
 
@@ -76654,13 +76654,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     //module loader detection derrived from http://tinyurl.com/hs2coz2
     if (("function").match(/^(object|function)$/) && __webpack_require__(151)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(36), __webpack_require__(80)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(58), __webpack_require__(81)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(36), __webpack_require__(80));
+        module.exports = factory(__webpack_require__(58), __webpack_require__(81));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -77108,7 +77108,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(24);
+var _button = __webpack_require__(25);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77237,7 +77237,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(24);
+var _button = __webpack_require__(25);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77341,7 +77341,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(68);
+var _trackButton = __webpack_require__(69);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -77467,7 +77467,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(30);
+var _menuItem = __webpack_require__(53);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -77475,7 +77475,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -77617,7 +77617,7 @@ __webpack_require__(126);
 
 __webpack_require__(128);
 
-__webpack_require__(67);
+__webpack_require__(68);
 
 __webpack_require__(117);
 
@@ -77705,7 +77705,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(24);
+var _button = __webpack_require__(25);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77937,7 +77937,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(24);
+var _button = __webpack_require__(25);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -78076,11 +78076,11 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(71);
+var _menuButton = __webpack_require__(72);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(72);
+var _menu = __webpack_require__(73);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -78318,7 +78318,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(30);
+var _menuItem = __webpack_require__(53);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -78569,15 +78569,15 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(61);
+var _computedStyle = __webpack_require__(64);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -78766,11 +78766,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -78944,7 +78944,7 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(75);
+var _slider = __webpack_require__(76);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -78952,15 +78952,15 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(61);
+var _computedStyle = __webpack_require__(64);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -79215,11 +79215,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -79466,7 +79466,7 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(56);
+var _textTrackMenuItem = __webpack_require__(59);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -79558,7 +79558,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(28);
+var _textTrackButton = __webpack_require__(51);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79676,7 +79676,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(28);
+var _textTrackButton = __webpack_require__(51);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79688,7 +79688,7 @@ var _chaptersTrackMenuItem = __webpack_require__(118);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -79923,7 +79923,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(30);
+var _menuItem = __webpack_require__(53);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -79931,7 +79931,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -80038,7 +80038,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(28);
+var _textTrackButton = __webpack_require__(51);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80046,7 +80046,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -80181,7 +80181,7 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(56);
+var _textTrackMenuItem = __webpack_require__(59);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -80279,7 +80279,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(28);
+var _textTrackButton = __webpack_require__(51);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80381,7 +80381,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80496,7 +80496,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80621,7 +80621,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(12);
+var _formatTime = __webpack_require__(14);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80797,7 +80797,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(69);
+__webpack_require__(70);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -80949,7 +80949,7 @@ exports['default'] = VolumeLevel;
 
 exports.__esModule = true;
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -80965,11 +80965,11 @@ var _popupButton = __webpack_require__(134);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(67);
+var _muteToggle = __webpack_require__(68);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(69);
+var _volumeBar = __webpack_require__(70);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -81203,11 +81203,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(73);
+var _modalDialog = __webpack_require__(74);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -81534,7 +81534,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(74);
+var _player = __webpack_require__(75);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -81567,7 +81567,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(25);
+var _clickableComponent = __webpack_require__(26);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -81704,11 +81704,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -81801,7 +81801,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(25);
+var _clickableComponent = __webpack_require__(26);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -81809,7 +81809,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -81994,7 +81994,7 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(11);
+var _events = __webpack_require__(13);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -82349,7 +82349,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(26);
+var _tech = __webpack_require__(27);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -82357,11 +82357,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(31);
+var _url = __webpack_require__(54);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(27);
+var _timeRanges = __webpack_require__(28);
 
 var _flashRtmp = __webpack_require__(138);
 
@@ -83538,7 +83538,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(26);
+var _tech = __webpack_require__(27);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -83550,11 +83550,11 @@ var _dom = __webpack_require__(3);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(31);
+var _url = __webpack_require__(54);
 
 var Url = _interopRequireWildcard(_url);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -83562,7 +83562,7 @@ var _log = __webpack_require__(8);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(66);
+var _tsml = __webpack_require__(67);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -83580,11 +83580,11 @@ var _window2 = _interopRequireDefault(_window);
 
 var _obj = __webpack_require__(7);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -85488,11 +85488,11 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(26);
+var _tech = __webpack_require__(27);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(16);
+var _toTitleCase = __webpack_require__(22);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -85579,13 +85579,13 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(58);
+var _trackEnums = __webpack_require__(61);
 
-var _track = __webpack_require__(60);
+var _track = __webpack_require__(63);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -85878,11 +85878,11 @@ var _document = __webpack_require__(4);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(29);
+var _eventTarget = __webpack_require__(52);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(57);
+var _textTrack = __webpack_require__(60);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -86209,7 +86209,7 @@ var _component = __webpack_require__(0);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -86671,11 +86671,11 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(59);
+var _trackList = __webpack_require__(62);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -86792,7 +86792,7 @@ var _component2 = _interopRequireDefault(_component);
 
 var _dom = __webpack_require__(3);
 
-var _fn = __webpack_require__(1);
+var _fn = __webpack_require__(2);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -87390,13 +87390,13 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(58);
+var _trackEnums = __webpack_require__(61);
 
-var _track = __webpack_require__(60);
+var _track = __webpack_require__(63);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(10);
+var _mergeOptions = __webpack_require__(12);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -87564,17 +87564,18 @@ function extend() {
 /* 158 */,
 /* 159 */,
 /* 160 */,
-/* 161 */
+/* 161 */,
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _angular = __webpack_require__(36);
+var _angular = __webpack_require__(58);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(17);
+var _jquery = __webpack_require__(23);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -87967,10 +87968,9 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)))
 
 /***/ }),
-/* 162 */,
 /* 163 */,
 /* 164 */,
 /* 165 */,
@@ -88013,11 +88013,23 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 202 */,
 /* 203 */,
 /* 204 */,
-/* 205 */
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(161);
+module.exports = __webpack_require__(162);
 
 
 /***/ })
-],[205]);
+],[217]);

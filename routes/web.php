@@ -104,6 +104,7 @@ Route::prefix('admin')->group(function () {
     // Nuovo pannello video
     Route::get('/video', 'Admin\VideoController@adminVideo')->name('admin.video');
     Route::get('/audio', 'Admin\AudioController@adminAudio')->name('admin.audio');
+    Route::get('/images', 'Admin\ImageController@adminImage')->name('admin.image');
 
     // Web menu routes
     Route::resource('posts', 'Admin\PostController');
