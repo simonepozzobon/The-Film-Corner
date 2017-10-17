@@ -14,6 +14,11 @@ class Video extends Model
         return $this->morphedByMany('App\AppsSessions\AppsSession', 'videoable');
     }
 
+    public function studentAppSessions()
+    {
+        return $this->morphedByMany('App\AppsSessions\StudentAppSession', 'videoable');
+    }
+
     public function teachers()
     {
         return $this->morphedByMany('App\Teacher', 'videoable');
@@ -65,8 +70,8 @@ class Video extends Model
       }
     }
 
-    public function videoCategory()
+    public function MediaCategory()
     {
-      return $this->belongsTo('App\VideoCategory');
+      return $this->belongsTo('App\MediaCategory');
     }
 }
