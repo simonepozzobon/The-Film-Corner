@@ -5,20 +5,20 @@
   <a href="{{ route('admin') }}" class="navbar-brand"><img src="/img/logo.png" height="50" style="max-width: 40vw;"></a>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     @if (Auth::guard('admin')->check())
-      <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      <ul class="navbar-nav mr-auto my-2">
         <li class="nav-item active">
-          <a href="{{ url('/') }}" target="_blank">Visit Website</a>
+          <a href="{{ url('/') }}" target="_blank" class="nav-link">Visit Website</a>
         </li>
       </ul>
       <ul class="navbar-nav my-2">
-        <li class="nav-item mr-sm-2">
-          <a href="{{ route('admin.video') }}">Video</a>
+        <li id="video-menu" class="nav-item mr-sm-2">
+          <a href="{{ route('admin.video') }}" class="nav-link">Video</a>
+        </li>
+        <li id="video-audio" class="nav-item mr-sm-2">
+          <a href="{{ route('admin.audio') }}" class="nav-link">Audio</a>
         </li>
         <li class="nav-item mr-sm-2">
-          <a href="{{ route('admin.audio') }}">Audio</a>
-        </li>
-        <li class="nav-item mr-sm-2">
-          <a href="#">Images</a>
+          <a href="#" class="nav-link disabled">Images</a>
         </li>
       </ul>
     @endif
