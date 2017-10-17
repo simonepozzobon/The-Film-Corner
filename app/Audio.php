@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Audio extends Model
 {
   protected $table = 'audios';
+  
+  public function category()
+  {
+    return $this->belongsTo('App\MediaCategory');
+  }
 
   public function appsSessions()
   {
