@@ -17,7 +17,8 @@ const { mix } = require('laravel-mix');
       'resources/assets/admin/js/plugins/image-picker.js',
       'resources/assets/admin/js/custom.js'
     ], 'public/js/admin/admin.js').minify('public/js/admin/admin.js')
-    .js('resources/assets/admin/js/test.js', 'public/js/admin/test.js')
+    .js('resources/assets/admin/js/video.js', 'public/js/admin/video.js')
+    .js('resources/assets/admin/js/audio.js', 'public/js/admin/audio.js')
     .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
     .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')

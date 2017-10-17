@@ -4,26 +4,24 @@
     <thead>
       <th>Id</th>
       <th>Title</th>
-      <th>Image</th>
+      <th>Duration</th>
       <th>Percorso</th>
       <th>Tools</th>
     </thead>
     <tbody>
-      <tr v-for="video in videos" :id="'row-'+video.id" ref="test">
-        <td class="align-middle">{{video.id}}</td>
-        <td class="align-middle">{{video.title}}</td>
-        <td class="align-middle">
-            <img :src="video.img" class="img-fluid" width="57">
-        </td>
-        <td class="align-middle">{{video.path}}</td>
+      <tr v-for="audio in audios" :id="'row-'+audio.id" ref="test">
+        <td class="align-middle">{{audio.id}}</td>
+        <td class="align-middle">{{audio.title}}</td>
+        <td class="align-middle">{{audio.duration}}</td>
+        <td class="align-middle">{{audio.path}}</td>
         <td  class="align-middle">
-          <button :id="'button-'+video.id" @click="toggleModal(video.id)" class="btn btn-secondary btn-orange btn-target" :data-target="video.id"><i class="fa fa-trash-o"></i></button>
-              <div :id="'modal-'+video.id" class="custom-modal" style="display: none; position: absolute;">
+          <button :id="'button-'+audio.id" @click="toggleModal(audio.id)" class="btn btn-secondary btn-orange btn-target" :data-target="audio.id"><i class="fa fa-trash-o"></i></button>
+              <div :id="'modal-'+audio.id" class="custom-modal" style="display: none; position: absolute;">
                 <div class="box container-fluid">
                   <div class="row">
                     <div class="col dark-blue py-3">
                       <div class="col d-flex justify-content-end">
-                        <a @click="closeModal(video.id)" data-modal="close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <a @click="closeModal(audio.id)" data-modal="close"><i class="fa fa-times" aria-hidden="true"></i></a>
                       </div>
                     </div>
                   </div>
@@ -36,10 +34,10 @@
                       </div>
                       <div class="row">
                         <div class="col-6">
-                          <button @click="closeModal(video.id)" class="btn btn-secondary btn-blue btn-left" data-modal="close"><i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
+                          <button @click="closeModal(audio.id)" class="btn btn-secondary btn-blue btn-left" data-modal="close"><i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
                         </div>
                         <div class="col-6">
-                          <button @click="deleteVideo(video.id)" class="btn btn-secondary btn-blue btn-right"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                          <button @click="deleteAudio(audio.id)" class="btn btn-secondary btn-blue btn-right"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                         </div>
                       </div>
                     </div>
@@ -61,7 +59,7 @@ export default {
     props: ['items', 'msg', 'token'],
     data () {
         return {
-          videos: '',
+          audios: '',
           opened: false,
           t_position: '',
           modal: '',
@@ -73,30 +71,30 @@ export default {
     mounted () {
       var vue = this;
 
-      this.$parent.$on('newVideoLoaded', function(response) {
-        vue.addVideo(response);
+      this.$parent.$on('newAudioLoaded', function(response) {
+        vue.addAudio(response);
       });
 
-      this.videos = JSON.parse(this.items);
+      this.audios = JSON.parse(this.items);
       console.log(this.$refs['table']);
       this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
 
     },
     methods: {
-      addVideo (response)
+      addAudio (response)
       {
           console.log('triggered method inside');
           console.log(response);
-          var newVideo = {
-            id: response.video.id,
-            title: response.video.title,
-            img: response.video.img,
-            path: response.video.path
+          var newAudio = {
+            id: response.audio.id,
+            title: response.audio.title,
+            duration: response.audio.duration,
+            path: response.audio.path
           }
-          this.videos.unshift(newVideo);
+          this.audios.unshift(newAudio);
       },
 
-      deleteVideo (id)
+      deleteAudio (id)
       {
         var vue = this;
         var formData = new FormData();
@@ -104,7 +102,7 @@ export default {
 
         axios({
             method: 'delete',
-            url: '/api/apps/video/'+id,
+            url: '/api/apps/audio/'+id,
             data: formData
         })
         .then(function(response){
