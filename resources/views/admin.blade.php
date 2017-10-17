@@ -1,48 +1,41 @@
 @extends('layouts.admin')
 @section('title', 'Statistiche')
+@section('stylesheets')
+  <style media="screen">
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+  </style>
+@endsection
 @section('content')
-<div class="row">
-  <div class="col-md-4">
-    <div class="box container-fluid mb-4">
-      <div class="row">
-        <div class="col dark-blue py-3 px-5">
-          <h3>Utenti Online</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col blue p-5">
-          <h1>{{ $users->count() }}</h1>
-        </div>
-      </div>
+<main id="app">
+  @if (!isset($visited))
+    <alert-tutorial title="Attenzione!!!" color="yellow" element="video-menu" position="bottom">
+      <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
+    </alert-tutorial>
+  @endif
+  <div class="row">
+    <div class="col-md-4">
+      <app-box title="Utenti Online" color="blue">
+        <h1>{{ $users->count() }}</h1>
+      </app-box>
+    </div>
+    <div class="col-md-4">
+      <app-box title="Sessioni" color="blue">
+        <h1>{{ $sessions->count() }}</h1>
+      </app-box>
+    </div>
+    <div class="col-md-4">
+      <app-box title="Visualizzazioni" color="blue">
+        <h1>{{ $page_views_tot }}</h1>
+      </app-box>
     </div>
   </div>
-  <div class="col-md-4">
-    <div class="box container-fluid mb-4">
-      <div class="row">
-        <div class="col dark-blue py-3 px-5">
-          <h3>Sessioni</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col blue p-5">
-          <h1>{{ $sessions->count() }}</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="box container-fluid mb-4">
-      <div class="row">
-        <div class="col dark-blue py-3 px-5">
-          <h3>Visualizzazioni</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col blue p-5">
-          <h1>{{ $page_views_tot }}</h1>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</main>
+@endsection
+@section('scripts')
+  <script src="{{ mix('js/admin/main.js') }}"></script>
 @endsection
