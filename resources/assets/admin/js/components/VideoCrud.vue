@@ -110,7 +110,7 @@ export default {
         .then(function(response){
           console.log(response);
           vue.closeModal(id);
-          // vue.deleteRow(id);
+          vue.deleteRow(id);
         })
         .catch(function(error){
           console.log(error);
