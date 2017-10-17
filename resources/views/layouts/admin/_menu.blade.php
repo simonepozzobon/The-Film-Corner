@@ -18,7 +18,7 @@
           <a href="{{ route('admin.audio') }}" class="nav-link">Audio</a>
         </li>
         <li class="nav-item mr-sm-2">
-          <a href="#" class="nav-link disabled">Images</a>
+          <a href="{{ route('admin.image') }}" class="nav-link">Images</a>
         </li>
       </ul>
     @endif
