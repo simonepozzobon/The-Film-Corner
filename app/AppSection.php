@@ -22,4 +22,9 @@ class AppSection extends Model
     {
       return $this->morphToMany('App\Audio', 'audioable');
     }
+
+    public function medias()
+    {
+      return $this->morphToMany('App\Media', 'mediaable');
+    }
 }

@@ -21,7 +21,7 @@ class ImageController extends Controller
       $medias = Media::orderBy('id', 'desc')->with('apps')->get();
 
       foreach ($medias as $key => $media) {
-        $media->img = Storage::disk('local')->url($media->img);
+        $media->img = Storage::disk('local')->url($media->src);
         $app = $media->apps()->first();
         $category = $app->category()->first();
         $pavilion = $category->section()->first();
