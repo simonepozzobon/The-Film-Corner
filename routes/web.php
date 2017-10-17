@@ -134,6 +134,9 @@ Route::prefix('admin')->group(function () {
     // Settings menu routes
     Route::resource('partners', 'Admin\PartnerController', ['except' => ['create'] ]);
 
+    // Stats
+    Route::get('/stats', 'Admin\StatsController@index')->name('stats.index');
+
     // Tools
     Route::get('conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
 

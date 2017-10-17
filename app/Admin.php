@@ -9,6 +9,7 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
+    protected $connection = 'mysql';
     protected $guard = 'admin';
 
     /**
@@ -28,8 +29,23 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
+
     public function posts() {
       return $this->hasMany('App\Post');
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return true;
+    }
+
+    public static function check()
+    {
+        return Auth::guard('admin')->check();
+    }
+
+    public static function user()
+    {
+        return Auth::guard('admin')->user();
     }
 }
