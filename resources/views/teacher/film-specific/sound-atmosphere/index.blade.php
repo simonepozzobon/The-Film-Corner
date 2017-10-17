@@ -82,7 +82,7 @@
                   <div class="col blue p-5">
                     <div class="embed-responsive embed-responsive-16by9">
                       <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                          <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                          <source src="/storage/test/oceans.mp4" type="video/mp4">
                       </video>
                     </div>
                     <div id="waveform"></div>
@@ -209,7 +209,7 @@
       console.log('sessione caricata '+session.token);
 
       // Load audio file
-      var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
+      var src = '/storage/test/Audio.mp3';
       wavesurfer.load(src);
       $.cookie('tfc-audio', JSON.stringify(src));
 

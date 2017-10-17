@@ -114,6 +114,7 @@ class SessionController extends Controller
       ], 400);
     }
 
+    define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
     $utility = new Utility;
 
     // se la validazione funziona allora aggiorno la sessione
@@ -238,10 +239,34 @@ class SessionController extends Controller
 
       // Film Specific - Sound - App 8 - Sound Atmosphere
       case 8:
+
+        // Definisco la variabili per il render
+        $video = parse_url($request['video'], PHP_URL_PATH);
+        $audio = parse_url($request['audio'], PHP_URL_PATH);
+        $sessionToken = $request['token'];
+
+        // rimuovo il primo / e ottengo la path assoluta del file
+        $audioPath = public_path(substr($audio, 1));
+        $videoPath = public_path(substr($video, 1));
+
+        // Definisco i percorsi
+        $expPath = $utility->verifyDirAndCreate('public/apps/sound-atmosphere/'.$sessionToken.'/exp');
+
+        // Creo i percorsi per l'export
+        $exportName = uniqid();
+        $exportPath = storage_path('app/public/apps/sound-atmosphere/'.$sessionToken.'/exp/'.$exportName.'.mp4');
+        $exportPublicPath = 'storage/apps/sound-atmosphere/'.$sessionToken.'/exp/'.$exportName.'.mp4';
+
+        // effettuo l'export
+        $cli = FFMPEG_LIB.' -i '.$videoPath.' -i '.$audioPath.' -c:v copy -map 0:v:0 -map 1:a:0 '.$exportPath;
+        exec($cli);
+
+        // Pacchetto i dati per salvarli nella sessione
         $data = [
           'notes' => $request['notes'],
           'audio' => $request['audio'],
-          'video' => $request['video']
+          'video' => $request['video'],
+          'export' => $exportPublicPath
         ];
 
         $session->content = json_encode($data);

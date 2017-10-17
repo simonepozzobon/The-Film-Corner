@@ -147,4 +147,14 @@ class Utility extends Model
 
       return $data;
   }
+
+  public function verifyDirAndCreate($path)
+  {
+      $finalPath = storage_path('app/'.$path);
+      if (!file_exists($finalPath)) {
+        $mkdir = Storage::makeDirectory($path, 0777, true);
+      }
+
+      return $finalPath;
+  }
 }
