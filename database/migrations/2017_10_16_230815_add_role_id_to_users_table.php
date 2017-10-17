@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePivotPostTag extends Migration
+class AddRoleIdToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreatePivotPostTag extends Migration
      */
     public function up()
     {
-        Schema::create('post_tag', function (Blueprint $table) {
-            $table->primary(['post_id', 'tag_id']);
-            $table->integer('post_id')->index();
-            $table->integer('tag_id')->index();
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('role_id')->after('id');
         });
     }
 
@@ -28,6 +25,8 @@ class CreatePivotPostTag extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_tag');
+        Schema::table('users', function (Blueprint $table) {
+            //
+        });
     }
 }
