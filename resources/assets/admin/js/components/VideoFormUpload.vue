@@ -56,6 +56,18 @@
             </select>
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <h6>Libreria</h6>
+            <div class="form-group">
+              <select class="form-control" name="sub_category" v-model="sub_category">
+                <option v-for="sub_cat in sub_cats" :value="sub_cat.id">
+                  {{ sub_cat.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
         <div class="form-group">
           <h6>File</h6>
           <input type="file" name="file" class="form-control" @change="fileChange">
@@ -87,7 +99,8 @@
               a_cats: '',
               app_category: '',
               a_names: '',
-              app_name: ''
+              app_name: '',
+              sub_cats: ''
           }
       },
 
@@ -484,7 +497,10 @@
 
         app_name: function(id)
         {
-          this.appRelations(id);
+          if (this.app_category == '' || this.section == '')
+          {
+            this.appRelations(id);
+          }
         }
       }
   }

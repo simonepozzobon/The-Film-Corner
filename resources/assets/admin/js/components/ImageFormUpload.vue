@@ -486,7 +486,10 @@
 
         app_name: function(id)
         {
-          this.appRelations(id);
+          if (this.app_category == '' || this.section == '')
+          {
+            this.appRelations(id);
+          }
         }
       }
   }
