@@ -51,4 +51,9 @@ class Media extends Model
     {
         return $this->morphedByMany('App\AppSection', 'mediaable');
     }
+
+    public function mediaSubCategories()
+    {
+        return $this->morphedByMany('App\MediaSubCategory', 'mediaable');
+    }
 }

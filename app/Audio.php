@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Audio extends Model
 {
   protected $table = 'audios';
-  
+
   public function category()
   {
     return $this->belongsTo('App\MediaCategory');
@@ -46,6 +46,11 @@ class Audio extends Model
   public function appSection()
   {
       return $this->morphedByMany('App\AppCategory', 'audioable');
+  }
+
+  public function mediaSubCategories()
+  {
+      return $this->morphedByMany('App\MediaSubCategory', 'audioable');
   }
 
   public function tToS ($t)

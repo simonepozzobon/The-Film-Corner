@@ -27,4 +27,9 @@ class App extends Model
     {
       return $this->morphToMany('App\Media', 'mediaable');
     }
+
+    public function mediaCategory()
+    {
+      return $this->hasMany('App\MediaSubCategory');
+    }
 }
