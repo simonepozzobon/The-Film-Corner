@@ -1,50 +1,41 @@
 @extends('layouts.admin')
-@section('title', 'Panel')
+@section('title', 'Statistiche')
+@section('stylesheets')
+  <style media="screen">
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+  </style>
+@endsection
 @section('content')
-<div id="app">
+<main id="app">
+  @if (!isset($visited))
+    <alert-tutorial title="Attenzione!!!" color="yellow" element="video-menu" position="bottom">
+      <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
+    </alert-tutorial>
+  @endif
   <div class="row">
-    <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-blue py-3 px-5">
-            <h3>Nuovo Video</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col blue p-5">
-            <video-form-upload
-                action=""
-                method="POST"
-                token="{{ csrf_token() }}"
-                options="{{ $categories }}"
-                sections="{{ $sections }}"
-                app_categories="{{ $app_categories }}"
-                apps="{{ $apps }}"
-              >
-            </video-form-upload>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-4">
+      <app-box title="Utenti Online" color="blue">
+        <h1>{{ $users->count() }}</h1>
+      </app-box>
+    </div>
+    <div class="col-md-4">
+      <app-box title="Sessioni" color="blue">
+        <h1>{{ $sessions->count() }}</h1>
+      </app-box>
+    </div>
+    <div class="col-md-4">
+      <app-box title="Visualizzazioni" color="blue">
+        <h1>{{ $page_views_tot }}</h1>
+      </app-box>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-orange py-3 px-5">
-            <h3>Video Caricati</h3>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col orange p-5">
-            <video-crud items="{{ $videos }}" token="{{ csrf_token() }}"></video-crud>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+</main>
 @endsection
 @section('scripts')
-  <script src="{{ mix('js/admin/test.js') }}"></script>
+  <script src="{{ mix('js/admin/main.js') }}"></script>
 @endsection

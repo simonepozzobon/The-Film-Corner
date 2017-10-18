@@ -1,7 +1,10 @@
 {
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
-  "/js/admin/test.js": "/js/admin/test.js",
+  "/js/admin/video.js": "/js/admin/video.js",
+  "/js/admin/image.js": "/js/admin/image.js",
+  "/js/admin/audio.js": "/js/admin/audio.js",
+  "/js/admin/main.js": "/js/admin/main.js",
   "/js/app.js": "/js/app.js",
   "/js/admin/admin.js": "/js/admin/admin.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",

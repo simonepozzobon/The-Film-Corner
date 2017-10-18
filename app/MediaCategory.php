@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VideoCategory extends Model
+class MediaCategory extends Model
 {
-    protected $table = 'video_categories';
+    protected $table = 'media_categories';
 
     public function videos()
     {

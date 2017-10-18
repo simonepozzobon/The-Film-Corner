@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\App;
-use App\Video;
-use App\AppSection;
-use App\AppCategory;
-use App\VideoCategory;
+use Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\Models\Activity;
+use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
 
 class AdminController extends Controller
 {
@@ -29,20 +26,30 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $categories = VideoCategory::all();
-        $sections = AppSection::all();
-        $app_categories = AppCategory::all();
-        $apps = App::all();
-        $videos = Video::orderBy('id', 'desc')->with('apps')->get();
+      $admin = Auth::guard('admin')->user();
+      $activities = Activity::where([
+        ['log_name', '=', 'first-visit'],
+        ['description', '=', 'visited']
+      ])->causedBy($admin)->get();
 
-        foreach ($videos as $key => $video) {
-          $video->img = Storage::disk('local')->url($video->img);
-          $app = $video->apps()->first();
-          $category = $app->category()->first();
-          $pavilion = $category->section()->first();
-          $video->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
-        }
+      if ($activities->count() == 0) {
+          activity()
+              ->causedBy($admin)
+              ->useLog('first-visit')
+              ->withProperties('video-update')
+              ->log('visited');
+      } else {
+          $visited = true;
+      }
 
-        return view('admin', compact('categories', 'sections', 'app_categories', 'apps', 'videos'));
+      $sessions = Tracker::sessions(60 * 24);
+      $users = Tracker::onlineUsers();
+      $page_views = Tracker::pageViews(60 * 24 * 30);
+      $page_views_tot = 0;
+      foreach ($page_views as $key => $page_view) {
+        $page_views_tot = $page_views_tot + $page_view->total;
+      }
+
+      return view('admin', compact('users', 'sessions', 'page_views_tot', 'visited'));
     }
 }

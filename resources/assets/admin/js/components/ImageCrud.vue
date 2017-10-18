@@ -9,21 +9,21 @@
       <th>Tools</th>
     </thead>
     <tbody>
-      <tr v-for="video in videos" :id="'row-'+video.id" ref="test">
-        <td class="align-middle">{{video.id}}</td>
-        <td class="align-middle">{{video.title}}</td>
+      <tr v-for="image in images" :id="'row-'+image.id" ref="test">
+        <td class="align-middle">{{image.id}}</td>
+        <td class="align-middle">{{image.title}}</td>
         <td class="align-middle">
-            <img :src="video.img" class="img-fluid" width="57">
+          <img :src="image.img" class="img-fluid" width="57">
         </td>
-        <td class="align-middle">{{video.path}}</td>
+        <td class="align-middle">{{image.path}}</td>
         <td  class="align-middle">
-          <button :id="'button-'+video.id" @click="toggleModal(video.id)" class="btn btn-secondary btn-orange btn-target" :data-target="video.id"><i class="fa fa-trash-o"></i></button>
-              <div :id="'modal-'+video.id" class="custom-modal" style="display: none; position: absolute;">
+          <button :id="'button-'+image.id" @click="toggleModal(image.id)" class="btn btn-secondary btn-orange btn-target" :data-target="image.id"><i class="fa fa-trash-o"></i></button>
+              <div :id="'modal-'+image.id" class="custom-modal" style="display: none; position: absolute;">
                 <div class="box container-fluid">
                   <div class="row">
                     <div class="col dark-blue py-3">
                       <div class="col d-flex justify-content-end">
-                        <a @click="closeModal(video.id)" data-modal="close"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <a @click="closeModal(image.id)" data-modal="close"><i class="fa fa-times" aria-hidden="true"></i></a>
                       </div>
                     </div>
                   </div>
@@ -36,10 +36,10 @@
                       </div>
                       <div class="row">
                         <div class="col-6">
-                          <button @click="closeModal(video.id)" class="btn btn-secondary btn-blue btn-left" data-modal="close"><i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
+                          <button @click="closeModal(image.id)" class="btn btn-secondary btn-blue btn-left" data-modal="close"><i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
                         </div>
                         <div class="col-6">
-                          <button @click="deleteVideo(video.id)" class="btn btn-secondary btn-blue btn-right"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+                          <button @click="deleteImage(image.id)" class="btn btn-secondary btn-blue btn-right"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
                         </div>
                       </div>
                     </div>
@@ -61,7 +61,7 @@ export default {
     props: ['items', 'msg', 'token'],
     data () {
         return {
-          videos: '',
+          images: '',
           opened: false,
           t_position: '',
           modal: '',
@@ -73,30 +73,30 @@ export default {
     mounted () {
       var vue = this;
 
-      this.$parent.$on('newVideoLoaded', function(response) {
-        vue.addVideo(response);
+      this.$parent.$on('newImageLoaded', function(response) {
+        vue.addImage(response);
       });
 
-      this.videos = JSON.parse(this.items);
+      this.images = JSON.parse(this.items);
       console.log(this.$refs['table']);
       this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
 
     },
     methods: {
-      addVideo (response)
+      addImage (response)
       {
           console.log('triggered method inside');
           console.log(response);
-          var newVideo = {
-            id: response.video.id,
-            title: response.video.title,
-            img: response.video.img,
-            path: response.video.path
+          var newImage = {
+            id: response.image.id,
+            title: response.image.title,
+            img: response.image.img,
+            path: response.image.path
           }
-          this.videos.unshift(newVideo);
+          this.images.unshift(newImage);
       },
 
-      deleteVideo (id)
+      deleteImage (id)
       {
         var vue = this;
         var formData = new FormData();
@@ -104,7 +104,7 @@ export default {
 
         axios({
             method: 'delete',
-            url: '/api/apps/video/'+id,
+            url: '/api/apps/image/'+id,
             data: formData
         })
         .then(function(response){

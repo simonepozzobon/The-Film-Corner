@@ -27,4 +27,14 @@ class AppCategory extends Model
     {
       return $this->morphToMany('App\Video', 'videoable');
     }
+
+    public function audios()
+    {
+      return $this->morphToMany('App\Audio', 'audioable');
+    }
+
+    public function medias()
+    {
+      return $this->morphToMany('App\Media', 'mediaable');
+    }
 }
