@@ -43,6 +43,7 @@ class MediaController extends Controller
           }
 
           $media = new Media;
+          $media->category_id = $r->category;
           $media->title = $r->title;
           $media->src = preg_replace('/public\//', '',$library['src']);
           $media->thumb = preg_replace('/public\//', '',$library['thumb']);
