@@ -105,21 +105,12 @@
             <div class="row">
               <div class="col yellow p-5">
                 <ul class="assets list-unstyled row">
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
+                  @foreach ($images as $key => $image)
+                    <li class="col-md-3">
+                      <img src="{{ Storage::disk('local')->url($image->src) }}" alt="image asset" width="80" class="img-fluid w-100"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  @endforeach
                 </ul>
               </div>
             </div>
