@@ -18,3 +18,5 @@ www.simonepozzobon.dev.crt
 www.simonepozzobon.dev.key
 
 .bash_profile
+
+laravel-echo-server.json
