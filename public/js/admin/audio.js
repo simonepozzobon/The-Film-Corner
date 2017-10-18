@@ -1245,6 +1245,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
@@ -1260,7 +1272,9 @@ exports.default = {
             a_cats: '',
             app_category: '',
             a_names: '',
-            app_name: ''
+            app_name: '',
+            sub_category: '',
+            sub_cats: ''
         };
     },
     mounted: function mounted() {
@@ -1481,6 +1495,7 @@ exports.default = {
             formData.append('section', this.section);
             formData.append('app_category', this.app_category);
             formData.append('app_name', this.app_name);
+            formData.append('sub_category', this.sub_category);
 
             this.animationBeforeSend();
 
@@ -1491,6 +1506,7 @@ exports.default = {
                 vue.section = '';
                 vue.app_category = '';
                 vue.app_name = '';
+                vue.sub_category = '';
 
                 vue.animationHideDots();
                 vue.animationShowSuccess();
@@ -1588,6 +1604,12 @@ exports.default = {
                 vue.section = response.data.pavilion.id;
             });
         },
+        subCategories: function subCategories(id) {
+            var vue = this;
+            _axios2.default.get('/api/apps/relations/media-sub-categories/' + id).then(function (response) {
+                vue.sub_cats = response.data;
+            });
+        },
         getOffsetLeft: function getOffsetLeft(elem) {
             var offsetLeft = 0;
             do {
@@ -1623,7 +1645,10 @@ exports.default = {
         },
 
         app_name: function app_name(id) {
-            this.appRelations(id);
+            if (this.app_category == '' || this.section == '') {
+                this.appRelations(id);
+            }
+            this.subCategories(id);
         }
     }
 };
@@ -1961,6 +1986,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v("\n            " + _vm._s(a_name.title) + "\n          ")])
   }))])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col"
+  }, [_c('h6', [_vm._v("Libreria")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.sub_category),
+      expression: "sub_category"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "sub_category"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.sub_category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.sub_cats), function(sub_cat) {
+    return _c('option', {
+      domProps: {
+        "value": sub_cat.id
+      }
+    }, [_vm._v("\n              " + _vm._s(sub_cat.name) + "\n            ")])
+  }))])])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('h6', [_vm._v("File")]), _vm._v(" "), _c('input', {
     staticClass: "form-control",

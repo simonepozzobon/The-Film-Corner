@@ -100,7 +100,8 @@
               app_category: '',
               a_names: '',
               app_name: '',
-              sub_cats: ''
+              sub_category: '',
+              sub_cats: '',
           }
       },
 
@@ -324,6 +325,7 @@
               formData.append('section', this.section);
               formData.append('app_category', this.app_category);
               formData.append('app_name', this.app_name);
+              formData.append('sub_category', this.sub_category);
 
               this.animationBeforeSend();
 
@@ -336,6 +338,7 @@
                 vue.section = '';
                 vue.app_category = '';
                 vue.app_name = '';
+                vue.sub_category = '';
 
                 vue.animationHideDots();
                 vue.animationShowSuccess();
@@ -453,6 +456,15 @@
               });
           },
 
+          subCategories(id)
+          {
+              var vue = this;
+              axios.get('/api/apps/relations/media-sub-categories/'+id)
+              .then((response) => {
+                vue.sub_cats = response.data;
+              });
+          },
+
           getOffsetLeft (elem)
           {
               var offsetLeft = 0;
@@ -477,7 +489,8 @@
               return offsetTop;
           },
 
-          deleteEl(el) {
+          deleteEl(el)
+          {
               if (el) {
                    el.parentNode.removeChild(el);
               }
@@ -487,20 +500,21 @@
       watch: {
         section: function(id)
         {
-          this.pavilionRelations(id);
+            this.pavilionRelations(id);
         },
 
         app_category: function(id)
         {
-          this.categoryRelations(id);
+            this.categoryRelations(id);
         },
 
         app_name: function(id)
         {
-          if (this.app_category == '' || this.section == '')
-          {
-            this.appRelations(id);
-          }
+            if (this.app_category == '' || this.section == '')
+            {
+                this.appRelations(id);
+            }
+            this.subCategories(id);
         }
       }
   }

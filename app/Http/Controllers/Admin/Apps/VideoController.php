@@ -8,6 +8,7 @@ use App\Utility;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCategory;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,11 @@ class VideoController extends Controller
         $app_category->videos()->save($video);
         $app_name->videos()->save($video);
 
+        if ($r->sub_category != null) {
+          $sub_category = MediaSubCategory::find($r->sub_category);
+          $sub_category->videos()->save($video);
+        }
+
         // riformatto il link dell'immagine per renderlo accessibile in vue
         $video->img = Storage::disk('local')->url($video->img);
         $video->path = $pavilion->name.' > '.$app_category->name.' > '.$app_name->title;
@@ -94,6 +100,7 @@ class VideoController extends Controller
         $video->apps()->detach($video);
         $video->appCategories()->detach($video);
         $video->appSection()->detach($video);
+        $video->mediaSubCategories()->detach($video);
 
         $video_path = storage_path('app/public/'.$video->src);
         $img_path = storage_path('app/public/'.$video->img);
@@ -116,54 +123,4 @@ class VideoController extends Controller
         return response()->json($data, 200);
     }
 
-    public function getRelations(string $type, $id)
-    {
-        switch ($type) {
-          case 'pavilion':
-              $section = AppSection::find($id);
-              $categories = $section->appCategories()->get();
-              $apps = collect();
-
-              foreach ($categories as $key => $category) {
-                $items = $category->apps()->get();
-                foreach ($items as $key => $app) {
-                  $apps->push($app);
-                }
-              }
-
-              $data = [
-                'categories' => $categories,
-                'apps' => $apps
-              ];
-
-              return response()->json($data, 200);
-            break;
-
-          case 'category':
-              $category = AppCategory::find($id);
-              $section = $category->section()->first();
-              $apps = $category->apps()->get();
-
-              $data = [
-                'pavilion' => $section,
-                'apps' => $apps
-              ];
-
-              return response()->json($data, 200);
-            break;
-
-          case 'app':
-              $app = App::find($id);
-              $category = $app->category()->first();
-              $section = $app->category()->first();
-
-              $data = [
-                'category' => $category,
-                'pavilion' => $section
-              ];
-
-              return response()->json($data, 200);
-            break;
-        }
-    }
 }

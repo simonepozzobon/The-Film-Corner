@@ -8,6 +8,7 @@ use App\Utility;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCategory;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -58,6 +59,11 @@ class AudioController extends Controller
       $app_category->audios()->save($audio);
       $app_name->audios()->save($audio);
 
+      if ($r->sub_category != null) {
+        $sub_category = MediaSubCategory::find($r->sub_category);
+        $sub_category->audios()->save($audio);
+      }
+
       // riformatto il link dell'immagine per renderlo accessibile in vue
       $audio->img = '';
       $audio->path = $pavilion->name.' > '.$app_category->name.' > '.$app_name->title;
@@ -93,6 +99,7 @@ class AudioController extends Controller
       $audio->apps()->detach($audio);
       $audio->appCategories()->detach($audio);
       $audio->appSection()->detach($audio);
+      $audio->mediaSubCategories()->detach($audio);
 
       $audio_path = storage_path('app/public/'.$audio->src);
 

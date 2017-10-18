@@ -17,7 +17,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('apps/relations/{type}/{id}', 'Admin\Apps\VideoController@getRelations');
+// General request
+Route::get('apps/relations/media-sub-categories/{id}', 'Admin\Apps\GeneralController@getSubCategories');
+Route::get('apps/relations/{type}/{id}', 'Admin\Apps\GeneralController@getRelations');
+
+// Video
 Route::post('apps/video', 'Admin\Apps\VideoController@uploadVideo');
 Route::delete('apps/video/{id}', 'Admin\Apps\VideoController@deleteVideo');
 

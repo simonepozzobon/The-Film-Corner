@@ -8,6 +8,7 @@ use App\Utility;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCategory;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -55,6 +56,11 @@ class MediaController extends Controller
           $app_category->medias()->save($media);
           $app_name->medias()->save($media);
 
+          if ($r->sub_category != null) {
+            $sub_category = MediaSubCategory::find($r->sub_category);
+            $sub_category->medias()->save($media);
+          }
+
           $media->img = Storage::disk('local')->url($media->thumb);
           $media->path = $pavilion->name.' > '.$app_category->name.' > '.$app_name->title;
 
@@ -88,6 +94,7 @@ class MediaController extends Controller
       $media->apps()->detach($media);
       $media->appCategories()->detach($media);
       $media->appSection()->detach($media);
+      $media->mediaSubCategories()->detach($media);
 
       $media_path = storage_path('app/public/'.$media->src);
       $thumb = storage_path('app/public/'.$media->thumb);
