@@ -52,6 +52,12 @@ class Teacher extends Authenticatable
 
     public function sessions()
     {
-      return $this->hasMany('App\TeacherSession');
+      return $this->hasMany('App\AppsSessions\AppsSession');
     }
+
+    // Deprecated Old version
+    // public function sessions()
+    // {
+    //   return $this->hasMany('App\TeacherSession');
+    // }
 }

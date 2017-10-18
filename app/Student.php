@@ -53,7 +53,13 @@ class Student extends Authenticatable
 
     public function sessions()
     {
-      return $this->hasMany('App\StudentSession');
+      return $this->hasMany('App\AppsSessions\StudentAppSession');
     }
+
+    // Deprecated old session method
+    // public function sessions()
+    // {
+    //   return $this->hasMany('App\StudentSession');
+    // }
 
 }

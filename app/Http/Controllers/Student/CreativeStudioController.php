@@ -50,10 +50,7 @@ class CreativeStudioController extends Controller
     }
 
     $colors = [
-      0 => ['#f5db5e', '#e9c845'],
-      1 => ['#d8ef8f', '#b7cc5e'],
-      2 => ['#f4c490', '#e8a360'],
-      3 => ['#d9f5fc', '#a6dbe2'],
+      'yellow', 'blue', 'orange', 'green'
     ];
 
     $counter = 0;
@@ -64,6 +61,15 @@ class CreativeStudioController extends Controller
       if ($counter % 4 == 0) {
         $counter = 0;
       }
+    }
+
+    // calcolo il numero di sessioni
+    $sessions = $student->sessions()->get();
+    foreach ($apps as $key => $app) {
+      $filtered = $sessions->filter(function($session, $key) use ($app) {
+        return $session->app_id == $app->id;
+      })->all();
+      count($filtered) < 5 ? $app->available = true : $app->available = false;
     }
 
     return view('student.creative-studio.path.index', compact('apps', 'app_category', 'visited'));
