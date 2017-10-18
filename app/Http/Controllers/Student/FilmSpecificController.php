@@ -92,7 +92,12 @@ class FilmSpecificController extends Controller
 
 
       case 'frame-composer':
-        return view('student.film-specific.frame-composer.index', compact('app', 'app_category'));
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            return $img->category_id == 2;
+        });
+        $images->all();
+        return view('student.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
         break;
 
       case 'frame-crop':
@@ -205,7 +210,12 @@ class FilmSpecificController extends Controller
     switch ($app_slug) {
 
       case 'frame-composer':
-        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session'));
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            return $img->category_id == 2;
+        });
+        $images->all();
+        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'images'));
         break;
 
       case 'frame-crop':

@@ -104,21 +104,12 @@
             <div class="row">
               <div class="col yellow p-5">
                 <ul class="assets list-unstyled row">
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/men.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/dress.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/trouser.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_1.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
-                  <li class="col-md-3"><img src="{{ asset('img/helpers/apps/character-builder/head_2.png') }}" alt="image asset" width="80" class="img-fluid w-100"/>
-                    <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                  </li>
+                  @foreach ($images as $key => $image)
+                    <li class="col-md-3">
+                      <img src="{{ Storage::disk('local')->url($image->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($image->src) }}"/>
+                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </li>
+                  @endforeach
                 </ul>
               </div>
             </div>
@@ -189,21 +180,20 @@
 
             if( !image_obj ) {
               var $image = $(this).find('img');
-              // var width = $image.width() / $image.height() * canvas.height / 3;
               var width = $image.prop('naturalWidth');
-              // var height = $image.height() / $image.width() * width;
               var height = $image.prop('naturalHeight');
-              var imgInstance = new fabric.Image($image[0], {
-                width  : width,
-                height : height,
-                transparentCorners : false,
-              });
-              parent.children('a').removeClass('d-none')
-              $this.data('image-image-obj', imgInstance);
-              canvas.add(imgInstance).setActiveObject( imgInstance );
 
-              // salvo in json
-              saveCanvas(canvas);
+              var imgInstance = new fabric.Image($image[0], {
+                width  : height,
+                height : width,
+                transparentCorners : false,
+              })
+              .setSrc($this.find('img').data('img-src'), function() {
+                parent.children('a').removeClass('d-none')
+                $this.data('image-image-obj', imgInstance);
+                canvas.add(imgInstance).setActiveObject( imgInstance );
+                saveCanvas(canvas);
+              });
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
               parent.children('a').addClass('d-none');
