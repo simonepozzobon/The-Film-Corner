@@ -194,8 +194,6 @@
                 canvas.add(imgInstance).setActiveObject( imgInstance );
                 saveCanvas(canvas);
               });
-
-              // salvo in json
             } else {
               // rimuove gli oggetti dal canvas e la classe "selected"
               parent.children('a').addClass('d-none');
