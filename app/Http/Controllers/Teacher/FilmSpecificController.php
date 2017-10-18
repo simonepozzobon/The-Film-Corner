@@ -92,15 +92,15 @@ class FilmSpecificController extends Controller
 
 
       case 'frame-composer':
-        $images = $app->medias()->get();
-
-        $filtered = $images->filter(function ($img, $key) {
-            return $img->category_id == 2;
-        });
-
-        $filtered->all();
-
-        dd($filtered);
+        // $images = $app->medias()->get();
+        //
+        // $filtered = $images->filter(function ($img, $key) {
+        //     return $img->category_id == 2;
+        // });
+        //
+        // $filtered->all();
+        //
+        // dd($filtered);
         return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category'));
         break;
 
