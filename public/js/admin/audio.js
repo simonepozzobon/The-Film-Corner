@@ -628,11 +628,11 @@ var _axios = __webpack_require__(15);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(190);
+var _AudioFormUpload = __webpack_require__(191);
 
 var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
 
-var _AudioCrud = __webpack_require__(189);
+var _AudioCrud = __webpack_require__(190);
 
 var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
 
@@ -1684,45 +1684,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 /***/ }),
 
-/***/ 189:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(208)
-
-var Component = __webpack_require__(29)(
-  /* script */
-  __webpack_require__(172),
-  /* template */
-  __webpack_require__(200),
-  /* scopeId */
-  "data-v-4e001d63",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioCrud.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AudioCrud.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4e001d63", Component.options)
-  } else {
-    hotAPI.reload("data-v-4e001d63", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1754,13 +1715,52 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /* styles */
-__webpack_require__(205)
+__webpack_require__(209)
+
+var Component = __webpack_require__(29)(
+  /* script */
+  __webpack_require__(172),
+  /* template */
+  __webpack_require__(201),
+  /* scopeId */
+  "data-v-4e001d63",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioCrud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AudioCrud.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4e001d63", Component.options)
+  } else {
+    hotAPI.reload("data-v-4e001d63", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 191:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(206)
 
 var Component = __webpack_require__(29)(
   /* script */
   __webpack_require__(173),
   /* template */
-  __webpack_require__(197),
+  __webpack_require__(198),
   /* scopeId */
   "data-v-298c3cca",
   /* cssModules */
@@ -1788,7 +1788,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 197:
+/***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2077,7 +2077,7 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 200:
+/***/ 201:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -2205,7 +2205,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 205:
+/***/ 206:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -2232,7 +2232,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 208:
+/***/ 209:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -2259,7 +2259,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(155);
@@ -52186,4 +52186,4 @@ module.exports = g;
 
 /***/ })
 
-},[211]);
+},[212]);

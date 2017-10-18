@@ -4,7 +4,7 @@
   <meta name="author" content="Simone Pozzobon">
 
   <title>Admin Panel - @yield('title')</title>
-
+  <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="{{ mix('css/admin/admin.css') }}">
   {{-- Main Stylesheet --}}
   {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
