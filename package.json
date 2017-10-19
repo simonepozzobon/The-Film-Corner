@@ -33,11 +33,15 @@
     "angular": "^1.6.6",
     "angular-media-timeline": "*",
     "dropzone": "^5.1.1",
+    "express": "^4.16.2",
     "fabric": "^2.0.0-beta0",
     "font-awesome": "^4.7.0",
     "mo-js": "*",
+    "redis": "^2.8.0",
+    "socket.io": "^2.0.3",
     "video.js": "^6.2.6",
     "vjs-video": "*",
-    "vue": "^2.4.4"
+    "vue": "^2.4.4",
+    "vue-socket.io": "^2.1.1-a"
   }
 }
