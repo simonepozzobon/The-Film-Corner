@@ -65,13 +65,13 @@ class Utility extends Model
     $file = $file->storeAs('public/video/tmp', $filename.'.'.$ext);
     $filePath = $globalPath->applyPathPrefix($file);
 
-    return [
-      'file_after' => $file,
-      'file_path' => $filePath,
-      'filename' => $filename,
-      'ext' => $ext,
-      'destFolder' => $destFolder
-    ];
+    // return [
+    //   'file_after' => $file,
+    //   'file_path' => $filePath,
+    //   'filename' => $filename,
+    //   'ext' => $ext,
+    //   'destFolder' => $destFolder
+    // ];
 
 
     Storage::makeDirectory('public/'.$destFolder, 0777, true);
