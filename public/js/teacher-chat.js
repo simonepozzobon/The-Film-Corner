@@ -15965,28 +15965,31 @@ exports.default = {
         'to_type': vue.totype,
         'token': vue.sessiontoken
       }).then(function (response) {
-        console.log(response);
-        _.each(response.data, function (msg) {
-          console.log(msg);
-          if (msg.from == vue.fromid) {
-            var history = {
-              'msg': msg.message,
-              'type': 'sent',
-              'color': 'orange',
-              'pos': 'justify-content-end'
-            };
-            vue.messages.push(history);
-          }
-          if (msg.from == vue.toid) {
-            var history = {
-              'msg': msg.message,
-              'type': 'received',
-              'color': 'green',
-              'pos': 'justify-content-start'
-            };
-            vue.messages.push(history);
-          }
-        });
+        if (response.data.success != false) {
+          _.each(response.data, function (msg) {
+            console.log(msg);
+            if (msg.from == vue.fromid) {
+              var history = {
+                'msg': msg.message,
+                'type': 'sent',
+                'color': 'orange',
+                'pos': 'justify-content-end'
+              };
+              vue.messages.push(history);
+            }
+            if (msg.from == vue.toid) {
+              var history = {
+                'msg': msg.message,
+                'type': 'received',
+                'color': 'green',
+                'pos': 'justify-content-start'
+              };
+              vue.messages.push(history);
+            }
+          });
+        } else {
+          console.log(response.data.status);
+        }
       }).catch(function (error) {
         console.log(error);
       });
