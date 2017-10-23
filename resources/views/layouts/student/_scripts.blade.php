@@ -509,6 +509,25 @@
         }
       });
     }
+
+    this.openSession = function (token, app_id)
+    {
+        var sessions = [];
+
+        if ($.cookie('tfc-sessions')) {
+            sessions = [];
+        }
+
+        session = {
+            'app_id': app_id,
+            'token': token
+        };
+
+        sessions.push(session);
+        // Vecchio sistema con i cookies
+        $.cookie('tfc-sessions', JSON.stringify(sessions));
+        console.log('session loaded');
+    }
   };
 </script>
 @endif
