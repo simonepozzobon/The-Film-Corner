@@ -1558,7 +1558,13 @@ exports.default = {
 
             this.animationBeforeSend();
 
-            _axios2.default.post('/api/apps/video', formData).then(function (response) {
+            var config = {
+                onUploadProgress: function onUploadProgress(progressEvent) {
+                    return console.log(progressEvent.loaded);
+                }
+            };
+
+            _axios2.default.post('/api/apps/video', formData, config).then(function (response) {
                 console.log(response);
                 vue.title = '';
                 vue.video = '';
@@ -1569,12 +1575,12 @@ exports.default = {
                 vue.sub_category = '';
 
                 vue.animationHideDots();
-                alert('uploaded');
                 vue.animationShowSuccess();
                 _lodash2.default.delay(function () {
                     vue.closeModal();
                     vue.$parent.$emit('newVideoLoaded', response.data);
                 }, 1000);
+                alert('uploaded');
             }).catch(function (error) {
                 console.log(error);
                 _lodash2.default.delay(function () {

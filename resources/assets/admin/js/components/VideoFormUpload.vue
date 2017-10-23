@@ -329,7 +329,11 @@
 
               this.animationBeforeSend();
 
-              axios.post('/api/apps/video', formData)
+              const config = {
+                  onUploadProgress: progressEvent => console.log(progressEvent.loaded)
+              }
+
+              axios.post('/api/apps/video', formData, config)
               .then(function(response){
                 console.log(response);
                 vue.title = '';
@@ -347,7 +351,7 @@
                   vue.$parent.$emit('newVideoLoaded', response.data);
                 }, 1000);
                 alert('uploaded');
-                
+
 
               })
               .catch(function (error) {
