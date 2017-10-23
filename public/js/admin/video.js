@@ -1570,11 +1570,11 @@ exports.default = {
 
                 vue.animationHideDots();
                 alert('uploaded');
-                // vue.animationShowSuccess();
-                // _.delay(() => {
-                //   vue.closeModal();
-                //   vue.$parent.$emit('newVideoLoaded', response.data);
-                // }, 1000);
+                vue.animationShowSuccess();
+                _lodash2.default.delay(function () {
+                    vue.closeModal();
+                    vue.$parent.$emit('newVideoLoaded', response.data);
+                }, 1000);
             }).catch(function (error) {
                 console.log(error);
                 _lodash2.default.delay(function () {

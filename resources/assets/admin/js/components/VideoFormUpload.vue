@@ -342,11 +342,11 @@
 
                 vue.animationHideDots();
                 alert('uploaded');
-                // vue.animationShowSuccess();
-                // _.delay(() => {
-                //   vue.closeModal();
-                //   vue.$parent.$emit('newVideoLoaded', response.data);
-                // }, 1000);
+                vue.animationShowSuccess();
+                _.delay(() => {
+                  vue.closeModal();
+                  vue.$parent.$emit('newVideoLoaded', response.data);
+                }, 1000);
 
               })
               .catch(function (error) {
