@@ -26,7 +26,8 @@ const { mix } = require('laravel-mix');
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
 
     .js('resources/assets/js/socket-test', 'public/js')
-    
+    .js('resources/assets/js/teacher-chat.js', 'public/js')
+
     .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')
