@@ -452,6 +452,8 @@ class SessionController extends Controller
     $teacher = $student->teacher()->first();
     $teacher->notify( new ShareSession($session) );
 
+    $session->teacher_shared = 1;
+    $session->save();
 
     //
     // // Creo la sessione condivisa
