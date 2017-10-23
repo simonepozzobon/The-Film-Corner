@@ -59,18 +59,20 @@ class Utility extends Model
     // definisco la library di FFMPEG
     define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
 
-    return [
-      'file' => $file,
-      'filename' => $filename,
-      'ext' => $ext,
-      'destFolder' => $destFolder
-    ];
-    
     // definisco la path global
     $globalPath = Storage::disk('local')->getDriver()->getAdapter();
 
     $file = $file->storeAs('public/video/tmp', $filename.'.'.$ext);
     $filePath = $globalPath->applyPathPrefix($file);
+
+    return [
+      'file_after' => $file,
+      'file_path' => $filePath,
+      'filename' => $filename,
+      'ext' => $ext,
+      'destFolder' => $destFolder
+    ];
+
 
     Storage::makeDirectory('public/'.$destFolder, 0777, true);
 
