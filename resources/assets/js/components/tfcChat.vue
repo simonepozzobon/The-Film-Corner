@@ -1,27 +1,26 @@
 <template>
-  <div id="chat" style="width: 30rem">
-    <div class="box container-fluid mb-4">
+  <div id="chat" class="collapse" style="width: 25rem;">
+    <div class="box container-fluid">
       <div class="row">
         <div class="col dark-blue py-3 px-5">
-          <h3>{{title}} - {{type}}</h3>
+          <h3>{{toname}}</h3>
         </div>
       </div>
       <div class="row">
-        <div class="col blue p-5">
-          <div class="form-group">
-            <select class="form-control" v-model="to_id">
-              <option v-for="contact in conts" :value="contact.id">{{contact.name}}</option>
-            </select>
-          </div>
+        <div class="col blue p-5" style="height: 20rem; overflow-y: scroll;">
           <div v-for="message in messages" :class="'d-flex '+message.pos+' mb-3'">
                   <div :class="'box '+message.color+' p-2 w-75'">
                     <p>{{message.msg}}</p>
                   </div>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col blue px-5 pb-5">
           <div class="form-group">
             <input @keyup.enter="sendMsg" class="form-control" v-model="msg">
           </div>
-          <a @click="sendMsg" href="#" class="btn btn-block btn-primary">Send</a>
+          <a @click="sendMsg" href="#" class="btn btn-block btn-secondary btn-blue"><i class="fa fa-paper-plane-o"></i> Send</a>
         </div>
       </div>
     </div>
@@ -35,23 +34,18 @@ var socket = io.connect('http://localhost:6001', {reconnect: true});
 
 export default {
   name: "tfc-chat",
-  props: ['title', 'type', 'user', 'contacts'],
+  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'sessiontoken'],
   data: () => ({
       messages: [],
       msg: '',
-      to_id: '',
       conts: '',
   }),
   mounted() {
-    console.log(this.user);
-    console.log(this.contacts);
-    this.conts = JSON.parse(this.contacts);
-
+    this.loadHistory();
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username);
     });
-
-    socket.on('chat:newMessage:'+this.user+':'+this.type, (data) => {
+    socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
       var message = {
         'msg': data.message,
         'type': 'received',
@@ -67,19 +61,16 @@ export default {
         e.preventDefault();
         var vue = this;
 
-        if (this.type == 'student') {
-          this.to_type = 'teacher';
-        } else {
-          this.to_type = 'student';
-        }
-        axios.post('/api/v1/test-notification', {
-            'from_id': vue.user,
-            'from_type': vue.type,
-            'to_id': vue.to_id,
-            'to_type': vue.to_type,
+        axios.post('/api/v1/chat-notification', {
+            'from_id': vue.fromid,
+            'from_type': vue.fromtype,
+            'to_id': vue.toid,
+            'to_type': vue.totype,
+            'token': vue.sessiontoken,
             'message' : vue.msg,
         })
         .then((response) => {
+          console.log(response);
             var message = {
               'msg': vue.msg,
               'type': 'sent',
@@ -93,6 +84,48 @@ export default {
           console.log(error);
         });
     },
+
+    loadHistory()
+    {
+      var vue = this;
+      axios.post('/api/v1/chat-history', {
+        'from_id': vue.fromid,
+        'from_type': vue.fromtype,
+        'to_id': vue.toid,
+        'to_type': vue.totype,
+        'token': vue.sessiontoken,
+      })
+      .then((response) => {
+        console.log(response);
+        _.each(response.data, (msg) => {
+          console.log(msg);
+          if (msg.from == vue.fromid)
+          {
+              var history = {
+                  'msg': msg.message,
+                  'type': 'sent',
+                  'color': 'orange',
+                  'pos': 'justify-content-end',
+              }
+              vue.messages.push(history);
+          }
+          if (msg.from == vue.toid)
+          {
+              var history = {
+                  'msg': msg.message,
+                  'type': 'received',
+                  'color': 'green',
+                  'pos': 'justify-content-start',
+              }
+              vue.messages.push(history);
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+    }
+
   },
 }
 </script>
