@@ -33,17 +33,17 @@ class VideoController extends Controller
 
       $destFolder = 'apps/library/'.$pavilion->slug.'/'.$app_category->slug.'/'.$app_name->slug.'/video/';
 
-      return response()->json([
-        'request' => $r->all(),
-        'file' => $file,
-        'filename' => $filename,
-        'ext' => $ext,
-        'check' => $check,
-        'pavilion' => $pavilion,
-        'app_category' => $app_category,
-        'app_name' => $app_name,
-        'destFolder' => $destFolder
-      ], 200);
+      // return response()->json([
+      //   'request' => $r->all(),
+      //   'file' => $file,
+      //   'filename' => $filename,
+      //   'ext' => $ext,
+      //   'check' => $check,
+      //   'pavilion' => $pavilion,
+      //   'app_category' => $app_category,
+      //   'app_name' => $app_name,
+      //   'destFolder' => $destFolder
+      // ], 200);
 
       if ($check) {
 
@@ -58,6 +58,8 @@ class VideoController extends Controller
             $library = $utility->storeVideo($file, $filename, $ext, $destFolder.'example/');
             break;
         }
+
+        return response()->json($library, 200);
 
         $video = new Video;
         $video->title = $r->title;
