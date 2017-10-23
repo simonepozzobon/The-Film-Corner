@@ -34,6 +34,7 @@ class VideoController extends Controller
       $destFolder = 'apps/library/'.$pavilion->slug.'/'.$app_category->slug.'/'.$app_name->slug.'/video/';
 
       return response()->json([
+        'request' => $r->all(),
         'file' => $file,
         'filename' => $filename,
         'ext' => $ext,

@@ -17,6 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::prefix('v1')->group(function() {
+  Route::post('test-notification', 'Api\TestController@test');
+});
+
 // General request
 Route::get('apps/relations/media-sub-categories/{id}', 'Admin\Apps\GeneralController@getSubCategories');
 Route::get('apps/relations/{type}/{id}', 'Admin\Apps\GeneralController@getRelations');
