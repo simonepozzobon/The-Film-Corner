@@ -207,7 +207,7 @@ class FilmSpecificController extends Controller
     $is_student = false;
     if ($app_session == null) {
       // Student Session
-      $app_session = StudentAppSession::where('token', '=', $token)->first();
+      $app_session = StudentAppSession::where('token', '=', $token)->with('student')->first();
       $is_student = true;
     }
 
@@ -230,19 +230,19 @@ class FilmSpecificController extends Controller
             return $img->category_id == 2;
         });
         $images->all();
-        return view('teacher.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'is_student', 'images'));
+        return view('teacher.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'images'));
         break;
 
       case 'frame-crop':
-        return view('teacher.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'juxtaposition':
-        return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       // case 'frame-counter':
-      //   return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session', 'is_student'));
+      //   return view('teacher.film-specific.frame-counter.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
       //   break;
 
       /*
@@ -254,19 +254,19 @@ class FilmSpecificController extends Controller
       case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token', 'is_student'));
+        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token', 'is_student'));
         break;
 
       case 'offscreen':
-        return view('teacher.film-specific.offscreen.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.offscreen.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'attractions':
-        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'attractions-viceversa':
-        return view('teacher.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
 
@@ -277,19 +277,19 @@ class FilmSpecificController extends Controller
       **/
 
       case 'whats-going-on':
-        return view('teacher.film-specific.whats-going-on.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.whats-going-on.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'sound-atmospheres':
-        return view('teacher.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'soundscapes':
-        return view('teacher.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'stop-and-go':
-        return view('teacher.film-specific.stop-and-go.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.stop-and-go.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
 
@@ -300,7 +300,7 @@ class FilmSpecificController extends Controller
       **/
 
       case 'character-analysis':
-        return view('teacher.film-specific.character-analysis.open', compact('app', 'app_category', 'session', 'is_student'));
+        return view('teacher.film-specific.character-analysis.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
     }
 

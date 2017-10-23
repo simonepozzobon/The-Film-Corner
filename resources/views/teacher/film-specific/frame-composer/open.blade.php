@@ -86,10 +86,10 @@
               </div>
             </div>
             <div class="row">
-              <div class="col blue p-5">
+              <div id="canvas-wrapper" class="col blue p-5" style="height: 30rem">
                 <input id="loadCanvas" type="hidden" name="" value="{{ $session->json_data }}">
                 <div id="container-canvas" class="col d-flex justify-content-around">
-                  <canvas class="image-editor" id="image-editor" width="2048" height="500"></canvas>
+                  <canvas class="image-editor" id="image-editor"></canvas>
                 </div>
               </div>
             </div>
@@ -135,12 +135,24 @@
       </div>
     </div>
   </div>
+  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
+    <tfc-chat
+        fromtype="teacher"
+        fromid="{{ Auth::guard('teacher')->ID() }}"
+        totype="student"
+        toid="{{ $app_session->student->id }}"
+        toname="{{ $app_session->student->name }}">
+    </tfc-chat>
+  </div>
 @endsection
 @section('scripts')
   <script src="{{ asset('plugins/fabric/fabric.min.js') }}"></script>
+  <script src="{{ mix('js/teacher-chat.js') }}"></script>
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
+    AppSession.openSession('{{ $app_session->token }}', {{ $app->id }});
+
     var canvas = this.__canvas = new fabric.Canvas('image-editor');
     json_data = init(canvas);
 
@@ -154,11 +166,9 @@
 
         function responsiveCanvas()
         {
-            $('.image-editor').each(function() {
-              var sizeWidth = ($('#container-canvas').width())-30;
-              $(this).attr('width', sizeWidth).width(sizeWidth);
-              $('.canvas-container').width(sizeWidth);
-            });
+            var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
+            var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
+            canvas.setWidth(sizeWidth).setHeight(sizeHeight);
 
             //SAVE JSON DATA
             json_data = saveCanvas(canvas);
@@ -207,6 +217,10 @@
     {
         json_data = JSON.stringify(canvas.toDatalessJSON());
         $.cookie('tfc-canvas', JSON.stringify(json_data));
+
+        // Save image to local storage
+        localStorage.setItem('app-1-image', canvas.toDataURL('png'));
+
         return json_data;
     }
 

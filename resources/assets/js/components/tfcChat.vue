@@ -96,30 +96,36 @@ export default {
         'token': vue.sessiontoken,
       })
       .then((response) => {
-        console.log(response);
-        _.each(response.data, (msg) => {
-          console.log(msg);
-          if (msg.from == vue.fromid)
-          {
-              var history = {
-                  'msg': msg.message,
-                  'type': 'sent',
-                  'color': 'orange',
-                  'pos': 'justify-content-end',
+        if (response.data.success != false)
+        {
+            _.each(response.data, (msg) => {
+              console.log(msg);
+              if (msg.from == vue.fromid)
+              {
+                  var history = {
+                      'msg': msg.message,
+                      'type': 'sent',
+                      'color': 'orange',
+                      'pos': 'justify-content-end',
+                  }
+                  vue.messages.push(history);
               }
-              vue.messages.push(history);
-          }
-          if (msg.from == vue.toid)
-          {
-              var history = {
-                  'msg': msg.message,
-                  'type': 'received',
-                  'color': 'green',
-                  'pos': 'justify-content-start',
+              if (msg.from == vue.toid)
+              {
+                  var history = {
+                      'msg': msg.message,
+                      'type': 'received',
+                      'color': 'green',
+                      'pos': 'justify-content-start',
+                  }
+                  vue.messages.push(history);
               }
-              vue.messages.push(history);
-          }
-        });
+            });
+        }
+        else
+        {
+            console.log(response.data.status);
+        }
       })
       .catch((error) => {
         console.log(error);

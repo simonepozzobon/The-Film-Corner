@@ -221,19 +221,19 @@ class FilmSpecificController extends Controller
             return $img->category_id == 2;
         });
         $images->all();
-        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'images'));
+        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'images'));
         break;
 
       case 'frame-crop':
-        return view('student.film-specific.frame-crop.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'juxtaposition':
-        return view('student.film-specific.juxtaposition.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       // case 'frame-counter':
-      //   return view('student.film-specific.frame-counter.open', compact('app', 'app_category', 'session'));
+      //   return view('student.film-specific.frame-counter.open', compact('app', 'app_category', 'session', 'app_session'));
       //   break;
 
       /*
@@ -245,19 +245,19 @@ class FilmSpecificController extends Controller
       case 'parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'token'));
+        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token'));
         break;
 
       case 'offscreen':
-        return view('student.film-specific.offscreen.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.offscreen.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'attractions':
-        return view('student.film-specific.attractions.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'attractions-viceversa':
-        return view('student.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
 
@@ -268,19 +268,19 @@ class FilmSpecificController extends Controller
       **/
 
       case 'whats-going-on':
-        return view('student.film-specific.whats-going-on.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.whats-going-on.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'sound-atmospheres':
-        return view('student.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'soundscapes':
-        return view('student.film-specific.soundscapes.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
       case 'stop-and-go':
-        return view('student.film-specific.stop-and-go.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.stop-and-go.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
 
 
@@ -291,7 +291,7 @@ class FilmSpecificController extends Controller
       **/
 
       case 'character-analysis':
-        return view('student.film-specific.character-analysis.open', compact('app', 'app_category', 'session'));
+        return view('student.film-specific.character-analysis.open', compact('app', 'app_category', 'session', 'app_session'));
         break;
     }
 

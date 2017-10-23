@@ -86,9 +86,9 @@
               </div>
             </div>
             <div class="row">
-              <div class="col blue p-5">
+              <div id="canvas-wrapper" class="col blue p-5" style="height: 30rem">
                 <div id="container-canvas" class="col d-flex justify-content-around">
-                  <canvas class="image-editor" id="image-editor" width="2048" height="500"></canvas>
+                  <canvas class="image-editor" id="image-editor"></canvas>
                 </div>
               </div>
             </div>
@@ -156,11 +156,9 @@
 
         function responsiveCanvas()
         {
-            $('.image-editor').each(function() {
-              var sizeWidth = ($('#container-canvas').width())-30;
-              $(this).attr('width', sizeWidth).width(sizeWidth);
-              $('.canvas-container').width(sizeWidth);
-            });
+            var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
+            var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
+            canvas.setWidth(sizeWidth).setHeight(sizeHeight);
 
             //SAVE JSON DATA
             json_data = JSON.stringify(canvas.toDatalessJSON());

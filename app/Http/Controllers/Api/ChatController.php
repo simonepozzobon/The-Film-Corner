@@ -106,6 +106,15 @@ class ChatController extends Controller
             ['student_id', '=', $student],
         ])->first();
 
-        return response($conversation->content);
+        if ($conversation != null) {
+          return response($conversation->content);
+        }
+        else {
+          return response()->json([
+            'success' => false,
+            'status' => 'No message history'
+          ], 200);
+        }
+
     }
 }
