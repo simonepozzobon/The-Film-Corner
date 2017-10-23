@@ -15,6 +15,13 @@
           <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </a>
       </div>
+      @if (isset($app_session) && $app_session->teacher_shared == 1)
+        <div id="comment-btn" class="d-block m-1">
+          <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
+            <i class="fa fa-comment-o" aria-hidden="true"></i>
+          </a>
+        </div>
+      @endif
   @else
       <div id="approve-btn" class="d-block m-1">
         <a class="text-white text-align-center btn btn-success btn-lg" data-toggle="modal" data-target="#saveSession">
@@ -22,7 +29,7 @@
         </a>
       </div>
       <div id="comment-btn" class="d-block m-1">
-        <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="modal" data-target="#saveSession">
+        <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
           <i class="fa fa-comment-o" aria-hidden="true"></i>
         </a>
       </div>

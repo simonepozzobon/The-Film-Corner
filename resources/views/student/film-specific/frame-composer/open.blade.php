@@ -19,7 +19,7 @@
       <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
     </div>
   </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
+  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => false])
   <div class="row row-custom">
     <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
         <div class="container-fluid pl-5">
@@ -86,10 +86,10 @@
               </div>
             </div>
             <div class="row">
-              <div class="col blue p-5">
+              <div id="canvas-wrapper" class="col blue p-5" style="height: 30rem">
                 <input id="loadCanvas" type="hidden" name="" value="{{ $session->json_data }}">
                 <div id="container-canvas" class="col d-flex justify-content-around">
-                  <canvas class="image-editor" id="image-editor" width="2048" height="500"></canvas>
+                  <canvas class="image-editor" id="image-editor"></canvas>
                 </div>
               </div>
             </div>
@@ -135,12 +135,24 @@
       </div>
     </div>
   </div>
+  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
+    <tfc-chat
+        fromtype="student"
+        fromid="{{ Auth::guard('student')->ID() }}"
+        totype="teacher"
+        toid="{{ Auth::guard('student')->user()->teacher()->first()->id }}"
+        toname="{{ Auth::guard('student')->user()->teacher()->first()->name }}">
+    </tfc-chat>
+  </div>
 @endsection
 @section('scripts')
   <script src="{{ asset('plugins/fabric/fabric.min.js') }}"></script>
+  <script src="{{ mix('js/teacher-chat.js') }}"></script>
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
+    AppSession.openSession('{{ $app_session->token }}', {{ $app->id }});
+
     var canvas = this.__canvas = new fabric.Canvas('image-editor');
     json_data = init(canvas);
 
@@ -154,11 +166,9 @@
 
         function responsiveCanvas()
         {
-            $('.image-editor').each(function() {
-              var sizeWidth = ($('#container-canvas').width())-30;
-              $(this).attr('width', sizeWidth).width(sizeWidth);
-              $('.canvas-container').width(sizeWidth);
-            });
+            var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
+            var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
+            canvas.setWidth(sizeWidth).setHeight(sizeHeight);
 
             //SAVE JSON DATA
             json_data = saveCanvas(canvas);
@@ -208,6 +218,10 @@
     {
         json_data = JSON.stringify(canvas.toDatalessJSON());
         $.cookie('tfc-canvas', JSON.stringify(json_data));
+
+        // Save image to local storage
+        localStorage.setItem('app-1-image', canvas.toDataURL('png'));
+
         return json_data;
     }
 
