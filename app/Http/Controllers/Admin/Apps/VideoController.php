@@ -59,7 +59,11 @@ class VideoController extends Controller
             break;
         }
 
-        return response()->json($library, 200);
+        return response()->json([
+          'library' => $library,
+          'request' => $r->all(),
+
+          ], 200);
 
         $video = new Video;
         $video->title = $r->title;
