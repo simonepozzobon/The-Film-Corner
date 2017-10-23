@@ -341,11 +341,12 @@
                 vue.sub_category = '';
 
                 vue.animationHideDots();
-                vue.animationShowSuccess();
-                _.delay(() => {
-                  vue.closeModal();
-                  vue.$parent.$emit('newVideoLoaded', response.data);
-                }, 1000);
+                alert('uploaded');
+                // vue.animationShowSuccess();
+                // _.delay(() => {
+                //   vue.closeModal();
+                //   vue.$parent.$emit('newVideoLoaded', response.data);
+                // }, 1000);
 
               })
               .catch(function (error) {
