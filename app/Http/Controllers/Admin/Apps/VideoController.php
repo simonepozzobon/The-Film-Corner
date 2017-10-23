@@ -59,6 +59,10 @@ class VideoController extends Controller
             break;
         }
 
+        return response([
+          'library' => $library
+        ]);
+
         $video = new Video;
         $video->title = $r->title;
         $video->category_id = $r->category;
