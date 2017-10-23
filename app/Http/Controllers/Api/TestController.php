@@ -12,8 +12,6 @@ class TestController extends Controller
     public function test(Request $request)
     {
 
-
-
       $data = [
         'event' => 'newMessage',
         'from_id' => $request->from_id,
