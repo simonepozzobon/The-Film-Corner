@@ -350,9 +350,6 @@
                   vue.closeModal();
                   vue.$parent.$emit('newVideoLoaded', response.data);
                 }, 1000);
-                alert('uploaded');
-
-
               })
               .catch(function (error) {
                 console.log(error);
