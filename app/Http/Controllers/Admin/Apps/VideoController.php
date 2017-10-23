@@ -72,7 +72,12 @@ class VideoController extends Controller
         $data = [
           'success' => true,
           'message' => 'success',
-          'video' => $video
+          'video' => $video,
+          'library' => $library,
+          'destFolder' => $destFolder,
+          'file' => $file,
+          'filename' => $filename,
+          'ext' => $ext
         ];
 
         return response()->json($data);
