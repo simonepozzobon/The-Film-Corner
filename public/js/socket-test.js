@@ -15913,29 +15913,31 @@ exports.default = {
     };
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     // this.loadHistory();
     console.log('check 1', socket.connected);
     socket.on('connect', function () {
+      var _this = this;
+
       console.log('check 2', socket.connected);
+      socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
+        console.log('new message');
+        var message = {
+          'msg': data.message,
+          'type': 'received',
+          'color': 'green',
+          'pos': 'justify-content-start'
+        };
+        _this.messages.push(message);
+      });
     });
 
     socket.on('chat:UserSignin', function (data) {
-      _this.messages.push(data.username);
+      _this2.messages.push(data.username);
     });
     console.log(socket);
     console.log('chat:newMessage:' + this.fromid + ':' + this.fromtype);
-    socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-      console.log('new message');
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start'
-      };
-      _this.messages.push(message);
-    });
   },
 
   methods: {

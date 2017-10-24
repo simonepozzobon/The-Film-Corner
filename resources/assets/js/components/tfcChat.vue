@@ -45,6 +45,16 @@ export default {
     console.log('check 1', socket.connected);
     socket.on('connect', function() {
       console.log('check 2', socket.connected);
+      socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
+        console.log('new message');
+        var message = {
+          'msg': data.message,
+          'type': 'received',
+          'color': 'green',
+          'pos': 'justify-content-start',
+        }
+        this.messages.push(message);
+      });
     });
 
     socket.on('chat:UserSignin', (data) => {
@@ -52,16 +62,7 @@ export default {
     });
     console.log(socket);
     console.log('chat:newMessage:'+this.fromid+':'+this.fromtype);
-    socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
-      console.log('new message');
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start',
-      }
-      this.messages.push(message);
-    });
+
   },
   methods: {
     sendMsg (e)
