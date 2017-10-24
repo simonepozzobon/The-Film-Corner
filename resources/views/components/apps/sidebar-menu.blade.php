@@ -18,7 +18,7 @@
       @if (isset($app_session) && $app_session->teacher_shared == 1)
         <div id="comment-btn" class="d-block m-1">
           <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
-            <i class="fa fa-comment-o" aria-hidden="true"></i>
+            <i class="fa fa-comment-o" aria-hidden="true"></i> <span id="alert-messages" class="badge badge-pill badge-danger">!</span>
           </a>
         </div>
       @endif
@@ -30,7 +30,7 @@
       </div>
       <div id="comment-btn" class="d-block m-1">
         <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
-          <i class="fa fa-comment-o" aria-hidden="true"></i>
+          <i class="fa fa-comment-o" aria-hidden="true"></i> <span id="alert-messages" class="badge badge-pill badge-danger">!</span>
         </a>
       </div>
   @endif

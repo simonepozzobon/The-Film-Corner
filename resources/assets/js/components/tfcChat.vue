@@ -3,6 +3,10 @@
     <div class="box container-fluid">
       <div class="row">
         <div class="col dark-blue py-3 px-5">
+          <button type="button" class="close" data-toggle="collapse" data-target="#chat" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Chiudi</span>
+          </button>
           <h3>{{toname}}</h3>
         </div>
       </div>
