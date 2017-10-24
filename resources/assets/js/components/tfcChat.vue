@@ -41,14 +41,12 @@ export default {
       conts: '',
   }),
   mounted() {
-    // this.loadHistory();
-    // console.log('check 1', socket.connected);
-    // socket.on('connect', function() {
-    //   console.log('check 2', socket.connected);
-    //
-    // });
+    socket.on('connect', function(){
+      console.log('CLIENT CONNECTED');
+    });
+
     socket.on('test', (data) => {
-      console.log('ricevuto');
+      console.log('testing');
     });
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
       console.log('new message');

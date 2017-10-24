@@ -15915,14 +15915,12 @@ exports.default = {
   mounted: function mounted() {
     var _this = this;
 
-    // this.loadHistory();
-    // console.log('check 1', socket.connected);
-    // socket.on('connect', function() {
-    //   console.log('check 2', socket.connected);
-    //
-    // });
+    socket.on('connect', function () {
+      console.log('CLIENT CONNECTED');
+    });
+
     socket.on('test', function (data) {
-      console.log('ricevuto');
+      console.log('testing');
     });
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
       console.log('new message');
