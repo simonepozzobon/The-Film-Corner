@@ -1,3 +1,5 @@
+#!/usr/bin/env nodejs
+
 /* our server app */
 
 var _ = require('lodash');
