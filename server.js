@@ -16,6 +16,7 @@ redis.on('message', (channel, message) => {
   message = JSON.parse(message);
   // io.emit(channel + ':' + message.event, message.data); //es. chat:UserSignin, data
   io.emit('test', 'ciao');
+  console.log(' ');
   io.clients((error, clients) => {
     if (error) throw error;
     _.each(clients, (client) => {
