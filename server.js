@@ -18,6 +18,7 @@ redis.on('message', (channel, message) => {
   io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message.data);
   console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type);
   console.log(message +' '+ channel);
+  console.log(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type);
 });
 
 server.listen('6001');
