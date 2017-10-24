@@ -26,3 +26,5 @@ redis.on('message', (channel, message) => {
 });
 
 server.listen('6001');
+
+console.log('Server is running at port 6001');
