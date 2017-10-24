@@ -42,12 +42,12 @@ export default {
       conts: '',
   }),
   mounted() {
+    this.loadHistory();
     socket.on('connect', function(){
       console.log('CLIENT CONNECTED');
     });
 
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
-      console.log('new message');
       var message = {
         'msg': data.message,
         'type': 'received',
@@ -60,8 +60,6 @@ export default {
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username);
     });
-    console.log(socket);
-    console.log('chat:newMessage:'+this.fromid+':'+this.fromtype);
 
   },
   methods: {
@@ -79,7 +77,7 @@ export default {
             'message' : vue.msg,
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
             var message = {
               'msg': vue.msg,
               'type': 'sent',
@@ -108,7 +106,7 @@ export default {
         if (response.data.success != false)
         {
             _.each(response.data, (msg) => {
-              console.log(msg);
+              // console.log(msg);
               if (msg.from == vue.fromid)
               {
                   var history = {

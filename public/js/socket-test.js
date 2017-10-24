@@ -15915,12 +15915,12 @@ exports.default = {
   mounted: function mounted() {
     var _this = this;
 
+    this.loadHistory();
     socket.on('connect', function () {
       console.log('CLIENT CONNECTED');
     });
 
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-      console.log('new message');
       var message = {
         'msg': data.message,
         'type': 'received',
@@ -15933,8 +15933,6 @@ exports.default = {
     socket.on('chat:UserSignin', function (data) {
       _this.messages.push(data.username);
     });
-    console.log(socket);
-    console.log('chat:newMessage:' + this.fromid + ':' + this.fromtype);
   },
 
   methods: {
@@ -15950,7 +15948,7 @@ exports.default = {
         'token': vue.sessiontoken,
         'message': vue.msg
       }).then(function (response) {
-        console.log(response);
+        // console.log(response);
         var message = {
           'msg': vue.msg,
           'type': 'sent',
@@ -15974,7 +15972,7 @@ exports.default = {
       }).then(function (response) {
         if (response.data.success != false) {
           _.each(response.data, function (msg) {
-            console.log(msg);
+            // console.log(msg);
             if (msg.from == vue.fromid) {
               var history = {
                 'msg': msg.message,
