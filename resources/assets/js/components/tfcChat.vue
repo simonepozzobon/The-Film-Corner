@@ -30,7 +30,7 @@
 var axios = require('axios');
 
 var io = require('socket.io-client')
-var socket = io.connect('http://localhost:6001', {reconnect: true});
+var socket = io.connect('http://localhost:6001', {path: '/'}, {reconnect: true});
 
 export default {
   name: "tfc-chat",
