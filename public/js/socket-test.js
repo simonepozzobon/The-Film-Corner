@@ -15921,6 +15921,9 @@ exports.default = {
     //   console.log('check 2', socket.connected);
     //
     // });
+    socket.on('test', function (data) {
+      console.log('ricevuto');
+    });
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
       console.log('new message');
       var message = {

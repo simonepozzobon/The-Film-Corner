@@ -47,6 +47,9 @@ export default {
     //   console.log('check 2', socket.connected);
     //
     // });
+    socket.on('test', (data) => {
+      console.log('ricevuto');
+    });
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
       console.log('new message');
       var message = {

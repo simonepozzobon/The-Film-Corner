@@ -13,7 +13,7 @@ redis.subscribe('chat');
 redis.on('message', (channel, message) => {
   message = JSON.parse(message);
   // io.emit(channel + ':' + message.event, message.data); //es. chat:UserSignin, data
-
+  io.emit('test', 'ciao');
   // channel:event:to_id:to_type - message.data
   io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message.data);
   console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type);
