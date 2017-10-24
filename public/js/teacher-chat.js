@@ -15920,6 +15920,7 @@ exports.default = {
       _this.messages.push(data.username);
     });
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
+      console.log('new message');
       var message = {
         'msg': data.message,
         'type': 'received',
