@@ -15919,6 +15919,8 @@ exports.default = {
     socket.on('chat:UserSignin', function (data) {
       _this.messages.push(data.username);
     });
+    console.log(socket);
+    console.log('chat:newMessage:' + this.fromid + ':' + this.fromtype);
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
       console.log('new message');
       var message = {

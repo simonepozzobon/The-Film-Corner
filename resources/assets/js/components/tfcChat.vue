@@ -45,6 +45,8 @@ export default {
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username);
     });
+    console.log(socket);
+    console.log('chat:newMessage:'+this.fromid+':'+this.fromtype);
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
       console.log('new message');
       var message = {
