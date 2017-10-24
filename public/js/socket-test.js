@@ -15919,9 +15919,6 @@ exports.default = {
       console.log('CLIENT CONNECTED');
     });
 
-    socket.on('test', function (data) {
-      console.log('testing');
-    });
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
       console.log('new message');
       var message = {
@@ -15957,7 +15954,7 @@ exports.default = {
         var message = {
           'msg': vue.msg,
           'type': 'sent',
-          'color': 'orange',
+          'color': 'yellow',
           'pos': 'justify-content-end'
         };
         vue.messages.push(message);

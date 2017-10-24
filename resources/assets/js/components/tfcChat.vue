@@ -46,9 +46,6 @@ export default {
       console.log('CLIENT CONNECTED');
     });
 
-    socket.on('test', (data) => {
-      console.log('testing');
-    });
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
       console.log('new message');
       var message = {
@@ -86,7 +83,7 @@ export default {
             var message = {
               'msg': vue.msg,
               'type': 'sent',
-              'color': 'orange',
+              'color': 'yellow',
               'pos': 'justify-content-end',
             }
             vue.messages.push(message);
