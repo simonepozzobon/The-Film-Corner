@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		12: 0
+/******/ 		13: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/teacher-chat","3":"/js/socket-test","4":"/js/admin/video","5":"/js/admin/image","6":"/js/admin/audio","7":"/js/admin/main","8":"/js/app","9":"/js/admin/admin","10":"/js/vendor","11":"/js/city"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/teacher-chat","3":"/js/socket-test","4":"/js/admin/video","5":"/js/admin/image","6":"/js/admin/audio","7":"/js/admin/main","8":"/js/app","9":"/js/admin/admin","10":"/js/vendor","11":"/js/city","12":"/js/network"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {

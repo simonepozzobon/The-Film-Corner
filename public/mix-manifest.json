@@ -16,6 +16,7 @@
   "/css/admin/admin.css": "/css/admin/admin.css",
   "/js/vendor.js": "/js/vendor.js",
   "/js/city.js": "/js/city.js",
+  "/js/network.js": "/js/network.js",
   "/js/manifest.js": "/js/manifest.js",
   "/js/admin/admin.min.js": "/js/admin/admin.min.js"
 }

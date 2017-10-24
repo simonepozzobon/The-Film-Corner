@@ -153,15 +153,14 @@ class NetworkController extends Controller
           2 => ['orange', 'dark-orange'],
           3 => ['blue', 'dark-blue'],
         ];
-
+        $item->debug = '';
 
         switch ($key) {
           case 0:
             $id = rand(0,3);
-
             break;
 
-          case $key > 0 && $key < 3:
+          case $key == 1:
             $id = rand(0,3);
             $before = $items_color[$key-1];
 
@@ -172,14 +171,13 @@ class NetworkController extends Controller
 
             break;
 
-          case $key == 3:
+          case $key == 2:
             $id = rand(0,3);
             $first = $items_color[$key-1];
             $second = $items_color[$key-2];
-            $third = $items_color[$key-3];
 
-            if ($id == $first || $id == $second || $id == $third) {
-              while ($id == $first || $id == $second || $id == $third)
+            if ($id == $first || $id == $second) {
+              while ($id == $first || $id == $second)
               {
                   $id = rand(0,3);
               }
@@ -187,13 +185,11 @@ class NetworkController extends Controller
 
             break;
 
-          case $key > 3 && $key % 4 == 0:
+          case $key > 2 && $key % 3 == 0:
             // Left Column
             $id = rand(0, 3);
-            $right_corner = $items_color[$key-3];
-            $top = $items_color[$key-4];
-
-            $item->l = '';
+            $right_corner = $items_color[$key-2];
+            $top = $items_color[$key-3];
 
             if ($id == $right_corner || $id == $top) {
               while ($id == $right_corner || $id == $top)
@@ -203,47 +199,15 @@ class NetworkController extends Controller
             }
             break;
 
-          case $key > 3 && ($key+1) % 4 == 0:
+          case $key > 2 && ($key+1) % 3 == 0 || ($key-1) % 3 == 0:
             // Right Column
             $id = rand(0, 3);
-            $left_corner = $items_color[$key-5];
-            $left = $items_color[$key-1];
-            $top = $items_color[$key-4];
-
-            if ($id == $left || $id == $left_corner || $id == $top) {
-              while ($id == $left || $id == $left_corner || $id == $top)
-              {
-                  $id = rand(0,3);
-              }
-            }
-
-            break;
-
-          case $key > 3 && ($key-1) % 4 == 0:
-            // Center Left Columns
-            $id = rand(0,3);
             $before = $items_color[$key-1];
-            $top = $items_color[$key-4];
-            $left_corner = $items_color[$key-5];
+            $left_corner = $items_color[$key-4];
+            $top = $items_color[$key-3];
 
             if ($id == $before || $id == $top || $id == $left_corner) {
               while ($id == $before || $id == $top || $id == $left_corner)
-              {
-                  $id = rand(0,3);
-              }
-            }
-
-            break;
-
-          case $key > 3 && ($key-1) % 4 != 0:
-            // Center Right Columns
-            $id = rand(0,3);
-            $before = $items_color[$key-1];
-            $top = $items_color[$key-4];
-            $right_corner = $items_color[$key-3];
-
-            if ($id == $before || $id == $top || $id == $right_corner) {
-              while ($id == $before || $id == $top || $id == $right_corner)
               {
                   $id = rand(0,3);
               }
