@@ -96,9 +96,18 @@
       </div>
     </div>
   </div>
-
+  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
+    <tfc-chat
+        fromtype="student"
+        fromid="{{ Auth::guard('student')->ID() }}"
+        totype="teacher"
+        toid="{{ Auth::guard('student')->user()->teacher()->first()->id }}"
+        toname="{{ Auth::guard('student')->user()->teacher()->first()->name }}">
+    </tfc-chat>
+  </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/teacher-chat.js') }}"></script>
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
   <script>
     var AppSession = new TfcSessions();

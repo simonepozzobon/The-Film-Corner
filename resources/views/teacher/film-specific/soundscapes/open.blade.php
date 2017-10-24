@@ -216,9 +216,18 @@
       </div>
     </div>
   </div>
-
+  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
+    <tfc-chat
+        fromtype="teacher"
+        fromid="{{ Auth::guard('teacher')->ID() }}"
+        totype="student"
+        toid="{{ $app_session->student->id }}"
+        toname="{{ $app_session->student->name }}">
+    </tfc-chat>
+  </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/teacher-chat.js') }}"></script>
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>

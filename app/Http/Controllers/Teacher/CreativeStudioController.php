@@ -19,6 +19,7 @@ use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\AppsSessions\StudentAppSession;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 use Spatie\Activitylog\Models\Activity;
 
@@ -165,6 +166,14 @@ class CreativeStudioController extends Controller
     $app_category = AppCategory::find($app->app_category_id);
 
     $app_session = AppsSession::where('token', '=', $token)->first();
+
+    $is_student = false;
+    if ($app_session == null) {
+      // Student Session
+      $app_session = StudentAppSession::where('token', '=', $token)->with('student')->first();
+      $is_student = true;
+    }
+
     $session = json_decode($app_session->content);
 
     $colors = [
@@ -186,19 +195,19 @@ class CreativeStudioController extends Controller
       **/
 
       case 'active-offscreen':
-        return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.active-offscreen.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
       case 'active-parallel-action':
         $elements = VideoLibrary::all();
         $session = json_encode($session);
-        return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
         break;
 
       case 'sound-studio':
         $elements = AudioLibrary::all();
         $session = json_encode($session);
-        return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
         break;
 
 
@@ -210,15 +219,15 @@ class CreativeStudioController extends Controller
 
       case 'character-builder':
         $session->json_data = htmlspecialchars_decode($session->json_data);
-        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
       case 'storytelling':
-        return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
       case 'storyboard':
-        return view('teacher.creative-studio.storyboard.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.storyboard.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
 
@@ -229,11 +238,11 @@ class CreativeStudioController extends Controller
       **/
 
       case 'lumiere-minute':
-        return view('teacher.creative-studio.lumiere-minute.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.lumiere-minute.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
       case 'make-your-own-film':
-        return view('teacher.creative-studio.make-your-own-film.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('teacher.creative-studio.make-your-own-film.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
         break;
 
     }

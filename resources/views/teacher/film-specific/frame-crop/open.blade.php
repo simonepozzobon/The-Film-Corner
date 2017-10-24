@@ -167,8 +167,18 @@
 
     </div>
   </div>
+  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
+    <tfc-chat
+        fromtype="teacher"
+        fromid="{{ Auth::guard('teacher')->ID() }}"
+        totype="student"
+        toid="{{ $app_session->student->id }}"
+        toname="{{ $app_session->student->name }}">
+    </tfc-chat>
+  </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/teacher-chat.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
   <script src="{{ asset('plugins/three.js/three.js') }}"></script>
   <script src="{{ asset('plugins/D.js/D.js') }}"></script>
