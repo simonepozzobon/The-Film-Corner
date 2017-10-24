@@ -2,6 +2,7 @@
 
 var server = require ('http').Server();
 var io = require ('socket.io')(server);
+io.set('origins', 'http://thefilmcorner.eu:80');
 var Redis = require ('ioredis');
 var redis = new Redis();
 
