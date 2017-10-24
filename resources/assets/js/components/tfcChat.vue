@@ -30,7 +30,7 @@
 var axios = require('axios');
 
 var io = require('socket.io-client')
-var socket = io.connect('http://localhost:6001', {path: '/'}, {reconnect: true});
+var socket = io.connect('http://localhost:6001', {reconnect: true});
 
 export default {
   name: "tfc-chat",
@@ -41,7 +41,12 @@ export default {
       conts: '',
   }),
   mounted() {
-    this.loadHistory();
+    // this.loadHistory();
+    console.log('check 1', socket.connected);
+    socket.on('connect', function() {
+      console.log('check 2', socket.connected);
+    });
+
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username);
     });

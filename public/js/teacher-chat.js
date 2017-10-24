@@ -15900,7 +15900,7 @@ Object.defineProperty(exports, "__esModule", {
 var axios = __webpack_require__(12);
 
 var io = __webpack_require__(128);
-var socket = io.connect('http://localhost:6001', { path: '/' }, { reconnect: true });
+var socket = io.connect('http://localhost:6001', { reconnect: true });
 
 exports.default = {
   name: "tfc-chat",
@@ -15915,7 +15915,12 @@ exports.default = {
   mounted: function mounted() {
     var _this = this;
 
-    this.loadHistory();
+    // this.loadHistory();
+    console.log('check 1', socket.connected);
+    socket.on('connect', function () {
+      console.log('check 2', socket.connected);
+    });
+
     socket.on('chat:UserSignin', function (data) {
       _this.messages.push(data.username);
     });
