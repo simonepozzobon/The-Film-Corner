@@ -19332,7 +19332,7 @@ var _tfcChat2 = _interopRequireDefault(_tfcChat);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_vue2.default.use(_vueSocket2.default, window.location.hostname + ':6001');
+_vue2.default.use(_vueSocket2.default, 'http://' + window.location.hostname + ':6001');
 
 
 var app = new _vue2.default({
