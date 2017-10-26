@@ -160,9 +160,12 @@ Route::prefix('admin')->group(function () {
     Route::get('/stats', 'Admin\StatsController@index')->name('stats.index');
 
     // Tools
-    Route::get('conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
+    Route::get('/conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
 
 });
+
+
+
 
 
 /*
