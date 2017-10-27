@@ -1,8 +1,8 @@
 {
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
-  "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/socket-test.js": "/js/socket-test.js",
+  "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/admin/video.js": "/js/admin/video.js",
   "/js/admin/image.js": "/js/admin/image.js",
   "/js/admin/audio.js": "/js/admin/audio.js",

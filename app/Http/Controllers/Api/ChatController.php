@@ -26,17 +26,8 @@ class ChatController extends Controller
 
         Redis::publish('chat', json_encode($data));
 
-        if ($request->from_type == 'student') {
-            $student = $request->from_id;
-        } elseif ($request->to_type == 'student') {
-            $student = $request->to_id;
-        }
-
-        if ($request->from_type == 'teacher') {
-            $teacher = $request->from_id;
-        } elseif ($request->to_type == 'teacher') {
-            $teacher = $request->to_id;
-        }
+        $student = $this->checkStudent($request);
+        $teacher = $this->checkTeacher($request);
 
         $conversation = Conversation::where([
             ['teacher_id', '=', $teacher],
@@ -58,11 +49,9 @@ class ChatController extends Controller
 
             $conversation->content = json_encode($messages);
             $conversation->save();
-            // return response()->json([
-            //   $conversation
-            // ], 200);
         }
-        else {
+        else
+        {
             $messages = collect();
 
             $content = [
@@ -83,23 +72,28 @@ class ChatController extends Controller
             //   $conversation
             // ], 200);
         }
+
         return response()->json($data, 200);
     }
 
+    public function typing(Request $request)
+    {
+        $data = [
+            'event' => 'typing',
+            'from_id' => $request->from_id,
+            'from_type' => $request->from_type,
+            'to_id' => $request->to_id,
+            'to_type' => $request->to_type,
+            'data' => []
+        ];
+        Redis::publish('chat', json_encode($data));
+        return response()->json($data, 200);
+    }
 
     public function history(Request $request)
     {
-        if ($request->from_type == 'student') {
-            $student = $request->from_id;
-        } elseif ($request->to_type == 'student') {
-            $student = $request->to_id;
-        }
-
-        if ($request->from_type == 'teacher') {
-            $teacher = $request->from_id;
-        } elseif ($request->to_type == 'teacher') {
-            $teacher = $request->to_id;
-        }
+        $student = $this->checkStudent($request);
+        $teacher = $this->checkTeacher($request);
 
         $conversation = Conversation::where([
             ['teacher_id', '=', $teacher],
@@ -116,5 +110,27 @@ class ChatController extends Controller
           ], 200);
         }
 
+    }
+
+    public function checkStudent($request)
+    {
+        if ($request->from_type == 'student') {
+            $student = $request->from_id;
+        } elseif ($request->to_type == 'student') {
+            $student = $request->to_id;
+        }
+
+        return $student;
+    }
+
+    public function checkTeacher($request)
+    {
+        if ($request->from_type == 'teacher') {
+            $teacher = $request->from_id;
+        } elseif ($request->to_type == 'teacher') {
+            $teacher = $request->to_id;
+        }
+
+        return $teacher;
     }
 }

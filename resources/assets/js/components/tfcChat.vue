@@ -11,20 +11,24 @@
         </div>
       </div>
       <div class="row">
-        <div class="col blue p-5" style="height: 20rem; overflow-y: scroll;">
+        <div id="questo" class="col blue p-5" style="overflow-y: scroll;" ref="messages">
           <div v-for="message in messages" :class="'d-flex '+message.pos+' mb-3'">
-                  <div :class="'box '+message.color+' p-2 w-75'">
-                    <p>{{message.msg}}</p>
-                  </div>
+            <div :class="'box '+message.color+' p-2 w-75'">
+              <span class="msg">{{message.msg}}</span>
+            </div>
           </div>
         </div>
       </div>
       <div class="row">
-        <div class="col blue px-5 pb-5">
-          <div class="form-group">
-            <input @keyup.enter="sendMsg" class="form-control" v-model="msg">
+        <div class="col dark-blue px-5 pt-4 pb-2">
+          <div class="d-flex justify-content-around">
+            <div class="form-group d-inline-block w-75">
+              <input @keyup.enter="sendMsg" @keyup="typingMsg" class="form-control" v-model="msg">
+            </div>
+            <div class="form-group d-inline-block">
+              <a @click="sendMsg" href="#" class="btn btn-secondary btn-blue-inverse"><i class="fa fa-paper-plane-o"></i></a>
+            </div>
           </div>
-          <a @click="sendMsg" href="#" class="btn btn-block btn-secondary btn-blue"><i class="fa fa-paper-plane-o"></i> Send</a>
         </div>
       </div>
     </div>
@@ -32,10 +36,10 @@
 </template>
 <script>
 var axios = require('axios');
-
 var io = require('socket.io-client')
 var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect: true});
-
+var _ = require('lodash');
+var $ = require('jquery');
 
 export default {
   name: "tfc-chat",
@@ -46,24 +50,39 @@ export default {
       conts: '',
   }),
   mounted() {
+    var vue = this;
+    this.resizeChat();
     this.loadHistory();
     socket.on('connect', function(){
-      console.log('CLIENT CONNECTED');
+        console.log('CLIENT CONNECTED');
     });
-
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start',
-      }
-      this.messages.push(message);
+        var message = {
+            'msg': data.message,
+            'type': 'received',
+            'color': 'green',
+            'pos': 'justify-content-start',
+        }
+        this.messages.push(message);
+    });
+    socket.on('chat:UserSignin', (data) => {
+        this.messages.push(data.username);
+    });
+    window.addEventListener( 'resize', _.debounce(vue.resizeChat, 50) );
+    $('#chat').on( 'shown.bs.collapse', () => {
+        var questo = document.getElementById('questo');
+        questo.scrollTop = (questo.scrollHeight - 120);
     });
 
-    socket.on('chat:UserSignin', (data) => {
-      this.messages.push(data.username);
-    });
+    // axios.post('/api/v1/chat-typing', {
+    //     'from_id': vue.fromid,
+    //     'from_type': vue.fromtype,
+    //     'to_id': vue.toid,
+    //     'to_type': vue.totype,
+    //     'token': vue.sessiontoken,
+    // }).then((response) => {
+    //   console.log(response);
+    // });
 
   },
   methods: {
@@ -81,7 +100,7 @@ export default {
             'message' : vue.msg,
         })
         .then((response) => {
-          // console.log(response);
+            // console.log(response);
             var message = {
               'msg': vue.msg,
               'type': 'sent',
@@ -92,59 +111,85 @@ export default {
             vue.msg = '';
         })
         .catch((error) => {
-          console.log(error);
+            console.log(error);
         });
     },
 
     loadHistory()
     {
-      var vue = this;
-      axios.post('/api/v1/chat-history', {
-        'from_id': vue.fromid,
-        'from_type': vue.fromtype,
-        'to_id': vue.toid,
-        'to_type': vue.totype,
-        'token': vue.sessiontoken,
-      })
-      .then((response) => {
-        if (response.data.success != false)
-        {
-            _.each(response.data, (msg) => {
-              // console.log(msg);
-              if (msg.from == vue.fromid)
-              {
-                  var history = {
-                      'msg': msg.message,
-                      'type': 'sent',
-                      'color': 'orange',
-                      'pos': 'justify-content-end',
+        var vue = this;
+        axios.post('/api/v1/chat-history', {
+            'from_id': vue.fromid,
+            'from_type': vue.fromtype,
+            'to_id': vue.toid,
+            'to_type': vue.totype,
+            'token': vue.sessiontoken,
+        })
+        .then((response) => {
+            if (response.data.success != false)
+            {
+                _.each(response.data, (msg) => {
+                  // console.log(msg);
+                  if (msg.from == vue.fromid)
+                  {
+                      var history = {
+                          'msg': msg.message,
+                          'type': 'sent',
+                          'color': 'yellow',
+                          'pos': 'justify-content-end',
+                      }
+                      vue.messages.push(history);
                   }
-                  vue.messages.push(history);
-              }
-              if (msg.from == vue.toid)
-              {
-                  var history = {
-                      'msg': msg.message,
-                      'type': 'received',
-                      'color': 'green',
-                      'pos': 'justify-content-start',
+                  if (msg.from == vue.toid)
+                  {
+                      var history = {
+                          'msg': msg.message,
+                          'type': 'received',
+                          'color': 'green',
+                          'pos': 'justify-content-start',
+                      }
+                      vue.messages.push(history);
                   }
-                  vue.messages.push(history);
-              }
-            });
-        }
-        else
-        {
-            console.log(response.data.status);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-    }
+                });
+            }
+            else
+            {
+                console.log(response.data.status);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    },
 
+    resizeChat()
+    {
+      var height = window.innerHeight / 4;
+      this.$refs['messages'].style.height = height+'px';
+    },
+
+    typingMsg()
+    {
+      var vue = this;
+      // _.debounce(
+      //   axios.post('/api/v1/chat-typing', {
+      //       'from_id': vue.fromid,
+      //       'from_type': vue.fromtype,
+      //       'to_id': vue.toid,
+      //       'to_type': vue.totype,
+      //       'token': vue.sessiontoken,
+      //   })
+      //   , 500);
+
+    },
   },
 }
 </script>
 <style lang="scss" scoped>
+  .box {
+    border-radius: .5rem;
+  }
+  .box span {
+    padding-left: .5rem;
+  }
 </style>

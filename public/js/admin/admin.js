@@ -1,6 +1,6 @@
 webpackJsonp([10],{
 
-/***/ 204:
+/***/ 203:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12,11 +12,11 @@ webpackJsonp([10],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
 
 /***/ }),
 
-/***/ 207:
+/***/ 206:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -340,7 +340,14 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(20)))
+
+/***/ }),
+
+/***/ 215:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -372,23 +379,16 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 220:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
 /***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(207);
-__webpack_require__(204);
+__webpack_require__(206);
+__webpack_require__(203);
+__webpack_require__(218);
 __webpack_require__(219);
-__webpack_require__(220);
+__webpack_require__(215);
 __webpack_require__(216);
-__webpack_require__(217);
-module.exports = __webpack_require__(218);
+module.exports = __webpack_require__(217);
 
 
 /***/ })

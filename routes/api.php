@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function() {
   Route::post('chat-notification', 'Api\ChatController@message');
   Route::post('chat-history', 'Api\ChatController@history');
+  Route::post('chat-typing', 'Api\ChatController@typing');
 });
 
 // General request

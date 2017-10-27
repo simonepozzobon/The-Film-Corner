@@ -13,19 +13,13 @@
             </div>
             <div class="row">
               <div class="col {{ $item->colors[0] }} px-5 pt-3 pb-5">
-                <h5 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_category }}</span></h5>
-                <h5 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_name }}</span></h5>
+                <h6 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_category }}</span></h6>
+                <h6 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_name }}</span></h6>
                 <p>{{ $item->notes }}</p>
-                <hr>
-                <div class="row pt-4">
-                  <div class="col">
-                    <h4 class="text-center"><i class="fa fa-eye" aria-hidden="true"></i></h4>
-                  </div>
-                  <div class="col">
-                    <h4 class="text-center"><i class="fa fa-heart" aria-hidden="true"></i></h4>
-                  </div>
-                  <div class="col">
-                    <h4 class="text-center"><i class="fa fa-comment" aria-hidden="true"></i></h4>
+                <network-icons></network-icons>
+                <div class="row">
+                  <div class="col d-flex justify-content-around">
+                    <a href="#" class="btn btn-secondary btn-block btn-{{ $item->colors[0] }}">View</a>
                   </div>
                 </div>
               </div>
