@@ -12,7 +12,6 @@ class ToolController extends Controller
     public function indexExcel()
     {
       $applications = ConferenceApplication::all();
-
       Excel::create('TFC - Registrazioni Conferenza', function($excel) use($applications) {
           $excel->setTitle('Registrazioni');
           $excel->sheet('Registrazioni', function($sheet) use($applications){
