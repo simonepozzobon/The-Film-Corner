@@ -216,6 +216,7 @@ Route::prefix('teacher')->group(function() {
 
   // Network
   Route::get('/network', 'Teacher\NetworkController@index')->name('teacher.network.index');
+  Route::get('/network/{token}', 'Teacher\NetworkController@single')->name('teacher.network.single');
 
   // Sessioni
   Route::get('/session/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');

@@ -28,6 +28,7 @@ const { mix } = require('laravel-mix');
     .js('resources/assets/js/socket-test', 'public/js')
     .js('resources/assets/js/teacher-chat.js', 'public/js')
     .js('resources/assets/js/network.js', 'public/js')
+    .js('resources/assets/js/network-single.js', 'public/js')
 
     .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
@@ -41,5 +42,6 @@ const { mix } = require('laravel-mix');
         tether: ['Tether'],
     })
     .browserSync({
-      proxy: 'http://www.simonepozzobon.dev:8888/'
+      proxy: 'http://www.simonepozzobon.dev:8888/',
+      browser: 'google chrome'
     });

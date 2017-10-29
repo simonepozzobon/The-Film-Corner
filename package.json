@@ -36,6 +36,7 @@
     "express": "^4.16.2",
     "fabric": "^2.0.0-beta0",
     "font-awesome": "^4.7.0",
+    "gsap": "^1.20.3",
     "ioredis": "^3.1.4",
     "mo-js": "*",
     "redis": "^2.8.0",

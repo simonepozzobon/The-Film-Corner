@@ -8,7 +8,7 @@
         <h4 ref="heart" class="text-center" @click="heartClick"><i class="fa fa-heart" aria-hidden="true"></i></h4>
       </div>
       <div class="col">
-        <h4 ref="comment" class="text-center"><i class="fa fa-comment" aria-hidden="true"></i></h4>
+        <h4 ref="comment" class="text-center">{{ this.comments }} <i class="fa fa-comment" aria-hidden="true"></i></h4>
       </div>
     </div>
   </div>
@@ -18,6 +18,7 @@ import mojs from 'mo-js'
 
 export default {
   name: "network-icons",
+  props: ['comments'],
   data: () => ({
 
   }),

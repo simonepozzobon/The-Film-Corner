@@ -18,6 +18,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function() {
+  // Comments
+  Route::post('send-comment', 'Api\CommentController@sendComment');
+  Route::post('destroy-comment', 'Api\CommentController@destroy');
+
+  // Chat
   Route::post('chat-notification', 'Api\ChatController@message');
   Route::post('chat-history', 'Api\ChatController@history');
   Route::post('chat-typing', 'Api\ChatController@typing');
