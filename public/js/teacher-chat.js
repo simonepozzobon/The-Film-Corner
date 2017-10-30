@@ -30509,7 +30509,7 @@ Transport.prototype.onClose = function () {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(124);
+var hasCORS = __webpack_require__(125);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -30897,7 +30897,7 @@ Emitter.prototype.hasListeners = function(event){
 var debug = __webpack_require__(21)('socket.io-parser');
 var Emitter = __webpack_require__(67);
 var hasBin = __webpack_require__(78);
-var binary = __webpack_require__(131);
+var binary = __webpack_require__(132);
 var isBuf = __webpack_require__(85);
 
 /**
@@ -31647,7 +31647,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(123);
+var isArray = __webpack_require__(124);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -32387,7 +32387,7 @@ function on (obj, ev, fn) {
 
 var parser = __webpack_require__(68);
 var Emitter = __webpack_require__(67);
-var toArray = __webpack_require__(132);
+var toArray = __webpack_require__(133);
 var on = __webpack_require__(83);
 var bind = __webpack_require__(75);
 var debug = __webpack_require__(21)('socket.io-client:socket');
@@ -32997,7 +32997,7 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 var axios = __webpack_require__(11);
-var io = __webpack_require__(128);
+var io = __webpack_require__(129);
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
 var _ = __webpack_require__(46);
 var $ = __webpack_require__(23);
@@ -33424,7 +33424,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(125);
+exports.humanize = __webpack_require__(126);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -35057,7 +35057,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(199);
+    NodeWebSocket = __webpack_require__(200);
   } catch (e) { }
 }
 
@@ -35655,7 +35655,8 @@ module.exports = Object.keys || function keys (obj){
 /***/ }),
 /* 121 */,
 /* 122 */,
-/* 123 */
+/* 123 */,
+/* 124 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -35666,7 +35667,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports) {
 
 
@@ -35689,7 +35690,7 @@ try {
 
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports) {
 
 /**
@@ -35847,9 +35848,9 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 126 */,
 /* 127 */,
-/* 128 */
+/* 128 */,
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -35857,7 +35858,7 @@ function plural(ms, n, name) {
  * Module dependencies.
  */
 
-var url = __webpack_require__(129);
+var url = __webpack_require__(130);
 var parser = __webpack_require__(68);
 var Manager = __webpack_require__(82);
 var debug = __webpack_require__(21)('socket.io-client');
@@ -35949,7 +35950,7 @@ exports.Socket = __webpack_require__(84);
 
 
 /***/ }),
-/* 129 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -36031,7 +36032,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 130 */
+/* 131 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -36042,7 +36043,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 131 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -36051,7 +36052,7 @@ module.exports = Array.isArray || function (arr) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(130);
+var isArray = __webpack_require__(131);
 var isBuf = __webpack_require__(85);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -36190,7 +36191,7 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 132 */
+/* 133 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -36209,7 +36210,6 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 133 */,
 /* 134 */,
 /* 135 */,
 /* 136 */,
@@ -36270,18 +36270,19 @@ function toArray(list, index) {
 /* 191 */,
 /* 192 */,
 /* 193 */,
-/* 194 */
+/* 194 */,
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(196)
+__webpack_require__(197)
 
 var Component = __webpack_require__(19)(
   /* script */
   __webpack_require__(107),
   /* template */
-  __webpack_require__(195),
+  __webpack_require__(196),
   /* scopeId */
   "data-v-4913f9f8",
   /* cssModules */
@@ -36308,7 +36309,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 195 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -36413,7 +36414,7 @@ if (false) {
 }
 
 /***/ }),
-/* 196 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -36439,15 +36440,14 @@ if(false) {
 }
 
 /***/ }),
-/* 197 */,
 /* 198 */,
-/* 199 */
+/* 199 */,
+/* 200 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 200 */,
 /* 201 */,
 /* 202 */,
 /* 203 */,
@@ -36463,7 +36463,8 @@ if(false) {
 /* 213 */,
 /* 214 */,
 /* 215 */,
-/* 216 */
+/* 216 */,
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36481,7 +36482,7 @@ var _jquery = __webpack_require__(23);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _tfcChat = __webpack_require__(194);
+var _tfcChat = __webpack_require__(195);
 
 var _tfcChat2 = _interopRequireDefault(_tfcChat);
 
@@ -36495,7 +36496,6 @@ var app = new _vue2.default({
 });
 
 /***/ }),
-/* 217 */,
 /* 218 */,
 /* 219 */,
 /* 220 */,
@@ -36575,11 +36575,28 @@ var app = new _vue2.default({
 /* 294 */,
 /* 295 */,
 /* 296 */,
-/* 297 */
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(216);
+module.exports = __webpack_require__(217);
 
 
 /***/ })
-],[297]);
+],[314]);

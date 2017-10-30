@@ -11,45 +11,51 @@
   </style>
 @endsection
 @section('content')
-  <div class="block-subtitle mt-5">
-    <h4>Accomodations</h4>
-  </div>
-  <div class="block-text mb-5">
+  <div class="container">
     <div class="row">
-      <div class="col-md-4">
-        <div id="map-novotel" style="height: 200px"></div>
-      </div>
-      <div class="col-md-8">
-        <p class="text-justify">
-          <h5>Novotel Milano Nord Cà Granda <i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></h5>
-          Viale Suzzani 13, Milano
-          <br>
-          MM Cà Granda
-          <br>
-          Reservation: <a href="mailto:H1140-FO@accor.com">H1140-FO@accor.com</a>
-          <br>
-          <em>(please specify: “Richiesta prenotazione The Film Corner”)</em>
-          <br>
-        </p>
+      <div class="col-md-10 offset-md-1">
+        <div class="block-subtitle mt-5">
+          <h4>Accomodations</h4>
+        </div>
+        <div class="block-text mb-5">
+          <div class="row">
+            <div class="col-md-4">
+              <div id="map-novotel" style="height: 200px"></div>
+            </div>
+            <div class="col-md-8">
+              <p class="text-justify">
+                <h5>Novotel Milano Nord Cà Granda <i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></h5>
+                Viale Suzzani 13, Milano
+                <br>
+                MM Cà Granda
+                <br>
+                Reservation: <a href="mailto:H1140-FO@accor.com">H1140-FO@accor.com</a>
+                <br>
+                <em>(please specify: “Richiesta prenotazione The Film Corner”)</em>
+                <br>
+              </p>
+            </div>
+          </div>
+          <p class="text-justify">
+            <div class="row">
+              <div class="col-md-4">
+                <div id="map-ibis" style="height: 200px;"></div>
+              </div>
+              <div class="col-md-8">
+                <h5>Hotel Ibis Cà Granda <i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></h5>
+                Viale Suzzani 13, Milano
+                <br>
+                MM Cà Granda
+                <br>
+                Reservation: <a href="mailto:h1135@accor.com">h1135@accor.com</a>
+                <br>
+                <em>(please specify: “Richiesta prenotazione The Film Corner”)</em>
+              </div>
+            </div>
+          </p>
+        </div>
       </div>
     </div>
-    <p class="text-justify">
-      <div class="row">
-        <div class="col-md-4">
-          <div id="map-ibis" style="height: 200px;"></div>
-        </div>
-        <div class="col-md-8">
-          <h5>Hotel Ibis Cà Granda <i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i></h5>
-          Viale Suzzani 13, Milano
-          <br>
-          MM Cà Granda
-          <br>
-          Reservation: <a href="mailto:h1135@accor.com">h1135@accor.com</a>
-          <br>
-          <em>(please specify: “Richiesta prenotazione The Film Corner”)</em>
-        </div>
-      </div>
-    </p>
   </div>
 @endsection
 @section('scripts')

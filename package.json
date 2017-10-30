@@ -40,6 +40,7 @@
     "ioredis": "^3.1.4",
     "mo-js": "*",
     "redis": "^2.8.0",
+    "scrollreveal": "^3.3.6",
     "socket.io": "^2.0.3",
     "socket.io-client": "^2.0.3",
     "video.js": "^6.2.6",

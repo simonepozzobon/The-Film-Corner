@@ -7,83 +7,89 @@
   <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
 @endsection
 @section('content')
-  <div class="block-subtitle mt-5">
-    <h4>Online Application</h4>
-  </div>
-  <div class="block-text">
-    <p id="message" class="text-justify">
-      <form id="application-form" class="" action="{{ route('conference.application.send') }}" method="POST">
-        {{ csrf_field() }}
-        {{ method_field('POST') }}
-        <div class="row">
-          <div class="form-group col-md-6">
-            <div class="row">
-              <label class="col-sm-2 col-form-label">Name*</label>
-              <div class="col-sm-10">
-                <input type="text" name="name" class="form-control">
-                <p class="error name alert alert-danger invisible"></p>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="row">
-              <label class="col-sm-2 col-form-label">Surname*</label>
-              <div class="col-sm-10">
-                <input type="text" name="surname" class="form-control">
-                <p class="error surname alert alert-danger invisible"></p>
-              </div>
-            </div>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div class="block-subtitle mt-5">
+          <h4>Online Application</h4>
         </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <div class="row">
-              <label class="col-sm-2 col-form-label">E-mail*</label>
-              <div class="col-sm-10">
-                <input type="text" name="email" class="form-control">
-                <p class="error email alert alert-danger invisible"></p>
+        <div class="block-text">
+          <p id="message" class="text-justify">
+            <form id="application-form" class="" action="{{ route('conference.application.send') }}" method="POST">
+              {{ csrf_field() }}
+              {{ method_field('POST') }}
+              <div class="row">
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label-sm">Name*</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control">
+                      <p class="error name alert alert-danger invisible"></p>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label-sm">Surname*</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="surname" class="form-control">
+                      <p class="error surname alert alert-danger invisible"></p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-6">
-            <div class="row">
-              <label class="col-sm-2 col-form-label">Institution</label>
-              <div class="col-sm-10">
-                <input type="text" name="institution" class="form-control">
+              <div class="row">
+                <div class="form-group col">
+                  <div class="row">
+                    <label class="col-sm-1 col-form-label-sm">E-mail*</label>
+                    <div class="col-sm-11">
+                      <input type="text" name="email" class="form-control">
+                      <p class="error email alert alert-danger invisible"></p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="form-group col-md-6">
-            <div class="row">
-              <label class="col-sm-2 col-form-label">Role</label>
-              <div class="col-sm-10">
-                <input type="text" name="role" class="form-control">
+              <div class="row pb-5">
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label-sm">Institution</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="institution" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-6">
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label-sm">Role</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="role" class="form-control">
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-12">
-            <div class="row">
-              <label class="col-sm-1 col-form-label">Notes</label>
-              <div class="col-sm-11">
-                <textarea id="editor" name="notes" rows="8" class="form-control"></textarea>
+              <div class="row">
+                <div class="form-group col-md-12">
+                  <div class="row">
+                    <label class="col-sm-1 col-form-label-sm">Notes</label>
+                    <div class="col-sm-11">
+                      <textarea id="editor" name="notes" rows="8" class="form-control"></textarea>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+              <p>* Required</p>
+              <div class="col-md-4 offset-md-4 pt-5">
+                <button type="submit" name="button" id="submit" class="btn btn-primary btn-block">
+                  <i class="fa fa-check" aria-hidden="true"></i> Apply
+                </button>
+              </div>
+            </form>
+            <span id="info-message" class="alert alert-info invisible"></span>
+            <span id="success-message" class="alert alert-success invisible"></span>
+          </p>
         </div>
-        <p>* Required</p>
-        <div class="col-md-4 offset-md-4 pt-5">
-          <button type="submit" name="button" id="submit" class="btn btn-primary btn-block">
-            <i class="fa fa-check" aria-hidden="true"></i> Apply
-          </button>
-        </div>
-      </form>
-      <span id="info-message" class="alert alert-info invisible"></span>
-      <span id="success-message" class="alert alert-success invisible"></span>
-    </p>
+      </div>
+    </div>
   </div>
 @endsection
 @section('scripts')
