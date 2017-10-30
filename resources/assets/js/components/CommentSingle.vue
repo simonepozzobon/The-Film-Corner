@@ -159,7 +159,7 @@ export default {
           })
           .catch(function (error) {
             console.log(error);
-            vue.loaderStop();
+            // vue.loaderStop();
           });
       },
   },

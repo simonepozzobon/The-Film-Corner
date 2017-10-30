@@ -9346,7 +9346,7 @@ exports.default = {
                 vue.closeReply();
             }).catch(function (error) {
                 console.log(error);
-                vue.loaderStop();
+                // vue.loaderStop();
             });
         }
     },
