@@ -25,6 +25,6 @@ class ToolController extends Controller
                 $sheet->row(($key+2), [$application->name, $application->surname, $application->email, $application->institution, $application->role]);
               }
           });
-      })->download('xlsx');
+      })->export('xls');
     }
 }
