@@ -44,7 +44,7 @@
         </div>
         <div class="row pt-3">
           <div class="col-sm-2 offset-sm-1">
-            <b>9:15 to 9:30</b>
+            <b>9:00 to 9:30</b>
           </div>
           <div class="col-sm-9">
             Registration and welcome coffee
@@ -56,6 +56,15 @@
           </div>
           <div class="col-sm-9">
             Institutional greetings
+            <ul>
+              <li>Matteo Solaro (EACEA, European Commission)</li>
+              <li>Nicola Borrelli (MIBACT-Ministero per i Beni e le Attività Culturali ed il Turismo-Direzione Generale Cinema)</li>
+              <li>Giuseppe Pierro (MIUR-Ministero dell’Istruzione, Università e Ricerca)</li>
+              <li>Delia Campanelli (Ufficio Scolastico Regionale, Regione Lombardia)</li>
+              <li>Cristina Cappellini (Assessore alla Cultura, Regione Lombardia)</li>
+              <li>Filippo del Corno (Assessore alla Cultura, Comune di Milano)</li>
+              <li>Matteo Pavesi (Fondazione Cineteca Italiana)</li>
+            </ul>
           </div>
         </div>
         <div class="row">
@@ -63,42 +72,48 @@
             <b>10:00 to 11:00</b>
           </div>
           <div class="col-sm-9">
-            Introduction to The Film Corner platform
+            Launch of The Film Corner Platform
             <ul>
-              <li>Aleksandar Erdeljanovic, Jugoslovenska Kinoteka</li>
-              <li>Emanuela Mancino, University of Milano-Bicocca</li>
-              <li>Silvia Pareti, Fondazione Cineteca Italiana</li>
-              <li>John Peto, The Nerve Centre</li>
-              <li>Ian Wall, The Film space</li>
+              <li>Silvia Pareti, Simone Moraldi (Fondazione Cineteca Italiana)</li>
+              <li>Ian Wall (The Film space)</li>
+              <li>Aleksandar Erdeljanovic, Branislav Erdeljanovic (Jugoslovenska Kinoteka)</li>
+              <li>Marty Melarkey (The Nerve Centre)</li>
+              <li>Emanuela Mancino (University of Milano-Bicocca)</li>
             </ul>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>11:00 to 11:15</b>
+            <b>11:00 to 11:30</b>
           </div>
           <div class="col-sm-9">
-            Coffee break
+            Keynote Speech
+            <ul>
+              <li>Maria Grazia Mattei (Meet the Media Guru)</li>
+            </ul>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>11:15 to 12:30</b>
+            <b>11:30 to 13:00</b>
           </div>
           <div class="col-sm-9">
-            Film education and audience development in the digital era
+            PANEL: Film education and audience development in the digital era
             <ul>
+              <li>Alessandra Guarino (Fondazione Centro Sperimentale di Cinematografia)</li>
+              <li>Claus Noer Hjorth (Danish Film Institute)</li>
               <li>Christine Eloy (Europa Distribution)</li>
-              <li>Elisa Giovannelli (Fondazione Cineteca di Bologna/ECFA)</li>
-              <li>Alessandro Bollo (Fondazione San Paolo – Polo del ‘900)</li>
-              <li>Chairman: Aleksandar Erdeljanovic (Jugoslovenska Kinoteka)</li>
+              <li>Alessandro Bollo (Polo del ‘900, Fondazione San Paolo)</li>
+              <li>Elisa Giovannelli (ECFA/Cineteca di Bologna)</li>
+              <li>Alice Arecco (Milano Film Network)</li>
+              <li>Chairman: Simone Moraldi (Fondazione Cineteca Italiana)</li>
             </ul>
 
           </div>
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>12:30 to 13:00</b>
+            <b>13:00 to 13:30</b>
           </div>
           <div class="col-sm-9">
             Q&A
@@ -106,7 +121,7 @@
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>13:00 to 14:00</b>
+            <b>13:30 to 14:30</b>
           </div>
           <div class="col-sm-9">
             Lunch break
@@ -114,24 +129,18 @@
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>14:00 to 15:30</b>
+            <b>14:30 to 16:00</b>
           </div>
           <div class="col-sm-9">
-            Film literacy and critical skills improvement for students in the digital era
+            PANEL: Film literacy methodologies and best practices in the digital era
             <ul>
               <li>Mark Reid (British Film Institute)</li>
-              <li>Alessandra Guarino (Fondazione Centro Sperimentale di Cinematografia)</li>
+              <li>Nathalie Bourgeois (Cinémathèque Française)</li>
+              <li>Christine Kopf (Deutsche Filmmuseum)</li>
+              <li>Núria Aidelman (A bao a Qu)</li>
               <li>Marty Melarkey (The Nerve Centre)</li>
               <li>Chairman: Ian Wall (The Film Space)</li>
             </ul>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-2 offset-sm-1">
-            <b>15:30 to 16:00</b>
-          </div>
-          <div class="col-sm-9">
-            Coffee break
           </div>
         </div>
         <div class="row">
@@ -144,25 +153,10 @@
         </div>
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
-            <b>16:30 to 18:00</b>
+            <b>16:30 to 17:00</b>
           </div>
           <div class="col-sm-9">
-            Creativity in film education and the digital media
-            <ul>
-              <li>Núria Aidelman (A bao a Qu)</li>
-              <li>Nathalie Bourgeois (Cinémathèque Française)</li>
-              <li>Marco Alessi (Dugong)</li>
-              <li>Chairman: Maria Grazia Mattei (digital communication specialist)</li>
-            </ul>
-
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-2 offset-sm-1">
-            <b>18:00 to 18:30</b>
-          </div>
-          <div class="col-sm-9">
-            Closing remarks
+            Closing Remarks
           </div>
         </div>
       </div>
