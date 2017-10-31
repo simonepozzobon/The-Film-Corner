@@ -49,7 +49,7 @@
             <div class="container">
               {{-- <div class="row align-items-end"> --}}
               <div class="row pb-5">
-                <div class="col-md-4 load">
+                <div class="col-md-4 load pb-5">
                     <div class="filter-wrapper filter-yellow">
                       <img class="img-fluid" src="/img/conference/nuria_aidelman.png">
                     </div>
@@ -67,7 +67,12 @@
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-8 load">
+                <div class="col-md-4 load push-md-8 pb-5">
+                  <div class="filter-wrapper filter-blue">
+                    <img class="img-fluid" src="/img/conference/alessandro_bollo.png">
+                  </div>
+                </div>
+                <div class="col-md-8 load pull-md-4">
                   <div class="block-subtitle pt-2">
                     <h5>Alessandro Bollo</h5>
                   </div>
@@ -77,15 +82,10 @@
                     </p>
                   </div>
                 </div>
-                <div class="col-md-4 load">
-                  <div class="filter-wrapper filter-blue">
-                    <img class="img-fluid" src="/img/conference/alessandro_bollo.png">
-                  </div>
-                </div>
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-4 load">
+                <div class="col-md-4 load pb-5">
                     <div class="filter-wrapper filter-orange">
                       <img class="img-fluid" src="/img/conference/nathalie_bourgeois.png">
                     </div>
@@ -106,7 +106,12 @@
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-8 load">
+                <div class="col-md-4 load push-md-8 pb-5">
+                  <div class="filter-wrapper filter-green">
+                    <img class="img-fluid" src="/img/conference/christine_eloy.png">
+                  </div>
+                </div>
+                <div class="col-md-8 load pull-md-4">
                   <div class="block-subtitle pt-2">
                     <h5>Christine Eloy</h5>
                   </div>
@@ -124,15 +129,10 @@
                     </p>
                   </div>
                 </div>
-                <div class="col-md-4 load">
-                  <div class="filter-wrapper filter-green">
-                    <img class="img-fluid" src="/img/conference/christine_eloy.png">
-                  </div>
-                </div>
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-4 load">
+                <div class="col-md-4 load pb-5">
                     <div class="filter-wrapper filter-blue">
                       <img class="img-fluid" src="/img/conference/alessandra_guarino.png">
                     </div>
@@ -160,7 +160,12 @@
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-8 load">
+                <div class="col-md-4 load push-md-8 pb-5">
+                  <div class="filter-wrapper filter-yellow w-100">
+                    <img class="img-fluid w-100" src="/img/conference/claus_hjorth.png">
+                  </div>
+                </div>
+                <div class="col-md-8 load pull-md-4">
                   <div class="block-subtitle pt-2">
                     <h5>Claus Noer Hjorth</h5>
                   </div>
@@ -182,15 +187,10 @@
                     </p>
                   </div>
                 </div>
-                <div class="col-md-4 load">
-                  <div class="filter-wrapper filter-yellow w-100">
-                    <img class="img-fluid w-100" src="/img/conference/claus_hjorth.png">
-                  </div>
-                </div>
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-4 load">
+                <div class="col-md-4 load pb-5">
                     <div class="filter-wrapper filter-green w-100">
                       <img class="img-fluid w-100" src="/img/conference/christine_kopf.png">
                     </div>
@@ -218,7 +218,12 @@
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-8 load">
+                <div class="col-md-4 load push-md-8 pb-5">
+                  <div class="filter-wrapper filter-orange w-100">
+                    {{-- <img class="img-fluid w-100" src="/img/conference/claus_hjorth.png"> --}}
+                  </div>
+                </div>
+                <div class="col-md-8 load pull-md-4">
                   <div class="block-subtitle pt-2">
                     <h5>Martin Melarkey</h5>
                   </div>
@@ -235,15 +240,10 @@
                     </p>
                   </div>
                 </div>
-                <div class="col-md-4 load">
-                  <div class="filter-wrapper filter-orange w-100">
-                    {{-- <img class="img-fluid w-100" src="/img/conference/claus_hjorth.png"> --}}
-                  </div>
-                </div>
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-4 load">
+                <div class="col-md-4 load pb-5">
                     <div class="filter-wrapper filter-blue w-100">
                       <img class="img-fluid w-100" src="/img/conference/camilla_paterno.png">
                     </div>
@@ -266,7 +266,12 @@
               </div>
               @include('components.home.divider')
               <div class="row pb-5">
-                <div class="col-md-8 load">
+                <div class="col-md-4 load push-md-8 pb-5">
+                  <div class="filter-wrapper filter-yellow w-100">
+                    <img class="img-fluid w-100" src="/img/conference/mark_reid.png">
+                  </div>
+                </div>
+                <div class="col-md-8 load pull-md-4">
                   <div class="block-subtitle pt-2">
                     <h5>Mark Reid</h5>
                   </div>
@@ -279,11 +284,6 @@
                       the first, and largest, survey of film education cultures in Europe, before leading the bid to
                       create the Framework for Film Education in Europe, which was published in 2015.
                     </p>
-                  </div>
-                </div>
-                <div class="col-md-4 load">
-                  <div class="filter-wrapper filter-yellow w-100">
-                    <img class="img-fluid w-100" src="/img/conference/mark_reid.png">
                   </div>
                 </div>
               </div>

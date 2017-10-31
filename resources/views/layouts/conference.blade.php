@@ -16,7 +16,7 @@
                     </div>
                     <nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md">
                       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#containerNavbarCenter" aria-controls="containerNavbarCenter" aria-expanded="false" aria-label="Toggle navigation">
-                        Menu <span class="navbar-toggler-icon"></span>
+                        <span class="navbar-toggler-icon"></span>
                       </button>
 
                       <div class="collapse navbar-collapse justify-content-md-center" id="containerNavbarCenter">
