@@ -42,14 +42,14 @@
             <h5>2017, November, 10th - Spazio Oberdan, Viale Vittorio Veneto, 2</h5>
           </div>
         </div>
-        <div class="row pt-3">
+        {{-- <div class="row pt-3">
           <div class="col-sm-2 offset-sm-1">
             <b>9:00 to 9:30</b>
           </div>
           <div class="col-sm-9">
             Registration and welcome coffee
           </div>
-        </div>
+        </div> --}}
         <div class="row">
           <div class="col-sm-2 offset-sm-1">
             <b>9:30 to 10:00</b>
