@@ -140,6 +140,7 @@
               <li>Núria Aidelman (A bao a Qu)</li>
               <li>Marty Melarkey (The Nerve Centre)</li>
               <li>Chairman: Ian Wall (The Film Space)</li>
+              <li>Camilla Paternò di Montecupo (Dugong Production)</li>
             </ul>
           </div>
         </div>
