@@ -8,6 +8,7 @@ use App\AppKeyword;
 use App\AppCategory;
 use App\VideoLibrary;
 use App\TeacherSession;
+use App\MultiSubcategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
@@ -100,9 +101,19 @@ class FilmSpecificController extends Controller
       case 'frame-composer':
         $images = $app->medias()->get();
         $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
             return $img->category_id == 2;
         });
         $images->all();
+
+        // debug
+        // $libraries = $app->mediaCategory()->get();
+        // foreach ($libraries as $key => $library) {
+        //   dd($library->media_on_sub_category());
+        // }
+        //
+        // dd();
+
         return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
         break;
 

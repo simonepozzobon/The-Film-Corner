@@ -274,6 +274,9 @@ return [
         // Debug
         // 'Debugbar' => 'Barryvdh\Debugbar\Facade',
         // 'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
+
+        // Custom classes
+        'Utility' => 'App\Utility',
     ],
 
 ];

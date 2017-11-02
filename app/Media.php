@@ -56,4 +56,12 @@ class Media extends Model
     {
         return $this->morphedByMany('App\MediaSubCategory', 'mediaable');
     }
+
+    public function library()
+    {
+        $link = $this->morphOne('App\MultiSubcategory', 'mediable')->first();
+        $library = $link->sub_category()->first();
+        return $library;
+    }
+
 }

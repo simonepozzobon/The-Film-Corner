@@ -28,5 +28,13 @@ class MediaSubCategory extends Model
       return $this->morphToMany('App\Audio', 'audioable');
     }
 
-
+    public function media_on_sub_category()
+    {
+        $medias_on_library = $this->hasMany('App\MultiSubcategory', 'media_subcategory_id', 'id')->get();
+        $medias = collect();
+        foreach ($medias_on_library as $key => $media) {
+          $medias->push($media->mediable()->first());
+        }
+        return $medias;
+    }
 }

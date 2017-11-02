@@ -103,14 +103,32 @@
             </div>
             <div class="row">
               <div class="col yellow p-5">
-                <ul class="assets list-unstyled row">
-                  @foreach ($images as $key => $image)
-                    <li class="col-md-3">
-                      <img src="{{ Storage::disk('local')->url($image->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($image->src) }}"/>
-                      <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    </li>
+                <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                      @foreach ($app->mediaCategory()->get() as $key => $library)
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                </nav>
+                <div id="libraries">
+                  @foreach ($app->mediaCategory()->get() as $key => $library)
+                    <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse" role="tabpanel">
+                      @foreach ($library->media_on_sub_category() as $key => $media)
+                        <li class="col-md-2 col-sm-4 pb-3 d-inline-block">
+                          <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        </li>
+                      @endforeach
+                    </ul>
                   @endforeach
-                </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -141,9 +159,6 @@
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
-
-
-
 
     $(document).ready(function($) {
         var canvas = this.__canvas = new fabric.Canvas('image-editor');
