@@ -975,7 +975,7 @@ var _jquery = __webpack_require__(23);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _networkIcons = __webpack_require__(269);
+var _networkIcons = __webpack_require__(270);
 
 var _networkIcons2 = _interopRequireDefault(_networkIcons);
 
@@ -1283,45 +1283,6 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 269:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(287)
-
-var Component = __webpack_require__(19)(
-  /* script */
-  __webpack_require__(237),
-  /* template */
-  __webpack_require__(271),
-  /* scopeId */
-  "data-v-101bdfcd",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/networkIcons.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] networkIcons.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-101bdfcd", Component.options)
-  } else {
-    hotAPI.reload("data-v-101bdfcd", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1382,7 +1343,46 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 271:
+/***/ 270:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(288)
+
+var Component = __webpack_require__(19)(
+  /* script */
+  __webpack_require__(237),
+  /* template */
+  __webpack_require__(272),
+  /* scopeId */
+  "data-v-101bdfcd",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/networkIcons.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] networkIcons.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-101bdfcd", Component.options)
+  } else {
+    hotAPI.reload("data-v-101bdfcd", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -1524,7 +1524,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 287:
+/***/ 288:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -1642,7 +1642,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 312:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(215);
@@ -24624,4 +24624,4 @@ module.exports = defaults;
 
 /***/ })
 
-},[312]);
+},[313]);

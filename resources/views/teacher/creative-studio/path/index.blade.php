@@ -139,7 +139,7 @@
                     <div class="d-flex justify-content-around">
                       <div class="">
                         @if ($app->available == 1)
-                          <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-secondary btn-{{ $app->colors }}" >
+                          <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn btn-secondary btn-{{ $app->colors }}" >
                             <i class="fa fa-file-o" aria-hidden="true"></i> New
                           </a>
                         @else
