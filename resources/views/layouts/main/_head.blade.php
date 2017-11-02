@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 
     {{-- reCaptcha google --}}
     {{-- <script src='//www.google.com/recaptcha/api.js'></script> --}}
