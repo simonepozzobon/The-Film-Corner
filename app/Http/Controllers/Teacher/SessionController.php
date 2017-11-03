@@ -221,8 +221,8 @@ class SessionController extends Controller
         if (isset($request['notes'])) {
 
           $data = [
-            'imgL' => $request['imgL'][0],
-            'imgR' => $request['imgR'][0],
+            'videoL' => $request['videoL'],
+            'videoR' => $request['videoR'],
             'notes' => $request['notes']
           ];
 

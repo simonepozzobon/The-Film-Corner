@@ -176,17 +176,6 @@
         // Film Specific - Editing - App 6 - Attractions
         case 6:
 
-          var imgL = [];
-          var imgR = [];
-
-          $('#div1 li img').each(function() {
-            var src = $(this).attr('src');
-            imgL.push(src);
-          });
-          $('#div2 li img').each(function() {
-            var src = $(this).attr('src');
-            imgR.push(src);
-          });
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -194,8 +183,8 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'imgL'    : imgL,
-            'imgR'    : imgR
+            'videoL'  : localStorage.getItem('app-6-video-left'),
+            'videoR'  : localStorage.getItem('app-6-video-right')
           };
 
           console.log('--------');

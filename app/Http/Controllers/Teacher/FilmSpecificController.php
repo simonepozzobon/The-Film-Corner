@@ -164,7 +164,23 @@ class FilmSpecificController extends Controller
         break;
 
       case 'attractions':
-        return view('teacher.film-specific.attractions.index', compact('app', 'app_category'));
+
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $left = $flatten->random();
+        $right = $flatten->random();
+        while ($left <= $right) {
+          $right = $flatten->random();
+        }
+
+        $library = json_encode($videos->toArray());
+
+        return view('teacher.film-specific.attractions.index', compact('app', 'app_category', 'library', 'left', 'right'));
         break;
 
       // case 'attractions-viceversa':
@@ -301,7 +317,18 @@ class FilmSpecificController extends Controller
         break;
 
       case 'attractions':
-        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
+
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $library = json_encode($videos->toArray());
+
+
+
+        return view('teacher.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'videos', 'library'));
         break;
 
       case 'attractions-viceversa':
