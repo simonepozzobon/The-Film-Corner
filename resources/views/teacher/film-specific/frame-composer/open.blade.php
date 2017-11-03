@@ -341,14 +341,13 @@
     function destroy(canvas)
     {
       // get the selcted obj
-      var obj = canvas.getActiveObject();
+      var obj = canvas.getActiveObject(),
 
       // decode the uri and remove baseurl
-      cleanUrl(obj);
-
+          src = cleanUrl(obj),
 
       // find the item on library
-      var el = $('[data-img-src="'+src+'"]'),
+          el = $('[data-img-src="'+src+'"]'),
 
       // remove red button and remove object data
           asset = el.parent();
@@ -378,6 +377,15 @@
         //LOAD JSON DATA on canvas
         canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
             canvas.renderAll();
+            canvas.forEachObject(function(obj) {
+                console.log(obj);
+                var src = cleanUrl(obj),
+                    el = $('[data-img-src="'+src+'"]'),
+                    asset = el.parent();
+
+                asset.children('a').removeClass('d-none');
+                asset.data('image-image-obj', obj);
+            })
         });
 
         return json_data;
@@ -397,6 +405,8 @@
       if (result.length > 0) {
           src = src.replace(result, "");
       }
+
+      return src;
     }
   </script>
 @endsection
