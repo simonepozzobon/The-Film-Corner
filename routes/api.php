@@ -26,6 +26,9 @@ Route::prefix('v1')->group(function() {
   Route::post('chat-notification', 'Api\ChatController@message');
   Route::post('chat-history', 'Api\ChatController@history');
   Route::post('chat-typing', 'Api\ChatController@typing');
+
+  // Video Editor
+  Route::post('/video-edit', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
 });
 
 // General request

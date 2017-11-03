@@ -87661,6 +87661,7 @@ _angular2.default.module('appService', []).factory('Feedback', function ($http, 
     send: function send(timelines, counter) {
       var media = [];
 
+      //check if timelines has a lenght
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
           session: timelines[i].session,
@@ -87672,11 +87673,6 @@ _angular2.default.module('appService', []).factory('Feedback', function ($http, 
         };
         media.push(edit);
       }
-
-      // console.log('---------');
-      // console.log('Dati da inviare');
-      // console.log(media);
-      // console.log('---------');
 
       // Ricompone la timelines
       if (typeof session == 'undefined' && counter == 0) {
@@ -87703,7 +87699,7 @@ _angular2.default.module('appService', []).factory('Feedback', function ($http, 
 
       return $http({
         method: 'POST',
-        url: '/video-edit/video-edit-api', //url: "{{ route('categories.index') }}",
+        url: '/api/v1/video-edit', //url: "{{ route('categories.index') }}",
         data: media
       });
     }
@@ -87826,9 +87822,10 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
 
   // Inizializzo la sessione
   var init = $window.timelines;
+  console.log(init);
   var counter = 0;
 
-  if (typeof session == 'undefined') {
+  if (typeof session == 'undefined' && typeof init != 'undefined') {
 
     // Rigenera Il video
     Video.send(init, counter).then(function successCallback(response) {

@@ -155,7 +155,7 @@ class FilmSpecificController extends Controller
 
       // case 'parallel-action':
       case 'parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         return view('teacher.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
@@ -291,7 +291,7 @@ class FilmSpecificController extends Controller
       **/
 
       case 'parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         $session = json_encode($session);
         return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token', 'is_student'));
         break;

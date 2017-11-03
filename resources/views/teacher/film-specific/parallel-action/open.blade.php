@@ -15,6 +15,10 @@
       height: 460px;
       overflow: scroll;
     }
+
+    #video-library {
+      overflow-y: scroll;
+    }
   </style>
 @endsection
 @section('content')
@@ -91,7 +95,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col blue p-5">
+              <div id="video-player" class="col blue p-5">
                 <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
                   <video class="video-js vjs-default-skin" controls preload="auto" >
                      {{-- <source src="{{ $media_url }}" type="video/mp4"> --}}
@@ -109,65 +113,25 @@
               </div>
             </div>
             <div class="row">
-              <div class="col yellow p-5">
+              {{-- Library --}}
+              <div id="video-library" class="col yellow p-5">
                 {{-- Library --}}
                   <div class="active pt-3" id="library">
-                    <table class="table table-hover">
-                      <thead>
-                        <th>Preview</th>
-                        <th>Title</th>
-                        <th>Tools</th>
-                      </thead>
-                      <tbody>
-                        @foreach ($elements as $key => $element)
-                          <tr>
-                            <td class="align-middle">
-                              <img src="{{ Storage::disk('local')->url($element->thumb) }}" width="57">
-                            </td>
-                            <td class="align-middle">{{ $element->title }}</td>
-                            <td class="align-middle" ng-controller="toolController">
-                              <div class="btn-group">
-                                {{-- Trigger Modal --}}
-                                <button type="button" class="btn btn-secondary btn-yellow" data-toggle="modal" data-target="#preview-{{ $element->id }}" data-toggle="tooltip" data-placement="top" title="Preview">
-                                  <i class="fa fa-eye" aria-hidden="true"></i>
-                                </button>
-                                {{-- <button ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline"> --}}
-                                <button class="btn btn-secondary btn-yellow" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
-                                  <i class="fa fa-plus" aria-hidden="true"></i>
-                                </button>
-                              </div>
-
-                              {{-- Modal Preview --}}
-                              <div class="modal fade" id="preview-{{ $element->id }}" tabindex="-1" role="dialog" aria-labelledby="modalPreview-{{ $element->id }}" aria-hidden="true">
-                                <div class="modal-dialog modal-lg" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="modalPreview-{{ $element->id }}">{{ $element->title }} - Preview</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <vjs-video-container vjs-ratio="16:9">
-                                          <video class="video-js vjs-default-skin" controls preload="auto" poster="{{ Storage::disk('local')->url($element->thumb) }}">
-                                              <source src="{{ Storage::disk('local')->url($element->path) }}" type="video/mp4">
-                                          </video>
-                                      </vjs-video-container>
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                      {{-- <button id="modalClose-{{ $element->id }}" type="button" class="btn btn-primary" ng-click="addElement('{{ $session_id }}','{{ $media_url }}','{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ $element->path }}')" data-dismiss="modal">
-                                        Add to timeline
-                                      </button> --}}
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
+                    @foreach ($elements as $key => $element)
+                      <div class="row pb-3">
+                        <div class="col-md-2">
+                          <img src="{{ Storage::disk('local')->url($element->img) }}" width="57">
+                        </div>
+                        <div class="col-md-8">
+                          <p class="p-2">{{ $element->title }}</p>
+                        </div>
+                        <div class="col-md-2" ng-controller="toolController">
+                          <button class="btn btn-secondary btn-yellow" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ urlencode($element->src) }}')" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                      </div>
+                    @endforeach
                   </div>
               </div>
             </div>
@@ -245,12 +209,19 @@
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>
+  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
 
     // Pass the variable to angular JS for init
     var timelines = {!! $session !!};
     var token = '{{ $token }}';
+
+    video_player = document.getElementById('video-player');
+    video_player.addEventListener('onresize', function(){
+        var video_player = document.getElementById('video-player').offsetHeight - 95;
+        $('#video-library').height(video_player);
+    });
 
     console.log('---------');
     console.log('Logging all\'inizio');

@@ -54,8 +54,8 @@ class VideoEditorController extends Controller
 
         // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
         foreach ($data as $key => $media) {
-          $mediaPath = $media['media_url'];
-          $srcFilename = str_replace("video/uploads/", "", $mediaPath);
+          $mediaPath = urldecode($media['media_url']);
+          $srcFilename = pathinfo($mediaPath, PATHINFO_FILENAME);
           $srcPath = $storePath.'/src/'.$srcFilename;
           // Se il file non è presente allora lo copio dalla libreria
           if (!file_exists($srcPath)) {
@@ -68,8 +68,8 @@ class VideoEditorController extends Controller
 
         // taglio i files e li salvo nella cartella tmp
         foreach ($data as $key => $media) {
-          $mediaPath = $media['media_url'];
-          $srcFilename = str_replace("video/uploads/", "", $mediaPath);
+          $mediaPath = urldecode($media['media_url']);
+          $srcFilename = pathinfo($mediaPath, PATHINFO_FILENAME);
           $tmpFilename = $media['id'];
           $srcPath = $storePath.'/src/'.$srcFilename;
           $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
@@ -98,7 +98,7 @@ class VideoEditorController extends Controller
           }
 
           //ffmpeg -ss [start] -i in.mp4 -t [duration] -c copy out.mp4
-          $cli = FFMPEG_LIB.' -y -i '.$srcPath.' -t '.$duration.' -c copy '.$tmpPath;
+          $cli = FFMPEG_LIB.' -y -i "'.$srcPath.'" -t '.$duration.' -c copy "'.$tmpPath.'"';
           exec($cli);
 
         }
@@ -115,14 +115,14 @@ class VideoEditorController extends Controller
 
         // faccio il render
         foreach ($data as $key => $media) {
-          $mediaPath = $media['media_url'];
-          $srcFilename = str_replace("video/uploads/", "", $mediaPath);
+          $mediaPath = urldecode($media['media_url']);
+          $srcFilename = pathinfo($mediaPath, PATHINFO_FILENAME);
           $tmpFilename = $media['id'];
           $srcPath = $storePath.'/src/'.$srcFilename;
           $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
           $intermediatePath = $storePath.'/tmp/'.$tmpFilename.'.ts';
 
-          $intermediateCli = FFMPEG_LIB.' -y -i '.$tmpPath.' -c copy -bsf:v h264_mp4toannexb -f mpegts '.$intermediatePath;
+          $intermediateCli = FFMPEG_LIB.' -y -i "'.$tmpPath.'" -c copy -bsf:v h264_mp4toannexb -f mpegts '.$intermediatePath;
           exec($intermediateCli);
 
           if ($key != ($dataLenght - 1)) {
@@ -135,9 +135,9 @@ class VideoEditorController extends Controller
         $cli .= ' -c copy -bsf:a aac_adtstoasc '.$export;
 
         // Save the cli on the DB for testing purposes
-        $save = new Test;
-        $save->session = $cli;
-        $save->save();
+        // $save = new Test;
+        // $save->session = $cli;
+        // $save->save();
 
         exec($cli);
 
