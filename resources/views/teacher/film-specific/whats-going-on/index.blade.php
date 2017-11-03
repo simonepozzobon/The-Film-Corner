@@ -69,6 +69,7 @@
     </div>
     <div id="app" class="col-12 px-5 d-inline-block float-left">
       <div class="row">
+        {{-- Player --}}
         <div class="col-md-8">
           <div class="row">
             <div class="col">
@@ -86,23 +87,8 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col orange p-5">
-                    <div class="d-flex justify-content-around">
-                      <button class="btn btn-secondary btn-orange" onclick="wavesurfer.playPause()">
-                        <i class="fa fa-play" aria-hidden="true"></i>
-                        Play
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
+        {{-- Library --}}
         <div class="col-md-4">
           <div class="box container-fluid mb-4">
             <div class="row">
@@ -113,28 +99,32 @@
             <div class="row">
               <div class="col yellow p-5">
                 <ul class="list-unstyled">
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 1</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    </div>
-                  </li>
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 2</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    </div>
-                  </li>
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 3</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    </div>
-                  </li>
+                  @foreach ($app->audios()->get() as $key => $audio)
+                    <li class="pb-3">
+                      <div class="d-flex justify-content-between">
+                        <p id="audio-title-{{ $audio->id }}" class="d-block">{{ $audio->title }}</p>
+                        <a id="audio-{{ $audio->id }}" href="#" class="add-audio btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                      </div>
+                    </li>
+                  @endforeach
                 </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{-- Controls --}}
+      <div class="row">
+        <div class="col">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col orange p-5">
+                <div class="d-flex justify-content-around">
+                  <button class="btn btn-secondary btn-orange" onclick="player.playPause()">
+                    <i class="fa fa-play" aria-hidden="true"></i>
+                    Play
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -165,21 +155,31 @@
   <script>
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
-    var wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: '#252525',
-      progressColor: 'purple',
-      splitChannels: true,
-      height: 64
+    var player = WaveSurfer.create({
+        container: '#waveform',
+        waveColor: '#252525',
+        progressColor: 'purple',
+        splitChannels: true,
+        height: 64
     });
 
     $('body').on('session-loaded', function(e, session){
-      console.log('sessione caricata '+session.token);
+        console.log('sessione caricata '+session.token);
 
-      var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
-      wavesurfer.load(src);
-      $.cookie('tfc-audio', JSON.stringify(src));
+        var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
+        player.load(src);
+        localStorage.setItem('app-7-audio', src);
+        // $.cookie('tfc-audio', JSON.stringify(src));
 
+        $('.add-audio').on('click', function () {
+            var audio_src = $(this).data('audio-src');
+            if (player.isPlaying()) {
+              player.stop();
+            }
+            console.log(audio_src);
+            player.load(audio_src);
+            localStorage.setItem('app-7-audio', audio_src);
+        });
     });
   </script>
 @endsection

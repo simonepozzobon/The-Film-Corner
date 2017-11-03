@@ -200,7 +200,7 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'audio'   : $.parseJSON($.cookie('tfc-audio'))
+            'audio'   : localStorage.getItem('app-7-audio')
           };
 
           console.log('--------');
