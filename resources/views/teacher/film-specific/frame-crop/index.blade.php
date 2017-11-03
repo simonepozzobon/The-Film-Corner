@@ -102,7 +102,10 @@
                     <div class="row">
                       <div class="col orange p-5">
                         <div class="d-flex justify-content-around pt-3">
-                          <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+                          <div class="btns">
+                            <button id="capture" type="button" name="button" class="btn btn-secondary btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+                            <button type="button" name="button" class="btn btn-secondary btn-orange" data-toggle="modal" data-target="#clear-all"><i class="fa fa-trash-o"></i> Clear All</button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -129,7 +132,29 @@
       </div>
     </div>
   </div>
-
+  <div class="modal fade" id="clear-all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Clear All</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 class="text-center">Pay attention</h4>
+          <p class="text-center">
+            Are you shure you want to reset your work?<br>
+            This action can't be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="clear-all-confirm" class="btn btn-danger text-white" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear All</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 @endsection
 @section('scripts')
   <link rel="stylesheet" href="{{ asset('plugins/photo-sphere/photo-sphere-viewer.min.css') }}">
@@ -174,7 +199,7 @@
             var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
             var img = PSV.render();
             counter = counter + 1;
-            var elem = '<div class="col-md-4">';
+            var elem = '<div class="snap col-md-4">';
             elem += '<div id="frame-container-'+counter+'" class="box container-fluid mb-5 px-4">'
             elem +=   '<div class="row">';
             elem +=     '<div class="col dark-green py-3 px-5">';
@@ -229,6 +254,12 @@
     }
 
     $('#rendered').sortable();
+
+    $('#clear-all-confirm').on('click', function(e) {
+        e.preventDefault();
+        $('.snap').remove();
+        $('#clear-all').modal('toggle');
+    });
 
   </script>
 @endsection
