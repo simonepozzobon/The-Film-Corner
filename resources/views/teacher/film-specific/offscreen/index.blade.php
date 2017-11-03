@@ -202,6 +202,7 @@
         event.preventDefault();
         player.pause();
         player.src($(this).data('video-src'));
+        localStorage.setItem('app-5-video', $(this).data('video-src'));
         player.load();
       });
     });

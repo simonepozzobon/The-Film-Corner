@@ -84,7 +84,7 @@
               <div id="video-player" class="col blue p-5">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      <source src="{{ $session->video }}" type="video/mp4">
                   </video>
                 </div>
               </div>

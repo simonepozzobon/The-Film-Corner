@@ -164,7 +164,7 @@
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'video'   : $('#video source').attr('src'),
+            'video'   : localStorage.getItem('app-5-video'),
             'notes'   : $('#notes').val()
           };
 
