@@ -110,7 +110,10 @@
                 <div class="row">
                   <div class="col orange p-5">
                     <div class="d-flex justify-content-around pt-3">
-                      <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+                      <div class="btns">
+                        <button id="capture" type="button" name="button" class="btn btn-secondary btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+                        <button type="button" name="button" class="btn btn-secondary btn-orange" data-toggle="modal" data-target="#clear-all"><i class="fa fa-trash-o"></i> Clear All</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -128,7 +131,32 @@
             </div>
             <div class="row">
               <div class="col yellow p-5">
-                <p>Content</p>
+                <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                      @foreach ($app->mediaCategory()->get() as $key => $library)
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                        </li>
+                      @endforeach
+                    </ul>
+                  </div>
+                </nav>
+                <div id="libraries">
+                  @foreach ($app->mediaCategory()->get() as $key => $library)
+                    <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse {{ $key == 0 ? 'show' : '' }}" role="tabpanel">
+                      @foreach ($library->media_on_sub_category() as $key => $media)
+                        <li class="asset col-md-2 col-sm-4 pb-3 d-inline-block">
+                          <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        </li>
+                      @endforeach
+                    </ul>
+                  @endforeach
+                </div>
               </div>
             </div>
           </div>
@@ -136,7 +164,7 @@
       </div>
       <form class="" action="" method="">
         <div id="rendered" class="row row-eq-height">
-          @foreach ($session as $key => $frame)
+          @foreach ($session->frames as $key => $frame)
             <div class="col-md-4">
               <div id="frame-container-{{ $key }}" class="box container-fluid mb-5 px-4">
                 <div class="row">
@@ -167,6 +195,29 @@
 
     </div>
   </div>
+  <div class="modal fade" id="clear-all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Clear All</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 class="text-center">Pay attention</h4>
+          <p class="text-center">
+            Are you shure you want to reset your work?<br>
+            This action can't be undone.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id="clear-all-confirm" class="btn btn-danger text-white" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear All</button>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
   @if ($is_student)
     @include('components.apps.chat', ['app_session' => $app_session])
   @endif
@@ -186,7 +237,7 @@
     var AppSession = new TfcSessions();
 
     var PSV = new PhotoSphereViewer({
-      panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
+      panorama: '{{ $session->src }}',
       container: 'photosphere',
       loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
       navbar: 'zoom fullscreen',
@@ -199,6 +250,11 @@
         height: 500
       }
     });
+
+    $('.asset').on('click', function() {
+      var src = $(this).find('img').data('img-src');
+      PSV.setPanorama(src);
+    })
 
     var counter = 0
 
@@ -272,6 +328,12 @@
     }
 
     $('#rendered').sortable();
+
+    $('#clear-all-confirm').on('click', function(e) {
+        e.preventDefault();
+        $('.snap').remove();
+        $('#clear-all').modal('toggle');
+    });
 
   </script>
 

@@ -173,7 +173,13 @@ class SessionController extends Controller
             ];
             $frames->push($data);
           }
-          $session->content = json_encode($frames);
+
+          $data = [
+            'frames' => $frames,
+            'src' => $request['src']
+          ];
+
+          $session->content = json_encode($data);
         }
         break;
 

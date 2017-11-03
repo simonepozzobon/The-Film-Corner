@@ -92,6 +92,12 @@
 
         // Film Specific - Framing - App 2 - Frame Crop
         case 2:
+
+          var src = null;
+          if (localStorage.getItem('app-2-image')) {
+            src = localStorage.getItem('app-2-image');
+          }
+
           var frames = [];
           $('#rendered .box').each(function(k){
             var frame = {
@@ -107,7 +113,8 @@
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'frames'  : frames
+            'frames'  : frames,
+            'src'     : src
           };
 
           console.log('--------');

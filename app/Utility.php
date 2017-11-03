@@ -215,11 +215,10 @@ class Utility extends Model
 
       // Film Specific - Framing - App 2 - Frame Crop
       case '2':
-        $obj = collect(json_decode($share->content));
-
+        $obj = json_decode($share->content);
         $item->media_type = 'image';
-        $item->featured_media = $obj->first()->img;
-        $item->notes = $obj->first()->description;
+        $item->featured_media = $obj->frames[0]->img;
+        $item->notes = $obj->frames[0]->description;
         break;
 
       // Film Specific - Framing - App 3 - Juxtaposition

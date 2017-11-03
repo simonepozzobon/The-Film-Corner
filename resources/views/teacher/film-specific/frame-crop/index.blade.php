@@ -122,7 +122,32 @@
                 </div>
                 <div class="row">
                   <div class="col yellow p-5">
-                    <p>Content</p>
+                    <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
+                      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+                      <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                          @foreach ($app->mediaCategory()->get() as $key => $library)
+                            <li class="nav-item">
+                              <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                            </li>
+                          @endforeach
+                        </ul>
+                      </div>
+                    </nav>
+                    <div id="libraries">
+                      @foreach ($app->mediaCategory()->get() as $key => $library)
+                        <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse {{ $key == 0 ? 'show' : '' }}" role="tabpanel">
+                          @foreach ($library->media_on_sub_category() as $key => $media)
+                            <li class="asset col-md-2 col-sm-4 pb-3 d-inline-block">
+                              <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                              <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                            </li>
+                          @endforeach
+                        </ul>
+                      @endforeach
+                    </div>
                   </div>
                 </div>
               </div>
@@ -171,7 +196,7 @@
     AppSession.initSession({{ $app->id }});
 
     var PSV = new PhotoSphereViewer({
-      panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
+      panorama: '{{ asset('img/helpers/null-image.png') }}',
       container: 'photosphere',
       loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
       navbar: 'zoom fullscreen',
@@ -184,6 +209,12 @@
         height: 500
       }
     });
+
+    $('.asset').on('click', function() {
+      var src = $(this).find('img').data('img-src');
+      PSV.setPanorama(src);
+      localStorage.setItem('app-2-image', src);
+    })
 
     var counter = 0;
 
