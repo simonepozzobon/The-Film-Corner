@@ -22,6 +22,16 @@
         <li class="nav-item">
           <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
         </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Login
+        </a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+          <a class="dropdown-item" href="{{ route('teacher.login') }}">Teacher Login</a>
+          <a class="dropdown-item" href="{{ route('student.login') }}">Student Login</a>
+          <a class="dropdown-item disabled" href="#">Guest Login</a>
+        </div>
+      </li>
       </ul>
     </div>
 </nav>
