@@ -1,6 +1,11 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <style media="screen">
+    #video-library {
+      overflow-y: scroll;
+    }
+  </style>
 @endsection
 @section('content')
   <section id="title" class="pt-5">
@@ -76,7 +81,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col blue p-5">
+              <div id="video-player" class="col blue p-5">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                       <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
@@ -94,8 +99,22 @@
               </div>
             </div>
             <div class="row">
-              <div class="col yellow p-5">
-                <p>Library</p>
+              <div id="video-library" class="col yellow p-5">
+                @foreach ($app->videos()->get() as $key => $video)
+                  <div class="row pb-3">
+                    <div class="col-md-2">
+                      <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
+                    </div>
+                    <div class="col-md-8">
+                      <p class="p-2">{{ $video->title }}</p>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="change-video btn btn-secondary btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  </div>
+                @endforeach
               </div>
             </div>
           </div>
@@ -155,13 +174,23 @@
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>
+  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
 
-    var player = videojs('video-left', {
+    $(document).ready( libraryResize );
+    document.getElementById('video-player').addEventListener('onresize', libraryResize);
+
+    function libraryResize()
+    {
+        var video_player = document.getElementById('video-player').offsetHeight - 95;
+        $('#video-library').height(video_player);
+    }
+
+    var player = videojs('video', {
       controlBar: {
         playToggle: false,
         volumeMenuButton: false,
@@ -170,6 +199,15 @@
     });
 
     player.muted(true);
+
+    player.ready(function() {
+      $('.change-video').on('click', function(event) {
+        event.preventDefault();
+        player.pause();
+        player.src($(this).data('video-src'));
+        player.load();
+      });
+    })
 
     $('#play').on('click', function() {
       player.play();
