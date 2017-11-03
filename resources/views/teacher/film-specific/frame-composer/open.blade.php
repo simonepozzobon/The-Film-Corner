@@ -136,15 +136,39 @@
         </div>
       </div>
       <div class="row">
+        <div class="col">
+          <div id="controls" class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col orange p-5">
+                <div class="d-flex justify-content-center">
+                  <div class="btns pr-4">
+                    <a id="deselect" href="#" class="btn btn-secondary btn-orange">Deselect All</a>
+                  </div>
+                  <div class="btns pr-4">
+                    <a id="back" href="#" class="btn btn-secondary btn-orange">Move Back</a>
+                    <a id="backward" href="#" class="btn btn-secondary btn-orange">Move Backward</a>
+                    <a id="forward" href="#" class="btn btn-secondary btn-orange">Move Forward</a>
+                    <a id="front" href="#" class="btn btn-secondary btn-orange">Move To Front</a>
+                  </div>
+                  <div class="btns">
+                    <a id="destroy" href="#" class="btn btn-secondary btn-orange">Remove</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md-12">
           <div class="box container-fluid mb-4">
             <div class="row">
-              <div class="col dark-orange py-3 px-5">
+              <div class="col dark-green py-3 px-5">
                 <h3>What criteria did you use in your composition?</h3>
               </div>
             </div>
             <div class="row">
-              <div class="col orange p-5">
+              <div class="col green p-5">
                 <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
               </div>
             </div>
@@ -173,24 +197,10 @@
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
         var json_data = '';
 
-        responsiveCanvas();
-        $(window).resize( responsiveCanvas );
-
-        function responsiveCanvas()
-        {
-            var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
-            var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
-            canvas.setWidth(sizeWidth).setHeight(sizeHeight);
-
-            //SAVE JSON DATA
-            json_data = saveCanvas(canvas);
-
-            //LOAD JSON DATA
-            canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
-                canvas.renderAll();
-            });
-        }
-
+        responsiveCanvas(canvas);
+        $(window).resize(function() {
+          responsiveCanvas(canvas)
+        });
 
         $('.assets li').click(function(e) {
             e.preventDefault();
@@ -210,7 +220,15 @@
               .setSrc($this.find('img').data('img-src'), function() {
                 parent.children('a').removeClass('d-none')
                 $this.data('image-image-obj', imgInstance);
+
+                // constrain object to maximum canvas size
+                var _width = document.getElementById('container-canvas').offsetWidth - 30;
+                if (_width < imgInstance.getScaledWidth()) {
+                  imgInstance.scaleToWidth(_width);
+                }
+
                 canvas.add(imgInstance).setActiveObject( imgInstance );
+                imgInstance.center();
                 saveCanvas(canvas);
               });
             } else {
@@ -222,6 +240,41 @@
               // salvo in json
               saveCanvas(canvas);
             }
+        });
+
+        /**
+         * Observe Events on Canvas
+         */
+
+        observe('object:added', canvas);
+        observe('object:removed', canvas);
+        observe('object:modified', canvas);
+        observe('object:rotating', canvas);
+        observe('object:scaling', canvas);
+        observe('object:moving', canvas);
+        observe('object:selected', canvas);
+
+        /**
+         * Controls
+         */
+
+        $('#deselect').on('click', function () {
+          deselect(canvas);
+        });
+        $('#back').on('click', function () {
+          back(canvas);
+        });
+        $('#backward').on('click', function () {
+          backward(canvas);
+        });
+        $('#forward').on('click', function () {
+          forward(canvas);
+        });
+        $('#front').on('click', function () {
+          front(canvas)
+        });
+        $('#destroy').on('click', function () {
+          destroy(canvas);
         });
     });
 
@@ -236,17 +289,114 @@
         return json_data;
     }
 
-    function init(canvas)
+    function responsiveCanvas()
     {
-        json_data = $('#loadCanvas').val();
-        $.cookie('tfc-canvas', JSON.stringify(json_data));
+        var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
+        var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
+        canvas.setWidth(sizeWidth).setHeight(sizeHeight);
+
+        //SAVE JSON DATA
+        json_data = saveCanvas(canvas);
 
         //LOAD JSON DATA
         canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
             canvas.renderAll();
         });
+    }
+
+
+    function deselect(canvas)
+    {
+      canvas.discardActiveObject();
+    }
+
+    function back(canvas)
+    {
+      var obj = canvas.getActiveObject();
+      canvas.sendToBack(obj);
+      canvas.discardActiveObject();
+    }
+
+    function backward(canvas)
+    {
+      var obj = canvas.getActiveObject();
+      canvas.sendBackwards(obj);
+      canvas.discardActiveObject();
+    }
+
+    function forward(canvas)
+    {
+      var obj = canvas.getActiveObject();
+      canvas.bringForward(obj);
+      canvas.discardActiveObject();
+    }
+
+    function front(canvas)
+    {
+      var obj = canvas.getActiveObject();
+      canvas.bringToFront(obj);
+      canvas.discardActiveObject();
+    }
+
+    function destroy(canvas)
+    {
+      // get the selcted obj
+      var obj = canvas.getActiveObject();
+
+      // decode the uri and remove baseurl
+      cleanUrl(obj);
+
+
+      // find the item on library
+      var el = $('[data-img-src="'+src+'"]'),
+
+      // remove red button and remove object data
+          asset = el.parent();
+
+      asset.children('a').addClass('d-none');
+      asset.data('image-image-obj', false);
+
+      // deselect all
+      canvas.discardActiveObject();
+
+      // finally remove the object
+      canvas.remove(obj);
+    }
+
+    function observe(eventName, canvas)
+    {
+      canvas.on(eventName, function() {
+        saveCanvas(canvas)
+      });
+    }
+
+    function init(canvas)
+    {
+        json_data = $('#loadCanvas').val();
+        $.cookie('tfc-canvas', JSON.stringify(json_data));
+
+        //LOAD JSON DATA on canvas
+        canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
+            canvas.renderAll();
+        });
 
         return json_data;
+    }
+
+    function cleanUrl(obj)
+    {
+      var src = decodeURI(obj._element.currentSrc),
+          baseUrlPattern = /^https?:\/\/[a-z\:0-9.]+/,
+          result = '',
+          match = baseUrlPattern.exec(src);
+
+      if (match != null) {
+          result = match[0];
+      }
+
+      if (result.length > 0) {
+          src = src.replace(result, "");
+      }
     }
   </script>
 @endsection
