@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Activitylog\Models\Activity;
 use App\AppsSessions\StudentAppSession;
+use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 
 class FilmSpecificController extends Controller
@@ -122,7 +123,24 @@ class FilmSpecificController extends Controller
         break;
 
       case 'juxtaposition':
-        return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category'));
+
+        $images = $app->medias()->get();
+
+        $images = collect($images->pluck('landscape')->all());
+
+        $flatten = $images->transform(function($image, $key) {
+            return Storage::disk('local')->url($image);
+        });
+
+        $left = $flatten->random();
+        $right = $flatten->random();
+        while ($left <= $right) {
+          $right = $flatten->random();
+        }
+
+        $library = json_encode($images->toArray());
+
+        return view('teacher.film-specific.juxtaposition.index', compact('app', 'app_category', 'library', 'left', 'right'));
         break;
 
       // case 'frame-counter':
@@ -249,7 +267,17 @@ class FilmSpecificController extends Controller
         break;
 
       case 'juxtaposition':
-        return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
+        $images = $app->medias()->get();
+
+        $images = collect($images->pluck('landscape')->all());
+
+        $flatten = $images->transform(function($image, $key) {
+            return Storage::disk('local')->url($image);
+        });
+
+        $library = json_encode($images->toArray());
+
+        return view('teacher.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
         break;
 
       // case 'frame-counter':
