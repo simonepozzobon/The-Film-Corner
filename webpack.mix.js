@@ -32,6 +32,8 @@ const { mix } = require('laravel-mix');
 
     .js('resources/assets/js/conference/speakers.js', 'public/js/conference')
 
+    .js('resources/assets/js/studio-home.js', 'public/js/app')
+
     .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')

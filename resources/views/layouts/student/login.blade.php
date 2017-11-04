@@ -72,7 +72,7 @@
       </svg>
       @yield('content')
       @include('layouts.student._scripts')
-      <script src="/js/app.js"></script>
+      {{-- <script src="/js/app.js"></script> --}}
     </div>
   </body>
 </html>

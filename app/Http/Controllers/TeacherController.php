@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Teacher;
+use App\AppSection;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 
@@ -41,12 +42,42 @@ class TeacherController extends Controller
 
     public function filmSpecific()
     {
-      return view('teacher.film-specific.index', compact('visited'));
+      $section = AppSection::where('slug', '=', 'film-specific')->first();
+
+      $teacher = Auth::guard('teacher')->user();
+      $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($section)->get();
+
+      if ($activities->count() == 0) {
+        activity()
+          ->causedBy($teacher)
+          ->performedOn($section)
+          ->withProperties('visited', true)
+          ->log('visited');
+      } else {
+        $visited = true;
+      }
+
+      return view('teacher.film-specific.index', compact('visited', 'section'));
     }
 
     public function creativeStudio()
     {
-      return view('teacher.creative-studio.index');
+      $section = AppSection::where('slug', '=', 'creative-studio')->first();
+
+      $teacher = Auth::guard('teacher')->user();
+      $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($section)->get();
+
+      if ($activities->count() == 0) {
+        activity()
+          ->causedBy($teacher)
+          ->performedOn($section)
+          ->withProperties('visited', true)
+          ->log('visited');
+      } else {
+        $visited = true;
+      }
+
+      return view('teacher.creative-studio.index', compact('visited', 'section'));
     }
 
     public function cinemaPav()

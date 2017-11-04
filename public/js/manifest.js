@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		15: 0
+/******/ 		16: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/socket-test","3":"/js/teacher-chat","4":"/js/network-single","5":"/js/admin/video","6":"/js/admin/image","7":"/js/admin/audio","8":"/js/admin/main","9":"/js/network","10":"/js/app","11":"/js/admin/admin","12":"/js/vendor","13":"/js/city","14":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/socket-test","3":"/js/teacher-chat","4":"/js/network-single","5":"/js/admin/video","6":"/js/admin/image","7":"/js/admin/audio","8":"/js/admin/main","9":"/js/network","10":"/js/app","11":"/js/app/studio-home","12":"/js/admin/admin","13":"/js/vendor","14":"/js/city","15":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {

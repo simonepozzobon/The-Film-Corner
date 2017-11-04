@@ -25,59 +25,5 @@
       ga('send', 'pageview');
 
     </script>
-
-    <style media="screen">
-
-      html, body {
-          color: #636b6f;
-          font-family: 'Raleway', sans-serif;
-          font-weight: 200;
-          height: 100%;
-          margin: 0;
-          background-position: center center;
-          background-attachment: fixed;
-          background-size: cover;
-      }
-
-      .full-height {
-          height: 100vh;
-      }
-
-      .flex-center {
-          align-items: center;
-          display: flex;
-          justify-content: center;
-      }
-
-      .position-ref {
-          position: relative;
-      }
-
-      .top-right {
-          position: absolute;
-          right: 10px;
-          top: 18px;
-      }
-
-      .content {
-          text-align: center;
-      }
-
-      .m-b-md {
-          margin-bottom: 30px;
-      }
-
-      .feedback-popup {
-        position: fixed;
-        z-index: 2;
-        margin-left: -1rem;
-        top: 25%;
-        transform: translateY(-50%);
-      }
-
-      .frame {
-        box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-      }
-    </style>
     @yield('stylesheets')
 </head>
