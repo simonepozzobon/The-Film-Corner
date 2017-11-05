@@ -307,8 +307,12 @@
 
         // Creative Studio - Warm Up - App 13 - Character Builder
         case 13:
-          var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          var json_data = null;
           var rendered = null;
+
+          if (localStorage.getItem('app-13-json')) {
+            json_data = localStorage.getItem('app-13-json');
+          }
 
           if (localStorage.getItem('app-13-image')) {
             rendered = localStorage.getItem('app-13-image');

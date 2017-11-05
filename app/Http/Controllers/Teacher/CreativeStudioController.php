@@ -138,7 +138,13 @@ class CreativeStudioController extends Controller
       **/
 
       case 'character-builder':
-        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category'));
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
+            return $img->category_id == 2;
+        });
+        $images->all();
+        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category', 'images'));
         break;
 
       case 'storytelling':
@@ -234,8 +240,13 @@ class CreativeStudioController extends Controller
       **/
 
       case 'character-builder':
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            return $img->category_id == 2;
+        });
+        $images->all();
         $session->json_data = htmlspecialchars_decode($session->json_data);
-        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
+        return view('teacher.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'images'));
         break;
 
       case 'storytelling':
