@@ -20,3 +20,7 @@ www.simonepozzobon.dev.key
 .bash_profile
 
 laravel-echo-server.json
+
+
+# Ignore sketch files
+*.sketch
