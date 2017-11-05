@@ -1,5 +1,5 @@
 @extends('layouts.teacher', ['type' => 'app'])
-@section('title', 'Make Your Own Film')
+@section('title', 'Soundscapes')
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -110,51 +110,13 @@
                 </div>
                 <div class="row">
                   <div class="col blue p-5">
-                    <img id="image" src="{{ asset('img/helpers/null-image.svg') }}" alt="" class="img-fluid">
+                    <img id="image" src="{{ $random_image }}" alt="" class="img-fluid">
                     <div id="waveform-1" class="d-none"></div>
                     <div id="waveform-2" class="d-none"></div>
                     <div id="waveform-3" class="d-none"></div>
                     <div id="waveform-4" class="d-none"></div>
                     <div id="waveform-5" class="d-none"></div>
                     <div id="waveform-6" class="d-none"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col orange p-5">
-                    <div class="col d-flex justify-content-around pb-4">
-                      {{-- Control Bar --}}
-                      <div class="btn-group">
-                        <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
-                          <i class="fa fa-play" aria-hidden="true"></i>
-                        </button>
-                        <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
-                          <i class="fa fa-pause" aria-hidden="true"></i>
-                        </button>
-                        <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
-                          <i class="fa fa-stop" aria-hidden="true"></i>
-                        </button>
-                        <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
-                          <i class="fa fa-backward" aria-hidden="true"></i>
-                        </button>
-                        <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
-                          <i class="fa fa-forward" aria-hidden="true"></i>
-                        </button>
-                      </div>
-                    </div>
-                    <div id="mixer" class="container-fluid d-flex justify-content-around">
-                      <div id="waveform-1-vol" style="height:100px;" class="mx-2"></div>
-                      <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
-                      <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
-                      <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
-                      <div id="waveform-5-vol" style="height:100px;" class="mx-2"></div>
-                      <div id="waveform-6-vol" style="height:100px;" class="mx-2"></div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -170,29 +132,91 @@
             </div>
             <div class="row">
               <div class="col yellow p-5">
-                <ul class="list-unstyled">
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 1</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
+                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#audio-library" aria-controls="#audio-library">Audio</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#image-library" aria-controls="#image-library">Images</a>
+                        </li>
+                    </ul>
+                  </div>
+                </nav>
+                <div id="libraries">
+                    <div id="audio-library" class="collapse show" data-show="true" role="tabpanel">
+                      @foreach ($app->audios()->get() as $key => $audio)
+                        <div class="asset-audio row pb-3">
+                          <div class="col-md-2">
+                            <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
+                          </div>
+                          <div class="col-md-8">
+                            <p>{{ $audio->title }}</p>
+                          </div>
+                          <div class="col-md-2">
+                            <a href="" class="btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url(urlencode($audio->src)) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                  </li>
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 2</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    <div id="image-library" class="collapse" role="tabpanel">
+                      @foreach ($app->medias()->get() as $key => $media)
+                        <div class="asset-image row pb-3 align-middle">
+                          <div class="col-md-2 justify-content-middle">
+                            <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="57" class="img-fluid w-100"/>
+                          </div>
+                          <div class="col-md-8 justify-content-middle">
+                            <p class="align-middle">{{ $media->title }}</p>
+                          </div>
+                          <div class="col-md-2">
+                            <a href="" class="btn btn-secondary btn-yellow" data-image-src="{{ Storage::disk('local')->url($media->landscape) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                  </li>
-                  <li class="pb-3">
-                    <div class="d-flex justify-content-between">
-                      <p id="audio-title-1" class="d-block">Title of the audio - Scene 3</p>
-                      <input id="audio-src-1" type="hidden" name="src" value="indirizzo audio">
-                      <a id="audio-1" href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    </div>
-                  </li>
-                </ul>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col orange p-5">
+                <div class="col d-flex justify-content-around pb-4">
+                  {{-- Control Bar --}}
+                  <div class="btn-group">
+                    <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
+                      <i class="fa fa-play" aria-hidden="true"></i>
+                    </button>
+                    <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
+                      <i class="fa fa-pause" aria-hidden="true"></i>
+                    </button>
+                    <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
+                      <i class="fa fa-stop" aria-hidden="true"></i>
+                    </button>
+                    <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
+                      <i class="fa fa-backward" aria-hidden="true"></i>
+                    </button>
+                    <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
+                      <i class="fa fa-forward" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+                <div id="mixer" class="container-fluid d-flex justify-content-around">
+                  <div id="waveform-1-vol" style="height:100px;" class="mx-2"></div>
+                  <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
+                  <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
+                  <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
+                  <div id="waveform-5-vol" style="height:100px;" class="mx-2"></div>
+                  <div id="waveform-6-vol" style="height:100px;" class="mx-2"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -248,58 +272,28 @@
 
     // Set loops
     wavesurfer_1.on('ready', function () {
-        var duration = wavesurfer_1.getDuration();
-        wavesurfer_1.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+        setLoops(wavesurfer_1);
+        wavesurfer_1.setVolume(0);
     });
     wavesurfer_2.on('ready', function () {
-        var duration = wavesurfer_2.getDuration();
-        wavesurfer_2.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+      setLoops(wavesurfer_2);
+      wavesurfer_2.setVolume(0);
     });
     wavesurfer_3.on('ready', function () {
-        var duration = wavesurfer_3.getDuration();
-        wavesurfer_3.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+      setLoops(wavesurfer_3);
+      wavesurfer_3.setVolume(0);
     });
     wavesurfer_4.on('ready', function () {
-        var duration = wavesurfer_4.getDuration();
-        wavesurfer_4.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+      setLoops(wavesurfer_4);
+      wavesurfer_4.setVolume(0);
     });
     wavesurfer_5.on('ready', function () {
-        var duration = wavesurfer_5.getDuration();
-        wavesurfer_5.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+      setLoops(wavesurfer_5);
+      wavesurfer_5.setVolume(0);
     });
     wavesurfer_6.on('ready', function () {
-        var duration = wavesurfer_6.getDuration();
-        wavesurfer_6.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+      setLoops(wavesurfer_6);
+      wavesurfer_6.setVolume(0);
     });
 
 
@@ -410,7 +404,8 @@
         'src_6' : src_6,
       };
 
-      $.cookie('tfc-audio-src', JSON.stringify(src));
+      localStorage.setItem('app-9-audio', JSON.stringify(src));
+      localStorage.setItem('app-9-img', $('#image').attr('src'));
 
       // Video and Audio Players Controller
       $('#play').on('click', function() {
@@ -432,18 +427,30 @@
       });
 
       $('#stop').on('click', function() {
-        wavesurfer_1.pause();
-        wavesurfer_2.pause();
-        wavesurfer_3.pause();
-        wavesurfer_4.pause();
-        wavesurfer_5.pause();
-        wavesurfer_6.pause();
-        wavesurfer_1.seekTo(0);
-        wavesurfer_2.seekTo(0);
-        wavesurfer_3.seekTo(0);
-        wavesurfer_4.seekTo(0);
-        wavesurfer_5.seekTo(0);
-        wavesurfer_6.seekTo(0);
+          if (wavesurfer_1.isPlaying()) {
+              wavesurfer_1.stop();
+              wavesurfer_1.seekTo(0);
+          }
+          if (wavesurfer_2.isPlaying()) {
+              wavesurfer_2.stop();
+              wavesurfer_2.seekTo(0);
+          }
+          if (wavesurfer_3.isPlaying()) {
+              wavesurfer_3.stop();
+              wavesurfer_3.seekTo(0);
+          }
+          if (wavesurfer_4.isPlaying()) {
+              wavesurfer_4.stop();
+              wavesurfer_4.seekTo(0);
+          }
+          if (wavesurfer_5.isPlaying()) {
+              wavesurfer_5.stop();
+              wavesurfer_5.seekTo(0);
+          }
+          if (wavesurfer_6.isPlaying()) {
+              wavesurfer_6.stop();
+              wavesurfer_6.seekTo(0);
+          }
       });
 
       $('#rewind').on('click', function() {
@@ -463,7 +470,14 @@
         wavesurfer_5.skipForward(5);
         wavesurfer_6.skipForward(5);
       });
-    });
+
+      $('.asset-image').find('a').on('click', function(e) {
+        e.preventDefault();
+        $('#image').attr('src', $(this).data('image-src'));
+        localStorage.setItem('app-9-img');
+      });
+
+    }); // end of session loaded
 
     function saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6)
     {
@@ -475,7 +489,18 @@
           'vol_5' : vol_5,
           'vol_6' : vol_6,
         };
-        $.cookie('tfc-audio-vol', JSON.stringify(vol));
+        localStorage.setItem('app-9-vol', JSON.stringify(vol));
+    }
+
+    function setLoops(player)
+    {
+        var duration = player.getDuration();
+        player.addRegion({
+            start: 0, // time in seconds
+            end: duration, // time in seconds
+            loop: true, //activate loop
+            color: 'hsla(100, 100%, 30%, 0.1)'
+        });
     }
   </script>
 @endsection
