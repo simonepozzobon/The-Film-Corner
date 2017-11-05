@@ -32,7 +32,11 @@ Route::prefix('v1')->group(function() {
   Route::post('chat-typing', 'Api\ChatController@typing');
 
   // Video Editor
-  Route::post('/video-edit', 'VideoEditorController@updateEditor')->name('update.teacher.editor');
+  Route::post('/video-edit', 'VideoEditorController@updateEditor');
+
+  // Audio Editor
+  Route::post('/audio-edit', 'AudioEditorController@updateEditor');
+
 });
 
 // General request

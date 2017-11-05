@@ -316,6 +316,16 @@ class SessionController extends Controller
         $session->content = json_encode($request['timelines']);
         break;
 
+      // Creative Studio - Warm Up - App 12 - Sound studio
+      case 12:
+        $data = [
+          'video' => $request['video'],
+          'timelines' => $request['timelines'],
+        ];
+
+        $session->content = json_encode($data);
+        break;
+
       // Creative Studio - Warm Up - App 13 - Character Builder
       case 13:
         // Save the image

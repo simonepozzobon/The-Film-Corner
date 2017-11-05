@@ -118,10 +118,18 @@ class CreativeStudioController extends Controller
         break;
 
       case 'sound-studio':
-        $elements = AudioLibrary::all();
-        return view('teacher.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements'));
-        break;
+        $elements = $app->audios()->get();
 
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $random_video = $flatten->random();
+        return view('teacher.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements', 'random_video'));
+        break;
 
       /*
        *
@@ -212,9 +220,10 @@ class CreativeStudioController extends Controller
         break;
 
       case 'sound-studio':
-        $elements = AudioLibrary::all();
-        $session = json_encode($session);
-        return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
+        $elements = $app->audios()->get();
+        $session = $session;
+        $timelines = json_encode($session->timelines);
+        return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'timelines', 'session', 'token'));
         break;
 
 

@@ -55,94 +55,88 @@ class AudioEditorController extends Controller
 
           // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
           foreach ($data as $key => $audio) {
-              $audioPath = $audio['media_url'];
-              $srcFilename = str_replace('audio/uploads/', '', $audioPath);
+              $audioPath = urldecode($audio['media_url']);
+              $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
               $srcPath = $storePath.'/src/'.$srcFilename;
               // Se il file non è presente allora lo copio dalla libreria
               if (!file_exists($srcPath)) {
                   // qui copio i file nella cartella src
                   Storage::copy('public/'.$audioPath, 'public/audio/sessions/'.$session_id.'/src/'.$srcFilename);
                   $convPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$srcFilename);
-                  $basename = pathinfo($srcFilename, PATHINFO_FILENAME);;
+                  $basename = $srcFilename;
                   $outPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$basename.'.wav');
-                  // lo converto allo stesso sample rate
-                  // sox input.mp3 output.wav channels 1 rate 8000
-
-                  // // Prendo il sample Rate
-                  // $cli = SOX_LIB.' --i -r '.$convPath;
-                  // $sampleRate = exec($cli);
-                  //
-                  // // Prendo il numero di canali
-                  // $cli = SOX_LIB.' --i -c '.$convPath;
-                  // $channels = exec($cli);
-                  //
-                  // // Se il formato non corrisponde lo uniformo ai requisiti della sessione
-                  // if ($sampleRate !== '44100') {
-                  //   $cli = SOX_LIB.' '.$convPath.' -r 44.1k -c 2 -C 320 '.$convPath.' -D';
-                  //   exec($cli);
-                  // } elseif ($channels !== '2') {
-                  //   $cli = SOX_LIB.' '.$convPath.' -c 2 -C 320 '.$convPath.' -D';
-                  //   exec($cli);
-                  // }
-
-                  // -r 48k  -b 16 -L -c 1
-
                   $cli = SOX_LIB.' '.$convPath.' -r 44.1k -b 16 -c 2 '.$outPath.' -D';
                   exec($cli);
-
               }
           }
 
           $dataLenght = count($data);
-
           // faccio degli step intermedi creando gli offset
           // sox awful-lyrics.wav offset-awful-lyrics.wav pad 3 0
           // Debug: $clis = collect();
           foreach ($data as $key => $audio) {
-              $srcFilename = str_replace("audio/uploads/", "", $audio['media_url']);
+              $audioPath = urldecode($audio['media_url']);
+              $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
               $tmpFilename = $audio['id'];
+              $basename = $srcFilename;
 
-              $basename = pathinfo($srcFilename, PATHINFO_FILENAME);;
               $srcPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$basename.'.wav');
-
               $tmpPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
-
               $delay = $Audio->tToS($audio['start']);
-
               $cli = SOX_LIB.' '.$srcPath. ' '.$tmpPath.' pad '.$delay. ' 0';
               exec($cli);
               // Debug: $clis->push($cli);
           }
 
-          // Mixo i file con i delay
-          // sox -m sick-beat.wav offset-awful-lyrics.wav output.wav
-          $cli = SOX_LIB.' -m ';
-          foreach ($data as $key => $audio) {
-              $srcFilename = str_replace('audio/uploads/', '', $audio['media_url']);
-              $tmpFilename = $audio['id'];
-              $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
-              $cli .= $offsettedPath.' ';
+          // se c'è più di un file sulla timeline
+          if ($dataLenght > 1) {
+            // Mixo i file con i delay
+            // sox -m sick-beat.wav offset-awful-lyrics.wav output.wav
+            $cli = SOX_LIB.' -m ';
+            foreach ($data as $key => $audio) {
+                $audioPath = urldecode($audio['media_url']);
+                $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
+                $tmpFilename = $audio['id'];
+                $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
+                $cli .= $offsettedPath.' ';
+            }
+
+            $audioExportName = uniqid();
+            $audioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.wav';
+            $cli .= $audioExportPath;
+            exec($cli);
+
+            // comprimo il file wav in mp3
+            // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
+            $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
+            $cli = FFMPEG_LIB.' -i '.$audioExportPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
+            exec($cli);
+
+          } else {
+            // Se c'è un solo file nella timeline lo salvo nella cartella degli export
+            $tmpFilename = $data[0]['id'];
+            $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-0.wav';
+            $audioExportName = uniqid();
+
+            // comprimo il file wav in mp3
+            // Anziché usare gli offset uniti uso direttamente l'unico file offset presente
+            // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
+            $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
+            $cli = FFMPEG_LIB.' -i '.$offsettedPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
+            exec($cli);
           }
 
-          $audioExportName = uniqid();
-          $audioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.wav';
-          $cli .= $audioExportPath;
-          exec($cli);
-
-          // comprimo il file wav in mp3
-          // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
-          $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
-          $cli = FFMPEG_LIB.' -i '.$audioExportPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
-          exec($cli);
+          // Pulisco il percorso del file video su cui montare l'audio
+          $videoRawPath = parse_url($request[0]['file'], PHP_URL_PATH);
+          $cleanedVideoPath = str_replace('/storage/', '', $videoRawPath);
+          $convertSpaces = str_replace('%20', ' ', $cleanedVideoPath);
+          $videoPath = storage_path('app/public/'.$convertSpaces);
 
           // Rimuovo l'audio dal video su cui montare
           // ffmpeg -i [input_file] -vcodec copy -an [output_file]
-
-          // file video su cui montare l'audio
-          $video = storage_path($request[0]['file']);
           $videoExportName = $audioExportName;
           $videoExportPath = $storePath.'/tmp/video-muted-'.$videoExportName.'.mp4';
-          $cli = FFMPEG_LIB.' -i '.$video.' -vcodec copy -an '.$videoExportPath;
+          $cli = FFMPEG_LIB.' -i "'.$videoPath.'" -vcodec copy -an "'.$videoExportPath.'"';
           exec($cli);
 
           // Creo l'export
@@ -154,6 +148,5 @@ class AudioEditorController extends Controller
           exec($cli);
 
           return response($exportPublicPath);
-          // return redirect()->url('/');
       }
 }

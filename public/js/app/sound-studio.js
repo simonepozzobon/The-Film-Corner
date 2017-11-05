@@ -87693,7 +87693,7 @@ _angular2.default.module('appService', []).factory('Audio', function ($http, CSR
 
       return $http({
         method: 'POST',
-        url: '/teacher/audio-edit/audio-edit-api', //url: "{{ route('categories.index') }}",
+        url: '/api/v1/audio-edit', //url: "{{ route('categories.index') }}",
         data: media
       });
     }
@@ -87790,7 +87790,7 @@ _angular2.default.module('uploadCtrl', []).controller('uploadController', ['$sco
       contentType: false,
       success: function success(response) {
         console.log(response);
-        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
+        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
 
         $compile(data)($scope);
         $scope.$apply();
@@ -87812,7 +87812,7 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   var init = $window.timelines;
   var counter = 0;
 
-  if (typeof session == 'undefined') {
+  if (typeof session == 'undefined' && typeof init != 'undefined') {
 
     // Rigenera Il video
     Audio.send(init, counter).then(function successCallback(response) {
@@ -87827,19 +87827,19 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   }
 
   $scope.$on('timelineChanged', function (e, timeline) {
-    // console.log('-----');
-    // console.log('timelineChanged Event Before Send');
-    // console.log(timeline);
-    // console.log('-----');
+    console.log('-----');
+    console.log('timelineChanged Event Before Send');
+    console.log(timeline);
+    console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
     Audio.send(timelines).then(function successCallback(response) {
       // console.log(timelines);
       // console.log(response.data[2]);
       // console.log('-------');
-      // console.log('DEBUG');
-      // console.log(response);
-      // console.log('-------');
+      console.log('DEBUG');
+      console.log(response);
+      console.log('-------');
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,
@@ -87850,9 +87850,12 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   });
 
   //listen for when the vjs-media object changes
-  $scope.$on('vjsAudioReady', function (e, videoData) {
+  $scope.$on('vjsVideoReady', function (e, videoData) {
+    console.log('video player', videoData.player.src());
 
-    // if (videoData.player.id() == 'vjs_video_3') {
+    // salvo il player in video data
+    $scope.videoData = videoData;
+
     $scope.editorPlay = function () {
       videoData.player.trigger('loadstart');
       var media = Timeline.getTimelines($scope);
@@ -87946,6 +87949,7 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
 
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
+    // console.log(url);
     var d = duration * 100 / 5;
     if (typeof session == 'undefined') {
       console.log('non trovata');
@@ -87954,10 +87958,9 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
       var token = session.token;
     }
 
-    var expPath = 'app/public/video/oceans.mp4';
     var timeline = {
       session: token,
-      file: expPath,
+      file: $scope.videoData.player.src(),
       id: new Date().getTime(),
       name: title,
       media_url: url,

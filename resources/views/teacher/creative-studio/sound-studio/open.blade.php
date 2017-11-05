@@ -97,7 +97,7 @@
                   <div id="video-player" class="col blue p-5">
                     <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
                       <video class="video-js vjs-default-skin" controls preload="auto" >
-                        <source src="{{ $random_video }}" type="video/mp4">
+                        <source src="{{ $session->video }}" type="video/mp4">
                       </video>
                     </vjs-video-container>
                   </div>
@@ -200,7 +200,9 @@
       </div>
     </div>
   </div>
-
+  @if ($is_student)
+    @include('components.apps.chat', ['app_session' => $app_session])
+  @endif
 @endsection
 @section('scripts')
   <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
@@ -214,9 +216,14 @@
         $('#video-library').height(video_player);
     });
 
-    $('body').on('session-loaded', function(e, session){
-      console.log('sessione caricata '+session.token);
-    });
+    // Pass the variable to angular JS for init
+    var timelines = {!! $timelines !!};
+    var token = '{{ $token }}';
+    $('#token').val(token);
+    console.log('---------');
+    console.log('Logging all\'inizio');
+    console.log(timelines);
+    console.log('---------');
   </script>
   <script src="{{ mix('js/app/sound-studio.js') }}"></script>
 @endsection
