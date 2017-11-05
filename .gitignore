@@ -24,3 +24,5 @@ laravel-echo-server.json
 
 # Ignore sketch files
 *.sketch
+
+server.js

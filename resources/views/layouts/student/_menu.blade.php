@@ -4,8 +4,10 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   {{-- Logo --}}
-  <a href="{{ url('/') }}" class="navbar-brand mr-4"><img src="/img/logo.png" height="50"></a>
-  <a href="#" class="navbar-brand mr-4"><img src="/img/creative-europe-media.png" height="50" alt=""></a>
+  <div class="navbar-brand">
+    <a href="{{ url('/') }}" class="mr-4"><img src="/img/logo.png" height="30"></a>
+    <a href="#" class="mr-4"><img src="/img/creative-europe-media.png" height="30" alt=""></a>
+  </div>
 
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">

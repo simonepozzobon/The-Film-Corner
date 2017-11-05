@@ -44,6 +44,7 @@ const { mix } = require('laravel-mix');
     .autoload({
         jquery: ['$', 'jQuery', 'jquery'],
         tether: ['Tether'],
+        vue: ['Vue']
     })
     .browserSync({
       proxy: 'http://www.simonepozzobon.dev:8888/',
