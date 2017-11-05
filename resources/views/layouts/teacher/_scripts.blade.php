@@ -235,9 +235,9 @@
             'token'       : token,
             'title'       : $('input[name="title"]').val(),
             'notes'       : $('#notes').val(),
-            'audio-src'   : $.parseJSON($.cookie('tfc-audio-src')),
-            'audio-vol'   : $.parseJSON($.cookie('tfc-audio-vol')),
-            'image'       : $('#image').attr('src')
+            'audio-src'   : localStorage.getItem('app-9-audio'),
+            'audio-vol'   : localStorage.getItem('app-9-vol'),
+            'image'       : localStorage.getItem('app-9-img'),
           };
 
           console.log('--------');
