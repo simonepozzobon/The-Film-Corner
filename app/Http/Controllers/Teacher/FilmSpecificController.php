@@ -210,7 +210,29 @@ class FilmSpecificController extends Controller
         break;
 
       case 'sound-atmospheres':
-        return view('teacher.film-specific.sound-atmosphere.index', compact('app', 'app_category'));
+          // Video
+          $videos = $app->videos()->get();
+          $videos = collect($videos->pluck('src')->all());
+
+          $flatten = $videos->transform(function($video, $key) {
+              return Storage::disk('local')->url($video);
+          });
+
+          $random_video = $flatten->random();
+          $video_library = json_encode($videos->toArray());
+
+          // Audio
+          $audios = $app->audios()->get();
+          $audios = collect($audios->pluck('src')->all());
+
+          $flatten = $audios->transform(function($audio, $key) {
+              return Storage::disk('local')->url($audio);
+          });
+
+          $random_audio = $flatten->random();
+          $audio_library = json_encode($audios->toArray());
+
+        return view('teacher.film-specific.sound-atmosphere.index', compact('app', 'app_category', 'random_video', 'random_audio'));
          break;
 
       case 'soundscapes':

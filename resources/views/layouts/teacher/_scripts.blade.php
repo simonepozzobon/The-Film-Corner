@@ -217,8 +217,8 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'audio'   : $.parseJSON($.cookie('tfc-audio')),
-            'video'   : $('video source').attr('src')
+            'audio'   : localStorage.getItem('app-8-audio'),
+            'video'   : localStorage.getItem('app-8-video')
           };
 
           console.log('--------');
