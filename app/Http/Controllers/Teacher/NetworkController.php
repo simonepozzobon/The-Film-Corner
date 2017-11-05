@@ -43,7 +43,13 @@ class NetworkController extends Controller
             $item->liked = $check;
 
             // Comments
-            $item->comments = $share->comments()->count();
+            $comments = $share->comments()->get();
+            $replies = 0;
+            foreach ($comments as $key => $comment) {
+                $comment_replies = $comment->comments()->count();
+                $replies = $replies + $comment_replies;
+            }
+            $item->comments = $comments->count() + $replies;
 
             $items->push($item);
 
