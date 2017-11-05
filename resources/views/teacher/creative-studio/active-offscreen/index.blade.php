@@ -1,6 +1,11 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <style media="screen">
+    #video-library {
+      overflow-y: scroll;
+    }
+  </style>
 @endsection
 @section('content')
   <section id="title" class="pt-5">
@@ -78,41 +83,11 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col blue p-5">
+                  <div id="video-player" class="col blue p-5">
                     <div class="embed-responsive embed-responsive-16by9">
                       <video id="video-main" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                          <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                          <source src="{{ $random_video }}" type="video/mp4">
                       </video>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col orange p-5">
-                    <div class="d-flex justify-content-around">
-                      {{-- Control Bar --}}
-                        <div class="btn-group">
-                          <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
-                            <i class="fa fa-play" aria-hidden="true"></i>
-                          </button>
-                          <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
-                            <i class="fa fa-pause" aria-hidden="true"></i>
-                          </button>
-                          <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
-                            <i class="fa fa-stop" aria-hidden="true"></i>
-                          </button>
-                          <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
-                            <i class="fa fa-backward" aria-hidden="true"></i>
-                          </button>
-                          <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
-                            <i class="fa fa-forward" aria-hidden="true"></i>
-                          </button>
-                        </div>
                     </div>
                   </div>
                 </div>
@@ -128,33 +103,52 @@
               </div>
             </div>
             <div class="row">
-              <div class="col yellow p-5">
-                <ul class="list-unstyled">
-                  <li class="">
-                    <div class="d-flex justify-content-between">
-                      <p class="d-block"><img src="{{ asset('img/helpers/null-image.png') }}" class="img-fluid" width="57"></p>
-                      <div class="">
-                        <a href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
+              <div id="video-library" class="col yellow p-5">
+                @foreach ($app->videos()->get() as $key => $video)
+                  <div class="row pb-3">
+                    <div class="col-md-2">
+                      <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
                     </div>
-                  </li>
-                  <li class="">
-                    <div class="d-flex justify-content-between">
-                      <p class="d-block"><img src="{{ asset('img/helpers/null-image.png') }}" class="img-fluid" width="57"></p>
-                      <div class="">
-                        <a href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
+                    <div class="col-md-8">
+                      <p class="p-2">{{ $video->title }}</p>
                     </div>
-                  </li>
-                  <li class="">
-                    <div class="d-flex justify-content-between">
-                      <p class="d-block"><img src="{{ asset('img/helpers/null-image.png') }}" class="img-fluid" width="57"></p>
-                      <div class="">
-                        <a href="#" class="btn btn-secondary btn-yellow"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
+                    <div class="col-md-2">
+                      <button class="change-video btn btn-secondary btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </button>
                     </div>
-                  </li>
-                </ul>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="box container-fluid mb-4">
+            <div class="row">
+              <div class="col orange p-5">
+                <div class="d-flex justify-content-around">
+                  {{-- Control Bar --}}
+                    <div class="btn-group">
+                      <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
+                        <i class="fa fa-play" aria-hidden="true"></i>
+                      </button>
+                      <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
+                        <i class="fa fa-pause" aria-hidden="true"></i>
+                      </button>
+                      <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
+                        <i class="fa fa-stop" aria-hidden="true"></i>
+                      </button>
+                      <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
+                        <i class="fa fa-backward" aria-hidden="true"></i>
+                      </button>
+                      <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
+                        <i class="fa fa-forward" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                </div>
               </div>
             </div>
           </div>
@@ -220,6 +214,16 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
+    $(document).ready( libraryResize );
+    document.getElementById('video-main').addEventListener('onresize', libraryResize);
+
+    function libraryResize()
+    {
+        var video_player = document.getElementById('video-main').offsetHeight - 95;
+        $('#video-library').height(video_player);
+    }
+
+
     var player = videojs('video-main', {
       controlBar: {
         playToggle: false,
@@ -231,6 +235,16 @@
     var videos = [];
 
     player.muted(true);
+
+    player.ready(function() {
+      $('.change-video').on('click', function(event) {
+        event.preventDefault();
+        player.pause();
+        player.src($(this).data('video-src'));
+        localStorage.setItem('app-10-video', $(this).data('video-src'));
+        player.load();
+      });
+    });
 
     $('#play').on('click', function() {
       player.play();
@@ -254,18 +268,22 @@
       player.currentTime(time+5);
     });
 
-    $(document).ready(function()
-    {
-      var session = $.parseJSON($.cookie('tfc-sessions'));
+    $('body').on('session-loaded', function(e, session) {
+      console.log('sessione caricata '+session.token);
+
+      // save the video src
+      localStorage.setItem('app-10-video', $('#video-main source').attr('src'));
+
 
       $('form#uploadForm').submit(function(event) {
         event.preventDefault();
+        console.log(session.token);
 
         var formData = new FormData();
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
         formData.append('media', $('#media')[0].files[0]);
         formData.append('video_ref', $('#videoRef').val());
-        formData.append('session', session[0].token);
+        formData.append('session', session.token);
 
         $.ajax({
           type: 'post',
@@ -299,7 +317,7 @@
             };
 
             videos.push(video);
-            localStorage.setItem('app-10-videos', JSON.stringify(videos));
+            localStorage.setItem('app-10-video-uploaded', JSON.stringify(videos));
           },
           error: function (errors) {
             console.log(errors);

@@ -255,8 +255,8 @@
 
         // Creative Studio - Warm Up - App 10 - Active Offscreen
         case 10:
-          if (localStorage.getItem('app-10-videos')) {
-            var videos = $.parseJSON(localStorage.getItem('app-10-videos'));
+          if (localStorage.getItem('app-10-video-uploaded')) {
+            var videos = $.parseJSON(localStorage.getItem('app-10-video-uploaded'));
           }
 
           var data = {
@@ -264,7 +264,7 @@
             'app_id'      : id,
             'token'       : token,
             'title'       : $('input[name="title"]').val(),
-            'main_video'  : $('#video-main source').attr('src'),
+            'main_video'  : localStorage.getItem('app-10-video'),
             'videos'      : videos
           };
 

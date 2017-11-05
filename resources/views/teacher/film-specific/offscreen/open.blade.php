@@ -179,7 +179,7 @@
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
+    // AppSession.initSession({{ $app->id }});
 
     $(document).ready( libraryResize );
     document.getElementById('video-player').addEventListener('onresize', libraryResize);

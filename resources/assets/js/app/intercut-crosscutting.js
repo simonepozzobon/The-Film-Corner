@@ -189,7 +189,7 @@ angular.module('uploadCtrl', [])
                           '<td class="align-middle">'+response.name+'</td>' +
                           '<td class="align-middle" ng-controller="toolController">' +
                             '<div class="btn-group">' +
-                              '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
+                              '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
                                 '<i class="fa fa-plus" aria-hidden="true"></i>' +
                               '</button>' +
                             '</div>' +

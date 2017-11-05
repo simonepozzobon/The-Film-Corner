@@ -102,17 +102,24 @@ class CreativeStudioController extends Controller
       **/
 
       case 'active-offscreen':
-        return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category', 'app_session'));
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+        $random_video = $flatten->random();
+        return view('teacher.creative-studio.active-offscreen.index', compact('app', 'app_category', 'random_video'));
         break;
 
       case 'active-parallel-action':
-        $elements = VideoLibrary::all();
-        return view('teacher.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'app_session', 'elements'));
+        $elements = $app->videos()->get();
+        return view('teacher.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
         $elements = AudioLibrary::all();
-        return view('teacher.creative-studio.sound-studio.index', compact('app', 'app_category', 'app_session', 'elements'));
+        return view('teacher.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements'));
         break;
 
 
@@ -123,15 +130,15 @@ class CreativeStudioController extends Controller
       **/
 
       case 'character-builder':
-        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category', 'app_session'));
+        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category'));
         break;
 
       case 'storytelling':
-        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category', 'app_session'));
+        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
         break;
 
       case 'storyboard':
-        return view('teacher.creative-studio.storyboard.index', compact('app', 'app_category', 'app_session'));
+        return view('teacher.creative-studio.storyboard.index', compact('app', 'app_category'));
         break;
 
 
@@ -142,11 +149,11 @@ class CreativeStudioController extends Controller
       **/
 
       case 'lumiere-minute':
-        return view('teacher.creative-studio.lumiere-minute.index', compact('app', 'app_category', 'app_session'));
+        return view('teacher.creative-studio.lumiere-minute.index', compact('app', 'app_category'));
         break;
 
       case 'make-your-own-film':
-        return view('teacher.creative-studio.make-your-own-film.index', compact('app', 'app_category', 'app_session'));
+        return view('teacher.creative-studio.make-your-own-film.index', compact('app', 'app_category'));
         break;
 
     }
@@ -199,7 +206,7 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         $session = json_encode($session);
         return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
         break;

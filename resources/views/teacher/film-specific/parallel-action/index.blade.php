@@ -1,5 +1,5 @@
 @extends('layouts.teacher', ['type' => 'app'])
-@section('title', 'Intercut - Cross Cutting')
+@section('title', $app->title)
 @section('stylesheets')
   {{-- <link rel="stylesheet" href="{{ mix('css/app/2.1/style.css') }}"> --}}
   <link rel="stylesheet" href="{{ asset('css/app/2.1/video-js.css') }}">

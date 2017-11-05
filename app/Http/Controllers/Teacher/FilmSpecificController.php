@@ -160,7 +160,16 @@ class FilmSpecificController extends Controller
         break;
 
       case 'offscreen':
-        return view('teacher.film-specific.offscreen.index', compact('app', 'app_category'));
+          $videos = $app->videos()->get();
+          $videos = collect($videos->pluck('src')->all());
+
+          $flatten = $videos->transform(function($video, $key) {
+              return Storage::disk('local')->url($video);
+          });
+
+          $random_video = $flatten->random();
+
+        return view('teacher.film-specific.offscreen.index', compact('app', 'app_category', 'random_video'));
         break;
 
       case 'attractions':
