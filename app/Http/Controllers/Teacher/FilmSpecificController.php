@@ -236,7 +236,14 @@ class FilmSpecificController extends Controller
          break;
 
       case 'soundscapes':
-        return view('teacher.film-specific.soundscapes.index', compact('app', 'app_category'));
+          $images = $app->medias()->get();
+          $images = collect($images->pluck('landscape')->all());
+          $flatten = $images->transform(function($image, $key) {
+              return Storage::disk('local')->url($image);
+          });
+          $random_image = $flatten->random();
+
+        return view('teacher.film-specific.soundscapes.index', compact('app', 'app_category', 'random_image'));
         break;
 
       case 'stop-and-go':
