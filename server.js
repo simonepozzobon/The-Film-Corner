@@ -6,6 +6,9 @@ var _ = require('lodash');
 
 var server = require ('http').Server();
 var io = require ('socket.io')(server);
+
+io.set('origins', '*:*');
+
 var Redis = require ('ioredis');
 var redis = new Redis();
 
