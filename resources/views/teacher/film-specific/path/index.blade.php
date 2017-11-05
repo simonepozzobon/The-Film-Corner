@@ -274,7 +274,7 @@
     data +=       '</div>';
     data +=       '<div class="modal-body">';
 
-    data +=         '<h4 class="text-center">Are You Shure?</h4>'
+    data +=         '<h4 class="text-center">Are You Sure?</h4>'
     data +=         '<p class="text-center">'
     data +=           'This will make your work public!'
     data +=           '{{ csrf_field() }}';
