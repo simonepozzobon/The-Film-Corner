@@ -47,7 +47,7 @@
     <div class="box container mb-4">
       <div class="row">
         <div class="col dark-orange py-3 px-5">
-          <h3>Title</h3>
+          <h3>Get Started</h3>
         </div>
       </div>
       <div class="row">
