@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import $ from 'jquery';
+import $ from 'jquery'
 
 import networkIcons from './components/networkIcons.vue'
 

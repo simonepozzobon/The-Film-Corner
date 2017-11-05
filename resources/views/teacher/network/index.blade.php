@@ -16,10 +16,12 @@
               <div class="col {{ $item->colors[0] }} px-5 pt-3 pb-5">
                 <h6 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_category }}</span></h6>
                 <h6 class="d-inline-block"><span class="badge badge-default mb-3">{{ $item->app_name }}</span></h6>
-                <p>{{ $item->notes }}</p>
+                <p>
+                  {{ $item->notes }}
+                </p>
 
                 <network-icons
-                    comments="{{ $item->comments }}"
+                    comments="{{ $item->comments }}" token="{{ $item->token }}" likes="2"
                 ></network-icons>
 
                 <div class="row">

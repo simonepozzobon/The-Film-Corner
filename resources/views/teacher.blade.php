@@ -1,4 +1,15 @@
 @extends('layouts.teacher')
+@section('stylesheets')
+  <style media="screen">
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+      .panels {
+        cursor: pointer;
+      }
+  </style>
+@endsection
 @section('content')
 <section id="image">
   <svg width="1921px" height="1080px" viewBox="0 0 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -19,7 +30,7 @@
           <path d="M1277.6,95.1 C1282,94.3 1285.3,90.5 1285.3,85.9 C1285.3,80.8 1281.1,76.6 1276,76.6 C1273.7,76.6 1271.6,77.4 1270,78.8 L1270,78.7 C1270,72.9 1265.3,68.1 1259.4,68.1 C1256.3,68.1 1253.5,69.4 1251.6,71.6 L1251.6,71.5 L1251.5,71.5 C1251.5,71 1251.6,70.6 1251.6,70.1 C1251.6,60.7 1244,53.1 1234.6,53.1 C1228.8,53.1 1223.7,56 1220.6,60.5 C1218,48.9 1207.7,40.2 1195.3,40.2 C1181,40.2 1169.3,51.8 1169.3,66.2 C1169.3,67.5 1169.4,68.8 1169.6,70.1 C1168.5,69.8 1167.4,69.6 1166.2,69.6 C1159.1,69.6 1153.3,75.4 1153.3,82.5 C1153.3,89.5 1158.9,95.2 1165.8,95.3 L1166,95.3 L1276.3,95.3 L1276.7,95.3 L1276.8,95.3 C1277.2,95.2 1277.4,95.2 1277.6,95.1 Z" id="Shape" fill="#F1F1F2" fill-rule="nonzero"></path>
       </g>
       <g id="buildings" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(89.000000, 300.000000)">
-          <g id="film-specific" transform="translate(0.000000, 74.000000)" fill-rule="nonzero" onclick="goPage('film-specific')">
+          <g id="film-specific" class="panels" transform="translate(0.000000, 74.000000)" fill-rule="nonzero" onclick="goPage('film-specific')">
               <polygon id="Shape" fill="#D9DBDC" points="584.2 280.1 243.5 376.2 243.5 0.7 584.2 37.9"></polygon>
               <rect id="Rectangle-path" fill="#CCCECF" x="0.1" y="0.7" width="243.4" height="375.5"></rect>
               <g id="windows" transform="translate(28.000000, 40.000000)">
@@ -78,7 +89,7 @@
               </g>
               <path d="M498.655152,304.159386 L374.523634,339.229604 L376.8,338.5 L376.8,263.226535 L492.8,242.457106 L492.8,305.3 L498.655152,304.159386 Z M500.5,303.638171 L537.8,293.1 L537.8,234.4 L500.5,241.078446 L500.5,303.638171 Z M369,340.790167 L304.9,358.9 L304.9,276.1 L369,264.6231 L369,340.790167 Z" id="Combined-Shape" fill="#CCCECF"></path>
           </g>
-          <g id="welcome" transform="translate(634.000000, 66.000000)" fill-rule="nonzero" onclick="goPage('welcome')">
+          <g id="welcome" class="panels" transform="translate(634.000000, 66.000000)" fill-rule="nonzero" onclick="goPage('welcome')">
               <rect id="Rectangle-path" fill="#E5E5E5" x="0" y="0.3" width="473.9" height="287.4"></rect>
               <g id="windows" transform="translate(48.000000, 46.000000)" fill="#FFFFFF">
                   <rect id="Rectangle-path" x="0.2" y="0.7" width="19.6" height="30.3"></rect>
@@ -128,7 +139,7 @@
               </g>
               <path d="M295.4,253.7 L326.1,253.7 L326.1,287.7 L295.4,287.7 L295.4,253.7 Z M289.7,253.7 L259,253.7 L259,287.7 L289.7,287.7 L289.7,253.7 Z M331.8,253.7 L357,253.7 L357,287.7 L331.8,287.7 L331.8,253.7 Z M253.3,253.7 L224,253.7 L224,287.7 L253.3,287.7 L253.3,253.7 Z M218.3,253.7 L186.2,253.7 L186.2,287.7 L218.3,287.7 L218.3,253.7 Z M180.5,253.7 L149.8,253.7 L149.8,287.7 L180.5,287.7 L180.5,253.7 Z M144.1,253.7 L119,253.7 L119,287.7 L144.1,287.7 L144.1,253.7 Z" id="Combined-Shape" fill="#D9DBDC"></path>
           </g>
-          <g id="creative-studio" transform="translate(1135.000000, 0.000000)" fill-rule="nonzero" onclick="goPage('creative-studio')">
+          <g id="creative-studio" class="panels" transform="translate(1135.000000, 0.000000)" fill-rule="nonzero" onclick="goPage('creative-studio')">
               <polygon id="Shape" fill="#D9DBDC" points="0.5 354.1 341.2 450.2 341.2 0.7 0.5 56.6"></polygon>
               <rect id="Rectangle-path" fill="#CCCECF" transform="translate(499.554700, 225.439900) rotate(180.000000) translate(-499.554700, -225.439900) " x="341.2547" y="0.689900055" width="316.6" height="449.5"></rect>
               <g id="windows" transform="translate(48.000000, 61.000000)">
@@ -227,7 +238,7 @@
           <path d="M1195.9,189.8 C1195.9,170 1179.9,154 1160.1,154 C1140.3,154 1124.3,170 1124.3,189.8 C1124.3,208.4 1138.5,223.5 1156.5,225.3 L1156.5,263.3 L1163.7,263.3 L1163.7,225.3 C1181.8,223.4 1195.9,208.3 1195.9,189.8" id="Shape" fill="#3FB7AE" fill-rule="nonzero"></path>
       </g>
       <g id="panels" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(58.000000, 192.000000)">
-          <g id="welcome" transform="translate(685.000000, 109.000000)" fill-rule="nonzero" onclick="goPage('welcome')">
+          <g id="welcome" class="panels" transform="translate(685.000000, 109.000000)" fill-rule="nonzero" onclick="goPage('welcome')">
               <rect id="Rectangle-path" fill="#CCCECF" x="215" y="56" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" x="25" y="56" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" x="405" y="56" width="5.5" height="10"></rect>
@@ -235,14 +246,14 @@
               <rect id="Rectangle-path-Copy" fill="#CCCECF" transform="translate(217.250000, 58.000000) rotate(90.000000) translate(-217.250000, -58.000000) " x="215" y="-159" width="4.5" height="434"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" transform="translate(217.250000, 3.000000) rotate(90.000000) translate(-217.250000, -3.000000) " x="215" y="-214" width="4.5" height="434"></rect>
           </g>
-          <g id="creative-studio" transform="translate(1514.000000, 0.000000)" fill-rule="nonzero" onclick="goPage('creative-studio')">
+          <g id="creative-studio" class="panels" transform="translate(1514.000000, 0.000000)" fill-rule="nonzero" onclick="goPage('creative-studio')">
               <rect id="Rectangle-path" fill="#CCCECF" x="59.6" y="99.1" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" x="238.1" y="99.1" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" transform="translate(151.750000, 96.650000) rotate(90.000000) translate(-151.750000, -96.650000) " x="149" y="-54" width="5.5" height="301.3"></rect>
               <rect id="Rectangle-path" fill="#F1F1F2" x="4" y="0" width="296.399994" height="94"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" transform="translate(151.750000, 2.750000) rotate(90.000000) translate(-151.750000, -2.750000) " x="149" y="-149" width="5.5" height="303.5"></rect>
           </g>
-          <g id="film-specific" transform="translate(0.000000, 68.000000)" fill-rule="nonzero" onclick="goPage('film-specific')">
+          <g id="film-specific" class="panels" transform="translate(0.000000, 68.000000)" fill-rule="nonzero" onclick="goPage('film-specific')">
               <rect id="Rectangle-path" fill="#CCCECF" x="60.7" y="104.7" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" x="239.2" y="104.7" width="5.5" height="10"></rect>
               <rect id="Rectangle-path" fill="#CCCECF" transform="translate(152.637000, 102.683500) rotate(90.000000) translate(-152.637000, -102.683500) " x="149.887" y="-49.0665" width="5.5" height="303.5"></rect>
@@ -250,7 +261,7 @@
               <rect id="Rectangle-path" fill="#F1F1F2" x="4.3" y="5.8" width="296.399994" height="94.1"></rect>
           </g>
       </g>
-      <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(105.000000, 203.000000)" font-family="Gotham-Bold, Gotham" font-weight="bold">
+      <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(105.000000, 203.000000)" font-family="Raleway" font-weight="bold">
           <text id="CREATIVE-STUDIO" font-size="46" fill="#FD4E50" onclick="goPage('creative-studio')">
               <tspan x="1496.525" y="34">CREATIVE</tspan>
               <tspan x="1526.724" y="75">STUDIO</tspan>
@@ -270,7 +281,6 @@
   <script type="text/javascript">
     function goPage(type) {
       var loc = '';
-
       // check what part is clicked
       if (type === 'film-specific') {
         loc = '{{ route('teacher.film-specific') }}';
@@ -279,9 +289,7 @@
       } else if (type === 'creative-studio') {
         loc = '{{ route('teacher.creative-studio') }}';
       }
-
       window.location.href = loc;
-
     }
   </script>
 @endsection

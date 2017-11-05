@@ -63,19 +63,19 @@
           <div class="col">
             <div class="box container-fluid mb-4">
               <div class="row">
-                <div class="col dark-blue py-3 px-5">
+                <div class="col dark-green py-3 px-5">
                   <h3>Examples</h3>
                 </div>
               </div>
               <div class="row">
-                <div class="col blue p-5">
+                <div class="col green p-5">
                   <p>Examples of pictures and clips related to each app with a short explanations</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="row">
+        {{-- <div class="row">
           <div class="col">
             <div class="box container-fluid mb-4">
               <div class="row">
@@ -96,7 +96,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> --}}
         <div class="row">
           <div class="col">
             @foreach ($app_category->keywords as $key => $keyword)

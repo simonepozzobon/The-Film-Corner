@@ -26,3 +26,5 @@ laravel-echo-server.json
 *.sketch
 
 server.js
+
+server.js

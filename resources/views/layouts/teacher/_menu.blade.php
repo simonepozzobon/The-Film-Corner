@@ -10,7 +10,7 @@
   </div>
 
   {{-- Desktop --}}
-  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+  <div class="collapse navbar-collapse justify-content-end" id="menu-main">
     <ul class="navbar-nav justify-content-end">
       <li class="nav-item">
         <span class="nav-link"> Hello, {{ Auth::guard('teacher')->user()->name }}</span>
