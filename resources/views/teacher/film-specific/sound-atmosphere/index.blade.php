@@ -1,5 +1,5 @@
 @extends('layouts.teacher', ['type' => 'app'])
-@section('title', 'Make Your Own Film')
+@section('title', 'Sound Atmosphere')
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
@@ -252,8 +252,10 @@
 
         $('#stop').on('click', function() {
             video.pause().currentTime(0);
-            audio.pause();
-            audio.seekTo(0);
+            if (audio.isPlaying()) {
+              audio.stop();
+              audio.seekTo(0);
+            }
         });
 
         $('#rewind').on('click', function() {

@@ -1,5 +1,5 @@
 @extends('layouts.teacher', ['type' => 'app'])
-@section('title', 'Make Your Own Film')
+@section('title', 'Sound Atmosphere')
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
