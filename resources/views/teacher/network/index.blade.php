@@ -21,7 +21,14 @@
                 </p>
 
                 <network-icons
-                    comments="{{ $item->comments }}" token="{{ $item->token }}" likes="2"
+                    views="{{ $item->views }}"
+                    comments="{{ $item->comments }}"
+                    likes="{{ $item->likes }}"
+                    liked="{{ $item->liked }}"
+                    user="{{ Auth::guard('teacher')->user() }}"
+                    user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
+                    likeable_type="App\SharedSession"
+                    likeable_id="{{ $item->id }}"
                 ></network-icons>
 
                 <div class="row">

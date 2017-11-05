@@ -15,6 +15,7 @@
 
 import {TweenMax, Power4, Elastic, TimelineMax} from 'gsap'
 import _ from 'lodash'
+import axios from 'axios'
 
 export default {
   name: "feedback-popup",
@@ -91,7 +92,7 @@ export default {
       openModal()
       {
           this.$parent.$emit('modalOpen', '#info');
-      }
+      },
   }
 }
 </script>

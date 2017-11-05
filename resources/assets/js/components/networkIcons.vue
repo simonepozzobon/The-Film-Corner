@@ -1,14 +1,14 @@
 <template>
-  <div :id="token">
+  <div :id="likeable_id">
     <div class="row py-4">
       <div class="col">
-        <h4 ref="eye" class="text-center">1234 <i class="fa fa-eye" aria-hidden="true"></i></h4>
+        <h5 ref="eye" class="text-center">{{ this.views }} <i class="fa fa-eye" aria-hidden="true"></i></h5>
       </div>
       <div class="col">
-        <h4 ref="heart" class="text-center" @click="heartClick(token, $event)">{{ this.counter }} <i class="fa fa-heart" aria-hidden="true"></i></h4>
+        <h5 ref="heart" class="text-center" @click="heartClick(likeable_id, $event)">{{ this.counter }} <i class="fa fa-heart" aria-hidden="true"></i></h5>
       </div>
       <div class="col">
-        <h4 ref="comment" class="text-center">{{ this.comments }} <i class="fa fa-comment" aria-hidden="true"></i></h4>
+        <h5 ref="comment" class="text-center">{{ this.comments }} <i class="fa fa-comment" aria-hidden="true"></i></h5>
       </div>
     </div>
   </div>
@@ -19,21 +19,28 @@ import {TweenMax, Power4, Elastic, TimelineMax} from 'gsap'
 
 export default {
   name: "network-icons",
-  props: ['comments', 'token', 'likes'],
+  props: ['views', 'comments', 'likes', 'liked', 'user', 'user_type', 'likeable_type', 'likeable_id'],
   data: () => ({
-    liked: '',
-    counter: ''
+    counter: '',
+    like_status: ''
   }),
   mounted() {
     this.counter = this.likes;
+
+    if (this.liked) {
+      this.$refs.heart.style.color = 'rgb(254, 89, 90)';
+    }
+    this.like_status = this.liked;
+
   },
   methods: {
-    heartClick (token, e)
+    heartClick (likeable_id, e)
     {
-        // if not yet liked
-        if (!this.liked) {
+        // if not liked yet
+        if (!this.like_status) {
             this.counter++;
-            this.liked = true;
+            this.like_status = true;
+            this.addLike();
 
             var t1 = new TimelineMax();
             t1.to(this.$refs.heart, .4, {
@@ -74,18 +81,41 @@ export default {
         // if already liked -> remove like
         } else {
           this.counter--;
-          this.liked = false;
+          this.like_status = false;
+          this.removeLike();
 
           TweenMax.to(this.$refs.heart, 1, {
             color: 'rgb(37, 37, 37)',
             ease: Power4.easeOut
           });
         }
+    },
 
+    addLike()
+    {
+        var vue = this;
 
+        var formData = new FormData();
+        formData.append('user', this.user);
+        formData.append('user_type', this.user_type);
+        formData.append('likeable_id', this.likeable_id);
+        formData.append('likeable_type', this.likeable_type);
 
+        axios.post('/api/v1/add-like', formData);
+    },
 
-    }
+    removeLike()
+    {
+        var vue = this;
+
+        var formData = new FormData();
+        formData.append('user', this.user);
+        formData.append('user_type', this.user_type);
+        formData.append('likeable_id', this.likeable_id);
+        formData.append('likeable_type', this.likeable_type);
+
+        axios.post('/api/v1/destroy-like', formData);
+    },
   },
 }
 </script>

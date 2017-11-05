@@ -1026,23 +1026,29 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
     name: "network-icons",
-    props: ['comments', 'token', 'likes'],
+    props: ['views', 'comments', 'likes', 'liked', 'user', 'user_type', 'likeable_type', 'likeable_id'],
     data: function data() {
         return {
-            liked: '',
-            counter: ''
+            counter: '',
+            like_status: ''
         };
     },
     mounted: function mounted() {
         this.counter = this.likes;
+
+        if (this.liked) {
+            this.$refs.heart.style.color = 'rgb(254, 89, 90)';
+        }
+        this.like_status = this.liked;
     },
 
     methods: {
-        heartClick: function heartClick(token, e) {
-            // if not yet liked
-            if (!this.liked) {
+        heartClick: function heartClick(likeable_id, e) {
+            // if not liked yet
+            if (!this.like_status) {
                 this.counter++;
-                this.liked = true;
+                this.like_status = true;
+                this.addLike();
 
                 var t1 = new _gsap.TimelineMax();
                 t1.to(this.$refs.heart, .4, {
@@ -1082,13 +1088,36 @@ exports.default = {
                 // if already liked -> remove like
             } else {
                 this.counter--;
-                this.liked = false;
+                this.like_status = false;
+                this.removeLike();
 
                 _gsap.TweenMax.to(this.$refs.heart, 1, {
                     color: 'rgb(37, 37, 37)',
                     ease: _gsap.Power4.easeOut
                 });
             }
+        },
+        addLike: function addLike() {
+            var vue = this;
+
+            var formData = new FormData();
+            formData.append('user', this.user);
+            formData.append('user_type', this.user_type);
+            formData.append('likeable_id', this.likeable_id);
+            formData.append('likeable_type', this.likeable_type);
+
+            axios.post('/api/v1/add-like', formData);
+        },
+        removeLike: function removeLike() {
+            var vue = this;
+
+            var formData = new FormData();
+            formData.append('user', this.user);
+            formData.append('user_type', this.user_type);
+            formData.append('likeable_id', this.likeable_id);
+            formData.append('likeable_type', this.likeable_type);
+
+            axios.post('/api/v1/destroy-like', formData);
         }
     }
 };
@@ -1367,28 +1396,28 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     attrs: {
-      "id": _vm.token
+      "id": _vm.likeable_id
     }
   }, [_c('div', {
     staticClass: "row py-4"
   }, [_c('div', {
     staticClass: "col"
-  }, [_c('h4', {
+  }, [_c('h5', {
     ref: "eye",
     staticClass: "text-center"
-  }, [_vm._v("1234 "), _c('i', {
+  }, [_vm._v(_vm._s(this.views) + " "), _c('i', {
     staticClass: "fa fa-eye",
     attrs: {
       "aria-hidden": "true"
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col"
-  }, [_c('h4', {
+  }, [_c('h5', {
     ref: "heart",
     staticClass: "text-center",
     on: {
       "click": function($event) {
-        _vm.heartClick(_vm.token, $event)
+        _vm.heartClick(_vm.likeable_id, $event)
       }
     }
   }, [_vm._v(_vm._s(this.counter) + " "), _c('i', {
@@ -1398,7 +1427,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })])]), _vm._v(" "), _c('div', {
     staticClass: "col"
-  }, [_c('h4', {
+  }, [_c('h5', {
     ref: "comment",
     staticClass: "text-center"
   }, [_vm._v(_vm._s(this.comments) + " "), _c('i', {

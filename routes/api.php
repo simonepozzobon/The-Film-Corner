@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function() {
+  // Likes
+  Route::post('add-like', 'Api\LikeController@addLike');
+  Route::post('destroy-like', 'Api\LikeController@destroy');
+
   // Comments
   Route::post('send-comment', 'Api\CommentController@sendComment');
   Route::post('destroy-comment', 'Api\CommentController@destroy');

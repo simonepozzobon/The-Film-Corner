@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers\Teacher;
 
+use Auth;
+use App\Like;
 use App\Utility;
+use App\Comment;
 use Carbon\Carbon;
 use App\SharedSession;
 use AppsSession\AppsSession;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Activitylog\Models\Activity;
 
 class NetworkController extends Controller
 {
     public function index()
     {
+        $user = Auth::guard('teacher')->user();
+
         $utility = new Utility;
         $shared = SharedSession::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments')->get();
         $items = collect();
@@ -24,7 +30,21 @@ class NetworkController extends Controller
             // Creo l'oggetto
             $item = $utility->formatNetworkContent($share);
             $item = $utility->assignColor($item, $key, $items_color);
+
+            // Views
+            $item->views = Activity::where('description', '=', 'network_views')->forSubject($share)->count();
+
+            // Likes
+            $likes = $share->likes()->get();
+            $check = $likes->contains(function($like, $key) use ($user) {
+                return $like->userable_type == get_class($user) && $like->userable_id == $user->id;
+            });
+            $item->likes = $likes->count();
+            $item->liked = $check;
+
+            // Comments
             $item->comments = $share->comments()->count();
+
             $items->push($item);
 
         }
@@ -37,6 +57,10 @@ class NetworkController extends Controller
         $utility = new Utility;
         $shared = SharedSession::where('token', '=', $token)->with('comments')->first();
         $item = $utility->formatNetworkContent($shared);
+
+        $views = Activity::where('description', '=', 'visit')->forSubject($shared)->count();
+
+        activity()->causedBy(Auth::guard('teacher')->user())->performedOn($shared)->withProperties('visited', true)->log('network_views');
 
         $comments = $shared->comments()->get();
         foreach ($comments as $key => $comment) {
