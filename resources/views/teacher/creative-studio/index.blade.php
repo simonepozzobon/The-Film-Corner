@@ -132,7 +132,7 @@
               <polygon id="Fill-110" class="panels" onclick="onPage('story-telling')" fill="#9BE2DA" points="50.3778 357.9688 700.1668 344.2908 799.7408 269.2308 697.0968 198.4258 47.3078 212.1038"></polygon>
               <polygon id="Fill-109" class="panels" onclick="onPage('mycorner-contest')" fill="#9BE2DA" points="766.2158 626.3165 117.8888 580.6475 22.1328 500.7735 128.1408 435.1115 776.4678 480.7805"></polygon>
           </g>
-          <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(232.000000, 92.000000)" font-family="Gotham-Bold, Gotham" font-weight="bold">
+          <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(232.000000, 92.000000)" font-family="Raleway" font-weight="bold">
               <text id="CREATIVE-STUDIO" font-size="64" fill="#FFFFFF">
                   <tspan x="0" y="47">CREATIVE STUDIO</tspan>
               </text>
