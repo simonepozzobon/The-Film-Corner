@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Audio;
+use App\Utility;
 use Illuminate\Http\Request;
 use Lanin\Laravel\ApiDebugger\Facade;
 use Illuminate\Support\Facades\Storage;
-use App\Audio;
 
 class AudioEditorController extends Controller
 {
@@ -71,20 +72,63 @@ class AudioEditorController extends Controller
           }
 
           $dataLenght = count($data);
-          // faccio degli step intermedi creando gli offset
+
+
+          // faccio degli step intermedi creando gli offset e tagliando i files
           // sox awful-lyrics.wav offset-awful-lyrics.wav pad 3 0
           // Debug: $clis = collect();
           foreach ($data as $key => $audio) {
+
+              // Definisco le variabili
               $audioPath = urldecode($audio['media_url']);
               $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
               $tmpFilename = $audio['id'];
               $basename = $srcFilename;
 
+              // definisco le paths per le operazioni
               $srcPath = storage_path('app/public/audio/sessions/'.$session_id.'/src/'.$basename.'.wav');
-              $tmpPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
+              $trimmedPath = $storePath.'/tmp/trim-'.$tmpFilename.'-'.$key.'.wav';
+              $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
+
+              /*
+               * Taglio l'audio
+               */
+
+              // Prendo la durata del file originale
+              $originalDuration = Utility::getAudioLenght($srcPath);
+
+              // prendo la durata del file nella timeline, in questo caso il primo e unico
+              $clipDurationInTicks = $request[0]['duration'];
+              $clipDuration = $Audio->tToS($clipDurationInTicks);
+
+              //imposto come limite massimo di durata quello originale del file
+              $duration = $clipDuration;
+              if ($clipDuration > $originalDuration) {
+                $duration = $originalDuration;
+              }
+
+              // se la durata è diversa dall'originale effetuo il taglio altrimenti no
+              if ($duration != $originalDuration) {
+
+                // taglio l'audio
+                // sox input output trim <start> <duration>
+                $cli = SOX_LIB.' "'.$srcPath.'" "'.$trimmedPath.'" trim 0 '.$duration;
+                exec($cli);
+
+              } else {
+                // salto il passagio del taglio assegnando la sorgente alla variabile tagliata
+                $trimmedPath = $srcPath;
+              }
+
+              /*
+               * Setto la distanza dei file dall'inizio della timeline (Ritardo)
+               */
+
+              // ritardo il file
               $delay = $Audio->tToS($audio['start']);
-              $cli = SOX_LIB.' '.$srcPath. ' '.$tmpPath.' pad '.$delay. ' 0';
+              $cli = SOX_LIB.' '.$trimmedPath. ' '.$offsettedPath.' pad '.$delay. ' 0';
               exec($cli);
+
               // Debug: $clis->push($cli);
           }
 
@@ -106,25 +150,25 @@ class AudioEditorController extends Controller
             $cli .= $audioExportPath;
             exec($cli);
 
-            // comprimo il file wav in mp3
-            // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
-            $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
-            $cli = FFMPEG_LIB.' -i '.$audioExportPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
-            exec($cli);
+
 
           } else {
             // Se c'è un solo file nella timeline lo salvo nella cartella degli export
             $tmpFilename = $data[0]['id'];
             $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-0.wav';
+
+            // definisco il nome dell'export
             $audioExportName = uniqid();
 
-            // comprimo il file wav in mp3
-            // Anziché usare gli offset uniti uso direttamente l'unico file offset presente
-            // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
-            $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
-            $cli = FFMPEG_LIB.' -i '.$offsettedPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
-            exec($cli);
+            // essendo un unico file lo assegno alla variabile $audioExportPath per comprimerlo successivamente
+            $audioExportPath = $offsettedPath;
           }
+
+          // comprimo il file wav in mp3
+          // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
+          $compressedAudioExportPath = $storePath.'/tmp/exp-'.$audioExportName.'.mp3';
+          $cli = FFMPEG_LIB.' -i '.$audioExportPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioExportPath;
+          exec($cli);
 
           // Pulisco il percorso del file video su cui montare l'audio
           $videoRawPath = parse_url($request[0]['file'], PHP_URL_PATH);

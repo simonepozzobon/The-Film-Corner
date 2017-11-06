@@ -146,7 +146,6 @@ class Utility extends Model
     return $data;
   }
 
-
   public function storeImg($file, $filename, $destFolder)
   {
       // Salvo il file
@@ -197,7 +196,8 @@ class Utility extends Model
       return $finalPath;
   }
 
-  public function formatNetworkContent($share) {
+  public function formatNetworkContent($share)
+  {
     $item = collect();
     $item->id = $share->id;
     $item->title = $share->title;
@@ -434,4 +434,21 @@ class Utility extends Model
 
       return $text;
   }
+
+  /*
+   *
+   * $path = path del file audio
+   * ritorna la durata del file in secondi
+   *
+   * Comando originale sox:
+   * sox out.wav -n stat 2>&1 | sed -n 's#^Length (seconds):[^0-9]*\([0-9.]*\)$#\1#p'
+   *
+  */
+  public static function getAudioLenght($path)
+  {
+      $cli = SOX_LIB.' "'.$path.'" -n stat 2>&1 | sed -n \'s#^Length (seconds):[^0-9]*\([0-9.]*\)$#\1#p\'';
+      $duration = exec($cli);
+      return $duration;
+  }
+
 }

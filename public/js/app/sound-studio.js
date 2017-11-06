@@ -87648,13 +87648,13 @@ __webpack_require__(105);
 _angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
 
   return {
-    send: function send(timelines, counter) {
+    send: function send(timelines, videoSrc, counter) {
       var media = [];
 
       for (var i = 0; i < timelines.length; i++) {
         var edit = {
           session: timelines[i].session,
-          file: timelines[i].file,
+          file: videoSrc,
           id: timelines[i].id,
           media_url: timelines[i].media_url,
           start: timelines[i].lines[0].events[0].start,
@@ -87668,7 +87668,7 @@ _angular2.default.module('appService', []).factory('Audio', function ($http, CSR
         for (var i = 0; i < timelines.length; i++) {
           var timeline = {
             session: timelines[i].session,
-            file: timelines[i].file,
+            file: videoSrc,
             id: timelines[i].id,
             name: timelines[i].name,
             media_url: timelines[i].media_url,
@@ -87815,7 +87815,7 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   if (typeof session == 'undefined' && typeof init != 'undefined') {
 
     // Rigenera Il video
-    Audio.send(init, counter).then(function successCallback(response) {
+    Audio.send(init, $scope.videoData.player.src(), counter).then(function successCallback(response) {
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,
@@ -87833,7 +87833,7 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
     console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
-    Audio.send(timelines).then(function successCallback(response) {
+    Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
       // console.log(timelines);
       // console.log(response.data[2]);
       // console.log('-------');
