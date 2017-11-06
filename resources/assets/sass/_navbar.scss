@@ -8,7 +8,7 @@
 // Responsive navbar
 // Navbar position
 // Navbar themes
-
+// Main Menu responsive
 
 // Navbar
 //
@@ -28,13 +28,9 @@
 // Used for brand, project, or site names.
 
 .navbar-brand {
-  display: inline-block;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
   margin-right: $navbar-padding-x;
-  font-size: $font-size-lg;
-  line-height: inherit;
-  white-space: nowrap;
+  height: 2.25rem;
+  width: inherit !important;
 
   @include hover-focus {
     text-decoration: none;
@@ -49,8 +45,6 @@
 .navbar-nav {
   display: flex;
   flex-direction: column; // cannot use `inherit` to get the `.navbar`s value
-  padding-left: 0;
-  margin-bottom: 0;
   list-style: none;
 
   .nav-link {
@@ -80,12 +74,10 @@
 // Button for toggling the navbar when in its collapsed state
 .navbar-toggler {
   align-self: flex-start; // Prevent toggler from growing to full width when it's the only visible navbar child
-  padding: $navbar-toggler-padding-y $navbar-toggler-padding-x;
   font-size: $navbar-toggler-font-size;
   line-height: 1;
   background: transparent; // remove default button style
-  border: $border-width solid transparent; // remove default button style
-  @include border-radius($navbar-toggler-border-radius);
+  border: none; // remove default button style
 
   @include hover-focus {
     text-decoration: none;
@@ -124,6 +116,7 @@
 
     &#{$infix} {
       @include media-breakpoint-down($breakpoint) {
+
         .navbar-nav {
           .dropdown-menu {
             position: static;
@@ -146,8 +139,8 @@
           flex-direction: row;
 
           .nav-link {
-            padding-right: .5rem;
-            padding-left: .5rem;
+            padding-right: 1rem;
+            padding-left: 1rem;
           }
         }
 
@@ -183,6 +176,7 @@
   .navbar-brand,
   .navbar-toggler {
     color: $navbar-light-active-color;
+    align-self: center;
 
     @include hover-focus {
       color: $navbar-light-active-color;
@@ -265,5 +259,55 @@
 
   .navbar-text {
     color: $navbar-inverse-color;
+  }
+}
+
+
+// Main Menu Responsive
+//
+//
+#main-menu {
+  > ul {
+    > li {
+      > a {
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+      } 
+    }
+  }
+}
+
+
+#main-menu {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+
+        > .navbar-collapse {
+          position: absolute;
+          flex-direction: row;
+          width: 100%;
+          top: 90%;
+          right: 0;
+          background-color: lighten($nav-gray, 25%);
+
+          > ul {
+            flex-direction: row;
+            align-items: center;
+
+            > li {
+              padding: 0;
+            }
+          }
+        }
+      }
+
+      @include media-breakpoint-up($next) {
+
+      }
+    }
   }
 }

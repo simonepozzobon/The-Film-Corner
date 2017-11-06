@@ -1,0 +1,36 @@
+
+/*
+ *top menu navbar
+ */
+
+#main-menu {
+  height: 90px;
+  flex-direction: row;
+  background-color: $nav-gray;
+}
+
+#main-menu .navbar-brand {
+  flex-direction: column;
+}
+
+// #main-menu .navbar-collapse {
+//   position: absolute;
+//   flex-direction: row;
+//   width: 100%;
+//   top: 90%;
+//   right: 0;
+//   background-color: lighten($nav-gray, 25%);
+//
+//   > ul {
+//     flex-direction: row;
+//     align-items: center;
+//
+//     > li {
+//       padding: 0;
+//     }
+//   }
+// }
+
+// #main-menu .nav-item {
+//   padding-left: 2rem;
+// }

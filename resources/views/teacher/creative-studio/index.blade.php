@@ -1,19 +1,21 @@
 @extends('layouts.teacher')
 @section('stylesheets')
   <style media="screen">
-  svg {
+  #background {
     width: 100%;
     height: 100%;
   }
+
   .panels, .texts {
     cursor: pointer;
   }
+
   </style>
 @endsection
 @section('content')
 <section id="image">
   <feedback-popup></feedback-popup>
-  <svg width="1921px" height="1082px" viewBox="-267 -202 1921 1082" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg id="background" width="1921px" height="1082px" viewBox="-267 -202 1921 1082" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
           <polygon id="path-1" points="0.32 1080.689 1920.32 1080.689 1920.32 0.689 0.32 0.689"></polygon>
       </defs>

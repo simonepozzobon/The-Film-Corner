@@ -2,7 +2,7 @@
 @section('title', 'Film Specific')
 @section('stylesheets')
   <style media="screen">
-  svg {
+  #background {
     width: 100%;
     height: 100%;
   }
@@ -14,7 +14,7 @@
 @section('content')
 <section id="image">
   <feedback-popup></feedback-popup>
-  <svg width="1921px" height="1080px" viewBox="-269 -204 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg id="background" width="1921px" height="1080px" viewBox="-269 -204 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
           <polygon id="path-1" points="0 1080 1920.724 1080 1920.724 0 0 0"></polygon>
       </defs>

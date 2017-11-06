@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 @section('stylesheets')
   <style media="screen">
-      svg {
+      #background {
         width: 100%;
         height: 100%;
       }
@@ -12,7 +12,7 @@
 @endsection
 @section('content')
 <section id="image">
-  <svg width="1921px" height="1080px" viewBox="0 0 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <svg id="background" width="1921px" height="1080px" viewBox="0 0 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g id="ground" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <rect id="Rectangle-path" fill="#D3EFE9" fill-rule="nonzero" x="0" y="0" width="1920" height="757.8"></rect>
           <path d="M1920.7,709.4 L0,743.333333 L0,515 C4.5,513 318.9,515.8 462.9,527.9 C606.9,540 776.4,528.6 891.9,524.5 C1007.4,520.4 1258.4,468.8 1393.9,463.7 C1616.4,455.4 1800.7,543.8 1920.7,542.6" id="Shape" fill="#9AE2D9" fill-rule="nonzero"></path>

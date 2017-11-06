@@ -5,19 +5,23 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>@yield('title')</title>
+
     @yield('section')
     @include('layouts.teacher._head')
-    <link rel="stylesheet" href="/css/teacher.css">
+
   </head>
-  <style media="screen">
-    body {
-      background: url('{{ asset('img/helpers/back.png') }}') repeat repeat;
-    }
-  </style>
   <body>
     @include('layouts.teacher._menu')
+
+
     @yield('content')
+
+
     @include('layouts.teacher._scripts', ['type' => $type])
   </body>
 </html>

@@ -9,13 +9,20 @@
 
 // Variables
 @import "variables";
+
+// Reset and dependencies
 @import "normalize";
 
 // Bootstrap
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
+// Components
+@import "nav";
 @import "navbar";
+@import "badge";
+
+// Custom imports
 @import "forms";
 @import "filters";
 
@@ -30,3 +37,4 @@ body {
 }
 
 @import "resources/assets/admin/sass/_style.scss";
+@import 'layout';
