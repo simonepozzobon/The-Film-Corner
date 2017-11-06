@@ -94,30 +94,13 @@
                   </div>
                 </form>
                 <ul id="assets" class="assets row list-unstyled">
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_1.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_2.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_3.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_4.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_5.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_6.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_7.png') }}" class="img-fluid w-100">
-                  </li>
-                  <li class="col-md-3 pb-4 asset">
-                    <img src="{{ asset('img/helpers/apps/storyboard/story_8.png') }}" class="img-fluid w-100">
-                  </li>
+                  @foreach ($app->medias()->get() as $key => $media)
+                    @if ($media->category_id == 2)
+                      <li class="col-md-3 pb-4 asset">
+                        <img src="{{ Storage::disk('local')->url($media->src) }}" class="img-fluid w-100">
+                      </li>
+                    @endif
+                  @endforeach
                 </ul>
               </div>
             </div>
