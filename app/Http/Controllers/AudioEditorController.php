@@ -150,8 +150,6 @@ class AudioEditorController extends Controller
             $cli .= $audioExportPath;
             exec($cli);
 
-
-
           } else {
             // Se c'è un solo file nella timeline lo salvo nella cartella degli export
             $tmpFilename = $data[0]['id'];
