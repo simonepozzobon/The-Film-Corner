@@ -4,6 +4,12 @@
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
+    .draggable-container {
+      min-width: 4rem;
+      min-height: 4rem;
+      border: 2px #333 dashed;
+    }
+
     .ui-slider {
       background: #f4c490;
       border: 1px solid #e8a360 !important;
@@ -109,7 +115,7 @@
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col blue p-5">
+                  <div id="player" class="col blue p-5">
                     <img id="image" src="{{ $random_image }}" alt="" class="img-fluid">
                     <div id="waveform-1" class="d-none"></div>
                     <div id="waveform-2" class="d-none"></div>
@@ -131,7 +137,7 @@
               </div>
             </div>
             <div class="row">
-              <div class="col yellow p-5">
+              <div id="library" class="col yellow p-5">
                 <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
                   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -148,18 +154,18 @@
                   </div>
                 </nav>
                 <div id="libraries">
-                    <div id="audio-library" class="collapse show" data-show="true" role="tabpanel">
+                    <div id="audio-library" class="collapse show test" data-show="true" role="tabpanel">
                       @foreach ($app->audios()->get() as $key => $audio)
-                        <div class="asset-audio row pb-3">
+                        <div class="asset-audio row pb-3" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}">
                           <div class="col-md-2">
-                            <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
+                            <h3 class="text-center droppable"><i class="fa fa-file-audio-o"></i></h3>
                           </div>
-                          <div class="col-md-8">
+                          <div class="col-md-10">
                             <p>{{ $audio->title }}</p>
                           </div>
-                          <div class="col-md-2">
+                          {{-- <div class="col-md-2">
                             <a href="" class="btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url(urlencode($audio->src)) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                          </div>
+                          </div> --}}
                         </div>
                       @endforeach
                     </div>
@@ -210,12 +216,90 @@
                   </div>
                 </div>
                 <div id="mixer" class="container-fluid d-flex justify-content-around">
-                  <div id="waveform-1-vol" style="height:100px;" class="mx-2"></div>
-                  <div id="waveform-2-vol" style="height:100px;" class="mx-2"></div>
-                  <div id="waveform-3-vol" style="height:100px;" class="mx-2"></div>
-                  <div id="waveform-4-vol" style="height:100px;" class="mx-2"></div>
-                  <div id="waveform-5-vol" style="height:100px;" class="mx-2"></div>
-                  <div id="waveform-6-vol" style="height:100px;" class="mx-2"></div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-1-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-1-container" data-id="1" class="draggable-container mx-auto mt-3 test">
+                          {{-- Bookmark --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-2-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-2-container" data-id="2" class="draggable-container mx-auto mt-3 test">
+                          {{-- Bookmark --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-3-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-3-container" data-id="3" class="draggable-container mx-auto mt-3 test">
+                          {{-- Bookmark --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-4-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-4-container" data-id="4" class="draggable-container mx-auto mt-3 test">
+                          {{-- Bookmark --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-5-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-5-container" data-id="5" class="draggable-container mx-auto mt-3 test">
+                          {{-- Bookmark --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-6-vol" style="height:100px;" class="mx-auto"></div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div id="waveform-6-container" data-id="6" class="draggable-container mx-auto mt-3 test">
+                          {{-- Ciao --}}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -243,6 +327,9 @@
 
 @endsection
 @section('scripts')
+  <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.3/lib/draggable.bundle.js"></script>
+  {{-- <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.3/lib/draggable.bundle.legacy.js"></script> --}}
+  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/plugin/wavesurfer.regions.min.js"></script>
@@ -250,60 +337,65 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
-    // Audio Init
-    var wavesurfer_1 = WaveSurfer.create({
-      container: '#waveform-1'
+    player = document.getElementById('player');
+    player.addEventListener('onresize', function(){
+        var player = document.getElementById('player').offsetHeight - 95;
+        $('#library').height(player);
     });
-    var wavesurfer_2 = WaveSurfer.create({
-      container: '#waveform-2'
+
+    const droppable = new Draggable.Droppable(document.querySelectorAll('.test'), {
+      draggable: '.asset-audio',
+      droppable: '.test'
     });
-    var wavesurfer_3 = WaveSurfer.create({
-      container: '#waveform-3'
-    });
-    var wavesurfer_4 = WaveSurfer.create({
-      container: '#waveform-4'
-    });
-    var wavesurfer_5 = WaveSurfer.create({
-      container: '#waveform-5'
-    });
-    var wavesurfer_6 = WaveSurfer.create({
-      container: '#waveform-6'
-    });
+
+    var srcs = [null, null, null, null, null, null];
+
+    var players = [
+      WaveSurfer.create({
+        container: '#waveform-1'
+      }),
+      WaveSurfer.create({
+        container: '#waveform-2'
+      }),
+      WaveSurfer.create({
+        container: '#waveform-3'
+      }),
+      WaveSurfer.create({
+        container: '#waveform-4'
+      }),
+      WaveSurfer.create({
+        container: '#waveform-5'
+      }),
+      WaveSurfer.create({
+        container: '#waveform-6'
+      })
+    ];
 
     // Set loops
-    wavesurfer_1.on('ready', function () {
-        setLoops(wavesurfer_1);
-        wavesurfer_1.setVolume(0);
+    players[0].on('ready', function () {
+        setLoops(players[0]);
+        console.log('player 0 pronto');
     });
-    wavesurfer_2.on('ready', function () {
-      setLoops(wavesurfer_2);
-      wavesurfer_2.setVolume(0);
+    players[1].on('ready', function () {
+        setLoops(players[1]);
+        console.log('player 1 pronto');
     });
-    wavesurfer_3.on('ready', function () {
-      setLoops(wavesurfer_3);
-      wavesurfer_3.setVolume(0);
+    players[2].on('ready', function () {
+        setLoops(players[2]);
+        console.log('player 2 pronto');
     });
-    wavesurfer_4.on('ready', function () {
-      setLoops(wavesurfer_4);
-      wavesurfer_4.setVolume(0);
+    players[3].on('ready', function () {
+        setLoops(players[3]);
+        console.log('player 3 pronto');
     });
-    wavesurfer_5.on('ready', function () {
-      setLoops(wavesurfer_5);
-      wavesurfer_5.setVolume(0);
+    players[4].on('ready', function () {
+        setLoops(players[4]);
+        console.log('player 4 pronto');
     });
-    wavesurfer_6.on('ready', function () {
-      setLoops(wavesurfer_6);
-      wavesurfer_6.setVolume(0);
+    players[5].on('ready', function () {
+        setLoops(players[5]);
+        console.log('player 5 pronto');
     });
-
-
-    // Mixer Init
-    var vol_1 = 0;
-    var vol_2 = 0;
-    var vol_3 = 0;
-    var vol_4 = 0;
-    var vol_5 = 0;
-    var vol_6 = 0;
 
     $( "#waveform-1-vol" ).slider({
       orientation: "vertical",
@@ -312,9 +404,9 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_1 = ui.value/100;
-          wavesurfer_1.setVolume(vol_1);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[0] = ui.value/100;
+          players[0].setVolume(vols[0]);
+          saveVol(vols);
       }
     });
     $( "#waveform-2-vol" ).slider({
@@ -324,9 +416,9 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_2 = ui.value/100;
-          wavesurfer_2.setVolume(vol_2);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[1] = ui.value/100;
+          players[1].setVolume(vols[1]);
+          saveVol(vols);
       }
     });
     $( "#waveform-3-vol" ).slider({
@@ -336,9 +428,9 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_3 = ui.value/100;
-          wavesurfer_3.setVolume(vol_3);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[2] = ui.value/100;
+          players[2].setVolume(vols[2]);
+          saveVol(vols);
       }
     });
     $( "#waveform-4-vol" ).slider({
@@ -348,9 +440,9 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_4 = ui.value/100;
-          wavesurfer_4.setVolume(vol_4);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[3] = ui.value/100;
+          players[3].setVolume(vols[3]);
+          saveVol(vols);
       }
     });
     $( "#waveform-5-vol" ).slider({
@@ -360,9 +452,9 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_5 = ui.value/100;
-          wavesurfer_5.setVolume(vol_5);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[4] = ui.value/100;
+          players[4].setVolume(vols[4]);
+          saveVol(vols);
       }
     });
     $( "#waveform-6-vol" ).slider({
@@ -372,104 +464,45 @@
       max: 100,
       value: 0,
       slide: function( event, ui ) {
-          vol_6 = ui.value/100;
-          wavesurfer_6.setVolume(vol_6);
-          saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6);
+          vols[5] = ui.value/100;
+          players[5].setVolume(vols[5]);
+          saveVol(vols);
       }
     });
+
+    // Mixer Init
+    var vols = [0, 0, 0, 0, 0, 0];
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
 
-      // Load audio file
-      var src_1 = 'https://ia802606.us.archive.org/24/items/MissCoyoteGirl2010/Miss_Coyote_Girl.mp3'; //musica
-      var src_2 = 'https://ia902606.us.archive.org/35/items/shortpoetry_047_librivox/song_cjrg_teasdale_64kb.mp3'; // Dialogo
-      var src_3 = 'https://ia601903.us.archive.org/33/items/aporee_7056_8757/DFF01241N6varand.mp3'; // Sottofondo Spiaggia
-      var src_4 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
-      var src_5 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
-      var src_6 = 'https://ia600609.us.archive.org/22/items/aporee_10517_42365/SeagullChatter.mp3'; // Versi gabbiani
-      wavesurfer_1.load(src_1);
-      wavesurfer_2.load(src_2);
-      wavesurfer_3.load(src_3);
-      wavesurfer_4.load(src_4);
-      wavesurfer_5.load(src_5);
-      wavesurfer_6.load(src_6);
+      droppable.on('drag:stop', (dragEvent) => {
 
-      var src = {
-        'src_1' : src_1,
-        'src_2' : src_2,
-        'src_3' : src_3,
-        'src_4' : src_4,
-        'src_5' : src_5,
-        'src_6' : src_6,
-      };
+        // Fermo il player
+        stop();
 
-      localStorage.setItem('app-9-audio', JSON.stringify(src));
-      localStorage.setItem('app-9-img', $('#image').attr('src'));
+        // Cambio la sorgente
+        if ($(dragEvent.sourceContainer).hasClass('draggable-container')) {
+          srcs[dragEvent.sourceContainer.dataset.id - 1] = null;
+          saveSrcs();
+          loadPlayers();
+        }
+        // Salvo le sorgenti
+        var el = dragEvent.source;
+        if (el.parentNode.dataset.id) {
+          var index = el.parentNode.dataset.id - 1
+          srcs[index] = el.dataset.audioSrc;
+          saveSrcs();
+          loadPlayers();
+        }
+      });
 
       // Video and Audio Players Controller
-      $('#play').on('click', function() {
-        wavesurfer_1.play();
-        wavesurfer_2.play();
-        wavesurfer_3.play();
-        wavesurfer_4.play();
-        wavesurfer_5.play();
-        wavesurfer_6.play();
-      });
-
-      $('#pause').on('click', function() {
-        wavesurfer_1.pause();
-        wavesurfer_2.pause();
-        wavesurfer_3.pause();
-        wavesurfer_4.pause();
-        wavesurfer_5.pause();
-        wavesurfer_6.pause();
-      });
-
-      $('#stop').on('click', function() {
-          if (wavesurfer_1.isPlaying()) {
-              wavesurfer_1.stop();
-              wavesurfer_1.seekTo(0);
-          }
-          if (wavesurfer_2.isPlaying()) {
-              wavesurfer_2.stop();
-              wavesurfer_2.seekTo(0);
-          }
-          if (wavesurfer_3.isPlaying()) {
-              wavesurfer_3.stop();
-              wavesurfer_3.seekTo(0);
-          }
-          if (wavesurfer_4.isPlaying()) {
-              wavesurfer_4.stop();
-              wavesurfer_4.seekTo(0);
-          }
-          if (wavesurfer_5.isPlaying()) {
-              wavesurfer_5.stop();
-              wavesurfer_5.seekTo(0);
-          }
-          if (wavesurfer_6.isPlaying()) {
-              wavesurfer_6.stop();
-              wavesurfer_6.seekTo(0);
-          }
-      });
-
-      $('#rewind').on('click', function() {
-        wavesurfer_1.skipBackward(5);
-        wavesurfer_2.skipBackward(5);
-        wavesurfer_3.skipBackward(5);
-        wavesurfer_4.skipBackward(5);
-        wavesurfer_5.skipBackward(5);
-        wavesurfer_6.skipBackward(5);
-      });
-
-      $('#forward').on('click', function() {
-        wavesurfer_1.skipForward(5);
-        wavesurfer_2.skipForward(5);
-        wavesurfer_3.skipForward(5);
-        wavesurfer_4.skipForward(5);
-        wavesurfer_5.skipForward(5);
-        wavesurfer_6.skipForward(5);
-      });
+      $('#play').on('click', play);
+      $('#pause').on('click', pause);
+      $('#stop').on('click', stop);
+      $('#rewind').on('click', rewind);
+      $('#forward').on('click', forward);
 
       $('.asset-image').find('a').on('click', function(e) {
         e.preventDefault();
@@ -479,28 +512,107 @@
 
     }); // end of session loaded
 
-    function saveVol(vol_1, vol_2, vol_3, vol_4, vol_5, vol_6)
+    function saveVol(vols)
     {
         var vol = {
-          'vol_1' : vol_1,
-          'vol_2' : vol_2,
-          'vol_3' : vol_3,
-          'vol_4' : vol_4,
-          'vol_5' : vol_5,
-          'vol_6' : vol_6,
+          'vol_1' : vols[0],
+          'vol_2' : vols[1],
+          'vol_3' : vols[2],
+          'vol_4' : vols[3],
+          'vol_5' : vols[4],
+          'vol_6' : vols[5],
         };
         localStorage.setItem('app-9-vol', JSON.stringify(vol));
     }
 
-    function setLoops(player)
+    function saveSrcs()
     {
-        var duration = player.getDuration();
-        player.addRegion({
-            start: 0, // time in seconds
-            end: duration, // time in seconds
-            loop: true, //activate loop
-            color: 'hsla(100, 100%, 30%, 0.1)'
-        });
+
+      var src = {
+        'src_1' : srcs[0],
+        'src_2' : srcs[1],
+        'src_3' : srcs[2],
+        'src_4' : srcs[3],
+        'src_5' : srcs[4],
+        'src_6' : srcs[5],
+      };
+      console.log(srcs);
+      localStorage.setItem('app-9-audio', JSON.stringify(src));
+      localStorage.setItem('app-9-img', $('#image').attr('src'));
+    }
+
+    function loadPlayers()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          players[i].load(srcs[i]);
+          setLoops(players[i]);
+          console.log('player '+i+' loaded');
+          // console.log(srcs);
+        }
+      }
+    }
+
+    function setLoops(mediable)
+    {
+        if (typeof(mediable) != 'undefined') {
+          var duration = mediable.getDuration();
+          mediable.addRegion({
+              start: 0, // time in seconds
+              end: duration, // time in seconds
+              loop: true, //activate loop
+              color: 'hsla(100, 100%, 30%, 0.1)'
+          });
+        }
+    }
+
+    function play()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          players[i].play()
+        }
+        // console.log(srcs[i]);
+      }
+    }
+
+    function pause()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          players[i].pause()
+        }
+      }
+    }
+
+    function stop()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          if (players[i].isPlaying()) {
+              players[i].stop();
+              players[i].seekTo(0);
+          }
+        }
+      }
+    }
+
+    function rewind()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          players[i].skipBackward(5);
+        }
+      }
+    }
+
+    function forward()
+    {
+      for (var i = 0; i < players.length; i++) {
+        if (srcs[i] != null) {
+          players[i].skipForward(5);
+        }
+      }
     }
   </script>
 @endsection

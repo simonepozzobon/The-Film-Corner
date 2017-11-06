@@ -270,8 +270,8 @@ class Utility extends Model
       case '9':
         $obj = json_decode($share->content);
 
-        $item->media_type = 'video';
-        $item->featured_media = $obj->video;
+        $item->media_type = 'image';
+        $item->featured_media = $obj->image;
         $item->notes = $obj->notes;
         break;
 
@@ -283,6 +283,24 @@ class Utility extends Model
         $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
         $item->notes = '';
         break;
+
+      // // Creative Studio - Warm up - App 10 - Active Offscreen
+      // case '11':
+      //   $obj = json_decode($share->content);
+      //
+      //   $item->media_type = 'video';
+      //   $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
+      //   $item->notes = '';
+      //   break;
+      //
+      // // Creative Studio - Warm up - App 10 - Active Offscreen
+      // case '12':
+      //   $obj = json_decode($share->content);
+      //
+      //   $item->media_type = 'video';
+      //   $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
+      //   $item->notes = '';
+      //   break;
 
       // Creative Studio - Story Telling - App 13 - Character Builder
       case '13':
@@ -450,5 +468,37 @@ class Utility extends Model
       $duration = exec($cli);
       return $duration;
   }
+
+  /*
+   *
+   * $t = durata in ticks
+   * ritorna la durata del file in secondi basandosi sulla impostazione della timeline
+   * clonato dal model App\Audio per essere accessibile ovunque
+  */
+  public static function tToS ($t)
+  {
+    $s = $t * 5 / 100;
+    return $s;
+  }
+
+
+  /*
+   *
+   * $path = absolute path
+   * verfica l'esistenza della cartella, se non esiste la crea (versione modificata di quella sopra)
+   *
+   */
+  public static function staticVerifyDirAndCreate($path)
+  {
+    $path = 'public/'.$path;
+    $absPath = storage_path('app/'.$path);
+
+    if (!file_exists($absPath)) {
+      $mkdir = Storage::makeDirectory($path, 0777, true);
+    }
+
+    return $absPath;
+  }
+
 
 }

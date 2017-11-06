@@ -88,7 +88,7 @@ class FilmSpecificController extends Controller
       3 => ['#d9f5fc', '#a6dbe2'],
     ];
 
-    $app->colors = $colors[rand(0, 3)];
+    // $app->colors = $colors[rand(0, 3)];
 
     switch ($app_slug) {
 
@@ -389,6 +389,8 @@ class FilmSpecificController extends Controller
         break;
 
       case 'soundscapes':
+
+
         return view('teacher.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
