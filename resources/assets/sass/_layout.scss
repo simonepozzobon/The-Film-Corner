@@ -4,6 +4,8 @@
  */
 
 #main-menu {
+  position: sticky;
+  top: 0;
   height: 90px;
   flex-direction: row;
   background-color: $nav-gray;
