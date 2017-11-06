@@ -270,8 +270,8 @@ class Utility extends Model
       case '9':
         $obj = json_decode($share->content);
 
-        $item->media_type = 'image';
-        $item->featured_media = $obj->image;
+        $item->media_type = 'video';
+        $item->featured_media = Storage::disk('local')->url($obj->exp);
         $item->notes = $obj->notes;
         break;
 

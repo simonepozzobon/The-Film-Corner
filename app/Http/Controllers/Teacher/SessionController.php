@@ -399,11 +399,12 @@ class SessionController extends Controller
         // unisco audio e video
         // ffmpeg -i PrintingCDs.mp4 -i AudioPrintCDs.mp3 -acodec copy -vcodec copy PrintCDs1.mp4
         $exportPath = $absExpDir.'/video.mp4';
+        $rawExpPath = $rawExpDir.'/video.mp4';
         $cli = FFMPEG_LIB.' -i '.$videoTmpPath.' -i '.$compressedAudioTmpPath.' -c:v copy -map 0:v:0 -map 1:a:0 '.$exportPath;
         exec($cli);
 
         $data = [
-          'exp' => $exportPath,
+          'exp' => $rawExpPath,
           'notes' => $request['notes'],
           'audio_src' => $request['audio-src'],
           'audio_vol' => $request['audio-vol'],
