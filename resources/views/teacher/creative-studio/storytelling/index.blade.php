@@ -140,32 +140,37 @@
 @endsection
 @section('scripts')
   <script type="text/javascript">
-    var AppSession = new TfcSessions();
-    var session = AppSession.initSession({{ $app->id }});
+    var AppSession = new TfcSessions(),
+        session = AppSession.initSession({{ $app->id }});
 
-    loadImgs();
+    // Load the libraries
+    var libraries = JSON.parse('{!! $images !!}');
+
+    loadImgs(libraries);
 
     $('#reload').on('click', function(e){
       e.preventDefault();
-      loadImgs();
+      loadImgs(libraries);
     });
 
-    function loadImgs()
+    function loadImgs(libraries)
     {
-        var s1 = Math.floor((Math.random() * 4) + 1);
-        var s2 = Math.floor((Math.random() * 4) + 1);
-        var s3 = Math.floor((Math.random() * 4) + 1);
-        var s4 = Math.floor((Math.random() * 4) + 1);
+
+
+        var s1 = Math.floor(Math.random() * libraries[0].length);
+        var s2 = Math.floor(Math.random() * libraries[1].length);
+        var s3 = Math.floor(Math.random() * libraries[2].length);
+        var s4 = Math.floor(Math.random() * libraries[3].length);
 
         // Remove previous images
         $('.asset').remove();
 
 
         // Append Images
-        $('#slot-1').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_'+s1+'.png">').children('input').val(s1);
-        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s2+'.png">').children('input').val(s2);
-        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s3+'.png">').children('input').val(s3);
-        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s4+'.png">').children('input').val(s4);
+        $('#slot-1').append('<img class="asset img-fluid w-100" src="'+libraries[0][s1]+'">').children('input').val(s1);
+        $('#slot-2').append('<img class="asset img-fluid w-100" src="'+libraries[1][s2]+'">').children('input').val(s2);
+        $('#slot-3').append('<img class="asset img-fluid w-100" src="'+libraries[2][s3]+'">').children('input').val(s3);
+        $('#slot-4').append('<img class="asset img-fluid w-100" src="'+libraries[3][s4]+'">').children('input').val(s4);
 
     }
 

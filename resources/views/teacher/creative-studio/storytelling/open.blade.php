@@ -84,25 +84,21 @@
                 <div class="col-md-3">
                   <div id="slot-1" class="container-fluid p-4 slot">
                     <input id="slot-1-in" type="hidden" name="slot-1" value="">
-                    <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_{{ $session->slot_1 }}.png">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div id="slot-2" class="container-fluid p-4 slot">
                     <input id="slot-2-in" type="hidden" name="slot-2" value="">
-                    <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_{{ $session->slot_2 }}.png">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div id="slot-3" class="container-fluid p-4 slot">
                     <input id="slot-3-in" type="hidden" name="slot-3" value="">
-                    <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_{{ $session->slot_3 }}.png">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div id="slot-4" class="container-fluid p-4 slot">
                     <input id="slot-4-in" type="hidden" name="slot-4" value="">
-                    <img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_{{ $session->slot_4 }}.png">
                   </div>
                 </div>
               </div>
@@ -150,27 +146,47 @@
   <script type="text/javascript">
     var AppSession = new TfcSessions();
 
+    // Load the libraries
+    var libraries = JSON.parse('{!! $images !!}');
+    init(libraries);
+
     $('#reload').on('click', function(e){
       e.preventDefault();
-      loadImgs();
+      loadImgs(libraries);
     });
 
-    function loadImgs()
+    function init(libraries)
     {
-        var s1 = Math.floor((Math.random() * 4) + 1);
-        var s2 = Math.floor((Math.random() * 4) + 1);
-        var s3 = Math.floor((Math.random() * 4) + 1);
-        var s4 = Math.floor((Math.random() * 4) + 1);
+      var s1 = {!! $session->slot_1 !!};
+      var s2 = {!! $session->slot_2 !!};
+      var s3 = {!! $session->slot_3 !!};
+      var s4 = {!! $session->slot_4 !!};
+
+      $('#slot-1').append('<img class="asset img-fluid w-100" src="'+libraries[0][s1]+'">').children('input').val(s1);
+      $('#slot-2').append('<img class="asset img-fluid w-100" src="'+libraries[1][s2]+'">').children('input').val(s2);
+      $('#slot-3').append('<img class="asset img-fluid w-100" src="'+libraries[2][s3]+'">').children('input').val(s3);
+      $('#slot-4').append('<img class="asset img-fluid w-100" src="'+libraries[3][s4]+'">').children('input').val(s4);
+
+    }
+
+    function loadImgs(libraries)
+    {
+
+
+        var s1 = Math.floor(Math.random() * libraries[0].length);
+        var s2 = Math.floor(Math.random() * libraries[1].length);
+        var s3 = Math.floor(Math.random() * libraries[2].length);
+        var s4 = Math.floor(Math.random() * libraries[3].length);
 
         // Remove previous images
         $('.asset').remove();
 
 
         // Append Images
-        $('#slot-1').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/char_'+s1+'.png">').children('input').val(s1);
-        $('#slot-2').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_1_'+s2+'.png">').children('input').val(s2);
-        $('#slot-3').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/object_2_'+s3+'.png">').children('input').val(s3);
-        $('#slot-4').append('<img class="asset img-fluid w-100" src="{{ url('/img/helpers/apps/storytelling') }}/land_'+s4+'.png">').children('input').val(s4);
+        $('#slot-1').append('<img class="asset img-fluid w-100" src="'+libraries[0][s1]+'">').children('input').val(s1);
+        $('#slot-2').append('<img class="asset img-fluid w-100" src="'+libraries[1][s2]+'">').children('input').val(s2);
+        $('#slot-3').append('<img class="asset img-fluid w-100" src="'+libraries[2][s3]+'">').children('input').val(s3);
+        $('#slot-4').append('<img class="asset img-fluid w-100" src="'+libraries[3][s4]+'">').children('input').val(s4);
 
     }
 

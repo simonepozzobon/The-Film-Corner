@@ -148,7 +148,18 @@ class CreativeStudioController extends Controller
         break;
 
       case 'storytelling':
-        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category'));
+        $categories = $app->mediaCategory()->get();
+        $images = collect();
+        foreach ($categories as $key => $category) {
+          $library = $category->media_on_sub_category();
+          $flatten = $library->transform(function($media, $key) {
+            return Storage::disk('local')->url($media->src);
+          });
+          $images->push($flatten);
+        }
+        $libraries_count = $images->count();
+        $images = json_encode($images);
+        return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category', 'images', 'libraries_count'));
         break;
 
       case 'storyboard':
@@ -250,7 +261,18 @@ class CreativeStudioController extends Controller
         break;
 
       case 'storytelling':
-        return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'is_student', 'session'));
+        $categories = $app->mediaCategory()->get();
+        $images = collect();
+        foreach ($categories as $key => $category) {
+          $library = $category->media_on_sub_category();
+          $flatten = $library->transform(function($media, $key) {
+            return Storage::disk('local')->url($media->src);
+          });
+          $images->push($flatten);
+        }
+        $libraries_count = $images->count();
+        $images = json_encode($images);
+        return view('teacher.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'libraries_count', 'images'));
         break;
 
       case 'storyboard':
