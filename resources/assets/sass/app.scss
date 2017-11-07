@@ -17,10 +17,24 @@
 // @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
+@import "mixins";
+
+// Core CSS
+@import "grid";
+@import "buttons";
+
+
 // Components
 @import "nav";
 @import "navbar";
+@import "breadcrumb";
 @import "badge";
+
+// Components w/ JavaScript
+@import "modal";
+
+// Utility classes
+@import "utilities";
 
 // Custom imports
 @import "forms";

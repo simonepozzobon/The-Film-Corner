@@ -266,13 +266,24 @@
 // Main Menu Responsive
 //
 //
+
 #main-menu {
+  position: sticky;
+  top: 0;
+  height: 90px;
+  flex-direction: row;
+  background-color: $nav-gray;
+
+  > .navbar-brand {
+    flex-direction: column;
+  }
+
   > ul {
     > li {
       > a {
         line-height: 1.5rem;
         font-size: 1.5rem;
-      } 
+      }
     }
   }
 }

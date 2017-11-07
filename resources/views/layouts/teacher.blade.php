@@ -21,7 +21,7 @@
 
     @yield('content')
 
-
+    @include('layouts.teacher._footer')
     @include('layouts.teacher._scripts', ['type' => $type])
   </body>
 </html>
