@@ -5,8 +5,11 @@
           {{ $app_category->name }}
         </div>
         <div class="icon-right">
-            <i class="fa fa-plus"></i>
+            <i class="fa fa-plus" data-toggle="collapse" href="#app-info" aria-expanded="false" aria-controls="app-info"></i>
         </div>
+      </div>
+      <div id="app-info" class="title-description collapse">
+        {!! $app_category->description !!}
       </div>
     </div>
   </div>

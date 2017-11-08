@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 @section('title', 'Creative Studio')
 @section('content')
-  <div class="container-fluid">
+  <div class="container">
     @include('components.apps.heading', ['route' => route('teacher'), 'app_category' => $app_category])
     <div class="row mt">
       <div class="col col-md-3">

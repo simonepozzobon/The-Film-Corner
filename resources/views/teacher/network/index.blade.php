@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 @section('title', 'Network')
 @section('content')
-  <div id="main" class="container-fluid">
+  <div id="main" class="container">
     @include('components.apps.heading_only', ['title' => 'Network'])
     <div class="row mt">
       @foreach ($items as $key => $item)

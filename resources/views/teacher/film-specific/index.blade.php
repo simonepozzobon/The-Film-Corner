@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.teacher', ['footer' => 'no-margin'])
 @section('title', 'Film Specific')
 @section('stylesheets')
   <style media="screen">
@@ -12,8 +12,9 @@
   </style>
 @endsection
 @section('content')
-<section id="image">
-  <feedback-popup></feedback-popup>
+  <div id="image">
+    <feedback-popup></feedback-popup>
+  </div>
   <svg id="background" width="1921px" height="1080px" viewBox="-269 -204 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
           <polygon id="path-1" points="0 1080 1920.724 1080 1920.724 0 0 0"></polygon>
@@ -131,7 +132,6 @@
       </div>
     </div>
   </div>
-</section>
 @endsection
 @section('scripts')
   <script type="text/javascript">

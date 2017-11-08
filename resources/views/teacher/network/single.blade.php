@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 @section('title', $item->title)
 @section('content')
-  <div id="main" class="container-fluid">
+  <div id="main" class="container">
     <div class="row mt">
       <div class="col">
         <div class="box blue">

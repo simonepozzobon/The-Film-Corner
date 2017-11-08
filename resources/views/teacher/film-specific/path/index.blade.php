@@ -1,10 +1,10 @@
 @extends('layouts.teacher')
-@section('title', 'Editing')
+@section('title', 'Film Specific')
 @section('content')
-  <div class="container-fluid">
+  <div class="container">
     @include('components.apps.heading', ['route' => route('teacher'), 'app_category' => $app_category])
     <div class="row mt">
-      <div class="col col-md-3">
+      <div class="col col-md-4">
         <div class="box green">
           <div class="box-header">
             Examples
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
         @if ($apps->count() > 0)
           @foreach ($apps as $key => $app)
             <div class="box {{ $app->colors }} {{ $key == 0 ? '' : 'mt' }}">

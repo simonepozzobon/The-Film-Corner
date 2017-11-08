@@ -1,22 +1,15 @@
 @extends('layouts.teacher')
 @section('title', 'Welcome')
 @section('content')
-  <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      Welcome
-      <h2 class="p-2 block-title">Short Introduction</h2>
-    </div>
-  </section>
-  <section class="pb-5 pr-5 pl-5">
-    <div class="box container mb-4">
-      <div class="row">
-        <div class="col dark-blue py-3 px-5">
-          <h3>Welcome to The Film Corner!</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col blue p-5">
-          <p>
+  <div class="container-fluid">
+    @include('components.apps.heading_only', ['title' => 'Welcome'])
+    <div class="row mt">
+      <div class="col">
+        <div class="box blue">
+          <div class="box-header">
+            Short Introduction
+          </div>
+          <div class="box-body">
             The Film Corner is the interactive web platform dedicated to cinema,
             a website where you can surf through different STUDIOS and the corresponding educational projects,
             discovering and exploring the many aspects that underpin cinematographic language and grammar.<br>
@@ -40,19 +33,17 @@
             In every picture there is a direct, and often very stark relationship between the emotions we feel and the visual, linguistic and grammatical
             choices made by the film creators. It may sound obvious, but there is a direct bond between creativity and critical reception of a film.
             That’s why we are interested in these two aspects!
-          </p>
+          </div>
         </div>
       </div>
     </div>
-    <div class="box container mb-4">
-      <div class="row">
-        <div class="col dark-orange py-3 px-5">
-          <h3>Get Started</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col orange p-5">
-          <p>
+    <div class="row mt">
+      <div class="col">
+        <div class="box orange">
+          <div class="box-header">
+            Get Started
+          </div>
+          <div class="box-body">
             The Film Corner is divided into 2 sections, called STUDIOS, each one dedicated to an aspect of Film Education:<br>
             <ul>
               <li>
@@ -70,15 +61,15 @@
             they have something in common: they are both based on the knowledge of cinematographic language and grammar.
             In fact, it is impossible to either analyze or create a film without knowing its language and aesthetics.
             This is the reason why we invite you to visit STUDIO 1 before visiting STUDIO 2.<br>
-          </p>
-          <p class="text-center">
-            <strong class="">Enjoy your trip in The Film Corner! See you outside!</strong>
-          </p>
-          <div class="pt-3 d-flex justify-content-around">
-            <a href="{{ route('teacher') }}" class="btn btn-lg btn-secondary btn-orange"><i class="fa fa-hand-o-right"></i> Start</a>
+            <p class="text-center">
+              <strong class="">Enjoy your trip in The Film Corner! See you outside!</strong>
+            </p>
+          </div>
+          <div class="box-btns">
+            <a href="{{ route('teacher') }}" class="btn btn-lg btn-orange"><i class="fa fa-hand-o-right"></i> Start</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 @endsection

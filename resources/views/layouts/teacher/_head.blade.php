@@ -2,13 +2,9 @@
 
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 
-
 {{-- Main Stylesheet --}}
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-{{-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> --}}
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-{{-- <link rel="stylesheet" href="/css/teacher.css"> --}}
-
 
 {{-- Google Analytics --}}
 <script>
