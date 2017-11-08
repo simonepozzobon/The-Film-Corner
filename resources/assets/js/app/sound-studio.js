@@ -205,21 +205,25 @@ angular.module('videoCtrl', ['vjs.video'])
         var counter = 0;
 
         if (typeof session == 'undefined' && typeof init != 'undefined') {
+          $scope.$on('vjsVideoReady', function (e, videoData) {
+              console.log('video player', videoData.player.src());
+              // salvo il player in video data
+              $scope.videoData = videoData;
 
-          // Rigenera Il video
-          Audio.send(init, $scope.videoData.player.src(), counter)
-          .then(function successCallback(response) {
-            $scope.mediaToggle = {
-              sources: [
-                {
-                  src: '/'+response.data,
-                  type: 'video/mp4'
-                }
-              ]
-            };
-            counter = 1;
+              // Rigenera Il video
+              Audio.send(init, $scope.videoData.player.src(), counter)
+              .then(function successCallback(response) {
+                $scope.mediaToggle = {
+                  sources: [
+                    {
+                      src: '/'+response.data,
+                      type: 'video/mp4'
+                    }
+                  ]
+                };
+                counter = 1;
+              });
           });
-
         }
 
 

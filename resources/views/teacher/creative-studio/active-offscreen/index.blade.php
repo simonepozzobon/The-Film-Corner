@@ -1,4 +1,5 @@
 @extends('layouts.teacher', ['type' => 'app'])
+@section('title', $app->title)
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
   <style media="screen">
@@ -8,198 +9,113 @@
   </style>
 @endsection
 @section('content')
-  <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      {{ $app->title }}
-      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
-    </div>
-  </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
-  <div class="row row-custom">
-    <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
-        <div class="container-fluid pl-5">
-          <div class="row">
-            <div class="col" style="background-color: #a6dbe2; color: #252525">
-              <h3 class="px-2 pt-4 pb-2">Examples</h3>
-            </div>
-          </div>
-          <div class="row pb-5">
-            <div class="col py-5" style="background-color: #d9f5fc; color: #252525">
-              <p class="pl-2">
-                Examples of pictures and clips related to each app with a short explanations
-              </p>
-            </div>
-          </div>
-          <div class="row" style="background-color: #e9c845; color: #252525">
-            <div class="col">
-              <h3 class="px-2 pt-4 pb-2">References</h3>
-            </div>
-          </div>
-          <div class="row mb-5" style="background-color: #f5db5e; color: #252525">
-            <div class="col py-5">
-              <p class="pl-2">
-                <ul>
-                  <li>lista 1</li>
-                  <li>lista 2</li>
-                  <li>altro elemento</li>
-                </ul>
-              </p>
-            </div>
-          </div>
-          <div class="row pb-5">
-            @foreach ($app_category->keywords as $key => $keyword)
-              <h5><span class="badge badge-default mb-2 mr-2" data-toggle="modal" data-target="#keywordModal-{{ $keyword->id }}">{{ $keyword->name }}</span></h5>
-              <div class="modal fade" id="keywordModal-{{ $keyword->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      {{ $keyword->description }}
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-    </div>
-    <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row">
+  <div class="container-fluid">
+    @include('components.apps.heading_only', ['title' => $app->title])
+    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+    <div id="app">
+      <div class="row mt">
         <div class="col-md-8">
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col dark-blue py-3 px-5">
-                    <h3>Scene</h3>
-                  </div>
-                </div>
-                <div class="row">
-                  <div id="video-player" class="col blue p-5">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <video id="video-main" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                          <source src="{{ $random_video }}" type="video/mp4">
-                      </video>
-                    </div>
-                  </div>
-                </div>
+          <div class="box blue">
+            <div class="box-header">
+              Scene
+            </div>
+            <div id="video-player" class="box-body">
+              <div class="embed-responsive embed-responsive-16by9">
+                <video id="video-main" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
+                    <source src="{{ $random_video }}" type="video/mp4">
+                </video>
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-yellow py-3 px-5">
-                <h3>Library</h3>
-              </div>
+          <div class="box yellow">
+            <div class="box-header">
+              Library
             </div>
-            <div class="row">
-              <div id="video-library" class="col yellow p-5">
-                @foreach ($app->videos()->get() as $key => $video)
-                  <div class="row pb-3">
-                    <div class="col-md-2">
-                      <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
-                    </div>
-                    <div class="col-md-8">
-                      <p class="p-2">{{ $video->title }}</p>
-                    </div>
-                    <div class="col-md-2">
-                      <button class="change-video btn btn-secondary btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                      </button>
-                    </div>
+            <div id="video-library" class="box-body">
+              @foreach ($app->videos()->get() as $key => $video)
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
                   </div>
-                @endforeach
-              </div>
+                  <div class="col-md-8">
+                    <p class="p-2">{{ $video->title }}</p>
+                  </div>
+                  <div class="col-md-2">
+                    <button class="change-video btn btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
+                      <i class="fa fa-plus" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              @endforeach
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt">
         <div class="col">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col orange p-5">
-                <div class="d-flex justify-content-around">
-                  {{-- Control Bar --}}
-                    <div class="btn-group">
-                      <button id="play" type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-play" aria-hidden="true"></i>
-                      </button>
-                      <button id="pause" type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-pause" aria-hidden="true"></i>
-                      </button>
-                      <button id="stop" type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-stop" aria-hidden="true"></i>
-                      </button>
-                      <button id="rewind" type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-backward" aria-hidden="true"></i>
-                      </button>
-                      <button id="forward" type="button" name="button" class="btn btn-secondary btn-orange">
-                        <i class="fa fa-forward" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                </div>
+          <div class="box orange">
+            <div class="box-btns pt">
+              <div class="btn-group">
+                <button id="play" type="button" name="button" class="btn btn-orange">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
+                <button id="pause" type="button" name="button" class="btn btn-orange">
+                  <i class="fa fa-pause" aria-hidden="true"></i>
+                </button>
+                <button id="stop" type="button" name="button" class="btn btn-orange">
+                  <i class="fa fa-stop" aria-hidden="true"></i>
+                </button>
+                <button id="rewind" type="button" name="button" class="btn btn-orange">
+                  <i class="fa fa-backward" aria-hidden="true"></i>
+                </button>
+                <button id="forward" type="button" name="button" class="btn btn-orange">
+                  <i class="fa fa-forward" aria-hidden="true"></i>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt">
         <div class="col-md-8">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-green py-3 px-5">
-                <h3>Upload your offscreen video</h3>
-              </div>
+          <div class="box green">
+            <div class="box-header">
+              Upload your offscreen video
             </div>
-            <div class="row">
-              <div class="col green p-5">
-                <form id="uploadForm" method="post" enctype="multipart/form-data">
-                  {{ csrf_field() }}
-                  {{ method_field('POST') }}
-                  <div class="form-group">
-                    <input id="media" type="file" name="media" class="form-control">
-                  </div>
-                  <input id="videoRef" type="hidden" name="video_ref" value="21">
-                  <div class="container-fluid d-flex justify-content-around">
-                    <button type="submit" name="button" class="btn btn-secondary btn-green"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-                  </div>
-                </form>
-              </div>
+            <div class="box-body">
+              <form id="uploadForm" method="post" enctype="multipart/form-data">
+                {{ csrf_field() }}
+                {{ method_field('POST') }}
+                <div class="form-group">
+                  <input id="media" type="file" name="media" class="form-control">
+                </div>
+                <input id="videoRef" type="hidden" name="video_ref" value="21">
+                <div class="container-fluid d-flex justify-content-around">
+                  <button type="submit" name="button" class="btn btn-green"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
         <div class="col-md-4">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-blue py-3 px-5">
-                <h3>Video Uploaded</h3>
-              </div>
+          <div class="box blue">
+            <div class="box-header">
+              Video Uploaded
             </div>
-            <div class="row">
-              <div class="col blue p-5">
-                <div id="no-video" class="pb-5">
-                  <span class="alert alert-warning d-block text-center">No video uploaded yet!</span>
-                </div>
-                <table id="videos" class="table table-hover d-none">
-                  <thead>
-                    <th>Video</th>
-                    <th></th>
-                  </thead>
-                  <tbody>
-                  </tbody>
-                </table>
+            <div class="box-body">
+              <div id="no-video">
+                <span class="alert alert-warning d-block text-center">No video uploaded yet!</span>
               </div>
+              <table id="videos" class="table table-hover d-none">
+                <thead>
+                  <th>Video</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -219,7 +135,7 @@
 
     function libraryResize()
     {
-        var video_player = document.getElementById('video-main').offsetHeight - 95;
+        var video_player = document.getElementById('video-main').offsetHeight;
         $('#video-library').height(video_player);
     }
 
@@ -304,8 +220,8 @@
             data +=    '<td>';
             data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
             data +=     '<div class="btn-group">';
-            data +=        '<button type="button" class="btn btn-secondary btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
-            data +=        '<button type="button" class="btn btn-secondary btn-blue" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
+            data +=        '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
+            data +=        '<button type="button" class="btn btn-blue" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
             data +=      '</div>';
             data +=    '</td>';
             data += '</tr>';
