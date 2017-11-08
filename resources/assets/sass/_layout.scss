@@ -104,6 +104,21 @@
   }
 }
 
+//
+// SIDEBAR MENU
+//
+
+.sidebar-menu {
+  position: fixed;
+  left: 0;
+  z-index: 1000;
+
+  > .button {
+    margin-left: -3px;
+    margin-bottom: ($spacer / 4);
+  }
+}
+
 
 //
 // FOOTER

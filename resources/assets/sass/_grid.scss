@@ -16,7 +16,7 @@
 
 @if $enable-grid-classes {
   .container-fluid {
-    margin-top: 2rem;
+    margin-top: $spacer;
     @include make-container();
   }
 }
@@ -33,7 +33,11 @@
   // Remove the negative margin from default .row, then the horizontal padding
   // from all immediate children columns (to prevent runaway style inheritance).
   .mt {
-    margin-top: 2rem;
+    margin-top: $spacer;
+  }
+
+  .pt {
+    padding-top: $spacer;
   }
 
   .no-gutters {

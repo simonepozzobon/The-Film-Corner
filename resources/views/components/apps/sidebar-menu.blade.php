@@ -3,20 +3,20 @@
     $student = false;
   }
 @endphp
-<div class="feedback-popup mt-4">
-  <div id="help-btn" class="d-block m-1 pl-2">
+<div class="sidebar-menu">
+  <div id="help-btn" class="button">
     <a class="text-white text-align-center btn btn-info btn-lg">
       <i id="help-icon" class="fa fa-question" aria-hidden="true"></i>
     </a>
   </div>
   @if ($student == false)
-      <div id="save-btn" class="d-block m-1">
+      <div id="save-btn" class="button">
         <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
           <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </a>
       </div>
       @if (isset($app_session) && $app_session->teacher_shared == 1)
-        <div id="comment-btn" class="d-block m-1">
+        <div id="comment-btn" class="button">
           <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
             <i class="fa fa-comment-o" aria-hidden="true"></i>
             {{-- <span id="alert-messages" class="badge badge-pill badge-danger">!</span> --}}
@@ -24,19 +24,19 @@
         </div>
       @endif
   @else
-      <div id="approve-btn" class="d-block m-1">
+      <div id="approve-btn" class="button">
         <a class="text-white text-align-center btn btn-success btn-lg" data-toggle="modal" data-target="#saveSession">
           <i class="fa fa-check" aria-hidden="true"></i>
         </a>
       </div>
-      <div id="comment-btn" class="d-block m-1">
+      <div id="comment-btn" class="button">
         <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
           <i class="fa fa-comment-o" aria-hidden="true"></i>
           {{-- <span id="alert-messages" class="badge badge-pill badge-danger">!</span> --}}
         </a>
       </div>
   @endif
-  <div id="close-btn" class="d-block m-1">
+  <div id="close-btn" class="button">
     <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
     </a>

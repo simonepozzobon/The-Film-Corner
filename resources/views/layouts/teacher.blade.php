@@ -18,7 +18,6 @@
   <body>
     @include('layouts.teacher._menu')
 
-
     @yield('content')
 
     @include('layouts.teacher._footer')
