@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <hr class="mt-5">
+    <hr class="">
   </div>
 </template>
 <script>

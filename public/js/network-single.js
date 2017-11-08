@@ -2479,7 +2479,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h3', [_vm._v(_vm._s(_vm.comment.author.name))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.comment.time))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.comment.comment))]), _vm._v(" "), _c('div', {
     staticClass: "reply"
   }, [_c('button', {
-    staticClass: "btn btn-secondary btn-orange",
+    staticClass: "btn btn-orange",
     attrs: {
       "type": "button",
       "name": "button"
@@ -2490,7 +2490,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-trash-o"
   }), _vm._v(" Delete")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-secondary btn-orange",
+    staticClass: "btn btn-orange",
     attrs: {
       "type": "button",
       "name": "button"
@@ -2510,7 +2510,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "col-md-6"
   }, [_c('button', {
-    staticClass: "close mb-3",
+    staticClass: "close",
     attrs: {
       "id": "close",
       "type": "button"
@@ -2547,9 +2547,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group d-flex justify-content-center pt-2"
+    staticClass: "form-group d-flex justify-content-center"
   }, [_c('button', {
-    staticClass: "btn btn-secondary btn-orange",
+    staticClass: "btn btn-orange",
     attrs: {
       "type": "button",
       "name": "button"
@@ -2559,9 +2559,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-comment-o"
-  }), _vm._v(" Send")])])])])]), _vm._v(" "), _c('hr', {
-    staticClass: "mt-5"
-  }), _vm._v(" "), _c('replies-list', {
+  }), _vm._v(" Send")])])])])]), _vm._v(" "), _c('hr', {}), _vm._v(" "), _c('replies-list', {
     attrs: {
       "replies": _vm.comment.replies,
       "user": _vm.user,
@@ -2579,7 +2577,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "d-flex justify-content-around"
   }, [_c('button', {
-    staticClass: "btn btn-secondary btn-orange mx-5",
+    staticClass: "btn btn-orange mx-5",
     attrs: {
       "type": "button",
       "name": "button"
@@ -2592,7 +2590,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('i', {
     staticClass: "fa fa-trash-o"
   }), _vm._v(" Confirm")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-secondary btn-orange mx-5",
+    staticClass: "btn btn-orange mx-5",
     attrs: {
       "type": "button",
       "name": "button"
@@ -2673,9 +2671,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-undo"
-  }), _vm._v(" Cancel\n        ")])])])]), _vm._v(" "), _c('hr', {
-    staticClass: "mt-5"
-  })])
+  }), _vm._v(" Cancel\n        ")])])])]), _vm._v(" "), _c('hr', {})])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "col-md-1 h-100"

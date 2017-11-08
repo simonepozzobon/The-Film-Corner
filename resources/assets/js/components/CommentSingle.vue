@@ -5,34 +5,34 @@
       <p>{{ comment.time }}</p>
       <p>{{ comment.comment }}</p>
       <div class="reply">
-        <button @click="confirmation" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-trash-o"></i> Delete</button>
-        <button @click="newReply" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-comments-o"></i> Reply</button>
+        <button @click="confirmation" type="button" name="button" class="btn btn-orange"><i class="fa fa-trash-o"></i> Delete</button>
+        <button @click="newReply" type="button" name="button" class="btn btn-orange"><i class="fa fa-comments-o"></i> Reply</button>
       </div>
       <div id="reply" ref="newReply">
         <div class="row justify-content-center">
           <div class="col-md-6">
-            <button @click="closeReply" id="close" type="button" class="close mb-3">
+            <button @click="closeReply" id="close" type="button" class="close">
               <span aria-hidden="true">&times;</span>
               <span class="sr-only">Close</span>
             </button>
             <div class="form-group">
               <textarea v-model="reply_msg" name="comment" class="form-control"></textarea>
             </div>
-            <div class="form-group d-flex justify-content-center pt-2">
-              <button @click="sendReply" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-comment-o"></i> Send</button>
+            <div class="form-group d-flex justify-content-center">
+              <button @click="sendReply" type="button" name="button" class="btn btn-orange"><i class="fa fa-comment-o"></i> Send</button>
             </div>
           </div>
         </div>
       </div>
-      <hr class="mt-5">
+      <hr class="">
       <replies-list :replies="comment.replies" :user="user" :user_type="user_type"></replies-list>
     </div>
     <div id="confirmation" ref="confirmation">
       <div class="row">
         <div class="col">
           <div class="d-flex justify-content-around">
-            <button @click="destroy(comment.id)" type="button" name="button" class="btn btn-secondary btn-orange mx-5"><i class="fa fa-trash-o"></i> Confirm</button>
-            <button @click="undo" type="button" name="button" class="btn btn-secondary btn-orange mx-5"><i class="fa fa-undo"></i> Cancel</button>
+            <button @click="destroy(comment.id)" type="button" name="button" class="btn btn-orange mx-5"><i class="fa fa-trash-o"></i> Confirm</button>
+            <button @click="undo" type="button" name="button" class="btn btn-orange mx-5"><i class="fa fa-undo"></i> Cancel</button>
           </div>
         </div>
       </div>

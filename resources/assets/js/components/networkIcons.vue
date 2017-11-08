@@ -1,6 +1,6 @@
 <template>
   <div :id="likeable_id">
-    <div class="row py-4">
+    <div class="row">
       <div class="col">
         <h5 ref="eye" class="text-center">{{ this.views }} <i class="fa fa-eye" aria-hidden="true"></i></h5>
       </div>
