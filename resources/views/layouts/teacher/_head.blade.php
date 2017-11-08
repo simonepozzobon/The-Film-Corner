@@ -32,7 +32,15 @@
 
 <style media="screen">
   body {
-    background: url('{{ asset('img/helpers/back.png') }}') repeat repeat;
+    background: url('{{ asset('img/helpers/bg_1.png') }}');
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    background-blend-mode: color-dodge;
+    /* For IE 5.5 - 7*/
+    /*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff);*/
+    /* For IE 8*/
+    /*-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#ffffff, endColorstr=#ffffff)";*/
+
   }
 </style>
 
