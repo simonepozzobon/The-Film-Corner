@@ -1,34 +1,24 @@
 <template>
   <div id="chat" class="collapse" style="width: 25rem;">
-    <div class="box container-fluid">
-      <div class="row">
-        <div class="col dark-blue py-3 px-5">
-          <button type="button" class="close" data-toggle="collapse" data-target="#chat" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            <span class="sr-only">Chiudi</span>
-          </button>
-          <h3>{{toname}}</h3>
-        </div>
+    <div class="box blue">
+      <div class="box-header">
+        To: {{toname}}
       </div>
-      <div class="row">
-        <div id="questo" class="col blue p-5" style="overflow-y: scroll;" ref="messages">
-          <div v-for="message in messages" :class="'d-flex '+message.pos+' mb-3'">
-            <div :class="'box '+message.color+' p-2 w-75'">
+      <div class="box-body chat">
+        <div id="questo" class="messages" ref="messages">
+          <div v-for="message in messages" :class="'messages-body '+message.type">
+            <div :class="'message '+message.color+' w-75'">
               <span class="msg">{{message.msg}}</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col dark-blue px-5 pt-4 pb-2">
-          <div class="d-flex justify-content-around">
-            <div class="form-group d-inline-block w-75">
-              <input @keyup.enter="sendMsg" @keyup="typingMsg" class="form-control" v-model="msg">
-            </div>
-            <div class="form-group d-inline-block">
-              <a @click="sendMsg" href="#" class="btn btn-secondary btn-blue-inverse"><i class="fa fa-paper-plane-o"></i></a>
-            </div>
-          </div>
+      <div class="box-btns">
+        <div class="form-group d-inline-block w-75">
+          <input @keyup.enter="sendMsg" @keyup="typingMsg" class="form-control" v-model="msg">
+        </div>
+        <div class="form-group d-inline-block">
+          <a @click="sendMsg" href="#" class="btn btn-blue"><i class="fa fa-paper-plane-o"></i></a>
         </div>
       </div>
     </div>
@@ -186,10 +176,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  .box {
-    border-radius: .5rem;
-  }
-  .box span {
-    padding-left: .5rem;
-  }
 </style>

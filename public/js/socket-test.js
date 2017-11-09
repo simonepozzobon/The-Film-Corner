@@ -32986,16 +32986,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 var axios = __webpack_require__(11);
 var io = __webpack_require__(129);
@@ -33406,7 +33396,7 @@ module.exports = (function() {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
-exports.push([module.i, "\n.box[data-v-4913f9f8] {\n  border-radius: .5rem;\n}\n.box span[data-v-4913f9f8] {\n  padding-left: .5rem;\n}\n", ""]);
+exports.push([module.i, "", ""]);
 
 /***/ }),
 /* 113 */
@@ -36322,36 +36312,27 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "chat"
     }
   }, [_c('div', {
-    staticClass: "box container-fluid"
+    staticClass: "box blue"
   }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col dark-blue py-3 px-5"
-  }, [_vm._m(0), _vm._v(" "), _c('h3', [_vm._v(_vm._s(_vm.toname))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
+    staticClass: "box-header"
+  }, [_vm._v("\n      To: " + _vm._s(_vm.toname) + "\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "box-body chat"
   }, [_c('div', {
     ref: "messages",
-    staticClass: "col blue p-5",
-    staticStyle: {
-      "overflow-y": "scroll"
-    },
+    staticClass: "messages",
     attrs: {
       "id": "questo"
     }
   }, _vm._l((_vm.messages), function(message) {
     return _c('div', {
-      class: 'd-flex ' + message.pos + ' mb-3'
+      class: 'messages-body ' + message.type
     }, [_c('div', {
-      class: 'box ' + message.color + ' p-2 w-75'
+      class: 'message ' + message.color + ' w-75'
     }, [_c('span', {
       staticClass: "msg"
     }, [_vm._v(_vm._s(message.msg))])])])
   }))]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col dark-blue px-5 pt-4 pb-2"
-  }, [_c('div', {
-    staticClass: "d-flex justify-content-around"
+    staticClass: "box-btns"
   }, [_c('div', {
     staticClass: "form-group d-inline-block w-75"
   }, [_c('input', {
@@ -36378,7 +36359,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('div', {
     staticClass: "form-group d-inline-block"
   }, [_c('a', {
-    staticClass: "btn btn-secondary btn-blue-inverse",
+    staticClass: "btn btn-blue",
     attrs: {
       "href": "#"
     },
@@ -36387,24 +36368,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-paper-plane-o"
-  })])])])])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "close",
-    attrs: {
-      "type": "button",
-      "data-toggle": "collapse",
-      "data-target": "#chat",
-      "aria-label": "Close"
-    }
-  }, [_c('span', {
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }, [_vm._v("×")]), _vm._v(" "), _c('span', {
-    staticClass: "sr-only"
-  }, [_vm._v("Chiudi")])])
-}]}
+  })])])])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

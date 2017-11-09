@@ -93,7 +93,7 @@
     </div>
   </div>
   @if ($is_student)
-    @include('components.apps.chat', ['app_session' => $app_session])
+    @include('components.apps.student_chat', ['app_session' => $app_session])
   @endif
 @endsection
 @section('scripts')

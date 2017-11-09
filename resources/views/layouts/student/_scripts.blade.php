@@ -627,40 +627,40 @@
 
   var menu_height = $main_menu.outerHeight();
 
-  var getNotifications = function() {
-      $.get('/student/notifications/get', function(response) {
-          $.each(response, function(k, item) {
-              // escludo tutto quello che non va bene
-              if (item.id) {
-                var check = $.inArray(item.id, notifications);
-                if (check == -1) {
-                  notifications.push(item.id);
-                  var session = item.data.session
-                  var section_slug = session.app.category.section.slug;
-                  var category_slug = session.app.category.slug;
-                  var app_slug = session.app.slug;
-                  var token = session.token;
-                  var message = 'You have a new notification from '+session.student.name+' - '+session.app.title+' - '+session.app.category.name;
-
-                  var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/student/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
-                  $notif_menu.append(data);
-                  var data = ''
-                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert">';
-                  data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                  data +=     '<span aria-hidden="true">&times;</span>';
-                  data +=   '</button>';
-                  data +=   '<div class="alert-icon"><i class="fa fa-globe"></i></div>';
-                  data +=   '<div class"alert-content">'+message+'</div>';
-                  data += '</div>'
-                  $main_menu.append(data);
-                  console.log(item);
-                }
-              }
-          });
-      });
-  };
-
-  setInterval(getNotifications, 10000);
+  // var getNotifications = function() {
+  //     $.get('/student/notifications/get', function(response) {
+  //         $.each(response, function(k, item) {
+  //             // escludo tutto quello che non va bene
+  //             if (item.id) {
+  //               var check = $.inArray(item.id, notifications);
+  //               if (check == -1) {
+  //                 notifications.push(item.id);
+  //                 var session = item.data.session
+  //                 var section_slug = session.app.category.section.slug;
+  //                 var category_slug = session.app.category.slug;
+  //                 var app_slug = session.app.slug;
+  //                 var token = session.token;
+  //                 var message = 'You have a new notification from '+session.student.name+' - '+session.app.title+' - '+session.app.category.name;
+  //
+  //                 var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/student/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
+  //                 $notif_menu.append(data);
+  //                 var data = ''
+  //                 data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert">';
+  //                 data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+  //                 data +=     '<span aria-hidden="true">&times;</span>';
+  //                 data +=   '</button>';
+  //                 data +=   '<div class="alert-icon"><i class="fa fa-globe"></i></div>';
+  //                 data +=   '<div class"alert-content">'+message+'</div>';
+  //                 data += '</div>'
+  //                 $main_menu.append(data);
+  //                 console.log(item);
+  //               }
+  //             }
+  //         });
+  //     });
+  // };
+  //
+  // setInterval(getNotifications, 10000);
 </script>
 
 @if ($type == 'app')
