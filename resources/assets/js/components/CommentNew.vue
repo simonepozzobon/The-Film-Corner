@@ -1,34 +1,34 @@
 <template>
-  <div id="">
-    <!-- New Comment -->
-      <div id="new-comment-btn">
-        <div class="form-group d-flex justify-content-center">
-          <button @click="show" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-comment-o"></i> New Comment</button>
+  <div id="" class="row mt">
+    <div class="col">
+      <div class="box yellow">
+        <div class="box-header">
+          Join the discussion!
+        </div>
+        <div class="box-btns pt">
+          <div id="loading" class="loading">
+            <div id="square" class="square"></div>
+          </div>
+          <button id="new-comment-btn" @click="show" type="button" name="button" class="btn btn-yellow"><i class="fa fa-comment-o"></i> New Comment</button>
         </div>
       </div>
-      <!-- New Comment Form -->
-      <div id="loading" class="loading">
-        <div id="square" class="square"></div>
-      </div>
-        <div id="new-comment">
-          <div class="row justify-content-center">
-            <div class="col-md-6">
-              <button @click="close" id="close" type="button" class="close mb-3">
-                <span aria-hidden="true">&times;</span>
-                <span class="sr-only">Close</span>
-              </button>
-              <div class="form-group">
-                <textarea v-model="comment" name="comment" class="form-control"></textarea>
-              </div>
-              <div class="form-group d-flex justify-content-center pt-2">
-                <button @click="sendComment" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-comment-o"></i> Send</button>
-              </div>
-            </div>
+      <div id="new-comment" class="box mt blue">
+        <div class="box-header">
+          <div class="title">
+            New comment
+          </div>
+          <div id="close" class="icon" @click="close">
+            <i class="fa fa-times"></i>
           </div>
         </div>
-        <hr class="mt-5">
-      <!-- End of new comment Form -->
-    <!-- End of new comment -->
+        <div class="box-body">
+          <textarea v-model="comment" name="comment" class="form-control"></textarea>
+        </div>
+        <div class="box-btns">
+          <button @click="sendComment" type="button" name="button" class="btn btn-blue"><i class="fa fa-comment-o"></i> Send</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -187,10 +187,24 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+  #new-comment {
+    .box-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+      > .icon {
+        cursor: pointer;
+      }
+    }
+  }
+
   .loading {
     position: relative;
     display: none;
   }
+
   .square {
     position: absolute;
     left: 50%;

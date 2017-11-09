@@ -1,43 +1,45 @@
 <template>
-  <div class="col">
-    <div id="single-comment" ref="comment">
-      <h3>{{ comment.author.name }}</h3>
-      <p>{{ comment.time }}</p>
-      <p>{{ comment.comment }}</p>
-      <div class="reply">
-        <button @click="confirmation" type="button" name="button" class="btn btn-orange"><i class="fa fa-trash-o"></i> Delete</button>
-        <button @click="newReply" type="button" name="button" class="btn btn-orange"><i class="fa fa-comments-o"></i> Reply</button>
-      </div>
-      <div id="reply" ref="newReply">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
-            <button @click="closeReply" id="close" type="button" class="close">
-              <span aria-hidden="true">&times;</span>
-              <span class="sr-only">Close</span>
-            </button>
-            <div class="form-group">
+    <div class="col">
+          <div :class="'box '+color">
+              <div class="box-header">
+                <div class="title">
+                  {{ comment.author.name }}
+
+                </div>
+                <div class="time">
+                  {{ comment.time }}
+                </div>
+              </div>
+              <div class="box-body" ref="comment">
+                {{ comment.comment }}
+              </div>
+              <div id="confirmation" class="box-btns pt" ref="confirmation">
+                <button @click="destroy(comment.id)" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-trash-o"></i> Confirm</button>
+                <button @click="undo" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-undo"></i> Cancel</button>
+              </div>
+              <div class="box-btns">
+                <button @click="confirmation" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-trash-o"></i> Delete</button>
+                <button @click="newReply" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-comments-o"></i> Reply</button>
+              </div>
+          </div>
+          <div id="reply" :class="'box mt '+reply_color" ref="newReply">
+            <div class="box-header">
+              <div class="title">
+                Reply to {{ comment.author.name }}
+              </div>
+              <div class="icon" ref="close" @click="closeReply">
+                <i class="fa fa-times"></i>
+              </div>
+            </div>
+            <div class="box-body">
               <textarea v-model="reply_msg" name="comment" class="form-control"></textarea>
             </div>
-            <div class="form-group d-flex justify-content-center">
-              <button @click="sendReply" type="button" name="button" class="btn btn-orange"><i class="fa fa-comment-o"></i> Send</button>
+            <div class="box-btns">
+              <button @click="sendReply" type="button" name="button" :class="'btn btn-'+reply_color"><i class="fa fa-comment-o"></i> Send</button>
             </div>
           </div>
-        </div>
-      </div>
-      <hr class="">
-      <replies-list :replies="comment.replies" :user="user" :user_type="user_type"></replies-list>
+          <replies-list :replies="comment.replies" :user="user" :user_type="user_type"></replies-list>
     </div>
-    <div id="confirmation" ref="confirmation">
-      <div class="row">
-        <div class="col">
-          <div class="d-flex justify-content-around">
-            <button @click="destroy(comment.id)" type="button" name="button" class="btn btn-orange mx-5"><i class="fa fa-trash-o"></i> Confirm</button>
-            <button @click="undo" type="button" name="button" class="btn btn-orange mx-5"><i class="fa fa-undo"></i> Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 <script>
 
@@ -52,9 +54,15 @@ export default {
   name: "comment-single",
   props: ['comment', 'user', 'user_type'],
   data: () => ({
-      reply_msg: ''
+      reply_msg: '',
+      color: '',
+      reply_color: ''
   }),
   mounted() {
+    this.colors = ['green', 'yellow', 'orange', 'blue'];
+    this.index = Math.floor(Math.random() * 3);
+    this.color = this.colors[this.index];
+    this.reply_color = this.colors[(this.index + 1)];
   },
   computed: {
     json_user: function()
@@ -67,30 +75,34 @@ export default {
       {
           var vue = this;
           var t1 = new TimelineMax();
-          t1.to(this.$refs['comment'], .4, {
+          t1.to(this.$refs.comment, .4, {
               opacity: 0,
               ease: Power4.easeInOut,
               onComplete: function () {
-                  vue.$refs['confirmation'].style.display = 'inherit';
+                  vue.$refs.comment.style.display = 'none';
+                  vue.$refs.confirmation.style.display = 'inherit';
               }
           })
-          .to(this.$refs['confirmation'], .4, {
+          .to(this.$refs.confirmation, .4, {
               opacity: 1,
               ease: Power4.easeInOut,
+              onComplete: function () {
+              }
           });
       },
       undo ()
       {
           var vue = this;
           var t1 = new TimelineMax();
-          t1.to(this.$refs['confirmation'], .4, {
+          t1.to(this.$refs.confirmation, .4, {
               opacity: 1,
               ease: Power4.easeInOut,
               onComplete: function () {
-                  vue.$refs['confirmation'].style.display = 'none';
+                  vue.$refs.confirmation.style.display = 'none';
+                  vue.$refs.comment.style.display = 'inherit';
               }
           })
-          .to(this.$refs['comment'], .4, {
+          .to(this.$refs.comment, .4, {
               opacity: 1,
               ease: Power4.easeInOut
           });
@@ -119,25 +131,24 @@ export default {
       // reply
       newReply()
       {
-          this.$refs['newReply'].style.display = 'inherit';
+          this.$refs.newReply.style.display = 'inherit';
           var t1 = new TimelineMax();
-          t1.to(this.$refs['newReply'], .4, {
-              height: '100%',
+          t1.to(this.$refs.newReply, .4, {
+              height: 'auto',
               opacity: 1
           });
       },
-
       closeReply()
       {
           var vue = this;
           var t1 = new TimelineMax();
-          t1.to(this.$refs['newReply'], .2, {
+          t1.to(this.$refs.newReply, .2, {
               opacity: 0,
           })
-          .to(this.$refs['newReply'], .2, {
+          .to(this.$refs.newReply, .2, {
               height: 0,
               onComplete: function () {
-                  vue.$refs['newReply'].style.display = 'none';
+                  vue.$refs.newReply.style.display = 'none';
               }
           });
       },
@@ -171,18 +182,38 @@ export default {
 <style lang="scss" scoped>
 
   #confirmation {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     display: none;
     opacity: 0;
+  }
+
+  .box-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    > .time {
+      align-self: flex-end;
+      font-size: 1rem;
+      line-height: 1.62;
+      font-weight: normal;
+      text-transform: lowercase;
+    }
   }
 
   #reply {
     display: none;
     height: 0;
     opacity: 0;
+
+    > .box-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      >.icon {
+        cursor: pointer;
+      }
+    }
   }
 
 </style>

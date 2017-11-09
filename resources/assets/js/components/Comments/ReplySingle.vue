@@ -1,29 +1,32 @@
 <template>
   <div class="col">
-    <div id="single-reply" class="row" ref="reply">
-      <div class="col-md-1 h-100">
+    <div class="row">
+      <div class="col-1">
         <h3 class="text-center"><i class="fa fa-caret-right"></i></h3>
       </div>
-      <div class="col-md-11">
-        <h3>{{ reply.author.name }}</h3>
-        <p>{{ reply.time }}</p>
-        <p>{{ reply.comment }}</p>
-        <button @click="confirmation" type="button" name="button" class="btn btn-secondary btn-orange"><i class="fa fa-trash-o"></i> Delete</button>
-      </div>
-    </div>
-    <div id="confirmation" class="row" ref="confirmation">
-      <div class="col pb-4">
-        <div class="d-flex justify-content-center">
-          <button @click="destroy(reply.id)" type="button" name="button" class="btn btn-secondary btn-orange mx-5">
-            <i class="fa fa-trash-o"></i> Confirm
-          </button>
-          <button @click="undo" type="button" name="button" class="btn btn-secondary btn-orange mx-5">
-            <i class="fa fa-undo"></i> Cancel
-          </button>
+      <div class="col-11">
+        <div :class="'box '+color">
+            <div class="box-header">
+              <div class="title">
+                {{ reply.author.name }}
+              </div>
+              <div class="time">
+                {{ reply.time }}
+              </div>
+            </div>
+            <div id="single-reply" class="box-body" ref="reply">
+                {{ reply.comment }}
+            </div>
+            <div id="confirmation" class="box-btns pt" ref="confirmation">
+              <button @click="destroy(reply.id)" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-trash-o"></i> Confirm</button>
+              <button @click="undo" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-undo"></i> Cancel</button>
+            </div>
+            <div class="box-btns">
+              <button @click="confirmation" type="button" name="button" :class="'btn btn-'+color"><i class="fa fa-trash-o"></i> Delete</button>
+            </div>
         </div>
       </div>
     </div>
-    <hr class="">
   </div>
 </template>
 <script>
@@ -31,7 +34,7 @@ export default {
   name: "reply-single",
   props: ['reply', 'user', 'user_type'],
   data: () => ({
-
+    color: '',
   }),
   computed: {
     json_user: function()
@@ -39,20 +42,25 @@ export default {
         return JSON.parse(this.user);
     }
   },
+  mounted() {
+    //do something after mounting vue instance
+    this.colors = ['green', 'yellow', 'orange', 'blue'];
+    this.index = Math.floor(Math.random() * 4);
+    this.color = this.colors[this.index];
+  },
   methods: {
       confirmation()
       {
           var vue = this;
-
           var t1 = new TimelineMax();
-          t1.to(this.$refs['reply'], .4, {
+          t1.to(this.$refs.reply, .4, {
             opacity: 0,
             onComplete: function () {
-              vue.$refs['confirmation'].style.display = 'flex';
-              vue.$refs['reply'].style.display = 'none';
+              vue.$refs.confirmation.style.display = 'flex';
+              vue.$refs.reply.style.display = 'none';
             }
           })
-          .to(this.$refs['confirmation'], .4, {
+          .to(this.$refs.confirmation, .4, {
             opacity: 1,
           })
       },
@@ -81,15 +89,15 @@ export default {
       {
           var vue = this;
           var t1 = new TimelineMax();
-          t1.to(this.$refs['confirmation'], .4, {
+          t1.to(this.$refs.confirmation, .4, {
               opacity: 1,
               ease: Power4.easeInOut,
               onComplete: function () {
-                  vue.$refs['confirmation'].style.display = 'none';
-                  vue.$refs['reply'].style.display = 'flex';
+                  vue.$refs.confirmation.style.display = 'none';
+                  vue.$refs.reply.style.display = 'flex';
               }
           })
-          .to(this.$refs['reply'], .4, {
+          .to(this.$refs.reply, .4, {
               opacity: 1,
               ease: Power4.easeInOut
           });
@@ -100,12 +108,22 @@ export default {
 <style lang="scss" scoped>
 
   #confirmation {
-    position: relative;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     display: none;
     opacity: 0;
+  }
+
+  .box-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      > .time {
+        align-self: flex-end;
+        font-size: 1rem;
+        line-height: 1.62;
+        font-weight: normal;
+        text-transform: lowercase;
+      }
   }
 
 </style>

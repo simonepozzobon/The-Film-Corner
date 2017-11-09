@@ -6,10 +6,8 @@
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <div class="block-subtitle mt-5">
+  <div class="conference-container">
+        <div class="block-subtitle">
           <h4>Contacts and Informations</h4>
         </div>
         <div class="block-text mb-5">
@@ -27,7 +25,5 @@
             <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
           </p>
         </div>
-      </div>
-    </div>
   </div>
 @endsection

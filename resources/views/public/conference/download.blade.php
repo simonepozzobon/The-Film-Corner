@@ -6,13 +6,11 @@
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <div class="block-subtitle mt-5">
+  <div class="conference-container">
+        <div class="block-subtitle">
           <h4>Downloads</h4>
         </div>
-        <div class="block-text mb-5">
+        <div class="block-text">
           <table class="table table-hover">
             <thead>
               <th>Description</th>
@@ -74,7 +72,5 @@
             </tbody>
           </table>
         </div>
-      </div>
-    </div>
   </div>
 @endsection

@@ -7,10 +7,8 @@
   <script src="{{ asset('plugins/ckeditor/ckeditor.js') }}"></script>
 @endsection
 @section('content')
-  <div class="container">
-    <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <div class="block-subtitle mt-5">
+  <div class="conference-container">
+        <div class="block-subtitle pb-3">
           <h4>Online Application</h4>
         </div>
         <div class="block-text">
@@ -24,7 +22,7 @@
                     <label class="col-sm-2 col-form-label-sm">Name*</label>
                     <div class="col-sm-10">
                       <input type="text" name="name" class="form-control">
-                      <p class="error name alert alert-danger invisible"></p>
+                      <p class="error name alert alert-danger d-none"></p>
                     </div>
                   </div>
                 </div>
@@ -33,7 +31,7 @@
                     <label class="col-sm-2 col-form-label-sm">Surname*</label>
                     <div class="col-sm-10">
                       <input type="text" name="surname" class="form-control">
-                      <p class="error surname alert alert-danger invisible"></p>
+                      <p class="error surname alert alert-danger d-none"></p>
                     </div>
                   </div>
                 </div>
@@ -44,12 +42,12 @@
                     <label class="col-sm-1 col-form-label-sm">E-mail*</label>
                     <div class="col-sm-11">
                       <input type="text" name="email" class="form-control">
-                      <p class="error email alert alert-danger invisible"></p>
+                      <p class="error email alert alert-danger d-none"></p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row pb-5">
+              <div class="row">
                 <div class="form-group col-md-6">
                   <div class="row">
                     <label class="col-sm-2 col-form-label-sm">Institution</label>
@@ -78,18 +76,16 @@
                 </div>
               </div>
               <p>* Required</p>
-              <div class="col-md-4 offset-md-4 pt-5">
+              <div class="col-md-4 offset-md-4">
                 <button type="submit" name="button" id="submit" class="btn btn-primary btn-block">
                   <i class="fa fa-check" aria-hidden="true"></i> Apply
                 </button>
               </div>
             </form>
-            <span id="info-message" class="alert alert-info invisible"></span>
-            <span id="success-message" class="alert alert-success invisible"></span>
+            <span id="info-message" class="alert alert-info d-none"></span>
+            <span id="success-message" class="alert alert-success d-none"></span>
           </p>
         </div>
-      </div>
-    </div>
   </div>
 @endsection
 @section('scripts')
@@ -116,7 +112,7 @@
 
     $('#submit').on('click', function(e) {
       e.preventDefault();
-      $('.error').addClass('invisible');
+      $('.error').addClass('d-none');
 
       $.ajax({
         type: 'post',
@@ -135,24 +131,24 @@
           console.log(data);
           if ((data.errors)) {
               if (data.errors.name) {
-                $('.error.name').removeClass('invisible');
+                $('.error.name').removeClass('d-none');
                 $('.error.name').text(data.errors.name);
               }
               if (data.errors.surname) {
-                $('.error.surname').removeClass('invisible');
+                $('.error.surname').removeClass('d-none');
                 $('.error.surname').text(data.errors.surname);
               }
               if (data.errors.email) {
-                $('.error.email').removeClass('invisible');
+                $('.error.email').removeClass('d-none');
                 $('.error.email').text(data.errors.email);
               }
           } else if ((data.info)) {
               $('#application-form').hide();
-              $('#info-message').removeClass('invisible');
+              $('#info-message').removeClass('d-none');
               $('#info-message').html(data.info);
           } else {
               $('#application-form').hide();
-              $('#success-message').removeClass('invisible');
+              $('#success-message').removeClass('d-none');
               $('#success-message').html(data.success);
               console.log(data.success);
           }

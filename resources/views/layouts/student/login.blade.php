@@ -3,48 +3,35 @@
   {{ $type = '' }}
 @endif
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link href="/css/app.css" rel="stylesheet">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
-    @yield('section')
-    @include('layouts.student._head')
+  <title>@yield('title')</title>
+
+  @yield('section')
+  @include('layouts.student._head')
+
     <style media="screen">
       body {
         background-color: #dfeee9;
+        background-image: none !important;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
-        line-height: 28px;
       }
 
-      svg {
+      #back {
         position: absolute;
       }
 
-      h3 {
-        font-weight: 500;
-        letter-spacing: 0;
-        text-transform: uppercase;
-      }
-
-      .btn {
-        letter-spacing: 0;
-        text-transform: uppercase;
-      }
-
-      #login-form {
-        box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-      }
     </style>
-  </head>
+</head>
   <body>
     <div class="wrapper">
       @include('layouts.main._menu')
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+      <svg id="back" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
         <defs>
           <style>
             .cls-2{fill:#9ae2d9;}

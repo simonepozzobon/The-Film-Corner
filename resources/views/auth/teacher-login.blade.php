@@ -1,14 +1,15 @@
-@extends('layouts.student.login')
+@extends('layouts.teacher.login')
 @section('content')
-<br><br>
-<div class="container mt-5">
-    <div class="row">
+<div class="container">
+    <div class="row mt">
         <div class="col-md-6 offset-md-3">
-          <div id="login-form" class="container-fluid bg-faded p-5">
-            <h3>Teacher Login</h3>
-            <hr>
-            <form class="form-horizontal" role="form" method="POST" action="{{ route('teacher.login.submit') }}">
-                {{ csrf_field() }}
+          <form class="form-horizontal" role="form" method="POST" action="{{ route('teacher.login.submit') }}">
+            {{ csrf_field() }}
+            <div class="box green">
+              <div class="box-header">
+                Teacher Login
+              </div>
+              <div class="box-body">
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label for="email">E-Mail Address</label>
                     <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
@@ -35,14 +36,16 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-green btn-block">
                         Login
                     </button>
                 </div>
                 <div class="form-group">
                     <a class="" href="{{ route('password.request') }}">Forgot Your Password?</a>
                 </div>
-          </div>
+              </div>
+            </div>
+          </form>
         </div>
     </div>
 </div>

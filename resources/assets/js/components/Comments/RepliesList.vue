@@ -1,6 +1,6 @@
 <template>
   <div id="replies-list">
-    <div v-for="reply in replies" :key="reply.key" class="row justify-content-center">
+    <div v-for="reply in msgs" :key="reply.key" class="row mt">
       <reply-single :reply="reply" :user="user" :user_type="user_type">
       </reply-single>
     </div>
@@ -14,9 +14,11 @@ export default {
   name: "replies-list",
   props: ['replies', 'user', 'user_type'],
   data: () => ({
+    msgs: ''
   }),
   mounted() {
     //do something after mounting vue instance
+    this.msgs = this.replies;
     this.$on('replyDelete', function(id) {
       this.deleteReply(id);
     });
@@ -24,7 +26,7 @@ export default {
   methods: {
     deleteReply(id)
     {
-      this.replies = this.replies.filter(function(value) {
+      this.msgs = this.msgs.filter(function(value) {
           return value.id !== id;
       });
     }

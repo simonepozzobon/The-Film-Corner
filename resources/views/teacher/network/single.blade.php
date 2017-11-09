@@ -32,28 +32,20 @@
         </div>
       </div>
     </div>
-    <div class="row mt">
-      <div class="col">
-        <div class="box orange">
-          <div class="box-header">
-            Comments
-          </div>
-          <div class="box-body">
-            <comment-new
-                csrf_field="{{ csrf_token() }}"
-                user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
-                user="{{ Auth::guard('teacher')->user() }}"
-                commentable_type="App\SharedSession"
-                commentable_id="{{ $item->id }}"
-            ></comment-new>
-
-            <comment-list
-                comments="{{ $comments }}"
-                user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
-                user="{{ Auth::guard('teacher')->user() }}"
-            ></comment-list>
-          </div>
-        </div>
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <comment-new
+            csrf_field="{{ csrf_token() }}"
+            user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
+            user="{{ Auth::guard('teacher')->user() }}"
+            commentable_type="App\SharedSession"
+            commentable_id="{{ $item->id }}"
+        ></comment-new>
+        <comment-list
+            comments="{{ $comments }}"
+            user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
+            user="{{ Auth::guard('teacher')->user() }}"
+        ></comment-list>
       </div>
     </div>
   </div>

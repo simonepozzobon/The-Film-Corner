@@ -1,8 +1,8 @@
 @extends('layouts.teacher')
 @section('title', 'Profile')
 @section('content')
-  <div class="container-fluid">
-    @include('components.apps.heading_only', ['title' => 'Profile'])
+  <div class="container">
+    @include('components.apps.heading_simple', ['title' => 'Profile'])
     <div id="main">
       <div class="row mt">
         <div class="col-md-8">
