@@ -13,7 +13,7 @@
             Examples of pictures and clips related to each app with a short explanations
           </div>
         </div>
-        <div class="box last orange mt">
+        {{-- <div class="box last orange mt">
           <div class="box-header">
             References
           </div>
@@ -24,7 +24,7 @@
               <li>altro elemento</li>
             </ul>
           </div>
-        </div>
+        </div> --}}
       </div>
       <div class="col-md-9">
         @if ($apps->count() > 0)
