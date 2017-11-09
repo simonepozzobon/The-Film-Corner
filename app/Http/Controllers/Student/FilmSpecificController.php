@@ -287,9 +287,6 @@ class FilmSpecificController extends Controller
     $app_session = StudentAppSession::where('token', '=', $token)->first();
 
     $is_student = false;
-    if ($app_session->teacher_shared == 1) {
-      $is_student = true;
-    }
 
     $session = json_decode($app_session->content);
 

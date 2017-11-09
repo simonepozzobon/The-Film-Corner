@@ -117,12 +117,19 @@ class SessionController extends Controller
     }
 
     define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
+    define('SOX_LIB', '/usr/local/bin/sox');
+
     $utility = new Utility;
+
 
     // se la validazione funziona allora aggiorno la sessione
     $session = StudentAppSession::where('token', '=', $request['token'])->first();
     $session->is_empty = 0;
     $session->title = $request['title'];
+
+    $app = $session->app()->first();
+    $app_category = $app->category()->first();
+    $app_section = $app_category->section()->first();
 
     $path = base_path('storage/app/public/apps/frame-crop');
 
@@ -175,7 +182,13 @@ class SessionController extends Controller
             ];
             $frames->push($data);
           }
-          $session->content = json_encode($frames);
+
+          $data = [
+            'frames' => $frames,
+            'src' => $request['src']
+          ];
+
+          $session->content = json_encode($data);
         }
         break;
 
@@ -217,8 +230,8 @@ class SessionController extends Controller
         if (isset($request['notes'])) {
 
           $data = [
-            'imgL' => $request['imgL'][0],
-            'imgR' => $request['imgR'][0],
+            'videoL' => $request['videoL'],
+            'videoR' => $request['videoR'],
             'notes' => $request['notes']
           ];
 
@@ -241,6 +254,7 @@ class SessionController extends Controller
 
       // Film Specific - Sound - App 8 - Sound Atmosphere
       case 8:
+
         // Definisco la variabili per il render
         $video = parse_url($request['video'], PHP_URL_PATH);
         $audio = parse_url($request['audio'], PHP_URL_PATH);
@@ -277,7 +291,123 @@ class SessionController extends Controller
 
       // Film Specific - Sound - App 9 - Soundscapes
       case 9:
+
+        // creo una collezione per le sorgenti
+        $audioSrcs = collect();
+
+        // creo una variabile con i volumi
+        $vols = [];
+        foreach (json_decode($request['audio-vol']) as $key => $vol) {
+          array_push($vols, $vol);
+        }
+
+        // Per ogni sorgente audio e calcolo la durata
+        $counter = 0;
+        foreach (json_decode($request['audio-src']) as $key => $audio) {
+          if ($audio) {
+            $cleanPath = str_replace('/storage/', 'app/public/', $audio);
+            $realPath = storage_path($cleanPath);
+            $media = [
+              'id' => uniqid(),
+              'key' => $key,
+              'src' => $realPath,
+              'vol' => $vols[$counter],
+              'duration' => Utility::getAudioLenght($realPath)
+            ];
+            $audioSrcs->push($media);
+          }
+          $counter = $counter+1;
+        }
+
+        // determino la lungezza del video in base alla lunghezza massima delle sorgenti
+        $duration = $audioSrcs->max('duration');
+        $audioSrcs = $audioSrcs->transform(function($audio, $key) use($duration) {
+          $audio['repeat'] = $duration / $audio['duration'];
+          return $audio;
+        });
+
+
+        // verifo l'esitenza della cartelle per gli export e per i tmp o le creo
+        // '/apps/sound/soundscapes/sessione'
+        $rawExpDir = 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$request['token'].'/exp';
+        $absExpDir = Utility::staticVerifyDirAndCreate($rawExpDir);
+        $rawTmpDir = 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$request['token'].'/tmp';
+        $absTmpDir = Utility::staticVerifyDirAndCreate($rawTmpDir);
+
+        // rendo tutte le sorgenti della stessa durata
+        $audioSrcs = $audioSrcs->transform(function($audio, $key) use($absTmpDir) {
+
+            // tmp path
+            $tmpPath = $absTmpDir.'/'.$audio['id'].'.wav';
+
+            // se il file deve essere allungato e il volume è diverso da zero
+            if ($audio['repeat'] != 1 && $audio['vol'] != 0) {
+
+                // allungo il file e ne aggiusto il volume
+                // sox music.mp3 foo.wav repeat 3
+                // sox -v 0.9 in.wav out.wav
+                $cli = SOX_LIB.' -v '.$audio['vol'].' "'.$audio['src'].'" "'.$tmpPath.'" repeat '.$audio['repeat'];
+                exec($cli);
+
+                $audio['tmp'] = $tmpPath;
+
+
+            } elseif ($audio['vol'] != 0 && $audio['vol'] != 1) {
+
+                // se non deve essere allungato, regolo il volume
+                $cli = SOX_LIB.' -v '.$audio['vol'].' "'.$audio['src'].'" "'.$tmpPath.'" ';
+                exec($cli);
+
+                $audio['tmp'] = $tmpPath;
+
+            } else {
+
+                // se il file è al massimo volume e non deve essere allungato
+                $audio['tmp'] = $audio['src'];
+
+            }
+
+            return $audio;
+
+        });
+
+        // creo un unico file audio
+        // sox -m audio1.wav audio2.wav out.wav
+        $audioTmpPath = $absTmpDir.'/audio.wav';
+
+        $cli = SOX_LIB.' -m ';
+        foreach ($audioSrcs as $key => $audio) {
+          $cli .= '"'.$audio['tmp'].'" ';
+        }
+        $cli .= ' "'.$audioTmpPath.'" ';
+        exec($cli);
+
+        // comprimo il file wav in mp3
+        // ffmpeg -i input.wav -codec:a libmp3lame -qscale:a 2 output.mp3
+        $compressedAudioTmpPath = $absTmpDir.'/audio.mp3';
+        $cli = FFMPEG_LIB.' -i '.$audioTmpPath.' -codec:a libmp3lame -qscale:a 4 '.$compressedAudioTmpPath;
+        exec($cli);
+
+
+        // Pulisco la path per l'immagine
+        $rawImagePath = str_replace('/storage/', '', $request['image']);
+        $absImagePath = storage_path('app/public/'.$rawImagePath);
+        $videoTmpPath = $absTmpDir.'/video.mp4';
+
+        // creo il video dall'immagine
+        // ffmpeg -loop 1 -i image.png -c:v libx264 -t 15 -pix_fmt yuv420p -vf scale=320:240 out.mp4
+        $cli = FFMPEG_LIB.' -loop 1 -i "'.$absImagePath.'" -c:v libx264 -t '.$duration.' -pix_fmt yuv420p -vf scale=640:480 "'.$videoTmpPath.'"';
+        exec($cli);
+
+        // unisco audio e video
+        // ffmpeg -i PrintingCDs.mp4 -i AudioPrintCDs.mp3 -acodec copy -vcodec copy PrintCDs1.mp4
+        $exportPath = $absExpDir.'/video.mp4';
+        $rawExpPath = $rawExpDir.'/video.mp4';
+        $cli = FFMPEG_LIB.' -i '.$videoTmpPath.' -i '.$compressedAudioTmpPath.' -c:v copy -map 0:v:0 -map 1:a:0 '.$exportPath;
+        exec($cli);
+
         $data = [
+          'exp' => $rawExpPath,
           'notes' => $request['notes'],
           'audio_src' => $request['audio-src'],
           'audio_vol' => $request['audio-vol'],
@@ -309,6 +439,16 @@ class SessionController extends Controller
       case 11:
 
         $session->content = json_encode($request['timelines']);
+        break;
+
+      // Creative Studio - Warm Up - App 12 - Sound studio
+      case 12:
+        $data = [
+          'video' => $request['video'],
+          'timelines' => $request['timelines'],
+        ];
+
+        $session->content = json_encode($data);
         break;
 
       // Creative Studio - Warm Up - App 13 - Character Builder
@@ -436,8 +576,7 @@ class SessionController extends Controller
     ];
 
     $session->save();
-
-
+    
     return response()->json($data);
   }
 

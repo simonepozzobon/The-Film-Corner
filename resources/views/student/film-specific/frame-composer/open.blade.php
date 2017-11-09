@@ -95,9 +95,7 @@
       </div>
     </div>
   </div>
-  @if ($is_student)
-    @include('components.apps.student_chat', ['app_session' => $app_session])
-  @endif
+  @include('components.apps.student_chat', ['app_session' => $app_session])
 @endsection
 @section('scripts')
   <script src="{{ asset('plugins/fabric/fabric.min.js') }}"></script>
