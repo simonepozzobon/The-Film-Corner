@@ -115,6 +115,10 @@ class VideoEditorController extends Controller
 
         // faccio il render
         foreach ($data as $key => $media) {
+          // $videoRawPath = parse_url($request[0]['file'], PHP_URL_PATH);
+          // $cleanedVideoPath = str_replace('/storage/', '', $videoRawPath);
+          // $convertSpaces = str_replace('%20', ' ', $cleanedVideoPath);
+
           $mediaPath = urldecode($media['media_url']);
           $srcFilename = pathinfo($mediaPath, PATHINFO_FILENAME);
           $tmpFilename = $media['id'];
