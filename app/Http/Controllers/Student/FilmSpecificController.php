@@ -8,12 +8,14 @@ use App\AppKeyword;
 use App\AppCategory;
 use App\VideoLibrary;
 use App\StudentSession;
+use App\MultiSubcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\AppsSessions\FilmSpecific\FrameCrop;
-use App\AppsSessions\StudentAppSession;
 use Spatie\Activitylog\Models\Activity;
+use App\AppsSessions\StudentAppSession;
+use Illuminate\Support\Facades\Storage;
+use App\AppsSessions\FilmSpecific\FrameCrop;
 
 class FilmSpecificController extends Controller
 {
@@ -28,7 +30,6 @@ class FilmSpecificController extends Controller
     $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
 
     $student = Auth::guard('student')->user();
-
     $activities = Activity::where('description', '=', 'visited')->causedBy($student)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {
@@ -49,7 +50,6 @@ class FilmSpecificController extends Controller
     foreach ($apps as $key => $app) {
       $app->colors = $colors[$counter];
       $counter++;
-
       if ($counter % 4 == 0) {
         $counter = 0;
       }
@@ -63,6 +63,7 @@ class FilmSpecificController extends Controller
       })->all();
       count($filtered) < 5 ? $app->available = true : $app->available = false;
     }
+
 
     return view('student.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
@@ -86,7 +87,7 @@ class FilmSpecificController extends Controller
       3 => ['#d9f5fc', '#a6dbe2'],
     ];
 
-    $app->colors = $colors[rand(0, 3)];
+    // $app->colors = $colors[rand(0, 3)];
 
     switch ($app_slug) {
 
@@ -100,9 +101,19 @@ class FilmSpecificController extends Controller
       case 'frame-composer':
         $images = $app->medias()->get();
         $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
             return $img->category_id == 2;
         });
         $images->all();
+
+        // debug
+        // $libraries = $app->mediaCategory()->get();
+        // foreach ($libraries as $key => $library) {
+        //   dd($library->media_on_sub_category());
+        // }
+        //
+        // dd();
+
         return view('student.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
         break;
 
@@ -111,7 +122,24 @@ class FilmSpecificController extends Controller
         break;
 
       case 'juxtaposition':
-        return view('student.film-specific.juxtaposition.index', compact('app', 'app_category'));
+
+        $images = $app->medias()->get();
+
+        $images = collect($images->pluck('landscape')->all());
+
+        $flatten = $images->transform(function($image, $key) {
+            return Storage::disk('local')->url($image);
+        });
+
+        $left = $flatten->random();
+        $right = $flatten->random();
+        while ($left <= $right) {
+          $right = $flatten->random();
+        }
+
+        $library = json_encode($images->toArray());
+
+        return view('student.film-specific.juxtaposition.index', compact('app', 'app_category', 'library', 'left', 'right'));
         break;
 
       // case 'frame-counter':
@@ -124,17 +152,43 @@ class FilmSpecificController extends Controller
        *
       **/
 
+      // case 'parallel-action':
       case 'parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         return view('student.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'offscreen':
-        return view('student.film-specific.offscreen.index', compact('app', 'app_category'));
+          $videos = $app->videos()->get();
+          $videos = collect($videos->pluck('src')->all());
+
+          $flatten = $videos->transform(function($video, $key) {
+              return Storage::disk('local')->url($video);
+          });
+
+          $random_video = $flatten->random();
+
+        return view('student.film-specific.offscreen.index', compact('app', 'app_category', 'random_video'));
         break;
 
       case 'attractions':
-        return view('student.film-specific.attractions.index', compact('app', 'app_category'));
+
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $left = $flatten->random();
+        $right = $flatten->random();
+        while ($left <= $right) {
+          $right = $flatten->random();
+        }
+
+        $library = json_encode($videos->toArray());
+
+        return view('student.film-specific.attractions.index', compact('app', 'app_category', 'library', 'left', 'right'));
         break;
 
       // case 'attractions-viceversa':
@@ -164,11 +218,40 @@ class FilmSpecificController extends Controller
         break;
 
       case 'sound-atmospheres':
-        return view('student.film-specific.sound-atmosphere.index', compact('app', 'app_category'));
+          // Video
+          $videos = $app->videos()->get();
+          $videos = collect($videos->pluck('src')->all());
+
+          $flatten = $videos->transform(function($video, $key) {
+              return Storage::disk('local')->url($video);
+          });
+
+          $random_video = $flatten->random();
+          $video_library = json_encode($videos->toArray());
+
+          // Audio
+          $audios = $app->audios()->get();
+          $audios = collect($audios->pluck('src')->all());
+
+          $flatten = $audios->transform(function($audio, $key) {
+              return Storage::disk('local')->url($audio);
+          });
+
+          $random_audio = $flatten->random();
+          $audio_library = json_encode($audios->toArray());
+
+        return view('student.film-specific.sound-atmosphere.index', compact('app', 'app_category', 'random_video', 'random_audio'));
          break;
 
       case 'soundscapes':
-        return view('student.film-specific.soundscapes.index', compact('app', 'app_category'));
+          $images = $app->medias()->get();
+          $images = collect($images->pluck('landscape')->all());
+          $flatten = $images->transform(function($image, $key) {
+              return Storage::disk('local')->url($image);
+          });
+          $random_image = $flatten->random();
+
+        return view('student.film-specific.soundscapes.index', compact('app', 'app_category', 'random_image'));
         break;
 
       case 'stop-and-go':
@@ -202,6 +285,12 @@ class FilmSpecificController extends Controller
     $app_category = AppCategory::find($app->app_category_id);
 
     $app_session = StudentAppSession::where('token', '=', $token)->first();
+
+    $is_student = false;
+    if ($app_session->teacher_shared == 1) {
+      $is_student = true;
+    }
+
     $session = json_decode($app_session->content);
 
     $colors = [
@@ -221,19 +310,29 @@ class FilmSpecificController extends Controller
             return $img->category_id == 2;
         });
         $images->all();
-        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'images'));
+        return view('student.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'images'));
         break;
 
       case 'frame-crop':
-        return view('student.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'juxtaposition':
-        return view('student.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session'));
+        $images = $app->medias()->get();
+
+        $images = collect($images->pluck('landscape')->all());
+
+        $flatten = $images->transform(function($image, $key) {
+            return Storage::disk('local')->url($image);
+        });
+
+        $library = json_encode($images->toArray());
+
+        return view('student.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
         break;
 
       // case 'frame-counter':
-      //   return view('student.film-specific.frame-counter.open', compact('app', 'app_category', 'session', 'app_session'));
+      //   return view('student.film-specific.frame-counter.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
       //   break;
 
       /*
@@ -243,21 +342,32 @@ class FilmSpecificController extends Controller
       **/
 
       case 'parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         $session = json_encode($session);
-        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token'));
+        return view('student.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token', 'is_student'));
         break;
 
       case 'offscreen':
-        return view('student.film-specific.offscreen.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.offscreen.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'attractions':
-        return view('student.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session'));
+
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $library = json_encode($videos->toArray());
+
+
+
+        return view('student.film-specific.attractions.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'videos', 'library'));
         break;
 
       case 'attractions-viceversa':
-        return view('student.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.attractions-viceversa.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
 
@@ -268,19 +378,21 @@ class FilmSpecificController extends Controller
       **/
 
       case 'whats-going-on':
-        return view('student.film-specific.whats-going-on.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.whats-going-on.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'sound-atmospheres':
-        return view('student.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.sound-atmosphere.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'soundscapes':
-        return view('student.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'app_session'));
+
+
+        return view('student.film-specific.soundscapes.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
       case 'stop-and-go':
-        return view('student.film-specific.stop-and-go.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.stop-and-go.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
 
@@ -291,7 +403,7 @@ class FilmSpecificController extends Controller
       **/
 
       case 'character-analysis':
-        return view('student.film-specific.character-analysis.open', compact('app', 'app_category', 'session', 'app_session'));
+        return view('student.film-specific.character-analysis.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
     }
 

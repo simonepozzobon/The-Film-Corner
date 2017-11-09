@@ -280,6 +280,7 @@ Route::prefix('student')->group(function() {
 
   // Network
   Route::get('/network', 'Student\NetworkController@index')->name('student.network.index');
+  Route::get('/network/{token}', 'Student\NetworkController@single')->name('student.network.single');
 
   // Sessioni
   Route::get('/session/{student_id}/{app_id}', 'Student\SessionController@openSessions')->name('open.sessions');
