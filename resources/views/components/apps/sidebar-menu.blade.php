@@ -4,11 +4,6 @@
   }
 @endphp
 <div class="sidebar-menu">
-  <div id="help-btn" class="button">
-    <a class="text-white text-align-center btn btn-info btn-lg">
-      <i id="help-icon" class="fa fa-question" aria-hidden="true"></i>
-    </a>
-  </div>
   @if ($student == false)
       <div id="save-btn" class="button">
         <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
