@@ -1,8 +1,8 @@
 @extends('layouts.teacher')
 @section('title', 'Welcome')
 @section('content')
-  <div class="container-fluid">
-    @include('components.apps.heading_only', ['title' => 'Welcome'])
+  <div class="container">
+    @include('components.apps.heading_simple', ['title' => 'Welcome'])
     <div class="row mt">
       <div class="col">
         <div class="box blue">

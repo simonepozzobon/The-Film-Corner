@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.teacher', ['footer' => 'no-margin'])
 @section('stylesheets')
   <style media="screen">
   #background {
