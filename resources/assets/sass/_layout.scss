@@ -29,7 +29,44 @@
   background-color: $nav-gray-light;
   font-size: $font-family-base;
   color: $black;
-  padding: $spacer;
+  padding-top: $spacer;
+  padding-bottom: $spacer;
+  padding-left: ($spacer * 2);
+  padding-right: ($spacer * 2);
+
+  > .heading {
+    padding-top: $spacer;
+    padding-bottom: ($spacer / 2);
+    font-size: 1.75rem;
+    line-height: 2.83rem;
+  }
+
+  > .content {
+    font-size: $font-family-base;
+    text-align: left;
+    padding-bottom: $spacer;
+
+    > .video-example {
+      max-width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: $spacer;
+    }
+
+    > .image-example {
+      max-width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: $spacer;
+    }
+
+    > .image-example {
+      max-width: 60%;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: $spacer;
+    }
+  }
 
   > p {
     margin: 0;

@@ -87857,6 +87857,7 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
       console.log('DEBUG');
       console.log(response);
       console.log('-------');
+      localStorage.setItem('tfc-video-editing', '/' + response.data);
       $scope.mediaToggle = {
         sources: [{
           src: '/' + response.data,

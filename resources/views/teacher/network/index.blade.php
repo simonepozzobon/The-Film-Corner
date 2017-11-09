@@ -3,10 +3,10 @@
 @section('content')
   <div id="main" class="container">
     @include('components.apps.heading_only', ['title' => 'Network'])
-    <div class="row mt">
+    <div class="row">
       @foreach ($items as $key => $item)
         <div class="col-md-4">
-          <div class="box {{ $item->colors[0] }}">
+          <div class="box {{ $item->colors[0] }} mt">
             <div class="box-header">
               {{ $item->title }}
             </div>

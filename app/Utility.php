@@ -284,23 +284,23 @@ class Utility extends Model
         $item->notes = '';
         break;
 
-      // // Creative Studio - Warm up - App 10 - Active Offscreen
-      // case '11':
-      //   $obj = json_decode($share->content);
-      //
-      //   $item->media_type = 'video';
-      //   $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
-      //   $item->notes = '';
-      //   break;
-      //
-      // // Creative Studio - Warm up - App 10 - Active Offscreen
-      // case '12':
-      //   $obj = json_decode($share->content);
-      //
-      //   $item->media_type = 'video';
-      //   $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
-      //   $item->notes = '';
-      //   break;
+      // Creative Studio - Warm up - App 10 - Active Offscreen
+      case '11':
+        $obj = json_decode($share->content);
+
+        $item->media_type = 'video';
+        $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
+        $item->notes = '';
+        break;
+
+      // Creative Studio - Warm up - App 10 - Active Offscreen
+      case '12':
+        $obj = json_decode($share->content);
+
+        $item->media_type = 'video';
+        $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
+        $item->notes = '';
+        break;
 
       // Creative Studio - Story Telling - App 13 - Character Builder
       case '13':

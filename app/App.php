@@ -32,4 +32,22 @@ class App extends Model
     {
       return $this->hasMany('App\MediaSubCategory');
     }
+
+    public function examples()
+    {
+      $videos = $this->morphToMany('App\Video', 'videoable')->where('category_id', 3)->get();
+      $images = $this->morphToMany('App\Media', 'mediaable')->where('category_id', 3)->get();
+      $audios = $this->morphToMany('App\Audio', 'audioable')->where('category_id', 3)->get();
+
+      $count = $videos->count() + $audios->count() + $images->count();
+
+      $items = [
+        'count' => $count,
+        'videos' => $videos,
+        'images' => $images,
+        'audios' => $audios,
+      ];
+
+      return $items;
+    }
 }
