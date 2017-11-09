@@ -1,50 +1,41 @@
 @extends('layouts.student')
+@section('title', 'Network')
 @section('content')
-  <section id="breadcrumbs mt-5 pt-5 px-5">
-    <div class="row pt-5">
-      <div class="col pt-5 px-5">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="#">Network</a></li>
-        </ol>
-      </div>
-    </div>
-  </section>
-  <section id="main" class="pb-5 px-5">
+  <div id="main" class="container">
+    @include('components.apps.heading_only', ['title' => 'Network'])
     <div class="row">
       @foreach ($items as $key => $item)
-        <div class="box col-md-4 mb-5">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col {{ $item->colors[0] }}">
-                @if ($item->media_type == 'image')
-                  <img src="{{ $item->featured_media }}" alt="" class="img-fluid w-100">
-                @elseif ($item->media_type == 'video')
-                  <video class="embed-responsive-item video-js w-100" controls preload="auto" width="640" height="264">
-                      <source src="{{ $item->featured_media }}" type="video/mp4">
-                  </video>
-                @endif
-              </div>
+        <div class="col-md-4">
+          <div class="box {{ $item->colors[0] }} mt">
+            <div class="box-header">
+              {{ $item->title }}
             </div>
-            <div class="row">
-              <div class="col {{ $item->colors[1] }} py-3 px-5" >
-                <h3>{{ $item->title }}</h3>
-              </div>
+            <div class="box-body">
+              <h6 class="d-inline-block"><span class="badge badge-default">{{ $item->app_category }}</span></h6>
+              <h6 class="d-inline-block"><span class="badge badge-default">{{ $item->app_name }}</span></h6>
+                {{ $item->notes }}
             </div>
-            <div class="row">
-              <div class="col {{ $item->colors[0] }} px-5 pt-3 pb-5">
-                <span class="badge badge-default mb-3">{{ $item->app_category }}</span>
-                <span class="badge badge-default mb-3">{{ $item->app_name }}</span>
-                <p>{{ $item->notes }}</p>
-                <div class="">
-                  <i class="fa fa-eye" aria-hidden="true"></i>
-                  <i class="fa fa-heart" aria-hidden="true"></i>
-                  <i class="fa fa-comment" aria-hidden="true"></i>
-                </div>
-              </div>
+            <div class="box-body">
+              <network-icons
+                  views="{{ $item->views }}"
+                  comments="{{ $item->comments }}"
+                  likes="{{ $item->likes }}"
+                  liked="{{ $item->liked }}"
+                  user="{{ Auth::guard('student')->user() }}"
+                  user_type="{{ get_class(Auth::guard('student')->user()) }}"
+                  likeable_type="App\SharedSession"
+                  likeable_id="{{ $item->id }}"
+              ></network-icons>
+            </div>
+            <div class="box-btns">
+              <a href="{{ route('student.network.single', $item->token) }}" class="btn btn-block btn-{{ $item->colors[0] }}">View</a>
             </div>
           </div>
         </div>
       @endforeach
     </div>
-  </secion>
+  </div>
+@endsection
+@section('scripts')
+  <script src="{{ mix('js/network.js') }}"></script>
 @endsection

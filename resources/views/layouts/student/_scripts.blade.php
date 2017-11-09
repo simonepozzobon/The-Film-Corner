@@ -92,8 +92,14 @@
 
         // Film Specific - Framing - App 2 - Frame Crop
         case 2:
+
+          var src = null;
+          if (localStorage.getItem('app-2-image')) {
+            src = localStorage.getItem('app-2-image');
+          }
+
           var frames = [];
-          $('.frame').each(function(k){
+          $('#rendered .box').each(function(k){
             var frame = {
               'text': $(this).find('textarea').val(),
               'order': k,
@@ -107,7 +113,8 @@
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'frames'  : frames
+            'frames'  : frames,
+            'src'     : src
           };
 
           console.log('--------');
@@ -118,8 +125,8 @@
         // Film Specific - Framing - App 3 - Juxtaposition
         case 3:
           var images = [
-              $('#img-left').attr('src'),
-              $('#img-right').attr('src'),
+            $('#img-left').attr('src'),
+            $('#img-right').attr('src'),
           ];
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -157,7 +164,7 @@
             'app_id'  : id,
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
-            'video'   : $('#video source').attr('src'),
+            'video'   : localStorage.getItem('app-5-video'),
             'notes'   : $('#notes').val()
           };
 
@@ -169,17 +176,6 @@
         // Film Specific - Editing - App 6 - Attractions
         case 6:
 
-          var imgL = [];
-          var imgR = [];
-
-          $('#div1 img').each(function() {
-            var src = $(this).attr('src');
-            imgL.push(src);
-          });
-          $('#div2 img').each(function() {
-            var src = $(this).attr('src');
-            imgR.push(src);
-          });
 
           var data = {
             '_token'  : $('input[name=_token]').val(),
@@ -187,8 +183,8 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'imgL'    : imgL,
-            'imgR'    : imgR
+            'videoL'  : localStorage.getItem('app-6-video-left'),
+            'videoR'  : localStorage.getItem('app-6-video-right')
           };
 
           console.log('--------');
@@ -204,7 +200,7 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'audio'   : $.parseJSON($.cookie('tfc-audio'))
+            'audio'   : localStorage.getItem('app-7-audio')
           };
 
           console.log('--------');
@@ -221,8 +217,8 @@
             'token'   : token,
             'title'   : $('input[name="title"]').val(),
             'notes'   : $('#notes').val(),
-            'audio'   : $.parseJSON($.cookie('tfc-audio')),
-            'video'   : $('video source').attr('src')
+            'audio'   : localStorage.getItem('app-8-audio'),
+            'video'   : localStorage.getItem('app-8-video')
           };
 
           console.log('--------');
@@ -239,9 +235,9 @@
             'token'       : token,
             'title'       : $('input[name="title"]').val(),
             'notes'       : $('#notes').val(),
-            'audio-src'   : $.parseJSON($.cookie('tfc-audio-src')),
-            'audio-vol'   : $.parseJSON($.cookie('tfc-audio-vol')),
-            'image'       : $('#image').attr('src')
+            'audio-src'   : localStorage.getItem('app-9-audio'),
+            'audio-vol'   : localStorage.getItem('app-9-vol'),
+            'image'       : localStorage.getItem('app-9-img'),
           };
 
           console.log('--------');
@@ -259,8 +255,8 @@
 
         // Creative Studio - Warm Up - App 10 - Active Offscreen
         case 10:
-          if (localStorage.getItem('app-10-videos')) {
-            var videos = $.parseJSON(localStorage.getItem('app-10-videos'));
+          if (localStorage.getItem('app-10-video-uploaded')) {
+            var videos = $.parseJSON(localStorage.getItem('app-10-video-uploaded'));
           }
 
           var data = {
@@ -268,7 +264,7 @@
             'app_id'      : id,
             'token'       : token,
             'title'       : $('input[name="title"]').val(),
-            'main_video'  : $('#video-main source').attr('src'),
+            'main_video'  : localStorage.getItem('app-10-video'),
             'videos'      : videos
           };
 
@@ -293,10 +289,30 @@
           console.log('--------');
           break;
 
+        // Creative Studio - Warm Up - App 12 - Sound Studio
+        case 12:
+          var data = {
+            '_token'    : $('input[name=_token]').val(),
+            'app_id'    : id,
+            'token'     : token,
+            'title'     : $('input[name="title"]').val(),
+            'video'     : $('[ng-controller="DemoMediaTimelineController"]').scope().videoData.player.src(),
+            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+          };
+
+          console.log('--------');
+          console.log(data);
+          console.log('--------');
+          break;
+
         // Creative Studio - Warm Up - App 13 - Character Builder
         case 13:
-          var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          var json_data = null;
           var rendered = null;
+
+          if (localStorage.getItem('app-13-json')) {
+            json_data = localStorage.getItem('app-13-json');
+          }
 
           if (localStorage.getItem('app-13-image')) {
             rendered = localStorage.getItem('app-13-image');
@@ -574,6 +590,79 @@
   });
 </script>
 
+{{-- NOTIFICATIONS --}}
+<script type="text/javascript">
+  $('.markasread').on('click', function(e) {
+    var notification_id = $(this).data('notif-id');
+    $.get('/student/notifications/markasread/'+notification_id);
+  });
+
+  $('.delete-notif').on('click', function(e) {
+    var notification_id = $(this).data('notif-id');
+    $.ajax({
+      method: 'POST',
+      url: '/student/notifications/delete',
+      data: {
+          '_token' : '{{ csrf_token() }}',
+          'id' : notification_id,
+      },
+      success: function(response) {
+        console.log(response);
+        $('*[data-notif-id="'+notification_id+'"]').remove();
+      },
+      error: function(errors) {
+        console.error(errors);
+      }
+    });
+  });
+
+  var notifications = new Array();
+  var $notif_menu = $('#notifications .dropdown-menu');
+  var $main_menu = $('#main-menu');
+
+  $notif_menu.find('.dropdown-item').each(function(){
+      var item = $(this).data('notif-id');
+      notifications.push(item);
+  });
+
+  var menu_height = $main_menu.outerHeight();
+
+  var getNotifications = function() {
+      $.get('/student/notifications/get', function(response) {
+          $.each(response, function(k, item) {
+              // escludo tutto quello che non va bene
+              if (item.id) {
+                var check = $.inArray(item.id, notifications);
+                if (check == -1) {
+                  notifications.push(item.id);
+                  var session = item.data.session
+                  var section_slug = session.app.category.section.slug;
+                  var category_slug = session.app.category.slug;
+                  var app_slug = session.app.slug;
+                  var token = session.token;
+                  var message = 'You have a new notification from '+session.student.name+' - '+session.app.title+' - '+session.app.category.name;
+
+                  var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/student/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
+                  $notif_menu.append(data);
+                  var data = ''
+                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert">';
+                  data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
+                  data +=     '<span aria-hidden="true">&times;</span>';
+                  data +=   '</button>';
+                  data +=   '<div class="alert-icon"><i class="fa fa-globe"></i></div>';
+                  data +=   '<div class"alert-content">'+message+'</div>';
+                  data += '</div>'
+                  $main_menu.append(data);
+                  console.log(item);
+                }
+              }
+          });
+      });
+  };
+
+  setInterval(getNotifications, 10000);
+</script>
+
 @if ($type == 'app')
 <script type="text/javascript">
   var btn = $('#help-btn');
@@ -584,6 +673,8 @@
       $('#app').toggleClass('panel-active');
       $('#save-btn').toggleClass('panel-active');
       $('#close-btn').toggleClass('panel-active');
+      $('#approve-btn').toggleClass('panel-active');
+      $('#comment-btn').toggleClass('panel-active');
 
       if (btn.hasClass('panel-active')) {
         $('#help-icon').removeClass('fa-question');
@@ -592,7 +683,6 @@
         $('#help-icon').removeClass('fa-arrow-left');
         $('#help-icon').addClass('fa-question');
       }
-
   });
 </script>
 @endif
