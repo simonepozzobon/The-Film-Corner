@@ -1,10 +1,10 @@
 <template>
-  <div class="feedback-popup">
-    <div @mouseover="hover" @mouseleave="leave" @click="openModal" id="info-btn" class="d-block pl-4" ref="btn">
+  <div id="info-popup">
+    <div @mouseover="hover" @mouseleave="leave" @click="openModal" id="info-btn" class="d-block" ref="btn">
       <svg id="svg-btn" width="130px" height="60px" viewBox="0 0 160 74" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <path id="Rectangle" d="M0,8.95230229 C0,6.76923102 1.72792468,5 3.86114055,5 C3.86114055,5 31.9305703,5 60,5 L116.138859,5 C118.270664,5 120,6.77092572 120,8.95230229 C120,8.95230229 120,19.4761511 120,30 C120,40.5238489 120,51.0476977 120,51.0476977 C120,53.230769 118.272075,55 116.138859,55 L60,55 C31.9305703,55 3.86114055,55 3.86114055,55 C1.729336,55 0,53.2290743 0,51.0476977 L0,30 L0,8.95230229 Z" stroke="none" fill-rule="evenodd"></path>
       </svg>
-      <a id="btn" class="text-white text-align-center pl-5">
+      <a id="btn" class="text-white text-align-center">
         <i class="fa fa-info"></i> <b>Info</b>
       </a>
     </div>
@@ -23,7 +23,6 @@ export default {
 
   }),
   mounted() {
-      //do something after mounting vue instance
       var vue = this;
       _.delay(function() {
         vue.init();
@@ -99,8 +98,13 @@ export default {
 
 <style lang="scss" scoped>
 
+  #info-popup {
+    position: fixed;
+    top: 25%;
+    left: 0;
+  }
+
   #info-btn {
-    // opacity: 0;
     margin-left: -2rem;
   }
 
@@ -113,7 +117,7 @@ export default {
     opacity: 0;
     position: absolute;
     top: calc(50% - 20px);
-    left: -15px;
+    left: 1rem;
   }
 
   #btn, #Rectangle {

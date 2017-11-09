@@ -18,10 +18,14 @@
   <body>
     @include('layouts.teacher._menu')
 
-
     @yield('content')
 
-
+    @php
+      if (!isset($footer)) {
+        $footer = '';
+      }
+    @endphp
+    @include('layouts.teacher._footer', ['footer' => $footer])
     @include('layouts.teacher._scripts', ['type' => $type])
   </body>
 </html>

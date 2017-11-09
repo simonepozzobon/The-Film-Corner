@@ -3,48 +3,41 @@
   {{ $type = '' }}
 @endif
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>@yield('title')</title>
-    @yield('section')
-    @include('layouts.student._head')
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <title>@yield('title')</title>
+
+  @yield('section')
+  @include('layouts.teacher._head')
+
     <style media="screen">
       body {
         background-color: #dfeee9;
+        background-image: none !important;
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
-        line-height: 28px;
       }
 
-      svg {
+      #back {
         position: absolute;
       }
 
-      h3 {
-        font-weight: 500;
-        letter-spacing: 0;
-        text-transform: uppercase;
-      }
-
-      .btn {
-        letter-spacing: 0;
-        text-transform: uppercase;
-      }
-
-      #login-form {
-        box-shadow: 0px -2px 19px 0px rgba(50, 50, 50, 0.125);
-      }
     </style>
-  </head>
+</head>
+
   <body>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+    @include('layouts.main._menu')
+    <svg id="back" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
       <defs>
         <style>
           .cls-2{fill:#9ae2d9;}
           .cls-3{fill:#c0ede6};
         </style>
       </defs>
-      <title>Asset 7</title>
       <g id="Layer_2" data-name="Layer 2">
         <g id="_1" data-name="1">
           <path class="cls-2" d="M565,391.14a35,35,0,0,0-53.58-29.68,39.44,39.44,0,0,0-57.24-26,57.9,57.9,0,0,0-114.29,5.13,36.75,36.75,0,0,0-58.54,34.59,26.55,26.55,0,1,0-14,50.73l.25,0q.62.08,1.24.13c.35,0,.69.11,1,.11H531.13c.39,0,.75-.08,1.13-.11A35,35,0,0,0,565,391.14ZM297.73,401h-.26v-.15Z"/>
@@ -64,6 +57,6 @@
       </g>
     </svg>
     @yield('content')
-    @include('layouts.student._scripts')
+    @include('layouts.teacher._scripts')
   </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Student;
+use App\AppSection;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 
@@ -34,19 +35,49 @@ class StudentController extends Controller
 
         } else {
             $visited = true;
-            return view('student')->with('teacher', $student);
+            return view('student')->with('student', $student);
         }
 
     }
 
     public function filmSpecific()
     {
-      return view('student.film-specific.index');
+      $section = AppSection::where('slug', '=', 'film-specific')->first();
+
+      $student = Auth::guard('student')->user();
+      $activities = Activity::where('description', '=', 'visited')->causedBy($student)->forSubject($section)->get();
+
+      if ($activities->count() == 0) {
+        activity()
+          ->causedBy($student)
+          ->performedOn($section)
+          ->withProperties('visited', true)
+          ->log('visited');
+      } else {
+        $visited = true;
+      }
+
+      return view('student.film-specific.index', compact('visited', 'section'));
     }
 
     public function creativeStudio()
     {
-      return view('student.creative-studio.index');
+      $section = AppSection::where('slug', '=', 'creative-studio')->first();
+
+      $student = Auth::guard('student')->user();
+      $activities = Activity::where('description', '=', 'visited')->causedBy($student)->forSubject($section)->get();
+
+      if ($activities->count() == 0) {
+        activity()
+          ->causedBy($student)
+          ->performedOn($section)
+          ->withProperties('visited', true)
+          ->log('visited');
+      } else {
+        $visited = true;
+      }
+
+      return view('student.creative-studio.index', compact('visited', 'section'));
     }
 
     public function cinemaPav()
@@ -56,7 +87,7 @@ class StudentController extends Controller
 
     public function path()
     {
-      return view('teacher.path.index');
+      return view('student.path.index');
     }
 
     public function welcome()

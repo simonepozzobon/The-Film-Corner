@@ -650,6 +650,16 @@ class SessionController extends Controller
         $shared->content = $session->content;
         break;
 
+      // Creative Studio - Warm Up - Active Parallel Action
+      case '11':
+        $shared->content = $session->content;
+        break;
+
+      // Creative Studio - Warm Up - Active Sound Studio
+      case '12':
+        $shared->content = $session->content;
+        break;
+
       // Creative Studio - Story Telling - Character Builder
       case '13':
         // estraggo l'immagine dalla sessione

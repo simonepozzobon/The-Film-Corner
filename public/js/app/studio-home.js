@@ -1148,7 +1148,6 @@ exports.default = {
         return {};
     },
     mounted: function mounted() {
-        //do something after mounting vue instance
         var vue = this;
         _lodash2.default.delay(function () {
             vue.init();
@@ -1326,7 +1325,7 @@ module.exports = Axios;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(18)();
-exports.push([module.i, "\n#info-btn[data-v-2760c2d4] {\n  margin-left: -2rem;\n}\n#Rectangle[data-v-2760c2d4] {\n  fill: #fe595a;\n  opacity: 0;\n}\n#btn[data-v-2760c2d4] {\n  opacity: 0;\n  position: absolute;\n  top: calc(50% - 20px);\n  left: -15px;\n}\n#btn[data-v-2760c2d4], #Rectangle[data-v-2760c2d4] {\n  cursor: pointer;\n}\n#svg-btn[data-v-2760c2d4] {\n  width: inherit !important;\n  height: inherit !important;\n}\n", ""]);
+exports.push([module.i, "\n#info-popup[data-v-2760c2d4] {\n  position: fixed;\n  top: 25%;\n  left: 0;\n}\n#info-btn[data-v-2760c2d4] {\n  margin-left: -2rem;\n}\n#Rectangle[data-v-2760c2d4] {\n  fill: #fe595a;\n  opacity: 0;\n}\n#btn[data-v-2760c2d4] {\n  opacity: 0;\n  position: absolute;\n  top: calc(50% - 20px);\n  left: 1rem;\n}\n#btn[data-v-2760c2d4], #Rectangle[data-v-2760c2d4] {\n  cursor: pointer;\n}\n#svg-btn[data-v-2760c2d4] {\n  width: inherit !important;\n  height: inherit !important;\n}\n", ""]);
 
 /***/ }),
 
@@ -1550,10 +1549,12 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "feedback-popup"
+    attrs: {
+      "id": "info-popup"
+    }
   }, [_c('div', {
     ref: "btn",
-    staticClass: "d-block pl-4",
+    staticClass: "d-block",
     attrs: {
       "id": "info-btn"
     },
@@ -1582,7 +1583,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _vm._m(0)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('a', {
-    staticClass: "text-white text-align-center pl-5",
+    staticClass: "text-white text-align-center",
     attrs: {
       "id": "btn"
     }

@@ -1,6 +1,6 @@
 <template>
   <div id="comment-list">
-    <div v-for="comment in comments_list" :key="comment.key" :id="'comment-'+comment.id" class="comment row">
+    <div v-for="comment in comments_list" :key="comment.key" :id="'comment-'+comment.id" class="comment row mt">
       <comment-single :comment="comment" :user="user" :user_type="user_type">
       </comment-single>
     </div>

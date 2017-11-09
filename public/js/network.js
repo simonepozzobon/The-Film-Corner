@@ -1575,7 +1575,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": _vm.likeable_id
     }
   }, [_c('div', {
-    staticClass: "row py-4"
+    staticClass: "row"
   }, [_c('div', {
     staticClass: "col"
   }, [_c('h5', {

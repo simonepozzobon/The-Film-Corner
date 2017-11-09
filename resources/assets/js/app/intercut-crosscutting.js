@@ -256,6 +256,7 @@ angular.module('videoCtrl', ['vjs.video'])
             console.log('DEBUG');
             console.log(response);
             console.log('-------');
+            localStorage.setItem('tfc-video-editing', '/'+response.data);
             $scope.mediaToggle = {
               sources: [
                 {

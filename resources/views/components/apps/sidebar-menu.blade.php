@@ -3,20 +3,15 @@
     $student = false;
   }
 @endphp
-<div class="feedback-popup mt-4">
-  <div id="help-btn" class="d-block m-1 pl-2">
-    <a class="text-white text-align-center btn btn-info btn-lg">
-      <i id="help-icon" class="fa fa-question" aria-hidden="true"></i>
-    </a>
-  </div>
+<div class="sidebar-menu">
   @if ($student == false)
-      <div id="save-btn" class="d-block m-1">
+      <div id="save-btn" class="button">
         <a class="text-white text-align-center btn btn-primary btn-lg" data-toggle="modal" data-target="#saveSession">
           <i class="fa fa-floppy-o" aria-hidden="true"></i>
         </a>
       </div>
       @if (isset($app_session) && $app_session->teacher_shared == 1)
-        <div id="comment-btn" class="d-block m-1">
+        <div id="comment-btn" class="button">
           <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
             <i class="fa fa-comment-o" aria-hidden="true"></i>
             {{-- <span id="alert-messages" class="badge badge-pill badge-danger">!</span> --}}
@@ -24,19 +19,19 @@
         </div>
       @endif
   @else
-      <div id="approve-btn" class="d-block m-1">
+      <div id="approve-btn" class="button">
         <a class="text-white text-align-center btn btn-success btn-lg" data-toggle="modal" data-target="#saveSession">
           <i class="fa fa-check" aria-hidden="true"></i>
         </a>
       </div>
-      <div id="comment-btn" class="d-block m-1">
+      <div id="comment-btn" class="button">
         <a class="text-white text-align-center btn btn-warning btn-lg" data-toggle="collapse" data-target="#chat">
           <i class="fa fa-comment-o" aria-hidden="true"></i>
           {{-- <span id="alert-messages" class="badge badge-pill badge-danger">!</span> --}}
         </a>
       </div>
   @endif
-  <div id="close-btn" class="d-block m-1">
+  <div id="close-btn" class="button">
     <a class="text-white text-align-center btn btn-danger btn-lg" data-toggle="modal" data-target="#close">
       <i class="fa fa-sign-out" aria-hidden="true"></i>
     </a>
@@ -65,6 +60,31 @@
           <div class="modal-footer">
             <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
             <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+@elseif ($student == true && isset($app_session))
+  <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <form class="" action="{{ route('teacher.session.share') }}" method="POST">
+          {{ csrf_field() }}
+          {{ method_field('POST') }}
+
+          <div class="modal-body">
+            Are you sure?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+            <button type="button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
           </div>
         </form>
       </div>

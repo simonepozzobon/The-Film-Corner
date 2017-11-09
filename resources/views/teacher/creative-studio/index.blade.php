@@ -1,4 +1,4 @@
-@extends('layouts.teacher')
+@extends('layouts.teacher', ['footer' => 'no-margin'])
 @section('stylesheets')
   <style media="screen">
   #background {
@@ -13,7 +13,7 @@
   </style>
 @endsection
 @section('content')
-<section id="image">
+<div id="image">
   <feedback-popup></feedback-popup>
   <svg id="background" width="1921px" height="1082px" viewBox="-267 -202 1921 1082" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <defs>
@@ -169,7 +169,7 @@
       </div>
     </div>
   </div>
-</section>
+</div>
 @endsection
 @section('scripts')
   <script type="text/javascript">

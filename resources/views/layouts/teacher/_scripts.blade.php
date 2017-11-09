@@ -645,14 +645,12 @@
                   var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/teacher/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
                   $notif_menu.append(data);
                   var data = ''
-                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert" style="top: calc('+menu_height+'px + 1.5rem); right: 1.5rem;">';
+                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert">';
                   data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
                   data +=     '<span aria-hidden="true">&times;</span>';
                   data +=   '</button>';
-                  data +=   '<div class="d-flex justify-content-between">';
-                  data +=     '<h1 class="pr-3 d-inline-block" style="padding-top: 0.5rem; font-size: 3rem"><i class="fa fa-globe"></i></h1>';
-                  data +=     '<div class"d-inline-block" style="margin-top: 0.9rem;">'+message+'</div>';
-                  data +=   '</div>';
+                  data +=   '<div class="alert-icon"><i class="fa fa-globe"></i></div>';
+                  data +=   '<div class"alert-content">'+message+'</div>';
                   data += '</div>'
                   $main_menu.append(data);
                   console.log(item);
@@ -664,6 +662,7 @@
 
   setInterval(getNotifications, 10000);
 </script>
+
 
 @if ($type == 'app')
 <script type="text/javascript">

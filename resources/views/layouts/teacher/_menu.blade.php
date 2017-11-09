@@ -125,12 +125,12 @@
       </li>
       <li class="nav-item">
         <a href="{{ route('teacher.network.index') }}" class="nav-link">
-          <i class="fa fa-share-alt" aria-hidden="true"></i>
+          <i class="fa fa-users" aria-hidden="true"></i>
         </a>
       </li>
       <li class="nav-item">
         <a href="{{ route('teacher.settings.index') }}" class="nav-link">
-          <i class="fa fa-cog" aria-hidden="true"></i>
+          <i class="fa fa-user" aria-hidden="true"></i>
         </a>
       </li>
       <li id="notifications" class="dropdown nav-item">

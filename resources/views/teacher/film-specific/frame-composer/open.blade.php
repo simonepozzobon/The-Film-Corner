@@ -13,82 +13,20 @@
   </style>
 @endsection
 @section('content')
-  <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      {{ $app->title }}
-      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
-    </div>
-  </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
-  <div class="row row-custom">
-    <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
-        <div class="container-fluid pl-5">
-          <div class="row">
-            <div class="col" style="background-color: #a6dbe2; color: #252525">
-              <h3 class="px-2 pt-4 pb-2">Examples</h3>
-            </div>
-          </div>
-          <div class="row pb-5">
-            <div class="col py-5" style="background-color: #d9f5fc; color: #252525">
-              <p class="pl-2">
-                Examples of pictures and clips related to each app with a short explanations
-              </p>
-            </div>
-          </div>
-          <div class="row" style="background-color: #e9c845; color: #252525">
-            <div class="col">
-              <h3 class="px-2 pt-4 pb-2">References</h3>
-            </div>
-          </div>
-          <div class="row mb-5" style="background-color: #f5db5e; color: #252525">
-            <div class="col py-5">
-              <p class="pl-2">
-                <ul>
-                  <li>lista 1</li>
-                  <li>lista 2</li>
-                  <li>altro elemento</li>
-                </ul>
-              </p>
-            </div>
-          </div>
-          <div class="row pb-5">
-            @foreach ($app_category->keywords as $key => $keyword)
-              <h5><span class="badge badge-default mb-2 mr-2" data-toggle="modal" data-target="#keywordModal-{{ $keyword->id }}">{{ $keyword->name }}</span></h5>
-              <div class="modal fade" id="keywordModal-{{ $keyword->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      {{ $keyword->description }}
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-    </div>
-    <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row">
+  <div class="container-fluid">
+    @include('components.apps.heading_info', ['app' => $app])
+    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
+    <div id="app">
+      <div class="row mt">
         <div class="col-md-8">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-blue py-3 px-5">
-                <h3>Build your scene</h3>
-              </div>
+          <div class="box blue">
+            <div class="box-header">
+              Frame
             </div>
-            <div class="row">
-              <div id="canvas-wrapper" class="col blue p-5" style="height: 30rem">
-                <input id="loadCanvas" type="hidden" name="" value="{{ $session->json_data }}">
-                <div id="container-canvas" class="col d-flex justify-content-around">
+            <div class="box-body">
+              <input id="loadCanvas" type="hidden" name="" value="{{ $session->json_data }}">
+              <div id="canvas-wrapper" class="blue" style="height: 30rem">
+                <div id="container-canvas" class="">
                   <canvas class="image-editor" id="image-editor"></canvas>
                 </div>
               </div>
@@ -96,82 +34,62 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-yellow py-3 px-5">
-                <h3>Library Characters</h3>
-              </div>
+          <div class="box yellow">
+            <div class="box-header">
+              Library
             </div>
-            <div class="row">
-              <div class="col yellow p-5">
-                <nav class="navbar navbar-toggleable-sm navbar-light pb-sm-5">
-                  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav mx-auto">
-                      @foreach ($app->mediaCategory()->get() as $key => $library)
-                        <li class="nav-item">
-                          <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
-                        </li>
-                      @endforeach
-                    </ul>
-                  </div>
-                </nav>
-                <div id="libraries">
-                  @foreach ($app->mediaCategory()->get() as $key => $library)
-                    <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse" role="tabpanel">
-                      @foreach ($library->media_on_sub_category() as $key => $media)
-                        <li class="col-md-2 col-sm-4 pb-3 d-inline-block">
-                          <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
-                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                        </li>
-                      @endforeach
-                    </ul>
-                  @endforeach
+            <div class="box-body">
+              <nav class="navbar navbar-toggleable-sm navbar-light navbar-library">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mx-auto">
+                    @foreach ($app->mediaCategory()->get() as $key => $library)
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                      </li>
+                    @endforeach
+                  </ul>
                 </div>
+              </nav>
+              <div id="libraries">
+                @foreach ($app->mediaCategory()->get() as $key => $library)
+                  <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse {{ $key == 0 ? 'show' : '' }}" role="tabpanel">
+                    @foreach ($library->media_on_sub_category() as $key => $media)
+                      <li class="asset col-md-3 col-sm-4 pb-3 d-inline-block">
+                        <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                        <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      </li>
+                    @endforeach
+                  </ul>
+                @endforeach
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <div id="controls" class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col orange p-5">
-                <div class="d-flex justify-content-center">
-                  <div class="btns pr-4">
-                    <a id="deselect" href="#" class="btn btn-secondary btn-orange">Deselect All</a>
-                  </div>
-                  <div class="btns pr-4">
-                    <a id="back" href="#" class="btn btn-secondary btn-orange">Move Back</a>
-                    <a id="backward" href="#" class="btn btn-secondary btn-orange">Move Backward</a>
-                    <a id="forward" href="#" class="btn btn-secondary btn-orange">Move Forward</a>
-                    <a id="front" href="#" class="btn btn-secondary btn-orange">Move To Front</a>
-                  </div>
-                  <div class="btns">
-                    <a id="destroy" href="#" class="btn btn-secondary btn-orange">Remove</a>
-                  </div>
-                </div>
-              </div>
+      <div class="row mt">
+        <div class="box orange">
+          <div id="controls" class="box-btns pt">
+            <a id="deselect" href="#" class="btn btn-secondary btn-orange">Deselect All</a>
+            <div class="btn-group">
+              <a id="back" href="#" class="btn btn-orange">Move Back</a>
+              <a id="backward" href="#" class="btn btn-orange">Move Backward</a>
+              <a id="forward" href="#" class="btn btn-orange">Move Forward</a>
+              <a id="front" href="#" class="btn btn-orange">Move To Front</a>
             </div>
+            <a id="destroy" href="#" class="btn btn-orange">Remove</a>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-green py-3 px-5">
-                <h3>What criteria did you use in your composition?</h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col green p-5">
-                <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
-              </div>
-            </div>
+      <div class="row mt">
+        <div class="box green">
+          <div class="box-header">
+            Notes
+          </div>
+          <div class="box-body">
+            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="What criteris did you use in yout composition?">{{ $session->notes }}</textarea>
           </div>
         </div>
       </div>
@@ -291,8 +209,8 @@
 
     function responsiveCanvas()
     {
-        var sizeWidth = document.getElementById('container-canvas').offsetWidth - 30;
-        var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight - 90;
+        var sizeWidth = document.getElementById('container-canvas').offsetWidth;
+        var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight;
         canvas.setWidth(sizeWidth).setHeight(sizeHeight);
 
         //SAVE JSON DATA

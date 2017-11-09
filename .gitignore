@@ -27,4 +27,5 @@ laravel-echo-server.json
 
 server.js
 
-/resources/assets/importbootstrap
+/resources/assets/copy_bootstrap
+/svg_dev

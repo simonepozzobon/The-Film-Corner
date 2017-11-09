@@ -1,5 +1,5 @@
 @extends('layouts.student', ['type' => 'app'])
-@section('title', 'Frame Crop')
+@section('title', $app->title)
 @section('stylesheets')
   <style media="screen">
     #vrview {
@@ -12,170 +12,121 @@
       height: 100%;
     }
 
-    .feedback-popup {
-      position: fixed;
-      z-index: 2;
-      margin-left: -1rem;
-      top: 25%;
-      transform: translateY(-50%);
-    }
   </style>
 @endsection
 @section('content')
-  <section id="title" class="pt-5">
-    <div class="title sp-center pt-5 pb-5">
-      {{ $app->title }}
-      <h2 class="p-2 block-title">{{ $app_category->name }}</h2>
-    </div>
-  </section>
-  @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
-  <div class="row row-custom">
-    <div id="help" class="col-6 container-fluid px-5 d-inline-block float-left">
-        <div class="container-fluid pl-2 pr-2">
-          <div class="row">
-            <div class="col" style="background-color: #a6dbe2; color: #252525">
-              <h3 class="pl-2 pr-2 pt-4 pb-2">Examples</h3>
-            </div>
-          </div>
-          <div class="row pb-5">
-            <div class="col pt-5 pb-5" style="background-color: #d9f5fc; color: #252525">
-              <p class="pl-2">
-                Examples of pictures and clips related to each app with a short explanations
-              </p>
-            </div>
-          </div>
-          <div class="row" style="background-color: #e9c845; color: #252525">
-            <div class="col">
-              <h3 class="pl-2 pr-2 pt-4 pb-2">References</h3>
-            </div>
-          </div>
-          <div class="row mb-5" style="background-color: #f5db5e; color: #252525">
-            <div class="col pt-5 pb-5">
-              <p class="pl-2">
-                <ul>
-                  <li>lista 1</li>
-                  <li>lista 2</li>
-                  <li>altro elemento</li>
-                </ul>
-              </p>
-            </div>
-          </div>
-          <div class="row pb-5">
-            @foreach ($app_category->keywords as $key => $keyword)
-              <h5><span class="badge badge-default mb-2 mr-2" data-toggle="modal" data-target="#keywordModal-{{ $keyword->id }}">{{ $keyword->name }}</span></h5>
-              <div class="modal fade" id="keywordModal-{{ $keyword->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      {{ $keyword->description }}
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            @endforeach
-          </div>
-        </div>
-    </div>
-    <div id="app" class="col-12 px-5 d-inline-block float-left">
-      <div class="row">
+  <div class="container-fluid">
+    @include('components.apps.heading_info', ['app' => $app])
+    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
+    <div id="app">
+      <div class="row mt">
         <div class="col-md-8">
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-5">
-                <div class="row">
-                  <div class="col dark-blue py-3 px-5">
-                    <h3>Your scene</h3>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col blue p-5">
-                    <div id="photosphere"></div>
-                  </div>
-                </div>
-              </div>
+          <div class="box blue">
+            <div class="box-header">
+              Scene
+            </div>
+            <div class="box-body">
+              <div id="photosphere"></div>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <div class="box container-fluid mb-4">
-                <div class="row">
-                  <div class="col orange p-5">
-                    <div class="d-flex justify-content-around pt-3">
-                      <button id="capture" type="button" name="button" class="btn btn-secondary btn-lg btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
         <div class="col-md-4">
-          <div class="box container-fluid mb-4">
-            <div class="row">
-              <div class="col dark-yellow py-3 px-5">
-                <h3>Library</h3>
-              </div>
+          <div class="box yellow">
+            <div class="box-header">
+              Library
             </div>
-            <div class="row">
-              <div class="col yellow p-5">
-                <p>Content</p>
+            <div class="box-body">
+              <nav class="navbar navbar-toggleable-sm navbar-light">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav mx-auto">
+                    @foreach ($app->mediaCategory()->get() as $key => $library)
+                      <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                      </li>
+                    @endforeach
+                  </ul>
+                </div>
+              </nav>
+              <div id="libraries">
+                @foreach ($app->mediaCategory()->get() as $key => $library)
+                  <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse {{ $key == 0 ? 'show' : '' }}" role="tabpanel">
+                    @foreach ($library->media_on_sub_category() as $key => $media)
+                      <li class="asset col-md-2 col-sm-4 pb-3 d-inline-block">
+                        <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                        <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
+                      </li>
+                    @endforeach
+                  </ul>
+                @endforeach
               </div>
             </div>
           </div>
         </div>
       </div>
-      <form class="" action="" method="">
-        <div id="rendered" class="row row-eq-height">
-          @foreach ($session as $key => $frame)
-            <div class="col-md-4">
-              <div id="frame-container-{{ $key }}" class="box container-fluid mb-5 px-4">
-                <div class="row">
-                  <div class="col dark-green py-3 px-5">
-                    <h3>Frame {{ $key }}</h3>
-                    <input type="hidden" name="frame-title" value="Frame {{ $frame->order }}">
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col green p-5">
-                    <img src="{{ $frame->img }}" class="img-fluid">
-                    <div class="form-group pt-3">
-                      <textarea id="frame-{{ $key }}" name="frame-{{ $key }}" class="form-control" rows="8">{{ $frame->description }}</textarea>
-                      <p id="frame-content-{{ $key }}" class="d-none">{{ $frame->description }}</p>
-                    </div>
-                    <div class="btn-group btn-block">
-                      <a onclick="save({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
-                      <a onclick="edit({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                      <a onclick="destroy({{ $key }})" class="btn btn-green w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                    </div>
-                  </div>
+      <div class="row mt">
+        <div class="col">
+          <div class="box orange">
+            <div class="box-btns pt">
+              <button id="capture" type="button" name="button" class="btn btn-secondary btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
+              <button type="button" name="button" class="btn btn-secondary btn-orange" data-toggle="modal" data-target="#clear-all"><i class="fa fa-trash-o"></i> Clear All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="rendered" class="row">
+
+        @foreach ($session->frames as $key => $frame)
+          <div id="frame-container-{{ $key }}" class="snap col-md-4 mt">
+            <div class="box green">
+              <div class="box-header">
+                Frame {{ $key }}
+                <input type="hidden" name="frame-title" value="Frame {{ $frame->order }}">
+              </div>
+              <div class="box-body">
+                <img src="{{ $frame->img }}" class="img-fluid">
+                <div class="form-group pt-3">
+                  <textarea id="frame-{{ $key }}" name="frame-{{ $key }}" class="form-control" rows="8">{{ $frame->description }}</textarea>
+                  <p id="frame-content-{{ $key }}" class="d-none">{{ $frame->description }}</p>
                 </div>
               </div>
+              <div class="box-btns">
+                <a onclick="save({{ $key }})" class="btn btn-green text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>
+                <a onclick="edit({{ $key }})" class="btn btn-green text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                <a onclick="destroy({{ $key }})" class="btn btn-green text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+              </div>
             </div>
-          @endforeach
+          </div>
+        @endforeach
+      </div>
+      <div class="modal fade" id="clear-all" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Clear All</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h4 class="text-center">Pay attention</h4>
+              <p class="text-center">
+                Are you shure you want to reset your work?<br>
+                This action can't be undone.
+              </p>
+            </div>
+            <div class="modal-footer">
+              <button id="clear-all-confirm" class="btn btn-danger text-white" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear All</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+            </div>
+          </div>
         </div>
-      </form>
-
+      </div>
     </div>
   </div>
-  <div id="teacher-chat" class="fixed-bottom" style="width: 25rem; left: inherit; right: 1.5rem !important;">
-    <tfc-chat
-        fromtype="student"
-        fromid="{{ Auth::guard('student')->ID() }}"
-        totype="teacher"
-        toid="{{ Auth::guard('student')->user()->teacher()->first()->id }}"
-        toname="{{ Auth::guard('student')->user()->teacher()->first()->name }}">
-    </tfc-chat>
-  </div>
+  @include('components.apps.student_chat', ['app_session' => $app_session])
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>
@@ -192,7 +143,7 @@
     var AppSession = new TfcSessions();
 
     var PSV = new PhotoSphereViewer({
-      panorama: '{{ asset('img/frame-test/louvre.jpg') }}',
+      panorama: '{{ $session->src }}',
       container: 'photosphere',
       loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
       navbar: 'zoom fullscreen',
@@ -205,6 +156,11 @@
         height: 500
       }
     });
+
+    $('.asset').on('click', function() {
+      var src = $(this).find('img').data('img-src');
+      PSV.setPanorama(src);
+    })
 
     var counter = 0
 
@@ -224,30 +180,27 @@
             var element = $('#photosphere .psv-container .psv-canvas-container canvas.psv-canvas').first();
             var img = PSV.render();
             counter = counter + 1;
-            var elem = '<div class="col-md-4">';
-            elem += '<div id="frame-container-'+counter+'" class="box container-fluid mb-5 px-4">'
-            elem +=   '<div class="row">';
-            elem +=     '<div class="col dark-green py-3 px-5">';
-            elem +=       '<h3>Frame '+counter+'</h3>';
-            elem +=       '<input type="hidden" name="frame-title" value="Frame '+counter+'">';
-            elem +=     '</div>';
-            elem +=   '</div>';
-            elem +=   '<div class="row">';
-            elem +=     '<div class="col green p-5">';
-            elem +=       '<img src="'+img+'" class="img-fluid">';
-            elem +=       '<div class="form-group pt-3">';
-            elem +=         '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
-            elem +=         '<p id="frame-content-'+counter+'" class="d-none"></p>';
-            elem +=       '</div>';
-            elem +=       '<div class="btn-group btn-block">';
-            elem +=         '<a onclick="save('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
-            elem +=         '<a onclick="edit('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-            elem +=         '<a onclick="destroy('+counter+')" class="btn btn-secondary btn-green w-50 text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
-            elem +=       '</div>';
-            elem +=     '</div>';
-            elem +=   '</div>';
-            elem += '</div>';
-            elem += '</div>';
+            var elem = '';
+            elem +='<div id="frame-container-'+counter+'" class="snap col-md-4 mt">';
+            elem +=  '<div class="box green">';
+            elem +=    '<div class="box-header">';
+            elem +=      'Frame '+counter+'';
+            elem +=      '<input type="hidden" name="frame-title" value="Frame '+counter+'">';
+            elem +=    '</div>';
+            elem +=    '<div class="box-body">';
+            elem +=      '<img src="'+img+'" class="img-fluid">';
+            elem +=      '<div class="form-group pt-3">';
+            elem +=        '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
+            elem +=        '<p id="frame-content-'+counter+'" class="d-none"></p>';
+            elem +=      '</div>';
+            elem +=    '</div>';
+            elem +=    '<div class="box-btns">';
+            elem +=      '<a onclick="save('+counter+')" class="btn btn-green text-white"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
+            elem +=      '<a onclick="edit('+counter+')" class="btn btn-green text-white"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+            elem +=      '<a onclick="destroy('+counter+')" class="btn btn-green text-white"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+            elem +=    '</div>';
+            elem +=  '</div>';
+            elem +='</div>';
 
             $('#rendered').append(elem);
         } else {
@@ -262,14 +215,14 @@
         var content = elem.val();
         container.html(content);
         elem.hide();
-        container.removeClass('invisible');
+        container.removeClass('d-none');
     }
 
     function edit(id)
     {
         var elem = $('#frame-'+id);
         var container = $('#frame-content-'+id);
-        container.addClass('invisible');
+        container.addClass('d-none');
         elem.show();
     }
 
@@ -278,6 +231,13 @@
     }
 
     $('#rendered').sortable();
+
+    $('#clear-all-confirm').on('click', function(e) {
+        e.preventDefault();
+        $('.snap').remove();
+        $('#clear-all').modal('toggle');
+        counter = 0;
+    });
 
   </script>
 
