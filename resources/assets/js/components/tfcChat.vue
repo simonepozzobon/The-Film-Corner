@@ -6,8 +6,8 @@
       </div>
       <div class="box-body chat">
         <div id="questo" class="messages" ref="messages">
-          <div v-for="message in messages" :class="'messages-body '+message.type">
-            <div :class="'message '+message.color+' w-75'">
+          <div v-for="message in messages" :class="'messages-body'">
+            <div :class="'message '+message.color+' '+message.type+' w-75'">
               <span class="msg">{{message.msg}}</span>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default {
     window.addEventListener( 'resize', _.debounce(vue.resizeChat, 50) );
     $('#chat').on( 'shown.bs.collapse', () => {
         var questo = document.getElementById('questo');
-        questo.scrollTop = (questo.scrollHeight - 120);
+        questo.scrollTop = (questo.scrollHeight);
     });
 
     // axios.post('/api/v1/chat-typing', {

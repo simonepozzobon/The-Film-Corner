@@ -33027,7 +33027,7 @@ exports.default = {
         window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
         $('#chat').on('shown.bs.collapse', function () {
             var questo = document.getElementById('questo');
-            questo.scrollTop = questo.scrollHeight - 120;
+            questo.scrollTop = questo.scrollHeight;
         });
 
         // axios.post('/api/v1/chat-typing', {
@@ -36325,9 +36325,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, _vm._l((_vm.messages), function(message) {
     return _c('div', {
-      class: 'messages-body ' + message.type
+      class: 'messages-body'
     }, [_c('div', {
-      class: 'message ' + message.color + ' w-75'
+      class: 'message ' + message.color + ' ' + message.type + ' w-75'
     }, [_c('span', {
       staticClass: "msg"
     }, [_vm._v(_vm._s(message.msg))])])])

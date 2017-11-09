@@ -663,6 +663,7 @@
   setInterval(getNotifications, 10000);
 </script>
 
+
 @if ($type == 'app')
 <script type="text/javascript">
   var btn = $('#help-btn');

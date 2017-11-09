@@ -235,6 +235,8 @@ footer {
 .chat {
   > .messages {
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 
     > .messages-body {
 
@@ -255,6 +257,14 @@ footer {
 
       & .yellow {
         background-color: $tfc-yellow !important;
+      }
+
+      & .sent {
+        margin-left: auto;
+      }
+
+      & .received {
+        margin-right: auto;
       }
     }
   }
