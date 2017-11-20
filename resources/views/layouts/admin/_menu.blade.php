@@ -20,6 +20,9 @@
         <li class="nav-item mr-sm-2">
           <a href="{{ route('admin.image') }}" class="nav-link">Images</a>
         </li>
+        <li class="nav-item mr-sm-2">
+          <a href="{{ route('admin.conference.gallery.index') }}" class="nav-link">Conference</a>
+        </li>
       </ul>
     @endif
   </div>

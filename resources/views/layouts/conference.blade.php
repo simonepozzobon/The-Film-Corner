@@ -29,9 +29,6 @@
                     <li class="nav-item {{ $active == 'schedule' ? 'active' : '' }}">
                       <a class="nav-link" href="{{ route('conference.schedule') }}">Schedule Draft</a>
                     </li>
-                    <li class="nav-item {{ $active == 'application' ? 'active' : '' }}">
-                      <a class="nav-link" href="{{ route('conference.application') }}">Online Application</a>
-                    </li>
                     <li class="nav-item {{ $active == 'accomodation' ? 'active' : '' }}">
                       <a class="nav-link" href="{{ route('conference.accomodation') }}">Accomodation</a>
                     </li>
@@ -40,6 +37,9 @@
                     </li>
                     <li class="nav-item {{ $active == 'contact' ? 'active' : '' }}">
                       <a class="nav-link" href="{{ route('conference.contact') }}">Contact & Info</a>
+                    </li>
+                    <li class="nav-item {{ $active == 'gallery' ? 'active' : '' }}">
+                      <a class="nav-link" href="{{ route('conference.gallery') }}">Gallery</a>
                     </li>
                   </ul>
                 </div>

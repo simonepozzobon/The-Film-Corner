@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Main;
 
 use Validator;
+use App\StaticPage;
 use Illuminate\Http\Request;
 use App\Mail\ConferenceApply;
 use App\ConferenceApplication;
@@ -102,6 +103,14 @@ class ConferenceController extends Controller
     public function contact()
     {
       return view('public.conference.contact');
+    }
+
+    public function gallery()
+    {
+      $static_page = StaticPage::where('slug', '=', 'conference')->first();
+      $images = $static_page->medias()->get();
+
+      return view('public.conference.gallery', compact('images'));
     }
 
 }

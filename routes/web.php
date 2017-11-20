@@ -63,6 +63,7 @@ Route::get('/', function () {
 */
 
 Route::prefix('conference')->group(function() {
+  Route::get('/gallery', 'Main\ConferenceController@gallery')->name('conference.gallery');
   Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
   Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
   Route::post('/application/send', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
@@ -162,6 +163,11 @@ Route::prefix('admin')->group(function () {
     // Tools
     Route::get('/conference-applications', 'Admin\ToolController@indexExcel')->name('excel.index');
 
+    // Conference gallery
+    Route::prefix('conference')->group(function() {
+      Route::get('/gallery', 'Admin\ConferenceController@index')->name('admin.conference.gallery.index');
+      Route::post('/gallery', 'Admin\ConferenceController@store')->name('admin.conference.gallery.store');
+    });
 });
 
 

@@ -46,6 +46,6 @@ const { mix } = require('laravel-mix');
         tether: ['Tether'],
     })
     .browserSync({
-      proxy: 'http://www.simonepozzobon.dev:8888/',
+      proxy: 'http://www.simonepozzobon.dev:80/',
       browser: 'google chrome'
     });

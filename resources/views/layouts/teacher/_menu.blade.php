@@ -120,7 +120,7 @@
     <ul class="navbar-nav justify-content-around">
       <li class="nav-item">
         <a href="{{ url('/teacher') }}" class="nav-link">
-          <i class="fa fa-film" aria-hidden="true"></i>
+          <i class="fa fa-home" aria-hidden="true"></i>
         </a>
       </li>
       <li class="nav-item">

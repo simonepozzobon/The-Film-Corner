@@ -32,66 +32,41 @@
   @endforeach
   {{-- END OF PARTNER MODAL --}}
   <div class="container">
-    {{-- News --}} {{-- HIDDEN FOR NOW --}}
-    {{-- @if (isset($posts))
-      <div class="row">
+    <div class="row mt">
       <div class="col">
-        <section id="news">
-          <div id="news-title" class="title sp-center pt-5 pb-5">
-            News
+        <div class="box blue">
+          <div class="box-header">
+            Greetings from The Film Corner International Conference
           </div>
-          <div id="news-container" class="tween-content-container">
-            <div id="newsCarouselIndicator" class="carousel slide" data-ride="carousel">
-              <ol class="carousel-indicators">
-                @foreach ($posts as $key => $post)
-                  <li data-target="#newsCarouselIndicator" data-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}"></li>
-                @endforeach
-              </ol>
-              <div class="carousel-inner" role="listbox">
-                @foreach ($posts as $key => $post)
-                  <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
-                      <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                          <div class="container-fluid" style="background-color: {{ $post->colors[0] }}; color: #252525">
-                            <div class="row" style="background-color: {{ $post->colors[1] }}; color: #252525">
-                              <div class="col align-text-bottom">
-                                <h3 class="p-2">{{ $post->title }}</h3>
-                              </div>
-                            </div>
-                            <div class="row">
-                              <div class="col p-5">
-                                <div class="row">
-                                  <div class="col-4">
-                                    <img src="{{ asset('img/helpers/poster.png') }}" class="img-fluid">
-                                  </div>
-                                  <div class="col-8">
-                                    <p class="pl-2">
-                                      {!! $post->content !!}
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                  </div>
-                @endforeach
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ asset('img/icons/people.svg') }}" class="img-fluid w-100" >
               </div>
-              <a class="carousel-control-prev" href="#newsCarouselIndicator" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#newsCarouselIndicator" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
+              <div class="col-md-8">
+                <div class="h-100 align-middle">
+                  <div class="">
+                    <p class="mb">
+                      Thank you everyone for having taken part in The Film Corner International Conference!<br>
+                      We think it has been a great opportunity to discuss together on the themes of Film Literacy and finally to show to the public The Film Corner Project.
+                    </p>
+                    <p class="text-center mb">
+                      For anyone who has missed it,
+                      <br>
+                      here is the gallery.
+                    </p>
+                    <div class="d-flex justify-content-center">
+                      <a href="{{ route('conference.gallery') }}" class="btn btn-blue"><i class="fa fa-picture-o"></i> Gallery</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
       </div>
     </div>
-    @endif --}}
+
     {{-- News --}}
     <div class="row mt">
       <div class="col">

@@ -25,9 +25,10 @@ class VideoController extends Controller
       foreach ($videos as $key => $video) {
         $video->img = Storage::disk('local')->url($video->img);
         $app = $video->apps()->first();
-        $category = $app->category()->first();
-        $pavilion = $category->section()->first();
-        $video->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+        // $category = $app->category()->first();
+        // $pavilion = $category->section()->first();
+        // $video->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+        $video->path = '';
       }
 
       return view('admin.video.index', compact('categories', 'sections', 'app_categories', 'apps', 'videos'));
