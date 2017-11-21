@@ -7,7 +7,7 @@
 <div class="conference-container">
   <div class="row">
       @foreach ($images as $key => $img)
-        <div class="col-md-4">
+        <div class="col-md-4 pb">
           <img class="img-fluid" src="{{ Storage::disk('local')->url($img->thumb) }}">
         </div>
       @endforeach
