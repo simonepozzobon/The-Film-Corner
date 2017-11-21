@@ -134,11 +134,11 @@
         @endphp
         @if ($count > 0)
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-globe"></i>
+              <i class="fa fa-bell"></i>
           </a>
         @else
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-globe"></i>
+              <i class="fa fa-bell"></i>
           </a>
         @endif
         <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
@@ -155,6 +155,25 @@
               You have a new notification from {{ $notification->data['session']['student']['name'] }} - {{ $notification->data['session']['app']['title'] }} - {{ $notification->data['session']['app']['category']['name'] }}
             </a>
           @endforeach
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'en') }}">
+              English
+            </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'fr') }}">
+              Francais
+            </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'it') }}">
+              Italiano
+            </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'sr') }}">
+              српски
+            </a>
         </div>
       </li>
     </ul>

@@ -139,11 +139,11 @@
         @endphp
         @if ($count > 0)
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-globe"></i>
+              <i class="fa fa-bell"></i>
           </a>
         @else
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-globe"></i>
+              <i class="fa fa-bell"></i>
           </a>
         @endif
         <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
