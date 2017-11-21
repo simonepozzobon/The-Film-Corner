@@ -197,6 +197,9 @@ return [
         // Tracker
         'PragmaRX\Tracker\Vendor\Laravel\ServiceProvider',
 
+        // Translatable
+        Dimsav\Translatable\TranslatableServiceProvider::class,
+
         // Debug
         // Lanin\Laravel\ApiDebugger\ServiceProvider::class,
         // 'Barryvdh\Debugbar\ServiceProvider',

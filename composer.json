@@ -8,6 +8,7 @@
         "php": "^7.0",
         "barryvdh/laravel-debugbar": "^2.3",
         "buggedcom/phpvideotoolkit": "^2.2",
+        "dimsav/laravel-translatable": "^7.3",
         "doctrine/dbal": "^2.5",
         "egeloen/google-map": "^2.0",
         "egeloen/serializer": "^1.0",

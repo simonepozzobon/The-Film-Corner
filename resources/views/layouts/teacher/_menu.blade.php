@@ -162,6 +162,20 @@
           @endforeach
         </div>
       </li>
+      <li class="nav-item">
+        <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-cog" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'en') }}">
+              English
+            </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'it') }}">
+              Italiano
+            </a>
+        </div>
+      </li>
+
     </ul>
 
   </div>

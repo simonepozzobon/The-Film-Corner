@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class AppSection extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+    public $translatedAttributes = ['name', 'description'];
     protected $table = 'app_sections';
+    protected $fillable = ['slug'];
 
     public function appCategories()
     {

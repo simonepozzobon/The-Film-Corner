@@ -7,7 +7,7 @@ webpackJsonp([7],{
 
 
 var bind = __webpack_require__(16);
-var isBuffer = __webpack_require__(40);
+var isBuffer = __webpack_require__(41);
 
 /*global toString:true*/
 
@@ -314,7 +314,7 @@ module.exports = {
 /***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(22);
+module.exports = __webpack_require__(23);
 
 /***/ }),
 
@@ -325,12 +325,12 @@ module.exports = __webpack_require__(22);
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(28);
-var buildURL = __webpack_require__(31);
-var parseHeaders = __webpack_require__(37);
-var isURLSameOrigin = __webpack_require__(35);
+var settle = __webpack_require__(29);
+var buildURL = __webpack_require__(32);
+var parseHeaders = __webpack_require__(38);
+var isURLSameOrigin = __webpack_require__(36);
 var createError = __webpack_require__(15);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(30);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(31);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -427,7 +427,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(33);
+      var cookies = __webpack_require__(34);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -553,7 +553,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(27);
+var enhanceError = __webpack_require__(28);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -963,7 +963,7 @@ function applyToTag (styleElement, obj) {
 "use strict";
 
 
-var _vue = __webpack_require__(42);
+var _vue = __webpack_require__(21);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -975,11 +975,11 @@ var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(262);
+var _AudioFormUpload = __webpack_require__(263);
 
 var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
 
-var _AudioCrud = __webpack_require__(261);
+var _AudioCrud = __webpack_require__(262);
 
 var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
 
@@ -995,2238 +995,7 @@ var app = new _vue2.default({
 
 /***/ }),
 
-/***/ 22:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var bind = __webpack_require__(16);
-var Axios = __webpack_require__(24);
-var defaults = __webpack_require__(7);
-
-/**
- * Create an instance of Axios
- *
- * @param {Object} defaultConfig The default config for the instance
- * @return {Axios} A new instance of Axios
- */
-function createInstance(defaultConfig) {
-  var context = new Axios(defaultConfig);
-  var instance = bind(Axios.prototype.request, context);
-
-  // Copy axios.prototype to instance
-  utils.extend(instance, Axios.prototype, context);
-
-  // Copy context to instance
-  utils.extend(instance, context);
-
-  return instance;
-}
-
-// Create the default instance to be exported
-var axios = createInstance(defaults);
-
-// Expose Axios class to allow class inheritance
-axios.Axios = Axios;
-
-// Factory for creating new instances
-axios.create = function create(instanceConfig) {
-  return createInstance(utils.merge(defaults, instanceConfig));
-};
-
-// Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(13);
-axios.CancelToken = __webpack_require__(23);
-axios.isCancel = __webpack_require__(14);
-
-// Expose all/spread
-axios.all = function all(promises) {
-  return Promise.all(promises);
-};
-axios.spread = __webpack_require__(38);
-
-module.exports = axios;
-
-// Allow use of default import syntax in TypeScript
-module.exports.default = axios;
-
-
-/***/ }),
-
-/***/ 226:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _mojsPlayer = __webpack_require__(62);
-
-var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// import MojsCurveEditor from 'mojs-curve-editor';
-
-exports.default = {
-    props: ['items', 'msg', 'token'],
-    data: function data() {
-        return {
-            audios: '',
-            opened: false,
-            t_position: '',
-            modal: '',
-            t_center: '',
-            previous_el: ''
-
-        };
-    },
-    mounted: function mounted() {
-        var vue = this;
-
-        this.$parent.$on('newAudioLoaded', function (response) {
-            vue.addAudio(response);
-        });
-
-        this.audios = JSON.parse(this.items);
-        console.log(this.$refs['table']);
-        this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
-    },
-
-    methods: {
-        addAudio: function addAudio(response) {
-            console.log('triggered method inside');
-            console.log(response);
-            var newAudio = {
-                id: response.audio.id,
-                title: response.audio.title,
-                duration: response.audio.duration,
-                path: response.audio.path
-            };
-            this.audios.unshift(newAudio);
-        },
-        deleteAudio: function deleteAudio(id) {
-            var vue = this;
-            var formData = new FormData();
-            formData.append('_token', this.token);
-
-            (0, _axios2.default)({
-                method: 'delete',
-                url: '/api/apps/audio/' + id,
-                data: formData
-            }).then(function (response) {
-                console.log(response);
-                vue.closeModal(id);
-                vue.deleteRow(id);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        toggleModal: function toggleModal(el) {
-            // Da modificare
-            var button = document.getElementById('button-' + el);
-            var opened = this.opened;
-            var t_center = this.t_center;
-
-            var vue = this;
-            var modal = document.getElementById('modal-' + el);
-            this.modal = modal;
-            // Get the position of the button relative to the window
-            var b_position = button.getBoundingClientRect();
-            var b_width = button.offsetWidth;
-            var b_center = b_width / 2;
-            var b_y = button.offsetHeight / 2 * -1;
-
-            var b_left = this.getOffsetLeft(button);
-            var b_top = this.getOffsetTop(button);
-
-            if (this.opened == false) {
-                modal.style.display = 'inherit';
-                var modal_y = modal.offsetHeight * -1 / 2;
-
-                // Get the size of the Modal
-                var m_center_x = modal.offsetWidth / 2;
-
-                var burst = new mojs.Burst({
-                    count: 10,
-                    duration: 300,
-                    radius: { 40: 80 },
-                    y: 0,
-                    x: 0,
-                    left: b_left + b_center,
-                    top: b_top + b_center,
-                    origin: '0 100%',
-                    children: {
-                        shape: 'line',
-                        stroke: '#e8a360',
-                        stroke: '#e8a360',
-                        strokeWidth: 2
-                    },
-                    onComplete: function onComplete() {
-                        vue.deleteEl(burst.el);
-                    }
-                });
-
-                var modalElOpen = new mojs.Html({
-                    el: '#modal-' + el,
-                    opacity: { 0: 1 },
-                    scaleY: { 0.1: 1 },
-                    scaleX: { 0: 1.5 },
-                    // top: 0,
-                    // left: 0,
-                    x: _defineProperty({}, -m_center_x + b_center, t_center + m_center_x),
-                    y: modal_y + b_y,
-                    easing: 'sin.in',
-                    duration: 150,
-                    delay: 150
-                }).then({
-                    scaleY: { 1: 1.1 },
-                    scaleX: { 1.5: 1.1 },
-                    duration: 50,
-                    easing: 'sin.in.out'
-                }).then({
-                    scaleY: { 1.1: 1 },
-                    scaleX: { 1.1: 1 },
-                    duration: 50,
-                    easing: 'sin.out'
-                });
-
-                var timelineOpen = new mojs.Timeline().add(burst, modalElOpen).play();
-                this.opened = true;
-                this.previous_el = el;
-            } else {
-                this.closeModal(this.previous_el);
-            }
-        },
-        closeModal: function closeModal(el) {
-
-            var t_center = this.t_center;
-
-            var button = document.getElementById('button-' + el);
-            var b_center = button.offsetWidth / 2;
-            var b_y = button.offsetHeight / 2 * -1;
-
-            var modal = this.modal;
-            var modal_y = modal.offsetHeight * -1 / 2;
-            var m_center_x = modal.offsetWidth / 2;
-
-            var modalElClose = new mojs.Html({
-                el: '#modal-' + el,
-                scaleX: { 1: 1.1 },
-                scaleY: { 1: 1.1 },
-                x: t_center + m_center_x,
-                y: modal_y + b_y,
-                duration: 50,
-                easing: 'sin.in.out'
-            }).then({
-                opacity: { 1: 0 },
-                scaleX: { 1.1: 0 },
-                scaleY: { 1.1: 0 },
-                x: _defineProperty({}, t_center + m_center_x, -m_center_x + b_center),
-                duration: 100,
-                easing: 'sin.in.out',
-                onComplete: function onComplete() {
-                    modal.style.display = 'none';
-                }
-            }).play();
-            this.opened = false;
-        },
-        deleteRow: function deleteRow(el) {
-            var rowHeight = document.getElementById('row-' + el);
-            var vue = this;
-            var row = new mojs.Html({
-                el: '#row-' + el,
-                height: { 100: 0 },
-                opacity: { 1: 0 },
-                onComplete: function onComplete() {
-                    vue.deleteEl(row.el);
-                }
-            }).play();
-        },
-        getOffsetLeft: function getOffsetLeft(elem) {
-            var offsetLeft = 0;
-            do {
-                if (!isNaN(elem.offsetLeft)) {
-                    offsetLeft += elem.offsetLeft;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetLeft;
-        },
-        getOffsetTop: function getOffsetTop(elem) {
-            var offsetTop = 0;
-            do {
-                if (!isNaN(elem.offsetTop)) {
-                    offsetTop += elem.offsetTop;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetTop;
-        },
-        deleteEl: function deleteEl(el) {
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 227:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _lodash = __webpack_require__(44);
-
-var _lodash2 = _interopRequireDefault(_lodash);
-
-var _axios = __webpack_require__(11);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _mojsPlayer = __webpack_require__(62);
-
-var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-    props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
-
-    data: function data() {
-        return {
-            title: '',
-            category: '',
-            opts: '',
-            audio: '',
-            secs: '',
-            section: '',
-            a_cats: '',
-            app_category: '',
-            a_names: '',
-            app_name: '',
-            sub_category: '',
-            sub_cats: ''
-        };
-    },
-    mounted: function mounted() {
-
-        this.showFormBtn = this.$refs['show-modal-btn'];
-        this.sendBtn = this.$refs['send-btn'];
-        this.form = this.$refs['this-form'];
-        this.closeFormBtn = this.$refs['close-form-btn'];
-
-        // get the original heights
-        this.formOriginalHeight = this.form.clientHeight;
-        this.showFormOriginalHeight = this.showFormBtn.clientHeight;
-
-        // Initialize style
-        this.form.style.opacity = '0';
-        this.form.style.height = '0';
-        this.form.style.display = 'none';
-        this.closeFormBtn.style.opacity = '0';
-
-        // var Settings
-        this.opts = JSON.parse(this.options);
-        this.secs = JSON.parse(this.sections);
-        this.a_cats = JSON.parse(this.app_categories);
-        this.a_names = JSON.parse(this.apps);
-
-        this._top = this.getOffsetTop(this.form);
-
-        this.dot_opts = {
-            shape: 'circle',
-            radius: 10,
-            y: _defineProperty({}, this._top, this._top - 20),
-            fill: 'grey',
-            isYoyo: true,
-            duration: 500,
-            easing: 'sin.in.out'
-        };
-
-        this.dot = new mojs.Shape(_extends({}, this.dot_opts, {
-            x: -40
-        })).then({
-            y: _defineProperty({}, this._top - 20, this._top),
-            onComplete: function onComplete(isForward, isYoyo) {
-                this.replay();
-            }
-        });
-
-        this.dot2 = new mojs.Shape(_extends({}, this.dot_opts, {
-            delay: 50
-        })).then({
-            y: _defineProperty({}, this._top - 20, this._top),
-            onComplete: function onComplete(isForward, isYoyo) {
-                this.replay();
-            }
-        });
-
-        this.dot3 = new mojs.Shape(_extends({}, this.dot_opts, {
-            x: 40,
-            delay: 100
-        })).then({
-            y: _defineProperty({}, this._top - 20, this._top),
-            onComplete: function onComplete(isForward, isYoyo) {
-                this.replay();
-            }
-        });
-
-        var Check = function (_mojs$CustomShape) {
-            _inherits(Check, _mojs$CustomShape);
-
-            function Check() {
-                _classCallCheck(this, Check);
-
-                return _possibleConstructorReturn(this, (Check.__proto__ || Object.getPrototypeOf(Check)).apply(this, arguments));
-            }
-
-            _createClass(Check, [{
-                key: 'getShape',
-                value: function getShape() {
-                    return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
-                }
-            }, {
-                key: 'getLength',
-                value: function getLength() {
-                    return 76.5;
-                }
-            }]);
-
-            return Check;
-        }(mojs.CustomShape);
-
-        mojs.addShape('check', Check);
-
-        this.circle = new mojs.Shape({
-            shape: 'circle',
-            className: 'success-circle',
-            fill: 'grey',
-            radius: { 0: 40 },
-            easing: 'sin.in',
-            duration: 350
-        });
-
-        this.check = new mojs.Shape({
-            shape: 'check',
-            parent: '.success-circle',
-            radius: { 0: 20 },
-            opacity: { 0: 1 },
-            stroke: 'white',
-            strokeWidth: 6,
-            strokeLinecap: 'round',
-            fill: 'none',
-            easing: 'sin.in',
-            delay: 100
-        });
-
-        this.burst = new mojs.Burst({
-            parent: '.success-circle',
-            radius: { 20: 80 },
-            count: 10,
-            duration: 200,
-            children: {
-                shape: 'line',
-                stroke: 'grey',
-                delay: 50
-            }
-        });
-    },
-
-
-    methods: {
-        fileChange: function fileChange(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length) return;
-            this.audio = files[0];
-            console.log(this.audio);
-        },
-        showModal: function showModal() {
-            var vue = this;
-
-            var showForm = new mojs.Html({
-                el: this.form,
-                height: { 0: vue.formOriginalHeight },
-                opacity: { 0: 1 },
-                y: { '-100': 0 },
-                easing: 'sin.in.out',
-                delay: 100,
-                onStart: function onStart() {
-                    vue.form.style.display = 'inherit';
-                }
-            });
-
-            var showCloseFormBtn = new mojs.Html({
-                el: this.closeFormBtn,
-                opacity: { 0: 1 },
-                y: { '-40': 0 },
-                angleZ: { 90: 0 },
-                easing: 'sin.out',
-                delay: 200
-            });
-
-            var showFormTimeline = new mojs.Timeline().add(showForm).append(showCloseFormBtn);
-
-            new mojs.Html({
-                el: this.showFormBtn,
-                opacity: { 1: 0 },
-                duration: 150,
-                easing: 'sin.in.out',
-                onComplete: function onComplete() {
-                    showFormTimeline.play();
-                }
-            }).then({
-                height: _defineProperty({}, this.showFormBtn.offsetHeight, 0)
-            }).play();
-        },
-        closeModal: function closeModal() {
-            var vue = this;
-            var showSendBtn = new mojs.Html({
-                el: this.showFormBtn,
-                opacity: { 0: 1 },
-                height: _defineProperty({}, vue.showFormBtn.offsetHeight, vue.showFormOriginalHeight),
-                easing: 'sin.out'
-            });
-
-            var hideForm = new mojs.Html({
-                el: this.form,
-                opacity: { 1: 0, duration: 350 },
-                y: { 0: '-100' },
-                easing: 'sin.in.out',
-                duration: 500,
-                onComplete: function onComplete() {
-                    showSendBtn.play();
-                    vue.form.style.display = 'none';
-                }
-            }).then({
-                height: _defineProperty({}, vue.showFormOriginalHeight, 0)
-            });
-
-            var hideCloseFormBtn = new mojs.Html({
-                el: this.closeFormBtn,
-                opacity: { 1: 0 },
-                y: { 0: '-40' },
-                angleZ: { 0: 90 },
-                easing: 'sin.in',
-                duration: 100
-            });
-
-            var hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn).append(hideForm).play();
-
-            // new MojsPlayer({add:hideFormTimeline});
-        },
-        sendForm: function sendForm(e) {
-            var vue = this;
-            e.preventDefault();
-
-            var formData = new FormData();
-            formData.append('_token', this.token);
-            formData.append('title', this.title);
-            formData.append('audio', this.audio);
-            formData.append('category', this.category);
-            formData.append('section', this.section);
-            formData.append('app_category', this.app_category);
-            formData.append('app_name', this.app_name);
-            formData.append('sub_category', this.sub_category);
-
-            this.animationBeforeSend();
-
-            _axios2.default.post('/api/apps/audio', formData).then(function (response) {
-                vue.title = '';
-                vue.audio = '';
-                vue.category = '';
-                vue.section = '';
-                vue.app_category = '';
-                vue.app_name = '';
-                vue.sub_category = '';
-
-                vue.animationHideDots();
-                vue.animationShowSuccess();
-                _lodash2.default.delay(function () {
-                    vue.closeModal();
-                    vue.$parent.$emit('newAudioLoaded', response.data);
-                }, 1000);
-            }).catch(function (error) {
-                console.log(error);
-                _lodash2.default.delay(function () {
-                    vue.animationHideDots();
-                    vue.showModal();
-                }, 250);
-            });
-        },
-        animationBeforeSend: function animationBeforeSend() {
-            var vue = this;
-            this.dot.play();
-            this.dot2.play();
-            this.dot3.play();
-
-            var hideFormBtnClose = new mojs.Html({
-                el: this.closeFormBtn,
-                opacity: { 1: 0 },
-                easing: 'sin.out'
-            });
-
-            var hideForm = new mojs.Html({
-                el: this.form,
-                opacity: { 1: 0 },
-                easing: 'sin.out',
-                onComplete: function onComplete() {
-                    vue.dot.play();
-                    vue.dot2.play();
-                    vue.dot3.play();
-                }
-            }).play();
-
-            var hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
-        },
-        animationHideDots: function animationHideDots() {
-            var vue = this;
-            this.dot.tune({
-                opacity: { 1: 0 }
-            }).play().stop();
-
-            this.dot2.tune({
-                opacity: { 1: 0 }
-            }).play().stop();
-
-            this.dot3.tune({
-                opacity: { 1: 0 }
-            }).play().stop();
-
-            // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
-        },
-        animationShowSuccess: function animationShowSuccess() {
-            var _this2 = this;
-
-            var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
-            _lodash2.default.delay(function () {
-                _this2.circle.tune({
-                    radius: { 40: 0 }
-                });
-
-                _this2.check.tune({
-                    radius: { 20: 0 }
-                });
-
-                var close = new mojs.Timeline().add(_this2.circle, _this2.check).play();
-            }, 800);
-        },
-        pavilionRelations: function pavilionRelations(id) {
-            var vue = this;
-            _axios2.default.get('/api/apps/relations/pavilion/' + id).then(function (response) {
-                vue.a_cats = response.data.categories;
-                vue.a_names = response.data.apps;
-            });
-        },
-        categoryRelations: function categoryRelations(id) {
-            var vue = this;
-            _axios2.default.get('/api/apps/relations/category/' + id).then(function (response) {
-                console.log(response);
-                vue.secs = [response.data.pavilion];
-                vue.section = response.data.pavilion.id;
-                vue.a_names = response.data.apps;
-            });
-        },
-        appRelations: function appRelations(id) {
-            var vue = this;
-            _axios2.default.get('/api/apps/relations/app/' + id).then(function (response) {
-                vue.a_cats = [response.data.category];
-                vue.app_category = response.data.category.id;
-                vue.a_names = [response.data.pavilion];
-                vue.section = response.data.pavilion.id;
-            });
-        },
-        subCategories: function subCategories(id) {
-            var vue = this;
-            _axios2.default.get('/api/apps/relations/media-sub-categories/' + id).then(function (response) {
-                vue.sub_cats = response.data;
-            });
-        },
-        getOffsetLeft: function getOffsetLeft(elem) {
-            var offsetLeft = 0;
-            do {
-                if (!isNaN(elem.offsetLeft)) {
-                    offsetLeft += elem.offsetLeft;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetLeft;
-        },
-        getOffsetTop: function getOffsetTop(elem) {
-            var offsetTop = 0;
-            do {
-                if (!isNaN(elem.offsetTop)) {
-                    offsetTop += elem.offsetTop;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetTop;
-        },
-        deleteEl: function deleteEl(el) {
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
-        }
-    },
-
-    watch: {
-        section: function section(id) {
-            this.pavilionRelations(id);
-        },
-
-        app_category: function app_category(id) {
-            this.categoryRelations(id);
-        },
-
-        app_name: function app_name(id) {
-            if (this.app_category == '' || this.section == '') {
-                this.appRelations(id);
-            }
-            this.subCategories(id);
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 23:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(13);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
-
-/***/ }),
-
-/***/ 24:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var defaults = __webpack_require__(7);
-var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(25);
-var dispatchRequest = __webpack_require__(26);
-var isAbsoluteURL = __webpack_require__(34);
-var combineURLs = __webpack_require__(32);
-
-/**
- * Create a new instance of Axios
- *
- * @param {Object} instanceConfig The default config for the instance
- */
-function Axios(instanceConfig) {
-  this.defaults = instanceConfig;
-  this.interceptors = {
-    request: new InterceptorManager(),
-    response: new InterceptorManager()
-  };
-}
-
-/**
- * Dispatch a request
- *
- * @param {Object} config The config specific for this request (merged with this.defaults)
- */
-Axios.prototype.request = function request(config) {
-  /*eslint no-param-reassign:0*/
-  // Allow for axios('example/url'[, config]) a la fetch API
-  if (typeof config === 'string') {
-    config = utils.merge({
-      url: arguments[0]
-    }, arguments[1]);
-  }
-
-  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
-  config.method = config.method.toLowerCase();
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
-
-  // Hook up interceptors middleware
-  var chain = [dispatchRequest, undefined];
-  var promise = Promise.resolve(config);
-
-  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-    chain.unshift(interceptor.fulfilled, interceptor.rejected);
-  });
-
-  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
-    chain.push(interceptor.fulfilled, interceptor.rejected);
-  });
-
-  while (chain.length) {
-    promise = promise.then(chain.shift(), chain.shift());
-  }
-
-  return promise;
-};
-
-// Provide aliases for supported request methods
-utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
-  /*eslint func-names:0*/
-  Axios.prototype[method] = function(url, config) {
-    return this.request(utils.merge(config || {}, {
-      method: method,
-      url: url
-    }));
-  };
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  /*eslint func-names:0*/
-  Axios.prototype[method] = function(url, data, config) {
-    return this.request(utils.merge(config || {}, {
-      method: method,
-      url: url,
-      data: data
-    }));
-  };
-});
-
-module.exports = Axios;
-
-
-/***/ }),
-
-/***/ 246:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)();
-exports.push([module.i, "\n.close-btn[data-v-298c3cca] {\n  position: absolute;\n  right: 1.5rem;\n  top: 1.5rem;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 25:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-function InterceptorManager() {
-  this.handlers = [];
-}
-
-/**
- * Add a new interceptor to the stack
- *
- * @param {Function} fulfilled The function to handle `then` for a `Promise`
- * @param {Function} rejected The function to handle `reject` for a `Promise`
- *
- * @return {Number} An ID used to remove interceptor later
- */
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-  this.handlers.push({
-    fulfilled: fulfilled,
-    rejected: rejected
-  });
-  return this.handlers.length - 1;
-};
-
-/**
- * Remove an interceptor from the stack
- *
- * @param {Number} id The ID that was returned by `use`
- */
-InterceptorManager.prototype.eject = function eject(id) {
-  if (this.handlers[id]) {
-    this.handlers[id] = null;
-  }
-};
-
-/**
- * Iterate over all the registered interceptors
- *
- * This method is particularly useful for skipping over any
- * interceptors that may have become `null` calling `eject`.
- *
- * @param {Function} fn The function to call for each interceptor
- */
-InterceptorManager.prototype.forEach = function forEach(fn) {
-  utils.forEach(this.handlers, function forEachHandler(h) {
-    if (h !== null) {
-      fn(h);
-    }
-  });
-};
-
-module.exports = InterceptorManager;
-
-
-/***/ }),
-
-/***/ 251:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(18)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-/***/ }),
-
-/***/ 26:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-var transformData = __webpack_require__(29);
-var isCancel = __webpack_require__(14);
-var defaults = __webpack_require__(7);
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-function throwIfCancellationRequested(config) {
-  if (config.cancelToken) {
-    config.cancelToken.throwIfRequested();
-  }
-}
-
-/**
- * Dispatch a request to the server using the configured adapter.
- *
- * @param {object} config The config that is to be used for the request
- * @returns {Promise} The Promise to be fulfilled
- */
-module.exports = function dispatchRequest(config) {
-  throwIfCancellationRequested(config);
-
-  // Ensure headers exist
-  config.headers = config.headers || {};
-
-  // Transform request data
-  config.data = transformData(
-    config.data,
-    config.headers,
-    config.transformRequest
-  );
-
-  // Flatten headers
-  config.headers = utils.merge(
-    config.headers.common || {},
-    config.headers[config.method] || {},
-    config.headers || {}
-  );
-
-  utils.forEach(
-    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
-    function cleanHeaderConfig(method) {
-      delete config.headers[method];
-    }
-  );
-
-  var adapter = config.adapter || defaults.adapter;
-
-  return adapter(config).then(function onAdapterResolution(response) {
-    throwIfCancellationRequested(config);
-
-    // Transform response data
-    response.data = transformData(
-      response.data,
-      response.headers,
-      config.transformResponse
-    );
-
-    return response;
-  }, function onAdapterRejection(reason) {
-    if (!isCancel(reason)) {
-      throwIfCancellationRequested(config);
-
-      // Transform response data
-      if (reason && reason.response) {
-        reason.response.data = transformData(
-          reason.response.data,
-          reason.response.headers,
-          config.transformResponse
-        );
-      }
-    }
-
-    return Promise.reject(reason);
-  });
-};
-
-
-/***/ }),
-
-/***/ 261:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(302)
-
-var Component = __webpack_require__(19)(
-  /* script */
-  __webpack_require__(226),
-  /* template */
-  __webpack_require__(285),
-  /* scopeId */
-  "data-v-4e001d63",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioCrud.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AudioCrud.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4e001d63", Component.options)
-  } else {
-    hotAPI.reload("data-v-4e001d63", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 262:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(297)
-
-var Component = __webpack_require__(19)(
-  /* script */
-  __webpack_require__(227),
-  /* template */
-  __webpack_require__(280),
-  /* scopeId */
-  "data-v-298c3cca",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioFormUpload.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AudioFormUpload.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-298c3cca", Component.options)
-  } else {
-    hotAPI.reload("data-v-298c3cca", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Update an Error with the specified config, error code, and response.
- *
- * @param {Error} error The error to update.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The error.
- */
-module.exports = function enhanceError(error, config, code, request, response) {
-  error.config = config;
-  if (code) {
-    error.code = code;
-  }
-  error.request = request;
-  error.response = response;
-  return error;
-};
-
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var createError = __webpack_require__(15);
-
-/**
- * Resolve or reject a Promise based on response status.
- *
- * @param {Function} resolve A function that resolves the promise.
- * @param {Function} reject A function that rejects the promise.
- * @param {object} response The response.
- */
-module.exports = function settle(resolve, reject, response) {
-  var validateStatus = response.config.validateStatus;
-  // Note: status is not exposed by XDomainRequest
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
-    resolve(response);
-  } else {
-    reject(createError(
-      'Request failed with status code ' + response.status,
-      response.config,
-      null,
-      response.request,
-      response
-    ));
-  }
-};
-
-
-/***/ }),
-
-/***/ 280:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "audio-form-upload"
-  }, [_c('div', {
-    staticClass: "d-flex justify-content-around"
-  }, [_c('button', {
-    ref: "show-modal-btn",
-    staticClass: "btn btn-lg btn-secondary btn-blue",
-    attrs: {
-      "type": "button",
-      "name": "button"
-    },
-    on: {
-      "click": _vm.showModal
-    }
-  }, [_vm._v("\n        Carica Audio\n    ")])]), _vm._v(" "), _c('div', {
-    ref: "close-form-btn",
-    staticClass: "d-flex justify-content-end close-btn",
-    on: {
-      "click": _vm.closeModal
-    }
-  }, [_vm._m(0)]), _vm._v(" "), _c('form', {
-    ref: "this-form",
-    attrs: {
-      "action": _vm.action,
-      "method": "post",
-      "enctype": "multipart/form-data"
-    }
-  }, [_c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "_token"
-    },
-    domProps: {
-      "value": _vm.token
-    }
-  }), _vm._v(" "), _c('input', {
-    attrs: {
-      "type": "hidden",
-      "name": "_method"
-    },
-    domProps: {
-      "value": _vm.method
-    }
-  }), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6 form-group"
-  }, [_c('h6', [_vm._v("Titolo")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.title),
-      expression: "title"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "name": "title",
-      "required": ""
-    },
-    domProps: {
-      "value": (_vm.title)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.title = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-6 form-group"
-  }, [_c('h6', [_vm._v("Categoria Audio")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.category),
-      expression: "category"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "category",
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.opts), function(opt) {
-    return _c('option', {
-      domProps: {
-        "value": opt.id
-      }
-    }, [_vm._v("\n            " + _vm._s(opt.name) + "\n          ")])
-  }))])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-4 form-group"
-  }, [_c('h6', [_vm._v("Padiglione")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.section),
-      expression: "section"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "section",
-      "required": ""
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.section = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.secs), function(sec) {
-    return _c('option', {
-      domProps: {
-        "value": sec.id
-      }
-    }, [_vm._v("\n            " + _vm._s(sec.name) + "\n          ")])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 form-group"
-  }, [_c('h6', [_vm._v("Categoria")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.app_category),
-      expression: "app_category"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "app_category"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.app_category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.a_cats), function(a_cat) {
-    return _c('option', {
-      domProps: {
-        "value": a_cat.id
-      }
-    }, [_vm._v("\n            " + _vm._s(a_cat.name) + "\n          ")])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "col-md-4 form-group"
-  }, [_c('h6', [_vm._v("App")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.app_name),
-      expression: "app_name"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "app_name"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.app_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.a_names), function(a_name) {
-    return _c('option', {
-      domProps: {
-        "value": a_name.id
-      }
-    }, [_vm._v("\n            " + _vm._s(a_name.title) + "\n          ")])
-  }))])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col"
-  }, [_c('h6', [_vm._v("Libreria")]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.sub_category),
-      expression: "sub_category"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "sub_category"
-    },
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.sub_category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.sub_cats), function(sub_cat) {
-    return _c('option', {
-      domProps: {
-        "value": sub_cat.id
-      }
-    }, [_vm._v("\n              " + _vm._s(sub_cat.name) + "\n            ")])
-  }))])])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('h6', [_vm._v("File")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "file",
-      "name": "file"
-    },
-    on: {
-      "change": _vm.fileChange
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "d-flex justify-content-around"
-  }, [_c('button', {
-    ref: "send-btn",
-    staticClass: "btn btn-lg btn-secondary btn-blue",
-    attrs: {
-      "type": "button",
-      "name": "button"
-    },
-    on: {
-      "click": _vm.sendForm
-    }
-  }, [_vm._v("Aggiungi")])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h3', [_c('i', {
-    staticClass: "fa fa-times"
-  })])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-298c3cca", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 285:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
-    ref: "table",
-    staticClass: "table table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.audios), function(audio) {
-    return _c('tr', {
-      ref: "test",
-      refInFor: true,
-      attrs: {
-        "id": 'row-' + audio.id
-      }
-    }, [_c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.id))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.title))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.duration))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_vm._v(_vm._s(audio.path))]), _vm._v(" "), _c('td', {
-      staticClass: "align-middle"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-orange btn-target",
-      attrs: {
-        "id": 'button-' + audio.id,
-        "data-target": audio.id
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggleModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-trash-o"
-    })]), _vm._v(" "), _c('div', {
-      staticClass: "custom-modal",
-      staticStyle: {
-        "display": "none",
-        "position": "absolute"
-      },
-      attrs: {
-        "id": 'modal-' + audio.id
-      }
-    }, [_c('div', {
-      staticClass: "box container-fluid"
-    }, [_c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col dark-blue py-3"
-    }, [_c('div', {
-      staticClass: "col d-flex justify-content-end"
-    }, [_c('a', {
-      attrs: {
-        "data-modal": "close"
-      },
-      on: {
-        "click": function($event) {
-          _vm.closeModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-times",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    })])])])]), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col blue px-5 py-4"
-    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
-      staticClass: "row"
-    }, [_c('div', {
-      staticClass: "col-6"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-blue btn-left",
-      attrs: {
-        "data-modal": "close"
-      },
-      on: {
-        "click": function($event) {
-          _vm.closeModal(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-undo",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }), _vm._v(" Undo")])]), _vm._v(" "), _c('div', {
-      staticClass: "col-6"
-    }, [_c('button', {
-      staticClass: "btn btn-secondary btn-blue btn-right",
-      on: {
-        "click": function($event) {
-          _vm.deleteAudio(audio.id)
-        }
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-trash-o",
-      attrs: {
-        "aria-hidden": "true"
-      }
-    }), _vm._v(" Delete")])])])])])])])])])
-  }))])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Duration")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row pb-4"
-  }, [_c('div', {
-    staticClass: "col"
-  }, [_c('h3', {
-    staticClass: "text-center"
-  }, [_vm._v("Are you shure")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-4e001d63", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-/**
- * Transform the data for a request or a response
- *
- * @param {Object|String} data The data to be transformed
- * @param {Array} headers The headers for the request or response
- * @param {Array|Function} fns A single function or Array of functions
- * @returns {*} The resulting transformed data
- */
-module.exports = function transformData(data, headers, fns) {
-  /*eslint no-param-reassign:0*/
-  utils.forEach(fns, function transform(fn) {
-    data = fn(data, headers);
-  });
-
-  return data;
-};
-
-
-/***/ }),
-
-/***/ 297:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(246);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(20)("1950240e", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 30:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
-/***/ 302:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(251);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(20)("319fe6e1", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 308:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(203);
-
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-function encode(val) {
-  return encodeURIComponent(val).
-    replace(/%40/gi, '@').
-    replace(/%3A/gi, ':').
-    replace(/%24/g, '$').
-    replace(/%2C/gi, ',').
-    replace(/%20/g, '+').
-    replace(/%5B/gi, '[').
-    replace(/%5D/gi, ']');
-}
-
-/**
- * Build a URL by appending params to the end
- *
- * @param {string} url The base of the url (e.g., http://www.google.com)
- * @param {object} [params] The params to be appended
- * @returns {string} The formatted url
- */
-module.exports = function buildURL(url, params, paramsSerializer) {
-  /*eslint no-param-reassign:0*/
-  if (!params) {
-    return url;
-  }
-
-  var serializedParams;
-  if (paramsSerializer) {
-    serializedParams = paramsSerializer(params);
-  } else if (utils.isURLSearchParams(params)) {
-    serializedParams = params.toString();
-  } else {
-    var parts = [];
-
-    utils.forEach(params, function serialize(val, key) {
-      if (val === null || typeof val === 'undefined') {
-        return;
-      }
-
-      if (utils.isArray(val)) {
-        key = key + '[]';
-      }
-
-      if (!utils.isArray(val)) {
-        val = [val];
-      }
-
-      utils.forEach(val, function parseValue(v) {
-        if (utils.isDate(v)) {
-          v = v.toISOString();
-        } else if (utils.isObject(v)) {
-          v = JSON.stringify(v);
-        }
-        parts.push(encode(key) + '=' + encode(v));
-      });
-    });
-
-    serializedParams = parts.join('&');
-  }
-
-  if (serializedParams) {
-    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
-  }
-
-  return url;
-};
-
-
-/***/ }),
-
-/***/ 32:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
-
-
-/***/ }),
-
-/***/ 33:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-module.exports = (
-  utils.isStandardBrowserEnv() ?
-
-  // Standard browser envs support document.cookie
-  (function standardBrowserEnv() {
-    return {
-      write: function write(name, value, expires, path, domain, secure) {
-        var cookie = [];
-        cookie.push(name + '=' + encodeURIComponent(value));
-
-        if (utils.isNumber(expires)) {
-          cookie.push('expires=' + new Date(expires).toGMTString());
-        }
-
-        if (utils.isString(path)) {
-          cookie.push('path=' + path);
-        }
-
-        if (utils.isString(domain)) {
-          cookie.push('domain=' + domain);
-        }
-
-        if (secure === true) {
-          cookie.push('secure');
-        }
-
-        document.cookie = cookie.join('; ');
-      },
-
-      read: function read(name) {
-        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
-        return (match ? decodeURIComponent(match[3]) : null);
-      },
-
-      remove: function remove(name) {
-        this.write(name, '', Date.now() - 86400000);
-      }
-    };
-  })() :
-
-  // Non standard browser env (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return {
-      write: function write() {},
-      read: function read() { return null; },
-      remove: function remove() {}
-    };
-  })()
-);
-
-
-/***/ }),
-
-/***/ 34:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */
-module.exports = function isAbsoluteURL(url) {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-  // by any combination of letters, digits, plus, period, or hyphen.
-  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
-
-
-/***/ }),
-
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-module.exports = (
-  utils.isStandardBrowserEnv() ?
-
-  // Standard browser envs have full support of the APIs needed to test
-  // whether the request URL is of the same origin as current location.
-  (function standardBrowserEnv() {
-    var msie = /(msie|trident)/i.test(navigator.userAgent);
-    var urlParsingNode = document.createElement('a');
-    var originURL;
-
-    /**
-    * Parse a URL to discover it's components
-    *
-    * @param {String} url The URL to be parsed
-    * @returns {Object}
-    */
-    function resolveURL(url) {
-      var href = url;
-
-      if (msie) {
-        // IE needs attribute set twice to normalize properties
-        urlParsingNode.setAttribute('href', href);
-        href = urlParsingNode.href;
-      }
-
-      urlParsingNode.setAttribute('href', href);
-
-      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
-      return {
-        href: urlParsingNode.href,
-        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
-        host: urlParsingNode.host,
-        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
-        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
-        hostname: urlParsingNode.hostname,
-        port: urlParsingNode.port,
-        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
-                  urlParsingNode.pathname :
-                  '/' + urlParsingNode.pathname
-      };
-    }
-
-    originURL = resolveURL(window.location.href);
-
-    /**
-    * Determine if a URL shares the same origin as the current location
-    *
-    * @param {String} requestURL The URL to test
-    * @returns {boolean} True if URL shares the same origin, otherwise false
-    */
-    return function isURLSameOrigin(requestURL) {
-      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
-      return (parsed.protocol === originURL.protocol &&
-            parsed.host === originURL.host);
-    };
-  })() :
-
-  // Non standard browser envs (web workers, react-native) lack needed support.
-  (function nonStandardBrowserEnv() {
-    return function isURLSameOrigin() {
-      return true;
-    };
-  })()
-);
-
-
-/***/ }),
-
-/***/ 36:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-module.exports = function normalizeHeaderName(headers, normalizedName) {
-  utils.forEach(headers, function processHeader(value, name) {
-    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-      headers[normalizedName] = value;
-      delete headers[name];
-    }
-  });
-};
-
-
-/***/ }),
-
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-/**
- * Parse headers into an object
- *
- * ```
- * Date: Wed, 27 Aug 2014 08:58:49 GMT
- * Content-Type: application/json
- * Connection: keep-alive
- * Transfer-Encoding: chunked
- * ```
- *
- * @param {String} headers Headers needing to be parsed
- * @returns {Object} Headers parsed into an object
- */
-module.exports = function parseHeaders(headers) {
-  var parsed = {};
-  var key;
-  var val;
-  var i;
-
-  if (!headers) { return parsed; }
-
-  utils.forEach(headers.split('\n'), function parser(line) {
-    i = line.indexOf(':');
-    key = utils.trim(line.substr(0, i)).toLowerCase();
-    val = utils.trim(line.substr(i + 1));
-
-    if (key) {
-      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-    }
-  });
-
-  return parsed;
-};
-
-
-/***/ }),
-
-/***/ 38:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
-/***/ 40:
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
-
-/***/ }),
-
-/***/ 42:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13424,6 +11193,2237 @@ Vue$3.compile = compileToFunctions;
 module.exports = Vue$3;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5), __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 227:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(11);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _mojsPlayer = __webpack_require__(62);
+
+var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// import MojsCurveEditor from 'mojs-curve-editor';
+
+exports.default = {
+    props: ['items', 'msg', 'token'],
+    data: function data() {
+        return {
+            audios: '',
+            opened: false,
+            t_position: '',
+            modal: '',
+            t_center: '',
+            previous_el: ''
+
+        };
+    },
+    mounted: function mounted() {
+        var vue = this;
+
+        this.$parent.$on('newAudioLoaded', function (response) {
+            vue.addAudio(response);
+        });
+
+        this.audios = JSON.parse(this.items);
+        console.log(this.$refs['table']);
+        this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
+    },
+
+    methods: {
+        addAudio: function addAudio(response) {
+            console.log('triggered method inside');
+            console.log(response);
+            var newAudio = {
+                id: response.audio.id,
+                title: response.audio.title,
+                duration: response.audio.duration,
+                path: response.audio.path
+            };
+            this.audios.unshift(newAudio);
+        },
+        deleteAudio: function deleteAudio(id) {
+            var vue = this;
+            var formData = new FormData();
+            formData.append('_token', this.token);
+
+            (0, _axios2.default)({
+                method: 'delete',
+                url: '/api/apps/audio/' + id,
+                data: formData
+            }).then(function (response) {
+                console.log(response);
+                vue.closeModal(id);
+                vue.deleteRow(id);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        toggleModal: function toggleModal(el) {
+            // Da modificare
+            var button = document.getElementById('button-' + el);
+            var opened = this.opened;
+            var t_center = this.t_center;
+
+            var vue = this;
+            var modal = document.getElementById('modal-' + el);
+            this.modal = modal;
+            // Get the position of the button relative to the window
+            var b_position = button.getBoundingClientRect();
+            var b_width = button.offsetWidth;
+            var b_center = b_width / 2;
+            var b_y = button.offsetHeight / 2 * -1;
+
+            var b_left = this.getOffsetLeft(button);
+            var b_top = this.getOffsetTop(button);
+
+            if (this.opened == false) {
+                modal.style.display = 'inherit';
+                var modal_y = modal.offsetHeight * -1 / 2;
+
+                // Get the size of the Modal
+                var m_center_x = modal.offsetWidth / 2;
+
+                var burst = new mojs.Burst({
+                    count: 10,
+                    duration: 300,
+                    radius: { 40: 80 },
+                    y: 0,
+                    x: 0,
+                    left: b_left + b_center,
+                    top: b_top + b_center,
+                    origin: '0 100%',
+                    children: {
+                        shape: 'line',
+                        stroke: '#e8a360',
+                        stroke: '#e8a360',
+                        strokeWidth: 2
+                    },
+                    onComplete: function onComplete() {
+                        vue.deleteEl(burst.el);
+                    }
+                });
+
+                var modalElOpen = new mojs.Html({
+                    el: '#modal-' + el,
+                    opacity: { 0: 1 },
+                    scaleY: { 0.1: 1 },
+                    scaleX: { 0: 1.5 },
+                    // top: 0,
+                    // left: 0,
+                    x: _defineProperty({}, -m_center_x + b_center, t_center + m_center_x),
+                    y: modal_y + b_y,
+                    easing: 'sin.in',
+                    duration: 150,
+                    delay: 150
+                }).then({
+                    scaleY: { 1: 1.1 },
+                    scaleX: { 1.5: 1.1 },
+                    duration: 50,
+                    easing: 'sin.in.out'
+                }).then({
+                    scaleY: { 1.1: 1 },
+                    scaleX: { 1.1: 1 },
+                    duration: 50,
+                    easing: 'sin.out'
+                });
+
+                var timelineOpen = new mojs.Timeline().add(burst, modalElOpen).play();
+                this.opened = true;
+                this.previous_el = el;
+            } else {
+                this.closeModal(this.previous_el);
+            }
+        },
+        closeModal: function closeModal(el) {
+
+            var t_center = this.t_center;
+
+            var button = document.getElementById('button-' + el);
+            var b_center = button.offsetWidth / 2;
+            var b_y = button.offsetHeight / 2 * -1;
+
+            var modal = this.modal;
+            var modal_y = modal.offsetHeight * -1 / 2;
+            var m_center_x = modal.offsetWidth / 2;
+
+            var modalElClose = new mojs.Html({
+                el: '#modal-' + el,
+                scaleX: { 1: 1.1 },
+                scaleY: { 1: 1.1 },
+                x: t_center + m_center_x,
+                y: modal_y + b_y,
+                duration: 50,
+                easing: 'sin.in.out'
+            }).then({
+                opacity: { 1: 0 },
+                scaleX: { 1.1: 0 },
+                scaleY: { 1.1: 0 },
+                x: _defineProperty({}, t_center + m_center_x, -m_center_x + b_center),
+                duration: 100,
+                easing: 'sin.in.out',
+                onComplete: function onComplete() {
+                    modal.style.display = 'none';
+                }
+            }).play();
+            this.opened = false;
+        },
+        deleteRow: function deleteRow(el) {
+            var rowHeight = document.getElementById('row-' + el);
+            var vue = this;
+            var row = new mojs.Html({
+                el: '#row-' + el,
+                height: { 100: 0 },
+                opacity: { 1: 0 },
+                onComplete: function onComplete() {
+                    vue.deleteEl(row.el);
+                }
+            }).play();
+        },
+        getOffsetLeft: function getOffsetLeft(elem) {
+            var offsetLeft = 0;
+            do {
+                if (!isNaN(elem.offsetLeft)) {
+                    offsetLeft += elem.offsetLeft;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetLeft;
+        },
+        getOffsetTop: function getOffsetTop(elem) {
+            var offsetTop = 0;
+            do {
+                if (!isNaN(elem.offsetTop)) {
+                    offsetTop += elem.offsetTop;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetTop;
+        },
+        deleteEl: function deleteEl(el) {
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 228:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _lodash = __webpack_require__(44);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _axios = __webpack_require__(11);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _mojsPlayer = __webpack_require__(62);
+
+var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    props: ['token', 'method', 'action', 'options', 'sections', 'app_categories', 'apps'],
+
+    data: function data() {
+        return {
+            title: '',
+            category: '',
+            opts: '',
+            audio: '',
+            secs: '',
+            section: '',
+            a_cats: '',
+            app_category: '',
+            a_names: '',
+            app_name: '',
+            sub_category: '',
+            sub_cats: ''
+        };
+    },
+    mounted: function mounted() {
+
+        this.showFormBtn = this.$refs['show-modal-btn'];
+        this.sendBtn = this.$refs['send-btn'];
+        this.form = this.$refs['this-form'];
+        this.closeFormBtn = this.$refs['close-form-btn'];
+
+        // get the original heights
+        this.formOriginalHeight = this.form.clientHeight;
+        this.showFormOriginalHeight = this.showFormBtn.clientHeight;
+
+        // Initialize style
+        this.form.style.opacity = '0';
+        this.form.style.height = '0';
+        this.form.style.display = 'none';
+        this.closeFormBtn.style.opacity = '0';
+
+        // var Settings
+        this.opts = JSON.parse(this.options);
+        this.secs = JSON.parse(this.sections);
+        this.a_cats = JSON.parse(this.app_categories);
+        this.a_names = JSON.parse(this.apps);
+
+        this._top = this.getOffsetTop(this.form);
+
+        this.dot_opts = {
+            shape: 'circle',
+            radius: 10,
+            y: _defineProperty({}, this._top, this._top - 20),
+            fill: 'grey',
+            isYoyo: true,
+            duration: 500,
+            easing: 'sin.in.out'
+        };
+
+        this.dot = new mojs.Shape(_extends({}, this.dot_opts, {
+            x: -40
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
+
+        this.dot2 = new mojs.Shape(_extends({}, this.dot_opts, {
+            delay: 50
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
+
+        this.dot3 = new mojs.Shape(_extends({}, this.dot_opts, {
+            x: 40,
+            delay: 100
+        })).then({
+            y: _defineProperty({}, this._top - 20, this._top),
+            onComplete: function onComplete(isForward, isYoyo) {
+                this.replay();
+            }
+        });
+
+        var Check = function (_mojs$CustomShape) {
+            _inherits(Check, _mojs$CustomShape);
+
+            function Check() {
+                _classCallCheck(this, Check);
+
+                return _possibleConstructorReturn(this, (Check.__proto__ || Object.getPrototypeOf(Check)).apply(this, arguments));
+            }
+
+            _createClass(Check, [{
+                key: 'getShape',
+                value: function getShape() {
+                    return '<g><polyline points="30.8022923 48.799683 45.3869007 62.9078069 85.1630931 23.5523084"></polyline></g>';
+                }
+            }, {
+                key: 'getLength',
+                value: function getLength() {
+                    return 76.5;
+                }
+            }]);
+
+            return Check;
+        }(mojs.CustomShape);
+
+        mojs.addShape('check', Check);
+
+        this.circle = new mojs.Shape({
+            shape: 'circle',
+            className: 'success-circle',
+            fill: 'grey',
+            radius: { 0: 40 },
+            easing: 'sin.in',
+            duration: 350
+        });
+
+        this.check = new mojs.Shape({
+            shape: 'check',
+            parent: '.success-circle',
+            radius: { 0: 20 },
+            opacity: { 0: 1 },
+            stroke: 'white',
+            strokeWidth: 6,
+            strokeLinecap: 'round',
+            fill: 'none',
+            easing: 'sin.in',
+            delay: 100
+        });
+
+        this.burst = new mojs.Burst({
+            parent: '.success-circle',
+            radius: { 20: 80 },
+            count: 10,
+            duration: 200,
+            children: {
+                shape: 'line',
+                stroke: 'grey',
+                delay: 50
+            }
+        });
+    },
+
+
+    methods: {
+        fileChange: function fileChange(e) {
+            var files = e.target.files || e.dataTransfer.files;
+            if (!files.length) return;
+            this.audio = files[0];
+            console.log(this.audio);
+        },
+        showModal: function showModal() {
+            var vue = this;
+
+            var showForm = new mojs.Html({
+                el: this.form,
+                height: { 0: vue.formOriginalHeight },
+                opacity: { 0: 1 },
+                y: { '-100': 0 },
+                easing: 'sin.in.out',
+                delay: 100,
+                onStart: function onStart() {
+                    vue.form.style.display = 'inherit';
+                }
+            });
+
+            var showCloseFormBtn = new mojs.Html({
+                el: this.closeFormBtn,
+                opacity: { 0: 1 },
+                y: { '-40': 0 },
+                angleZ: { 90: 0 },
+                easing: 'sin.out',
+                delay: 200
+            });
+
+            var showFormTimeline = new mojs.Timeline().add(showForm).append(showCloseFormBtn);
+
+            new mojs.Html({
+                el: this.showFormBtn,
+                opacity: { 1: 0 },
+                duration: 150,
+                easing: 'sin.in.out',
+                onComplete: function onComplete() {
+                    showFormTimeline.play();
+                }
+            }).then({
+                height: _defineProperty({}, this.showFormBtn.offsetHeight, 0)
+            }).play();
+        },
+        closeModal: function closeModal() {
+            var vue = this;
+            var showSendBtn = new mojs.Html({
+                el: this.showFormBtn,
+                opacity: { 0: 1 },
+                height: _defineProperty({}, vue.showFormBtn.offsetHeight, vue.showFormOriginalHeight),
+                easing: 'sin.out'
+            });
+
+            var hideForm = new mojs.Html({
+                el: this.form,
+                opacity: { 1: 0, duration: 350 },
+                y: { 0: '-100' },
+                easing: 'sin.in.out',
+                duration: 500,
+                onComplete: function onComplete() {
+                    showSendBtn.play();
+                    vue.form.style.display = 'none';
+                }
+            }).then({
+                height: _defineProperty({}, vue.showFormOriginalHeight, 0)
+            });
+
+            var hideCloseFormBtn = new mojs.Html({
+                el: this.closeFormBtn,
+                opacity: { 1: 0 },
+                y: { 0: '-40' },
+                angleZ: { 0: 90 },
+                easing: 'sin.in',
+                duration: 100
+            });
+
+            var hideFormTimeline = new mojs.Timeline().add(hideCloseFormBtn).append(hideForm).play();
+
+            // new MojsPlayer({add:hideFormTimeline});
+        },
+        sendForm: function sendForm(e) {
+            var vue = this;
+            e.preventDefault();
+
+            var formData = new FormData();
+            formData.append('_token', this.token);
+            formData.append('title', this.title);
+            formData.append('audio', this.audio);
+            formData.append('category', this.category);
+            formData.append('section', this.section);
+            formData.append('app_category', this.app_category);
+            formData.append('app_name', this.app_name);
+            formData.append('sub_category', this.sub_category);
+
+            this.animationBeforeSend();
+
+            _axios2.default.post('/api/apps/audio', formData).then(function (response) {
+                vue.title = '';
+                vue.audio = '';
+                vue.category = '';
+                vue.section = '';
+                vue.app_category = '';
+                vue.app_name = '';
+                vue.sub_category = '';
+
+                vue.animationHideDots();
+                vue.animationShowSuccess();
+                _lodash2.default.delay(function () {
+                    vue.closeModal();
+                    vue.$parent.$emit('newAudioLoaded', response.data);
+                }, 1000);
+            }).catch(function (error) {
+                console.log(error);
+                _lodash2.default.delay(function () {
+                    vue.animationHideDots();
+                    vue.showModal();
+                }, 250);
+            });
+        },
+        animationBeforeSend: function animationBeforeSend() {
+            var vue = this;
+            this.dot.play();
+            this.dot2.play();
+            this.dot3.play();
+
+            var hideFormBtnClose = new mojs.Html({
+                el: this.closeFormBtn,
+                opacity: { 1: 0 },
+                easing: 'sin.out'
+            });
+
+            var hideForm = new mojs.Html({
+                el: this.form,
+                opacity: { 1: 0 },
+                easing: 'sin.out',
+                onComplete: function onComplete() {
+                    vue.dot.play();
+                    vue.dot2.play();
+                    vue.dot3.play();
+                }
+            }).play();
+
+            var hide = new mojs.Timeline().add(hideFormBtnClose, hideForm).play();
+        },
+        animationHideDots: function animationHideDots() {
+            var vue = this;
+            this.dot.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
+
+            this.dot2.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
+
+            this.dot3.tune({
+                opacity: { 1: 0 }
+            }).play().stop();
+
+            // let hide_dots_Timeline = new mojs.Timeline().add(this.dot, this.dots2, this.dot3).play();
+        },
+        animationShowSuccess: function animationShowSuccess() {
+            var _this2 = this;
+
+            var successTimeline = new mojs.Timeline().add(this.circle, this.check, this.burst).play();
+            _lodash2.default.delay(function () {
+                _this2.circle.tune({
+                    radius: { 40: 0 }
+                });
+
+                _this2.check.tune({
+                    radius: { 20: 0 }
+                });
+
+                var close = new mojs.Timeline().add(_this2.circle, _this2.check).play();
+            }, 800);
+        },
+        pavilionRelations: function pavilionRelations(id) {
+            var vue = this;
+            _axios2.default.get('/api/apps/relations/pavilion/' + id).then(function (response) {
+                vue.a_cats = response.data.categories;
+                vue.a_names = response.data.apps;
+            });
+        },
+        categoryRelations: function categoryRelations(id) {
+            var vue = this;
+            _axios2.default.get('/api/apps/relations/category/' + id).then(function (response) {
+                console.log(response);
+                vue.secs = [response.data.pavilion];
+                vue.section = response.data.pavilion.id;
+                vue.a_names = response.data.apps;
+            });
+        },
+        appRelations: function appRelations(id) {
+            var vue = this;
+            _axios2.default.get('/api/apps/relations/app/' + id).then(function (response) {
+                vue.a_cats = [response.data.category];
+                vue.app_category = response.data.category.id;
+                vue.a_names = [response.data.pavilion];
+                vue.section = response.data.pavilion.id;
+            });
+        },
+        subCategories: function subCategories(id) {
+            var vue = this;
+            _axios2.default.get('/api/apps/relations/media-sub-categories/' + id).then(function (response) {
+                vue.sub_cats = response.data;
+            });
+        },
+        getOffsetLeft: function getOffsetLeft(elem) {
+            var offsetLeft = 0;
+            do {
+                if (!isNaN(elem.offsetLeft)) {
+                    offsetLeft += elem.offsetLeft;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetLeft;
+        },
+        getOffsetTop: function getOffsetTop(elem) {
+            var offsetTop = 0;
+            do {
+                if (!isNaN(elem.offsetTop)) {
+                    offsetTop += elem.offsetTop;
+                }
+            } while (elem = elem.offsetParent);
+            return offsetTop;
+        },
+        deleteEl: function deleteEl(el) {
+            if (el) {
+                el.parentNode.removeChild(el);
+            }
+        }
+    },
+
+    watch: {
+        section: function section(id) {
+            this.pavilionRelations(id);
+        },
+
+        app_category: function app_category(id) {
+            this.categoryRelations(id);
+        },
+
+        app_name: function app_name(id) {
+            if (this.app_category == '' || this.section == '') {
+                this.appRelations(id);
+            }
+            this.subCategories(id);
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(16);
+var Axios = __webpack_require__(25);
+var defaults = __webpack_require__(7);
+
+/**
+ * Create an instance of Axios
+ *
+ * @param {Object} defaultConfig The default config for the instance
+ * @return {Axios} A new instance of Axios
+ */
+function createInstance(defaultConfig) {
+  var context = new Axios(defaultConfig);
+  var instance = bind(Axios.prototype.request, context);
+
+  // Copy axios.prototype to instance
+  utils.extend(instance, Axios.prototype, context);
+
+  // Copy context to instance
+  utils.extend(instance, context);
+
+  return instance;
+}
+
+// Create the default instance to be exported
+var axios = createInstance(defaults);
+
+// Expose Axios class to allow class inheritance
+axios.Axios = Axios;
+
+// Factory for creating new instances
+axios.create = function create(instanceConfig) {
+  return createInstance(utils.merge(defaults, instanceConfig));
+};
+
+// Expose Cancel & CancelToken
+axios.Cancel = __webpack_require__(13);
+axios.CancelToken = __webpack_require__(24);
+axios.isCancel = __webpack_require__(14);
+
+// Expose all/spread
+axios.all = function all(promises) {
+  return Promise.all(promises);
+};
+axios.spread = __webpack_require__(39);
+
+module.exports = axios;
+
+// Allow use of default import syntax in TypeScript
+module.exports.default = axios;
+
+
+/***/ }),
+
+/***/ 24:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(13);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ 247:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+exports.push([module.i, "\n.close-btn[data-v-298c3cca] {\n  position: absolute;\n  right: 1.5rem;\n  top: 1.5rem;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 25:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaults = __webpack_require__(7);
+var utils = __webpack_require__(0);
+var InterceptorManager = __webpack_require__(26);
+var dispatchRequest = __webpack_require__(27);
+var isAbsoluteURL = __webpack_require__(35);
+var combineURLs = __webpack_require__(33);
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config.method = config.method.toLowerCase();
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+/***/ 252:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(18)();
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+/***/ }),
+
+/***/ 26:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ 262:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(303)
+
+var Component = __webpack_require__(19)(
+  /* script */
+  __webpack_require__(227),
+  /* template */
+  __webpack_require__(286),
+  /* scopeId */
+  "data-v-4e001d63",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioCrud.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AudioCrud.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4e001d63", Component.options)
+  } else {
+    hotAPI.reload("data-v-4e001d63", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 263:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(298)
+
+var Component = __webpack_require__(19)(
+  /* script */
+  __webpack_require__(228),
+  /* template */
+  __webpack_require__(281),
+  /* scopeId */
+  "data-v-298c3cca",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AudioFormUpload.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AudioFormUpload.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-298c3cca", Component.options)
+  } else {
+    hotAPI.reload("data-v-298c3cca", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var transformData = __webpack_require__(30);
+var isCancel = __webpack_require__(14);
+var defaults = __webpack_require__(7);
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ 281:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "audio-form-upload"
+  }, [_c('div', {
+    staticClass: "d-flex justify-content-around"
+  }, [_c('button', {
+    ref: "show-modal-btn",
+    staticClass: "btn btn-lg btn-secondary btn-blue",
+    attrs: {
+      "type": "button",
+      "name": "button"
+    },
+    on: {
+      "click": _vm.showModal
+    }
+  }, [_vm._v("\n        Carica Audio\n    ")])]), _vm._v(" "), _c('div', {
+    ref: "close-form-btn",
+    staticClass: "d-flex justify-content-end close-btn",
+    on: {
+      "click": _vm.closeModal
+    }
+  }, [_vm._m(0)]), _vm._v(" "), _c('form', {
+    ref: "this-form",
+    attrs: {
+      "action": _vm.action,
+      "method": "post",
+      "enctype": "multipart/form-data"
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_method"
+    },
+    domProps: {
+      "value": _vm.method
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 form-group"
+  }, [_c('h6', [_vm._v("Titolo")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.title),
+      expression: "title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "name": "title",
+      "required": ""
+    },
+    domProps: {
+      "value": (_vm.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.title = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6 form-group"
+  }, [_c('h6', [_vm._v("Categoria Audio")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.category),
+      expression: "category"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "category",
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.opts), function(opt) {
+    return _c('option', {
+      domProps: {
+        "value": opt.id
+      }
+    }, [_vm._v("\n            " + _vm._s(opt.name) + "\n          ")])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-4 form-group"
+  }, [_c('h6', [_vm._v("Padiglione")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.section),
+      expression: "section"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "section",
+      "required": ""
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.section = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.secs), function(sec) {
+    return _c('option', {
+      domProps: {
+        "value": sec.id
+      }
+    }, [_vm._v("\n            " + _vm._s(sec.name) + "\n          ")])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4 form-group"
+  }, [_c('h6', [_vm._v("Categoria")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.app_category),
+      expression: "app_category"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "app_category"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.app_category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.a_cats), function(a_cat) {
+    return _c('option', {
+      domProps: {
+        "value": a_cat.id
+      }
+    }, [_vm._v("\n            " + _vm._s(a_cat.name) + "\n          ")])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4 form-group"
+  }, [_c('h6', [_vm._v("App")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.app_name),
+      expression: "app_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "app_name"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.app_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.a_names), function(a_name) {
+    return _c('option', {
+      domProps: {
+        "value": a_name.id
+      }
+    }, [_vm._v("\n            " + _vm._s(a_name.title) + "\n          ")])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col"
+  }, [_c('h6', [_vm._v("Libreria")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.sub_category),
+      expression: "sub_category"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "sub_category"
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.sub_category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.sub_cats), function(sub_cat) {
+    return _c('option', {
+      domProps: {
+        "value": sub_cat.id
+      }
+    }, [_vm._v("\n              " + _vm._s(sub_cat.name) + "\n            ")])
+  }))])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('h6', [_vm._v("File")]), _vm._v(" "), _c('input', {
+    staticClass: "form-control",
+    attrs: {
+      "type": "file",
+      "name": "file"
+    },
+    on: {
+      "change": _vm.fileChange
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "d-flex justify-content-around"
+  }, [_c('button', {
+    ref: "send-btn",
+    staticClass: "btn btn-lg btn-secondary btn-blue",
+    attrs: {
+      "type": "button",
+      "name": "button"
+    },
+    on: {
+      "click": _vm.sendForm
+    }
+  }, [_vm._v("Aggiungi")])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('h3', [_c('i', {
+    staticClass: "fa fa-times"
+  })])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-298c3cca", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 286:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    ref: "table",
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.audios), function(audio) {
+    return _c('tr', {
+      ref: "test",
+      refInFor: true,
+      attrs: {
+        "id": 'row-' + audio.id
+      }
+    }, [_c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(audio.id))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(audio.title))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(audio.duration))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_vm._v(_vm._s(audio.path))]), _vm._v(" "), _c('td', {
+      staticClass: "align-middle"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-orange btn-target",
+      attrs: {
+        "id": 'button-' + audio.id,
+        "data-target": audio.id
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggleModal(audio.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash-o"
+    })]), _vm._v(" "), _c('div', {
+      staticClass: "custom-modal",
+      staticStyle: {
+        "display": "none",
+        "position": "absolute"
+      },
+      attrs: {
+        "id": 'modal-' + audio.id
+      }
+    }, [_c('div', {
+      staticClass: "box container-fluid"
+    }, [_c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col dark-blue py-3"
+    }, [_c('div', {
+      staticClass: "col d-flex justify-content-end"
+    }, [_c('a', {
+      attrs: {
+        "data-modal": "close"
+      },
+      on: {
+        "click": function($event) {
+          _vm.closeModal(audio.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-times",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    })])])])]), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col blue px-5 py-4"
+    }, [_vm._m(1, true), _vm._v(" "), _c('div', {
+      staticClass: "row"
+    }, [_c('div', {
+      staticClass: "col-6"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-blue btn-left",
+      attrs: {
+        "data-modal": "close"
+      },
+      on: {
+        "click": function($event) {
+          _vm.closeModal(audio.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-undo",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Undo")])]), _vm._v(" "), _c('div', {
+      staticClass: "col-6"
+    }, [_c('button', {
+      staticClass: "btn btn-secondary btn-blue btn-right",
+      on: {
+        "click": function($event) {
+          _vm.deleteAudio(audio.id)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-trash-o",
+      attrs: {
+        "aria-hidden": "true"
+      }
+    }), _vm._v(" Delete")])])])])])])])])])
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('th', [_vm._v("Id")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Duration")]), _vm._v(" "), _c('th', [_vm._v("Percorso")]), _vm._v(" "), _c('th', [_vm._v("Tools")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row pb-4"
+  }, [_c('div', {
+    staticClass: "col"
+  }, [_c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Are you shure")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4e001d63", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(15);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ 298:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(247);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(20)("1950240e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-298c3cca\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioFormUpload.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
+
+
+/***/ }),
+
+/***/ 303:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(252);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(20)("319fe6e1", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4e001d63\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AudioCrud.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 309:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(203);
+
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
+
+
+/***/ }),
+
+/***/ 32:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      }
+
+      if (!utils.isArray(val)) {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+};
+
+
+/***/ }),
+
+/***/ 33:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ 34:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs support document.cookie
+  (function standardBrowserEnv() {
+    return {
+      write: function write(name, value, expires, path, domain, secure) {
+        var cookie = [];
+        cookie.push(name + '=' + encodeURIComponent(value));
+
+        if (utils.isNumber(expires)) {
+          cookie.push('expires=' + new Date(expires).toGMTString());
+        }
+
+        if (utils.isString(path)) {
+          cookie.push('path=' + path);
+        }
+
+        if (utils.isString(domain)) {
+          cookie.push('domain=' + domain);
+        }
+
+        if (secure === true) {
+          cookie.push('secure');
+        }
+
+        document.cookie = cookie.join('; ');
+      },
+
+      read: function read(name) {
+        var match = document.cookie.match(new RegExp('(^|;\\s*)(' + name + ')=([^;]*)'));
+        return (match ? decodeURIComponent(match[3]) : null);
+      },
+
+      remove: function remove(name) {
+        this.write(name, '', Date.now() - 86400000);
+      }
+    };
+  })() :
+
+  // Non standard browser env (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return {
+      write: function write() {},
+      read: function read() { return null; },
+      remove: function remove() {}
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ 36:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = (
+  utils.isStandardBrowserEnv() ?
+
+  // Standard browser envs have full support of the APIs needed to test
+  // whether the request URL is of the same origin as current location.
+  (function standardBrowserEnv() {
+    var msie = /(msie|trident)/i.test(navigator.userAgent);
+    var urlParsingNode = document.createElement('a');
+    var originURL;
+
+    /**
+    * Parse a URL to discover it's components
+    *
+    * @param {String} url The URL to be parsed
+    * @returns {Object}
+    */
+    function resolveURL(url) {
+      var href = url;
+
+      if (msie) {
+        // IE needs attribute set twice to normalize properties
+        urlParsingNode.setAttribute('href', href);
+        href = urlParsingNode.href;
+      }
+
+      urlParsingNode.setAttribute('href', href);
+
+      // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
+      return {
+        href: urlParsingNode.href,
+        protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
+        host: urlParsingNode.host,
+        search: urlParsingNode.search ? urlParsingNode.search.replace(/^\?/, '') : '',
+        hash: urlParsingNode.hash ? urlParsingNode.hash.replace(/^#/, '') : '',
+        hostname: urlParsingNode.hostname,
+        port: urlParsingNode.port,
+        pathname: (urlParsingNode.pathname.charAt(0) === '/') ?
+                  urlParsingNode.pathname :
+                  '/' + urlParsingNode.pathname
+      };
+    }
+
+    originURL = resolveURL(window.location.href);
+
+    /**
+    * Determine if a URL shares the same origin as the current location
+    *
+    * @param {String} requestURL The URL to test
+    * @returns {boolean} True if URL shares the same origin, otherwise false
+    */
+    return function isURLSameOrigin(requestURL) {
+      var parsed = (utils.isString(requestURL)) ? resolveURL(requestURL) : requestURL;
+      return (parsed.protocol === originURL.protocol &&
+            parsed.host === originURL.host);
+    };
+  })() :
+
+  // Non standard browser envs (web workers, react-native) lack needed support.
+  (function nonStandardBrowserEnv() {
+    return function isURLSameOrigin() {
+      return true;
+    };
+  })()
+);
+
+
+/***/ }),
+
+/***/ 37:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ 38:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ 41:
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
 
 /***/ }),
 
@@ -52092,7 +52092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(36);
+var normalizeHeaderName = __webpack_require__(37);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -52186,4 +52186,4 @@ module.exports = defaults;
 
 /***/ })
 
-},[308]);
+},[309]);

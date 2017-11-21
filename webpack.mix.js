@@ -21,6 +21,7 @@ const { mix } = require('laravel-mix');
     .js('resources/assets/admin/js/audio.js', 'public/js/admin/audio.js')
     .js('resources/assets/admin/js/image.js', 'public/js/admin/image.js')
     .js('resources/assets/admin/js/main.js', 'public/js/admin/main.js')
+    .js('resources/assets/admin/js/translate.js', 'public/js/admin/')
     .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
     .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')

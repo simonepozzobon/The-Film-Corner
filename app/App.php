@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class App extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = ['title', 'description'];
     protected $table = 'apps';
+    protected $fillable = ['slug'];
 
     public function category()
     {
@@ -50,4 +54,35 @@ class App extends Model
 
       return $items;
     }
+
+    // public function translations()
+    // {
+    //     // Trovo le colonne che sono mappate
+    //     $map = TranslableMap::where('table', '=', 'apps')->get();
+    //     $map_arr = $map->pluck('column');
+    //
+    //     $translations = collect();
+    //     foreach ($map_arr as $key => $map) {
+    //       // ottengo le traduzioni
+    //       $t = Translate::where([
+    //         ['column', '=', $map],
+    //         ['translable_type', '=', get_class($this)]
+    //       ])->get();
+    //
+    //       // formatto l'oggetto traduzione
+    //       if ($t->count() > 0) {
+    //         $obj = collect();
+    //         $obj->column = $map;
+    //         $obj->translation = $t;
+    //         $translations->push($obj);
+    //       } else {
+    //         $obj = collect();
+    //         $obj->column = $map;
+    //         $obj->translation = collect();
+    //         $translations->push($obj);
+    //       }
+    //     }
+    //
+    //     return $translations;
+    // }
 }

@@ -500,5 +500,15 @@ class Utility extends Model
     return $absPath;
   }
 
+  /*
+   *
+   * $table = nome della tabella
+   * Verifica in quella tabella quali sono le colonne che possono essere tradotte
+   *
+   */
+  public static function translable_columns($table)
+  {
+
+  }
 
 }
