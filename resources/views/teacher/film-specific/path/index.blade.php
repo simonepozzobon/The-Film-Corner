@@ -13,18 +13,6 @@
             Examples of pictures and clips related to each app with a short explanations
           </div>
         </div>
-        {{-- <div class="box last orange mt">
-          <div class="box-header">
-            References
-          </div>
-          <div class="box-body">
-            <ul>
-              <li>lista 1</li>
-              <li>lista 2</li>
-              <li>altro elemento</li>
-            </ul>
-          </div>
-        </div> --}}
       </div>
       <div class="col-md-8">
         @if ($apps->count() > 0)

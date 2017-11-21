@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\App;
-use App\AppSection;
-use App\AppSectionTranslation;
+use App\AppKeyword;
+use App\AppKeywordTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -37,16 +37,16 @@ class TranslateController extends Controller
 
     public function translate()
     {
-        $app_section = AppSection::all();
-        foreach ($app_section as $key => $item) {
-            $t = new AppSectionTranslation;
-            $t->app_section_id = $item->id;
+        $items = AppKeyword::all();
+        foreach ($items as $key => $item) {
+            $t = new AppKeywordTranslation;
+            $t->app_keyword_id = $item->id;
             $t->name = $item->name;
             $t->description = $item->description;
             $t->locale = 'en';
             $t->save();
         }
 
-        return redirect()->route('admin.index');
+        return redirect()->route('admin');
     }
 }

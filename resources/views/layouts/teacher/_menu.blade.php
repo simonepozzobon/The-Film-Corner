@@ -170,8 +170,14 @@
             <a class="dropdown-item markasread" href="{{ route('set.locale', 'en') }}">
               English
             </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'fr') }}">
+              Francais
+            </a>
             <a class="dropdown-item markasread" href="{{ route('set.locale', 'it') }}">
               Italiano
+            </a>
+            <a class="dropdown-item markasread" href="{{ route('set.locale', 'sr') }}">
+              српски
             </a>
         </div>
       </li>

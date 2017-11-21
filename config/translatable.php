@@ -11,9 +11,10 @@ return [
     |
     */
     'locales' => [
-        'en',
-        'fr',
-        'it',
+        'en', // Inglese
+        'fr', // Francese
+        'it', // Italiano
+        'sr', // Serbo
     ],
 
     /*
