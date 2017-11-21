@@ -28,7 +28,7 @@ class FilmSpecificController extends Controller
   public function index($category)
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
-    $apps = App::where('app_category_id', '=', $app_category->id)->with('category')->get();
+    $apps = App::where('app_category_id', '=', $app_category->id)->orderBy('order')->with('category')->get();
 
     $teacher = Auth::guard('teacher')->user();
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
