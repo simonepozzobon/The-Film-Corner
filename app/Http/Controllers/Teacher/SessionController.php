@@ -190,7 +190,7 @@ class SessionController extends Controller
         break;
 
 
-      // Film Specific - Framing - App 3 - Juxtaposition
+      // Film Specific - Framing - App 3 - types-of-images
       case 3:
         if (isset($request['notes'])) {
           $data = [
@@ -615,7 +615,7 @@ class SessionController extends Controller
         $shared->content = $session->content;
         break;
 
-      // Film Specific - Framing - Juxtaposition
+      // Film Specific - Framing - types-of-images
       case '3':
         $shared->content = $session->content;
         break;

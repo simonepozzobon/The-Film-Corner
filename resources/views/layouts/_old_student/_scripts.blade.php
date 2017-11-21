@@ -115,7 +115,7 @@
           console.log('--------');
           break;
 
-        // Film Specific - Framing - App 3 - Juxtaposition
+        // Film Specific - Framing - App 3 - types-of-images
         case 3:
           var images = [
               $('#img-left').attr('src'),

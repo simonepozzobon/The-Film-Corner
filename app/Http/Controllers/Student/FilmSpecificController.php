@@ -121,7 +121,7 @@ class FilmSpecificController extends Controller
         return view('student.film-specific.frame-crop.index', compact('app', 'app_category'));
         break;
 
-      case 'juxtaposition':
+      case 'types-of-images':
 
         $images = $app->medias()->get();
 
@@ -139,7 +139,7 @@ class FilmSpecificController extends Controller
 
         $library = json_encode($images->toArray());
 
-        return view('student.film-specific.juxtaposition.index', compact('app', 'app_category', 'library', 'left', 'right'));
+        return view('student.film-specific.types-of-images.index', compact('app', 'app_category', 'library', 'left', 'right'));
         break;
 
       // case 'frame-counter':
@@ -314,7 +314,7 @@ class FilmSpecificController extends Controller
         return view('student.film-specific.frame-crop.open', compact('app', 'app_category', 'session', 'app_session', 'is_student'));
         break;
 
-      case 'juxtaposition':
+      case 'types-of-images':
         $images = $app->medias()->get();
 
         $images = collect($images->pluck('landscape')->all());
@@ -325,7 +325,7 @@ class FilmSpecificController extends Controller
 
         $library = json_encode($images->toArray());
 
-        return view('student.film-specific.juxtaposition.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
+        return view('student.film-specific.types-of-images.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
         break;
 
       // case 'frame-counter':

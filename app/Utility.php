@@ -221,7 +221,7 @@ class Utility extends Model
         $item->notes = $obj->frames[0]->description;
         break;
 
-      // Film Specific - Framing - App 3 - Juxtaposition
+      // Film Specific - Framing - App 3 - types-of-images
       case '3':
         $obj = json_decode($share->content);
 
