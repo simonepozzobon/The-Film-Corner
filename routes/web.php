@@ -182,6 +182,11 @@ Route::prefix('admin')->group(function () {
         Route::get('/index', 'Admin\TranslateController@index')->name('admin.translate.index');
     });
 
+    Route::prefix('apps')->group(function(){
+        Route::get('/glossary', 'Admin\GlossaryController@index')->name('admin.apps.glossary.index');
+        Route::post('/glossary', 'Admin\GlossaryController@store')->name('admin.apps.glossary.store');
+    });
+
 });
 
 

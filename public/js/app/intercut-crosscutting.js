@@ -24,11 +24,11 @@ var _guid = __webpack_require__(49);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -36,7 +36,7 @@ var _toTitleCase = __webpack_require__(50);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -1981,7 +1981,7 @@ exports.normalizeContent = normalizeContent;
 exports.appendContent = appendContent;
 exports.insertContent = insertContent;
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -1993,7 +1993,7 @@ var _guid = __webpack_require__(49);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -2001,7 +2001,7 @@ var _tsml = __webpack_require__(87);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -2847,7 +2847,8 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /***/ }),
 /* 5 */,
-/* 6 */
+/* 6 */,
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
@@ -2869,7 +2870,6 @@ if (typeof document !== 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */,
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2886,7 +2886,8 @@ if (typeof document !== 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 9 */
+/* 9 */,
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2998,7 +2999,15 @@ var BACKGROUND_SIZE_SUPPORTED = exports.BACKGROUND_SIZE_SUPPORTED = Dom.isReal()
 
 
 /***/ }),
-/* 10 */
+/* 11 */,
+/* 12 */,
+/* 13 */,
+/* 14 */,
+/* 15 */,
+/* 16 */,
+/* 17 */,
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3157,13 +3166,7 @@ function isPlain(value) {
 
 
 /***/ }),
-/* 11 */,
-/* 12 */,
-/* 13 */,
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3176,9 +3179,9 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -3310,9 +3313,6 @@ exports['default'] = log;
 
 
 /***/ }),
-/* 18 */,
-/* 19 */,
-/* 20 */,
 /* 21 */,
 /* 22 */,
 /* 23 */,
@@ -3334,7 +3334,10 @@ exports['default'] = log;
 /* 39 */,
 /* 40 */,
 /* 41 */,
-/* 42 */
+/* 42 */,
+/* 43 */,
+/* 44 */,
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3343,7 +3346,7 @@ exports['default'] = log;
 exports.__esModule = true;
 exports['default'] = mergeOptions;
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 /**
  * Deep-merge one or more options objects, recursively merging **only** plain
@@ -3389,9 +3392,7 @@ function mergeOptions() {
 
 
 /***/ }),
-/* 43 */,
-/* 44 */,
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3412,7 +3413,7 @@ var _guid = __webpack_require__(49);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -3420,7 +3421,7 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -3884,7 +3885,7 @@ function one(elem, type, fn) {
 
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3943,7 +3944,6 @@ exports['default'] = formatTime;
 
 
 /***/ }),
-/* 47 */,
 /* 48 */,
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -4026,11 +4026,11 @@ var _component = __webpack_require__(1);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -4209,7 +4209,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4217,15 +4217,15 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -4541,7 +4541,7 @@ var _htmlTrackElementList = __webpack_require__(187);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -4565,7 +4565,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4581,11 +4581,11 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -5953,7 +5953,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -6097,7 +6097,8 @@ exports.createTimeRange = createTimeRanges;
 /***/ }),
 /* 56 */,
 /* 57 */,
-/* 58 */
+/* 58 */,
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6207,7 +6208,7 @@ exports['default'] = TextTrackButton;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6215,7 +6216,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -6383,7 +6384,7 @@ exports['default'] = EventTarget;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6399,7 +6400,7 @@ var _component = __webpack_require__(1);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -6528,7 +6529,7 @@ exports['default'] = MenuItem;
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6537,7 +6538,7 @@ exports['default'] = MenuItem;
 exports.__esModule = true;
 exports.isCrossOrigin = exports.getFileExtension = exports.getAbsoluteURL = exports.parseUrl = undefined;
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -6708,8 +6709,8 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 
 /***/ }),
-/* 62 */,
-/* 63 */
+/* 63 */,
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(106);
@@ -6717,7 +6718,6 @@ module.exports = angular;
 
 
 /***/ }),
-/* 64 */,
 /* 65 */,
 /* 66 */,
 /* 67 */,
@@ -6733,7 +6733,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(60);
+var _menuItem = __webpack_require__(61);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -6749,7 +6749,7 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -6917,7 +6917,7 @@ var Fn = _interopRequireWildcard(_fn);
 
 var _trackEnums = __webpack_require__(72);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -6929,17 +6929,17 @@ var _track = __webpack_require__(74);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(61);
+var _url = __webpack_require__(62);
 
 var _xhr = __webpack_require__(102);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7436,15 +7436,15 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(59);
+var _eventTarget = __webpack_require__(60);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -7676,11 +7676,11 @@ exports['default'] = TrackList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -7688,7 +7688,7 @@ var _guid = __webpack_require__(49);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(59);
+var _eventTarget = __webpack_require__(60);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -8358,7 +8358,7 @@ exports['default'] = VolumeBar;
 
 exports.__esModule = true;
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 /**
  * A Custom `MediaError` class which mimics the standard HTML5 `MediaError` class.
@@ -8947,7 +8947,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9648,7 +9648,7 @@ var _component = __webpack_require__(1);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -9656,7 +9656,7 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9672,11 +9672,11 @@ var _guid = __webpack_require__(49);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -9704,9 +9704,9 @@ var _tuple = __webpack_require__(128);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -13344,7 +13344,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -13700,11 +13700,11 @@ var _trackList = __webpack_require__(73);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -13888,11 +13888,11 @@ var _trackList = __webpack_require__(73);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -14141,7 +14141,7 @@ function bufferedPercent(buffered, duration) {
 exports.__esModule = true;
 exports.setTextContent = exports.createStyleElement = undefined;
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -14209,11 +14209,11 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -14233,11 +14233,11 @@ var _component = __webpack_require__(1);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(59);
+var _eventTarget = __webpack_require__(60);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -14249,7 +14249,7 @@ var _plugins = __webpack_require__(177);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(42);
+var _mergeOptions2 = __webpack_require__(45);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
@@ -14271,19 +14271,19 @@ var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
 var _timeRanges = __webpack_require__(55);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(61);
+var _url = __webpack_require__(62);
 
 var Url = _interopRequireWildcard(_url);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 var _computedStyle = __webpack_require__(75);
 
@@ -76698,13 +76698,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     //module loader detection derrived from http://tinyurl.com/hs2coz2
     if (("function").match(/^(object|function)$/) && __webpack_require__(198)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(63), __webpack_require__(101)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(64), __webpack_require__(101)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(63), __webpack_require__(101));
+        module.exports = factory(__webpack_require__(64), __webpack_require__(101));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -77511,7 +77511,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(60);
+var _menuItem = __webpack_require__(61);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -78362,7 +78362,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(60);
+var _menuItem = __webpack_require__(61);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -78617,7 +78617,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -78814,7 +78814,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -79000,7 +79000,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -79263,7 +79263,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -79602,7 +79602,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(58);
+var _textTrackButton = __webpack_require__(59);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79720,7 +79720,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(58);
+var _textTrackButton = __webpack_require__(59);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79967,7 +79967,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(60);
+var _menuItem = __webpack_require__(61);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -80082,7 +80082,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(58);
+var _textTrackButton = __webpack_require__(59);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80323,7 +80323,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(58);
+var _textTrackButton = __webpack_require__(59);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80425,7 +80425,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80540,7 +80540,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80665,7 +80665,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(46);
+var _formatTime = __webpack_require__(47);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -81251,7 +81251,7 @@ var _modalDialog = __webpack_require__(94);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -81353,11 +81353,11 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -81458,7 +81458,7 @@ exports['default'] = extendFn;
 
 exports.__esModule = true;
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -81752,7 +81752,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -81861,7 +81861,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -82038,11 +82038,11 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(45);
+var _events = __webpack_require__(46);
 
 var Events = _interopRequireWildcard(_events);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -82401,7 +82401,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(61);
+var _url = __webpack_require__(62);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -82419,7 +82419,7 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -83594,7 +83594,7 @@ var _dom = __webpack_require__(4);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(61);
+var _url = __webpack_require__(62);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -83602,7 +83602,7 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -83610,11 +83610,11 @@ var _tsml = __webpack_require__(87);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -83622,9 +83622,9 @@ var _window = __webpack_require__(8);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -85629,11 +85629,11 @@ var _track = __webpack_require__(74);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -85759,11 +85759,11 @@ exports['default'] = AudioTrack;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -85914,15 +85914,15 @@ exports['default'] = HtmlTrackElementList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(59);
+var _eventTarget = __webpack_require__(60);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -86090,11 +86090,11 @@ exports['default'] = HTMLTrackElement;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -86723,11 +86723,11 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(6);
+var _document = __webpack_require__(7);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -86840,11 +86840,11 @@ var _fn = __webpack_require__(3);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _obj = __webpack_require__(10);
+var _obj = __webpack_require__(19);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(17);
+var _log = __webpack_require__(20);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -87440,11 +87440,11 @@ var _track = __webpack_require__(74);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(42);
+var _mergeOptions = __webpack_require__(45);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(9);
+var _browser = __webpack_require__(10);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87614,17 +87614,18 @@ function extend() {
 /* 208 */,
 /* 209 */,
 /* 210 */,
-/* 211 */
+/* 211 */,
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _angular = __webpack_require__(63);
+var _angular = __webpack_require__(64);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(22);
+var _jquery = __webpack_require__(42);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -88015,10 +88016,9 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(22)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
 
 /***/ }),
-/* 212 */,
 /* 213 */,
 /* 214 */,
 /* 215 */,
@@ -88122,11 +88122,33 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 313 */,
 /* 314 */,
 /* 315 */,
-/* 316 */
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(211);
+module.exports = __webpack_require__(212);
 
 
 /***/ })
-],[316]);
+],[338]);
