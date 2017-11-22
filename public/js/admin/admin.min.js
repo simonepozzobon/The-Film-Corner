@@ -12,7 +12,7 @@ webpackJsonp([14],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ }),
 
@@ -340,7 +340,7 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ }),
 
