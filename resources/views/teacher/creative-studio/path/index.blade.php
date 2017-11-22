@@ -7,7 +7,7 @@
       <div class="col col-md-4">
         <h3 class="d-inline">
           @foreach ($app_category->keywords()->get() as $key => $keyword)
-            <span class="glossary badge badge-default p-1 m-1" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</span>
+            <span class="glossary badge badge-default" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</span>
           @endforeach
         </h3>
         @foreach ($app_category->keywords()->get() as $key => $keyword)

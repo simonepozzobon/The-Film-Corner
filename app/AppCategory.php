@@ -9,7 +9,7 @@ class AppCategory extends Model
     use \Dimsav\Translatable\Translatable;
     public $translatedAttributes = ['name', 'description'];
     protected $table = 'app_categories';
-    protected $fillable = ['slug'];
+    protected $fillable = ['slug', 'color_class'];
 
     public function section()
     {

@@ -5,11 +5,12 @@
     @include('components.apps.heading', ['route' => route('teacher'), 'app_category' => $app_category, 'apps' => $apps])
     <div class="row mt">
       <div class="col col-md-4">
-        <h3 class="d-inline">
+        <div class="glossary">
           @foreach ($app_category->keywords()->get() as $key => $keyword)
-            <span class="glossary badge badge-default p-1 m-1" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</span>
+            <div class="badge badge-{{ $app_category->color_class }}" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</div>
           @endforeach
-        </h3>
+        </div>
+
         @foreach ($app_category->keywords()->get() as $key => $keyword)
           <div class="modal fade" id="glossary-{{$keyword->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
@@ -80,6 +81,9 @@
                   {{ $app->description }}
                 </div>
               </div>
+              <div class="box-btns">
+                <a href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
+              </div>
             </div>
           @endforeach
           <div id="modalSession"></div>
@@ -99,6 +103,32 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
+  $(document.body).on('click', '.read-more', function(event) {
+    console.log('read-more cliccato');
+    event.preventDefault();
+    var id = event.target.dataset.id,
+        el = $('#'+id),
+        short_description = el.find('.short-description'),
+        long_description = el.find('.long-description');
+
+    short_description.addClass('d-none');
+    long_description.removeClass('d-none');
+    $(this).html('Read Less').removeClass('read-more').addClass('read-less');
+  });
+
+  $(document.body).on('click', '.read-less', function(event) {
+    console.log('read-less cliccato');
+    event.preventDefault();
+    var id = event.target.dataset.id,
+        el = $('#'+id),
+        short_description = el.find('.short-description'),
+        long_description = el.find('.long-description');
+
+    long_description.addClass('d-none');
+    short_description.removeClass('d-none');
+    $(this).html('Read More').removeClass('read-less').addClass('read-more');
+  })
+
   function openSessions(teacherId, appId, color) {
     $.ajax({
       type: 'GET',

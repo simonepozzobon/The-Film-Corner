@@ -125,6 +125,13 @@ $tfc-dark-blue:   rgb(166, 219, 226);
 $tfc-orange:      rgb(244, 196, 144);
 $tfc-dark-orange: rgb(232, 163, 96);
 
+// Other TFC colors
+$tfc-red:             rgb(255, 135, 143);
+$tfc-dark-red:        rgb(255, 99, 110);
+$tfc-green-var:       rgb(189, 237, 231);
+$tfc-dark-green-var:  rgb(149, 226, 218);
+
+
 // Reassign color vars to semantic color scheme
 $brand-primary:             $blue !default;
 $brand-success:             $green !default;

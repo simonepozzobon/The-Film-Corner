@@ -124,6 +124,16 @@
       margin-left: ($spacer / 2);
       margin-right: ($spacer / 2);
     }
+
+
+    // Read more link or link in btns
+    > .read-more, .read-less {
+      color: $black;
+
+      &:hover {
+        color: $black;
+      }
+    }
   }
 
   &.last {
@@ -164,6 +174,7 @@
     }
   }
 }
+
 
 //
 // SIDEBAR MENU

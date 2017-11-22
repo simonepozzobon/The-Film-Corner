@@ -3,17 +3,34 @@
 // Requires one of the contextual, color modifier classes for `color` and
 // `background-color`.
 
+.glossary {
+  display: flex;
+  flex-wrap: wrap;
+
+  > .badge {
+    margin-left: ($spacer / 3);
+    margin-bottom: ($spacer / 4);
+    color: $black;
+  }
+}
+
+
+
 .badge {
   display: inline-block;
-  padding: $badge-padding-y $badge-padding-x;
-  font-size: $badge-font-size;
-  font-weight: $badge-font-weight;
-  line-height: 1;
+  padding-top: ($spacer / 3);
+  padding-bottom: ($spacer / 3);
+  padding-left: ($spacer * 2/3);
+  padding-right: ($spacer * 2/3);
+
+  font-size: $font-size-base;
+  font-weight: $font-weight-base;
+  line-height: $line-height-base;
   color: $badge-color;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
-  @include border-radius();
+  @include border-radius(0);
 
   // Empty badges collapse automatically
   &:empty {
@@ -74,4 +91,20 @@ a.badge {
 
 .badge-danger {
   @include badge-variant($badge-danger-bg);
+}
+
+.badge-red {
+  @include badge-variant($tfc-red);
+}
+
+.badge-dark-red {
+  @include badge-variant($tfc-dark-red);
+}
+
+.badge-yellow {
+  @include badge-variant($tfc-yellow);
+}
+
+.badge-green-var {
+  @include badge-variant($tfc-green-var);
 }
