@@ -2,34 +2,39 @@
 @section('title', 'Creative Studio')
 @section('content')
   <div class="container">
-    @include('components.apps.heading', ['route' => route('teacher'), 'app_category' => $app_category])
+    @include('components.apps.heading', ['route' => route('teacher'), 'app_category' => $app_category, 'apps' => $apps])
     <div class="row mt">
-      <div class="col col-md-3">
-        <div class="box green">
-          <div class="box-header">
-            Examples
+      <div class="col col-md-4">
+        <h3 class="d-inline">
+          @foreach ($app_category->keywords()->get() as $key => $keyword)
+            <span class="glossary badge badge-default p-1 m-1" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</span>
+          @endforeach
+        </h3>
+        @foreach ($app_category->keywords()->get() as $key => $keyword)
+          <div class="modal fade" id="glossary-{{$keyword->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-default">{!! $keyword->description !!}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Okay</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="box-body">
-            Examples of pictures and clips related to each app with a short explanations
-          </div>
-        </div>
-        {{-- <div class="box last orange mt">
-          <div class="box-header">
-            References
-          </div>
-          <div class="box-body">
-            <ul>
-              <li>lista 1</li>
-              <li>lista 2</li>
-              <li>altro elemento</li>
-            </ul>
-          </div>
-        </div> --}}
+        @endforeach
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
         @if ($apps->count() > 0)
           @foreach ($apps as $key => $app)
-            <div class="box {{ $app->colors }} {{ $key == 0 ? '' : 'mt' }}">
+            <div id="{{ $app->slug }}" class="box {{ $app->colors }} {{ $key == 0 ? '' : 'mt' }}">
               <div class="box-header">
                 {{ $app->title }}
               </div>
