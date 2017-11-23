@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Student;
 use App\AppSection;
+use App\WelcomeForm;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 
@@ -92,6 +93,18 @@ class StudentController extends Controller
 
     public function welcome()
     {
-      return view('student.first_visit.index');
+      $user = Auth::guard('student')->user();
+      $user_type = get_class($user);
+
+      $form = WelcomeForm::where([
+        ['userable_id', '=', $user->id],
+        ['userable_type', '=', $user_type]
+      ])->first();
+
+      if (!$form) {
+        $form = '';
+      }
+
+      return view('student.first_visit.index', compact('form'));
     }
 }

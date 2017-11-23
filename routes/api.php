@@ -37,6 +37,9 @@ Route::prefix('v1')->group(function() {
   // Audio Editor
   Route::post('/audio-edit', 'AudioEditorController@updateEditor');
 
+  // Welcome form
+  Route::post('/welcome/save', 'Api\GeneralController@welcome_save');
+
 });
 
 // General request

@@ -28,13 +28,14 @@ const { mix } = require('laravel-mix');
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
 
     .js('resources/assets/js/socket-test', 'public/js')
-    .js('resources/assets/js/teacher-chat.js', 'public/js')
-    .js('resources/assets/js/network.js', 'public/js')
-    .js('resources/assets/js/network-single.js', 'public/js')
+    .js('resources/assets/js/teacher-chat', 'public/js')
+    .js('resources/assets/js/network', 'public/js')
+    .js('resources/assets/js/network-single', 'public/js')
 
-    .js('resources/assets/js/conference/speakers.js', 'public/js/conference')
+    .js('resources/assets/js/conference/speakers', 'public/js/conference')
 
     .js('resources/assets/js/studio-home.js', 'public/js/app')
+    .js('resources/assets/js/first-visit', 'public/js')
 
     .js('resources/assets/js/app.js', 'public/js')
     .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')

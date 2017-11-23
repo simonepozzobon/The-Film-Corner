@@ -1,40 +1,11 @@
 @extends('layouts.student')
 @section('title', 'Welcome')
 @section('content')
-  <div class="container">
+  <div id="app" class="container">
     @include('components.apps.heading_simple', ['title' => 'Welcome'])
     <div class="row mt">
       <div class="col">
-        <div class="box blue">
-          <div class="box-header">
-            Short Introduction
-          </div>
-          <div class="box-body">
-            The Film Corner is the interactive web platform dedicated to cinema,
-            a website where you can surf through different STUDIOS and the corresponding educational projects,
-            discovering and exploring the many aspects that underpin cinematographic language and grammar.<br>
-            <br>
-            We all have a relationship with cinema. The word “cinema” means something to each one of us,
-            it reminds us of other worlds and other aspects of our lives. What is cinema for you?
-            <strong>Think of 3 key words to describe your own relationship with cinema and write them in the cloud below.</strong><br>
-            <br>
-            Cinema is something big, something that often characterizes and enters our lives and we can experience in different ways.<br>
-            However, when we decided to create The Film Corner, we asked ourselves which of these many aspects we would have liked to talk about.
-            The answer we came up with is that The Film Corner would talk about two specific aspects of cinema: the formal and the creative ones.<br>
-            <br>
-            The reason why we wanted to approach cinema from this point of view is to be found in a question that we’d like you to try and answer:
-            when you are watching a film, what is it that really gets to you of what you are seeing?
-            <strong>Try and answer this question, then write your answer in the grid below.</strong><br>
-            <br>
-            Usually, the first piece of information that gets to us when watching a film is the emotion, which comes before we can even have the
-            time to really start reflecting on what we see (the positioning of the camera, the editing choices, the selection of the soundtrack, etc.).
-            Love, joy, hilarity, sadness, despair, detachment, coldness, or even concern, anguish, fear, are indeed emotions, sensations.
-            But how does cinema do it? Behind each emotion we feel with cinema lays a conscious choice made by whoever made the film.
-            In every picture there is a direct, and often very stark relationship between the emotions we feel and the visual, linguistic and grammatical
-            choices made by the film creators. It may sound obvious, but there is a direct bond between creativity and critical reception of a film.
-            That’s why we are interested in these two aspects!
-          </div>
-        </div>
+        <welcome-form user="{{ Auth::guard('student')->user() }}" user_type="{{ get_class(Auth::guard('student')->user()) }}" form="{{ $form }}"></welcome-form>
       </div>
     </div>
     <div class="row mt">
@@ -72,4 +43,7 @@
       </div>
     </div>
   </div>
+@endsection
+@section('scripts')
+  <script src="{{ mix('js/first-visit.js') }}"></script>
 @endsection
