@@ -1,27 +1,36 @@
+/**
+ * Activate Jquery globally and add Tether for Bootstrap js
+ */
+
 window.$ = window.jQuery = require('jquery')
 window.Tether = require('tether')
+
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 require('./bootstrap');
 
+
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
  */
 
-// Vue.component('example', require('./components/Example.vue'));
-
-// const app = new Vue({
-//     el: '#app'
-// });
-
 import Echo from "laravel-echo"
-
+window.io = require('socket.io-client');
 window.Echo = new Echo({
     broadcaster: 'socket.io',
     host: window.location.hostname + ':6001'
 });
+
+
+/**
+ * Importo anche Tooltip.js per i tooltip (usati specialmente nel menu delle applicazioni)
+ */
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

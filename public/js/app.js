@@ -1196,13 +1196,19 @@ var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * Activate Jquery globally and add Tether for Bootstrap js
+ */
+
 window.$ = window.jQuery = __webpack_require__(44);
 window.Tether = __webpack_require__(126);
+
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+
 __webpack_require__(252);
 
 /**
@@ -1210,7 +1216,6 @@ __webpack_require__(252);
  */
 
 window.io = __webpack_require__(104);
-
 window.Echo = new _laravelEcho2.default({
   broadcaster: 'socket.io',
   host: window.location.hostname + ':6001'
@@ -1220,7 +1225,6 @@ window.Echo = new _laravelEcho2.default({
  * Importo anche Tooltip.js per i tooltip (usati specialmente nel menu delle applicazioni)
  */
 
-// window.Tooltip = require('tooltip.js');
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
