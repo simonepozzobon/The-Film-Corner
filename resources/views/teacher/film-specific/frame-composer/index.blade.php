@@ -14,8 +14,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher'])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher'])
     <div id="app">
       <div class="row mt">
         <div class="col-md-8">
@@ -37,31 +36,33 @@
             <div class="box-header">
               Library
             </div>
-            <div class="box-body">
-              <nav class="navbar navbar-toggleable-sm navbar-light navbar-library">
+            <div class="box-body library">
+              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav mx-auto">
+                  <ul class="navbar-nav" role="tablist">
                     @foreach ($app->mediaCategory()->get() as $key => $library)
                       <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#{{ Utility::slugify($library->name) }}" aria-expanded="false" aria-controls="{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                        <a class="nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                       </li>
                     @endforeach
                   </ul>
                 </div>
               </nav>
-              <div id="libraries">
+              <div id="libraries" class="library-container tab-content">
                 @foreach ($app->mediaCategory()->get() as $key => $library)
-                  <ul id="{{ Utility::slugify($library->name) }}" class="assets list-unstyled row collapse {{ $key == 0 ? 'show' : '' }}" role="tabpanel">
-                    @foreach ($library->media_on_sub_category() as $key => $media)
-                      <li class="asset col-md-3 col-sm-4 pb-3 d-inline-block">
-                        <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="80" class="img-fluid w-100" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
-                        <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times" aria-hidden="true"></i></a>
-                      </li>
-                    @endforeach
-                  </ul>
+                  <div id="{{ Utility::slugify($library->name) }}" class="assets tab-pane {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
+                    <div class="row">
+                      @foreach ($library->media_on_sub_category() as $key => $media)
+                        <div class="asset col-md-3 col-sm-4 pb-3">
+                          <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" class="img-fluid" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
+                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>
+                        </div>
+                      @endforeach
+                    </div>
+                  </div>
                 @endforeach
               </div>
             </div>
@@ -117,11 +118,11 @@
           responsiveCanvas(canvas)
         });
 
-        $('.assets li').click(function(e) {
+        $('.assets .asset').click(function(e) {
             e.preventDefault();
             var $this = $(this);
             var image_obj = $this.data('image-image-obj');
-            var parent = $this.closest('li');
+            var parent = $this.closest('.asset');
 
             if( !image_obj ) {
               var $image = $(this).find('img');
@@ -176,21 +177,27 @@
 
         $('#deselect').on('click', function () {
           deselect(canvas);
+          saveCanvas(canvas);
         });
         $('#back').on('click', function () {
           back(canvas);
+          saveCanvas(canvas);
         });
         $('#backward').on('click', function () {
           backward(canvas);
+          saveCanvas(canvas);
         });
         $('#forward').on('click', function () {
           forward(canvas);
+          saveCanvas(canvas);
         });
         $('#front').on('click', function () {
           front(canvas)
+          saveCanvas(canvas);
         });
         $('#destroy').on('click', function () {
           destroy(canvas);
+          saveCanvas(canvas);
         });
     });
 
