@@ -14,8 +14,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
     <div id="app">
       <div class="row mt">
         <div class="col-md-8">
