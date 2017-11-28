@@ -1,19 +1,56 @@
+@php
+  if (!isset($student)) {
+    $student = false;
+  }
+@endphp
   <div class="row mt">
     <div class="col">
       <div class="title-wrapper bg-faded">
+        <div class="icons-left">
+          <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="Close App">
+            <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-window-close text-danger"></i></a>
+          </div>
+          @if ($student == false)
+            <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="Save This Session">
+              <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-floppy-o text-primary"></i></a>
+            </div>
+            @if (isset($app_session) && $app_session->teacher_shared == 1)
+            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
+              <a href="#" data-toggle="collapse" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
+            </div>
+            @endif
+          @else
+            <div id="approve-btn" class="icon approve" data-toggle="tooltip" data-html="true" title="Approve this session and make it available to share">
+              <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-thumbs-o-up text-success"></i></a>
+            </div>
+            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
+              <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-comment-o text-warning"></i></a>
+            </div>
+          @endif
+        </div>
         <div class="title">
           {{ $app->title }}
         </div>
-        <div class="icon-right">
-          <i class="fa fa-plus" data-toggle="collapse" href="#app-info" aria-expanded="false" aria-controls="app-info"></i>
+        <div class="icons-right">
+          <div id="example-btn" class="icon" data-toggle="tooltip" data-html="true" title="Show Examples">
+            <a ><i class="fa fa-lightbulb-o"></i></a>
+          </div>
+          <div id="help-btn" class="icon" data-toggle="tooltip" data-html="true" title="Help">
+            <a><i class="fa fa-question"></i></a>
+          </div>
+          <div id="print-btn" class="icon" data-toggle="tooltip" data-html="true" title="Print">
+            <a ><i class="fa fa-print"></i></a>
+          </div>
         </div>
       </div>
-      <div id="app-info" class="title-description collapse">
-        <div class="heading">
-          Info
-        </div>
-        <div class="content">
-          {!! $app->description !!}
+      <div id="app-info" class="title-description">
+        <div class="content no-padding">
+          <div class="short-description">
+            {{ substr(strip_tags($app->description), 0, 200) }}{{ strlen(strip_tags($app->description)) > 200 ? '...' : "" }}
+          </div>
+          <div class="long-description d-none">
+            {!! $app->description !!}
+          </div>
         </div>
         @if ($app->examples()['count'] > 0)
           <div class="heading">
@@ -47,6 +84,87 @@
               @endforeach
           </div>
         @endif
+
+        <div class="btns">
+            <a href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  @if ($student == false)
+    <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+
+            <div class="modal-body">
+              <form>
+              {{ csrf_field() }}
+              {{ method_field('POST') }}
+              <div class="form-group">
+                <label for="">Title:</label>
+                <input type="text" name="title" class="form-control">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  @elseif ($student == true && isset($app_session))
+    <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </div>
+          <form class="" action="{{ route('teacher.session.share') }}" method="POST">
+            {{ csrf_field() }}
+            {{ method_field('POST') }}
+
+            <div class="modal-body">
+              Are you sure?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+              <button type="button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  @endif
+  <div class="modal fade" id="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Close {{ $app->title }}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h4 class="text-center">Pay attention</h4>
+          <p class="text-center">
+            Unsaved progress will be losed.<br>
+            If you want, go back and save them.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
+          <a class="btn btn-danger text-white" href="{{ url('/') }}/{{ $type }}/{{ $app->category->section->slug }}/{{ $app->category->slug }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Close</a>
+        </div>
       </div>
     </div>
   </div>
