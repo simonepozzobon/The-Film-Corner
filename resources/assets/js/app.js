@@ -1,9 +1,10 @@
 /**
- * Activate Jquery globally and add Tether for Bootstrap js
+ * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
 
 window.$ = window.jQuery = require('jquery')
 window.Tether = require('tether')
+require('any-resize-event')
 
 
 /**
