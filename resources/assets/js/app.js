@@ -19,7 +19,7 @@ require('./bootstrap');
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
  */
 
-import Echo from "laravel-echo"
+import Echo from 'laravel-echo'
 window.io = require('socket.io-client');
 window.Echo = new Echo({
     broadcaster: 'socket.io',
@@ -34,3 +34,15 @@ window.Echo = new Echo({
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+/**
+ * Setup di Iscroll per le librerie nelle app
+ */
+
+import IScroll from 'iscroll'
+
+var libraryEls = document.querySelectorAll('.library-container');
+if (libraryEls.length > 0) {
+  var libraryScroll = new IScroll('.library-container');
+}
