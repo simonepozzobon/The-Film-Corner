@@ -44,7 +44,7 @@ const { mix } = require('laravel-mix');
     .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/admin/sass/app.scss', 'public/css/admin/admin.css')
-    .extract(['jquery', 'tether', 'bootstrap'])
+    .extract(['jquery', 'tether', 'bootstrap', 'any-resize-event'])
     .autoload({
         jquery: ['$', 'jQuery', 'jquery'],
         tether: ['Tether'],
