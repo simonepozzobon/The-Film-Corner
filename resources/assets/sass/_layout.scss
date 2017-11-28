@@ -5,7 +5,7 @@
 .title-wrapper {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  justify-content: space-between;
   padding: $spacer;
 
   > .title {
@@ -15,13 +15,29 @@
     line-height: 2.83rem;
     color: $black;
     font-size: 1.75rem;
-    align-self: center;
-    margin: auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
-  > .icon-right {
+  > .icons-right {
+    display: flex;
     font-size: 1.25rem;
     line-height: 2.02rem;
+
+    > .icon {
+      margin-left: $spacer;
+    }
+  }
+
+  > .icons-left {
+    display: flex;
+    font-size: 1.25rem;
+    line-height: 2.02rem;
+
+    > .icon {
+      margin-right: $spacer;
+    }
   }
 }
 
@@ -45,6 +61,10 @@
     font-size: $font-family-base;
     text-align: left;
     padding-bottom: $spacer;
+
+    &.no-padding {
+      padding-bottom: 0;
+    }
 
     > .video-example {
       max-width: 60%;
@@ -74,6 +94,20 @@
   > p {
     margin: 0;
     padding: 0;
+  }
+
+  > .btns {
+    padding-top: $spacer;
+    display: flex;
+    justify-content: center;
+
+    > .read-more, .read-less {
+      color: $black;
+
+      &:hover {
+        color: $black;
+      }
+    }
   }
 }
 
@@ -111,6 +145,10 @@
     color: $black;
     line-height: $line-height-base;
     padding: $spacer;
+
+    &.library {
+      padding: 0;
+    }
   }
 
   > .box-btns {
@@ -173,6 +211,203 @@
       background-color: $tfc-orange;
     }
   }
+}
+
+
+//
+// LIBRARY CONTAINER
+//
+
+//
+// Navbar for library
+//
+
+.navbar-library {
+  padding: 0;
+
+  .navbar-toggler {
+    color: $black;
+    align-self: center;
+
+    @include hover-focus {
+      color: $navbar-light-active-color;
+    }
+  }
+
+  .navbar-nav {
+    width: 100%;
+    justify-content: space-around;
+
+    .nav-item {
+      width: 100%;
+    }
+
+    .nav-link {
+      text-align: center;
+      &.disabled {
+        color: $navbar-light-disabled-color;
+      }
+    }
+
+    .open > .nav-link,
+    .active > .nav-link,
+    .nav-link.open,
+    .nav-link.active {
+      color: $navbar-light-active-color;
+    }
+  }
+
+  .navbar-toggler {
+    border-color: $navbar-light-toggler-border;
+  }
+
+  .navbar-toggler-icon {
+    background-image: $navbar-light-toggler-bg;
+  }
+
+  .navbar-text {
+    color: $navbar-light-color;
+  }
+
+  &.yellow {
+    .navbar-toggler {
+      color: $black;
+      background-color: $tfc-yellow;
+
+      @include hover-focus {
+        color: $tfc-yellow;
+      }
+    }
+
+    .navbar-nav {
+      .nav-item {
+        border: 1px solid $tfc-dark-yellow;
+        .nav-link {
+          color: $black;
+          background-color: $tfc-yellow;
+
+          @include hover-focus {
+            color: $tfc-yellow;
+            background-color: $black;
+          }
+        }
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+          color: $tfc-yellow;
+          background-color: $black;
+        }
+      }
+    }
+  }
+
+  &.green {
+    .navbar-toggler {
+      color: $black;
+      background-color: $tfc-green;
+
+      @include hover-focus {
+        color: $tfc-green;
+      }
+    }
+
+    .navbar-nav {
+      .nav-item {
+        border: 1px solid $tfc-dark-green;
+        .nav-link {
+          color: $black;
+          background-color: $tfc-green;
+
+          @include hover-focus {
+            color: $tfc-green;
+            background-color: $black;
+          }
+        }
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+          color: $tfc-green;
+          background-color: $black;
+        }
+      }
+    }
+  }
+
+  &.blue {
+    .navbar-toggler {
+      color: $black;
+      background-color: $tfc-blue;
+
+      @include hover-focus {
+        color: $tfc-blue;
+      }
+    }
+
+    .navbar-nav {
+      .nav-item {
+        border: 1px solid $tfc-dark-blue;
+        .nav-link {
+          color: $black;
+          background-color: $tfc-blue;
+
+          @include hover-focus {
+            color: $tfc-blue;
+            background-color: $black;
+          }
+        }
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+          color: $tfc-blue;
+          background-color: $black;
+        }
+      }
+    }
+  }
+
+  &.orange {
+    .navbar-toggler {
+      color: $black;
+      background-color: $tfc-orange;
+
+      @include hover-focus {
+        color: $tfc-orange;
+      }
+    }
+
+    .navbar-nav {
+      .nav-item {
+        border: 1px solid $tfc-dark-orange;
+        .nav-link {
+          color: $black;
+          background-color: $tfc-orange;
+
+          @include hover-focus {
+            color: $tfc-orange;
+            background-color: $black;
+          }
+        }
+
+        .open > .nav-link,
+        .active > .nav-link,
+        .nav-link.open,
+        .nav-link.active {
+          color: $tfc-orange;
+          background-color: $black;
+        }
+      }
+    }
+  }
+}
+
+.library-container {
+  padding: $spacer;
 }
 
 
