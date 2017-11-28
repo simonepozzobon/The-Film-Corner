@@ -108,6 +108,9 @@
     var session = AppSession.initSession({{ $app->id }});
 
     $(document).ready(function($) {
+        libraryResize();
+        document.getElementById('canvas-wrapper').addEventListener('onresize', libraryResize);
+
         var canvas = this.__canvas = new fabric.Canvas('image-editor');
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
@@ -302,6 +305,12 @@
       canvas.on(eventName, function(){
         saveCanvas(canvas)
       });
+    }
+
+    function libraryResize()
+    {
+        var video_player = document.getElementById('canvas-wrapper').offsetHeight - 42;
+        $('#libraries').height(video_player);
     }
 
   </script>
