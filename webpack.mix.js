@@ -26,6 +26,7 @@ const { mix } = require('laravel-mix');
     .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
     .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
     .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
+    .js('resources/assets/js/timeline/timeline.js', 'public/js')
 
     .js('resources/assets/js/socket-test', 'public/js')
     .js('resources/assets/js/teacher-chat', 'public/js')

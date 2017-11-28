@@ -10,20 +10,9 @@ use App\Events\UserSignin;
 | Public Routes
 |--------------------------------------------------------------------------
 */
-Route::get('/test', function(){
 
-    event(new UserSignin());
-    $user = Auth::guard('teacher')->user();
-    if ($user == null) {
-        $user = Auth::guard('student')->user();
-        $model = 'student';
-        $contacts = $user->teacher()->get();
-    } else {
-        $contacts = $user->students()->get();
-        $model = 'teacher';
-    }
-
-    return view('test', compact('user', 'model', 'contacts'));
+Route::get('/timeline', function(){
+  return view('timeline');
 });
 
 Route::prefix('feedback')->group(function() {

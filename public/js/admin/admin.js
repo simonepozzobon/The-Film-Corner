@@ -1,4 +1,4 @@
-webpackJsonp([15],{
+webpackJsonp([16],{
 
 /***/ 204:
 /***/ (function(module, exports, __webpack_require__) {
@@ -12,7 +12,7 @@ webpackJsonp([15],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
 
@@ -340,14 +340,7 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
-
-/***/ }),
-
-/***/ 222:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
 
 /***/ }),
 
@@ -379,18 +372,25 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 340:
+/***/ 227:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 356:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(208);
 __webpack_require__(204);
-__webpack_require__(225);
 __webpack_require__(226);
-__webpack_require__(222);
+__webpack_require__(227);
 __webpack_require__(223);
-module.exports = __webpack_require__(224);
+__webpack_require__(224);
+module.exports = __webpack_require__(225);
 
 
 /***/ })
 
-},[340]);
+},[356]);
