@@ -10962,7 +10962,7 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 220:
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10972,7 +10972,7 @@ var _vue = __webpack_require__(22);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _FeedbackPopup = __webpack_require__(297);
+var _FeedbackPopup = __webpack_require__(299);
 
 var _FeedbackPopup2 = _interopRequireDefault(_FeedbackPopup);
 
@@ -10996,7 +10996,7 @@ var app = new _vue2.default({
     FeedbackPopup: _FeedbackPopup2.default
   }
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ }),
 
@@ -11125,7 +11125,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 246:
+/***/ 247:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11137,7 +11137,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _gsap = __webpack_require__(57);
 
-var _lodash = __webpack_require__(43);
+var _lodash = __webpack_require__(44);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -11282,14 +11282,6 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 259:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(14)();
-exports.push([module.i, "\n#info-popup[data-v-2760c2d4] {\n  position: fixed;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n#btn[data-v-2760c2d4] {\n  opacity: 0;\n  width: 20rem;\n}\n#Rectangle[data-v-2760c2d4] {\n  fill: #fe595a;\n  opacity: 0;\n}\n", ""]);
-
-/***/ }),
-
 /***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11347,6 +11339,14 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
+
+/***/ }),
+
+/***/ 260:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(14)();
+exports.push([module.i, "\n#info-popup[data-v-2760c2d4] {\n  position: fixed;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n#btn[data-v-2760c2d4] {\n  opacity: 0;\n  width: 20rem;\n}\n#Rectangle[data-v-2760c2d4] {\n  fill: #fe595a;\n  opacity: 0;\n}\n", ""]);
 
 /***/ }),
 
@@ -11500,18 +11500,18 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 297:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(334)
+__webpack_require__(336)
 
 var Component = __webpack_require__(15)(
   /* script */
-  __webpack_require__(246),
+  __webpack_require__(247),
   /* template */
-  __webpack_require__(309),
+  __webpack_require__(311),
   /* scopeId */
   "data-v-2760c2d4",
   /* cssModules */
@@ -11758,38 +11758,6 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 309:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "info-popup"
-    }
-  }, [_c('a', {
-    ref: "btn",
-    staticClass: "btn btn-danger text-white",
-    attrs: {
-      "id": "btn",
-      "href": "#"
-    },
-    on: {
-      "click": _vm.openModal
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-info"
-  }), _vm._v(" "), _c('b', [_vm._v("Info")])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-2760c2d4", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11831,6 +11799,38 @@ function btoa(input) {
 
 module.exports = btoa;
 
+
+/***/ }),
+
+/***/ 311:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "info-popup"
+    }
+  }, [_c('a', {
+    ref: "btn",
+    staticClass: "btn btn-danger text-white",
+    attrs: {
+      "id": "btn",
+      "href": "#"
+    },
+    on: {
+      "click": _vm.openModal
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-info"
+  }), _vm._v(" "), _c('b', [_vm._v("Info")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2760c2d4", module.exports)
+  }
+}
 
 /***/ }),
 
@@ -11932,13 +11932,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 334:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(259);
+var content = __webpack_require__(260);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12118,14 +12118,6 @@ module.exports = (
 
 /***/ }),
 
-/***/ 368:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(220);
-
-
-/***/ }),
-
 /***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12142,6 +12134,14 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
     }
   });
 };
+
+
+/***/ }),
+
+/***/ 370:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(221);
 
 
 /***/ }),
@@ -12317,7 +12317,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -37677,4 +37677,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[368]);
+},[370]);

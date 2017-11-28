@@ -761,7 +761,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -775,11 +775,11 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _jquery = __webpack_require__(44);
+var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _WelcomeForm = __webpack_require__(299);
+var _WelcomeForm = __webpack_require__(301);
 
 var _WelcomeForm2 = _interopRequireDefault(_WelcomeForm);
 
@@ -11120,7 +11120,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 248:
+/***/ 249:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11423,7 +11423,7 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 261:
+/***/ 262:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
@@ -11577,45 +11577,6 @@ module.exports = function settle(resolve, reject, response) {
     ));
   }
 };
-
-
-/***/ }),
-
-/***/ 299:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(336)
-
-var Component = __webpack_require__(15)(
-  /* script */
-  __webpack_require__(248),
-  /* template */
-  __webpack_require__(311),
-  /* scopeId */
-  "data-v-31e9a848",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/welcome/WelcomeForm.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] WelcomeForm.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-31e9a848", Component.options)
-  } else {
-    hotAPI.reload("data-v-31e9a848", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
 
 
 /***/ }),
@@ -11839,6 +11800,45 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
+/***/ 301:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(338)
+
+var Component = __webpack_require__(15)(
+  /* script */
+  __webpack_require__(249),
+  /* template */
+  __webpack_require__(313),
+  /* scopeId */
+  "data-v-31e9a848",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/welcome/WelcomeForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] WelcomeForm.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-31e9a848", Component.options)
+  } else {
+    hotAPI.reload("data-v-31e9a848", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11883,7 +11883,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 311:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12110,13 +12110,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 336:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(261);
+var content = __webpack_require__(262);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12296,10 +12296,10 @@ module.exports = (
 
 /***/ }),
 
-/***/ 363:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(215);
+module.exports = __webpack_require__(216);
 
 
 /***/ }),
@@ -12763,4 +12763,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[363]);
+},[365]);

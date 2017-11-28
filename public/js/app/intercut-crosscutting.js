@@ -87615,7 +87615,8 @@ function extend() {
 /* 209 */,
 /* 210 */,
 /* 211 */,
-/* 212 */
+/* 212 */,
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87625,7 +87626,7 @@ var _angular = __webpack_require__(80);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(44);
+var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -88016,10 +88017,9 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ }),
-/* 213 */,
 /* 214 */,
 /* 215 */,
 /* 216 */,
@@ -88166,11 +88166,13 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 357 */,
 /* 358 */,
 /* 359 */,
-/* 360 */
+/* 360 */,
+/* 361 */,
+/* 362 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(212);
+module.exports = __webpack_require__(213);
 
 
 /***/ })
-],[360]);
+],[362]);

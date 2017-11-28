@@ -761,7 +761,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 203:
+/***/ 204:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -779,11 +779,11 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(282);
+var _AudioFormUpload = __webpack_require__(284);
 
 var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
 
-var _AudioCrud = __webpack_require__(281);
+var _AudioCrud = __webpack_require__(283);
 
 var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
 
@@ -11060,7 +11060,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 230:
+/***/ 231:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11338,7 +11338,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 231:
+/***/ 232:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11352,7 +11352,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _lodash = __webpack_require__(43);
+var _lodash = __webpack_require__(44);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -12070,7 +12070,7 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 260:
+/***/ 261:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
@@ -12078,7 +12078,7 @@ exports.push([module.i, "\n.close-btn[data-v-298c3cca] {\n  position: absolute;\
 
 /***/ }),
 
-/***/ 266:
+/***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
@@ -12202,18 +12202,18 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 281:
+/***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(341)
+__webpack_require__(343)
 
 var Component = __webpack_require__(15)(
   /* script */
-  __webpack_require__(230),
+  __webpack_require__(231),
   /* template */
-  __webpack_require__(316),
+  __webpack_require__(318),
   /* scopeId */
   "data-v-4e001d63",
   /* cssModules */
@@ -12241,18 +12241,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 282:
+/***/ 284:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(335)
+__webpack_require__(337)
 
 var Component = __webpack_require__(15)(
   /* script */
-  __webpack_require__(231),
+  __webpack_require__(232),
   /* template */
-  __webpack_require__(310),
+  __webpack_require__(312),
   /* scopeId */
   "data-v-298c3cca",
   /* cssModules */
@@ -12577,7 +12577,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 310:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12847,7 +12847,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 316:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -13073,13 +13073,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 335:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(260);
+var content = __webpack_require__(261);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13161,13 +13161,13 @@ module.exports = (
 
 /***/ }),
 
-/***/ 341:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(266);
+var content = __webpack_require__(267);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13210,10 +13210,10 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 352:
+/***/ 354:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(203);
+module.exports = __webpack_require__(204);
 
 
 /***/ }),
@@ -13485,7 +13485,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -52186,4 +52186,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[352]);
+},[354]);

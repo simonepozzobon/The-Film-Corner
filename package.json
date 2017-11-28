@@ -31,6 +31,7 @@
   "dependencies": {
     "angular": "^1.6.6",
     "angular-media-timeline": "*",
+    "any-resize-event": "^1.0.0",
     "dropzone": "^5.1.1",
     "express": "^4.16.2",
     "fabric": "^2.0.0-beta0",

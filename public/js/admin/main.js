@@ -761,7 +761,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 207:
+/***/ 208:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -779,11 +779,11 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AppBox = __webpack_require__(280);
+var _AppBox = __webpack_require__(282);
 
 var _AppBox2 = _interopRequireDefault(_AppBox);
 
-var _AlertTutorial = __webpack_require__(279);
+var _AlertTutorial = __webpack_require__(281);
 
 var _AlertTutorial2 = _interopRequireDefault(_AlertTutorial);
 
@@ -10999,7 +10999,7 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 228:
+/***/ 229:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11013,7 +11013,7 @@ var _moJs = __webpack_require__(53);
 
 var _moJs2 = _interopRequireDefault(_moJs);
 
-var _lodash = __webpack_require__(43);
+var _lodash = __webpack_require__(44);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -11115,39 +11115,6 @@ exports.default = {
 
 /***/ }),
 
-/***/ 229:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  props: ['title', 'color'],
-  data: function data() {
-    return {};
-  }
-};
-
-/***/ }),
-
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11205,6 +11172,39 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
+
+/***/ }),
+
+/***/ 230:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  props: ['title', 'color'],
+  data: function data() {
+    return {};
+  }
+};
 
 /***/ }),
 
@@ -11367,7 +11367,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 253:
+/***/ 254:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
@@ -11432,14 +11432,6 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-
-/***/ }),
-
-/***/ 269:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(14)();
-exports.push([module.i, "", ""]);
 
 /***/ }),
 
@@ -11530,42 +11522,11 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 279:
+/***/ 270:
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(344)
-
-var Component = __webpack_require__(15)(
-  /* script */
-  __webpack_require__(228),
-  /* template */
-  __webpack_require__(319),
-  /* scopeId */
-  "data-v-63cb4389",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AlertTutorial.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] AlertTutorial.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-63cb4389", Component.options)
-  } else {
-    hotAPI.reload("data-v-63cb4389", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
+exports = module.exports = __webpack_require__(14)();
+exports.push([module.i, "", ""]);
 
 /***/ }),
 
@@ -11598,18 +11559,57 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(328)
+__webpack_require__(346)
 
 var Component = __webpack_require__(15)(
   /* script */
   __webpack_require__(229),
   /* template */
-  __webpack_require__(303),
+  __webpack_require__(321),
+  /* scopeId */
+  "data-v-63cb4389",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/AlertTutorial.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] AlertTutorial.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-63cb4389", Component.options)
+  } else {
+    hotAPI.reload("data-v-63cb4389", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 282:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(330)
+
+var Component = __webpack_require__(15)(
+  /* script */
+  __webpack_require__(230),
+  /* template */
+  __webpack_require__(305),
   /* scopeId */
   "data-v-0335644b",
   /* cssModules */
@@ -11890,7 +11890,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 303:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11957,47 +11957,6 @@ function btoa(input) {
 
 module.exports = btoa;
 
-
-/***/ }),
-
-/***/ 319:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    staticClass: "col-md-6 offset-md-3"
-  }, [_c('div', {
-    ref: "alert",
-    staticClass: "box container-fluid mb-4"
-  }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col dark-' + _vm.color + ' py-3 px-5'
-  }, [_c('h3', [_vm._v(_vm._s(_vm.title))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col ' + _vm.color + ' p-5'
-  }, [_vm._t("default"), _vm._v(" "), _c('div', {
-    staticClass: "pt-5 d-flex justify-content-around"
-  }, [_c('a', {
-    class: 'btn btn-' + _vm.color + ' btn-lg',
-    attrs: {
-      "href": "#"
-    },
-    on: {
-      "click": _vm.removeAlert
-    }
-  }, [_vm._v("Ok ho capito")])])], 2)])])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-63cb4389", module.exports)
-  }
-}
 
 /***/ }),
 
@@ -12077,29 +12036,43 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 328:
+/***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(253);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(16)("56036dff", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0335644b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppBox.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0335644b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppBox.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6 offset-md-3"
+  }, [_c('div', {
+    ref: "alert",
+    staticClass: "box container-fluid mb-4"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    class: 'col dark-' + _vm.color + ' py-3 px-5'
+  }, [_c('h3', [_vm._v(_vm._s(_vm.title))])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    class: 'col ' + _vm.color + ' p-5'
+  }, [_vm._t("default"), _vm._v(" "), _c('div', {
+    staticClass: "pt-5 d-flex justify-content-around"
+  }, [_c('a', {
+    class: 'btn btn-' + _vm.color + ' btn-lg',
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": _vm.removeAlert
+    }
+  }, [_vm._v("Ok ho capito")])])], 2)])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-63cb4389", module.exports)
+  }
 }
 
 /***/ }),
@@ -12123,6 +12096,33 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
+
+/***/ }),
+
+/***/ 330:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(254);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(16)("56036dff", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0335644b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppBox.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-0335644b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./AppBox.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -12187,13 +12187,13 @@ module.exports = (
 
 /***/ }),
 
-/***/ 344:
+/***/ 346:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(269);
+var content = __webpack_require__(270);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12236,10 +12236,10 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 355:
+/***/ 357:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(207);
+module.exports = __webpack_require__(208);
 
 
 /***/ }),
@@ -12511,7 +12511,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -41919,4 +41919,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[355]);
+},[357]);

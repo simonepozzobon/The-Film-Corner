@@ -983,8 +983,8 @@ Object.defineProperty(exports, "__esModule", {
 var axios = __webpack_require__(8);
 var io = __webpack_require__(104);
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
-var _ = __webpack_require__(43);
-var $ = __webpack_require__(44);
+var _ = __webpack_require__(44);
+var $ = __webpack_require__(43);
 
 exports.default = {
     name: "tfc-chat",
@@ -12052,7 +12052,7 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 221:
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12066,7 +12066,7 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _jquery = __webpack_require__(44);
+var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -13034,14 +13034,6 @@ module.exports = (
 
 /***/ }),
 
-/***/ 369:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(221);
-
-
-/***/ }),
-
 /***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13058,6 +13050,14 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
     }
   });
 };
+
+
+/***/ }),
+
+/***/ 371:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(222);
 
 
 /***/ }),
@@ -13233,7 +13233,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -36418,4 +36418,4 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ })
 
-},[369]);
+},[371]);

@@ -761,7 +761,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 218:
+/***/ 219:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -775,11 +775,11 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _jquery = __webpack_require__(44);
+var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _networkIcons = __webpack_require__(298);
+var _networkIcons = __webpack_require__(300);
 
 var _networkIcons2 = _interopRequireDefault(_networkIcons);
 
@@ -11120,7 +11120,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 247:
+/***/ 248:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11348,7 +11348,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 256:
+/***/ 257:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
@@ -11562,45 +11562,6 @@ module.exports = function settle(resolve, reject, response) {
     ));
   }
 };
-
-
-/***/ }),
-
-/***/ 298:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(331)
-
-var Component = __webpack_require__(15)(
-  /* script */
-  __webpack_require__(247),
-  /* template */
-  __webpack_require__(306),
-  /* scopeId */
-  "data-v-101bdfcd",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/networkIcons.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] networkIcons.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-101bdfcd", Component.options)
-  } else {
-    hotAPI.reload("data-v-101bdfcd", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
 
 
 /***/ }),
@@ -11824,7 +11785,46 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 306:
+/***/ 300:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(333)
+
+var Component = __webpack_require__(15)(
+  /* script */
+  __webpack_require__(248),
+  /* template */
+  __webpack_require__(308),
+  /* scopeId */
+  "data-v-101bdfcd",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/components/networkIcons.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] networkIcons.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-101bdfcd", Component.options)
+  } else {
+    hotAPI.reload("data-v-101bdfcd", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12023,13 +12023,13 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 331:
+/***/ 333:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(256);
+var content = __webpack_require__(257);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12209,10 +12209,10 @@ module.exports = (
 
 /***/ }),
 
-/***/ 365:
+/***/ 367:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(218);
+module.exports = __webpack_require__(219);
 
 
 /***/ }),
@@ -32664,4 +32664,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[365]);
+},[367]);
