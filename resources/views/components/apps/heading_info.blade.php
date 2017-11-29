@@ -70,23 +70,22 @@
 
           function toggleDescription()
           {
-            if (opened)
-            {
-                longDesc.classList.remove('d-none');
-                shortDesc.classList.add('d-none');
-                button.innerHTML = 'Read Less'
-            }
+              if (opened)
+              {
+                  longDesc.classList.remove('d-none');
+                  shortDesc.classList.add('d-none');
+                  button.innerHTML = 'Read Less'
+              }
 
-            else
-            {
-                shortDesc.classList.remove('d-none');
-                longDesc.classList.add('d-none');
-                button.innerHTML = 'Read More';
-            }
+              else
+              {
+                  shortDesc.classList.remove('d-none');
+                  longDesc.classList.add('d-none');
+                  button.innerHTML = 'Read More';
+              }
 
-            opened = !opened;
+              opened = !opened;
           }
-
         </script>
       </div>
     </div>
