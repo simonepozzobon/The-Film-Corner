@@ -43,7 +43,50 @@ $(function () {
 
 import IScroll from 'iscroll'
 
-var libraryEls = document.querySelectorAll('.library-container');
+// verifico se ci sono librerie
+var libraryEls = document.querySelectorAll('.library');
 if (libraryEls.length > 0) {
-  var libraryScroll = new IScroll('.library-container');
+    // Creo la funzione per impostare la dimensione del wrapper / assets
+    function initScroll(e)
+    {
+        // Le dimensioni che dovrà avere la libreria
+        var height = Math.round($(e.target).height()),
+            width = Math.round($(e.target).width()),
+            wrappers = $('.assets');
+
+        wrappers.each(function(index, el) {
+          $(el).css('height', height);
+          $(el).css('width', width);
+          $(el).css('position', 'relative');
+          $(el).css('overflow', 'hidden');
+
+          var scroller = $(el).find('.scroller');
+          scroller.css('position', 'absolute');
+        });
+    }
+
+    // catturo l'evento per le dimensioni della libreria
+    document.addEventListener('library-resized', initScroll, false)
+
+    // inizializzo la variabile contenitore per le instance di Iscroll
+    var scrollEl;
+
+    // quando attivo il tab
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+      // Elimino l'instance di Iscroll
+      if (typeof(scrollEl) != 'undefined' || scrollEl != null) {
+        console.log('esiste');
+        scrollEl.destroy();
+        scrollEl = null;
+      }
+
+      // inizializzo la nuova instance di Iscroll
+      scrollEl = new IScroll(e.target.hash, {
+        scrollbars: true,
+        mouseWheel: true,
+        shrinkScrollbars: 'scale',
+      });
+
+    })
 }

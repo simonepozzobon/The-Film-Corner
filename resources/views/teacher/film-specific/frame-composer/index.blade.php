@@ -10,6 +10,17 @@
         top: -5%;
         right: 5%;
       }
+
+      .wrapper {
+        /*position: relative;
+        overflow: hidden;*/
+        /*height: 200px;
+        width: 300px;*/
+      }
+
+      .scroller {
+        /*position: absolute;*/
+      }
   </style>
 @endsection
 @section('content')
@@ -53,8 +64,8 @@
               </nav>
               <div id="libraries" class="library-container tab-content">
                 @foreach ($app->mediaCategory()->get() as $key => $library)
-                  <div id="{{ Utility::slugify($library->name) }}" class="assets tab-pane {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
-                    <div class="row">
+                  <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
+                    <div class="row scroller">
                       @foreach ($library->media_on_sub_category() as $key => $media)
                         <div class="asset col-md-3 col-sm-4 pb-3">
                           <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" class="img-fluid" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
@@ -311,6 +322,15 @@
     {
         var video_player = document.getElementById('canvas-wrapper').offsetHeight - 42;
         $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
     }
 
   </script>
