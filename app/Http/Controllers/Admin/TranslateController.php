@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\App;
+use App\Language;
 use App\AppKeyword;
 use App\AppKeywordTranslation;
 use Illuminate\Http\Request;
@@ -13,8 +14,9 @@ class TranslateController extends Controller
 
     public function get_languages()
     {
-      $languages = Language::where('id', '!=', 1)->get();
-      return response($languages, 200);
+      $locales = Language::all();
+      $locales = $locales->pluck('short');
+      return response($locales, 200);
     }
 
     public function index()
@@ -24,7 +26,6 @@ class TranslateController extends Controller
           $app->model = get_class($app);
           return $app;
         });
-
         return view('admin.translate.index', compact('apps'));
     }
 

@@ -777,7 +777,7 @@ var _TranslatePanel2 = _interopRequireDefault(_TranslatePanel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = new _vue2.default({
+new _vue2.default({
   el: '#app',
   data: function data() {
     return {
@@ -11259,7 +11259,6 @@ exports.default = {
     }
   },
   created: function created() {
-    //do something after creating vue instance
     this.get_languages();
   },
 

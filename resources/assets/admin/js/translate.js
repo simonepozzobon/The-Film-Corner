@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 import TranslatePanel from './components/TranslatePanel.vue'
 
-const app = new Vue({
+new Vue({
   el: '#app',
   data: () => ({
     'options': [
@@ -14,4 +14,4 @@ const app = new Vue({
   components: {
     TranslatePanel
   }
-});
+})

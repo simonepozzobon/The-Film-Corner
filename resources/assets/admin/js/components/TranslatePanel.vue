@@ -26,7 +26,6 @@ export default {
       }
   },
   created() {
-    //do something after creating vue instance
     this.get_languages();
   },
   methods: {

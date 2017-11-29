@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,9 +15,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         // $this->call(CitiesTableSeeder::class);
         // $this->call(PointsTableSeeder::class);
-        $this->call(AppSectionsTableSeeder::class);
-        $this->call(AppCategoriesTableSeeder::class);
-        $this->call(AppKeywordsTableSeeder::class);
-        $this->call(AppTableSeeder::class);
+        // $this->call(AppSectionsTableSeeder::class);
+        // $this->call(AppCategoriesTableSeeder::class);
+        // $this->call(AppKeywordsTableSeeder::class);
+        // $this->call(AppTableSeeder::class);
+        $this->call(AppLanguages::class);
     }
 }
