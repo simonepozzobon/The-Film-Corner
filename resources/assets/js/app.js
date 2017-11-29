@@ -46,6 +46,9 @@ import IScroll from 'iscroll'
 // verifico se ci sono librerie
 var libraryEls = document.querySelectorAll('.library');
 if (libraryEls.length > 0) {
+    // inizializzo la variabile contenitore per le instance di Iscroll
+    var scrollEl;
+
     // Creo la funzione per impostare la dimensione del wrapper / assets
     function initScroll(e)
     {
@@ -53,6 +56,14 @@ if (libraryEls.length > 0) {
         var height = Math.round($(e.target).height()),
             width = Math.round($(e.target).width()),
             wrappers = $('.assets');
+
+        // var debug = {
+        //     'height': height,
+        //     'width': width,
+        //     'wrappers': wrappers,
+        // };
+        // console.dir(debug);
+        // console.log('ridimensionata');
 
         wrappers.each(function(index, el) {
           $(el).css('height', height);
@@ -62,29 +73,37 @@ if (libraryEls.length > 0) {
 
           var scroller = $(el).find('.scroller');
           scroller.css('position', 'absolute');
+          scroller.css('width', '100%');
         });
+
+        // inizializzo IScroll sul primo tab attivo
+        var firstEl = $('.assets.active').attr('id');
+        if (typeof(firstEl) != 'undefined' || firstEl != null) {
+            scrollEl = new IScroll('#'+firstEl, {
+                scrollbars: true,
+                mouseWheel: true,
+                shrinkScrollbars: 'scale',
+            });
+        }
     }
 
     // catturo l'evento per le dimensioni della libreria
     document.addEventListener('library-resized', initScroll, false)
-
-    // inizializzo la variabile contenitore per le instance di Iscroll
-    var scrollEl;
 
     // quando attivo il tab (evento Bootstrap)
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
       // Elimino l'instance di Iscroll
       if (typeof(scrollEl) != 'undefined' || scrollEl != null) {
-        scrollEl.destroy();
-        scrollEl = null;
+          scrollEl.destroy();
+          scrollEl = null;
       }
 
       // inizializzo la nuova instance di Iscroll
       scrollEl = new IScroll(e.target.hash, {
-        scrollbars: true,
-        mouseWheel: true,
-        shrinkScrollbars: 'scale',
+          scrollbars: true,
+          mouseWheel: true,
+          shrinkScrollbars: 'scale',
       });
 
     })

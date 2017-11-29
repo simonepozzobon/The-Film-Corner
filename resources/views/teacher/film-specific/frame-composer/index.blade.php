@@ -45,7 +45,7 @@
                   <ul class="navbar-nav" role="tablist">
                     @foreach ($app->mediaCategory()->get() as $key => $library)
                       <li class="nav-item">
-                        <a class="nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                        <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                       </li>
                     @endforeach
                   </ul>

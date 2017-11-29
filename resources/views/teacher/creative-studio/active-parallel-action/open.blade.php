@@ -7,15 +7,6 @@
     #video-editor button.vjs-big-play-button {
       display: none;
     }
-
-    .scrollable {
-      height: 460px;
-      overflow: scroll;
-    }
-
-    #video-library {
-      overflow-y: scroll;
-    }
   </style>
 @endsection
 @section('content')
@@ -41,68 +32,76 @@
             <div class="box-header">
               Library
             </div>
-            <div id="video-library" class="box-body">
-              <nav class="navbar navbar-toggleable-sm navbar-light">
+            <div id="video-library" class="box-body library">
+              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav mx-auto">
+                  <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="#library-video" aria-expanded="false" aria-controls="">Video</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#library-video">Video</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="#upload" aria-expanded="false" aria-controls="">Upload</a>
+                      <a class="library-link nav-link" data-toggle="tab" href="#upload">Uploads</a>
                     </li>
                   </ul>
                 </div>
               </nav>
-              {{-- Library --}}
-                <div class="collapse show" id="library-video" role="tabpanel" show="true">
-                  {{-- Library --}}
-                    @foreach ($elements as $key => $element)
-                      <div class="row">
-                        <div class="col-md-2">
-                          <img src="{{ Storage::disk('local')->url($element->img) }}" width="57">
+              <div id="libraries" class="library-container tab-content">
+                <div id="library-video" class="assets tab-pane active" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      @foreach ($elements as $key => $element)
+                        <div class="row">
+                          <div class="col-md-2">
+                            <img src="{{ Storage::disk('local')->url($element->img) }}" width="57">
+                          </div>
+                          <div class="col-md-8">
+                            <p class="p-2">{{ $element->title }}</p>
+                          </div>
+                          <div class="col-md-2" ng-controller="toolController">
+                            <button class="btn btn-yellow" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ urlencode($element->src) }}')" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                          </div>
                         </div>
-                        <div class="col-md-8">
-                          <p class="p-2">{{ $element->title }}</p>
-                        </div>
-                        <div class="col-md-2" ng-controller="toolController">
-                          <button class="btn btn-yellow" ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ urlencode($element->src) }}')" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                          </button>
-                        </div>
-                      </div>
-                    @endforeach
-                </div>
-                <div class="collapse" id="upload" role="tabpanel">
-                  <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
-                    {{ csrf_field() }}
-                    {{ method_field('POST') }}
-                    <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
-                    <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
-                    <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
-                    <div class="form-group">
-                      <input id="media" type="file" name="media" class="form-control" ng-model="media">
+                      @endforeach
                     </div>
-                    <div class="container-fluid d-flex justify-content-around">
-                      <button type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
-                    </div>
-                  </form>
-                  <div class="container-fluid pt-4">
-                    <table id="uploads" class="table table-hover">
-                      <thead>
-                        <th>Preview</th>
-                        <th>Title</th>
-                        <th>Tools</th>
-                      </thead>
-                      <tbody>
-
-                      </tbody>
-                    </table>
                   </div>
                 </div>
+                <div id="upload" class="assets tab-pane" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
+                        <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
+                        <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
+                        <div class="form-group">
+                          <input id="media" type="file" name="media" class="form-control" ng-model="media">
+                        </div>
+                        <div class="container-fluid d-flex justify-content-around">
+                          <button type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                        </div>
+                      </form>
+                      <div class="container-fluid pt-4">
+                        <table id="uploads" class="table table-hover">
+                          <thead>
+                            <th>Preview</th>
+                            <th>Title</th>
+                            <th>Tools</th>
+                          </thead>
+                          <tbody>
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -172,11 +171,10 @@
   <script type="text/javascript">
     var AppSession = new TfcSessions();
 
+    resizeLibrary();
     video_player = document.getElementById('video-player');
-    video_player.addEventListener('onresize', function(){
-        var video_player = document.getElementById('video-player').offsetHeight - 63;
-        $('#video-library').height(video_player);
-    });
+    video_player.addEventListener('onresize', resizeLibrary);
+
 
     // Pass the variable to angular JS for init
     var timelines = {!! $session !!};
@@ -186,6 +184,21 @@
     console.log('Logging all\'inizio');
     console.log(timelines);
     console.log('---------');
+
+    function resizeLibrary()
+    {
+        var video_player = document.getElementById('video-player').offsetHeight - 106;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
+    }
 
   </script>
   <script src="{{ mix('js/app/intercut-crosscutting.js') }}"></script>

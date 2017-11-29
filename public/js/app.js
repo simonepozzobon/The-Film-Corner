@@ -1222,8 +1222,8 @@ __webpack_require__(253);
 
 window.io = __webpack_require__(104);
 window.Echo = new _laravelEcho2.default({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
 });
 
 /**
@@ -1231,7 +1231,7 @@ window.Echo = new _laravelEcho2.default({
  */
 
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 /**
@@ -1241,48 +1241,66 @@ $(function () {
 // verifico se ci sono librerie
 var libraryEls = document.querySelectorAll('.library');
 if (libraryEls.length > 0) {
-  // Creo la funzione per impostare la dimensione del wrapper / assets
-  var initScroll = function initScroll(e) {
-    // Le dimensioni che dovrà avere la libreria
-    var height = Math.round($(e.target).height()),
-        width = Math.round($(e.target).width()),
-        wrappers = $('.assets');
 
-    wrappers.each(function (index, el) {
-      $(el).css('height', height);
-      $(el).css('width', width);
-      $(el).css('position', 'relative');
-      $(el).css('overflow', 'hidden');
+    // Creo la funzione per impostare la dimensione del wrapper / assets
+    var initScroll = function initScroll(e) {
+        // Le dimensioni che dovrà avere la libreria
+        var height = Math.round($(e.target).height()),
+            width = Math.round($(e.target).width()),
+            wrappers = $('.assets');
 
-      var scroller = $(el).find('.scroller');
-      scroller.css('position', 'absolute');
+        // var debug = {
+        //     'height': height,
+        //     'width': width,
+        //     'wrappers': wrappers,
+        // };
+        // console.dir(debug);
+        // console.log('ridimensionata');
+
+        wrappers.each(function (index, el) {
+            $(el).css('height', height);
+            $(el).css('width', width);
+            $(el).css('position', 'relative');
+            $(el).css('overflow', 'hidden');
+
+            var scroller = $(el).find('.scroller');
+            scroller.css('position', 'absolute');
+            scroller.css('width', '100%');
+        });
+
+        // inizializzo IScroll sul primo tab attivo
+        var firstEl = $('.assets.active').attr('id');
+        if (typeof firstEl != 'undefined' || firstEl != null) {
+            scrollEl = new _iscroll2.default('#' + firstEl, {
+                scrollbars: true,
+                mouseWheel: true,
+                shrinkScrollbars: 'scale'
+            });
+        }
+    };
+
+    // catturo l'evento per le dimensioni della libreria
+
+
+    // inizializzo la variabile contenitore per le instance di Iscroll
+    var scrollEl;document.addEventListener('library-resized', initScroll, false);
+
+    // quando attivo il tab (evento Bootstrap)
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+        // Elimino l'instance di Iscroll
+        if (typeof scrollEl != 'undefined' || scrollEl != null) {
+            scrollEl.destroy();
+            scrollEl = null;
+        }
+
+        // inizializzo la nuova instance di Iscroll
+        scrollEl = new _iscroll2.default(e.target.hash, {
+            scrollbars: true,
+            mouseWheel: true,
+            shrinkScrollbars: 'scale'
+        });
     });
-  };
-
-  // catturo l'evento per le dimensioni della libreria
-
-
-  document.addEventListener('library-resized', initScroll, false);
-
-  // inizializzo la variabile contenitore per le instance di Iscroll
-  var scrollEl;
-
-  // quando attivo il tab (evento Bootstrap)
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-    // Elimino l'instance di Iscroll
-    if (typeof scrollEl != 'undefined' || scrollEl != null) {
-      scrollEl.destroy();
-      scrollEl = null;
-    }
-
-    // inizializzo la nuova instance di Iscroll
-    scrollEl = new _iscroll2.default(e.target.hash, {
-      scrollbars: true,
-      mouseWheel: true,
-      shrinkScrollbars: 'scale'
-    });
-  });
 }
 
 /**
