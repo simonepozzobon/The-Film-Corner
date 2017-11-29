@@ -71,7 +71,12 @@ class CreativeStudioController extends Controller
       count($filtered) < 5 ? $app->available = true : $app->available = false;
     }
 
-    return view('teacher.creative-studio.path.index', compact('apps', 'app_category', 'visited'));
+    $keywords = AppKeyword::all();
+    // foreach ($keywords as $key => $value) {
+    //   dd($value->category->color_class);
+    // }
+
+    return view('teacher.creative-studio.path.index', compact('apps', 'app_category', 'visited', 'keywords'));
   }
 
   /**

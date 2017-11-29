@@ -10,7 +10,6 @@
             <div class="badge badge-{{ $app_category->color_class }}" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</div>
           @endforeach
         </div>
-
         @foreach ($app_category->keywords()->get() as $key => $keyword)
           <div class="modal fade" id="glossary-{{$keyword->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
