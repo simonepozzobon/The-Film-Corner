@@ -1,17 +1,19 @@
 /node_modules
 /svg_projects
-/public/storage
-/public/hot
-/storage/*.key
+/svg_dev
 /vendor
 /.idea
 /resources/assets/working
+/resources/assets/copy_bootstrap
+/storage/*.key
+/public/hot
+/public/storage
+public/img/cover-1.jpg
 Homestead.json
 Homestead.yaml
 .env
 npm-debug.log
 
-public/img/cover-1.jpg
 
 *.DS_Store
 www.simonepozzobon.dev.crt
@@ -25,7 +27,7 @@ laravel-echo-server.json
 # Ignore sketch files
 *.sketch
 
-server.js
+# Ignore Eslint Config
+.eslintrc.json
 
-/resources/assets/copy_bootstrap
-/svg_dev
+server.js
