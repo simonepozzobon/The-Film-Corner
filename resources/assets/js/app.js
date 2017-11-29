@@ -71,7 +71,7 @@ if (libraryEls.length > 0) {
     // inizializzo la variabile contenitore per le instance di Iscroll
     var scrollEl;
 
-    // quando attivo il tab
+    // quando attivo il tab (evento Bootstrap)
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
       // Elimino l'instance di Iscroll

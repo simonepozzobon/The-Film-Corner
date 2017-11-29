@@ -10,17 +10,6 @@
         top: -5%;
         right: 5%;
       }
-
-      .wrapper {
-        /*position: relative;
-        overflow: hidden;*/
-        /*height: 200px;
-        width: 300px;*/
-      }
-
-      .scroller {
-        /*position: absolute;*/
-      }
   </style>
 @endsection
 @section('content')
