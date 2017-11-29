@@ -1272,7 +1272,6 @@ if (libraryEls.length > 0) {
 
     // Elimino l'instance di Iscroll
     if (typeof scrollEl != 'undefined' || scrollEl != null) {
-      console.log('esiste');
       scrollEl.destroy();
       scrollEl = null;
     }
