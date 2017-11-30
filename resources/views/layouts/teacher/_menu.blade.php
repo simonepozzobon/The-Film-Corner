@@ -118,22 +118,22 @@
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="menu-main">
     <ul class="navbar-nav justify-content-around">
-      <li class="nav-item">
+      <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Apps">
         <a href="{{ url('/teacher') }}" class="nav-link">
           <i class="fa fa-home" aria-hidden="true"></i>
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Network">
         <a href="{{ route('teacher.network.index') }}" class="nav-link">
           <i class="fa fa-users" aria-hidden="true"></i>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('teacher.settings.index') }}" class="nav-link">
+        <a href="{{ route('teacher.settings.index') }}" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
           <i class="fa fa-user" aria-hidden="true"></i>
         </a>
       </li>
-      <li id="notifications" class="dropdown nav-item">
+      <li id="notifications" class="dropdown nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Notifications">
         @php
           $count = count(Auth::guard('teacher')->user()->unreadNotifications()->get())
         @endphp
@@ -162,7 +162,7 @@
           @endforeach
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Change Language">
         <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-cog" aria-hidden="true"></i>
         </a>
