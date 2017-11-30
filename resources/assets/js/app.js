@@ -1,7 +1,8 @@
+import $ from 'jquery'
+
 /**
  * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
-
 window.$ = window.jQuery = require('jquery')
 window.Tether = require('tether')
 require('any-resize-event')
@@ -13,7 +14,7 @@ require('any-resize-event')
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require('./bootstrap')
 
 
 /**
@@ -21,11 +22,11 @@ require('./bootstrap');
  */
 
 import Echo from 'laravel-echo'
-window.io = require('socket.io-client');
+window.io = require('socket.io-client')
 window.Echo = new Echo({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
-});
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001'
+})
 
 
 /**
@@ -44,71 +45,70 @@ $(function () {
 import IScroll from 'iscroll'
 
 // verifico se ci sono librerie
-var libraryEls = document.querySelectorAll('.library');
+var libraryEls = document.querySelectorAll('.library')
 if (libraryEls.length > 0) {
-    // inizializzo la variabile contenitore per le instance di Iscroll
-    var scrollEl;
+  // inizializzo la variabile contenitore per le instance di Iscroll
+  var scrollEl
 
-    // Creo la funzione per impostare la dimensione del wrapper / assets
-    function initScroll(e)
-    {
-        // Le dimensioni che dovrà avere la libreria
-        var height = Math.round($(e.target).height()),
-            width = Math.round($(e.target).width()),
-            wrappers = $('.assets');
+  // catturo l'evento per le dimensioni della libreria
+  document.addEventListener('library-resized', initScroll, false)
 
-        // var debug = {
-        //     'height': height,
-        //     'width': width,
-        //     'wrappers': wrappers,
-        // };
-        // console.dir(debug);
-        // console.log('ridimensionata');
+  // quando attivo il tab (evento Bootstrap)
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
-        wrappers.each(function(index, el) {
-          $(el).css('height', height);
-          $(el).css('width', width);
-          $(el).css('position', 'relative');
-          $(el).css('overflow', 'hidden');
-
-          var scroller = $(el).find('.scroller');
-          scroller.css('position', 'absolute');
-          scroller.css('width', '100%');
-        });
-
-        // inizializzo IScroll sul primo tab attivo
-        var firstEl = $('.assets.active').attr('id');
-        if (typeof(firstEl) != 'undefined' || firstEl != null) {
-            scrollEl = new IScroll('#'+firstEl, {
-                scrollbars: true,
-                mouseWheel: true,
-                shrinkScrollbars: 'scale',
-            });
-        }
+    // Elimino l'instance di Iscroll
+    if (typeof(scrollEl) != 'undefined' || scrollEl != null) {
+      scrollEl.destroy()
+      scrollEl = null
     }
 
-    // catturo l'evento per le dimensioni della libreria
-    document.addEventListener('library-resized', initScroll, false)
-
-    // quando attivo il tab (evento Bootstrap)
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-      // Elimino l'instance di Iscroll
-      if (typeof(scrollEl) != 'undefined' || scrollEl != null) {
-          scrollEl.destroy();
-          scrollEl = null;
-      }
-
-      // inizializzo la nuova instance di Iscroll
-      scrollEl = new IScroll(e.target.hash, {
-          scrollbars: true,
-          mouseWheel: true,
-          shrinkScrollbars: 'scale',
-      });
-
+    // inizializzo la nuova instance di Iscroll
+    scrollEl = new IScroll(e.target.hash, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale',
     })
+
+  })
 }
 
+// Creo la funzione per impostare la dimensione del wrapper / assets
+function initScroll(e)
+{
+  // Le dimensioni che dovrà avere la libreria
+  var height = Math.round($(e.target).height()),
+    width = Math.round($(e.target).width()) + 32,
+    wrappers = $('.assets')
+
+  // var debug = {
+  //     'height': height,
+  //     'width': width,
+  //     'wrappers': wrappers,
+  // }
+  // console.dir(debug)
+  // console.log('ridimensionata')
+
+  wrappers.each(function(index, el) {
+    $(el).css('height', height)
+    $(el).css('width', width)
+    $(el).css('position', 'relative')
+    $(el).css('overflow', 'hidden')
+
+    var scroller = $(el).find('.scroller')
+    scroller.css('position', 'absolute')
+    scroller.css('width', '100%')
+  })
+
+  // inizializzo IScroll sul primo tab attivo
+  var firstEl = $('.assets.active').attr('id')
+  if (typeof(firstEl) != 'undefined' || firstEl != null) {
+    scrollEl = new IScroll('#'+firstEl, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale',
+    })
+  }
+}
 
 /**
  * read more on apps

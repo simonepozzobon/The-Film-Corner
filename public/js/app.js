@@ -1188,7 +1188,11 @@ function localstorage() {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {
+
+
+var _jquery = __webpack_require__(43);
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 var _laravelEcho = __webpack_require__(279);
 
@@ -1203,7 +1207,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
-
 window.$ = window.jQuery = __webpack_require__(43);
 window.Tether = __webpack_require__(126);
 __webpack_require__(202);
@@ -1222,16 +1225,16 @@ __webpack_require__(253);
 
 window.io = __webpack_require__(104);
 window.Echo = new _laravelEcho2.default({
-    broadcaster: 'socket.io',
-    host: window.location.hostname + ':6001'
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001'
 });
 
 /**
  * Importo anche Tooltip.js per i tooltip (usati specialmente nel menu delle applicazioni)
  */
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+(0, _jquery2.default)(function () {
+  (0, _jquery2.default)('[data-toggle="tooltip"]').tooltip();
 });
 
 /**
@@ -1241,72 +1244,70 @@ $(function () {
 // verifico se ci sono librerie
 var libraryEls = document.querySelectorAll('.library');
 if (libraryEls.length > 0) {
+  // inizializzo la variabile contenitore per le instance di Iscroll
+  var scrollEl;
 
-    // Creo la funzione per impostare la dimensione del wrapper / assets
-    var initScroll = function initScroll(e) {
-        // Le dimensioni che dovrà avere la libreria
-        var height = Math.round($(e.target).height()),
-            width = Math.round($(e.target).width()),
-            wrappers = $('.assets');
+  // catturo l'evento per le dimensioni della libreria
+  document.addEventListener('library-resized', initScroll, false);
 
-        // var debug = {
-        //     'height': height,
-        //     'width': width,
-        //     'wrappers': wrappers,
-        // };
-        // console.dir(debug);
-        // console.log('ridimensionata');
+  // quando attivo il tab (evento Bootstrap)
+  (0, _jquery2.default)('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
-        wrappers.each(function (index, el) {
-            $(el).css('height', height);
-            $(el).css('width', width);
-            $(el).css('position', 'relative');
-            $(el).css('overflow', 'hidden');
+    // Elimino l'instance di Iscroll
+    if (typeof scrollEl != 'undefined' || scrollEl != null) {
+      scrollEl.destroy();
+      scrollEl = null;
+    }
 
-            var scroller = $(el).find('.scroller');
-            scroller.css('position', 'absolute');
-            scroller.css('width', '100%');
-        });
-
-        // inizializzo IScroll sul primo tab attivo
-        var firstEl = $('.assets.active').attr('id');
-        if (typeof firstEl != 'undefined' || firstEl != null) {
-            scrollEl = new _iscroll2.default('#' + firstEl, {
-                scrollbars: true,
-                mouseWheel: true,
-                shrinkScrollbars: 'scale'
-            });
-        }
-    };
-
-    // catturo l'evento per le dimensioni della libreria
-
-
-    // inizializzo la variabile contenitore per le instance di Iscroll
-    var scrollEl;document.addEventListener('library-resized', initScroll, false);
-
-    // quando attivo il tab (evento Bootstrap)
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-        // Elimino l'instance di Iscroll
-        if (typeof scrollEl != 'undefined' || scrollEl != null) {
-            scrollEl.destroy();
-            scrollEl = null;
-        }
-
-        // inizializzo la nuova instance di Iscroll
-        scrollEl = new _iscroll2.default(e.target.hash, {
-            scrollbars: true,
-            mouseWheel: true,
-            shrinkScrollbars: 'scale'
-        });
+    // inizializzo la nuova instance di Iscroll
+    scrollEl = new _iscroll2.default(e.target.hash, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale'
     });
+  });
+}
+
+// Creo la funzione per impostare la dimensione del wrapper / assets
+function initScroll(e) {
+  // Le dimensioni che dovrà avere la libreria
+  var height = Math.round((0, _jquery2.default)(e.target).height()),
+      width = Math.round((0, _jquery2.default)(e.target).width()) + 32,
+      wrappers = (0, _jquery2.default)('.assets');
+
+  // var debug = {
+  //     'height': height,
+  //     'width': width,
+  //     'wrappers': wrappers,
+  // }
+  // console.dir(debug)
+  // console.log('ridimensionata')
+
+  wrappers.each(function (index, el) {
+    (0, _jquery2.default)(el).css('height', height);
+    (0, _jquery2.default)(el).css('width', width);
+    (0, _jquery2.default)(el).css('position', 'relative');
+    (0, _jquery2.default)(el).css('overflow', 'hidden');
+
+    var scroller = (0, _jquery2.default)(el).find('.scroller');
+    scroller.css('position', 'absolute');
+    scroller.css('width', '100%');
+  });
+
+  // inizializzo IScroll sul primo tab attivo
+  var firstEl = (0, _jquery2.default)('.assets.active').attr('id');
+  if (typeof firstEl != 'undefined' || firstEl != null) {
+    scrollEl = new _iscroll2.default('#' + firstEl, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale'
+    });
+  }
 }
 
 /**
  * read more on apps
  */
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(43)))
 
 /***/ }),
 
