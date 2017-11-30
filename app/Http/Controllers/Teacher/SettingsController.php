@@ -61,7 +61,16 @@ class SettingsController extends Controller
     public function save_student(Request $r)
     {
         $teacher = Auth::guard('teacher')->user();
-        $student = new Student;
+
+        $check = Student::where('email', '=', $r->email)->first();
+
+        // Se lo studente collegato alla email non esiste ne creo uno nuovo
+        if ($check == null) {
+            $student = new Student;
+        } else {
+            return response('Error, mail already exist!', 400);
+        }
+
         $student->name = $r->name;
         $student->email = $r->email;
         $student->password = Hash::make($r->password);
@@ -69,6 +78,38 @@ class SettingsController extends Controller
         $student->save();
 
         return response()->json($student, 200);
+    }
+
+    public function update_student(Request $r)
+    {
+        $student = Student::where('email', '=', $r->email)->first();
+
+        if ($student == null) {
+            return response('Error, student not found!', 400);
+        } else {
+
+            $teacher = Auth::guard('teacher')->user();
+
+            if ($teacher == $student->teacher()->first()) {
+
+                $student->name = $r->name;
+                $student->email = $r->email;
+
+                if ($r->password != null) {
+                    $student->password = Hash::make($r->password);
+                }
+
+                $student->teacher_id = $teacher->id;
+                $student->save();
+
+                return response()->json($student, 200);
+
+            } else {
+
+                return response('Error, unauthorized request!', 400);
+
+            }
+        }
     }
 
     public function deleteStudent(Request $request)
@@ -81,6 +122,13 @@ class SettingsController extends Controller
         ];
 
         return response()->json($data);
+    }
+
+    public function destroy_student(Request $r)
+    {
+        $student = Student::find($r->id);
+        $student->delete();
+        return response()->json($student, 200);
     }
 
     public function get_slots()

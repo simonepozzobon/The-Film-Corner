@@ -27139,9 +27139,20 @@ exports.default = {
       default: function _default() {}
     }
   },
-  data: function data() {
-    return {};
+  watch: {
+    student: function student() {
+      this.studentObj = this.student;
+    }
   },
+  data: function data() {
+    return {
+      studentObj: []
+    };
+  },
+  created: function created() {
+    this.studentObj = this.student;
+  },
+
   methods: {
     showInfoIcon: function showInfoIcon() {
       var t1 = new _gsap.TimelineMax();
@@ -27186,7 +27197,7 @@ exports.default = {
     },
 
     showUserDetail: function showUserDetail() {
-      this.$parent.$emit('show-user-detail', this.student);
+      this.$parent.$emit('show-user-detail', this.studentObj);
     }
   }
 }; //
@@ -27223,6 +27234,41 @@ var _gsap = __webpack_require__(62);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -27364,6 +27410,8 @@ exports.default = {
       master.add(t1);
       master.add(t2);
       master.play();
+
+      this.user = { name: '', email: '', password: '' };
     },
 
     showCloseBtn: function showCloseBtn(el) {
@@ -27418,8 +27466,90 @@ exports.default = {
         vue.studentsArr.push(response.data);
         vue.slots--;
         vue.closePanel();
+        vue.user = { name: '', email: '', password: '' };
+      });
+    },
+
+    askConfirmation: function askConfirmation() {
+      var t1 = new _gsap.TimelineMax();
+      t1.to(this.$refs.student_detail, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var t2 = new _gsap.TimelineMax();
+      t2.to(this.$refs.confirmation, .4, {
+        opacity: 1,
+        display: 'inherit',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(t1);
+      master.add(t2, .4);
+      master.play();
+
+      this.panel = { obj: this.$refs.confirmation, status: true };
+    },
+
+    undoDelete: function undoDelete() {
+      this.closePanel();
+    },
+
+    deleteStudent: function deleteStudent() {
+      var vue = this;
+      var data = new FormData();
+      data.append('id', this.obj.id);
+      _axios2.default.post('/teacher/settings/destroy-student', data).then(function (response) {
+        vue.studentsArr = vue.studentsArr.filter(function (value) {
+          return value.id != response.data.id;
+        });
+        vue.slots++;
+        vue.closePanel();
+      });
+    },
+
+    showEditPanel: function showEditPanel() {
+      var t1 = new _gsap.TimelineMax();
+      t1.to(this.$refs.student_detail, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var t2 = new _gsap.TimelineMax();
+      t2.to(this.$refs.edit_student, .4, {
+        opacity: 1,
+        display: 'inherit',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(t1);
+      master.add(t2, .4);
+      master.play();
+
+      this.panel = { obj: this.$refs.edit_student, status: true };
+      this.user = { name: this.obj.name, email: this.obj.email, password: '' };
+    },
+
+    editStudent: function editStudent() {
+      var vue = this;
+      var data = new FormData();
+      data.append('name', this.user.name);
+      data.append('email', this.user.email);
+      data.append('password', this.user.password);
+
+      _axios2.default.post('/teacher/settings/update-student', data).then(function (response) {
+        var foundIndex = vue.studentsArr.findIndex(function (x) {
+          return x.id == response.data.id;
+        });
+        vue.studentsArr[foundIndex] = response.data;
+        vue.closePanel();
       });
     }
+
   },
   components: {
     SingleStudent: _SingleStudent2.default,
@@ -27537,7 +27667,7 @@ exports.push([module.i, "\n#single-student[data-v-2452ca1a] {\n  width: 4rem;\n 
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n.box-header[data-v-45ec7499] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.box-body[data-v-45ec7499] {\n  padding-left: 0;\n  padding-right: 0;\n  padding-bottom: 0;\n}\n.students[data-v-45ec7499] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.students > .student[data-v-45ec7499] {\n    margin-right: 1rem;\n    margin-left: 1rem;\n    margin-bottom: 2rem;\n}\n#student-detail[data-v-45ec7499] {\n  opacity: 0;\n  display: none;\n}\n#student-detail > .content[data-v-45ec7499] {\n    padding-left: 2rem;\n    padding-right: 2rem;\n    padding-bottom: 2rem;\n    text-align: left;\n}\n#new-student[data-v-45ec7499] {\n  opacity: 0;\n  display: none;\n}\n#new-student > .content[data-v-45ec7499] {\n    padding-left: 2rem;\n    padding-right: 2rem;\n    padding-bottom: 2rem;\n    text-align: left;\n}\n#close[data-v-45ec7499] {\n  opacity: 0;\n  display: none;\n}\n", ""]);
+exports.push([module.i, "\n.box-header[data-v-45ec7499] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: justify;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.box-body[data-v-45ec7499] {\n  padding-left: 0;\n  padding-right: 0;\n  padding-bottom: 0;\n}\n.students[data-v-45ec7499] {\n  padding-left: 1rem;\n  padding-right: 1rem;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-wrap: wrap;\n      flex-wrap: wrap;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n.students > .student[data-v-45ec7499] {\n    margin-right: 1rem;\n    margin-left: 1rem;\n    margin-bottom: 2rem;\n}\n#student-detail > .content > h4[data-v-45ec7499] {\n  text-transform: capitalize;\n}\n#student-detail[data-v-45ec7499],\n#new-student[data-v-45ec7499],\n#confirmation[data-v-45ec7499],\n#edit-student[data-v-45ec7499] {\n  opacity: 0;\n  display: none;\n}\n#student-detail > .content[data-v-45ec7499],\n  #new-student > .content[data-v-45ec7499],\n  #confirmation > .content[data-v-45ec7499],\n  #edit-student > .content[data-v-45ec7499] {\n    padding-left: 2rem;\n    padding-right: 2rem;\n    padding-bottom: 2rem;\n    text-align: left;\n}\n#close[data-v-45ec7499] {\n  opacity: 0;\n  display: none;\n}\n", ""]);
 
 /***/ }),
 /* 275 */,
@@ -27905,7 +28035,140 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "content"
-  }, [_c('h4', [_vm._v(_vm._s(_vm.obj.name))]), _vm._v(" "), _c('p', [_vm._v("\n            " + _vm._s(_vm.obj.email) + "\n          ")])])]), _vm._v(" "), _c('div', {
+  }, [_c('h4', [_vm._v(_vm._s(_vm.obj.name))]), _vm._v(" "), _c('p', [_vm._v("\n            " + _vm._s(_vm.obj.email) + "\n          ")]), _vm._v(" "), _c('div', {
+    staticClass: "d-flex justify-content-center"
+  }, [_c('button', {
+    staticClass: "btn btn-yellow mr-2",
+    on: {
+      "click": _vm.showEditPanel
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-edit"
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-yellow",
+    on: {
+      "click": _vm.askConfirmation
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o"
+  })])])])]), _vm._v(" "), _c('div', {
+    ref: "edit_student",
+    attrs: {
+      "id": "edit-student"
+    }
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.name),
+      expression: "user.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.user.name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("E-mail")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.email),
+      expression: "user.email"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.user.email)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.email = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": ""
+    }
+  }, [_vm._v("Password")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.user.password),
+      expression: "user.password"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.user.password)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.user.password = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "d-flex justify-content-center"
+  }, [_c('button', {
+    staticClass: "btn btn-yellow",
+    on: {
+      "click": _vm.editStudent
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-floppy-o"
+  }), _vm._v(" Save\n            ")])])])]), _vm._v(" "), _c('div', {
+    ref: "confirmation",
+    attrs: {
+      "id": "confirmation"
+    }
+  }, [_c('div', {
+    staticClass: "content"
+  }, [_c('h4', [_vm._v("Pay Attention!")]), _vm._v(" "), _c('p', [_vm._v("This operation can't be undone")]), _vm._v(" "), _c('div', {
+    staticClass: "d-flex justify-content-center mt"
+  }, [_c('button', {
+    staticClass: "btn btn-yellow mr-2",
+    on: {
+      "click": _vm.deleteStudent
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-trash-o"
+  }), _vm._v(" Yes")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-yellow",
+    on: {
+      "click": _vm.undoDelete
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-undo"
+  }), _vm._v(" No")])])])]), _vm._v(" "), _c('div', {
     ref: "new_student",
     attrs: {
       "id": "new-student"

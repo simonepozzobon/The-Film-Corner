@@ -230,7 +230,9 @@ Route::prefix('teacher')->group(function() {
       Route::get('/', 'Teacher\SettingsController@index')->name('teacher.settings.index');
       Route::post('/store-student', 'Teacher\SettingsController@storeStudent')->name('teacher.student.store');
       Route::post('/save-student', 'Teacher\SettingsController@save_student')->name('teacher.settings.save_student');
+      Route::post('/destroy-student', 'Teacher\SettingsController@destroy_student')->name('teacher.settings.destroy_student');
       Route::post('/delete-student', 'Teacher\SettingsController@deleteStudent')->name('teacher.student.delete');
+      Route::post('/update-student', 'Teacher\SettingsController@update_student')->name('teacher.settings.update_student');
       Route::get('/get-slots', 'Teacher\SettingsController@get_slots')->name('teacher.settings.get_slots');
     });
 

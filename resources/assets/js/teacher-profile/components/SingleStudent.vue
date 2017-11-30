@@ -15,9 +15,18 @@ export default {
       default: () => {}
     }
   },
+  watch: {
+    student: function()
+    {
+      this.studentObj = this.student
+    }
+  },
   data: () => ({
-
+    studentObj: []
   }),
+  created() {
+    this.studentObj = this.student
+  },
   methods: {
     showInfoIcon: function()
     {
@@ -65,7 +74,7 @@ export default {
 
     showUserDetail: function()
     {
-      this.$parent.$emit('show-user-detail', this.student)
+      this.$parent.$emit('show-user-detail', this.studentObj)
     }
   },
 }

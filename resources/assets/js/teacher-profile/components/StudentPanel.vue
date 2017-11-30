@@ -20,6 +20,41 @@
             <p>
               {{obj.email}}
             </p>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-yellow mr-2" @click="showEditPanel"><i class="fa fa-edit"></i></button>
+              <button class="btn btn-yellow" @click="askConfirmation"><i class="fa fa-trash-o"></i></button>
+            </div>
+          </div>
+        </div>
+        <div id="edit-student" ref="edit_student">
+          <div class="content">
+            <div class="form-group">
+              <label for="">Name</label>
+              <input type="text" v-model="user.name" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">E-mail</label>
+              <input type="text" v-model="user.email" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="">Password</label>
+              <input type="text" v-model="user.password" class="form-control">
+            </div>
+            <div class="d-flex justify-content-center">
+              <button class="btn btn-yellow" @click="editStudent">
+                <i class="fa fa-floppy-o"></i> Save
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="confirmation" ref="confirmation">
+          <div class="content">
+            <h4>Pay Attention!</h4>
+            <p>This operation can't be undone</p>
+            <div class="d-flex justify-content-center mt">
+              <button class="btn btn-yellow mr-2" @click="deleteStudent"><i class="fa fa-trash-o"></i> Yes</button>
+              <button class="btn btn-yellow" @click="undoDelete"><i class="fa fa-undo"></i> No</button>
+            </div>
           </div>
         </div>
         <div id="new-student" ref="new_student">
@@ -146,6 +181,8 @@ export default {
       master.add(t1)
       master.add(t2)
       master.play()
+
+      this.user = { name: '', email: '', password: '' }
     },
 
     showCloseBtn: function(el)
@@ -204,8 +241,95 @@ export default {
           vue.studentsArr.push(response.data)
           vue.slots--
           vue.closePanel()
+          vue.user = { name: '', email: '', password: '' }
         })
     },
+
+    askConfirmation: function()
+    {
+      var t1 = new TimelineMax()
+      t1.to(this.$refs.student_detail, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: Power4.easeInOut
+      })
+
+      var t2 = new TimelineMax()
+      t2.to(this.$refs.confirmation, .4, {
+        opacity: 1,
+        display: 'inherit',
+        easing: Power4.easeInOut
+      })
+
+      var master = new TimelineMax()
+      master.add(t1)
+      master.add(t2, .4)
+      master.play()
+
+      this.panel = { obj: this.$refs.confirmation, status: true }
+    },
+
+    undoDelete: function()
+    {
+      this.closePanel()
+    },
+
+    deleteStudent: function()
+    {
+      var vue = this
+      var data = new FormData()
+      data.append('id', this.obj.id)
+      axios.post('/teacher/settings/destroy-student', data)
+        .then(response => {
+          vue.studentsArr = vue.studentsArr.filter((value) => {
+            return value.id != response.data.id
+          })
+          vue.slots++
+          vue.closePanel()
+        })
+    },
+
+    showEditPanel: function()
+    {
+      var t1 = new TimelineMax()
+      t1.to(this.$refs.student_detail, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: Power4.easeInOut
+      })
+
+      var t2 = new TimelineMax()
+      t2.to(this.$refs.edit_student, .4, {
+        opacity: 1,
+        display: 'inherit',
+        easing: Power4.easeInOut
+      })
+
+      var master = new TimelineMax()
+      master.add(t1)
+      master.add(t2, .4)
+      master.play()
+
+      this.panel = { obj: this.$refs.edit_student, status:true }
+      this.user = { name: this.obj.name, email: this.obj.email, password: '' }
+    },
+
+    editStudent: function()
+    {
+      var vue = this
+      var data = new FormData()
+      data.append('name', this.user.name)
+      data.append('email', this.user.email)
+      data.append('password', this.user.password)
+
+      axios.post('/teacher/settings/update-student', data)
+        .then(response => {
+          var foundIndex = vue.studentsArr.findIndex(x => x.id == response.data.id)
+          vue.studentsArr[foundIndex] = response.data
+          vue.closePanel()
+        })
+    },
+
   },
   components: {
     SingleStudent,
@@ -243,18 +367,17 @@ export default {
   }
 
   #student-detail {
-    opacity: 0;
-    display: none;
-
     > .content {
-      padding-left: $spacer;
-      padding-right: $spacer;
-      padding-bottom: $spacer;
-      text-align: left;
+      > h4 {
+        text-transform: capitalize;
+      }
     }
   }
 
-  #new-student {
+  #student-detail,
+  #new-student,
+  #confirmation,
+  #edit-student {
     opacity: 0;
     display: none;
 
