@@ -3,7 +3,7 @@
 @section('content')
   <div id="main" class="container">
     @include('components.apps.heading_simple', ['title' => 'Profile'])
-    <teacher-profile />
+    <teacher-profile students="{{ $students }}"/>
     <div class="row mt">
       <div class="col-md-8">
         <div class="box blue">

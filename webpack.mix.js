@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+const { mix } = require('laravel-mix')
 
 
 /*
@@ -52,6 +52,13 @@ mix
     tether: ['Tether'],
   })
   .browserSync({
-    proxy: 'http://www.simonepozzobon.dev:80/',
+    proxy: 'http://www.simonepozzobon.dev/',
     browser: 'google chrome'
+  })
+  .webpackConfig({
+    resolve:{
+      alias: {
+        'styles': path.resolve(__dirname, 'resources/assets/sass')
+      }
+    }
   })

@@ -226,9 +226,13 @@ Route::prefix('teacher')->group(function() {
     Route::get('/path_1', 'TeacherController@path')->name('teacher.path');
 
     // Settings
-    Route::get('/settings', 'Teacher\SettingsController@index')->name('teacher.settings.index');
-    Route::post('/settings/store-student', 'Teacher\SettingsController@storeStudent')->name('teacher.student.store');
-    Route::post('/settings/delete-student', 'Teacher\SettingsController@deleteStudent')->name('teacher.student.delete');
+    Route::prefix('settings')->group(function() {
+      Route::get('/', 'Teacher\SettingsController@index')->name('teacher.settings.index');
+      Route::post('/store-student', 'Teacher\SettingsController@storeStudent')->name('teacher.student.store');
+      Route::post('/save-student', 'Teacher\SettingsController@save_student')->name('teacher.settings.save_student');
+      Route::post('/delete-student', 'Teacher\SettingsController@deleteStudent')->name('teacher.student.delete');
+      Route::get('/get-slots', 'Teacher\SettingsController@get_slots')->name('teacher.settings.get_slots');
+    });
 
     // Network
     Route::get('/network', 'Teacher\NetworkController@index')->name('teacher.network.index');

@@ -4,7 +4,7 @@
       <sessions/>
     </div>
     <div class="col-md-4">
-      <student-panel/>
+      <student-panel :students="studentsParsed"/>
     </div>
   </div>
 </template>
@@ -18,6 +18,18 @@ var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect
 
 export default {
   name: 'TeacherProfile',
+  props: {
+    students: {
+      default: '',
+      type: String
+    }
+  },
+  computed: {
+    studentsParsed: function()
+    {
+      return JSON.parse(this.students)
+    }
+  },
   data: () => ({
 
   }),
