@@ -24,7 +24,7 @@
               <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-thumbs-o-up text-success"></i></a>
             </div>
             <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
-              <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-comment-o text-warning"></i></a>
+              <a href="#" data-toggle="modal" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
             </div>
           @endif
         </div>
