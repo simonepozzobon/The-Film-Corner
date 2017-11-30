@@ -7,6 +7,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: $spacer;
+  min-height: 109px;
 
   > .title {
     font-family: $font-family-serif;
@@ -24,6 +25,7 @@
     display: flex;
     font-size: 1.25rem;
     line-height: 2.02rem;
+    align-self: center;
 
     > .icon {
       margin-left: $spacer;
@@ -34,6 +36,7 @@
     display: flex;
     font-size: 1.25rem;
     line-height: 2.02rem;
+    align-self: center;
 
     > .icon {
       margin-right: $spacer;
