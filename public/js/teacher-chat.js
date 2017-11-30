@@ -1303,7 +1303,7 @@ module.exports = function xhrAdapter(config) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 //
 //
@@ -1339,134 +1339,136 @@ var _ = __webpack_require__(44);
 var $ = __webpack_require__(43);
 
 exports.default = {
-    name: "tfc-chat",
-    props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'sessiontoken'],
-    data: function data() {
-        return {
-            messages: [],
-            msg: '',
-            conts: ''
-        };
-    },
-    mounted: function mounted() {
-        var _this = this;
+  name: 'TfcChat',
+  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'sessiontoken'],
+  data: function data() {
+    return {
+      messages: [],
+      msg: '',
+      conts: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
 
-        var vue = this;
-        this.resizeChat();
-        this.loadHistory();
-        socket.on('connect', function () {
-            console.log('CLIENT CONNECTED');
-        });
-        socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-            var message = {
-                'msg': data.message,
+    var vue = this;
+    this.resizeChat();
+    this.loadHistory();
+    socket.on('connect', function () {
+      console.log('CLIENT CONNECTED');
+    });
+    socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
+      var message = {
+        'msg': data.message,
+        'type': 'received',
+        'color': 'green',
+        'pos': 'justify-content-start'
+      };
+      _this.messages.push(message);
+    });
+    socket.on('chat:UserSignin', function (data) {
+      _this.messages.push(data.username);
+    });
+    window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
+    $('#chat').on('shown.bs.collapse', function () {
+      var questo = document.getElementById('questo');
+      questo.scrollTop = questo.scrollHeight;
+    });
+
+    // axios.post('/api/v1/chat-typing', {
+    //     'from_id': vue.fromid,
+    //     'from_type': vue.fromtype,
+    //     'to_id': vue.toid,
+    //     'to_type': vue.totype,
+    //     'token': vue.sessiontoken,
+    // }).then((response) => {
+    //   console.log(response);
+    // });
+  },
+
+  methods: {
+    sendMsg: function sendMsg(e) {
+      e.preventDefault();
+      var vue = this;
+
+      axios.post('/api/v1/chat-notification', {
+        'from_id': vue.fromid,
+        'from_type': vue.fromtype,
+        'to_id': vue.toid,
+        'to_type': vue.totype,
+        'token': vue.sessiontoken,
+        'message': vue.msg
+      }).then(function (response) {
+        console.log(response);
+        var message = {
+          'msg': vue.msg,
+          'type': 'sent',
+          'color': 'yellow',
+          'pos': 'justify-content-end'
+        };
+        vue.messages.push(message);
+        vue.msg = '';
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    loadHistory: function loadHistory() {
+      var vue = this;
+      axios.post('/api/v1/chat-history', {
+        'from_id': vue.fromid,
+        'from_type': vue.fromtype,
+        'to_id': vue.toid,
+        'to_type': vue.totype,
+        'token': vue.sessiontoken
+      }).then(function (response) {
+        if (response.data.success != false) {
+          _.each(response.data, function (msg) {
+            // console.log(msg);
+            var history;
+            if (msg.from == vue.fromid) {
+              history = {
+                'msg': msg.message,
+                'type': 'sent',
+                'color': 'yellow',
+                'pos': 'justify-content-end'
+              };
+              vue.messages.push(history);
+            }
+            if (msg.from == vue.toid) {
+              history = {
+                'msg': msg.message,
                 'type': 'received',
                 'color': 'green',
                 'pos': 'justify-content-start'
-            };
-            _this.messages.push(message);
-        });
-        socket.on('chat:UserSignin', function (data) {
-            _this.messages.push(data.username);
-        });
-        window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
-        $('#chat').on('shown.bs.collapse', function () {
-            var questo = document.getElementById('questo');
-            questo.scrollTop = questo.scrollHeight;
-        });
-
-        // axios.post('/api/v1/chat-typing', {
-        //     'from_id': vue.fromid,
-        //     'from_type': vue.fromtype,
-        //     'to_id': vue.toid,
-        //     'to_type': vue.totype,
-        //     'token': vue.sessiontoken,
-        // }).then((response) => {
-        //   console.log(response);
-        // });
-    },
-
-    methods: {
-        sendMsg: function sendMsg(e) {
-            e.preventDefault();
-            var vue = this;
-
-            axios.post('/api/v1/chat-notification', {
-                'from_id': vue.fromid,
-                'from_type': vue.fromtype,
-                'to_id': vue.toid,
-                'to_type': vue.totype,
-                'token': vue.sessiontoken,
-                'message': vue.msg
-            }).then(function (response) {
-                // console.log(response);
-                var message = {
-                    'msg': vue.msg,
-                    'type': 'sent',
-                    'color': 'yellow',
-                    'pos': 'justify-content-end'
-                };
-                vue.messages.push(message);
-                vue.msg = '';
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        loadHistory: function loadHistory() {
-            var vue = this;
-            axios.post('/api/v1/chat-history', {
-                'from_id': vue.fromid,
-                'from_type': vue.fromtype,
-                'to_id': vue.toid,
-                'to_type': vue.totype,
-                'token': vue.sessiontoken
-            }).then(function (response) {
-                if (response.data.success != false) {
-                    _.each(response.data, function (msg) {
-                        // console.log(msg);
-                        if (msg.from == vue.fromid) {
-                            var history = {
-                                'msg': msg.message,
-                                'type': 'sent',
-                                'color': 'yellow',
-                                'pos': 'justify-content-end'
-                            };
-                            vue.messages.push(history);
-                        }
-                        if (msg.from == vue.toid) {
-                            var history = {
-                                'msg': msg.message,
-                                'type': 'received',
-                                'color': 'green',
-                                'pos': 'justify-content-start'
-                            };
-                            vue.messages.push(history);
-                        }
-                    });
-                } else {
-                    console.log(response.data.status);
-                }
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        resizeChat: function resizeChat() {
-            var height = window.innerHeight / 4;
-            this.$refs['messages'].style.height = height + 'px';
-        },
-        typingMsg: function typingMsg() {
-            var vue = this;
-            // _.debounce(
-            //   axios.post('/api/v1/chat-typing', {
-            //       'from_id': vue.fromid,
-            //       'from_type': vue.fromtype,
-            //       'to_id': vue.toid,
-            //       'to_type': vue.totype,
-            //       'token': vue.sessiontoken,
-            //   })
-            //   , 500);
+              };
+              vue.messages.push(history);
+            }
+          });
+        } else {
+          console.log(response.data.status);
         }
+      }).catch(function (error) {
+        console.log(error);
+      });
+    },
+    resizeChat: function resizeChat() {
+      var height = window.innerHeight / 4;
+      this.$refs['messages'].style.height = height + 'px';
+    },
+    typingMsg: function typingMsg() {
+      // var vue = this
+      // _.debounce(
+      //   axios.post('/api/v1/chat-typing', {
+      //       'from_id': vue.fromid,
+      //       'from_type': vue.fromtype,
+      //       'to_id': vue.toid,
+      //       'to_type': vue.totype,
+      //       'token': vue.sessiontoken,
+      //   })
+      //   , 500);
+
     }
+  }
 };
 
 /***/ }),
@@ -13135,7 +13137,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 376:
+/***/ 377:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(222);
@@ -36418,4 +36420,4 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ })
 
-},[376]);
+},[377]);

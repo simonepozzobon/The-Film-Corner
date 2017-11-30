@@ -1390,11 +1390,11 @@ var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _laravelEcho = __webpack_require__(281);
+var _laravelEcho = __webpack_require__(282);
 
 var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
 
-var _iscroll = __webpack_require__(280);
+var _iscroll = __webpack_require__(281);
 
 var _iscroll2 = _interopRequireDefault(_iscroll);
 
@@ -1413,7 +1413,7 @@ __webpack_require__(202);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(254);
+__webpack_require__(255);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -11927,7 +11927,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 254:
+/***/ 255:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12158,7 +12158,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 280:
+/***/ 281:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! iScroll v5.2.0 ~ (c) 2008-2016 Matteo Spinelli ~ http://cubiq.org/license */
@@ -14257,7 +14257,7 @@ if ( typeof module != 'undefined' && module.exports ) {
 
 /***/ }),
 
-/***/ 281:
+/***/ 282:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
@@ -15599,7 +15599,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 366:
+/***/ 367:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(212);
@@ -38753,4 +38753,4 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ })
 
-},[366]);
+},[367]);
