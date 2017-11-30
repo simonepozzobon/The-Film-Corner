@@ -268,7 +268,7 @@
           <text id="WELCOME" font-size="40" fill="#F9DA5E" onclick="goPage('welcome')">
               <tspan x="743.26" y="141">WELCOME</tspan>
           </text>
-          <text id="FILM-SPECIFIC" font-size="44" fill="#3FB7AE" onclick="goPage('creative-studio')">
+          <text id="FILM-SPECIFIC" font-size="44" fill="#3FB7AE" onclick="goPage('film-specifc')">
               <tspan x="51.462" y="104">FILM</tspan>
               <tspan x="0.796" y="143">SPECIFIC</tspan>
           </text>
