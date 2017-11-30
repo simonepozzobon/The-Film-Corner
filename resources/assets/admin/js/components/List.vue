@@ -10,6 +10,7 @@
             <table class="table table-hover">
               <thead>
                 <th v-for="option in options" :key="option.key">{{option.title}}</th>
+                <th>Languages</th>
               </thead>
               <list-el v-for="item in items" :key="item.key" :item="item" :options="options" :languages="languages" :color="color"></list-el>
             </table>
@@ -23,14 +24,40 @@
 import ListEl from './ListEl.vue'
 
 export default {
-  name: "list",
-  props: ['title', 'color', 'items', 'options', 'languages'],
+  name: 'List',
+  props: {
+    'title': {
+      default: '',
+      type: String
+    },
+    'color': {
+      default: '',
+      type: String
+    },
+    'items': {
+      default: '',
+      type: [Array, Object]
+    },
+    'options': {
+      default: '',
+      type: Array
+    },
+    'languages': {
+      default: '',
+      type: [Array, String]
+    }
+  },
   data: () => ({
   }),
   components: {
-      ListEl
+    ListEl
   }
 }
 </script>
 <style lang="scss" scoped>
+
+  th {
+    text-transform: capitalize;
+  }
+
 </style>

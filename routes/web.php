@@ -169,6 +169,8 @@ Route::prefix('admin')->group(function () {
         Route::get('/languages', 'Admin\TranslateController@get_languages')->name('admin.translate.get_languages');
         Route::post('/save', 'Admin\TranslateController@save')->name('admin.translate.save');
         Route::get('/index', 'Admin\TranslateController@index')->name('admin.translate.index');
+        Route::post('/get-elements', 'Admin\TranslateController@get_elements')->name('admin.translate.get_elements');
+        Route::post('/get-translation', 'Admin\TranslateController@get_translation')->name('admin.translate.get_translation');
     });
 
     Route::prefix('apps')->group(function(){

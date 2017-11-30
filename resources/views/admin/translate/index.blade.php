@@ -2,7 +2,7 @@
 @section('title', 'Translate')
 @section('content')
   <div id="app" class="container">
-      <translate-panel apps="{{ $apps }}"></translate-panel>
+      <translate-panel/>
   </div>
 @endsection
 @section('scripts')

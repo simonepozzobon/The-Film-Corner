@@ -11069,8 +11069,29 @@ var _ListEl2 = _interopRequireDefault(_ListEl);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: "list",
-  props: ['title', 'color', 'items', 'options', 'languages'],
+  name: 'List',
+  props: {
+    'title': {
+      default: '',
+      type: String
+    },
+    'color': {
+      default: '',
+      type: String
+    },
+    'items': {
+      default: '',
+      type: [Array, Object]
+    },
+    'options': {
+      default: '',
+      type: Array
+    },
+    'languages': {
+      default: '',
+      type: [Array, String]
+    }
+  },
   data: function data() {
     return {};
   },
@@ -11078,6 +11099,7 @@ exports.default = {
     ListEl: _ListEl2.default
   }
 }; //
+//
 //
 //
 //
@@ -11121,20 +11143,78 @@ var _axios = __webpack_require__(8);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _SingleField = __webpack_require__(387);
+
+var _SingleField2 = _interopRequireDefault(_SingleField);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
-  name: "list-el",
-  props: ['item', 'options', 'languages', 'color'],
+  name: 'ListEl',
+  props: {
+    'item': {
+      default: '',
+      type: Object
+    },
+    'options': {
+      default: '',
+      type: Array
+    },
+    'languages': {
+      default: '',
+      type: [Array, String]
+    },
+    'color': {
+      default: '',
+      type: String
+    }
+  },
   data: function data() {
     return {
       toolbar: {
         status: false,
-        obj: ''
+        translation: false,
+        cache: ''
       },
       language: '',
-      translation: '',
-      property: ''
+      language_form: '',
+      options_obj: '',
+      translation: ''
     };
   },
   computed: {
@@ -11142,23 +11222,72 @@ exports.default = {
       return this.options.length;
     }
   },
+  created: function created() {
+    this.options_obj = this.options;
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$on('input-updated', function (input) {
+      _this.updateObjs(input);
+    });
+  },
+
   methods: {
     get_property: function get_property(val) {
       var property = _lodash2.default.pick(this.item, val);
       return Object.values(property)[0];
     },
-    edit: function edit(e) {
-      if (this.toolbar.status == false) {
-        this.show_tools(e);
-        this.property = e.target.dataset.property;
-      } else {}
+    get_translation: function get_translation(val) {
+      var property = _lodash2.default.pick(this.translation, val);
+      return Object.values(property)[0];
     },
-    show_tools: function show_tools(e) {
+    updateObjs: function updateObjs(input) {
+      var foundIndex = this.options_obj.findIndex(function (x) {
+        return x.title == input.option;
+      });
+      this.options_obj[foundIndex].value = input.value;
+    },
+    edit: function edit() {
+      if (!this.toolbar.status) {
+        this.show_tools();
+      } else {
+        this.hide_tools();
+      }
+
+      if (this.toolbar.translation) {
+        this.hideTranslation();
+      }
+    },
+    hide_tools: function hide_tools() {
+      var t1 = new _gsap.TimelineMax();
+      t1.to(this.$refs.row, .4, {
+        background: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var t2 = new _gsap.TimelineMax();
+      t2.to(this.$refs.tools, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(t2);
+      master.add(t1, .4);
+      master.play();
+      this.toolbar.status = false;
+      this.language_form = '';
+      _lodash2.default.each(this.options_obj, function (option) {
+        option.value = '';
+      });
+    },
+    show_tools: function show_tools() {
       this.toolbar.status = true;
-      this.toolbar.obj = e.target;
 
       var t1 = new _gsap.TimelineMax();
-      t1.to(e.target, .4, {
+      t1.to(this.$refs.row, .4, {
         background: 'rgba(255, 255, 255, 0.4)',
         easing: _gsap.Power4.easeInOut
       });
@@ -11178,43 +11307,110 @@ exports.default = {
     save: function save() {
       var vue = this;
       var data = new FormData();
-      data.append('translation', this.translation);
-      data.append('language', this.language);
-      data.append('property', this.property);
+      data.append('language', this.language_form);
       data.append('translable_id', this.item.id);
       data.append('translable_type', this.item.model);
+      data.append('translations', JSON.stringify(this.options_obj));
 
       _axios2.default.post('/admin/translate/save', data).then(function (response) {
         console.log(response);
-      }).catch(function (errors) {
-        console.log(errors);
+        vue.hide_tools();
+        vue.$root.$emit('translation-update');
       });
-    }
+    },
+    translationPanel: function translationPanel(e, language) {
+      if (!this.toolbar.translation) {
+        this.language = language;
+        this.toolbar.cache = e.target;
+        this.showTranslation();
+      } else {
+        this.hideTranslation();
+      }
+
+      if (this.toolbar.status) {
+        this.hide_tools();
+      }
+    },
+    editDefault: function editDefault(e, language) {
+      if (this.toolbar.status) {
+        this.hide_tools();
+      }
+
+      var vue = this;
+      this.language = language;
+      this.toolbar.cache = e.target;
+      vue.language_form = vue.language.id;
+      _lodash2.default.each(vue.options_obj, function (option) {
+        var value = vue.get_property(option.title);
+        option.value = value;
+      });
+      vue.edit();
+    },
+    showTranslation: function showTranslation() {
+      var vue = this;
+      var data = new FormData();
+      data.append('id', this.item.id);
+      data.append('original_model', this.item.original_model);
+      data.append('language', this.language.short);
+
+      var t1 = new _gsap.TimelineMax();
+      t1.to(vue.$refs.translation, .4, {
+        opacity: 1,
+        display: 'table-row'
+      });
+
+      var t2 = new _gsap.TimelineMax();
+      t2.to(this.toolbar.cache, .4, {
+        background: 'rgb(170, 170, 170)'
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(t1);
+      master.add(t2);
+
+      _axios2.default.post('/admin/translate/get-translation', data).then(function (response) {
+        vue.translation = response.data;
+        master.play();
+        vue.toolbar.translation = true;
+      });
+    },
+    hideTranslation: function hideTranslation() {
+      var t1 = new _gsap.TimelineMax();
+      t1.to(this.$refs.translation, .4, {
+        opacity: 0,
+        display: 'none'
+      });
+
+      var t2 = new _gsap.TimelineMax();
+      t2.to(this.toolbar.cache, .4, {
+        background: 'rgb(255, 135, 143)'
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(t1);
+      master.add(t2);
+      master.play();
+
+      this.toolbar.cache = '';
+      this.toolbar.translation = false;
+      this.language = '';
+    },
+    translation_tools: function translation_tools() {
+      var vue = this;
+      this.language_form = this.language.id;
+      _lodash2.default.each(this.options_obj, function (option) {
+        var value = vue.get_translation(option.title);
+        option.value = value;
+      });
+      this.edit();
+    },
+    show_translation_alert: function show_translation_alert(e) {},
+    restore_translation: function restore_translation(e) {}
+  },
+  components: {
+    SingleField: _SingleField2.default
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -11243,23 +11439,60 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
-  name: "translate-panel",
-  props: ['apps'],
+  name: 'TranslatePanel',
   data: function data() {
     return {
-      options: [{ title: 'title' }, { title: 'slug' }, { title: 'description' }],
-      languages: ''
+      categories: [{
+        title: 'Apps',
+        value: 'apps',
+        options: [{ title: 'title', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }, {
+        title: 'Glossary',
+        value: 'app_keywords',
+        options: [{ title: 'name', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }, {
+        title: 'Studios',
+        value: 'app_sections',
+        options: [{ title: 'name', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }, {
+        title: 'Didactical Path',
+        value: 'app_categories',
+        options: [{ title: 'name', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }],
+      languages: '',
+      category: 'apps',
+      items: [],
+      options: [],
+      title: ''
     };
-  },
-  computed: {
-    appsParsed: function appsParsed() {
-      return JSON.parse(this.apps);
-    }
   },
   created: function created() {
     this.get_languages();
+    this.changePanel();
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$parent.$on('translation-update', function () {
+      _this.changePanel();
+    });
   },
 
   methods: {
@@ -11267,6 +11500,21 @@ exports.default = {
       var vue = this;
       _axios2.default.get('/admin/translate/languages').then(function (response) {
         vue.languages = response.data;
+      });
+    },
+    changePanel: function changePanel() {
+      var vue = this;
+
+      var data = new FormData();
+      data.append('type', this.category);
+
+      _axios2.default.post('/admin/translate/get-elements', data).then(function (response) {
+        var foundIndex = vue.categories.findIndex(function (x) {
+          return x.value == vue.category;
+        });
+        vue.options = vue.categories[foundIndex].options;
+        vue.title = vue.categories[foundIndex].title;
+        vue.items = response.data;
       });
     }
   },
@@ -11500,7 +11748,7 @@ module.exports = InterceptorManager;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\nth[data-v-52cf2582] {\n  text-transform: capitalize;\n}\n", ""]);
 
 /***/ }),
 
@@ -11595,7 +11843,7 @@ module.exports = function dispatchRequest(config) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(14)();
-exports.push([module.i, "\n#tools[data-v-8e76a674] {\n  display: none;\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n#tools[data-v-8e76a674], #translation[data-v-8e76a674] {\n  display: none;\n  opacity: 0;\n}\n", ""]);
 
 /***/ }),
 
@@ -12070,11 +12318,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box-body"
   }, [_c('table', {
     staticClass: "table table-hover"
-  }, [_c('thead', _vm._l((_vm.options), function(option) {
+  }, [_c('thead', [_vm._l((_vm.options), function(option) {
     return _c('th', {
       key: option.key
     }, [_vm._v(_vm._s(option.title))])
-  })), _vm._v(" "), _vm._l((_vm.items), function(item) {
+  }), _vm._v(" "), _c('th', [_vm._v("Languages")])], 2), _vm._v(" "), _vm._l((_vm.items), function(item) {
     return _c('list-el', {
       key: item.key,
       attrs: {
@@ -12177,10 +12425,11 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('tbody', [_c('tr', {
+    ref: "row",
     attrs: {
       "id": "list-el"
     }
-  }, _vm._l((_vm.options), function(option, key, index) {
+  }, [_vm._l((_vm.options), function(option, key, index) {
     return _c('td', {
       key: option.key,
       ref: "items",
@@ -12192,13 +12441,39 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "click": _vm.edit
       }
     }, [_vm._v(_vm._s(_vm.get_property(option.title)))])
-  })), _vm._v(" "), _c('tr', [_c('td', {
+  }), _vm._v(" "), _c('td', _vm._l((_vm.item.translated), function(language) {
+    return (language.short != 'en') ? _c('span', {
+      key: language.key,
+      staticClass: "badge badge-red mb",
+      on: {
+        "click": function($event) {
+          _vm.translationPanel(this.event, language)
+        }
+      }
+    }, [_vm._v(_vm._s(language.short))]) : _c('span', {
+      staticClass: "badge badge-red mb",
+      on: {
+        "click": function($event) {
+          _vm.editDefault(this.event, language)
+        }
+      }
+    }, [_vm._v(_vm._s(language.short))])
+  }))], 2), _vm._v(" "), _c('tr', [_c('td', {
     ref: "tools",
     attrs: {
       "id": "tools",
       "colspan": "42"
     }
   }, [_c('div', {
+    staticClass: "close"
+  }, [_c('button', {
+    staticClass: "btn btn-secondary",
+    on: {
+      "click": _vm.hide_tools
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-times"
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -12208,8 +12483,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.language),
-      expression: "language"
+      value: (_vm.language_form),
+      expression: "language_form"
     }],
     staticClass: "form-control",
     on: {
@@ -12220,7 +12495,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.language = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.language_form = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, _vm._l((_vm.languages), function(language) {
@@ -12230,35 +12505,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": language.id
       }
     }, [_vm._v(_vm._s(language.short))])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": ""
-    }
-  }, [_vm._v("Translation:")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.translation),
-      expression: "translation"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "name",
-      "rows": "8",
-      "cols": "80"
-    },
-    domProps: {
-      "value": (_vm.translation)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.translation = $event.target.value
+  }))]), _vm._v(" "), _vm._l((_vm.options_obj), function(option) {
+    return _c('single-field', {
+      key: option.key,
+      attrs: {
+        "label": option.title,
+        "type": option.type,
+        "value": option.value
       }
-    }
-  })]), _vm._v(" "), _c('div', {
+    })
+  }), _vm._v(" "), _c('div', {
     staticClass: "d-flex justify-content-center"
   }, [_c('a', {
     class: 'btn btn-' + _vm.color,
@@ -12270,7 +12526,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-floppy-o"
-  }), _vm._v(" Save")])])])])])
+  }), _vm._v(" Save")])])], 2)]), _vm._v(" "), _c('tr', {
+    ref: "translation",
+    attrs: {
+      "id": "translation"
+    },
+    on: {
+      "click": _vm.translation_tools,
+      "mouseover": _vm.show_translation_alert,
+      "mouseleave": _vm.restore_translation
+    }
+  }, [_vm._l((_vm.options), function(option, key, index) {
+    return _c('td', {
+      key: option.key,
+      ref: "items",
+      refInFor: true
+    }, [_vm._v(_vm._s(_vm.get_translation(option.title)))])
+  }), _vm._v(" "), _c('td', [_c('span', {
+    staticClass: "badge badge-red mb"
+  }, [_vm._v(_vm._s(_vm.language.short))])])], 2)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -12290,11 +12564,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "translate-panel"
     }
-  }, [_c('list', {
+  }, [_c('div', {
+    staticClass: "box yellow"
+  }, [_c('div', {
+    staticClass: "box-header"
+  }, [_vm._v("\n      Select What To Translate\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "box-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.category),
+      expression: "category"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.category = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.categories), function(cat) {
+    return _c('option', {
+      key: cat.key,
+      domProps: {
+        "value": cat.value
+      }
+    }, [_vm._v(_vm._s(cat.title))])
+  }))])]), _vm._v(" "), _c('div', {
+    staticClass: "box-btns"
+  }, [_c('button', {
+    staticClass: "btn btn-yellow",
+    on: {
+      "click": _vm.changePanel
+    }
+  }, [_vm._v("Translate")])])]), _vm._v(" "), _c('list', {
     attrs: {
-      "title": "Apps",
       "color": "green",
-      "items": _vm.appsParsed,
+      "title": _vm.title,
+      "items": _vm.items,
       "options": _vm.options,
       "languages": _vm.languages
     }
@@ -12642,6 +12957,201 @@ module.exports = function parseHeaders(headers) {
   return parsed;
 };
 
+
+/***/ }),
+
+/***/ 385:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'SingleField',
+  props: {
+    'label': {
+      default: 'Label',
+      type: String
+    },
+    'type': {
+      default: 'input',
+      type: String
+    },
+    value: {
+      default: '',
+      type: String
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  computed: {
+    input: {
+      get: function get() {
+        return this.value;
+      },
+      set: function set(newval) {
+        var obj = {
+          'option': this.label,
+          'value': newval
+        };
+        this.$parent.$emit('input-updated', obj);
+      }
+    }
+  },
+  mounted: function mounted() {
+    //do something after mounting vue instance
+    this.input = this.value;
+  }
+};
+
+/***/ }),
+
+/***/ 386:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(14)();
+exports.push([module.i, "\nlabel[data-v-7cefc3fe] {\n  text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 387:
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(389)
+
+var Component = __webpack_require__(15)(
+  /* script */
+  __webpack_require__(385),
+  /* template */
+  __webpack_require__(388),
+  /* scopeId */
+  "data-v-7cefc3fe",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/admin/js/components/SingleField.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SingleField.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7cefc3fe", Component.options)
+  } else {
+    hotAPI.reload("data-v-7cefc3fe", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ 388:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "from-group pb",
+    attrs: {
+      "id": "single-field"
+    }
+  }, [_c('label', [_vm._v(_vm._s(_vm.label))]), _vm._v(" "), (_vm.type == 'input') ? _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input),
+      expression: "input"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": _vm.value
+    },
+    domProps: {
+      "value": (_vm.input)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input = $event.target.value
+      }
+    }
+  }) : (_vm.type == 'textarea') ? _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input),
+      expression: "input"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "name",
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.input)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input = $event.target.value
+      }
+    }
+  }, [_vm._v(_vm._s(this.value))]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7cefc3fe", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ 389:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(386);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(16)("833eaaf8", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7cefc3fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SingleField.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7cefc3fe\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SingleField.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
