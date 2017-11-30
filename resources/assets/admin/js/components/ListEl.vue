@@ -74,12 +74,16 @@ export default {
     opt_lenght: function ()
     {
       return this.options.length
+    },
+  },
+  watch: {
+    options: function()
+    {
+      this.options_obj = this.options
     }
   },
-  created() {
-    this.options_obj = this.options
-  },
   mounted() {
+    this.options_obj = this.options
     this.$on('input-updated', input => {
       this.updateObjs(input)
     })
@@ -169,18 +173,24 @@ export default {
     save()
     {
       var vue = this
-      var data = new FormData()
-      data.append('language', this.language_form)
-      data.append('translable_id', this.item.id)
-      data.append('translable_type', this.item.model)
-      data.append('translations', JSON.stringify(this.options_obj))
+      if (this.language_form == '' || vue.item.id == '' || vue.item.model == '' || vue.options_obj == '') {
+        alert('Please complete all the informations')
+      } else {
 
-      axios.post('/admin/translate/save', data)
-        .then((response) => {
-          console.log(response);
-          vue.hide_tools()
-          vue.$root.$emit('translation-update')
-        })
+        var data = new FormData()
+        data.append('language', this.language_form)
+        data.append('translable_id', this.item.id)
+        data.append('translable_type', this.item.model)
+        data.append('translations', JSON.stringify(this.options_obj))
+
+        axios.post('/admin/translate/save', data)
+          .then(() => {
+            vue.hide_tools()
+            vue.$root.$emit('translation-update')
+          })
+      }
+
+
     },
 
     translationPanel(e, language)

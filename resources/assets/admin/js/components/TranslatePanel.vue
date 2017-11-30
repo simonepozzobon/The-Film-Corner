@@ -64,13 +64,21 @@ export default {
     category: 'apps',
     items: [],
     options: [],
+    options_obj: '',
     title: '',
   }),
+  watch: {
+    options: function()
+    {
+      this.options_obj = this.options
+    }
+  },
   created() {
     this.get_languages()
-    this.changePanel()
   },
   mounted() {
+    this.changePanel()
+
     this.$parent.$on('translation-update', () => {
       this.changePanel()
     })

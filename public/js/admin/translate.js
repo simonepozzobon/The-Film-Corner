@@ -11093,7 +11093,14 @@ exports.default = {
     }
   },
   data: function data() {
-    return {};
+    return {
+      options_obj: ''
+    };
+  },
+  watch: {
+    options: function options() {
+      this.options_obj = this.options;
+    }
   },
   components: {
     ListEl: _ListEl2.default
@@ -11222,12 +11229,15 @@ exports.default = {
       return this.options.length;
     }
   },
-  created: function created() {
-    this.options_obj = this.options;
+  watch: {
+    options: function options() {
+      this.options_obj = this.options;
+    }
   },
   mounted: function mounted() {
     var _this = this;
 
+    this.options_obj = this.options;
     this.$on('input-updated', function (input) {
       _this.updateObjs(input);
     });
@@ -11306,17 +11316,21 @@ exports.default = {
     },
     save: function save() {
       var vue = this;
-      var data = new FormData();
-      data.append('language', this.language_form);
-      data.append('translable_id', this.item.id);
-      data.append('translable_type', this.item.model);
-      data.append('translations', JSON.stringify(this.options_obj));
+      if (this.language_form == '' || vue.item.id == '' || vue.item.model == '' || vue.options_obj == '') {
+        alert('Please complete all the informations');
+      } else {
 
-      _axios2.default.post('/admin/translate/save', data).then(function (response) {
-        console.log(response);
-        vue.hide_tools();
-        vue.$root.$emit('translation-update');
-      });
+        var data = new FormData();
+        data.append('language', this.language_form);
+        data.append('translable_id', this.item.id);
+        data.append('translable_type', this.item.model);
+        data.append('translations', JSON.stringify(this.options_obj));
+
+        _axios2.default.post('/admin/translate/save', data).then(function () {
+          vue.hide_tools();
+          vue.$root.$emit('translation-update');
+        });
+      }
     },
     translationPanel: function translationPanel(e, language) {
       if (!this.toolbar.translation) {
@@ -11480,15 +11494,22 @@ exports.default = {
       category: 'apps',
       items: [],
       options: [],
+      options_obj: '',
       title: ''
     };
   },
+  watch: {
+    options: function options() {
+      this.options_obj = this.options;
+    }
+  },
   created: function created() {
     this.get_languages();
-    this.changePanel();
   },
   mounted: function mounted() {
     var _this = this;
+
+    this.changePanel();
 
     this.$parent.$on('translation-update', function () {
       _this.changePanel();
@@ -12318,7 +12339,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box-body"
   }, [_c('table', {
     staticClass: "table table-hover"
-  }, [_c('thead', [_vm._l((_vm.options), function(option) {
+  }, [_c('thead', [_vm._l((_vm.options_obj), function(option) {
     return _c('th', {
       key: option.key
     }, [_vm._v(_vm._s(option.title))])

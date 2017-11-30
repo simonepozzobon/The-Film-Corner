@@ -9,7 +9,7 @@
           <div class="box-body">
             <table class="table table-hover">
               <thead>
-                <th v-for="option in options" :key="option.key">{{option.title}}</th>
+                <th v-for="option in options_obj" :key="option.key">{{option.title}}</th>
                 <th>Languages</th>
               </thead>
               <list-el v-for="item in items" :key="item.key" :item="item" :options="options" :languages="languages" :color="color"></list-el>
@@ -48,7 +48,14 @@ export default {
     }
   },
   data: () => ({
+    options_obj: ''
   }),
+  watch: {
+    options: function()
+    {
+      this.options_obj = this.options
+    }
+  },
   components: {
     ListEl
   }
