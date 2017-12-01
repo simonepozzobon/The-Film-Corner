@@ -147,23 +147,72 @@
     });
 
     $('#reload').on('click', function() {
-        var left_id = Math.floor(Math.random() * lenght),
-            right_id = Math.floor(Math.random() * lenght);
-
-        while (left_id == right_id) {
+      var left_id = Math.floor(Math.random() * lenght),
           right_id = Math.floor(Math.random() * lenght);
-        }
 
-        left.pause();
-        right.pause();
-        left.src(videos[left_id]);
-        right.src(videos[right_id]);
-        left.load();
-        right.load();
-        localStorage.setItem('app-6-video-left', left.src());
-        localStorage.setItem('app-6-video-right', right.src());
+      while (left_id == right_id) {
+        right_id = Math.floor(Math.random() * lenght);
+      }
 
+      left.pause();
+      right.pause();
+      left.src(videos[left_id]);
+      right.src(videos[right_id]);
+      left.load();
+      right.load();
+      localStorage.setItem('app-6-video-left', left.src());
+      localStorage.setItem('app-6-video-right', right.src());
     });
+
+    $('#reload-left').on('click', function() {
+      var cache_video = localStorage.getItem('app-6-video-right'),
+          clean_path = getPath(cache_video),
+          decoded_uri = decodeURI(clean_path);
+
+      var foundIndex = videos.findIndex((video) => {
+        return video == decoded_uri;
+      });
+
+      var left_id = Math.floor(Math.random() * lenght);
+      while (left_id == foundIndex) {
+        right_id = Math.floor(Math.random() * lenght);
+      }
+
+      left.pause();
+      right.pause();
+      left.src(videos[left_id]);
+      left.load();
+      localStorage.setItem('app-6-video-left', left.src());
+
+    })
+
+    $('#reload-right').on('click', function() {
+      var cache_video = localStorage.getItem('app-6-video-left'),
+          clean_path = getPath(cache_video),
+          decoded_uri = decodeURI(clean_path);
+
+      var foundIndex = videos.findIndex((video) => {
+        return video == decoded_uri;
+      });
+
+      var right_id = Math.floor(Math.random() * lenght);
+      while (right_id == foundIndex) {
+        left_id = Math.floor(Math.random() * lenght);
+      }
+
+      left.pause();
+      right.pause();
+      right.src(videos[right_id]);
+      right.load();
+      localStorage.cdsetItem('app-6-video-right', right.src());
+
+    })
+
+    function getPath(url) {
+      var a = document.createElement('a');
+      a.href = url;
+      return a.pathname.substr(0,1) === '/' ? a.pathname : '/' + a.pathname;
+    }
 
   </script>
 @endsection
