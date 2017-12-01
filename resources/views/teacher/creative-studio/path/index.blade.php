@@ -41,7 +41,7 @@
                 </div>
                 <div class="btns">
                   @if ($app->available == 1)
-                    <a href="{{ route('teacher.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
+                    <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
                       <i class="fa fa-file-o" aria-hidden="true"></i>
                     </a>
                   @else
@@ -163,7 +163,7 @@
             data +=   '</td>';
             data +=   '<td class="align-middle">';
             data +=     '<div class="btn-group">';
-            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-'+color+'"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
+            data +=       '<a href="/teacher/creative-studio/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-'+color+'"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
             data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
             data +=       '<a class="btn btn-'+color+'"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
             data +=     '</div>';
