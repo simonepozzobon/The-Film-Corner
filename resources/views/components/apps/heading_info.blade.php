@@ -35,7 +35,7 @@
           {{-- Se ci sono esempi, fa vedere il pulsante per gli esempi --}}
           @if ($app->examples()['count'] > 0)
             <div id="example-btn" class="icon" data-toggle="tooltip" data-html="true" title="Show Examples">
-              <a href="#" data-toggle="modal" data-target="#examples"><i class="fa fa-lightbulb-o"></i></a>
+              <a href="#" data-toggle="modal" data-target="#examples"><i class="fa fa-eye"></i></a>
             </div>
           @endif
           <div id="help-btn" class="icon" data-toggle="tooltip" data-html="true" title="Help">
