@@ -1,10 +1,10 @@
 {
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
+  "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/socket-test.js": "/js/socket-test.js",
   "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/app.js": "/js/app.js",
-  "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/network-single.js": "/js/network-single.js",
   "/js/admin/translate.js": "/js/admin/translate.js",
   "/js/admin/video.js": "/js/admin/video.js",

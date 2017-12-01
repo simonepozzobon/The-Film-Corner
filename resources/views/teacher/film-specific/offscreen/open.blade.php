@@ -144,7 +144,7 @@
       }
     });
 
-    player.muted(true);
+    // player.muted(true);
 
     player.ready(function() {
       $('.change-video').on('click', function(event) {
