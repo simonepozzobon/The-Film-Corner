@@ -218,6 +218,8 @@
         event.preventDefault();
         console.log(session.token);
 
+        console.log($('#media')[0]);
+
         var formData = new FormData();
         formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
         formData.append('media', $('#media')[0].files[0]);
