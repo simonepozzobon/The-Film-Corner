@@ -6,11 +6,7 @@ webpackJsonp([20],{
 "use strict";
 
 
-<<<<<<< HEAD
 var _scrollreveal = __webpack_require__(293);
-=======
-var _scrollreveal = __webpack_require__(283);
->>>>>>> master
 
 var _scrollreveal2 = _interopRequireDefault(_scrollreveal);
 
@@ -28,11 +24,7 @@ sr.reveal('.load, .load > img', {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 293:
-=======
-/***/ 283:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
@@ -900,11 +892,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 395:
-=======
-/***/ 370:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(215);
@@ -912,8 +900,4 @@ module.exports = __webpack_require__(215);
 
 /***/ })
 
-<<<<<<< HEAD
 },[395]);
-=======
-},[370]);
->>>>>>> master

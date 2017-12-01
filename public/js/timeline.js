@@ -10239,11 +10239,7 @@ var _vue = __webpack_require__(21);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-<<<<<<< HEAD
 var _Timeline = __webpack_require__(321);
-=======
-var _Timeline = __webpack_require__(306);
->>>>>>> master
 
 var _Timeline2 = _interopRequireDefault(_Timeline);
 
@@ -10258,45 +10254,7 @@ var timeline = new _vue2.default({
 
 /***/ }),
 
-<<<<<<< HEAD
-/***/ 24:
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-
 /***/ 257:
-=======
-/***/ 252:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10306,11 +10264,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-<<<<<<< HEAD
 var _TimelineTrack = __webpack_require__(323);
-=======
-var _TimelineTrack = __webpack_require__(308);
->>>>>>> master
 
 var _TimelineTrack2 = _interopRequireDefault(_TimelineTrack);
 
@@ -10339,11 +10293,7 @@ exports.default = {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 258:
-=======
-/***/ 253:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10368,11 +10318,7 @@ exports.default = {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 259:
-=======
-/***/ 254:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10382,11 +10328,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-<<<<<<< HEAD
 var _TimelineElement = __webpack_require__(322);
-=======
-var _TimelineElement = __webpack_require__(307);
->>>>>>> master
 
 var _TimelineElement2 = _interopRequireDefault(_TimelineElement);
 
@@ -10416,11 +10358,7 @@ exports.default = {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 263:
-=======
-/***/ 258:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -10428,11 +10366,7 @@ exports.push([module.i, "\n#timeline[data-v-08172334] {\n  background: #5d5ee3;\
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 280:
-=======
-/***/ 271:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -10440,11 +10374,7 @@ exports.push([module.i, "\n#timeline-element[data-v-545c8358] {\n  background: #
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 283:
-=======
-/***/ 274:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -10643,32 +10573,18 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 321:
-=======
-/***/ 306:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-<<<<<<< HEAD
 __webpack_require__(357)
-=======
-__webpack_require__(337)
->>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
-<<<<<<< HEAD
   __webpack_require__(257),
   /* template */
   __webpack_require__(326),
-=======
-  __webpack_require__(252),
-  /* template */
-  __webpack_require__(311),
->>>>>>> master
   /* scopeId */
   "data-v-08172334",
   /* cssModules */
@@ -10696,32 +10612,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 322:
-=======
-/***/ 307:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-<<<<<<< HEAD
 __webpack_require__(374)
-=======
-__webpack_require__(350)
->>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
-<<<<<<< HEAD
   __webpack_require__(258),
   /* template */
   __webpack_require__(343),
-=======
-  __webpack_require__(253),
-  /* template */
-  __webpack_require__(324),
->>>>>>> master
   /* scopeId */
   "data-v-545c8358",
   /* cssModules */
@@ -10749,32 +10651,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 323:
-=======
-/***/ 308:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-<<<<<<< HEAD
 __webpack_require__(377)
-=======
-__webpack_require__(353)
->>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
-<<<<<<< HEAD
   __webpack_require__(259),
   /* template */
   __webpack_require__(346),
-=======
-  __webpack_require__(254),
-  /* template */
-  __webpack_require__(327),
->>>>>>> master
   /* scopeId */
   "data-v-784a91b2",
   /* cssModules */
@@ -10802,11 +10690,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 326:
-=======
-/***/ 311:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10834,11 +10718,7 @@ if (false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 343:
-=======
-/***/ 324:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10859,11 +10739,7 @@ if (false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 346:
-=======
-/***/ 327:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -10899,21 +10775,13 @@ if (false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 357:
-=======
-/***/ 337:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-<<<<<<< HEAD
 var content = __webpack_require__(263);
-=======
-var content = __webpack_require__(258);
->>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -10934,21 +10802,13 @@ if(false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 374:
-=======
-/***/ 350:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-<<<<<<< HEAD
 var content = __webpack_require__(280);
-=======
-var content = __webpack_require__(271);
->>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -10969,21 +10829,13 @@ if(false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 377:
-=======
-/***/ 353:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-<<<<<<< HEAD
 var content = __webpack_require__(283);
-=======
-var content = __webpack_require__(274);
->>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11004,13 +10856,7 @@ if(false) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 404:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(224);
-=======
-/***/ 379:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(224);
@@ -11018,7 +10864,7 @@ module.exports = __webpack_require__(224);
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports) {
 
 /**
@@ -11048,7 +10894,6 @@ module.exports = function listToStyles (parentId, list) {
   }
   return styles
 }
->>>>>>> master
 
 
 /***/ }),
@@ -11187,7 +11032,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(24)
+var listToStyles = __webpack_require__(42)
 
 /*
 type StyleObject = {
@@ -11390,8 +11235,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-<<<<<<< HEAD
 },[404]);
-=======
-},[379]);
->>>>>>> master

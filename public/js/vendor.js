@@ -5377,11 +5377,7 @@ var Popover = function ($) {
 
 /***/ }),
 
-<<<<<<< HEAD
 /***/ 405:
-=======
-/***/ 380:
->>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(45);
@@ -15653,8 +15649,4 @@ return jQuery;
 
 /***/ })
 
-<<<<<<< HEAD
 },[405]);
-=======
-},[380]);
->>>>>>> master
