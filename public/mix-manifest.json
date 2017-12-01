@@ -4,6 +4,7 @@
   "/js/socket-test.js": "/js/socket-test.js",
   "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/app.js": "/js/app.js",
+  "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/network-single.js": "/js/network-single.js",
   "/js/admin/translate.js": "/js/admin/translate.js",
   "/js/admin/video.js": "/js/admin/video.js",
@@ -24,7 +25,6 @@
   "/js/vendor.js": "/js/vendor.js",
   "/js/city.js": "/js/city.js",
   "/js/conference/speakers.js": "/js/conference/speakers.js",
-  "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/manifest.js": "/js/manifest.js",
   "/js/admin/admin.min.js": "/js/admin/admin.min.js"
 }
