@@ -647,6 +647,51 @@ function isTrue (v) {
   return v === true
 }
 
+<<<<<<< HEAD
+=======
+var _WelcomeForm = __webpack_require__(305);
+
+var _WelcomeForm2 = _interopRequireDefault(_WelcomeForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = new _vue2.default({
+  el: '#app',
+  components: {
+    WelcomeForm: _WelcomeForm2.default
+  }
+});
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, global) {/*!
+ * Vue.js v2.4.4
+ * (c) 2014-2017 Evan You
+ * Released under the MIT License.
+ */
+
+
+/*  */
+
+// these helpers produces better vm code in JS engines due to their
+// explicitness and function inlining
+function isUndef (v) {
+  return v === undefined || v === null
+}
+
+function isDef (v) {
+  return v !== undefined && v !== null
+}
+
+function isTrue (v) {
+  return v === true
+}
+
+>>>>>>> master
 function isFalse (v) {
   return v === false
 }
@@ -11264,7 +11309,160 @@ module.exports = Axios;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 29:
+=======
+/***/ 251:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _axios = __webpack_require__(11);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: "welcome-form",
+    props: ['user', 'user_type', 'form'],
+    data: function data() {
+        return {
+            word_1: '',
+            word_2: '',
+            word_3: '',
+            answer: ''
+        };
+    },
+    computed: {
+
+        userParsed: function userParsed() {
+            return JSON.parse(this.user);
+        },
+
+        formParsed: function formParsed() {
+            return JSON.parse(this.form);
+        }
+    },
+    watch: {
+        word_1: function word_1(new_word) {
+            this.save();
+        },
+        word_2: function word_2(new_word) {
+            this.save();
+        },
+        word_3: function word_3(new_word) {
+            this.save();
+        },
+        answer: function answer(new_answer) {
+            this.save();
+        }
+    },
+    created: function created() {
+        this.word_1 = this.properNull(this.formParsed.word_1);
+        this.word_2 = this.properNull(this.formParsed.word_2);
+        this.word_3 = this.properNull(this.formParsed.word_3);
+        this.answer = this.properNull(this.formParsed.answer);
+    },
+
+    methods: {
+        // save the form
+        save: _.debounce(function () {
+            var vue = this;
+            var data = new FormData();
+            data.append('user', this.user);
+            data.append('user_type', this.user_type);
+            data.append('word_1', this.word_1);
+            data.append('word_2', this.word_2);
+            data.append('word_3', this.word_3);
+            data.append('answer', this.answer);
+
+            //send the request
+            _axios2.default.post('/api/v1/welcome/save', data).then(function (response) {
+                console.log(response);
+            }).catch(function (errors) {
+                console.log(errors);
+            });
+        }, 500),
+
+        properNull: function properNull(value) {
+            if (value == 'null') {
+                return value = null;
+            } else {
+                return value;
+            }
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ 26:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11324,6 +11522,167 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ 264:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var transformData = __webpack_require__(30);
+var isCancel = __webpack_require__(14);
+var defaults = __webpack_require__(5);
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(15);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+>>>>>>> master
 /***/ 3:
 /***/ (function(module, exports) {
 
@@ -11631,18 +11990,30 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 315:
+=======
+/***/ 305:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(365)
+=======
+__webpack_require__(343)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(251),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(334),
+=======
+  __webpack_require__(317),
+>>>>>>> master
   /* scopeId */
   "data-v-31e9a848",
   /* cssModules */
@@ -11732,7 +12103,11 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 334:
+=======
+/***/ 317:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12091,7 +12466,38 @@ module.exports = (
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 38:
+=======
+/***/ 343:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(264);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(10)("ef77857e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-31e9a848\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WelcomeForm.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-31e9a848\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WelcomeForm.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 35:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12217,7 +12623,19 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 41:
+=======
+/***/ 371:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(216);
+
+
+/***/ }),
+
+/***/ 38:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12763,4 +13181,8 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
+<<<<<<< HEAD
 },[396]);
+=======
+},[371]);
+>>>>>>> master

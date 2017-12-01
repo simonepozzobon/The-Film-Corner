@@ -819,7 +819,11 @@ setInterval(newLemmings, refreshTime);
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 397:
+=======
+/***/ 372:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(217);
@@ -12845,4 +12849,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ })
 
+<<<<<<< HEAD
 },[397]);
+=======
+},[372]);
+>>>>>>> master

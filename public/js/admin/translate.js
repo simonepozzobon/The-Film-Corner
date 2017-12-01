@@ -620,7 +620,41 @@ module.exports = g;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 21:
+=======
+/***/ 210:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(22);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _TranslatePanel = __webpack_require__(294);
+
+var _TranslatePanel2 = _interopRequireDefault(_TranslatePanel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
+  el: '#app',
+  data: function data() {
+    return {
+      'options': [{ 'title': 'title' }, { 'title': 'slug' }, { 'title': 'description' }]
+    };
+  },
+  components: {
+    TranslatePanel: _TranslatePanel2.default
+  }
+});
+
+/***/ }),
+
+/***/ 22:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10861,7 +10895,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+<<<<<<< HEAD
 var _ListEl = __webpack_require__(302);
+=======
+var _ListEl = __webpack_require__(292);
+>>>>>>> master
 
 var _ListEl2 = _interopRequireDefault(_ListEl);
 
@@ -10949,7 +10987,11 @@ var _axios = __webpack_require__(17);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+<<<<<<< HEAD
 var _SingleField = __webpack_require__(303);
+=======
+var _SingleField = __webpack_require__(293);
+>>>>>>> master
 
 var _SingleField2 = _interopRequireDefault(_SingleField);
 
@@ -11286,6 +11328,7 @@ exports.default = {
 /***/ }),
 
 /***/ 24:
+<<<<<<< HEAD
 /***/ (function(module, exports) {
 
 /**
@@ -11316,6 +11359,69 @@ module.exports = function listToStyles (parentId, list) {
   return styles
 }
 
+=======
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(13);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+>>>>>>> master
 
 /***/ }),
 
@@ -11333,7 +11439,11 @@ var _axios = __webpack_require__(17);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+<<<<<<< HEAD
 var _List = __webpack_require__(301);
+=======
+var _List = __webpack_require__(291);
+>>>>>>> master
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -11438,6 +11548,7 @@ exports.default = {
 /***/ }),
 
 /***/ 25:
+<<<<<<< HEAD
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -11600,6 +11711,8 @@ exports.push([module.i, "\nth[data-v-52cf2582] {\n  text-transform: capitalize;\
 /***/ }),
 
 /***/ 28:
+=======
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11777,6 +11890,7 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 3:
 /***/ (function(module, exports) {
 
@@ -11969,6 +12083,9 @@ process.umask = function() { return 0; };
 /***/ }),
 
 /***/ 30:
+=======
+/***/ 27:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12055,18 +12172,125 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 301:
+=======
+/***/ 270:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "\nth[data-v-52cf2582] {\n  text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 275:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "\nlabel[data-v-7cefc3fe] {\n  text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 277:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "\n#tools[data-v-8e76a674], #translation[data-v-8e76a674] {\n  display: none;\n  opacity: 0;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 279:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(15);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ 291:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(373)
+=======
+__webpack_require__(349)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(237),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(342),
+=======
+  __webpack_require__(323),
+>>>>>>> master
   /* scopeId */
   "data-v-52cf2582",
   /* cssModules */
@@ -12094,18 +12318,30 @@ module.exports = Component.exports
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 302:
+=======
+/***/ 292:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(381)
+=======
+__webpack_require__(356)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(238),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(350),
+=======
+  __webpack_require__(330),
+>>>>>>> master
   /* scopeId */
   "data-v-8e76a674",
   /* cssModules */
@@ -12133,18 +12369,30 @@ module.exports = Component.exports
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 303:
+=======
+/***/ 293:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(378)
+=======
+__webpack_require__(354)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(239),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(347),
+=======
+  __webpack_require__(328),
+>>>>>>> master
   /* scopeId */
   "data-v-7cefc3fe",
   /* cssModules */
@@ -12172,18 +12420,30 @@ module.exports = Component.exports
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 304:
+=======
+/***/ 294:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(383)
+=======
+__webpack_require__(358)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(240),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(352),
+=======
+  __webpack_require__(332),
+>>>>>>> master
   /* scopeId */
   "data-v-a16b1a92",
   /* cssModules */
@@ -12346,116 +12606,10 @@ module.exports = btoa;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 342:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "list"
-    }
-  }, [_c('div', {
-    staticClass: "row mt"
-  }, [_c('div', {
-    staticClass: "col"
-  }, [_c('div', {
-    class: 'box ' + _vm.color
-  }, [_c('div', {
-    staticClass: "box-header"
-  }, [_vm._v("\n          " + _vm._s(_vm.title) + "\n        ")]), _vm._v(" "), _c('div', {
-    staticClass: "box-body"
-  }, [_c('table', {
-    staticClass: "table table-hover"
-  }, [_c('thead', [_vm._l((_vm.options_obj), function(option) {
-    return _c('th', {
-      key: option.key
-    }, [_vm._v(_vm._s(option.title))])
-  }), _vm._v(" "), _c('th', [_vm._v("Languages")])], 2), _vm._v(" "), _vm._l((_vm.items), function(item) {
-    return _c('list-el', {
-      key: item.key,
-      attrs: {
-        "item": item,
-        "options": _vm.options,
-        "languages": _vm.languages,
-        "color": _vm.color
-      }
-    })
-  })], 2)])])])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-52cf2582", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 347:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "from-group pb",
-    attrs: {
-      "id": "single-field"
-    }
-  }, [_c('label', [_vm._v(_vm._s(_vm.label))]), _vm._v(" "), (_vm.type == 'input') ? _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.input),
-      expression: "input"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "placeholder": _vm.value
-    },
-    domProps: {
-      "value": (_vm.input)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.input = $event.target.value
-      }
-    }
-  }) : (_vm.type == 'textarea') ? _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.input),
-      expression: "input"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "name": "name",
-      "rows": "8"
-    },
-    domProps: {
-      "value": (_vm.input)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.input = $event.target.value
-      }
-    }
-  }, [_vm._v(_vm._s(this.value))]) : _vm._e()])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-7cefc3fe", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 35:
+=======
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12531,7 +12685,219 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
+/***/ 323:
+>>>>>>> master
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "list"
+    }
+  }, [_c('div', {
+    staticClass: "row mt"
+  }, [_c('div', {
+    staticClass: "col"
+  }, [_c('div', {
+    class: 'box ' + _vm.color
+  }, [_c('div', {
+    staticClass: "box-header"
+  }, [_vm._v("\n          " + _vm._s(_vm.title) + "\n        ")]), _vm._v(" "), _c('div', {
+    staticClass: "box-body"
+  }, [_c('table', {
+    staticClass: "table table-hover"
+  }, [_c('thead', [_vm._l((_vm.options_obj), function(option) {
+    return _c('th', {
+      key: option.key
+    }, [_vm._v(_vm._s(option.title))])
+  }), _vm._v(" "), _c('th', [_vm._v("Languages")])], 2), _vm._v(" "), _vm._l((_vm.items), function(item) {
+    return _c('list-el', {
+      key: item.key,
+      attrs: {
+        "item": item,
+        "options": _vm.options,
+        "languages": _vm.languages,
+        "color": _vm.color
+      }
+    })
+  })], 2)])])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-52cf2582", module.exports)
+  }
+}
+
+/***/ }),
+
+<<<<<<< HEAD
+/***/ 347:
+=======
+/***/ 328:
+>>>>>>> master
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "from-group pb",
+    attrs: {
+      "id": "single-field"
+    }
+  }, [_c('label', [_vm._v(_vm._s(_vm.label))]), _vm._v(" "), (_vm.type == 'input') ? _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input),
+      expression: "input"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "placeholder": _vm.value
+    },
+    domProps: {
+      "value": (_vm.input)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input = $event.target.value
+      }
+    }
+  }) : (_vm.type == 'textarea') ? _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input),
+      expression: "input"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "name": "name",
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.input)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input = $event.target.value
+      }
+    }
+  }, [_vm._v(_vm._s(this.value))]) : _vm._e()])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7cefc3fe", module.exports)
+  }
+}
+
+/***/ }),
+
+<<<<<<< HEAD
+/***/ 35:
+=======
+/***/ 33:
+>>>>>>> master
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+<<<<<<< HEAD
+var utils = __webpack_require__(0);
+
+function encode(val) {
+  return encodeURIComponent(val).
+    replace(/%40/gi, '@').
+    replace(/%3A/gi, ':').
+    replace(/%24/g, '$').
+    replace(/%2C/gi, ',').
+    replace(/%20/g, '+').
+    replace(/%5B/gi, '[').
+    replace(/%5D/gi, ']');
+}
+
+/**
+ * Build a URL by appending params to the end
+ *
+ * @param {string} url The base of the url (e.g., http://www.google.com)
+ * @param {object} [params] The params to be appended
+ * @returns {string} The formatted url
+ */
+module.exports = function buildURL(url, params, paramsSerializer) {
+  /*eslint no-param-reassign:0*/
+  if (!params) {
+    return url;
+  }
+
+  var serializedParams;
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params);
+  } else if (utils.isURLSearchParams(params)) {
+    serializedParams = params.toString();
+  } else {
+    var parts = [];
+
+    utils.forEach(params, function serialize(val, key) {
+      if (val === null || typeof val === 'undefined') {
+        return;
+      }
+
+      if (utils.isArray(val)) {
+        key = key + '[]';
+      }
+
+      if (!utils.isArray(val)) {
+        val = [val];
+      }
+
+      utils.forEach(val, function parseValue(v) {
+        if (utils.isDate(v)) {
+          v = v.toISOString();
+        } else if (utils.isObject(v)) {
+          v = JSON.stringify(v);
+        }
+        parts.push(encode(key) + '=' + encode(v));
+      });
+    });
+
+    serializedParams = parts.join('&');
+  }
+
+  if (serializedParams) {
+    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams;
+  }
+
+  return url;
+=======
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+>>>>>>> master
+};
+
+
+/***/ }),
+
+<<<<<<< HEAD
 /***/ 350:
+=======
+/***/ 330:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12667,7 +13033,11 @@ if (false) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 352:
+=======
+/***/ 332:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12819,13 +13189,21 @@ module.exports = (
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 373:
+=======
+/***/ 349:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(279);
+=======
+var content = __webpack_require__(270);
+>>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12846,13 +13224,43 @@ if(false) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 378:
+=======
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ 354:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(284);
+=======
+var content = __webpack_require__(275);
+>>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12873,6 +13281,7 @@ if(false) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12896,12 +13305,19 @@ module.exports = function isAbsoluteURL(url) {
 /***/ }),
 
 /***/ 381:
+=======
+/***/ 356:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(287);
+=======
+var content = __webpack_require__(277);
+>>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12922,13 +13338,21 @@ if(false) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 383:
+=======
+/***/ 358:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(289);
+=======
+var content = __webpack_require__(279);
+>>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13025,7 +13449,11 @@ module.exports = (
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 390:
+=======
+/***/ 365:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(210);
@@ -38662,4 +39090,8 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
+<<<<<<< HEAD
 },[390]);
+=======
+},[365]);
+>>>>>>> master

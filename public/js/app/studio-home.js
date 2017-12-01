@@ -10831,7 +10831,11 @@ var _vue = __webpack_require__(21);
 
 var _vue2 = _interopRequireDefault(_vue);
 
+<<<<<<< HEAD
 var _FeedbackPopup = __webpack_require__(313);
+=======
+var _FeedbackPopup = __webpack_require__(303);
+>>>>>>> master
 
 var _FeedbackPopup2 = _interopRequireDefault(_FeedbackPopup);
 
@@ -11118,7 +11122,74 @@ module.exports = CancelToken;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 28:
+=======
+/***/ 249:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _gsap = __webpack_require__(57);
+
+var _lodash = __webpack_require__(44);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
+var _axios = __webpack_require__(11);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: "feedback-popup",
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {
+        var vue = this;
+        _lodash2.default.delay(function () {
+            vue.init();
+        }, 500);
+    },
+
+    methods: {
+        init: function init() {
+            var t1 = new _gsap.TimelineMax();
+            t1.fromTo(this.$refs.btn, .6, {
+                opacity: 0,
+                y: '-=100%',
+                easing: _gsap.Power4.easeInOut
+            }, {
+                opacity: 1,
+                y: '+=105%',
+                delay: 1,
+                easing: _gsap.Power4.easeInOut
+            });
+        },
+        openModal: function openModal() {
+            this.$parent.$emit('modalOpen', '#info');
+        }
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ 25:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11272,6 +11343,167 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ 262:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "\n#info-popup[data-v-2760c2d4] {\n  position: fixed;\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n          transform: translateX(-50%);\n}\n#btn[data-v-2760c2d4] {\n  opacity: 0;\n  width: 20rem;\n}\n#Rectangle[data-v-2760c2d4] {\n  fill: #fe595a;\n  opacity: 0;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var transformData = __webpack_require__(30);
+var isCancel = __webpack_require__(14);
+var defaults = __webpack_require__(5);
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+function throwIfCancellationRequested(config) {
+  if (config.cancelToken) {
+    config.cancelToken.throwIfRequested();
+  }
+}
+
+/**
+ * Dispatch a request to the server using the configured adapter.
+ *
+ * @param {object} config The config that is to be used for the request
+ * @returns {Promise} The Promise to be fulfilled
+ */
+module.exports = function dispatchRequest(config) {
+  throwIfCancellationRequested(config);
+
+  // Ensure headers exist
+  config.headers = config.headers || {};
+
+  // Transform request data
+  config.data = transformData(
+    config.data,
+    config.headers,
+    config.transformRequest
+  );
+
+  // Flatten headers
+  config.headers = utils.merge(
+    config.headers.common || {},
+    config.headers[config.method] || {},
+    config.headers || {}
+  );
+
+  utils.forEach(
+    ['delete', 'get', 'head', 'post', 'put', 'patch', 'common'],
+    function cleanHeaderConfig(method) {
+      delete config.headers[method];
+    }
+  );
+
+  var adapter = config.adapter || defaults.adapter;
+
+  return adapter(config).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config);
+
+    // Transform response data
+    response.data = transformData(
+      response.data,
+      response.headers,
+      config.transformResponse
+    );
+
+    return response;
+  }, function onAdapterRejection(reason) {
+    if (!isCancel(reason)) {
+      throwIfCancellationRequested(config);
+
+      // Transform response data
+      if (reason && reason.response) {
+        reason.response.data = transformData(
+          reason.response.data,
+          reason.response.headers,
+          config.transformResponse
+        );
+      }
+    }
+
+    return Promise.reject(reason);
+  });
+};
+
+
+/***/ }),
+
+/***/ 28:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(15);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+>>>>>>> master
 /***/ 3:
 /***/ (function(module, exports) {
 
@@ -11579,18 +11811,30 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 313:
+=======
+/***/ 303:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(363)
+=======
+__webpack_require__(341)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(249),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(332),
+=======
+  __webpack_require__(315),
+>>>>>>> master
   /* scopeId */
   "data-v-2760c2d4",
   /* cssModules */
@@ -11680,7 +11924,11 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 332:
+=======
+/***/ 315:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11942,7 +12190,38 @@ module.exports = (
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 38:
+=======
+/***/ 341:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(262);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(10)("485ca625", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2760c2d4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FeedbackPopup.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-2760c2d4\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FeedbackPopup.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 35:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12060,7 +12339,11 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 401:
+=======
+/***/ 376:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(221);
@@ -37677,4 +37960,8 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
+<<<<<<< HEAD
 },[401]);
+=======
+},[376]);
+>>>>>>> master

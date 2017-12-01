@@ -88174,6 +88174,7 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 365 */,
 /* 366 */,
 /* 367 */,
+<<<<<<< HEAD
 /* 368 */,
 /* 369 */,
 /* 370 */,
@@ -88200,10 +88201,17 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 391 */,
 /* 392 */,
 /* 393 */
+=======
+/* 368 */
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(213);
 
 
 /***/ })
+<<<<<<< HEAD
 ],[393]);
+=======
+],[368]);
+>>>>>>> master

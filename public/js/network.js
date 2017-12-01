@@ -647,6 +647,51 @@ function isTrue (v) {
   return v === true
 }
 
+<<<<<<< HEAD
+=======
+var _networkIcons = __webpack_require__(304);
+
+var _networkIcons2 = _interopRequireDefault(_networkIcons);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var app = new _vue2.default({
+  el: '#main',
+  components: {
+    networkIcons: _networkIcons2.default
+  }
+});
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process, global) {/*!
+ * Vue.js v2.4.4
+ * (c) 2014-2017 Evan You
+ * Released under the MIT License.
+ */
+
+
+/*  */
+
+// these helpers produces better vm code in JS engines due to their
+// explicitness and function inlining
+function isUndef (v) {
+  return v === undefined || v === null
+}
+
+function isDef (v) {
+  return v !== undefined && v !== null
+}
+
+function isTrue (v) {
+  return v === true
+}
+
+>>>>>>> master
 function isFalse (v) {
   return v === false
 }
@@ -10888,6 +10933,103 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
+<<<<<<< HEAD
+=======
+/***/ 25:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var defaults = __webpack_require__(5);
+var utils = __webpack_require__(0);
+var InterceptorManager = __webpack_require__(26);
+var dispatchRequest = __webpack_require__(27);
+var isAbsoluteURL = __webpack_require__(35);
+var combineURLs = __webpack_require__(33);
+
+/**
+ * Create a new instance of Axios
+ *
+ * @param {Object} instanceConfig The default config for the instance
+ */
+function Axios(instanceConfig) {
+  this.defaults = instanceConfig;
+  this.interceptors = {
+    request: new InterceptorManager(),
+    response: new InterceptorManager()
+  };
+}
+
+/**
+ * Dispatch a request
+ *
+ * @param {Object} config The config specific for this request (merged with this.defaults)
+ */
+Axios.prototype.request = function request(config) {
+  /*eslint no-param-reassign:0*/
+  // Allow for axios('example/url'[, config]) a la fetch API
+  if (typeof config === 'string') {
+    config = utils.merge({
+      url: arguments[0]
+    }, arguments[1]);
+  }
+
+  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config.method = config.method.toLowerCase();
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
+
+  // Hook up interceptors middleware
+  var chain = [dispatchRequest, undefined];
+  var promise = Promise.resolve(config);
+
+  this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  while (chain.length) {
+    promise = promise.then(chain.shift(), chain.shift());
+  }
+
+  return promise;
+};
+
+// Provide aliases for supported request methods
+utils.forEach(['delete', 'get', 'head', 'options'], function forEachMethodNoData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url
+    }));
+  };
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  /*eslint func-names:0*/
+  Axios.prototype[method] = function(url, data, config) {
+    return this.request(utils.merge(config || {}, {
+      method: method,
+      url: url,
+      data: data
+    }));
+  };
+});
+
+module.exports = Axios;
+
+
+/***/ }),
+
+>>>>>>> master
 /***/ 250:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11155,6 +11297,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11250,6 +11393,17 @@ module.exports = Axios;
 /***/ }),
 
 /***/ 29:
+=======
+/***/ 259:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+
+/***/ 26:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11616,18 +11770,30 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 314:
+=======
+/***/ 304:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
+<<<<<<< HEAD
 __webpack_require__(358)
+=======
+__webpack_require__(338)
+>>>>>>> master
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(250),
   /* template */
+<<<<<<< HEAD
   __webpack_require__(327),
+=======
+  __webpack_require__(312),
+>>>>>>> master
   /* scopeId */
   "data-v-101bdfcd",
   /* cssModules */
@@ -11689,7 +11855,11 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 327:
+=======
+/***/ 312:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -11894,13 +12064,43 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 358:
+=======
+/***/ 33:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ 338:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
+<<<<<<< HEAD
 var content = __webpack_require__(264);
+=======
+var content = __webpack_require__(259);
+>>>>>>> master
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12130,7 +12330,19 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 41:
+=======
+/***/ 373:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(219);
+
+
+/***/ }),
+
+/***/ 38:
+>>>>>>> master
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32664,4 +32876,8 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
+<<<<<<< HEAD
 },[398]);
+=======
+},[373]);
+>>>>>>> master
