@@ -27098,18 +27098,6 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
   name: 'Sessions',
@@ -27677,7 +27665,7 @@ exports.push([module.i, "\n.box-header[data-v-45ec7499] {\n  display: -webkit-bo
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n.notification[data-v-5163daa6] {\n  padding-bottom: 0.5rem;\n  border-bottom: 2px dashed #a6dbe2;\n}\n", ""]);
 
 /***/ }),
 /* 279 */,
@@ -28293,34 +28281,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n      Sessions\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "box-body"
   }, [_c('div', {
-    staticClass: "row align-items-center"
+    staticClass: "row align-items-center notification"
   }, [_c('div', {
     staticClass: "col"
   }, [_c('span', {
     staticClass: "display-2 align-middle"
   }, [_c('i', {
-    staticClass: "fa fa-check text-success"
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "col"
-  }, [_vm._v("\n          Gianni\n        ")]), _vm._v(" "), _c('div', {
-    staticClass: "col"
-  }, [_vm._v("\n          Frame Composer\n        ")]), _vm._v(" "), _c('div', {
-    staticClass: "col"
-  }, [_c('div', {
-    staticClass: "btn-group"
-  }, [_c('button', {
-    staticClass: "btn btn-blue"
-  }, [_c('i', {
-    staticClass: "fa fa-folder-open-o"
-  })]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-blue"
-  }, [_c('i', {
-    staticClass: "fa fa-thumbs-o-up"
-  })]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-blue"
-  }, [_c('i', {
-    staticClass: "fa fa-trash-o"
-  })])])])])])])])
+    staticClass: "fa fa-exclamation text-danger"
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "divider"
+  })])])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

@@ -5,22 +5,10 @@
         Sessions
       </div>
       <div class="box-body">
-        <div class="row align-items-center">
+        <div class="row align-items-center notification">
           <div class="col">
-            <span class="display-2 align-middle"><i class="fa fa-check text-success"></i></span>
-          </div>
-          <div class="col">
-            Gianni
-          </div>
-          <div class="col">
-            Frame Composer
-          </div>
-          <div class="col">
-            <div class="btn-group">
-              <button class="btn btn-blue"><i class="fa fa-folder-open-o"></i></button>
-              <button class="btn btn-blue"><i class="fa fa-thumbs-o-up"></i></button>
-              <button class="btn btn-blue"><i class="fa fa-trash-o"></i></button>
-            </div>
+            <span class="display-2 align-middle"><i class="fa fa-exclamation text-danger"></i></span>
+            <div class="divider"></div>
           </div>
         </div>
       </div>
@@ -36,4 +24,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  @import '~styles/variables';
+
+  .notification {
+    padding-bottom: $spacer / 4;
+    border-bottom: 2px dashed $tfc-dark-blue;
+  }
+
 </style>
