@@ -97,7 +97,7 @@
 
         libraryResize();
 
-        var src = 'https://wavesurfer-js.org/example/split-channels/stereo.mp3'
+        var src = '{{ $random_audio }}'
         player.load(src);
         localStorage.setItem('app-7-audio', src);
         // $.cookie('tfc-audio', JSON.stringify(src));
