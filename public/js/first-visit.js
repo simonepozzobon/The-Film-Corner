@@ -860,7 +860,7 @@ var _jquery = __webpack_require__(43);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _WelcomeForm = __webpack_require__(304);
+var _WelcomeForm = __webpack_require__(305);
 
 var _WelcomeForm2 = _interopRequireDefault(_WelcomeForm);
 
@@ -11295,7 +11295,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 250:
+/***/ 251:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11504,7 +11504,7 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 263:
+/***/ 264:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
@@ -11881,18 +11881,18 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 304:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(342)
+__webpack_require__(343)
 
 var Component = __webpack_require__(9)(
   /* script */
-  __webpack_require__(250),
+  __webpack_require__(251),
   /* template */
-  __webpack_require__(316),
+  __webpack_require__(317),
   /* scopeId */
   "data-v-31e9a848",
   /* cssModules */
@@ -11964,7 +11964,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 316:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12252,13 +12252,13 @@ module.exports = (
 
 /***/ }),
 
-/***/ 342:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(263);
+var content = __webpack_require__(264);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12397,7 +12397,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 370:
+/***/ 371:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(216);
@@ -12763,4 +12763,4 @@ module.exports = function normalizeComponent (
 
 /***/ })
 
-},[370]);
+},[371]);

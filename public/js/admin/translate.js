@@ -852,7 +852,7 @@ var _vue = __webpack_require__(22);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _TranslatePanel = __webpack_require__(293);
+var _TranslatePanel = __webpack_require__(294);
 
 var _TranslatePanel2 = _interopRequireDefault(_TranslatePanel);
 
@@ -11133,7 +11133,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 236:
+/***/ 237:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11143,7 +11143,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _ListEl = __webpack_require__(291);
+var _ListEl = __webpack_require__(292);
 
 var _ListEl2 = _interopRequireDefault(_ListEl);
 
@@ -11211,7 +11211,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 237:
+/***/ 238:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11231,7 +11231,7 @@ var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _SingleField = __webpack_require__(292);
+var _SingleField = __webpack_require__(293);
 
 var _SingleField2 = _interopRequireDefault(_SingleField);
 
@@ -11509,7 +11509,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 238:
+/***/ 239:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11567,7 +11567,72 @@ exports.default = {
 
 /***/ }),
 
-/***/ 239:
+/***/ 24:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(13);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ 240:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11581,7 +11646,7 @@ var _axios = __webpack_require__(11);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _List = __webpack_require__(290);
+var _List = __webpack_require__(291);
 
 var _List2 = _interopRequireDefault(_List);
 
@@ -11682,71 +11747,6 @@ exports.default = {
     List: _List2.default
   }
 };
-
-/***/ }),
-
-/***/ 24:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(13);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
 
 /***/ }),
 
@@ -11904,14 +11904,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 269:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(8)();
-exports.push([module.i, "\nth[data-v-52cf2582] {\n  text-transform: capitalize;\n}\n", ""]);
-
-/***/ }),
-
 /***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11999,7 +11991,15 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 274:
+/***/ 270:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(8)();
+exports.push([module.i, "\nth[data-v-52cf2582] {\n  text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 275:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
@@ -12007,7 +12007,7 @@ exports.push([module.i, "\nlabel[data-v-7cefc3fe] {\n  text-transform: capitaliz
 
 /***/ }),
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
@@ -12015,7 +12015,7 @@ exports.push([module.i, "\n#tools[data-v-8e76a674], #translation[data-v-8e76a674
 
 /***/ }),
 
-/***/ 278:
+/***/ 279:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(8)();
@@ -12086,18 +12086,18 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 290:
+/***/ 291:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(348)
+__webpack_require__(349)
 
 var Component = __webpack_require__(9)(
   /* script */
-  __webpack_require__(236),
+  __webpack_require__(237),
   /* template */
-  __webpack_require__(322),
+  __webpack_require__(323),
   /* scopeId */
   "data-v-52cf2582",
   /* cssModules */
@@ -12125,18 +12125,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 291:
+/***/ 292:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(355)
+__webpack_require__(356)
 
 var Component = __webpack_require__(9)(
   /* script */
-  __webpack_require__(237),
+  __webpack_require__(238),
   /* template */
-  __webpack_require__(329),
+  __webpack_require__(330),
   /* scopeId */
   "data-v-8e76a674",
   /* cssModules */
@@ -12164,18 +12164,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 292:
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(353)
+__webpack_require__(354)
 
 var Component = __webpack_require__(9)(
   /* script */
-  __webpack_require__(238),
+  __webpack_require__(239),
   /* template */
-  __webpack_require__(327),
+  __webpack_require__(328),
   /* scopeId */
   "data-v-7cefc3fe",
   /* cssModules */
@@ -12203,18 +12203,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 293:
+/***/ 294:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(357)
+__webpack_require__(358)
 
 var Component = __webpack_require__(9)(
   /* script */
-  __webpack_require__(239),
+  __webpack_require__(240),
   /* template */
-  __webpack_require__(331),
+  __webpack_require__(332),
   /* scopeId */
   "data-v-a16b1a92",
   /* cssModules */
@@ -12581,7 +12581,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 322:
+/***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12627,7 +12627,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 327:
+/***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12690,7 +12690,29 @@ if (false) {
 
 /***/ }),
 
-/***/ 329:
+/***/ 33:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
+
+
+/***/ }),
+
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12826,29 +12848,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 33:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
-
-
-/***/ }),
-
-/***/ 331:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12978,13 +12978,13 @@ module.exports = (
 
 /***/ }),
 
-/***/ 348:
+/***/ 349:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(269);
+var content = __webpack_require__(270);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13027,13 +13027,13 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 353:
+/***/ 354:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(274);
+var content = __webpack_require__(275);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13054,13 +13054,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 355:
+/***/ 356:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(276);
+var content = __webpack_require__(277);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13081,13 +13081,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 357:
+/***/ 358:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(278);
+var content = __webpack_require__(279);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13184,7 +13184,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 364:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(210);
@@ -38662,4 +38662,4 @@ module.exports = function normalizeComponent (
 
 /***/ })
 
-},[364]);
+},[365]);
