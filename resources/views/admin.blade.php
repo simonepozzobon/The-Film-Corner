@@ -13,7 +13,7 @@
 @section('content')
 <main id="app">
   @if (!isset($visited))
-    <alert-tutorial title="Attenzione!!!" color="yellow" element="video-menu" position="bottom">
+    <alert-tutorial title="Attenzione!!!" color="yellow" element="libraries-menu" position="bottom">
       <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
     </alert-tutorial>
   @endif

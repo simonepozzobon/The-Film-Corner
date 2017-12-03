@@ -11020,10 +11020,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 exports.default = {
   props: ['title', 'color', 'element', 'position'],
@@ -11108,10 +11104,6 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-//
-//
-//
-//
 //
 //
 //
@@ -11896,16 +11888,12 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "box container-fluid mb-4"
+    class: 'box ' + _vm.color
   }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col dark-' + _vm.color + ' py-3 px-5'
-  }, [_c('h3', [_vm._v(_vm._s(_vm.title))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col ' + _vm.color + ' p-5'
-  }, [_vm._t("default")], 2)])])
+    staticClass: "box-header"
+  }, [_vm._v("\n      " + _vm._s(_vm.title) + "\n  ")]), _vm._v(" "), _c('div', {
+    staticClass: "box-body"
+  }, [_vm._t("default")], 2)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -12009,18 +11997,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('div', {
     staticClass: "col-md-6 offset-md-3"
   }, [_c('div', {
-    ref: "alert",
-    staticClass: "box container-fluid mb-4"
+    class: 'box ' + _vm.color
   }, [_c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col dark-' + _vm.color + ' py-3 px-5'
-  }, [_c('h3', [_vm._v(_vm._s(_vm.title))])])]), _vm._v(" "), _c('div', {
-    staticClass: "row"
-  }, [_c('div', {
-    class: 'col ' + _vm.color + ' p-5'
-  }, [_vm._t("default"), _vm._v(" "), _c('div', {
-    staticClass: "pt-5 d-flex justify-content-around"
+    staticClass: "box-header"
+  }, [_vm._v("\n        " + _vm._s(_vm.title) + "\n      ")]), _vm._v(" "), _c('div', {
+    staticClass: "box-body"
+  }, [_vm._t("default")], 2), _vm._v(" "), _c('div', {
+    staticClass: "box-btns"
   }, [_c('a', {
     class: 'btn btn-' + _vm.color + ' btn-lg',
     attrs: {
@@ -12029,7 +12012,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.removeAlert
     }
-  }, [_vm._v("Ok ho capito")])])], 2)])])])])
+  }, [_vm._v("Ok ho capito")])])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

@@ -33,7 +33,7 @@
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="menu-main">
     <ul class="navbar-nav justify-content-around">
-      <li class="nav-item">
+      <li id="libraries-menu" class="nav-item">
         <a href="#" id="librarieDropdown" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Libraries
         </a>

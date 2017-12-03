@@ -1,14 +1,10 @@
 <template>
-  <div class="box container-fluid mb-4">
-    <div class="row">
-      <div :class="'col dark-'+color+' py-3 px-5'">
-        <h3>{{title}}</h3>
-      </div>
+  <div :class="'box '+color">
+    <div class="box-header">
+        {{title}}
     </div>
-    <div class="row">
-      <div :class="'col '+color+' p-5'">
-        <slot></slot>
-      </div>
+    <div class="box-body">
+      <slot></slot>
     </div>
   </div>
 </template>

@@ -1,19 +1,15 @@
 <template>
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <div class="box container-fluid mb-4" ref="alert">
-        <div class="row">
-          <div :class="'col dark-'+color+' py-3 px-5'">
-            <h3>{{title}}</h3>
-          </div>
+      <div :class="'box '+color">
+        <div class="box-header">
+          {{title}}
         </div>
-        <div class="row">
-          <div :class="'col '+color+' p-5'">
-            <slot></slot>
-            <div class="pt-5 d-flex justify-content-around">
-              <a @click="removeAlert" href="#" :class="'btn btn-'+color+' btn-lg'">Ok ho capito</a>
-            </div>
-          </div>
+        <div class="box-body">
+          <slot></slot>
+        </div>
+        <div class="box-btns">
+          <a @click="removeAlert" href="#" :class="'btn btn-'+color+' btn-lg'">Ok ho capito</a>
         </div>
       </div>
     </div>
