@@ -29,5 +29,3 @@ laravel-echo-server.json
 
 # Ignore Eslint Config
 .eslintrc.json
-
-server.js
