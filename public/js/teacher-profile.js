@@ -27159,7 +27159,7 @@ exports.default = {
   },
   methods: {
     showNotification: function showNotification() {
-      _gsap.TweenMax.to(this.$refs.notification, .4, {
+      _gsap.TweenMax.to(this.$refs.notification, .8, {
         opacity: 1,
         display: 'flex',
         easing: _gsap.Power4.easeInOut
@@ -27875,7 +27875,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n#notification > .col > .wrapper > .icons-left > .icon[data-v-60c437fb] {\n        margin-right: 1.5rem;\n        width: 2rem;\n        text-align: center;\n}\n#notification > .col > .wrapper > .description > span[data-v-60c437fb] {\n      text-transform: capitalize;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n  display: none;\n  opacity: 0;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n#notification > .col > .wrapper > .icons-left > .icon[data-v-60c437fb] {\n        margin-right: 1.5rem;\n        width: 2rem;\n        text-align: center;\n}\n#notification > .col > .wrapper > .description > span[data-v-60c437fb] {\n      text-transform: capitalize;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 286 */,

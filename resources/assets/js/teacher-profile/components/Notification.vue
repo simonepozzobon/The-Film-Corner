@@ -78,7 +78,7 @@ export default {
   methods: {
     showNotification: function()
     {
-      TweenMax.to(this.$refs.notification, .4, {
+      TweenMax.to(this.$refs.notification, .8, {
         opacity: 1,
         display: 'flex',
         easing: Power4.easeInOut
@@ -123,6 +123,8 @@ export default {
 
   #notification {
     margin-bottom: $spacer * 3 / 4;
+    display: none;
+    opacity: 0;
 
     >.col {
       >.wrapper {
