@@ -27167,6 +27167,9 @@ exports.default = {
       _axios2.default.post('/teacher/notifications/destroy', data).then(function () {
         vue.$root.$emit('notification-deleted', _this.notification);
       });
+    },
+    markAsRead: function markAsRead() {
+      this.$root.$emit('notification-mark-as-read', this.notification);
     }
   }
 };
@@ -27673,9 +27676,13 @@ var _StudentPanel = __webpack_require__(322);
 
 var _StudentPanel2 = _interopRequireDefault(_StudentPanel);
 
+var _axios = __webpack_require__(16);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
+var io = __webpack_require__(97); //
 //
 //
 //
@@ -27686,7 +27693,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 
-var io = __webpack_require__(97);
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
 
 exports.default = {
@@ -27753,6 +27759,10 @@ exports.default = {
     this.$root.$on('notification-deleted', function (notification) {
       _this.deleteNotification(notification);
     });
+
+    this.$root.$on('notification-mark-as-read', function (notification) {
+      _this.markAsRead(notification);
+    });
   },
 
   methods: {
@@ -27763,6 +27773,24 @@ exports.default = {
       this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
         return value.id !== notification.id;
       });
+    },
+    markAsRead: function markAsRead(notification) {
+      var foundIndex = this.notificationsUpdated.findIndex(function (element) {
+        return element.id == notification.id;
+      });
+      if (foundIndex != -1) {
+        if (this.notificationsUpdated[foundIndex].read_at == null) {
+          this.notificationsUpdated[foundIndex].read_at = 10;
+          _axios2.default.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id);
+        } else {
+          this.notificationsUpdated[foundIndex].read_at = null;
+
+          var data = new FormData();
+          data.append('id', this.notificationsUpdated[foundIndex].id);
+
+          _axios2.default.post('/teacher/notifications/markasunread', data);
+        }
+      }
     }
   },
   components: {
@@ -28504,7 +28532,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "mouseenter": _vm.showDelete,
-      "mouseleave": _vm.hideDelete
+      "mouseleave": _vm.hideDelete,
+      "click": _vm.markAsRead
     }
   }, [_c('div', {
     staticClass: "col"

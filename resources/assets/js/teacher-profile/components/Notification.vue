@@ -1,5 +1,5 @@
 <template>
-  <div id="notification" class="row align-items-center" @mouseenter="showDelete" @mouseleave="hideDelete">
+  <div id="notification" class="row align-items-center" @mouseenter="showDelete" @mouseleave="hideDelete" @click="markAsRead">
     <div class="col">
       <div class="wrapper">
         <div class="icons-left">
@@ -87,6 +87,10 @@ export default {
         .then(() => {
           vue.$root.$emit('notification-deleted', this.notification)
         })
+    },
+    markAsRead: function()
+    {
+      this.$root.$emit('notification-mark-as-read', this.notification)
     }
   }
 }

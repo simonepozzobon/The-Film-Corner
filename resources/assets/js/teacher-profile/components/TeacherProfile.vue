@@ -12,9 +12,9 @@
 import Sessions from './Sessions.vue'
 import StudentPanel from './StudentPanel.vue'
 
+import axios from 'axios'
 var io = require('socket.io-client')
 var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect: true})
-
 
 export default {
   name: 'TeacherProfile',
@@ -79,6 +79,10 @@ export default {
     this.$root.$on('notification-deleted', notification => {
       this.deleteNotification(notification)
     })
+
+    this.$root.$on('notification-mark-as-read', notification => {
+      this.markAsRead(notification)
+    })
   },
   methods: {
     pushNotification: function (notification)
@@ -91,6 +95,29 @@ export default {
         return value.id !== notification.id
       })
     },
+    markAsRead: function(notification)
+    {
+      var foundIndex = this.notificationsUpdated.findIndex((element) => {
+        return element.id == notification.id
+      })
+      if (foundIndex != -1)
+      {
+        if (this.notificationsUpdated[foundIndex].read_at == null)
+        {
+          this.notificationsUpdated[foundIndex].read_at = 10
+          axios.get('/teacher/notifications/markasread/'+this.notificationsUpdated[foundIndex].id)
+        }
+        else
+        {
+          this.notificationsUpdated[foundIndex].read_at = null
+
+          var data = new FormData()
+          data.append('id', this.notificationsUpdated[foundIndex].id)
+
+          axios.post('/teacher/notifications/markasunread', data)
+        }
+      }
+    }
   },
   components: {
     Sessions,

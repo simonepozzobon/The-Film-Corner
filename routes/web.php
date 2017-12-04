@@ -247,10 +247,13 @@ Route::prefix('teacher')->group(function() {
     Route::post('/session/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
 
     // Notifications
-    Route::get('/notifications/markasread/{id}', 'Teacher\NotificationController@markAsRead')->name('teacher.notifications.markasread');
-    Route::get('/notifications/get', 'Teacher\NotificationController@getNotifications')->name('teacher.notifications.getnew');
-    Route::post('/notifications/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
-    Route::post('/notifications/destroy', 'Teacher\NotificationController@destroy')->name('teacher.notifications.destroy');
+    Route::prefix('notifications')->group(function() {
+      Route::get('/markasread/{id}', 'Teacher\NotificationController@markAsRead')->name('teacher.notifications.markasread');
+      Route::post('/markasunread', 'Teacher\NotificationController@markAsUnread')->name('teacher.notifications.markasunread');
+      Route::get('/get', 'Teacher\NotificationController@getNotifications')->name('teacher.notifications.getnew');
+      Route::post('/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
+      Route::post('/destroy', 'Teacher\NotificationController@destroy')->name('teacher.notifications.destroy');
+    });
 });
 
 

@@ -14,6 +14,14 @@ class NotificationController extends Controller
         return response('success');
     }
 
+    public function markAsUnread(Request $r)
+    {
+        $notification = Auth::guard('teacher')->user()->notifications()->where('id', $r->id)->first();
+        $notification->read_at = null;
+        $notification->save();
+        return response('success');
+    }
+
     // deprecated (vd. funzione destroy)
     public function delete(Request $request)
     {
