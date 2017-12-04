@@ -9,10 +9,10 @@
       <div class="divider" ref="divider"/>
       <div class="notification" ref="notification">
         <div class="name">
-          {{ notification.from }},
+          {{ notification.data.sender.name }},
         </div>
         <div class="message">
-          {{ notification.message }}
+          sent you a new notification.
         </div>
       </div>
       <div class="close-notification" ref="close_btn">

@@ -11556,21 +11556,13 @@ var _vue = __webpack_require__(21);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _axios = __webpack_require__(16);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _jquery = __webpack_require__(45);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
 var _tfcChat = __webpack_require__(196);
 
 var _tfcChat2 = _interopRequireDefault(_tfcChat);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = new _vue2.default({
+new _vue2.default({
   el: '#teacher-chat',
   components: {
     tfcChat: _tfcChat2.default

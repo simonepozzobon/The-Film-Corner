@@ -18,10 +18,6 @@
   <body>
     @include('layouts.teacher._menu')
 
-    <div id="notifications-container">
-      <notifications/>
-    </div>
-
     @yield('content')
 
     @php

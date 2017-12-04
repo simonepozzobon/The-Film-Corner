@@ -1,10 +1,10 @@
+import MainMenuComponent from './components/MainMenuComponent.vue'
+
 import Vue from 'vue'
 
-import Notifications from './components/Notifications.vue'
-
 new Vue({
-  el: '#notifications-container',
+  el: '#main-menu-container',
   components: {
-    Notifications
+    MainMenuComponent
   }
 })
