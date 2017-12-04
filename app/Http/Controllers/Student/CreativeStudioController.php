@@ -72,7 +72,9 @@ class CreativeStudioController extends Controller
       count($filtered) < 5 ? $app->available = true : $app->available = false;
     }
 
-    return view('student.creative-studio.path.index', compact('apps', 'app_category', 'visited'));
+    $keywords = AppKeyword::all();
+
+    return view('student.creative-studio.path.index', compact('apps', 'app_category', 'visited', 'keywords'));
   }
 
   /**
@@ -103,7 +105,14 @@ class CreativeStudioController extends Controller
       **/
 
       case 'active-offscreen':
-        return view('student.creative-studio.active-offscreen.index', compact('app', 'app_category'));
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+        $random_video = $flatten->random();
+        return view('student.creative-studio.active-offscreen.index', compact('app', 'app_category', 'random_video'));
         break;
 
       case 'active-parallel-action':
@@ -112,8 +121,17 @@ class CreativeStudioController extends Controller
         break;
 
       case 'sound-studio':
-        $elements = AudioLibrary::all();
-        return view('student.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements'));
+        $elements = $app->audios()->get();
+
+        $videos = $app->videos()->get();
+        $videos = collect($videos->pluck('src')->all());
+
+        $flatten = $videos->transform(function($video, $key) {
+            return Storage::disk('local')->url($video);
+        });
+
+        $random_video = $flatten->random();
+        return view('student.creative-studio.sound-studio.index', compact('app', 'app_category', 'elements', 'random_video'));
         break;
 
 
@@ -124,11 +142,28 @@ class CreativeStudioController extends Controller
       **/
 
       case 'character-builder':
-        return view('student.creative-studio.character-builder.index', compact('app', 'app_category'));
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
+            return $img->category_id == 2;
+        });
+        $images->all();
+        return view('student.creative-studio.character-builder.index', compact('app', 'app_category', 'images'));
         break;
 
       case 'storytelling':
-        return view('student.creative-studio.storytelling.index', compact('app', 'app_category'));
+        $categories = $app->mediaCategory()->get();
+        $images = collect();
+        foreach ($categories as $key => $category) {
+          $library = $category->media_on_sub_category();
+          $flatten = $library->transform(function($media, $key) {
+            return Storage::disk('local')->url($media->src);
+          });
+          $images->push($flatten);
+        }
+        $libraries_count = $images->count();
+        $images = json_encode($images);
+        return view('student.creative-studio.storytelling.index', compact('app', 'app_category', 'images', 'libraries_count'));
         break;
 
       case 'storyboard':
@@ -192,15 +227,16 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         $session = json_encode($session);
-        return view('student.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        return view('student.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
         break;
 
       case 'sound-studio':
-        $elements = AudioLibrary::all();
-        $session = json_encode($session);
-        return view('student.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'elements', 'session', 'token'));
+        $elements = $app->audios()->get();
+        $session = $session;
+        $timelines = json_encode($session->timelines);
+        return view('student.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'timelines', 'session', 'token'));
         break;
 
 
@@ -211,12 +247,28 @@ class CreativeStudioController extends Controller
       **/
 
       case 'character-builder':
+        $images = $app->medias()->get();
+        $images = $images->filter(function ($img, $key) {
+            return $img->category_id == 2;
+        });
+        $images->all();
         $session->json_data = htmlspecialchars_decode($session->json_data);
-        return view('student.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'session'));
+        return view('student.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'images'));
         break;
 
       case 'storytelling':
-        return view('student.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'session'));
+        $categories = $app->mediaCategory()->get();
+        $images = collect();
+        foreach ($categories as $key => $category) {
+          $library = $category->media_on_sub_category();
+          $flatten = $library->transform(function($media, $key) {
+            return Storage::disk('local')->url($media->src);
+          });
+          $images->push($flatten);
+        }
+        $libraries_count = $images->count();
+        $images = json_encode($images);
+        return view('student.creative-studio.storytelling.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'libraries_count', 'images'));
         break;
 
       case 'storyboard':

@@ -7,18 +7,15 @@ use Validator;
 use App\Video;
 use App\Media;
 use App\Utility;
-use App\Teacher;
 use App\AppSection;
 use App\AppCategory;
 use App\SharedSession;
 use App\StudentSession;
 use Illuminate\Http\Request;
-use App\Notifications\ShareSession;
 use App\AppsSessions\StudentAppSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 
@@ -121,7 +118,6 @@ class SessionController extends Controller
     define('SOX_LIB', '/usr/local/bin/sox');
 
     $utility = new Utility;
-
 
     // se la validazione funziona allora aggiorno la sessione
     $session = StudentAppSession::where('token', '=', $request['token'])->first();

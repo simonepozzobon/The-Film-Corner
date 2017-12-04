@@ -214,8 +214,16 @@ class FilmSpecificController extends Controller
       **/
 
       case 'whats-going-on':
-        return view('student.film-specific.whats-going-on.index', compact('app', 'app_category'));
-        break;
+      $audios = $app->audios()->get();
+      $audios = collect($audios->pluck('src')->all());
+      $flatten = $audios->transform(function($audio, $key) {
+        return Storage::disk('local')->url($audio);
+      });
+
+      $random_audio = $flatten->random();
+
+      return view('student.film-specific.whats-going-on.index', compact('app', 'app_category', 'random_audio'));
+      break;
 
       case 'sound-atmospheres':
           // Video
