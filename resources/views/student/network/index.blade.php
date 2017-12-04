@@ -2,7 +2,7 @@
 @section('title', 'Network')
 @section('content')
   <div id="main" class="container">
-    @include('components.apps.heading_only', ['title' => 'Network'])
+    @include('components.apps.heading_simple', ['title' => 'Network'])
     <div class="row">
       @foreach ($items as $key => $item)
         <div class="col-md-4">
