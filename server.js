@@ -1,7 +1,4 @@
 #!/usr/bin/env nodejs
-
-/* our server app */
-
 var _ = require('lodash');
 
 var server = require ('http').Server();
@@ -19,14 +16,20 @@ redis.subscribe('notification');
 
 // evento quando arriva un messaggio su quel canale
 redis.on('message', (channel, message) => {
-  console.log(channel, message);
   message = JSON.parse(message);
-  // io.emit(channel + ':' + message.event, message.data); //es. chat:UserSignin, data
 
-  // channel:event:to_id:to_type - message.data
-  io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message.data);
-  console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type);
-  // console.log(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type);
+  if (channel == 'chat') {
+    // io.emit(channel + ':' + message.event, message.data); //es. chat:UserSignin, data
+    // channel:event:to_id:to_type - message.data
+    io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message.data);
+    console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type);
+    // console.log(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type);
+  }
+  else if (channel == 'notification') {
+    // channel:event:to_id:to_type - message (complete message)
+    io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message);
+    console.log('Notifica ricevuta per ' + message.to_id + ' ' + message.to_type);
+  }
 });
 
 server.listen('6001');

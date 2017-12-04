@@ -27084,8 +27084,48 @@ Object.defineProperty(exports, "__esModule", {
 
 var _gsap = __webpack_require__(54);
 
+var _axios = __webpack_require__(16);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
   name: 'Notification',
+  props: {
+    'notification': {
+      default: function _default() {},
+      type: [Object, Array]
+    }
+  },
+  computed: {
+    status: function status() {
+      if (this.notification.read_at != null) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  },
   data: function data() {
     return {};
   },
@@ -27103,25 +27143,20 @@ exports.default = {
         display: 'none',
         easing: _gsap.Power4.easeInOut
       });
+    },
+    deleteNotification: function deleteNotification() {
+      var _this = this;
+
+      var vue = this;
+      var data = new FormData();
+      data.append('id', this.notification.id);
+
+      _axios2.default.post('/teacher/notifications/destroy', data).then(function () {
+        vue.$root.$emit('notification-deleted', _this.notification);
+      });
     }
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 /* 254 */
@@ -27155,7 +27190,6 @@ exports.default = {
     Notification: _Notification2.default
   }
 }; //
-//
 //
 //
 //
@@ -27652,6 +27686,14 @@ exports.default = {
     notifications: {
       default: '',
       type: String
+    },
+    user: {
+      default: '',
+      type: String
+    },
+    user_type: {
+      default: '',
+      type: String
     }
   },
   computed: {
@@ -27660,13 +27702,21 @@ exports.default = {
     },
     notificationsParsed: function notificationsParsed() {
       return JSON.parse(this.notifications);
+    },
+    userParsed: function userParsed() {
+      return JSON.parse(this.user);
     }
   },
   data: function data() {
-    return {};
+    return {
+      notificationsUpdated: []
+    };
   },
   mounted: function mounted() {
     var _this = this;
+
+    var vue = this;
+    this.notificationsUpdated = this.notificationsParsed;
 
     socket.on('connect', function () {
       console.log('CLIENT CONNECTED');
@@ -27682,8 +27732,26 @@ exports.default = {
       };
       _this.messages.push(message);
     });
+
+    socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
+      vue.pushNotification(data);
+    });
+
+    this.$root.$on('notification-deleted', function (notification) {
+      _this.deleteNotification(notification);
+    });
   },
 
+  methods: {
+    pushNotification: function pushNotification(notification) {
+      this.notificationsUpdated.unshift(notification);
+    },
+    deleteNotification: function deleteNotification(notification) {
+      this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
+        return value.id !== notification.id;
+      });
+    }
+  },
   components: {
     Sessions: _Sessions2.default,
     StudentPanel: _StudentPanel2.default
@@ -27743,7 +27811,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 283 */,
@@ -28392,7 +28460,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box-header"
   }, [_vm._v("\n      Sessions\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "box-body"
-  }, [_c('notification'), _vm._v(" "), _c('notification')], 1)])])
+  }, _vm._l((_vm.notifications), function(notification) {
+    return _c('notification', {
+      key: notification.key,
+      attrs: {
+        "notification": notification
+      }
+    })
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -28422,21 +28497,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col"
   }, [_c('div', {
     staticClass: "wrapper"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_c('div', {
+    staticClass: "icons-left"
+  }, [(this.status) ? _c('i', {
+    staticClass: "fa fa-check text-success"
+  }) : _c('i', {
+    staticClass: "fa fa-exclamation text-danger"
+  })]), _vm._v(" "), _c('div', {
     staticClass: "description"
-  }, [_vm._v("\n        Randy Casey - Frame Composer\n      ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(this.notification.data.session.student.name) + " - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
     ref: "icons_right",
     staticClass: "icons-right"
   }, [_c('i', {
-    staticClass: "fa fa-times text-muted"
+    staticClass: "fa fa-times text-muted",
+    on: {
+      "click": _vm.deleteNotification
+    }
   })])])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "icons-left"
-  }, [_c('i', {
-    staticClass: "fa fa-exclamation text-danger"
-  })])
-}]}
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -28463,7 +28541,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-md-8"
   }, [_c('sessions', {
     attrs: {
-      "notifications": _vm.notificationsParsed
+      "notifications": _vm.notificationsUpdated
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"

@@ -3,13 +3,14 @@
     <div class="col">
       <div class="wrapper">
         <div class="icons-left">
-          <i class="fa fa-exclamation text-danger"></i>
+          <i v-if="this.status" class="fa fa-check text-success"></i>
+          <i v-else class="fa fa-exclamation text-danger"></i>
         </div>
         <div class="description">
-          Randy Casey - Frame Composer
+          {{ this.notification.data.session.student.name }} - {{ this.notification.data.session.app.title }}
         </div>
         <div class="icons-right" ref="icons_right">
-          <i class="fa fa-times text-muted"></i>
+          <i class="fa fa-times text-muted" @click="deleteNotification"></i>
         </div>
       </div>
     </div>
@@ -17,9 +18,28 @@
 </template>
 <script>
 import {TweenMax, Power4} from 'gsap'
+import axios from 'axios'
 
 export default {
   name: 'Notification',
+  props: {
+    'notification': {
+      default: function() {},
+      type: [Object, Array]
+    }
+  },
+  computed: {
+    status: function()
+    {
+      if (this.notification.read_at != null)
+      {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+  },
   data: () => ({
 
   }),
@@ -39,6 +59,17 @@ export default {
         display: 'none',
         easing: Power4.easeInOut
       })
+    },
+    deleteNotification: function()
+    {
+      var vue = this
+      var data = new FormData()
+      data.append('id', this.notification.id)
+
+      axios.post('/teacher/notifications/destroy', data)
+        .then(() => {
+          vue.$root.$emit('notification-deleted', this.notification)
+        })
     }
   }
 }
@@ -57,6 +88,8 @@ export default {
 
         > .icons-left {
           margin-right: $spacer * 3 / 4;
+          width: $spacer;
+          text-align: center;
         }
 
         >.icons-right {

@@ -5,8 +5,7 @@
         Sessions
       </div>
       <div class="box-body">
-        <notification/>
-        <notification/>
+        <notification v-for="notification in notifications" :key="notification.key" :notification="notification"/>
       </div>
     </div>
   </div>

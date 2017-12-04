@@ -1,7 +1,7 @@
 <template>
   <div id="teacher-profile" class="row mt">
     <div class="col-md-8">
-      <sessions :notifications="notificationsParsed"/>
+      <sessions :notifications="notificationsUpdated"/>
     </div>
     <div class="col-md-4">
       <student-panel :students="studentsParsed"/>
@@ -26,6 +26,14 @@ export default {
     notifications: {
       default: '',
       type: String
+    },
+    user: {
+      default: '',
+      type: String
+    },
+    user_type: {
+      default: '',
+      type: String
     }
   },
   computed: {
@@ -36,12 +44,19 @@ export default {
     notificationsParsed: function()
     {
       return JSON.parse(this.notifications)
+    },
+    userParsed: function()
+    {
+      return JSON.parse(this.user)
     }
   },
   data: () => ({
-
+    notificationsUpdated: []
   }),
   mounted() {
+    var vue = this
+    this.notificationsUpdated = this.notificationsParsed
+
     socket.on('connect', function(){
       console.log('CLIENT CONNECTED')
     })
@@ -56,6 +71,26 @@ export default {
       }
       this.messages.push(message)
     })
+
+    socket.on('notification:newSharedSession:'+this.userParsed.id+':'+this.user_type, (data) => {
+      vue.pushNotification(data)
+    })
+
+    this.$root.$on('notification-deleted', notification => {
+      this.deleteNotification(notification)
+    })
+  },
+  methods: {
+    pushNotification: function (notification)
+    {
+      this.notificationsUpdated.unshift(notification)
+    },
+    deleteNotification: function (notification)
+    {
+      this.notificationsUpdated = this.notificationsUpdated.filter(function(value) {
+        return value.id !== notification.id
+      })
+    },
   },
   components: {
     Sessions,

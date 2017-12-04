@@ -583,15 +583,17 @@ class SessionController extends Controller
 
   public function shareSession(Request $request)
   {
-
-
+    // Raccolgo le informazioni necessarie per creare la notifica e condividere la sessione
     $session = StudentAppSession::where('token', '=', $request['token'])->with('student', 'app')->first();
     $student = $session->student()->first();
     $app = $session->app()->first();
-
     $teacher = $student->teacher()->first();
-    // $teacher->notify( new ShareSession($session) );
 
+    // utilizzo il sistema di Laravel per creare una nuova notifica
+    $teacher->notify( new ShareSession($session) );
+
+    // Redis instant notification
+    // Preparo l'oggetto per la notifica da inviare a server.js
     $notification = [
       'event' => 'newSharedSession',
       'from_id' => $student->id,
@@ -599,17 +601,20 @@ class SessionController extends Controller
       'to_id' => $teacher->id,
       'to_type' => get_class($teacher),
       'data' => [
+          'sender' => $student,
           'session' => $session,
           'app' => $app
       ]
     ];
 
+    // pubblico la notifica sul server Redis
     Redis::publish('notification', json_encode($notification));
 
-    // $session->teacher_shared = 1;
-    // $session->save();
+    // Salvo la sessione come condivisa
+    $session->teacher_shared = 1;
+    $session->save();
 
-
+    // Se tutto va a buon fine, creo la risposta con esito positivo
     $data = [
       'status' => 'success'
     ];
