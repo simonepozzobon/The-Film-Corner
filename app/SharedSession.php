@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\AppsSessions\StudentAppSession;
+use App\AppsSessions\AppsSession;
 
 class SharedSession extends Model
 {
@@ -134,5 +136,19 @@ class SharedSession extends Model
         }
         $shared->save();
         return $shared;
+    }
+
+    public static function author($token)
+    {
+        $session = AppsSession::where('token', '=', $token)->first();
+        if ($session != null) {
+            $author = $session->teacher()->first();
+        } else {
+            // Student Session
+            $session = StudentAppSession::where('token', '=', $token)->first();
+            $author = $session->student()->first();
+        }
+
+        return $author;
     }
 }
