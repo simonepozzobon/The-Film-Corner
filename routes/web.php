@@ -245,6 +245,7 @@ Route::prefix('teacher')->group(function() {
       Route::get('/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
       Route::post('/new', 'Teacher\SessionController@newSession')->name('new.session');
       Route::post('/update', 'Teacher\SessionController@updateSession')->name('update.session');
+      Route::post('/share-approved', 'Teacher\SessionController@shareApproved')->name('teacher.session.share_approved');
       Route::post('/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
       Route::post('/approve', 'Teacher\SessionController@approveSession')->name('teacher.session.approve');
     });

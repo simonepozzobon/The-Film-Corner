@@ -5,7 +5,7 @@
     @include('components.apps.heading_simple', ['title' => 'Profile'])
     <teacher-profile
       students="{{ $students }}"
-      notifications="{{ $notifications }}"
+      notifications="{{ $sessions }}"
       user="{{ Auth::guard('teacher')->user() }}"
       user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
     />

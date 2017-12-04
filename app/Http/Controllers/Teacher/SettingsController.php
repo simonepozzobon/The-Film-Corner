@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\AppsSessions\StudentAppSession;
 
 class SettingsController extends Controller
 {
@@ -23,7 +24,16 @@ class SettingsController extends Controller
 
         $notifications = $teacher->notifications()->get();
 
-        return view('teacher.settings.index', compact('students', 'teacher', 'notifications'));
+        $sessions = collect();
+
+        foreach ($notifications as $key => $notification) {
+            $token = $notification->data['session']['token'];
+            $session = StudentAppSession::where('token', '=', $token)->first();
+            $session->notification = $notification;
+            $sessions->push($session);
+        }
+
+        return view('teacher.settings.index', compact('students', 'teacher', 'notifications', 'sessions'));
     }
 
     public function storeStudent(Request $request)

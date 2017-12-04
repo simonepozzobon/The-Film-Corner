@@ -591,123 +591,16 @@ class SessionController extends Controller
     $app = $session->app()->first();
 
     // Creo la sessione condivisa
-    $shared = new SharedSession;
-    $shared->app_id = $request['app_id'];
-    $shared->token = $session->token;
-    $shared->title = $session->title;
-
-    switch ($request['app_id']) {
-      // Film Specific - Framing - Frame Composer
-      case '1':
-        // estraggo l'immagine dalla sessione
-        $obj = json_decode($session->content);
-        $img = $obj->rendered;
-        $notes = $obj->notes;
-
-        $content = [
-          'img' => $img,
-          'notes' => $notes,
-        ];
-
-        // condivido la sessione
-        $shared->content = json_encode($content);
-        break;
-
-      // Film Specific - Framing - Frame Crop
-      case '2':
-        // estraggo i frame dalla sessione e li salvo in quella condivisa
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Framing - types-of-images
-      case '3':
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Editing - Offscreen
-      case '5':
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Editing - Attractions
-      case '6':
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Sound - What's Going On
-      case '7':
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Sound - Sound Atmosphere
-      case '8':
-        $shared->content = $session->content;
-        break;
-
-      // Film Specific - Sound - Soundscapes
-      case '9':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Warm Up - Active Offscreen
-      case '10':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Warm Up - Active Parallel Action
-      case '11':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Warm Up - Active Sound Studio
-      case '12':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Story Telling - Character Builder
-      case '13':
-        // estraggo l'immagine dalla sessione
-        $obj = json_decode($session->content);
-        $img = $obj->rendered;
-        $notes = $obj->notes;
-
-        $content = [
-          'img' => $img,
-          'notes' => $notes,
-        ];
-
-        // condivido la sessione
-        $shared->content = json_encode($content);
-        break;
-
-      // Creative Studio - Story Telling - Storytelling
-      case '14':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Story Telling - Storyboard
-      case '15':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Contest - Lumiere Minute
-      case '16':
-        $shared->content = $session->content;
-        break;
-
-      // Creative Studio - Contest - Make Your Own Film
-      case '17':
-        $shared->content = $session->content;
-        break;
-    }
-
-    $shared->save();
+    $shared = SharedSession::share($session, $request['app_id']);
 
     $data = [
       'status' => 'success'
     ];
 
-    return response()->json($data);
+    return response()->json([
+      'status' => 'success',
+      'session' => $shared,
+    ], 200);
   }
 
   public function approveSession(Request $request)
@@ -718,36 +611,52 @@ class SessionController extends Controller
         $session = StudentAppSession::where('token', '=', $request->token)->first();
       }
 
-      // se non è già stata approvata, la approvo
-      if ($session->teacher_approved == 0) {
-          // modifico la sessione
-          $session->teacher_approved = 1;
-          $session->save();
+        // modifico la sessione
+        $session->teacher_approved = 1;
+        $session->save();
 
-          $student = $session->student()->first();
-          $app = $session->app()->first();
-          $teacher = Auth::guard('teacher')->user();
+        $student = $session->student()->first();
+        $app = $session->app()->first();
+        $teacher = Auth::guard('teacher')->user();
 
-          $sender = $teacher;
-          $student->notify( new ShareSession($session, $sender) );
+        $sender = $teacher;
+        $student->notify( new ShareSession($session, $sender) );
 
-          $notification = [
-            'event' => 'sessionApproved',
-            'from_id' => $teacher->id,
-            'from_type' => get_class($teacher),
-            'to_id' => $student->id,
-            'to_type' => get_class($student),
-            'data' => [
-                'sender' => $teacher,
-                'session' => $session,
-                'app' => $app
-            ]
-          ];
+        $notification = [
+          'event' => 'sessionApproved',
+          'from_id' => $teacher->id,
+          'from_type' => get_class($teacher),
+          'to_id' => $student->id,
+          'to_type' => get_class($student),
+          'data' => [
+              'sender' => $teacher,
+              'session' => $session,
+              'app' => $app
+          ]
+        ];
 
-          Redis::publish('notification', json_encode($notification));
-      }
+        Redis::publish('notification', json_encode($notification));
 
 
       return redirect()->route('teacher.settings.index');
+  }
+
+  public function shareApproved(Request $request)
+  {
+    // recupero la sessione sia che sia di uno studente che dell'insegnante
+    $session = AppsSession::where('token', '=', $request->token)->first();
+    if ($session == null) {
+      $session = StudentAppSession::where('token', '=', $request->token)->first();
+    }
+
+    $app = $session->app()->first();
+
+    // Creo la session condivisa
+    $shared = SharedSession::share($session, $app->id);
+
+    return response()->json([
+      'status' => 'success',
+      'session' => $shared,
+    ], 200);
   }
 }

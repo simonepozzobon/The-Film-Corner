@@ -13,6 +13,7 @@ import Sessions from './Sessions.vue'
 import StudentPanel from './StudentPanel.vue'
 
 import axios from 'axios'
+import _ from 'lodash'
 var io = require('socket.io-client')
 var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect: true})
 
@@ -43,7 +44,13 @@ export default {
     },
     notificationsParsed: function()
     {
-      return JSON.parse(this.notifications)
+      var parsed = JSON.parse(this.notifications)
+      parsed = _.each(parsed, (single) => {
+        single.data = single.notification.data
+        single.read_at = single.notification.read_at
+        single.id = single.notification.id
+      })
+      return parsed
     },
     userParsed: function()
     {
