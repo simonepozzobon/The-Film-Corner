@@ -13118,8 +13118,8 @@ exports.default = {
       _this.dismissNotification(notification);
     });
 
-    this.$root.$on('new-notification', function (notification) {
-      _this.pushNotification(notification);
+    this.$root.$on('new-notification', function (content) {
+      _this.pushNotification(content);
     });
   },
 
@@ -13129,8 +13129,8 @@ exports.default = {
         return element.id != notification.id;
       });
     },
-    pushNotification: function pushNotification(notification) {
-      this.notifications.unshift(notification);
+    pushNotification: function pushNotification(content) {
+      this.notifications.unshift(content);
     }
   },
   components: {
@@ -13274,7 +13274,7 @@ exports.default = {
   },
   mounted: function mounted() {
     this.showNotification();
-    setTimeout(this.dismissNotification, 10000);
+    // setTimeout(this.dismissNotification, 10000)
   },
 
   methods: {
@@ -13491,9 +13491,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "notification"
   }, [_c('div', {
     staticClass: "name"
-  }, [_vm._v("\n        " + _vm._s(_vm.notification.data.sender.name) + ",\n      ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.notification.notification.data.sender.name) + ",\n      ")]), _vm._v(" "), _c('div', {
     staticClass: "message"
-  }, [_vm._v("\n        sent you a new notification.\n      ")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n        " + _vm._s(_vm.notification.message) + "\n      ")])]), _vm._v(" "), _c('div', {
     ref: "close_btn",
     staticClass: "close-notification"
   }, [_c('i', {
@@ -13812,7 +13812,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('i', {
     staticClass: "fa fa-globe"
-  }), _vm._v(" -\n    "), _c('span', [_vm._v(_vm._s(_vm.notification.data.session.student.name))]), _vm._v(", sent you a new notification\n  ")])])
+  }), _vm._v(" -\n    "), _c('span', [_vm._v(_vm._s(_vm.notification.data.sender.name))]), _vm._v(", sent you a new notification\n  ")])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -14324,22 +14324,32 @@ exports.default = {
     });
 
     socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data);
+      vue.pushNotification(data, 'sent you a new notification.');
+    });
+
+    socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
+      vue.pushNotification(data, 'approved your work.');
     });
   },
 
   methods: {
     markAsRead: function markAsRead(notification) {
       var vue = this;
-      _axios2.default.get('/teacher/notifications/markasread/' + notification.id).then(function () {
+      _axios2.default.get('/' + this.type + '/notifications/markasread/' + notification.id).then(function () {
         vue.notifs = vue.notifs.filter(function (element) {
           return element.id != notification.id;
         });
       });
     },
-    pushNotification: function pushNotification(notification) {
+    pushNotification: function pushNotification(notification, msg) {
       this.notifs.unshift(notification);
-      this.$root.$emit('new-notification', notification);
+
+      var content = {
+        notification: notification,
+        message: msg
+      };
+
+      this.$root.$emit('new-notification', content);
     }
   },
   components: {

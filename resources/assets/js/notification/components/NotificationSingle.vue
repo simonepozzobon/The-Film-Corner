@@ -9,10 +9,10 @@
       <div class="divider" ref="divider"/>
       <div class="notification" ref="notification">
         <div class="name">
-          {{ notification.data.sender.name }},
+          {{ notification.notification.data.sender.name }},
         </div>
         <div class="message">
-          sent you a new notification.
+          {{ notification.message }}
         </div>
       </div>
       <div class="close-notification" ref="close_btn">
@@ -37,7 +37,7 @@ export default {
   }),
   mounted() {
     this.showNotification()
-    setTimeout(this.dismissNotification, 10000)
+    // setTimeout(this.dismissNotification, 10000)
   },
   methods: {
     showNotification: function() {

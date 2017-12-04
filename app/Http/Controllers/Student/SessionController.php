@@ -589,7 +589,8 @@ class SessionController extends Controller
     $teacher = $student->teacher()->first();
 
     // utilizzo il sistema di Laravel per creare una nuova notifica
-    $teacher->notify( new ShareSession($session) );
+    $sender = $student;
+    $teacher->notify( new ShareSession($session, $sender) );
 
     // Redis instant notification
     // Preparo l'oggetto per la notifica da inviare a server.js

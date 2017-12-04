@@ -23,15 +23,15 @@ export default {
     }
   },
   data: () => ({
-    notifications: []
+    notifications: [],
   }),
   mounted() {
     this.$root.$on('notification-dismissed', notification => {
       this.dismissNotification(notification)
     })
 
-    this.$root.$on('new-notification', notification => {
-      this.pushNotification(notification)
+    this.$root.$on('new-notification', content => {
+      this.pushNotification(content)
     })
   },
   methods: {
@@ -41,9 +41,9 @@ export default {
         return element.id != notification.id
       })
     },
-    pushNotification: function(notification)
+    pushNotification: function(content)
     {
-      this.notifications.unshift(notification)
+      this.notifications.unshift(content)
     },
   },
   components: {

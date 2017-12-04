@@ -2,7 +2,7 @@
   <div id="notification-dropdown-single">
     <a :href="'/teacher/'+section_slug+'/'+app_cat_slug+'/'+app_slug+'/'+token" @click="markAsRead">
       <i class="fa fa-globe"/> -
-      <span>{{ notification.data.session.student.name }}</span>, sent you a new notification
+      <span>{{ notification.data.sender.name }}</span>, sent you a new notification
     </a>
   </div>
 </template>

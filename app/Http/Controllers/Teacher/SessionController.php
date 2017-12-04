@@ -728,7 +728,8 @@ class SessionController extends Controller
           $app = $session->app()->first();
           $teacher = Auth::guard('teacher')->user();
 
-          $student->notify( new ShareSession($session) );
+          $sender = $teacher;
+          $student->notify( new ShareSession($session, $sender) );
 
           $notification = [
             'event' => 'sessionApproved',

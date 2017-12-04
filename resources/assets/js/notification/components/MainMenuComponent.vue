@@ -248,24 +248,34 @@ export default {
     })
 
     socket.on('notification:newSharedSession:'+this.userParsed.id+':'+this.user_type, (data) => {
-      vue.pushNotification(data)
+      vue.pushNotification(data, 'sent you a new notification.')
+    })
+
+    socket.on('notification:sessionApproved:'+this.userParsed.id+':'+this.user_type, (data) => {
+      vue.pushNotification(data, 'approved your work.')
     })
   },
   methods: {
     markAsRead: function(notification)
     {
       var vue = this
-      axios.get('/teacher/notifications/markasread/'+notification.id)
+      axios.get('/'+this.type+'/notifications/markasread/'+notification.id)
         .then(() => {
           vue.notifs = vue.notifs.filter((element) => {
             return element.id != notification.id
           })
         })
     },
-    pushNotification: function(notification)
+    pushNotification: function(notification, msg)
     {
       this.notifs.unshift(notification)
-      this.$root.$emit('new-notification', notification)
+
+      var content = {
+        notification: notification,
+        message: msg
+      }
+
+      this.$root.$emit('new-notification', content)
     },
   },
   components: {

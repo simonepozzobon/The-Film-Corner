@@ -18,10 +18,11 @@ class ShareSession extends Notification
      *
      * @return void
      */
-    public function __construct($session)
+    public function __construct($session, $sender)
     {
         $this->session = $session;
         $this->app_category = $session->app->category->section;
+        $this->sender = $sender;
     }
 
     /**
@@ -44,6 +45,7 @@ class ShareSession extends Notification
     public function toDatabase($notifiable)
     {
         return [
+            'sender' => $this->sender,
             'session' => $this->session,
             'user' => $notifiable,
             'sharedTime' => date('Y-m-d H:m:i')
