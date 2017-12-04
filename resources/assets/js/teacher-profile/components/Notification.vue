@@ -10,6 +10,7 @@
           {{ this.notification.data.session.student.name }} - {{ this.notification.data.session.app.title }}
         </div>
         <div class="icons-right" ref="icons_right">
+          <a :href="'/teacher/'+section_slug+'/'+app_cat_slug+'/'+app_slug+'/'+token" class="btn btn-sm btn-blue">Open</a>
           <i class="fa fa-times text-muted" @click="deleteNotification"></i>
         </div>
       </div>
@@ -38,6 +39,22 @@ export default {
       else {
         return false
       }
+    },
+    section_slug: function()
+    {
+      return this.notification.data.session.app.category.section.slug
+    },
+    app_cat_slug: function()
+    {
+      return this.notification.data.session.app.category.slug
+    },
+    app_slug: function()
+    {
+      return this.notification.data.session.app.slug
+    },
+    token: function()
+    {
+      return this.notification.data.session.token
     }
   },
   data: () => ({
@@ -83,6 +100,7 @@ export default {
     >.col {
       >.wrapper {
         display: flex;
+        align-items: center;
         padding-bottom: $spacer / 3;
         border-bottom: 2px dashed $tfc-dark-blue;
 
@@ -94,6 +112,7 @@ export default {
 
         >.icons-right {
           margin-left: auto;
+          align-self: center;
           display: none;
           opacity: 0;
 

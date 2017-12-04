@@ -27108,6 +27108,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
 
 exports.default = {
   name: 'Notification',
@@ -27124,6 +27125,18 @@ exports.default = {
       } else {
         return false;
       }
+    },
+    section_slug: function section_slug() {
+      return this.notification.data.session.app.category.section.slug;
+    },
+    app_cat_slug: function app_cat_slug() {
+      return this.notification.data.session.app.category.slug;
+    },
+    app_slug: function app_slug() {
+      return this.notification.data.session.app.slug;
+    },
+    token: function token() {
+      return this.notification.data.session.token;
     }
   },
   data: function data() {
@@ -27811,7 +27824,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 283 */,
@@ -28508,7 +28521,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n        " + _vm._s(this.notification.data.session.student.name) + " - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
     ref: "icons_right",
     staticClass: "icons-right"
-  }, [_c('i', {
+  }, [_c('a', {
+    staticClass: "btn btn-sm btn-blue",
+    attrs: {
+      "href": '/teacher/' + _vm.section_slug + '/' + _vm.app_cat_slug + '/' + _vm.app_slug + '/' + _vm.token
+    }
+  }, [_vm._v("Open")]), _vm._v(" "), _c('i', {
     staticClass: "fa fa-times text-muted",
     on: {
       "click": _vm.deleteNotification
