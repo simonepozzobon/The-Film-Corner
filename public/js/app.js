@@ -11200,11 +11200,11 @@ var _jquery = __webpack_require__(45);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _laravelEcho = __webpack_require__(292);
+var _laravelEcho = __webpack_require__(294);
 
 var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
 
-var _iscroll = __webpack_require__(291);
+var _iscroll = __webpack_require__(293);
 
 var _iscroll2 = _interopRequireDefault(_iscroll);
 
@@ -11223,7 +11223,7 @@ __webpack_require__(202);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(260);
+__webpack_require__(261);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -11683,7 +11683,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 260:
+/***/ 261:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11829,7 +11829,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 291:
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! iScroll v5.2.0 ~ (c) 2008-2016 Matteo Spinelli ~ http://cubiq.org/license */
@@ -13928,7 +13928,7 @@ if ( typeof module != 'undefined' && module.exports ) {
 
 /***/ }),
 
-/***/ 292:
+/***/ 294:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
@@ -15922,7 +15922,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 
-/***/ 392:
+/***/ 397:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(212);
@@ -33617,7 +33617,7 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33787,7 +33787,7 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33796,7 +33796,7 @@ Emitter.prototype.hasListeners = function(event){
  */
 
 var debug = __webpack_require__(17)('socket.io-parser');
-var Emitter = __webpack_require__(54);
+var Emitter = __webpack_require__(55);
 var hasBin = __webpack_require__(63);
 var binary = __webpack_require__(100);
 var isBuf = __webpack_require__(69);
@@ -34679,8 +34679,8 @@ module.exports = function parseuri(str) {
 
 var eio = __webpack_require__(86);
 var Socket = __webpack_require__(68);
-var Emitter = __webpack_require__(54);
-var parser = __webpack_require__(55);
+var Emitter = __webpack_require__(55);
+var parser = __webpack_require__(56);
 var on = __webpack_require__(67);
 var bind = __webpack_require__(60);
 var debug = __webpack_require__(17)('socket.io-client:manager');
@@ -35288,8 +35288,8 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(55);
-var Emitter = __webpack_require__(54);
+var parser = __webpack_require__(56);
+var Emitter = __webpack_require__(55);
 var toArray = __webpack_require__(101);
 var on = __webpack_require__(67);
 var bind = __webpack_require__(60);
@@ -38566,7 +38566,7 @@ function plural(ms, n, name) {
  */
 
 var url = __webpack_require__(98);
-var parser = __webpack_require__(55);
+var parser = __webpack_require__(56);
 var Manager = __webpack_require__(66);
 var debug = __webpack_require__(17)('socket.io-client');
 
@@ -38753,4 +38753,4 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ })
 
-},[392]);
+},[397]);

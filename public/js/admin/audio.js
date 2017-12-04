@@ -638,11 +638,11 @@ var _axios = __webpack_require__(16);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(297);
+var _AudioFormUpload = __webpack_require__(299);
 
 var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
 
-var _AudioCrud = __webpack_require__(296);
+var _AudioCrud = __webpack_require__(298);
 
 var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
 
@@ -12045,7 +12045,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 270:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -12053,7 +12053,7 @@ exports.push([module.i, "\n.close-btn[data-v-298c3cca] {\n  position: absolute;\
 
 /***/ }),
 
-/***/ 277:
+/***/ 278:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -12123,18 +12123,18 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 296:
+/***/ 298:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(371)
+__webpack_require__(375)
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(232),
   /* template */
-  __webpack_require__(340),
+  __webpack_require__(343),
   /* scopeId */
   "data-v-4e001d63",
   /* cssModules */
@@ -12162,18 +12162,18 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ 297:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(364)
+__webpack_require__(368)
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(233),
   /* template */
-  __webpack_require__(333),
+  __webpack_require__(336),
   /* scopeId */
   "data-v-298c3cca",
   /* cssModules */
@@ -12595,7 +12595,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 333:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12887,7 +12887,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 340:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -13111,13 +13111,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 364:
+/***/ 368:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(270);
+var content = __webpack_require__(271);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13183,13 +13183,13 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 371:
+/***/ 375:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(277);
+var content = __webpack_require__(278);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13245,7 +13245,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 385:
+/***/ 390:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(204);
@@ -52186,4 +52186,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[385]);
+},[390]);

@@ -10839,7 +10839,7 @@ var _jquery = __webpack_require__(45);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _WelcomeForm = __webpack_require__(315);
+var _WelcomeForm = __webpack_require__(317);
 
 var _WelcomeForm2 = _interopRequireDefault(_WelcomeForm);
 
@@ -11398,7 +11398,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
@@ -11779,18 +11779,18 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 315:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(365)
+__webpack_require__(369)
 
 var Component = __webpack_require__(8)(
   /* script */
   __webpack_require__(251),
   /* template */
-  __webpack_require__(334),
+  __webpack_require__(337),
   /* scopeId */
   "data-v-31e9a848",
   /* cssModules */
@@ -11901,7 +11901,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 334:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -12148,13 +12148,13 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 365:
+/***/ 369:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(271);
+var content = __webpack_require__(272);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12251,14 +12251,6 @@ module.exports = function spread(callback) {
     return callback.apply(null, arr);
   };
 };
-
-
-/***/ }),
-
-/***/ 396:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(216);
 
 
 /***/ }),
@@ -12388,6 +12380,14 @@ function isBuffer (obj) {
 function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
+
+
+/***/ }),
+
+/***/ 401:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(216);
 
 
 /***/ }),
@@ -12763,4 +12763,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[396]);
+},[401]);
