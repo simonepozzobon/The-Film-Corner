@@ -79,7 +79,9 @@
       </div>
     </div>
   </div>
-  @include('components.apps.student_chat', ['app_session' => $app_session])
+  @if ($app_session->teacher_shared == 1)
+    @include('components.apps.student_chat', ['app_session' => $app_session])
+  @endif
 @endsection
 @section('scripts')
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>

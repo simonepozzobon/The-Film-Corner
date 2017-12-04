@@ -7,21 +7,11 @@
     #video-editor button.vjs-big-play-button {
       display: none;
     }
-
-    .scrollable {
-      height: 460px;
-      overflow: scroll;
-    }
-
-    #video-library {
-      overflow-y: scroll;
-    }
   </style>
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student'])
     <div id="app" ng-app="App" ng-cloak ng-controller="videoController">
       <div class="row mt">
         <div class="col-md-8">
@@ -43,23 +33,41 @@
             <div class="box-header">
               Library
             </div>
-            <div id="video-library" class="box-body">
-              <div class="active" id="library">
-                @foreach ($elements as $key => $element)
-                  <div class="row">
-                    <div class="col-md-2">
-                      <h3><i class="fa fa-file-audio-o"></i></h3>
-                    </div>
-                    <div class="col-md-8">
-                      <p class="p-2">{{ $element->title }}</p>
-                    </div>
-                    <div class="col-md-2" ng-controller="toolController">
-                      <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ urlencode($element->src) }}')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                      </button>
+            <div id="video-library" class="box-body library">
+              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav" role="tablist">
+                    <li class="nav-item">
+                      <a class="library-link nav-link active" data-toggle="tab" href="#library">Audio</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+              <div id="libraries" class="library-container tab-content">
+                <div id="library" class="assets tab-pane active" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      @foreach ($elements as $key => $element)
+                        <div class="row">
+                          <div class="col-md-2">
+                            <h3><i class="fa fa-file-audio-o"></i></h3>
+                          </div>
+                          <div class="col-md-8">
+                            <p class="p-2">{{ $element->title }}</p>
+                          </div>
+                          <div class="col-md-2" ng-controller="toolController">
+                            <button ng-click="addElement('{{ $element->id }}','{{ $element->title }}', '{{ $element->duration }}', '{{ urlencode($element->src) }}')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
                   </div>
-                @endforeach
+                </div>
               </div>
             </div>
           </div>
@@ -120,20 +128,32 @@
   </div>
 @endsection
 @section('scripts')
-  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
 
+    resizeLibrary();
     video_player = document.getElementById('video-player');
-    video_player.addEventListener('onresize', function(){
-        var video_player = document.getElementById('video-player').offsetHeight - 95;
-        $('#video-library').height(video_player);
-    });
+    video_player.addEventListener('onresize', resizeLibrary);
 
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
     });
+
+    function resizeLibrary()
+    {
+        var video_player = document.getElementById('video-player').offsetHeight - 106;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
+    }
   </script>
   <script src="{{ mix('js/app/sound-studio.js') }}"></script>
 @endsection
