@@ -12,11 +12,13 @@ use App\AppCategory;
 use App\SharedSession;
 use App\StudentSession;
 use Illuminate\Http\Request;
-use App\AppsSessions\StudentAppSession;
+use App\Notifications\ShareSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+use App\AppsSessions\StudentAppSession;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 
 class SessionController extends Controller
