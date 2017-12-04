@@ -419,76 +419,6 @@
           console.log('--------');
           break;
 
-
-        /*
-         *
-         * DEPRECATED
-         *
-        */
-
-        // Film Specific - Framing - App 3 - Frame Counter
-        // case 3:
-        //   var data = {
-        //     '_token'  : $('input[name=_token]').val(),
-        //     'app_id'  : id,
-        //     'token'   : token,
-        //     'title'   : $('input[name="title"]').val(),
-        //     'markers' : markers
-        //   };
-        //
-        //   console.log('--------');
-        //   console.log(data);
-        //   console.log('--------');
-        //   break;
-
-        // // Film Specific - Sound - App 10 - Stop and Go
-        // case 10:
-        //   var data = {
-        //     '_token'  : $('input[name=_token]').val(),
-        //     'app_id'  : id,
-        //     'token'   : token,
-        //     'title'   : $('input[name="title"]').val(),
-        //     'notes'   : $('#notes').val(),
-        //     'video'   : $('video source').attr('src')
-        //   };
-        //
-        //   console.log('--------');
-        //   console.log(data);
-        //   console.log('--------');
-        //
-        //   break;
-
-        // Film Specific - Editing - App 7 - attractions-viceversa
-        // case 7:
-        //
-        //   var imgL = [];
-        //   var imgR = [];
-        //
-        //   $('#div1 img').each(function() {
-        //     var src = $(this).attr('src');
-        //     imgL.push(src);
-        //   });
-        //   $('#div2 img').each(function() {
-        //     var src = $(this).attr('src');
-        //     imgR.push(src);
-        //   });
-        //
-        //   var data = {
-        //     '_token'  : $('input[name=_token]').val(),
-        //     'app_id'  : id,
-        //     'token'   : token,
-        //     'title'   : $('input[name="title"]').val(),
-        //     'emotion' : $('input[name="emotion"]').val(),
-        //     'notes'   : $('#notes').val(),
-        //     'imgL'    : imgL,
-        //     'imgR'    : imgR
-        //   };
-        //
-        //   console.log('--------');
-        //   console.log(data);
-        //   console.log('--------');
-        //   break;
-
       }
 
       $.ajax({
@@ -591,7 +521,7 @@
 </script>
 
 {{-- NOTIFICATIONS --}}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   $('.markasread').on('click', function(e) {
     var notification_id = $(this).data('notif-id');
     $.get('/teacher/notifications/markasread/'+notification_id);
@@ -661,8 +591,10 @@
   };
 
   setInterval(getNotifications, 10000);
-</script>
+</script> --}}
+<script src="{{ mix('js/notifications.js') }}">
 
+</script>
 
 @if ($type == 'app')
 <script type="text/javascript">
