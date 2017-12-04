@@ -37,6 +37,7 @@ export default {
   }),
   mounted() {
     this.showNotification()
+    setTimeout(this.dismissNotification, 10000)
   },
   methods: {
     showNotification: function() {
