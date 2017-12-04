@@ -1,6 +1,7 @@
 <script src="{{ mix('js/manifest.js') }}"></script>
 <script src="{{ mix('js/vendor.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ mix('js/notifications.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
 
@@ -520,81 +521,6 @@
   });
 </script>
 
-{{-- NOTIFICATIONS --}}
-{{-- <script type="text/javascript">
-  $('.markasread').on('click', function(e) {
-    var notification_id = $(this).data('notif-id');
-    $.get('/teacher/notifications/markasread/'+notification_id);
-  });
-
-  $('.delete-notif').on('click', function(e) {
-    var notification_id = $(this).data('notif-id');
-    $.ajax({
-      method: 'POST',
-      url: '/teacher/notifications/delete',
-      data: {
-          '_token' : '{{ csrf_token() }}',
-          'id' : notification_id,
-      },
-      success: function(response) {
-        console.log(response);
-        $('*[data-notif-id="'+notification_id+'"]').remove();
-      },
-      error: function(errors) {
-        console.error(errors);
-      }
-    });
-  });
-
-  var notifications = new Array();
-  var $notif_menu = $('#notifications .dropdown-menu');
-  var $main_menu = $('#main-menu');
-
-  $notif_menu.find('.dropdown-item').each(function(){
-      var item = $(this).data('notif-id');
-      notifications.push(item);
-  });
-
-  var menu_height = $main_menu.outerHeight();
-
-  var getNotifications = function() {
-      $.get('/teacher/notifications/get', function(response) {
-          $.each(response, function(k, item) {
-              // escludo tutto quello che non va bene
-              if (item.id) {
-                var check = $.inArray(item.id, notifications);
-                if (check == -1) {
-                  notifications.push(item.id);
-                  var session = item.data.session
-                  var section_slug = session.app.category.section.slug;
-                  var category_slug = session.app.category.slug;
-                  var app_slug = session.app.slug;
-                  var token = session.token;
-                  var message = 'You have a new notification from '+session.student.name+' - '+session.app.title+' - '+session.app.category.name;
-
-                  var data = '<a class="dropdown-item markasread" data-notif-id="'+item.id+'" href="/teacher/'+section_slug+'/'+category_slug+'/'+app_slug+'/'+token+'">'+message+'</a>';
-                  $notif_menu.append(data);
-                  var data = ''
-                  data += '<div class="alert alert-success alert-dismissible fade show fixed-top w-25 ml-auto" role="alert">';
-                  data +=   '<button type="button" class="close" data-dismiss="alert" aria-label="Close">';
-                  data +=     '<span aria-hidden="true">&times;</span>';
-                  data +=   '</button>';
-                  data +=   '<div class="alert-icon"><i class="fa fa-globe"></i></div>';
-                  data +=   '<div class"alert-content">'+message+'</div>';
-                  data += '</div>'
-                  $main_menu.append(data);
-                  console.log(item);
-                }
-              }
-          });
-      });
-  };
-
-  setInterval(getNotifications, 10000);
-</script> --}}
-<script src="{{ mix('js/notifications.js') }}">
-
-</script>
 
 @if ($type == 'app')
 <script type="text/javascript">
