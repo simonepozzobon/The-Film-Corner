@@ -70,7 +70,7 @@
 
           function toggleDescription()
           {
-              if (opened)
+              if (!opened)
               {
                   longDesc.classList.remove('d-none');
                   shortDesc.classList.add('d-none');

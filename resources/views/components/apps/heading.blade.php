@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div id="app-info" class="title-description">
+      <div id="" class="title-description">
         <div id="short-description" class="short-description">
           {{ substr(strip_tags($app_category->description), 0, 200) }}{{ strlen(strip_tags($app_category->description)) > 200 ? '...' : "" }}
         </div>
@@ -19,7 +19,7 @@
           {!! $app_category->description !!}
         </div>
         <div class="btns">
-          <a href="" id="read-more-btn" class="read-more" data-id="{{ $app_category->slug }}">Read More</a>
+          <a href="" id="read-more-btn" class="text-default text-muted" data-id="{{ $app_category->slug }}">Read More</a>
         </div>
       </div>
       <script type="text/javascript">
@@ -32,9 +32,10 @@
         button.addEventListener('click', toggleDescription, false);
         icon.addEventListener('click', toggleDescription, false);
 
-        function toggleDescription()
+        function toggleDescription(event)
         {
-            if (opened)
+            event.preventDefault();
+            if (!opened)
             {
                 longDesc.classList.remove('d-none');
                 shortDesc.classList.add('d-none');
