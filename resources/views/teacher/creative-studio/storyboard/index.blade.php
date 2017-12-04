@@ -82,33 +82,37 @@
         // Storyboard appen frame
         $('#assets').on('click', 'li', function(e){
             e.preventDefault();
-            counter++;
+            if (counter <= 9) {
+              counter++;
 
-            var src = $(this).children('img').attr('src');
+              var src = $(this).children('img').attr('src');
 
-            var data = '';
-            data +='<div id="frame-container-'+counter+'" class="col-md-6 mt story">';
-            data +=  '<div class="box blue">';
-            data +=    '<div class="box-header">';
-            data +=      'Frame '+counter+'';
-            data +=      '<input type="hidden" name="frame_title" value="Frame '+counter+'">';;
-            data +=    '</div>';
-            data +=    '<div class="box-body">';
-            data +=      '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
-            data +=      '<div class="form-group pt">';
-            data +=        '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
-            data +=        '<p id="frame-content-'+counter+'" class="invisible"></p>';
-            data +=      '</div>';
-            data +=    '</div>';
-            data +=    '<div class="box-btns">';
-            data +=      '<a onclick="save('+counter+')" class="btn btn-blue"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
-            data +=      '<a onclick="edit('+counter+')" class="btn btn-blue"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
-            data +=      '<a onclick="destroy('+counter+')" class="btn btn-blue"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
-            data +=    '</div>';
-            data +=  '</div>';
-            data +='</div>';
+              var data = '';
+              data +='<div id="frame-container-'+counter+'" class="col-md-6 mt story">';
+              data +=  '<div class="box blue">';
+              data +=    '<div class="box-header">';
+              data +=      'Frame '+counter+'';
+              data +=      '<input type="hidden" name="frame_title" value="Frame '+counter+'">';;
+              data +=    '</div>';
+              data +=    '<div class="box-body">';
+              data +=      '<img id="frame-img-'+counter+'" src="'+src+'" class="img-fluid">';
+              data +=      '<div class="form-group pt">';
+              data +=        '<textarea id="frame-'+counter+'" name="frame-'+counter+'" class="form-control" rows="8"></textarea>';
+              data +=        '<p id="frame-content-'+counter+'" class="invisible"></p>';
+              data +=      '</div>';
+              data +=    '</div>';
+              data +=    '<div class="box-btns">';
+              data +=      '<a onclick="save('+counter+')" class="btn btn-blue"><i class="fa fa-floppy-o" aria-hidden="true"></i></a>';
+              data +=      '<a onclick="edit('+counter+')" class="btn btn-blue"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
+              data +=      '<a onclick="destroy('+counter+')" class="btn btn-blue"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
+              data +=    '</div>';
+              data +=  '</div>';
+              data +='</div>';
 
-            $('#storyboard').append(data);
+              $('#storyboard').append(data);
+            } else {
+              alert('limit reached');
+            }
 
         });
 
