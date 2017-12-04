@@ -18,6 +18,7 @@ use App\AppsSessions\StudentAppSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 
@@ -576,7 +577,7 @@ class SessionController extends Controller
     ];
 
     $session->save();
-    
+
     return response()->json($data);
   }
 
@@ -589,114 +590,25 @@ class SessionController extends Controller
     $app = $session->app()->first();
 
     $teacher = $student->teacher()->first();
-    $teacher->notify( new ShareSession($session) );
+    // $teacher->notify( new ShareSession($session) );
 
-    $session->teacher_shared = 1;
-    $session->save();
+    $notification = [
+      'event' => 'newSharedSession',
+      'from_id' => $student->id,
+      'from_type' => get_class($student),
+      'to_id' => $teacher->id,
+      'to_type' => get_class($teacher),
+      'data' => [
+          'session' => $session,
+          'app' => $app
+      ]
+    ];
 
-    //
-    // // Creo la sessione condivisa
-    // $shared = new SharedSession;
-    // $shared->app_id = $request['app_id'];
-    // $shared->token = $session->token;
-    // $shared->title = $session->title;
-    //
-    // switch ($request['app_id']) {
-    //   // Film Specific - Framing - Frame Composer
-    //   case '1':
-    //     // estraggo l'immagine dalla sessione
-    //     $obj = json_decode($session->content);
-    //     $img = $obj->rendered;
-    //     $notes = $obj->notes;
-    //
-    //     $content = [
-    //       'img' => $img,
-    //       'notes' => $notes,
-    //     ];
-    //
-    //     // condivido la sessione
-    //     $shared->content = json_encode($content);
-    //     break;
-    //
-    //   // Film Specific - Framing - Frame Crop
-    //   case '2':
-    //     // estraggo i frame dalla sessione e li salvo in quella condivisa
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Framing - types-of-images
-    //   case '3':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Editing - Offscreen
-    //   case '5':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Editing - Attractions
-    //   case '6':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Sound - What's Going On
-    //   case '7':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Sound - Sound Atmosphere
-    //   case '8':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Film Specific - Sound - Soundscapes
-    //   case '9':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Creative Studio - Warm Up - Active Offscreen
-    //   case '10':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Creative Studio - Story Telling - Character Builder
-    //   case '13':
-    //     // estraggo l'immagine dalla sessione
-    //     $obj = json_decode($session->content);
-    //     $img = $obj->rendered;
-    //     $notes = $obj->notes;
-    //
-    //     $content = [
-    //       'img' => $img,
-    //       'notes' => $notes,
-    //     ];
-    //
-    //     // condivido la sessione
-    //     $shared->content = json_encode($content);
-    //     break;
-    //
-    //   // Creative Studio - Story Telling - Storytelling
-    //   case '14':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Creative Studio - Story Telling - Storyboard
-    //   case '15':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Creative Studio - Contest - Lumiere Minute
-    //   case '16':
-    //     $shared->content = $session->content;
-    //     break;
-    //
-    //   // Creative Studio - Contest - Make Your Own Film
-    //   case '17':
-    //     $shared->content = $session->content;
-    //     break;
-    // }
-    //
-    // $shared->save();
+    Redis::publish('notification', json_encode($notification));
+
+    // $session->teacher_shared = 1;
+    // $session->save();
+
 
     $data = [
       'status' => 'success'

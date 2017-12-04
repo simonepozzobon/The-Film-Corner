@@ -5,34 +5,28 @@
         Sessions
       </div>
       <div class="box-body">
-        <div class="row align-items-center">
-          <div class="col">
-            <span class="display-2 align-middle"><i class="fa fa-check text-success"></i></span>
-          </div>
-          <div class="col">
-            Gianni
-          </div>
-          <div class="col">
-            Frame Composer
-          </div>
-          <div class="col">
-            <div class="btn-group">
-              <button class="btn btn-blue"><i class="fa fa-folder-open-o"></i></button>
-              <button class="btn btn-blue"><i class="fa fa-thumbs-o-up"></i></button>
-              <button class="btn btn-blue"><i class="fa fa-trash-o"></i></button>
-            </div>
-          </div>
-        </div>
+        <notification/>
+        <notification/>
       </div>
     </div>
   </div>
 </template>
 <script>
+import Notification from './Notification.vue'
 export default {
   name: 'Sessions',
+  props: {
+    notifications: {
+      default: function() {},
+      type: Array
+    }
+  },
   data: () => ({
 
-  })
+  }),
+  components: {
+    Notification
+  }
 }
 </script>
 <style lang="scss" scoped>

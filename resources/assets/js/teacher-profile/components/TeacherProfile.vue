@@ -1,7 +1,7 @@
 <template>
   <div id="teacher-profile" class="row mt">
     <div class="col-md-8">
-      <sessions/>
+      <sessions :notifications="notificationsParsed"/>
     </div>
     <div class="col-md-4">
       <student-panel :students="studentsParsed"/>
@@ -22,12 +22,20 @@ export default {
     students: {
       default: '',
       type: String
+    },
+    notifications: {
+      default: '',
+      type: String
     }
   },
   computed: {
     studentsParsed: function()
     {
       return JSON.parse(this.students)
+    },
+    notificationsParsed: function()
+    {
+      return JSON.parse(this.notifications)
     }
   },
   data: () => ({
