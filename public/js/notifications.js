@@ -13274,7 +13274,7 @@ exports.default = {
   },
   mounted: function mounted() {
     this.showNotification();
-    // setTimeout(this.dismissNotification, 10000)
+    setTimeout(this.dismissNotification, 10000);
   },
 
   methods: {

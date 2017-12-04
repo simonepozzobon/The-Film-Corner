@@ -1,10 +1,16 @@
 <template>
-  <div id="notification" class="row align-items-center" @mouseenter="showDelete" @mouseleave="hideDelete" @click="markAsRead">
+  <div id="notification" class="row align-items-center" @mouseenter="showDelete" @mouseleave="hideDelete" @click="markAsRead" ref="notification">
     <div class="col">
       <div class="wrapper">
         <div class="icons-left">
-          <i v-if="this.status" class="fa fa-check text-success"></i>
-          <i v-else class="fa fa-exclamation text-danger"></i>
+          <div class="icon">
+            <i v-if="this.approved" class="fa fa-check text-success"></i>
+            <i v-else class="fa fa-exclamation text-danger"></i>
+          </div>
+          <div class="icon">
+            <i v-if="this.status" class="fa fa-eye text-warning"></i>
+            <i v-else class="fa fa-eye-slash text-danger"></i>
+          </div>
         </div>
         <div class="description">
           <span>{{ this.notification.data.sender.name }}</span> - {{ this.notification.data.session.app.title }}
@@ -32,8 +38,16 @@ export default {
   computed: {
     status: function()
     {
-      if (this.notification.read_at != null)
-      {
+      if (this.notification.read_at != null) {
+        return true
+      }
+      else {
+        return false
+      }
+    },
+    approved: function()
+    {
+      if (this.notification.data.session.teacher_approved == 1) {
         return true
       }
       else {
@@ -57,10 +71,19 @@ export default {
       return this.notification.data.session.token
     }
   },
-  data: () => ({
-
-  }),
+  mounted: function()
+  {
+    this.showNotification()
+  },
   methods: {
+    showNotification: function()
+    {
+      TweenMax.to(this.$refs.notification, .4, {
+        opacity: 1,
+        display: 'flex',
+        easing: Power4.easeInOut
+      })
+    },
     showDelete: function()
     {
       TweenMax.to(this.$refs.icons_right, .4, {
@@ -109,9 +132,13 @@ export default {
         border-bottom: 2px dashed $tfc-dark-blue;
 
         > .icons-left {
-          margin-right: $spacer * 3 / 4;
-          width: $spacer;
-          text-align: center;
+          display: flex;
+
+          > .icon {
+            margin-right: $spacer * 3 / 4;
+            width: $spacer;
+            text-align: center;
+          }
         }
 
         >.description {

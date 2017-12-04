@@ -27111,6 +27111,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'Notification',
@@ -27123,6 +27129,13 @@ exports.default = {
   computed: {
     status: function status() {
       if (this.notification.read_at != null) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    approved: function approved() {
+      if (this.notification.data.session.teacher_approved == 1) {
         return true;
       } else {
         return false;
@@ -27141,10 +27154,17 @@ exports.default = {
       return this.notification.data.session.token;
     }
   },
-  data: function data() {
-    return {};
+  mounted: function mounted() {
+    this.showNotification();
   },
   methods: {
+    showNotification: function showNotification() {
+      _gsap.TweenMax.to(this.$refs.notification, .4, {
+        opacity: 1,
+        display: 'flex',
+        easing: _gsap.Power4.easeInOut
+      });
+    },
     showDelete: function showDelete() {
       _gsap.TweenMax.to(this.$refs.icons_right, .4, {
         opacity: 1,
@@ -27855,7 +27875,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .description > span[data-v-60c437fb] {\n      text-transform: capitalize;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n#notification > .col > .wrapper > .icons-left > .icon[data-v-60c437fb] {\n        margin-right: 1.5rem;\n        width: 2rem;\n        text-align: center;\n}\n#notification > .col > .wrapper > .description > span[data-v-60c437fb] {\n      text-transform: capitalize;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 286 */,
@@ -28531,6 +28551,7 @@ if (false) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    ref: "notification",
     staticClass: "row align-items-center",
     attrs: {
       "id": "notification"
@@ -28546,11 +28567,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "wrapper"
   }, [_c('div', {
     staticClass: "icons-left"
-  }, [(this.status) ? _c('i', {
+  }, [_c('div', {
+    staticClass: "icon"
+  }, [(this.approved) ? _c('i', {
     staticClass: "fa fa-check text-success"
   }) : _c('i', {
     staticClass: "fa fa-exclamation text-danger"
   })]), _vm._v(" "), _c('div', {
+    staticClass: "icon"
+  }, [(this.status) ? _c('i', {
+    staticClass: "fa fa-eye text-warning"
+  }) : _c('i', {
+    staticClass: "fa fa-eye-slash text-danger"
+  })])]), _vm._v(" "), _c('div', {
     staticClass: "description"
   }, [_c('span', [_vm._v(_vm._s(this.notification.data.sender.name))]), _vm._v(" - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
     ref: "icons_right",
