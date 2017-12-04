@@ -241,10 +241,14 @@ Route::prefix('teacher')->group(function() {
     Route::get('/network/{token}', 'Teacher\NetworkController@single')->name('teacher.network.single');
 
     // Sessioni
-    Route::get('/session/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
-    Route::post('/session/new', 'Teacher\SessionController@newSession')->name('new.session');
-    Route::post('/session/update', 'Teacher\SessionController@updateSession')->name('update.session');
-    Route::post('/session/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
+    Route::prefix('session')->group(function() {
+      Route::get('/{teacher_id}/{app_id}', 'Teacher\SessionController@openSessions')->name('open.sessions');
+      Route::post('/new', 'Teacher\SessionController@newSession')->name('new.session');
+      Route::post('/update', 'Teacher\SessionController@updateSession')->name('update.session');
+      Route::post('/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
+      Route::post('/approve', 'Teacher\SessionController@approveSession')->name('teacher.session.approve');
+    });
+
 
     // Notifications
     Route::prefix('notifications')->group(function() {

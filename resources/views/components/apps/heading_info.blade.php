@@ -20,8 +20,8 @@
             </div>
             @endif
           @else
-            <div id="approve-btn" class="icon approve" data-toggle="tooltip" data-html="true" title="Approve this session and make it available to share">
-              <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-thumbs-o-up text-success"></i></a>
+            <div id="approve-btn" class="icon approve" data-toggle="tooltip" data-html="true" title="Approve student's work">
+              <a href="#" data-toggle="modal" data-target="#approveSession"><i class="fa fa-thumbs-o-up text-success"></i></a>
             </div>
             <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
               <a href="#" data-toggle="collapse" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
@@ -164,7 +164,7 @@
       </div>
     </div>
   @elseif ($student == true && isset($app_session))
-    <div class="modal fade" id="saveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+    <div class="modal fade" id="approveSession" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -173,18 +173,19 @@
               <i class="fa fa-times" aria-hidden="true"></i>
             </button>
           </div>
-          <form class="" action="{{ route('teacher.session.share') }}" method="POST">
-            {{ csrf_field() }}
-            {{ method_field('POST') }}
+          <div class="modal-body">
+            You're approving this work. Next it will be available for sharing on the network in your profile's page.
+          </div>
 
-            <div class="modal-body">
-              Are you sure?
-            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-              <button type="button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+              <form class="" action="{{ route('teacher.session.approve') }}" method="POST">
+                {{ csrf_field() }}
+                {{ method_field('POST') }}
+                <input type="hidden" name="token" value="{{ $app_session->token }}">
+                <button type="submit" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+              </form>
             </div>
-          </form>
         </div>
       </div>
     </div>

@@ -11,11 +11,15 @@ use App\AppSection;
 use App\AppCategory;
 use App\SharedSession;
 use App\TeacherSession;
+use App\StudentSession;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
+use App\Notifications\ShareSession;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Intervention\Image\Facades\Image;
+use App\AppsSessions\StudentAppSession;
 use Illuminate\Support\Facades\Storage;
 use App\AppsSessions\FilmSpecific\FrameCrop;
 
@@ -704,5 +708,45 @@ class SessionController extends Controller
     ];
 
     return response()->json($data);
+  }
+
+  public function approveSession(Request $request)
+  {
+      // recupero la sessione da approvare
+      $session = AppsSession::where('token', '=', $request->token)->first();
+      if ($session == null) {
+        $session = StudentAppSession::where('token', '=', $request->token)->first();
+      }
+
+      // se non è già stata approvata, la approvo
+      if ($session->teacher_approved == 0) {
+          // modifico la sessione
+          $session->teacher_approved = 1;
+          $session->save();
+
+          $student = $session->student()->first();
+          $app = $session->app()->first();
+          $teacher = Auth::guard('teacher')->user();
+
+          $student->notify( new ShareSession($session) );
+
+          $notification = [
+            'event' => 'sessionApproved',
+            'from_id' => $teacher->id,
+            'from_type' => get_class($teacher),
+            'to_id' => $student->id,
+            'to_type' => get_class($student),
+            'data' => [
+                'sender' => $teacher,
+                'session' => $session,
+                'app' => $app
+            ]
+          ];
+
+          Redis::publish('notification', json_encode($notification));
+      }
+
+
+      return redirect()->route('teacher.settings.index');
   }
 }
