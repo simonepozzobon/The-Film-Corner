@@ -11565,6 +11565,10 @@ exports.default = {
         title: 'Didactical Path',
         value: 'app_categories',
         options: [{ title: 'name', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }, {
+        title: 'General Texts',
+        value: 'general_texts',
+        options: [{ title: 'description', type: 'textarea' }]
       }],
       languages: '',
       category: 'apps',

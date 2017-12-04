@@ -7,6 +7,7 @@ use App\Language;
 use App\AppKeyword;
 use App\AppSection;
 use App\AppCategory;
+use App\GeneralText;
 use App\AppKeywordTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -58,6 +59,10 @@ class TranslateController extends Controller
 
             case 'app_categories':
                 $items = AppCategory::all();
+                break;
+
+            case 'general_texts':
+                $items = GeneralText::all();
                 break;
         }
 
