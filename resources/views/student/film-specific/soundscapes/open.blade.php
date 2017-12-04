@@ -346,7 +346,7 @@
       </div>
     </div>
   </div>
-  @if ($is_student)
+  @if ($app_session->teacher_shared == 1)
     @include('components.apps.student_chat', ['app_session' => $app_session])
   @endif
 @endsection
