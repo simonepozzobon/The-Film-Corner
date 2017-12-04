@@ -7,7 +7,7 @@
           <i v-else class="fa fa-exclamation text-danger"></i>
         </div>
         <div class="description">
-          {{ this.notification.data.session.student.name }} - {{ this.notification.data.session.app.title }}
+          <span>{{ this.notification.data.session.student.name }}</span> - {{ this.notification.data.session.app.title }}
         </div>
         <div class="icons-right" ref="icons_right">
           <a :href="'/teacher/'+section_slug+'/'+app_cat_slug+'/'+app_slug+'/'+token" class="btn btn-sm btn-blue">Open</a>
@@ -112,6 +112,12 @@ export default {
           margin-right: $spacer * 3 / 4;
           width: $spacer;
           text-align: center;
+        }
+
+        >.description {
+          >span {
+            text-transform: capitalize;
+          }
         }
 
         >.icons-right {

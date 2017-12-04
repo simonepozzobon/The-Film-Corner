@@ -27855,7 +27855,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
+exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.5rem;\n}\n#notification > .col > .wrapper[data-v-60c437fb] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n    padding-bottom: 0.66667rem;\n    border-bottom: 2px dashed #a6dbe2;\n}\n#notification > .col > .wrapper > .icons-left[data-v-60c437fb] {\n      margin-right: 1.5rem;\n      width: 2rem;\n      text-align: center;\n}\n#notification > .col > .wrapper > .description > span[data-v-60c437fb] {\n      text-transform: capitalize;\n}\n#notification > .col > .wrapper > .icons-right[data-v-60c437fb] {\n      margin-left: auto;\n      -ms-flex-item-align: center;\n          -ms-grid-row-align: center;\n          align-self: center;\n      display: none;\n      opacity: 0;\n}\n#notification > .col > .wrapper > .icons-right > i[data-v-60c437fb] {\n        margin-left: 1rem;\n}\n", ""]);
 
 /***/ }),
 /* 286 */,
@@ -28552,7 +28552,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-exclamation text-danger"
   })]), _vm._v(" "), _c('div', {
     staticClass: "description"
-  }, [_vm._v("\n        " + _vm._s(this.notification.data.session.student.name) + " - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
+  }, [_c('span', [_vm._v(_vm._s(this.notification.data.session.student.name))]), _vm._v(" - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
     ref: "icons_right",
     staticClass: "icons-right"
   }, [_c('a', {
