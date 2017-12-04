@@ -280,6 +280,7 @@ return [
 
         // Custom classes
         'Utility' => 'App\Utility',
+        'GeneralText' => 'App\GeneralText',
     ],
 
 ];
