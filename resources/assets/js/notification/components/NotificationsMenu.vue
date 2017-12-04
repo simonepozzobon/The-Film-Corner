@@ -7,7 +7,7 @@
   >
     <div class="notification-container">
       <i class="fa fa-bell"/>
-      <div class="notification-badge">
+      <div class="notification-badge" v-if="this.notifications.length > 0">
         <div class="notification-text">
           {{ this.notifications.length }}
         </div>
@@ -66,7 +66,5 @@ export default {
       }
     }
   }
-
-
 
 </style>

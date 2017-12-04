@@ -13656,11 +13656,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "notification-container"
   }, [_c('i', {
     staticClass: "fa fa-bell"
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (this.notifications.length > 0) ? _c('div', {
     staticClass: "notification-badge"
   }, [_c('div', {
     staticClass: "notification-text"
-  }, [_vm._v("\n        " + _vm._s(this.notifications.length) + "\n      ")])])])])
+  }, [_vm._v("\n        " + _vm._s(this.notifications.length) + "\n      ")])]) : _vm._e()])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

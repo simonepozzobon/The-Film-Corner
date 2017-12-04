@@ -176,8 +176,6 @@ export default {
 
         >.icon_bg {
           position: relative;
-          // width: $spacer * 2;
-          // height: $spacer * 2;
           width: 0;
           height: 0;
           opacity: 0;
@@ -196,7 +194,6 @@ export default {
       }
 
       >.divider {
-        // height: $spacer * 2;
         height: 0;
         border-left: 1px solid $tfc-dark-green;
         margin-right: $spacer / 2;
