@@ -2,71 +2,86 @@
 @section('title', 'Film Specific')
 @section('content')
   <div class="container">
-    @include('components.apps.heading', ['route' => route('student'), 'app_category' => $app_category])
+    @include('components.apps.heading', ['route' => route('student'), 'app_category' => $app_category, 'apps' => $apps])
     <div class="row mt">
       <div class="col col-md-4">
-        <div class="box green">
-          <div class="box-header">
-            Examples
-          </div>
-          <div class="box-body">
-            Examples of pictures and clips related to each app with a short explanations
-          </div>
+        <div class="glossary">
+          @foreach ($app_category->keywords()->get() as $key => $keyword)
+            <div class="badge badge-{{ $app_category->color_class }}" data-toggle="modal" data-target="#glossary-{{$keyword->id}}">{{ $keyword->name }}</div>
+          @endforeach
         </div>
-        {{-- <div class="box last orange mt">
-          <div class="box-header">
-            References
+        @foreach ($app_category->keywords()->get() as $key => $keyword)
+          <div class="modal fade" id="glossary-{{$keyword->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p class="text-default">{!! $keyword->description !!}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Okay</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="box-body">
-            <ul>
-              <li>lista 1</li>
-              <li>lista 2</li>
-              <li>altro elemento</li>
-            </ul>
-          </div>
-        </div> --}}
+        @endforeach
       </div>
       <div class="col-md-8">
         @if ($apps->count() > 0)
           @foreach ($apps as $key => $app)
-            <div class="box {{ $app->colors }} {{ $key == 0 ? '' : 'mt' }}">
+            <div id="{{ $app->slug }}" class="box {{ $app->colors }} {{ $key == 0 ? '' : 'mt' }}">
               <div class="box-header">
-                {{ $app->title }}
-              </div>
-              <div class="box-body">
-                {{ $app->description }}
-              </div>
-              <div class="box-btns">
-                @if ($app->available == 1)
-                  <a href="{{ route('student.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
-                    <i class="fa fa-file-o" aria-hidden="true"></i> New
-                  </a>
-                @else
-                  <a href="" class="btn btn-{{ $app->colors }}" data-toggle="modal" data-target="#fullModal">
-                    <i class="fa fa-exclamation-circle" aria-hidden="true"></i> Full
-                  </a>
-                  <div class="modal fade" id="fullModal" tabindex="-1" role="dialog" aria-labelledby="fullModalWarning" aria-hidden="true">
-                     <div class="modal-dialog modal-lg" role="document">
-                       <div class="modal-content">
-                         <div class="modal-header">
-                           <h5 class="modal-title" id="fullModalWarning">Your slots are full</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                             <i class="fa fa-times" aria-hidden="true"></i>
-                           </button>
-                         </div>
-                         <div class="modal-body">
-                           <p class="text-center">Please, remove one of your sessions from this app!</p>
-                         </div>
-                         <div class="modal-footer">
-                           <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
+                <div class="title">
+                  {{ $app->title }}
+                </div>
+                <div class="btns">
+                  @if ($app->available == 1)
+                    <a href="{{ route('student.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
+                      <i class="fa fa-file-o" aria-hidden="true"></i>
+                    </a>
+                  @else
+                    <a href="" class="btn btn-{{ $app->colors }}" data-toggle="modal" data-target="#fullModal">
+                      <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                    </a>
+                    <div class="modal fade" id="fullModal" tabindex="-1" role="dialog" aria-labelledby="fullModalWarning" aria-hidden="true">
+                       <div class="modal-dialog modal-lg" role="document">
+                         <div class="modal-content">
+                           <div class="modal-header">
+                             <h5 class="modal-title" id="fullModalWarning">Your slots are full</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                               <i class="fa fa-times" aria-hidden="true"></i>
+                             </button>
+                           </div>
+                           <div class="modal-body">
+                             <p class="text-center">Please, remove one of your sessions from this app!</p>
+                           </div>
+                           <div class="modal-footer">
+                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>
+                           </div>
                          </div>
                        </div>
                      </div>
-                   </div>
-                @endif
-                <a href="#" onclick="openSessions({{ Auth::guard('student')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
-                  <i class="fa fa-floppy-o" aria-hidden="true"></i> Saved
-                </a>
+                  @endif
+                  <a href="#" onclick="openSessions({{ Auth::guard('student')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
+                    <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="box-body">
+                <div class="short-description">
+                  {{ substr(strip_tags($app->description), 0, 200) }}{{ strlen(strip_tags($app->description)) > 200 ? '...' : "" }}
+                </div>
+                <div class="long-description d-none">
+                  {{ $app->description }}
+                </div>
+              </div>
+              <div class="box-btns">
+                <a href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
               </div>
             </div>
           @endforeach
@@ -87,6 +102,32 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
+  $(document.body).on('click', '.read-more', function(event) {
+    console.log('read-more cliccato');
+    event.preventDefault();
+    var id = event.target.dataset.id,
+        el = $('#'+id),
+        short_description = el.find('.short-description'),
+        long_description = el.find('.long-description');
+
+    short_description.addClass('d-none');
+    long_description.removeClass('d-none');
+    $(this).html('Read Less').removeClass('read-more').addClass('read-less');
+  });
+
+  $(document.body).on('click', '.read-less', function(event) {
+    console.log('read-less cliccato');
+    event.preventDefault();
+    var id = event.target.dataset.id,
+        el = $('#'+id),
+        short_description = el.find('.short-description'),
+        long_description = el.find('.long-description');
+
+    long_description.addClass('d-none');
+    short_description.removeClass('d-none');
+    $(this).html('Read More').removeClass('read-less').addClass('read-more');
+  })
+
   function openSessions(studentId, appId, color) {
     $.ajax({
       type: 'GET',

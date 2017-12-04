@@ -16,8 +16,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student', 'student' => $is_student])
     <div id="app">
       <div class="row mt">
         <div class="col-md-8">
@@ -126,7 +125,9 @@
       </div>
     </div>
   </div>
-  @include('components.apps.student_chat', ['app_session' => $app_session])
+  @if ($is_student)
+    @include('components.apps.student_chat', ['app_session' => $app_session])
+  @endif
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>

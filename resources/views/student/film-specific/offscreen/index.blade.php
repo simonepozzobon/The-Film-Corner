@@ -1,16 +1,10 @@
 @extends('layouts.student', ['type' => 'app'])
 @section('stylesheets')
   <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-  <style media="screen">
-    #video-library {
-      overflow-y: scroll;
-    }
-  </style>
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student'])
     <div id="app">
       <div class="row mt">
         <div class="col-md-8">
@@ -32,22 +26,42 @@
             <div class="box-header">
               Library
             </div>
-            <div id="video-library" class="box-body">
-              @foreach ($app->videos()->get() as $key => $video)
-                <div class="row">
-                  <div class="col-md-2">
-                    <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
-                  </div>
-                  <div class="col-md-8">
-                    <p class="p-2">{{ $video->title }}</p>
-                  </div>
-                  <div class="col-md-2">
-                    <button class="change-video btn btn-secondary btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
-                      <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
+            <div id="video-library" class="box-body library">
+              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav" role="tablist">
+                    <li class="nav-item">
+                      <a class="library-link nav-link active" data-toggle="tab" href="#offscreen-library">Video</a>
+                    </li>
+                  </ul>
+                </div>
+              </nav>
+              <div id="libraries" class="library-container tab-content">
+                <div id="offscreen-library" class="assets active" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      @foreach ($app->videos()->get() as $key => $video)
+                        <div class="row">
+                          <div class="col-md-2">
+                            <img src="{{ Storage::disk('local')->url($video->img) }}" width="57">
+                          </div>
+                          <div class="col-md-8">
+                            <p class="p-2">{{ $video->title }}</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button class="change-video btn btn-secondary btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}">
+                              <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                          </div>
+                        </div>
+                      @endforeach
+                    </div>
                   </div>
                 </div>
-              @endforeach
+              </div>
             </div>
           </div>
         </div>
@@ -93,9 +107,7 @@
   </div>
 @endsection
 @section('scripts')
-  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
-
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
@@ -105,8 +117,17 @@
 
     function libraryResize()
     {
-        var video_player = document.getElementById('video-player').offsetHeight - 63;
-        $('#video-library').height(video_player);
+        var video_player = document.getElementById('video-player').offsetHeight - 106;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
     }
 
     var player = videojs('video', {
@@ -117,7 +138,7 @@
       }
     });
 
-    player.muted(true);
+    // player.muted(true);
 
     player.ready(function() {
       $('.change-video').on('click', function(event) {

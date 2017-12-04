@@ -5,8 +5,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student'])
     <div id="app">
       <div class="row mt">
         <div class="col-md-6">

@@ -4,8 +4,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student', 'student' => $is_student])
     <div class="row mt">
       <div class="col-md-8">
         <div class="box blue">
@@ -22,17 +21,37 @@
           <div class="box-header">
             Library
           </div>
-          <div class="box-body">
-            <ul class="list-unstyled">
-              @foreach ($app->audios()->get() as $key => $audio)
-                <li class="pb-3">
-                  <div class="d-flex justify-content-between">
-                    <p id="audio-title-{{ $audio->id }}" class="d-block">{{ $audio->title }}</p>
-                    <a id="audio-{{ $audio->id }}" href="#" class="add-audio btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+          <div class="box-body library">
+            <nav class="navbar navbar-toggleable-sm navbar-library yellow">
+              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" role="tablist">
+                  <li class="nav-item">
+                    <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">Audio</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <div id="libraries" class="library-container tab-content">
+              <div id="audio-library" class="assets tab-pane active" role="tabpanel">
+                <div class="row scroller">
+                  <div class="col">
+                    @foreach ($app->audios()->get() as $key => $audio)
+                      <div class="row pb-3">
+                        <div class="col-md-8">
+                            <p id="audio-title-{{ $audio->id }}" class="d-block">{{ $audio->title }}</p>
+                        </div>
+                        <div class="col-md-4">
+                          <a id="audio-{{ $audio->id }}" href="#" class="add-audio btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    @endforeach
                   </div>
-                </li>
-              @endforeach
-            </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -61,7 +80,9 @@
       </div>
     </div>
   </div>
-  @include('components.apps.student_chat', ['app_session' => $app_session])
+  @if ($is_student)
+    @include('components.apps.student_chat', ['app_session' => $app_session])
+  @endif
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>
@@ -77,6 +98,8 @@
       height: 64
     });
 
+    libraryResize();
+
     var src = '{{ $session->audio }}'
     player.load(src);
     localStorage.setItem('app-7-audio', src);
@@ -91,6 +114,21 @@
         player.load(audio_src);
         localStorage.setItem('app-7-audio', audio_src);
     });
+
+    function libraryResize()
+    {
+        var video_player = document.getElementById('waveform').offsetHeight + 128;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
+    }
 
   </script>
 @endsection

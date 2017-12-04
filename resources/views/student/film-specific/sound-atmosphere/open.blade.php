@@ -5,15 +5,14 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student', 'student' => $is_student])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student', 'student' => $is_student])
     <div class="row mt">
       <div class="col-md-8">
         <div class="box blue">
           <div class="box-header">
             Create your atmosphere
           </div>
-          <div class="box-body">
+          <div id="media-element" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
               <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
                   <source src="{{ $session->video }}" type="video/mp4">
@@ -28,54 +27,62 @@
           <div class="box-header">
             Library
           </div>
-          <div class="box-body">
-            <nav class="navbar navbar-toggleable-sm navbar-light">
+          <div class="box-body library">
+            <nav class="navbar navbar-toggleable-sm navbar-library yellow">
               <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#video-library" aria-controls="#video-library">Video</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#audio-library" aria-controls="#audio-library">Audio</a>
-                    </li>
+                <ul class="navbar-nav" role="tablist">
+                  <li class="nav-item">
+                    <a class="library-link nav-link active" data-toggle="tab" href="#video-library">Video</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="library-link nav-link" data-toggle="tab" href="#audio-library">Audio</a>
+                  </li>
                 </ul>
               </div>
             </nav>
-            <div id="libraries">
-                <div id="video-library" class="collapse show" data-show="true" role="tabpanel">
-                  @foreach ($app->videos()->get() as $key => $video)
-                    <div class="asset-video row pb-3">
-                      <div class="col-md-2">
-                        <img src="{{ Storage::disk('local')->url($video->img) }}" alt="image asset" width="57" class="img-fluid w-100"/>
+            <div id="libraries" class="library-container tab-content">
+              <div id="video-library" class="assets tab-pane active" role="tabpanel">
+                <div class="row scroller">
+                  <div class="col">
+                    @foreach ($app->videos()->get() as $key => $video)
+                      <div class="asset-video row pb-3">
+                        <div class="col-md-2">
+                          <img src="{{ Storage::disk('local')->url($video->img) }}" alt="image asset" width="57" class="img-fluid w-100"/>
+                        </div>
+                        <div class="col-md-8">
+                          <p>{{ $video->title }}</p>
+                        </div>
+                        <div class="col-md-2">
+                          <a href="" class="btn btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        </div>
                       </div>
-                      <div class="col-md-8">
-                        <p>{{ $video->title }}</p>
-                      </div>
-                      <div class="col-md-2">
-                        <a href="" class="btn btn-yellow" data-video-src="{{ Storage::disk('local')->url($video->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
-                    </div>
-                  @endforeach
-                </div>
-                <div id="audio-library" class="collapse" role="tabpanel">
-                  @foreach ($app->audios()->get() as $key => $audio)
-                    <div class="asset-audio row pb-3 align-middle">
-                      <div class="col-md-2 justify-content-middle">
-                        <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
-                      </div>
-                      <div class="col-md-8 justify-content-middle">
-                        <p class="align-middle">{{ $audio->title }}</p>
-                      </div>
-                      <div class="col-md-2">
-                        <a href="" class="btn btn-yellow" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
-                    </div>
-                  @endforeach
+                    @endforeach
+                  </div>
                 </div>
               </div>
+              <div id="audio-library" class="assets tab-pane" role="tabpanel">
+                <div class="row scroller">
+                  <div class="col">
+                    @foreach ($app->audios()->get() as $key => $audio)
+                      <div class="asset-audio row pb-3 align-middle">
+                        <div class="col-md-2 justify-content-middle">
+                          <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
+                        </div>
+                        <div class="col-md-8 justify-content-middle">
+                          <p class="align-middle">{{ $audio->title }}</p>
+                        </div>
+                        <div class="col-md-2">
+                          <a href="" class="btn btn-yellow" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        </div>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +125,9 @@
       </div>
     </div>
   </div>
-  @include('components.apps.student_chat', ['app_session' => $app_session])
+  @if ($is_student)
+    @include('components.apps.student_chat', ['app_session' => $app_session])
+  @endif
 @endsection
 @section('scripts')
   <script src="{{ mix('js/teacher-chat.js') }}"></script>
@@ -126,6 +135,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
   <script>
     var AppSession = new TfcSessions();
+
+    libraryResize();
+    document.getElementById('media-element').addEventListener('onresize', libraryResize);
 
     // Video Init
     var video = videojs('video', {
@@ -145,7 +157,6 @@
         splitChannels: true,
         height: 64
     });
-    console.log('ci siamo');
 
     // Load audio file
     var src = '{{ $session->audio }}';
@@ -206,5 +217,19 @@
         localStorage.setItem('app-8-audio', audio_src);
     });
 
+    function libraryResize()
+    {
+        var video_player = document.getElementById('media-element').offsetHeight - 106;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
+    }
   </script>
 @endsection

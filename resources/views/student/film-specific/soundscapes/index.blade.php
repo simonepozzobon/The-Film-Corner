@@ -41,8 +41,7 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app])
-    @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'student'])
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'student'])
     <div class="row mt">
       <div class="col-md-8">
         <div class="box blue">
@@ -51,7 +50,7 @@
           </div>
           <div class="box-body">
             <div id="player" class="">
-              <img id="image" src="{{ $random_image }}" alt="" class="img-fluid">
+              <img id="image" src="{{ $random_image }}" alt="" class="img-fluid w-100">
               <div id="waveform-1" class="d-none"></div>
               <div id="waveform-2" class="d-none"></div>
               <div id="waveform-3" class="d-none"></div>
@@ -67,52 +66,57 @@
           <div class="box-header">
             Library
           </div>
-          <div id="library" class="box-body">
-            <nav class="navbar navbar-toggleable-sm navbar-light">
+          <div id="library" class="box-body library">
+            <nav class="navbar navbar-toggleable-sm navbar-library yellow">
               <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto">
+                <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#audio-library" aria-controls="#audio-library">Audio</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">Audio</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" data-toggle="collapse" href="" aria-expanded="false" data-target="#image-library" aria-controls="#image-library">Images</a>
+                      <a class="library-link nav-link" data-toggle="tab" href="#image-library">Image</a>
                     </li>
                 </ul>
               </div>
             </nav>
-            <div id="libraries">
-                <div id="audio-library" class="collapse show test" data-show="true" role="tabpanel">
-                  @foreach ($app->audios()->get() as $key => $audio)
-                    <div class="asset-audio row" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}">
-                      <div class="col-md-2">
-                        <h3 class="text-center droppable"><i class="fa fa-file-audio-o"></i></h3>
-                      </div>
-                      <div class="col-md-10">
-                        <p>{{ $audio->title }}</p>
-                      </div>
-                      {{-- <div class="col-md-2">
-                        <a href="" class="btn btn-secondary btn-yellow" data-audio-src="{{ Storage::disk('local')->url(urlencode($audio->src)) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div> --}}
+            <div id="libraries" class="library-container tab-content">
+                <div id="audio-library" class="assets tab-pane active test" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      @foreach ($app->audios()->get() as $key => $audio)
+                        <div class="asset-audio row" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}">
+                          <div class="col-md-2">
+                            <h3 class="text-center droppable"><i class="fa fa-file-audio-o"></i></h3>
+                          </div>
+                          <div class="col-md-10">
+                            <p>{{ $audio->title }}</p>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                  @endforeach
+                  </div>
                 </div>
-                <div id="image-library" class="collapse" role="tabpanel">
-                  @foreach ($app->medias()->get() as $key => $media)
-                    <div class="asset-image row align-middle">
-                      <div class="col-md-2 justify-content-middle">
-                        <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="57" class="img-fluid w-100"/>
-                      </div>
-                      <div class="col-md-8 justify-content-middle">
-                        <p class="align-middle">{{ $media->title }}</p>
-                      </div>
-                      <div class="col-md-2">
-                        <a href="" class="btn btn-secondary btn-yellow" data-image-src="{{ Storage::disk('local')->url($media->landscape) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                      </div>
+                <div id="image-library" class="assets tab-pane" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      @foreach ($app->medias()->get() as $key => $media)
+                        <div class="asset-image row align-middle pb-3">
+                          <div class="col-md-2 justify-content-middle">
+                            <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" width="57" class="img-fluid w-100 h-100"/>
+                          </div>
+                          <div class="col-md-8 justify-content-middle">
+                            <p class="align-middle">{{ $media->title }}</p>
+                          </div>
+                          <div class="col-md-2">
+                            <a href="" class="btn btn-secondary btn-yellow" data-image-src="{{ Storage::disk('local')->url($media->landscape) }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                  @endforeach
+                  </div>
                 </div>
               </div>
           </div>
@@ -240,7 +244,6 @@
 @endsection
 @section('scripts')
   <script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.3/lib/draggable.bundle.js"></script>
-  <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/wavesurfer.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.2.3/plugin/wavesurfer.regions.min.js"></script>
@@ -248,11 +251,9 @@
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
 
+    resizeLibrary();
     player = document.getElementById('player');
-    player.addEventListener('onresize', function(){
-        var player = document.getElementById('player').offsetHeight;
-        $('#library').height(player);
-    });
+    player.addEventListener('onresize', resizeLibrary);
 
     const droppable = new Draggable.Droppable(document.querySelectorAll('.test'), {
       draggable: '.asset-audio',
@@ -524,6 +525,21 @@
           players[i].skipForward(5);
         }
       }
+    }
+
+    function resizeLibrary()
+    {
+        var video_player = document.getElementById('player').offsetHeight - 42;
+        $('#libraries').height(video_player);
+
+        var libraryEl = document.getElementById('libraries');
+
+        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+        var event = document.createEvent('HTMLEvents');
+        event.initEvent('library-resized', true, true);
+
+        // target can be any Element or other EventTarget.
+        libraryEl.dispatchEvent(event);
     }
   </script>
 @endsection

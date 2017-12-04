@@ -15,6 +15,7 @@ var redis = new Redis();
 
 // canale a cui iscriversi
 redis.subscribe('chat');
+redis.subscribe('notifications');
 
 // evento quando arriva un messaggio su quel canale
 redis.on('message', (channel, message) => {
