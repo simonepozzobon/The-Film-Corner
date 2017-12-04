@@ -794,16 +794,6 @@ exports.default = {
       var questo = document.getElementById('questo');
       questo.scrollTop = questo.scrollHeight;
     });
-
-    // axios.post('/api/v1/chat-typing', {
-    //     'from_id': vue.fromid,
-    //     'from_type': vue.fromtype,
-    //     'to_id': vue.toid,
-    //     'to_type': vue.totype,
-    //     'token': vue.sessiontoken,
-    // }).then((response) => {
-    //   console.log(response);
-    // });
   },
 
   methods: {

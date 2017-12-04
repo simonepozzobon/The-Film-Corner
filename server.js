@@ -15,10 +15,11 @@ var redis = new Redis();
 
 // canale a cui iscriversi
 redis.subscribe('chat');
-redis.subscribe('notifications');
+redis.subscribe('notification');
 
 // evento quando arriva un messaggio su quel canale
 redis.on('message', (channel, message) => {
+  console.log(channel, message);
   message = JSON.parse(message);
   // io.emit(channel + ':' + message.event, message.data); //es. chat:UserSignin, data
 
