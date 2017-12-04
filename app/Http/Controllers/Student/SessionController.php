@@ -7,6 +7,7 @@ use Validator;
 use App\Video;
 use App\Media;
 use App\Utility;
+use App\Teacher;
 use App\AppSection;
 use App\AppCategory;
 use App\SharedSession;
