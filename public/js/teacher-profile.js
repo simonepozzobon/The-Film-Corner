@@ -28552,7 +28552,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fa fa-exclamation text-danger"
   })]), _vm._v(" "), _c('div', {
     staticClass: "description"
-  }, [_c('span', [_vm._v(_vm._s(this.notification.data.session.student.name))]), _vm._v(" - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
+  }, [_c('span', [_vm._v(_vm._s(this.notification.data.sender.name))]), _vm._v(" - " + _vm._s(this.notification.data.session.app.title) + "\n      ")]), _vm._v(" "), _c('div', {
     ref: "icons_right",
     staticClass: "icons-right"
   }, [_c('a', {
