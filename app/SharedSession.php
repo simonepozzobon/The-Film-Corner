@@ -153,41 +153,4 @@ class SharedSession extends Model
         return $shared;
     }
 
-    // Deprecated
-    //
-    // public static function author($token)
-    // {
-    //     $session = AppsSession::where('token', '=', $token)->first();
-    //     if ($session != null) {
-    //         $author = $session->teacher()->first();
-    //     } else {
-    //         // Student Session
-    //         $session = StudentAppSession::where('token', '=', $token)->first();
-    //         $author = $session->student()->first();
-    //     }
-    //
-    //     return $author;
-    // }
-
-
-    /*
-     * @model (String) 'App\\Student' o 'App\\Teacher'
-     * $user_id (Integer) user_id del model sopra
-     *
-     * @sessions (Collection) sessions shared by that user. If the model is
-     * teacher will return also sessions made by its student
-    */
-
-    public static function get($model, $user_id)
-    {
-        $user = $model::find($user_id);
-
-        // Se l'utente è un Teacher devo raccogliere le sessioni condivise e quelle degli studenti
-        // Trasformo
-        // Prendo le sessioni condivise dove l'autore è l'insegnante
-        $user_sessions = $user->sessions()->get();
-        //
-
-        dd($tokens);
-    }
 }
