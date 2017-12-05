@@ -42,7 +42,7 @@
             <a id="read-more-icon"><i class="fa fa-question"></i></a>
           </div>
           <div id="print-btn" class="icon" data-toggle="tooltip" data-html="true" title="Print">
-            <a><i class="fa fa-print"></i></a>
+            <a id="print-this-page"><i class="fa fa-print"></i></a>
           </div>
         </div>
       </div>
@@ -58,15 +58,18 @@
         <div class="btns">
             <a id="read-more-btn" href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
         </div>
-        <script type="text/javascript">
+        <script>
           var button = document.getElementById('read-more-btn'),
               icon = document.getElementById('read-more-icon'),
               shortDesc = document.getElementById('short-description'),
               longDesc = document.getElementById('long-description'),
-              opened = false;
+              opened = false,
+              printBtn = document.getElementById('print-this-page');
 
           button.addEventListener('click', toggleDescription, false);
           icon.addEventListener('click', toggleDescription, false);
+
+          printBtn.addEventListener('click', printThisPage, false);
 
           function toggleDescription()
           {
@@ -86,16 +89,21 @@
 
               opened = !opened;
           }
+
+          function printThisPage()
+          {
+            window.print();
+          }
         </script>
       </div>
     </div>
   </div>
   @if ($app->examples()['count'] > 0)
-    <div class="modal fade" id="examples" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="examples" tabindex="-1" role="dialog" aria-labelledby="examplesModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Examples</h5>
+            <h5 class="modal-title" id="examplesModalLabel">Examples</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <i class="fa fa-times" aria-hidden="true"></i>
             </button>
@@ -190,11 +198,11 @@
       </div>
     </div>
   @endif
-  <div class="modal fade" id="close" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="close" tabindex="-1" role="dialog" aria-labelledby="closeModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Close {{ $app->title }}</h5>
+          <h5 class="modal-title" id="closeModalLabel">Close {{ $app->title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
