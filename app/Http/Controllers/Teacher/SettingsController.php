@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Teacher;
 
 use Validator;
 use App\Student;
+use App\SharedSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -19,13 +20,15 @@ class SettingsController extends Controller
 
     public function index()
     {
+        // Raccolgo i dati sugli utenti
         $teacher = Auth::guard('teacher')->user();
         $students = Student::where('teacher_id', '=', $teacher->id)->get();
 
+        // prendo le notifiche dell'insegnante
         $notifications = $teacher->notifications()->get();
 
+        // preparo la formattazione delle notifiche
         $sessions = collect();
-
         foreach ($notifications as $key => $notification) {
             $token = $notification->data['session']['token'];
             $session = StudentAppSession::where('token', '=', $token)->first();
@@ -33,7 +36,22 @@ class SettingsController extends Controller
             $sessions->push($session);
         }
 
-        return view('teacher.settings.index', compact('students', 'teacher', 'notifications', 'sessions'));
+        // Estraggo gli id degli studenti appartenenti all'insegnante e li
+        // converto in array
+        $studentsIds = $students->pluck('id')->toArray();
+
+        // Trovo le sessioni condivise appartenenti all'insegnante e quelle
+        // appartenenti ai suoi studenti con una query avanzata
+        $shared_sessions = SharedSession::where([
+            ['userable_type', '=', 'App\Teacher'],
+            ['userable_id', '=', $teacher->id]
+        ])->orWhere(function($q) use ($studentsIds){
+            $q->where('userable_type', 'App\Student')
+                ->whereIn('userable_id', $studentsIds);
+        })->get();
+
+
+        return view('teacher.settings.index', compact('students', 'teacher', 'notifications', 'sessions', 'shared_sessions'));
     }
 
     public function storeStudent(Request $request)
