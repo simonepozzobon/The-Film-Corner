@@ -24,9 +24,13 @@ class ImageController extends Controller
       foreach ($medias as $key => $media) {
         $media->img = Storage::disk('local')->url($media->thumb);
         $app = $media->apps()->first();
-        $category = $app->category()->first();
-        $pavilion = $category->section()->first();
-        $media->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+        if ($app) {
+            $category = $app->category()->first();
+            $pavilion = $category->section()->first();
+            $media->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+        } else {
+            $media->path = '';
+        }
       }
 
       return view('admin.image.index', compact('categories', 'sections', 'app_categories', 'apps', 'medias'));
