@@ -2,12 +2,12 @@
   <div id="shared-sessions">
     <div class="box green mt">
       <div class="box-header">
-        Shared Sessions
+        Network
       </div>
       <div class="box-body">
         <shared-session-single
           v-for="session in sessions"
-          :key="shared.key"
+          :key="session.key"
           :session="session"
         />
       </div>

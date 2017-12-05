@@ -44399,6 +44399,30 @@ Object.defineProperty(exports, "__esModule", {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
   name: 'SharedSessionSingle',
@@ -44962,6 +44986,10 @@ exports.default = {
     user_type: {
       default: '',
       type: String
+    },
+    shared_sessions: {
+      default: '',
+      type: String
     }
   },
   computed: {
@@ -44979,11 +45007,15 @@ exports.default = {
     },
     userParsed: function userParsed() {
       return JSON.parse(this.user);
+    },
+    shared_sessionsParsed: function shared_sessionsParsed() {
+      return JSON.parse(this.shared_sessions);
     }
   },
   data: function data() {
     return {
-      notificationsUpdated: []
+      notificationsUpdated: [],
+      sharedSessions: []
     };
   },
   mounted: function mounted() {
@@ -44991,6 +45023,7 @@ exports.default = {
 
     var vue = this;
     this.notificationsUpdated = this.notificationsParsed;
+    this.sharedSessions = this.shared_sessionsParsed;
 
     socket.on('connect', function () {
       console.log('CLIENT CONNECTED');
@@ -45124,7 +45157,7 @@ exports.push([module.i, "\n#notification[data-v-60c437fb] {\n  margin-bottom: 1.
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n#shared-session-single > .shared-container[data-v-7dcba739] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding-bottom: 1.33333rem;\n}\n#shared-session-single > .shared-container > .shared-content > a[data-v-7dcba739] {\n    text-transform: capitalize;\n    color: #252525;\n}\n#shared-session-single > .shared-container > .stats[data-v-7dcba739] {\n    margin-left: auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n#shared-session-single > .shared-container > .stats > .mr[data-v-7dcba739] {\n      margin-right: 1rem;\n}\n#shared-session-single > .shared-container > .stats > .stat[data-v-7dcba739] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n#shared-session-single > .shared-container > .stats > .stat > .text[data-v-7dcba739] {\n        margin-right: 0.5rem;\n}\n#shared-session-single > .shared-container > .stats > .stat > .icon[data-v-7dcba739] {\n        color: #636c72;\n}\n", ""]);
 
 /***/ }),
 /* 302 */
@@ -45859,7 +45892,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box blue"
   }, [_c('div', {
     staticClass: "box-header"
-  }, [_vm._v("\n      Sessions\n    ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n      Activities\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "box-body"
   }, _vm._l((_vm.notifications), function(notification) {
     return _c('notification', {
@@ -45963,8 +45996,38 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "shared-session-single"
     }
-  }, [_vm._v("\n  test\n")])
-},staticRenderFns: []}
+  }, [_c('div', {
+    staticClass: "shared-container"
+  }, [_c('div', {
+    staticClass: "shared-content"
+  }, [_c('a', {
+    attrs: {
+      "href": '/teacher/network/' + _vm.session.token
+    }
+  }, [_vm._v("\n        " + _vm._s(_vm.session.title) + " - " + _vm._s(_vm.session.app.title) + " made by " + _vm._s(_vm.session.userable.name) + "\n      ")])]), _vm._v(" "), _c('div', {
+    staticClass: "stats"
+  }, [_c('div', {
+    staticClass: "stat mr"
+  }, [_c('div', {
+    staticClass: "text"
+  }, [_vm._v("\n          " + _vm._s(_vm.session.comments_count) + "\n        ")]), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c('div', {
+    staticClass: "stat"
+  }, [_c('div', {
+    staticClass: "text"
+  }, [_vm._v("\n          " + _vm._s(_vm.session.likes.length) + "\n        ")]), _vm._v(" "), _vm._m(1)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-comment"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "icon"
+  }, [_c('i', {
+    staticClass: "fa fa-heart"
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -45991,7 +46054,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('shared-sessions', {
     attrs: {
-      "sessions": _vm.sessions
+      "sessions": _vm.sharedSessions
     }
   })], 1), _vm._v(" "), _c('div', {
     staticClass: "col-md-4"
@@ -46026,11 +46089,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "box green mt"
   }, [_c('div', {
     staticClass: "box-header"
-  }, [_vm._v("\n      Shared Sessions\n    ")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("\n      Network\n    ")]), _vm._v(" "), _c('div', {
     staticClass: "box-body"
   }, _vm._l((_vm.sessions), function(session) {
     return _c('shared-session-single', {
-      key: _vm.shared.key,
+      key: session.key,
       attrs: {
         "session": session
       }

@@ -48,7 +48,18 @@ class SettingsController extends Controller
         ])->orWhere(function($q) use ($studentsIds){
             $q->where('userable_type', 'App\Student')
                 ->whereIn('userable_id', $studentsIds);
-        })->get();
+        })->with('comments', 'likes', 'author', 'app')->get();
+
+        // Conteggio le risposte insieme ai commenti
+        foreach ($shared_sessions as $key => $shared) {
+            $comments = $shared->comments()->get();
+            $replies = 0;
+            foreach ($comments as $key => $comment) {
+                $comment_replies = $comment->comments()->count();
+                $replies = $replies + $comment_replies;
+            }
+            $shared->comments_count = $comments->count() + $replies;
+        }
 
 
         return view('teacher.settings.index', compact('students', 'teacher', 'notifications', 'sessions', 'shared_sessions'));

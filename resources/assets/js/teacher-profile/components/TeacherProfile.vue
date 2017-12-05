@@ -2,7 +2,7 @@
   <div id="teacher-profile" class="row mt">
     <div class="col-md-8">
       <sessions :notifications="notificationsUpdated"/>
-      <shared-sessions :sessions="sessions"/>
+      <shared-sessions :sessions="sharedSessions"/>
     </div>
     <div class="col-md-4">
       <student-panel :students="studentsParsed"/>
@@ -38,6 +38,10 @@ export default {
       default: '',
       type: String
     },
+    shared_sessions: {
+      default: '',
+      type: String
+    }
   },
   computed: {
     studentsParsed: function()
@@ -58,13 +62,19 @@ export default {
     {
       return JSON.parse(this.user)
     },
+    shared_sessionsParsed: function()
+    {
+      return JSON.parse(this.shared_sessions)
+    },
   },
   data: () => ({
-    notificationsUpdated: []
+    notificationsUpdated: [],
+    sharedSessions: [],
   }),
   mounted() {
     var vue = this
     this.notificationsUpdated = this.notificationsParsed
+    this.sharedSessions = this.shared_sessionsParsed
 
     socket.on('connect', function(){
       console.log('CLIENT CONNECTED')

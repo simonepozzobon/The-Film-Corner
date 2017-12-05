@@ -2,7 +2,7 @@
   <div id="sessions">
     <div class="box blue">
       <div class="box-header">
-        Sessions
+        Activities
       </div>
       <div class="box-body">
         <notification v-for="notification in notifications" :key="notification.key" :notification="notification"/>
