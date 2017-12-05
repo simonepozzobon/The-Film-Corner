@@ -11,17 +11,17 @@
           @endforeach
         </div>
         @foreach ($app_category->keywords()->get() as $key => $keyword)
-          <div class="modal fade" id="glossary-{{$keyword->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="glossary-{{ $keyword->id }}" tabindex="-1" role="dialog" aria-labelledby="{{ $keyword->id }}Label" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">{{ $keyword->name }}</h5>
+                  <h5 class="modal-title" id="{{ $keyword->id }}Label">{{ $keyword->name }}</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <p class="text-default">{!! $keyword->description !!}</p>
+                  {!! $keyword->description !!}
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Okay</button>
@@ -101,7 +101,7 @@
   </div>
 @endsection
 @section('scripts')
-<script type="text/javascript">
+<script>
   $(document.body).on('click', '.read-more', function(event) {
     console.log('read-more cliccato');
     event.preventDefault();

@@ -8,7 +8,7 @@
 
 {{-- Sessione --}}
 @if ($type == 'app')
-<script type="text/javascript">
+<script>
   var TfcSessions = function () {
     this.initSession = function (id)
     {
@@ -482,7 +482,7 @@
 
 
  {{-- SEND FEEDBACK --}}
-<script type="text/javascript">
+<script>
   var url = "";
   // send function
   $('#fdbck-send').on('click', function(e) {
@@ -523,7 +523,7 @@
 
 
 @if ($type == 'app')
-<script type="text/javascript">
+<script>
   var btn = $('#help-btn');
     btn.on('click', function() {
       // Agggiungo la classe

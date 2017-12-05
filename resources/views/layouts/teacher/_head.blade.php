@@ -1,4 +1,3 @@
-<title>The Film Corner - @yield('title')</title>
 
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
 

@@ -47,6 +47,9 @@
                       <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                     </li>
                   @endforeach
+                  <li class="nav-item">
+                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">Upload</a>
+                  </li>
                 </ul>
               </div>
             </nav>
@@ -63,6 +66,29 @@
                   </div>
                 </div>
               @endforeach
+              <div id="upload-library" class="assets wrapper tab-pane" role="tabpanel">
+                <div class="row scroller">
+                    <div class="col">
+                      <div class="row">
+                        <div class="col">
+                          <form>
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
+                            <div class="form-group">
+                              <input type="file" name="media" class="form-control" >
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="asset col-md-3 col-sm-4 pb-3">
+                          <img src="" alt="image asset" class="img-fluid" data-img-src=""/>
+                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -9,9 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>@yield('title')</title>
+    {{-- <title>@yield('title')</title> --}}
+    <title>The Film Corner - @yield('title')</title>
 
-    @yield('section')
+    {{-- @yield('section') --}}
     @include('layouts.teacher._head')
 
   </head>

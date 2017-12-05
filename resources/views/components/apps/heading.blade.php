@@ -11,7 +11,7 @@
           </div>
         </div>
       </div>
-      <div id="" class="title-description">
+      <div class="title-description">
         <div id="short-description" class="short-description">
           {{ substr(strip_tags($app_category->description), 0, 200) }}{{ strlen(strip_tags($app_category->description)) > 200 ? '...' : "" }}
         </div>
@@ -22,7 +22,7 @@
           <a href="" id="read-more-btn" class="text-default text-muted" data-id="{{ $app_category->slug }}">Read More</a>
         </div>
       </div>
-      <script type="text/javascript">
+      <script>
         var button = document.getElementById('read-more-btn'),
             icon = document.getElementById('read-more-icon'),
             shortDesc = document.getElementById('short-description'),
