@@ -281,6 +281,7 @@ return [
         // Custom classes
         'Utility' => 'App\Utility',
         'GeneralText' => 'App\GeneralText',
+        'SharedSession' => 'App\SharedSession',
     ],
 
 ];
