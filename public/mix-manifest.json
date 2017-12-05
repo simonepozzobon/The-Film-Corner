@@ -1,7 +1,8 @@
 {
+  "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
-  "/js/teacher-profile.js": "/js/teacher-profile.js",
+  "/js/notifications.js": "/js/notifications.js",
   "/js/socket-test.js": "/js/socket-test.js",
   "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/app.js": "/js/app.js",
@@ -16,7 +17,6 @@
   "/js/first-visit.js": "/js/first-visit.js",
   "/js/network.js": "/js/network.js",
   "/js/timeline.js": "/js/timeline.js",
-  "/js/notifications.js": "/js/notifications.js",
   "/js/admin/admin.js": "/js/admin/admin.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",

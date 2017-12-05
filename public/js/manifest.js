@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/app/sound-studio","1":"/js/app/intercut-crosscutting","2":"/js/teacher-profile","3":"/js/socket-test","4":"/js/teacher-chat","5":"/js/app","6":"/js/network-single","7":"/js/admin/translate","8":"/js/admin/video","9":"/js/admin/image","10":"/js/admin/audio","11":"/js/admin/main","12":"/js/app/studio-home","13":"/js/admin/keywords","14":"/js/first-visit","15":"/js/network","16":"/js/timeline","17":"/js/notifications","18":"/js/admin/admin","19":"/js/vendor","20":"/js/city","21":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/teacher-profile","1":"/js/app/sound-studio","2":"/js/app/intercut-crosscutting","3":"/js/notifications","4":"/js/socket-test","5":"/js/teacher-chat","6":"/js/app","7":"/js/network-single","8":"/js/admin/translate","9":"/js/admin/video","10":"/js/admin/image","11":"/js/admin/audio","12":"/js/admin/main","13":"/js/app/studio-home","14":"/js/admin/keywords","15":"/js/first-visit","16":"/js/network","17":"/js/timeline","18":"/js/admin/admin","19":"/js/vendor","20":"/js/city","21":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {

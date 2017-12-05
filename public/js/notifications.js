@@ -1,13 +1,12 @@
-webpackJsonp([17],{
-
-/***/ 0:
+webpackJsonp([3],[
+/* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var bind = __webpack_require__(14);
-var isBuffer = __webpack_require__(42);
+var bind = __webpack_require__(15);
+var isBuffer = __webpack_require__(41);
 
 /*global toString:true*/
 
@@ -310,465 +309,660 @@ module.exports = {
 
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports) {
 
-/***/ 10:
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 2 */,
+/* 3 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(30);
-var buildURL = __webpack_require__(33);
-var parseHeaders = __webpack_require__(39);
-var isURLSameOrigin = __webpack_require__(37);
-var createError = __webpack_require__(13);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(32);
+var normalizeHeaderName = __webpack_require__(38);
 
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (process.env.NODE_ENV !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(35);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
 };
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-
-/***/ 100:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
-
-/**
- * Module requirements
- */
-
-var isArray = __webpack_require__(99);
-var isBuf = __webpack_require__(69);
-var toString = Object.prototype.toString;
-var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
-var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
-
-/**
- * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
- * Anything with blobs or files should be fed through removeBlobs before coming
- * here.
- *
- * @param {Object} packet - socket.io event packet
- * @return {Object} with deconstructed packet and list of buffers
- * @api public
- */
-
-exports.deconstructPacket = function(packet) {
-  var buffers = [];
-  var packetData = packet.data;
-  var pack = packet;
-  pack.data = _deconstructPacket(packetData, buffers);
-  pack.attachments = buffers.length; // number of binary 'attachments'
-  return {packet: pack, buffers: buffers};
-};
-
-function _deconstructPacket(data, buffers) {
-  if (!data) return data;
-
-  if (isBuf(data)) {
-    var placeholder = { _placeholder: true, num: buffers.length };
-    buffers.push(data);
-    return placeholder;
-  } else if (isArray(data)) {
-    var newData = new Array(data.length);
-    for (var i = 0; i < data.length; i++) {
-      newData[i] = _deconstructPacket(data[i], buffers);
-    }
-    return newData;
-  } else if (typeof data === 'object' && !(data instanceof Date)) {
-    var newData = {};
-    for (var key in data) {
-      newData[key] = _deconstructPacket(data[key], buffers);
-    }
-    return newData;
-  }
-  return data;
-}
-
-/**
- * Reconstructs a binary packet from its placeholder packet and buffers
- *
- * @param {Object} packet - event packet with placeholders
- * @param {Array} buffers - binary buffers to put in placeholder positions
- * @return {Object} reconstructed packet
- * @api public
- */
-
-exports.reconstructPacket = function(packet, buffers) {
-  packet.data = _reconstructPacket(packet.data, buffers);
-  packet.attachments = undefined; // no longer useful
-  return packet;
-};
-
-function _reconstructPacket(data, buffers) {
-  if (!data) return data;
-
-  if (data && data._placeholder) {
-    return buffers[data.num]; // appropriate buffer (should be natural order anyway)
-  } else if (isArray(data)) {
-    for (var i = 0; i < data.length; i++) {
-      data[i] = _reconstructPacket(data[i], buffers);
-    }
-  } else if (typeof data === 'object') {
-    for (var key in data) {
-      data[key] = _reconstructPacket(data[key], buffers);
-    }
-  }
-
-  return data;
-}
-
-/**
- * Asynchronously removes Blobs or Files from data via
- * FileReader's readAsArrayBuffer method. Used before encoding
- * data as msgpack. Calls callback with the blobless data.
- *
- * @param {Object} data
- * @param {Function} callback
- * @api private
- */
-
-exports.removeBlobs = function(data, callback) {
-  function _removeBlobs(obj, curKey, containingObject) {
-    if (!obj) return obj;
-
-    // convert any blob
-    if ((withNativeBlob && obj instanceof Blob) ||
-        (withNativeFile && obj instanceof File)) {
-      pendingBlobs++;
-
-      // async filereader
-      var fileReader = new FileReader();
-      fileReader.onload = function() { // this.result == arraybuffer
-        if (containingObject) {
-          containingObject[curKey] = this.result;
-        }
-        else {
-          bloblessData = this.result;
-        }
-
-        // if nothing pending its callback time
-        if(! --pendingBlobs) {
-          callback(bloblessData);
-        }
-      };
-
-      fileReader.readAsArrayBuffer(obj); // blob -> arraybuffer
-    } else if (isArray(obj)) { // handle array
-      for (var i = 0; i < obj.length; i++) {
-        _removeBlobs(obj[i], i, obj);
-      }
-    } else if (typeof obj === 'object' && !isBuf(obj)) { // and object
-      for (var key in obj) {
-        _removeBlobs(obj[key], key, obj);
-      }
-    }
-  }
-
-  var pendingBlobs = 0;
-  var bloblessData = data;
-  _removeBlobs(bloblessData);
-  if (!pendingBlobs) {
-    callback(bloblessData);
-  }
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-
-/***/ 101:
+/* 5 */
 /***/ (function(module, exports) {
 
-module.exports = toArray
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
 
-function toArray(list, index) {
-    var array = []
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
 
-    index = index || 0
-
-    for (var i = index || 0; i < list.length; i++) {
-        array[i - index] = list[i]
-    }
-
-    return array
-}
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
 
 
 /***/ }),
-
-/***/ 108:
+/* 6 */
 /***/ (function(module, exports) {
 
-/* (ignored) */
+// this module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle
 
-/***/ }),
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  scopeId,
+  cssModules
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
 
-/***/ 11:
-/***/ (function(module, exports, __webpack_require__) {
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
 
-"use strict";
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
 
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+  }
 
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  // inject cssModules
+  if (cssModules) {
+    var computed = Object.create(options.computed || null)
+    Object.keys(cssModules).forEach(function (key) {
+      var module = cssModules[key]
+      computed[key] = function () { return module }
+    })
+    options.computed = computed
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
 }
 
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
 
 /***/ }),
-
-/***/ 12:
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+  Modified by Evan You @yyx990803
+*/
 
+var hasDocument = typeof document !== 'undefined'
 
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
+if (typeof DEBUG !== 'undefined' && DEBUG) {
+  if (!hasDocument) {
+    throw new Error(
+    'vue-style-loader cannot be used in a non-browser environment. ' +
+    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
+  ) }
+}
 
+var listToStyles = __webpack_require__(42)
 
-/***/ }),
+/*
+type StyleObject = {
+  id: number;
+  parts: Array<StyleObjectPart>
+}
 
-/***/ 13:
-/***/ (function(module, exports, __webpack_require__) {
+type StyleObjectPart = {
+  css: string;
+  media: string;
+  sourceMap: ?string
+}
+*/
 
-"use strict";
+var stylesInDom = {/*
+  [id: number]: {
+    id: number,
+    refs: number,
+    parts: Array<(obj?: StyleObjectPart) => void>
+  }
+*/}
 
+var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
+var singletonElement = null
+var singletonCounter = 0
+var isProduction = false
+var noop = function () {}
 
-var enhanceError = __webpack_require__(29);
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+// tags it will allow on a page
+var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
 
-/**
- * Create an Error with the specified message, config, error code, request and response.
- *
- * @param {string} message The error message.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The created error.
- */
-module.exports = function createError(message, config, code, request, response) {
-  var error = new Error(message);
-  return enhanceError(error, config, code, request, response);
-};
+module.exports = function (parentId, list, _isProduction) {
+  isProduction = _isProduction
 
+  var styles = listToStyles(parentId, list)
+  addStylesToDom(styles)
 
-/***/ }),
-
-/***/ 14:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function bind(fn, thisArg) {
-  return function wrap() {
-    var args = new Array(arguments.length);
-    for (var i = 0; i < args.length; i++) {
-      args[i] = arguments[i];
+  return function update (newList) {
+    var mayRemove = []
+    for (var i = 0; i < styles.length; i++) {
+      var item = styles[i]
+      var domStyle = stylesInDom[item.id]
+      domStyle.refs--
+      mayRemove.push(domStyle)
     }
-    return fn.apply(thisArg, args);
-  };
-};
+    if (newList) {
+      styles = listToStyles(parentId, newList)
+      addStylesToDom(styles)
+    } else {
+      styles = []
+    }
+    for (var i = 0; i < mayRemove.length; i++) {
+      var domStyle = mayRemove[i]
+      if (domStyle.refs === 0) {
+        for (var j = 0; j < domStyle.parts.length; j++) {
+          domStyle.parts[j]()
+        }
+        delete stylesInDom[domStyle.id]
+      }
+    }
+  }
+}
+
+function addStylesToDom (styles /* Array<StyleObject> */) {
+  for (var i = 0; i < styles.length; i++) {
+    var item = styles[i]
+    var domStyle = stylesInDom[item.id]
+    if (domStyle) {
+      domStyle.refs++
+      for (var j = 0; j < domStyle.parts.length; j++) {
+        domStyle.parts[j](item.parts[j])
+      }
+      for (; j < item.parts.length; j++) {
+        domStyle.parts.push(addStyle(item.parts[j]))
+      }
+      if (domStyle.parts.length > item.parts.length) {
+        domStyle.parts.length = item.parts.length
+      }
+    } else {
+      var parts = []
+      for (var j = 0; j < item.parts.length; j++) {
+        parts.push(addStyle(item.parts[j]))
+      }
+      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
+    }
+  }
+}
+
+function createStyleElement () {
+  var styleElement = document.createElement('style')
+  styleElement.type = 'text/css'
+  head.appendChild(styleElement)
+  return styleElement
+}
+
+function addStyle (obj /* StyleObjectPart */) {
+  var update, remove
+  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
+
+  if (styleElement) {
+    if (isProduction) {
+      // has SSR styles and in production mode.
+      // simply do nothing.
+      return noop
+    } else {
+      // has SSR styles but in dev mode.
+      // for some reason Chrome can't handle source map in server-rendered
+      // style tags - source maps in <style> only works if the style tag is
+      // created and inserted dynamically. So we remove the server rendered
+      // styles and inject new ones.
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  if (isOldIE) {
+    // use singleton mode for IE9.
+    var styleIndex = singletonCounter++
+    styleElement = singletonElement || (singletonElement = createStyleElement())
+    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
+    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
+  } else {
+    // use multi-style-tag mode in all other cases
+    styleElement = createStyleElement()
+    update = applyToTag.bind(null, styleElement)
+    remove = function () {
+      styleElement.parentNode.removeChild(styleElement)
+    }
+  }
+
+  update(obj)
+
+  return function updateStyle (newObj /* StyleObjectPart */) {
+    if (newObj) {
+      if (newObj.css === obj.css &&
+          newObj.media === obj.media &&
+          newObj.sourceMap === obj.sourceMap) {
+        return
+      }
+      update(obj = newObj)
+    } else {
+      remove()
+    }
+  }
+}
+
+var replaceText = (function () {
+  var textStore = []
+
+  return function (index, replacement) {
+    textStore[index] = replacement
+    return textStore.filter(Boolean).join('\n')
+  }
+})()
+
+function applyToSingletonTag (styleElement, index, remove, obj) {
+  var css = remove ? '' : obj.css
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = replaceText(index, css)
+  } else {
+    var cssNode = document.createTextNode(css)
+    var childNodes = styleElement.childNodes
+    if (childNodes[index]) styleElement.removeChild(childNodes[index])
+    if (childNodes.length) {
+      styleElement.insertBefore(cssNode, childNodes[index])
+    } else {
+      styleElement.appendChild(cssNode)
+    }
+  }
+}
+
+function applyToTag (styleElement, obj) {
+  var css = obj.css
+  var media = obj.media
+  var sourceMap = obj.sourceMap
+
+  if (media) {
+    styleElement.setAttribute('media', media)
+  }
+
+  if (sourceMap) {
+    // https://developer.chrome.com/devtools/docs/javascript-debugging
+    // this makes source maps inside style tags work properly in Chrome
+    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
+    // http://stackoverflow.com/a/26603875
+    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
+  }
+
+  if (styleElement.styleSheet) {
+    styleElement.styleSheet.cssText = css
+  } else {
+    while (styleElement.firstChild) {
+      styleElement.removeChild(styleElement.firstChild)
+    }
+    styleElement.appendChild(document.createTextNode(css))
+  }
+}
 
 
 /***/ }),
-
-/***/ 16:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(24);
-
-/***/ }),
-
-/***/ 17:
+/* 8 */,
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -777,7 +971,7 @@ module.exports = __webpack_require__(24);
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(85);
+exports = module.exports = __webpack_require__(79);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -960,36 +1154,900 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
+/* 10 */,
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 2:
-/***/ (function(module, exports) {
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
 
-var g;
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(30);
+var buildURL = __webpack_require__(33);
+var parseHeaders = __webpack_require__(39);
+var isURLSameOrigin = __webpack_require__(37);
+var createError = __webpack_require__(14);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(32);
 
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
 
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(35);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
 }
 
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
 
-module.exports = g;
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
 
 
 /***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 21:
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(29);
+
+/**
+ * Create an Error with the specified message, config, error code, request and response.
+ *
+ * @param {string} message The error message.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The created error.
+ */
+module.exports = function createError(message, config, code, request, response) {
+  var error = new Error(message);
+  return enhanceError(error, config, code, request, response);
+};
+
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function bind(fn, thisArg) {
+  return function wrap() {
+    var args = new Array(arguments.length);
+    for (var i = 0; i < args.length; i++) {
+      args[i] = arguments[i];
+    }
+    return fn.apply(thisArg, args);
+  };
+};
+
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(24);
+
+/***/ }),
+/* 17 */,
+/* 18 */,
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {/**
+ * Module dependencies.
+ */
+
+var keys = __webpack_require__(86);
+var hasBinary = __webpack_require__(60);
+var sliceBuffer = __webpack_require__(75);
+var after = __webpack_require__(85);
+var utf8 = __webpack_require__(87);
+
+var base64encoder;
+if (global && global.ArrayBuffer) {
+  base64encoder = __webpack_require__(77);
+}
+
+/**
+ * Check if we are running an android browser. That requires us to use
+ * ArrayBuffer with polling transports...
+ *
+ * http://ghinda.net/jpeg-blob-ajax-android/
+ */
+
+var isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
+
+/**
+ * Check if we are running in PhantomJS.
+ * Uploading a Blob with PhantomJS does not work correctly, as reported here:
+ * https://github.com/ariya/phantomjs/issues/11395
+ * @type boolean
+ */
+var isPhantomJS = typeof navigator !== 'undefined' && /PhantomJS/i.test(navigator.userAgent);
+
+/**
+ * When true, avoids using Blobs to encode payloads.
+ * @type boolean
+ */
+var dontSendBlobs = isAndroid || isPhantomJS;
+
+/**
+ * Current protocol version.
+ */
+
+exports.protocol = 3;
+
+/**
+ * Packet types.
+ */
+
+var packets = exports.packets = {
+    open:     0    // non-ws
+  , close:    1    // non-ws
+  , ping:     2
+  , pong:     3
+  , message:  4
+  , upgrade:  5
+  , noop:     6
+};
+
+var packetslist = keys(packets);
+
+/**
+ * Premade error packet.
+ */
+
+var err = { type: 'error', data: 'parser error' };
+
+/**
+ * Create a blob api even for blob builder when vendor prefixes exist
+ */
+
+var Blob = __webpack_require__(78);
+
+/**
+ * Encodes a packet.
+ *
+ *     <packet type id> [ <data> ]
+ *
+ * Example:
+ *
+ *     5hello world
+ *     3
+ *     4
+ *
+ * Binary is encoded in an identical principle
+ *
+ * @api private
+ */
+
+exports.encodePacket = function (packet, supportsBinary, utf8encode, callback) {
+  if (typeof supportsBinary === 'function') {
+    callback = supportsBinary;
+    supportsBinary = false;
+  }
+
+  if (typeof utf8encode === 'function') {
+    callback = utf8encode;
+    utf8encode = null;
+  }
+
+  var data = (packet.data === undefined)
+    ? undefined
+    : packet.data.buffer || packet.data;
+
+  if (global.ArrayBuffer && data instanceof ArrayBuffer) {
+    return encodeArrayBuffer(packet, supportsBinary, callback);
+  } else if (Blob && data instanceof global.Blob) {
+    return encodeBlob(packet, supportsBinary, callback);
+  }
+
+  // might be an object with { base64: true, data: dataAsBase64String }
+  if (data && data.base64) {
+    return encodeBase64Object(packet, callback);
+  }
+
+  // Sending data as a utf-8 string
+  var encoded = packets[packet.type];
+
+  // data fragment is optional
+  if (undefined !== packet.data) {
+    encoded += utf8encode ? utf8.encode(String(packet.data), { strict: false }) : String(packet.data);
+  }
+
+  return callback('' + encoded);
+
+};
+
+function encodeBase64Object(packet, callback) {
+  // packet data is an object { base64: true, data: dataAsBase64String }
+  var message = 'b' + exports.packets[packet.type] + packet.data.data;
+  return callback(message);
+}
+
+/**
+ * Encode packet helpers for binary types
+ */
+
+function encodeArrayBuffer(packet, supportsBinary, callback) {
+  if (!supportsBinary) {
+    return exports.encodeBase64Packet(packet, callback);
+  }
+
+  var data = packet.data;
+  var contentArray = new Uint8Array(data);
+  var resultBuffer = new Uint8Array(1 + data.byteLength);
+
+  resultBuffer[0] = packets[packet.type];
+  for (var i = 0; i < contentArray.length; i++) {
+    resultBuffer[i+1] = contentArray[i];
+  }
+
+  return callback(resultBuffer.buffer);
+}
+
+function encodeBlobAsArrayBuffer(packet, supportsBinary, callback) {
+  if (!supportsBinary) {
+    return exports.encodeBase64Packet(packet, callback);
+  }
+
+  var fr = new FileReader();
+  fr.onload = function() {
+    packet.data = fr.result;
+    exports.encodePacket(packet, supportsBinary, true, callback);
+  };
+  return fr.readAsArrayBuffer(packet.data);
+}
+
+function encodeBlob(packet, supportsBinary, callback) {
+  if (!supportsBinary) {
+    return exports.encodeBase64Packet(packet, callback);
+  }
+
+  if (dontSendBlobs) {
+    return encodeBlobAsArrayBuffer(packet, supportsBinary, callback);
+  }
+
+  var length = new Uint8Array(1);
+  length[0] = packets[packet.type];
+  var blob = new Blob([length.buffer, packet.data]);
+
+  return callback(blob);
+}
+
+/**
+ * Encodes a packet with binary data in a base64 string
+ *
+ * @param {Object} packet, has `type` and `data`
+ * @return {String} base64 encoded message
+ */
+
+exports.encodeBase64Packet = function(packet, callback) {
+  var message = 'b' + exports.packets[packet.type];
+  if (Blob && packet.data instanceof global.Blob) {
+    var fr = new FileReader();
+    fr.onload = function() {
+      var b64 = fr.result.split(',')[1];
+      callback(message + b64);
+    };
+    return fr.readAsDataURL(packet.data);
+  }
+
+  var b64data;
+  try {
+    b64data = String.fromCharCode.apply(null, new Uint8Array(packet.data));
+  } catch (e) {
+    // iPhone Safari doesn't let you apply with typed arrays
+    var typed = new Uint8Array(packet.data);
+    var basic = new Array(typed.length);
+    for (var i = 0; i < typed.length; i++) {
+      basic[i] = typed[i];
+    }
+    b64data = String.fromCharCode.apply(null, basic);
+  }
+  message += global.btoa(b64data);
+  return callback(message);
+};
+
+/**
+ * Decodes a packet. Changes format to Blob if requested.
+ *
+ * @return {Object} with `type` and `data` (if any)
+ * @api private
+ */
+
+exports.decodePacket = function (data, binaryType, utf8decode) {
+  if (data === undefined) {
+    return err;
+  }
+  // String data
+  if (typeof data === 'string') {
+    if (data.charAt(0) === 'b') {
+      return exports.decodeBase64Packet(data.substr(1), binaryType);
+    }
+
+    if (utf8decode) {
+      data = tryDecode(data);
+      if (data === false) {
+        return err;
+      }
+    }
+    var type = data.charAt(0);
+
+    if (Number(type) != type || !packetslist[type]) {
+      return err;
+    }
+
+    if (data.length > 1) {
+      return { type: packetslist[type], data: data.substring(1) };
+    } else {
+      return { type: packetslist[type] };
+    }
+  }
+
+  var asArray = new Uint8Array(data);
+  var type = asArray[0];
+  var rest = sliceBuffer(data, 1);
+  if (Blob && binaryType === 'blob') {
+    rest = new Blob([rest]);
+  }
+  return { type: packetslist[type], data: rest };
+};
+
+function tryDecode(data) {
+  try {
+    data = utf8.decode(data, { strict: false });
+  } catch (e) {
+    return false;
+  }
+  return data;
+}
+
+/**
+ * Decodes a packet encoded in a base64 string
+ *
+ * @param {String} base64 encoded message
+ * @return {Object} with `type` and `data` (if any)
+ */
+
+exports.decodeBase64Packet = function(msg, binaryType) {
+  var type = packetslist[msg.charAt(0)];
+  if (!base64encoder) {
+    return { type: type, data: { base64: true, data: msg.substr(1) } };
+  }
+
+  var data = base64encoder.decode(msg.substr(1));
+
+  if (binaryType === 'blob' && Blob) {
+    data = new Blob([data]);
+  }
+
+  return { type: type, data: data };
+};
+
+/**
+ * Encodes multiple messages (payload).
+ *
+ *     <length>:data
+ *
+ * Example:
+ *
+ *     11:hello world2:hi
+ *
+ * If any contents are binary, they will be encoded as base64 strings. Base64
+ * encoded strings are marked with a b before the length specifier
+ *
+ * @param {Array} packets
+ * @api private
+ */
+
+exports.encodePayload = function (packets, supportsBinary, callback) {
+  if (typeof supportsBinary === 'function') {
+    callback = supportsBinary;
+    supportsBinary = null;
+  }
+
+  var isBinary = hasBinary(packets);
+
+  if (supportsBinary && isBinary) {
+    if (Blob && !dontSendBlobs) {
+      return exports.encodePayloadAsBlob(packets, callback);
+    }
+
+    return exports.encodePayloadAsArrayBuffer(packets, callback);
+  }
+
+  if (!packets.length) {
+    return callback('0:');
+  }
+
+  function setLengthHeader(message) {
+    return message.length + ':' + message;
+  }
+
+  function encodeOne(packet, doneCallback) {
+    exports.encodePacket(packet, !isBinary ? false : supportsBinary, false, function(message) {
+      doneCallback(null, setLengthHeader(message));
+    });
+  }
+
+  map(packets, encodeOne, function(err, results) {
+    return callback(results.join(''));
+  });
+};
+
+/**
+ * Async array map using after
+ */
+
+function map(ary, each, done) {
+  var result = new Array(ary.length);
+  var next = after(ary.length, done);
+
+  var eachWithIndex = function(i, el, cb) {
+    each(el, function(error, msg) {
+      result[i] = msg;
+      cb(error, result);
+    });
+  };
+
+  for (var i = 0; i < ary.length; i++) {
+    eachWithIndex(i, ary[i], next);
+  }
+}
+
+/*
+ * Decodes data when a payload is maybe expected. Possible binary contents are
+ * decoded from their base64 representation
+ *
+ * @param {String} data, callback method
+ * @api public
+ */
+
+exports.decodePayload = function (data, binaryType, callback) {
+  if (typeof data !== 'string') {
+    return exports.decodePayloadAsBinary(data, binaryType, callback);
+  }
+
+  if (typeof binaryType === 'function') {
+    callback = binaryType;
+    binaryType = null;
+  }
+
+  var packet;
+  if (data === '') {
+    // parser error - ignoring payload
+    return callback(err, 0, 1);
+  }
+
+  var length = '', n, msg;
+
+  for (var i = 0, l = data.length; i < l; i++) {
+    var chr = data.charAt(i);
+
+    if (chr !== ':') {
+      length += chr;
+      continue;
+    }
+
+    if (length === '' || (length != (n = Number(length)))) {
+      // parser error - ignoring payload
+      return callback(err, 0, 1);
+    }
+
+    msg = data.substr(i + 1, n);
+
+    if (length != msg.length) {
+      // parser error - ignoring payload
+      return callback(err, 0, 1);
+    }
+
+    if (msg.length) {
+      packet = exports.decodePacket(msg, binaryType, false);
+
+      if (err.type === packet.type && err.data === packet.data) {
+        // parser error in individual packet - ignoring payload
+        return callback(err, 0, 1);
+      }
+
+      var ret = callback(packet, i + n, l);
+      if (false === ret) return;
+    }
+
+    // advance cursor
+    i += n;
+    length = '';
+  }
+
+  if (length !== '') {
+    // parser error - ignoring payload
+    return callback(err, 0, 1);
+  }
+
+};
+
+/**
+ * Encodes multiple messages (payload) as binary.
+ *
+ * <1 = binary, 0 = string><number from 0-9><number from 0-9>[...]<number
+ * 255><data>
+ *
+ * Example:
+ * 1 3 255 1 2 3, if the binary contents are interpreted as 8 bit integers
+ *
+ * @param {Array} packets
+ * @return {ArrayBuffer} encoded payload
+ * @api private
+ */
+
+exports.encodePayloadAsArrayBuffer = function(packets, callback) {
+  if (!packets.length) {
+    return callback(new ArrayBuffer(0));
+  }
+
+  function encodeOne(packet, doneCallback) {
+    exports.encodePacket(packet, true, true, function(data) {
+      return doneCallback(null, data);
+    });
+  }
+
+  map(packets, encodeOne, function(err, encodedPackets) {
+    var totalLength = encodedPackets.reduce(function(acc, p) {
+      var len;
+      if (typeof p === 'string'){
+        len = p.length;
+      } else {
+        len = p.byteLength;
+      }
+      return acc + len.toString().length + len + 2; // string/binary identifier + separator = 2
+    }, 0);
+
+    var resultArray = new Uint8Array(totalLength);
+
+    var bufferIndex = 0;
+    encodedPackets.forEach(function(p) {
+      var isString = typeof p === 'string';
+      var ab = p;
+      if (isString) {
+        var view = new Uint8Array(p.length);
+        for (var i = 0; i < p.length; i++) {
+          view[i] = p.charCodeAt(i);
+        }
+        ab = view.buffer;
+      }
+
+      if (isString) { // not true binary
+        resultArray[bufferIndex++] = 0;
+      } else { // true binary
+        resultArray[bufferIndex++] = 1;
+      }
+
+      var lenStr = ab.byteLength.toString();
+      for (var i = 0; i < lenStr.length; i++) {
+        resultArray[bufferIndex++] = parseInt(lenStr[i]);
+      }
+      resultArray[bufferIndex++] = 255;
+
+      var view = new Uint8Array(ab);
+      for (var i = 0; i < view.length; i++) {
+        resultArray[bufferIndex++] = view[i];
+      }
+    });
+
+    return callback(resultArray.buffer);
+  });
+};
+
+/**
+ * Encode as Blob
+ */
+
+exports.encodePayloadAsBlob = function(packets, callback) {
+  function encodeOne(packet, doneCallback) {
+    exports.encodePacket(packet, true, true, function(encoded) {
+      var binaryIdentifier = new Uint8Array(1);
+      binaryIdentifier[0] = 1;
+      if (typeof encoded === 'string') {
+        var view = new Uint8Array(encoded.length);
+        for (var i = 0; i < encoded.length; i++) {
+          view[i] = encoded.charCodeAt(i);
+        }
+        encoded = view.buffer;
+        binaryIdentifier[0] = 0;
+      }
+
+      var len = (encoded instanceof ArrayBuffer)
+        ? encoded.byteLength
+        : encoded.size;
+
+      var lenStr = len.toString();
+      var lengthAry = new Uint8Array(lenStr.length + 1);
+      for (var i = 0; i < lenStr.length; i++) {
+        lengthAry[i] = parseInt(lenStr[i]);
+      }
+      lengthAry[lenStr.length] = 255;
+
+      if (Blob) {
+        var blob = new Blob([binaryIdentifier.buffer, lengthAry.buffer, encoded]);
+        doneCallback(null, blob);
+      }
+    });
+  }
+
+  map(packets, encodeOne, function(err, results) {
+    return callback(new Blob(results));
+  });
+};
+
+/*
+ * Decodes data when a payload is maybe expected. Strings are decoded by
+ * interpreting each byte as a key code for entries marked to start with 0. See
+ * description of encodePayloadAsBinary
+ *
+ * @param {ArrayBuffer} data, callback method
+ * @api public
+ */
+
+exports.decodePayloadAsBinary = function (data, binaryType, callback) {
+  if (typeof binaryType === 'function') {
+    callback = binaryType;
+    binaryType = null;
+  }
+
+  var bufferTail = data;
+  var buffers = [];
+
+  while (bufferTail.byteLength > 0) {
+    var tailArray = new Uint8Array(bufferTail);
+    var isString = tailArray[0] === 0;
+    var msgLength = '';
+
+    for (var i = 1; ; i++) {
+      if (tailArray[i] === 255) break;
+
+      // 310 = char length of Number.MAX_VALUE
+      if (msgLength.length > 310) {
+        return callback(err, 0, 1);
+      }
+
+      msgLength += tailArray[i];
+    }
+
+    bufferTail = sliceBuffer(bufferTail, 2 + msgLength.length);
+    msgLength = parseInt(msgLength);
+
+    var msg = sliceBuffer(bufferTail, 0, msgLength);
+    if (isString) {
+      try {
+        msg = String.fromCharCode.apply(null, new Uint8Array(msg));
+      } catch (e) {
+        // iPhone Safari doesn't let you apply to typed arrays
+        var typed = new Uint8Array(msg);
+        msg = '';
+        for (var i = 0; i < typed.length; i++) {
+          msg += String.fromCharCode(typed[i]);
+        }
+      }
+    }
+
+    buffers.push(msg);
+    bufferTail = sliceBuffer(bufferTail, msgLength);
+  }
+
+  var total = buffers.length;
+  buffers.forEach(function(buffer, i) {
+    callback(exports.decodePacket(buffer, binaryType, true), i, total);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11186,70 +12244,10 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 22:
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-
-/***/ 220:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _MainMenuComponent = __webpack_require__(471);
-
-var _MainMenuComponent2 = _interopRequireDefault(_MainMenuComponent);
-
-var _vue = __webpack_require__(21);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _vue2.default({
-  el: '#main-menu-container',
-  components: {
-    MainMenuComponent: _MainMenuComponent2.default
-  }
-});
-
-/***/ }),
-
-/***/ 23:
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -11277,15 +12275,14 @@ module.exports = function(module) {
 
 
 /***/ }),
-
-/***/ 24:
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(14);
+var bind = __webpack_require__(15);
 var Axios = __webpack_require__(26);
 var defaults = __webpack_require__(4);
 
@@ -11320,9 +12317,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(11);
+axios.Cancel = __webpack_require__(12);
 axios.CancelToken = __webpack_require__(25);
-axios.isCancel = __webpack_require__(12);
+axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -11337,14 +12334,13 @@ module.exports.default = axios;
 
 
 /***/ }),
-
-/***/ 25:
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(11);
+var Cancel = __webpack_require__(12);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -11402,8 +12398,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-
-/***/ 26:
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11496,8 +12491,7 @@ module.exports = Axios;
 
 
 /***/ }),
-
-/***/ 27:
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11556,8 +12550,7 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-
-/***/ 28:
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11565,7 +12558,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(31);
-var isCancel = __webpack_require__(12);
+var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(4);
 
 /**
@@ -11643,8 +12636,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-
-/***/ 29:
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11672,205 +12664,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-
-/***/ 3:
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-
-/***/ 30:
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(13);
+var createError = __webpack_require__(14);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -11897,8 +12697,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-
-/***/ 31:
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11925,8 +12724,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-
-/***/ 32:
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11969,8 +12767,7 @@ module.exports = btoa;
 
 
 /***/ }),
-
-/***/ 33:
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12045,8 +12842,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-
-/***/ 34:
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12067,8 +12863,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-
-/***/ 35:
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12128,8 +12923,7 @@ module.exports = (
 
 
 /***/ }),
-
-/***/ 36:
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12150,8 +12944,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-
-/***/ 37:
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12226,8 +13019,7 @@ module.exports = (
 
 
 /***/ }),
-
-/***/ 38:
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12246,8 +13038,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-
-/***/ 39:
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12291,109 +13082,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-
-/***/ 4:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(38);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(10);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(10);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
-
-/***/ }),
-
-/***/ 40:
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12427,630 +13116,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {/**
- * Module dependencies.
- */
-
-var keys = __webpack_require__(92);
-var hasBinary = __webpack_require__(63);
-var sliceBuffer = __webpack_require__(81);
-var after = __webpack_require__(91);
-var utf8 = __webpack_require__(93);
-
-var base64encoder;
-if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(83);
-}
-
-/**
- * Check if we are running an android browser. That requires us to use
- * ArrayBuffer with polling transports...
- *
- * http://ghinda.net/jpeg-blob-ajax-android/
- */
-
-var isAndroid = typeof navigator !== 'undefined' && /Android/i.test(navigator.userAgent);
-
-/**
- * Check if we are running in PhantomJS.
- * Uploading a Blob with PhantomJS does not work correctly, as reported here:
- * https://github.com/ariya/phantomjs/issues/11395
- * @type boolean
- */
-var isPhantomJS = typeof navigator !== 'undefined' && /PhantomJS/i.test(navigator.userAgent);
-
-/**
- * When true, avoids using Blobs to encode payloads.
- * @type boolean
- */
-var dontSendBlobs = isAndroid || isPhantomJS;
-
-/**
- * Current protocol version.
- */
-
-exports.protocol = 3;
-
-/**
- * Packet types.
- */
-
-var packets = exports.packets = {
-    open:     0    // non-ws
-  , close:    1    // non-ws
-  , ping:     2
-  , pong:     3
-  , message:  4
-  , upgrade:  5
-  , noop:     6
-};
-
-var packetslist = keys(packets);
-
-/**
- * Premade error packet.
- */
-
-var err = { type: 'error', data: 'parser error' };
-
-/**
- * Create a blob api even for blob builder when vendor prefixes exist
- */
-
-var Blob = __webpack_require__(84);
-
-/**
- * Encodes a packet.
- *
- *     <packet type id> [ <data> ]
- *
- * Example:
- *
- *     5hello world
- *     3
- *     4
- *
- * Binary is encoded in an identical principle
- *
- * @api private
- */
-
-exports.encodePacket = function (packet, supportsBinary, utf8encode, callback) {
-  if (typeof supportsBinary === 'function') {
-    callback = supportsBinary;
-    supportsBinary = false;
-  }
-
-  if (typeof utf8encode === 'function') {
-    callback = utf8encode;
-    utf8encode = null;
-  }
-
-  var data = (packet.data === undefined)
-    ? undefined
-    : packet.data.buffer || packet.data;
-
-  if (global.ArrayBuffer && data instanceof ArrayBuffer) {
-    return encodeArrayBuffer(packet, supportsBinary, callback);
-  } else if (Blob && data instanceof global.Blob) {
-    return encodeBlob(packet, supportsBinary, callback);
-  }
-
-  // might be an object with { base64: true, data: dataAsBase64String }
-  if (data && data.base64) {
-    return encodeBase64Object(packet, callback);
-  }
-
-  // Sending data as a utf-8 string
-  var encoded = packets[packet.type];
-
-  // data fragment is optional
-  if (undefined !== packet.data) {
-    encoded += utf8encode ? utf8.encode(String(packet.data), { strict: false }) : String(packet.data);
-  }
-
-  return callback('' + encoded);
-
-};
-
-function encodeBase64Object(packet, callback) {
-  // packet data is an object { base64: true, data: dataAsBase64String }
-  var message = 'b' + exports.packets[packet.type] + packet.data.data;
-  return callback(message);
-}
-
-/**
- * Encode packet helpers for binary types
- */
-
-function encodeArrayBuffer(packet, supportsBinary, callback) {
-  if (!supportsBinary) {
-    return exports.encodeBase64Packet(packet, callback);
-  }
-
-  var data = packet.data;
-  var contentArray = new Uint8Array(data);
-  var resultBuffer = new Uint8Array(1 + data.byteLength);
-
-  resultBuffer[0] = packets[packet.type];
-  for (var i = 0; i < contentArray.length; i++) {
-    resultBuffer[i+1] = contentArray[i];
-  }
-
-  return callback(resultBuffer.buffer);
-}
-
-function encodeBlobAsArrayBuffer(packet, supportsBinary, callback) {
-  if (!supportsBinary) {
-    return exports.encodeBase64Packet(packet, callback);
-  }
-
-  var fr = new FileReader();
-  fr.onload = function() {
-    packet.data = fr.result;
-    exports.encodePacket(packet, supportsBinary, true, callback);
-  };
-  return fr.readAsArrayBuffer(packet.data);
-}
-
-function encodeBlob(packet, supportsBinary, callback) {
-  if (!supportsBinary) {
-    return exports.encodeBase64Packet(packet, callback);
-  }
-
-  if (dontSendBlobs) {
-    return encodeBlobAsArrayBuffer(packet, supportsBinary, callback);
-  }
-
-  var length = new Uint8Array(1);
-  length[0] = packets[packet.type];
-  var blob = new Blob([length.buffer, packet.data]);
-
-  return callback(blob);
-}
-
-/**
- * Encodes a packet with binary data in a base64 string
- *
- * @param {Object} packet, has `type` and `data`
- * @return {String} base64 encoded message
- */
-
-exports.encodeBase64Packet = function(packet, callback) {
-  var message = 'b' + exports.packets[packet.type];
-  if (Blob && packet.data instanceof global.Blob) {
-    var fr = new FileReader();
-    fr.onload = function() {
-      var b64 = fr.result.split(',')[1];
-      callback(message + b64);
-    };
-    return fr.readAsDataURL(packet.data);
-  }
-
-  var b64data;
-  try {
-    b64data = String.fromCharCode.apply(null, new Uint8Array(packet.data));
-  } catch (e) {
-    // iPhone Safari doesn't let you apply with typed arrays
-    var typed = new Uint8Array(packet.data);
-    var basic = new Array(typed.length);
-    for (var i = 0; i < typed.length; i++) {
-      basic[i] = typed[i];
-    }
-    b64data = String.fromCharCode.apply(null, basic);
-  }
-  message += global.btoa(b64data);
-  return callback(message);
-};
-
-/**
- * Decodes a packet. Changes format to Blob if requested.
- *
- * @return {Object} with `type` and `data` (if any)
- * @api private
- */
-
-exports.decodePacket = function (data, binaryType, utf8decode) {
-  if (data === undefined) {
-    return err;
-  }
-  // String data
-  if (typeof data === 'string') {
-    if (data.charAt(0) === 'b') {
-      return exports.decodeBase64Packet(data.substr(1), binaryType);
-    }
-
-    if (utf8decode) {
-      data = tryDecode(data);
-      if (data === false) {
-        return err;
-      }
-    }
-    var type = data.charAt(0);
-
-    if (Number(type) != type || !packetslist[type]) {
-      return err;
-    }
-
-    if (data.length > 1) {
-      return { type: packetslist[type], data: data.substring(1) };
-    } else {
-      return { type: packetslist[type] };
-    }
-  }
-
-  var asArray = new Uint8Array(data);
-  var type = asArray[0];
-  var rest = sliceBuffer(data, 1);
-  if (Blob && binaryType === 'blob') {
-    rest = new Blob([rest]);
-  }
-  return { type: packetslist[type], data: rest };
-};
-
-function tryDecode(data) {
-  try {
-    data = utf8.decode(data, { strict: false });
-  } catch (e) {
-    return false;
-  }
-  return data;
-}
-
-/**
- * Decodes a packet encoded in a base64 string
- *
- * @param {String} base64 encoded message
- * @return {Object} with `type` and `data` (if any)
- */
-
-exports.decodeBase64Packet = function(msg, binaryType) {
-  var type = packetslist[msg.charAt(0)];
-  if (!base64encoder) {
-    return { type: type, data: { base64: true, data: msg.substr(1) } };
-  }
-
-  var data = base64encoder.decode(msg.substr(1));
-
-  if (binaryType === 'blob' && Blob) {
-    data = new Blob([data]);
-  }
-
-  return { type: type, data: data };
-};
-
-/**
- * Encodes multiple messages (payload).
- *
- *     <length>:data
- *
- * Example:
- *
- *     11:hello world2:hi
- *
- * If any contents are binary, they will be encoded as base64 strings. Base64
- * encoded strings are marked with a b before the length specifier
- *
- * @param {Array} packets
- * @api private
- */
-
-exports.encodePayload = function (packets, supportsBinary, callback) {
-  if (typeof supportsBinary === 'function') {
-    callback = supportsBinary;
-    supportsBinary = null;
-  }
-
-  var isBinary = hasBinary(packets);
-
-  if (supportsBinary && isBinary) {
-    if (Blob && !dontSendBlobs) {
-      return exports.encodePayloadAsBlob(packets, callback);
-    }
-
-    return exports.encodePayloadAsArrayBuffer(packets, callback);
-  }
-
-  if (!packets.length) {
-    return callback('0:');
-  }
-
-  function setLengthHeader(message) {
-    return message.length + ':' + message;
-  }
-
-  function encodeOne(packet, doneCallback) {
-    exports.encodePacket(packet, !isBinary ? false : supportsBinary, false, function(message) {
-      doneCallback(null, setLengthHeader(message));
-    });
-  }
-
-  map(packets, encodeOne, function(err, results) {
-    return callback(results.join(''));
-  });
-};
-
-/**
- * Async array map using after
- */
-
-function map(ary, each, done) {
-  var result = new Array(ary.length);
-  var next = after(ary.length, done);
-
-  var eachWithIndex = function(i, el, cb) {
-    each(el, function(error, msg) {
-      result[i] = msg;
-      cb(error, result);
-    });
-  };
-
-  for (var i = 0; i < ary.length; i++) {
-    eachWithIndex(i, ary[i], next);
-  }
-}
-
-/*
- * Decodes data when a payload is maybe expected. Possible binary contents are
- * decoded from their base64 representation
- *
- * @param {String} data, callback method
- * @api public
- */
-
-exports.decodePayload = function (data, binaryType, callback) {
-  if (typeof data !== 'string') {
-    return exports.decodePayloadAsBinary(data, binaryType, callback);
-  }
-
-  if (typeof binaryType === 'function') {
-    callback = binaryType;
-    binaryType = null;
-  }
-
-  var packet;
-  if (data === '') {
-    // parser error - ignoring payload
-    return callback(err, 0, 1);
-  }
-
-  var length = '', n, msg;
-
-  for (var i = 0, l = data.length; i < l; i++) {
-    var chr = data.charAt(i);
-
-    if (chr !== ':') {
-      length += chr;
-      continue;
-    }
-
-    if (length === '' || (length != (n = Number(length)))) {
-      // parser error - ignoring payload
-      return callback(err, 0, 1);
-    }
-
-    msg = data.substr(i + 1, n);
-
-    if (length != msg.length) {
-      // parser error - ignoring payload
-      return callback(err, 0, 1);
-    }
-
-    if (msg.length) {
-      packet = exports.decodePacket(msg, binaryType, false);
-
-      if (err.type === packet.type && err.data === packet.data) {
-        // parser error in individual packet - ignoring payload
-        return callback(err, 0, 1);
-      }
-
-      var ret = callback(packet, i + n, l);
-      if (false === ret) return;
-    }
-
-    // advance cursor
-    i += n;
-    length = '';
-  }
-
-  if (length !== '') {
-    // parser error - ignoring payload
-    return callback(err, 0, 1);
-  }
-
-};
-
-/**
- * Encodes multiple messages (payload) as binary.
- *
- * <1 = binary, 0 = string><number from 0-9><number from 0-9>[...]<number
- * 255><data>
- *
- * Example:
- * 1 3 255 1 2 3, if the binary contents are interpreted as 8 bit integers
- *
- * @param {Array} packets
- * @return {ArrayBuffer} encoded payload
- * @api private
- */
-
-exports.encodePayloadAsArrayBuffer = function(packets, callback) {
-  if (!packets.length) {
-    return callback(new ArrayBuffer(0));
-  }
-
-  function encodeOne(packet, doneCallback) {
-    exports.encodePacket(packet, true, true, function(data) {
-      return doneCallback(null, data);
-    });
-  }
-
-  map(packets, encodeOne, function(err, encodedPackets) {
-    var totalLength = encodedPackets.reduce(function(acc, p) {
-      var len;
-      if (typeof p === 'string'){
-        len = p.length;
-      } else {
-        len = p.byteLength;
-      }
-      return acc + len.toString().length + len + 2; // string/binary identifier + separator = 2
-    }, 0);
-
-    var resultArray = new Uint8Array(totalLength);
-
-    var bufferIndex = 0;
-    encodedPackets.forEach(function(p) {
-      var isString = typeof p === 'string';
-      var ab = p;
-      if (isString) {
-        var view = new Uint8Array(p.length);
-        for (var i = 0; i < p.length; i++) {
-          view[i] = p.charCodeAt(i);
-        }
-        ab = view.buffer;
-      }
-
-      if (isString) { // not true binary
-        resultArray[bufferIndex++] = 0;
-      } else { // true binary
-        resultArray[bufferIndex++] = 1;
-      }
-
-      var lenStr = ab.byteLength.toString();
-      for (var i = 0; i < lenStr.length; i++) {
-        resultArray[bufferIndex++] = parseInt(lenStr[i]);
-      }
-      resultArray[bufferIndex++] = 255;
-
-      var view = new Uint8Array(ab);
-      for (var i = 0; i < view.length; i++) {
-        resultArray[bufferIndex++] = view[i];
-      }
-    });
-
-    return callback(resultArray.buffer);
-  });
-};
-
-/**
- * Encode as Blob
- */
-
-exports.encodePayloadAsBlob = function(packets, callback) {
-  function encodeOne(packet, doneCallback) {
-    exports.encodePacket(packet, true, true, function(encoded) {
-      var binaryIdentifier = new Uint8Array(1);
-      binaryIdentifier[0] = 1;
-      if (typeof encoded === 'string') {
-        var view = new Uint8Array(encoded.length);
-        for (var i = 0; i < encoded.length; i++) {
-          view[i] = encoded.charCodeAt(i);
-        }
-        encoded = view.buffer;
-        binaryIdentifier[0] = 0;
-      }
-
-      var len = (encoded instanceof ArrayBuffer)
-        ? encoded.byteLength
-        : encoded.size;
-
-      var lenStr = len.toString();
-      var lengthAry = new Uint8Array(lenStr.length + 1);
-      for (var i = 0; i < lenStr.length; i++) {
-        lengthAry[i] = parseInt(lenStr[i]);
-      }
-      lengthAry[lenStr.length] = 255;
-
-      if (Blob) {
-        var blob = new Blob([binaryIdentifier.buffer, lengthAry.buffer, encoded]);
-        doneCallback(null, blob);
-      }
-    });
-  }
-
-  map(packets, encodeOne, function(err, results) {
-    return callback(new Blob(results));
-  });
-};
-
-/*
- * Decodes data when a payload is maybe expected. Strings are decoded by
- * interpreting each byte as a key code for entries marked to start with 0. See
- * description of encodePayloadAsBinary
- *
- * @param {ArrayBuffer} data, callback method
- * @api public
- */
-
-exports.decodePayloadAsBinary = function (data, binaryType, callback) {
-  if (typeof binaryType === 'function') {
-    callback = binaryType;
-    binaryType = null;
-  }
-
-  var bufferTail = data;
-  var buffers = [];
-
-  while (bufferTail.byteLength > 0) {
-    var tailArray = new Uint8Array(bufferTail);
-    var isString = tailArray[0] === 0;
-    var msgLength = '';
-
-    for (var i = 1; ; i++) {
-      if (tailArray[i] === 255) break;
-
-      // 310 = char length of Number.MAX_VALUE
-      if (msgLength.length > 310) {
-        return callback(err, 0, 1);
-      }
-
-      msgLength += tailArray[i];
-    }
-
-    bufferTail = sliceBuffer(bufferTail, 2 + msgLength.length);
-    msgLength = parseInt(msgLength);
-
-    var msg = sliceBuffer(bufferTail, 0, msgLength);
-    if (isString) {
-      try {
-        msg = String.fromCharCode.apply(null, new Uint8Array(msg));
-      } catch (e) {
-        // iPhone Safari doesn't let you apply to typed arrays
-        var typed = new Uint8Array(msg);
-        msg = '';
-        for (var i = 0; i < typed.length; i++) {
-          msg += String.fromCharCode(typed[i]);
-        }
-      }
-    }
-
-    buffers.push(msg);
-    bufferTail = sliceBuffer(bufferTail, msgLength);
-  }
-
-  var total = buffers.length;
-  buffers.forEach(function(buffer, i) {
-    callback(exports.decodePacket(buffer, binaryType, true), i, total);
-  });
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-
-/***/ 411:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(220);
-
-
-/***/ }),
-
-/***/ 42:
+/* 41 */
 /***/ (function(module, exports) {
 
 /*!
@@ -13077,866 +13143,42 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
+/* 42 */
+/***/ (function(module, exports) {
 
-/***/ 429:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _NotificationSingle = __webpack_require__(436);
-
-var _NotificationSingle2 = _interopRequireDefault(_NotificationSingle);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-  name: 'Notifications',
-  props: {
-    user: {
-      default: function _default() {},
-      type: Object
-    },
-    user_type: {
-      default: '',
-      type: String
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
     }
-  },
-  data: function data() {
-    return {
-      notifications: []
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.$root.$on('notification-dismissed', function (notification) {
-      _this.dismissNotification(notification);
-    });
-
-    this.$root.$on('new-notification', function (content) {
-      _this.pushNotification(content);
-    });
-  },
-
-  methods: {
-    dismissNotification: function dismissNotification(notification) {
-      this.notifications = this.notifications.filter(function (element) {
-        return element.id != notification.id;
-      });
-    },
-    pushNotification: function pushNotification(content) {
-      this.notifications.unshift(content);
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
     }
-  },
-  components: {
-    NotificationSingle: _NotificationSingle2.default
   }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-
-/***/ }),
-
-/***/ 430:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "", ""]);
-
-/***/ }),
-
-/***/ 431:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(433)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(429),
-  /* template */
-  __webpack_require__(432),
-  /* scopeId */
-  "data-v-6ad11b1b",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/Notifications.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6ad11b1b", Component.options)
-  } else {
-    hotAPI.reload("data-v-6ad11b1b", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 432:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "notifications"
-    }
-  }, _vm._l((_vm.notifications), function(notification) {
-    return _c('notification-single', {
-      key: notification.key,
-      attrs: {
-        "notification": notification
-      }
-    })
-  }))
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-6ad11b1b", module.exports)
-  }
+  return styles
 }
 
-/***/ }),
-
-/***/ 433:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(430);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("4550c02c", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
 
 /***/ }),
-
-/***/ 434:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _gsap = __webpack_require__(54);
-
-exports.default = {
-  name: 'NotificationSingle',
-  props: {
-    notification: {
-      default: function _default() {},
-      type: [Array, Object]
-    }
-  },
-  data: function data() {
-    return {};
-  },
-  mounted: function mounted() {
-    this.showNotification();
-    setTimeout(this.dismissNotification, 10000);
-  },
-
-  methods: {
-    showNotification: function showNotification() {
-      var icon_bg = new _gsap.TimelineMax();
-      icon_bg.to(this.$refs.icon_bg, .4, {
-        opacity: 1,
-        width: '4rem',
-        height: '4rem'
-      });
-
-      var icon = new _gsap.TimelineMax();
-      icon.to(this.$refs.icon, .4, {
-        opacity: 1,
-        display: 'inherit',
-        easing: _gsap.Power4.easeInOut
-      });
-
-      var divider = new _gsap.TimelineMax();
-      divider.to(this.$refs.divider, .8, {
-        height: '4rem',
-        easing: _gsap.Power4.easeInOut
-      });
-
-      var close_btn = new _gsap.TimelineMax();
-      close_btn.fromTo(this.$refs.close_btn, .6, {
-        x: '+=100px',
-        opacity: 0
-      }, {
-        x: 0,
-        rotation: '-=360',
-        opacity: 1,
-        display: 'inherit'
-      });
-
-      var notification_content = new _gsap.TimelineMax();
-      notification_content.to(this.$refs.notification, .4, {
-        opacity: 1
-      });
-
-      var notification_bg = new _gsap.TimelineMax();
-      notification_bg.to(this.$refs.notification_bg, .4, {
-        opacity: 1
-      });
-
-      var master = new _gsap.TimelineMax();
-      master.add(notification_bg);
-      master.add(notification_content);
-      master.add(divider, .4);
-      master.add(close_btn, .4);
-      master.add(icon_bg, .4);
-      master.add(icon, .8);
-      master.play();
-    },
-    dismissNotification: function dismissNotification() {
-      var _this = this;
-
-      var vue = this;
-
-      var icon_bg = new _gsap.TimelineMax();
-      icon_bg.to(this.$refs.icon_bg, .4, {
-        opacity: 0,
-        width: 0,
-        height: 0
-      });
-
-      var icon = new _gsap.TimelineMax();
-      icon.to(this.$refs.icon, .4, {
-        opacity: 0,
-        display: 'none',
-        easing: _gsap.Power4.easeInOut
-      });
-
-      var divider = new _gsap.TimelineMax();
-      divider.to(this.$refs.divider, .8, {
-        height: 0,
-        easing: _gsap.Power4.easeInOut
-      });
-
-      var close_btn = new _gsap.TimelineMax();
-      close_btn.to(this.$refs.close_btn, .6, {
-        x: '+=100px',
-        opacity: 0,
-        rotation: '+=360',
-        display: 'none'
-      });
-
-      var notification_content = new _gsap.TimelineMax();
-      notification_content.to(this.$refs.notification, .4, {
-        opacity: 0
-      });
-
-      var notification_bg = new _gsap.TimelineMax();
-      notification_bg.to(this.$refs.notification_bg, .4, {
-        opacity: 0
-      });
-
-      var callback = new _gsap.TimelineMax();
-      callback.to(this, 1, {
-        onComplete: function onComplete() {
-          vue.$root.$emit('notification-dismissed', _this.notification);
-        }
-      });
-
-      var master = new _gsap.TimelineMax();
-      master.add(icon);
-      master.add(icon_bg);
-      master.add(close_btn);
-      master.add(divider);
-      master.add(notification_content, .8);
-      master.add(notification_bg, .8);
-      master.add(callback, 1);
-      master.play();
-    }
-  }
-
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/***/ }),
-
-/***/ 435:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification-single[data-v-fd6d6120] {\n  position: fixed;\n  top: 6.625rem;\n  right: 1rem;\n  background: #d8ee8f;\n  z-index: 9;\n  opacity: 0;\n}\n#notification-single > .notification-content[data-v-fd6d6120] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding: 2rem;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#notification-single > .notification-content > .icon-left[data-v-fd6d6120] {\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg[data-v-fd6d6120] {\n        position: relative;\n        width: 0;\n        height: 0;\n        opacity: 0;\n        border-radius: 50%;\n        background-color: #b7cc5e;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg > i[data-v-fd6d6120] {\n          position: absolute;\n          color: #d8ee8f;\n          font-size: 1.5rem;\n          top: 50%;\n          left: 50%;\n          -webkit-transform: translate(-50%, -50%);\n                  transform: translate(-50%, -50%);\n}\n#notification-single > .notification-content > .divider[data-v-fd6d6120] {\n      height: 0;\n      border-left: 1px solid #b7cc5e;\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .notification[data-v-fd6d6120] {\n      margin-right: 1rem;\n      opacity: 0;\n}\n#notification-single > .notification-content > .notification > .name[data-v-fd6d6120] {\n        font-size: 1.125rem;\n        font-weight: bold;\n        text-transform: uppercase;\n}\n#notification-single > .notification-content > .close-notification[data-v-fd6d6120] {\n      display: none;\n      opacity: 0;\n      color: #b7cc5e;\n      font-size: 1.25rem;\n      -ms-flex-item-align: start;\n          align-self: flex-start;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 436:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(438)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(434),
-  /* template */
-  __webpack_require__(437),
-  /* scopeId */
-  "data-v-fd6d6120",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationSingle.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationSingle.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fd6d6120", Component.options)
-  } else {
-    hotAPI.reload("data-v-fd6d6120", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 437:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    ref: "notification_bg",
-    attrs: {
-      "id": "notification-single"
-    }
-  }, [_c('div', {
-    staticClass: "notification-content"
-  }, [_c('div', {
-    staticClass: "icon-left"
-  }, [_c('div', {
-    ref: "icon_bg",
-    staticClass: "icon_bg"
-  }, [_c('i', {
-    ref: "icon",
-    staticClass: "fa fa-exclamation"
-  })])]), _vm._v(" "), _c('div', {
-    ref: "divider",
-    staticClass: "divider"
-  }), _vm._v(" "), _c('div', {
-    ref: "notification",
-    staticClass: "notification"
-  }, [_c('div', {
-    staticClass: "name"
-  }, [_vm._v("\n        " + _vm._s(_vm.notification.notification.data.sender.name) + ",\n      ")]), _vm._v(" "), _c('div', {
-    staticClass: "message"
-  }, [_vm._v("\n        " + _vm._s(_vm.notification.message) + "\n      ")])]), _vm._v(" "), _c('div', {
-    ref: "close_btn",
-    staticClass: "close-notification"
-  }, [_c('i', {
-    staticClass: "fa fa-times",
-    on: {
-      "click": _vm.dismissNotification
-    }
-  })])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-fd6d6120", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 438:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(435);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("c21357bc", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 439:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-exports.default = {
-  name: 'NotificationsMenu',
-  props: {
-    notifications: {
-      default: function _default() {},
-      type: Array
-    }
-  },
-  computed: {
-    menu_class: function menu_class() {
-      if (this.notifications.length == 0) {
-        return 'disabled';
-      }
-    }
-  },
-  methods: {
-    toggleDropdown: function toggleDropdown() {
-      this.$root.$emit('toggle-notifications-dropdown');
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 440:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n.notification-container[data-v-1e48d39a] {\n  position: relative;\n}\n.notification-container > .notification-badge[data-v-1e48d39a] {\n    position: absolute;\n    width: 1.33333rem;\n    height: 1.33333rem;\n    background-color: #ff636e;\n    border-radius: 50%;\n    top: -.5rem;\n    right: -.75rem;\n}\n.notification-container > .notification-badge > .notification-text[data-v-1e48d39a] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n      font-size: 0.66667rem;\n      color: #ededed;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 441:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(443)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(439),
-  /* template */
-  __webpack_require__(442),
-  /* scopeId */
-  "data-v-1e48d39a",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsMenu.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationsMenu.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1e48d39a", Component.options)
-  } else {
-    hotAPI.reload("data-v-1e48d39a", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 442:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    class: 'nav-link ' + _vm.menu_class,
-    attrs: {
-      "id": "notifications-menu",
-      "href": "#"
-    },
-    on: {
-      "click": _vm.toggleDropdown
-    }
-  }, [_c('div', {
-    staticClass: "notification-container"
-  }, [_c('i', {
-    staticClass: "fa fa-bell"
-  }), _vm._v(" "), (this.notifications.length > 0) ? _c('div', {
-    staticClass: "notification-badge"
-  }, [_c('div', {
-    staticClass: "notification-text"
-  }, [_vm._v("\n        " + _vm._s(this.notifications.length) + "\n      ")])]) : _vm._e()])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1e48d39a", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 443:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(440);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("1c2ed7bc", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 449:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'NotificationDropdownSingle',
-  props: {
-    notification: {
-      default: function _default() {},
-      type: Object
-    }
-  },
-  computed: {
-    section_slug: function section_slug() {
-      return this.notification.data.session.app.category.section.slug;
-    },
-    app_cat_slug: function app_cat_slug() {
-      return this.notification.data.session.app.category.slug;
-    },
-    app_slug: function app_slug() {
-      return this.notification.data.session.app.slug;
-    },
-    token: function token() {
-      return this.notification.data.session.token;
-    }
-  },
-  methods: {
-    markAsRead: function markAsRead() {
-      this.$root.$emit('mark-as-read', this.notification);
-    }
-  }
-};
-
-/***/ }),
-
-/***/ 450:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notification-dropdown-single[data-v-54f0833e] {\n  padding-bottom: 0.5rem;\n  border-bottom: 2px dashed #f7f7f9;\n  font-size: 1rem;\n  font-weight: 400;\n}\n#notification-dropdown-single > a[data-v-54f0833e] {\n    color: #252525;\n}\n#notification-dropdown-single > a > span[data-v-54f0833e] {\n      text-transform: capitalize;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 451:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(453)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(449),
-  /* template */
-  __webpack_require__(452),
-  /* scopeId */
-  "data-v-54f0833e",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationDropdownSingle.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationDropdownSingle.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-54f0833e", Component.options)
-  } else {
-    hotAPI.reload("data-v-54f0833e", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 452:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "notification-dropdown-single"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": '/teacher/' + _vm.section_slug + '/' + _vm.app_cat_slug + '/' + _vm.app_slug + '/' + _vm.token
-    },
-    on: {
-      "click": _vm.markAsRead
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-globe"
-  }), _vm._v(" -\n    "), _c('span', [_vm._v(_vm._s(_vm.notification.data.sender.name))]), _vm._v(", sent you a new notification\n  ")])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-54f0833e", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 453:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(450);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("1dcfe9e0", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 459:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _NotificationDropdownSingle = __webpack_require__(451);
-
-var _NotificationDropdownSingle2 = _interopRequireDefault(_NotificationDropdownSingle);
-
-var _gsap = __webpack_require__(54);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-exports.default = {
-  name: 'NotificationsDropdown',
-  props: {
-    notifications: {
-      default: function _default() {},
-      type: Array
-    }
-  },
-  data: function data() {
-    return {
-      status: false
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    this.$root.$on('toggle-notifications-dropdown', function () {
-      _this.toggleDropdown();
-    });
-  },
-  methods: {
-    toggleDropdown: function toggleDropdown() {
-      if (this.status) {
-        this.hideDropdown();
-      } else {
-        this.showDropdown();
-      }
-    },
-    hideDropdown: function hideDropdown() {
-      _gsap.TweenMax.to(this.$refs.dropdown, .6, {
-        opacity: 0,
-        display: 'none',
-        easing: _gsap.Power4.easeInOut
-      });
-
-      this.status = false;
-    },
-    showDropdown: function showDropdown() {
-      _gsap.TweenMax.to(this.$refs.dropdown, .6, {
-        opacity: 1,
-        display: 'block',
-        easing: _gsap.Power4.easeInOut
-      });
-      this.status = true;
-    }
-  },
-  components: {
-    NotificationDropdownSingle: _NotificationDropdownSingle2.default
-  }
-};
-
-/***/ }),
-
-/***/ 46:
+/* 43 */,
+/* 44 */,
+/* 45 */
 /***/ (function(module, exports) {
 
 
@@ -13948,420 +13190,7 @@ module.exports = function(a, b){
 };
 
 /***/ }),
-
-/***/ 460:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "\n#notifications-dropdown[data-v-564207cb] {\n  position: absolute;\n  top: 6.625rem;\n  right: 1rem;\n  background: #ededed;\n  padding-left: 2rem;\n  padding-right: 2rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  z-index: 8;\n  border: 2px solid #f7f7f9;\n  display: none;\n  opacity: 0;\n}\n#notifications-dropdown > .notif[data-v-564207cb] {\n    margin-bottom: 1rem;\n    margin-top: 1rem;\n}\n#notifications-dropdown[data-v-564207cb]::before {\n  position: absolute;\n  content: '';\n  top: -0.6rem;\n  right: 4.75rem;\n  width: 1rem;\n  height: 1rem;\n  background-color: #ededed;\n  -webkit-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n  border-top: 2px solid #f7f7f9;\n  border-right: 2px solid #f7f7f9;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 461:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(463)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(459),
-  /* template */
-  __webpack_require__(462),
-  /* scopeId */
-  "data-v-564207cb",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsDropdownMenu.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationsDropdownMenu.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-564207cb", Component.options)
-  } else {
-    hotAPI.reload("data-v-564207cb", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 462:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    ref: "dropdown",
-    attrs: {
-      "id": "notifications-dropdown"
-    }
-  }, _vm._l((_vm.notifications), function(notification) {
-    return _c('notification-dropdown-single', {
-      key: notification.key,
-      staticClass: "notif",
-      attrs: {
-        "notification": notification
-      }
-    })
-  }))
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-564207cb", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 463:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(460);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("5046c3e7", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 469:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _Notifications = __webpack_require__(431);
-
-var _Notifications2 = _interopRequireDefault(_Notifications);
-
-var _NotificationsMenu = __webpack_require__(441);
-
-var _NotificationsMenu2 = _interopRequireDefault(_NotificationsMenu);
-
-var _NotificationsDropdownMenu = __webpack_require__(461);
-
-var _NotificationsDropdownMenu2 = _interopRequireDefault(_NotificationsDropdownMenu);
-
-var _axios = __webpack_require__(16);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var io = __webpack_require__(97); //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
-exports.default = {
-  name: 'MainMenuComponent',
-  props: {
-    user: {
-      default: '',
-      type: String
-    },
-    user_type: {
-      default: '',
-      type: String
-    },
-    notifications: {
-      default: '',
-      type: String
-    }
-  },
-  computed: {
-    type: function type() {
-      if (this.user_type == 'App\\Student') {
-        return 'student';
-      } else {
-        return 'teacher';
-      }
-    },
-    userParsed: function userParsed() {
-      return JSON.parse(this.user);
-    },
-    notifsParsed: function notifsParsed() {
-      return JSON.parse(this.notifications);
-    }
-  },
-  data: function data() {
-    return {
-      notifs: []
-    };
-  },
-  created: function created() {
-    var _this = this;
-
-    var vue = this;
-
-    this.notifs = this.notifsParsed;
-
-    this.$root.$on('mark-as-read', function (notification) {
-      _this.markAsRead(notification);
-    });
-
-    socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data, 'sent you a new notification.');
-    });
-
-    socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data, 'approved your work.');
-    });
-  },
-
-  methods: {
-    markAsRead: function markAsRead(notification) {
-      var vue = this;
-      _axios2.default.get('/' + this.type + '/notifications/markasread/' + notification.id).then(function () {
-        vue.notifs = vue.notifs.filter(function (element) {
-          return element.id != notification.id;
-        });
-      });
-    },
-    pushNotification: function pushNotification(notification, msg) {
-      this.notifs.unshift(notification);
-
-      var content = {
-        notification: notification,
-        message: msg
-      };
-
-      this.$root.$emit('new-notification', content);
-    }
-  },
-  components: {
-    Notifications: _Notifications2.default,
-    NotificationsMenu: _NotificationsMenu2.default,
-    NotificationsDropdownMenu: _NotificationsDropdownMenu2.default
-  }
-};
-
-/***/ }),
-
-/***/ 47:
+/* 46 */
 /***/ (function(module, exports) {
 
 /**
@@ -14404,819 +13233,15 @@ exports.decode = function(qs){
 
 
 /***/ }),
-
-/***/ 470:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(7)();
-exports.push([module.i, "", ""]);
-
-/***/ }),
-
-/***/ 471:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(473)
-
-var Component = __webpack_require__(8)(
-  /* script */
-  __webpack_require__(469),
-  /* template */
-  __webpack_require__(472),
-  /* scopeId */
-  "data-v-49f2c950",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/MainMenuComponent.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] MainMenuComponent.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49f2c950", Component.options)
-  } else {
-    hotAPI.reload("data-v-49f2c950", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ 472:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "main-menu-component"
-    }
-  }, [_c('nav', {
-    staticClass: "navbar navbar-toggleable-md navbar-light fixed-top",
-    attrs: {
-      "id": "main-menu"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "navbar-brand"
-  }, [_c('a', {
-    attrs: {
-      "href": "/"
-    }
-  }, [_c('svg', {
-    attrs: {
-      "id": "main-logo",
-      "width": "102px",
-      "height": "26px",
-      "viewBox": "0 0 102 26",
-      "version": "1.1",
-      "xmlns": "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Symbols",
-      "stroke": "none",
-      "stroke-width": "1",
-      "fill": "none",
-      "fill-rule": "evenodd"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "main-logo",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Group"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "text",
-      "transform": "translate(54.516129, 3.774194)"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M5.23310771,18.4389946 C6.25875014,18.4389946 7.10783707,18.1210949 7.96843849,17.3138979 L7.20208529,15.8579748 C7.20208529,15.8579748 6.47112849,16.6125078 5.44548606,16.6125078 C4.3609918,16.6125078 3.46499399,15.7784999 3.46499399,14.2301753 C3.46499399,12.5358276 4.49020995,11.8473641 5.41008967,11.8473641 C6.65962493,11.8473641 7.35561181,12.6287079 7.35561181,12.6287079 L7.50871186,10.7490782 C7.50871186,10.7490782 6.69502132,10.0476882 5.20922581,10.0476882 C3.06369273,10.0476882 1.31903445,11.4375417 1.31903445,14.2301753 C1.31903445,17.0357357 3.09951558,18.4389946 5.23310771,18.4389946 L5.23310771,18.4389946 Z M16.5160273,14.243102 C16.5160273,11.5696807 14.7709426,10.0342828 12.5900131,10.0342828 C10.4090837,10.0342828 8.67593986,11.5696807 8.67593986,14.2301753 C8.67593986,16.9035966 10.4090837,18.4389946 12.5900131,18.4389946 C14.7709426,18.4389946 16.5160273,16.9035966 16.5160273,14.243102 L16.5160273,14.243102 Z M14.3581268,14.243102 C14.3581268,15.7650945 13.5683182,16.6125078 12.5900131,16.6125078 C11.6232225,16.6125078 10.8214729,15.7650945 10.8214729,14.2301753 C10.8214729,12.7345149 11.6232225,11.8473641 12.5900131,11.8473641 C13.5683182,11.8473641 14.3581268,12.7345149 14.3581268,14.243102 L14.3581268,14.243102 Z M24.4618775,16.5861757 C22.7760711,16.5861757 23.0473013,14.6797353 21.8920142,14.3493877 C22.30483,14.269434 23.0588157,13.7269938 23.0588157,12.549233 C23.0588157,10.8682906 21.8681323,10.1400897 19.8049065,10.1400897 L17.9306036,10.1400897 L17.9306036,18.3461142 L20.0526812,18.3461142 L20.0526812,15.1565848 C20.5832007,15.1565848 20.8309754,15.5271485 21.0663827,16.0035193 C21.5265358,16.9701449 21.8804997,18.4121838 24.0848846,18.4121838 L24.4618775,16.5861757 Z M21.0309863,12.6550399 C21.0309863,13.1840748 20.6544199,13.5153799 20.0526812,13.5153799 L20.0526812,11.8741749 C20.618597,11.8741749 21.0309863,12.1915959 21.0309863,12.6550399 L21.0309863,12.6550399 Z M31.9953384,18.4121838 L31.9953384,10.1400897 L29.8732608,10.1400897 L29.8732608,14.0444147 L25.6410465,10.0740202 L25.2870826,10.0740202 L25.2870826,18.3461142 L27.4091602,18.3461142 L27.4091602,14.4288626 L31.641801,18.4121838 L31.9953384,18.4121838 Z M38.8217244,18.3461142 L39.1987173,16.5335116 L35.8859563,16.5335116 L35.8859563,14.9047546 L37.6191001,14.9047546 L37.6191001,13.0916732 L35.8859563,13.0916732 L35.8859563,11.9402445 L38.2558086,11.9402445 L38.2558086,10.1400897 L33.7638786,10.1400897 L33.7638786,18.3461142 L38.8217244,18.3461142 Z M46.9091602,16.5861757 C45.2233537,16.5861757 45.4945839,14.6797353 44.3392969,14.3493877 C44.7521126,14.269434 45.5065249,13.7269938 45.5065249,12.549233 C45.5065249,10.8682906 44.315415,10.1400897 42.2521892,10.1400897 L40.3778863,10.1400897 L40.3778863,18.3461142 L42.4999639,18.3461142 L42.4999639,15.1565848 C43.0300569,15.1565848 43.2778316,15.5271485 43.5136654,16.0035193 C43.973392,16.9701449 44.3273559,18.4121838 46.5317408,18.4121838 L46.9091602,16.5861757 Z M43.478269,12.6550399 C43.478269,13.1840748 43.1008496,13.5153799 42.4999639,13.5153799 L42.4999639,11.8741749 C43.0658797,11.8741749 43.478269,12.1915959 43.478269,12.6550399 L43.478269,12.6550399 Z",
-      "id": "Fill-1095",
-      "fill": "#656A6B"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M27.7687534,4.88770738 L27.7687534,3.07462599 L26.0825205,3.07462599 L26.0825205,1.90931306 L28.5116512,1.90931306 L28.5116512,0.123042492 L23.9604429,0.123042492 L23.9604429,8.32906702 L26.0825205,8.32906702 L26.0825205,4.88770738 L27.7687534,4.88770738 Z M29.3364297,8.32954579 L31.4585074,8.32954579 L31.4585074,0.123042492 L29.3364297,0.123042492 L29.3364297,8.32954579 Z M37.3654401,8.32906702 L37.7428595,6.51550688 L35.1137179,6.51550688 L35.1137179,0.123042492 L32.9912138,0.123042492 L32.9912138,8.32906702 L37.3654401,8.32906702 Z M39.9706998,0.0698996255 L39.6525588,0.0698996255 L38.2733789,8.32906702 L40.3596337,8.32906702 L40.8666976,4.74168419 L42.4467414,7.28344523 L44.0148442,4.74168419 L44.5338491,8.32906702 L46.6201039,8.32906702 L45.2289831,0.0698996255 L44.9104155,0.0698996255 L42.4467414,4.22605476 L39.9706998,0.0698996255 Z",
-      "id": "Fill-1097",
-      "fill": "#656A6B"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M6.05268343,1.92300573 L6.05268343,0.122850986 L1.08908584,0.122850986 L0.712092947,1.92300573 L2.43329579,1.92300573 L2.43329579,8.32887552 L4.53191799,8.32887552 L4.53191799,1.92300573 L6.05268343,1.92300573 Z M13.5038371,8.32887552 L13.5038371,0.122850986 L11.381333,0.122850986 L11.381333,2.92889006 L9.10615528,2.92889006 L9.10615528,0.122850986 L6.99559213,0.122850986 L6.99559213,8.32887552 L9.10615528,8.32887552 L9.10615528,4.74245021 L11.381333,4.74245021 L11.381333,8.32887552 L13.5038371,8.32887552 Z M20.0939628,8.32887552 L20.4709557,6.51579413 L17.1586211,6.51579413 L17.1586211,4.88751587 L18.8913384,4.88751587 L18.8913384,3.07395572 L17.1586211,3.07395572 L17.1586211,1.92300573 L19.528047,1.92300573 L19.528047,0.122850986 L15.036117,0.122850986 L15.036117,8.32887552 L20.0939628,8.32887552 Z",
-      "id": "Fill-1099",
-      "fill": "#A5B1B4"
-    }
-  })]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "logo"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M3.98384254,8.51956744 L3.98384254,8.72878755 L4.34804155,8.62441688 L3.98384254,8.51956744 Z M24.6374237,14.441885 L18.6754773,12.731738 L0.0872542373,18.0996463 L24.6374237,25.1915857 L24.6374237,14.441885 Z M14.4206605,11.5108884 L14.369485,11.4979618 L13.2943729,11.80868 L13.2943729,13.0730972 L14.4206605,12.7484948 L14.4206605,11.5108884 Z M7.08507818,13.6002169 L7.08507818,14.8646341 L8.21435101,14.5400318 L8.21435101,13.2760933 L7.08507818,13.6002169 Z M10.190152,12.7044484 L10.190152,13.9688656 L11.3189984,13.6442633 L11.3189984,12.3798461 L10.190152,12.7044484 Z M2.00846802,15.0676303 L0.879621651,15.3917539 L0.879621651,16.6561711 L2.00846802,16.3315687 L2.00846802,15.0676303 Z M3.98384254,14.4959854 L3.98384254,15.7604026 L5.11311536,15.4358003 L5.11311536,14.1718618 L3.98384254,14.4959854 Z M2.00846802,8.03601524 L0.879621651,8.36061761 L0.879621651,9.62503481 L2.00846802,9.30043244 L2.00846802,8.03601524 Z",
-      "id": "Fill-1105",
-      "fill": "#FADA3E"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M16.3958218,12.177185 L16.3958218,12.0790383 L14.4204472,11.5112235 L14.4204472,12.7483512 L13.2945861,13.0729535 L13.2945861,11.8085363 L14.3692717,11.4978181 L4.34825478,8.62427325 L3.98405577,8.72912269 L3.98405577,8.51942381 L4.26462548e-05,7.37709157 L4.26462548e-05,18.0760432 L0.0874674686,18.0995026 L18.6752641,12.7315944 L16.5647009,12.1269148 L16.3958218,12.177185 Z M0.87940842,8.36047398 L2.00868125,8.03635037 L2.00868125,9.30028881 L0.87940842,9.62489118 L0.87940842,8.36047398 Z M3.98405577,15.760259 L3.98405577,14.4963206 L5.11290213,14.1717182 L5.11290213,15.4361354 L3.98405577,15.760259 Z M0.87940842,15.392089 L2.00868125,15.0674867 L2.00868125,16.3319039 L0.87940842,16.6560275 L0.87940842,15.392089 Z M10.1899388,13.968722 L10.1899388,12.7047836 L11.3192116,12.3801812 L11.3192116,13.6441196 L10.1899388,13.968722 Z M7.08529142,14.8644905 L7.08529142,13.6005521 L8.21456424,13.2759497 L8.21456424,14.5403669 L7.08529142,14.8644905 Z",
-      "id": "Fill-1107",
-      "fill": "#F0871F"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M17.5250519,11.8494228 L16.5646583,12.1266275 L18.6752214,12.7317859 L24.6371679,11.0111061 L24.6371679,0.260926684 L0,7.37680432 L3.98401312,8.51961532 L3.98401312,7.46489699 L5.11328595,7.14029462 L5.11328595,8.40471182 L4.34821214,8.62446476 L14.3692291,11.4980096 L14.4208311,11.4841255 L14.4208311,11.5109363 L16.3957791,12.0792298 L16.3957791,10.9129593 L17.5250519,10.5850056 L17.5250519,11.8494228 Z M22.6050738,2.08645595 L23.7313614,1.76233234 L23.7313614,3.02627077 L22.6050738,3.35087314 L22.6050738,2.08645595 Z M17.5250519,3.55386932 L17.5250519,4.81780775 L16.3957791,5.14576147 L16.3957791,3.88134428 L17.5250519,3.55386932 Z M14.4208311,4.45298916 L14.4208311,5.71692759 L13.2945435,6.04152996 L13.2945435,4.77759153 L14.4208311,4.45298916 Z M19.5004265,4.24999299 L19.5004265,2.98557579 L20.6292728,2.65762206 L20.6292728,3.92203926 L19.5004265,4.24999299 Z M22.6050738,10.3824882 L22.6050738,9.11807102 L23.7313614,8.79346864 L23.7313614,10.0578858 L22.6050738,10.3824882 Z M19.5004265,11.2811293 L19.5004265,10.0171909 L20.6292728,9.68923713 L20.6292728,10.9536543 L19.5004265,11.2811293 Z M7.08524877,7.83306694 L7.08524877,6.56912851 L8.2145216,6.24452614 L8.2145216,7.50894333 L7.08524877,7.83306694 Z M10.1898961,5.67336002 L11.3187425,5.34875765 L11.3187425,6.61269608 L10.1898961,6.93729845 L10.1898961,5.67336002 Z",
-      "id": "Fill-1109",
-      "fill": "#F49F52"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1111",
-      "fill": "#ED736E",
-      "points": "49.2748475 18.0929914 49.2748475 7.36004756 30.6055965 12.7246044"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1113",
-      "fill": "#4CBAB7",
-      "points": "49.2748475 18.1098439 49.2748475 18.0930872 30.6055965 12.7247002 24.6376796 14.4425074 24.6376796 25.1922081"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1115",
-      "fill": "#EC6666",
-      "points": "49.2748475 7.36004756 49.2748475 7.3432908 24.6376796 0.260926684 24.6376796 11.0106273 30.6055965 12.7246044"
-    }
-  })])])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "navbar-brand"
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('svg', {
-    attrs: {
-      "width": "77px",
-      "height": "26px",
-      "viewBox": "0 0 77 26",
-      "version": "1.1",
-      "xmlns": "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink"
-    }
-  }, [_c('defs'), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Page-1",
-      "stroke": "none",
-      "stroke-width": "1",
-      "fill": "none",
-      "fill-rule": "evenodd"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "creative-europe-logo",
-      "transform": "translate(0.188235, 0.000000)"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "text",
-      "transform": "translate(42.976471, 0.000000)"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M5.36578824,6.15741176 C5.20932941,6.22745882 5.06556471,6.29505882 4.93801176,6.35501176 C4.81045882,6.41603529 4.64252941,6.48088235 4.43498824,6.54725882 C4.25987059,6.60185882 4.07022353,6.65018824 3.86451765,6.68949412 C3.65865882,6.7288 3.43261176,6.74883529 3.18637647,6.74883529 C2.71975294,6.74883529 2.29717647,6.68230588 1.9162,6.55001176 C1.53705882,6.41618824 1.20532941,6.20834118 0.923,5.92677647 C0.647552941,5.64888235 0.430682353,5.29803529 0.277741176,4.87056471 C0.120976471,4.44324706 0.0445058824,3.94557647 0.0445058824,3.38076471 C0.0445058824,2.84394118 0.117458824,2.36462353 0.268564706,1.94281176 C0.418294118,1.51901176 0.633329412,1.16265882 0.915505882,0.870235294 C1.18728235,0.587752941 1.51687059,0.3718 1.90335294,0.223294118 C2.28998824,0.0737176471 2.71791765,0 3.18989412,0 C3.53462353,0 3.87904706,0.0428235294 4.22347059,0.127552941 C4.56605882,0.211364706 4.94688235,0.360788235 5.36578824,0.573223529 L5.36578824,1.60022353 L5.30247059,1.60022353 C4.94871765,1.30122353 4.59695294,1.08175294 4.251,0.945176471 C3.90275294,0.807529412 3.52896471,0.740082353 3.13345882,0.740082353 C2.80907059,0.740082353 2.51787059,0.791929412 2.25710588,0.898682353 C1.99634118,1.00528235 1.76478824,1.17015294 1.56076471,1.3962 C1.36209412,1.61291765 1.20884706,1.89004706 1.09811765,2.22468235 C0.986623529,2.55901176 0.932023529,2.94442353 0.932023529,3.38107059 C0.932023529,3.8376 0.992129412,4.23218824 1.11417647,4.56192941 C1.23637647,4.89182353 1.39467059,5.15977647 1.58645882,5.36563529 C1.78665882,5.58250588 2.02371765,5.74202353 2.29136471,5.84495294 C2.55962353,5.9488 2.84363529,5.99988235 3.14263529,5.99988235 C3.55251765,5.99988235 3.939,5.92876471 4.29810588,5.78652941 C4.65721176,5.64444706 4.99414118,5.42925882 5.30598824,5.14325882 L5.36578824,5.14325882 L5.36578824,6.15741176 L5.36578824,6.15741176 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M9.18778824,2.6416 L9.1442,2.6416 C9.02567059,2.61345882 8.90698824,2.59143529 8.79411765,2.57874118 C8.67941176,2.56512941 8.54650588,2.55870588 8.38958824,2.55870588 C8.14014118,2.55870588 7.89910588,2.61529412 7.66755294,2.72632941 C7.43462353,2.83935294 7.21025882,2.98327059 6.99369412,3.16190588 L6.99369412,6.63015294 L6.18448235,6.63015294 L6.18448235,1.74505882 L6.99369412,1.74505882 L6.99369412,2.46571765 C7.31594118,2.20434118 7.60071765,2.01836471 7.84649412,1.90885882 C8.09058824,1.79950588 8.34202353,1.74490588 8.59896471,1.74490588 C8.73967059,1.74490588 8.84152941,1.74842353 8.90331765,1.75561176 C8.96724706,1.76310588 9.06191765,1.77671765 9.18763529,1.79675294 L9.18763529,2.6416 L9.18778824,2.6416 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M13.8041647,4.27195294 L10.2576118,4.27195294 C10.2576118,4.57370588 10.3033412,4.83508235 10.3908235,5.05745882 C10.4819765,5.28167059 10.6023412,5.46382353 10.7571176,5.60697647 C10.9085294,5.74645882 11.0851765,5.85107059 11.2911882,5.92234118 C11.4952118,5.99162353 11.7214118,6.02710588 11.9690235,6.02710588 C12.2972353,6.02710588 12.6271294,5.95981176 12.9571765,5.82858824 C13.2905882,5.69552941 13.5256588,5.56507059 13.6677412,5.43675294 L13.7094941,5.43675294 L13.7094941,6.33344706 C13.4380235,6.45014118 13.1589059,6.54756471 12.8745882,6.62587059 C12.5887412,6.70524706 12.2914235,6.74348235 11.9782,6.74348235 C11.18,6.74348235 10.5547765,6.52477647 10.1065059,6.08552941 C9.65991765,5.6472 9.43585882,5.02304706 9.43585882,4.21643529 C9.43585882,3.41731765 9.64921176,2.78307059 10.0789765,2.31292941 C10.5093529,1.84447059 11.0743176,1.6094 11.7741765,1.6094 C12.4247882,1.6094 12.9239882,1.80164706 13.2775882,2.18705882 C13.6295059,2.57155294 13.8041647,3.11847059 13.8041647,3.82643529 L13.8041647,4.27195294 L13.8041647,4.27195294 Z M13.0152941,3.64321176 C13.0131529,3.21115294 12.9056353,2.87774118 12.6962588,2.6416 C12.4829059,2.40576471 12.1621882,2.28723529 11.7319647,2.28723529 C11.2982235,2.28723529 10.9519647,2.41662353 10.6951765,2.67723529 C10.4379294,2.93601176 10.2924824,3.25856471 10.2576118,3.64321176 L13.0152941,3.64321176 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M18.4714706,6.63030588 L17.6657765,6.63030588 L17.6657765,6.10984706 C17.5931294,6.15909412 17.4967765,6.22745882 17.3742706,6.31692941 C17.2520706,6.40609412 17.1341529,6.47736471 17.0191412,6.53012941 C16.8840941,6.59757647 16.7293176,6.65309412 16.5543529,6.69775294 C16.3792353,6.74332941 16.1735294,6.7652 15.9381529,6.7652 C15.5047176,6.7652 15.1367412,6.62036471 14.8337647,6.32962353 C14.5332353,6.03811765 14.3818235,5.6654 14.3818235,5.21330588 C14.3818235,4.84242353 14.4601294,4.54357647 14.6168941,4.31401176 C14.7719765,4.08612941 14.9961882,3.90581176 15.2875412,3.77458824 C15.5793529,3.64351765 15.9328,3.55481176 16.3428353,3.50770588 C16.7527176,3.46121176 17.1941059,3.42649412 17.6657765,3.40278824 L17.6657765,3.27707059 C17.6657765,3.08925882 17.6332,2.93432941 17.5692706,2.81228235 C17.5038118,2.69023529 17.4106706,2.59357647 17.2906118,2.52429412 C17.1759059,2.45669412 17.0390235,2.41111765 16.8769059,2.38756471 C16.7164706,2.36477647 16.5471647,2.353 16.3717412,2.353 C16.1605294,2.353 15.9236235,2.38205882 15.6611765,2.43864706 C15.4007176,2.49508235 15.1309294,2.57705882 14.8522706,2.68549412 L14.8083765,2.68549412 L14.8083765,1.85089412 C14.9666706,1.80623529 15.1945529,1.75882353 15.4935529,1.70590588 C15.7922471,1.65314118 16.0858941,1.6276 16.3774,1.6276 C16.7164706,1.6276 17.0118,1.65497647 17.2633882,1.71232941 C17.5143647,1.76983529 17.7318471,1.86634118 17.9158353,2.00291765 C18.0963059,2.13689412 18.2345647,2.31002353 18.3292353,2.52429412 C18.4242118,2.73565882 18.4714706,2.99978824 18.4714706,3.31515294 L18.4714706,6.63030588 L18.4714706,6.63030588 Z M17.6659294,5.42818824 L17.6659294,4.06777647 C17.4183176,4.08230588 17.1284941,4.10417647 16.7930941,4.13338824 C16.458,4.1626 16.1935647,4.20435294 15.9970353,4.25925882 C15.7654824,4.32655294 15.5776706,4.4304 15.4332941,4.57263529 C15.2893765,4.7138 15.2185647,4.90788235 15.2185647,5.1558 C15.2185647,5.43644706 15.3003882,5.64704706 15.4680118,5.78821176 C15.6341059,5.93029412 15.8892118,5.99957647 16.2318,5.99957647 C16.5144353,5.99957647 16.7752,5.94482353 17.0099647,5.83271765 C17.2468706,5.71984706 17.4654235,5.58418824 17.6659294,5.42818824 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M22.1331882,6.58641176 C21.9799412,6.62648235 21.8141529,6.6612 21.6355176,6.68750588 C21.4547412,6.71304706 21.2946118,6.72681176 21.1543647,6.72681176 C20.6644941,6.72681176 20.2905529,6.59207059 20.0354471,6.32396471 C19.7785059,6.05616471 19.6509529,5.62609412 19.6509529,5.0336 L19.6509529,2.43574118 L19.1043412,2.43574118 L19.1043412,1.74505882 L19.6509529,1.74505882 L19.6509529,0.340752941 L20.462,0.340752941 L20.462,1.74505882 L22.1333412,1.74505882 L22.1333412,2.43574118 L20.462,2.43574118 L20.462,4.66195294 C20.462,4.91889412 20.4673529,5.1194 20.4783647,5.26331765 C20.4893765,5.40723529 20.5312824,5.54396471 20.5984235,5.66784706 C20.6626588,5.78454118 20.7498353,5.86927059 20.8591882,5.92402353 C20.9703765,5.97770588 21.1378471,6.00416471 21.3658824,6.00416471 C21.4987882,6.00416471 21.6373529,5.98504706 21.7792824,5.94589412 C21.9232,5.90674118 22.0256706,5.87385882 22.0914353,5.84648235 L22.1331882,5.84648235 L22.1331882,6.58641176 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M23.6676471,0.926670588 L22.7547412,0.926670588 L22.7547412,0.0737176471 L23.6676471,0.0737176471 L23.6676471,0.926670588 Z M23.6165647,6.63030588 L22.8073529,6.63030588 L22.8073529,1.74505882 L23.6165647,1.74505882 L23.6165647,6.63030588 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero",
-      "points": "29.0293059 1.74505882 27.0811412 6.63015294 26.2665765 6.63015294 24.3311059 1.74505882 25.2111294 1.74505882 26.702 5.63328235 28.1800235 1.74505882"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M33.6037765,4.27195294 L30.0553882,4.27195294 C30.0553882,4.57370588 30.1011176,4.83508235 30.1904353,5.05745882 C30.2779176,5.28167059 30.4019529,5.46382353 30.5567294,5.60697647 C30.7061529,5.74645882 30.8829529,5.85107059 31.0889647,5.92234118 C31.2948235,5.99162353 31.5191882,6.02710588 31.7668,6.02710588 C32.0950118,6.02710588 32.4249059,5.95981176 32.7564824,5.82858824 C33.0883647,5.69552941 33.3252706,5.56507059 33.4656706,5.43675294 L33.5089529,5.43675294 L33.5089529,6.33344706 C33.2356471,6.45014118 32.9572941,6.54756471 32.6725176,6.62587059 C32.3882,6.70524706 32.0896588,6.74348235 31.7761294,6.74348235 C30.9779294,6.74348235 30.3545412,6.52477647 29.9058118,6.08552941 C29.4576941,5.6472 29.2334824,5.02304706 29.2334824,4.21643529 C29.2334824,3.41731765 29.4488235,2.78307059 29.8787412,2.31292941 C30.3071294,1.84447059 30.8722471,1.6094 31.5736353,1.6094 C32.2224118,1.6094 32.7239059,1.80164706 33.0755176,2.18705882 C33.4274353,2.57155294 33.6039294,3.11847059 33.6039294,3.82643529 L33.6039294,4.27195294 L33.6037765,4.27195294 Z M32.8149059,3.64321176 C32.8110824,3.21115294 32.7034118,2.87774118 32.4920471,2.6416 C32.2823647,2.40576471 31.9618,2.28723529 31.5298941,2.28723529 C31.0961529,2.28723529 30.7517294,2.41662353 30.4944824,2.67723529 C30.2375412,2.93601176 30.0899529,3.25856471 30.0553882,3.64321176 L32.8149059,3.64321176 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero",
-      "points": "4.63901176 15.4219765 0.4108 15.4219765 0.4108 8.9102 4.63901176 8.9102 4.63901176 9.68025882 1.2636 9.68025882 1.2636 11.4653882 4.63901176 11.4653882 4.63901176 12.2343765 1.2636 12.2343765 1.2636 14.6528353 4.63901176 14.6528353"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M9.53037647,15.4219765 L8.71932941,15.4219765 L8.71932941,14.8805647 C8.44602353,15.0995765 8.18556471,15.2661294 7.93397647,15.3834353 C7.68422353,15.5004353 7.40877647,15.5587059 7.1084,15.5587059 C6.60354118,15.5587059 6.20803529,15.4011765 5.92555294,15.0874941 C5.64475294,14.7750353 5.50435294,14.3148353 5.50435294,13.7079647 L5.50435294,10.5376471 L6.3154,10.5376471 L6.3154,13.3196471 C6.3154,13.5663412 6.32641176,13.7789294 6.35042353,13.9546588 C6.37229412,14.1314588 6.42123529,14.2827176 6.49617647,14.4075176 C6.57264706,14.5359882 6.67481176,14.6297412 6.79701176,14.6874 C6.92104706,14.7455176 7.10105882,14.7747294 7.33612941,14.7747294 C7.54581176,14.7747294 7.77583529,14.7202824 8.02314118,14.6087882 C8.27136471,14.4977529 8.5046,14.3564353 8.71948235,14.1843765 L8.71948235,10.5376471 L9.53052941,10.5376471 L9.53052941,15.4219765 L9.53037647,15.4219765 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M13.7151529,11.4332706 L13.6729412,11.4332706 C13.5525765,11.4049765 13.4360353,11.3832588 13.3213294,11.3704118 C13.2081529,11.3569529 13.0734118,11.3505294 12.9183294,11.3505294 C12.6685765,11.3505294 12.4263176,11.4069647 12.1949176,11.5199882 C11.9616824,11.6313294 11.7373176,11.7769294 11.5225882,11.9535765 L11.5225882,15.4219765 L10.7112353,15.4219765 L10.7112353,10.5376471 L11.5225882,10.5376471 L11.5225882,11.2595294 C11.8451412,10.9958588 12.1271647,10.8100353 12.3735529,10.7017529 C12.6179529,10.5924 12.8693882,10.5378 13.1244941,10.5378 C13.2648941,10.5378 13.3667529,10.5413176 13.4303765,10.5485059 C13.4943059,10.5558471 13.5892824,10.5696118 13.715,10.5898 L13.715,11.4332706 L13.7151529,11.4332706 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M18.4206941,12.9816471 C18.4206941,13.7783176 18.2201882,14.4067529 17.8173412,14.8661882 C17.4146471,15.3280706 16.8770588,15.5585529 16.2007529,15.5585529 C15.5212353,15.5585529 14.9799765,15.3279176 14.5789647,14.8661882 C14.1778,14.4067529 13.9772941,13.7783176 13.9772941,12.9816471 C13.9772941,12.1851294 14.1778,11.5563882 14.5789647,11.0954235 C14.9798235,10.6326235 15.5210824,10.4029059 16.2007529,10.4029059 C16.8770588,10.4029059 17.4148,10.6324706 17.8173412,11.0954235 C18.2203412,11.5563882 18.4206941,12.1851294 18.4206941,12.9816471 Z M17.5841059,12.9816471 C17.5841059,12.3493882 17.4619059,11.8790941 17.2178118,11.5719882 C16.9737176,11.2648824 16.6344941,11.1099529 16.2007529,11.1099529 C15.7616588,11.1099529 15.4207529,11.2648824 15.1768118,11.5719882 C14.9342471,11.8790941 14.8123529,12.3493882 14.8123529,12.9816471 C14.8123529,13.5940235 14.9342471,14.0585059 15.1800235,14.3749412 C15.4244235,14.6912235 15.7633412,14.8496706 16.2007529,14.8496706 C16.6309765,14.8496706 16.9717294,14.6932118 17.2161294,14.3793765 C17.4619059,14.066 17.5841059,13.5993765 17.5841059,12.9816471 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M23.5783294,12.9206235 C23.5783294,13.3170471 23.5218941,13.6798235 23.4104,14.0075765 C23.2978353,14.3356353 23.1392353,14.6136824 22.9368941,14.8403412 C22.7472471,15.0562941 22.5231882,15.223 22.2662471,15.3406118 C22.0073176,15.4599059 21.7372235,15.5181765 21.4495412,15.5181765 C21.1978,15.5181765 20.9740471,15.4909529 20.7694118,15.4342118 C20.5675294,15.3794588 20.3613647,15.2932 20.1516824,15.1775765 L20.1516824,17.2239294 L19.3427765,17.2239294 L19.3427765,10.5376471 L20.1516824,10.5376471 L20.1516824,11.0496941 C20.3685529,10.8655529 20.6092824,10.7115412 20.8772353,10.5868941 C21.1470235,10.4636235 21.4331765,10.4027529 21.7372235,10.4027529 C22.3188588,10.4027529 22.7686588,10.6251294 23.0933529,11.0686588 C23.4160588,11.5126471 23.5783294,12.1305294 23.5783294,12.9206235 Z M22.7415882,12.9424941 C22.7415882,12.3536706 22.6412588,11.9135059 22.4447294,11.6221529 C22.2460588,11.3303412 21.9417059,11.1845882 21.5315176,11.1845882 C21.2982824,11.1845882 21.0630588,11.2355176 20.8279882,11.3378353 C20.5929176,11.4398471 20.3685529,11.5745882 20.1516824,11.7405294 L20.1516824,14.508 C20.3814,14.6136824 20.5803765,14.6837294 20.7440235,14.7221176 C20.9098118,14.7602 21.0977765,14.7793176 21.3074588,14.7793176 C21.7575647,14.7793176 22.1091765,14.6253059 22.3645882,14.3156 C22.6161765,14.0077294 22.7415882,13.5486 22.7415882,12.9424941 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M28.5958706,13.0653059 L25.0490118,13.0653059 C25.0490118,13.3652235 25.0947412,13.6266 25.1840588,13.8506588 C25.2733765,14.0731882 25.3934353,14.2553412 25.5485176,14.3995647 C25.6982471,14.5398118 25.8767294,14.6438118 26.0825882,14.7140118 C26.2866118,14.7840588 26.5128118,14.8189294 26.7604235,14.8189294 C27.0886353,14.8189294 27.4166941,14.7513294 27.7485765,14.6199529 C28.0798471,14.4870471 28.3167529,14.3565882 28.4571529,14.2282706 L28.5007412,14.2282706 L28.5007412,15.1257294 C28.2277412,15.2415059 27.9487765,15.3396941 27.6646118,15.4183059 C27.3819765,15.4967647 27.0829765,15.5366824 26.7679176,15.5366824 C25.9694118,15.5366824 25.3460235,15.3162941 24.8979059,14.8776588 C24.4494824,14.4385647 24.2255765,13.8164 24.2255765,13.0079529 C24.2255765,12.2092941 24.4403059,11.5742824 24.8708353,11.1059765 C25.3010588,10.6358353 25.8658706,10.4024471 26.5657294,10.4024471 C27.2163412,10.4024471 27.7155412,10.5936235 28.0673059,10.9784235 C28.4192235,11.3627647 28.5960235,11.9095294 28.5960235,12.6193294 L28.5960235,13.0653059 L28.5958706,13.0653059 Z M27.8063882,12.4356471 C27.8048588,12.0038941 27.6970353,11.6695647 27.4858235,11.4332706 C27.2743059,11.1974353 26.9535882,11.0790588 26.5233647,11.0790588 C26.0896235,11.0790588 25.7436706,11.2082941 25.4865765,11.4689059 C25.2296353,11.7295176 25.0835765,12.0502353 25.0490118,12.4354941 L27.8063882,12.4354941 L27.8063882,12.4356471 Z",
-      "id": "Shape",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "media-logo",
-      "transform": "translate(0.305882, 19.729412)"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Group",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#F9A528",
-      "points": "1.36056471 1.42051765 1.35888235 1.4196 0.156 1.4196 0.156 0.281564706 0.276058824 0.281564706 0.154164706 0.152176471 0.154164706 2.22621176 0.154164706 1.42051765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#224F9F",
-      "points": "0.156 4.8334 0.156 4.8334 0.154164706 3.69490588 0.154164706 3.69490588 0.154164706 5.97036471 1.25488235 5.97036471 1.25488235 5.96944706 0.154164706 5.96944706"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#F9A528",
-      "points": "0.156 4.83431765 0.156 4.8334 0.156 4.8334 0.154164706 5.96944706 1.25488235 5.96944706 1.25488235 4.83431765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#F9A528",
-      "points": "5.67442353 4.83431765 4.54097647 4.83431765 4.54097647 5.96944706 5.55604706 5.96944706 5.67442353 5.96944706"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#F9A528",
-      "points": "10.0777529 4.83431765 7.83578824 4.83431765 7.83578824 4.83431765 6.76076471 4.83431765 6.76076471 5.96944706 8.75267059 5.96944706 10.0756118 5.96944706"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#F9A528",
-      "x": "16.4436235",
-      "y": "4.83431765",
-      "width": "1.11891765",
-      "height": "1.13512941"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#F9A528",
-      "points": "22.7769176 5.8474 22.3372118 4.83431765 18.3046118 4.83431765 17.8211647 5.96944706 19.0424 5.96944706 19.3686235 5.09477647 21.2603529 5.09844706 21.5882588 5.96944706 22.3392 5.96944706 22.8276941 5.96944706"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M15.0748,4.83431765 L12.8348235,4.83431765 C12.8348235,4.83431765 12.8329882,4.83431765 12.8313059,4.83431765 L12.2903529,4.83431765 L12.2903529,4.83431765 L11.1530824,4.83431765 L11.1530824,5.96944706 L12.8458353,5.96944706 C13.7572118,5.95675294 14.5661176,5.51398824 15.0748,4.83431765 Z",
-      "id": "Shape",
-      "fill": "#F9A528"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#A6CC3C",
-      "points": "1.89448235 3.69490588 2.95543529 4.8334 2.96262353 4.8334 3.94129412 3.69490588"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#A6CC3C",
-      "points": "1.25488235 3.69490588 0.154164706 3.69490588 0.156 4.8334 1.25488235 4.8334"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#A6CC3C",
-      "points": "4.53929412 3.69490588 4.54097647 4.8334 5.67442353 4.8334 5.67442353 3.69490588"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#A6CC3C",
-      "x": "6.76076471",
-      "y": "3.69490588",
-      "width": "1.07502353",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#A6CC3C",
-      "x": "16.4436235",
-      "y": "3.69490588",
-      "width": "1.11891765",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#A6CC3C",
-      "points": "20.7827176 3.93915294 19.8441176 3.93915294 19.9316 3.69490588 18.7891294 3.69490588 18.3046118 4.8334 22.3353765 4.8334 21.8416824 3.69490588 20.6915647 3.69490588"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M14.404,3.69490588 C14.1820824,4.34307059 13.5765882,4.81948235 12.8644941,4.83324706 L15.0749529,4.83324706 C15.3207294,4.50228235 15.4979882,4.11610588 15.5798118,3.69490588 L14.404,3.69490588 Z",
-      "id": "Shape",
-      "fill": "#A6CC3C"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#A6CC3C",
-      "x": "11.1530824",
-      "y": "3.69490588",
-      "width": "1.13727059",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#4BB86A",
-      "points": "0.154164706 3.69490588 1.25488235 3.69490588 1.25488235 3.01141176 1.89448235 3.69490588 3.94129412 3.69490588 4.53929412 3.00254118 4.53929412 3.69490588 5.67442353 3.69490588 5.67442353 2.55855294 3.46182353 2.55855294 2.95696471 3.10256471 2.4414 2.55855294 0.154164706 2.55855294 0.154164706 3.69490588"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#4BB86A",
-      "points": "7.83578824 3.69398824 10.0756118 3.69490588 10.0740824 2.55855294 6.75862353 2.55855294 6.76076471 3.69490588 7.83578824 3.69490588"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#4BB86A",
-      "x": "16.4436235",
-      "y": "2.55855294",
-      "width": "1.11891765",
-      "height": "1.13635294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#4BB86A",
-      "points": "18.7891294 3.69490588 19.9316 3.69490588 20.3017176 2.68090588 20.6915647 3.69490588 21.8416824 3.69490588 21.3478353 2.55855294 19.2702824 2.55855294"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M15.5686471,2.55855294 L14.3896235,2.55855294 C14.4567647,2.74483529 14.495,2.94411765 14.495,3.14814118 C14.495,3.34054118 14.4624235,3.52361176 14.4038471,3.69475294 L15.5796588,3.69475294 C15.6125412,3.51917647 15.6322706,3.33671765 15.6322706,3.14982353 C15.6322706,2.94778824 15.6104,2.74927059 15.5686471,2.55855294 Z",
-      "id": "Shape",
-      "fill": "#4BB86A"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#4BB86A",
-      "points": "11.1530824 2.55855294 11.1530824 3.69490588 12.2902 3.69490588 12.2863765 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#224F9F",
-      "points": "21.3531882 2.55855294 20.8576588 1.42051765 20.8523059 1.42051765 21.3456941 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#079EC5",
-      "points": "2.4414 2.55855294 1.36056471 1.42051765 0.154164706 1.42051765 0.154164706 2.22621176 0.154164706 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#079EC5",
-      "points": "4.51711765 1.42051765 3.46350588 2.55855294 5.67442353 2.55855294 5.67442353 1.42051765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#079EC5",
-      "points": "10.0740824 2.55687059 7.83578824 2.55687059 7.84144706 1.42235294 10.0777529 1.42235294 10.0777529 1.42051765 6.75862353 1.42051765 6.75862353 2.55855294 10.0740824 2.55855294"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#079EC5",
-      "x": "16.4436235",
-      "y": "1.42051765",
-      "width": "1.11891765",
-      "height": "1.13803529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#079EC5",
-      "points": "19.2702824 2.55855294 21.3456941 2.55855294 20.8523059 1.42051765 19.7551059 1.42051765"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M12.2863765,2.55855294 L12.2863765,1.42418824 L12.8313059,1.42418824 C13.5440118,1.42418824 14.1525647,1.911 14.3896235,2.55855294 L15.5686471,2.55855294 C15.4811647,2.13872941 15.3006941,1.75224706 15.0512471,1.42051765 L11.1530824,1.42051765 L11.1530824,2.55855294 L12.2863765,2.55855294 Z",
-      "id": "Shape",
-      "fill": "#079EC5"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#1C78BE",
-      "points": "5.67442353 1.4196 5.67442353 0.281564706 5.57424706 0.281564706 4.51895294 1.4196"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#1C78BE",
-      "points": "0.156 1.4196 1.35888235 1.4196 0.276058824 0.281564706 0.156 0.281564706"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#1C78BE",
-      "x": "6.75862353",
-      "y": "0.286917647",
-      "width": "3.31897647",
-      "height": "1.13268235"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#1C78BE",
-      "points": "17.5607059 0.286917647 16.4436235 0.286917647 16.4436235 1.4196 17.5625412 1.4196"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "fill": "#1C78BE",
-      "points": "20.8523059 1.4196 20.3584588 0.281564706 20.2377882 0.281564706 19.7551059 1.4196"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M12.8019412,0.286917647 L11.1530824,0.284929412 L11.1530824,1.4196 L15.0494118,1.4196 C14.5332353,0.734423529 13.7189765,0.286917647 12.8019412,0.286917647 Z",
-      "id": "Shape",
-      "fill": "#1C78BE"
-    }
-  })]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(0.152941, 0.152941)"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(0.611765, 0.152941)"
-    }
-  })])]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "flag",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('rect', {
-    attrs: {
-      "id": "Rectangle-path",
-      "fill": "#224F9F",
-      "x": "0.103082353",
-      "y": "0",
-      "width": "37.9021882",
-      "height": "26"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(9.329412, 3.594118)",
-      "stroke-width": "0.5",
-      "stroke": "#FAED36",
-      "fill": "#FAED36"
-    }
-  }, [_c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "19.2282235 9.12936471 18.8327176 9.12125882 18.2478706 9.11024706 18.0563882 8.58887059 17.9323529 8.25561176 17.8104588 8.58887059 17.6205059 9.11024706 17.0356588 9.12125882 16.6404588 9.12936471 16.9630118 9.36183529 17.4239765 9.69264706 17.2563529 10.2146353 17.1413412 10.5700706 17.4531882 10.3643647 17.9323529 10.0470118 18.4171765 10.3643647 18.7252 10.5700706 18.6121765 10.2146353 18.4460824 9.69264706 18.9055176 9.36183529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "16.3249412 5.57562353 16.1591529 6.09852941 16.0462824 6.45304706 16.3559882 6.24978824 16.8372941 5.92815294 17.3221176 6.24978824 17.628 6.45304706 17.5168118 6.09852941 17.3493412 5.57562353 17.8086235 5.24465882 18.1328588 5.01218824 17.7376588 5.00515294 17.1506706 4.99597647 16.9611765 4.47307059 16.8372941 4.13675294 16.7147882 4.47307059 16.5257529 4.99597647 15.9406 5.00515294 15.5450941 5.01218824 15.8658118 5.24465882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "14.1727529 2.00154118 13.9812706 1.47955294 13.8572353 1.14415294 13.7354941 1.47955294 13.5456941 2.00154118 12.9608471 2.01163529 12.5633529 2.02065882 12.8877412 2.25221176 13.3488588 2.58394118 13.1813882 3.10608235 13.0663765 3.4606 13.3779176 3.25825882 13.8572353 2.93830588 14.3403765 3.25825882 14.6503882 3.4606 14.5353765 3.10608235 14.3711176 2.58394118 14.8305529 2.25221176 15.1528 2.02065882 14.7594353 2.01163529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "10.0066353 0.897305882 9.81515294 0.376847059 9.69081176 0.0414470588 9.57075294 0.376847059 9.37927059 0.897305882 8.79442353 0.91 8.39708235 0.916423529 8.72147059 1.14858824 9.18090588 1.48138824 9.01481176 2.00429412 8.90010588 2.35789412 9.20996471 2.15555294 9.69081176 1.83483529 10.1756353 2.15555294 10.4836588 2.35789412 10.3710941 2.00429412 10.205 1.48138824 10.6644353 1.14858824 10.9848471 0.916423529 10.5914824 0.91"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "5.87661176 2.00154118 5.68512941 1.47955294 5.56507059 1.14415294 5.44287059 1.47955294 5.25169412 2.00154118 4.66654118 2.01163529 4.2692 2.01790588 4.59175294 2.25129412 5.05302353 2.58210588 4.88692941 3.10409412 4.77252941 3.4606 5.08208235 3.25458824 5.56507059 2.93662353 6.04438824 3.25458824 6.35424706 3.4606 6.24137647 3.10409412 6.07528235 2.58210588 6.53471765 2.25129412 6.85910588 2.01790588 6.46176471 2.01163529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "2.86978824 4.96416471 2.68151765 4.44370588 2.55962353 4.10937647 2.43604706 4.44370588 2.2464 4.96416471 1.66109412 4.97502353 1.26558824 4.98236471 1.58829412 5.2156 2.04772941 5.54732941 1.88010588 6.06855294 1.76861176 6.42383529 2.0748 6.21981176 2.55794118 5.90092941 3.04092941 6.21981176 3.3488 6.42383529 3.23562353 6.06855294 3.06983529 5.54732941 3.53110588 5.2156 3.85197647 4.98236471 3.45616471 4.97502353"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "1.9162 10.3568706 2.22605882 10.5625765 2.11334118 10.2056118 1.94724706 9.68423529 2.40637647 9.35265882 2.72908235 9.12125882 2.33388235 9.11284706 1.74872941 9.10305882 1.55755294 8.5826 1.43535294 8.24827059 1.31284706 8.5826 1.12167059 9.10305882 0.536823529 9.11284706 0.141317647 9.12125882 0.461882353 9.35265882 0.923 9.68423529 0.757211765 10.2056118 0.644341176 10.5625765 0.952058824 10.3568706 1.43535294 10.0379882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "2.85663529 13.1873529 2.66545882 12.6678118 2.54509412 12.3333294 2.42105882 12.6678118 2.22988235 13.1873529 1.64503529 13.2000471 1.24952941 13.2087647 1.57177647 13.4384824 2.03121176 13.7722 1.86511765 14.2934235 1.75041176 14.6459529 2.06027059 14.4445294 2.54142353 14.1258 3.02441176 14.4445294 3.33243529 14.6476353 3.21956471 14.2934235 3.05561176 13.7722 3.51458824 13.4384824 3.83545882 13.2087647 3.43995294 13.2000471"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "5.84021176 16.1778118 5.65071765 15.6547529 5.52851765 15.3205765 5.40463529 15.6547529 5.21529412 16.1778118 4.62830588 16.1869882 4.2328 16.1960118 4.55718824 16.4275647 5.01448235 16.7592941 4.85052941 17.2802118 4.73582353 17.6359529 5.04354118 17.4334588 5.52851765 17.1135059 6.00768235 17.4334588 6.31952941 17.6359529 6.20451765 17.2802118 6.03903529 16.7592941 6.49816471 16.4275647 6.82255294 16.1960118 6.42536471 16.1869882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "10.0026588 17.2812824 9.81331765 16.7629647 9.68912941 16.4264941 9.56891765 16.7629647 9.37743529 17.2812824 8.79258824 17.2932118 8.39509412 17.3025412 8.71764706 17.5356235 9.17922353 17.8653647 9.01129412 18.3867412 8.90010588 18.7430941 9.20812941 18.5381529 9.68912941 18.2182 10.1724235 18.5381529 10.4802941 18.7430941 10.3692588 18.3867412 10.2013294 17.8653647 10.6607647 17.5356235 10.9831647 17.3025412 10.5896471 17.2932118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "14.1345176 16.1978471 13.9430353 15.6766235 13.8208353 15.3421412 13.6986353 15.6766235 13.5089882 16.1978471 12.9241412 16.2106941 12.5268 16.2180353 12.8514941 16.4494353 13.3106235 16.7810118 13.1445294 17.3025412 13.0316588 17.6576706 13.3396824 17.4553294 13.8208353 17.1355294 14.3038235 17.4553294 14.6100118 17.6576706 14.5008118 17.3025412 14.3347176 16.7810118 14.7920118 16.4494353 15.1148706 16.2180353 14.7193647 16.2106941"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Shape",
-      "points": "17.1359882 13.2237529 16.9445059 12.7022235 16.8226118 12.3689647 16.7004118 12.7022235 16.5089294 13.2237529 15.9237765 13.2344588 15.5285765 13.2419529 15.8526588 13.4751882 16.3105647 13.806 16.1449294 14.3289059 16.0334353 14.6834235 16.3399294 14.4792471 16.8226118 14.1603647 17.3052941 14.4792471 17.6117882 14.6834235 17.4986118 14.3289059 17.3346588 13.806 17.7940941 13.4751882 18.1166471 13.2419529 17.7208353 13.2344588"
-    }
-  })])])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "collapse navbar-collapse justify-content-end",
-    attrs: {
-      "id": "menu-main"
-    }
-  }, [_c('ul', {
-    staticClass: "navbar-nav justify-content-around"
-  }, [_c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Apps"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-home",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Network"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type + '/network'
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-users",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), (_vm.type == 'teacher') ? _c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type + '/settings',
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Student settings"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-user",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]) : _vm._e(), _vm._v(" "), _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "id": "notifications-menu",
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Notifications"
-    }
-  }, [_c('notifications-menu', {
-    attrs: {
-      "notifications": _vm.notifs
-    }
-  })], 1), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('notifications-dropdown-menu', {
-    attrs: {
-      "notifications": _vm.notifs
-    }
-  }), _vm._v(" "), _c('notifications', {
-    attrs: {
-      "user": _vm.userParsed,
-      "user_type": _vm.user_type
-    }
-  })], 1)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "navbar-toggler navbar-toggler-right",
-    attrs: {
-      "type": "button",
-      "data-toggle": "collapse",
-      "data-target": "#menu-main",
-      "aria-controls": "menu-main",
-      "aria-expanded": "false",
-      "aria-label": "Toggle navigation"
-    }
-  }, [_c('span', {
-    staticClass: "navbar-toggler-icon"
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Change Language"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": "#",
-      "id": "dropdownMenuLink",
-      "data-toggle": "dropdown",
-      "aria-haspopup": "true",
-      "aria-expanded": "false"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-cog",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "dropdown-menu dropdown-menu-right px-2",
-    attrs: {
-      "aria-labelledby": "dropdownMenuLink"
-    }
-  }, [_c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/en"
-    }
-  }, [_vm._v("\n              English\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/fr"
-    }
-  }, [_vm._v("\n              Francais\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/it"
-    }
-  }, [_vm._v("\n              Italiano\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/sr"
-    }
-  }, [_vm._v("\n              српски\n            ")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-49f2c950", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ 473:
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(470);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(9)("2aabf4d7", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ 51:
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var parser = __webpack_require__(41);
-var Emitter = __webpack_require__(53);
+var parser = __webpack_require__(19);
+var Emitter = __webpack_require__(49);
 
 /**
  * Module exports.
@@ -15371,13 +13396,12 @@ Transport.prototype.onClose = function () {
 
 
 /***/ }),
-
-/***/ 52:
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(95);
+var hasCORS = __webpack_require__(89);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -15413,11 +13437,10 @@ module.exports = function (opts) {
   }
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 53:
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -15586,8 +13609,584 @@ Emitter.prototype.hasListeners = function(event){
 
 
 /***/ }),
+/* 50 */
+/***/ (function(module, exports, __webpack_require__) {
 
-/***/ 54:
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (true) {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+  var args = [].slice.call(arguments, 1)
+    , callbacks = this._callbacks['$' + event];
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+
+/***/ }),
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Module dependencies.
+ */
+
+var debug = __webpack_require__(9)('socket.io-parser');
+var Emitter = __webpack_require__(50);
+var hasBin = __webpack_require__(60);
+var binary = __webpack_require__(94);
+var isBuf = __webpack_require__(66);
+
+/**
+ * Protocol version.
+ *
+ * @api public
+ */
+
+exports.protocol = 4;
+
+/**
+ * Packet types.
+ *
+ * @api public
+ */
+
+exports.types = [
+  'CONNECT',
+  'DISCONNECT',
+  'EVENT',
+  'ACK',
+  'ERROR',
+  'BINARY_EVENT',
+  'BINARY_ACK'
+];
+
+/**
+ * Packet type `connect`.
+ *
+ * @api public
+ */
+
+exports.CONNECT = 0;
+
+/**
+ * Packet type `disconnect`.
+ *
+ * @api public
+ */
+
+exports.DISCONNECT = 1;
+
+/**
+ * Packet type `event`.
+ *
+ * @api public
+ */
+
+exports.EVENT = 2;
+
+/**
+ * Packet type `ack`.
+ *
+ * @api public
+ */
+
+exports.ACK = 3;
+
+/**
+ * Packet type `error`.
+ *
+ * @api public
+ */
+
+exports.ERROR = 4;
+
+/**
+ * Packet type 'binary event'
+ *
+ * @api public
+ */
+
+exports.BINARY_EVENT = 5;
+
+/**
+ * Packet type `binary ack`. For acks with binary arguments.
+ *
+ * @api public
+ */
+
+exports.BINARY_ACK = 6;
+
+/**
+ * Encoder constructor.
+ *
+ * @api public
+ */
+
+exports.Encoder = Encoder;
+
+/**
+ * Decoder constructor.
+ *
+ * @api public
+ */
+
+exports.Decoder = Decoder;
+
+/**
+ * A socket.io Encoder instance
+ *
+ * @api public
+ */
+
+function Encoder() {}
+
+/**
+ * Encode a packet as a single string if non-binary, or as a
+ * buffer sequence, depending on packet type.
+ *
+ * @param {Object} obj - packet object
+ * @param {Function} callback - function to handle encodings (likely engine.write)
+ * @return Calls callback with Array of encodings
+ * @api public
+ */
+
+Encoder.prototype.encode = function(obj, callback){
+  if ((obj.type === exports.EVENT || obj.type === exports.ACK) && hasBin(obj.data)) {
+    obj.type = obj.type === exports.EVENT ? exports.BINARY_EVENT : exports.BINARY_ACK;
+  }
+
+  debug('encoding packet %j', obj);
+
+  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
+    encodeAsBinary(obj, callback);
+  }
+  else {
+    var encoding = encodeAsString(obj);
+    callback([encoding]);
+  }
+};
+
+/**
+ * Encode packet as string.
+ *
+ * @param {Object} packet
+ * @return {String} encoded
+ * @api private
+ */
+
+function encodeAsString(obj) {
+
+  // first is type
+  var str = '' + obj.type;
+
+  // attachments if we have them
+  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
+    str += obj.attachments + '-';
+  }
+
+  // if we have a namespace other than `/`
+  // we append it followed by a comma `,`
+  if (obj.nsp && '/' !== obj.nsp) {
+    str += obj.nsp + ',';
+  }
+
+  // immediately followed by the id
+  if (null != obj.id) {
+    str += obj.id;
+  }
+
+  // json data
+  if (null != obj.data) {
+    str += JSON.stringify(obj.data);
+  }
+
+  debug('encoded %j as %s', obj, str);
+  return str;
+}
+
+/**
+ * Encode packet as 'buffer sequence' by removing blobs, and
+ * deconstructing packet into object with placeholders and
+ * a list of buffers.
+ *
+ * @param {Object} packet
+ * @return {Buffer} encoded
+ * @api private
+ */
+
+function encodeAsBinary(obj, callback) {
+
+  function writeEncoding(bloblessData) {
+    var deconstruction = binary.deconstructPacket(bloblessData);
+    var pack = encodeAsString(deconstruction.packet);
+    var buffers = deconstruction.buffers;
+
+    buffers.unshift(pack); // add packet info to beginning of data list
+    callback(buffers); // write all the buffers
+  }
+
+  binary.removeBlobs(obj, writeEncoding);
+}
+
+/**
+ * A socket.io Decoder instance
+ *
+ * @return {Object} decoder
+ * @api public
+ */
+
+function Decoder() {
+  this.reconstructor = null;
+}
+
+/**
+ * Mix in `Emitter` with Decoder.
+ */
+
+Emitter(Decoder.prototype);
+
+/**
+ * Decodes an ecoded packet string into packet JSON.
+ *
+ * @param {String} obj - encoded packet
+ * @return {Object} packet
+ * @api public
+ */
+
+Decoder.prototype.add = function(obj) {
+  var packet;
+  if (typeof obj === 'string') {
+    packet = decodeString(obj);
+    if (exports.BINARY_EVENT === packet.type || exports.BINARY_ACK === packet.type) { // binary packet's json
+      this.reconstructor = new BinaryReconstructor(packet);
+
+      // no attachments, labeled binary but no binary data to follow
+      if (this.reconstructor.reconPack.attachments === 0) {
+        this.emit('decoded', packet);
+      }
+    } else { // non-binary full packet
+      this.emit('decoded', packet);
+    }
+  }
+  else if (isBuf(obj) || obj.base64) { // raw binary data
+    if (!this.reconstructor) {
+      throw new Error('got binary data when not reconstructing a packet');
+    } else {
+      packet = this.reconstructor.takeBinaryData(obj);
+      if (packet) { // received final buffer
+        this.reconstructor = null;
+        this.emit('decoded', packet);
+      }
+    }
+  }
+  else {
+    throw new Error('Unknown type: ' + obj);
+  }
+};
+
+/**
+ * Decode a packet String (JSON data)
+ *
+ * @param {String} str
+ * @return {Object} packet
+ * @api private
+ */
+
+function decodeString(str) {
+  var i = 0;
+  // look up type
+  var p = {
+    type: Number(str.charAt(0))
+  };
+
+  if (null == exports.types[p.type]) return error();
+
+  // look up attachments if type binary
+  if (exports.BINARY_EVENT === p.type || exports.BINARY_ACK === p.type) {
+    var buf = '';
+    while (str.charAt(++i) !== '-') {
+      buf += str.charAt(i);
+      if (i == str.length) break;
+    }
+    if (buf != Number(buf) || str.charAt(i) !== '-') {
+      throw new Error('Illegal attachments');
+    }
+    p.attachments = Number(buf);
+  }
+
+  // look up namespace (if any)
+  if ('/' === str.charAt(i + 1)) {
+    p.nsp = '';
+    while (++i) {
+      var c = str.charAt(i);
+      if (',' === c) break;
+      p.nsp += c;
+      if (i === str.length) break;
+    }
+  } else {
+    p.nsp = '/';
+  }
+
+  // look up id
+  var next = str.charAt(i + 1);
+  if ('' !== next && Number(next) == next) {
+    p.id = '';
+    while (++i) {
+      var c = str.charAt(i);
+      if (null == c || Number(c) != c) {
+        --i;
+        break;
+      }
+      p.id += str.charAt(i);
+      if (i === str.length) break;
+    }
+    p.id = Number(p.id);
+  }
+
+  // look up json data
+  if (str.charAt(++i)) {
+    p = tryParse(p, str.substr(i));
+  }
+
+  debug('decoded %s as %j', str, p);
+  return p;
+}
+
+function tryParse(p, str) {
+  try {
+    p.data = JSON.parse(str);
+  } catch(e){
+    return error();
+  }
+  return p; 
+}
+
+/**
+ * Deallocates a parser's resources
+ *
+ * @api public
+ */
+
+Decoder.prototype.destroy = function() {
+  if (this.reconstructor) {
+    this.reconstructor.finishedReconstruction();
+  }
+};
+
+/**
+ * A manager of a binary event's 'buffer sequence'. Should
+ * be constructed whenever a packet of type BINARY_EVENT is
+ * decoded.
+ *
+ * @param {Object} packet
+ * @return {BinaryReconstructor} initialized reconstructor
+ * @api private
+ */
+
+function BinaryReconstructor(packet) {
+  this.reconPack = packet;
+  this.buffers = [];
+}
+
+/**
+ * Method to be called when binary data received from connection
+ * after a BINARY_EVENT packet.
+ *
+ * @param {Buffer | ArrayBuffer} binData - the raw binary data received
+ * @return {null | Object} returns null if more binary data is expected or
+ *   a reconstructed packet object if all buffers have been received.
+ * @api private
+ */
+
+BinaryReconstructor.prototype.takeBinaryData = function(binData) {
+  this.buffers.push(binData);
+  if (this.buffers.length === this.reconPack.attachments) { // done with buffer list
+    var packet = binary.reconstructPacket(this.reconPack, this.buffers);
+    this.finishedReconstruction();
+    return packet;
+  }
+  return null;
+};
+
+/**
+ * Cleans up binary packet reconstruction variables.
+ *
+ * @api private
+ */
+
+BinaryReconstructor.prototype.finishedReconstruction = function() {
+  this.reconPack = null;
+  this.buffers = [];
+};
+
+function error() {
+  return {
+    type: exports.ERROR,
+    data: 'parser error'
+  };
+}
+
+
+/***/ }),
+/* 52 */,
+/* 53 */,
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -23553,588 +22152,12 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 		_tickerActive = false; //ensures that the first official animation forces a ticker.tick() to update the time when it is instantiated
 
 })((typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window, "TweenMax");
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 55:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Expose `Emitter`.
- */
-
-if (true) {
-  module.exports = Emitter;
-}
-
-/**
- * Initialize a new `Emitter`.
- *
- * @api public
- */
-
-function Emitter(obj) {
-  if (obj) return mixin(obj);
-};
-
-/**
- * Mixin the emitter properties.
- *
- * @param {Object} obj
- * @return {Object}
- * @api private
- */
-
-function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
-}
-
-/**
- * Listen on the given `event` with `fn`.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-    .push(fn);
-  return this;
-};
-
-/**
- * Adds an `event` listener that will be invoked a single
- * time then automatically removed.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.once = function(event, fn){
-  function on() {
-    this.off(event, on);
-    fn.apply(this, arguments);
-  }
-
-  on.fn = fn;
-  this.on(event, on);
-  return this;
-};
-
-/**
- * Remove the given callback for `event` or all
- * registered callbacks.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.off =
-Emitter.prototype.removeListener =
-Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
-
-  // specific event
-  var callbacks = this._callbacks['$' + event];
-  if (!callbacks) return this;
-
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks['$' + event];
-    return this;
-  }
-
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-  return this;
-};
-
-/**
- * Emit `event` with the given args.
- *
- * @param {String} event
- * @param {Mixed} ...
- * @return {Emitter}
- */
-
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks['$' + event];
-
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
-
-  return this;
-};
-
-/**
- * Return array of callbacks for `event`.
- *
- * @param {String} event
- * @return {Array}
- * @api public
- */
-
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks['$' + event] || [];
-};
-
-/**
- * Check if this emitter has `event` handlers.
- *
- * @param {String} event
- * @return {Boolean}
- * @api public
- */
-
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
-};
-
-
-/***/ }),
-
-/***/ 56:
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Module dependencies.
- */
-
-var debug = __webpack_require__(17)('socket.io-parser');
-var Emitter = __webpack_require__(55);
-var hasBin = __webpack_require__(63);
-var binary = __webpack_require__(100);
-var isBuf = __webpack_require__(69);
-
-/**
- * Protocol version.
- *
- * @api public
- */
-
-exports.protocol = 4;
-
-/**
- * Packet types.
- *
- * @api public
- */
-
-exports.types = [
-  'CONNECT',
-  'DISCONNECT',
-  'EVENT',
-  'ACK',
-  'ERROR',
-  'BINARY_EVENT',
-  'BINARY_ACK'
-];
-
-/**
- * Packet type `connect`.
- *
- * @api public
- */
-
-exports.CONNECT = 0;
-
-/**
- * Packet type `disconnect`.
- *
- * @api public
- */
-
-exports.DISCONNECT = 1;
-
-/**
- * Packet type `event`.
- *
- * @api public
- */
-
-exports.EVENT = 2;
-
-/**
- * Packet type `ack`.
- *
- * @api public
- */
-
-exports.ACK = 3;
-
-/**
- * Packet type `error`.
- *
- * @api public
- */
-
-exports.ERROR = 4;
-
-/**
- * Packet type 'binary event'
- *
- * @api public
- */
-
-exports.BINARY_EVENT = 5;
-
-/**
- * Packet type `binary ack`. For acks with binary arguments.
- *
- * @api public
- */
-
-exports.BINARY_ACK = 6;
-
-/**
- * Encoder constructor.
- *
- * @api public
- */
-
-exports.Encoder = Encoder;
-
-/**
- * Decoder constructor.
- *
- * @api public
- */
-
-exports.Decoder = Decoder;
-
-/**
- * A socket.io Encoder instance
- *
- * @api public
- */
-
-function Encoder() {}
-
-/**
- * Encode a packet as a single string if non-binary, or as a
- * buffer sequence, depending on packet type.
- *
- * @param {Object} obj - packet object
- * @param {Function} callback - function to handle encodings (likely engine.write)
- * @return Calls callback with Array of encodings
- * @api public
- */
-
-Encoder.prototype.encode = function(obj, callback){
-  if ((obj.type === exports.EVENT || obj.type === exports.ACK) && hasBin(obj.data)) {
-    obj.type = obj.type === exports.EVENT ? exports.BINARY_EVENT : exports.BINARY_ACK;
-  }
-
-  debug('encoding packet %j', obj);
-
-  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
-    encodeAsBinary(obj, callback);
-  }
-  else {
-    var encoding = encodeAsString(obj);
-    callback([encoding]);
-  }
-};
-
-/**
- * Encode packet as string.
- *
- * @param {Object} packet
- * @return {String} encoded
- * @api private
- */
-
-function encodeAsString(obj) {
-
-  // first is type
-  var str = '' + obj.type;
-
-  // attachments if we have them
-  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
-    str += obj.attachments + '-';
-  }
-
-  // if we have a namespace other than `/`
-  // we append it followed by a comma `,`
-  if (obj.nsp && '/' !== obj.nsp) {
-    str += obj.nsp + ',';
-  }
-
-  // immediately followed by the id
-  if (null != obj.id) {
-    str += obj.id;
-  }
-
-  // json data
-  if (null != obj.data) {
-    str += JSON.stringify(obj.data);
-  }
-
-  debug('encoded %j as %s', obj, str);
-  return str;
-}
-
-/**
- * Encode packet as 'buffer sequence' by removing blobs, and
- * deconstructing packet into object with placeholders and
- * a list of buffers.
- *
- * @param {Object} packet
- * @return {Buffer} encoded
- * @api private
- */
-
-function encodeAsBinary(obj, callback) {
-
-  function writeEncoding(bloblessData) {
-    var deconstruction = binary.deconstructPacket(bloblessData);
-    var pack = encodeAsString(deconstruction.packet);
-    var buffers = deconstruction.buffers;
-
-    buffers.unshift(pack); // add packet info to beginning of data list
-    callback(buffers); // write all the buffers
-  }
-
-  binary.removeBlobs(obj, writeEncoding);
-}
-
-/**
- * A socket.io Decoder instance
- *
- * @return {Object} decoder
- * @api public
- */
-
-function Decoder() {
-  this.reconstructor = null;
-}
-
-/**
- * Mix in `Emitter` with Decoder.
- */
-
-Emitter(Decoder.prototype);
-
-/**
- * Decodes an ecoded packet string into packet JSON.
- *
- * @param {String} obj - encoded packet
- * @return {Object} packet
- * @api public
- */
-
-Decoder.prototype.add = function(obj) {
-  var packet;
-  if (typeof obj === 'string') {
-    packet = decodeString(obj);
-    if (exports.BINARY_EVENT === packet.type || exports.BINARY_ACK === packet.type) { // binary packet's json
-      this.reconstructor = new BinaryReconstructor(packet);
-
-      // no attachments, labeled binary but no binary data to follow
-      if (this.reconstructor.reconPack.attachments === 0) {
-        this.emit('decoded', packet);
-      }
-    } else { // non-binary full packet
-      this.emit('decoded', packet);
-    }
-  }
-  else if (isBuf(obj) || obj.base64) { // raw binary data
-    if (!this.reconstructor) {
-      throw new Error('got binary data when not reconstructing a packet');
-    } else {
-      packet = this.reconstructor.takeBinaryData(obj);
-      if (packet) { // received final buffer
-        this.reconstructor = null;
-        this.emit('decoded', packet);
-      }
-    }
-  }
-  else {
-    throw new Error('Unknown type: ' + obj);
-  }
-};
-
-/**
- * Decode a packet String (JSON data)
- *
- * @param {String} str
- * @return {Object} packet
- * @api private
- */
-
-function decodeString(str) {
-  var i = 0;
-  // look up type
-  var p = {
-    type: Number(str.charAt(0))
-  };
-
-  if (null == exports.types[p.type]) return error();
-
-  // look up attachments if type binary
-  if (exports.BINARY_EVENT === p.type || exports.BINARY_ACK === p.type) {
-    var buf = '';
-    while (str.charAt(++i) !== '-') {
-      buf += str.charAt(i);
-      if (i == str.length) break;
-    }
-    if (buf != Number(buf) || str.charAt(i) !== '-') {
-      throw new Error('Illegal attachments');
-    }
-    p.attachments = Number(buf);
-  }
-
-  // look up namespace (if any)
-  if ('/' === str.charAt(i + 1)) {
-    p.nsp = '';
-    while (++i) {
-      var c = str.charAt(i);
-      if (',' === c) break;
-      p.nsp += c;
-      if (i === str.length) break;
-    }
-  } else {
-    p.nsp = '/';
-  }
-
-  // look up id
-  var next = str.charAt(i + 1);
-  if ('' !== next && Number(next) == next) {
-    p.id = '';
-    while (++i) {
-      var c = str.charAt(i);
-      if (null == c || Number(c) != c) {
-        --i;
-        break;
-      }
-      p.id += str.charAt(i);
-      if (i === str.length) break;
-    }
-    p.id = Number(p.id);
-  }
-
-  // look up json data
-  if (str.charAt(++i)) {
-    p = tryParse(p, str.substr(i));
-  }
-
-  debug('decoded %s as %j', str, p);
-  return p;
-}
-
-function tryParse(p, str) {
-  try {
-    p.data = JSON.parse(str);
-  } catch(e){
-    return error();
-  }
-  return p; 
-}
-
-/**
- * Deallocates a parser's resources
- *
- * @api public
- */
-
-Decoder.prototype.destroy = function() {
-  if (this.reconstructor) {
-    this.reconstructor.finishedReconstruction();
-  }
-};
-
-/**
- * A manager of a binary event's 'buffer sequence'. Should
- * be constructed whenever a packet of type BINARY_EVENT is
- * decoded.
- *
- * @param {Object} packet
- * @return {BinaryReconstructor} initialized reconstructor
- * @api private
- */
-
-function BinaryReconstructor(packet) {
-  this.reconPack = packet;
-  this.buffers = [];
-}
-
-/**
- * Method to be called when binary data received from connection
- * after a BINARY_EVENT packet.
- *
- * @param {Buffer | ArrayBuffer} binData - the raw binary data received
- * @return {null | Object} returns null if more binary data is expected or
- *   a reconstructed packet object if all buffers have been received.
- * @api private
- */
-
-BinaryReconstructor.prototype.takeBinaryData = function(binData) {
-  this.buffers.push(binData);
-  if (this.buffers.length === this.reconPack.attachments) { // done with buffer list
-    var packet = binary.reconstructPacket(this.reconPack, this.buffers);
-    this.finishedReconstruction();
-    return packet;
-  }
-  return null;
-};
-
-/**
- * Cleans up binary packet reconstruction variables.
- *
- * @api private
- */
-
-BinaryReconstructor.prototype.finishedReconstruction = function() {
-  this.reconPack = null;
-  this.buffers = [];
-};
-
-function error() {
-  return {
-    type: exports.ERROR,
-    data: 'parser error'
-  };
-}
-
-
-/***/ }),
-
-/***/ 60:
+/* 55 */,
+/* 56 */,
+/* 57 */
 /***/ (function(module, exports) {
 
 /**
@@ -24163,18 +22186,17 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-
-/***/ 61:
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(52);
-var XHR = __webpack_require__(89);
-var JSONP = __webpack_require__(88);
-var websocket = __webpack_require__(90);
+var XMLHttpRequest = __webpack_require__(48);
+var XHR = __webpack_require__(83);
+var JSONP = __webpack_require__(82);
+var websocket = __webpack_require__(84);
 
 /**
  * Export transports.
@@ -24221,23 +22243,22 @@ function polling (opts) {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 62:
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(51);
-var parseqs = __webpack_require__(47);
-var parser = __webpack_require__(41);
-var inherit = __webpack_require__(46);
-var yeast = __webpack_require__(74);
-var debug = __webpack_require__(17)('engine.io-client:polling');
+var Transport = __webpack_require__(47);
+var parseqs = __webpack_require__(46);
+var parser = __webpack_require__(19);
+var inherit = __webpack_require__(45);
+var yeast = __webpack_require__(67);
+var debug = __webpack_require__(9)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -24250,7 +22271,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(52);
+  var XMLHttpRequest = __webpack_require__(48);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -24476,8 +22497,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-
-/***/ 63:
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -24486,7 +22506,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(94);
+var isArray = __webpack_require__(88);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -24543,11 +22563,10 @@ function hasBinary (obj) {
   return false;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 64:
+/* 61 */
 /***/ (function(module, exports) {
 
 
@@ -24562,8 +22581,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-
-/***/ 65:
+/* 62 */
 /***/ (function(module, exports) {
 
 /**
@@ -24608,8 +22626,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-
-/***/ 66:
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -24617,15 +22634,15 @@ module.exports = function parseuri(str) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(86);
-var Socket = __webpack_require__(68);
-var Emitter = __webpack_require__(55);
-var parser = __webpack_require__(56);
-var on = __webpack_require__(67);
-var bind = __webpack_require__(60);
-var debug = __webpack_require__(17)('socket.io-client:manager');
-var indexOf = __webpack_require__(64);
-var Backoff = __webpack_require__(82);
+var eio = __webpack_require__(80);
+var Socket = __webpack_require__(65);
+var Emitter = __webpack_require__(50);
+var parser = __webpack_require__(51);
+var on = __webpack_require__(64);
+var bind = __webpack_require__(57);
+var debug = __webpack_require__(9)('socket.io-client:manager');
+var indexOf = __webpack_require__(61);
+var Backoff = __webpack_require__(76);
 
 /**
  * IE6+ hasOwnProperty
@@ -25188,8 +23205,7 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-
-/***/ 67:
+/* 64 */
 /***/ (function(module, exports) {
 
 
@@ -25219,8 +23235,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-
-/***/ 68:
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -25228,13 +23243,13 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(56);
-var Emitter = __webpack_require__(55);
-var toArray = __webpack_require__(101);
-var on = __webpack_require__(67);
-var bind = __webpack_require__(60);
-var debug = __webpack_require__(17)('socket.io-client:socket');
-var parseqs = __webpack_require__(47);
+var parser = __webpack_require__(51);
+var Emitter = __webpack_require__(50);
+var toArray = __webpack_require__(95);
+var on = __webpack_require__(64);
+var bind = __webpack_require__(57);
+var debug = __webpack_require__(9)('socket.io-client:socket');
+var parseqs = __webpack_require__(46);
 
 /**
  * Module exports.
@@ -25644,8 +23659,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-
-/***/ 69:
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -25662,68 +23676,10 @@ function isBuf(obj) {
          (global.ArrayBuffer && obj instanceof ArrayBuffer);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 7:
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-
-/***/ }),
-
-/***/ 74:
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -25798,66 +23754,14 @@ module.exports = yeast;
 
 
 /***/ }),
-
-/***/ 8:
-/***/ (function(module, exports) {
-
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  scopeId,
-  cssModules
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  // inject cssModules
-  if (cssModules) {
-    var computed = Object.create(options.computed || null)
-    Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
-      computed[key] = function () { return module }
-    })
-    options.computed = computed
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ 81:
+/* 68 */,
+/* 69 */,
+/* 70 */,
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */,
+/* 75 */
 /***/ (function(module, exports) {
 
 /**
@@ -25892,8 +23796,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-
-/***/ 82:
+/* 76 */
 /***/ (function(module, exports) {
 
 
@@ -25984,8 +23887,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-
-/***/ 83:
+/* 77 */
 /***/ (function(module, exports) {
 
 /*
@@ -26058,8 +23960,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-
-/***/ 84:
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -26159,11 +24060,10 @@ module.exports = (function() {
   }
 })();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 85:
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26179,7 +24079,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(96);
+exports.humanize = __webpack_require__(90);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -26371,12 +24271,11 @@ function coerce(val) {
 
 
 /***/ }),
-
-/***/ 86:
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(87);
+module.exports = __webpack_require__(81);
 
 /**
  * Exports parser
@@ -26384,25 +24283,24 @@ module.exports = __webpack_require__(87);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(41);
+module.exports.parser = __webpack_require__(19);
 
 
 /***/ }),
-
-/***/ 87:
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(61);
-var Emitter = __webpack_require__(53);
-var debug = __webpack_require__(17)('engine.io-client:socket');
-var index = __webpack_require__(64);
-var parser = __webpack_require__(41);
-var parseuri = __webpack_require__(65);
-var parseqs = __webpack_require__(47);
+var transports = __webpack_require__(58);
+var Emitter = __webpack_require__(49);
+var debug = __webpack_require__(9)('engine.io-client:socket');
+var index = __webpack_require__(61);
+var parser = __webpack_require__(19);
+var parseuri = __webpack_require__(62);
+var parseqs = __webpack_require__(46);
 
 /**
  * Module exports.
@@ -26535,9 +24433,9 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(51);
-Socket.transports = __webpack_require__(61);
-Socket.parser = __webpack_require__(41);
+Socket.Transport = __webpack_require__(47);
+Socket.transports = __webpack_require__(58);
+Socket.parser = __webpack_require__(19);
 
 /**
  * Creates transport of the given type.
@@ -27136,11 +25034,10 @@ Socket.prototype.filterUpgrades = function (upgrades) {
   return filteredUpgrades;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 88:
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -27148,8 +25045,8 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(62);
-var inherit = __webpack_require__(46);
+var Polling = __webpack_require__(59);
+var inherit = __webpack_require__(45);
 
 /**
  * Module exports.
@@ -27375,22 +25272,21 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
   }
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 89:
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(52);
-var Polling = __webpack_require__(62);
-var Emitter = __webpack_require__(53);
-var inherit = __webpack_require__(46);
-var debug = __webpack_require__(17)('engine.io-client:polling-xhr');
+var XMLHttpRequest = __webpack_require__(48);
+var Polling = __webpack_require__(59);
+var Emitter = __webpack_require__(49);
+var inherit = __webpack_require__(45);
+var debug = __webpack_require__(9)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -27796,250 +25692,27 @@ function unloadHandler () {
   }
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-  Modified by Evan You @yyx990803
-*/
-
-var hasDocument = typeof document !== 'undefined'
-
-if (typeof DEBUG !== 'undefined' && DEBUG) {
-  if (!hasDocument) {
-    throw new Error(
-    'vue-style-loader cannot be used in a non-browser environment. ' +
-    "Use { target: 'node' } in your Webpack config to indicate a server-rendering environment."
-  ) }
-}
-
-var listToStyles = __webpack_require__(22)
-
-/*
-type StyleObject = {
-  id: number;
-  parts: Array<StyleObjectPart>
-}
-
-type StyleObjectPart = {
-  css: string;
-  media: string;
-  sourceMap: ?string
-}
-*/
-
-var stylesInDom = {/*
-  [id: number]: {
-    id: number,
-    refs: number,
-    parts: Array<(obj?: StyleObjectPart) => void>
-  }
-*/}
-
-var head = hasDocument && (document.head || document.getElementsByTagName('head')[0])
-var singletonElement = null
-var singletonCounter = 0
-var isProduction = false
-var noop = function () {}
-
-// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-// tags it will allow on a page
-var isOldIE = typeof navigator !== 'undefined' && /msie [6-9]\b/.test(navigator.userAgent.toLowerCase())
-
-module.exports = function (parentId, list, _isProduction) {
-  isProduction = _isProduction
-
-  var styles = listToStyles(parentId, list)
-  addStylesToDom(styles)
-
-  return function update (newList) {
-    var mayRemove = []
-    for (var i = 0; i < styles.length; i++) {
-      var item = styles[i]
-      var domStyle = stylesInDom[item.id]
-      domStyle.refs--
-      mayRemove.push(domStyle)
-    }
-    if (newList) {
-      styles = listToStyles(parentId, newList)
-      addStylesToDom(styles)
-    } else {
-      styles = []
-    }
-    for (var i = 0; i < mayRemove.length; i++) {
-      var domStyle = mayRemove[i]
-      if (domStyle.refs === 0) {
-        for (var j = 0; j < domStyle.parts.length; j++) {
-          domStyle.parts[j]()
-        }
-        delete stylesInDom[domStyle.id]
-      }
-    }
-  }
-}
-
-function addStylesToDom (styles /* Array<StyleObject> */) {
-  for (var i = 0; i < styles.length; i++) {
-    var item = styles[i]
-    var domStyle = stylesInDom[item.id]
-    if (domStyle) {
-      domStyle.refs++
-      for (var j = 0; j < domStyle.parts.length; j++) {
-        domStyle.parts[j](item.parts[j])
-      }
-      for (; j < item.parts.length; j++) {
-        domStyle.parts.push(addStyle(item.parts[j]))
-      }
-      if (domStyle.parts.length > item.parts.length) {
-        domStyle.parts.length = item.parts.length
-      }
-    } else {
-      var parts = []
-      for (var j = 0; j < item.parts.length; j++) {
-        parts.push(addStyle(item.parts[j]))
-      }
-      stylesInDom[item.id] = { id: item.id, refs: 1, parts: parts }
-    }
-  }
-}
-
-function createStyleElement () {
-  var styleElement = document.createElement('style')
-  styleElement.type = 'text/css'
-  head.appendChild(styleElement)
-  return styleElement
-}
-
-function addStyle (obj /* StyleObjectPart */) {
-  var update, remove
-  var styleElement = document.querySelector('style[data-vue-ssr-id~="' + obj.id + '"]')
-
-  if (styleElement) {
-    if (isProduction) {
-      // has SSR styles and in production mode.
-      // simply do nothing.
-      return noop
-    } else {
-      // has SSR styles but in dev mode.
-      // for some reason Chrome can't handle source map in server-rendered
-      // style tags - source maps in <style> only works if the style tag is
-      // created and inserted dynamically. So we remove the server rendered
-      // styles and inject new ones.
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  if (isOldIE) {
-    // use singleton mode for IE9.
-    var styleIndex = singletonCounter++
-    styleElement = singletonElement || (singletonElement = createStyleElement())
-    update = applyToSingletonTag.bind(null, styleElement, styleIndex, false)
-    remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true)
-  } else {
-    // use multi-style-tag mode in all other cases
-    styleElement = createStyleElement()
-    update = applyToTag.bind(null, styleElement)
-    remove = function () {
-      styleElement.parentNode.removeChild(styleElement)
-    }
-  }
-
-  update(obj)
-
-  return function updateStyle (newObj /* StyleObjectPart */) {
-    if (newObj) {
-      if (newObj.css === obj.css &&
-          newObj.media === obj.media &&
-          newObj.sourceMap === obj.sourceMap) {
-        return
-      }
-      update(obj = newObj)
-    } else {
-      remove()
-    }
-  }
-}
-
-var replaceText = (function () {
-  var textStore = []
-
-  return function (index, replacement) {
-    textStore[index] = replacement
-    return textStore.filter(Boolean).join('\n')
-  }
-})()
-
-function applyToSingletonTag (styleElement, index, remove, obj) {
-  var css = remove ? '' : obj.css
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = replaceText(index, css)
-  } else {
-    var cssNode = document.createTextNode(css)
-    var childNodes = styleElement.childNodes
-    if (childNodes[index]) styleElement.removeChild(childNodes[index])
-    if (childNodes.length) {
-      styleElement.insertBefore(cssNode, childNodes[index])
-    } else {
-      styleElement.appendChild(cssNode)
-    }
-  }
-}
-
-function applyToTag (styleElement, obj) {
-  var css = obj.css
-  var media = obj.media
-  var sourceMap = obj.sourceMap
-
-  if (media) {
-    styleElement.setAttribute('media', media)
-  }
-
-  if (sourceMap) {
-    // https://developer.chrome.com/devtools/docs/javascript-debugging
-    // this makes source maps inside style tags work properly in Chrome
-    css += '\n/*# sourceURL=' + sourceMap.sources[0] + ' */'
-    // http://stackoverflow.com/a/26603875
-    css += '\n/*# sourceMappingURL=data:application/json;base64,' + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + ' */'
-  }
-
-  if (styleElement.styleSheet) {
-    styleElement.styleSheet.cssText = css
-  } else {
-    while (styleElement.firstChild) {
-      styleElement.removeChild(styleElement.firstChild)
-    }
-    styleElement.appendChild(document.createTextNode(css))
-  }
-}
-
-
-/***/ }),
-
-/***/ 90:
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(51);
-var parser = __webpack_require__(41);
-var parseqs = __webpack_require__(47);
-var inherit = __webpack_require__(46);
-var yeast = __webpack_require__(74);
-var debug = __webpack_require__(17)('engine.io-client:websocket');
+var Transport = __webpack_require__(47);
+var parser = __webpack_require__(19);
+var parseqs = __webpack_require__(46);
+var inherit = __webpack_require__(45);
+var yeast = __webpack_require__(67);
+var debug = __webpack_require__(9)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(108);
+    NodeWebSocket = __webpack_require__(100);
   } catch (e) { }
 }
 
@@ -28312,11 +25985,10 @@ WS.prototype.check = function () {
   return !!WebSocket && !('__initialize' in WebSocket && this.name === WS.prototype.name);
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 91:
+/* 85 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -28350,8 +26022,7 @@ function noop() {}
 
 
 /***/ }),
-
-/***/ 92:
+/* 86 */
 /***/ (function(module, exports) {
 
 
@@ -28376,8 +26047,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-
-/***/ 93:
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -28635,11 +26305,10 @@ module.exports = Object.keys || function keys (obj){
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module), __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module), __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 94:
+/* 88 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -28650,8 +26319,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-
-/***/ 95:
+/* 89 */
 /***/ (function(module, exports) {
 
 
@@ -28674,8 +26342,7 @@ try {
 
 
 /***/ }),
-
-/***/ 96:
+/* 90 */
 /***/ (function(module, exports) {
 
 /**
@@ -28833,8 +26500,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-
-/***/ 97:
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -28842,10 +26508,10 @@ function plural(ms, n, name) {
  * Module dependencies.
  */
 
-var url = __webpack_require__(98);
-var parser = __webpack_require__(56);
-var Manager = __webpack_require__(66);
-var debug = __webpack_require__(17)('socket.io-client');
+var url = __webpack_require__(92);
+var parser = __webpack_require__(51);
+var Manager = __webpack_require__(63);
+var debug = __webpack_require__(9)('socket.io-client');
 
 /**
  * Module exports.
@@ -28929,13 +26595,12 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(66);
-exports.Socket = __webpack_require__(68);
+exports.Manager = __webpack_require__(63);
+exports.Socket = __webpack_require__(65);
 
 
 /***/ }),
-
-/***/ 98:
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -28943,8 +26608,8 @@ exports.Socket = __webpack_require__(68);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(65);
-var debug = __webpack_require__(17)('socket.io-client:url');
+var parseuri = __webpack_require__(62);
+var debug = __webpack_require__(9)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -29014,11 +26679,10 @@ function url (uri, loc) {
   return obj;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-
-/***/ 99:
+/* 93 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -29028,6 +26692,2570 @@ module.exports = Array.isArray || function (arr) {
 };
 
 
-/***/ })
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
 
-},[411]);
+/* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
+
+/**
+ * Module requirements
+ */
+
+var isArray = __webpack_require__(93);
+var isBuf = __webpack_require__(66);
+var toString = Object.prototype.toString;
+var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
+var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
+
+/**
+ * Replaces every Buffer | ArrayBuffer in packet with a numbered placeholder.
+ * Anything with blobs or files should be fed through removeBlobs before coming
+ * here.
+ *
+ * @param {Object} packet - socket.io event packet
+ * @return {Object} with deconstructed packet and list of buffers
+ * @api public
+ */
+
+exports.deconstructPacket = function(packet) {
+  var buffers = [];
+  var packetData = packet.data;
+  var pack = packet;
+  pack.data = _deconstructPacket(packetData, buffers);
+  pack.attachments = buffers.length; // number of binary 'attachments'
+  return {packet: pack, buffers: buffers};
+};
+
+function _deconstructPacket(data, buffers) {
+  if (!data) return data;
+
+  if (isBuf(data)) {
+    var placeholder = { _placeholder: true, num: buffers.length };
+    buffers.push(data);
+    return placeholder;
+  } else if (isArray(data)) {
+    var newData = new Array(data.length);
+    for (var i = 0; i < data.length; i++) {
+      newData[i] = _deconstructPacket(data[i], buffers);
+    }
+    return newData;
+  } else if (typeof data === 'object' && !(data instanceof Date)) {
+    var newData = {};
+    for (var key in data) {
+      newData[key] = _deconstructPacket(data[key], buffers);
+    }
+    return newData;
+  }
+  return data;
+}
+
+/**
+ * Reconstructs a binary packet from its placeholder packet and buffers
+ *
+ * @param {Object} packet - event packet with placeholders
+ * @param {Array} buffers - binary buffers to put in placeholder positions
+ * @return {Object} reconstructed packet
+ * @api public
+ */
+
+exports.reconstructPacket = function(packet, buffers) {
+  packet.data = _reconstructPacket(packet.data, buffers);
+  packet.attachments = undefined; // no longer useful
+  return packet;
+};
+
+function _reconstructPacket(data, buffers) {
+  if (!data) return data;
+
+  if (data && data._placeholder) {
+    return buffers[data.num]; // appropriate buffer (should be natural order anyway)
+  } else if (isArray(data)) {
+    for (var i = 0; i < data.length; i++) {
+      data[i] = _reconstructPacket(data[i], buffers);
+    }
+  } else if (typeof data === 'object') {
+    for (var key in data) {
+      data[key] = _reconstructPacket(data[key], buffers);
+    }
+  }
+
+  return data;
+}
+
+/**
+ * Asynchronously removes Blobs or Files from data via
+ * FileReader's readAsArrayBuffer method. Used before encoding
+ * data as msgpack. Calls callback with the blobless data.
+ *
+ * @param {Object} data
+ * @param {Function} callback
+ * @api private
+ */
+
+exports.removeBlobs = function(data, callback) {
+  function _removeBlobs(obj, curKey, containingObject) {
+    if (!obj) return obj;
+
+    // convert any blob
+    if ((withNativeBlob && obj instanceof Blob) ||
+        (withNativeFile && obj instanceof File)) {
+      pendingBlobs++;
+
+      // async filereader
+      var fileReader = new FileReader();
+      fileReader.onload = function() { // this.result == arraybuffer
+        if (containingObject) {
+          containingObject[curKey] = this.result;
+        }
+        else {
+          bloblessData = this.result;
+        }
+
+        // if nothing pending its callback time
+        if(! --pendingBlobs) {
+          callback(bloblessData);
+        }
+      };
+
+      fileReader.readAsArrayBuffer(obj); // blob -> arraybuffer
+    } else if (isArray(obj)) { // handle array
+      for (var i = 0; i < obj.length; i++) {
+        _removeBlobs(obj[i], i, obj);
+      }
+    } else if (typeof obj === 'object' && !isBuf(obj)) { // and object
+      for (var key in obj) {
+        _removeBlobs(obj[key], key, obj);
+      }
+    }
+  }
+
+  var pendingBlobs = 0;
+  var bloblessData = data;
+  _removeBlobs(bloblessData);
+  if (!pendingBlobs) {
+    callback(bloblessData);
+  }
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports) {
+
+module.exports = toArray
+
+function toArray(list, index) {
+    var array = []
+
+    index = index || 0
+
+    for (var i = index || 0; i < list.length; i++) {
+        array[i - index] = list[i]
+    }
+
+    return array
+}
+
+
+/***/ }),
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _MainMenuComponent = __webpack_require__(335);
+
+var _MainMenuComponent2 = _interopRequireDefault(_MainMenuComponent);
+
+var _vue = __webpack_require__(22);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
+  el: '#main-menu-container',
+  components: {
+    MainMenuComponent: _MainMenuComponent2.default
+  }
+});
+
+/***/ }),
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Notifications = __webpack_require__(338);
+
+var _Notifications2 = _interopRequireDefault(_Notifications);
+
+var _NotificationsMenu = __webpack_require__(340);
+
+var _NotificationsMenu2 = _interopRequireDefault(_NotificationsMenu);
+
+var _NotificationsDropdownMenu = __webpack_require__(339);
+
+var _NotificationsDropdownMenu2 = _interopRequireDefault(_NotificationsDropdownMenu);
+
+var _axios = __webpack_require__(16);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var io = __webpack_require__(91); //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
+exports.default = {
+  name: 'MainMenuComponent',
+  props: {
+    user: {
+      default: '',
+      type: String
+    },
+    user_type: {
+      default: '',
+      type: String
+    },
+    notifications: {
+      default: '',
+      type: String
+    }
+  },
+  computed: {
+    type: function type() {
+      if (this.user_type == 'App\\Student') {
+        return 'student';
+      } else {
+        return 'teacher';
+      }
+    },
+    userParsed: function userParsed() {
+      return JSON.parse(this.user);
+    },
+    notifsParsed: function notifsParsed() {
+      return JSON.parse(this.notifications);
+    }
+  },
+  data: function data() {
+    return {
+      notifs: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    var vue = this;
+
+    this.notifs = this.notifsParsed;
+
+    this.$root.$on('mark-as-read', function (notification) {
+      _this.markAsRead(notification);
+    });
+
+    socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
+      vue.pushNotification(data, 'sent you a new notification.');
+    });
+
+    socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
+      vue.pushNotification(data, 'approved your work.');
+    });
+  },
+
+  methods: {
+    markAsRead: function markAsRead(notification) {
+      var vue = this;
+      _axios2.default.get('/' + this.type + '/notifications/markasread/' + notification.id).then(function () {
+        vue.notifs = vue.notifs.filter(function (element) {
+          return element.id != notification.id;
+        });
+      });
+    },
+    pushNotification: function pushNotification(notification, msg) {
+      this.notifs.unshift(notification);
+
+      var content = {
+        notification: notification,
+        message: msg
+      };
+
+      this.$root.$emit('new-notification', content);
+    }
+  },
+  components: {
+    Notifications: _Notifications2.default,
+    NotificationsMenu: _NotificationsMenu2.default,
+    NotificationsDropdownMenu: _NotificationsDropdownMenu2.default
+  }
+};
+
+/***/ }),
+/* 254 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'NotificationDropdownSingle',
+  props: {
+    notification: {
+      default: function _default() {},
+      type: Object
+    }
+  },
+  computed: {
+    section_slug: function section_slug() {
+      return this.notification.data.session.app.category.section.slug;
+    },
+    app_cat_slug: function app_cat_slug() {
+      return this.notification.data.session.app.category.slug;
+    },
+    app_slug: function app_slug() {
+      return this.notification.data.session.app.slug;
+    },
+    token: function token() {
+      return this.notification.data.session.token;
+    }
+  },
+  methods: {
+    markAsRead: function markAsRead() {
+      this.$root.$emit('mark-as-read', this.notification);
+    }
+  }
+};
+
+/***/ }),
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _gsap = __webpack_require__(54);
+
+exports.default = {
+  name: 'NotificationSingle',
+  props: {
+    notification: {
+      default: function _default() {},
+      type: [Array, Object]
+    }
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    this.showNotification();
+    setTimeout(this.dismissNotification, 10000);
+  },
+
+  methods: {
+    showNotification: function showNotification() {
+      var icon_bg = new _gsap.TimelineMax();
+      icon_bg.to(this.$refs.icon_bg, .4, {
+        opacity: 1,
+        width: '4rem',
+        height: '4rem'
+      });
+
+      var icon = new _gsap.TimelineMax();
+      icon.to(this.$refs.icon, .4, {
+        opacity: 1,
+        display: 'inherit',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var divider = new _gsap.TimelineMax();
+      divider.to(this.$refs.divider, .8, {
+        height: '4rem',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var close_btn = new _gsap.TimelineMax();
+      close_btn.fromTo(this.$refs.close_btn, .6, {
+        x: '+=100px',
+        opacity: 0
+      }, {
+        x: 0,
+        rotation: '-=360',
+        opacity: 1,
+        display: 'inherit'
+      });
+
+      var notification_content = new _gsap.TimelineMax();
+      notification_content.to(this.$refs.notification, .4, {
+        opacity: 1
+      });
+
+      var notification_bg = new _gsap.TimelineMax();
+      notification_bg.to(this.$refs.notification_bg, .4, {
+        opacity: 1
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(notification_bg);
+      master.add(notification_content);
+      master.add(divider, .4);
+      master.add(close_btn, .4);
+      master.add(icon_bg, .4);
+      master.add(icon, .8);
+      master.play();
+    },
+    dismissNotification: function dismissNotification() {
+      var _this = this;
+
+      var vue = this;
+
+      var icon_bg = new _gsap.TimelineMax();
+      icon_bg.to(this.$refs.icon_bg, .4, {
+        opacity: 0,
+        width: 0,
+        height: 0
+      });
+
+      var icon = new _gsap.TimelineMax();
+      icon.to(this.$refs.icon, .4, {
+        opacity: 0,
+        display: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var divider = new _gsap.TimelineMax();
+      divider.to(this.$refs.divider, .8, {
+        height: 0,
+        easing: _gsap.Power4.easeInOut
+      });
+
+      var close_btn = new _gsap.TimelineMax();
+      close_btn.to(this.$refs.close_btn, .6, {
+        x: '+=100px',
+        opacity: 0,
+        rotation: '+=360',
+        display: 'none'
+      });
+
+      var notification_content = new _gsap.TimelineMax();
+      notification_content.to(this.$refs.notification, .4, {
+        opacity: 0
+      });
+
+      var notification_bg = new _gsap.TimelineMax();
+      notification_bg.to(this.$refs.notification_bg, .4, {
+        opacity: 0
+      });
+
+      var callback = new _gsap.TimelineMax();
+      callback.to(this, 1, {
+        onComplete: function onComplete() {
+          vue.$root.$emit('notification-dismissed', _this.notification);
+        }
+      });
+
+      var master = new _gsap.TimelineMax();
+      master.add(icon);
+      master.add(icon_bg);
+      master.add(close_btn);
+      master.add(divider);
+      master.add(notification_content, .8);
+      master.add(notification_bg, .8);
+      master.add(callback, 1);
+      master.play();
+    }
+  }
+
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 256 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _NotificationSingle = __webpack_require__(337);
+
+var _NotificationSingle2 = _interopRequireDefault(_NotificationSingle);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+  name: 'Notifications',
+  props: {
+    user: {
+      default: function _default() {},
+      type: Object
+    },
+    user_type: {
+      default: '',
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      notifications: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    this.$root.$on('notification-dismissed', function (notification) {
+      _this.dismissNotification(notification);
+    });
+
+    this.$root.$on('new-notification', function (content) {
+      _this.pushNotification(content);
+    });
+  },
+
+  methods: {
+    dismissNotification: function dismissNotification(notification) {
+      this.notifications = this.notifications.filter(function (element) {
+        return element.id != notification.id;
+      });
+    },
+    pushNotification: function pushNotification(content) {
+      this.notifications.unshift(content);
+    }
+  },
+  components: {
+    NotificationSingle: _NotificationSingle2.default
+  }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+/* 257 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _NotificationDropdownSingle = __webpack_require__(336);
+
+var _NotificationDropdownSingle2 = _interopRequireDefault(_NotificationDropdownSingle);
+
+var _gsap = __webpack_require__(54);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'NotificationsDropdown',
+  props: {
+    notifications: {
+      default: function _default() {},
+      type: Array
+    }
+  },
+  data: function data() {
+    return {
+      status: false
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    this.$root.$on('toggle-notifications-dropdown', function () {
+      _this.toggleDropdown();
+    });
+  },
+  methods: {
+    toggleDropdown: function toggleDropdown() {
+      if (this.status) {
+        this.hideDropdown();
+      } else {
+        this.showDropdown();
+      }
+    },
+    hideDropdown: function hideDropdown() {
+      _gsap.TweenMax.to(this.$refs.dropdown, .6, {
+        opacity: 0,
+        display: 'none',
+        easing: _gsap.Power4.easeInOut
+      });
+
+      this.status = false;
+    },
+    showDropdown: function showDropdown() {
+      _gsap.TweenMax.to(this.$refs.dropdown, .6, {
+        opacity: 1,
+        display: 'block',
+        easing: _gsap.Power4.easeInOut
+      });
+      this.status = true;
+    }
+  },
+  components: {
+    NotificationDropdownSingle: _NotificationDropdownSingle2.default
+  }
+};
+
+/***/ }),
+/* 258 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+exports.default = {
+  name: 'NotificationsMenu',
+  props: {
+    notifications: {
+      default: function _default() {},
+      type: Array
+    }
+  },
+  computed: {
+    menu_class: function menu_class() {
+      if (this.notifications.length == 0) {
+        return 'disabled';
+      }
+    }
+  },
+  methods: {
+    toggleDropdown: function toggleDropdown() {
+      this.$root.$emit('toggle-notifications-dropdown');
+    }
+  }
+};
+
+/***/ }),
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n.notification-container[data-v-1e48d39a] {\n  position: relative;\n}\n.notification-container > .notification-badge[data-v-1e48d39a] {\n    position: absolute;\n    width: 1.33333rem;\n    height: 1.33333rem;\n    background-color: #ff636e;\n    border-radius: 50%;\n    top: -.5rem;\n    right: -.75rem;\n}\n.notification-container > .notification-badge > .notification-text[data-v-1e48d39a] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n      font-size: 0.66667rem;\n      color: #ededed;\n}\n", ""]);
+
+/***/ }),
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#notification-dropdown-single[data-v-54f0833e] {\n  padding-bottom: 0.5rem;\n  border-bottom: 2px dashed #f7f7f9;\n  font-size: 1rem;\n  font-weight: 400;\n}\n#notification-dropdown-single > a[data-v-54f0833e] {\n    color: #252525;\n}\n#notification-dropdown-single > a > span[data-v-54f0833e] {\n      text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
+/* 294 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#notifications-dropdown[data-v-564207cb] {\n  position: absolute;\n  top: 6.625rem;\n  right: 1rem;\n  background: #ededed;\n  padding-left: 2rem;\n  padding-right: 2rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  z-index: 8;\n  border: 2px solid #f7f7f9;\n  display: none;\n  opacity: 0;\n}\n#notifications-dropdown > .notif[data-v-564207cb] {\n    margin-bottom: 1rem;\n    margin-top: 1rem;\n}\n#notifications-dropdown[data-v-564207cb]::before {\n  position: absolute;\n  content: '';\n  top: -0.6rem;\n  right: 4.75rem;\n  width: 1rem;\n  height: 1rem;\n  background-color: #ededed;\n  -webkit-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n  border-top: 2px solid #f7f7f9;\n  border-right: 2px solid #f7f7f9;\n}\n", ""]);
+
+/***/ }),
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#notification-single[data-v-fd6d6120] {\n  position: fixed;\n  top: 6.625rem;\n  right: 1rem;\n  background: #d8ee8f;\n  z-index: 9;\n  opacity: 0;\n}\n#notification-single > .notification-content[data-v-fd6d6120] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding: 2rem;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#notification-single > .notification-content > .icon-left[data-v-fd6d6120] {\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg[data-v-fd6d6120] {\n        position: relative;\n        width: 0;\n        height: 0;\n        opacity: 0;\n        border-radius: 50%;\n        background-color: #b7cc5e;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg > i[data-v-fd6d6120] {\n          position: absolute;\n          color: #d8ee8f;\n          font-size: 1.5rem;\n          top: 50%;\n          left: 50%;\n          -webkit-transform: translate(-50%, -50%);\n                  transform: translate(-50%, -50%);\n}\n#notification-single > .notification-content > .divider[data-v-fd6d6120] {\n      height: 0;\n      border-left: 1px solid #b7cc5e;\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .notification[data-v-fd6d6120] {\n      margin-right: 1rem;\n      opacity: 0;\n}\n#notification-single > .notification-content > .notification > .name[data-v-fd6d6120] {\n        font-size: 1.125rem;\n        font-weight: bold;\n        text-transform: uppercase;\n}\n#notification-single > .notification-content > .close-notification[data-v-fd6d6120] {\n      display: none;\n      opacity: 0;\n      color: #b7cc5e;\n      font-size: 1.25rem;\n      -ms-flex-item-align: start;\n          align-self: flex-start;\n}\n", ""]);
+
+/***/ }),
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */,
+/* 326 */,
+/* 327 */,
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(408)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(253),
+  /* template */
+  __webpack_require__(368),
+  /* scopeId */
+  "data-v-49f2c950",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/MainMenuComponent.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] MainMenuComponent.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-49f2c950", Component.options)
+  } else {
+    hotAPI.reload("data-v-49f2c950", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 336 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(414)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(254),
+  /* template */
+  __webpack_require__(374),
+  /* scopeId */
+  "data-v-54f0833e",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationDropdownSingle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NotificationDropdownSingle.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-54f0833e", Component.options)
+  } else {
+    hotAPI.reload("data-v-54f0833e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 337 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(430)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(255),
+  /* template */
+  __webpack_require__(390),
+  /* scopeId */
+  "data-v-fd6d6120",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationSingle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NotificationSingle.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fd6d6120", Component.options)
+  } else {
+    hotAPI.reload("data-v-fd6d6120", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 338 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(419)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(256),
+  /* template */
+  __webpack_require__(379),
+  /* scopeId */
+  "data-v-6ad11b1b",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/Notifications.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6ad11b1b", Component.options)
+  } else {
+    hotAPI.reload("data-v-6ad11b1b", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 339 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(415)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(257),
+  /* template */
+  __webpack_require__(375),
+  /* scopeId */
+  "data-v-564207cb",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsDropdownMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NotificationsDropdownMenu.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-564207cb", Component.options)
+  } else {
+    hotAPI.reload("data-v-564207cb", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 340 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(398)
+
+var Component = __webpack_require__(6)(
+  /* script */
+  __webpack_require__(258),
+  /* template */
+  __webpack_require__(358),
+  /* scopeId */
+  "data-v-1e48d39a",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NotificationsMenu.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1e48d39a", Component.options)
+  } else {
+    hotAPI.reload("data-v-1e48d39a", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 341 */,
+/* 342 */,
+/* 343 */,
+/* 344 */,
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    class: 'nav-link ' + _vm.menu_class,
+    attrs: {
+      "id": "notifications-menu",
+      "href": "#"
+    },
+    on: {
+      "click": _vm.toggleDropdown
+    }
+  }, [_c('div', {
+    staticClass: "notification-container"
+  }, [_c('i', {
+    staticClass: "fa fa-bell"
+  }), _vm._v(" "), (this.notifications.length > 0) ? _c('div', {
+    staticClass: "notification-badge"
+  }, [_c('div', {
+    staticClass: "notification-text"
+  }, [_vm._v("\n        " + _vm._s(this.notifications.length) + "\n      ")])]) : _vm._e()])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1e48d39a", module.exports)
+  }
+}
+
+/***/ }),
+/* 359 */,
+/* 360 */,
+/* 361 */,
+/* 362 */,
+/* 363 */,
+/* 364 */,
+/* 365 */,
+/* 366 */,
+/* 367 */,
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "main-menu-component"
+    }
+  }, [_c('nav', {
+    staticClass: "navbar navbar-toggleable-md navbar-light fixed-top",
+    attrs: {
+      "id": "main-menu"
+    }
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "navbar-brand"
+  }, [_c('a', {
+    attrs: {
+      "href": "/"
+    }
+  }, [_c('svg', {
+    attrs: {
+      "id": "main-logo",
+      "width": "102px",
+      "height": "26px",
+      "viewBox": "0 0 102 26",
+      "version": "1.1",
+      "xmlns": "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "Symbols",
+      "stroke": "none",
+      "stroke-width": "1",
+      "fill": "none",
+      "fill-rule": "evenodd"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "main-logo",
+      "fill-rule": "nonzero"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "Group"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "text",
+      "transform": "translate(54.516129, 3.774194)"
+    }
+  }, [_c('path', {
+    attrs: {
+      "d": "M5.23310771,18.4389946 C6.25875014,18.4389946 7.10783707,18.1210949 7.96843849,17.3138979 L7.20208529,15.8579748 C7.20208529,15.8579748 6.47112849,16.6125078 5.44548606,16.6125078 C4.3609918,16.6125078 3.46499399,15.7784999 3.46499399,14.2301753 C3.46499399,12.5358276 4.49020995,11.8473641 5.41008967,11.8473641 C6.65962493,11.8473641 7.35561181,12.6287079 7.35561181,12.6287079 L7.50871186,10.7490782 C7.50871186,10.7490782 6.69502132,10.0476882 5.20922581,10.0476882 C3.06369273,10.0476882 1.31903445,11.4375417 1.31903445,14.2301753 C1.31903445,17.0357357 3.09951558,18.4389946 5.23310771,18.4389946 L5.23310771,18.4389946 Z M16.5160273,14.243102 C16.5160273,11.5696807 14.7709426,10.0342828 12.5900131,10.0342828 C10.4090837,10.0342828 8.67593986,11.5696807 8.67593986,14.2301753 C8.67593986,16.9035966 10.4090837,18.4389946 12.5900131,18.4389946 C14.7709426,18.4389946 16.5160273,16.9035966 16.5160273,14.243102 L16.5160273,14.243102 Z M14.3581268,14.243102 C14.3581268,15.7650945 13.5683182,16.6125078 12.5900131,16.6125078 C11.6232225,16.6125078 10.8214729,15.7650945 10.8214729,14.2301753 C10.8214729,12.7345149 11.6232225,11.8473641 12.5900131,11.8473641 C13.5683182,11.8473641 14.3581268,12.7345149 14.3581268,14.243102 L14.3581268,14.243102 Z M24.4618775,16.5861757 C22.7760711,16.5861757 23.0473013,14.6797353 21.8920142,14.3493877 C22.30483,14.269434 23.0588157,13.7269938 23.0588157,12.549233 C23.0588157,10.8682906 21.8681323,10.1400897 19.8049065,10.1400897 L17.9306036,10.1400897 L17.9306036,18.3461142 L20.0526812,18.3461142 L20.0526812,15.1565848 C20.5832007,15.1565848 20.8309754,15.5271485 21.0663827,16.0035193 C21.5265358,16.9701449 21.8804997,18.4121838 24.0848846,18.4121838 L24.4618775,16.5861757 Z M21.0309863,12.6550399 C21.0309863,13.1840748 20.6544199,13.5153799 20.0526812,13.5153799 L20.0526812,11.8741749 C20.618597,11.8741749 21.0309863,12.1915959 21.0309863,12.6550399 L21.0309863,12.6550399 Z M31.9953384,18.4121838 L31.9953384,10.1400897 L29.8732608,10.1400897 L29.8732608,14.0444147 L25.6410465,10.0740202 L25.2870826,10.0740202 L25.2870826,18.3461142 L27.4091602,18.3461142 L27.4091602,14.4288626 L31.641801,18.4121838 L31.9953384,18.4121838 Z M38.8217244,18.3461142 L39.1987173,16.5335116 L35.8859563,16.5335116 L35.8859563,14.9047546 L37.6191001,14.9047546 L37.6191001,13.0916732 L35.8859563,13.0916732 L35.8859563,11.9402445 L38.2558086,11.9402445 L38.2558086,10.1400897 L33.7638786,10.1400897 L33.7638786,18.3461142 L38.8217244,18.3461142 Z M46.9091602,16.5861757 C45.2233537,16.5861757 45.4945839,14.6797353 44.3392969,14.3493877 C44.7521126,14.269434 45.5065249,13.7269938 45.5065249,12.549233 C45.5065249,10.8682906 44.315415,10.1400897 42.2521892,10.1400897 L40.3778863,10.1400897 L40.3778863,18.3461142 L42.4999639,18.3461142 L42.4999639,15.1565848 C43.0300569,15.1565848 43.2778316,15.5271485 43.5136654,16.0035193 C43.973392,16.9701449 44.3273559,18.4121838 46.5317408,18.4121838 L46.9091602,16.5861757 Z M43.478269,12.6550399 C43.478269,13.1840748 43.1008496,13.5153799 42.4999639,13.5153799 L42.4999639,11.8741749 C43.0658797,11.8741749 43.478269,12.1915959 43.478269,12.6550399 L43.478269,12.6550399 Z",
+      "id": "Fill-1095",
+      "fill": "#656A6B"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M27.7687534,4.88770738 L27.7687534,3.07462599 L26.0825205,3.07462599 L26.0825205,1.90931306 L28.5116512,1.90931306 L28.5116512,0.123042492 L23.9604429,0.123042492 L23.9604429,8.32906702 L26.0825205,8.32906702 L26.0825205,4.88770738 L27.7687534,4.88770738 Z M29.3364297,8.32954579 L31.4585074,8.32954579 L31.4585074,0.123042492 L29.3364297,0.123042492 L29.3364297,8.32954579 Z M37.3654401,8.32906702 L37.7428595,6.51550688 L35.1137179,6.51550688 L35.1137179,0.123042492 L32.9912138,0.123042492 L32.9912138,8.32906702 L37.3654401,8.32906702 Z M39.9706998,0.0698996255 L39.6525588,0.0698996255 L38.2733789,8.32906702 L40.3596337,8.32906702 L40.8666976,4.74168419 L42.4467414,7.28344523 L44.0148442,4.74168419 L44.5338491,8.32906702 L46.6201039,8.32906702 L45.2289831,0.0698996255 L44.9104155,0.0698996255 L42.4467414,4.22605476 L39.9706998,0.0698996255 Z",
+      "id": "Fill-1097",
+      "fill": "#656A6B"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M6.05268343,1.92300573 L6.05268343,0.122850986 L1.08908584,0.122850986 L0.712092947,1.92300573 L2.43329579,1.92300573 L2.43329579,8.32887552 L4.53191799,8.32887552 L4.53191799,1.92300573 L6.05268343,1.92300573 Z M13.5038371,8.32887552 L13.5038371,0.122850986 L11.381333,0.122850986 L11.381333,2.92889006 L9.10615528,2.92889006 L9.10615528,0.122850986 L6.99559213,0.122850986 L6.99559213,8.32887552 L9.10615528,8.32887552 L9.10615528,4.74245021 L11.381333,4.74245021 L11.381333,8.32887552 L13.5038371,8.32887552 Z M20.0939628,8.32887552 L20.4709557,6.51579413 L17.1586211,6.51579413 L17.1586211,4.88751587 L18.8913384,4.88751587 L18.8913384,3.07395572 L17.1586211,3.07395572 L17.1586211,1.92300573 L19.528047,1.92300573 L19.528047,0.122850986 L15.036117,0.122850986 L15.036117,8.32887552 L20.0939628,8.32887552 Z",
+      "id": "Fill-1099",
+      "fill": "#A5B1B4"
+    }
+  })]), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "logo"
+    }
+  }, [_c('path', {
+    attrs: {
+      "d": "M3.98384254,8.51956744 L3.98384254,8.72878755 L4.34804155,8.62441688 L3.98384254,8.51956744 Z M24.6374237,14.441885 L18.6754773,12.731738 L0.0872542373,18.0996463 L24.6374237,25.1915857 L24.6374237,14.441885 Z M14.4206605,11.5108884 L14.369485,11.4979618 L13.2943729,11.80868 L13.2943729,13.0730972 L14.4206605,12.7484948 L14.4206605,11.5108884 Z M7.08507818,13.6002169 L7.08507818,14.8646341 L8.21435101,14.5400318 L8.21435101,13.2760933 L7.08507818,13.6002169 Z M10.190152,12.7044484 L10.190152,13.9688656 L11.3189984,13.6442633 L11.3189984,12.3798461 L10.190152,12.7044484 Z M2.00846802,15.0676303 L0.879621651,15.3917539 L0.879621651,16.6561711 L2.00846802,16.3315687 L2.00846802,15.0676303 Z M3.98384254,14.4959854 L3.98384254,15.7604026 L5.11311536,15.4358003 L5.11311536,14.1718618 L3.98384254,14.4959854 Z M2.00846802,8.03601524 L0.879621651,8.36061761 L0.879621651,9.62503481 L2.00846802,9.30043244 L2.00846802,8.03601524 Z",
+      "id": "Fill-1105",
+      "fill": "#FADA3E"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M16.3958218,12.177185 L16.3958218,12.0790383 L14.4204472,11.5112235 L14.4204472,12.7483512 L13.2945861,13.0729535 L13.2945861,11.8085363 L14.3692717,11.4978181 L4.34825478,8.62427325 L3.98405577,8.72912269 L3.98405577,8.51942381 L4.26462548e-05,7.37709157 L4.26462548e-05,18.0760432 L0.0874674686,18.0995026 L18.6752641,12.7315944 L16.5647009,12.1269148 L16.3958218,12.177185 Z M0.87940842,8.36047398 L2.00868125,8.03635037 L2.00868125,9.30028881 L0.87940842,9.62489118 L0.87940842,8.36047398 Z M3.98405577,15.760259 L3.98405577,14.4963206 L5.11290213,14.1717182 L5.11290213,15.4361354 L3.98405577,15.760259 Z M0.87940842,15.392089 L2.00868125,15.0674867 L2.00868125,16.3319039 L0.87940842,16.6560275 L0.87940842,15.392089 Z M10.1899388,13.968722 L10.1899388,12.7047836 L11.3192116,12.3801812 L11.3192116,13.6441196 L10.1899388,13.968722 Z M7.08529142,14.8644905 L7.08529142,13.6005521 L8.21456424,13.2759497 L8.21456424,14.5403669 L7.08529142,14.8644905 Z",
+      "id": "Fill-1107",
+      "fill": "#F0871F"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M17.5250519,11.8494228 L16.5646583,12.1266275 L18.6752214,12.7317859 L24.6371679,11.0111061 L24.6371679,0.260926684 L0,7.37680432 L3.98401312,8.51961532 L3.98401312,7.46489699 L5.11328595,7.14029462 L5.11328595,8.40471182 L4.34821214,8.62446476 L14.3692291,11.4980096 L14.4208311,11.4841255 L14.4208311,11.5109363 L16.3957791,12.0792298 L16.3957791,10.9129593 L17.5250519,10.5850056 L17.5250519,11.8494228 Z M22.6050738,2.08645595 L23.7313614,1.76233234 L23.7313614,3.02627077 L22.6050738,3.35087314 L22.6050738,2.08645595 Z M17.5250519,3.55386932 L17.5250519,4.81780775 L16.3957791,5.14576147 L16.3957791,3.88134428 L17.5250519,3.55386932 Z M14.4208311,4.45298916 L14.4208311,5.71692759 L13.2945435,6.04152996 L13.2945435,4.77759153 L14.4208311,4.45298916 Z M19.5004265,4.24999299 L19.5004265,2.98557579 L20.6292728,2.65762206 L20.6292728,3.92203926 L19.5004265,4.24999299 Z M22.6050738,10.3824882 L22.6050738,9.11807102 L23.7313614,8.79346864 L23.7313614,10.0578858 L22.6050738,10.3824882 Z M19.5004265,11.2811293 L19.5004265,10.0171909 L20.6292728,9.68923713 L20.6292728,10.9536543 L19.5004265,11.2811293 Z M7.08524877,7.83306694 L7.08524877,6.56912851 L8.2145216,6.24452614 L8.2145216,7.50894333 L7.08524877,7.83306694 Z M10.1898961,5.67336002 L11.3187425,5.34875765 L11.3187425,6.61269608 L10.1898961,6.93729845 L10.1898961,5.67336002 Z",
+      "id": "Fill-1109",
+      "fill": "#F49F52"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Fill-1111",
+      "fill": "#ED736E",
+      "points": "49.2748475 18.0929914 49.2748475 7.36004756 30.6055965 12.7246044"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Fill-1113",
+      "fill": "#4CBAB7",
+      "points": "49.2748475 18.1098439 49.2748475 18.0930872 30.6055965 12.7247002 24.6376796 14.4425074 24.6376796 25.1922081"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Fill-1115",
+      "fill": "#EC6666",
+      "points": "49.2748475 7.36004756 49.2748475 7.3432908 24.6376796 0.260926684 24.6376796 11.0106273 30.6055965 12.7246044"
+    }
+  })])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "navbar-brand"
+  }, [_c('a', {
+    attrs: {
+      "href": "#"
+    }
+  }, [_c('svg', {
+    attrs: {
+      "width": "77px",
+      "height": "26px",
+      "viewBox": "0 0 77 26",
+      "version": "1.1",
+      "xmlns": "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink"
+    }
+  }, [_c('defs'), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "Page-1",
+      "stroke": "none",
+      "stroke-width": "1",
+      "fill": "none",
+      "fill-rule": "evenodd"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "creative-europe-logo",
+      "transform": "translate(0.188235, 0.000000)"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "text",
+      "transform": "translate(42.976471, 0.000000)"
+    }
+  }, [_c('path', {
+    attrs: {
+      "d": "M5.36578824,6.15741176 C5.20932941,6.22745882 5.06556471,6.29505882 4.93801176,6.35501176 C4.81045882,6.41603529 4.64252941,6.48088235 4.43498824,6.54725882 C4.25987059,6.60185882 4.07022353,6.65018824 3.86451765,6.68949412 C3.65865882,6.7288 3.43261176,6.74883529 3.18637647,6.74883529 C2.71975294,6.74883529 2.29717647,6.68230588 1.9162,6.55001176 C1.53705882,6.41618824 1.20532941,6.20834118 0.923,5.92677647 C0.647552941,5.64888235 0.430682353,5.29803529 0.277741176,4.87056471 C0.120976471,4.44324706 0.0445058824,3.94557647 0.0445058824,3.38076471 C0.0445058824,2.84394118 0.117458824,2.36462353 0.268564706,1.94281176 C0.418294118,1.51901176 0.633329412,1.16265882 0.915505882,0.870235294 C1.18728235,0.587752941 1.51687059,0.3718 1.90335294,0.223294118 C2.28998824,0.0737176471 2.71791765,0 3.18989412,0 C3.53462353,0 3.87904706,0.0428235294 4.22347059,0.127552941 C4.56605882,0.211364706 4.94688235,0.360788235 5.36578824,0.573223529 L5.36578824,1.60022353 L5.30247059,1.60022353 C4.94871765,1.30122353 4.59695294,1.08175294 4.251,0.945176471 C3.90275294,0.807529412 3.52896471,0.740082353 3.13345882,0.740082353 C2.80907059,0.740082353 2.51787059,0.791929412 2.25710588,0.898682353 C1.99634118,1.00528235 1.76478824,1.17015294 1.56076471,1.3962 C1.36209412,1.61291765 1.20884706,1.89004706 1.09811765,2.22468235 C0.986623529,2.55901176 0.932023529,2.94442353 0.932023529,3.38107059 C0.932023529,3.8376 0.992129412,4.23218824 1.11417647,4.56192941 C1.23637647,4.89182353 1.39467059,5.15977647 1.58645882,5.36563529 C1.78665882,5.58250588 2.02371765,5.74202353 2.29136471,5.84495294 C2.55962353,5.9488 2.84363529,5.99988235 3.14263529,5.99988235 C3.55251765,5.99988235 3.939,5.92876471 4.29810588,5.78652941 C4.65721176,5.64444706 4.99414118,5.42925882 5.30598824,5.14325882 L5.36578824,5.14325882 L5.36578824,6.15741176 L5.36578824,6.15741176 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M9.18778824,2.6416 L9.1442,2.6416 C9.02567059,2.61345882 8.90698824,2.59143529 8.79411765,2.57874118 C8.67941176,2.56512941 8.54650588,2.55870588 8.38958824,2.55870588 C8.14014118,2.55870588 7.89910588,2.61529412 7.66755294,2.72632941 C7.43462353,2.83935294 7.21025882,2.98327059 6.99369412,3.16190588 L6.99369412,6.63015294 L6.18448235,6.63015294 L6.18448235,1.74505882 L6.99369412,1.74505882 L6.99369412,2.46571765 C7.31594118,2.20434118 7.60071765,2.01836471 7.84649412,1.90885882 C8.09058824,1.79950588 8.34202353,1.74490588 8.59896471,1.74490588 C8.73967059,1.74490588 8.84152941,1.74842353 8.90331765,1.75561176 C8.96724706,1.76310588 9.06191765,1.77671765 9.18763529,1.79675294 L9.18763529,2.6416 L9.18778824,2.6416 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M13.8041647,4.27195294 L10.2576118,4.27195294 C10.2576118,4.57370588 10.3033412,4.83508235 10.3908235,5.05745882 C10.4819765,5.28167059 10.6023412,5.46382353 10.7571176,5.60697647 C10.9085294,5.74645882 11.0851765,5.85107059 11.2911882,5.92234118 C11.4952118,5.99162353 11.7214118,6.02710588 11.9690235,6.02710588 C12.2972353,6.02710588 12.6271294,5.95981176 12.9571765,5.82858824 C13.2905882,5.69552941 13.5256588,5.56507059 13.6677412,5.43675294 L13.7094941,5.43675294 L13.7094941,6.33344706 C13.4380235,6.45014118 13.1589059,6.54756471 12.8745882,6.62587059 C12.5887412,6.70524706 12.2914235,6.74348235 11.9782,6.74348235 C11.18,6.74348235 10.5547765,6.52477647 10.1065059,6.08552941 C9.65991765,5.6472 9.43585882,5.02304706 9.43585882,4.21643529 C9.43585882,3.41731765 9.64921176,2.78307059 10.0789765,2.31292941 C10.5093529,1.84447059 11.0743176,1.6094 11.7741765,1.6094 C12.4247882,1.6094 12.9239882,1.80164706 13.2775882,2.18705882 C13.6295059,2.57155294 13.8041647,3.11847059 13.8041647,3.82643529 L13.8041647,4.27195294 L13.8041647,4.27195294 Z M13.0152941,3.64321176 C13.0131529,3.21115294 12.9056353,2.87774118 12.6962588,2.6416 C12.4829059,2.40576471 12.1621882,2.28723529 11.7319647,2.28723529 C11.2982235,2.28723529 10.9519647,2.41662353 10.6951765,2.67723529 C10.4379294,2.93601176 10.2924824,3.25856471 10.2576118,3.64321176 L13.0152941,3.64321176 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M18.4714706,6.63030588 L17.6657765,6.63030588 L17.6657765,6.10984706 C17.5931294,6.15909412 17.4967765,6.22745882 17.3742706,6.31692941 C17.2520706,6.40609412 17.1341529,6.47736471 17.0191412,6.53012941 C16.8840941,6.59757647 16.7293176,6.65309412 16.5543529,6.69775294 C16.3792353,6.74332941 16.1735294,6.7652 15.9381529,6.7652 C15.5047176,6.7652 15.1367412,6.62036471 14.8337647,6.32962353 C14.5332353,6.03811765 14.3818235,5.6654 14.3818235,5.21330588 C14.3818235,4.84242353 14.4601294,4.54357647 14.6168941,4.31401176 C14.7719765,4.08612941 14.9961882,3.90581176 15.2875412,3.77458824 C15.5793529,3.64351765 15.9328,3.55481176 16.3428353,3.50770588 C16.7527176,3.46121176 17.1941059,3.42649412 17.6657765,3.40278824 L17.6657765,3.27707059 C17.6657765,3.08925882 17.6332,2.93432941 17.5692706,2.81228235 C17.5038118,2.69023529 17.4106706,2.59357647 17.2906118,2.52429412 C17.1759059,2.45669412 17.0390235,2.41111765 16.8769059,2.38756471 C16.7164706,2.36477647 16.5471647,2.353 16.3717412,2.353 C16.1605294,2.353 15.9236235,2.38205882 15.6611765,2.43864706 C15.4007176,2.49508235 15.1309294,2.57705882 14.8522706,2.68549412 L14.8083765,2.68549412 L14.8083765,1.85089412 C14.9666706,1.80623529 15.1945529,1.75882353 15.4935529,1.70590588 C15.7922471,1.65314118 16.0858941,1.6276 16.3774,1.6276 C16.7164706,1.6276 17.0118,1.65497647 17.2633882,1.71232941 C17.5143647,1.76983529 17.7318471,1.86634118 17.9158353,2.00291765 C18.0963059,2.13689412 18.2345647,2.31002353 18.3292353,2.52429412 C18.4242118,2.73565882 18.4714706,2.99978824 18.4714706,3.31515294 L18.4714706,6.63030588 L18.4714706,6.63030588 Z M17.6659294,5.42818824 L17.6659294,4.06777647 C17.4183176,4.08230588 17.1284941,4.10417647 16.7930941,4.13338824 C16.458,4.1626 16.1935647,4.20435294 15.9970353,4.25925882 C15.7654824,4.32655294 15.5776706,4.4304 15.4332941,4.57263529 C15.2893765,4.7138 15.2185647,4.90788235 15.2185647,5.1558 C15.2185647,5.43644706 15.3003882,5.64704706 15.4680118,5.78821176 C15.6341059,5.93029412 15.8892118,5.99957647 16.2318,5.99957647 C16.5144353,5.99957647 16.7752,5.94482353 17.0099647,5.83271765 C17.2468706,5.71984706 17.4654235,5.58418824 17.6659294,5.42818824 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M22.1331882,6.58641176 C21.9799412,6.62648235 21.8141529,6.6612 21.6355176,6.68750588 C21.4547412,6.71304706 21.2946118,6.72681176 21.1543647,6.72681176 C20.6644941,6.72681176 20.2905529,6.59207059 20.0354471,6.32396471 C19.7785059,6.05616471 19.6509529,5.62609412 19.6509529,5.0336 L19.6509529,2.43574118 L19.1043412,2.43574118 L19.1043412,1.74505882 L19.6509529,1.74505882 L19.6509529,0.340752941 L20.462,0.340752941 L20.462,1.74505882 L22.1333412,1.74505882 L22.1333412,2.43574118 L20.462,2.43574118 L20.462,4.66195294 C20.462,4.91889412 20.4673529,5.1194 20.4783647,5.26331765 C20.4893765,5.40723529 20.5312824,5.54396471 20.5984235,5.66784706 C20.6626588,5.78454118 20.7498353,5.86927059 20.8591882,5.92402353 C20.9703765,5.97770588 21.1378471,6.00416471 21.3658824,6.00416471 C21.4987882,6.00416471 21.6373529,5.98504706 21.7792824,5.94589412 C21.9232,5.90674118 22.0256706,5.87385882 22.0914353,5.84648235 L22.1331882,5.84648235 L22.1331882,6.58641176 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M23.6676471,0.926670588 L22.7547412,0.926670588 L22.7547412,0.0737176471 L23.6676471,0.0737176471 L23.6676471,0.926670588 Z M23.6165647,6.63030588 L22.8073529,6.63030588 L22.8073529,1.74505882 L23.6165647,1.74505882 L23.6165647,6.63030588 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero",
+      "points": "29.0293059 1.74505882 27.0811412 6.63015294 26.2665765 6.63015294 24.3311059 1.74505882 25.2111294 1.74505882 26.702 5.63328235 28.1800235 1.74505882"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M33.6037765,4.27195294 L30.0553882,4.27195294 C30.0553882,4.57370588 30.1011176,4.83508235 30.1904353,5.05745882 C30.2779176,5.28167059 30.4019529,5.46382353 30.5567294,5.60697647 C30.7061529,5.74645882 30.8829529,5.85107059 31.0889647,5.92234118 C31.2948235,5.99162353 31.5191882,6.02710588 31.7668,6.02710588 C32.0950118,6.02710588 32.4249059,5.95981176 32.7564824,5.82858824 C33.0883647,5.69552941 33.3252706,5.56507059 33.4656706,5.43675294 L33.5089529,5.43675294 L33.5089529,6.33344706 C33.2356471,6.45014118 32.9572941,6.54756471 32.6725176,6.62587059 C32.3882,6.70524706 32.0896588,6.74348235 31.7761294,6.74348235 C30.9779294,6.74348235 30.3545412,6.52477647 29.9058118,6.08552941 C29.4576941,5.6472 29.2334824,5.02304706 29.2334824,4.21643529 C29.2334824,3.41731765 29.4488235,2.78307059 29.8787412,2.31292941 C30.3071294,1.84447059 30.8722471,1.6094 31.5736353,1.6094 C32.2224118,1.6094 32.7239059,1.80164706 33.0755176,2.18705882 C33.4274353,2.57155294 33.6039294,3.11847059 33.6039294,3.82643529 L33.6039294,4.27195294 L33.6037765,4.27195294 Z M32.8149059,3.64321176 C32.8110824,3.21115294 32.7034118,2.87774118 32.4920471,2.6416 C32.2823647,2.40576471 31.9618,2.28723529 31.5298941,2.28723529 C31.0961529,2.28723529 30.7517294,2.41662353 30.4944824,2.67723529 C30.2375412,2.93601176 30.0899529,3.25856471 30.0553882,3.64321176 L32.8149059,3.64321176 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero",
+      "points": "4.63901176 15.4219765 0.4108 15.4219765 0.4108 8.9102 4.63901176 8.9102 4.63901176 9.68025882 1.2636 9.68025882 1.2636 11.4653882 4.63901176 11.4653882 4.63901176 12.2343765 1.2636 12.2343765 1.2636 14.6528353 4.63901176 14.6528353"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M9.53037647,15.4219765 L8.71932941,15.4219765 L8.71932941,14.8805647 C8.44602353,15.0995765 8.18556471,15.2661294 7.93397647,15.3834353 C7.68422353,15.5004353 7.40877647,15.5587059 7.1084,15.5587059 C6.60354118,15.5587059 6.20803529,15.4011765 5.92555294,15.0874941 C5.64475294,14.7750353 5.50435294,14.3148353 5.50435294,13.7079647 L5.50435294,10.5376471 L6.3154,10.5376471 L6.3154,13.3196471 C6.3154,13.5663412 6.32641176,13.7789294 6.35042353,13.9546588 C6.37229412,14.1314588 6.42123529,14.2827176 6.49617647,14.4075176 C6.57264706,14.5359882 6.67481176,14.6297412 6.79701176,14.6874 C6.92104706,14.7455176 7.10105882,14.7747294 7.33612941,14.7747294 C7.54581176,14.7747294 7.77583529,14.7202824 8.02314118,14.6087882 C8.27136471,14.4977529 8.5046,14.3564353 8.71948235,14.1843765 L8.71948235,10.5376471 L9.53052941,10.5376471 L9.53052941,15.4219765 L9.53037647,15.4219765 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M13.7151529,11.4332706 L13.6729412,11.4332706 C13.5525765,11.4049765 13.4360353,11.3832588 13.3213294,11.3704118 C13.2081529,11.3569529 13.0734118,11.3505294 12.9183294,11.3505294 C12.6685765,11.3505294 12.4263176,11.4069647 12.1949176,11.5199882 C11.9616824,11.6313294 11.7373176,11.7769294 11.5225882,11.9535765 L11.5225882,15.4219765 L10.7112353,15.4219765 L10.7112353,10.5376471 L11.5225882,10.5376471 L11.5225882,11.2595294 C11.8451412,10.9958588 12.1271647,10.8100353 12.3735529,10.7017529 C12.6179529,10.5924 12.8693882,10.5378 13.1244941,10.5378 C13.2648941,10.5378 13.3667529,10.5413176 13.4303765,10.5485059 C13.4943059,10.5558471 13.5892824,10.5696118 13.715,10.5898 L13.715,11.4332706 L13.7151529,11.4332706 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M18.4206941,12.9816471 C18.4206941,13.7783176 18.2201882,14.4067529 17.8173412,14.8661882 C17.4146471,15.3280706 16.8770588,15.5585529 16.2007529,15.5585529 C15.5212353,15.5585529 14.9799765,15.3279176 14.5789647,14.8661882 C14.1778,14.4067529 13.9772941,13.7783176 13.9772941,12.9816471 C13.9772941,12.1851294 14.1778,11.5563882 14.5789647,11.0954235 C14.9798235,10.6326235 15.5210824,10.4029059 16.2007529,10.4029059 C16.8770588,10.4029059 17.4148,10.6324706 17.8173412,11.0954235 C18.2203412,11.5563882 18.4206941,12.1851294 18.4206941,12.9816471 Z M17.5841059,12.9816471 C17.5841059,12.3493882 17.4619059,11.8790941 17.2178118,11.5719882 C16.9737176,11.2648824 16.6344941,11.1099529 16.2007529,11.1099529 C15.7616588,11.1099529 15.4207529,11.2648824 15.1768118,11.5719882 C14.9342471,11.8790941 14.8123529,12.3493882 14.8123529,12.9816471 C14.8123529,13.5940235 14.9342471,14.0585059 15.1800235,14.3749412 C15.4244235,14.6912235 15.7633412,14.8496706 16.2007529,14.8496706 C16.6309765,14.8496706 16.9717294,14.6932118 17.2161294,14.3793765 C17.4619059,14.066 17.5841059,13.5993765 17.5841059,12.9816471 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M23.5783294,12.9206235 C23.5783294,13.3170471 23.5218941,13.6798235 23.4104,14.0075765 C23.2978353,14.3356353 23.1392353,14.6136824 22.9368941,14.8403412 C22.7472471,15.0562941 22.5231882,15.223 22.2662471,15.3406118 C22.0073176,15.4599059 21.7372235,15.5181765 21.4495412,15.5181765 C21.1978,15.5181765 20.9740471,15.4909529 20.7694118,15.4342118 C20.5675294,15.3794588 20.3613647,15.2932 20.1516824,15.1775765 L20.1516824,17.2239294 L19.3427765,17.2239294 L19.3427765,10.5376471 L20.1516824,10.5376471 L20.1516824,11.0496941 C20.3685529,10.8655529 20.6092824,10.7115412 20.8772353,10.5868941 C21.1470235,10.4636235 21.4331765,10.4027529 21.7372235,10.4027529 C22.3188588,10.4027529 22.7686588,10.6251294 23.0933529,11.0686588 C23.4160588,11.5126471 23.5783294,12.1305294 23.5783294,12.9206235 Z M22.7415882,12.9424941 C22.7415882,12.3536706 22.6412588,11.9135059 22.4447294,11.6221529 C22.2460588,11.3303412 21.9417059,11.1845882 21.5315176,11.1845882 C21.2982824,11.1845882 21.0630588,11.2355176 20.8279882,11.3378353 C20.5929176,11.4398471 20.3685529,11.5745882 20.1516824,11.7405294 L20.1516824,14.508 C20.3814,14.6136824 20.5803765,14.6837294 20.7440235,14.7221176 C20.9098118,14.7602 21.0977765,14.7793176 21.3074588,14.7793176 C21.7575647,14.7793176 22.1091765,14.6253059 22.3645882,14.3156 C22.6161765,14.0077294 22.7415882,13.5486 22.7415882,12.9424941 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M28.5958706,13.0653059 L25.0490118,13.0653059 C25.0490118,13.3652235 25.0947412,13.6266 25.1840588,13.8506588 C25.2733765,14.0731882 25.3934353,14.2553412 25.5485176,14.3995647 C25.6982471,14.5398118 25.8767294,14.6438118 26.0825882,14.7140118 C26.2866118,14.7840588 26.5128118,14.8189294 26.7604235,14.8189294 C27.0886353,14.8189294 27.4166941,14.7513294 27.7485765,14.6199529 C28.0798471,14.4870471 28.3167529,14.3565882 28.4571529,14.2282706 L28.5007412,14.2282706 L28.5007412,15.1257294 C28.2277412,15.2415059 27.9487765,15.3396941 27.6646118,15.4183059 C27.3819765,15.4967647 27.0829765,15.5366824 26.7679176,15.5366824 C25.9694118,15.5366824 25.3460235,15.3162941 24.8979059,14.8776588 C24.4494824,14.4385647 24.2255765,13.8164 24.2255765,13.0079529 C24.2255765,12.2092941 24.4403059,11.5742824 24.8708353,11.1059765 C25.3010588,10.6358353 25.8658706,10.4024471 26.5657294,10.4024471 C27.2163412,10.4024471 27.7155412,10.5936235 28.0673059,10.9784235 C28.4192235,11.3627647 28.5960235,11.9095294 28.5960235,12.6193294 L28.5960235,13.0653059 L28.5958706,13.0653059 Z M27.8063882,12.4356471 C27.8048588,12.0038941 27.6970353,11.6695647 27.4858235,11.4332706 C27.2743059,11.1974353 26.9535882,11.0790588 26.5233647,11.0790588 C26.0896235,11.0790588 25.7436706,11.2082941 25.4865765,11.4689059 C25.2296353,11.7295176 25.0835765,12.0502353 25.0490118,12.4354941 L27.8063882,12.4354941 L27.8063882,12.4356471 Z",
+      "id": "Shape",
+      "fill": "#204EA0",
+      "fill-rule": "nonzero"
+    }
+  }), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "media-logo",
+      "transform": "translate(0.305882, 19.729412)"
+    }
+  }, [_c('g', {
+    attrs: {
+      "id": "Group",
+      "fill-rule": "nonzero"
+    }
+  }, [_c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#F9A528",
+      "points": "1.36056471 1.42051765 1.35888235 1.4196 0.156 1.4196 0.156 0.281564706 0.276058824 0.281564706 0.154164706 0.152176471 0.154164706 2.22621176 0.154164706 1.42051765"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#224F9F",
+      "points": "0.156 4.8334 0.156 4.8334 0.154164706 3.69490588 0.154164706 3.69490588 0.154164706 5.97036471 1.25488235 5.97036471 1.25488235 5.96944706 0.154164706 5.96944706"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#F9A528",
+      "points": "0.156 4.83431765 0.156 4.8334 0.156 4.8334 0.154164706 5.96944706 1.25488235 5.96944706 1.25488235 4.83431765"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#F9A528",
+      "points": "5.67442353 4.83431765 4.54097647 4.83431765 4.54097647 5.96944706 5.55604706 5.96944706 5.67442353 5.96944706"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#F9A528",
+      "points": "10.0777529 4.83431765 7.83578824 4.83431765 7.83578824 4.83431765 6.76076471 4.83431765 6.76076471 5.96944706 8.75267059 5.96944706 10.0756118 5.96944706"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#F9A528",
+      "x": "16.4436235",
+      "y": "4.83431765",
+      "width": "1.11891765",
+      "height": "1.13512941"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#F9A528",
+      "points": "22.7769176 5.8474 22.3372118 4.83431765 18.3046118 4.83431765 17.8211647 5.96944706 19.0424 5.96944706 19.3686235 5.09477647 21.2603529 5.09844706 21.5882588 5.96944706 22.3392 5.96944706 22.8276941 5.96944706"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M15.0748,4.83431765 L12.8348235,4.83431765 C12.8348235,4.83431765 12.8329882,4.83431765 12.8313059,4.83431765 L12.2903529,4.83431765 L12.2903529,4.83431765 L11.1530824,4.83431765 L11.1530824,5.96944706 L12.8458353,5.96944706 C13.7572118,5.95675294 14.5661176,5.51398824 15.0748,4.83431765 Z",
+      "id": "Shape",
+      "fill": "#F9A528"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#A6CC3C",
+      "points": "1.89448235 3.69490588 2.95543529 4.8334 2.96262353 4.8334 3.94129412 3.69490588"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#A6CC3C",
+      "points": "1.25488235 3.69490588 0.154164706 3.69490588 0.156 4.8334 1.25488235 4.8334"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#A6CC3C",
+      "points": "4.53929412 3.69490588 4.54097647 4.8334 5.67442353 4.8334 5.67442353 3.69490588"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#A6CC3C",
+      "x": "6.76076471",
+      "y": "3.69490588",
+      "width": "1.07502353",
+      "height": "1.13834118"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#A6CC3C",
+      "x": "16.4436235",
+      "y": "3.69490588",
+      "width": "1.11891765",
+      "height": "1.13834118"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#A6CC3C",
+      "points": "20.7827176 3.93915294 19.8441176 3.93915294 19.9316 3.69490588 18.7891294 3.69490588 18.3046118 4.8334 22.3353765 4.8334 21.8416824 3.69490588 20.6915647 3.69490588"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M14.404,3.69490588 C14.1820824,4.34307059 13.5765882,4.81948235 12.8644941,4.83324706 L15.0749529,4.83324706 C15.3207294,4.50228235 15.4979882,4.11610588 15.5798118,3.69490588 L14.404,3.69490588 Z",
+      "id": "Shape",
+      "fill": "#A6CC3C"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#A6CC3C",
+      "x": "11.1530824",
+      "y": "3.69490588",
+      "width": "1.13727059",
+      "height": "1.13834118"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#4BB86A",
+      "points": "0.154164706 3.69490588 1.25488235 3.69490588 1.25488235 3.01141176 1.89448235 3.69490588 3.94129412 3.69490588 4.53929412 3.00254118 4.53929412 3.69490588 5.67442353 3.69490588 5.67442353 2.55855294 3.46182353 2.55855294 2.95696471 3.10256471 2.4414 2.55855294 0.154164706 2.55855294 0.154164706 3.69490588"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#4BB86A",
+      "points": "7.83578824 3.69398824 10.0756118 3.69490588 10.0740824 2.55855294 6.75862353 2.55855294 6.76076471 3.69490588 7.83578824 3.69490588"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#4BB86A",
+      "x": "16.4436235",
+      "y": "2.55855294",
+      "width": "1.11891765",
+      "height": "1.13635294"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#4BB86A",
+      "points": "18.7891294 3.69490588 19.9316 3.69490588 20.3017176 2.68090588 20.6915647 3.69490588 21.8416824 3.69490588 21.3478353 2.55855294 19.2702824 2.55855294"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M15.5686471,2.55855294 L14.3896235,2.55855294 C14.4567647,2.74483529 14.495,2.94411765 14.495,3.14814118 C14.495,3.34054118 14.4624235,3.52361176 14.4038471,3.69475294 L15.5796588,3.69475294 C15.6125412,3.51917647 15.6322706,3.33671765 15.6322706,3.14982353 C15.6322706,2.94778824 15.6104,2.74927059 15.5686471,2.55855294 Z",
+      "id": "Shape",
+      "fill": "#4BB86A"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#4BB86A",
+      "points": "11.1530824 2.55855294 11.1530824 3.69490588 12.2902 3.69490588 12.2863765 2.55855294"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#224F9F",
+      "points": "21.3531882 2.55855294 20.8576588 1.42051765 20.8523059 1.42051765 21.3456941 2.55855294"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#079EC5",
+      "points": "2.4414 2.55855294 1.36056471 1.42051765 0.154164706 1.42051765 0.154164706 2.22621176 0.154164706 2.55855294"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#079EC5",
+      "points": "4.51711765 1.42051765 3.46350588 2.55855294 5.67442353 2.55855294 5.67442353 1.42051765"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#079EC5",
+      "points": "10.0740824 2.55687059 7.83578824 2.55687059 7.84144706 1.42235294 10.0777529 1.42235294 10.0777529 1.42051765 6.75862353 1.42051765 6.75862353 2.55855294 10.0740824 2.55855294"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#079EC5",
+      "x": "16.4436235",
+      "y": "1.42051765",
+      "width": "1.11891765",
+      "height": "1.13803529"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#079EC5",
+      "points": "19.2702824 2.55855294 21.3456941 2.55855294 20.8523059 1.42051765 19.7551059 1.42051765"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M12.2863765,2.55855294 L12.2863765,1.42418824 L12.8313059,1.42418824 C13.5440118,1.42418824 14.1525647,1.911 14.3896235,2.55855294 L15.5686471,2.55855294 C15.4811647,2.13872941 15.3006941,1.75224706 15.0512471,1.42051765 L11.1530824,1.42051765 L11.1530824,2.55855294 L12.2863765,2.55855294 Z",
+      "id": "Shape",
+      "fill": "#079EC5"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#1C78BE",
+      "points": "5.67442353 1.4196 5.67442353 0.281564706 5.57424706 0.281564706 4.51895294 1.4196"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#1C78BE",
+      "points": "0.156 1.4196 1.35888235 1.4196 0.276058824 0.281564706 0.156 0.281564706"
+    }
+  }), _vm._v(" "), _c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#1C78BE",
+      "x": "6.75862353",
+      "y": "0.286917647",
+      "width": "3.31897647",
+      "height": "1.13268235"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#1C78BE",
+      "points": "17.5607059 0.286917647 16.4436235 0.286917647 16.4436235 1.4196 17.5625412 1.4196"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "fill": "#1C78BE",
+      "points": "20.8523059 1.4196 20.3584588 0.281564706 20.2377882 0.281564706 19.7551059 1.4196"
+    }
+  }), _vm._v(" "), _c('path', {
+    attrs: {
+      "d": "M12.8019412,0.286917647 L11.1530824,0.284929412 L11.1530824,1.4196 L15.0494118,1.4196 C14.5332353,0.734423529 13.7189765,0.286917647 12.8019412,0.286917647 Z",
+      "id": "Shape",
+      "fill": "#1C78BE"
+    }
+  })]), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "Group",
+      "transform": "translate(0.152941, 0.152941)"
+    }
+  }), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "Group",
+      "transform": "translate(0.611765, 0.152941)"
+    }
+  })])]), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "flag",
+      "fill-rule": "nonzero"
+    }
+  }, [_c('rect', {
+    attrs: {
+      "id": "Rectangle-path",
+      "fill": "#224F9F",
+      "x": "0.103082353",
+      "y": "0",
+      "width": "37.9021882",
+      "height": "26"
+    }
+  }), _vm._v(" "), _c('g', {
+    attrs: {
+      "id": "Group",
+      "transform": "translate(9.329412, 3.594118)",
+      "stroke-width": "0.5",
+      "stroke": "#FAED36",
+      "fill": "#FAED36"
+    }
+  }, [_c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "19.2282235 9.12936471 18.8327176 9.12125882 18.2478706 9.11024706 18.0563882 8.58887059 17.9323529 8.25561176 17.8104588 8.58887059 17.6205059 9.11024706 17.0356588 9.12125882 16.6404588 9.12936471 16.9630118 9.36183529 17.4239765 9.69264706 17.2563529 10.2146353 17.1413412 10.5700706 17.4531882 10.3643647 17.9323529 10.0470118 18.4171765 10.3643647 18.7252 10.5700706 18.6121765 10.2146353 18.4460824 9.69264706 18.9055176 9.36183529"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "16.3249412 5.57562353 16.1591529 6.09852941 16.0462824 6.45304706 16.3559882 6.24978824 16.8372941 5.92815294 17.3221176 6.24978824 17.628 6.45304706 17.5168118 6.09852941 17.3493412 5.57562353 17.8086235 5.24465882 18.1328588 5.01218824 17.7376588 5.00515294 17.1506706 4.99597647 16.9611765 4.47307059 16.8372941 4.13675294 16.7147882 4.47307059 16.5257529 4.99597647 15.9406 5.00515294 15.5450941 5.01218824 15.8658118 5.24465882"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "14.1727529 2.00154118 13.9812706 1.47955294 13.8572353 1.14415294 13.7354941 1.47955294 13.5456941 2.00154118 12.9608471 2.01163529 12.5633529 2.02065882 12.8877412 2.25221176 13.3488588 2.58394118 13.1813882 3.10608235 13.0663765 3.4606 13.3779176 3.25825882 13.8572353 2.93830588 14.3403765 3.25825882 14.6503882 3.4606 14.5353765 3.10608235 14.3711176 2.58394118 14.8305529 2.25221176 15.1528 2.02065882 14.7594353 2.01163529"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "10.0066353 0.897305882 9.81515294 0.376847059 9.69081176 0.0414470588 9.57075294 0.376847059 9.37927059 0.897305882 8.79442353 0.91 8.39708235 0.916423529 8.72147059 1.14858824 9.18090588 1.48138824 9.01481176 2.00429412 8.90010588 2.35789412 9.20996471 2.15555294 9.69081176 1.83483529 10.1756353 2.15555294 10.4836588 2.35789412 10.3710941 2.00429412 10.205 1.48138824 10.6644353 1.14858824 10.9848471 0.916423529 10.5914824 0.91"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "5.87661176 2.00154118 5.68512941 1.47955294 5.56507059 1.14415294 5.44287059 1.47955294 5.25169412 2.00154118 4.66654118 2.01163529 4.2692 2.01790588 4.59175294 2.25129412 5.05302353 2.58210588 4.88692941 3.10409412 4.77252941 3.4606 5.08208235 3.25458824 5.56507059 2.93662353 6.04438824 3.25458824 6.35424706 3.4606 6.24137647 3.10409412 6.07528235 2.58210588 6.53471765 2.25129412 6.85910588 2.01790588 6.46176471 2.01163529"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "2.86978824 4.96416471 2.68151765 4.44370588 2.55962353 4.10937647 2.43604706 4.44370588 2.2464 4.96416471 1.66109412 4.97502353 1.26558824 4.98236471 1.58829412 5.2156 2.04772941 5.54732941 1.88010588 6.06855294 1.76861176 6.42383529 2.0748 6.21981176 2.55794118 5.90092941 3.04092941 6.21981176 3.3488 6.42383529 3.23562353 6.06855294 3.06983529 5.54732941 3.53110588 5.2156 3.85197647 4.98236471 3.45616471 4.97502353"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "1.9162 10.3568706 2.22605882 10.5625765 2.11334118 10.2056118 1.94724706 9.68423529 2.40637647 9.35265882 2.72908235 9.12125882 2.33388235 9.11284706 1.74872941 9.10305882 1.55755294 8.5826 1.43535294 8.24827059 1.31284706 8.5826 1.12167059 9.10305882 0.536823529 9.11284706 0.141317647 9.12125882 0.461882353 9.35265882 0.923 9.68423529 0.757211765 10.2056118 0.644341176 10.5625765 0.952058824 10.3568706 1.43535294 10.0379882"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "2.85663529 13.1873529 2.66545882 12.6678118 2.54509412 12.3333294 2.42105882 12.6678118 2.22988235 13.1873529 1.64503529 13.2000471 1.24952941 13.2087647 1.57177647 13.4384824 2.03121176 13.7722 1.86511765 14.2934235 1.75041176 14.6459529 2.06027059 14.4445294 2.54142353 14.1258 3.02441176 14.4445294 3.33243529 14.6476353 3.21956471 14.2934235 3.05561176 13.7722 3.51458824 13.4384824 3.83545882 13.2087647 3.43995294 13.2000471"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "5.84021176 16.1778118 5.65071765 15.6547529 5.52851765 15.3205765 5.40463529 15.6547529 5.21529412 16.1778118 4.62830588 16.1869882 4.2328 16.1960118 4.55718824 16.4275647 5.01448235 16.7592941 4.85052941 17.2802118 4.73582353 17.6359529 5.04354118 17.4334588 5.52851765 17.1135059 6.00768235 17.4334588 6.31952941 17.6359529 6.20451765 17.2802118 6.03903529 16.7592941 6.49816471 16.4275647 6.82255294 16.1960118 6.42536471 16.1869882"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "10.0026588 17.2812824 9.81331765 16.7629647 9.68912941 16.4264941 9.56891765 16.7629647 9.37743529 17.2812824 8.79258824 17.2932118 8.39509412 17.3025412 8.71764706 17.5356235 9.17922353 17.8653647 9.01129412 18.3867412 8.90010588 18.7430941 9.20812941 18.5381529 9.68912941 18.2182 10.1724235 18.5381529 10.4802941 18.7430941 10.3692588 18.3867412 10.2013294 17.8653647 10.6607647 17.5356235 10.9831647 17.3025412 10.5896471 17.2932118"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "14.1345176 16.1978471 13.9430353 15.6766235 13.8208353 15.3421412 13.6986353 15.6766235 13.5089882 16.1978471 12.9241412 16.2106941 12.5268 16.2180353 12.8514941 16.4494353 13.3106235 16.7810118 13.1445294 17.3025412 13.0316588 17.6576706 13.3396824 17.4553294 13.8208353 17.1355294 14.3038235 17.4553294 14.6100118 17.6576706 14.5008118 17.3025412 14.3347176 16.7810118 14.7920118 16.4494353 15.1148706 16.2180353 14.7193647 16.2106941"
+    }
+  }), _vm._v(" "), _c('polygon', {
+    attrs: {
+      "id": "Shape",
+      "points": "17.1359882 13.2237529 16.9445059 12.7022235 16.8226118 12.3689647 16.7004118 12.7022235 16.5089294 13.2237529 15.9237765 13.2344588 15.5285765 13.2419529 15.8526588 13.4751882 16.3105647 13.806 16.1449294 14.3289059 16.0334353 14.6834235 16.3399294 14.4792471 16.8226118 14.1603647 17.3052941 14.4792471 17.6117882 14.6834235 17.4986118 14.3289059 17.3346588 13.806 17.7940941 13.4751882 18.1166471 13.2419529 17.7208353 13.2344588"
+    }
+  })])])])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "collapse navbar-collapse justify-content-end",
+    attrs: {
+      "id": "menu-main"
+    }
+  }, [_c('ul', {
+    staticClass: "navbar-nav justify-content-around"
+  }, [_c('li', {
+    staticClass: "nav-item",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "bottom",
+      "data-html": "true",
+      "title": "Apps"
+    }
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "href": '/' + _vm.type
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-home",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), _c('li', {
+    staticClass: "nav-item",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "bottom",
+      "data-html": "true",
+      "title": "Network"
+    }
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "href": '/' + _vm.type + '/network'
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-users",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]), _vm._v(" "), (_vm.type == 'teacher') ? _c('li', {
+    staticClass: "nav-item"
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "href": '/' + _vm.type + '/settings',
+      "data-toggle": "tooltip",
+      "data-placement": "bottom",
+      "data-html": "true",
+      "title": "Student settings"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-user",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])]) : _vm._e(), _vm._v(" "), _c('li', {
+    staticClass: "nav-item",
+    attrs: {
+      "id": "notifications-menu",
+      "data-toggle": "tooltip",
+      "data-placement": "bottom",
+      "data-html": "true",
+      "title": "Notifications"
+    }
+  }, [_c('notifications-menu', {
+    attrs: {
+      "notifications": _vm.notifs
+    }
+  })], 1), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('notifications-dropdown-menu', {
+    attrs: {
+      "notifications": _vm.notifs
+    }
+  }), _vm._v(" "), _c('notifications', {
+    attrs: {
+      "user": _vm.userParsed,
+      "user_type": _vm.user_type
+    }
+  })], 1)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "navbar-toggler navbar-toggler-right",
+    attrs: {
+      "type": "button",
+      "data-toggle": "collapse",
+      "data-target": "#menu-main",
+      "aria-controls": "menu-main",
+      "aria-expanded": "false",
+      "aria-label": "Toggle navigation"
+    }
+  }, [_c('span', {
+    staticClass: "navbar-toggler-icon"
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', {
+    staticClass: "nav-item",
+    attrs: {
+      "data-toggle": "tooltip",
+      "data-placement": "bottom",
+      "data-html": "true",
+      "title": "Change Language"
+    }
+  }, [_c('a', {
+    staticClass: "nav-link",
+    attrs: {
+      "href": "#",
+      "id": "dropdownMenuLink",
+      "data-toggle": "dropdown",
+      "aria-haspopup": "true",
+      "aria-expanded": "false"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-cog",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "dropdown-menu dropdown-menu-right px-2",
+    attrs: {
+      "aria-labelledby": "dropdownMenuLink"
+    }
+  }, [_c('a', {
+    staticClass: "dropdown-item markasread",
+    attrs: {
+      "href": "/set-locale/en"
+    }
+  }, [_vm._v("\n              English\n            ")]), _vm._v(" "), _c('a', {
+    staticClass: "dropdown-item markasread",
+    attrs: {
+      "href": "/set-locale/fr"
+    }
+  }, [_vm._v("\n              Francais\n            ")]), _vm._v(" "), _c('a', {
+    staticClass: "dropdown-item markasread",
+    attrs: {
+      "href": "/set-locale/it"
+    }
+  }, [_vm._v("\n              Italiano\n            ")]), _vm._v(" "), _c('a', {
+    staticClass: "dropdown-item markasread",
+    attrs: {
+      "href": "/set-locale/sr"
+    }
+  }, [_vm._v("\n              српски\n            ")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-49f2c950", module.exports)
+  }
+}
+
+/***/ }),
+/* 369 */,
+/* 370 */,
+/* 371 */,
+/* 372 */,
+/* 373 */,
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "notification-dropdown-single"
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": '/teacher/' + _vm.section_slug + '/' + _vm.app_cat_slug + '/' + _vm.app_slug + '/' + _vm.token
+    },
+    on: {
+      "click": _vm.markAsRead
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-globe"
+  }), _vm._v(" -\n    "), _c('span', [_vm._v(_vm._s(_vm.notification.data.sender.name))]), _vm._v(", sent you a new notification\n  ")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-54f0833e", module.exports)
+  }
+}
+
+/***/ }),
+/* 375 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    ref: "dropdown",
+    attrs: {
+      "id": "notifications-dropdown"
+    }
+  }, _vm._l((_vm.notifications), function(notification) {
+    return _c('notification-dropdown-single', {
+      key: notification.key,
+      staticClass: "notif",
+      attrs: {
+        "notification": notification
+      }
+    })
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-564207cb", module.exports)
+  }
+}
+
+/***/ }),
+/* 376 */,
+/* 377 */,
+/* 378 */,
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    attrs: {
+      "id": "notifications"
+    }
+  }, _vm._l((_vm.notifications), function(notification) {
+    return _c('notification-single', {
+      key: notification.key,
+      attrs: {
+        "notification": notification
+      }
+    })
+  }))
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6ad11b1b", module.exports)
+  }
+}
+
+/***/ }),
+/* 380 */,
+/* 381 */,
+/* 382 */,
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    ref: "notification_bg",
+    attrs: {
+      "id": "notification-single"
+    }
+  }, [_c('div', {
+    staticClass: "notification-content"
+  }, [_c('div', {
+    staticClass: "icon-left"
+  }, [_c('div', {
+    ref: "icon_bg",
+    staticClass: "icon_bg"
+  }, [_c('i', {
+    ref: "icon",
+    staticClass: "fa fa-exclamation"
+  })])]), _vm._v(" "), _c('div', {
+    ref: "divider",
+    staticClass: "divider"
+  }), _vm._v(" "), _c('div', {
+    ref: "notification",
+    staticClass: "notification"
+  }, [_c('div', {
+    staticClass: "name"
+  }, [_vm._v("\n        " + _vm._s(_vm.notification.notification.data.sender.name) + ",\n      ")]), _vm._v(" "), _c('div', {
+    staticClass: "message"
+  }, [_vm._v("\n        " + _vm._s(_vm.notification.message) + "\n      ")])]), _vm._v(" "), _c('div', {
+    ref: "close_btn",
+    staticClass: "close-notification"
+  }, [_c('i', {
+    staticClass: "fa fa-times",
+    on: {
+      "click": _vm.dismissNotification
+    }
+  })])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-fd6d6120", module.exports)
+  }
+}
+
+/***/ }),
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(277);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("1c2ed7bc", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(287);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("2aabf4d7", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(293);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("1dcfe9e0", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(294);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("5046c3e7", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(298);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("4550c02c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(309);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("c21357bc", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(220);
+
+
+/***/ })
+],[446]);
