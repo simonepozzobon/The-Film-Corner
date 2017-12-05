@@ -8,6 +8,7 @@
       notifications="{{ $sessions }}"
       user="{{ Auth::guard('teacher')->user() }}"
       user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
+      shared_sessions="{{ $shared_sessions }}"
     />
   </div>
 @endsection

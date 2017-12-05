@@ -2,6 +2,7 @@
   <div id="teacher-profile" class="row mt">
     <div class="col-md-8">
       <sessions :notifications="notificationsUpdated"/>
+      <shared-sessions :sessions="sessions"/>
     </div>
     <div class="col-md-4">
       <student-panel :students="studentsParsed"/>
@@ -11,6 +12,7 @@
 <script>
 import Sessions from './Sessions.vue'
 import StudentPanel from './StudentPanel.vue'
+import SharedSessions from './SharedSessions.vue'
 
 import axios from 'axios'
 import _ from 'lodash'
@@ -35,7 +37,7 @@ export default {
     user_type: {
       default: '',
       type: String
-    }
+    },
   },
   computed: {
     studentsParsed: function()
@@ -55,7 +57,7 @@ export default {
     userParsed: function()
     {
       return JSON.parse(this.user)
-    }
+    },
   },
   data: () => ({
     notificationsUpdated: []
@@ -128,7 +130,8 @@ export default {
   },
   components: {
     Sessions,
-    StudentPanel
+    StudentPanel,
+    SharedSessions
   }
 }
 </script>

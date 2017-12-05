@@ -23,10 +23,25 @@ class SharedSession extends Model
         return $this->morphMany('App\Like', 'likeable');
     }
 
+    public function author()
+    {
+        return $this->morphTo('userable');
+    }
+
     public static function share($session, $app_id)
     {
         $shared = new SharedSession;
         $shared->app_id = $app_id;
+
+        $class = get_class($session);
+        if ($class = 'App\AppsSessions\StudentAppSession') {
+            $shared->userable_type = 'App\Student';
+            $shared->userable_id = $session->student_id;
+        } else {
+            $shared->userable_type = 'App\Teacher';
+            $shared->userable_id = $session->teacher_id;
+        }
+
         $shared->token = $session->token;
         $shared->title = $session->title;
 
