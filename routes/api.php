@@ -18,27 +18,30 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function() {
-  // Likes
-  Route::post('add-like', 'Api\LikeController@addLike');
-  Route::post('destroy-like', 'Api\LikeController@destroy');
+    // Likes
+    Route::post('add-like', 'Api\LikeController@addLike');
+    Route::post('destroy-like', 'Api\LikeController@destroy');
 
-  // Comments
-  Route::post('send-comment', 'Api\CommentController@sendComment');
-  Route::post('destroy-comment', 'Api\CommentController@destroy');
+    // Comments
+    Route::post('send-comment', 'Api\CommentController@sendComment');
+    Route::post('destroy-comment', 'Api\CommentController@destroy');
 
-  // Chat
-  Route::post('chat-notification', 'Api\ChatController@message');
-  Route::post('chat-history', 'Api\ChatController@history');
-  Route::post('chat-typing', 'Api\ChatController@typing');
+    // Chat
+    Route::post('chat-notification', 'Api\ChatController@message');
+    Route::post('chat-history', 'Api\ChatController@history');
+    Route::post('chat-typing', 'Api\ChatController@typing');
 
-  // Video Editor
-  Route::post('/video-edit', 'VideoEditorController@updateEditor');
+    // Video Editor
+    Route::post('/video-edit', 'VideoEditorController@updateEditor');
 
-  // Audio Editor
-  Route::post('/audio-edit', 'AudioEditorController@updateEditor');
+    // Audio Editor
+    Route::post('/audio-edit', 'AudioEditorController@updateEditor');
 
-  // Welcome form
-  Route::post('/welcome/save', 'Api\GeneralController@welcome_save');
+    // Welcome form
+    Route::post('/welcome/save', 'Api\GeneralController@welcome_save');
+
+    // Feedbacks
+    Route::post('/send-feedback', 'Api\GeneralController@save_feedback');
 
 });
 

@@ -45,13 +45,16 @@
           <div class="form-group">
             <textarea
               class="form-control"
-              placeholder="Your comment or your idea..."
+              placeholder="Your comment or idea..."
               v-model="comment"
             />
           </div>
         </div>
         <div class="btns">
-          <button class="btn btn-primary">
+          <button
+            class="btn btn-primary"
+            @click="sendFeedback"
+          >
             <i class="fa fa-paper-plane"/>
           </button>
         </div>
@@ -61,13 +64,31 @@
 </template>
 <script>
 import {TimelineMax, TweenMax, Power4} from 'gsap'
+import axios from 'axios'
+
 export default {
   name: 'FeedbackToolbar',
+  props: {
+    user: {
+      default: '',
+      type: String
+    },
+    user_type: {
+      default: '',
+      type: String
+    }
+  },
   data: () => ({
     status: false,
     valutation: 'positive',
     comment: '',
   }),
+  computed: {
+    userParsed: function()
+    {
+      return JSON.parse(this.user)
+    }
+  },
   methods: {
     mouseEnter: function()
     {
@@ -161,10 +182,14 @@ export default {
       var data = new FormData()
       data.append('valutation', this.valutation)
       data.append('comment', this.comment)
+      data.append('user_id', this.userParsed.id)
+      data.append('user_type', this.user_type)
 
-      axios.post('')
-        .then(response => {
-          console.log(response);
+      var vue = this
+      axios.post('/api/v1/send-feedback', data)
+        .then(() => {
+          vue.comment = ''
+          vue.closeDialog()
         })
     }
   }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\AppFeedback;
 use App\WelcomeForm;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -40,5 +41,17 @@ class GeneralController extends Controller
         }
 
         return response()->json($form, 200);
+    }
+
+    public function save_feedback(Request $request)
+    {
+        $feedback = new AppFeedback();
+        $feedback->valutation = $request->valutation;
+        $feedback->comment = $request->comment;
+        $feedback->userable_id = $request->user_id;
+        $feedback->userable_type = $request->user_type;
+        $feedback->save();
+
+        return response($feedback);
     }
 }
