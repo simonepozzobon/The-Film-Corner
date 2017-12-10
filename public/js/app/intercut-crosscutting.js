@@ -2007,7 +2007,7 @@ var _tsml = __webpack_require__(112);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -2899,7 +2899,8 @@ if (typeof document !== 'undefined') {
 /* 19 */,
 /* 20 */,
 /* 21 */,
-/* 22 */
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3011,8 +3012,26 @@ var BACKGROUND_SIZE_SUPPORTED = exports.BACKGROUND_SIZE_SUPPORTED = Dom.isReal()
 
 
 /***/ }),
-/* 23 */,
-/* 24 */
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
+/* 30 */,
+/* 31 */,
+/* 32 */,
+/* 33 */,
+/* 34 */,
+/* 35 */,
+/* 36 */,
+/* 37 */,
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3171,25 +3190,6 @@ function isPlain(value) {
 
 
 /***/ }),
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */,
-/* 30 */,
-/* 31 */,
-/* 32 */,
-/* 33 */,
-/* 34 */,
-/* 35 */,
-/* 36 */,
-/* 37 */,
-/* 38 */,
-/* 39 */,
-/* 40 */,
-/* 41 */,
-/* 42 */,
-/* 43 */,
 /* 44 */,
 /* 45 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -3204,9 +3204,9 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -3357,7 +3357,7 @@ exports['default'] = log;
 exports.__esModule = true;
 exports['default'] = mergeOptions;
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 /**
  * Deep-merge one or more options objects, recursively merging **only** plain
@@ -4051,7 +4051,7 @@ var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -4246,7 +4246,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -4606,7 +4606,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -6439,7 +6439,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -6974,7 +6974,7 @@ var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7475,7 +7475,7 @@ var _eventTarget = __webpack_require__(99);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7711,7 +7711,7 @@ exports['default'] = TrackList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -8383,7 +8383,7 @@ exports['default'] = VolumeBar;
 
 exports.__esModule = true;
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 /**
  * A Custom `MediaError` class which mimics the standard HTML5 `MediaError` class.
@@ -9697,7 +9697,7 @@ var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -9729,7 +9729,7 @@ var _tuple = __webpack_require__(136);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 var _mergeOptions = __webpack_require__(56);
 
@@ -13369,7 +13369,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -13725,7 +13725,7 @@ var _trackList = __webpack_require__(108);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -13913,7 +13913,7 @@ var _trackList = __webpack_require__(108);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -14238,7 +14238,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -14308,7 +14308,7 @@ var _url = __webpack_require__(101);
 
 var Url = _interopRequireWildcard(_url);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 var _computedStyle = __webpack_require__(110);
 
@@ -82480,7 +82480,7 @@ var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -82984,7 +82984,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -83542,7 +83542,7 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -84733,7 +84733,7 @@ var _tsml = __webpack_require__(112);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -84745,7 +84745,7 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 var _mergeOptions = __webpack_require__(56);
 
@@ -86756,7 +86756,7 @@ var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -86882,7 +86882,7 @@ exports['default'] = AudioTrack;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87037,7 +87037,7 @@ exports['default'] = HtmlTrackElementList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87213,7 +87213,7 @@ exports['default'] = HTMLTrackElement;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87846,7 +87846,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87963,7 +87963,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _obj = __webpack_require__(24);
+var _obj = __webpack_require__(43);
 
 var Obj = _interopRequireWildcard(_obj);
 
@@ -88567,7 +88567,7 @@ var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(22);
+var _browser = __webpack_require__(23);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -88738,7 +88738,8 @@ function extend() {
 /* 212 */,
 /* 213 */,
 /* 214 */,
-/* 215 */
+/* 215 */,
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89142,7 +89143,6 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
-/* 216 */,
 /* 217 */,
 /* 218 */,
 /* 219 */,
@@ -89373,11 +89373,18 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 444 */,
 /* 445 */,
 /* 446 */,
-/* 447 */
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(215);
+module.exports = __webpack_require__(216);
 
 
 /***/ })
-],[447]);
+],[454]);

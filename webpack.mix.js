@@ -23,6 +23,8 @@ mix
   .js('resources/assets/admin/js/main.js', 'public/js/admin/main.js')
   .js('resources/assets/admin/js/translate.js', 'public/js/admin/')
   .js('resources/assets/admin/js/keywords.js', 'public/js/admin/')
+  .js('resources/assets/admin/js/footer/footer.js', 'public/js/admin/')
+
   .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
   .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
   .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')

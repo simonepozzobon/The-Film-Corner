@@ -12,7 +12,7 @@ use App\Events\UserSignin;
 */
 
 Route::get('/timeline', function(){
-  return view('timeline');
+    return view('timeline');
 });
 
 Route::prefix('feedback')->group(function() {
@@ -33,15 +33,15 @@ Route::get('/', 'FrontendController@home_page')->name('home.page');
 Route::get('/set-locale/{lang}', 'FrontendController@set_locale')->name('set.locale');
 
 Route::prefix('conference')->group(function() {
-  Route::get('/gallery', 'Main\ConferenceController@gallery')->name('conference.gallery');
-  Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
-  Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
-  Route::post('/application/send', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
-  Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
-  Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
-  Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
-  Route::get('/accomodation', 'Main\ConferenceController@accomodation')->name('conference.accomodation');
-  Route::get('/', 'Main\ConferenceController@index')->name('conference');
+    Route::get('/gallery', 'Main\ConferenceController@gallery')->name('conference.gallery');
+    Route::get('/download', 'Main\ConferenceController@download')->name('conference.download');
+    Route::get('/contact', 'Main\ConferenceController@contact')->name('conference.contact');
+    Route::post('/application/send', 'Main\ConferenceController@sendApplication')->name('conference.application.send');
+    Route::get('/application', 'Main\ConferenceController@application')->name('conference.application');
+    Route::get('/schedule-draft', 'Main\ConferenceController@schedule')->name('conference.schedule');
+    Route::get('/about-conference', 'Main\ConferenceController@about')->name('conference.about');
+    Route::get('/accomodation', 'Main\ConferenceController@accomodation')->name('conference.accomodation');
+    Route::get('/', 'Main\ConferenceController@index')->name('conference');
 });
 
 Route::get('blog/{slug}', 'Blog\BlogController@getSingle')->where('slug', '[\w\d\-\_]+')->name('blog.post');
@@ -153,6 +153,15 @@ Route::prefix('admin')->group(function () {
         Route::post('/glossary', 'Admin\GlossaryController@store')->name('admin.apps.glossary.store');
     });
 
+    Route::prefix('footer')->group(function(){
+        Route::get('/get_credits', 'Admin\FooterController@get_credits')->name('admin.credit.get_credits');
+        Route::get('/get_filmography', 'Admin\FooterController@get_filmography')->name('admin.filmography.get_filmography');
+        Route::post('/save_credit', 'Admin\FooterController@save_credit')->name('admin.credit.save');
+        Route::post('/save_filmography', 'Admin\FooterController@save_filmography')->name('admin.filmography.save');
+        Route::post('/update_credit', 'Admin\FooterController@update_credit')->name('admin.credit.update');
+        Route::post('/update_filmography', 'Admin\FooterController@update_filmography')->name('admin.filmography.update');
+        Route::get('/', 'Admin\FooterController@index')->name('admin.footer');
+    });
 });
 
 

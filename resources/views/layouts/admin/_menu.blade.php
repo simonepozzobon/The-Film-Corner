@@ -70,6 +70,11 @@
           Glossary
         </a>
       </li>
+      <li id="footer" class="nav-item">
+        <a href="{{ route('admin.footer') }}" class="nav-link">
+          Footer
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

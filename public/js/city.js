@@ -1,6 +1,6 @@
-webpackJsonp([21],{
+webpackJsonp([22],{
 
-/***/ 220:
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -819,10 +819,10 @@ setInterval(newLemmings, refreshTime);
 
 /***/ }),
 
-/***/ 452:
+/***/ 459:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(220);
+module.exports = __webpack_require__(221);
 
 
 /***/ }),
@@ -12845,4 +12845,4 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ })
 
-},[452]);
+},[459]);

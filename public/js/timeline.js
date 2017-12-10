@@ -1,4 +1,4 @@
-webpackJsonp([17],{
+webpackJsonp([18],{
 
 /***/ 1:
 /***/ (function(module, exports) {
@@ -28,7 +28,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 20:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -222,7 +222,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 21:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -275,39 +275,14 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(20);
+__webpack_require__(19);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
 
-/***/ 228:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(23);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _Timeline = __webpack_require__(355);
-
-var _Timeline2 = _interopRequireDefault(_Timeline);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var timeline = new _vue2.default({
-  el: '#timeline',
-  components: {
-    Timeline: _Timeline2.default
-  }
-});
-
-/***/ }),
-
-/***/ 23:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11031,11 +11006,36 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(21).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(20).setImmediate))
 
 /***/ }),
 
-/***/ 25:
+/***/ 229:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(21);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _Timeline = __webpack_require__(359);
+
+var _Timeline2 = _interopRequireDefault(_Timeline);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var timeline = new _vue2.default({
+  el: '#timeline',
+  components: {
+    Timeline: _Timeline2.default
+  }
+});
+
+/***/ }),
+
+/***/ 24:
 /***/ (function(module, exports) {
 
 /**
@@ -11069,7 +11069,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11079,7 +11079,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _TimelineTrack = __webpack_require__(357);
+var _TimelineTrack = __webpack_require__(361);
 
 var _TimelineTrack2 = _interopRequireDefault(_TimelineTrack);
 
@@ -11108,7 +11108,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 272:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11133,7 +11133,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 273:
+/***/ 275:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11143,7 +11143,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _TimelineElement = __webpack_require__(356);
+var _TimelineElement = __webpack_require__(360);
 
 var _TimelineElement2 = _interopRequireDefault(_TimelineElement);
 
@@ -11173,7 +11173,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 281:
+/***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
@@ -11181,19 +11181,11 @@ exports.push([module.i, "\n#timeline[data-v-284ee8c4] {\n  background: #5d5ee3;\
 
 /***/ }),
 
-/***/ 289:
+/***/ 291:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
 exports.push([module.i, "\n#heading[data-v-3d9c00fd] {\n  background: #ad1035;\n}\n#media[data-v-3d9c00fd] {\n  background: #578644;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 298:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#timeline-element[data-v-62f2afae] {\n  background: #a9b42a;\n}\n", ""]);
 
 /***/ }),
 
@@ -11388,18 +11380,26 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 355:
+/***/ 301:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#timeline-element[data-v-62f2afae] {\n  background: #a9b42a;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 359:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Timeline_vue__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Timeline_vue__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Timeline_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Timeline_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_284ee8c4_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_Timeline_vue__ = __webpack_require__(364);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_284ee8c4_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_Timeline_vue__ = __webpack_require__(368);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(405)
+  __webpack_require__(410)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -11446,18 +11446,18 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 356:
+/***/ 360:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineElement_vue__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineElement_vue__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineElement_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_62f2afae_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TimelineElement_vue__ = __webpack_require__(381);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_62f2afae_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TimelineElement_vue__ = __webpack_require__(386);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(422)
+  __webpack_require__(428)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -11504,18 +11504,18 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 357:
+/***/ 361:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineTrack_vue__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineTrack_vue__ = __webpack_require__(275);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineTrack_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_TimelineTrack_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d9c00fd_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TimelineTrack_vue__ = __webpack_require__(372);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d9c00fd_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_TimelineTrack_vue__ = __webpack_require__(376);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(413)
+  __webpack_require__(418)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -11562,7 +11562,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 364:
+/***/ 368:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11591,7 +11591,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 372:
+/***/ 376:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11627,7 +11627,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 381:
+/***/ 386:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11657,13 +11657,13 @@ if (false) {
 
 /***/ }),
 
-/***/ 405:
+/***/ 410:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(281);
+var content = __webpack_require__(283);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11684,13 +11684,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 413:
+/***/ 418:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(289);
+var content = __webpack_require__(291);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11711,13 +11711,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 422:
+/***/ 428:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(298);
+var content = __webpack_require__(301);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -11738,10 +11738,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 460:
+/***/ 467:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(228);
+module.exports = __webpack_require__(229);
 
 
 /***/ }),
@@ -11932,7 +11932,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(25)
+var listToStyles = __webpack_require__(24)
 
 /*
 type StyleObject = {
@@ -12135,4 +12135,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[460]);
+},[467]);
