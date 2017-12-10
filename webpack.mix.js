@@ -34,6 +34,7 @@ mix
   .js('resources/assets/js/network-single', 'public/js')
   .js('resources/assets/js/teacher-profile/teacher-profile', 'public/js')
   .js('resources/assets/js/notification/notifications', 'public/js')
+  .js('resources/assets/js/feedback-toolbar/feedback-toolbar', 'public/js')
 
 
   .js('resources/assets/js/conference/speakers', 'public/js/conference')

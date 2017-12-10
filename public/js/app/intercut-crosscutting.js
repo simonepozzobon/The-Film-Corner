@@ -47,23 +47,23 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -1874,7 +1874,7 @@ exports['default'] = Component;
 exports.__esModule = true;
 exports.throttle = exports.bind = undefined;
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 /**
  * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
@@ -1995,19 +1995,19 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(110);
+var _tsml = __webpack_require__(112);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -2863,7 +2863,7 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(201);
+var minDoc = __webpack_require__(203);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -2897,7 +2897,9 @@ if (typeof document !== 'undefined') {
 
 /***/ }),
 /* 19 */,
-/* 20 */
+/* 20 */,
+/* 21 */,
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3009,7 +3011,8 @@ var BACKGROUND_SIZE_SUPPORTED = exports.BACKGROUND_SIZE_SUPPORTED = Dom.isReal()
 
 
 /***/ }),
-/* 21 */
+/* 23 */,
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3168,9 +3171,6 @@ function isPlain(value) {
 
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
 /* 25 */,
 /* 26 */,
 /* 27 */,
@@ -3189,7 +3189,9 @@ function isPlain(value) {
 /* 40 */,
 /* 41 */,
 /* 42 */,
-/* 43 */
+/* 43 */,
+/* 44 */,
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3202,9 +3204,9 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -3336,15 +3338,17 @@ exports['default'] = log;
 
 
 /***/ }),
-/* 44 */,
-/* 45 */,
 /* 46 */,
 /* 47 */,
 /* 48 */,
 /* 49 */,
 /* 50 */,
 /* 51 */,
-/* 52 */
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */,
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3353,7 +3357,7 @@ exports['default'] = log;
 exports.__esModule = true;
 exports['default'] = mergeOptions;
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 /**
  * Deep-merge one or more options objects, recursively merging **only** plain
@@ -3399,9 +3403,7 @@ function mergeOptions() {
 
 
 /***/ }),
-/* 53 */,
-/* 54 */,
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3418,11 +3420,11 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -3894,7 +3896,7 @@ function one(elem, type, fn) {
 
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3953,8 +3955,6 @@ exports['default'] = formatTime;
 
 
 /***/ }),
-/* 57 */,
-/* 58 */,
 /* 59 */,
 /* 60 */,
 /* 61 */,
@@ -3964,7 +3964,9 @@ exports['default'] = formatTime;
 /* 65 */,
 /* 66 */,
 /* 67 */,
-/* 68 */
+/* 68 */,
+/* 69 */,
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3995,7 +3997,7 @@ function newGUID() {
 
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4028,8 +4030,8 @@ exports['default'] = toTitleCase;
 
 
 /***/ }),
-/* 70 */,
-/* 71 */
+/* 72 */,
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4037,7 +4039,7 @@ exports['default'] = toTitleCase;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(72);
+var _clickableComponent = __webpack_require__(74);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4045,11 +4047,11 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -4212,7 +4214,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4228,7 +4230,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4236,7 +4238,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4244,7 +4246,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -4540,7 +4542,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4552,31 +4554,31 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(189);
+var _htmlTrackElement = __webpack_require__(191);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(188);
+var _htmlTrackElementList = __webpack_require__(190);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(104);
+var _textTrack = __webpack_require__(106);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(193);
+var _textTrackList = __webpack_require__(195);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(121);
+var _videoTrackList = __webpack_require__(123);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(120);
+var _audioTrackList = __webpack_require__(122);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
@@ -4584,15 +4586,15 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(74);
+var _timeRanges = __webpack_require__(76);
 
-var _buffer = __webpack_require__(122);
+var _buffer = __webpack_require__(124);
 
-var _mediaError = __webpack_require__(114);
+var _mediaError = __webpack_require__(116);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -4604,7 +4606,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -5195,7 +5197,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(137);
+      var vtt = __webpack_require__(139);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -5962,7 +5964,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5972,7 +5974,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -6114,8 +6116,6 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 75 */,
-/* 76 */,
 /* 77 */,
 /* 78 */,
 /* 79 */,
@@ -6135,7 +6135,9 @@ exports.createTimeRange = createTimeRanges;
 /* 93 */,
 /* 94 */,
 /* 95 */,
-/* 96 */
+/* 96 */,
+/* 97 */,
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6143,7 +6145,7 @@ exports.createTimeRange = createTimeRanges;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(112);
+var _trackButton = __webpack_require__(114);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -6151,11 +6153,11 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _textTrackMenuItem = __webpack_require__(103);
+var _textTrackMenuItem = __webpack_require__(105);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _offTextTrackMenuItem = __webpack_require__(165);
+var _offTextTrackMenuItem = __webpack_require__(167);
 
 var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
 
@@ -6245,7 +6247,7 @@ exports['default'] = TextTrackButton;
 
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6253,7 +6255,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -6421,7 +6423,7 @@ exports['default'] = EventTarget;
 
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6429,7 +6431,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(72);
+var _clickableComponent = __webpack_require__(74);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -6437,7 +6439,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -6566,7 +6568,7 @@ exports['default'] = MenuItem;
 
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6746,17 +6748,17 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 
 /***/ }),
-/* 100 */,
-/* 101 */,
-/* 102 */
+/* 102 */,
+/* 103 */,
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(128);
+__webpack_require__(130);
 module.exports = angular;
 
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6766,7 +6768,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(100);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -6932,7 +6934,7 @@ exports['default'] = TextTrackMenuItem;
 
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6940,7 +6942,7 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(190);
+var _textTrackCueList = __webpack_require__(192);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
@@ -6948,9 +6950,9 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(105);
+var _trackEnums = __webpack_require__(107);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -6958,21 +6960,21 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(107);
+var _track = __webpack_require__(109);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(101);
 
-var _xhr = __webpack_require__(125);
+var _xhr = __webpack_require__(127);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7388,7 +7390,7 @@ exports['default'] = TextTrack;
 
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7461,7 +7463,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 
 /***/ }),
-/* 106 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7469,11 +7471,11 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(99);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7701,7 +7703,7 @@ exports['default'] = TrackList;
 
 
 /***/ }),
-/* 107 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7709,7 +7711,7 @@ exports['default'] = TrackList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -7717,11 +7719,11 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(99);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -7850,7 +7852,7 @@ exports['default'] = Track;
 
 
 /***/ }),
-/* 108 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7899,7 +7901,7 @@ function computedStyle(el, prop) {
 
 
 /***/ }),
-/* 109 */
+/* 111 */
 /***/ (function(module, exports) {
 
 module.exports = isFunction
@@ -7920,7 +7922,7 @@ function isFunction (fn) {
 
 
 /***/ }),
-/* 110 */
+/* 112 */
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -7939,7 +7941,7 @@ module.exports = function tsml (sa) {
 }
 
 /***/ }),
-/* 111 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7947,7 +7949,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(71);
+var _button = __webpack_require__(73);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -8100,7 +8102,7 @@ exports['default'] = MuteToggle;
 
 
 /***/ }),
-/* 112 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8108,7 +8110,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(115);
+var _menuButton = __webpack_require__(117);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -8185,7 +8187,7 @@ exports['default'] = TrackButton;
 
 
 /***/ }),
-/* 113 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8193,7 +8195,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(119);
+var _slider = __webpack_require__(121);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -8205,7 +8207,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(172);
+__webpack_require__(174);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -8373,7 +8375,7 @@ exports['default'] = VolumeBar;
 
 
 /***/ }),
-/* 114 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8381,7 +8383,7 @@ exports['default'] = VolumeBar;
 
 exports.__esModule = true;
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 /**
  * A Custom `MediaError` class which mimics the standard HTML5 `MediaError` class.
@@ -8591,7 +8593,7 @@ exports['default'] = MediaError;
 
 
 /***/ }),
-/* 115 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8599,7 +8601,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(72);
+var _clickableComponent = __webpack_require__(74);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -8607,7 +8609,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(116);
+var _menu = __webpack_require__(118);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -8619,7 +8621,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -8950,7 +8952,7 @@ exports['default'] = MenuButton;
 
 
 /***/ }),
-/* 116 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8970,7 +8972,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9159,7 +9161,7 @@ exports['default'] = Menu;
 
 
 /***/ }),
-/* 117 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9659,7 +9661,7 @@ exports['default'] = ModalDialog;
 
 
 /***/ }),
-/* 118 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9679,7 +9681,7 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -9691,89 +9693,89 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(68);
+var _guid = __webpack_require__(70);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(74);
+var _timeRanges = __webpack_require__(76);
 
-var _buffer = __webpack_require__(122);
+var _buffer = __webpack_require__(124);
 
-var _stylesheet = __webpack_require__(123);
+var _stylesheet = __webpack_require__(125);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(176);
+var _fullscreenApi = __webpack_require__(178);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(114);
+var _mediaError = __webpack_require__(116);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(134);
+var _tuple = __webpack_require__(136);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(192);
+var _textTrackListConverter = __webpack_require__(194);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(117);
+var _modalDialog = __webpack_require__(119);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(73);
+var _tech = __webpack_require__(75);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(120);
+var _audioTrackList = __webpack_require__(122);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(121);
+var _videoTrackList = __webpack_require__(123);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
+__webpack_require__(188);
+
 __webpack_require__(186);
 
-__webpack_require__(184);
+__webpack_require__(183);
 
-__webpack_require__(181);
+__webpack_require__(193);
 
-__webpack_require__(191);
+__webpack_require__(179);
 
-__webpack_require__(177);
+__webpack_require__(144);
 
-__webpack_require__(142);
+__webpack_require__(145);
 
-__webpack_require__(143);
+__webpack_require__(148);
 
-__webpack_require__(146);
+__webpack_require__(176);
 
-__webpack_require__(174);
+__webpack_require__(196);
 
-__webpack_require__(194);
-
-__webpack_require__(185);
+__webpack_require__(187);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -13351,7 +13353,7 @@ exports['default'] = Player;
 
 
 /***/ }),
-/* 119 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13367,7 +13369,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -13711,7 +13713,7 @@ exports['default'] = Slider;
 
 
 /***/ }),
-/* 120 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13719,11 +13721,11 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(106);
+var _trackList = __webpack_require__(108);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -13899,7 +13901,7 @@ exports['default'] = AudioTrackList;
 
 
 /***/ }),
-/* 121 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13907,11 +13909,11 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(106);
+var _trackList = __webpack_require__(108);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -14099,7 +14101,7 @@ exports['default'] = VideoTrackList;
 
 
 /***/ }),
-/* 122 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14108,7 +14110,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(74);
+var _timeRanges = __webpack_require__(76);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -14155,7 +14157,7 @@ function bufferedPercent(buffered, duration) {
 
 
 /***/ }),
-/* 123 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14210,7 +14212,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14236,7 +14238,7 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -14244,11 +14246,11 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _setup = __webpack_require__(182);
+var _setup = __webpack_require__(184);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(123);
+var _stylesheet = __webpack_require__(125);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -14256,23 +14258,23 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(99);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(118);
+var _player = __webpack_require__(120);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(178);
+var _plugins = __webpack_require__(180);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(52);
+var _mergeOptions2 = __webpack_require__(56);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
@@ -14280,47 +14282,47 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(104);
+var _textTrack = __webpack_require__(106);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(187);
+var _audioTrack = __webpack_require__(189);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(195);
+var _videoTrack = __webpack_require__(197);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(74);
+var _timeRanges = __webpack_require__(76);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(101);
 
 var Url = _interopRequireWildcard(_url);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
-var _computedStyle = __webpack_require__(108);
+var _computedStyle = __webpack_require__(110);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(175);
+var _extend = __webpack_require__(177);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(125);
+var _xhr = __webpack_require__(127);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(73);
+var _tech = __webpack_require__(75);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -14939,15 +14941,15 @@ exports['default'] = videojs;
 
 
 /***/ }),
-/* 125 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var window = __webpack_require__(18)
-var isFunction = __webpack_require__(109)
-var parseHeaders = __webpack_require__(133)
-var xtend = __webpack_require__(200)
+var isFunction = __webpack_require__(111)
+var parseHeaders = __webpack_require__(135)
+var xtend = __webpack_require__(202)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -15181,8 +15183,8 @@ function noop() {}
 
 
 /***/ }),
-/* 126 */,
-/* 127 */
+/* 128 */,
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15955,11 +15957,11 @@ angular.module('mt.media-timeline', [])
 
 
 /***/ }),
-/* 128 */
+/* 130 */
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.6
+ * @license AngularJS v1.6.7
  * (c) 2010-2017 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -16066,7 +16068,7 @@ function minErr(module, ErrorConstructor) {
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.6.6/' +
+    message += '\nhttp://errors.angularjs.org/1.6.7/' +
       (module ? module + '/' : '') + code;
 
     for (i = 0, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
@@ -16189,13 +16191,11 @@ function minErr(module, ErrorConstructor) {
  * @installation
  * @description
  *
- * # ng (core module)
  * The ng module is loaded by default when an AngularJS application is started. The module itself
  * contains the essential components for an AngularJS application to function. The table below
  * lists a high level breakdown of each of the services/factories, filters, directives and testing
  * components available within this core module.
  *
- * <div doc-module-components="ng"></div>
  */
 
 var REGEX_STRING_REGEXP = /^\/(.+)\/([a-z]*)$/;
@@ -16936,7 +16936,7 @@ function arrayRemove(array, value) {
           <button ng-click="update(user)">SAVE</button>
         </form>
         <pre>form = {{user | json}}</pre>
-        <pre>master = {{master | json}}</pre>
+        <pre>leader = {{leader | json}}</pre>
       </div>
     </file>
     <file name="script.js">
@@ -16944,16 +16944,16 @@ function arrayRemove(array, value) {
       angular.
         module('copyExample', []).
         controller('ExampleController', ['$scope', function($scope) {
-          $scope.master = {};
+          $scope.leader = {};
 
           $scope.reset = function() {
             // Example with 1 argument
-            $scope.user = angular.copy($scope.master);
+            $scope.user = angular.copy($scope.leader);
           };
 
           $scope.update = function(user) {
             // Example with 2 arguments
-            angular.copy(user, $scope.master);
+            angular.copy(user, $scope.leader);
           };
 
           $scope.reset();
@@ -17689,6 +17689,10 @@ var isAutoBootstrapAllowed = allowAutoBootstrap(window.document);
  * document would not be compiled, the `AppController` would not be instantiated and the `{{ a+b }}`
  * would not be resolved to `3`.
  *
+ * @example
+ *
+ * ### Simple Usage
+ *
  * `ngApp` is the easiest, and most common way to bootstrap an application.
  *
  <example module="ngAppDemo" name="ng-app">
@@ -17704,6 +17708,10 @@ var isAutoBootstrapAllowed = allowAutoBootstrap(window.document);
    });
    </file>
  </example>
+ *
+ * @example
+ *
+ * ### With `ngStrictDi`
  *
  * Using `ngStrictDi`, you would see something like this:
  *
@@ -18744,11 +18752,11 @@ function toDebugString(obj, maxDepth) {
 var version = {
   // These placeholder strings will be replaced by grunt's `build` task.
   // They need to be double- or single-quoted.
-  full: '1.6.6',
+  full: '1.6.7',
   major: 1,
   minor: 6,
-  dot: 6,
-  codeName: 'interdimensional-cable'
+  dot: 7,
+  codeName: 'imperial-backstroke'
 };
 
 
@@ -18894,7 +18902,7 @@ function publishExternalAPI(angular) {
       });
     }
   ])
-  .info({ angularVersion: '1.6.6' });
+  .info({ angularVersion: '1.6.7' });
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -19317,13 +19325,18 @@ function jqLiteHasClass(element, selector) {
 
 function jqLiteRemoveClass(element, cssClasses) {
   if (cssClasses && element.setAttribute) {
+    var existingClasses = (' ' + (element.getAttribute('class') || '') + ' ')
+                            .replace(/[\n\t]/g, ' ');
+    var newClasses = existingClasses;
+
     forEach(cssClasses.split(' '), function(cssClass) {
-      element.setAttribute('class', trim(
-          (' ' + (element.getAttribute('class') || '') + ' ')
-          .replace(/[\n\t]/g, ' ')
-          .replace(' ' + trim(cssClass) + ' ', ' '))
-      );
+      cssClass = trim(cssClass);
+      newClasses = newClasses.replace(' ' + cssClass + ' ', ' ');
     });
+
+    if (newClasses !== existingClasses) {
+      element.setAttribute('class', trim(newClasses));
+    }
   }
 }
 
@@ -19331,15 +19344,18 @@ function jqLiteAddClass(element, cssClasses) {
   if (cssClasses && element.setAttribute) {
     var existingClasses = (' ' + (element.getAttribute('class') || '') + ' ')
                             .replace(/[\n\t]/g, ' ');
+    var newClasses = existingClasses;
 
     forEach(cssClasses.split(' '), function(cssClass) {
       cssClass = trim(cssClass);
-      if (existingClasses.indexOf(' ' + cssClass + ' ') === -1) {
-        existingClasses += cssClass + ' ';
+      if (newClasses.indexOf(' ' + cssClass + ' ') === -1) {
+        newClasses += cssClass + ' ';
       }
     });
 
-    element.setAttribute('class', trim(existingClasses));
+    if (newClasses !== existingClasses) {
+      element.setAttribute('class', trim(newClasses));
+    }
   }
 }
 
@@ -20247,7 +20263,7 @@ function annotate(fn, strictDi, name) {
  *   })).toBe($injector);
  * ```
  *
- * # Injection Function Annotation
+ * ## Injection Function Annotation
  *
  * JavaScript does not have annotations, and annotations are needed for dependency injection. The
  * following are all valid ways of annotating function with injection arguments and are equivalent.
@@ -20265,7 +20281,7 @@ function annotate(fn, strictDi, name) {
  *   $injector.invoke(['serviceA', function(serviceA){}]);
  * ```
  *
- * ## Inference
+ * ### Inference
  *
  * In JavaScript calling `toString()` on a function returns the function definition. The definition
  * can then be parsed and the function arguments can be extracted. This method of discovering
@@ -20273,10 +20289,10 @@ function annotate(fn, strictDi, name) {
  * *NOTE:* This does not work with minification, and obfuscation tools since these tools change the
  * argument names.
  *
- * ## `$inject` Annotation
+ * ### `$inject` Annotation
  * By adding an `$inject` property onto a function the injection parameters can be specified.
  *
- * ## Inline
+ * ### Inline
  * As an array of injection names, where the last item in the array is the function to call.
  */
 
@@ -20364,7 +20380,7 @@ function annotate(fn, strictDi, name) {
  * function is invoked. There are three ways in which the function can be annotated with the needed
  * dependencies.
  *
- * # Argument names
+ * #### Argument names
  *
  * The simplest form is to extract the dependencies from the arguments of the function. This is done
  * by converting the function into a string using `toString()` method and extracting the argument
@@ -20384,7 +20400,7 @@ function annotate(fn, strictDi, name) {
  * This method does not work with code minification / obfuscation. For this reason the following
  * annotation strategies are supported.
  *
- * # The `$inject` property
+ * #### The `$inject` property
  *
  * If a function has an `$inject` property and its value is an array of strings, then the strings
  * represent names of services to be injected into the function.
@@ -20400,7 +20416,7 @@ function annotate(fn, strictDi, name) {
  *   expect(injector.annotate(MyController)).toEqual(['$scope', '$route']);
  * ```
  *
- * # The array notation
+ * #### The array notation
  *
  * It is often desirable to inline Injected functions and that's when setting the `$inject` property
  * is very inconvenient. In these situations using the array notation to specify the dependencies in
@@ -20437,7 +20453,45 @@ function annotate(fn, strictDi, name) {
  *
  * @returns {Array.<string>} The names of the services which the function requires.
  */
-
+/**
+ * @ngdoc method
+ * @name $injector#loadNewModules
+ *
+ * @description
+ *
+ * **This is a dangerous API, which you use at your own risk!**
+ *
+ * Add the specified modules to the current injector.
+ *
+ * This method will add each of the injectables to the injector and execute all of the config and run
+ * blocks for each module passed to the method.
+ *
+ * If a module has already been loaded into the injector then it will not be loaded again.
+ *
+ * * The application developer is responsible for loading the code containing the modules; and for
+ * ensuring that lazy scripts are not downloaded and executed more often that desired.
+ * * Previously compiled HTML will not be affected by newly loaded directives, filters and components.
+ * * Modules cannot be unloaded.
+ *
+ * You can use {@link $injector#modules `$injector.modules`} to check whether a module has been loaded
+ * into the injector, which may indicate whether the script has been executed already.
+ *
+ * @example
+ * Here is an example of loading a bundle of modules, with a utility method called `getScript`:
+ *
+ * ```javascript
+ * app.factory('loadModule', function($injector) {
+ *   return function loadModule(moduleName, bundleUrl) {
+ *     return getScript(bundleUrl).then(function() { $injector.loadNewModules([moduleName]); });
+ *   };
+ * })
+ * ```
+ *
+ * @param {Array<String|Function|Array>=} mods an array of modules to load into the application.
+ *     Each item in the array should be the name of a predefined module or a (DI annotated)
+ *     function that will be invoked by the injector as a `config` block.
+ *     See: {@link angular.module modules}
+ */
 
 
 /**
@@ -20800,6 +20854,11 @@ function createInjector(modulesToLoad, strictDi) {
   instanceInjector = protoInstanceInjector.get('$injector');
   instanceInjector.strictDi = strictDi;
   forEach(runBlocks, function(fn) { if (fn) instanceInjector.invoke(fn); });
+
+  instanceInjector.loadNewModules = function(mods) {
+    forEach(loadModules(mods), function(fn) { if (fn) instanceInjector.invoke(fn); });
+  };
+
 
   return instanceInjector;
 
@@ -22742,8 +22801,8 @@ function $CacheFactoryProvider() {
        *
        * @description
        * A cache object used to store and retrieve data, primarily used by
-       * {@link $http $http} and the {@link ng.directive:script script} directive to cache
-       * templates and other data.
+       * {@link $templateRequest $templateRequest} and the {@link ng.directive:script script}
+       * directive to cache templates and other data.
        *
        * ```js
        *  angular.module('superCache')
@@ -22996,9 +23055,12 @@ function $CacheFactoryProvider() {
  * @this
  *
  * @description
+ * `$templateCache` is a {@link $cacheFactory.Cache Cache object} created by the
+ * {@link ng.$cacheFactory $cacheFactory}.
+ *
  * The first time a template is used, it is loaded in the template cache for quick retrieval. You
- * can load templates directly into the cache in a `script` tag, or by consuming the
- * `$templateCache` service directly.
+ * can load templates directly into the cache in a `script` tag, by using {@link $templateRequest},
+ * or by consuming the `$templateCache` service directly.
  *
  * Adding via the `script` tag:
  *
@@ -23009,8 +23071,8 @@ function $CacheFactoryProvider() {
  * ```
  *
  * **Note:** the `script` tag containing the template does not need to be included in the `head` of
- * the document, but it must be a descendent of the {@link ng.$rootElement $rootElement} (IE,
- * element with ng-app attribute), otherwise the template will be ignored.
+ * the document, but it must be a descendent of the {@link ng.$rootElement $rootElement} (e.g.
+ * element with {@link ngApp} attribute), otherwise the template will be ignored.
  *
  * Adding via the `$templateCache` service:
  *
@@ -23032,8 +23094,6 @@ function $CacheFactoryProvider() {
  * ```js
  * $templateCache.get('templateId.html')
  * ```
- *
- * See {@link ng.$cacheFactory $cacheFactory}.
  *
  */
 function $TemplateCacheProvider() {
@@ -23548,8 +23608,11 @@ function $TemplateCacheProvider() {
  * $sce#getTrustedResourceUrl $sce.getTrustedResourceUrl}.
  *
  *
- * #### `replace` ([*DEPRECATED*!], will be removed in next major release - i.e. v2.0)
- * specify what the template should replace. Defaults to `false`.
+ * #### `replace` (*DEPRECATED*)
+ *
+ * `replace` will be removed in next major release - i.e. v2.0).
+ *
+ * Specifies what the template should replace. Defaults to `false`.
  *
  * * `true` - the template will replace the directive's element.
  * * `false` - the template will replace the contents of the directive's element.
@@ -24404,7 +24467,12 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
    * binding information and a reference to the current scope on to DOM elements.
    * If enabled, the compiler will add the following to DOM elements that have been bound to the scope
    * * `ng-binding` CSS class
+   * * `ng-scope` and `ng-isolated-scope` CSS classes
    * * `$binding` data property containing an array of the binding expressions
+   * * Data properties used by the {@link angular.element#methods `scope()`/`isolateScope()` methods} to return
+   *   the element's scope.
+   * * Placeholder comments will contain information about what directive and binding caused the placeholder.
+   *   E.g. `<!-- ngIf: shouldShow() -->`.
    *
    * You may want to disable this in production for a significant performance boost. See
    * {@link guide/production#disabling-debug-data Disabling Debug Data} for more.
@@ -26705,7 +26773,9 @@ var SPECIAL_CHARS_REGEXP = /[:\-_]+(.)/g;
 function directiveNormalize(name) {
   return name
     .replace(PREFIX_REGEXP, '')
-    .replace(SPECIAL_CHARS_REGEXP, fnCamelCaseReplace);
+    .replace(SPECIAL_CHARS_REGEXP, function(_, letter, offset) {
+      return offset ? letter.toUpperCase() : letter;
+    });
 }
 
 /**
@@ -28226,7 +28296,7 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
 
@@ -28239,7 +28309,7 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
 
@@ -28252,7 +28322,7 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
 
@@ -28268,6 +28338,10 @@ function $HttpProvider() {
      * You can trust a URL by adding it to the whitelist via
      * {@link $sceDelegateProvider#resourceUrlWhitelist  `$sceDelegateProvider.resourceUrlWhitelist`} or
      * by explicitly trusting the URL via {@link $sce#trustAsResourceUrl `$sce.trustAsResourceUrl(url)`}.
+     *
+     * You should avoid generating the URL for the JSONP request from user provided data.
+     * Provide additional query parameters via `params` property of the `config` parameter, rather than
+     * modifying the URL itself.
      *
      * JSONP requests must specify a callback to be used in the response from the server. This callback
      * is passed as a query parameter in the request. You must specify the name of this parameter by
@@ -28290,7 +28364,7 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
     createShortMethods('get', 'delete', 'head', 'jsonp');
@@ -28304,7 +28378,7 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
 
@@ -28317,7 +28391,7 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
      * @returns {HttpPromise} Future object
      */
 
@@ -28330,7 +28404,7 @@ function $HttpProvider() {
       *
       * @param {string} url Relative or absolute URL specifying the destination of the request
       * @param {*} data Request content
-      * @param {Object=} config Optional configuration object
+      * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
       * @returns {HttpPromise} Future object
       */
     createShortMethodsWithData('post', 'put', 'patch');
@@ -28544,20 +28618,26 @@ function $HttpProvider() {
       return url;
     }
 
-    function sanitizeJsonpCallbackParam(url, key) {
-      if (/[&?][^=]+=JSON_CALLBACK/.test(url)) {
-        // Throw if the url already contains a reference to JSON_CALLBACK
-        throw $httpMinErr('badjsonp', 'Illegal use of JSON_CALLBACK in url, "{0}"', url);
+    function sanitizeJsonpCallbackParam(url, cbKey) {
+      var parts = url.split('?');
+      if (parts.length > 2) {
+        // Throw if the url contains more than one `?` query indicator
+        throw $httpMinErr('badjsonp', 'Illegal use more than one "?", in url, "{1}"', url);
       }
-
-      var callbackParamRegex = new RegExp('[&?]' + key + '=');
-      if (callbackParamRegex.test(url)) {
-        // Throw if the callback param was already provided
-        throw $httpMinErr('badjsonp', 'Illegal use of callback param, "{0}", in url, "{1}"', key, url);
-      }
+      var params = parseKeyValue(parts[1]);
+      forEach(params, function(value, key) {
+        if (value === 'JSON_CALLBACK') {
+          // Throw if the url already contains a reference to JSON_CALLBACK
+          throw $httpMinErr('badjsonp', 'Illegal use of JSON_CALLBACK in url, "{0}"', url);
+        }
+        if (key === cbKey) {
+          // Throw if the callback param was already provided
+          throw $httpMinErr('badjsonp', 'Illegal use of callback param, "{0}", in url, "{1}"', cbKey, url);
+        }
+      });
 
       // Add in the JSON_CALLBACK callback param value
-      url += ((url.indexOf('?') === -1) ? '?' : '&') + key + '=JSON_CALLBACK';
+      url += ((url.indexOf('?') === -1) ? '?' : '&') + cbKey + '=JSON_CALLBACK';
 
       return url;
     }
@@ -29483,7 +29563,23 @@ function encodePath(path) {
       i = segments.length;
 
   while (i--) {
-    segments[i] = encodeUriSegment(segments[i]);
+    // decode forward slashes to prevent them from being double encoded
+    segments[i] = encodeUriSegment(segments[i].replace(/%2F/g, '/'));
+  }
+
+  return segments.join('/');
+}
+
+function decodePath(path, html5Mode) {
+  var segments = path.split('/'),
+      i = segments.length;
+
+  while (i--) {
+    segments[i] = decodeURIComponent(segments[i]);
+    if (html5Mode) {
+      // encode forward slashes to prevent them from being mistaken for path separators
+      segments[i] = segments[i].replace(/\//g, '%2F');
+    }
   }
 
   return segments.join('/');
@@ -29498,7 +29594,7 @@ function parseAbsoluteUrl(absoluteUrl, locationObj) {
 }
 
 var DOUBLE_SLASH_REGEX = /^\s*[\\/]{2,}/;
-function parseAppUrl(url, locationObj) {
+function parseAppUrl(url, locationObj, html5Mode) {
 
   if (DOUBLE_SLASH_REGEX.test(url)) {
     throw $locationMinErr('badpath', 'Invalid url "{0}".', url);
@@ -29509,8 +29605,8 @@ function parseAppUrl(url, locationObj) {
     url = '/' + url;
   }
   var match = urlResolve(url);
-  locationObj.$$path = decodeURIComponent(prefixed && match.pathname.charAt(0) === '/' ?
-      match.pathname.substring(1) : match.pathname);
+  var path = prefixed && match.pathname.charAt(0) === '/' ? match.pathname.substring(1) : match.pathname;
+  locationObj.$$path = decodePath(path, html5Mode);
   locationObj.$$search = parseKeyValue(match.search);
   locationObj.$$hash = decodeURIComponent(match.hash);
 
@@ -29585,7 +29681,7 @@ function LocationHtml5Url(appBase, appBaseNoFile, basePrefix) {
           appBaseNoFile);
     }
 
-    parseAppUrl(pathUrl, this);
+    parseAppUrl(pathUrl, this, true);
 
     if (!this.$$path) {
       this.$$path = '/';
@@ -29688,7 +29784,7 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
       }
     }
 
-    parseAppUrl(withoutHashUrl, this);
+    parseAppUrl(withoutHashUrl, this, false);
 
     this.$$path = removeWindowsDriveName(this.$$path, withoutHashUrl, appBase);
 
@@ -29873,7 +29969,7 @@ var locationPrototype = {
     }
 
     var match = PATH_MATCH.exec(url);
-    if (match[1] || url === '') this.path(decodeURIComponent(match[1]));
+    if (match[1] || url === '') this.path(decodeURI(match[1]));
     if (match[2] || match[1] || url === '') this.search(match[3] || '');
     this.hash(match[5] || '');
 
@@ -32667,7 +32763,7 @@ function $ParseProvider() {
  * $q can be used in two fashions --- one which is more similar to Kris Kowal's Q or jQuery's Deferred
  * implementations, and the other which resembles ES6 (ES2015) promises to some degree.
  *
- * # $q constructor
+ * ## $q constructor
  *
  * The streamlined ES6 style promise is essentially just using $q as a constructor which takes a `resolver`
  * function as the first argument. This is similar to the native Promise implementation from ES6,
@@ -32755,7 +32851,7 @@ function $ParseProvider() {
  * For more on this please see the [Q documentation](https://github.com/kriskowal/q) especially the
  * section on serial or parallel joining of promises.
  *
- * # The Deferred API
+ * ## The Deferred API
  *
  * A new instance of deferred is constructed by calling `$q.defer()`.
  *
@@ -32777,7 +32873,7 @@ function $ParseProvider() {
  * - promise – `{Promise}` – promise object associated with this deferred.
  *
  *
- * # The Promise API
+ * ## The Promise API
  *
  * A new promise instance is created when a deferred instance is created and can be retrieved by
  * calling `deferred.promise`.
@@ -32809,7 +32905,7 @@ function $ParseProvider() {
  *   specification](https://github.com/kriskowal/q/wiki/API-Reference#promisefinallycallback) for
  *   more information.
  *
- * # Chaining promises
+ * ## Chaining promises
  *
  * Because calling the `then` method of a promise returns a new derived promise, it is easily
  * possible to create a chain of promises:
@@ -32829,7 +32925,7 @@ function $ParseProvider() {
  * $http's response interceptors.
  *
  *
- * # Differences between Kris Kowal's Q and $q
+ * ## Differences between Kris Kowal's Q and $q
  *
  *  There are two main differences:
  *
@@ -32839,7 +32935,7 @@ function $ParseProvider() {
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
  *
- * # Testing
+ * ## Testing
  *
  *  ```js
  *    it('should simulate promise', inject(function($q, $rootScope) {
@@ -33016,6 +33112,10 @@ function qFactory(nextTick, exceptionHandler, errorOnUnhandledRejections) {
           }
         } catch (e) {
           rejectPromise(promise, e);
+          // This error is explicitly marked for being passed to the $exceptionHandler
+          if (e && e.$$passToExceptionHandler === true) {
+            exceptionHandler(e);
+          }
         }
       }
     } finally {
@@ -33508,7 +33608,7 @@ function $RootScopeProvider() {
      * an in-depth introduction and usage examples.
      *
      *
-     * # Inheritance
+     * ## Inheritance
      * A scope can inherit from a parent scope, as in this example:
      * ```js
          var parent = $rootScope;
@@ -33683,7 +33783,7 @@ function $RootScopeProvider() {
        *
        *
        *
-       * # Example
+       * @example
        * ```js
            // let's assume that scope was dependency injected as the $rootScope
            var scope = $rootScope;
@@ -33934,7 +34034,7 @@ function $RootScopeProvider() {
        *   adding, removing, and moving items belonging to an object or array.
        *
        *
-       * # Example
+       * @example
        * ```js
           $scope.names = ['igor', 'matias', 'misko', 'james'];
           $scope.dataCount = 4;
@@ -34132,7 +34232,7 @@ function $RootScopeProvider() {
        *
        * In unit tests, you may need to call `$digest()` to simulate the scope life cycle.
        *
-       * # Example
+       * @example
        * ```js
            var scope = ...;
            scope.name = 'misko';
@@ -34361,7 +34461,7 @@ function $RootScopeProvider() {
        * the expression are propagated (uncaught). This is useful when evaluating Angular
        * expressions.
        *
-       * # Example
+       * @example
        * ```js
            var scope = ng.$rootScope.Scope();
            scope.a = 1;
@@ -34443,9 +34543,8 @@ function $RootScopeProvider() {
        * cycle of {@link ng.$exceptionHandler exception handling},
        * {@link ng.$rootScope.Scope#$digest executing watches}.
        *
-       * ## Life cycle
+       * **Life cycle: Pseudo-Code of `$apply()`**
        *
-       * # Pseudo-Code of `$apply()`
        * ```js
            function $apply(expr) {
              try {
@@ -34573,7 +34672,10 @@ function $RootScopeProvider() {
         return function() {
           var indexOfListener = namedListeners.indexOf(listener);
           if (indexOfListener !== -1) {
-            namedListeners[indexOfListener] = null;
+            // Use delete in the hope of the browser deallocating the memory for the array entry,
+            // while not shifting the array indexes of other listeners.
+            // See issue https://github.com/angular/angular.js/issues/16135
+            delete namedListeners[indexOfListener];
             decrementListenerCount(self, 1, name);
           }
         };
@@ -34640,8 +34742,7 @@ function $RootScopeProvider() {
           }
           //if any listener on the current scope stops propagation, prevent bubbling
           if (stopPropagation) {
-            event.currentScope = null;
-            return event;
+            break;
           }
           //traverse upwards
           scope = scope.$parent;
@@ -34817,7 +34918,7 @@ function $RootScopeProvider() {
  * Private service to sanitize uris for links and images. Used by $compile and $sanitize.
  */
 function $$SanitizeUriProvider() {
-  var aHrefSanitizationWhitelist = /^\s*(https?|ftp|mailto|tel|file):/,
+  var aHrefSanitizationWhitelist = /^\s*(https?|s?ftp|mailto|tel|file):/,
     imgSrcSanitizationWhitelist = /^\s*((https?|ftp|file|blob):|data:image\/)/;
 
   /**
@@ -34873,7 +34974,7 @@ function $$SanitizeUriProvider() {
     return function sanitizeUri(uri, isImage) {
       var regex = isImage ? imgSrcSanitizationWhitelist : aHrefSanitizationWhitelist;
       var normalizedVal;
-      normalizedVal = urlResolve(uri).href;
+      normalizedVal = urlResolve(uri && uri.trim()).href;
       if (normalizedVal !== '' && !normalizedVal.match(regex)) {
         return 'unsafe:' + normalizedVal;
       }
@@ -35345,13 +35446,13 @@ function $SceDelegateProvider() {
  *
  * `$sce` is a service that provides Strict Contextual Escaping services to AngularJS.
  *
- * # Strict Contextual Escaping
+ * ## Strict Contextual Escaping
  *
  * Strict Contextual Escaping (SCE) is a mode in which AngularJS constrains bindings to only render
  * trusted values. Its goal is to assist in writing code in a way that (a) is secure by default, and
  * (b) makes auditing for security vulnerabilities such as XSS, clickjacking, etc. a lot easier.
  *
- * ## Overview
+ * ### Overview
  *
  * To systematically block XSS security bugs, AngularJS treats all values as untrusted by default in
  * HTML or sensitive URL bindings. When binding untrusted values, AngularJS will automatically
@@ -35367,7 +35468,7 @@ function $SceDelegateProvider() {
  *
  * As of version 1.2, AngularJS ships with SCE enabled by default.
  *
- * ## In practice
+ * ### In practice
  *
  * Here's an example of a binding in a privileged context:
  *
@@ -35404,7 +35505,7 @@ function $SceDelegateProvider() {
  * (and shorthand methods such as {@link ng.$sce#trustAsHtml $sce.trustAsHtml}, etc.) to
  * build the trusted versions of your values.
  *
- * ## How does it work?
+ * ### How does it work?
  *
  * In privileged contexts, directives and code will bind to the result of {@link ng.$sce#getTrusted
  * $sce.getTrusted(context, value)} rather than to the value directly.  Think of this function as
@@ -35428,7 +35529,7 @@ function $SceDelegateProvider() {
  * }];
  * ```
  *
- * ## Impact on loading templates
+ * ### Impact on loading templates
  *
  * This applies both to the {@link ng.directive:ngInclude `ng-include`} directive as well as
  * `templateUrl`'s specified by {@link guide/directive directives}.
@@ -35448,7 +35549,7 @@ function $SceDelegateProvider() {
  * won't work on all browsers.  Also, loading templates from `file://` URL does not work on some
  * browsers.
  *
- * ## This feels like too much overhead
+ * ### This feels like too much overhead
  *
  * It's important to remember that SCE only applies to interpolation expressions.
  *
@@ -35472,7 +35573,7 @@ function $SceDelegateProvider() {
  * security onto an application later.
  *
  * <a name="contexts"></a>
- * ## What trusted context types are supported?
+ * ### What trusted context types are supported?
  *
  * | Context             | Notes          |
  * |---------------------|----------------|
@@ -35488,7 +35589,7 @@ function $SceDelegateProvider() {
  * in AngularJS currently, so their corresponding `$sce.trustAs` functions aren't useful yet. This
  * might evolve.
  *
- * ## Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
+ * ### Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
  *
  *  Each element in these arrays must be one of the following:
  *
@@ -35535,7 +35636,7 @@ function $SceDelegateProvider() {
  *
  * Refer {@link ng.$sceDelegateProvider $sceDelegateProvider} for an example.
  *
- * ## Show me an example using SCE.
+ * ### Show me an example using SCE.
  *
  * <example module="mySceApp" deps="angular-sanitize.js" name="sce-service">
  * <file name="index.html">
@@ -36164,6 +36265,12 @@ function $TemplateRequestProvider() {
    *
    * If you want to pass custom options to the `$http` service, such as setting the Accept header you
    * can configure this via {@link $templateRequestProvider#httpOptions}.
+   *
+   * `$templateRequest` is used internally by {@link $compile}, {@link ngRoute.$route}, and directives such
+   * as {@link ngInclude} to download and cache templates.
+   *
+   * 3rd party modules should use `$templateRequest` if their services or directives are loading
+   * templates.
    *
    * @param {string|TrustedResourceUrl} tpl The HTTP request template URL
    * @param {boolean=} ignoreRequestError Whether or not to ignore the exception when the request fails or the template is empty
@@ -38895,14 +39002,14 @@ var htmlAnchorDirective = valueFn({
  * @example
     <example name="ng-checked">
       <file name="index.html">
-        <label>Check me to check both: <input type="checkbox" ng-model="master"></label><br/>
-        <input id="checkSlave" type="checkbox" ng-checked="master" aria-label="Slave input">
+        <label>Check me to check both: <input type="checkbox" ng-model="leader"></label><br/>
+        <input id="checkFollower" type="checkbox" ng-checked="leader" aria-label="Follower input">
       </file>
       <file name="protractor.js" type="protractor">
         it('should check both checkBoxes', function() {
-          expect(element(by.id('checkSlave')).getAttribute('checked')).toBeFalsy();
-          element(by.model('master')).click();
-          expect(element(by.id('checkSlave')).getAttribute('checked')).toBeTruthy();
+          expect(element(by.id('checkFollower')).getAttribute('checked')).toBeFalsy();
+          element(by.model('leader')).click();
+          expect(element(by.id('checkFollower')).getAttribute('checked')).toBeTruthy();
         });
       </file>
     </example>
@@ -39497,7 +39604,7 @@ addSetValidityMethod({
  * If the `name` attribute is specified, the form controller is published onto the current scope under
  * this name.
  *
- * # Alias: {@link ng.directive:ngForm `ngForm`}
+ * ## Alias: {@link ng.directive:ngForm `ngForm`}
  *
  * In Angular, forms can be nested. This means that the outer form is valid when all of the child
  * forms are valid as well. However, browsers do not allow nesting of `<form>` elements, so
@@ -39505,7 +39612,7 @@ addSetValidityMethod({
  * `form` but can be nested. Nested forms can be useful, for example, if the validity of a sub-group
  * of controls needs to be determined.
  *
- * # CSS classes
+ * ## CSS classes
  *  - `ng-valid` is set if the form is valid.
  *  - `ng-invalid` is set if the form is invalid.
  *  - `ng-pending` is set if the form is pending.
@@ -39516,7 +39623,7 @@ addSetValidityMethod({
  * Keep in mind that ngAnimate can detect each of these classes when added and removed.
  *
  *
- * # Submitting a form and preventing the default action
+ * ## Submitting a form and preventing the default action
  *
  * Since the role of forms in client-side Angular applications is different than in classical
  * roundtrip apps, it is desirable for the browser not to translate the form submission into a full
@@ -39549,8 +39656,7 @@ addSetValidityMethod({
  * submitted. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
  * to have access to the updated model.
  *
- * ## Animation Hooks
- *
+ * @animations
  * Animations in ngForm are triggered when any of the associated CSS classes are added and removed.
  * These classes are: `.ng-pristine`, `.ng-dirty`, `.ng-invalid` and `.ng-valid` as well as any
  * other validations that are performed within the form. Animations in ngForm are similar to how
@@ -40913,8 +41019,8 @@ var inputType = {
    *                  Can be interpolated.
    * @param {string=} step Sets the `step` validation to ensure that the value entered matches the `step`
    *                  Can be interpolated.
-   * @param {string=} ngChange Angular expression to be executed when the ngModel value changes due
-   *                  to user interaction with the input element.
+   * @param {expression=} ngChange AngularJS expression to be executed when the ngModel value changes due
+   *                      to user interaction with the input element.
    * @param {expression=} ngChecked If the expression is truthy, then the `checked` attribute will be set on the
    *                      element. **Note** : `ngChecked` should not be used alongside `ngModel`.
    *                      Checkout {@link ng.directive:ngChecked ngChecked} for usage.
@@ -41899,6 +42005,8 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
 /**
  * @ngdoc directive
  * @name ngValue
+ * @restrict A
+ * @priority 100
  *
  * @description
  * Binds the given expression to the value of the element.
@@ -41911,8 +42019,8 @@ var CONSTANT_VALUE_REGEXP = /^(true|false|\d+)$/;
  * It can also be used to achieve one-way binding of a given expression to an input element
  * such as an `input[text]` or a `textarea`, when that element does not use ngModel.
  *
- * @element input
- * @param {string=} ngValue angular expression, whose value will be bound to the `value` attribute
+ * @element ANY
+ * @param {string=} ngValue AngularJS expression, whose value will be bound to the `value` attribute
  * and `value` property of the element.
  *
  * @example
@@ -42196,6 +42304,7 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
 /**
  * @ngdoc directive
  * @name ngChange
+ * @restrict A
  *
  * @description
  * Evaluate the given expression when the user changes the input.
@@ -42214,7 +42323,7 @@ var ngBindHtmlDirective = ['$sce', '$parse', '$compile', function($sce, $parse, 
  *
  * Note, this directive requires `ngModel` to be present.
  *
- * @element input
+ * @element ANY
  * @param {expression} ngChange {@link guide/expression Expression} to evaluate upon change
  * in input value.
  *
@@ -42456,6 +42565,7 @@ function classDirective(name, selector) {
  * @ngdoc directive
  * @name ngClass
  * @restrict AC
+ * @element ANY
  *
  * @description
  * The `ngClass` directive allows you to dynamically set CSS classes on an HTML element by databinding
@@ -42491,14 +42601,21 @@ function classDirective(name, selector) {
  * | {@link ng.$animate#addClass addClass}       | just before the class is applied to the element   |
  * | {@link ng.$animate#removeClass removeClass} | just before the class is removed from the element |
  *
- * @element ANY
+ * ### ngClass and pre-existing CSS3 Transitions/Animations
+   The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
+   Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder
+   any pre-existing CSS transitions already on the element. To get an idea of what happens during a class-based animation, be sure
+   to view the step by step details of {@link $animate#addClass $animate.addClass} and
+   {@link $animate#removeClass $animate.removeClass}.
+ *
  * @param {expression} ngClass {@link guide/expression Expression} to eval. The result
  *   of the evaluation can be a string representing space delimited class
  *   names, an array, or a map of class names to boolean values. In the case of a map, the
  *   names of the properties whose values are truthy will be added as css classes to the
  *   element.
  *
- * @example Example that demonstrates basic bindings via ngClass directive.
+ * @example
+ * ### Basic
    <example name="ng-class">
      <file name="index.html">
        <p ng-class="{strike: deleted, bold: important, 'has-error': error}">Map Syntax Example</p>
@@ -42588,7 +42705,8 @@ function classDirective(name, selector) {
      </file>
    </example>
 
-   ## Animations
+   @example
+   ### Animations
 
    The example below demonstrates how to perform animations using ngClass.
 
@@ -42626,14 +42744,6 @@ function classDirective(name, selector) {
        });
      </file>
    </example>
-
-
-   ## ngClass and pre-existing CSS3 Transitions/Animations
-   The ngClass directive still supports CSS3 Transitions/Animations even if they do not follow the ngAnimate CSS naming structure.
-   Upon animation ngAnimate will apply supplementary CSS classes to track the start and end of an animation, but this will not hinder
-   any pre-existing CSS transitions already on the element. To get an idea of what happens during a class-based animation, be sure
-   to view the step by step details of {@link $animate#addClass $animate.addClass} and
-   {@link $animate#removeClass $animate.removeClass}.
  */
 var ngClassDirective = classDirective('', true);
 
@@ -43107,6 +43217,7 @@ var ngControllerDirective = [function() {
  * E.g.`<body ng-csp="no-inline-style;no-unsafe-eval">`
  *
  * @example
+ *
  * This example shows how to apply the `ngCsp` directive to the `html` tag.
    ```html
      <!doctype html>
@@ -43115,122 +43226,122 @@ var ngControllerDirective = [function() {
      ...
      </html>
    ```
-  * @example
-      <!-- Note: the `.csp` suffix in the example name triggers CSP mode in our http server! -->
-      <example name="example.csp" module="cspExample" ng-csp="true">
-        <file name="index.html">
-          <div ng-controller="MainController as ctrl">
-            <div>
-              <button ng-click="ctrl.inc()" id="inc">Increment</button>
-              <span id="counter">
-                {{ctrl.counter}}
-              </span>
-            </div>
 
-            <div>
-              <button ng-click="ctrl.evil()" id="evil">Evil</button>
-              <span id="evilError">
-                {{ctrl.evilError}}
-              </span>
-            </div>
-          </div>
-        </file>
-        <file name="script.js">
-           angular.module('cspExample', [])
-             .controller('MainController', function MainController() {
-                this.counter = 0;
-                this.inc = function() {
-                  this.counter++;
-                };
-                this.evil = function() {
-                  try {
-                    eval('1+2'); // eslint-disable-line no-eval
-                  } catch (e) {
-                    this.evilError = e.message;
-                  }
-                };
-              });
-        </file>
-        <file name="protractor.js" type="protractor">
-          var util, webdriver;
+  <!-- Note: the `.csp` suffix in the example name triggers CSP mode in our http server! -->
+  <example name="example.csp" module="cspExample" ng-csp="true">
+    <file name="index.html">
+      <div ng-controller="MainController as ctrl">
+        <div>
+          <button ng-click="ctrl.inc()" id="inc">Increment</button>
+          <span id="counter">
+            {{ctrl.counter}}
+          </span>
+        </div>
 
-          var incBtn = element(by.id('inc'));
-          var counter = element(by.id('counter'));
-          var evilBtn = element(by.id('evil'));
-          var evilError = element(by.id('evilError'));
-
-          function getAndClearSevereErrors() {
-            return browser.manage().logs().get('browser').then(function(browserLog) {
-              return browserLog.filter(function(logEntry) {
-                return logEntry.level.value > webdriver.logging.Level.WARNING.value;
-              });
-            });
-          }
-
-          function clearErrors() {
-            getAndClearSevereErrors();
-          }
-
-          function expectNoErrors() {
-            getAndClearSevereErrors().then(function(filteredLog) {
-              expect(filteredLog.length).toEqual(0);
-              if (filteredLog.length) {
-                console.log('browser console errors: ' + util.inspect(filteredLog));
+        <div>
+          <button ng-click="ctrl.evil()" id="evil">Evil</button>
+          <span id="evilError">
+            {{ctrl.evilError}}
+          </span>
+        </div>
+      </div>
+    </file>
+    <file name="script.js">
+       angular.module('cspExample', [])
+         .controller('MainController', function MainController() {
+            this.counter = 0;
+            this.inc = function() {
+              this.counter++;
+            };
+            this.evil = function() {
+              try {
+                eval('1+2'); // eslint-disable-line no-eval
+              } catch (e) {
+                this.evilError = e.message;
               }
-            });
+            };
+          });
+    </file>
+    <file name="protractor.js" type="protractor">
+      var util, webdriver;
+
+      var incBtn = element(by.id('inc'));
+      var counter = element(by.id('counter'));
+      var evilBtn = element(by.id('evil'));
+      var evilError = element(by.id('evilError'));
+
+      function getAndClearSevereErrors() {
+        return browser.manage().logs().get('browser').then(function(browserLog) {
+          return browserLog.filter(function(logEntry) {
+            return logEntry.level.value > webdriver.logging.Level.WARNING.value;
+          });
+        });
+      }
+
+      function clearErrors() {
+        getAndClearSevereErrors();
+      }
+
+      function expectNoErrors() {
+        getAndClearSevereErrors().then(function(filteredLog) {
+          expect(filteredLog.length).toEqual(0);
+          if (filteredLog.length) {
+            console.log('browser console errors: ' + util.inspect(filteredLog));
           }
+        });
+      }
 
-          function expectError(regex) {
-            getAndClearSevereErrors().then(function(filteredLog) {
-              var found = false;
-              filteredLog.forEach(function(log) {
-                if (log.message.match(regex)) {
-                  found = true;
-                }
-              });
-              if (!found) {
-                throw new Error('expected an error that matches ' + regex);
-              }
-            });
+      function expectError(regex) {
+        getAndClearSevereErrors().then(function(filteredLog) {
+          var found = false;
+          filteredLog.forEach(function(log) {
+            if (log.message.match(regex)) {
+              found = true;
+            }
+          });
+          if (!found) {
+            throw new Error('expected an error that matches ' + regex);
           }
+        });
+      }
 
-          beforeEach(function() {
-            util = require('util');
-            webdriver = require('selenium-webdriver');
-          });
+      beforeEach(function() {
+        util = require('util');
+        webdriver = require('selenium-webdriver');
+      });
 
-          // For now, we only test on Chrome,
-          // as Safari does not load the page with Protractor's injected scripts,
-          // and Firefox webdriver always disables content security policy (#6358)
-          if (browser.params.browser !== 'chrome') {
-            return;
-          }
+      // For now, we only test on Chrome,
+      // as Safari does not load the page with Protractor's injected scripts,
+      // and Firefox webdriver always disables content security policy (#6358)
+      if (browser.params.browser !== 'chrome') {
+        return;
+      }
 
-          it('should not report errors when the page is loaded', function() {
-            // clear errors so we are not dependent on previous tests
-            clearErrors();
-            // Need to reload the page as the page is already loaded when
-            // we come here
-            browser.driver.getCurrentUrl().then(function(url) {
-              browser.get(url);
-            });
-            expectNoErrors();
-          });
+      it('should not report errors when the page is loaded', function() {
+        // clear errors so we are not dependent on previous tests
+        clearErrors();
+        // Need to reload the page as the page is already loaded when
+        // we come here
+        browser.driver.getCurrentUrl().then(function(url) {
+          browser.get(url);
+        });
+        expectNoErrors();
+      });
 
-          it('should evaluate expressions', function() {
-            expect(counter.getText()).toEqual('0');
-            incBtn.click();
-            expect(counter.getText()).toEqual('1');
-            expectNoErrors();
-          });
+      it('should evaluate expressions', function() {
+        expect(counter.getText()).toEqual('0');
+        incBtn.click();
+        expect(counter.getText()).toEqual('1');
+        expectNoErrors();
+      });
 
-          it('should throw and report an error when using "eval"', function() {
-            evilBtn.click();
-            expect(evilError.getText()).toMatch(/Content Security Policy/);
-            expectError(/Content Security Policy/);
-          });
-        </file>
-      </example>
+      it('should throw and report an error when using "eval"', function() {
+        evilBtn.click();
+        expect(evilError.getText()).toMatch(/Content Security Policy/);
+        expectError(/Content Security Policy/);
+      });
+    </file>
+  </example>
   */
 
 // `ngCsp` is not implemented as a proper directive any more, because we need it be processed while
@@ -43240,13 +43351,14 @@ var ngControllerDirective = [function() {
 /**
  * @ngdoc directive
  * @name ngClick
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * The ngClick directive allows you to specify custom behavior when
  * an element is clicked.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngClick {@link guide/expression Expression} to evaluate upon
  * click. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43316,12 +43428,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngDblclick
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * The `ngDblclick` directive allows you to specify custom behavior on a dblclick event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngDblclick {@link guide/expression Expression} to evaluate upon
  * a dblclick. (The Event object is available as `$event`)
  *
@@ -43340,12 +43453,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMousedown
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * The ngMousedown directive allows you to specify custom behavior on mousedown event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMousedown {@link guide/expression Expression} to evaluate upon
  * mousedown. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43364,12 +43478,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMouseup
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on mouseup event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMouseup {@link guide/expression Expression} to evaluate upon
  * mouseup. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43387,12 +43502,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMouseover
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on mouseover event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMouseover {@link guide/expression Expression} to evaluate upon
  * mouseover. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43411,12 +43527,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMouseenter
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on mouseenter event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMouseenter {@link guide/expression Expression} to evaluate upon
  * mouseenter. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43435,12 +43552,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMouseleave
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on mouseleave event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMouseleave {@link guide/expression Expression} to evaluate upon
  * mouseleave. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43459,12 +43577,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngMousemove
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on mousemove event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngMousemove {@link guide/expression Expression} to evaluate upon
  * mousemove. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43483,12 +43602,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngKeydown
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on keydown event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngKeydown {@link guide/expression Expression} to evaluate upon
  * keydown. (Event object is available as `$event` and can be interrogated for keyCode, altKey, etc.)
  *
@@ -43505,12 +43625,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngKeyup
+ * @restrict A
+ * @element ANY
+ * @priority 0
  *
  * @description
  * Specify custom behavior on keyup event.
  *
- * @element ANY
- * @priority 0
  * @param {expression} ngKeyup {@link guide/expression Expression} to evaluate upon
  * keyup. (Event object is available as `$event` and can be interrogated for keyCode, altKey, etc.)
  *
@@ -43532,11 +43653,12 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngKeypress
+ * @restrict A
+ * @element ANY
  *
  * @description
  * Specify custom behavior on keypress event.
  *
- * @element ANY
  * @param {expression} ngKeypress {@link guide/expression Expression} to evaluate upon
  * keypress. ({@link guide/expression#-event- Event object is available as `$event`}
  * and can be interrogated for keyCode, altKey, etc.)
@@ -43554,6 +43676,9 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngSubmit
+ * @restrict A
+ * @element form
+ * @priority 0
  *
  * @description
  * Enables binding angular expressions to onsubmit events.
@@ -43569,8 +43694,6 @@ forEach(
  * for a detailed discussion of when `ngSubmit` may be triggered.
  * </div>
  *
- * @element form
- * @priority 0
  * @param {expression} ngSubmit {@link guide/expression Expression} to eval.
  * ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43617,6 +43740,9 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngFocus
+ * @restrict A
+ * @element window, input, select, textarea, a
+ * @priority 0
  *
  * @description
  * Specify custom behavior on focus event.
@@ -43625,8 +43751,6 @@ forEach(
  * AngularJS executes the expression using `scope.$evalAsync` if the event is fired
  * during an `$apply` to ensure a consistent state.
  *
- * @element window, input, select, textarea, a
- * @priority 0
  * @param {expression} ngFocus {@link guide/expression Expression} to evaluate upon
  * focus. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43637,6 +43761,9 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngBlur
+ * @restrict A
+ * @element window, input, select, textarea, a
+ * @priority 0
  *
  * @description
  * Specify custom behavior on blur event.
@@ -43649,8 +43776,6 @@ forEach(
  * AngularJS executes the expression using `scope.$evalAsync` if the event is fired
  * during an `$apply` to ensure a consistent state.
  *
- * @element window, input, select, textarea, a
- * @priority 0
  * @param {expression} ngBlur {@link guide/expression Expression} to evaluate upon
  * blur. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43661,12 +43786,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngCopy
+ * @restrict A
+ * @element window, input, select, textarea, a
+ * @priority 0
  *
  * @description
  * Specify custom behavior on copy event.
  *
- * @element window, input, select, textarea, a
- * @priority 0
  * @param {expression} ngCopy {@link guide/expression Expression} to evaluate upon
  * copy. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43682,12 +43808,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngCut
+ * @restrict A
+ * @element window, input, select, textarea, a
+ * @priority 0
  *
  * @description
  * Specify custom behavior on cut event.
  *
- * @element window, input, select, textarea, a
- * @priority 0
  * @param {expression} ngCut {@link guide/expression Expression} to evaluate upon
  * cut. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43703,12 +43830,13 @@ forEach(
 /**
  * @ngdoc directive
  * @name ngPaste
+ * @restrict A
+ * @element window, input, select, textarea, a
+ * @priority 0
  *
  * @description
  * Specify custom behavior on paste event.
  *
- * @element window, input, select, textarea, a
- * @priority 0
  * @param {expression} ngPaste {@link guide/expression Expression} to evaluate upon
  * paste. ({@link guide/expression#-event- Event object is available as `$event`})
  *
@@ -43851,6 +43979,8 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * @ngdoc directive
  * @name ngInclude
  * @restrict ECA
+ * @scope
+ * @priority -400
  *
  * @description
  * Fetches, compiles and includes an external HTML fragment.
@@ -43877,10 +44007,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  *
  * The enter and leave animation occur concurrently.
  *
- * @scope
- * @priority 400
- *
- * @param {string} ngInclude|src angular expression evaluating to URL. If the source is a string constant,
+ * @param {string} ngInclude|src AngularJS expression evaluating to URL. If the source is a string constant,
  *                 make sure you wrap it in **single** quotes, e.g. `src="'myPartialTemplate.html'"`.
  * @param {string=} onload Expression to evaluate when a new partial is loaded.
  *                  <div class="alert alert-warning">
@@ -44157,6 +44284,10 @@ var ngIncludeFillContentDirective = ['$compile',
  * @ngdoc directive
  * @name ngInit
  * @restrict AC
+ * @priority 450
+ * @element ANY
+ *
+ * @param {expression} ngInit {@link guide/expression Expression} to eval.
  *
  * @description
  * The `ngInit` directive allows you to evaluate an expression in the
@@ -44164,10 +44295,16 @@ var ngIncludeFillContentDirective = ['$compile',
  *
  * <div class="alert alert-danger">
  * This directive can be abused to add unnecessary amounts of logic into your templates.
- * There are only a few appropriate uses of `ngInit`, such as for aliasing special properties of
- * {@link ng.directive:ngRepeat `ngRepeat`}, as seen in the demo below; and for injecting data via
- * server side scripting. Besides these few cases, you should use {@link guide/controller controllers}
- * rather than `ngInit` to initialize values on a scope.
+ * There are only a few appropriate uses of `ngInit`:
+ * <ul>
+ *   <li>aliasing special properties of {@link ng.directive:ngRepeat `ngRepeat`},
+ *     as seen in the demo below.</li>
+ *   <li>initializing data during development, or for examples, as seen throughout these docs.</li>
+ *   <li>injecting data via server side scripting.</li>
+ * </ul>
+ *
+ * Besides these few cases, you should use {@link guide/component Components} or
+ * {@link guide/controller Controllers} rather than `ngInit` to initialize values on a scope.
  * </div>
  *
  * <div class="alert alert-warning">
@@ -44177,11 +44314,6 @@ var ngIncludeFillContentDirective = ['$compile',
  * `<div ng-init="test1 = ($index | toString)"></div>`
  * </pre>
  * </div>
- *
- * @priority 450
- *
- * @element ANY
- * @param {expression} ngInit {@link guide/expression Expression} to eval.
  *
  * @example
    <example module="initExample" name="ng-init">
@@ -44225,6 +44357,10 @@ var ngInitDirective = ngDirective({
 /**
  * @ngdoc directive
  * @name ngList
+ * @restrict A
+ * @priority 100
+ *
+ * @param {string=} ngList optional delimiter that should be used to split the value.
  *
  * @description
  * Text input that converts between a delimited string and an array of strings. The default
@@ -44240,7 +44376,8 @@ var ngInitDirective = ngDirective({
  *   when joining the list items back together) and whitespace around each list item is stripped
  *   before it is added to the model.
  *
- * ### Example with Validation
+ * @example
+ * ### Validation
  *
  * <example name="ngList-directive" module="listExample">
  *   <file name="app.js">
@@ -44287,7 +44424,9 @@ var ngInitDirective = ngDirective({
  *   </file>
  * </example>
  *
- * ### Example - splitting on newline
+ * @example
+ * ### Splitting on newline
+ *
  * <example name="ngList-directive-newlines">
  *   <file name="index.html">
  *    <textarea ng-model="list" ng-list="&#10;" ng-trim="false"></textarea>
@@ -44303,8 +44442,6 @@ var ngInitDirective = ngDirective({
  *   </file>
  * </example>
  *
- * @element input
- * @param {string=} ngList optional delimiter that should be used to split the value.
  */
 var ngListDirective = function() {
   return {
@@ -44375,7 +44512,6 @@ var ngModelMinErr = minErr('ngModel');
 /**
  * @ngdoc type
  * @name ngModel.NgModelController
- *
  * @property {*} $viewValue The actual value from the control's view. For `input` elements, this is a
  * String. See {@link ngModel.NgModelController#$setViewValue} for information about when the $viewValue
  * is set.
@@ -44822,6 +44958,7 @@ NgModelController.prototype = {
    * input which may have such events pending. This is important in order to make sure that the
    * input field will be updated with the new model value and any pending operations are cancelled.
    *
+   * @example
    * <example name="ng-model-cancel-update" module="cancel-update-example">
    *   <file name="app.js">
    *     angular.module('cancel-update-example', [])
@@ -45228,6 +45365,153 @@ NgModelController.prototype = {
    */
   $overrideModelOptions: function(options) {
     this.$options = this.$options.createChild(options);
+  },
+
+  /**
+   * @ngdoc method
+   *
+   * @name  ngModel.NgModelController#$processModelValue
+
+   * @description
+   *
+   * Runs the model -> view pipeline on the current
+   * {@link ngModel.NgModelController#$modelValue $modelValue}.
+   *
+   * The following actions are performed by this method:
+   *
+   * - the `$modelValue` is run through the {@link ngModel.NgModelController#$formatters $formatters}
+   * and the result is set to the {@link ngModel.NgModelController#$viewValue $viewValue}
+   * - the `ng-empty` or `ng-not-empty` class is set on the element
+   * - if the `$viewValue` has changed:
+   *   - {@link ngModel.NgModelController#$render $render} is called on the control
+   *   - the {@link ngModel.NgModelController#$validators $validators} are run and
+   *   the validation status is set.
+   *
+   * This method is called by ngModel internally when the bound scope value changes.
+   * Application developers usually do not have to call this function themselves.
+   *
+   * This function can be used when the `$viewValue` or the rendered DOM value are not correctly
+   * formatted and the `$modelValue` must be run through the `$formatters` again.
+   *
+   * @example
+   * Consider a text input with an autocomplete list (for fruit), where the items are
+   * objects with a name and an id.
+   * A user enters `ap` and then selects `Apricot` from the list.
+   * Based on this, the autocomplete widget will call `$setViewValue({name: 'Apricot', id: 443})`,
+   * but the rendered value will still be `ap`.
+   * The widget can then call `ctrl.$processModelValue()` to run the model -> view
+   * pipeline again, which formats the object to the string `Apricot`,
+   * then updates the `$viewValue`, and finally renders it in the DOM.
+   *
+   * <example module="inputExample" name="ng-model-process">
+     <file name="index.html">
+      <div ng-controller="inputController" style="display: flex;">
+        <div style="margin-right: 30px;">
+          Search Fruit:
+          <basic-autocomplete items="items" on-select="selectedFruit = item"></basic-autocomplete>
+        </div>
+        <div>
+          Model:<br>
+          <pre>{{selectedFruit | json}}</pre>
+        </div>
+      </div>
+     </file>
+     <file name="app.js">
+      angular.module('inputExample', [])
+        .controller('inputController', function($scope) {
+          $scope.items = [
+            {name: 'Apricot', id: 443},
+            {name: 'Clementine', id: 972},
+            {name: 'Durian', id: 169},
+            {name: 'Jackfruit', id: 982},
+            {name: 'Strawberry', id: 863}
+          ];
+        })
+        .component('basicAutocomplete', {
+          bindings: {
+            items: '<',
+            onSelect: '&'
+          },
+          templateUrl: 'autocomplete.html',
+          controller: function($element, $scope) {
+            var that = this;
+            var ngModel;
+
+            that.$postLink = function() {
+              ngModel = $element.find('input').controller('ngModel');
+
+              ngModel.$formatters.push(function(value) {
+                return (value && value.name) || value;
+              });
+
+              ngModel.$parsers.push(function(value) {
+                var match = value;
+                for (var i = 0; i < that.items.length; i++) {
+                  if (that.items[i].name === value) {
+                    match = that.items[i];
+                    break;
+                  }
+                }
+
+                return match;
+              });
+            };
+
+            that.selectItem = function(item) {
+              ngModel.$setViewValue(item);
+              ngModel.$processModelValue();
+              that.onSelect({item: item});
+            };
+          }
+        });
+     </file>
+     <file name="autocomplete.html">
+       <div>
+         <input type="search" ng-model="$ctrl.searchTerm" />
+         <ul>
+           <li ng-repeat="item in $ctrl.items | filter:$ctrl.searchTerm">
+             <button ng-click="$ctrl.selectItem(item)">{{ item.name }}</button>
+           </li>
+         </ul>
+       </div>
+     </file>
+   * </example>
+   *
+   */
+  $processModelValue: function() {
+    var viewValue = this.$$format();
+
+    if (this.$viewValue !== viewValue) {
+      this.$$updateEmptyClasses(viewValue);
+      this.$viewValue = this.$$lastCommittedViewValue = viewValue;
+      this.$render();
+      // It is possible that model and view value have been updated during render
+      this.$$runValidators(this.$modelValue, this.$viewValue, noop);
+    }
+  },
+
+  /**
+   * This method is called internally to run the $formatters on the $modelValue
+   */
+  $$format: function() {
+    var formatters = this.$formatters,
+        idx = formatters.length;
+
+    var viewValue = this.$modelValue;
+    while (idx--) {
+      viewValue = formatters[idx](viewValue);
+    }
+
+    return viewValue;
+  },
+
+  /**
+   * This method is called internally when the bound scope value changes.
+   */
+  $$setModelValue: function(modelValue) {
+    this.$modelValue = this.$$rawModelValue = modelValue;
+    this.$$parserValid = undefined;
+    this.$processModelValue();
   }
 };
 
@@ -45244,30 +45528,14 @@ function setupModelWatcher(ctrl) {
     var modelValue = ctrl.$$ngModelGet(scope);
 
     // if scope model value and ngModel value are out of sync
-    // TODO(perf): why not move this to the action fn?
+    // This cannot be moved to the action function, because it would not catch the
+    // case where the model is changed in the ngChange function or the model setter
     if (modelValue !== ctrl.$modelValue &&
-       // checks for NaN is needed to allow setting the model to NaN when there's an asyncValidator
-        // eslint-disable-next-line no-self-compare
-       (ctrl.$modelValue === ctrl.$modelValue || modelValue === modelValue)
+      // checks for NaN is needed to allow setting the model to NaN when there's an asyncValidator
+      // eslint-disable-next-line no-self-compare
+      (ctrl.$modelValue === ctrl.$modelValue || modelValue === modelValue)
     ) {
-      ctrl.$modelValue = ctrl.$$rawModelValue = modelValue;
-      ctrl.$$parserValid = undefined;
-
-      var formatters = ctrl.$formatters,
-          idx = formatters.length;
-
-      var viewValue = modelValue;
-      while (idx--) {
-        viewValue = formatters[idx](viewValue);
-      }
-      if (ctrl.$viewValue !== viewValue) {
-        ctrl.$$updateEmptyClasses(viewValue);
-        ctrl.$viewValue = ctrl.$$lastCommittedViewValue = viewValue;
-        ctrl.$render();
-
-        // It is possible that model and view value have been updated during render
-        ctrl.$$runValidators(ctrl.$modelValue, ctrl.$viewValue, noop);
-      }
+      ctrl.$$setModelValue(modelValue);
     }
 
     return modelValue;
@@ -45310,9 +45578,9 @@ addSetValidityMethod({
 /**
  * @ngdoc directive
  * @name ngModel
- *
- * @element input
+ * @restrict A
  * @priority 1
+ * @param {expression} ngModel assignable {@link guide/expression Expression} to bind to.
  *
  * @description
  * The `ngModel` directive binds an `input`,`select`, `textarea` (or custom form control) to a
@@ -45354,7 +45622,7 @@ addSetValidityMethod({
  *  - {@link ng.directive:select select}
  *  - {@link ng.directive:textarea textarea}
  *
- * # Complex Models (objects or collections)
+ * ## Complex Models (objects or collections)
  *
  * By default, `ngModel` watches the model by reference, not value. This is important to know when
  * binding inputs to models that are objects (e.g. `Date`) or collections (e.g. arrays). If only properties of the
@@ -45370,7 +45638,7 @@ addSetValidityMethod({
  * first level of the object (or only changing the properties of an item in the collection if it's an array) will still
  * not trigger a re-rendering of the model.
  *
- * # CSS classes
+ * ## CSS classes
  * The following CSS classes are added and removed on the associated input/select/textarea element
  * depending on the validity of the model.
  *
@@ -45389,8 +45657,7 @@ addSetValidityMethod({
  *
  * Keep in mind that ngAnimate can detect each of these classes when added and removed.
  *
- * ## Animation Hooks
- *
+ * @animations
  * Animations within models are triggered when any of the associated CSS classes are added and removed
  * on the input element which is attached to the model. These classes include: `.ng-pristine`, `.ng-dirty`,
  * `.ng-invalid` and `.ng-valid` as well as any other validations that are performed on the model itself.
@@ -45414,6 +45681,7 @@ addSetValidityMethod({
  * </pre>
  *
  * @example
+ * ### Basic Usage
  * <example deps="angular-animate.js" animations="true" fixBase="true" module="inputExample" name="ng-model">
      <file name="index.html">
        <script>
@@ -45443,7 +45711,8 @@ addSetValidityMethod({
      </file>
  * </example>
  *
- * ## Binding to a getter/setter
+ * @example
+ * ### Binding to a getter/setter
  *
  * Sometimes it's helpful to bind `ngModel` to a getter/setter function.  A getter/setter is a
  * function that returns a representation of the model when called with zero arguments, and sets
@@ -45651,6 +45920,8 @@ defaultModelOptions = new ModelOptions({
 /**
  * @ngdoc directive
  * @name ngModelOptions
+ * @restrict A
+ * @priority 10
  *
  * @description
  * This directive allows you to modify the behaviour of {@link ngModel} directives within your
@@ -45929,6 +46200,7 @@ function defaults(dst, src) {
  * @name ngNonBindable
  * @restrict AC
  * @priority 1000
+ * @element ANY
  *
  * @description
  * The `ngNonBindable` directive tells Angular not to compile or bind the contents of the current
@@ -45936,25 +46208,22 @@ function defaults(dst, src) {
  * bindings but which should be ignored by Angular. This could be the case if you have a site that
  * displays snippets of code, for instance.
  *
- * @element ANY
- *
  * @example
  * In this example there are two locations where a simple interpolation binding (`{{}}`) is present,
  * but the one wrapped in `ngNonBindable` is left alone.
  *
- * @example
-    <example name="ng-non-bindable">
-      <file name="index.html">
-        <div>Normal: {{1 + 2}}</div>
-        <div ng-non-bindable>Ignored: {{1 + 2}}</div>
-      </file>
-      <file name="protractor.js" type="protractor">
-       it('should check ng-non-bindable', function() {
-         expect(element(by.binding('1 + 2')).getText()).toContain('3');
-         expect(element.all(by.css('div')).last().getText()).toMatch(/1 \+ 2/);
-       });
-      </file>
-    </example>
+  <example name="ng-non-bindable">
+    <file name="index.html">
+      <div>Normal: {{1 + 2}}</div>
+      <div ng-non-bindable>Ignored: {{1 + 2}}</div>
+    </file>
+    <file name="protractor.js" type="protractor">
+     it('should check ng-non-bindable', function() {
+       expect(element(by.binding('1 + 2')).getText()).toContain('3');
+       expect(element.all(by.css('div')).last().getText()).toMatch(/1 \+ 2/);
+     });
+    </file>
+  </example>
  */
 var ngNonBindableDirective = ngDirective({ terminal: true, priority: 1000 });
 
@@ -46687,7 +46956,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * [plural categories](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html)
  * and the strings to be displayed.
  *
- * # Plural categories and explicit number rules
+ * ## Plural categories and explicit number rules
  * There are two
  * [plural categories](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html)
  * in Angular's default en-US locale: "one" and "other".
@@ -46697,7 +46966,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * explicit number rule for "3" matches the number 3. There are examples of plural categories
  * and explicit number rules throughout the rest of this documentation.
  *
- * # Configuring ngPluralize
+ * ## Configuring ngPluralize
  * You configure ngPluralize by providing 2 attributes: `count` and `when`.
  * You can also provide an optional attribute, `offset`.
  *
@@ -46731,7 +47000,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * If no rule is defined for a category, then an empty string is displayed and a warning is generated.
  * Note that some locales define more categories than `one` and `other`. For example, fr-fr defines `few` and `many`.
  *
- * # Configuring ngPluralize with offset
+ * ## Configuring ngPluralize with offset
  * The `offset` attribute allows further customization of pluralized text, which can result in
  * a better user experience. For example, instead of the message "4 people are viewing this document",
  * you might display "John, Kate and 2 others are viewing this document".
@@ -46943,7 +47212,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * </div>
  *
  *
- * # Iterating over object properties
+ * ## Iterating over object properties
  *
  * It is possible to get `ngRepeat` to iterate over the properties of an object using the following
  * syntax:
@@ -46973,7 +47242,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * or implement a `$watch` on the object yourself.
  *
  *
- * # Tracking and Duplicates
+ * ## Tracking and Duplicates
  *
  * `ngRepeat` uses {@link $rootScope.Scope#$watchCollection $watchCollection} to detect changes in
  * the collection. When a change happens, `ngRepeat` then makes the corresponding changes to the DOM:
@@ -47053,7 +47322,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * ```
  *
  *
- * # Special repeat start and end points
+ * ## Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
  * the range of the repeater by defining explicit start and end points by using **ng-repeat-start** and **ng-repeat-end** respectively.
  * The **ng-repeat-start** directive works the same as **ng-repeat**, but will repeat all the HTML code (including the tag it's defined on)
@@ -47162,7 +47431,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * @example
  * This example uses `ngRepeat` to display a list of people. A filter is used to restrict the displayed
  * results by name or by age. New (entering) and removed (leaving) items are animated.
-  <example module="ngRepeat" name="ngRepeat" deps="angular-animate.js" animations="true" name="ng-repeat">
+  <example module="ngRepeat" name="ngRepeat" deps="angular-animate.js" animations="true">
     <file name="index.html">
       <div ng-controller="repeatController">
         I have {{friends.length}} friends. They are:
@@ -47540,7 +47809,11 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
  * By default you don't need to override anything in CSS and the animations will work around the
  * display style.
  *
- * ## A note about animations with `ngShow`
+ * @animations
+ * | Animation                                           | Occurs                                                                                                        |
+ * |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
+ * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngShow` expression evaluates to a non truthy value and just before the contents are set to hidden. |
+ * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngShow` expression evaluates to a truthy value and just before contents are set to visible.        |
  *
  * Animations in `ngShow`/`ngHide` work with the show and hide events that are triggered when the
  * directive expression is true and false. This system works like the animation system present with
@@ -47561,12 +47834,6 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
  *
  * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display property
  * to block during animation states - ngAnimate will automatically handle the style toggling for you.
- *
- * @animations
- * | Animation                                           | Occurs                                                                                                        |
- * |-----------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
- * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngShow` expression evaluates to a non truthy value and just before the contents are set to hidden. |
- * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngShow` expression evaluates to a truthy value and just before contents are set to visible.        |
  *
  * @element ANY
  * @param {expression} ngShow If the {@link guide/expression expression} is truthy/falsy then the
@@ -47742,7 +48009,11 @@ var ngShowDirective = ['$animate', function($animate) {
  * By default you don't need to override in CSS anything and the animations will work around the
  * display style.
  *
- * ## A note about animations with `ngHide`
+ * @animations
+ * | Animation                                           | Occurs                                                                                                     |
+ * |-----------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+ * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngHide` expression evaluates to a truthy value and just before the contents are set to hidden.  |
+ * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngHide` expression evaluates to a non truthy value and just before contents are set to visible. |
  *
  * Animations in `ngShow`/`ngHide` work with the show and hide events that are triggered when the
  * directive expression is true and false. This system works like the animation system present with
@@ -47763,13 +48034,6 @@ var ngShowDirective = ['$animate', function($animate) {
  *
  * Keep in mind that, as of AngularJS version 1.3, there is no need to change the display property
  * to block during animation states - ngAnimate will automatically handle the style toggling for you.
- *
- * @animations
- * | Animation                                           | Occurs                                                                                                     |
- * |-----------------------------------------------------|------------------------------------------------------------------------------------------------------------|
- * | {@link $animate#addClass addClass} `.ng-hide`       | After the `ngHide` expression evaluates to a truthy value and just before the contents are set to hidden.  |
- * | {@link $animate#removeClass removeClass} `.ng-hide` | After the `ngHide` expression evaluates to a non truthy value and just before contents are set to visible. |
- *
  *
  * @element ANY
  * @param {expression} ngHide If the {@link guide/expression expression} is truthy/falsy then the
@@ -48483,7 +48747,8 @@ function setOptionSelectedStatus(optionEl, value) {
  *       <option value="option-1">Option 1</option>
  *       <option value="option-2">Option 2</option>
  *     </select><br>
- *     <span ng-if="myForm.testSelect.$error.unknownValue">Error: The current model doesn't match any option</span>
+ *     <span class="error" ng-if="myForm.testSelect.$error.unknownValue">
+ *       Error: The current model doesn't match any option</span><br>
  *
  *     <button ng-click="forceUnknownOption()">Force unknown option</button><br>
  *   </form>
@@ -48532,11 +48797,11 @@ function setOptionSelectedStatus(optionEl, value) {
  * <div ng-controller="ExampleController">
  *   <form name="myForm">
  *     <label for="testSelect"> Select: </label><br>
- *     <select name="testSelect" ng-model="selected" unknown-value-required>
+ *     <select name="testSelect" ng-model="selected" required unknown-value-required>
  *       <option value="option-1">Option 1</option>
  *       <option value="option-2">Option 2</option>
  *     </select><br>
- *     <span ng-if="myForm.testSelect.$error.required">Error: Please select a value</span><br>
+ *     <span class="error" ng-if="myForm.testSelect.$error.required">Error: Please select a value</span><br>
  *
  *     <button ng-click="forceUnknownOption()">Force unknown option</button><br>
  *   </form>
@@ -48571,6 +48836,22 @@ function setOptionSelectedStatus(optionEl, value) {
  *       }
  *     };
  *   });
+ * </file>
+ * <file name="protractor.js" type="protractor">
+ *  it('should show the error message when the unknown option is selected', function() {
+
+      var error = element(by.className('error'));
+
+      expect(error.getText()).toBe('Error: Please select a value');
+
+      element(by.cssContainingText('option', 'Option 1')).click();
+
+      expect(error.isPresent()).toBe(false);
+
+      element(by.tagName('button')).click();
+
+      expect(error.getText()).toBe('Error: Please select a value');
+    });
  * </file>
  *</example>
  *
@@ -49042,6 +49323,7 @@ var SelectController =
  * </file>
  *</example>
  *
+ * @example
  * ### Using `ngRepeat` to generate `select` options
  * <example name="select-ngrepeat" module="ngrepeatSelect">
  * <file name="index.html">
@@ -49071,6 +49353,7 @@ var SelectController =
  * </file>
  *</example>
  *
+ * @example
  * ### Using `ngValue` to bind the model to an array of objects
  * <example name="select-ngvalue" module="ngvalueSelect">
  * <file name="index.html">
@@ -49103,6 +49386,7 @@ var SelectController =
  * </file>
  *</example>
  *
+ * @example
  * ### Using `select` with `ngOptions` and setting a default value
  * See the {@link ngOptions ngOptions documentation} for more `ngOptions` usage examples.
  *
@@ -49134,7 +49418,7 @@ var SelectController =
  * </file>
  *</example>
  *
- *
+ * @example
  * ### Binding `select` to a non-string value via `ngModel` parsing / formatting
  *
  * <example name="select-with-non-string-options" module="nonStringSelect">
@@ -49335,6 +49619,10 @@ var optionDirective = ['$interpolate', function($interpolate) {
  * @name ngRequired
  * @restrict A
  *
+ * @param {expression} ngRequired AngularJS expression. If it evaluates to `true`, it sets the
+ *                                `required` attribute to the element and adds the `required`
+ *                                {@link ngModel.NgModelController#$validators `validator`}.
+ *
  * @description
  *
  * ngRequired adds the required {@link ngModel.NgModelController#$validators `validator`} to {@link ngModel `ngModel`}.
@@ -49411,6 +49699,11 @@ var requiredDirective = function() {
 /**
  * @ngdoc directive
  * @name ngPattern
+ * @restrict A
+ *
+ * @param {expression|RegExp} ngPattern AngularJS expression that must evaluate to a `RegExp` or a `String`
+ *                                      parsable into a `RegExp`, or a `RegExp` literal. See above for
+ *                                      more details.
  *
  * @description
  *
@@ -49418,11 +49711,12 @@ var requiredDirective = function() {
  * It is most often used for text-based {@link input `input`} controls, but can also be applied to custom text-based controls.
  *
  * The validator sets the `pattern` error key if the {@link ngModel.NgModelController#$viewValue `ngModel.$viewValue`}
- * does not match a RegExp which is obtained by evaluating the Angular expression given in the
- * `ngPattern` attribute value:
- * * If the expression evaluates to a RegExp object, then this is used directly.
- * * If the expression evaluates to a string, then it will be converted to a RegExp after wrapping it
- * in `^` and `$` characters. For instance, `"abc"` will be converted to `new RegExp('^abc$')`.
+ * does not match a RegExp which is obtained from the `ngPattern` attribute value:
+ * - the value is an AngularJS expression:
+ *   - If the expression evaluates to a RegExp object, then this is used directly.
+ *   - If the expression evaluates to a string, then it will be converted to a RegExp after wrapping it
+ *     in `^` and `$` characters. For instance, `"abc"` will be converted to `new RegExp('^abc$')`.
+ * - If the value is a RegExp literal, e.g. `ngPattern="/^\d+$/"`, it is used directly.
  *
  * <div class="alert alert-info">
  * **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
@@ -49517,6 +49811,11 @@ var patternDirective = function() {
 /**
  * @ngdoc directive
  * @name ngMaxlength
+ * @restrict A
+ *
+ * @param {expression} ngMaxlength AngularJS expression that must evaluate to a `Number` or `String`
+ *                                 parsable into a `Number`. Used as value for the `maxlength`
+ *                                 {@link ngModel.NgModelController#$validators validator}.
  *
  * @description
  *
@@ -49603,6 +49902,11 @@ var maxlengthDirective = function() {
 /**
  * @ngdoc directive
  * @name ngMinlength
+ * @restrict A
+ *
+ * @param {expression} ngMinlength AngularJS expression that must evaluate to a `Number` or `String`
+ *                                 parsable into a `Number`. Used as value for the `minlength`
+ *                                 {@link ngModel.NgModelController#$validators validator}.
  *
  * @description
  *
@@ -49849,12 +50153,12 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 129 */,
-/* 130 */,
-/* 131 */
+/* 131 */,
+/* 132 */,
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(109)
+var isFunction = __webpack_require__(111)
 
 module.exports = forEach
 
@@ -49903,7 +50207,7 @@ function forEachObject(object, iterator, context) {
 
 
 /***/ }),
-/* 132 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -49923,11 +50227,11 @@ module.exports = win;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 133 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(135)
-  , forEach = __webpack_require__(131)
+var trim = __webpack_require__(137)
+  , forEach = __webpack_require__(133)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -49959,7 +50263,7 @@ module.exports = function (headers) {
 }
 
 /***/ }),
-/* 134 */
+/* 136 */
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -49979,7 +50283,7 @@ function SafeParseTuple(obj, reviver) {
 
 
 /***/ }),
-/* 135 */
+/* 137 */
 /***/ (function(module, exports) {
 
 
@@ -49999,12 +50303,12 @@ exports.right = function(str){
 
 
 /***/ }),
-/* 136 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * @license
- * Video.js 6.2.7 <http://videojs.com/>
+ * Video.js 6.5.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/master/LICENSE>
@@ -50020,7 +50324,7 @@ exports.right = function(str){
 	(global.videojs = factory());
 }(this, (function () {
 
-var version = "6.2.7";
+var version = "6.5.1";
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -50762,6 +51066,23 @@ function isEl(value) {
 }
 
 /**
+ * Determines if the current DOM is embedded in an iframe.
+ *
+ * @return {boolean}
+ *
+ */
+function isInFrame() {
+
+  // We need a try/catch here because Safari will throw errors when attempting
+  // to get either `parent` or `self`
+  try {
+    return window_1.parent !== window_1.self;
+  } catch (x) {
+    return true;
+  }
+}
+
+/**
  * Creates functions to query the DOM using a given method.
  *
  * @param {string} method
@@ -51411,6 +51732,62 @@ function insertContent(el, content) {
 }
 
 /**
+ * Check if event was a single left click
+ *
+ * @param {EventTarget~Event} event
+ *        Event object
+ *
+ * @return {boolean}
+ *         - True if a left click
+ *         - False if not a left click
+ */
+function isSingleLeftClick(event) {
+  // Note: if you create something draggable, be sure to
+  // call it on both `mousedown` and `mousemove` event,
+  // otherwise `mousedown` should be enough for a button
+
+  if (event.button === undefined && event.buttons === undefined) {
+    // Why do we need `butttons` ?
+    // Because, middle mouse sometimes have this:
+    // e.button === 0 and e.buttons === 4
+    // Furthermore, we want to prevent combination click, something like
+    // HOLD middlemouse then left click, that would be
+    // e.button === 0, e.buttons === 5
+    // just `button` is not gonna work
+
+    // Alright, then what this block does ?
+    // this is for chrome `simulate mobile devices`
+    // I want to support this as well
+
+    return true;
+  }
+
+  if (event.button === 0 && event.buttons === undefined) {
+    // Touch screen, sometimes on some specific device, `buttons`
+    // doesn't have anything (safari on ios, blackberry...)
+
+    return true;
+  }
+
+  if (IE_VERSION === 9) {
+    // Ignore IE9
+
+    return true;
+  }
+
+  if (event.button !== 0 || event.buttons !== 1) {
+    // This is the reason we have those if else block above
+    // if any special case we can catch and let it slide
+    // we do it above, when get to here, this definitely
+    // is-not-left-click
+
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Finds a single DOM element matching `selector` within the optional
  * `context` of another DOM element (defaulting to `document`).
  *
@@ -51452,6 +51829,7 @@ var $$ = createQuerier('querySelectorAll');
 var Dom = (Object.freeze || Object)({
 	isReal: isReal,
 	isEl: isEl,
+	isInFrame: isInFrame,
 	createEl: createEl,
 	textContent: textContent,
 	prependTo: prependTo,
@@ -51474,6 +51852,7 @@ var Dom = (Object.freeze || Object)({
 	normalizeContent: normalizeContent,
 	appendContent: appendContent,
 	insertContent: insertContent,
+	isSingleLeftClick: isSingleLeftClick,
 	$: $,
 	$$: $$
 });
@@ -51799,6 +52178,7 @@ var _supportsPassive = false;
     });
 
     window_1.addEventListener('test', null, opts);
+    window_1.removeEventListener('test', null, opts);
   } catch (e) {
     // disregard
   }
@@ -51923,15 +52303,17 @@ function off(elem, type, fn) {
   }
 
   // Utility function
-  var removeType = function removeType(t) {
+  var removeType = function removeType(el, t) {
     data.handlers[t] = [];
-    _cleanUpEvents(elem, t);
+    _cleanUpEvents(el, t);
   };
 
   // Are we removing all bound events?
-  if (!type) {
+  if (type === undefined) {
     for (var t in data.handlers) {
-      removeType(t);
+      if (Object.prototype.hasOwnProperty.call(data.handlers || {}, t)) {
+        removeType(elem, t);
+      }
     }
     return;
   }
@@ -51945,7 +52327,7 @@ function off(elem, type, fn) {
 
   // If no listener was provided, remove all listeners for type
   if (!fn) {
-    removeType(type);
+    removeType(elem, type);
     return;
   }
 
@@ -52086,6 +52468,7 @@ var autoSetup = function autoSetup() {
   // through each list of elements to build up a new, combined list of elements.
   var vids = document_1.getElementsByTagName('video');
   var audios = document_1.getElementsByTagName('audio');
+  var divs = document_1.getElementsByTagName('video-js');
   var mediaEls = [];
 
   if (vids && vids.length > 0) {
@@ -52100,11 +52483,17 @@ var autoSetup = function autoSetup() {
     }
   }
 
+  if (divs && divs.length > 0) {
+    for (var _i2 = 0, _e2 = divs.length; _i2 < _e2; _i2++) {
+      mediaEls.push(divs[_i2]);
+    }
+  }
+
   // Check if any media elements exist
   if (mediaEls && mediaEls.length > 0) {
 
-    for (var _i2 = 0, _e2 = mediaEls.length; _i2 < _e2; _i2++) {
-      var mediaEl = mediaEls[_i2];
+    for (var _i3 = 0, _e3 = mediaEls.length; _i3 < _e3; _i3++) {
+      var mediaEl = mediaEls[_i3];
 
       // Check if element exists, has getAttribute func.
       // IE seems to consider typeof el.getAttribute == 'object' instead of
@@ -52836,7 +53225,10 @@ function evented(target) {
 
   // When any evented object is disposed, it removes all its listeners.
   target.on('dispose', function () {
-    return target.off();
+    target.off();
+    window_1.setTimeout(function () {
+      target.eventBusEl_ = null;
+    }, 0);
   });
 
   return target;
@@ -53118,8 +53510,11 @@ var Component = function () {
       this.el_ = this.createEl();
     }
 
-    // Make this an evented object and use `el_`, if available, as its event bus
-    evented(this, { eventBusKey: this.el_ ? 'el_' : null });
+    // if evented is anything except false, we want to mixin in evented
+    if (options.evented !== false) {
+      // Make this an evented object and use `el_`, if available, as its event bus
+      evented(this, { eventBusKey: this.el_ ? 'el_' : null });
+    }
     stateful(this, this.constructor.defaultState);
 
     this.children_ = [];
@@ -53184,6 +53579,9 @@ var Component = function () {
       removeData(this.el_);
       this.el_ = null;
     }
+
+    // remove reference to the player after disposing of the element
+    this.player_ = null;
   };
 
   /**
@@ -53670,18 +54068,21 @@ var Component = function () {
   Component.prototype.ready = function ready(fn) {
     var sync = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
 
-    if (fn) {
-      if (this.isReady_) {
-        if (sync) {
-          fn.call(this);
-        } else {
-          // Call the function asynchronously by default for consistency
-          this.setTimeout(fn, 1);
-        }
-      } else {
-        this.readyQueue_ = this.readyQueue_ || [];
-        this.readyQueue_.push(fn);
-      }
+    if (!fn) {
+      return;
+    }
+
+    if (!this.isReady_) {
+      this.readyQueue_ = this.readyQueue_ || [];
+      this.readyQueue_.push(fn);
+      return;
+    }
+
+    if (sync) {
+      fn.call(this);
+    } else {
+      // Call the function asynchronously by default for consistency
+      this.setTimeout(fn, 1);
     }
   };
 
@@ -54361,11 +54762,13 @@ var Component = function () {
 
 
   Component.prototype.setTimeout = function setTimeout(fn, timeout) {
+    var _this2 = this;
+
     fn = bind(this, fn);
 
     var timeoutId = window_1.setTimeout(fn, timeout);
     var disposeFn = function disposeFn() {
-      this.clearTimeout(timeoutId);
+      return _this2.clearTimeout(timeoutId);
     };
 
     disposeFn.guid = 'vjs-timeout-' + timeoutId;
@@ -54427,12 +54830,14 @@ var Component = function () {
 
 
   Component.prototype.setInterval = function setInterval(fn, interval) {
+    var _this3 = this;
+
     fn = bind(this, fn);
 
     var intervalId = window_1.setInterval(fn, interval);
 
     var disposeFn = function disposeFn() {
-      this.clearInterval(intervalId);
+      return _this3.clearInterval(intervalId);
     };
 
     disposeFn.guid = 'vjs-interval-' + intervalId;
@@ -54499,14 +54904,14 @@ var Component = function () {
 
 
   Component.prototype.requestAnimationFrame = function requestAnimationFrame(fn) {
-    var _this2 = this;
+    var _this4 = this;
 
     if (this.supportsRaf_) {
       fn = bind(this, fn);
 
       var id = window_1.requestAnimationFrame(fn);
       var disposeFn = function disposeFn() {
-        return _this2.cancelAnimationFrame(id);
+        return _this4.cancelAnimationFrame(id);
       };
 
       disposeFn.guid = 'vjs-raf-' + id;
@@ -55016,6 +55421,34 @@ function SafeParseTuple(obj, reviver) {
 }
 
 /**
+ * Returns whether an object is `Promise`-like (i.e. has a `then` method).
+ *
+ * @param  {Object}  value
+ *         An object that may or may not be `Promise`-like.
+ *
+ * @return {Boolean}
+ *         Whether or not the object is `Promise`-like.
+ */
+function isPromise(value) {
+  return value !== undefined && typeof value.then === 'function';
+}
+
+/**
+ * Silence a Promise-like object.
+ *
+ * This is useful for avoiding non-harmful, but potentially confusing "uncaught
+ * play promise" rejection error messages.
+ *
+ * @param  {Object} value
+ *         An object that may or may not be `Promise`-like.
+ */
+function silencePromise(value) {
+  if (isPromise(value)) {
+    value.then(null, function (e) {});
+  }
+}
+
+/**
  * @file text-track-list-converter.js Utilities for capturing text track state and
  * re-creating tracks based on a capture.
  *
@@ -55216,6 +55649,14 @@ var ModalDialog = function (_Component) {
     });
   };
 
+  ModalDialog.prototype.dispose = function dispose() {
+    this.contentEl_ = null;
+    this.descEl_ = null;
+    this.previouslyActiveEl_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
    * Builds the default DOM `className`.
    *
@@ -55316,7 +55757,10 @@ var ModalDialog = function (_Component) {
         this.on(this.el_.ownerDocument, 'keydown', bind(this, this.handleKeyPress));
       }
 
+      // Hide controls and note if they were enabled.
+      this.hadControls_ = player.controls();
       player.controls(false);
+
       this.show();
       this.conditionalFocus_();
       this.el().setAttribute('aria-hidden', 'false');
@@ -55382,7 +55826,10 @@ var ModalDialog = function (_Component) {
       this.off(this.el_.ownerDocument, 'keydown', bind(this, this.handleKeyPress));
     }
 
-    player.controls(true);
+    if (this.hadControls_) {
+      player.controls(true);
+    }
+
     this.hide();
     this.el().setAttribute('aria-hidden', 'true');
 
@@ -56740,6 +57187,10 @@ var parseUrl = function parseUrl(url) {
     details.host = details.host.replace(/:443$/, '');
   }
 
+  if (!details.protocol) {
+    details.protocol = window_1.location.protocol;
+  }
+
   if (addToBody) {
     document_1.body.removeChild(div);
   }
@@ -56826,7 +57277,7 @@ var Url = (Object.freeze || Object)({
 	isCrossOrigin: isCrossOrigin
 });
 
-var isFunction_1 = isFunction;
+var index$1 = isFunction;
 
 var toString$1 = Object.prototype.toString;
 
@@ -56842,7 +57293,7 @@ function isFunction (fn) {
       fn === window.prompt))
 }
 
-var trim_1 = createCommonjsModule(function (module, exports) {
+var index$3 = createCommonjsModule(function (module, exports) {
 exports = module.exports = trim;
 
 function trim(str){
@@ -56858,13 +57309,13 @@ exports.right = function(str){
 };
 });
 
-var forEach_1 = forEach;
+var index$5 = forEach;
 
 var toString$2 = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function forEach(list, iterator, context) {
-    if (!isFunction_1(iterator)) {
+    if (!index$1(iterator)) {
         throw new TypeError('iterator must be a function')
     }
 
@@ -56913,12 +57364,12 @@ var parseHeaders = function (headers) {
 
   var result = {};
 
-  forEach_1(
-      trim_1(headers).split('\n')
+  index$5(
+      index$3(headers).split('\n')
     , function (row) {
         var index = row.indexOf(':')
-          , key = trim_1(row.slice(0, index)).toLowerCase()
-          , value = trim_1(row.slice(index + 1));
+          , key = index$3(row.slice(0, index)).toLowerCase()
+          , value = index$3(row.slice(index + 1));
 
         if (typeof(result[key]) === 'undefined') {
           result[key] = value;
@@ -56953,7 +57404,7 @@ function extend() {
     return target
 }
 
-var xhr = createXHR;
+var index = createXHR;
 createXHR.XMLHttpRequest = window_1.XMLHttpRequest || noop;
 createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window_1.XDomainRequest;
 
@@ -56981,7 +57432,7 @@ function isEmpty(obj){
 function initParams(uri, options, callback) {
     var params = uri;
 
-    if (isFunction_1(options)) {
+    if (index$1(options)) {
         callback = options;
         if (typeof uri === "string") {
             params = {uri:uri};
@@ -57259,7 +57710,7 @@ var loadTrack = function loadTrack(src, track) {
     opts.cors = crossOrigin;
   }
 
-  xhr(opts, bind(this, function (err, response, responseBody) {
+  index(opts, bind(this, function (err, response, responseBody) {
     if (err) {
       return log$1.error(err, response);
     }
@@ -61426,6 +61877,13 @@ var ClickableComponent = function (_Component) {
     return el;
   };
 
+  ClickableComponent.prototype.dispose = function dispose() {
+    // remove controlTextEl_ on dipose
+    this.controlTextEl_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
    * Create a control text element on this `Component`
    *
@@ -61468,7 +61926,7 @@ var ClickableComponent = function (_Component) {
   ClickableComponent.prototype.controlText = function controlText(text) {
     var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.el();
 
-    if (!text) {
+    if (text === undefined) {
       return this.controlText_ || 'Need Text';
     }
 
@@ -62360,10 +62818,8 @@ var BigPlayButton = function (_Button) {
       return playToggle.focus();
     };
 
-    if (playPromise && playPromise.then) {
-      var ignoreRejectedPlayPromise = function ignoreRejectedPlayPromise() {};
-
-      playPromise.then(playFocus, ignoreRejectedPlayPromise);
+    if (isPromise(playPromise)) {
+      playPromise.then(playFocus, function () {});
     } else {
       this.setTimeout(playFocus, 1);
     }
@@ -62538,6 +62994,27 @@ var PlayToggle = function (_Button) {
   };
 
   /**
+   * This gets called once after the video has ended and the user seeks so that
+   * we can change the replay button back to a play button.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The event that caused this function to run.
+   *
+   * @listens Player#seeked
+   */
+
+
+  PlayToggle.prototype.handleSeeked = function handleSeeked(event) {
+    this.removeClass('vjs-ended');
+
+    if (this.player_.paused()) {
+      this.handlePause(event);
+    } else {
+      this.handlePlay(event);
+    }
+  };
+
+  /**
    * Add the vjs-playing class to the element so it can change appearance.
    *
    * @param {EventTarget~Event} [event]
@@ -62575,6 +63052,10 @@ var PlayToggle = function (_Button) {
   /**
    * Add the vjs-ended class to the element so it can change appearance
    *
+   * @param {EventTarget~Event} [event]
+   *        The event that caused this function to run.
+   *
+   * @listens Player#ended
    */
 
 
@@ -62583,6 +63064,9 @@ var PlayToggle = function (_Button) {
     this.addClass('vjs-ended');
     // change the button text to "Replay"
     this.controlText('Replay');
+
+    // on the next seek remove the replay button
+    this.one(this.player_, 'seeked', this.handleSeeked);
   };
 
   return PlayToggle;
@@ -62649,16 +63133,16 @@ function formatTime(seconds) {
 }
 
 /**
- * @file current-time-display.js
+ * @file time-display.js
  */
 /**
- * Displays the current time
+ * Displays the time left in the video
  *
  * @extends Component
  */
 
-var CurrentTimeDisplay = function (_Component) {
-  inherits(CurrentTimeDisplay, _Component);
+var TimeDisplay = function (_Component) {
+  inherits(TimeDisplay, _Component);
 
   /**
    * Creates an instance of this class.
@@ -62669,8 +63153,8 @@ var CurrentTimeDisplay = function (_Component) {
    * @param {Object} [options]
    *        The key/value store of player options.
    */
-  function CurrentTimeDisplay(player, options) {
-    classCallCheck(this, CurrentTimeDisplay);
+  function TimeDisplay(player, options) {
+    classCallCheck(this, TimeDisplay);
 
     var _this = possibleConstructorReturn(this, _Component.call(this, player, options));
 
@@ -62687,19 +63171,20 @@ var CurrentTimeDisplay = function (_Component) {
    */
 
 
-  CurrentTimeDisplay.prototype.createEl = function createEl$$1() {
+  TimeDisplay.prototype.createEl = function createEl$$1(plainName) {
+    var className = this.buildCSSClass();
     var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-current-time vjs-time-control vjs-control'
+      className: className + ' vjs-time-control vjs-control'
     });
 
     this.contentEl_ = createEl('div', {
-      className: 'vjs-current-time-display'
+      className: className + '-display'
     }, {
       // tell screen readers not to automatically read the time as it changes
       'aria-live': 'off'
     }, createEl('span', {
       className: 'vjs-control-text',
-      textContent: this.localize('Current Time')
+      textContent: this.localize(this.controlText_)
     }));
 
     this.updateTextNode_();
@@ -62707,20 +63192,141 @@ var CurrentTimeDisplay = function (_Component) {
     return el;
   };
 
+  TimeDisplay.prototype.dispose = function dispose() {
+    this.contentEl_ = null;
+    this.textNode_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
-   * Updates the "current time" text node with new content using the
+   * Updates the "remaining time" text node with new content using the
    * contents of the `formattedTime_` property.
    *
    * @private
    */
 
 
-  CurrentTimeDisplay.prototype.updateTextNode_ = function updateTextNode_() {
-    if (this.textNode_) {
-      this.contentEl_.removeChild(this.textNode_);
+  TimeDisplay.prototype.updateTextNode_ = function updateTextNode_() {
+    if (!this.contentEl_) {
+      return;
     }
-    this.textNode_ = document_1.createTextNode(' ' + (this.formattedTime_ || '0:00'));
+
+    while (this.contentEl_.firstChild) {
+      this.contentEl_.removeChild(this.contentEl_.firstChild);
+    }
+
+    this.textNode_ = document_1.createTextNode(this.formattedTime_ || '0:00');
     this.contentEl_.appendChild(this.textNode_);
+  };
+
+  /**
+   * Generates a formatted time for this component to use in display.
+   *
+   * @param  {number} time
+   *         A numeric time, in seconds.
+   *
+   * @return {string}
+   *         A formatted time
+   *
+   * @private
+   */
+
+
+  TimeDisplay.prototype.formatTime_ = function formatTime_(time) {
+    return formatTime(time);
+  };
+
+  /**
+   * Updates the time display text node if it has what was passed in changed
+   * the formatted time.
+   *
+   * @param {number} time
+   *        The time to update to
+   *
+   * @private
+   */
+
+
+  TimeDisplay.prototype.updateFormattedTime_ = function updateFormattedTime_(time) {
+    var formattedTime = this.formatTime_(time);
+
+    if (formattedTime === this.formattedTime_) {
+      return;
+    }
+
+    this.formattedTime_ = formattedTime;
+    this.requestAnimationFrame(this.updateTextNode_);
+  };
+
+  /**
+   * To be filled out in the child class, should update the displayed time
+   * in accordance with the fact that the current time has changed.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate`  event that caused this to run.
+   *
+   * @listens Player#timeupdate
+   */
+
+
+  TimeDisplay.prototype.updateContent = function updateContent(event) {};
+
+  return TimeDisplay;
+}(Component);
+
+/**
+ * The text that should display over the `TimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+TimeDisplay.prototype.controlText_ = 'Time';
+
+Component.registerComponent('TimeDisplay', TimeDisplay);
+
+/**
+ * @file current-time-display.js
+ */
+/**
+ * Displays the current time
+ *
+ * @extends Component
+ */
+
+var CurrentTimeDisplay = function (_TimeDisplay) {
+  inherits(CurrentTimeDisplay, _TimeDisplay);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function CurrentTimeDisplay(player, options) {
+    classCallCheck(this, CurrentTimeDisplay);
+
+    var _this = possibleConstructorReturn(this, _TimeDisplay.call(this, player, options));
+
+    _this.on(player, 'ended', _this.handleEnded);
+    return _this;
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+
+
+  CurrentTimeDisplay.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-current-time';
   };
 
   /**
@@ -62736,16 +63342,41 @@ var CurrentTimeDisplay = function (_Component) {
   CurrentTimeDisplay.prototype.updateContent = function updateContent(event) {
     // Allows for smooth scrubbing, when player can't keep up.
     var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-    var formattedTime = formatTime(time, this.player_.duration());
 
-    if (formattedTime !== this.formattedTime_) {
-      this.formattedTime_ = formattedTime;
-      this.requestAnimationFrame(this.updateTextNode_);
+    this.updateFormattedTime_(time);
+  };
+
+  /**
+   * When the player fires ended there should be no time left. Sadly
+   * this is not always the case, lets make it seem like that is the case
+   * for users.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `ended` event that caused this to run.
+   *
+   * @listens Player#ended
+   */
+
+
+  CurrentTimeDisplay.prototype.handleEnded = function handleEnded(event) {
+    if (!this.player_.duration()) {
+      return;
     }
+    this.updateFormattedTime_(this.player_.duration());
   };
 
   return CurrentTimeDisplay;
-}(Component);
+}(TimeDisplay);
+
+/**
+ * The text that should display over the `CurrentTimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+CurrentTimeDisplay.prototype.controlText_ = 'Current Time';
 
 Component.registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
 
@@ -62758,8 +63389,8 @@ Component.registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
  * @extends Component
  */
 
-var DurationDisplay = function (_Component) {
-  inherits(DurationDisplay, _Component);
+var DurationDisplay = function (_TimeDisplay) {
+  inherits(DurationDisplay, _TimeDisplay);
 
   /**
    * Creates an instance of this class.
@@ -62773,61 +63404,30 @@ var DurationDisplay = function (_Component) {
   function DurationDisplay(player, options) {
     classCallCheck(this, DurationDisplay);
 
-    var _this = possibleConstructorReturn(this, _Component.call(this, player, options));
+    // we do not want to/need to throttle duration changes,
+    // as they should always display the changed duration as
+    // it has changed
+    var _this = possibleConstructorReturn(this, _TimeDisplay.call(this, player, options));
 
-    _this.throttledUpdateContent = throttle(bind(_this, _this.updateContent), 25);
+    _this.on(player, 'durationchange', _this.updateContent);
 
-    _this.on(player, ['durationchange',
-
-    // Also listen for timeupdate and loadedmetadata because removing those
+    // Also listen for timeupdate (in the parent) and loadedmetadata because removing those
     // listeners could have broken dependent applications/libraries. These
     // can likely be removed for 7.0.
-    'loadedmetadata', 'timeupdate'], _this.throttledUpdateContent);
+    _this.on(player, 'loadedmetadata', _this.throttledUpdateContent);
     return _this;
   }
 
   /**
-   * Create the `Component`'s DOM element
+   * Builds the default DOM `className`.
    *
-   * @return {Element}
-   *         The element that was created.
+   * @return {string}
+   *         The DOM `className` for this object.
    */
 
 
-  DurationDisplay.prototype.createEl = function createEl$$1() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-duration vjs-time-control vjs-control'
-    });
-
-    this.contentEl_ = createEl('div', {
-      className: 'vjs-duration-display'
-    }, {
-      // tell screen readers not to automatically read the time as it changes
-      'aria-live': 'off'
-    }, createEl('span', {
-      className: 'vjs-control-text',
-      textContent: this.localize('Duration Time')
-    }));
-
-    this.updateTextNode_();
-    el.appendChild(this.contentEl_);
-    return el;
-  };
-
-  /**
-   * Updates the "current time" text node with new content using the
-   * contents of the `formattedTime_` property.
-   *
-   * @private
-   */
-
-
-  DurationDisplay.prototype.updateTextNode_ = function updateTextNode_() {
-    if (this.textNode_) {
-      this.contentEl_.removeChild(this.textNode_);
-    }
-    this.textNode_ = document_1.createTextNode(' ' + (this.formattedTime_ || '0:00'));
-    this.contentEl_.appendChild(this.textNode_);
+  DurationDisplay.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-duration';
   };
 
   /**
@@ -62848,13 +63448,22 @@ var DurationDisplay = function (_Component) {
 
     if (duration && this.duration_ !== duration) {
       this.duration_ = duration;
-      this.formattedTime_ = formatTime(duration);
-      this.requestAnimationFrame(this.updateTextNode_);
+      this.updateFormattedTime_(duration);
     }
   };
 
   return DurationDisplay;
-}(Component);
+}(TimeDisplay);
+
+/**
+ * The text that should display over the `DurationDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+DurationDisplay.prototype.controlText_ = 'Duration Time';
 
 Component.registerComponent('DurationDisplay', DurationDisplay);
 
@@ -62903,8 +63512,8 @@ Component.registerComponent('TimeDivider', TimeDivider);
  * @extends Component
  */
 
-var RemainingTimeDisplay = function (_Component) {
-  inherits(RemainingTimeDisplay, _Component);
+var RemainingTimeDisplay = function (_TimeDisplay) {
+  inherits(RemainingTimeDisplay, _TimeDisplay);
 
   /**
    * Creates an instance of this class.
@@ -62918,55 +63527,40 @@ var RemainingTimeDisplay = function (_Component) {
   function RemainingTimeDisplay(player, options) {
     classCallCheck(this, RemainingTimeDisplay);
 
-    var _this = possibleConstructorReturn(this, _Component.call(this, player, options));
+    var _this = possibleConstructorReturn(this, _TimeDisplay.call(this, player, options));
 
-    _this.throttledUpdateContent = throttle(bind(_this, _this.updateContent), 25);
-    _this.on(player, ['timeupdate', 'durationchange'], _this.throttledUpdateContent);
+    _this.on(player, 'durationchange', _this.throttledUpdateContent);
+    _this.on(player, 'ended', _this.handleEnded);
     return _this;
   }
 
   /**
-   * Create the `Component`'s DOM element
+   * Builds the default DOM `className`.
    *
-   * @return {Element}
-   *         The element that was created.
+   * @return {string}
+   *         The DOM `className` for this object.
    */
 
 
-  RemainingTimeDisplay.prototype.createEl = function createEl$$1() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-remaining-time vjs-time-control vjs-control'
-    });
-
-    this.contentEl_ = createEl('div', {
-      className: 'vjs-remaining-time-display'
-    }, {
-      // tell screen readers not to automatically read the time as it changes
-      'aria-live': 'off'
-    }, createEl('span', {
-      className: 'vjs-control-text',
-      textContent: this.localize('Remaining Time')
-    }));
-
-    this.updateTextNode_();
-    el.appendChild(this.contentEl_);
-    return el;
+  RemainingTimeDisplay.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-remaining-time';
   };
 
   /**
-   * Updates the "remaining time" text node with new content using the
-   * contents of the `formattedTime_` property.
+   * The remaining time display prefixes numbers with a "minus" character.
+   *
+   * @param  {number} time
+   *         A numeric time, in seconds.
+   *
+   * @return {string}
+   *         A formatted time
    *
    * @private
    */
 
 
-  RemainingTimeDisplay.prototype.updateTextNode_ = function updateTextNode_() {
-    if (this.textNode_) {
-      this.contentEl_.removeChild(this.textNode_);
-    }
-    this.textNode_ = document_1.createTextNode(' -' + (this.formattedTime_ || '0:00'));
-    this.contentEl_.appendChild(this.textNode_);
+  RemainingTimeDisplay.prototype.formatTime_ = function formatTime_(time) {
+    return '-' + _TimeDisplay.prototype.formatTime_.call(this, time);
   };
 
   /**
@@ -62981,18 +63575,50 @@ var RemainingTimeDisplay = function (_Component) {
 
 
   RemainingTimeDisplay.prototype.updateContent = function updateContent(event) {
-    if (this.player_.duration()) {
-      var formattedTime = formatTime(this.player_.remainingTime());
+    if (!this.player_.duration()) {
+      return;
+    }
 
-      if (formattedTime !== this.formattedTime_) {
-        this.formattedTime_ = formattedTime;
-        this.requestAnimationFrame(this.updateTextNode_);
-      }
+    // @deprecated We should only use remainingTimeDisplay
+    // as of video.js 7
+    if (this.player_.remainingTimeDisplay) {
+      this.updateFormattedTime_(this.player_.remainingTimeDisplay());
+    } else {
+      this.updateFormattedTime_(this.player_.remainingTime());
     }
   };
 
+  /**
+   * When the player fires ended there should be no time left. Sadly
+   * this is not always the case, lets make it seem like that is the case
+   * for users.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `ended` event that caused this to run.
+   *
+   * @listens Player#ended
+   */
+
+
+  RemainingTimeDisplay.prototype.handleEnded = function handleEnded(event) {
+    if (!this.player_.duration()) {
+      return;
+    }
+    this.updateFormattedTime_(0);
+  };
+
   return RemainingTimeDisplay;
-}(Component);
+}(TimeDisplay);
+
+/**
+ * The text that should display over the `RemainingTimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+RemainingTimeDisplay.prototype.controlText_ = 'Remaining Time';
 
 Component.registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
 
@@ -63053,6 +63679,12 @@ var LiveDisplay = function (_Component) {
     return el;
   };
 
+  LiveDisplay.prototype.dispose = function dispose() {
+    this.contentEl_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
    * Check the duration to see if the LiveDisplay should be showing or not. Then show/hide
    * it accordingly
@@ -63110,19 +63742,80 @@ var Slider = function (_Component) {
     // Set a horizontal or vertical class on the slider depending on the slider type
     _this.vertical(!!_this.options_.vertical);
 
-    _this.on('mousedown', _this.handleMouseDown);
-    _this.on('touchstart', _this.handleMouseDown);
-    _this.on('focus', _this.handleFocus);
-    _this.on('blur', _this.handleBlur);
-    _this.on('click', _this.handleClick);
-
-    _this.on(player, 'controlsvisible', _this.update);
-
-    if (_this.playerEvent) {
-      _this.on(player, _this.playerEvent, _this.update);
-    }
+    _this.enable();
     return _this;
   }
+
+  /**
+   * Are controls are currently enabled for this slider or not.
+   *
+   * @return {boolean}
+   *         true if controls are enabled, false otherwise
+   */
+
+
+  Slider.prototype.enabled = function enabled() {
+    return this.enabled_;
+  };
+
+  /**
+   * Enable controls for this slider if they are disabled
+   */
+
+
+  Slider.prototype.enable = function enable() {
+    if (this.enabled()) {
+      return;
+    }
+
+    this.on('mousedown', this.handleMouseDown);
+    this.on('touchstart', this.handleMouseDown);
+    this.on('focus', this.handleFocus);
+    this.on('blur', this.handleBlur);
+    this.on('click', this.handleClick);
+
+    this.on(this.player_, 'controlsvisible', this.update);
+
+    if (this.playerEvent) {
+      this.on(this.player_, this.playerEvent, this.update);
+    }
+
+    this.removeClass('disabled');
+    this.setAttribute('tabindex', 0);
+
+    this.enabled_ = true;
+  };
+
+  /**
+   * Disable controls for this slider if they are enabled
+   */
+
+
+  Slider.prototype.disable = function disable() {
+    if (!this.enabled()) {
+      return;
+    }
+    var doc = this.bar.el_.ownerDocument;
+
+    this.off('mousedown', this.handleMouseDown);
+    this.off('touchstart', this.handleMouseDown);
+    this.off('focus', this.handleFocus);
+    this.off('blur', this.handleBlur);
+    this.off('click', this.handleClick);
+    this.off(this.player_, 'controlsvisible', this.update);
+    this.off(doc, 'mousemove', this.handleMouseMove);
+    this.off(doc, 'mouseup', this.handleMouseUp);
+    this.off(doc, 'touchmove', this.handleMouseMove);
+    this.off(doc, 'touchend', this.handleMouseUp);
+    this.removeAttribute('tabindex');
+
+    this.addClass('disabled');
+
+    if (this.playerEvent) {
+      this.off(this.player_, this.playerEvent, this.update);
+    }
+    this.enabled_ = false;
+  };
 
   /**
    * Create the `Button`s DOM element.
@@ -63463,6 +64156,12 @@ var LoadProgressBar = function (_Component) {
     });
   };
 
+  LoadProgressBar.prototype.dispose = function dispose() {
+    this.partEls_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
    * Update progress bar
    *
@@ -63798,6 +64497,9 @@ Component.registerComponent('MouseTimeDisplay', MouseTimeDisplay);
 // The number of seconds the `step*` functions move the timeline.
 var STEP_SECONDS = 5;
 
+// The interval at which the bar should update as it progresses.
+var UPDATE_REFRESH_INTERVAL = 30;
+
 /**
  * Seek bar and container for the progress bars. Uses {@link PlayProgressBar}
  * as its `bar`.
@@ -63822,7 +64524,29 @@ var SeekBar = function (_Slider) {
 
     var _this = possibleConstructorReturn(this, _Slider.call(this, player, options));
 
-    _this.update = throttle(bind(_this, _this.update), 50);
+    _this.update = throttle(bind(_this, _this.update), UPDATE_REFRESH_INTERVAL);
+
+    _this.on(player, 'timeupdate', _this.update);
+    _this.on(player, 'ended', _this.handleEnded);
+
+    // when playing, let's ensure we smoothly update the play progress bar
+    // via an interval
+    _this.updateInterval = null;
+
+    _this.on(player, ['playing'], function () {
+      _this.clearInterval(_this.updateInterval);
+
+      _this.updateInterval = _this.setInterval(function () {
+        _this.requestAnimationFrame(function () {
+          _this.update();
+        });
+      }, UPDATE_REFRESH_INTERVAL);
+    });
+
+    _this.on(player, ['ended', 'pause', 'waiting'], function () {
+      _this.clearInterval(_this.updateInterval);
+    });
+
     _this.on(player, ['timeupdate', 'ended'], _this.update);
     return _this;
   }
@@ -63844,33 +64568,80 @@ var SeekBar = function (_Slider) {
   };
 
   /**
+   * This function updates the play progress bar and accessiblity
+   * attributes to whatever is passed in.
+   *
+   * @param {number} currentTime
+   *        The currentTime value that should be used for accessiblity
+   *
+   * @param {number} percent
+   *        The percentage as a decimal that the bar should be filled from 0-1.
+   *
+   * @private
+   */
+
+
+  SeekBar.prototype.update_ = function update_(currentTime, percent) {
+    var duration = this.player_.duration();
+
+    // machine readable value of progress bar (percentage complete)
+    this.el_.setAttribute('aria-valuenow', (percent * 100).toFixed(2));
+
+    // human readable value of progress bar (time complete)
+    this.el_.setAttribute('aria-valuetext', this.localize('progress bar timing: currentTime={1} duration={2}', [formatTime(currentTime, duration), formatTime(duration, duration)], '{1} of {2}'));
+
+    // Update the `PlayProgressBar`.
+    this.bar.update(getBoundingClientRect(this.el_), percent);
+  };
+
+  /**
    * Update the seek bar's UI.
    *
    * @param {EventTarget~Event} [event]
    *        The `timeupdate` or `ended` event that caused this to run.
    *
    * @listens Player#timeupdate
+   *
+   * @returns {number}
+   *          The current percent at a number from 0-1
+   */
+
+
+  SeekBar.prototype.update = function update(event) {
+    var percent = _Slider.prototype.update.call(this);
+
+    this.update_(this.getCurrentTime_(), percent);
+    return percent;
+  };
+
+  /**
+   * Get the value of current time but allows for smooth scrubbing,
+   * when player can't keep up.
+   *
+   * @return {number}
+   *         The current time value to display
+   *
+   * @private
+   */
+
+
+  SeekBar.prototype.getCurrentTime_ = function getCurrentTime_() {
+    return this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
+  };
+
+  /**
+   * We want the seek bar to be full on ended
+   * no matter what the actual internal values are. so we force it.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` or `ended` event that caused this to run.
+   *
    * @listens Player#ended
    */
 
 
-  SeekBar.prototype.update = function update() {
-    var percent = _Slider.prototype.update.call(this);
-    var duration = this.player_.duration();
-
-    // Allows for smooth scrubbing, when player can't keep up.
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-
-    // machine readable value of progress bar (percentage complete)
-    this.el_.setAttribute('aria-valuenow', (percent * 100).toFixed(2));
-
-    // human readable value of progress bar (time complete)
-    this.el_.setAttribute('aria-valuetext', this.localize('progress bar timing: currentTime={1} duration={2}', [formatTime(time, duration), formatTime(duration, duration)], '{1} of {2}'));
-
-    // Update the `PlayProgressBar`.
-    this.bar.update(getBoundingClientRect(this.el_), percent);
-
-    return percent;
+  SeekBar.prototype.handleEnded = function handleEnded(event) {
+    this.update_(this.player_.duration(), 1);
   };
 
   /**
@@ -63882,11 +64653,7 @@ var SeekBar = function (_Slider) {
 
 
   SeekBar.prototype.getPercent = function getPercent() {
-
-    // Allows for smooth scrubbing, when player can't keep up.
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-
-    var percent = time / this.player_.duration();
+    var percent = this.getCurrentTime_() / this.player_.duration();
 
     return percent >= 1 ? 1 : percent;
   };
@@ -63902,6 +64669,10 @@ var SeekBar = function (_Slider) {
 
 
   SeekBar.prototype.handleMouseDown = function handleMouseDown(event) {
+    if (!isSingleLeftClick(event)) {
+      return;
+    }
+
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
@@ -63921,6 +64692,10 @@ var SeekBar = function (_Slider) {
 
 
   SeekBar.prototype.handleMouseMove = function handleMouseMove(event) {
+    if (!isSingleLeftClick(event)) {
+      return;
+    }
+
     var newTime = this.calculateDistance(event) * this.player_.duration();
 
     // Don't let video end while scrubbing.
@@ -63930,6 +64705,28 @@ var SeekBar = function (_Slider) {
 
     // Set new time (tell player to seek to new time)
     this.player_.currentTime(newTime);
+  };
+
+  SeekBar.prototype.enable = function enable() {
+    _Slider.prototype.enable.call(this);
+    var mouseTimeDisplay = this.getChild('mouseTimeDisplay');
+
+    if (!mouseTimeDisplay) {
+      return;
+    }
+
+    mouseTimeDisplay.show();
+  };
+
+  SeekBar.prototype.disable = function disable() {
+    _Slider.prototype.disable.call(this);
+    var mouseTimeDisplay = this.getChild('mouseTimeDisplay');
+
+    if (!mouseTimeDisplay) {
+      return;
+    }
+
+    mouseTimeDisplay.hide();
   };
 
   /**
@@ -63946,6 +64743,15 @@ var SeekBar = function (_Slider) {
     _Slider.prototype.handleMouseUp.call(this, event);
 
     this.player_.scrubbing(false);
+
+    /**
+     * Trigger timeupdate because we're done seeking and the time has changed.
+     * This is particularly useful for if the player is paused to time the time displays.
+     *
+     * @event Tech#timeupdate
+     * @type {EventTarget~Event}
+     */
+    this.player_.trigger({ type: 'timeupdate', target: this, manuallyTriggered: true });
     if (this.videoWasPlaying) {
       this.player_.play();
     }
@@ -64069,10 +64875,9 @@ var ProgressControl = function (_Component) {
     var _this = possibleConstructorReturn(this, _Component.call(this, player, options));
 
     _this.handleMouseMove = throttle(bind(_this, _this.handleMouseMove), 25);
-    _this.on(_this.el_, 'mousemove', _this.handleMouseMove);
-
     _this.throttledHandleMouseSeek = throttle(bind(_this, _this.handleMouseSeek), 25);
-    _this.on(['mousedown', 'touchstart'], _this.handleMouseDown);
+
+    _this.enable();
     return _this;
   }
 
@@ -64148,6 +64953,62 @@ var ProgressControl = function (_Component) {
     var seekBar = this.getChild('seekBar');
 
     seekBar.handleMouseMove(event);
+  };
+
+  /**
+   * Are controls are currently enabled for this progress control.
+   *
+   * @return {boolean}
+   *         true if controls are enabled, false otherwise
+   */
+
+
+  ProgressControl.prototype.enabled = function enabled() {
+    return this.enabled_;
+  };
+
+  /**
+   * Disable all controls on the progress control and its children
+   */
+
+
+  ProgressControl.prototype.disable = function disable() {
+    this.children().forEach(function (child) {
+      return child.disable && child.disable();
+    });
+
+    if (!this.enabled()) {
+      return;
+    }
+
+    this.off(['mousedown', 'touchstart'], this.handleMouseDown);
+    this.off(this.el_, 'mousemove', this.handleMouseMove);
+    this.handleMouseUp();
+
+    this.addClass('disabled');
+
+    this.enabled_ = false;
+  };
+
+  /**
+   * Enable all controls on the progress control and its children
+   */
+
+
+  ProgressControl.prototype.enable = function enable() {
+    this.children().forEach(function (child) {
+      return child.enable && child.enable();
+    });
+
+    if (this.enabled()) {
+      return;
+    }
+
+    this.on(['mousedown', 'touchstart'], this.handleMouseDown);
+    this.on(this.el_, 'mousemove', this.handleMouseMove);
+    this.removeClass('disabled');
+
+    this.enabled_ = true;
   };
 
   /**
@@ -64409,13 +65270,31 @@ var VolumeBar = function (_Slider) {
    */
 
 
-  VolumeBar.prototype.createEl = function createEl() {
+  VolumeBar.prototype.createEl = function createEl$$1() {
     return _Slider.prototype.createEl.call(this, 'div', {
       className: 'vjs-volume-bar vjs-slider-bar'
     }, {
       'aria-label': this.localize('Volume Level'),
       'aria-live': 'polite'
     });
+  };
+
+  /**
+   * Handle mouse down on volume bar
+   *
+   * @param {EventTarget~Event} event
+   *        The `mousedown` event that caused this to run.
+   *
+   * @listens mousedown
+   */
+
+
+  VolumeBar.prototype.handleMouseDown = function handleMouseDown(event) {
+    if (!isSingleLeftClick(event)) {
+      return;
+    }
+
+    _Slider.prototype.handleMouseDown.call(this, event);
   };
 
   /**
@@ -64429,6 +65308,10 @@ var VolumeBar = function (_Slider) {
 
 
   VolumeBar.prototype.handleMouseMove = function handleMouseMove(event) {
+    if (!isSingleLeftClick(event)) {
+      return;
+    }
+
     this.checkMuted();
     this.player_.volume(this.calculateDistance(event));
   };
@@ -65075,6 +65958,12 @@ var Menu = function (_Component) {
     return el;
   };
 
+  Menu.prototype.dispose = function dispose() {
+    this.contentEl_ = null;
+
+    _Component.prototype.dispose.call(this);
+  };
+
   /**
    * Handle a `keydown` event on this menu. This listener is added in the constructor.
    *
@@ -65224,6 +66113,7 @@ var MenuButton = function (_Component) {
     var menu = this.createMenu();
 
     if (this.menu) {
+      this.menu.dispose();
       this.removeChild(this.menu);
     }
 
@@ -65531,8 +66421,12 @@ var MenuButton = function (_Component) {
       this.buttonPressed_ = true;
       this.menu.lockShowing();
       this.menuButton_.el_.setAttribute('aria-expanded', 'true');
-      // set the focus into the submenu
-      this.menu.focus();
+
+      // set the focus into the submenu, except on iOS where it is resulting in
+      // undesired scrolling behavior when the player is in an iframe
+      if (!IS_IOS && !isInFrame()) {
+        this.menu.focus();
+      }
     }
   };
 
@@ -65740,8 +66634,7 @@ var MenuItem = function (_ClickableComponent) {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
-        // Note that a space clears out the selected state text
-        this.controlText(' ');
+        this.controlText('');
       }
     }
   };
@@ -65785,13 +66678,26 @@ var TextTrackMenuItem = function (_MenuItem) {
     var _this = possibleConstructorReturn(this, _MenuItem.call(this, player, options));
 
     _this.track = track;
-    var changeHandler = bind(_this, _this.handleTracksChange);
-    var selectedLanguageChangeHandler = bind(_this, _this.handleSelectedLanguageChange);
+    var changeHandler = function changeHandler() {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this.handleTracksChange.apply(_this, args);
+    };
+    var selectedLanguageChangeHandler = function selectedLanguageChangeHandler() {
+      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      _this.handleSelectedLanguageChange.apply(_this, args);
+    };
 
     player.on(['loadstart', 'texttrackchange'], changeHandler);
     tracks.addEventListener('change', changeHandler);
     tracks.addEventListener('selectedlanguagechange', selectedLanguageChangeHandler);
     _this.on('dispose', function () {
+      player.off(['loadstart', 'texttrackchange'], changeHandler);
       tracks.removeEventListener('change', changeHandler);
       tracks.removeEventListener('selectedlanguagechange', selectedLanguageChangeHandler);
     });
@@ -65823,6 +66729,9 @@ var TextTrackMenuItem = function (_MenuItem) {
         tracks.dispatchEvent(event);
       });
     }
+
+    // set the default state based on current tracks
+    _this.handleTracksChange();
     return _this;
   }
 
@@ -65898,6 +66807,13 @@ var TextTrackMenuItem = function (_MenuItem) {
     }
   };
 
+  TextTrackMenuItem.prototype.dispose = function dispose() {
+    // remove reference to track object on dispose
+    this.track = null;
+
+    _MenuItem.prototype.dispose.call(this);
+  };
+
   return TextTrackMenuItem;
 }(MenuItem);
 
@@ -65950,10 +66866,7 @@ var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
     // MenuItem is selectable
     options.selectable = true;
 
-    var _this = possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
-
-    _this.selected(true);
-    return _this;
+    return possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
   }
 
   /**
@@ -67178,6 +68091,12 @@ var PlaybackRateMenuButton = function (_MenuButton) {
     return el;
   };
 
+  PlaybackRateMenuButton.prototype.dispose = function dispose() {
+    this.labelEl_ = null;
+
+    _MenuButton.prototype.dispose.call(this);
+  };
+
   /**
    * Builds the default DOM `className`.
    *
@@ -67798,6 +68717,12 @@ var TextTrackSettings = function (_ModalDialog) {
     return _this;
   }
 
+  TextTrackSettings.prototype.dispose = function dispose() {
+    this.endDialog = null;
+
+    _ModalDialog.prototype.dispose.call(this);
+  };
+
   /**
    * Create a <select> element with configured options.
    *
@@ -67820,10 +68745,10 @@ var TextTrackSettings = function (_ModalDialog) {
     var config = selectConfigs[key];
     var id = config.id.replace('%s', this.id_);
 
-    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + legendId + ' ' + id + '">'].concat(config.options.map(function (o) {
+    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + '">'].concat(config.options.map(function (o) {
       var optionId = id + '-' + o[1];
 
-      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + legendId + ' ' + id + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
+      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
     })).concat('</select>').join('');
   };
 
@@ -68186,6 +69111,8 @@ var Html5 = function (_Tech) {
 
   Html5.prototype.dispose = function dispose() {
     Html5.disposeMediaElement(this.el_);
+    this.options_ = null;
+
     // tech will handle clearing of the emulated track list
     _Tech.prototype.dispose.call(this);
   };
@@ -68224,6 +69151,10 @@ var Html5 = function (_Tech) {
     // each time there is a track 'change' event
     takeMetadataTrackSnapshot();
     textTracks.addEventListener('change', takeMetadataTrackSnapshot);
+
+    this.on('dispose', function () {
+      return textTracks.removeEventListener('change', takeMetadataTrackSnapshot);
+    });
 
     var restoreTrackMode = function restoreTrackMode() {
       for (var i = 0; i < metadataTracksPreFullscreenState.length; i++) {
@@ -70129,6 +71060,9 @@ var Player = function (_Component) {
     // Same with creating the element
     options.createEl = false;
 
+    // don't auto mixin the evented mixin
+    options.evented = false;
+
     // we don't want the player to report touch activity on itself
     // see enableTouchActivity in Component
     options.reportTouchActivity = false;
@@ -70138,7 +71072,7 @@ var Player = function (_Component) {
       if (typeof tag.closest === 'function') {
         var closest = tag.closest('[lang]');
 
-        if (closest) {
+        if (closest && closest.getAttribute) {
           options.language = closest.getAttribute('lang');
         }
       } else {
@@ -70160,6 +71094,12 @@ var Player = function (_Component) {
     var _this = possibleConstructorReturn(this, _Component.call(this, null, options, ready));
 
     _this.isReady_ = false;
+
+    // Init state hasStarted_
+    _this.hasStarted_ = false;
+
+    // Init state userActive_
+    _this.userActive_ = false;
 
     // if the global option object was accidentally blown away by
     // someone, bail early with an informative error
@@ -70205,6 +71145,7 @@ var Player = function (_Component) {
     // now remove immediately so native controls don't flash.
     // May be turned back on by HTML5 tech if nativeControlsForTouch is true
     tag.controls = false;
+    tag.removeAttribute('controls');
 
     /*
      * Store the internal state of scrubbing
@@ -70300,6 +71241,8 @@ var Player = function (_Component) {
     _this.on('stageclick', _this.handleStageClick_);
 
     _this.changingSrc_ = false;
+    _this.playWaitingForReady_ = false;
+    _this.playOnLoadstart_ = null;
     return _this;
   }
 
@@ -70326,6 +71269,7 @@ var Player = function (_Component) {
 
     if (this.styleEl_ && this.styleEl_.parentNode) {
       this.styleEl_.parentNode.removeChild(this.styleEl_);
+      this.styleEl_ = null;
     }
 
     // Kill reference to this player
@@ -70343,6 +71287,15 @@ var Player = function (_Component) {
       this.tech_.dispose();
     }
 
+    if (this.playerElIngest_) {
+      this.playerElIngest_ = null;
+    }
+
+    if (this.tag) {
+      this.tag = null;
+    }
+
+    // the actual .el_ is removed here
     _Component.prototype.dispose.call(this);
   };
 
@@ -70358,11 +71311,32 @@ var Player = function (_Component) {
     var tag = this.tag;
     var el = void 0;
     var playerElIngest = this.playerElIngest_ = tag.parentNode && tag.parentNode.hasAttribute && tag.parentNode.hasAttribute('data-vjs-player');
+    var divEmbed = this.tag.tagName.toLowerCase() === 'video-js';
 
     if (playerElIngest) {
       el = this.el_ = tag.parentNode;
-    } else {
+    } else if (!divEmbed) {
       el = this.el_ = _Component.prototype.createEl.call(this, 'div');
+    }
+
+    // Copy over all the attributes from the tag, including ID and class
+    // ID will now reference player box, not the video tag
+    var attrs = getAttributes(tag);
+
+    if (divEmbed) {
+      el = this.el_ = tag;
+      tag = this.tag = document_1.createElement('video');
+      while (el.children.length) {
+        tag.appendChild(el.firstChild);
+      }
+
+      if (!hasClass(el, 'video-js')) {
+        addClass(el, 'video-js');
+      }
+
+      el.appendChild(tag);
+
+      playerElIngest = this.playerElIngest_ = el;
     }
 
     // set tabindex to -1 so we could focus on the player element
@@ -70372,17 +71346,21 @@ var Player = function (_Component) {
     tag.removeAttribute('width');
     tag.removeAttribute('height');
 
-    // Copy over all the attributes from the tag, including ID and class
-    // ID will now reference player box, not the video tag
-    var attrs = getAttributes(tag);
-
     Object.getOwnPropertyNames(attrs).forEach(function (attr) {
       // workaround so we don't totally break IE7
       // http://stackoverflow.com/questions/3653444/css-styles-not-applied-on-dynamic-elements-in-internet-explorer-7
       if (attr === 'class') {
         el.className += ' ' + attrs[attr];
+
+        if (divEmbed) {
+          tag.className += ' ' + attrs[attr];
+        }
       } else {
         el.setAttribute(attr, attrs[attr]);
+
+        if (divEmbed) {
+          tag.setAttribute(attr, attrs[attr]);
+        }
       }
     });
 
@@ -70452,10 +71430,11 @@ var Player = function (_Component) {
   };
 
   /**
-   * A getter/setter for the `Player`'s width.
+   * A getter/setter for the `Player`'s width. Returns the player's configured value.
+   * To get the current width use `currentWidth()`.
    *
    * @param {number} [value]
-   *        The value to set the `Player's width to.
+   *        The value to set the `Player`'s width to.
    *
    * @return {number}
    *         The current width of the `Player` when getting.
@@ -70467,10 +71446,11 @@ var Player = function (_Component) {
   };
 
   /**
-   * A getter/setter for the `Player`'s height.
+   * A getter/setter for the `Player`'s height. Returns the player's configured value.
+   * To get the current height use `currentheight()`.
    *
    * @param {number} [value]
-   *        The value to set the `Player's heigth to.
+   *        The value to set the `Player`'s heigth to.
    *
    * @return {number}
    *         The current height of the `Player` when getting.
@@ -70507,17 +71487,18 @@ var Player = function (_Component) {
     if (value === '') {
       // If an empty string is given, reset the dimension to be automatic
       this[privDimension] = undefined;
-    } else {
-      var parsedVal = parseFloat(value);
-
-      if (isNaN(parsedVal)) {
-        log$1.error('Improper value "' + value + '" supplied for for ' + _dimension);
-        return;
-      }
-
-      this[privDimension] = parsedVal;
+      this.updateStyleEl_();
+      return;
     }
 
+    var parsedVal = parseFloat(value);
+
+    if (isNaN(parsedVal)) {
+      log$1.error('Improper value "' + value + '" supplied for for ' + _dimension);
+      return;
+    }
+
+    this[privDimension] = parsedVal;
     this.updateStyleEl_();
   };
 
@@ -70938,7 +71919,6 @@ var Player = function (_Component) {
       } catch (e) {
         log$1('deleting tag.poster throws in some browsers', e);
       }
-      this.play();
     }
   };
 
@@ -70987,31 +71967,33 @@ var Player = function (_Component) {
    *
    * @fires Player#firstplay
    *
-   * @param {boolean} hasStarted
+   * @param {boolean} request
    *        - true: adds the class
    *        - false: remove the class
    *
    * @return {boolean}
-   *         the boolean value of hasStarted
+   *         the boolean value of hasStarted_
    */
 
 
-  Player.prototype.hasStarted = function hasStarted(_hasStarted) {
-    if (_hasStarted !== undefined) {
-      // only update if this is a new value
-      if (this.hasStarted_ !== _hasStarted) {
-        this.hasStarted_ = _hasStarted;
-        if (_hasStarted) {
-          this.addClass('vjs-has-started');
-          // trigger the firstplay event if this newly has played
-          this.trigger('firstplay');
-        } else {
-          this.removeClass('vjs-has-started');
-        }
-      }
+  Player.prototype.hasStarted = function hasStarted(request) {
+    if (request === undefined) {
+      // act as getter, if we have no request to change
+      return this.hasStarted_;
+    }
+
+    if (request === this.hasStarted_) {
       return;
     }
-    return !!this.hasStarted_;
+
+    this.hasStarted_ = request;
+
+    if (this.hasStarted_) {
+      this.addClass('vjs-has-started');
+      this.trigger('firstplay');
+    } else {
+      this.removeClass('vjs-has-started');
+    }
   };
 
   /**
@@ -71272,20 +72254,20 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechClick_ = function handleTechClick_(event) {
-    // We're using mousedown to detect clicks thanks to Flash, but mousedown
-    // will also be triggered with right-clicks, so we need to prevent that
-    if (event.button !== 0) {
+    if (!isSingleLeftClick(event)) {
       return;
     }
 
     // When controls are disabled a click should not toggle playback because
     // the click is considered a control
-    if (this.controls()) {
-      if (this.paused()) {
-        this.play();
-      } else {
-        this.pause();
-      }
+    if (!this.controls_) {
+      return;
+    }
+
+    if (this.paused()) {
+      this.play();
+    } else {
+      this.pause();
     }
   };
 
@@ -71499,70 +72481,93 @@ var Player = function (_Component) {
 
 
   Player.prototype.techGet_ = function techGet_(method) {
-    if (this.tech_ && this.tech_.isReady_) {
-
-      if (method in allowedGetters) {
-        return get$1(this.middleware_, this.tech_, method);
-      }
-
-      // Flash likes to die and reload when you hide or reposition it.
-      // In these cases the object methods go away and we get errors.
-      // When that happens we'll catch the errors and inform tech that it's not ready any more.
-      try {
-        return this.tech_[method]();
-      } catch (e) {
-        // When building additional tech libs, an expected method may not be defined yet
-        if (this.tech_[method] === undefined) {
-          log$1('Video.js: ' + method + ' method not defined for ' + this.techName_ + ' playback technology.', e);
-
-          // When a method isn't available on the object it throws a TypeError
-        } else if (e.name === 'TypeError') {
-          log$1('Video.js: ' + method + ' unavailable on ' + this.techName_ + ' playback technology element.', e);
-          this.tech_.isReady_ = false;
-        } else {
-          log$1(e);
-        }
-        throw e;
-      }
+    if (!this.tech_ || !this.tech_.isReady_) {
+      return;
     }
 
-    return;
+    if (method in allowedGetters) {
+      return get$1(this.middleware_, this.tech_, method);
+    }
+
+    // Flash likes to die and reload when you hide or reposition it.
+    // In these cases the object methods go away and we get errors.
+    // When that happens we'll catch the errors and inform tech that it's not ready any more.
+    try {
+      return this.tech_[method]();
+    } catch (e) {
+
+      // When building additional tech libs, an expected method may not be defined yet
+      if (this.tech_[method] === undefined) {
+        log$1('Video.js: ' + method + ' method not defined for ' + this.techName_ + ' playback technology.', e);
+        throw e;
+      }
+
+      // When a method isn't available on the object it throws a TypeError
+      if (e.name === 'TypeError') {
+        log$1('Video.js: ' + method + ' unavailable on ' + this.techName_ + ' playback technology element.', e);
+        this.tech_.isReady_ = false;
+        throw e;
+      }
+
+      // If error unknown, just log and throw
+      log$1(e);
+      throw e;
+    }
   };
 
   /**
-   * start media playback
+   * Attempt to begin playback at the first opportunity.
    *
    * @return {Promise|undefined}
-   *         Returns a `Promise` if the browser returns one, for most browsers this will
-   *         return undefined.
+   *         Returns a `Promise` only if the browser returns one and the player
+   *         is ready to begin playback. For some browsers and all non-ready
+   *         situations, this will return `undefined`.
    */
 
 
   Player.prototype.play = function play() {
-    if (this.changingSrc_) {
-      this.ready(function () {
-        var retval = this.techGet_('play');
+    var _this5 = this;
 
-        // silence errors (unhandled promise from play)
-        if (retval !== undefined && typeof retval.then === 'function') {
-          retval.then(null, function (e) {});
-        }
+    // If this is called while we have a play queued up on a loadstart, remove
+    // that listener to avoid getting in a potentially bad state.
+    if (this.playOnLoadstart_) {
+      this.off('loadstart', this.playOnLoadstart_);
+    }
+
+    // If the player/tech is not ready, queue up another call to `play()` for
+    // when it is. This will loop back into this method for another attempt at
+    // playback when the tech is ready.
+    if (!this.isReady_) {
+
+      // Bail out if we're already waiting for `ready`!
+      if (this.playWaitingForReady_) {
+        return;
+      }
+
+      this.playWaitingForReady_ = true;
+      this.ready(function () {
+        _this5.playWaitingForReady_ = false;
+        silencePromise(_this5.play());
       });
 
-      // Only calls the tech's play if we already have a src loaded
-    } else if (this.isReady_ && (this.src() || this.currentSrc())) {
+      // If the player/tech is ready and we have a source, we can attempt playback.
+    } else if (!this.changingSrc_ && (this.src() || this.currentSrc())) {
       return this.techGet_('play');
-    } else {
-      this.ready(function () {
-        this.tech_.one('loadstart', function () {
-          var retval = this.play();
 
-          // silence errors (unhandled promise from play)
-          if (retval !== undefined && typeof retval.then === 'function') {
-            retval.then(null, function (e) {});
-          }
-        });
-      });
+      // If the tech is ready, but we do not have a source, we'll need to wait
+      // for both the `ready` and a `loadstart` when the source is finally
+      // resolved by middleware and set on the player.
+      //
+      // This can happen if `play()` is called while changing sources or before
+      // one has been set on the player.
+    } else {
+
+      this.playOnLoadstart_ = function () {
+        _this5.playOnLoadstart_ = null;
+        silencePromise(_this5.play());
+      };
+
+      this.one('loadstart', this.playOnLoadstart_);
     }
   };
 
@@ -71718,6 +72723,19 @@ var Player = function (_Component) {
 
   Player.prototype.remainingTime = function remainingTime() {
     return this.duration() - this.currentTime();
+  };
+
+  /**
+   * A remaining time function that is intented to be used when
+   * the time is to be displayed directly to the user.
+   *
+   * @return {number}
+   *         The rounded time remaining in seconds
+   */
+
+
+  Player.prototype.remainingTimeDisplay = function remainingTimeDisplay() {
+    return Math.floor(this.duration()) - Math.floor(this.currentTime());
   };
 
   //
@@ -72153,7 +73171,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.selectSource = function selectSource(sources) {
-    var _this5 = this;
+    var _this6 = this;
 
     // Get only the techs specified in `techOrder` that exist and are supported by the
     // current platform
@@ -72202,7 +73220,7 @@ var Player = function (_Component) {
       var techName = _ref2[0],
           tech = _ref2[1];
 
-      if (tech.canPlaySource(source, _this5.options_[techName.toLowerCase()])) {
+      if (tech.canPlaySource(source, _this6.options_[techName.toLowerCase()])) {
         return { source: source, tech: techName };
       }
     };
@@ -72238,11 +73256,11 @@ var Player = function (_Component) {
 
 
   Player.prototype.src = function src(source) {
-    var _this6 = this;
+    var _this7 = this;
 
     // getter usage
     if (typeof source === 'undefined') {
-      return this.cache_.src;
+      return this.cache_.src || '';
     }
     // filter out invalid sources and turn our source into
     // an array of source objects
@@ -72267,32 +73285,32 @@ var Player = function (_Component) {
 
     // middlewareSource is the source after it has been changed by middleware
     setSource(this, sources[0], function (middlewareSource, mws) {
-      _this6.middleware_ = mws;
+      _this7.middleware_ = mws;
 
-      var err = _this6.src_(middlewareSource);
+      var err = _this7.src_(middlewareSource);
 
       if (err) {
         if (sources.length > 1) {
-          return _this6.src(sources.slice(1));
+          return _this7.src(sources.slice(1));
         }
 
         // We need to wrap this in a timeout to give folks a chance to add error event handlers
-        _this6.setTimeout(function () {
+        _this7.setTimeout(function () {
           this.error({ code: 4, message: this.localize(this.options_.notSupportedMessage) });
         }, 0);
 
         // we could not find an appropriate tech, but let's still notify the delegate that this is it
         // this needs a better comment about why this is needed
-        _this6.triggerReady();
+        _this7.triggerReady();
 
         return;
       }
 
-      _this6.changingSrc_ = false;
+      _this7.changingSrc_ = false;
       // video element listed source
-      _this6.cache_.src = middlewareSource.src;
+      _this7.cache_.src = middlewareSource.src;
 
-      setTech(mws, _this6.tech_);
+      setTech(mws, _this7.tech_);
     });
   };
 
@@ -72341,10 +73359,6 @@ var Player = function (_Component) {
 
       if (this.options_.preload === 'auto') {
         this.load();
-      }
-
-      if (this.options_.autoplay) {
-        this.play();
       }
 
       // Set the source synchronously if possible (#2326)
@@ -72600,46 +73614,46 @@ var Player = function (_Component) {
 
 
   Player.prototype.controls = function controls(bool) {
-    if (bool !== undefined) {
-      bool = !!bool;
+    if (bool === undefined) {
+      return !!this.controls_;
+    }
 
-      // Don't trigger a change event unless it actually changed
-      if (this.controls_ !== bool) {
-        this.controls_ = bool;
+    bool = !!bool;
 
-        if (this.usingNativeControls()) {
-          this.techCall_('setControls', bool);
-        }
-
-        if (bool) {
-          this.removeClass('vjs-controls-disabled');
-          this.addClass('vjs-controls-enabled');
-          /**
-           * @event Player#controlsenabled
-           * @type {EventTarget~Event}
-           */
-          this.trigger('controlsenabled');
-
-          if (!this.usingNativeControls()) {
-            this.addTechControlsListeners_();
-          }
-        } else {
-          this.removeClass('vjs-controls-enabled');
-          this.addClass('vjs-controls-disabled');
-          /**
-           * @event Player#controlsdisabled
-           * @type {EventTarget~Event}
-           */
-          this.trigger('controlsdisabled');
-
-          if (!this.usingNativeControls()) {
-            this.removeTechControlsListeners_();
-          }
-        }
-      }
+    // Don't trigger a change event unless it actually changed
+    if (this.controls_ === bool) {
       return;
     }
-    return !!this.controls_;
+
+    this.controls_ = bool;
+
+    if (this.usingNativeControls()) {
+      this.techCall_('setControls', bool);
+    }
+
+    if (this.controls_) {
+      this.removeClass('vjs-controls-disabled');
+      this.addClass('vjs-controls-enabled');
+      /**
+       * @event Player#controlsenabled
+       * @type {EventTarget~Event}
+       */
+      this.trigger('controlsenabled');
+      if (!this.usingNativeControls()) {
+        this.addTechControlsListeners_();
+      }
+    } else {
+      this.removeClass('vjs-controls-enabled');
+      this.addClass('vjs-controls-disabled');
+      /**
+       * @event Player#controlsdisabled
+       * @type {EventTarget~Event}
+       */
+      this.trigger('controlsdisabled');
+      if (!this.usingNativeControls()) {
+        this.removeTechControlsListeners_();
+      }
+    }
   };
 
   /**
@@ -72662,37 +73676,40 @@ var Player = function (_Component) {
 
 
   Player.prototype.usingNativeControls = function usingNativeControls(bool) {
-    if (bool !== undefined) {
-      bool = !!bool;
+    if (bool === undefined) {
+      return !!this.usingNativeControls_;
+    }
 
-      // Don't trigger a change event unless it actually changed
-      if (this.usingNativeControls_ !== bool) {
-        this.usingNativeControls_ = bool;
-        if (bool) {
-          this.addClass('vjs-using-native-controls');
+    bool = !!bool;
 
-          /**
-           * player is using the native device controls
-           *
-           * @event Player#usingnativecontrols
-           * @type {EventTarget~Event}
-           */
-          this.trigger('usingnativecontrols');
-        } else {
-          this.removeClass('vjs-using-native-controls');
-
-          /**
-           * player is using the custom HTML controls
-           *
-           * @event Player#usingcustomcontrols
-           * @type {EventTarget~Event}
-           */
-          this.trigger('usingcustomcontrols');
-        }
-      }
+    // Don't trigger a change event unless it actually changed
+    if (this.usingNativeControls_ === bool) {
       return;
     }
-    return !!this.usingNativeControls_;
+
+    this.usingNativeControls_ = bool;
+
+    if (this.usingNativeControls_) {
+      this.addClass('vjs-using-native-controls');
+
+      /**
+       * player is using the native device controls
+       *
+       * @event Player#usingnativecontrols
+       * @type {EventTarget~Event}
+       */
+      this.trigger('usingnativecontrols');
+    } else {
+      this.removeClass('vjs-using-native-controls');
+
+      /**
+       * player is using the custom HTML controls
+       *
+       * @event Player#usingcustomcontrols
+       * @type {EventTarget~Event}
+       */
+      this.trigger('usingcustomcontrols');
+    }
   };
 
   /**
@@ -72770,53 +73787,53 @@ var Player = function (_Component) {
 
 
   Player.prototype.userActive = function userActive(bool) {
-    if (bool !== undefined) {
-      bool = !!bool;
-      if (bool !== this.userActive_) {
-        this.userActive_ = bool;
-        if (bool) {
-          // If the user was inactive and is now active we want to reset the
-          // inactivity timer
-          this.userActivity_ = true;
-          this.removeClass('vjs-user-inactive');
-          this.addClass('vjs-user-active');
-          /**
-           * @event Player#useractive
-           * @type {EventTarget~Event}
-           */
-          this.trigger('useractive');
-        } else {
-          // We're switching the state to inactive manually, so erase any other
-          // activity
-          this.userActivity_ = false;
+    if (bool === undefined) {
+      return this.userActive_;
+    }
 
-          // Chrome/Safari/IE have bugs where when you change the cursor it can
-          // trigger a mousemove event. This causes an issue when you're hiding
-          // the cursor when the user is inactive, and a mousemove signals user
-          // activity. Making it impossible to go into inactive mode. Specifically
-          // this happens in fullscreen when we really need to hide the cursor.
-          //
-          // When this gets resolved in ALL browsers it can be removed
-          // https://code.google.com/p/chromium/issues/detail?id=103041
-          if (this.tech_) {
-            this.tech_.one('mousemove', function (e) {
-              e.stopPropagation();
-              e.preventDefault();
-            });
-          }
+    bool = !!bool;
 
-          this.removeClass('vjs-user-active');
-          this.addClass('vjs-user-inactive');
-          /**
-           * @event Player#userinactive
-           * @type {EventTarget~Event}
-           */
-          this.trigger('userinactive');
-        }
-      }
+    if (bool === this.userActive_) {
       return;
     }
-    return this.userActive_;
+
+    this.userActive_ = bool;
+
+    if (this.userActive_) {
+      this.userActivity_ = true;
+      this.removeClass('vjs-user-inactive');
+      this.addClass('vjs-user-active');
+      /**
+       * @event Player#useractive
+       * @type {EventTarget~Event}
+       */
+      this.trigger('useractive');
+      return;
+    }
+
+    // Chrome/Safari/IE have bugs where when you change the cursor it can
+    // trigger a mousemove event. This causes an issue when you're hiding
+    // the cursor when the user is inactive, and a mousemove signals user
+    // activity. Making it impossible to go into inactive mode. Specifically
+    // this happens in fullscreen when we really need to hide the cursor.
+    //
+    // When this gets resolved in ALL browsers it can be removed
+    // https://code.google.com/p/chromium/issues/detail?id=103041
+    if (this.tech_) {
+      this.tech_.one('mousemove', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      });
+    }
+
+    this.userActivity_ = false;
+    this.removeClass('vjs-user-active');
+    this.addClass('vjs-user-inactive');
+    /**
+     * @event Player#userinactive
+     * @type {EventTarget~Event}
+     */
+    this.trigger('userinactive');
   };
 
   /**
@@ -72879,31 +73896,35 @@ var Player = function (_Component) {
 
     this.setInterval(function () {
       // Check to see if mouse/touch activity has happened
-      if (this.userActivity_) {
-        // Reset the activity tracker
-        this.userActivity_ = false;
-
-        // If the user state was inactive, set the state to active
-        this.userActive(true);
-
-        // Clear any existing inactivity timeout to start the timer over
-        this.clearTimeout(inactivityTimeout);
-
-        var timeout = this.options_.inactivityTimeout;
-
-        if (timeout > 0) {
-          // In <timeout> milliseconds, if no more activity has occurred the
-          // user will be considered inactive
-          inactivityTimeout = this.setTimeout(function () {
-            // Protect against the case where the inactivityTimeout can trigger just
-            // before the next user activity is picked up by the activity check loop
-            // causing a flicker
-            if (!this.userActivity_) {
-              this.userActive(false);
-            }
-          }, timeout);
-        }
+      if (!this.userActivity_) {
+        return;
       }
+
+      // Reset the activity tracker
+      this.userActivity_ = false;
+
+      // If the user state was inactive, set the state to active
+      this.userActive(true);
+
+      // Clear any existing inactivity timeout to start the timer over
+      this.clearTimeout(inactivityTimeout);
+
+      var timeout = this.options_.inactivityTimeout;
+
+      if (timeout <= 0) {
+        return;
+      }
+
+      // In <timeout> milliseconds, if no more activity has occurred the
+      // user will be considered inactive
+      inactivityTimeout = this.setTimeout(function () {
+        // Protect against the case where the inactivityTimeout can trigger just
+        // before the next user activity is picked up by the activity check loop
+        // causing a flicker
+        if (!this.userActivity_) {
+          this.userActive(false);
+        }
+      }, timeout);
     }, 250);
   };
 
@@ -73186,7 +74207,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.createModal = function createModal(content, options) {
-    var _this7 = this;
+    var _this8 = this;
 
     options = options || {};
     options.content = content || '';
@@ -73195,7 +74216,7 @@ var Player = function (_Component) {
 
     this.addChild(modal);
     modal.on('dispose', function () {
-      _this7.removeChild(modal);
+      _this8.removeChild(modal);
     });
 
     modal.open();
@@ -73760,6 +74781,15 @@ var Plugin = function () {
   }
 
   /**
+   * Get the version of the plugin that was set on <pluginName>.VERSION
+   */
+
+
+  Plugin.prototype.version = function version() {
+    return this.constructor.VERSION;
+  };
+
+  /**
    * Each event triggered by plugins includes a hash of additional data with
    * conventional properties.
    *
@@ -74171,6 +75201,7 @@ if (typeof HTMLVideoElement === 'undefined' && isReal()) {
   document_1.createElement('video');
   document_1.createElement('audio');
   document_1.createElement('track');
+  document_1.createElement('video-js');
 }
 
 /**
@@ -74238,6 +75269,11 @@ function videojs(id, options, ready) {
     return tag.player || Player.players[tag.playerId];
   }
 
+  // Check if element is included in the DOM
+  if (isEl(tag) && !document_1.body.contains(tag)) {
+    log$1.warn('The element supplied is not included in the DOM');
+  }
+
   options = options || {};
 
   videojs.hooks('beforesetup').forEach(function (hookFunction) {
@@ -74275,8 +75311,8 @@ videojs.hooks_ = {};
  * @param {string} type
  *        the lifecyle to get hooks from
  *
- * @param {Function} [fn]
- *        Optionally add a hook to the lifecycle that your are getting.
+ * @param {Function|Function[]} [fn]
+ *        Optionally add a hook (or hooks) to the lifecycle that your are getting.
  *
  * @return {Array}
  *         an array of hooks, or an empty array if there are none.
@@ -74303,6 +75339,26 @@ videojs.hook = function (type, fn) {
 };
 
 /**
+ * Add a function hook that will only run once to a specific videojs lifecycle.
+ *
+ * @param {string} type
+ *        the lifecycle to hook the function to.
+ *
+ * @param {Function|Function[]}
+ *        The function or array of functions to attach.
+ */
+videojs.hookOnce = function (type, fn) {
+  videojs.hooks(type, [].concat(fn).map(function (original) {
+    var wrapper = function wrapper() {
+      videojs.removeHook(type, wrapper);
+      original.apply(undefined, arguments);
+    };
+
+    return wrapper;
+  }));
+};
+
+/**
  * Remove a hook from a specific videojs lifecycle.
  *
  * @param {string} type
@@ -74315,14 +75371,14 @@ videojs.hook = function (type, fn) {
  *         The function that was removed or undef
  */
 videojs.removeHook = function (type, fn) {
-  var index = videojs.hooks(type).indexOf(fn);
+  var index$$1 = videojs.hooks(type).indexOf(fn);
 
-  if (index <= -1) {
+  if (index$$1 <= -1) {
     return false;
   }
 
   videojs.hooks_[type] = videojs.hooks_[type].slice();
-  videojs.hooks_[type].splice(index, 1);
+  videojs.hooks_[type].splice(index$$1, 1);
 
   return true;
 };
@@ -74659,7 +75715,7 @@ videojs.trigger = trigger;
  *
  * @see https://github.com/Raynos/xhr
  */
-videojs.xhr = xhr;
+videojs.xhr = index;
 
 /**
  * TextTrack class
@@ -74844,7 +75900,7 @@ return videojs;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 137 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -74868,12 +75924,12 @@ return videojs;
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 
-var window = __webpack_require__(132);
+var window = __webpack_require__(134);
 
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(138),
-  VTTCue: __webpack_require__(139),
-  VTTRegion: __webpack_require__(140)
+  WebVTT: __webpack_require__(140),
+  VTTCue: __webpack_require__(141),
+  VTTRegion: __webpack_require__(142)
 };
 
 window.vttjs = vttjs;
@@ -74900,7 +75956,7 @@ if (!window.VTTCue) {
 
 
 /***/ }),
-/* 138 */
+/* 140 */
 /***/ (function(module, exports) {
 
 /**
@@ -76235,7 +77291,7 @@ module.exports = WebVTT;
 
 
 /***/ }),
-/* 139 */
+/* 141 */
 /***/ (function(module, exports) {
 
 /**
@@ -76546,7 +77602,7 @@ module.exports = VTTCue;
 
 
 /***/ }),
-/* 140 */
+/* 142 */
 /***/ (function(module, exports) {
 
 /**
@@ -76686,7 +77742,7 @@ module.exports = VTTRegion;
 
 
 /***/ }),
-/* 141 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -76695,457 +77751,523 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  * @description
  * # vjs.directive.js
  */
-(function (root, factory) {
+(function(root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(199)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(201)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(102), __webpack_require__(124)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(104), __webpack_require__(126)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(102), __webpack_require__(124));
+        module.exports = factory(__webpack_require__(104), __webpack_require__(126));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
         //also, we don't need to add this module to global space
         factory(root.angular, root.videojs);
     }
-}(this, function (angular, videojs) {
+})(this, function(angular, videojs) {
     'use strict';
 
     var module = angular.module('vjs.video', []);
 
     function getVersion() {
-        return (videojs && videojs.VERSION) ?
-                videojs.VERSION : '0.0.0';
+        return videojs && videojs.VERSION ? videojs.VERSION : '0.0.0';
     }
 
     function isMediaElement(element) {
-        return element[0].nodeName === 'VIDEO' || element[0].nodeName === 'AUDIO';
+        return (
+            element[0].nodeName === 'VIDEO' || element[0].nodeName === 'AUDIO'
+        );
     }
 
-    module.controller('VjsVideoController', ['$scope', function ($scope) {
-        var self = this;
+    module.controller('VjsVideoController', [
+        '$scope',
+        function($scope) {
+            var self = this;
 
-        function getVidElement(element, isContainer) {
-            var vid = null,
-                videos;
+            function getVidElement(element, isContainer) {
+                var vid = null,
+                    videos;
 
-            if (!videojs) {
-                throw new Error('video.js was not found!');
-            }
-
-            if (isContainer) {
-                videos = element[0].querySelectorAll('video, audio');
-                if (videos.length === 0) {
-                    throw new Error('video tag must be defined within container directive!');
-                } else if (videos.length > 1) {
-                    throw new Error('only one video can be defined within the container directive!');
+                if (!videojs) {
+                    throw new Error('video.js was not found!');
                 }
 
-                vid = videos[0];
-            } else {
-                if (isMediaElement(element)) {
-                    vid = element[0];
+                if (isContainer) {
+                    videos = element[0].querySelectorAll('video, audio');
+                    if (videos.length === 0) {
+                        throw new Error(
+                            'video tag must be defined within container directive!'
+                        );
+                    } else if (videos.length > 1) {
+                        throw new Error(
+                            'only one video can be defined within the container directive!'
+                        );
+                    }
+
+                    vid = videos[0];
                 } else {
-                    throw new Error('directive must be attached to a video or audio tag!');
-                }
-            }
-
-            return vid;
-        }
-
-        function applyRatio(el, ratioVal) {
-            var ratio = ratioVal,
-                style = document.createElement('style'),
-                parseRatio = function (r) {
-                    var tokens = r.split(':'),
-                        tokenErrorMsg = 'the ratio must either be "wide", "standard" or ' +
-                                        'decimal values in the format of w:h';
-
-                    //if invalid ratio throw an error
-                    if (tokens.length !== 2) {
-                        throw new Error(tokenErrorMsg);
-                    }
-
-                    //confirm that both tokens are numbers
-                    if (isNaN(tokens[0]) || isNaN(tokens[1])) {
-                        throw new Error(tokenErrorMsg);
-                    }
-
-                    //confirm that the width or height is not zero
-                    if (Number(tokens[0]) === 0 || Number(tokens[1]) === 0) {
-                        throw new Error('neither the width or height ratio can be zero!');
-                    }
-
-                    return (Number(tokens[1]) / Number(tokens[0])) * 100;
-                },
-                genContainerId = function (element) {
-                    var container = element[0].querySelector('.vjs-tech'),
-                        vjsId;
-
-                    if (container) {
-                        vjsId = 'vjs-container-' + container.getAttribute('id');
+                    if (isMediaElement(element)) {
+                        vid = element[0];
                     } else {
-                        //vjsId = 'vjs-container-default';
-                        throw new Error('Failed to find instance of video-js class!');
+                        throw new Error(
+                            'directive must be attached to a video or audio tag!'
+                        );
                     }
+                }
 
-                    //add generated id to container
-                    element[0].setAttribute('id', vjsId);
-
-                    return vjsId;
-                },
-                containerId,
-                ratioPercentage,
-                css;
-
-            //if ratio isn't defined lets default to wide screen
-            if (!ratio) {
-                ratio = '16:9';
+                return vid;
             }
 
-            switch (ratio) {
-            case 'wide':
-                ratio = '16:9';
-                break;
-            case 'standard':
-                ratio = '4:3';
-                break;
-            }
+            function applyRatio(el, ratioVal) {
+                var ratio = ratioVal,
+                    style = document.createElement('style'),
+                    parseRatio = function(r) {
+                        var tokens = r.split(':'),
+                            tokenErrorMsg =
+                                'the ratio must either be "wide", "standard" or ' +
+                                'decimal values in the format of w:h';
 
-            containerId = genContainerId(el);
-
-            ratioPercentage = parseRatio(ratio);
-
-            css = ['#', containerId, ' ',
-                   '.video-js {padding-top:', ratioPercentage,
-                   '%;}\n', '.vjs-fullscreen {padding-top: 0px;}'].join('');
-
-            style.type = 'text/css';
-            style.rel = 'stylesheet';
-            if (style.styleSheet) {
-                style.styleSheet.cssText = css;
-            } else {
-                style.appendChild(document.createTextNode(css));
-            }
-
-            el[0].appendChild(style);
-        }
-
-        function generateMedia(ctrl, mediaChangedHandler) {
-            var errMsgNoValid = 'a sources and/or tracks element must be ' +
-                                'defined for the vjs-media attribute',
-                errMsgNoSrcs  = 'sources must be an array of objects with at ' +
-                                'least one item',
-                errMsgNoTrks  = 'tracks must be an array of objects with at ' +
-                                'least one item',
-                div,
-                curDiv;
-            //check to see if vjsMedia is defined
-            if (!ctrl.vjsMedia) {
-                return;
-            }
-
-            //if sources and tracks aren't defined, throw an error
-            if (!ctrl.vjsMedia.sources && !ctrl.vjsMedia.tracks) {
-                throw new Error(errMsgNoValid);
-            }
-
-            //verify sources and tracks are arrays if they are defined
-            if (ctrl.vjsMedia.sources && !(ctrl.vjsMedia.sources instanceof Array)) {
-                throw new Error(errMsgNoSrcs);
-            }
-            if (ctrl.vjsMedia.tracks && !(ctrl.vjsMedia.tracks instanceof Array)) {
-                throw new Error(errMsgNoTrks);
-            }
-
-            //build DOM elements for sources and tracks as children to a div
-            div = document.createElement("div");
-
-            if (ctrl.vjsMedia.sources) {
-                ctrl.vjsMedia.sources.forEach(function (curObj) {
-                    curDiv = document.createElement('source');
-                    curDiv.setAttribute('src', curObj.src || "");
-                    curDiv.setAttribute('type', curObj.type || "");
-                    div.appendChild(curDiv);
-                });
-            }
-
-            if (ctrl.vjsMedia.tracks) {
-                ctrl.vjsMedia.tracks.forEach(function (curObj) {
-                    curDiv = document.createElement('track');
-                    curDiv.setAttribute('kind', curObj.kind || "");
-                    curDiv.setAttribute('label', curObj.label || "");
-                    curDiv.setAttribute('src', curObj.src || "");
-                    curDiv.setAttribute('srclang', curObj.srclang || "");
-
-                    //check for default flag
-                    if (curObj.default === true) {
-                        curDiv.setAttribute('default', "");
-                    }
-
-                    div.appendChild(curDiv);
-                });
-            }
-
-            //invoke callback
-            mediaChangedHandler.call(undefined, {element: div});
-
-        }
-
-        function initVideoJs(vid, params, element, mediaChangedHandler) {
-            var opts = params.vjsSetup || {},
-                ratio = params.vjsRatio,
-                isValidContainer =
-                    (!isMediaElement(element) && !getVersion().match(/^5\./)) ? true : false,
-                mediaWatcher;
-
-            if (!videojs) {
-                return null;
-            }
-
-            //override poster settings if defined in vjsMedia
-            if (params.vjsMedia && params.vjsMedia.poster) {
-                opts.poster = params.vjsMedia.poster;
-            }
-
-            //generate any defined sources or tracks
-            generateMedia(params, mediaChangedHandler);
-
-            //watch for changes to vjs-media
-            mediaWatcher = $scope.$watch(
-                function () {
-                    return params.vjsMedia;
-                },
-                function (newVal, oldVal) {
-
-                    if (newVal && !angular.equals(newVal, oldVal)) {
-                        //deregister watcher
-                        mediaWatcher();
-
-                        if (isValidContainer) {
-                            videojs(vid).dispose();
-                            $scope.$emit('vjsVideoMediaChanged');
-                        } else {
-                            $scope.$emit('vjsVideoMediaChanged');
+                        //if invalid ratio throw an error
+                        if (tokens.length !== 2) {
+                            throw new Error(tokenErrorMsg);
                         }
-                    }
-                }
-            );
 
-            //bootstrap videojs
-            videojs(vid, opts, function () {
-                if (isValidContainer) {
-                    applyRatio(element, ratio);
-                }
+                        //confirm that both tokens are numbers
+                        if (isNaN(tokens[0]) || isNaN(tokens[1])) {
+                            throw new Error(tokenErrorMsg);
+                        }
 
-                //emit ready event with reference to video
-                $scope.$emit('vjsVideoReady', {
-                    id: vid.getAttribute('id'),
-                    vid: this,
-                    player: this,
-                    controlBar: this.controlBar
-                });
-            });
+                        //confirm that the width or height is not zero
+                        if (
+                            Number(tokens[0]) === 0 ||
+                            Number(tokens[1]) === 0
+                        ) {
+                            throw new Error(
+                                'neither the width or height ratio can be zero!'
+                            );
+                        }
 
-            //dispose of videojs before destroying directive
-            $scope.$on('$destroy', function () {
-                videojs(vid).dispose();
-            });
-        }
-
-        //export public methods
-        self.initVideoJs = initVideoJs;
-        self.getVidElement = getVidElement;
-    }]);
-
-    module.directive('vjsVideo', ['$compile', '$timeout', function ($compile, $timeout) {
-
-        return {
-            restrict: 'A',
-            transclude: true,
-            scope: {
-                vjsSetup: '=?',
-                vjsRatio: '@',
-                vjsMedia: '=?'
-            },
-            controller: 'VjsVideoController',
-            controllerAs: 'vjsCtrl',
-            bindToController: true,
-            link: function postLink(scope, element, attrs, ctrl, transclude) {
-                var vid,
-                    parentContainer,
-                    origContent,
-                    compiledEl,
-                    mediaChangedHandler = function (e) {
-                        //remove any inside contents
-                        element.children().remove();
-                        //add generated sources and tracks
-                        element.append(e.element.childNodes);
+                        return Number(tokens[1]) / Number(tokens[0]) * 100;
                     },
-                    init = function () {
-                        vid = ctrl.getVidElement(element);
+                    genContainerId = function(element) {
+                        var container = element[0].querySelector('.vjs-tech'),
+                            vjsId;
 
-                        //check if video.js version 5.x is running
-                        if (getVersion().match(/^5\./)) {
-                            //if vjsRatio is defined,
-                            //add it to the vjsSetup options
-                            if (ctrl.vjsRatio) {
-                                if (!ctrl.vjsSetup) {
-                                    ctrl.vjsSetup = {};
-                                }
+                        if (container) {
+                            vjsId =
+                                'vjs-container-' + container.getAttribute('id');
+                        } else {
+                            //vjsId = 'vjs-container-default';
+                            throw new Error(
+                                'Failed to find instance of video-js class!'
+                            );
+                        }
 
-                                ctrl.vjsSetup.aspectRatio = ctrl.vjsRatio;
+                        //add generated id to container
+                        element[0].setAttribute('id', vjsId);
+
+                        return vjsId;
+                    },
+                    containerId,
+                    ratioPercentage,
+                    css;
+
+                //if ratio isn't defined lets default to wide screen
+                if (!ratio) {
+                    ratio = '16:9';
+                }
+
+                switch (ratio) {
+                    case 'wide':
+                        ratio = '16:9';
+                        break;
+                    case 'standard':
+                        ratio = '4:3';
+                        break;
+                }
+
+                containerId = genContainerId(el);
+
+                ratioPercentage = parseRatio(ratio);
+
+                css = [
+                    '#',
+                    containerId,
+                    ' ',
+                    '.video-js {padding-top:',
+                    ratioPercentage,
+                    '%;}\n',
+                    '.vjs-fullscreen {padding-top: 0px;}'
+                ].join('');
+
+                style.type = 'text/css';
+                style.rel = 'stylesheet';
+                if (style.styleSheet) {
+                    style.styleSheet.cssText = css;
+                } else {
+                    style.appendChild(document.createTextNode(css));
+                }
+
+                el[0].appendChild(style);
+            }
+
+            function generateMedia(ctrl, mediaChangedHandler) {
+                var errMsgNoValid =
+                        'a sources and/or tracks element must be ' +
+                        'defined for the vjs-media attribute',
+                    errMsgNoSrcs =
+                        'sources must be an array of objects with at ' +
+                        'least one item',
+                    errMsgNoTrks =
+                        'tracks must be an array of objects with at ' +
+                        'least one item',
+                    div,
+                    curDiv;
+                //check to see if vjsMedia is defined
+                if (!ctrl.vjsMedia) {
+                    return;
+                }
+
+                //if sources and tracks aren't defined, throw an error
+                if (!ctrl.vjsMedia.sources && !ctrl.vjsMedia.tracks) {
+                    throw new Error(errMsgNoValid);
+                }
+
+                //verify sources and tracks are arrays if they are defined
+                if (
+                    ctrl.vjsMedia.sources &&
+                    !(ctrl.vjsMedia.sources instanceof Array)
+                ) {
+                    throw new Error(errMsgNoSrcs);
+                }
+                if (
+                    ctrl.vjsMedia.tracks &&
+                    !(ctrl.vjsMedia.tracks instanceof Array)
+                ) {
+                    throw new Error(errMsgNoTrks);
+                }
+
+                //build DOM elements for sources and tracks as children to a div
+                div = document.createElement('div');
+
+                if (ctrl.vjsMedia.sources) {
+                    ctrl.vjsMedia.sources.forEach(function(curObj) {
+                        curDiv = document.createElement('source');
+                        curDiv.setAttribute('src', curObj.src || '');
+                        curDiv.setAttribute('type', curObj.type || '');
+                        div.appendChild(curDiv);
+                    });
+                }
+
+                if (ctrl.vjsMedia.tracks) {
+                    ctrl.vjsMedia.tracks.forEach(function(curObj) {
+                        curDiv = document.createElement('track');
+                        curDiv.setAttribute('kind', curObj.kind || '');
+                        curDiv.setAttribute('label', curObj.label || '');
+                        curDiv.setAttribute('src', curObj.src || '');
+                        curDiv.setAttribute('srclang', curObj.srclang || '');
+
+                        //check for default flag
+                        if (curObj.default === true) {
+                            curDiv.setAttribute('default', '');
+                        }
+
+                        div.appendChild(curDiv);
+                    });
+                }
+
+                //invoke callback
+                mediaChangedHandler.call(undefined, { element: div });
+            }
+
+            function initVideoJs(vid, params, element, mediaChangedHandler) {
+                var opts = params.vjsSetup || {},
+                    ratio = params.vjsRatio,
+                    isValidContainer =
+                        !isMediaElement(element) && !getVersion().match(/^5\./)
+                            ? true
+                            : false,
+                    mediaWatcher;
+
+                if (!videojs) {
+                    return null;
+                }
+
+                //override poster settings if defined in vjsMedia
+                if (params.vjsMedia && params.vjsMedia.poster) {
+                    opts.poster = params.vjsMedia.poster;
+                }
+
+                //generate any defined sources or tracks
+                generateMedia(params, mediaChangedHandler);
+
+                //watch for changes to vjs-media
+                mediaWatcher = $scope.$watch(
+                    function() {
+                        return params.vjsMedia;
+                    },
+                    function(newVal, oldVal) {
+                        if (newVal && !angular.equals(newVal, oldVal)) {
+                            //deregister watcher
+                            mediaWatcher();
+
+                            if (isValidContainer) {
+                                videojs(vid).dispose();
+                                $scope.$emit('vjsVideoMediaChanged');
+                            } else {
+                                $scope.$emit('vjsVideoMediaChanged');
                             }
                         }
+                    }
+                );
 
-                        //attach transcluded content
-                        transclude(function (content) {
-                            element.append(content);
+                //bootstrap videojs
+                var player = videojs(vid, opts, function() {
+                    if (isValidContainer) {
+                        applyRatio(element, ratio);
+                    }
+                });
 
-                            //now that the transcluded content is injected
-                            //initialize video.js
-                            ctrl.initVideoJs(vid, ctrl, element, mediaChangedHandler);
-                        });
-                    };
-
-                origContent = element.clone();
-
-                //we need to wrap the video inside of a div
-                //for easier DOM management
-                if (!element.parent().hasClass('vjs-video-wrap')) {
-                    element.wrap('<div class="vjs-video-wrap"></div>');
+                if (player) {
+                    //emit ready event with reference to video
+                    $scope.$emit('vjsVideoReady', {
+                        id: vid.getAttribute('id'),
+                        vid: player,
+                        player: player,
+                        controlBar: player.controlBar
+                    });
                 }
 
-                parentContainer = element.parent();
+                //dispose of videojs before destroying directive
+                $scope.$on('$destroy', function() {
+                    videojs(vid).dispose();
+                });
+            }
 
-                scope.$on('vjsVideoMediaChanged', function () {
-                    //retreive base element that video.js creates
-                    var staleChild = parentContainer.children()[0];
+            //export public methods
+            self.initVideoJs = initVideoJs;
+            self.getVidElement = getVidElement;
+        }
+    ]);
 
-                    //remove current directive instance
-                    //destroy will trigger a video.js dispose
-                    $timeout(function () {
-                        scope.$destroy();
+    module.directive('vjsVideo', [
+        '$compile',
+        '$timeout',
+        function($compile, $timeout) {
+            return {
+                restrict: 'A',
+                transclude: true,
+                scope: {
+                    vjsSetup: '=?',
+                    vjsRatio: '@',
+                    vjsMedia: '=?'
+                },
+                controller: 'VjsVideoController',
+                controllerAs: 'vjsCtrl',
+                bindToController: true,
+                link: function postLink(
+                    scope,
+                    element,
+                    attrs,
+                    ctrl,
+                    transclude
+                ) {
+                    var vid,
+                        parentContainer,
+                        origContent,
+                        compiledEl,
+                        mediaChangedHandler = function(e) {
+                            //remove any inside contents
+                            element.children().remove();
+                            //add generated sources and tracks
+                            element.append(e.element.childNodes);
+                        },
+                        init = function() {
+                            vid = ctrl.getVidElement(element);
+
+                            //check if video.js version 5.x is running
+                            if (getVersion().match(/^5\./)) {
+                                //if vjsRatio is defined,
+                                //add it to the vjsSetup options
+                                if (ctrl.vjsRatio) {
+                                    if (!ctrl.vjsSetup) {
+                                        ctrl.vjsSetup = {};
+                                    }
+
+                                    ctrl.vjsSetup.aspectRatio = ctrl.vjsRatio;
+                                }
+                            }
+
+                            //attach transcluded content
+                            transclude(function(content) {
+                                element.append(content);
+
+                                //now that the transcluded content is injected
+                                //initialize video.js
+                                ctrl.initVideoJs(
+                                    vid,
+                                    ctrl,
+                                    element,
+                                    mediaChangedHandler
+                                );
+                            });
+                        };
+
+                    origContent = element.clone();
+
+                    //we need to wrap the video inside of a div
+                    //for easier DOM management
+                    if (!element.parent().hasClass('vjs-video-wrap')) {
+                        element.wrap('<div class="vjs-video-wrap"></div>');
+                    }
+
+                    parentContainer = element.parent();
+
+                    scope.$on('vjsVideoMediaChanged', function() {
+                        //retreive base element that video.js creates
+                        var staleChild = parentContainer.children()[0];
+
+                        //remove current directive instance
+                        //destroy will trigger a video.js dispose
+                        $timeout(function() {
+                            scope.$destroy();
+                        });
+
+                        //compile the new directive and add it to the DOM
+                        compiledEl = origContent.clone();
+                        parentContainer.append(compiledEl);
+                        //it is key to pass in the parent scope to the directive
+                        compiledEl = $compile(compiledEl)(scope.$parent);
+
+                        //remove original element created by video.js
+                        staleChild.remove();
                     });
 
-                    //compile the new directive and add it to the DOM
-                    compiledEl = origContent.clone();
-                    parentContainer.append(compiledEl);
-                    //it is key to pass in the parent scope to the directive
-                    compiledEl = $compile(compiledEl)(scope.$parent);
+                    init();
+                }
+            };
+        }
+    ]);
 
-                    //remove original element created by video.js
-                    staleChild.remove();
-                });
-
-                init();
-            }
-        };
-    }]);
-
-    module.directive('vjsVideoContainer', [function () {
-
-        return {
-            restrict: 'AE',
-            transclude: true,
-            template: '<div class="vjs-directive-container"><div ng-transclude></div></div>',
-            scope: {
-                vjsSetup: '=?',
-                vjsRatio: '@',
-                vjsMedia: '=?'
-            },
-            controller: 'VjsVideoController',
-            controllerAs: 'vjsCtrl',
-            bindToController: true,
-            link: function postLink(scope, element, attrs, ctrl, transclude) {
-                var vid,
-                    origContent,
-                    mediaChangedHandler = function (e) {
-                        var vidEl = element[0].querySelector('video, audio');
-
-                        if (vidEl) {
-                            //remove any inside contents
-                            while (vidEl.firstChild) {
-                                vidEl.removeChild(vidEl.firstChild);
-                            }
-
-                            //add generated sources and tracks
-                            while (e.element.childNodes.length > 0) {
-                                vidEl.appendChild(e.element.childNodes[0]);
-                            }
-                        }
-                    },
-                    init = function () {
-                        vid = ctrl.getVidElement(element, true);
-
-                        //we want to confirm that the vjs-video directive or
-                        //any corresponding attributes are not defined on the
-                        //internal video element
-                        if (vid.getAttribute('vjs-video') !== null) {
-                            throw new Error(
-                                'vjs-video should not be used on the video ' +
-                                'tag when using vjs-video-container!');
-                        }
-
-                        //we also want to make sure that no vjs-* attributes
-                        //are included on the internal video tag
-                        if ((vid.getAttribute('vjs-setup') !== null) ||
-                            (vid.getAttribute('vjs-media') !== null) ||
-                            (vid.getAttribute('vjs-ratio') !== null)) {
-                            throw new Error(
-                                'directive attributes should not be used on ' +
-                                'the video tag when using vjs-video-container!'
+    module.directive('vjsVideoContainer', [
+        function() {
+            return {
+                restrict: 'AE',
+                transclude: true,
+                template:
+                    '<div class="vjs-directive-container"><div ng-transclude></div></div>',
+                scope: {
+                    vjsSetup: '=?',
+                    vjsRatio: '@',
+                    vjsMedia: '=?'
+                },
+                controller: 'VjsVideoController',
+                controllerAs: 'vjsCtrl',
+                bindToController: true,
+                link: function postLink(
+                    scope,
+                    element,
+                    attrs,
+                    ctrl,
+                    transclude
+                ) {
+                    var vid,
+                        origContent,
+                        mediaChangedHandler = function(e) {
+                            var vidEl = element[0].querySelector(
+                                'video, audio'
                             );
 
-                        }
-
-                        //check if video.js version 5.x is running
-                        if (getVersion().match(/^5\./)) {
-
-                            if (ctrl.vjsRatio) {
-                                if (!ctrl.vjsSetup) {
-                                    ctrl.vjsSetup = {};
+                            if (vidEl) {
+                                //remove any inside contents
+                                while (vidEl.firstChild) {
+                                    vidEl.removeChild(vidEl.firstChild);
                                 }
 
-                                ctrl.vjsSetup.aspectRatio = ctrl.vjsRatio;
+                                //add generated sources and tracks
+                                while (e.element.childNodes.length > 0) {
+                                    vidEl.appendChild(e.element.childNodes[0]);
+                                }
                             }
-                        } else {
-                            //set width and height of video to auto
-                            vid.setAttribute('width', 'auto');
-                            vid.setAttribute('height', 'auto');
-                        }
+                        },
+                        init = function() {
+                            vid = ctrl.getVidElement(element, true);
 
-                        //bootstrap video js
-                        ctrl.initVideoJs(vid, ctrl, element, mediaChangedHandler);
-                    };
+                            //we want to confirm that the vjs-video directive or
+                            //any corresponding attributes are not defined on the
+                            //internal video element
+                            if (vid.getAttribute('vjs-video') !== null) {
+                                throw new Error(
+                                    'vjs-video should not be used on the video ' +
+                                        'tag when using vjs-video-container!'
+                                );
+                            }
 
-                //save original content
-                transclude(function (content) {
-                    origContent = content.clone();
-                });
+                            //we also want to make sure that no vjs-* attributes
+                            //are included on the internal video tag
+                            if (
+                                vid.getAttribute('vjs-setup') !== null ||
+                                vid.getAttribute('vjs-media') !== null ||
+                                vid.getAttribute('vjs-ratio') !== null
+                            ) {
+                                throw new Error(
+                                    'directive attributes should not be used on ' +
+                                        'the video tag when using vjs-video-container!'
+                                );
+                            }
 
-                scope.$on('vjsVideoMediaChanged', function () {
-                    //replace element children with orignal content
-                    element.children().remove();
-                    element.append(origContent.clone());
+                            //check if video.js version 5.x is running
+                            if (getVersion().match(/^5\./)) {
+                                if (ctrl.vjsRatio) {
+                                    if (!ctrl.vjsSetup) {
+                                        ctrl.vjsSetup = {};
+                                    }
+
+                                    ctrl.vjsSetup.aspectRatio = ctrl.vjsRatio;
+                                }
+                            } else {
+                                //set width and height of video to auto
+                                vid.setAttribute('width', 'auto');
+                                vid.setAttribute('height', 'auto');
+                            }
+
+                            //bootstrap video js
+                            ctrl.initVideoJs(
+                                vid,
+                                ctrl,
+                                element,
+                                mediaChangedHandler
+                            );
+                        };
+
+                    //save original content
+                    transclude(function(content) {
+                        origContent = content.clone();
+                    });
+
+                    scope.$on('vjsVideoMediaChanged', function() {
+                        //replace element children with orignal content
+                        element.children().remove();
+                        element.append(origContent.clone());
+                        init();
+                    });
+
                     init();
-                });
-
-                init();
-            }
-        };
-    }]);
+                }
+            };
+        }
+    ]);
 
     return module;
-}));
+});
 
 
 /***/ }),
-/* 142 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77153,7 +78275,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(71);
+var _button = __webpack_require__(73);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77274,7 +78396,7 @@ exports['default'] = BigPlayButton;
 
 
 /***/ }),
-/* 143 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77282,7 +78404,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(71);
+var _button = __webpack_require__(73);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77378,7 +78500,7 @@ exports['default'] = CloseButton;
 
 
 /***/ }),
-/* 144 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77386,7 +78508,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(112);
+var _trackButton = __webpack_require__(114);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -77394,7 +78516,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(145);
+var _audioTrackMenuItem = __webpack_require__(147);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -77504,7 +78626,7 @@ exports['default'] = AudioTrackButton;
 
 
 /***/ }),
-/* 145 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77512,7 +78634,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(100);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -77630,7 +78752,7 @@ exports['default'] = AudioTrackMenuItem;
 
 
 /***/ }),
-/* 146 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77642,41 +78764,41 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(149);
-
-__webpack_require__(167);
-
-__webpack_require__(168);
-
-__webpack_require__(170);
+__webpack_require__(151);
 
 __webpack_require__(169);
 
-__webpack_require__(148);
+__webpack_require__(170);
 
-__webpack_require__(155);
-
-__webpack_require__(147);
+__webpack_require__(172);
 
 __webpack_require__(171);
 
+__webpack_require__(150);
+
+__webpack_require__(157);
+
+__webpack_require__(149);
+
 __webpack_require__(173);
 
-__webpack_require__(111);
+__webpack_require__(175);
 
-__webpack_require__(162);
+__webpack_require__(113);
 
 __webpack_require__(164);
 
 __webpack_require__(166);
 
-__webpack_require__(161);
+__webpack_require__(168);
 
-__webpack_require__(144);
+__webpack_require__(163);
 
-__webpack_require__(150);
+__webpack_require__(146);
 
-__webpack_require__(158);
+__webpack_require__(152);
+
+__webpack_require__(160);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -77742,7 +78864,7 @@ exports['default'] = ControlBar;
 
 
 /***/ }),
-/* 147 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77750,7 +78872,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(71);
+var _button = __webpack_require__(73);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -77865,7 +78987,7 @@ exports['default'] = FullscreenToggle;
 
 
 /***/ }),
-/* 148 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77974,7 +79096,7 @@ exports['default'] = LiveDisplay;
 
 
 /***/ }),
-/* 149 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77982,7 +79104,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(71);
+var _button = __webpack_require__(73);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -78113,7 +79235,7 @@ exports['default'] = PlayToggle;
 
 
 /***/ }),
-/* 150 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78121,15 +79243,15 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(115);
+var _menuButton = __webpack_require__(117);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(116);
+var _menu = __webpack_require__(118);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(151);
+var _playbackRateMenuItem = __webpack_require__(153);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
@@ -78355,7 +79477,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 
 /***/ }),
-/* 151 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78363,7 +79485,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(100);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -78469,7 +79591,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 
 /***/ }),
-/* 152 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78598,7 +79720,7 @@ exports['default'] = LoadProgressBar;
 
 
 /***/ }),
-/* 153 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78618,11 +79740,11 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(108);
+var _computedStyle = __webpack_require__(110);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -78799,7 +79921,7 @@ exports['default'] = MouseTimeDisplay;
 
 
 /***/ }),
-/* 154 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78815,7 +79937,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -78907,7 +80029,7 @@ exports['default'] = PlayProgressBar;
 
 
 /***/ }),
-/* 155 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78919,9 +80041,9 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(156);
+__webpack_require__(158);
 
-__webpack_require__(153);
+__webpack_require__(155);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -78981,7 +80103,7 @@ exports['default'] = ProgressControl;
 
 
 /***/ }),
-/* 156 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78989,7 +80111,7 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(119);
+var _slider = __webpack_require__(121);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -79001,19 +80123,19 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(108);
+var _computedStyle = __webpack_require__(110);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(152);
-
 __webpack_require__(154);
 
-__webpack_require__(157);
+__webpack_require__(156);
+
+__webpack_require__(159);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -79248,7 +80370,7 @@ exports['default'] = SeekBar;
 
 
 /***/ }),
-/* 157 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79264,7 +80386,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -79354,7 +80476,7 @@ exports['default'] = TooltipProgressBar;
 
 
 /***/ }),
-/* 158 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79362,7 +80484,7 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(159);
+var _spacer = __webpack_require__(161);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
@@ -79432,7 +80554,7 @@ exports['default'] = CustomControlSpacer;
 
 
 /***/ }),
-/* 159 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79503,7 +80625,7 @@ exports['default'] = Spacer;
 
 
 /***/ }),
-/* 160 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79511,7 +80633,7 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(103);
+var _textTrackMenuItem = __webpack_require__(105);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -79595,7 +80717,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 
 /***/ }),
-/* 161 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79603,7 +80725,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(98);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79611,7 +80733,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(160);
+var _captionSettingsMenuItem = __webpack_require__(162);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -79713,7 +80835,7 @@ exports['default'] = CaptionsButton;
 
 
 /***/ }),
-/* 162 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79721,7 +80843,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(98);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -79729,11 +80851,11 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(163);
+var _chaptersTrackMenuItem = __webpack_require__(165);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -79960,7 +81082,7 @@ exports['default'] = ChaptersButton;
 
 
 /***/ }),
-/* 163 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79968,7 +81090,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(100);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -80075,7 +81197,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 
 /***/ }),
-/* 164 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80083,7 +81205,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(98);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80218,7 +81340,7 @@ exports['default'] = DescriptionsButton;
 
 
 /***/ }),
-/* 165 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80226,7 +81348,7 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(103);
+var _textTrackMenuItem = __webpack_require__(105);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -80316,7 +81438,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 
 /***/ }),
-/* 166 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80324,7 +81446,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(98);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -80410,7 +81532,7 @@ exports['default'] = SubtitlesButton;
 
 
 /***/ }),
-/* 167 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80426,7 +81548,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80525,7 +81647,7 @@ exports['default'] = CurrentTimeDisplay;
 
 
 /***/ }),
-/* 168 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80541,7 +81663,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80650,7 +81772,7 @@ exports['default'] = DurationDisplay;
 
 
 /***/ }),
-/* 169 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80666,7 +81788,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(56);
+var _formatTime = __webpack_require__(58);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -80771,7 +81893,7 @@ exports['default'] = RemainingTimeDisplay;
 
 
 /***/ }),
-/* 170 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80830,7 +81952,7 @@ exports['default'] = TimeDivider;
 
 
 /***/ }),
-/* 171 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80842,7 +81964,7 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(113);
+__webpack_require__(115);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -80928,7 +82050,7 @@ exports['default'] = VolumeControl;
 
 
 /***/ }),
-/* 172 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80986,7 +82108,7 @@ exports['default'] = VolumeLevel;
 
 
 /***/ }),
-/* 173 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81002,19 +82124,19 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(180);
+var _popup = __webpack_require__(182);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(179);
+var _popupButton = __webpack_require__(181);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(111);
+var _muteToggle = __webpack_require__(113);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(113);
+var _volumeBar = __webpack_require__(115);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -81236,7 +82358,7 @@ exports['default'] = VolumeMenuButton;
 
 
 /***/ }),
-/* 174 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81248,11 +82370,11 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(117);
+var _modalDialog = __webpack_require__(119);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -81344,7 +82466,7 @@ exports['default'] = ErrorDisplay;
 
 
 /***/ }),
-/* 175 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81354,11 +82476,11 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -81451,7 +82573,7 @@ exports['default'] = extendFn;
 
 
 /***/ }),
-/* 176 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81513,7 +82635,7 @@ exports['default'] = FullscreenApi;
 
 
 /***/ }),
-/* 177 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81571,7 +82693,7 @@ exports['default'] = LoadingSpinner;
 
 
 /***/ }),
-/* 178 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81579,7 +82701,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(118);
+var _player = __webpack_require__(120);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -81604,7 +82726,7 @@ exports['default'] = plugin;
 
 
 /***/ }),
-/* 179 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81612,7 +82734,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(72);
+var _clickableComponent = __webpack_require__(74);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -81733,7 +82855,7 @@ exports['default'] = PopupButton;
 
 
 /***/ }),
-/* 180 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81753,7 +82875,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -81838,7 +82960,7 @@ exports['default'] = Popup;
 
 
 /***/ }),
-/* 181 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81846,7 +82968,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(72);
+var _clickableComponent = __webpack_require__(74);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -81862,7 +82984,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -82026,7 +83148,7 @@ exports['default'] = PosterImage;
 
 
 /***/ }),
-/* 182 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82039,7 +83161,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(55);
+var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -82177,7 +83299,7 @@ exports.hasLoaded = hasLoaded;
 
 
 /***/ }),
-/* 183 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82386,7 +83508,7 @@ exports['default'] = FlashRtmpDecorator;
 
 
 /***/ }),
-/* 184 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82394,7 +83516,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(73);
+var _tech = __webpack_require__(75);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -82402,13 +83524,13 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(101);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(74);
+var _timeRanges = __webpack_require__(76);
 
-var _flashRtmp = __webpack_require__(183);
+var _flashRtmp = __webpack_require__(185);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
@@ -82420,7 +83542,7 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -83573,7 +84695,7 @@ exports['default'] = Flash;
 
 
 /***/ }),
-/* 185 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83583,7 +84705,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(73);
+var _tech = __webpack_require__(75);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -83595,7 +84717,7 @@ var _dom = __webpack_require__(10);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(101);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -83603,15 +84725,15 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(110);
+var _tsml = __webpack_require__(112);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -83623,13 +84745,13 @@ var _window = __webpack_require__(18);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -85521,7 +86643,7 @@ exports['default'] = Html5;
 
 
 /***/ }),
-/* 186 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85533,11 +86655,11 @@ var _component = __webpack_require__(2);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(73);
+var _tech = __webpack_require__(75);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(69);
+var _toTitleCase = __webpack_require__(71);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -85616,7 +86738,7 @@ exports['default'] = MediaLoader;
 
 
 /***/ }),
-/* 187 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85624,17 +86746,17 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(105);
+var _trackEnums = __webpack_require__(107);
 
-var _track = __webpack_require__(107);
+var _track = __webpack_require__(109);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -85752,7 +86874,7 @@ exports['default'] = AudioTrack;
 
 
 /***/ }),
-/* 188 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85760,7 +86882,7 @@ exports['default'] = AudioTrack;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -85907,7 +87029,7 @@ exports['default'] = HtmlTrackElementList;
 
 
 /***/ }),
-/* 189 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85915,7 +87037,7 @@ exports['default'] = HtmlTrackElementList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -85923,11 +87045,11 @@ var _document = __webpack_require__(17);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(99);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(104);
+var _textTrack = __webpack_require__(106);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -86083,7 +87205,7 @@ exports['default'] = HTMLTrackElement;
 
 
 /***/ }),
-/* 190 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86091,7 +87213,7 @@ exports['default'] = HTMLTrackElement;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -86242,7 +87364,7 @@ exports['default'] = TextTrackCueList;
 
 
 /***/ }),
-/* 191 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86599,7 +87721,7 @@ exports['default'] = TextTrackDisplay;
 
 
 /***/ }),
-/* 192 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86708,7 +87830,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 
 /***/ }),
-/* 193 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86716,7 +87838,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(106);
+var _trackList = __webpack_require__(108);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -86724,7 +87846,7 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -86819,7 +87941,7 @@ exports['default'] = TextTrackList;
 
 
 /***/ }),
-/* 194 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86841,11 +87963,11 @@ var _fn = __webpack_require__(8);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _obj = __webpack_require__(21);
+var _obj = __webpack_require__(24);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(43);
+var _log = __webpack_require__(45);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -87427,7 +88549,7 @@ exports['default'] = TextTrackSettings;
 
 
 /***/ }),
-/* 195 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87435,17 +88557,17 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(105);
+var _trackEnums = __webpack_require__(107);
 
-var _track = __webpack_require__(107);
+var _track = __webpack_require__(109);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(52);
+var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(20);
+var _browser = __webpack_require__(22);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -87562,10 +88684,10 @@ exports['default'] = VideoTrack;
 
 
 /***/ }),
-/* 196 */,
-/* 197 */,
 /* 198 */,
-/* 199 */
+/* 199 */,
+/* 200 */,
+/* 201 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -87574,7 +88696,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(exports, {}))
 
 /***/ }),
-/* 200 */
+/* 202 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -87599,14 +88721,12 @@ function extend() {
 
 
 /***/ }),
-/* 201 */
+/* 203 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 202 */,
-/* 203 */,
 /* 204 */,
 /* 205 */,
 /* 206 */,
@@ -87616,33 +88736,35 @@ function extend() {
 /* 210 */,
 /* 211 */,
 /* 212 */,
-/* 213 */
+/* 213 */,
+/* 214 */,
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
-var _angular = __webpack_require__(102);
+var _angular = __webpack_require__(104);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(53);
+var _jquery = __webpack_require__(50);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // VideoJS
-__webpack_require__(136);
+__webpack_require__(138);
 
 // Angular VideoJS
-__webpack_require__(141);
+__webpack_require__(143);
 
 // dropzone
 // require('dropzone/dist/dropzone.js');
 
 // Angular Media Timeline
-__webpack_require__(127);
+__webpack_require__(129);
 
 'use strict';
 
@@ -88017,11 +89139,9 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
-/* 214 */,
-/* 215 */,
 /* 216 */,
 /* 217 */,
 /* 218 */,
@@ -88245,11 +89365,19 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 436 */,
 /* 437 */,
 /* 438 */,
-/* 439 */
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(213);
+module.exports = __webpack_require__(215);
 
 
 /***/ })
-],[439]);
+],[447]);

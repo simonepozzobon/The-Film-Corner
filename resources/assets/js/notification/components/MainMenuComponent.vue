@@ -1,4 +1,4 @@
-:href="'/'+type+'<template>
+<template>
   <div id="main-menu-component">
     <nav
       id="main-menu"
@@ -178,6 +178,10 @@
               </a>
               <a class="dropdown-item markasread" href="/set-locale/sr">
                 српски
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item markasread" :href="'/'+type+'/logout'">
+                Logout
               </a>
             </div>
           </li>

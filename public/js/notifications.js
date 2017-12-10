@@ -6,7 +6,7 @@ webpackJsonp([3],[
 
 
 var bind = __webpack_require__(15);
-var isBuffer = __webpack_require__(41);
+var isBuffer = __webpack_require__(44);
 
 /*global toString:true*/
 
@@ -534,7 +534,7 @@ process.umask = function() { return 0; };
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(38);
+var normalizeHeaderName = __webpack_require__(41);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -686,14 +686,19 @@ module.exports = function() {
 /* 6 */
 /***/ (function(module, exports) {
 
-// this module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
 
 module.exports = function normalizeComponent (
   rawScriptExports,
   compiledTemplate,
+  functionalTemplate,
+  injectStyles,
   scopeId,
-  cssModules
+  moduleIdentifier /* server only */
 ) {
   var esModule
   var scriptExports = rawScriptExports = rawScriptExports || {}
@@ -714,6 +719,12 @@ module.exports = function normalizeComponent (
   if (compiledTemplate) {
     options.render = compiledTemplate.render
     options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
   }
 
   // scopedId
@@ -721,14 +732,55 @@ module.exports = function normalizeComponent (
     options._scopeId = scopeId
   }
 
-  // inject cssModules
-  if (cssModules) {
-    var computed = Object.create(options.computed || null)
-    Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
-      computed[key] = function () { return module }
-    })
-    options.computed = computed
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
   }
 
   return {
@@ -759,7 +811,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(42)
+var listToStyles = __webpack_require__(25)
 
 /*
 type StyleObject = {
@@ -971,7 +1023,7 @@ function applyToTag (styleElement, obj) {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(79);
+exports = module.exports = __webpack_require__(81);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -1162,12 +1214,12 @@ function localstorage() {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(30);
-var buildURL = __webpack_require__(33);
-var parseHeaders = __webpack_require__(39);
-var isURLSameOrigin = __webpack_require__(37);
+var settle = __webpack_require__(33);
+var buildURL = __webpack_require__(36);
+var parseHeaders = __webpack_require__(42);
+var isURLSameOrigin = __webpack_require__(40);
 var createError = __webpack_require__(14);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(32);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(35);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1264,7 +1316,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(35);
+      var cookies = __webpack_require__(38);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1387,7 +1439,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(29);
+var enhanceError = __webpack_require__(32);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -1427,7 +1479,7 @@ module.exports = function bind(fn, thisArg) {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(24);
+module.exports = __webpack_require__(27);
 
 /***/ }),
 /* 17 */,
@@ -1439,15 +1491,15 @@ module.exports = __webpack_require__(24);
  * Module dependencies.
  */
 
-var keys = __webpack_require__(86);
-var hasBinary = __webpack_require__(60);
-var sliceBuffer = __webpack_require__(75);
-var after = __webpack_require__(85);
-var utf8 = __webpack_require__(87);
+var keys = __webpack_require__(88);
+var hasBinary = __webpack_require__(62);
+var sliceBuffer = __webpack_require__(77);
+var after = __webpack_require__(87);
+var utf8 = __webpack_require__(89);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(77);
+  base64encoder = __webpack_require__(79);
 }
 
 /**
@@ -1505,7 +1557,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(78);
+var Blob = __webpack_require__(80);
 
 /**
  * Encodes a packet.
@@ -2045,20 +2097,273 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 20 */,
-/* 21 */,
-/* 22 */
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
+    "use strict";
+
+    if (global.setImmediate) {
+        return;
+    }
+
+    var nextHandle = 1; // Spec says greater than zero
+    var tasksByHandle = {};
+    var currentlyRunningATask = false;
+    var doc = global.document;
+    var registerImmediate;
+
+    function setImmediate(callback) {
+      // Callback can either be a function or a string
+      if (typeof callback !== "function") {
+        callback = new Function("" + callback);
+      }
+      // Copy function arguments
+      var args = new Array(arguments.length - 1);
+      for (var i = 0; i < args.length; i++) {
+          args[i] = arguments[i + 1];
+      }
+      // Store and register the task
+      var task = { callback: callback, args: args };
+      tasksByHandle[nextHandle] = task;
+      registerImmediate(nextHandle);
+      return nextHandle++;
+    }
+
+    function clearImmediate(handle) {
+        delete tasksByHandle[handle];
+    }
+
+    function run(task) {
+        var callback = task.callback;
+        var args = task.args;
+        switch (args.length) {
+        case 0:
+            callback();
+            break;
+        case 1:
+            callback(args[0]);
+            break;
+        case 2:
+            callback(args[0], args[1]);
+            break;
+        case 3:
+            callback(args[0], args[1], args[2]);
+            break;
+        default:
+            callback.apply(undefined, args);
+            break;
+        }
+    }
+
+    function runIfPresent(handle) {
+        // From the spec: "Wait until any invocations of this algorithm started before this one have completed."
+        // So if we're currently running a task, we'll need to delay this invocation.
+        if (currentlyRunningATask) {
+            // Delay by doing a setTimeout. setImmediate was tried instead, but in Firefox 7 it generated a
+            // "too much recursion" error.
+            setTimeout(runIfPresent, 0, handle);
+        } else {
+            var task = tasksByHandle[handle];
+            if (task) {
+                currentlyRunningATask = true;
+                try {
+                    run(task);
+                } finally {
+                    clearImmediate(handle);
+                    currentlyRunningATask = false;
+                }
+            }
+        }
+    }
+
+    function installNextTickImplementation() {
+        registerImmediate = function(handle) {
+            process.nextTick(function () { runIfPresent(handle); });
+        };
+    }
+
+    function canUsePostMessage() {
+        // The test against `importScripts` prevents this implementation from being installed inside a web worker,
+        // where `global.postMessage` means something completely different and can't be used for this purpose.
+        if (global.postMessage && !global.importScripts) {
+            var postMessageIsAsynchronous = true;
+            var oldOnMessage = global.onmessage;
+            global.onmessage = function() {
+                postMessageIsAsynchronous = false;
+            };
+            global.postMessage("", "*");
+            global.onmessage = oldOnMessage;
+            return postMessageIsAsynchronous;
+        }
+    }
+
+    function installPostMessageImplementation() {
+        // Installs an event handler on `global` for the `message` event: see
+        // * https://developer.mozilla.org/en/DOM/window.postMessage
+        // * http://www.whatwg.org/specs/web-apps/current-work/multipage/comms.html#crossDocumentMessages
+
+        var messagePrefix = "setImmediate$" + Math.random() + "$";
+        var onGlobalMessage = function(event) {
+            if (event.source === global &&
+                typeof event.data === "string" &&
+                event.data.indexOf(messagePrefix) === 0) {
+                runIfPresent(+event.data.slice(messagePrefix.length));
+            }
+        };
+
+        if (global.addEventListener) {
+            global.addEventListener("message", onGlobalMessage, false);
+        } else {
+            global.attachEvent("onmessage", onGlobalMessage);
+        }
+
+        registerImmediate = function(handle) {
+            global.postMessage(messagePrefix + handle, "*");
+        };
+    }
+
+    function installMessageChannelImplementation() {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = function(event) {
+            var handle = event.data;
+            runIfPresent(handle);
+        };
+
+        registerImmediate = function(handle) {
+            channel.port2.postMessage(handle);
+        };
+    }
+
+    function installReadyStateChangeImplementation() {
+        var html = doc.documentElement;
+        registerImmediate = function(handle) {
+            // Create a <script> element; its readystatechange event will be fired asynchronously once it is inserted
+            // into the document. Do so, thus queuing up the task. Remember to clean up once it's been called.
+            var script = doc.createElement("script");
+            script.onreadystatechange = function () {
+                runIfPresent(handle);
+                script.onreadystatechange = null;
+                html.removeChild(script);
+                script = null;
+            };
+            html.appendChild(script);
+        };
+    }
+
+    function installSetTimeoutImplementation() {
+        registerImmediate = function(handle) {
+            setTimeout(runIfPresent, 0, handle);
+        };
+    }
+
+    // If supported, we should attach to the prototype of global, since that is where setTimeout et al. live.
+    var attachTo = Object.getPrototypeOf && Object.getPrototypeOf(global);
+    attachTo = attachTo && attachTo.setTimeout ? attachTo : global;
+
+    // Don't get fooled by e.g. browserify environments.
+    if ({}.toString.call(global.process) === "[object process]") {
+        // For Node.js before 0.9
+        installNextTickImplementation();
+
+    } else if (canUsePostMessage()) {
+        // For non-IE10 modern browsers
+        installPostMessageImplementation();
+
+    } else if (global.MessageChannel) {
+        // For web workers, where supported
+        installMessageChannelImplementation();
+
+    } else if (doc && "onreadystatechange" in doc.createElement("script")) {
+        // For IE 6–8
+        installReadyStateChangeImplementation();
+
+    } else {
+        // For older browsers
+        installSetTimeoutImplementation();
+    }
+
+    attachTo.setImmediate = setImmediate;
+    attachTo.clearImmediate = clearImmediate;
+}(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(3)))
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(20);
+exports.setImmediate = setImmediate;
+exports.clearImmediate = clearImmediate;
+
+
+/***/ }),
+/* 22 */,
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process, global) {/*!
- * Vue.js v2.4.4
+/* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/*!
+ * Vue.js v2.5.9
  * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
 
 
 /*  */
+
+var emptyObject = Object.freeze({});
 
 // these helpers produces better vm code in JS engines due to their
 // explicitness and function inlining
@@ -2098,7 +2403,14 @@ function isObject (obj) {
   return obj !== null && typeof obj === 'object'
 }
 
+/**
+ * Get the raw type string of a value e.g. [object Object]
+ */
 var _toString = Object.prototype.toString;
+
+function toRawType (value) {
+  return _toString.call(value).slice(8, -1)
+}
 
 /**
  * Strict object type check. Only returns true
@@ -2116,7 +2428,7 @@ function isRegExp (v) {
  * Check if val is a valid array index.
  */
 function isValidArrayIndex (val) {
-  var n = parseFloat(val);
+  var n = parseFloat(String(val));
   return n >= 0 && Math.floor(n) === n && isFinite(val)
 }
 
@@ -2166,7 +2478,7 @@ var isBuiltInTag = makeMap('slot,component', true);
 /**
  * Check if a attribute is a reserved attribute.
  */
-var isReservedAttribute = makeMap('key,ref,slot,is');
+var isReservedAttribute = makeMap('key,ref,slot,slot-scope,is');
 
 /**
  * Remove an item from an array
@@ -2376,7 +2688,8 @@ var LIFECYCLE_HOOKS = [
   'beforeDestroy',
   'destroyed',
   'activated',
-  'deactivated'
+  'deactivated',
+  'errorCaptured'
 ];
 
 /*  */
@@ -2469,8 +2782,6 @@ var config = ({
 
 /*  */
 
-var emptyObject = Object.freeze({});
-
 /**
  * Check if a string starts with $ or _
  */
@@ -2511,131 +2822,20 @@ function parsePath (path) {
 
 /*  */
 
-var warn = noop;
-var tip = noop;
-var formatComponentName = (null); // work around flow check
-
-if (process.env.NODE_ENV !== 'production') {
-  var hasConsole = typeof console !== 'undefined';
-  var classifyRE = /(?:^|[-_])(\w)/g;
-  var classify = function (str) { return str
-    .replace(classifyRE, function (c) { return c.toUpperCase(); })
-    .replace(/[-_]/g, ''); };
-
-  warn = function (msg, vm) {
-    var trace = vm ? generateComponentTrace(vm) : '';
-
-    if (config.warnHandler) {
-      config.warnHandler.call(null, msg, vm, trace);
-    } else if (hasConsole && (!config.silent)) {
-      console.error(("[Vue warn]: " + msg + trace));
-    }
-  };
-
-  tip = function (msg, vm) {
-    if (hasConsole && (!config.silent)) {
-      console.warn("[Vue tip]: " + msg + (
-        vm ? generateComponentTrace(vm) : ''
-      ));
-    }
-  };
-
-  formatComponentName = function (vm, includeFile) {
-    if (vm.$root === vm) {
-      return '<Root>'
-    }
-    var name = typeof vm === 'string'
-      ? vm
-      : typeof vm === 'function' && vm.options
-        ? vm.options.name
-        : vm._isVue
-          ? vm.$options.name || vm.$options._componentTag
-          : vm.name;
-
-    var file = vm._isVue && vm.$options.__file;
-    if (!name && file) {
-      var match = file.match(/([^/\\]+)\.vue$/);
-      name = match && match[1];
-    }
-
-    return (
-      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
-      (file && includeFile !== false ? (" at " + file) : '')
-    )
-  };
-
-  var repeat = function (str, n) {
-    var res = '';
-    while (n) {
-      if (n % 2 === 1) { res += str; }
-      if (n > 1) { str += str; }
-      n >>= 1;
-    }
-    return res
-  };
-
-  var generateComponentTrace = function (vm) {
-    if (vm._isVue && vm.$parent) {
-      var tree = [];
-      var currentRecursiveSequence = 0;
-      while (vm) {
-        if (tree.length > 0) {
-          var last = tree[tree.length - 1];
-          if (last.constructor === vm.constructor) {
-            currentRecursiveSequence++;
-            vm = vm.$parent;
-            continue
-          } else if (currentRecursiveSequence > 0) {
-            tree[tree.length - 1] = [last, currentRecursiveSequence];
-            currentRecursiveSequence = 0;
-          }
-        }
-        tree.push(vm);
-        vm = vm.$parent;
-      }
-      return '\n\nfound in\n\n' + tree
-        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
-            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
-            : formatComponentName(vm))); })
-        .join('\n')
-    } else {
-      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
-    }
-  };
-}
-
-/*  */
-
-function handleError (err, vm, info) {
-  if (config.errorHandler) {
-    config.errorHandler.call(null, err, vm, info);
-  } else {
-    if (process.env.NODE_ENV !== 'production') {
-      warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
-    }
-    /* istanbul ignore else */
-    if (inBrowser && typeof console !== 'undefined') {
-      console.error(err);
-    } else {
-      throw err
-    }
-  }
-}
-
-/*  */
-/* globals MutationObserver */
 
 // can we use __proto__?
 var hasProto = '__proto__' in {};
 
 // Browser environment sniffing
 var inBrowser = typeof window !== 'undefined';
+var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
 var isIE = UA && /msie|trident/.test(UA);
 var isIE9 = UA && UA.indexOf('msie 9.0') > 0;
 var isEdge = UA && UA.indexOf('edge/') > 0;
-var isAndroid = UA && UA.indexOf('android') > 0;
-var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA);
+var isAndroid = (UA && UA.indexOf('android') > 0) || (weexPlatform === 'android');
+var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 var isChrome = UA && /chrome\/\d+/.test(UA) && !isEdge;
 
 // Firefox has a "watch" function on Object.prototype...
@@ -2684,94 +2884,8 @@ var hasSymbol =
   typeof Symbol !== 'undefined' && isNative(Symbol) &&
   typeof Reflect !== 'undefined' && isNative(Reflect.ownKeys);
 
-/**
- * Defer a task to execute it asynchronously.
- */
-var nextTick = (function () {
-  var callbacks = [];
-  var pending = false;
-  var timerFunc;
-
-  function nextTickHandler () {
-    pending = false;
-    var copies = callbacks.slice(0);
-    callbacks.length = 0;
-    for (var i = 0; i < copies.length; i++) {
-      copies[i]();
-    }
-  }
-
-  // the nextTick behavior leverages the microtask queue, which can be accessed
-  // via either native Promise.then or MutationObserver.
-  // MutationObserver has wider support, however it is seriously bugged in
-  // UIWebView in iOS >= 9.3.3 when triggered in touch event handlers. It
-  // completely stops working after triggering a few times... so, if native
-  // Promise is available, we will use it:
-  /* istanbul ignore if */
-  if (typeof Promise !== 'undefined' && isNative(Promise)) {
-    var p = Promise.resolve();
-    var logError = function (err) { console.error(err); };
-    timerFunc = function () {
-      p.then(nextTickHandler).catch(logError);
-      // in problematic UIWebViews, Promise.then doesn't completely break, but
-      // it can get stuck in a weird state where callbacks are pushed into the
-      // microtask queue but the queue isn't being flushed, until the browser
-      // needs to do some other work, e.g. handle a timer. Therefore we can
-      // "force" the microtask queue to be flushed by adding an empty timer.
-      if (isIOS) { setTimeout(noop); }
-    };
-  } else if (!isIE && typeof MutationObserver !== 'undefined' && (
-    isNative(MutationObserver) ||
-    // PhantomJS and iOS 7.x
-    MutationObserver.toString() === '[object MutationObserverConstructor]'
-  )) {
-    // use MutationObserver where native Promise is not available,
-    // e.g. PhantomJS, iOS7, Android 4.4
-    var counter = 1;
-    var observer = new MutationObserver(nextTickHandler);
-    var textNode = document.createTextNode(String(counter));
-    observer.observe(textNode, {
-      characterData: true
-    });
-    timerFunc = function () {
-      counter = (counter + 1) % 2;
-      textNode.data = String(counter);
-    };
-  } else {
-    // fallback to setTimeout
-    /* istanbul ignore next */
-    timerFunc = function () {
-      setTimeout(nextTickHandler, 0);
-    };
-  }
-
-  return function queueNextTick (cb, ctx) {
-    var _resolve;
-    callbacks.push(function () {
-      if (cb) {
-        try {
-          cb.call(ctx);
-        } catch (e) {
-          handleError(e, ctx, 'nextTick');
-        }
-      } else if (_resolve) {
-        _resolve(ctx);
-      }
-    });
-    if (!pending) {
-      pending = true;
-      timerFunc();
-    }
-    if (!cb && typeof Promise !== 'undefined') {
-      return new Promise(function (resolve, reject) {
-        _resolve = resolve;
-      })
-    }
-  }
-})();
-
 var _Set;
-/* istanbul ignore if */
+/* istanbul ignore if */ // $flow-disable-line
 if (typeof Set !== 'undefined' && isNative(Set)) {
   // use native Set when available.
   _Set = Set;
@@ -2793,6 +2907,100 @@ if (typeof Set !== 'undefined' && isNative(Set)) {
 
     return Set;
   }());
+}
+
+/*  */
+
+var warn = noop;
+var tip = noop;
+var generateComponentTrace = (noop); // work around flow check
+var formatComponentName = (noop);
+
+if (process.env.NODE_ENV !== 'production') {
+  var hasConsole = typeof console !== 'undefined';
+  var classifyRE = /(?:^|[-_])(\w)/g;
+  var classify = function (str) { return str
+    .replace(classifyRE, function (c) { return c.toUpperCase(); })
+    .replace(/[-_]/g, ''); };
+
+  warn = function (msg, vm) {
+    var trace = vm ? generateComponentTrace(vm) : '';
+
+    if (config.warnHandler) {
+      config.warnHandler.call(null, msg, vm, trace);
+    } else if (hasConsole && (!config.silent)) {
+      console.error(("[Vue warn]: " + msg + trace));
+    }
+  };
+
+  tip = function (msg, vm) {
+    if (hasConsole && (!config.silent)) {
+      console.warn("[Vue tip]: " + msg + (
+        vm ? generateComponentTrace(vm) : ''
+      ));
+    }
+  };
+
+  formatComponentName = function (vm, includeFile) {
+    if (vm.$root === vm) {
+      return '<Root>'
+    }
+    var options = typeof vm === 'function' && vm.cid != null
+      ? vm.options
+      : vm._isVue
+        ? vm.$options || vm.constructor.options
+        : vm || {};
+    var name = options.name || options._componentTag;
+    var file = options.__file;
+    if (!name && file) {
+      var match = file.match(/([^/\\]+)\.vue$/);
+      name = match && match[1];
+    }
+
+    return (
+      (name ? ("<" + (classify(name)) + ">") : "<Anonymous>") +
+      (file && includeFile !== false ? (" at " + file) : '')
+    )
+  };
+
+  var repeat = function (str, n) {
+    var res = '';
+    while (n) {
+      if (n % 2 === 1) { res += str; }
+      if (n > 1) { str += str; }
+      n >>= 1;
+    }
+    return res
+  };
+
+  generateComponentTrace = function (vm) {
+    if (vm._isVue && vm.$parent) {
+      var tree = [];
+      var currentRecursiveSequence = 0;
+      while (vm) {
+        if (tree.length > 0) {
+          var last = tree[tree.length - 1];
+          if (last.constructor === vm.constructor) {
+            currentRecursiveSequence++;
+            vm = vm.$parent;
+            continue
+          } else if (currentRecursiveSequence > 0) {
+            tree[tree.length - 1] = [last, currentRecursiveSequence];
+            currentRecursiveSequence = 0;
+          }
+        }
+        tree.push(vm);
+        vm = vm.$parent;
+      }
+      return '\n\nfound in\n\n' + tree
+        .map(function (vm, i) { return ("" + (i === 0 ? '---> ' : repeat(' ', 5 + i * 2)) + (Array.isArray(vm)
+            ? ((formatComponentName(vm[0])) + "... (" + (vm[1]) + " recursive calls)")
+            : formatComponentName(vm))); })
+        .join('\n')
+    } else {
+      return ("\n\n(found in " + (formatComponentName(vm)) + ")")
+    }
+  };
 }
 
 /*  */
@@ -2844,6 +3052,110 @@ function pushTarget (_target) {
 
 function popTarget () {
   Dep.target = targetStack.pop();
+}
+
+/*  */
+
+var VNode = function VNode (
+  tag,
+  data,
+  children,
+  text,
+  elm,
+  context,
+  componentOptions,
+  asyncFactory
+) {
+  this.tag = tag;
+  this.data = data;
+  this.children = children;
+  this.text = text;
+  this.elm = elm;
+  this.ns = undefined;
+  this.context = context;
+  this.fnContext = undefined;
+  this.fnOptions = undefined;
+  this.fnScopeId = undefined;
+  this.key = data && data.key;
+  this.componentOptions = componentOptions;
+  this.componentInstance = undefined;
+  this.parent = undefined;
+  this.raw = false;
+  this.isStatic = false;
+  this.isRootInsert = true;
+  this.isComment = false;
+  this.isCloned = false;
+  this.isOnce = false;
+  this.asyncFactory = asyncFactory;
+  this.asyncMeta = undefined;
+  this.isAsyncPlaceholder = false;
+};
+
+var prototypeAccessors = { child: { configurable: true } };
+
+// DEPRECATED: alias for componentInstance for backwards compat.
+/* istanbul ignore next */
+prototypeAccessors.child.get = function () {
+  return this.componentInstance
+};
+
+Object.defineProperties( VNode.prototype, prototypeAccessors );
+
+var createEmptyVNode = function (text) {
+  if ( text === void 0 ) text = '';
+
+  var node = new VNode();
+  node.text = text;
+  node.isComment = true;
+  return node
+};
+
+function createTextVNode (val) {
+  return new VNode(undefined, undefined, undefined, String(val))
+}
+
+// optimized shallow clone
+// used for static nodes and slot nodes because they may be reused across
+// multiple renders, cloning them avoids errors when DOM manipulations rely
+// on their elm reference.
+function cloneVNode (vnode, deep) {
+  var componentOptions = vnode.componentOptions;
+  var cloned = new VNode(
+    vnode.tag,
+    vnode.data,
+    vnode.children,
+    vnode.text,
+    vnode.elm,
+    vnode.context,
+    componentOptions,
+    vnode.asyncFactory
+  );
+  cloned.ns = vnode.ns;
+  cloned.isStatic = vnode.isStatic;
+  cloned.key = vnode.key;
+  cloned.isComment = vnode.isComment;
+  cloned.fnContext = vnode.fnContext;
+  cloned.fnOptions = vnode.fnOptions;
+  cloned.fnScopeId = vnode.fnScopeId;
+  cloned.isCloned = true;
+  if (deep) {
+    if (vnode.children) {
+      cloned.children = cloneVNodes(vnode.children, true);
+    }
+    if (componentOptions && componentOptions.children) {
+      componentOptions.children = cloneVNodes(componentOptions.children, true);
+    }
+  }
+  return cloned
+}
+
+function cloneVNodes (vnodes, deep) {
+  var len = vnodes.length;
+  var res = new Array(len);
+  for (var i = 0; i < len; i++) {
+    res[i] = cloneVNode(vnodes[i], deep);
+  }
+  return res
 }
 
 /*
@@ -2931,7 +3243,7 @@ var Observer = function Observer (value) {
 Observer.prototype.walk = function walk (obj) {
   var keys = Object.keys(obj);
   for (var i = 0; i < keys.length; i++) {
-    defineReactive$$1(obj, keys[i], obj[keys[i]]);
+    defineReactive(obj, keys[i], obj[keys[i]]);
   }
 };
 
@@ -2974,7 +3286,7 @@ function copyAugment (target, src, keys) {
  * or the existing observer if the value already has one.
  */
 function observe (value, asRootData) {
-  if (!isObject(value)) {
+  if (!isObject(value) || value instanceof VNode) {
     return
   }
   var ob;
@@ -2998,7 +3310,7 @@ function observe (value, asRootData) {
 /**
  * Define a reactive property on an Object.
  */
-function defineReactive$$1 (
+function defineReactive (
   obj,
   key,
   val,
@@ -3065,7 +3377,7 @@ function set (target, key, val) {
     target.splice(key, 1, val);
     return val
   }
-  if (hasOwn(target, key)) {
+  if (key in target && !(key in Object.prototype)) {
     target[key] = val;
     return val
   }
@@ -3081,7 +3393,7 @@ function set (target, key, val) {
     target[key] = val;
     return val
   }
-  defineReactive$$1(ob.value, key, val);
+  defineReactive(ob.value, key, val);
   ob.dep.notify();
   return val
 }
@@ -3197,7 +3509,7 @@ function mergeDataOrFn (
         typeof parentVal === 'function' ? parentVal.call(this) : parentVal
       )
     }
-  } else if (parentVal || childVal) {
+  } else {
     return function mergedInstanceDataFn () {
       // instance merge
       var instanceData = typeof childVal === 'function'
@@ -3231,7 +3543,7 @@ strats.data = function (
 
       return parentVal
     }
-    return mergeDataOrFn.call(this, parentVal, childVal)
+    return mergeDataOrFn(parentVal, childVal)
   }
 
   return mergeDataOrFn(parentVal, childVal, vm)
@@ -3264,11 +3576,19 @@ LIFECYCLE_HOOKS.forEach(function (hook) {
  * a three-way merge between constructor options, instance
  * options and parent options.
  */
-function mergeAssets (parentVal, childVal) {
+function mergeAssets (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
   var res = Object.create(parentVal || null);
-  return childVal
-    ? extend(res, childVal)
-    : res
+  if (childVal) {
+    process.env.NODE_ENV !== 'production' && assertObjectType(key, childVal, vm);
+    return extend(res, childVal)
+  } else {
+    return res
+  }
 }
 
 ASSET_TYPES.forEach(function (type) {
@@ -3281,22 +3601,30 @@ ASSET_TYPES.forEach(function (type) {
  * Watchers hashes should not overwrite one
  * another, so we merge them as arrays.
  */
-strats.watch = function (parentVal, childVal) {
+strats.watch = function (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
   // work around Firefox's Object.prototype.watch...
   if (parentVal === nativeWatch) { parentVal = undefined; }
   if (childVal === nativeWatch) { childVal = undefined; }
   /* istanbul ignore if */
   if (!childVal) { return Object.create(parentVal || null) }
+  if (process.env.NODE_ENV !== 'production') {
+    assertObjectType(key, childVal, vm);
+  }
   if (!parentVal) { return childVal }
   var ret = {};
   extend(ret, parentVal);
-  for (var key in childVal) {
-    var parent = ret[key];
-    var child = childVal[key];
+  for (var key$1 in childVal) {
+    var parent = ret[key$1];
+    var child = childVal[key$1];
     if (parent && !Array.isArray(parent)) {
       parent = [parent];
     }
-    ret[key] = parent
+    ret[key$1] = parent
       ? parent.concat(child)
       : Array.isArray(child) ? child : [child];
   }
@@ -3309,7 +3637,15 @@ strats.watch = function (parentVal, childVal) {
 strats.props =
 strats.methods =
 strats.inject =
-strats.computed = function (parentVal, childVal) {
+strats.computed = function (
+  parentVal,
+  childVal,
+  vm,
+  key
+) {
+  if (childVal && process.env.NODE_ENV !== 'production') {
+    assertObjectType(key, childVal, vm);
+  }
   if (!parentVal) { return childVal }
   var ret = Object.create(null);
   extend(ret, parentVal);
@@ -3346,7 +3682,7 @@ function checkComponents (options) {
  * Ensure all props option syntax are normalized into the
  * Object-based format.
  */
-function normalizeProps (options) {
+function normalizeProps (options, vm) {
   var props = options.props;
   if (!props) { return }
   var res = {};
@@ -3370,6 +3706,12 @@ function normalizeProps (options) {
         ? val
         : { type: val };
     }
+  } else if (process.env.NODE_ENV !== 'production') {
+    warn(
+      "Invalid value for option \"props\": expected an Array or an Object, " +
+      "but got " + (toRawType(props)) + ".",
+      vm
+    );
   }
   options.props = res;
 }
@@ -3377,13 +3719,26 @@ function normalizeProps (options) {
 /**
  * Normalize all injections into Object-based format
  */
-function normalizeInject (options) {
+function normalizeInject (options, vm) {
   var inject = options.inject;
+  var normalized = options.inject = {};
   if (Array.isArray(inject)) {
-    var normalized = options.inject = {};
     for (var i = 0; i < inject.length; i++) {
-      normalized[inject[i]] = inject[i];
+      normalized[inject[i]] = { from: inject[i] };
     }
+  } else if (isPlainObject(inject)) {
+    for (var key in inject) {
+      var val = inject[key];
+      normalized[key] = isPlainObject(val)
+        ? extend({ from: key }, val)
+        : { from: val };
+    }
+  } else if (process.env.NODE_ENV !== 'production' && inject) {
+    warn(
+      "Invalid value for option \"inject\": expected an Array or an Object, " +
+      "but got " + (toRawType(inject)) + ".",
+      vm
+    );
   }
 }
 
@@ -3399,6 +3754,16 @@ function normalizeDirectives (options) {
         dirs[key] = { bind: def, update: def };
       }
     }
+  }
+}
+
+function assertObjectType (name, value, vm) {
+  if (!isPlainObject(value)) {
+    warn(
+      "Invalid value for option \"" + name + "\": expected an Object, " +
+      "but got " + (toRawType(value)) + ".",
+      vm
+    );
   }
 }
 
@@ -3419,8 +3784,8 @@ function mergeOptions (
     child = child.options;
   }
 
-  normalizeProps(child);
-  normalizeInject(child);
+  normalizeProps(child, vm);
+  normalizeInject(child, vm);
   normalizeDirectives(child);
   var extendsFrom = child.extends;
   if (extendsFrom) {
@@ -3584,9 +3949,9 @@ function assertProp (
   }
   if (!valid) {
     warn(
-      'Invalid prop: type check failed for prop "' + name + '".' +
-      ' Expected ' + expectedTypes.map(capitalize).join(', ') +
-      ', got ' + Object.prototype.toString.call(value).slice(8, -1) + '.',
+      "Invalid prop: type check failed for prop \"" + name + "\"." +
+      " Expected " + (expectedTypes.map(capitalize).join(', ')) +
+      ", got " + (toRawType(value)) + ".",
       vm
     );
     return
@@ -3652,6 +4017,165 @@ function isType (type, fn) {
 
 /*  */
 
+function handleError (err, vm, info) {
+  if (vm) {
+    var cur = vm;
+    while ((cur = cur.$parent)) {
+      var hooks = cur.$options.errorCaptured;
+      if (hooks) {
+        for (var i = 0; i < hooks.length; i++) {
+          try {
+            var capture = hooks[i].call(cur, err, vm, info) === false;
+            if (capture) { return }
+          } catch (e) {
+            globalHandleError(e, cur, 'errorCaptured hook');
+          }
+        }
+      }
+    }
+  }
+  globalHandleError(err, vm, info);
+}
+
+function globalHandleError (err, vm, info) {
+  if (config.errorHandler) {
+    try {
+      return config.errorHandler.call(null, err, vm, info)
+    } catch (e) {
+      logError(e, null, 'config.errorHandler');
+    }
+  }
+  logError(err, vm, info);
+}
+
+function logError (err, vm, info) {
+  if (process.env.NODE_ENV !== 'production') {
+    warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
+  }
+  /* istanbul ignore else */
+  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
+    console.error(err);
+  } else {
+    throw err
+  }
+}
+
+/*  */
+/* globals MessageChannel */
+
+var callbacks = [];
+var pending = false;
+
+function flushCallbacks () {
+  pending = false;
+  var copies = callbacks.slice(0);
+  callbacks.length = 0;
+  for (var i = 0; i < copies.length; i++) {
+    copies[i]();
+  }
+}
+
+// Here we have async deferring wrappers using both micro and macro tasks.
+// In < 2.4 we used micro tasks everywhere, but there are some scenarios where
+// micro tasks have too high a priority and fires in between supposedly
+// sequential events (e.g. #4521, #6690) or even between bubbling of the same
+// event (#6566). However, using macro tasks everywhere also has subtle problems
+// when state is changed right before repaint (e.g. #6813, out-in transitions).
+// Here we use micro task by default, but expose a way to force macro task when
+// needed (e.g. in event handlers attached by v-on).
+var microTimerFunc;
+var macroTimerFunc;
+var useMacroTask = false;
+
+// Determine (macro) Task defer implementation.
+// Technically setImmediate should be the ideal choice, but it's only available
+// in IE. The only polyfill that consistently queues the callback after all DOM
+// events triggered in the same loop is by using MessageChannel.
+/* istanbul ignore if */
+if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+  macroTimerFunc = function () {
+    setImmediate(flushCallbacks);
+  };
+} else if (typeof MessageChannel !== 'undefined' && (
+  isNative(MessageChannel) ||
+  // PhantomJS
+  MessageChannel.toString() === '[object MessageChannelConstructor]'
+)) {
+  var channel = new MessageChannel();
+  var port = channel.port2;
+  channel.port1.onmessage = flushCallbacks;
+  macroTimerFunc = function () {
+    port.postMessage(1);
+  };
+} else {
+  /* istanbul ignore next */
+  macroTimerFunc = function () {
+    setTimeout(flushCallbacks, 0);
+  };
+}
+
+// Determine MicroTask defer implementation.
+/* istanbul ignore next, $flow-disable-line */
+if (typeof Promise !== 'undefined' && isNative(Promise)) {
+  var p = Promise.resolve();
+  microTimerFunc = function () {
+    p.then(flushCallbacks);
+    // in problematic UIWebViews, Promise.then doesn't completely break, but
+    // it can get stuck in a weird state where callbacks are pushed into the
+    // microtask queue but the queue isn't being flushed, until the browser
+    // needs to do some other work, e.g. handle a timer. Therefore we can
+    // "force" the microtask queue to be flushed by adding an empty timer.
+    if (isIOS) { setTimeout(noop); }
+  };
+} else {
+  // fallback to macro
+  microTimerFunc = macroTimerFunc;
+}
+
+/**
+ * Wrap a function so that if any code inside triggers state change,
+ * the changes are queued using a Task instead of a MicroTask.
+ */
+function withMacroTask (fn) {
+  return fn._withTask || (fn._withTask = function () {
+    useMacroTask = true;
+    var res = fn.apply(null, arguments);
+    useMacroTask = false;
+    return res
+  })
+}
+
+function nextTick (cb, ctx) {
+  var _resolve;
+  callbacks.push(function () {
+    if (cb) {
+      try {
+        cb.call(ctx);
+      } catch (e) {
+        handleError(e, ctx, 'nextTick');
+      }
+    } else if (_resolve) {
+      _resolve(ctx);
+    }
+  });
+  if (!pending) {
+    pending = true;
+    if (useMacroTask) {
+      macroTimerFunc();
+    } else {
+      microTimerFunc();
+    }
+  }
+  // $flow-disable-line
+  if (!cb && typeof Promise !== 'undefined') {
+    return new Promise(function (resolve) {
+      _resolve = resolve;
+    })
+  }
+}
+
+/*  */
+
 var mark;
 var measure;
 
@@ -3690,8 +4214,10 @@ if (process.env.NODE_ENV !== 'production') {
   var warnNonPresent = function (target, key) {
     warn(
       "Property or method \"" + key + "\" is not defined on the instance but " +
-      "referenced during render. Make sure to declare reactive data " +
-      "properties in the data option.",
+      'referenced during render. Make sure that this property is reactive, ' +
+      'either in the data option, or for class-based components, by ' +
+      'initializing the property. ' +
+      'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.',
       target
     );
   };
@@ -3701,7 +4227,7 @@ if (process.env.NODE_ENV !== 'production') {
     Proxy.toString().match(/native code/);
 
   if (hasProxy) {
-    var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta');
+    var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
     config.keyCodes = new Proxy(config.keyCodes, {
       set: function set (target, key, value) {
         if (isBuiltInModifier(key)) {
@@ -3751,95 +4277,39 @@ if (process.env.NODE_ENV !== 'production') {
 
 /*  */
 
-var VNode = function VNode (
-  tag,
-  data,
-  children,
-  text,
-  elm,
-  context,
-  componentOptions,
-  asyncFactory
-) {
-  this.tag = tag;
-  this.data = data;
-  this.children = children;
-  this.text = text;
-  this.elm = elm;
-  this.ns = undefined;
-  this.context = context;
-  this.functionalContext = undefined;
-  this.key = data && data.key;
-  this.componentOptions = componentOptions;
-  this.componentInstance = undefined;
-  this.parent = undefined;
-  this.raw = false;
-  this.isStatic = false;
-  this.isRootInsert = true;
-  this.isComment = false;
-  this.isCloned = false;
-  this.isOnce = false;
-  this.asyncFactory = asyncFactory;
-  this.asyncMeta = undefined;
-  this.isAsyncPlaceholder = false;
-};
+var seenObjects = new _Set();
 
-var prototypeAccessors = { child: {} };
-
-// DEPRECATED: alias for componentInstance for backwards compat.
-/* istanbul ignore next */
-prototypeAccessors.child.get = function () {
-  return this.componentInstance
-};
-
-Object.defineProperties( VNode.prototype, prototypeAccessors );
-
-var createEmptyVNode = function (text) {
-  if ( text === void 0 ) text = '';
-
-  var node = new VNode();
-  node.text = text;
-  node.isComment = true;
-  return node
-};
-
-function createTextVNode (val) {
-  return new VNode(undefined, undefined, undefined, String(val))
+/**
+ * Recursively traverse an object to evoke all converted
+ * getters, so that every nested property inside the object
+ * is collected as a "deep" dependency.
+ */
+function traverse (val) {
+  _traverse(val, seenObjects);
+  seenObjects.clear();
 }
 
-// optimized shallow clone
-// used for static nodes and slot nodes because they may be reused across
-// multiple renders, cloning them avoids errors when DOM manipulations rely
-// on their elm reference.
-function cloneVNode (vnode, deep) {
-  var cloned = new VNode(
-    vnode.tag,
-    vnode.data,
-    vnode.children,
-    vnode.text,
-    vnode.elm,
-    vnode.context,
-    vnode.componentOptions,
-    vnode.asyncFactory
-  );
-  cloned.ns = vnode.ns;
-  cloned.isStatic = vnode.isStatic;
-  cloned.key = vnode.key;
-  cloned.isComment = vnode.isComment;
-  cloned.isCloned = true;
-  if (deep && vnode.children) {
-    cloned.children = cloneVNodes(vnode.children);
+function _traverse (val, seen) {
+  var i, keys;
+  var isA = Array.isArray(val);
+  if ((!isA && !isObject(val)) || Object.isFrozen(val)) {
+    return
   }
-  return cloned
-}
-
-function cloneVNodes (vnodes, deep) {
-  var len = vnodes.length;
-  var res = new Array(len);
-  for (var i = 0; i < len; i++) {
-    res[i] = cloneVNode(vnodes[i], deep);
+  if (val.__ob__) {
+    var depId = val.__ob__.dep.id;
+    if (seen.has(depId)) {
+      return
+    }
+    seen.add(depId);
   }
-  return res
+  if (isA) {
+    i = val.length;
+    while (i--) { _traverse(val[i], seen); }
+  } else {
+    keys = Object.keys(val);
+    i = keys.length;
+    while (i--) { _traverse(val[keys[i]], seen); }
+  }
 }
 
 /*  */
@@ -3851,10 +4321,8 @@ var normalizeEvent = cached(function (name) {
   name = once$$1 ? name.slice(1) : name;
   var capture = name.charAt(0) === '!';
   name = capture ? name.slice(1) : name;
-  var plain = !(passive || once$$1 || capture);
   return {
     name: name,
-    plain: plain,
     once: once$$1,
     capture: capture,
     passive: passive
@@ -3880,11 +4348,6 @@ function createFnInvoker (fns) {
   return invoker
 }
 
-// #6552
-function prioritizePlainEvents (a, b) {
-  return a.plain ? -1 : b.plain ? 1 : 0
-}
-
 function updateListeners (
   on,
   oldOn,
@@ -3893,13 +4356,10 @@ function updateListeners (
   vm
 ) {
   var name, cur, old, event;
-  var toAdd = [];
-  var hasModifier = false;
   for (name in on) {
     cur = on[name];
     old = oldOn[name];
     event = normalizeEvent(name);
-    if (!event.plain) { hasModifier = true; }
     if (isUndef(cur)) {
       process.env.NODE_ENV !== 'production' && warn(
         "Invalid handler for event \"" + (event.name) + "\": got " + String(cur),
@@ -3909,18 +4369,10 @@ function updateListeners (
       if (isUndef(cur.fns)) {
         cur = on[name] = createFnInvoker(cur);
       }
-      event.handler = cur;
-      toAdd.push(event);
+      add(event.name, cur, event.once, event.capture, event.passive);
     } else if (cur !== old) {
       old.fns = cur;
       on[name] = old;
-    }
-  }
-  if (toAdd.length) {
-    if (hasModifier) { toAdd.sort(prioritizePlainEvents); }
-    for (var i = 0; i < toAdd.length; i++) {
-      var event$1 = toAdd[i];
-      add(event$1.name, event$1.handler, event$1.once, event$1.capture, event$1.passive);
     }
   }
   for (name in oldOn) {
@@ -3934,6 +4386,9 @@ function updateListeners (
 /*  */
 
 function mergeVNodeHook (def, hookKey, hook) {
+  if (def instanceof VNode) {
+    def = def.data.hook || (def.data.hook = {});
+  }
   var invoker;
   var oldHook = def[hookKey];
 
@@ -4072,20 +4527,29 @@ function isTextNode (node) {
 
 function normalizeArrayChildren (children, nestedIndex) {
   var res = [];
-  var i, c, last;
+  var i, c, lastIndex, last;
   for (i = 0; i < children.length; i++) {
     c = children[i];
     if (isUndef(c) || typeof c === 'boolean') { continue }
-    last = res[res.length - 1];
+    lastIndex = res.length - 1;
+    last = res[lastIndex];
     //  nested
     if (Array.isArray(c)) {
-      res.push.apply(res, normalizeArrayChildren(c, ((nestedIndex || '') + "_" + i)));
+      if (c.length > 0) {
+        c = normalizeArrayChildren(c, ((nestedIndex || '') + "_" + i));
+        // merge adjacent text nodes
+        if (isTextNode(c[0]) && isTextNode(last)) {
+          res[lastIndex] = createTextVNode(last.text + (c[0]).text);
+          c.shift();
+        }
+        res.push.apply(res, c);
+      }
     } else if (isPrimitive(c)) {
       if (isTextNode(last)) {
         // merge adjacent text nodes
         // this is necessary for SSR hydration because text nodes are
         // essentially merged when rendered to HTML strings
-        (last).text += String(c);
+        res[lastIndex] = createTextVNode(last.text + c);
       } else if (c !== '') {
         // convert primitive to vnode
         res.push(createTextVNode(c));
@@ -4093,7 +4557,7 @@ function normalizeArrayChildren (children, nestedIndex) {
     } else {
       if (isTextNode(c) && isTextNode(last)) {
         // merge adjacent text nodes
-        res[res.length - 1] = createTextVNode(last.text + c.text);
+        res[lastIndex] = createTextVNode(last.text + c.text);
       } else {
         // default key for nested array children (likely generated by v-for)
         if (isTrue(children._isVList) &&
@@ -4112,7 +4576,10 @@ function normalizeArrayChildren (children, nestedIndex) {
 /*  */
 
 function ensureCtor (comp, base) {
-  if (comp.__esModule && comp.default) {
+  if (
+    comp.__esModule ||
+    (hasSymbol && comp[Symbol.toStringTag] === 'Module')
+  ) {
     comp = comp.default;
   }
   return isObject(comp)
@@ -4270,8 +4737,8 @@ function initEvents (vm) {
 
 var target;
 
-function add (event, fn, once$$1) {
-  if (once$$1) {
+function add (event, fn, once) {
+  if (once) {
     target.$once(event, fn);
   } else {
     target.$on(event, fn);
@@ -4289,6 +4756,7 @@ function updateComponentListeners (
 ) {
   target = vm;
   updateListeners(listeners, oldListeners || {}, add, remove$1, vm);
+  target = undefined;
 }
 
 function eventsMixin (Vue) {
@@ -4344,7 +4812,7 @@ function eventsMixin (Vue) {
     if (!cbs) {
       return vm
     }
-    if (arguments.length === 1) {
+    if (!fn) {
       vm._events[event] = null;
       return vm
     }
@@ -4406,7 +4874,6 @@ function resolveSlots (
   if (!children) {
     return slots
   }
-  var defaultSlot = [];
   for (var i = 0, l = children.length; i < l; i++) {
     var child = children[i];
     var data = child.data;
@@ -4416,7 +4883,7 @@ function resolveSlots (
     }
     // named slots should only be respected if the vnode was rendered in the
     // same context.
-    if ((child.context === context || child.functionalContext === context) &&
+    if ((child.context === context || child.fnContext === context) &&
       data && data.slot != null
     ) {
       var name = child.data.slot;
@@ -4427,18 +4894,20 @@ function resolveSlots (
         slot.push(child);
       }
     } else {
-      defaultSlot.push(child);
+      (slots.default || (slots.default = [])).push(child);
     }
   }
-  // ignore whitespace
-  if (!defaultSlot.every(isWhitespace)) {
-    slots.default = defaultSlot;
+  // ignore slots that contains only whitespace
+  for (var name$1 in slots) {
+    if (slots[name$1].every(isWhitespace)) {
+      delete slots[name$1];
+    }
   }
   return slots
 }
 
 function isWhitespace (node) {
-  return node.isComment || node.text === ' '
+  return (node.isComment && !node.asyncFactory) || node.text === ' '
 }
 
 function resolveScopedSlots (
@@ -4574,6 +5043,10 @@ function lifecycleMixin (Vue) {
     if (vm.$el) {
       vm.$el.__vue__ = null;
     }
+    // release circular reference (#6759)
+    if (vm.$vnode) {
+      vm.$vnode.parent = null;
+    }
   };
 }
 
@@ -4617,12 +5090,12 @@ function mountComponent (
       mark(startTag);
       var vnode = vm._render();
       mark(endTag);
-      measure((name + " render"), startTag, endTag);
+      measure(("vue " + name + " render"), startTag, endTag);
 
       mark(startTag);
       vm._update(vnode, hydrating);
       mark(endTag);
-      measure((name + " patch"), startTag, endTag);
+      measure(("vue " + name + " patch"), startTag, endTag);
     };
   } else {
     updateComponent = function () {
@@ -4630,7 +5103,10 @@ function mountComponent (
     };
   }
 
-  vm._watcher = new Watcher(vm, updateComponent, noop);
+  // we set this to vm._watcher inside the watcher's constructor
+  // since the watcher's initial patch may call $forceUpdate (e.g. inside child
+  // component's mounted hook), which relies on vm._watcher being already defined
+  new Watcher(vm, updateComponent, noop, null, true /* isRenderWatcher */);
   hydrating = false;
 
   // manually mounted instance, call mounted on self
@@ -4917,9 +5393,13 @@ var Watcher = function Watcher (
   vm,
   expOrFn,
   cb,
-  options
+  options,
+  isRenderWatcher
 ) {
   this.vm = vm;
+  if (isRenderWatcher) {
+    vm._watcher = this;
+  }
   vm._watchers.push(this);
   // options
   if (options) {
@@ -5113,40 +5593,6 @@ Watcher.prototype.teardown = function teardown () {
   }
 };
 
-/**
- * Recursively traverse an object to evoke all converted
- * getters, so that every nested property inside the object
- * is collected as a "deep" dependency.
- */
-var seenObjects = new _Set();
-function traverse (val) {
-  seenObjects.clear();
-  _traverse(val, seenObjects);
-}
-
-function _traverse (val, seen) {
-  var i, keys;
-  var isA = Array.isArray(val);
-  if ((!isA && !isObject(val)) || !Object.isExtensible(val)) {
-    return
-  }
-  if (val.__ob__) {
-    var depId = val.__ob__.dep.id;
-    if (seen.has(depId)) {
-      return
-    }
-    seen.add(depId);
-  }
-  if (isA) {
-    i = val.length;
-    while (i--) { _traverse(val[i], seen); }
-  } else {
-    keys = Object.keys(val);
-    i = keys.length;
-    while (i--) { _traverse(val[keys[i]], seen); }
-  }
-}
-
 /*  */
 
 var sharedPropertyDefinition = {
@@ -5182,16 +5628,6 @@ function initState (vm) {
   }
 }
 
-function checkOptionType (vm, name) {
-  var option = vm.$options[name];
-  if (!isPlainObject(option)) {
-    warn(
-      ("component option \"" + name + "\" should be an object."),
-      vm
-    );
-  }
-}
-
 function initProps (vm, propsOptions) {
   var propsData = vm.$options.propsData || {};
   var props = vm._props = {};
@@ -5206,13 +5642,15 @@ function initProps (vm, propsOptions) {
     var value = validateProp(key, propsOptions, propsData, vm);
     /* istanbul ignore else */
     if (process.env.NODE_ENV !== 'production') {
-      if (isReservedAttribute(key) || config.isReservedAttr(key)) {
+      var hyphenatedKey = hyphenate(key);
+      if (isReservedAttribute(hyphenatedKey) ||
+          config.isReservedAttr(hyphenatedKey)) {
         warn(
-          ("\"" + key + "\" is a reserved attribute and cannot be used as component prop."),
+          ("\"" + hyphenatedKey + "\" is a reserved attribute and cannot be used as component prop."),
           vm
         );
       }
-      defineReactive$$1(props, key, value, function () {
+      defineReactive(props, key, value, function () {
         if (vm.$parent && !isUpdatingChildComponent) {
           warn(
             "Avoid mutating a prop directly since the value will be " +
@@ -5224,7 +5662,7 @@ function initProps (vm, propsOptions) {
         }
       });
     } else {
-      defineReactive$$1(props, key, value);
+      defineReactive(props, key, value);
     }
     // static props are already proxied on the component's prototype
     // during Vue.extend(). We only need to proxy props defined at
@@ -5282,7 +5720,7 @@ function initData (vm) {
 
 function getData (data, vm) {
   try {
-    return data.call(vm)
+    return data.call(vm, vm)
   } catch (e) {
     handleError(e, vm, "data()");
     return {}
@@ -5292,7 +5730,6 @@ function getData (data, vm) {
 var computedWatcherOptions = { lazy: true };
 
 function initComputed (vm, computed) {
-  process.env.NODE_ENV !== 'production' && checkOptionType(vm, 'computed');
   var watchers = vm._computedWatchers = Object.create(null);
   // computed properties are just getters during SSR
   var isSSR = isServerRendering();
@@ -5381,7 +5818,6 @@ function createComputedGetter (key) {
 }
 
 function initMethods (vm, methods) {
-  process.env.NODE_ENV !== 'production' && checkOptionType(vm, 'methods');
   var props = vm.$options.props;
   for (var key in methods) {
     if (process.env.NODE_ENV !== 'production') {
@@ -5410,7 +5846,6 @@ function initMethods (vm, methods) {
 }
 
 function initWatch (vm, watch) {
-  process.env.NODE_ENV !== 'production' && checkOptionType(vm, 'watch');
   for (var key in watch) {
     var handler = watch[key];
     if (Array.isArray(handler)) {
@@ -5504,7 +5939,7 @@ function initInjections (vm) {
     Object.keys(result).forEach(function (key) {
       /* istanbul ignore else */
       if (process.env.NODE_ENV !== 'production') {
-        defineReactive$$1(vm, key, result[key], function () {
+        defineReactive(vm, key, result[key], function () {
           warn(
             "Avoid mutating an injected value directly since the changes will be " +
             "overwritten whenever the provided component re-renders. " +
@@ -5513,7 +5948,7 @@ function initInjections (vm) {
           );
         });
       } else {
-        defineReactive$$1(vm, key, result[key]);
+        defineReactive(vm, key, result[key]);
       }
     });
     observerState.shouldConvert = true;
@@ -5533,7 +5968,7 @@ function resolveInject (inject, vm) {
 
     for (var i = 0; i < keys.length; i++) {
       var key = keys[i];
-      var provideKey = inject[key];
+      var provideKey = inject[key].from;
       var source = vm;
       while (source) {
         if (source._provided && provideKey in source._provided) {
@@ -5542,8 +5977,15 @@ function resolveInject (inject, vm) {
         }
         source = source.$parent;
       }
-      if (process.env.NODE_ENV !== 'production' && !source) {
-        warn(("Injection \"" + key + "\" not found"), vm);
+      if (!source) {
+        if ('default' in inject[key]) {
+          var provideDefault = inject[key].default;
+          result[key] = typeof provideDefault === 'function'
+            ? provideDefault.call(vm)
+            : provideDefault;
+        } else if (process.env.NODE_ENV !== 'production') {
+          warn(("Injection \"" + key + "\" not found"), vm);
+        }
       }
     }
     return result
@@ -5552,15 +5994,344 @@ function resolveInject (inject, vm) {
 
 /*  */
 
+/**
+ * Runtime helper for rendering v-for lists.
+ */
+function renderList (
+  val,
+  render
+) {
+  var ret, i, l, keys, key;
+  if (Array.isArray(val) || typeof val === 'string') {
+    ret = new Array(val.length);
+    for (i = 0, l = val.length; i < l; i++) {
+      ret[i] = render(val[i], i);
+    }
+  } else if (typeof val === 'number') {
+    ret = new Array(val);
+    for (i = 0; i < val; i++) {
+      ret[i] = render(i + 1, i);
+    }
+  } else if (isObject(val)) {
+    keys = Object.keys(val);
+    ret = new Array(keys.length);
+    for (i = 0, l = keys.length; i < l; i++) {
+      key = keys[i];
+      ret[i] = render(val[key], key, i);
+    }
+  }
+  if (isDef(ret)) {
+    (ret)._isVList = true;
+  }
+  return ret
+}
+
+/*  */
+
+/**
+ * Runtime helper for rendering <slot>
+ */
+function renderSlot (
+  name,
+  fallback,
+  props,
+  bindObject
+) {
+  var scopedSlotFn = this.$scopedSlots[name];
+  var nodes;
+  if (scopedSlotFn) { // scoped slot
+    props = props || {};
+    if (bindObject) {
+      if (process.env.NODE_ENV !== 'production' && !isObject(bindObject)) {
+        warn(
+          'slot v-bind without argument expects an Object',
+          this
+        );
+      }
+      props = extend(extend({}, bindObject), props);
+    }
+    nodes = scopedSlotFn(props) || fallback;
+  } else {
+    var slotNodes = this.$slots[name];
+    // warn duplicate slot usage
+    if (slotNodes) {
+      if (process.env.NODE_ENV !== 'production' && slotNodes._rendered) {
+        warn(
+          "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
+          "- this will likely cause render errors.",
+          this
+        );
+      }
+      slotNodes._rendered = true;
+    }
+    nodes = slotNodes || fallback;
+  }
+
+  var target = props && props.slot;
+  if (target) {
+    return this.$createElement('template', { slot: target }, nodes)
+  } else {
+    return nodes
+  }
+}
+
+/*  */
+
+/**
+ * Runtime helper for resolving filters
+ */
+function resolveFilter (id) {
+  return resolveAsset(this.$options, 'filters', id, true) || identity
+}
+
+/*  */
+
+/**
+ * Runtime helper for checking keyCodes from config.
+ * exposed as Vue.prototype._k
+ * passing in eventKeyName as last argument separately for backwards compat
+ */
+function checkKeyCodes (
+  eventKeyCode,
+  key,
+  builtInAlias,
+  eventKeyName
+) {
+  var keyCodes = config.keyCodes[key] || builtInAlias;
+  if (keyCodes) {
+    if (Array.isArray(keyCodes)) {
+      return keyCodes.indexOf(eventKeyCode) === -1
+    } else {
+      return keyCodes !== eventKeyCode
+    }
+  } else if (eventKeyName) {
+    return hyphenate(eventKeyName) !== key
+  }
+}
+
+/*  */
+
+/**
+ * Runtime helper for merging v-bind="object" into a VNode's data.
+ */
+function bindObjectProps (
+  data,
+  tag,
+  value,
+  asProp,
+  isSync
+) {
+  if (value) {
+    if (!isObject(value)) {
+      process.env.NODE_ENV !== 'production' && warn(
+        'v-bind without argument expects an Object or Array value',
+        this
+      );
+    } else {
+      if (Array.isArray(value)) {
+        value = toObject(value);
+      }
+      var hash;
+      var loop = function ( key ) {
+        if (
+          key === 'class' ||
+          key === 'style' ||
+          isReservedAttribute(key)
+        ) {
+          hash = data;
+        } else {
+          var type = data.attrs && data.attrs.type;
+          hash = asProp || config.mustUseProp(tag, type, key)
+            ? data.domProps || (data.domProps = {})
+            : data.attrs || (data.attrs = {});
+        }
+        if (!(key in hash)) {
+          hash[key] = value[key];
+
+          if (isSync) {
+            var on = data.on || (data.on = {});
+            on[("update:" + key)] = function ($event) {
+              value[key] = $event;
+            };
+          }
+        }
+      };
+
+      for (var key in value) loop( key );
+    }
+  }
+  return data
+}
+
+/*  */
+
+/**
+ * Runtime helper for rendering static trees.
+ */
+function renderStatic (
+  index,
+  isInFor,
+  isOnce
+) {
+  // render fns generated by compiler < 2.5.4 does not provide v-once
+  // information to runtime so be conservative
+  var isOldVersion = arguments.length < 3;
+  // if a static tree is generated by v-once, it is cached on the instance;
+  // otherwise it is purely static and can be cached on the shared options
+  // across all instances.
+  var renderFns = this.$options.staticRenderFns;
+  var cached = isOldVersion || isOnce
+    ? (this._staticTrees || (this._staticTrees = []))
+    : (renderFns.cached || (renderFns.cached = []));
+  var tree = cached[index];
+  // if has already-rendered static tree and not inside v-for,
+  // we can reuse the same tree by doing a shallow clone.
+  if (tree && !isInFor) {
+    return Array.isArray(tree)
+      ? cloneVNodes(tree)
+      : cloneVNode(tree)
+  }
+  // otherwise, render a fresh tree.
+  tree = cached[index] = renderFns[index].call(this._renderProxy, null, this);
+  markStatic(tree, ("__static__" + index), false);
+  return tree
+}
+
+/**
+ * Runtime helper for v-once.
+ * Effectively it means marking the node as static with a unique key.
+ */
+function markOnce (
+  tree,
+  index,
+  key
+) {
+  markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
+  return tree
+}
+
+function markStatic (
+  tree,
+  key,
+  isOnce
+) {
+  if (Array.isArray(tree)) {
+    for (var i = 0; i < tree.length; i++) {
+      if (tree[i] && typeof tree[i] !== 'string') {
+        markStaticNode(tree[i], (key + "_" + i), isOnce);
+      }
+    }
+  } else {
+    markStaticNode(tree, key, isOnce);
+  }
+}
+
+function markStaticNode (node, key, isOnce) {
+  node.isStatic = true;
+  node.key = key;
+  node.isOnce = isOnce;
+}
+
+/*  */
+
+function bindObjectListeners (data, value) {
+  if (value) {
+    if (!isPlainObject(value)) {
+      process.env.NODE_ENV !== 'production' && warn(
+        'v-on without argument expects an Object value',
+        this
+      );
+    } else {
+      var on = data.on = data.on ? extend({}, data.on) : {};
+      for (var key in value) {
+        var existing = on[key];
+        var ours = value[key];
+        on[key] = existing ? [].concat(existing, ours) : ours;
+      }
+    }
+  }
+  return data
+}
+
+/*  */
+
+function installRenderHelpers (target) {
+  target._o = markOnce;
+  target._n = toNumber;
+  target._s = toString;
+  target._l = renderList;
+  target._t = renderSlot;
+  target._q = looseEqual;
+  target._i = looseIndexOf;
+  target._m = renderStatic;
+  target._f = resolveFilter;
+  target._k = checkKeyCodes;
+  target._b = bindObjectProps;
+  target._v = createTextVNode;
+  target._e = createEmptyVNode;
+  target._u = resolveScopedSlots;
+  target._g = bindObjectListeners;
+}
+
+/*  */
+
+function FunctionalRenderContext (
+  data,
+  props,
+  children,
+  parent,
+  Ctor
+) {
+  var options = Ctor.options;
+  this.data = data;
+  this.props = props;
+  this.children = children;
+  this.parent = parent;
+  this.listeners = data.on || emptyObject;
+  this.injections = resolveInject(options.inject, parent);
+  this.slots = function () { return resolveSlots(children, parent); };
+
+  // ensure the createElement function in functional components
+  // gets a unique context - this is necessary for correct named slot check
+  var contextVm = Object.create(parent);
+  var isCompiled = isTrue(options._compiled);
+  var needNormalization = !isCompiled;
+
+  // support for compiled functional template
+  if (isCompiled) {
+    // exposing $options for renderStatic()
+    this.$options = options;
+    // pre-resolve slots for renderSlot()
+    this.$slots = this.slots();
+    this.$scopedSlots = data.scopedSlots || emptyObject;
+  }
+
+  if (options._scopeId) {
+    this._c = function (a, b, c, d) {
+      var vnode = createElement(contextVm, a, b, c, d, needNormalization);
+      if (vnode) {
+        vnode.fnScopeId = options._scopeId;
+        vnode.fnContext = parent;
+      }
+      return vnode
+    };
+  } else {
+    this._c = function (a, b, c, d) { return createElement(contextVm, a, b, c, d, needNormalization); };
+  }
+}
+
+installRenderHelpers(FunctionalRenderContext.prototype);
+
 function createFunctionalComponent (
   Ctor,
   propsData,
   data,
-  context,
+  contextVm,
   children
 ) {
+  var options = Ctor.options;
   var props = {};
-  var propOptions = Ctor.options.props;
+  var propOptions = options.props;
   if (isDef(propOptions)) {
     for (var key in propOptions) {
       props[key] = validateProp(key, propOptions, propsData || emptyObject);
@@ -5569,26 +6340,25 @@ function createFunctionalComponent (
     if (isDef(data.attrs)) { mergeProps(props, data.attrs); }
     if (isDef(data.props)) { mergeProps(props, data.props); }
   }
-  // ensure the createElement function in functional components
-  // gets a unique context - this is necessary for correct named slot check
-  var _context = Object.create(context);
-  var h = function (a, b, c, d) { return createElement(_context, a, b, c, d, true); };
-  var vnode = Ctor.options.render.call(null, h, {
-    data: data,
-    props: props,
-    children: children,
-    parent: context,
-    listeners: data.on || emptyObject,
-    injections: resolveInject(Ctor.options.inject, context),
-    slots: function () { return resolveSlots(children, context); }
-  });
+
+  var renderContext = new FunctionalRenderContext(
+    data,
+    props,
+    children,
+    contextVm,
+    Ctor
+  );
+
+  var vnode = options.render.call(null, renderContext._c, renderContext);
+
   if (vnode instanceof VNode) {
-    vnode.functionalContext = context;
-    vnode.functionalOptions = Ctor.options;
+    vnode.fnContext = contextVm;
+    vnode.fnOptions = options;
     if (data.slot) {
       (vnode.data || (vnode.data = {})).slot = data.slot;
     }
   }
+
   return vnode
 }
 
@@ -5933,258 +6703,32 @@ function _createElement (
   }
 }
 
-function applyNS (vnode, ns) {
+function applyNS (vnode, ns, force) {
   vnode.ns = ns;
   if (vnode.tag === 'foreignObject') {
     // use default namespace inside foreignObject
-    return
+    ns = undefined;
+    force = true;
   }
   if (isDef(vnode.children)) {
     for (var i = 0, l = vnode.children.length; i < l; i++) {
       var child = vnode.children[i];
-      if (isDef(child.tag) && isUndef(child.ns)) {
-        applyNS(child, ns);
+      if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force))) {
+        applyNS(child, ns, force);
       }
     }
   }
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering v-for lists.
- */
-function renderList (
-  val,
-  render
-) {
-  var ret, i, l, keys, key;
-  if (Array.isArray(val) || typeof val === 'string') {
-    ret = new Array(val.length);
-    for (i = 0, l = val.length; i < l; i++) {
-      ret[i] = render(val[i], i);
-    }
-  } else if (typeof val === 'number') {
-    ret = new Array(val);
-    for (i = 0; i < val; i++) {
-      ret[i] = render(i + 1, i);
-    }
-  } else if (isObject(val)) {
-    keys = Object.keys(val);
-    ret = new Array(keys.length);
-    for (i = 0, l = keys.length; i < l; i++) {
-      key = keys[i];
-      ret[i] = render(val[key], key, i);
-    }
-  }
-  if (isDef(ret)) {
-    (ret)._isVList = true;
-  }
-  return ret
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering <slot>
- */
-function renderSlot (
-  name,
-  fallback,
-  props,
-  bindObject
-) {
-  var scopedSlotFn = this.$scopedSlots[name];
-  if (scopedSlotFn) { // scoped slot
-    props = props || {};
-    if (bindObject) {
-      props = extend(extend({}, bindObject), props);
-    }
-    return scopedSlotFn(props) || fallback
-  } else {
-    var slotNodes = this.$slots[name];
-    // warn duplicate slot usage
-    if (slotNodes && process.env.NODE_ENV !== 'production') {
-      slotNodes._rendered && warn(
-        "Duplicate presence of slot \"" + name + "\" found in the same render tree " +
-        "- this will likely cause render errors.",
-        this
-      );
-      slotNodes._rendered = true;
-    }
-    return slotNodes || fallback
-  }
-}
-
-/*  */
-
-/**
- * Runtime helper for resolving filters
- */
-function resolveFilter (id) {
-  return resolveAsset(this.$options, 'filters', id, true) || identity
-}
-
-/*  */
-
-/**
- * Runtime helper for checking keyCodes from config.
- */
-function checkKeyCodes (
-  eventKeyCode,
-  key,
-  builtInAlias
-) {
-  var keyCodes = config.keyCodes[key] || builtInAlias;
-  if (Array.isArray(keyCodes)) {
-    return keyCodes.indexOf(eventKeyCode) === -1
-  } else {
-    return keyCodes !== eventKeyCode
-  }
-}
-
-/*  */
-
-/**
- * Runtime helper for merging v-bind="object" into a VNode's data.
- */
-function bindObjectProps (
-  data,
-  tag,
-  value,
-  asProp,
-  isSync
-) {
-  if (value) {
-    if (!isObject(value)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        'v-bind without argument expects an Object or Array value',
-        this
-      );
-    } else {
-      if (Array.isArray(value)) {
-        value = toObject(value);
-      }
-      var hash;
-      var loop = function ( key ) {
-        if (
-          key === 'class' ||
-          key === 'style' ||
-          isReservedAttribute(key)
-        ) {
-          hash = data;
-        } else {
-          var type = data.attrs && data.attrs.type;
-          hash = asProp || config.mustUseProp(tag, type, key)
-            ? data.domProps || (data.domProps = {})
-            : data.attrs || (data.attrs = {});
-        }
-        if (!(key in hash)) {
-          hash[key] = value[key];
-
-          if (isSync) {
-            var on = data.on || (data.on = {});
-            on[("update:" + key)] = function ($event) {
-              value[key] = $event;
-            };
-          }
-        }
-      };
-
-      for (var key in value) loop( key );
-    }
-  }
-  return data
-}
-
-/*  */
-
-/**
- * Runtime helper for rendering static trees.
- */
-function renderStatic (
-  index,
-  isInFor
-) {
-  var tree = this._staticTrees[index];
-  // if has already-rendered static tree and not inside v-for,
-  // we can reuse the same tree by doing a shallow clone.
-  if (tree && !isInFor) {
-    return Array.isArray(tree)
-      ? cloneVNodes(tree)
-      : cloneVNode(tree)
-  }
-  // otherwise, render a fresh tree.
-  tree = this._staticTrees[index] =
-    this.$options.staticRenderFns[index].call(this._renderProxy);
-  markStatic(tree, ("__static__" + index), false);
-  return tree
-}
-
-/**
- * Runtime helper for v-once.
- * Effectively it means marking the node as static with a unique key.
- */
-function markOnce (
-  tree,
-  index,
-  key
-) {
-  markStatic(tree, ("__once__" + index + (key ? ("_" + key) : "")), true);
-  return tree
-}
-
-function markStatic (
-  tree,
-  key,
-  isOnce
-) {
-  if (Array.isArray(tree)) {
-    for (var i = 0; i < tree.length; i++) {
-      if (tree[i] && typeof tree[i] !== 'string') {
-        markStaticNode(tree[i], (key + "_" + i), isOnce);
-      }
-    }
-  } else {
-    markStaticNode(tree, key, isOnce);
-  }
-}
-
-function markStaticNode (node, key, isOnce) {
-  node.isStatic = true;
-  node.key = key;
-  node.isOnce = isOnce;
-}
-
-/*  */
-
-function bindObjectListeners (data, value) {
-  if (value) {
-    if (!isPlainObject(value)) {
-      process.env.NODE_ENV !== 'production' && warn(
-        'v-on without argument expects an Object value',
-        this
-      );
-    } else {
-      var on = data.on = data.on ? extend({}, data.on) : {};
-      for (var key in value) {
-        var existing = on[key];
-        var ours = value[key];
-        on[key] = existing ? [].concat(ours, existing) : ours;
-      }
-    }
-  }
-  return data
 }
 
 /*  */
 
 function initRender (vm) {
   vm._vnode = null; // the root of the child tree
-  vm._staticTrees = null;
-  var parentVnode = vm.$vnode = vm.$options._parentVnode; // the placeholder node in parent tree
+  vm._staticTrees = null; // v-once cached trees
+  var options = vm.$options;
+  var parentVnode = vm.$vnode = options._parentVnode; // the placeholder node in parent tree
   var renderContext = parentVnode && parentVnode.context;
-  vm.$slots = resolveSlots(vm.$options._renderChildren, renderContext);
+  vm.$slots = resolveSlots(options._renderChildren, renderContext);
   vm.$scopedSlots = emptyObject;
   // bind the createElement fn to this instance
   // so that we get proper render context inside it.
@@ -6201,19 +6745,22 @@ function initRender (vm) {
 
   /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
-    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, function () {
       !isUpdatingChildComponent && warn("$attrs is readonly.", vm);
     }, true);
-    defineReactive$$1(vm, '$listeners', vm.$options._parentListeners || emptyObject, function () {
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, function () {
       !isUpdatingChildComponent && warn("$listeners is readonly.", vm);
     }, true);
   } else {
-    defineReactive$$1(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
-    defineReactive$$1(vm, '$listeners', vm.$options._parentListeners || emptyObject, null, true);
+    defineReactive(vm, '$attrs', parentData && parentData.attrs || emptyObject, null, true);
+    defineReactive(vm, '$listeners', options._parentListeners || emptyObject, null, true);
   }
 }
 
 function renderMixin (Vue) {
+  // install runtime convenience helpers
+  installRenderHelpers(Vue.prototype);
+
   Vue.prototype.$nextTick = function (fn) {
     return nextTick(fn, this)
   };
@@ -6222,7 +6769,6 @@ function renderMixin (Vue) {
     var vm = this;
     var ref = vm.$options;
     var render = ref.render;
-    var staticRenderFns = ref.staticRenderFns;
     var _parentVnode = ref._parentVnode;
 
     if (vm._isMounted) {
@@ -6230,7 +6776,9 @@ function renderMixin (Vue) {
       // last render. They need to be cloned to ensure "freshness" for this render.
       for (var key in vm.$slots) {
         var slot = vm.$slots[key];
-        if (slot._rendered) {
+        // _rendered is a flag added by renderSlot, but may not be present
+        // if the slot is passed from manually written render functions
+        if (slot._rendered || (slot[0] && slot[0].elm)) {
           vm.$slots[key] = cloneVNodes(slot, true /* deep */);
         }
       }
@@ -6238,9 +6786,6 @@ function renderMixin (Vue) {
 
     vm.$scopedSlots = (_parentVnode && _parentVnode.data.scopedSlots) || emptyObject;
 
-    if (staticRenderFns && !vm._staticTrees) {
-      vm._staticTrees = [];
-    }
     // set parent vnode. this allows render functions to have access
     // to the data on the placeholder node.
     vm.$vnode = _parentVnode;
@@ -6249,14 +6794,21 @@ function renderMixin (Vue) {
     try {
       vnode = render.call(vm._renderProxy, vm.$createElement);
     } catch (e) {
-      handleError(e, vm, "render function");
+      handleError(e, vm, "render");
       // return error render result,
       // or previous vnode to prevent render error causing blank component
       /* istanbul ignore else */
       if (process.env.NODE_ENV !== 'production') {
-        vnode = vm.$options.renderError
-          ? vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e)
-          : vm._vnode;
+        if (vm.$options.renderError) {
+          try {
+            vnode = vm.$options.renderError.call(vm._renderProxy, vm.$createElement, e);
+          } catch (e) {
+            handleError(e, vm, "renderError");
+            vnode = vm._vnode;
+          }
+        } else {
+          vnode = vm._vnode;
+        }
       } else {
         vnode = vm._vnode;
       }
@@ -6276,25 +6828,6 @@ function renderMixin (Vue) {
     vnode.parent = _parentVnode;
     return vnode
   };
-
-  // internal render helpers.
-  // these are exposed on the instance prototype to reduce generated render
-  // code size.
-  Vue.prototype._o = markOnce;
-  Vue.prototype._n = toNumber;
-  Vue.prototype._s = toString;
-  Vue.prototype._l = renderList;
-  Vue.prototype._t = renderSlot;
-  Vue.prototype._q = looseEqual;
-  Vue.prototype._i = looseIndexOf;
-  Vue.prototype._m = renderStatic;
-  Vue.prototype._f = resolveFilter;
-  Vue.prototype._k = checkKeyCodes;
-  Vue.prototype._b = bindObjectProps;
-  Vue.prototype._v = createTextVNode;
-  Vue.prototype._e = createEmptyVNode;
-  Vue.prototype._u = resolveScopedSlots;
-  Vue.prototype._g = bindObjectListeners;
 }
 
 /*  */
@@ -6310,7 +6843,7 @@ function initMixin (Vue) {
     var startTag, endTag;
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
-      startTag = "vue-perf-init:" + (vm._uid);
+      startTag = "vue-perf-start:" + (vm._uid);
       endTag = "vue-perf-end:" + (vm._uid);
       mark(startTag);
     }
@@ -6351,7 +6884,7 @@ function initMixin (Vue) {
     if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
       vm._name = formatComponentName(vm, false);
       mark(endTag);
-      measure(((vm._name) + " init"), startTag, endTag);
+      measure(("vue " + (vm._name) + " init"), startTag, endTag);
     }
 
     if (vm.$options.el) {
@@ -6617,8 +7150,6 @@ function initAssetRegisters (Vue) {
 
 /*  */
 
-var patternTypes = [String, RegExp, Array];
-
 function getComponentName (opts) {
   return opts && (opts.Ctor.options.name || opts.tag)
 }
@@ -6635,26 +7166,36 @@ function matches (pattern, name) {
   return false
 }
 
-function pruneCache (cache, current, filter) {
+function pruneCache (keepAliveInstance, filter) {
+  var cache = keepAliveInstance.cache;
+  var keys = keepAliveInstance.keys;
+  var _vnode = keepAliveInstance._vnode;
   for (var key in cache) {
     var cachedNode = cache[key];
     if (cachedNode) {
       var name = getComponentName(cachedNode.componentOptions);
       if (name && !filter(name)) {
-        if (cachedNode !== current) {
-          pruneCacheEntry(cachedNode);
-        }
-        cache[key] = null;
+        pruneCacheEntry(cache, key, keys, _vnode);
       }
     }
   }
 }
 
-function pruneCacheEntry (vnode) {
-  if (vnode) {
-    vnode.componentInstance.$destroy();
+function pruneCacheEntry (
+  cache,
+  key,
+  keys,
+  current
+) {
+  var cached$$1 = cache[key];
+  if (cached$$1 && (!current || cached$$1.tag !== current.tag)) {
+    cached$$1.componentInstance.$destroy();
   }
+  cache[key] = null;
+  remove(keys, key);
 }
+
+var patternTypes = [String, RegExp, Array];
 
 var KeepAlive = {
   name: 'keep-alive',
@@ -6662,55 +7203,76 @@ var KeepAlive = {
 
   props: {
     include: patternTypes,
-    exclude: patternTypes
+    exclude: patternTypes,
+    max: [String, Number]
   },
 
   created: function created () {
     this.cache = Object.create(null);
+    this.keys = [];
   },
 
   destroyed: function destroyed () {
     var this$1 = this;
 
     for (var key in this$1.cache) {
-      pruneCacheEntry(this$1.cache[key]);
+      pruneCacheEntry(this$1.cache, key, this$1.keys);
     }
   },
 
   watch: {
     include: function include (val) {
-      pruneCache(this.cache, this._vnode, function (name) { return matches(val, name); });
+      pruneCache(this, function (name) { return matches(val, name); });
     },
     exclude: function exclude (val) {
-      pruneCache(this.cache, this._vnode, function (name) { return !matches(val, name); });
+      pruneCache(this, function (name) { return !matches(val, name); });
     }
   },
 
   render: function render () {
-    var vnode = getFirstComponentChild(this.$slots.default);
+    var slot = this.$slots.default;
+    var vnode = getFirstComponentChild(slot);
     var componentOptions = vnode && vnode.componentOptions;
     if (componentOptions) {
       // check pattern
       var name = getComponentName(componentOptions);
-      if (name && (
-        (this.include && !matches(this.include, name)) ||
-        (this.exclude && matches(this.exclude, name))
-      )) {
+      var ref = this;
+      var include = ref.include;
+      var exclude = ref.exclude;
+      if (
+        // not included
+        (include && (!name || !matches(include, name))) ||
+        // excluded
+        (exclude && name && matches(exclude, name))
+      ) {
         return vnode
       }
+
+      var ref$1 = this;
+      var cache = ref$1.cache;
+      var keys = ref$1.keys;
       var key = vnode.key == null
         // same constructor may get registered as different local components
         // so cid alone is not enough (#3269)
         ? componentOptions.Ctor.cid + (componentOptions.tag ? ("::" + (componentOptions.tag)) : '')
         : vnode.key;
-      if (this.cache[key]) {
-        vnode.componentInstance = this.cache[key].componentInstance;
+      if (cache[key]) {
+        vnode.componentInstance = cache[key].componentInstance;
+        // make current key freshest
+        remove(keys, key);
+        keys.push(key);
       } else {
-        this.cache[key] = vnode;
+        cache[key] = vnode;
+        keys.push(key);
+        // prune oldest entry
+        if (this.max && keys.length > parseInt(this.max)) {
+          pruneCacheEntry(cache, keys[0], keys, this._vnode);
+        }
       }
+
       vnode.data.keepAlive = true;
     }
-    return vnode
+    return vnode || (slot && slot[0])
   }
 };
 
@@ -6740,7 +7302,7 @@ function initGlobalAPI (Vue) {
     warn: warn,
     extend: extend,
     mergeOptions: mergeOptions,
-    defineReactive: defineReactive$$1
+    defineReactive: defineReactive
   };
 
   Vue.set = set;
@@ -6777,7 +7339,7 @@ Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   }
 });
 
-Vue$3.version = '2.4.4';
+Vue$3.version = '2.5.9';
 
 /*  */
 
@@ -7187,13 +7749,13 @@ function createPatchFunction (backend) {
   }
 
   function createRmCb (childElm, listeners) {
-    function remove$$1 () {
-      if (--remove$$1.listeners === 0) {
+    function remove () {
+      if (--remove.listeners === 0) {
         removeNode(childElm);
       }
     }
-    remove$$1.listeners = listeners;
-    return remove$$1
+    remove.listeners = listeners;
+    return remove
   }
 
   function removeNode (el) {
@@ -7204,7 +7766,23 @@ function createPatchFunction (backend) {
     }
   }
 
-  var inPre = 0;
+  function isUnknownElement$$1 (vnode, inVPre) {
+    return (
+      !inVPre &&
+      !vnode.ns &&
+      !(
+        config.ignoredElements.length &&
+        config.ignoredElements.some(function (ignore) {
+          return isRegExp(ignore)
+            ? ignore.test(vnode.tag)
+            : ignore === vnode.tag
+        })
+      ) &&
+      config.isUnknownElement(vnode.tag)
+    )
+  }
+
+  var creatingElmInVPre = 0;
   function createElm (vnode, insertedVnodeQueue, parentElm, refElm, nested) {
     vnode.isRootInsert = !nested; // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
@@ -7217,14 +7795,9 @@ function createPatchFunction (backend) {
     if (isDef(tag)) {
       if (process.env.NODE_ENV !== 'production') {
         if (data && data.pre) {
-          inPre++;
+          creatingElmInVPre++;
         }
-        if (
-          !inPre &&
-          !vnode.ns &&
-          !(config.ignoredElements.length && config.ignoredElements.indexOf(tag) > -1) &&
-          config.isUnknownElement(tag)
-        ) {
+        if (isUnknownElement$$1(vnode, creatingElmInVPre)) {
           warn(
             'Unknown custom element: <' + tag + '> - did you ' +
             'register the component correctly? For recursive components, ' +
@@ -7248,7 +7821,7 @@ function createPatchFunction (backend) {
       }
 
       if (process.env.NODE_ENV !== 'production' && data && data.pre) {
-        inPre--;
+        creatingElmInVPre--;
       }
     } else if (isTrue(vnode.isComment)) {
       vnode.elm = nodeOps.createComment(vnode.text);
@@ -7365,16 +7938,21 @@ function createPatchFunction (backend) {
   // of going through the normal attribute patching process.
   function setScope (vnode) {
     var i;
-    var ancestor = vnode;
-    while (ancestor) {
-      if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
-        nodeOps.setAttribute(vnode.elm, i, '');
+    if (isDef(i = vnode.fnScopeId)) {
+      nodeOps.setAttribute(vnode.elm, i, '');
+    } else {
+      var ancestor = vnode;
+      while (ancestor) {
+        if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
+          nodeOps.setAttribute(vnode.elm, i, '');
+        }
+        ancestor = ancestor.parent;
       }
-      ancestor = ancestor.parent;
     }
     // for slot content they should also get the scopeId from the host instance.
     if (isDef(i = activeInstance) &&
       i !== vnode.context &&
+      i !== vnode.fnContext &&
       isDef(i = i.$options._scopeId)
     ) {
       nodeOps.setAttribute(vnode.elm, i, '');
@@ -7453,7 +8031,7 @@ function createPatchFunction (backend) {
     var newEndIdx = newCh.length - 1;
     var newStartVnode = newCh[0];
     var newEndVnode = newCh[newEndIdx];
-    var oldKeyToIdx, idxInOld, elmToMove, refElm;
+    var oldKeyToIdx, idxInOld, vnodeToMove, refElm;
 
     // removeOnly is a special flag used only by <transition-group>
     // to ensure removed elements stay in correct relative positions
@@ -7491,18 +8069,18 @@ function createPatchFunction (backend) {
         if (isUndef(idxInOld)) { // New element
           createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
         } else {
-          elmToMove = oldCh[idxInOld];
+          vnodeToMove = oldCh[idxInOld];
           /* istanbul ignore if */
-          if (process.env.NODE_ENV !== 'production' && !elmToMove) {
+          if (process.env.NODE_ENV !== 'production' && !vnodeToMove) {
             warn(
               'It seems there are duplicate keys that is causing an update error. ' +
               'Make sure each v-for item has a unique key.'
             );
           }
-          if (sameVnode(elmToMove, newStartVnode)) {
-            patchVnode(elmToMove, newStartVnode, insertedVnodeQueue);
+          if (sameVnode(vnodeToMove, newStartVnode)) {
+            patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue);
             oldCh[idxInOld] = undefined;
-            canMove && nodeOps.insertBefore(parentElm, elmToMove.elm, oldStartVnode.elm);
+            canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
           } else {
             // same key but different element. treat as new element
             createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
@@ -7598,27 +8176,32 @@ function createPatchFunction (backend) {
     }
   }
 
-  var bailed = false;
+  var hydrationBailed = false;
   // list of modules that can skip create hook during hydration because they
   // are already rendered on the client or has no need for initialization
-  var isRenderedModule = makeMap('attrs,style,class,staticClass,staticStyle,key');
+  // Note: style is excluded because it relies on initial clone for future
+  // deep updates (#7063).
+  var isRenderedModule = makeMap('attrs,class,staticClass,staticStyle,key');
 
   // Note: this is a browser-only function so we can assume elms are DOM nodes.
-  function hydrate (elm, vnode, insertedVnodeQueue) {
-    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
-      vnode.elm = elm;
-      vnode.isAsyncPlaceholder = true;
-      return true
-    }
-    if (process.env.NODE_ENV !== 'production') {
-      if (!assertNodeMatch(elm, vnode)) {
-        return false
-      }
-    }
-    vnode.elm = elm;
+  function hydrate (elm, vnode, insertedVnodeQueue, inVPre) {
+    var i;
     var tag = vnode.tag;
     var data = vnode.data;
     var children = vnode.children;
+    inVPre = inVPre || (data && data.pre);
+    vnode.elm = elm;
+
+    if (isTrue(vnode.isComment) && isDef(vnode.asyncFactory)) {
+      vnode.isAsyncPlaceholder = true;
+      return true
+    }
+    // assert node match
+    if (process.env.NODE_ENV !== 'production') {
+      if (!assertNodeMatch(elm, vnode, inVPre)) {
+        return false
+      }
+    }
     if (isDef(data)) {
       if (isDef(i = data.hook) && isDef(i = i.init)) { i(vnode, true /* hydrating */); }
       if (isDef(i = vnode.componentInstance)) {
@@ -7639,9 +8222,9 @@ function createPatchFunction (backend) {
               /* istanbul ignore if */
               if (process.env.NODE_ENV !== 'production' &&
                 typeof console !== 'undefined' &&
-                !bailed
+                !hydrationBailed
               ) {
-                bailed = true;
+                hydrationBailed = true;
                 console.warn('Parent: ', elm);
                 console.warn('server innerHTML: ', i);
                 console.warn('client innerHTML: ', elm.innerHTML);
@@ -7653,7 +8236,7 @@ function createPatchFunction (backend) {
             var childrenMatch = true;
             var childNode = elm.firstChild;
             for (var i$1 = 0; i$1 < children.length; i$1++) {
-              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue)) {
+              if (!childNode || !hydrate(childNode, children[i$1], insertedVnodeQueue, inVPre)) {
                 childrenMatch = false;
                 break
               }
@@ -7665,9 +8248,9 @@ function createPatchFunction (backend) {
               /* istanbul ignore if */
               if (process.env.NODE_ENV !== 'production' &&
                 typeof console !== 'undefined' &&
-                !bailed
+                !hydrationBailed
               ) {
-                bailed = true;
+                hydrationBailed = true;
                 console.warn('Parent: ', elm);
                 console.warn('Mismatching childNodes vs. VNodes: ', elm.childNodes, children);
               }
@@ -7677,11 +8260,17 @@ function createPatchFunction (backend) {
         }
       }
       if (isDef(data)) {
+        var fullInvoke = false;
         for (var key in data) {
           if (!isRenderedModule(key)) {
+            fullInvoke = true;
             invokeCreateHooks(vnode, insertedVnodeQueue);
             break
           }
+        }
+        if (!fullInvoke && data['class']) {
+          // ensure collecting deps for deep class bindings for future updates
+          traverse(data['class']);
         }
       }
     } else if (elm.data !== vnode.text) {
@@ -7690,10 +8279,10 @@ function createPatchFunction (backend) {
     return true
   }
 
-  function assertNodeMatch (node, vnode) {
+  function assertNodeMatch (node, vnode, inVPre) {
     if (isDef(vnode.tag)) {
-      return (
-        vnode.tag.indexOf('vue-component') === 0 ||
+      return vnode.tag.indexOf('vue-component') === 0 || (
+        !isUnknownElement$$1(vnode, inVPre) &&
         vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase())
       )
     } else {
@@ -7746,9 +8335,12 @@ function createPatchFunction (backend) {
           // create an empty node and replace it
           oldVnode = emptyNodeAt(oldVnode);
         }
+
         // replacing existing element
         var oldElm = oldVnode.elm;
         var parentElm$1 = nodeOps.parentNode(oldElm);
+
+        // create new node
         createElm(
           vnode,
           insertedVnodeQueue,
@@ -7759,9 +8351,8 @@ function createPatchFunction (backend) {
           nodeOps.nextSibling(oldElm)
         );
 
+        // update parent placeholder node element, recursively
         if (isDef(vnode.parent)) {
-          // component root element replaced.
-          // update parent placeholder node element, recursively
           var ancestor = vnode.parent;
           var patchable = isPatchable(vnode);
           while (ancestor) {
@@ -7783,11 +8374,14 @@ function createPatchFunction (backend) {
                   insert.fns[i$2]();
                 }
               }
+            } else {
+              registerRef(ancestor);
             }
             ancestor = ancestor.parent;
           }
         }
 
+        // destroy old node
         if (isDef(parentElm$1)) {
           removeVnodes(parentElm$1, [oldVnode], 0, 0);
         } else if (isDef(oldVnode.tag)) {
@@ -7853,14 +8447,14 @@ function _update (oldVnode, vnode) {
       }
     };
     if (isCreate) {
-      mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'insert', callInsert);
+      mergeVNodeHook(vnode, 'insert', callInsert);
     } else {
       callInsert();
     }
   }
 
   if (dirsWithPostpatch.length) {
-    mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'postpatch', function () {
+    mergeVNodeHook(vnode, 'postpatch', function () {
       for (var i = 0; i < dirsWithPostpatch.length; i++) {
         callHook$1(dirsWithPostpatch[i], 'componentUpdated', vnode, oldVnode);
       }
@@ -7946,8 +8540,9 @@ function updateAttrs (oldVnode, vnode) {
     }
   }
   // #4391: in IE9, setting type can reset value for input[type=radio]
+  // #6666: IE/Edge forces progress value down to 1 before setting a max
   /* istanbul ignore if */
-  if (isIE9 && attrs.value !== oldAttrs.value) {
+  if ((isIE || isEdge) && attrs.value !== oldAttrs.value) {
     setAttr(elm, 'value', attrs.value);
   }
   for (key in oldAttrs) {
@@ -7987,6 +8582,23 @@ function setAttr (el, key, value) {
     if (isFalsyAttrValue(value)) {
       el.removeAttribute(key);
     } else {
+      // #7138: IE10 & 11 fires input event when setting placeholder on
+      // <textarea>... block the first input event and remove the blocker
+      // immediately.
+      /* istanbul ignore if */
+      if (
+        isIE && !isIE9 &&
+        el.tagName === 'TEXTAREA' &&
+        key === 'placeholder' && !el.__ieph
+      ) {
+        var blocker = function (e) {
+          e.stopImmediatePropagation();
+          el.removeEventListener('input', blocker);
+        };
+        el.addEventListener('input', blocker);
+        // $flow-disable-line
+        el.__ieph = true; /* IE placeholder patched */
+      }
       el.setAttribute(key, value);
     }
   }
@@ -8175,39 +8787,59 @@ function addHandler (
   important,
   warn
 ) {
+  modifiers = modifiers || emptyObject;
   // warn prevent and passive modifier
   /* istanbul ignore if */
   if (
     process.env.NODE_ENV !== 'production' && warn &&
-    modifiers && modifiers.prevent && modifiers.passive
+    modifiers.prevent && modifiers.passive
   ) {
     warn(
       'passive and prevent can\'t be used together. ' +
       'Passive handler can\'t prevent default event.'
     );
   }
+
   // check capture modifier
-  if (modifiers && modifiers.capture) {
+  if (modifiers.capture) {
     delete modifiers.capture;
     name = '!' + name; // mark the event as captured
   }
-  if (modifiers && modifiers.once) {
+  if (modifiers.once) {
     delete modifiers.once;
     name = '~' + name; // mark the event as once
   }
   /* istanbul ignore if */
-  if (modifiers && modifiers.passive) {
+  if (modifiers.passive) {
     delete modifiers.passive;
     name = '&' + name; // mark the event as passive
   }
+
+  // normalize click.right and click.middle since they don't actually fire
+  // this is technically browser-specific, but at least for now browsers are
+  // the only target envs that have right/middle clicks.
+  if (name === 'click') {
+    if (modifiers.right) {
+      name = 'contextmenu';
+      delete modifiers.right;
+    } else if (modifiers.middle) {
+      name = 'mouseup';
+    }
+  }
+
   var events;
-  if (modifiers && modifiers.native) {
+  if (modifiers.native) {
     delete modifiers.native;
     events = el.nativeEvents || (el.nativeEvents = {});
   } else {
     events = el.events || (el.events = {});
   }
-  var newHandler = { value: value, modifiers: modifiers };
+
+  var newHandler = { value: value };
+  if (modifiers !== emptyObject) {
+    newHandler.modifiers = modifiers;
+  }
+
   var handlers = events[name];
   /* istanbul ignore if */
   if (Array.isArray(handlers)) {
@@ -8237,7 +8869,15 @@ function getBindingAttr (
   }
 }
 
-function getAndRemoveAttr (el, name) {
+// note: this only removes the attr from the Array (attrsList) so that it
+// doesn't get processed by processAttrs.
+// By default it does NOT remove it from the map (attrsMap) because the map is
+// needed during codegen.
+function getAndRemoveAttr (
+  el,
+  name,
+  removeFromMap
+) {
   var val;
   if ((val = el.attrsMap[name]) != null) {
     var list = el.attrsList;
@@ -8247,6 +8887,9 @@ function getAndRemoveAttr (el, name) {
         break
       }
     }
+  }
+  if (removeFromMap) {
+    delete el.attrsMap[name];
   }
   return val
 }
@@ -8292,25 +8935,26 @@ function genAssignmentCode (
   value,
   assignment
 ) {
-  var modelRs = parseModel(value);
-  if (modelRs.idx === null) {
+  var res = parseModel(value);
+  if (res.key === null) {
     return (value + "=" + assignment)
   } else {
-    return ("$set(" + (modelRs.exp) + ", " + (modelRs.idx) + ", " + assignment + ")")
+    return ("$set(" + (res.exp) + ", " + (res.key) + ", " + assignment + ")")
   }
 }
 
 /**
- * parse directive model to do the array update transform. a[idx] = val => $$a.splice($$idx, 1, val)
+ * Parse a v-model expression into a base path and a final key segment.
+ * Handles both dot-path and possible square brackets.
  *
- * for loop possible cases:
+ * Possible cases:
  *
  * - test
- * - test[idx]
- * - test[test1[idx]]
- * - test["a"][idx]
- * - xxx.test[a[a].test1[idx]]
- * - test.xxx.a["asa"][test1[idx]]
+ * - test[key]
+ * - test[test1[key]]
+ * - test["a"][key]
+ * - xxx.test[a[a].test1[key]]
+ * - test.xxx.a["asa"][test1[key]]
  *
  */
 
@@ -8321,17 +8965,28 @@ var index$1;
 var expressionPos;
 var expressionEndPos;
 
+
+
 function parseModel (val) {
-  str = val;
-  len = str.length;
-  index$1 = expressionPos = expressionEndPos = 0;
+  len = val.length;
 
   if (val.indexOf('[') < 0 || val.lastIndexOf(']') < len - 1) {
-    return {
-      exp: val,
-      idx: null
+    index$1 = val.lastIndexOf('.');
+    if (index$1 > -1) {
+      return {
+        exp: val.slice(0, index$1),
+        key: '"' + val.slice(index$1 + 1) + '"'
+      }
+    } else {
+      return {
+        exp: val,
+        key: null
+      }
     }
   }
+
+  str = val;
+  index$1 = expressionPos = expressionEndPos = 0;
 
   while (!eof()) {
     chr = next();
@@ -8344,8 +8999,8 @@ function parseModel (val) {
   }
 
   return {
-    exp: val.substring(0, expressionPos),
-    idx: val.substring(expressionPos + 1, expressionEndPos)
+    exp: val.slice(0, expressionPos),
+    key: val.slice(expressionPos + 1, expressionEndPos)
   }
 }
 
@@ -8410,13 +9065,6 @@ function model (
   var type = el.attrsMap.type;
 
   if (process.env.NODE_ENV !== 'production') {
-    var dynamicType = el.attrsMap['v-bind:type'] || el.attrsMap[':type'];
-    if (tag === 'input' && dynamicType) {
-      warn$1(
-        "<input :type=\"" + dynamicType + "\" v-model=\"" + value + "\">:\n" +
-        "v-model does not support dynamic input types. Use v-if branches instead."
-      );
-    }
     // inputs with type="file" are read only and setting the input's
     // value will throw an error.
     if (tag === 'input' && type === 'file') {
@@ -8473,7 +9121,7 @@ function genCheckboxModel (
           : (":_q(" + value + "," + trueValueBinding + ")")
       )
   );
-  addHandler(el, CHECKBOX_RADIO_TOKEN,
+  addHandler(el, 'change',
     "var $$a=" + value + "," +
         '$$el=$event.target,' +
         "$$c=$$el.checked?(" + trueValueBinding + "):(" + falseValueBinding + ");" +
@@ -8496,7 +9144,7 @@ function genRadioModel (
   var valueBinding = getBindingAttr(el, 'value') || 'null';
   valueBinding = number ? ("_n(" + valueBinding + ")") : valueBinding;
   addProp(el, 'checked', ("_q(" + value + "," + valueBinding + ")"));
-  addHandler(el, CHECKBOX_RADIO_TOKEN, genAssignmentCode(value, valueBinding), null, true);
+  addHandler(el, 'change', genAssignmentCode(value, valueBinding), null, true);
 }
 
 function genSelect (
@@ -8522,6 +9170,19 @@ function genDefaultModel (
   modifiers
 ) {
   var type = el.attrsMap.type;
+
+  // warn if v-bind:value conflicts with v-model
+  if (process.env.NODE_ENV !== 'production') {
+    var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
+    if (value$1) {
+      var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
+      warn$1(
+        binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
+        'because the latter already expands to a value binding internally'
+      );
+    }
+  }
+
   var ref = modifiers || {};
   var lazy = ref.lazy;
   var number = ref.number;
@@ -8560,23 +9221,33 @@ function genDefaultModel (
 // the whole point is ensuring the v-model callback gets called before
 // user-attached handlers.
 function normalizeEvents (on) {
-  var event;
   /* istanbul ignore if */
   if (isDef(on[RANGE_TOKEN])) {
     // IE input[type=range] only supports `change` event
-    event = isIE ? 'change' : 'input';
+    var event = isIE ? 'change' : 'input';
     on[event] = [].concat(on[RANGE_TOKEN], on[event] || []);
     delete on[RANGE_TOKEN];
   }
+  // This was originally intended to fix #4521 but no longer necessary
+  // after 2.5. Keeping it for backwards compat with generated code from < 2.4
+  /* istanbul ignore if */
   if (isDef(on[CHECKBOX_RADIO_TOKEN])) {
-    // Chrome fires microtasks in between click/change, leads to #4521
-    event = isChrome ? 'click' : 'change';
-    on[event] = [].concat(on[CHECKBOX_RADIO_TOKEN], on[event] || []);
+    on.change = [].concat(on[CHECKBOX_RADIO_TOKEN], on.change || []);
     delete on[CHECKBOX_RADIO_TOKEN];
   }
 }
 
 var target$1;
+
+function createOnceHandler (handler, event, capture) {
+  var _target = target$1; // save current target element in closure
+  return function onceHandler () {
+    var res = handler.apply(null, arguments);
+    if (res !== null) {
+      remove$2(event, onceHandler, capture, _target);
+    }
+  }
+}
 
 function add$1 (
   event,
@@ -8585,18 +9256,8 @@ function add$1 (
   capture,
   passive
 ) {
-  if (once$$1) {
-    var oldHandler = handler;
-    var _target = target$1; // save current target element in closure
-    handler = function (ev) {
-      var res = arguments.length === 1
-        ? oldHandler(ev)
-        : oldHandler.apply(null, arguments);
-      if (res !== null) {
-        remove$2(event, handler, capture, _target);
-      }
-    };
-  }
+  handler = withMacroTask(handler);
+  if (once$$1) { handler = createOnceHandler(handler, event, capture); }
   target$1.addEventListener(
     event,
     handler,
@@ -8612,7 +9273,11 @@ function remove$2 (
   capture,
   _target
 ) {
-  (_target || target$1).removeEventListener(event, handler, capture);
+  (_target || target$1).removeEventListener(
+    event,
+    handler._withTask || handler,
+    capture
+  );
 }
 
 function updateDOMListeners (oldVnode, vnode) {
@@ -8624,6 +9289,7 @@ function updateDOMListeners (oldVnode, vnode) {
   target$1 = vnode.elm;
   normalizeEvents(on);
   updateListeners(on, oldOn, add$1, remove$2, vnode.context);
+  target$1 = undefined;
 }
 
 var events = {
@@ -8659,6 +9325,11 @@ function updateDOMProps (oldVnode, vnode) {
     if (key === 'textContent' || key === 'innerHTML') {
       if (vnode.children) { vnode.children.length = 0; }
       if (cur === oldProps[key]) { continue }
+      // #6601 work around Chrome version <= 55 bug where single textNode
+      // replaced by innerHTML/textContent retains its parentNode property
+      if (elm.childNodes.length === 1) {
+        elm.removeChild(elm.childNodes[0]);
+      }
     }
 
     if (key === 'value') {
@@ -8667,7 +9338,7 @@ function updateDOMProps (oldVnode, vnode) {
       elm._value = cur;
       // avoid resetting cursor position when value is the same
       var strCur = isUndef(cur) ? '' : String(cur);
-      if (shouldUpdateValue(elm, vnode, strCur)) {
+      if (shouldUpdateValue(elm, strCur)) {
         elm.value = strCur;
       }
     } else {
@@ -8679,13 +9350,9 @@ function updateDOMProps (oldVnode, vnode) {
 // check platforms/web/util/attrs.js acceptValue
 
 
-function shouldUpdateValue (
-  elm,
-  vnode,
-  checkVal
-) {
+function shouldUpdateValue (elm, checkVal) {
   return (!elm.composing && (
-    vnode.tag === 'option' ||
+    elm.tagName === 'OPTION' ||
     isDirty(elm, checkVal) ||
     isInputChanged(elm, checkVal)
   ))
@@ -8940,20 +9607,20 @@ function removeClass (el, cls) {
 
 /*  */
 
-function resolveTransition (def$$1) {
-  if (!def$$1) {
+function resolveTransition (def) {
+  if (!def) {
     return
   }
   /* istanbul ignore else */
-  if (typeof def$$1 === 'object') {
+  if (typeof def === 'object') {
     var res = {};
-    if (def$$1.css !== false) {
-      extend(res, autoCssTransition(def$$1.name || 'v'));
+    if (def.css !== false) {
+      extend(res, autoCssTransition(def.name || 'v'));
     }
-    extend(res, def$$1);
+    extend(res, def);
     return res
-  } else if (typeof def$$1 === 'string') {
-    return autoCssTransition(def$$1)
+  } else if (typeof def === 'string') {
+    return autoCssTransition(def)
   }
 }
 
@@ -8994,9 +9661,11 @@ if (hasTransition) {
 }
 
 // binding to window is necessary to make hot reload work in IE in strict mode
-var raf = inBrowser && window.requestAnimationFrame
-  ? window.requestAnimationFrame.bind(window)
-  : setTimeout;
+var raf = inBrowser
+  ? window.requestAnimationFrame
+    ? window.requestAnimationFrame.bind(window)
+    : setTimeout
+  : /* istanbul ignore next */ function (fn) { return fn(); };
 
 function nextFrame (fn) {
   raf(function () {
@@ -9226,7 +9895,7 @@ function enter (vnode, toggleDisplay) {
 
   if (!vnode.data.show) {
     // remove pending leave element on enter by injecting an insert hook
-    mergeVNodeHook(vnode.data.hook || (vnode.data.hook = {}), 'insert', function () {
+    mergeVNodeHook(vnode, 'insert', function () {
       var parent = el.parentNode;
       var pendingNode = parent && parent._pending && parent._pending[vnode.key];
       if (pendingNode &&
@@ -9277,12 +9946,12 @@ function leave (vnode, rm) {
   }
 
   var data = resolveTransition(vnode.data.transition);
-  if (isUndef(data)) {
+  if (isUndef(data) || el.nodeType !== 1) {
     return rm()
   }
 
   /* istanbul ignore if */
-  if (isDef(el._leaveCb) || el.nodeType !== 1) {
+  if (isDef(el._leaveCb)) {
     return
   }
 
@@ -9465,10 +10134,17 @@ if (isIE9) {
   });
 }
 
-var model$1 = {
-  inserted: function inserted (el, binding, vnode) {
+var directive = {
+  inserted: function inserted (el, binding, vnode, oldVnode) {
     if (vnode.tag === 'select') {
-      setSelected(el, binding, vnode.context);
+      // #6903
+      if (oldVnode.elm && !oldVnode.elm._vOptions) {
+        mergeVNodeHook(vnode, 'postpatch', function () {
+          directive.componentUpdated(el, binding, vnode);
+        });
+      } else {
+        setSelected(el, binding, vnode.context);
+      }
       el._vOptions = [].map.call(el.options, getValue);
     } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
       el._vModifiers = binding.modifiers;
@@ -9489,6 +10165,7 @@ var model$1 = {
       }
     }
   },
+
   componentUpdated: function componentUpdated (el, binding, vnode) {
     if (vnode.tag === 'select') {
       setSelected(el, binding, vnode.context);
@@ -9647,7 +10324,7 @@ var show = {
 };
 
 var platformDirectives = {
-  model: model$1,
+  model: directive,
   show: show
 };
 
@@ -9729,7 +10406,7 @@ var Transition = {
   render: function render (h) {
     var this$1 = this;
 
-    var children = this.$options._renderChildren;
+    var children = this.$slots.default;
     if (!children) {
       return
     }
@@ -9808,11 +10485,13 @@ var Transition = {
       oldChild &&
       oldChild.data &&
       !isSameChild(child, oldChild) &&
-      !isAsyncPlaceholder(oldChild)
+      !isAsyncPlaceholder(oldChild) &&
+      // #6687 component root is a comment node
+      !(oldChild.componentInstance && oldChild.componentInstance._vnode.isComment)
     ) {
       // replace old child transition data with fresh one
       // important for dynamic transitions!
-      var oldData = oldChild && (oldChild.data.transition = extend({}, data));
+      var oldData = oldChild.data.transition = extend({}, data);
       // handle transition mode
       if (mode === 'out-in') {
         // return placeholder node and queue update when leave finishes
@@ -9929,8 +10608,9 @@ var TransitionGroup = {
     children.forEach(applyTranslation);
 
     // force reflow to put everything in position
-    var body = document.body;
-    var f = body.offsetHeight; // eslint-disable-line
+    // assign to this to avoid being removed in tree-shaking
+    // $flow-disable-line
+    this._reflow = document.body.offsetHeight;
 
     children.forEach(function (c) {
       if (c.data.moved) {
@@ -10038,7 +10718,7 @@ Vue$3.prototype.$mount = function (
 
 // devtools global hook
 /* istanbul ignore next */
-setTimeout(function () {
+Vue$3.nextTick(function () {
   if (config.devtools) {
     if (devtools) {
       devtools.emit('init', Vue$3);
@@ -10060,19 +10740,6 @@ setTimeout(function () {
     );
   }
 }, 0);
-
-/*  */
-
-// check whether current browser encodes a char inside attribute values
-function shouldDecode (content, encoded) {
-  var div = document.createElement('div');
-  div.innerHTML = "<div a=\"" + content + "\"/>";
-  return div.innerHTML.indexOf(encoded) > 0
-}
-
-// #3663
-// IE encodes newlines inside attribute values while other browsers don't
-var shouldDecodeNewlines = inBrowser ? shouldDecode('\n', '&#10;') : false;
 
 /*  */
 
@@ -10199,31 +10866,16 @@ var style$1 = {
   genData: genData$1
 };
 
-var modules$1 = [
-  klass$1,
-  style$1
-];
-
 /*  */
 
-function text (el, dir) {
-  if (dir.value) {
-    addProp(el, 'textContent', ("_s(" + (dir.value) + ")"));
+var decoder;
+
+var he = {
+  decode: function decode (html) {
+    decoder = decoder || document.createElement('div');
+    decoder.innerHTML = html;
+    return decoder.textContent
   }
-}
-
-/*  */
-
-function html (el, dir) {
-  if (dir.value) {
-    addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"));
-  }
-}
-
-var directives$1 = {
-  model: model,
-  text: text,
-  html: html
 };
 
 /*  */
@@ -10248,33 +10900,6 @@ var isNonPhrasingTag = makeMap(
   'optgroup,option,param,rp,rt,source,style,summary,tbody,td,tfoot,th,thead,' +
   'title,tr,track'
 );
-
-/*  */
-
-var baseOptions = {
-  expectHTML: true,
-  modules: modules$1,
-  directives: directives$1,
-  isPreTag: isPreTag,
-  isUnaryTag: isUnaryTag,
-  mustUseProp: mustUseProp,
-  canBeLeftOpenTag: canBeLeftOpenTag,
-  isReservedTag: isReservedTag,
-  getTagNamespace: getTagNamespace,
-  staticKeys: genStaticKeys(modules$1)
-};
-
-/*  */
-
-var decoder;
-
-var he = {
-  decode: function decode (html) {
-    decoder = decoder || document.createElement('div');
-    decoder.innerHTML = html;
-    return decoder.textContent
-  }
-};
 
 /**
  * Not type-checking this file because it's mostly vendor code.
@@ -10314,10 +10939,11 @@ var decodingMap = {
   '&gt;': '>',
   '&quot;': '"',
   '&amp;': '&',
-  '&#10;': '\n'
+  '&#10;': '\n',
+  '&#9;': '\t'
 };
 var encodedAttr = /&(?:lt|gt|quot|amp);/g;
-var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10);/g;
+var encodedAttrWithNewLines = /&(?:lt|gt|quot|amp|#10|#9);/g;
 
 // #5992
 var isIgnoreNewlineTag = makeMap('pre,textarea', true);
@@ -10508,12 +11134,12 @@ function parseHTML (html, options) {
         if (args[5] === '') { delete args[5]; }
       }
       var value = args[3] || args[4] || args[5] || '';
+      var shouldDecodeNewlines = tagName === 'a' && args[1] === 'href'
+        ? options.shouldDecodeNewlinesForHref
+        : options.shouldDecodeNewlines;
       attrs[i] = {
         name: args[1],
-        value: decodeAttr(
-          value,
-          options.shouldDecodeNewlines
-        )
+        value: decodeAttr(value, shouldDecodeNewlines)
       };
     }
 
@@ -10587,7 +11213,8 @@ function parseHTML (html, options) {
 var onRE = /^@|^v-on:/;
 var dirRE = /^v-|^@|^:/;
 var forAliasRE = /(.*?)\s+(?:in|of)\s+(.*)/;
-var forIteratorRE = /\((\{[^}]*\}|[^,]*),([^,]*)(?:,([^,]*))?\)/;
+var forIteratorRE = /\((\{[^}]*\}|[^,{]*),([^,]*)(?:,([^,]*))?\)/;
+var stripParensRE = /^\(|\)$/g;
 
 var argRE = /:(.*)$/;
 var bindRE = /^:|^v-bind:/;
@@ -10604,6 +11231,23 @@ var postTransforms;
 var platformIsPreTag;
 var platformMustUseProp;
 var platformGetTagNamespace;
+
+
+
+function createASTElement (
+  tag,
+  attrs,
+  parent
+) {
+  return {
+    type: 1,
+    tag: tag,
+    attrsList: attrs,
+    attrsMap: makeAttrsMap(attrs),
+    parent: parent,
+    children: []
+  }
+}
 
 /**
  * Convert HTML string to AST.
@@ -10655,6 +11299,7 @@ function parse (
     isUnaryTag: options.isUnaryTag,
     canBeLeftOpenTag: options.canBeLeftOpenTag,
     shouldDecodeNewlines: options.shouldDecodeNewlines,
+    shouldDecodeNewlinesForHref: options.shouldDecodeNewlinesForHref,
     shouldKeepComment: options.comments,
     start: function start (tag, attrs, unary) {
       // check namespace.
@@ -10667,14 +11312,7 @@ function parse (
         attrs = guardIESVGBug(attrs);
       }
 
-      var element = {
-        type: 1,
-        tag: tag,
-        attrsList: attrs,
-        attrsMap: makeAttrsMap(attrs),
-        parent: currentParent,
-        children: []
-      };
+      var element = createASTElement(tag, attrs, currentParent);
       if (ns) {
         element.ns = ns;
       }
@@ -10690,7 +11328,7 @@ function parse (
 
       // apply pre-transforms
       for (var i = 0; i < preTransforms.length; i++) {
-        preTransforms[i](element, options);
+        element = preTransforms[i](element, options) || element;
       }
 
       if (!inVPre) {
@@ -10704,23 +11342,13 @@ function parse (
       }
       if (inVPre) {
         processRawAttrs(element);
-      } else {
+      } else if (!element.processed) {
+        // structural directives
         processFor(element);
         processIf(element);
         processOnce(element);
-        processKey(element);
-
-        // determine whether this is a plain element after
-        // removing structural attributes
-        element.plain = !element.key && !attrs.length;
-
-        processRef(element);
-        processSlot(element);
-        processComponent(element);
-        for (var i$1 = 0; i$1 < transforms.length; i$1++) {
-          transforms[i$1](element, options);
-        }
-        processAttrs(element);
+        // element-scope stuff
+        processElement(element, options);
       }
 
       function checkRootConstraints (el) {
@@ -10778,8 +11406,8 @@ function parse (
         endPre(element);
       }
       // apply post-transforms
-      for (var i$2 = 0; i$2 < postTransforms.length; i$2++) {
-        postTransforms[i$2](element, options);
+      for (var i$1 = 0; i$1 < postTransforms.length; i$1++) {
+        postTransforms[i$1](element, options);
       }
     },
 
@@ -10873,6 +11501,22 @@ function processRawAttrs (el) {
   }
 }
 
+function processElement (element, options) {
+  processKey(element);
+
+  // determine whether this is a plain element after
+  // removing structural attributes
+  element.plain = !element.key && !element.attrsList.length;
+
+  processRef(element);
+  processSlot(element);
+  processComponent(element);
+  for (var i = 0; i < transforms.length; i++) {
+    element = transforms[i](element, options) || element;
+  }
+  processAttrs(element);
+}
+
 function processKey (el) {
   var exp = getBindingAttr(el, 'key');
   if (exp) {
@@ -10911,7 +11555,7 @@ function processFor (el) {
         el.iterator2 = iteratorMatch[3].trim();
       }
     } else {
-      el.alias = alias;
+      el.alias = alias.replace(stripParensRE, '');
     }
   }
 }
@@ -10992,14 +11636,40 @@ function processSlot (el) {
       );
     }
   } else {
+    var slotScope;
+    if (el.tag === 'template') {
+      slotScope = getAndRemoveAttr(el, 'scope');
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== 'production' && slotScope) {
+        warn$2(
+          "the \"scope\" attribute for scoped slots have been deprecated and " +
+          "replaced by \"slot-scope\" since 2.5. The new \"slot-scope\" attribute " +
+          "can also be used on plain elements in addition to <template> to " +
+          "denote scoped slots.",
+          true
+        );
+      }
+      el.slotScope = slotScope || getAndRemoveAttr(el, 'slot-scope');
+    } else if ((slotScope = getAndRemoveAttr(el, 'slot-scope'))) {
+      /* istanbul ignore if */
+      if (process.env.NODE_ENV !== 'production' && el.attrsMap['v-for']) {
+        warn$2(
+          "Ambiguous combined usage of slot-scope and v-for on <" + (el.tag) + "> " +
+          "(v-for takes higher priority). Use a wrapper <template> for the " +
+          "scoped slot to make it clearer.",
+          true
+        );
+      }
+      el.slotScope = slotScope;
+    }
     var slotTarget = getBindingAttr(el, 'slot');
     if (slotTarget) {
       el.slotTarget = slotTarget === '""' ? '"default"' : slotTarget;
       // preserve slot as an attribute for native shadow DOM compat
-      addAttr(el, 'slot', slotTarget);
-    }
-    if (el.tag === 'template') {
-      el.slotScope = getAndRemoveAttr(el, 'scope');
+      // only for non-scoped slots.
+      if (el.tag !== 'template' && !el.slotScope) {
+        addAttr(el, 'slot', slotTarget);
+      }
     }
   }
 }
@@ -11086,6 +11756,13 @@ function processAttrs (el) {
         }
       }
       addAttr(el, name, JSON.stringify(value));
+      // #6887 firefox doesn't update muted state if set via attribute
+      // even immediately after element creation
+      if (!el.component &&
+          name === 'muted' &&
+          platformMustUseProp(el.tag, el.attrsMap.type, name)) {
+        addProp(el, name, 'true');
+      }
     }
   }
 }
@@ -11170,6 +11847,125 @@ function checkForAliasModel (el, value) {
     _el = _el.parent;
   }
 }
+
+/*  */
+
+/**
+ * Expand input[v-model] with dyanmic type bindings into v-if-else chains
+ * Turn this:
+ *   <input v-model="data[type]" :type="type">
+ * into this:
+ *   <input v-if="type === 'checkbox'" type="checkbox" v-model="data[type]">
+ *   <input v-else-if="type === 'radio'" type="radio" v-model="data[type]">
+ *   <input v-else :type="type" v-model="data[type]">
+ */
+
+function preTransformNode (el, options) {
+  if (el.tag === 'input') {
+    var map = el.attrsMap;
+    if (map['v-model'] && (map['v-bind:type'] || map[':type'])) {
+      var typeBinding = getBindingAttr(el, 'type');
+      var ifCondition = getAndRemoveAttr(el, 'v-if', true);
+      var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : "";
+      var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
+      var elseIfCondition = getAndRemoveAttr(el, 'v-else-if', true);
+      // 1. checkbox
+      var branch0 = cloneASTElement(el);
+      // process for on the main node
+      processFor(branch0);
+      addRawAttr(branch0, 'type', 'checkbox');
+      processElement(branch0, options);
+      branch0.processed = true; // prevent it from double-processed
+      branch0.if = "(" + typeBinding + ")==='checkbox'" + ifConditionExtra;
+      addIfCondition(branch0, {
+        exp: branch0.if,
+        block: branch0
+      });
+      // 2. add radio else-if condition
+      var branch1 = cloneASTElement(el);
+      getAndRemoveAttr(branch1, 'v-for', true);
+      addRawAttr(branch1, 'type', 'radio');
+      processElement(branch1, options);
+      addIfCondition(branch0, {
+        exp: "(" + typeBinding + ")==='radio'" + ifConditionExtra,
+        block: branch1
+      });
+      // 3. other
+      var branch2 = cloneASTElement(el);
+      getAndRemoveAttr(branch2, 'v-for', true);
+      addRawAttr(branch2, ':type', typeBinding);
+      processElement(branch2, options);
+      addIfCondition(branch0, {
+        exp: ifCondition,
+        block: branch2
+      });
+
+      if (hasElse) {
+        branch0.else = true;
+      } else if (elseIfCondition) {
+        branch0.elseif = elseIfCondition;
+      }
+
+      return branch0
+    }
+  }
+}
+
+function cloneASTElement (el) {
+  return createASTElement(el.tag, el.attrsList.slice(), el.parent)
+}
+
+function addRawAttr (el, name, value) {
+  el.attrsMap[name] = value;
+  el.attrsList.push({ name: name, value: value });
+}
+
+var model$2 = {
+  preTransformNode: preTransformNode
+};
+
+var modules$1 = [
+  klass$1,
+  style$1,
+  model$2
+];
+
+/*  */
+
+function text (el, dir) {
+  if (dir.value) {
+    addProp(el, 'textContent', ("_s(" + (dir.value) + ")"));
+  }
+}
+
+/*  */
+
+function html (el, dir) {
+  if (dir.value) {
+    addProp(el, 'innerHTML', ("_s(" + (dir.value) + ")"));
+  }
+}
+
+var directives$1 = {
+  model: model,
+  text: text,
+  html: html
+};
+
+/*  */
+
+var baseOptions = {
+  expectHTML: true,
+  modules: modules$1,
+  directives: directives$1,
+  isPreTag: isPreTag,
+  isUnaryTag: isUnaryTag,
+  mustUseProp: mustUseProp,
+  canBeLeftOpenTag: canBeLeftOpenTag,
+  isReservedTag: isReservedTag,
+  getTagNamespace: getTagNamespace,
+  staticKeys: genStaticKeys(modules$1)
+};
 
 /*  */
 
@@ -11341,18 +12137,7 @@ function genHandlers (
 ) {
   var res = isNative ? 'nativeOn:{' : 'on:{';
   for (var name in events) {
-    var handler = events[name];
-    // #5330: warn click.right, since right clicks do not actually fire click events.
-    if (process.env.NODE_ENV !== 'production' &&
-      name === 'click' &&
-      handler && handler.modifiers && handler.modifiers.right
-    ) {
-      warn(
-        "Use \"contextmenu\" instead of \"click.right\" since right clicks " +
-        "do not actually fire \"click\" events."
-      );
-    }
-    res += "\"" + name + "\":" + (genHandler(name, handler)) + ",";
+    res += "\"" + name + "\":" + (genHandler(name, events[name])) + ",";
   }
   return res.slice(0, -1) + '}'
 }
@@ -11387,6 +12172,14 @@ function genHandler (
         if (keyCodes[key]) {
           keys.push(key);
         }
+      } else if (key === 'exact') {
+        var modifiers = (handler.modifiers);
+        genModifierCode += genGuard(
+          ['ctrl', 'shift', 'alt', 'meta']
+            .filter(function (keyModifier) { return !modifiers[keyModifier]; })
+            .map(function (keyModifier) { return ("$event." + keyModifier + "Key"); })
+            .join('||')
+        );
       } else {
         keys.push(key);
       }
@@ -11416,8 +12209,13 @@ function genFilterCode (key) {
   if (keyVal) {
     return ("$event.keyCode!==" + keyVal)
   }
-  var alias = keyCodes[key];
-  return ("_k($event.keyCode," + (JSON.stringify(key)) + (alias ? ',' + JSON.stringify(alias) : '') + ")")
+  var code = keyCodes[key];
+  return (
+    "_k($event.keyCode," +
+    (JSON.stringify(key)) + "," +
+    (JSON.stringify(code)) + "," +
+    "$event.key)"
+  )
 }
 
 /*  */
@@ -11506,10 +12304,10 @@ function genElement (el, state) {
 }
 
 // hoist static sub-trees out
-function genStatic (el, state) {
+function genStatic (el, state, once$$1) {
   el.staticProcessed = true;
   state.staticRenderFns.push(("with(this){return " + (genElement(el, state)) + "}"));
-  return ("_m(" + (state.staticRenderFns.length - 1) + (el.staticInFor ? ',true' : '') + ")")
+  return ("_m(" + (state.staticRenderFns.length - 1) + "," + (el.staticInFor ? 'true' : 'false') + "," + (once$$1 ? 'true' : 'false') + ")")
 }
 
 // v-once
@@ -11535,7 +12333,7 @@ function genOnce (el, state) {
     }
     return ("_o(" + (genElement(el, state)) + "," + (state.onceId++) + "," + key + ")")
   } else {
-    return genStatic(el, state)
+    return genStatic(el, state, true)
   }
 }
 
@@ -11655,7 +12453,8 @@ function genData$2 (el, state) {
     data += (genHandlers(el.nativeEvents, true, state.warn)) + ",";
   }
   // slot target
-  if (el.slotTarget) {
+  // only for non-scoped slots
+  if (el.slotTarget && !el.slotScope) {
     data += "slot:" + (el.slotTarget) + ",";
   }
   // scoped slots
@@ -11713,7 +12512,7 @@ function genDirectives (el, state) {
 function genInlineTemplate (el, state) {
   var ast = el.children[0];
   if (process.env.NODE_ENV !== 'production' && (
-    el.children.length > 1 || ast.type !== 1
+    el.children.length !== 1 || ast.type !== 1
   )) {
     state.warn('Inline-template components must have exactly one child element.');
   }
@@ -11740,10 +12539,13 @@ function genScopedSlot (
   if (el.for && !el.forProcessed) {
     return genForScopedSlot(key, el, state)
   }
-  return "{key:" + key + ",fn:function(" + (String(el.attrsMap.scope)) + "){" +
+  var fn = "function(" + (String(el.slotScope)) + "){" +
     "return " + (el.tag === 'template'
-      ? genChildren(el, state) || 'void 0'
-      : genElement(el, state)) + "}}"
+      ? el.if
+        ? ((el.if) + "?" + (genChildren(el, state) || 'undefined') + ":undefined")
+        : genChildren(el, state) || 'undefined'
+      : genElement(el, state)) + "}";
+  return ("{key:" + key + ",fn:" + fn + "}")
 }
 
 function genForScopedSlot (
@@ -11898,9 +12700,6 @@ var unaryOperatorsRE = new RegExp('\\b' + (
   'delete,typeof,void'
 ).split(',').join('\\s*\\([^\\)]*\\)|\\b') + '\\s*\\([^\\)]*\\)');
 
-// check valid identifier for v-for
-var identRE = /[A-Za-z_$][\w$]*/;
-
 // strip strings in expressions
 var stripStringRE = /'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"|`(?:[^`\\]|\\.)*\$\{|\}(?:[^`\\]|\\.)*`|`(?:[^`\\]|\\.)*`/g;
 
@@ -11958,9 +12757,18 @@ function checkFor (node, text, errors) {
   checkIdentifier(node.iterator2, 'v-for iterator', text, errors);
 }
 
-function checkIdentifier (ident, type, text, errors) {
-  if (typeof ident === 'string' && !identRE.test(ident)) {
-    errors.push(("invalid " + type + " \"" + ident + "\" in expression: " + (text.trim())));
+function checkIdentifier (
+  ident,
+  type,
+  text,
+  errors
+) {
+  if (typeof ident === 'string') {
+    try {
+      new Function(("var " + ident + "=_"));
+    } catch (e) {
+      errors.push(("invalid " + type + " \"" + ident + "\" in expression: " + (text.trim())));
+    }
   }
 }
 
@@ -11972,10 +12780,14 @@ function checkExpression (exp, text, errors) {
     if (keywordMatch) {
       errors.push(
         "avoid using JavaScript keyword as property name: " +
-        "\"" + (keywordMatch[0]) + "\" in expression " + (text.trim())
+        "\"" + (keywordMatch[0]) + "\"\n  Raw expression: " + (text.trim())
       );
     } else {
-      errors.push(("invalid expression: " + (text.trim())));
+      errors.push(
+        "invalid expression: " + (e.message) + " in\n\n" +
+        "    " + exp + "\n\n" +
+        "  Raw expression: " + (text.trim()) + "\n"
+      );
     }
   }
 }
@@ -11999,7 +12811,9 @@ function createCompileToFunctionFn (compile) {
     options,
     vm
   ) {
-    options = options || {};
+    options = extend({}, options);
+    var warn$$1 = options.warn || warn;
+    delete options.warn;
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production') {
@@ -12008,7 +12822,7 @@ function createCompileToFunctionFn (compile) {
         new Function('return 1');
       } catch (e) {
         if (e.toString().match(/unsafe-eval|CSP/)) {
-          warn(
+          warn$$1(
             'It seems you are using the standalone build of Vue.js in an ' +
             'environment with Content Security Policy that prohibits unsafe-eval. ' +
             'The template compiler cannot work in this environment. Consider ' +
@@ -12033,7 +12847,7 @@ function createCompileToFunctionFn (compile) {
     // check compilation errors/tips
     if (process.env.NODE_ENV !== 'production') {
       if (compiled.errors && compiled.errors.length) {
-        warn(
+        warn$$1(
           "Error compiling template:\n\n" + template + "\n\n" +
           compiled.errors.map(function (e) { return ("- " + e); }).join('\n') + '\n',
           vm
@@ -12058,7 +12872,7 @@ function createCompileToFunctionFn (compile) {
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== 'production') {
       if ((!compiled.errors || !compiled.errors.length) && fnGenErrors.length) {
-        warn(
+        warn$$1(
           "Failed to generate render function:\n\n" +
           fnGenErrors.map(function (ref) {
             var err = ref.err;
@@ -12153,6 +12967,21 @@ var compileToFunctions = ref$1.compileToFunctions;
 
 /*  */
 
+// check whether current browser encodes a char inside attribute values
+var div;
+function getShouldDecode (href) {
+  div = div || document.createElement('div');
+  div.innerHTML = href ? "<a href=\"\n\"/>" : "<div a=\"\n\"/>";
+  return div.innerHTML.indexOf('&#10;') > 0
+}
+
+// #3663: IE encodes newlines inside attribute values while other browsers don't
+var shouldDecodeNewlines = inBrowser ? getShouldDecode(false) : false;
+// #6828: chrome encodes content in a[href]
+var shouldDecodeNewlinesForHref = inBrowser ? getShouldDecode(true) : false;
+
+/*  */
+
 var idToTemplate = cached(function (id) {
   var el = query(id);
   return el && el.innerHTML
@@ -12208,6 +13037,7 @@ Vue$3.prototype.$mount = function (
 
       var ref = compileToFunctions(template, {
         shouldDecodeNewlines: shouldDecodeNewlines,
+        shouldDecodeNewlinesForHref: shouldDecodeNewlinesForHref,
         delimiters: options.delimiters,
         comments: options.comments
       }, this);
@@ -12219,7 +13049,7 @@ Vue$3.prototype.$mount = function (
       /* istanbul ignore if */
       if (process.env.NODE_ENV !== 'production' && config.performance && mark) {
         mark('compile end');
-        measure(((this._name) + " compile"), 'compile', 'compile end');
+        measure(("vue " + (this._name) + " compile"), 'compile', 'compile end');
       }
     }
   }
@@ -12244,10 +13074,44 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(21).setImmediate))
 
 /***/ }),
-/* 23 */
+/* 24 */,
+/* 25 */
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+/* 26 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -12275,7 +13139,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 24 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12283,7 +13147,7 @@ module.exports = function(module) {
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(15);
-var Axios = __webpack_require__(26);
+var Axios = __webpack_require__(29);
 var defaults = __webpack_require__(4);
 
 /**
@@ -12318,14 +13182,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(25);
+axios.CancelToken = __webpack_require__(28);
 axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(40);
+axios.spread = __webpack_require__(43);
 
 module.exports = axios;
 
@@ -12334,7 +13198,7 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 25 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12398,7 +13262,7 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 26 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12406,10 +13270,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(27);
-var dispatchRequest = __webpack_require__(28);
-var isAbsoluteURL = __webpack_require__(36);
-var combineURLs = __webpack_require__(34);
+var InterceptorManager = __webpack_require__(30);
+var dispatchRequest = __webpack_require__(31);
+var isAbsoluteURL = __webpack_require__(39);
+var combineURLs = __webpack_require__(37);
 
 /**
  * Create a new instance of Axios
@@ -12491,7 +13355,7 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 27 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12550,14 +13414,14 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 28 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(31);
+var transformData = __webpack_require__(34);
 var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(4);
 
@@ -12636,7 +13500,7 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 29 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12664,7 +13528,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 30 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12697,7 +13561,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 31 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12724,7 +13588,7 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 32 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12767,7 +13631,7 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 33 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12842,7 +13706,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 34 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12863,7 +13727,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 35 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12923,7 +13787,7 @@ module.exports = (
 
 
 /***/ }),
-/* 36 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12944,7 +13808,7 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 37 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13019,7 +13883,7 @@ module.exports = (
 
 
 /***/ }),
-/* 38 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13038,7 +13902,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 39 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13082,7 +13946,7 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 40 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13116,7 +13980,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 41 */
+/* 44 */
 /***/ (function(module, exports) {
 
 /*!
@@ -13143,42 +14007,9 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-/* 43 */,
-/* 44 */,
-/* 45 */
+/* 45 */,
+/* 46 */,
+/* 47 */
 /***/ (function(module, exports) {
 
 
@@ -13190,7 +14021,7 @@ module.exports = function(a, b){
 };
 
 /***/ }),
-/* 46 */
+/* 48 */
 /***/ (function(module, exports) {
 
 /**
@@ -13233,960 +14064,7 @@ exports.decode = function(qs){
 
 
 /***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Module dependencies.
- */
-
-var parser = __webpack_require__(19);
-var Emitter = __webpack_require__(49);
-
-/**
- * Module exports.
- */
-
-module.exports = Transport;
-
-/**
- * Transport abstract constructor.
- *
- * @param {Object} options.
- * @api private
- */
-
-function Transport (opts) {
-  this.path = opts.path;
-  this.hostname = opts.hostname;
-  this.port = opts.port;
-  this.secure = opts.secure;
-  this.query = opts.query;
-  this.timestampParam = opts.timestampParam;
-  this.timestampRequests = opts.timestampRequests;
-  this.readyState = '';
-  this.agent = opts.agent || false;
-  this.socket = opts.socket;
-  this.enablesXDR = opts.enablesXDR;
-
-  // SSL options for Node.js client
-  this.pfx = opts.pfx;
-  this.key = opts.key;
-  this.passphrase = opts.passphrase;
-  this.cert = opts.cert;
-  this.ca = opts.ca;
-  this.ciphers = opts.ciphers;
-  this.rejectUnauthorized = opts.rejectUnauthorized;
-  this.forceNode = opts.forceNode;
-
-  // other options for Node.js client
-  this.extraHeaders = opts.extraHeaders;
-  this.localAddress = opts.localAddress;
-}
-
-/**
- * Mix in `Emitter`.
- */
-
-Emitter(Transport.prototype);
-
-/**
- * Emits an error.
- *
- * @param {String} str
- * @return {Transport} for chaining
- * @api public
- */
-
-Transport.prototype.onError = function (msg, desc) {
-  var err = new Error(msg);
-  err.type = 'TransportError';
-  err.description = desc;
-  this.emit('error', err);
-  return this;
-};
-
-/**
- * Opens the transport.
- *
- * @api public
- */
-
-Transport.prototype.open = function () {
-  if ('closed' === this.readyState || '' === this.readyState) {
-    this.readyState = 'opening';
-    this.doOpen();
-  }
-
-  return this;
-};
-
-/**
- * Closes the transport.
- *
- * @api private
- */
-
-Transport.prototype.close = function () {
-  if ('opening' === this.readyState || 'open' === this.readyState) {
-    this.doClose();
-    this.onClose();
-  }
-
-  return this;
-};
-
-/**
- * Sends multiple packets.
- *
- * @param {Array} packets
- * @api private
- */
-
-Transport.prototype.send = function (packets) {
-  if ('open' === this.readyState) {
-    this.write(packets);
-  } else {
-    throw new Error('Transport not open');
-  }
-};
-
-/**
- * Called upon open
- *
- * @api private
- */
-
-Transport.prototype.onOpen = function () {
-  this.readyState = 'open';
-  this.writable = true;
-  this.emit('open');
-};
-
-/**
- * Called with data.
- *
- * @param {String} data
- * @api private
- */
-
-Transport.prototype.onData = function (data) {
-  var packet = parser.decodePacket(data, this.socket.binaryType);
-  this.onPacket(packet);
-};
-
-/**
- * Called with a decoded packet.
- */
-
-Transport.prototype.onPacket = function (packet) {
-  this.emit('packet', packet);
-};
-
-/**
- * Called upon close.
- *
- * @api private
- */
-
-Transport.prototype.onClose = function () {
-  this.readyState = 'closed';
-  this.emit('close');
-};
-
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
-
-var hasCORS = __webpack_require__(89);
-
-module.exports = function (opts) {
-  var xdomain = opts.xdomain;
-
-  // scheme must be same when usign XDomainRequest
-  // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
-  var xscheme = opts.xscheme;
-
-  // XDomainRequest has a flow of not sending cookie, therefore it should be disabled as a default.
-  // https://github.com/Automattic/engine.io-client/pull/217
-  var enablesXDR = opts.enablesXDR;
-
-  // XMLHttpRequest can be disabled on IE
-  try {
-    if ('undefined' !== typeof XMLHttpRequest && (!xdomain || hasCORS)) {
-      return new XMLHttpRequest();
-    }
-  } catch (e) { }
-
-  // Use XDomainRequest for IE8 if enablesXDR is true
-  // because loading bar keeps flashing when using jsonp-polling
-  // https://github.com/yujiosaka/socke.io-ie8-loading-example
-  try {
-    if ('undefined' !== typeof XDomainRequest && !xscheme && enablesXDR) {
-      return new XDomainRequest();
-    }
-  } catch (e) { }
-
-  if (!xdomain) {
-    try {
-      return new global[['Active'].concat('Object').join('X')]('Microsoft.XMLHTTP');
-    } catch (e) { }
-  }
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
 /* 49 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Expose `Emitter`.
- */
-
-if (true) {
-  module.exports = Emitter;
-}
-
-/**
- * Initialize a new `Emitter`.
- *
- * @api public
- */
-
-function Emitter(obj) {
-  if (obj) return mixin(obj);
-};
-
-/**
- * Mixin the emitter properties.
- *
- * @param {Object} obj
- * @return {Object}
- * @api private
- */
-
-function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
-}
-
-/**
- * Listen on the given `event` with `fn`.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-    .push(fn);
-  return this;
-};
-
-/**
- * Adds an `event` listener that will be invoked a single
- * time then automatically removed.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.once = function(event, fn){
-  function on() {
-    this.off(event, on);
-    fn.apply(this, arguments);
-  }
-
-  on.fn = fn;
-  this.on(event, on);
-  return this;
-};
-
-/**
- * Remove the given callback for `event` or all
- * registered callbacks.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.off =
-Emitter.prototype.removeListener =
-Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
-
-  // specific event
-  var callbacks = this._callbacks['$' + event];
-  if (!callbacks) return this;
-
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks['$' + event];
-    return this;
-  }
-
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-  return this;
-};
-
-/**
- * Emit `event` with the given args.
- *
- * @param {String} event
- * @param {Mixed} ...
- * @return {Emitter}
- */
-
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks['$' + event];
-
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
-
-  return this;
-};
-
-/**
- * Return array of callbacks for `event`.
- *
- * @param {String} event
- * @return {Array}
- * @api public
- */
-
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks['$' + event] || [];
-};
-
-/**
- * Check if this emitter has `event` handlers.
- *
- * @param {String} event
- * @return {Boolean}
- * @api public
- */
-
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
-};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Expose `Emitter`.
- */
-
-if (true) {
-  module.exports = Emitter;
-}
-
-/**
- * Initialize a new `Emitter`.
- *
- * @api public
- */
-
-function Emitter(obj) {
-  if (obj) return mixin(obj);
-};
-
-/**
- * Mixin the emitter properties.
- *
- * @param {Object} obj
- * @return {Object}
- * @api private
- */
-
-function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
-}
-
-/**
- * Listen on the given `event` with `fn`.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-    .push(fn);
-  return this;
-};
-
-/**
- * Adds an `event` listener that will be invoked a single
- * time then automatically removed.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.once = function(event, fn){
-  function on() {
-    this.off(event, on);
-    fn.apply(this, arguments);
-  }
-
-  on.fn = fn;
-  this.on(event, on);
-  return this;
-};
-
-/**
- * Remove the given callback for `event` or all
- * registered callbacks.
- *
- * @param {String} event
- * @param {Function} fn
- * @return {Emitter}
- * @api public
- */
-
-Emitter.prototype.off =
-Emitter.prototype.removeListener =
-Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
-
-  // specific event
-  var callbacks = this._callbacks['$' + event];
-  if (!callbacks) return this;
-
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks['$' + event];
-    return this;
-  }
-
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-  return this;
-};
-
-/**
- * Emit `event` with the given args.
- *
- * @param {String} event
- * @param {Mixed} ...
- * @return {Emitter}
- */
-
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks['$' + event];
-
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
-
-  return this;
-};
-
-/**
- * Return array of callbacks for `event`.
- *
- * @param {String} event
- * @return {Array}
- * @api public
- */
-
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks['$' + event] || [];
-};
-
-/**
- * Check if this emitter has `event` handlers.
- *
- * @param {String} event
- * @return {Boolean}
- * @api public
- */
-
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
-};
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/**
- * Module dependencies.
- */
-
-var debug = __webpack_require__(9)('socket.io-parser');
-var Emitter = __webpack_require__(50);
-var hasBin = __webpack_require__(60);
-var binary = __webpack_require__(94);
-var isBuf = __webpack_require__(66);
-
-/**
- * Protocol version.
- *
- * @api public
- */
-
-exports.protocol = 4;
-
-/**
- * Packet types.
- *
- * @api public
- */
-
-exports.types = [
-  'CONNECT',
-  'DISCONNECT',
-  'EVENT',
-  'ACK',
-  'ERROR',
-  'BINARY_EVENT',
-  'BINARY_ACK'
-];
-
-/**
- * Packet type `connect`.
- *
- * @api public
- */
-
-exports.CONNECT = 0;
-
-/**
- * Packet type `disconnect`.
- *
- * @api public
- */
-
-exports.DISCONNECT = 1;
-
-/**
- * Packet type `event`.
- *
- * @api public
- */
-
-exports.EVENT = 2;
-
-/**
- * Packet type `ack`.
- *
- * @api public
- */
-
-exports.ACK = 3;
-
-/**
- * Packet type `error`.
- *
- * @api public
- */
-
-exports.ERROR = 4;
-
-/**
- * Packet type 'binary event'
- *
- * @api public
- */
-
-exports.BINARY_EVENT = 5;
-
-/**
- * Packet type `binary ack`. For acks with binary arguments.
- *
- * @api public
- */
-
-exports.BINARY_ACK = 6;
-
-/**
- * Encoder constructor.
- *
- * @api public
- */
-
-exports.Encoder = Encoder;
-
-/**
- * Decoder constructor.
- *
- * @api public
- */
-
-exports.Decoder = Decoder;
-
-/**
- * A socket.io Encoder instance
- *
- * @api public
- */
-
-function Encoder() {}
-
-/**
- * Encode a packet as a single string if non-binary, or as a
- * buffer sequence, depending on packet type.
- *
- * @param {Object} obj - packet object
- * @param {Function} callback - function to handle encodings (likely engine.write)
- * @return Calls callback with Array of encodings
- * @api public
- */
-
-Encoder.prototype.encode = function(obj, callback){
-  if ((obj.type === exports.EVENT || obj.type === exports.ACK) && hasBin(obj.data)) {
-    obj.type = obj.type === exports.EVENT ? exports.BINARY_EVENT : exports.BINARY_ACK;
-  }
-
-  debug('encoding packet %j', obj);
-
-  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
-    encodeAsBinary(obj, callback);
-  }
-  else {
-    var encoding = encodeAsString(obj);
-    callback([encoding]);
-  }
-};
-
-/**
- * Encode packet as string.
- *
- * @param {Object} packet
- * @return {String} encoded
- * @api private
- */
-
-function encodeAsString(obj) {
-
-  // first is type
-  var str = '' + obj.type;
-
-  // attachments if we have them
-  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
-    str += obj.attachments + '-';
-  }
-
-  // if we have a namespace other than `/`
-  // we append it followed by a comma `,`
-  if (obj.nsp && '/' !== obj.nsp) {
-    str += obj.nsp + ',';
-  }
-
-  // immediately followed by the id
-  if (null != obj.id) {
-    str += obj.id;
-  }
-
-  // json data
-  if (null != obj.data) {
-    str += JSON.stringify(obj.data);
-  }
-
-  debug('encoded %j as %s', obj, str);
-  return str;
-}
-
-/**
- * Encode packet as 'buffer sequence' by removing blobs, and
- * deconstructing packet into object with placeholders and
- * a list of buffers.
- *
- * @param {Object} packet
- * @return {Buffer} encoded
- * @api private
- */
-
-function encodeAsBinary(obj, callback) {
-
-  function writeEncoding(bloblessData) {
-    var deconstruction = binary.deconstructPacket(bloblessData);
-    var pack = encodeAsString(deconstruction.packet);
-    var buffers = deconstruction.buffers;
-
-    buffers.unshift(pack); // add packet info to beginning of data list
-    callback(buffers); // write all the buffers
-  }
-
-  binary.removeBlobs(obj, writeEncoding);
-}
-
-/**
- * A socket.io Decoder instance
- *
- * @return {Object} decoder
- * @api public
- */
-
-function Decoder() {
-  this.reconstructor = null;
-}
-
-/**
- * Mix in `Emitter` with Decoder.
- */
-
-Emitter(Decoder.prototype);
-
-/**
- * Decodes an ecoded packet string into packet JSON.
- *
- * @param {String} obj - encoded packet
- * @return {Object} packet
- * @api public
- */
-
-Decoder.prototype.add = function(obj) {
-  var packet;
-  if (typeof obj === 'string') {
-    packet = decodeString(obj);
-    if (exports.BINARY_EVENT === packet.type || exports.BINARY_ACK === packet.type) { // binary packet's json
-      this.reconstructor = new BinaryReconstructor(packet);
-
-      // no attachments, labeled binary but no binary data to follow
-      if (this.reconstructor.reconPack.attachments === 0) {
-        this.emit('decoded', packet);
-      }
-    } else { // non-binary full packet
-      this.emit('decoded', packet);
-    }
-  }
-  else if (isBuf(obj) || obj.base64) { // raw binary data
-    if (!this.reconstructor) {
-      throw new Error('got binary data when not reconstructing a packet');
-    } else {
-      packet = this.reconstructor.takeBinaryData(obj);
-      if (packet) { // received final buffer
-        this.reconstructor = null;
-        this.emit('decoded', packet);
-      }
-    }
-  }
-  else {
-    throw new Error('Unknown type: ' + obj);
-  }
-};
-
-/**
- * Decode a packet String (JSON data)
- *
- * @param {String} str
- * @return {Object} packet
- * @api private
- */
-
-function decodeString(str) {
-  var i = 0;
-  // look up type
-  var p = {
-    type: Number(str.charAt(0))
-  };
-
-  if (null == exports.types[p.type]) return error();
-
-  // look up attachments if type binary
-  if (exports.BINARY_EVENT === p.type || exports.BINARY_ACK === p.type) {
-    var buf = '';
-    while (str.charAt(++i) !== '-') {
-      buf += str.charAt(i);
-      if (i == str.length) break;
-    }
-    if (buf != Number(buf) || str.charAt(i) !== '-') {
-      throw new Error('Illegal attachments');
-    }
-    p.attachments = Number(buf);
-  }
-
-  // look up namespace (if any)
-  if ('/' === str.charAt(i + 1)) {
-    p.nsp = '';
-    while (++i) {
-      var c = str.charAt(i);
-      if (',' === c) break;
-      p.nsp += c;
-      if (i === str.length) break;
-    }
-  } else {
-    p.nsp = '/';
-  }
-
-  // look up id
-  var next = str.charAt(i + 1);
-  if ('' !== next && Number(next) == next) {
-    p.id = '';
-    while (++i) {
-      var c = str.charAt(i);
-      if (null == c || Number(c) != c) {
-        --i;
-        break;
-      }
-      p.id += str.charAt(i);
-      if (i === str.length) break;
-    }
-    p.id = Number(p.id);
-  }
-
-  // look up json data
-  if (str.charAt(++i)) {
-    p = tryParse(p, str.substr(i));
-  }
-
-  debug('decoded %s as %j', str, p);
-  return p;
-}
-
-function tryParse(p, str) {
-  try {
-    p.data = JSON.parse(str);
-  } catch(e){
-    return error();
-  }
-  return p; 
-}
-
-/**
- * Deallocates a parser's resources
- *
- * @api public
- */
-
-Decoder.prototype.destroy = function() {
-  if (this.reconstructor) {
-    this.reconstructor.finishedReconstruction();
-  }
-};
-
-/**
- * A manager of a binary event's 'buffer sequence'. Should
- * be constructed whenever a packet of type BINARY_EVENT is
- * decoded.
- *
- * @param {Object} packet
- * @return {BinaryReconstructor} initialized reconstructor
- * @api private
- */
-
-function BinaryReconstructor(packet) {
-  this.reconPack = packet;
-  this.buffers = [];
-}
-
-/**
- * Method to be called when binary data received from connection
- * after a BINARY_EVENT packet.
- *
- * @param {Buffer | ArrayBuffer} binData - the raw binary data received
- * @return {null | Object} returns null if more binary data is expected or
- *   a reconstructed packet object if all buffers have been received.
- * @api private
- */
-
-BinaryReconstructor.prototype.takeBinaryData = function(binData) {
-  this.buffers.push(binData);
-  if (this.buffers.length === this.reconPack.attachments) { // done with buffer list
-    var packet = binary.reconstructPacket(this.reconPack, this.buffers);
-    this.finishedReconstruction();
-    return packet;
-  }
-  return null;
-};
-
-/**
- * Cleans up binary packet reconstruction variables.
- *
- * @api private
- */
-
-BinaryReconstructor.prototype.finishedReconstruction = function() {
-  this.reconPack = null;
-  this.buffers = [];
-};
-
-function error() {
-  return {
-    type: exports.ERROR,
-    data: 'parser error'
-  };
-}
-
-
-/***/ }),
-/* 52 */,
-/* 53 */,
-/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22155,9 +22033,962 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 55 */,
+/* 50 */,
+/* 51 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Module dependencies.
+ */
+
+var parser = __webpack_require__(19);
+var Emitter = __webpack_require__(53);
+
+/**
+ * Module exports.
+ */
+
+module.exports = Transport;
+
+/**
+ * Transport abstract constructor.
+ *
+ * @param {Object} options.
+ * @api private
+ */
+
+function Transport (opts) {
+  this.path = opts.path;
+  this.hostname = opts.hostname;
+  this.port = opts.port;
+  this.secure = opts.secure;
+  this.query = opts.query;
+  this.timestampParam = opts.timestampParam;
+  this.timestampRequests = opts.timestampRequests;
+  this.readyState = '';
+  this.agent = opts.agent || false;
+  this.socket = opts.socket;
+  this.enablesXDR = opts.enablesXDR;
+
+  // SSL options for Node.js client
+  this.pfx = opts.pfx;
+  this.key = opts.key;
+  this.passphrase = opts.passphrase;
+  this.cert = opts.cert;
+  this.ca = opts.ca;
+  this.ciphers = opts.ciphers;
+  this.rejectUnauthorized = opts.rejectUnauthorized;
+  this.forceNode = opts.forceNode;
+
+  // other options for Node.js client
+  this.extraHeaders = opts.extraHeaders;
+  this.localAddress = opts.localAddress;
+}
+
+/**
+ * Mix in `Emitter`.
+ */
+
+Emitter(Transport.prototype);
+
+/**
+ * Emits an error.
+ *
+ * @param {String} str
+ * @return {Transport} for chaining
+ * @api public
+ */
+
+Transport.prototype.onError = function (msg, desc) {
+  var err = new Error(msg);
+  err.type = 'TransportError';
+  err.description = desc;
+  this.emit('error', err);
+  return this;
+};
+
+/**
+ * Opens the transport.
+ *
+ * @api public
+ */
+
+Transport.prototype.open = function () {
+  if ('closed' === this.readyState || '' === this.readyState) {
+    this.readyState = 'opening';
+    this.doOpen();
+  }
+
+  return this;
+};
+
+/**
+ * Closes the transport.
+ *
+ * @api private
+ */
+
+Transport.prototype.close = function () {
+  if ('opening' === this.readyState || 'open' === this.readyState) {
+    this.doClose();
+    this.onClose();
+  }
+
+  return this;
+};
+
+/**
+ * Sends multiple packets.
+ *
+ * @param {Array} packets
+ * @api private
+ */
+
+Transport.prototype.send = function (packets) {
+  if ('open' === this.readyState) {
+    this.write(packets);
+  } else {
+    throw new Error('Transport not open');
+  }
+};
+
+/**
+ * Called upon open
+ *
+ * @api private
+ */
+
+Transport.prototype.onOpen = function () {
+  this.readyState = 'open';
+  this.writable = true;
+  this.emit('open');
+};
+
+/**
+ * Called with data.
+ *
+ * @param {String} data
+ * @api private
+ */
+
+Transport.prototype.onData = function (data) {
+  var packet = parser.decodePacket(data, this.socket.binaryType);
+  this.onPacket(packet);
+};
+
+/**
+ * Called with a decoded packet.
+ */
+
+Transport.prototype.onPacket = function (packet) {
+  this.emit('packet', packet);
+};
+
+/**
+ * Called upon close.
+ *
+ * @api private
+ */
+
+Transport.prototype.onClose = function () {
+  this.readyState = 'closed';
+  this.emit('close');
+};
+
+
+/***/ }),
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
+
+var hasCORS = __webpack_require__(91);
+
+module.exports = function (opts) {
+  var xdomain = opts.xdomain;
+
+  // scheme must be same when usign XDomainRequest
+  // http://blogs.msdn.com/b/ieinternals/archive/2010/05/13/xdomainrequest-restrictions-limitations-and-workarounds.aspx
+  var xscheme = opts.xscheme;
+
+  // XDomainRequest has a flow of not sending cookie, therefore it should be disabled as a default.
+  // https://github.com/Automattic/engine.io-client/pull/217
+  var enablesXDR = opts.enablesXDR;
+
+  // XMLHttpRequest can be disabled on IE
+  try {
+    if ('undefined' !== typeof XMLHttpRequest && (!xdomain || hasCORS)) {
+      return new XMLHttpRequest();
+    }
+  } catch (e) { }
+
+  // Use XDomainRequest for IE8 if enablesXDR is true
+  // because loading bar keeps flashing when using jsonp-polling
+  // https://github.com/yujiosaka/socke.io-ie8-loading-example
+  try {
+    if ('undefined' !== typeof XDomainRequest && !xscheme && enablesXDR) {
+      return new XDomainRequest();
+    }
+  } catch (e) { }
+
+  if (!xdomain) {
+    try {
+      return new global[['Active'].concat('Object').join('X')]('Microsoft.XMLHTTP');
+    } catch (e) { }
+  }
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (true) {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+  var args = [].slice.call(arguments, 1)
+    , callbacks = this._callbacks['$' + event];
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Expose `Emitter`.
+ */
+
+if (true) {
+  module.exports = Emitter;
+}
+
+/**
+ * Initialize a new `Emitter`.
+ *
+ * @api public
+ */
+
+function Emitter(obj) {
+  if (obj) return mixin(obj);
+};
+
+/**
+ * Mixin the emitter properties.
+ *
+ * @param {Object} obj
+ * @return {Object}
+ * @api private
+ */
+
+function mixin(obj) {
+  for (var key in Emitter.prototype) {
+    obj[key] = Emitter.prototype[key];
+  }
+  return obj;
+}
+
+/**
+ * Listen on the given `event` with `fn`.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.on =
+Emitter.prototype.addEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
+    .push(fn);
+  return this;
+};
+
+/**
+ * Adds an `event` listener that will be invoked a single
+ * time then automatically removed.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.once = function(event, fn){
+  function on() {
+    this.off(event, on);
+    fn.apply(this, arguments);
+  }
+
+  on.fn = fn;
+  this.on(event, on);
+  return this;
+};
+
+/**
+ * Remove the given callback for `event` or all
+ * registered callbacks.
+ *
+ * @param {String} event
+ * @param {Function} fn
+ * @return {Emitter}
+ * @api public
+ */
+
+Emitter.prototype.off =
+Emitter.prototype.removeListener =
+Emitter.prototype.removeAllListeners =
+Emitter.prototype.removeEventListener = function(event, fn){
+  this._callbacks = this._callbacks || {};
+
+  // all
+  if (0 == arguments.length) {
+    this._callbacks = {};
+    return this;
+  }
+
+  // specific event
+  var callbacks = this._callbacks['$' + event];
+  if (!callbacks) return this;
+
+  // remove all handlers
+  if (1 == arguments.length) {
+    delete this._callbacks['$' + event];
+    return this;
+  }
+
+  // remove specific handler
+  var cb;
+  for (var i = 0; i < callbacks.length; i++) {
+    cb = callbacks[i];
+    if (cb === fn || cb.fn === fn) {
+      callbacks.splice(i, 1);
+      break;
+    }
+  }
+  return this;
+};
+
+/**
+ * Emit `event` with the given args.
+ *
+ * @param {String} event
+ * @param {Mixed} ...
+ * @return {Emitter}
+ */
+
+Emitter.prototype.emit = function(event){
+  this._callbacks = this._callbacks || {};
+  var args = [].slice.call(arguments, 1)
+    , callbacks = this._callbacks['$' + event];
+
+  if (callbacks) {
+    callbacks = callbacks.slice(0);
+    for (var i = 0, len = callbacks.length; i < len; ++i) {
+      callbacks[i].apply(this, args);
+    }
+  }
+
+  return this;
+};
+
+/**
+ * Return array of callbacks for `event`.
+ *
+ * @param {String} event
+ * @return {Array}
+ * @api public
+ */
+
+Emitter.prototype.listeners = function(event){
+  this._callbacks = this._callbacks || {};
+  return this._callbacks['$' + event] || [];
+};
+
+/**
+ * Check if this emitter has `event` handlers.
+ *
+ * @param {String} event
+ * @return {Boolean}
+ * @api public
+ */
+
+Emitter.prototype.hasListeners = function(event){
+  return !! this.listeners(event).length;
+};
+
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/**
+ * Module dependencies.
+ */
+
+var debug = __webpack_require__(9)('socket.io-parser');
+var Emitter = __webpack_require__(54);
+var hasBin = __webpack_require__(62);
+var binary = __webpack_require__(96);
+var isBuf = __webpack_require__(68);
+
+/**
+ * Protocol version.
+ *
+ * @api public
+ */
+
+exports.protocol = 4;
+
+/**
+ * Packet types.
+ *
+ * @api public
+ */
+
+exports.types = [
+  'CONNECT',
+  'DISCONNECT',
+  'EVENT',
+  'ACK',
+  'ERROR',
+  'BINARY_EVENT',
+  'BINARY_ACK'
+];
+
+/**
+ * Packet type `connect`.
+ *
+ * @api public
+ */
+
+exports.CONNECT = 0;
+
+/**
+ * Packet type `disconnect`.
+ *
+ * @api public
+ */
+
+exports.DISCONNECT = 1;
+
+/**
+ * Packet type `event`.
+ *
+ * @api public
+ */
+
+exports.EVENT = 2;
+
+/**
+ * Packet type `ack`.
+ *
+ * @api public
+ */
+
+exports.ACK = 3;
+
+/**
+ * Packet type `error`.
+ *
+ * @api public
+ */
+
+exports.ERROR = 4;
+
+/**
+ * Packet type 'binary event'
+ *
+ * @api public
+ */
+
+exports.BINARY_EVENT = 5;
+
+/**
+ * Packet type `binary ack`. For acks with binary arguments.
+ *
+ * @api public
+ */
+
+exports.BINARY_ACK = 6;
+
+/**
+ * Encoder constructor.
+ *
+ * @api public
+ */
+
+exports.Encoder = Encoder;
+
+/**
+ * Decoder constructor.
+ *
+ * @api public
+ */
+
+exports.Decoder = Decoder;
+
+/**
+ * A socket.io Encoder instance
+ *
+ * @api public
+ */
+
+function Encoder() {}
+
+/**
+ * Encode a packet as a single string if non-binary, or as a
+ * buffer sequence, depending on packet type.
+ *
+ * @param {Object} obj - packet object
+ * @param {Function} callback - function to handle encodings (likely engine.write)
+ * @return Calls callback with Array of encodings
+ * @api public
+ */
+
+Encoder.prototype.encode = function(obj, callback){
+  if ((obj.type === exports.EVENT || obj.type === exports.ACK) && hasBin(obj.data)) {
+    obj.type = obj.type === exports.EVENT ? exports.BINARY_EVENT : exports.BINARY_ACK;
+  }
+
+  debug('encoding packet %j', obj);
+
+  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
+    encodeAsBinary(obj, callback);
+  }
+  else {
+    var encoding = encodeAsString(obj);
+    callback([encoding]);
+  }
+};
+
+/**
+ * Encode packet as string.
+ *
+ * @param {Object} packet
+ * @return {String} encoded
+ * @api private
+ */
+
+function encodeAsString(obj) {
+
+  // first is type
+  var str = '' + obj.type;
+
+  // attachments if we have them
+  if (exports.BINARY_EVENT === obj.type || exports.BINARY_ACK === obj.type) {
+    str += obj.attachments + '-';
+  }
+
+  // if we have a namespace other than `/`
+  // we append it followed by a comma `,`
+  if (obj.nsp && '/' !== obj.nsp) {
+    str += obj.nsp + ',';
+  }
+
+  // immediately followed by the id
+  if (null != obj.id) {
+    str += obj.id;
+  }
+
+  // json data
+  if (null != obj.data) {
+    str += JSON.stringify(obj.data);
+  }
+
+  debug('encoded %j as %s', obj, str);
+  return str;
+}
+
+/**
+ * Encode packet as 'buffer sequence' by removing blobs, and
+ * deconstructing packet into object with placeholders and
+ * a list of buffers.
+ *
+ * @param {Object} packet
+ * @return {Buffer} encoded
+ * @api private
+ */
+
+function encodeAsBinary(obj, callback) {
+
+  function writeEncoding(bloblessData) {
+    var deconstruction = binary.deconstructPacket(bloblessData);
+    var pack = encodeAsString(deconstruction.packet);
+    var buffers = deconstruction.buffers;
+
+    buffers.unshift(pack); // add packet info to beginning of data list
+    callback(buffers); // write all the buffers
+  }
+
+  binary.removeBlobs(obj, writeEncoding);
+}
+
+/**
+ * A socket.io Decoder instance
+ *
+ * @return {Object} decoder
+ * @api public
+ */
+
+function Decoder() {
+  this.reconstructor = null;
+}
+
+/**
+ * Mix in `Emitter` with Decoder.
+ */
+
+Emitter(Decoder.prototype);
+
+/**
+ * Decodes an ecoded packet string into packet JSON.
+ *
+ * @param {String} obj - encoded packet
+ * @return {Object} packet
+ * @api public
+ */
+
+Decoder.prototype.add = function(obj) {
+  var packet;
+  if (typeof obj === 'string') {
+    packet = decodeString(obj);
+    if (exports.BINARY_EVENT === packet.type || exports.BINARY_ACK === packet.type) { // binary packet's json
+      this.reconstructor = new BinaryReconstructor(packet);
+
+      // no attachments, labeled binary but no binary data to follow
+      if (this.reconstructor.reconPack.attachments === 0) {
+        this.emit('decoded', packet);
+      }
+    } else { // non-binary full packet
+      this.emit('decoded', packet);
+    }
+  }
+  else if (isBuf(obj) || obj.base64) { // raw binary data
+    if (!this.reconstructor) {
+      throw new Error('got binary data when not reconstructing a packet');
+    } else {
+      packet = this.reconstructor.takeBinaryData(obj);
+      if (packet) { // received final buffer
+        this.reconstructor = null;
+        this.emit('decoded', packet);
+      }
+    }
+  }
+  else {
+    throw new Error('Unknown type: ' + obj);
+  }
+};
+
+/**
+ * Decode a packet String (JSON data)
+ *
+ * @param {String} str
+ * @return {Object} packet
+ * @api private
+ */
+
+function decodeString(str) {
+  var i = 0;
+  // look up type
+  var p = {
+    type: Number(str.charAt(0))
+  };
+
+  if (null == exports.types[p.type]) return error();
+
+  // look up attachments if type binary
+  if (exports.BINARY_EVENT === p.type || exports.BINARY_ACK === p.type) {
+    var buf = '';
+    while (str.charAt(++i) !== '-') {
+      buf += str.charAt(i);
+      if (i == str.length) break;
+    }
+    if (buf != Number(buf) || str.charAt(i) !== '-') {
+      throw new Error('Illegal attachments');
+    }
+    p.attachments = Number(buf);
+  }
+
+  // look up namespace (if any)
+  if ('/' === str.charAt(i + 1)) {
+    p.nsp = '';
+    while (++i) {
+      var c = str.charAt(i);
+      if (',' === c) break;
+      p.nsp += c;
+      if (i === str.length) break;
+    }
+  } else {
+    p.nsp = '/';
+  }
+
+  // look up id
+  var next = str.charAt(i + 1);
+  if ('' !== next && Number(next) == next) {
+    p.id = '';
+    while (++i) {
+      var c = str.charAt(i);
+      if (null == c || Number(c) != c) {
+        --i;
+        break;
+      }
+      p.id += str.charAt(i);
+      if (i === str.length) break;
+    }
+    p.id = Number(p.id);
+  }
+
+  // look up json data
+  if (str.charAt(++i)) {
+    p = tryParse(p, str.substr(i));
+  }
+
+  debug('decoded %s as %j', str, p);
+  return p;
+}
+
+function tryParse(p, str) {
+  try {
+    p.data = JSON.parse(str);
+  } catch(e){
+    return error();
+  }
+  return p; 
+}
+
+/**
+ * Deallocates a parser's resources
+ *
+ * @api public
+ */
+
+Decoder.prototype.destroy = function() {
+  if (this.reconstructor) {
+    this.reconstructor.finishedReconstruction();
+  }
+};
+
+/**
+ * A manager of a binary event's 'buffer sequence'. Should
+ * be constructed whenever a packet of type BINARY_EVENT is
+ * decoded.
+ *
+ * @param {Object} packet
+ * @return {BinaryReconstructor} initialized reconstructor
+ * @api private
+ */
+
+function BinaryReconstructor(packet) {
+  this.reconPack = packet;
+  this.buffers = [];
+}
+
+/**
+ * Method to be called when binary data received from connection
+ * after a BINARY_EVENT packet.
+ *
+ * @param {Buffer | ArrayBuffer} binData - the raw binary data received
+ * @return {null | Object} returns null if more binary data is expected or
+ *   a reconstructed packet object if all buffers have been received.
+ * @api private
+ */
+
+BinaryReconstructor.prototype.takeBinaryData = function(binData) {
+  this.buffers.push(binData);
+  if (this.buffers.length === this.reconPack.attachments) { // done with buffer list
+    var packet = binary.reconstructPacket(this.reconPack, this.buffers);
+    this.finishedReconstruction();
+    return packet;
+  }
+  return null;
+};
+
+/**
+ * Cleans up binary packet reconstruction variables.
+ *
+ * @api private
+ */
+
+BinaryReconstructor.prototype.finishedReconstruction = function() {
+  this.reconPack = null;
+  this.buffers = [];
+};
+
+function error() {
+  return {
+    type: exports.ERROR,
+    data: 'parser error'
+  };
+}
+
+
+/***/ }),
 /* 56 */,
-/* 57 */
+/* 57 */,
+/* 58 */,
+/* 59 */
 /***/ (function(module, exports) {
 
 /**
@@ -22186,17 +23017,17 @@ module.exports = function(obj, fn){
 
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(48);
-var XHR = __webpack_require__(83);
-var JSONP = __webpack_require__(82);
-var websocket = __webpack_require__(84);
+var XMLHttpRequest = __webpack_require__(52);
+var XHR = __webpack_require__(85);
+var JSONP = __webpack_require__(84);
+var websocket = __webpack_require__(86);
 
 /**
  * Export transports.
@@ -22246,18 +23077,18 @@ function polling (opts) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(47);
-var parseqs = __webpack_require__(46);
+var Transport = __webpack_require__(51);
+var parseqs = __webpack_require__(48);
 var parser = __webpack_require__(19);
-var inherit = __webpack_require__(45);
-var yeast = __webpack_require__(67);
+var inherit = __webpack_require__(47);
+var yeast = __webpack_require__(69);
 var debug = __webpack_require__(9)('engine.io-client:polling');
 
 /**
@@ -22271,7 +23102,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(48);
+  var XMLHttpRequest = __webpack_require__(52);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -22497,7 +23328,7 @@ Polling.prototype.uri = function () {
 
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -22506,7 +23337,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(88);
+var isArray = __webpack_require__(90);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -22566,7 +23397,7 @@ function hasBinary (obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports) {
 
 
@@ -22581,7 +23412,7 @@ module.exports = function(arr, obj){
 };
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports) {
 
 /**
@@ -22626,7 +23457,7 @@ module.exports = function parseuri(str) {
 
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -22634,15 +23465,15 @@ module.exports = function parseuri(str) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(80);
-var Socket = __webpack_require__(65);
-var Emitter = __webpack_require__(50);
-var parser = __webpack_require__(51);
-var on = __webpack_require__(64);
-var bind = __webpack_require__(57);
+var eio = __webpack_require__(82);
+var Socket = __webpack_require__(67);
+var Emitter = __webpack_require__(54);
+var parser = __webpack_require__(55);
+var on = __webpack_require__(66);
+var bind = __webpack_require__(59);
 var debug = __webpack_require__(9)('socket.io-client:manager');
-var indexOf = __webpack_require__(61);
-var Backoff = __webpack_require__(76);
+var indexOf = __webpack_require__(63);
+var Backoff = __webpack_require__(78);
 
 /**
  * IE6+ hasOwnProperty
@@ -23205,7 +24036,7 @@ Manager.prototype.onreconnect = function () {
 
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports) {
 
 
@@ -23235,7 +24066,7 @@ function on (obj, ev, fn) {
 
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -23243,13 +24074,13 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(51);
-var Emitter = __webpack_require__(50);
-var toArray = __webpack_require__(95);
-var on = __webpack_require__(64);
-var bind = __webpack_require__(57);
+var parser = __webpack_require__(55);
+var Emitter = __webpack_require__(54);
+var toArray = __webpack_require__(97);
+var on = __webpack_require__(66);
+var bind = __webpack_require__(59);
 var debug = __webpack_require__(9)('socket.io-client:socket');
-var parseqs = __webpack_require__(46);
+var parseqs = __webpack_require__(48);
 
 /**
  * Module exports.
@@ -23659,7 +24490,7 @@ Socket.prototype.compress = function (compress) {
 
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -23679,7 +24510,7 @@ function isBuf(obj) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -23754,14 +24585,14 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 68 */,
-/* 69 */,
 /* 70 */,
 /* 71 */,
 /* 72 */,
 /* 73 */,
 /* 74 */,
-/* 75 */
+/* 75 */,
+/* 76 */,
+/* 77 */
 /***/ (function(module, exports) {
 
 /**
@@ -23796,7 +24627,7 @@ module.exports = function(arraybuffer, start, end) {
 
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports) {
 
 
@@ -23887,7 +24718,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports) {
 
 /*
@@ -23960,7 +24791,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -24063,7 +24894,7 @@ module.exports = (function() {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -24079,7 +24910,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(90);
+exports.humanize = __webpack_require__(92);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -24271,11 +25102,11 @@ function coerce(val) {
 
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(81);
+module.exports = __webpack_require__(83);
 
 /**
  * Exports parser
@@ -24287,20 +25118,20 @@ module.exports.parser = __webpack_require__(19);
 
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(58);
-var Emitter = __webpack_require__(49);
+var transports = __webpack_require__(60);
+var Emitter = __webpack_require__(53);
 var debug = __webpack_require__(9)('engine.io-client:socket');
-var index = __webpack_require__(61);
+var index = __webpack_require__(63);
 var parser = __webpack_require__(19);
-var parseuri = __webpack_require__(62);
-var parseqs = __webpack_require__(46);
+var parseuri = __webpack_require__(64);
+var parseqs = __webpack_require__(48);
 
 /**
  * Module exports.
@@ -24433,8 +25264,8 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(47);
-Socket.transports = __webpack_require__(58);
+Socket.Transport = __webpack_require__(51);
+Socket.transports = __webpack_require__(60);
 Socket.parser = __webpack_require__(19);
 
 /**
@@ -25037,7 +25868,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -25045,8 +25876,8 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(59);
-var inherit = __webpack_require__(45);
+var Polling = __webpack_require__(61);
+var inherit = __webpack_require__(47);
 
 /**
  * Module exports.
@@ -25275,17 +26106,17 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(48);
-var Polling = __webpack_require__(59);
-var Emitter = __webpack_require__(49);
-var inherit = __webpack_require__(45);
+var XMLHttpRequest = __webpack_require__(52);
+var Polling = __webpack_require__(61);
+var Emitter = __webpack_require__(53);
+var inherit = __webpack_require__(47);
 var debug = __webpack_require__(9)('engine.io-client:polling-xhr');
 
 /**
@@ -25695,24 +26526,24 @@ function unloadHandler () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(47);
+var Transport = __webpack_require__(51);
 var parser = __webpack_require__(19);
-var parseqs = __webpack_require__(46);
-var inherit = __webpack_require__(45);
-var yeast = __webpack_require__(67);
+var parseqs = __webpack_require__(48);
+var inherit = __webpack_require__(47);
+var yeast = __webpack_require__(69);
 var debug = __webpack_require__(9)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(100);
+    NodeWebSocket = __webpack_require__(102);
   } catch (e) { }
 }
 
@@ -25988,7 +26819,7 @@ WS.prototype.check = function () {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -26022,7 +26853,7 @@ function noop() {}
 
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports) {
 
 
@@ -26047,7 +26878,7 @@ module.exports = Object.keys || function keys (obj){
 
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -26305,10 +27136,10 @@ module.exports = Object.keys || function keys (obj){
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(23)(module), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26)(module), __webpack_require__(1)))
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -26319,7 +27150,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports) {
 
 
@@ -26342,7 +27173,7 @@ try {
 
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports) {
 
 /**
@@ -26500,7 +27331,7 @@ function plural(ms, n, name) {
 
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -26508,9 +27339,9 @@ function plural(ms, n, name) {
  * Module dependencies.
  */
 
-var url = __webpack_require__(92);
-var parser = __webpack_require__(51);
-var Manager = __webpack_require__(63);
+var url = __webpack_require__(94);
+var parser = __webpack_require__(55);
+var Manager = __webpack_require__(65);
 var debug = __webpack_require__(9)('socket.io-client');
 
 /**
@@ -26595,12 +27426,12 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(63);
-exports.Socket = __webpack_require__(65);
+exports.Manager = __webpack_require__(65);
+exports.Socket = __webpack_require__(67);
 
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -26608,7 +27439,7 @@ exports.Socket = __webpack_require__(65);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(62);
+var parseuri = __webpack_require__(64);
 var debug = __webpack_require__(9)('socket.io-client:url');
 
 /**
@@ -26682,7 +27513,7 @@ function url (uri, loc) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -26693,7 +27524,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -26702,8 +27533,8 @@ module.exports = Array.isArray || function (arr) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(93);
-var isBuf = __webpack_require__(66);
+var isArray = __webpack_require__(95);
+var isBuf = __webpack_require__(68);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -26841,7 +27672,7 @@ exports.removeBlobs = function(data, callback) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -26860,18 +27691,16 @@ function toArray(list, index) {
 
 
 /***/ }),
-/* 96 */,
-/* 97 */,
 /* 98 */,
 /* 99 */,
-/* 100 */
+/* 100 */,
+/* 101 */,
+/* 102 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
-/* 101 */,
-/* 102 */,
 /* 103 */,
 /* 104 */,
 /* 105 */,
@@ -26989,17 +27818,20 @@ function toArray(list, index) {
 /* 217 */,
 /* 218 */,
 /* 219 */,
-/* 220 */
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _MainMenuComponent = __webpack_require__(335);
+var _MainMenuComponent = __webpack_require__(341);
 
 var _MainMenuComponent2 = _interopRequireDefault(_MainMenuComponent);
 
-var _vue = __webpack_require__(22);
+var _vue = __webpack_require__(23);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -27013,9 +27845,6 @@ new _vue2.default({
 });
 
 /***/ }),
-/* 221 */,
-/* 222 */,
-/* 223 */,
 /* 224 */,
 /* 225 */,
 /* 226 */,
@@ -27045,7 +27874,11 @@ new _vue2.default({
 /* 250 */,
 /* 251 */,
 /* 252 */,
-/* 253 */
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27055,15 +27888,15 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _Notifications = __webpack_require__(338);
+var _Notifications = __webpack_require__(344);
 
 var _Notifications2 = _interopRequireDefault(_Notifications);
 
-var _NotificationsMenu = __webpack_require__(340);
+var _NotificationsMenu = __webpack_require__(346);
 
 var _NotificationsMenu2 = _interopRequireDefault(_NotificationsMenu);
 
-var _NotificationsDropdownMenu = __webpack_require__(339);
+var _NotificationsDropdownMenu = __webpack_require__(345);
 
 var _NotificationsDropdownMenu2 = _interopRequireDefault(_NotificationsDropdownMenu);
 
@@ -27073,7 +27906,11 @@ var _axios2 = _interopRequireDefault(_axios);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var io = __webpack_require__(91); //
+var io = __webpack_require__(93); //
+//
+//
+//
+//
 //
 //
 //
@@ -27353,7 +28190,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 254 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27401,7 +28238,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 255 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27411,7 +28248,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _gsap = __webpack_require__(54);
+var _gsap = __webpack_require__(49);
 
 exports.default = {
   name: 'NotificationSingle',
@@ -27568,7 +28405,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 256 */
+/* 260 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27578,7 +28415,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _NotificationSingle = __webpack_require__(337);
+var _NotificationSingle = __webpack_require__(343);
 
 var _NotificationSingle2 = _interopRequireDefault(_NotificationSingle);
 
@@ -27637,7 +28474,7 @@ exports.default = {
 //
 
 /***/ }),
-/* 257 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27647,11 +28484,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _NotificationDropdownSingle = __webpack_require__(336);
+var _NotificationDropdownSingle = __webpack_require__(342);
 
 var _NotificationDropdownSingle2 = _interopRequireDefault(_NotificationDropdownSingle);
 
-var _gsap = __webpack_require__(54);
+var _gsap = __webpack_require__(49);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27721,7 +28558,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 258 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -27772,10 +28609,6 @@ exports.default = {
 };
 
 /***/ }),
-/* 259 */,
-/* 260 */,
-/* 261 */,
-/* 262 */,
 /* 263 */,
 /* 264 */,
 /* 265 */,
@@ -27789,79 +28622,79 @@ exports.default = {
 /* 273 */,
 /* 274 */,
 /* 275 */,
-/* 276 */,
-/* 277 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n.notification-container[data-v-1e48d39a] {\n  position: relative;\n}\n.notification-container > .notification-badge[data-v-1e48d39a] {\n    position: absolute;\n    width: 1.33333rem;\n    height: 1.33333rem;\n    background-color: #ff636e;\n    border-radius: 50%;\n    top: -.5rem;\n    right: -.75rem;\n}\n.notification-container > .notification-badge > .notification-text[data-v-1e48d39a] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n      font-size: 0.66667rem;\n      color: #ededed;\n}\n", ""]);
+exports.push([module.i, "\n#notifications-dropdown[data-v-0c50e5a1] {\n  position: absolute;\n  top: 6.625rem;\n  right: 1rem;\n  background: #ededed;\n  padding-left: 2rem;\n  padding-right: 2rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  z-index: 8;\n  border: 2px solid #f7f7f9;\n  display: none;\n  opacity: 0;\n}\n#notifications-dropdown > .notif[data-v-0c50e5a1] {\n    margin-bottom: 1rem;\n    margin-top: 1rem;\n}\n#notifications-dropdown[data-v-0c50e5a1]::before {\n  position: absolute;\n  content: '';\n  top: -0.6rem;\n  right: 4.75rem;\n  width: 1rem;\n  height: 1rem;\n  background-color: #ededed;\n  -webkit-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n  border-top: 2px solid #f7f7f9;\n  border-right: 2px solid #f7f7f9;\n}\n", ""]);
 
 /***/ }),
+/* 277 */,
 /* 278 */,
 /* 279 */,
 /* 280 */,
 /* 281 */,
 /* 282 */,
-/* 283 */,
-/* 284 */,
-/* 285 */,
-/* 286 */,
-/* 287 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
 exports.push([module.i, "", ""]);
 
 /***/ }),
-/* 288 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#notification-dropdown-single[data-v-3d56c96a] {\n  padding-bottom: 0.5rem;\n  border-bottom: 2px dashed #f7f7f9;\n  font-size: 1rem;\n  font-weight: 400;\n}\n#notification-dropdown-single > a[data-v-3d56c96a] {\n    color: #252525;\n}\n#notification-dropdown-single > a > span[data-v-3d56c96a] {\n      text-transform: capitalize;\n}\n", ""]);
+
+/***/ }),
 /* 289 */,
 /* 290 */,
 /* 291 */,
 /* 292 */,
-/* 293 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#notification-dropdown-single[data-v-54f0833e] {\n  padding-bottom: 0.5rem;\n  border-bottom: 2px dashed #f7f7f9;\n  font-size: 1rem;\n  font-weight: 400;\n}\n#notification-dropdown-single > a[data-v-54f0833e] {\n    color: #252525;\n}\n#notification-dropdown-single > a > span[data-v-54f0833e] {\n      text-transform: capitalize;\n}\n", ""]);
-
-/***/ }),
-/* 294 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#notifications-dropdown[data-v-564207cb] {\n  position: absolute;\n  top: 6.625rem;\n  right: 1rem;\n  background: #ededed;\n  padding-left: 2rem;\n  padding-right: 2rem;\n  padding-top: 1rem;\n  padding-bottom: 1rem;\n  z-index: 8;\n  border: 2px solid #f7f7f9;\n  display: none;\n  opacity: 0;\n}\n#notifications-dropdown > .notif[data-v-564207cb] {\n    margin-bottom: 1rem;\n    margin-top: 1rem;\n}\n#notifications-dropdown[data-v-564207cb]::before {\n  position: absolute;\n  content: '';\n  top: -0.6rem;\n  right: 4.75rem;\n  width: 1rem;\n  height: 1rem;\n  background-color: #ededed;\n  -webkit-transform: rotate(-45deg);\n          transform: rotate(-45deg);\n  border-top: 2px solid #f7f7f9;\n  border-right: 2px solid #f7f7f9;\n}\n", ""]);
-
-/***/ }),
+/* 293 */,
+/* 294 */,
 /* 295 */,
 /* 296 */,
 /* 297 */,
-/* 298 */
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
 exports.push([module.i, "", ""]);
 
 /***/ }),
-/* 299 */,
-/* 300 */,
-/* 301 */,
-/* 302 */,
-/* 303 */,
+/* 303 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n.notification-container[data-v-88343120] {\n  position: relative;\n}\n.notification-container > .notification-badge[data-v-88343120] {\n    position: absolute;\n    width: 1.33333rem;\n    height: 1.33333rem;\n    background-color: #ff636e;\n    border-radius: 50%;\n    top: -.5rem;\n    right: -.75rem;\n}\n.notification-container > .notification-badge > .notification-text[data-v-88343120] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n      font-size: 0.66667rem;\n      color: #ededed;\n}\n", ""]);
+
+/***/ }),
 /* 304 */,
 /* 305 */,
 /* 306 */,
 /* 307 */,
 /* 308 */,
-/* 309 */
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#notification-single[data-v-fd6d6120] {\n  position: fixed;\n  top: 6.625rem;\n  right: 1rem;\n  background: #d8ee8f;\n  z-index: 9;\n  opacity: 0;\n}\n#notification-single > .notification-content[data-v-fd6d6120] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding: 2rem;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#notification-single > .notification-content > .icon-left[data-v-fd6d6120] {\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg[data-v-fd6d6120] {\n        position: relative;\n        width: 0;\n        height: 0;\n        opacity: 0;\n        border-radius: 50%;\n        background-color: #b7cc5e;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg > i[data-v-fd6d6120] {\n          position: absolute;\n          color: #d8ee8f;\n          font-size: 1.5rem;\n          top: 50%;\n          left: 50%;\n          -webkit-transform: translate(-50%, -50%);\n                  transform: translate(-50%, -50%);\n}\n#notification-single > .notification-content > .divider[data-v-fd6d6120] {\n      height: 0;\n      border-left: 1px solid #b7cc5e;\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .notification[data-v-fd6d6120] {\n      margin-right: 1rem;\n      opacity: 0;\n}\n#notification-single > .notification-content > .notification > .name[data-v-fd6d6120] {\n        font-size: 1.125rem;\n        font-weight: bold;\n        text-transform: uppercase;\n}\n#notification-single > .notification-content > .close-notification[data-v-fd6d6120] {\n      display: none;\n      opacity: 0;\n      color: #b7cc5e;\n      font-size: 1.25rem;\n      -ms-flex-item-align: start;\n          align-self: flex-start;\n}\n", ""]);
+exports.push([module.i, "\n#notification-single[data-v-d162934c] {\n  position: fixed;\n  top: 6.625rem;\n  right: 1rem;\n  background: #d8ee8f;\n  z-index: 9;\n  opacity: 0;\n}\n#notification-single > .notification-content[data-v-d162934c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    padding: 2rem;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#notification-single > .notification-content > .icon-left[data-v-d162934c] {\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg[data-v-d162934c] {\n        position: relative;\n        width: 0;\n        height: 0;\n        opacity: 0;\n        border-radius: 50%;\n        background-color: #b7cc5e;\n}\n#notification-single > .notification-content > .icon-left > .icon_bg > i[data-v-d162934c] {\n          position: absolute;\n          color: #d8ee8f;\n          font-size: 1.5rem;\n          top: 50%;\n          left: 50%;\n          -webkit-transform: translate(-50%, -50%);\n                  transform: translate(-50%, -50%);\n}\n#notification-single > .notification-content > .divider[data-v-d162934c] {\n      height: 0;\n      border-left: 1px solid #b7cc5e;\n      margin-right: 1rem;\n}\n#notification-single > .notification-content > .notification[data-v-d162934c] {\n      margin-right: 1rem;\n      opacity: 0;\n}\n#notification-single > .notification-content > .notification > .name[data-v-d162934c] {\n        font-size: 1.125rem;\n        font-weight: bold;\n        text-transform: uppercase;\n}\n#notification-single > .notification-content > .close-notification[data-v-d162934c] {\n      display: none;\n      opacity: 0;\n      color: #b7cc5e;\n      font-size: 1.25rem;\n      -ms-flex-item-align: start;\n          align-self: flex-start;\n}\n", ""]);
 
 /***/ }),
-/* 310 */,
-/* 311 */,
-/* 312 */,
 /* 313 */,
 /* 314 */,
 /* 315 */,
@@ -27884,26 +28717,48 @@ exports.push([module.i, "\n#notification-single[data-v-fd6d6120] {\n  position: 
 /* 332 */,
 /* 333 */,
 /* 334 */,
-/* 335 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 335 */,
+/* 336 */,
+/* 337 */,
+/* 338 */,
+/* 339 */,
+/* 340 */,
+/* 341 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainMenuComponent_vue__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainMenuComponent_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainMenuComponent_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_78a3af2e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_MainMenuComponent_vue__ = __webpack_require__(385);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(426)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(408)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(253),
-  /* template */
-  __webpack_require__(368),
-  /* scopeId */
-  "data-v-49f2c950",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-78a3af2e"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainMenuComponent_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_78a3af2e_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_MainMenuComponent_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/MainMenuComponent.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] MainMenuComponent.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/MainMenuComponent.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -27912,36 +28767,55 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-49f2c950", Component.options)
+    hotAPI.createRecord("data-v-78a3af2e", Component.options)
   } else {
-    hotAPI.reload("data-v-49f2c950", Component.options)
-  }
+    hotAPI.reload("data-v-78a3af2e", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 336 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 342 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationDropdownSingle_vue__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationDropdownSingle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationDropdownSingle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d56c96a_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationDropdownSingle_vue__ = __webpack_require__(371);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(412)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(414)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(254),
-  /* template */
-  __webpack_require__(374),
-  /* scopeId */
-  "data-v-54f0833e",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-3d56c96a"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationDropdownSingle_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_3d56c96a_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationDropdownSingle_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationDropdownSingle.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationDropdownSingle.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/NotificationDropdownSingle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -27950,36 +28824,55 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-54f0833e", Component.options)
+    hotAPI.createRecord("data-v-3d56c96a", Component.options)
   } else {
-    hotAPI.reload("data-v-54f0833e", Component.options)
-  }
+    hotAPI.reload("data-v-3d56c96a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 337 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 343 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationSingle_vue__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationSingle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationSingle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_d162934c_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationSingle_vue__ = __webpack_require__(395);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(436)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(430)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(255),
-  /* template */
-  __webpack_require__(390),
-  /* scopeId */
-  "data-v-fd6d6120",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-d162934c"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationSingle_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_d162934c_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationSingle_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationSingle.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationSingle.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/NotificationSingle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -27988,36 +28881,55 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-fd6d6120", Component.options)
+    hotAPI.createRecord("data-v-d162934c", Component.options)
   } else {
-    hotAPI.reload("data-v-fd6d6120", Component.options)
-  }
+    hotAPI.reload("data-v-d162934c", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 338 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 344 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Notifications_vue__ = __webpack_require__(260);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Notifications_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Notifications_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2c8d89f1_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_Notifications_vue__ = __webpack_require__(366);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(407)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(419)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(256),
-  /* template */
-  __webpack_require__(379),
-  /* scopeId */
-  "data-v-6ad11b1b",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-2c8d89f1"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_Notifications_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2c8d89f1_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_Notifications_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/Notifications.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Notifications.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/Notifications.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -28026,36 +28938,55 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6ad11b1b", Component.options)
+    hotAPI.createRecord("data-v-2c8d89f1", Component.options)
   } else {
-    hotAPI.reload("data-v-6ad11b1b", Component.options)
-  }
+    hotAPI.reload("data-v-2c8d89f1", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 339 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 345 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsDropdownMenu_vue__ = __webpack_require__(261);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsDropdownMenu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsDropdownMenu_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0c50e5a1_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationsDropdownMenu_vue__ = __webpack_require__(359);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(400)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(415)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(257),
-  /* template */
-  __webpack_require__(375),
-  /* scopeId */
-  "data-v-564207cb",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-0c50e5a1"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsDropdownMenu_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_0c50e5a1_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationsDropdownMenu_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsDropdownMenu.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationsDropdownMenu.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/NotificationsDropdownMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -28064,36 +28995,55 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-564207cb", Component.options)
+    hotAPI.createRecord("data-v-0c50e5a1", Component.options)
   } else {
-    hotAPI.reload("data-v-564207cb", Component.options)
-  }
+    hotAPI.reload("data-v-0c50e5a1", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 340 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 346 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsMenu_vue__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsMenu_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsMenu_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_88343120_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationsMenu_vue__ = __webpack_require__(386);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(427)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
 
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
 /* styles */
-__webpack_require__(398)
-
-var Component = __webpack_require__(6)(
-  /* script */
-  __webpack_require__(258),
-  /* template */
-  __webpack_require__(358),
-  /* scopeId */
-  "data-v-1e48d39a",
-  /* cssModules */
-  null
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-88343120"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_NotificationsMenu_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_88343120_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_NotificationsMenu_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
 )
-Component.options.__file = "/Users/simonepozzobon/laravel/resources/assets/js/notification/components/NotificationsMenu.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] NotificationsMenu.vue: functional components are not supported with templates, they should use render functions.")}
+Component.options.__file = "resources/assets/js/notification/components/NotificationsMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -28102,22 +29052,19 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1e48d39a", Component.options)
+    hotAPI.createRecord("data-v-88343120", Component.options)
   } else {
-    hotAPI.reload("data-v-1e48d39a", Component.options)
-  }
+    hotAPI.reload("data-v-88343120", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
 })()}
 
-module.exports = Component.exports
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
-/* 341 */,
-/* 342 */,
-/* 343 */,
-/* 344 */,
-/* 345 */,
-/* 346 */,
 /* 347 */,
 /* 348 */,
 /* 349 */,
@@ -28129,885 +29076,1297 @@ module.exports = Component.exports
 /* 355 */,
 /* 356 */,
 /* 357 */,
-/* 358 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 358 */,
+/* 359 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('a', {
-    class: 'nav-link ' + _vm.menu_class,
-    attrs: {
-      "id": "notifications-menu",
-      "href": "#"
-    },
-    on: {
-      "click": _vm.toggleDropdown
-    }
-  }, [_c('div', {
-    staticClass: "notification-container"
-  }, [_c('i', {
-    staticClass: "fa fa-bell"
-  }), _vm._v(" "), (this.notifications.length > 0) ? _c('div', {
-    staticClass: "notification-badge"
-  }, [_c('div', {
-    staticClass: "notification-text"
-  }, [_vm._v("\n        " + _vm._s(this.notifications.length) + "\n      ")])]) : _vm._e()])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { ref: "dropdown", attrs: { id: "notifications-dropdown" } },
+    _vm._l(_vm.notifications, function(notification) {
+      return _c("notification-dropdown-single", {
+        key: notification.key,
+        staticClass: "notif",
+        attrs: { notification: notification }
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1e48d39a", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0c50e5a1", esExports)
   }
 }
 
 /***/ }),
-/* 359 */,
 /* 360 */,
 /* 361 */,
 /* 362 */,
 /* 363 */,
 /* 364 */,
 /* 365 */,
-/* 366 */,
-/* 367 */,
-/* 368 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 366 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "main-menu-component"
-    }
-  }, [_c('nav', {
-    staticClass: "navbar navbar-toggleable-md navbar-light fixed-top",
-    attrs: {
-      "id": "main-menu"
-    }
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "navbar-brand"
-  }, [_c('a', {
-    attrs: {
-      "href": "/"
-    }
-  }, [_c('svg', {
-    attrs: {
-      "id": "main-logo",
-      "width": "102px",
-      "height": "26px",
-      "viewBox": "0 0 102 26",
-      "version": "1.1",
-      "xmlns": "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Symbols",
-      "stroke": "none",
-      "stroke-width": "1",
-      "fill": "none",
-      "fill-rule": "evenodd"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "main-logo",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Group"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "text",
-      "transform": "translate(54.516129, 3.774194)"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M5.23310771,18.4389946 C6.25875014,18.4389946 7.10783707,18.1210949 7.96843849,17.3138979 L7.20208529,15.8579748 C7.20208529,15.8579748 6.47112849,16.6125078 5.44548606,16.6125078 C4.3609918,16.6125078 3.46499399,15.7784999 3.46499399,14.2301753 C3.46499399,12.5358276 4.49020995,11.8473641 5.41008967,11.8473641 C6.65962493,11.8473641 7.35561181,12.6287079 7.35561181,12.6287079 L7.50871186,10.7490782 C7.50871186,10.7490782 6.69502132,10.0476882 5.20922581,10.0476882 C3.06369273,10.0476882 1.31903445,11.4375417 1.31903445,14.2301753 C1.31903445,17.0357357 3.09951558,18.4389946 5.23310771,18.4389946 L5.23310771,18.4389946 Z M16.5160273,14.243102 C16.5160273,11.5696807 14.7709426,10.0342828 12.5900131,10.0342828 C10.4090837,10.0342828 8.67593986,11.5696807 8.67593986,14.2301753 C8.67593986,16.9035966 10.4090837,18.4389946 12.5900131,18.4389946 C14.7709426,18.4389946 16.5160273,16.9035966 16.5160273,14.243102 L16.5160273,14.243102 Z M14.3581268,14.243102 C14.3581268,15.7650945 13.5683182,16.6125078 12.5900131,16.6125078 C11.6232225,16.6125078 10.8214729,15.7650945 10.8214729,14.2301753 C10.8214729,12.7345149 11.6232225,11.8473641 12.5900131,11.8473641 C13.5683182,11.8473641 14.3581268,12.7345149 14.3581268,14.243102 L14.3581268,14.243102 Z M24.4618775,16.5861757 C22.7760711,16.5861757 23.0473013,14.6797353 21.8920142,14.3493877 C22.30483,14.269434 23.0588157,13.7269938 23.0588157,12.549233 C23.0588157,10.8682906 21.8681323,10.1400897 19.8049065,10.1400897 L17.9306036,10.1400897 L17.9306036,18.3461142 L20.0526812,18.3461142 L20.0526812,15.1565848 C20.5832007,15.1565848 20.8309754,15.5271485 21.0663827,16.0035193 C21.5265358,16.9701449 21.8804997,18.4121838 24.0848846,18.4121838 L24.4618775,16.5861757 Z M21.0309863,12.6550399 C21.0309863,13.1840748 20.6544199,13.5153799 20.0526812,13.5153799 L20.0526812,11.8741749 C20.618597,11.8741749 21.0309863,12.1915959 21.0309863,12.6550399 L21.0309863,12.6550399 Z M31.9953384,18.4121838 L31.9953384,10.1400897 L29.8732608,10.1400897 L29.8732608,14.0444147 L25.6410465,10.0740202 L25.2870826,10.0740202 L25.2870826,18.3461142 L27.4091602,18.3461142 L27.4091602,14.4288626 L31.641801,18.4121838 L31.9953384,18.4121838 Z M38.8217244,18.3461142 L39.1987173,16.5335116 L35.8859563,16.5335116 L35.8859563,14.9047546 L37.6191001,14.9047546 L37.6191001,13.0916732 L35.8859563,13.0916732 L35.8859563,11.9402445 L38.2558086,11.9402445 L38.2558086,10.1400897 L33.7638786,10.1400897 L33.7638786,18.3461142 L38.8217244,18.3461142 Z M46.9091602,16.5861757 C45.2233537,16.5861757 45.4945839,14.6797353 44.3392969,14.3493877 C44.7521126,14.269434 45.5065249,13.7269938 45.5065249,12.549233 C45.5065249,10.8682906 44.315415,10.1400897 42.2521892,10.1400897 L40.3778863,10.1400897 L40.3778863,18.3461142 L42.4999639,18.3461142 L42.4999639,15.1565848 C43.0300569,15.1565848 43.2778316,15.5271485 43.5136654,16.0035193 C43.973392,16.9701449 44.3273559,18.4121838 46.5317408,18.4121838 L46.9091602,16.5861757 Z M43.478269,12.6550399 C43.478269,13.1840748 43.1008496,13.5153799 42.4999639,13.5153799 L42.4999639,11.8741749 C43.0658797,11.8741749 43.478269,12.1915959 43.478269,12.6550399 L43.478269,12.6550399 Z",
-      "id": "Fill-1095",
-      "fill": "#656A6B"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M27.7687534,4.88770738 L27.7687534,3.07462599 L26.0825205,3.07462599 L26.0825205,1.90931306 L28.5116512,1.90931306 L28.5116512,0.123042492 L23.9604429,0.123042492 L23.9604429,8.32906702 L26.0825205,8.32906702 L26.0825205,4.88770738 L27.7687534,4.88770738 Z M29.3364297,8.32954579 L31.4585074,8.32954579 L31.4585074,0.123042492 L29.3364297,0.123042492 L29.3364297,8.32954579 Z M37.3654401,8.32906702 L37.7428595,6.51550688 L35.1137179,6.51550688 L35.1137179,0.123042492 L32.9912138,0.123042492 L32.9912138,8.32906702 L37.3654401,8.32906702 Z M39.9706998,0.0698996255 L39.6525588,0.0698996255 L38.2733789,8.32906702 L40.3596337,8.32906702 L40.8666976,4.74168419 L42.4467414,7.28344523 L44.0148442,4.74168419 L44.5338491,8.32906702 L46.6201039,8.32906702 L45.2289831,0.0698996255 L44.9104155,0.0698996255 L42.4467414,4.22605476 L39.9706998,0.0698996255 Z",
-      "id": "Fill-1097",
-      "fill": "#656A6B"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M6.05268343,1.92300573 L6.05268343,0.122850986 L1.08908584,0.122850986 L0.712092947,1.92300573 L2.43329579,1.92300573 L2.43329579,8.32887552 L4.53191799,8.32887552 L4.53191799,1.92300573 L6.05268343,1.92300573 Z M13.5038371,8.32887552 L13.5038371,0.122850986 L11.381333,0.122850986 L11.381333,2.92889006 L9.10615528,2.92889006 L9.10615528,0.122850986 L6.99559213,0.122850986 L6.99559213,8.32887552 L9.10615528,8.32887552 L9.10615528,4.74245021 L11.381333,4.74245021 L11.381333,8.32887552 L13.5038371,8.32887552 Z M20.0939628,8.32887552 L20.4709557,6.51579413 L17.1586211,6.51579413 L17.1586211,4.88751587 L18.8913384,4.88751587 L18.8913384,3.07395572 L17.1586211,3.07395572 L17.1586211,1.92300573 L19.528047,1.92300573 L19.528047,0.122850986 L15.036117,0.122850986 L15.036117,8.32887552 L20.0939628,8.32887552 Z",
-      "id": "Fill-1099",
-      "fill": "#A5B1B4"
-    }
-  })]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "logo"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M3.98384254,8.51956744 L3.98384254,8.72878755 L4.34804155,8.62441688 L3.98384254,8.51956744 Z M24.6374237,14.441885 L18.6754773,12.731738 L0.0872542373,18.0996463 L24.6374237,25.1915857 L24.6374237,14.441885 Z M14.4206605,11.5108884 L14.369485,11.4979618 L13.2943729,11.80868 L13.2943729,13.0730972 L14.4206605,12.7484948 L14.4206605,11.5108884 Z M7.08507818,13.6002169 L7.08507818,14.8646341 L8.21435101,14.5400318 L8.21435101,13.2760933 L7.08507818,13.6002169 Z M10.190152,12.7044484 L10.190152,13.9688656 L11.3189984,13.6442633 L11.3189984,12.3798461 L10.190152,12.7044484 Z M2.00846802,15.0676303 L0.879621651,15.3917539 L0.879621651,16.6561711 L2.00846802,16.3315687 L2.00846802,15.0676303 Z M3.98384254,14.4959854 L3.98384254,15.7604026 L5.11311536,15.4358003 L5.11311536,14.1718618 L3.98384254,14.4959854 Z M2.00846802,8.03601524 L0.879621651,8.36061761 L0.879621651,9.62503481 L2.00846802,9.30043244 L2.00846802,8.03601524 Z",
-      "id": "Fill-1105",
-      "fill": "#FADA3E"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M16.3958218,12.177185 L16.3958218,12.0790383 L14.4204472,11.5112235 L14.4204472,12.7483512 L13.2945861,13.0729535 L13.2945861,11.8085363 L14.3692717,11.4978181 L4.34825478,8.62427325 L3.98405577,8.72912269 L3.98405577,8.51942381 L4.26462548e-05,7.37709157 L4.26462548e-05,18.0760432 L0.0874674686,18.0995026 L18.6752641,12.7315944 L16.5647009,12.1269148 L16.3958218,12.177185 Z M0.87940842,8.36047398 L2.00868125,8.03635037 L2.00868125,9.30028881 L0.87940842,9.62489118 L0.87940842,8.36047398 Z M3.98405577,15.760259 L3.98405577,14.4963206 L5.11290213,14.1717182 L5.11290213,15.4361354 L3.98405577,15.760259 Z M0.87940842,15.392089 L2.00868125,15.0674867 L2.00868125,16.3319039 L0.87940842,16.6560275 L0.87940842,15.392089 Z M10.1899388,13.968722 L10.1899388,12.7047836 L11.3192116,12.3801812 L11.3192116,13.6441196 L10.1899388,13.968722 Z M7.08529142,14.8644905 L7.08529142,13.6005521 L8.21456424,13.2759497 L8.21456424,14.5403669 L7.08529142,14.8644905 Z",
-      "id": "Fill-1107",
-      "fill": "#F0871F"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M17.5250519,11.8494228 L16.5646583,12.1266275 L18.6752214,12.7317859 L24.6371679,11.0111061 L24.6371679,0.260926684 L0,7.37680432 L3.98401312,8.51961532 L3.98401312,7.46489699 L5.11328595,7.14029462 L5.11328595,8.40471182 L4.34821214,8.62446476 L14.3692291,11.4980096 L14.4208311,11.4841255 L14.4208311,11.5109363 L16.3957791,12.0792298 L16.3957791,10.9129593 L17.5250519,10.5850056 L17.5250519,11.8494228 Z M22.6050738,2.08645595 L23.7313614,1.76233234 L23.7313614,3.02627077 L22.6050738,3.35087314 L22.6050738,2.08645595 Z M17.5250519,3.55386932 L17.5250519,4.81780775 L16.3957791,5.14576147 L16.3957791,3.88134428 L17.5250519,3.55386932 Z M14.4208311,4.45298916 L14.4208311,5.71692759 L13.2945435,6.04152996 L13.2945435,4.77759153 L14.4208311,4.45298916 Z M19.5004265,4.24999299 L19.5004265,2.98557579 L20.6292728,2.65762206 L20.6292728,3.92203926 L19.5004265,4.24999299 Z M22.6050738,10.3824882 L22.6050738,9.11807102 L23.7313614,8.79346864 L23.7313614,10.0578858 L22.6050738,10.3824882 Z M19.5004265,11.2811293 L19.5004265,10.0171909 L20.6292728,9.68923713 L20.6292728,10.9536543 L19.5004265,11.2811293 Z M7.08524877,7.83306694 L7.08524877,6.56912851 L8.2145216,6.24452614 L8.2145216,7.50894333 L7.08524877,7.83306694 Z M10.1898961,5.67336002 L11.3187425,5.34875765 L11.3187425,6.61269608 L10.1898961,6.93729845 L10.1898961,5.67336002 Z",
-      "id": "Fill-1109",
-      "fill": "#F49F52"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1111",
-      "fill": "#ED736E",
-      "points": "49.2748475 18.0929914 49.2748475 7.36004756 30.6055965 12.7246044"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1113",
-      "fill": "#4CBAB7",
-      "points": "49.2748475 18.1098439 49.2748475 18.0930872 30.6055965 12.7247002 24.6376796 14.4425074 24.6376796 25.1922081"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "id": "Fill-1115",
-      "fill": "#EC6666",
-      "points": "49.2748475 7.36004756 49.2748475 7.3432908 24.6376796 0.260926684 24.6376796 11.0106273 30.6055965 12.7246044"
-    }
-  })])])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "navbar-brand"
-  }, [_c('a', {
-    attrs: {
-      "href": "#"
-    }
-  }, [_c('svg', {
-    attrs: {
-      "width": "77px",
-      "height": "26px",
-      "viewBox": "0 0 77 26",
-      "version": "1.1",
-      "xmlns": "http://www.w3.org/2000/svg",
-      "xmlns:xlink": "http://www.w3.org/1999/xlink"
-    }
-  }, [_c('defs'), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Page-1",
-      "stroke": "none",
-      "stroke-width": "1",
-      "fill": "none",
-      "fill-rule": "evenodd"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "creative-europe-logo",
-      "transform": "translate(0.188235, 0.000000)"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "text",
-      "transform": "translate(42.976471, 0.000000)"
-    }
-  }, [_c('path', {
-    attrs: {
-      "d": "M5.36578824,6.15741176 C5.20932941,6.22745882 5.06556471,6.29505882 4.93801176,6.35501176 C4.81045882,6.41603529 4.64252941,6.48088235 4.43498824,6.54725882 C4.25987059,6.60185882 4.07022353,6.65018824 3.86451765,6.68949412 C3.65865882,6.7288 3.43261176,6.74883529 3.18637647,6.74883529 C2.71975294,6.74883529 2.29717647,6.68230588 1.9162,6.55001176 C1.53705882,6.41618824 1.20532941,6.20834118 0.923,5.92677647 C0.647552941,5.64888235 0.430682353,5.29803529 0.277741176,4.87056471 C0.120976471,4.44324706 0.0445058824,3.94557647 0.0445058824,3.38076471 C0.0445058824,2.84394118 0.117458824,2.36462353 0.268564706,1.94281176 C0.418294118,1.51901176 0.633329412,1.16265882 0.915505882,0.870235294 C1.18728235,0.587752941 1.51687059,0.3718 1.90335294,0.223294118 C2.28998824,0.0737176471 2.71791765,0 3.18989412,0 C3.53462353,0 3.87904706,0.0428235294 4.22347059,0.127552941 C4.56605882,0.211364706 4.94688235,0.360788235 5.36578824,0.573223529 L5.36578824,1.60022353 L5.30247059,1.60022353 C4.94871765,1.30122353 4.59695294,1.08175294 4.251,0.945176471 C3.90275294,0.807529412 3.52896471,0.740082353 3.13345882,0.740082353 C2.80907059,0.740082353 2.51787059,0.791929412 2.25710588,0.898682353 C1.99634118,1.00528235 1.76478824,1.17015294 1.56076471,1.3962 C1.36209412,1.61291765 1.20884706,1.89004706 1.09811765,2.22468235 C0.986623529,2.55901176 0.932023529,2.94442353 0.932023529,3.38107059 C0.932023529,3.8376 0.992129412,4.23218824 1.11417647,4.56192941 C1.23637647,4.89182353 1.39467059,5.15977647 1.58645882,5.36563529 C1.78665882,5.58250588 2.02371765,5.74202353 2.29136471,5.84495294 C2.55962353,5.9488 2.84363529,5.99988235 3.14263529,5.99988235 C3.55251765,5.99988235 3.939,5.92876471 4.29810588,5.78652941 C4.65721176,5.64444706 4.99414118,5.42925882 5.30598824,5.14325882 L5.36578824,5.14325882 L5.36578824,6.15741176 L5.36578824,6.15741176 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M9.18778824,2.6416 L9.1442,2.6416 C9.02567059,2.61345882 8.90698824,2.59143529 8.79411765,2.57874118 C8.67941176,2.56512941 8.54650588,2.55870588 8.38958824,2.55870588 C8.14014118,2.55870588 7.89910588,2.61529412 7.66755294,2.72632941 C7.43462353,2.83935294 7.21025882,2.98327059 6.99369412,3.16190588 L6.99369412,6.63015294 L6.18448235,6.63015294 L6.18448235,1.74505882 L6.99369412,1.74505882 L6.99369412,2.46571765 C7.31594118,2.20434118 7.60071765,2.01836471 7.84649412,1.90885882 C8.09058824,1.79950588 8.34202353,1.74490588 8.59896471,1.74490588 C8.73967059,1.74490588 8.84152941,1.74842353 8.90331765,1.75561176 C8.96724706,1.76310588 9.06191765,1.77671765 9.18763529,1.79675294 L9.18763529,2.6416 L9.18778824,2.6416 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M13.8041647,4.27195294 L10.2576118,4.27195294 C10.2576118,4.57370588 10.3033412,4.83508235 10.3908235,5.05745882 C10.4819765,5.28167059 10.6023412,5.46382353 10.7571176,5.60697647 C10.9085294,5.74645882 11.0851765,5.85107059 11.2911882,5.92234118 C11.4952118,5.99162353 11.7214118,6.02710588 11.9690235,6.02710588 C12.2972353,6.02710588 12.6271294,5.95981176 12.9571765,5.82858824 C13.2905882,5.69552941 13.5256588,5.56507059 13.6677412,5.43675294 L13.7094941,5.43675294 L13.7094941,6.33344706 C13.4380235,6.45014118 13.1589059,6.54756471 12.8745882,6.62587059 C12.5887412,6.70524706 12.2914235,6.74348235 11.9782,6.74348235 C11.18,6.74348235 10.5547765,6.52477647 10.1065059,6.08552941 C9.65991765,5.6472 9.43585882,5.02304706 9.43585882,4.21643529 C9.43585882,3.41731765 9.64921176,2.78307059 10.0789765,2.31292941 C10.5093529,1.84447059 11.0743176,1.6094 11.7741765,1.6094 C12.4247882,1.6094 12.9239882,1.80164706 13.2775882,2.18705882 C13.6295059,2.57155294 13.8041647,3.11847059 13.8041647,3.82643529 L13.8041647,4.27195294 L13.8041647,4.27195294 Z M13.0152941,3.64321176 C13.0131529,3.21115294 12.9056353,2.87774118 12.6962588,2.6416 C12.4829059,2.40576471 12.1621882,2.28723529 11.7319647,2.28723529 C11.2982235,2.28723529 10.9519647,2.41662353 10.6951765,2.67723529 C10.4379294,2.93601176 10.2924824,3.25856471 10.2576118,3.64321176 L13.0152941,3.64321176 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M18.4714706,6.63030588 L17.6657765,6.63030588 L17.6657765,6.10984706 C17.5931294,6.15909412 17.4967765,6.22745882 17.3742706,6.31692941 C17.2520706,6.40609412 17.1341529,6.47736471 17.0191412,6.53012941 C16.8840941,6.59757647 16.7293176,6.65309412 16.5543529,6.69775294 C16.3792353,6.74332941 16.1735294,6.7652 15.9381529,6.7652 C15.5047176,6.7652 15.1367412,6.62036471 14.8337647,6.32962353 C14.5332353,6.03811765 14.3818235,5.6654 14.3818235,5.21330588 C14.3818235,4.84242353 14.4601294,4.54357647 14.6168941,4.31401176 C14.7719765,4.08612941 14.9961882,3.90581176 15.2875412,3.77458824 C15.5793529,3.64351765 15.9328,3.55481176 16.3428353,3.50770588 C16.7527176,3.46121176 17.1941059,3.42649412 17.6657765,3.40278824 L17.6657765,3.27707059 C17.6657765,3.08925882 17.6332,2.93432941 17.5692706,2.81228235 C17.5038118,2.69023529 17.4106706,2.59357647 17.2906118,2.52429412 C17.1759059,2.45669412 17.0390235,2.41111765 16.8769059,2.38756471 C16.7164706,2.36477647 16.5471647,2.353 16.3717412,2.353 C16.1605294,2.353 15.9236235,2.38205882 15.6611765,2.43864706 C15.4007176,2.49508235 15.1309294,2.57705882 14.8522706,2.68549412 L14.8083765,2.68549412 L14.8083765,1.85089412 C14.9666706,1.80623529 15.1945529,1.75882353 15.4935529,1.70590588 C15.7922471,1.65314118 16.0858941,1.6276 16.3774,1.6276 C16.7164706,1.6276 17.0118,1.65497647 17.2633882,1.71232941 C17.5143647,1.76983529 17.7318471,1.86634118 17.9158353,2.00291765 C18.0963059,2.13689412 18.2345647,2.31002353 18.3292353,2.52429412 C18.4242118,2.73565882 18.4714706,2.99978824 18.4714706,3.31515294 L18.4714706,6.63030588 L18.4714706,6.63030588 Z M17.6659294,5.42818824 L17.6659294,4.06777647 C17.4183176,4.08230588 17.1284941,4.10417647 16.7930941,4.13338824 C16.458,4.1626 16.1935647,4.20435294 15.9970353,4.25925882 C15.7654824,4.32655294 15.5776706,4.4304 15.4332941,4.57263529 C15.2893765,4.7138 15.2185647,4.90788235 15.2185647,5.1558 C15.2185647,5.43644706 15.3003882,5.64704706 15.4680118,5.78821176 C15.6341059,5.93029412 15.8892118,5.99957647 16.2318,5.99957647 C16.5144353,5.99957647 16.7752,5.94482353 17.0099647,5.83271765 C17.2468706,5.71984706 17.4654235,5.58418824 17.6659294,5.42818824 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M22.1331882,6.58641176 C21.9799412,6.62648235 21.8141529,6.6612 21.6355176,6.68750588 C21.4547412,6.71304706 21.2946118,6.72681176 21.1543647,6.72681176 C20.6644941,6.72681176 20.2905529,6.59207059 20.0354471,6.32396471 C19.7785059,6.05616471 19.6509529,5.62609412 19.6509529,5.0336 L19.6509529,2.43574118 L19.1043412,2.43574118 L19.1043412,1.74505882 L19.6509529,1.74505882 L19.6509529,0.340752941 L20.462,0.340752941 L20.462,1.74505882 L22.1333412,1.74505882 L22.1333412,2.43574118 L20.462,2.43574118 L20.462,4.66195294 C20.462,4.91889412 20.4673529,5.1194 20.4783647,5.26331765 C20.4893765,5.40723529 20.5312824,5.54396471 20.5984235,5.66784706 C20.6626588,5.78454118 20.7498353,5.86927059 20.8591882,5.92402353 C20.9703765,5.97770588 21.1378471,6.00416471 21.3658824,6.00416471 C21.4987882,6.00416471 21.6373529,5.98504706 21.7792824,5.94589412 C21.9232,5.90674118 22.0256706,5.87385882 22.0914353,5.84648235 L22.1331882,5.84648235 L22.1331882,6.58641176 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M23.6676471,0.926670588 L22.7547412,0.926670588 L22.7547412,0.0737176471 L23.6676471,0.0737176471 L23.6676471,0.926670588 Z M23.6165647,6.63030588 L22.8073529,6.63030588 L22.8073529,1.74505882 L23.6165647,1.74505882 L23.6165647,6.63030588 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#204EA0",
-      "fill-rule": "nonzero",
-      "points": "29.0293059 1.74505882 27.0811412 6.63015294 26.2665765 6.63015294 24.3311059 1.74505882 25.2111294 1.74505882 26.702 5.63328235 28.1800235 1.74505882"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M33.6037765,4.27195294 L30.0553882,4.27195294 C30.0553882,4.57370588 30.1011176,4.83508235 30.1904353,5.05745882 C30.2779176,5.28167059 30.4019529,5.46382353 30.5567294,5.60697647 C30.7061529,5.74645882 30.8829529,5.85107059 31.0889647,5.92234118 C31.2948235,5.99162353 31.5191882,6.02710588 31.7668,6.02710588 C32.0950118,6.02710588 32.4249059,5.95981176 32.7564824,5.82858824 C33.0883647,5.69552941 33.3252706,5.56507059 33.4656706,5.43675294 L33.5089529,5.43675294 L33.5089529,6.33344706 C33.2356471,6.45014118 32.9572941,6.54756471 32.6725176,6.62587059 C32.3882,6.70524706 32.0896588,6.74348235 31.7761294,6.74348235 C30.9779294,6.74348235 30.3545412,6.52477647 29.9058118,6.08552941 C29.4576941,5.6472 29.2334824,5.02304706 29.2334824,4.21643529 C29.2334824,3.41731765 29.4488235,2.78307059 29.8787412,2.31292941 C30.3071294,1.84447059 30.8722471,1.6094 31.5736353,1.6094 C32.2224118,1.6094 32.7239059,1.80164706 33.0755176,2.18705882 C33.4274353,2.57155294 33.6039294,3.11847059 33.6039294,3.82643529 L33.6039294,4.27195294 L33.6037765,4.27195294 Z M32.8149059,3.64321176 C32.8110824,3.21115294 32.7034118,2.87774118 32.4920471,2.6416 C32.2823647,2.40576471 31.9618,2.28723529 31.5298941,2.28723529 C31.0961529,2.28723529 30.7517294,2.41662353 30.4944824,2.67723529 C30.2375412,2.93601176 30.0899529,3.25856471 30.0553882,3.64321176 L32.8149059,3.64321176 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#204EA0",
-      "fill-rule": "nonzero",
-      "points": "4.63901176 15.4219765 0.4108 15.4219765 0.4108 8.9102 4.63901176 8.9102 4.63901176 9.68025882 1.2636 9.68025882 1.2636 11.4653882 4.63901176 11.4653882 4.63901176 12.2343765 1.2636 12.2343765 1.2636 14.6528353 4.63901176 14.6528353"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M9.53037647,15.4219765 L8.71932941,15.4219765 L8.71932941,14.8805647 C8.44602353,15.0995765 8.18556471,15.2661294 7.93397647,15.3834353 C7.68422353,15.5004353 7.40877647,15.5587059 7.1084,15.5587059 C6.60354118,15.5587059 6.20803529,15.4011765 5.92555294,15.0874941 C5.64475294,14.7750353 5.50435294,14.3148353 5.50435294,13.7079647 L5.50435294,10.5376471 L6.3154,10.5376471 L6.3154,13.3196471 C6.3154,13.5663412 6.32641176,13.7789294 6.35042353,13.9546588 C6.37229412,14.1314588 6.42123529,14.2827176 6.49617647,14.4075176 C6.57264706,14.5359882 6.67481176,14.6297412 6.79701176,14.6874 C6.92104706,14.7455176 7.10105882,14.7747294 7.33612941,14.7747294 C7.54581176,14.7747294 7.77583529,14.7202824 8.02314118,14.6087882 C8.27136471,14.4977529 8.5046,14.3564353 8.71948235,14.1843765 L8.71948235,10.5376471 L9.53052941,10.5376471 L9.53052941,15.4219765 L9.53037647,15.4219765 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M13.7151529,11.4332706 L13.6729412,11.4332706 C13.5525765,11.4049765 13.4360353,11.3832588 13.3213294,11.3704118 C13.2081529,11.3569529 13.0734118,11.3505294 12.9183294,11.3505294 C12.6685765,11.3505294 12.4263176,11.4069647 12.1949176,11.5199882 C11.9616824,11.6313294 11.7373176,11.7769294 11.5225882,11.9535765 L11.5225882,15.4219765 L10.7112353,15.4219765 L10.7112353,10.5376471 L11.5225882,10.5376471 L11.5225882,11.2595294 C11.8451412,10.9958588 12.1271647,10.8100353 12.3735529,10.7017529 C12.6179529,10.5924 12.8693882,10.5378 13.1244941,10.5378 C13.2648941,10.5378 13.3667529,10.5413176 13.4303765,10.5485059 C13.4943059,10.5558471 13.5892824,10.5696118 13.715,10.5898 L13.715,11.4332706 L13.7151529,11.4332706 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M18.4206941,12.9816471 C18.4206941,13.7783176 18.2201882,14.4067529 17.8173412,14.8661882 C17.4146471,15.3280706 16.8770588,15.5585529 16.2007529,15.5585529 C15.5212353,15.5585529 14.9799765,15.3279176 14.5789647,14.8661882 C14.1778,14.4067529 13.9772941,13.7783176 13.9772941,12.9816471 C13.9772941,12.1851294 14.1778,11.5563882 14.5789647,11.0954235 C14.9798235,10.6326235 15.5210824,10.4029059 16.2007529,10.4029059 C16.8770588,10.4029059 17.4148,10.6324706 17.8173412,11.0954235 C18.2203412,11.5563882 18.4206941,12.1851294 18.4206941,12.9816471 Z M17.5841059,12.9816471 C17.5841059,12.3493882 17.4619059,11.8790941 17.2178118,11.5719882 C16.9737176,11.2648824 16.6344941,11.1099529 16.2007529,11.1099529 C15.7616588,11.1099529 15.4207529,11.2648824 15.1768118,11.5719882 C14.9342471,11.8790941 14.8123529,12.3493882 14.8123529,12.9816471 C14.8123529,13.5940235 14.9342471,14.0585059 15.1800235,14.3749412 C15.4244235,14.6912235 15.7633412,14.8496706 16.2007529,14.8496706 C16.6309765,14.8496706 16.9717294,14.6932118 17.2161294,14.3793765 C17.4619059,14.066 17.5841059,13.5993765 17.5841059,12.9816471 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M23.5783294,12.9206235 C23.5783294,13.3170471 23.5218941,13.6798235 23.4104,14.0075765 C23.2978353,14.3356353 23.1392353,14.6136824 22.9368941,14.8403412 C22.7472471,15.0562941 22.5231882,15.223 22.2662471,15.3406118 C22.0073176,15.4599059 21.7372235,15.5181765 21.4495412,15.5181765 C21.1978,15.5181765 20.9740471,15.4909529 20.7694118,15.4342118 C20.5675294,15.3794588 20.3613647,15.2932 20.1516824,15.1775765 L20.1516824,17.2239294 L19.3427765,17.2239294 L19.3427765,10.5376471 L20.1516824,10.5376471 L20.1516824,11.0496941 C20.3685529,10.8655529 20.6092824,10.7115412 20.8772353,10.5868941 C21.1470235,10.4636235 21.4331765,10.4027529 21.7372235,10.4027529 C22.3188588,10.4027529 22.7686588,10.6251294 23.0933529,11.0686588 C23.4160588,11.5126471 23.5783294,12.1305294 23.5783294,12.9206235 Z M22.7415882,12.9424941 C22.7415882,12.3536706 22.6412588,11.9135059 22.4447294,11.6221529 C22.2460588,11.3303412 21.9417059,11.1845882 21.5315176,11.1845882 C21.2982824,11.1845882 21.0630588,11.2355176 20.8279882,11.3378353 C20.5929176,11.4398471 20.3685529,11.5745882 20.1516824,11.7405294 L20.1516824,14.508 C20.3814,14.6136824 20.5803765,14.6837294 20.7440235,14.7221176 C20.9098118,14.7602 21.0977765,14.7793176 21.3074588,14.7793176 C21.7575647,14.7793176 22.1091765,14.6253059 22.3645882,14.3156 C22.6161765,14.0077294 22.7415882,13.5486 22.7415882,12.9424941 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M28.5958706,13.0653059 L25.0490118,13.0653059 C25.0490118,13.3652235 25.0947412,13.6266 25.1840588,13.8506588 C25.2733765,14.0731882 25.3934353,14.2553412 25.5485176,14.3995647 C25.6982471,14.5398118 25.8767294,14.6438118 26.0825882,14.7140118 C26.2866118,14.7840588 26.5128118,14.8189294 26.7604235,14.8189294 C27.0886353,14.8189294 27.4166941,14.7513294 27.7485765,14.6199529 C28.0798471,14.4870471 28.3167529,14.3565882 28.4571529,14.2282706 L28.5007412,14.2282706 L28.5007412,15.1257294 C28.2277412,15.2415059 27.9487765,15.3396941 27.6646118,15.4183059 C27.3819765,15.4967647 27.0829765,15.5366824 26.7679176,15.5366824 C25.9694118,15.5366824 25.3460235,15.3162941 24.8979059,14.8776588 C24.4494824,14.4385647 24.2255765,13.8164 24.2255765,13.0079529 C24.2255765,12.2092941 24.4403059,11.5742824 24.8708353,11.1059765 C25.3010588,10.6358353 25.8658706,10.4024471 26.5657294,10.4024471 C27.2163412,10.4024471 27.7155412,10.5936235 28.0673059,10.9784235 C28.4192235,11.3627647 28.5960235,11.9095294 28.5960235,12.6193294 L28.5960235,13.0653059 L28.5958706,13.0653059 Z M27.8063882,12.4356471 C27.8048588,12.0038941 27.6970353,11.6695647 27.4858235,11.4332706 C27.2743059,11.1974353 26.9535882,11.0790588 26.5233647,11.0790588 C26.0896235,11.0790588 25.7436706,11.2082941 25.4865765,11.4689059 C25.2296353,11.7295176 25.0835765,12.0502353 25.0490118,12.4354941 L27.8063882,12.4354941 L27.8063882,12.4356471 Z",
-      "fill": "#204EA0",
-      "fill-rule": "nonzero"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "media-logo",
-      "transform": "translate(0.305882, 19.729412)"
-    }
-  }, [_c('g', {
-    attrs: {
-      "id": "Group",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('polygon', {
-    attrs: {
-      "fill": "#F9A528",
-      "points": "1.36056471 1.42051765 1.35888235 1.4196 0.156 1.4196 0.156 0.281564706 0.276058824 0.281564706 0.154164706 0.152176471 0.154164706 2.22621176 0.154164706 1.42051765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#224F9F",
-      "points": "0.156 4.8334 0.156 4.8334 0.154164706 3.69490588 0.154164706 3.69490588 0.154164706 5.97036471 1.25488235 5.97036471 1.25488235 5.96944706 0.154164706 5.96944706"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#F9A528",
-      "points": "0.156 4.83431765 0.156 4.8334 0.156 4.8334 0.154164706 5.96944706 1.25488235 5.96944706 1.25488235 4.83431765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#F9A528",
-      "points": "5.67442353 4.83431765 4.54097647 4.83431765 4.54097647 5.96944706 5.55604706 5.96944706 5.67442353 5.96944706"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#F9A528",
-      "points": "10.0777529 4.83431765 7.83578824 4.83431765 7.83578824 4.83431765 6.76076471 4.83431765 6.76076471 5.96944706 8.75267059 5.96944706 10.0756118 5.96944706"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#F9A528",
-      "x": "16.4436235",
-      "y": "4.83431765",
-      "width": "1.11891765",
-      "height": "1.13512941"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#F9A528",
-      "points": "22.7769176 5.8474 22.3372118 4.83431765 18.3046118 4.83431765 17.8211647 5.96944706 19.0424 5.96944706 19.3686235 5.09477647 21.2603529 5.09844706 21.5882588 5.96944706 22.3392 5.96944706 22.8276941 5.96944706"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M15.0748,4.83431765 L12.8348235,4.83431765 C12.8348235,4.83431765 12.8329882,4.83431765 12.8313059,4.83431765 L12.2903529,4.83431765 L12.2903529,4.83431765 L11.1530824,4.83431765 L11.1530824,5.96944706 L12.8458353,5.96944706 C13.7572118,5.95675294 14.5661176,5.51398824 15.0748,4.83431765 Z",
-      "fill": "#F9A528"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "points": "1.89448235 3.69490588 2.95543529 4.8334 2.96262353 4.8334 3.94129412 3.69490588"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "points": "1.25488235 3.69490588 0.154164706 3.69490588 0.156 4.8334 1.25488235 4.8334"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "points": "4.53929412 3.69490588 4.54097647 4.8334 5.67442353 4.8334 5.67442353 3.69490588"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "x": "6.76076471",
-      "y": "3.69490588",
-      "width": "1.07502353",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "x": "16.4436235",
-      "y": "3.69490588",
-      "width": "1.11891765",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "points": "20.7827176 3.93915294 19.8441176 3.93915294 19.9316 3.69490588 18.7891294 3.69490588 18.3046118 4.8334 22.3353765 4.8334 21.8416824 3.69490588 20.6915647 3.69490588"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M14.404,3.69490588 C14.1820824,4.34307059 13.5765882,4.81948235 12.8644941,4.83324706 L15.0749529,4.83324706 C15.3207294,4.50228235 15.4979882,4.11610588 15.5798118,3.69490588 L14.404,3.69490588 Z",
-      "fill": "#A6CC3C"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#A6CC3C",
-      "x": "11.1530824",
-      "y": "3.69490588",
-      "width": "1.13727059",
-      "height": "1.13834118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#4BB86A",
-      "points": "0.154164706 3.69490588 1.25488235 3.69490588 1.25488235 3.01141176 1.89448235 3.69490588 3.94129412 3.69490588 4.53929412 3.00254118 4.53929412 3.69490588 5.67442353 3.69490588 5.67442353 2.55855294 3.46182353 2.55855294 2.95696471 3.10256471 2.4414 2.55855294 0.154164706 2.55855294 0.154164706 3.69490588"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#4BB86A",
-      "points": "7.83578824 3.69398824 10.0756118 3.69490588 10.0740824 2.55855294 6.75862353 2.55855294 6.76076471 3.69490588 7.83578824 3.69490588"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#4BB86A",
-      "x": "16.4436235",
-      "y": "2.55855294",
-      "width": "1.11891765",
-      "height": "1.13635294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#4BB86A",
-      "points": "18.7891294 3.69490588 19.9316 3.69490588 20.3017176 2.68090588 20.6915647 3.69490588 21.8416824 3.69490588 21.3478353 2.55855294 19.2702824 2.55855294"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M15.5686471,2.55855294 L14.3896235,2.55855294 C14.4567647,2.74483529 14.495,2.94411765 14.495,3.14814118 C14.495,3.34054118 14.4624235,3.52361176 14.4038471,3.69475294 L15.5796588,3.69475294 C15.6125412,3.51917647 15.6322706,3.33671765 15.6322706,3.14982353 C15.6322706,2.94778824 15.6104,2.74927059 15.5686471,2.55855294 Z",
-      "fill": "#4BB86A"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#4BB86A",
-      "points": "11.1530824 2.55855294 11.1530824 3.69490588 12.2902 3.69490588 12.2863765 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#224F9F",
-      "points": "21.3531882 2.55855294 20.8576588 1.42051765 20.8523059 1.42051765 21.3456941 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#079EC5",
-      "points": "2.4414 2.55855294 1.36056471 1.42051765 0.154164706 1.42051765 0.154164706 2.22621176 0.154164706 2.55855294"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#079EC5",
-      "points": "4.51711765 1.42051765 3.46350588 2.55855294 5.67442353 2.55855294 5.67442353 1.42051765"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#079EC5",
-      "points": "10.0740824 2.55687059 7.83578824 2.55687059 7.84144706 1.42235294 10.0777529 1.42235294 10.0777529 1.42051765 6.75862353 1.42051765 6.75862353 2.55855294 10.0740824 2.55855294"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#079EC5",
-      "x": "16.4436235",
-      "y": "1.42051765",
-      "width": "1.11891765",
-      "height": "1.13803529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#079EC5",
-      "points": "19.2702824 2.55855294 21.3456941 2.55855294 20.8523059 1.42051765 19.7551059 1.42051765"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M12.2863765,2.55855294 L12.2863765,1.42418824 L12.8313059,1.42418824 C13.5440118,1.42418824 14.1525647,1.911 14.3896235,2.55855294 L15.5686471,2.55855294 C15.4811647,2.13872941 15.3006941,1.75224706 15.0512471,1.42051765 L11.1530824,1.42051765 L11.1530824,2.55855294 L12.2863765,2.55855294 Z",
-      "fill": "#079EC5"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#1C78BE",
-      "points": "5.67442353 1.4196 5.67442353 0.281564706 5.57424706 0.281564706 4.51895294 1.4196"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#1C78BE",
-      "points": "0.156 1.4196 1.35888235 1.4196 0.276058824 0.281564706 0.156 0.281564706"
-    }
-  }), _vm._v(" "), _c('rect', {
-    attrs: {
-      "fill": "#1C78BE",
-      "x": "6.75862353",
-      "y": "0.286917647",
-      "width": "3.31897647",
-      "height": "1.13268235"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#1C78BE",
-      "points": "17.5607059 0.286917647 16.4436235 0.286917647 16.4436235 1.4196 17.5625412 1.4196"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "fill": "#1C78BE",
-      "points": "20.8523059 1.4196 20.3584588 0.281564706 20.2377882 0.281564706 19.7551059 1.4196"
-    }
-  }), _vm._v(" "), _c('path', {
-    attrs: {
-      "d": "M12.8019412,0.286917647 L11.1530824,0.284929412 L11.1530824,1.4196 L15.0494118,1.4196 C14.5332353,0.734423529 13.7189765,0.286917647 12.8019412,0.286917647 Z",
-      "fill": "#1C78BE"
-    }
-  })]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(0.152941, 0.152941)"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(0.611765, 0.152941)"
-    }
-  })])]), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "flag",
-      "fill-rule": "nonzero"
-    }
-  }, [_c('rect', {
-    attrs: {
-      "fill": "#224F9F",
-      "x": "0.103082353",
-      "y": "0",
-      "width": "37.9021882",
-      "height": "26"
-    }
-  }), _vm._v(" "), _c('g', {
-    attrs: {
-      "id": "Group",
-      "transform": "translate(9.329412, 3.594118)",
-      "stroke-width": "0.5",
-      "stroke": "#FAED36",
-      "fill": "#FAED36"
-    }
-  }, [_c('polygon', {
-    attrs: {
-      "points": "19.2282235 9.12936471 18.8327176 9.12125882 18.2478706 9.11024706 18.0563882 8.58887059 17.9323529 8.25561176 17.8104588 8.58887059 17.6205059 9.11024706 17.0356588 9.12125882 16.6404588 9.12936471 16.9630118 9.36183529 17.4239765 9.69264706 17.2563529 10.2146353 17.1413412 10.5700706 17.4531882 10.3643647 17.9323529 10.0470118 18.4171765 10.3643647 18.7252 10.5700706 18.6121765 10.2146353 18.4460824 9.69264706 18.9055176 9.36183529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "16.3249412 5.57562353 16.1591529 6.09852941 16.0462824 6.45304706 16.3559882 6.24978824 16.8372941 5.92815294 17.3221176 6.24978824 17.628 6.45304706 17.5168118 6.09852941 17.3493412 5.57562353 17.8086235 5.24465882 18.1328588 5.01218824 17.7376588 5.00515294 17.1506706 4.99597647 16.9611765 4.47307059 16.8372941 4.13675294 16.7147882 4.47307059 16.5257529 4.99597647 15.9406 5.00515294 15.5450941 5.01218824 15.8658118 5.24465882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "14.1727529 2.00154118 13.9812706 1.47955294 13.8572353 1.14415294 13.7354941 1.47955294 13.5456941 2.00154118 12.9608471 2.01163529 12.5633529 2.02065882 12.8877412 2.25221176 13.3488588 2.58394118 13.1813882 3.10608235 13.0663765 3.4606 13.3779176 3.25825882 13.8572353 2.93830588 14.3403765 3.25825882 14.6503882 3.4606 14.5353765 3.10608235 14.3711176 2.58394118 14.8305529 2.25221176 15.1528 2.02065882 14.7594353 2.01163529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "10.0066353 0.897305882 9.81515294 0.376847059 9.69081176 0.0414470588 9.57075294 0.376847059 9.37927059 0.897305882 8.79442353 0.91 8.39708235 0.916423529 8.72147059 1.14858824 9.18090588 1.48138824 9.01481176 2.00429412 8.90010588 2.35789412 9.20996471 2.15555294 9.69081176 1.83483529 10.1756353 2.15555294 10.4836588 2.35789412 10.3710941 2.00429412 10.205 1.48138824 10.6644353 1.14858824 10.9848471 0.916423529 10.5914824 0.91"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "5.87661176 2.00154118 5.68512941 1.47955294 5.56507059 1.14415294 5.44287059 1.47955294 5.25169412 2.00154118 4.66654118 2.01163529 4.2692 2.01790588 4.59175294 2.25129412 5.05302353 2.58210588 4.88692941 3.10409412 4.77252941 3.4606 5.08208235 3.25458824 5.56507059 2.93662353 6.04438824 3.25458824 6.35424706 3.4606 6.24137647 3.10409412 6.07528235 2.58210588 6.53471765 2.25129412 6.85910588 2.01790588 6.46176471 2.01163529"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "2.86978824 4.96416471 2.68151765 4.44370588 2.55962353 4.10937647 2.43604706 4.44370588 2.2464 4.96416471 1.66109412 4.97502353 1.26558824 4.98236471 1.58829412 5.2156 2.04772941 5.54732941 1.88010588 6.06855294 1.76861176 6.42383529 2.0748 6.21981176 2.55794118 5.90092941 3.04092941 6.21981176 3.3488 6.42383529 3.23562353 6.06855294 3.06983529 5.54732941 3.53110588 5.2156 3.85197647 4.98236471 3.45616471 4.97502353"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "1.9162 10.3568706 2.22605882 10.5625765 2.11334118 10.2056118 1.94724706 9.68423529 2.40637647 9.35265882 2.72908235 9.12125882 2.33388235 9.11284706 1.74872941 9.10305882 1.55755294 8.5826 1.43535294 8.24827059 1.31284706 8.5826 1.12167059 9.10305882 0.536823529 9.11284706 0.141317647 9.12125882 0.461882353 9.35265882 0.923 9.68423529 0.757211765 10.2056118 0.644341176 10.5625765 0.952058824 10.3568706 1.43535294 10.0379882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "2.85663529 13.1873529 2.66545882 12.6678118 2.54509412 12.3333294 2.42105882 12.6678118 2.22988235 13.1873529 1.64503529 13.2000471 1.24952941 13.2087647 1.57177647 13.4384824 2.03121176 13.7722 1.86511765 14.2934235 1.75041176 14.6459529 2.06027059 14.4445294 2.54142353 14.1258 3.02441176 14.4445294 3.33243529 14.6476353 3.21956471 14.2934235 3.05561176 13.7722 3.51458824 13.4384824 3.83545882 13.2087647 3.43995294 13.2000471"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "5.84021176 16.1778118 5.65071765 15.6547529 5.52851765 15.3205765 5.40463529 15.6547529 5.21529412 16.1778118 4.62830588 16.1869882 4.2328 16.1960118 4.55718824 16.4275647 5.01448235 16.7592941 4.85052941 17.2802118 4.73582353 17.6359529 5.04354118 17.4334588 5.52851765 17.1135059 6.00768235 17.4334588 6.31952941 17.6359529 6.20451765 17.2802118 6.03903529 16.7592941 6.49816471 16.4275647 6.82255294 16.1960118 6.42536471 16.1869882"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "10.0026588 17.2812824 9.81331765 16.7629647 9.68912941 16.4264941 9.56891765 16.7629647 9.37743529 17.2812824 8.79258824 17.2932118 8.39509412 17.3025412 8.71764706 17.5356235 9.17922353 17.8653647 9.01129412 18.3867412 8.90010588 18.7430941 9.20812941 18.5381529 9.68912941 18.2182 10.1724235 18.5381529 10.4802941 18.7430941 10.3692588 18.3867412 10.2013294 17.8653647 10.6607647 17.5356235 10.9831647 17.3025412 10.5896471 17.2932118"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "14.1345176 16.1978471 13.9430353 15.6766235 13.8208353 15.3421412 13.6986353 15.6766235 13.5089882 16.1978471 12.9241412 16.2106941 12.5268 16.2180353 12.8514941 16.4494353 13.3106235 16.7810118 13.1445294 17.3025412 13.0316588 17.6576706 13.3396824 17.4553294 13.8208353 17.1355294 14.3038235 17.4553294 14.6100118 17.6576706 14.5008118 17.3025412 14.3347176 16.7810118 14.7920118 16.4494353 15.1148706 16.2180353 14.7193647 16.2106941"
-    }
-  }), _vm._v(" "), _c('polygon', {
-    attrs: {
-      "points": "17.1359882 13.2237529 16.9445059 12.7022235 16.8226118 12.3689647 16.7004118 12.7022235 16.5089294 13.2237529 15.9237765 13.2344588 15.5285765 13.2419529 15.8526588 13.4751882 16.3105647 13.806 16.1449294 14.3289059 16.0334353 14.6834235 16.3399294 14.4792471 16.8226118 14.1603647 17.3052941 14.4792471 17.6117882 14.6834235 17.4986118 14.3289059 17.3346588 13.806 17.7940941 13.4751882 18.1166471 13.2419529 17.7208353 13.2344588"
-    }
-  })])])])])])])]), _vm._v(" "), _c('div', {
-    staticClass: "collapse navbar-collapse justify-content-end",
-    attrs: {
-      "id": "menu-main"
-    }
-  }, [_c('ul', {
-    staticClass: "navbar-nav justify-content-around"
-  }, [_c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Apps"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-home",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Network"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type + '/network'
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-users",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]), _vm._v(" "), (_vm.type == 'teacher') ? _c('li', {
-    staticClass: "nav-item"
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": '/' + _vm.type + '/settings',
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Student settings"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-user",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })])]) : _vm._e(), _vm._v(" "), _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "id": "notifications-menu",
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Notifications"
-    }
-  }, [_c('notifications-menu', {
-    attrs: {
-      "notifications": _vm.notifs
-    }
-  })], 1), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('notifications-dropdown-menu', {
-    attrs: {
-      "notifications": _vm.notifs
-    }
-  }), _vm._v(" "), _c('notifications', {
-    attrs: {
-      "user": _vm.userParsed,
-      "user_type": _vm.user_type
-    }
-  })], 1)])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "navbar-toggler navbar-toggler-right",
-    attrs: {
-      "type": "button",
-      "data-toggle": "collapse",
-      "data-target": "#menu-main",
-      "aria-controls": "menu-main",
-      "aria-expanded": "false",
-      "aria-label": "Toggle navigation"
-    }
-  }, [_c('span', {
-    staticClass: "navbar-toggler-icon"
-  })])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', {
-    staticClass: "nav-item",
-    attrs: {
-      "data-toggle": "tooltip",
-      "data-placement": "bottom",
-      "data-html": "true",
-      "title": "Change Language"
-    }
-  }, [_c('a', {
-    staticClass: "nav-link",
-    attrs: {
-      "href": "#",
-      "id": "dropdownMenuLink",
-      "data-toggle": "dropdown",
-      "aria-haspopup": "true",
-      "aria-expanded": "false"
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-cog",
-    attrs: {
-      "aria-hidden": "true"
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "dropdown-menu dropdown-menu-right px-2",
-    attrs: {
-      "aria-labelledby": "dropdownMenuLink"
-    }
-  }, [_c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/en"
-    }
-  }, [_vm._v("\n              English\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/fr"
-    }
-  }, [_vm._v("\n              Francais\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/it"
-    }
-  }, [_vm._v("\n              Italiano\n            ")]), _vm._v(" "), _c('a', {
-    staticClass: "dropdown-item markasread",
-    attrs: {
-      "href": "/set-locale/sr"
-    }
-  }, [_vm._v("\n              српски\n            ")])])])
-}]}
-module.exports.render._withStripped = true
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { attrs: { id: "notifications" } },
+    _vm._l(_vm.notifications, function(notification) {
+      return _c("notification-single", {
+        key: notification.key,
+        attrs: { notification: notification }
+      })
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-49f2c950", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-2c8d89f1", esExports)
   }
 }
 
 /***/ }),
+/* 367 */,
+/* 368 */,
 /* 369 */,
 /* 370 */,
-/* 371 */,
+/* 371 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "notification-dropdown-single" } }, [
+    _c(
+      "a",
+      {
+        attrs: {
+          href:
+            "/teacher/" +
+            _vm.section_slug +
+            "/" +
+            _vm.app_cat_slug +
+            "/" +
+            _vm.app_slug +
+            "/" +
+            _vm.token
+        },
+        on: { click: _vm.markAsRead }
+      },
+      [
+        _c("i", { staticClass: "fa fa-globe" }),
+        _vm._v(" -\n    "),
+        _c("span", [_vm._v(_vm._s(_vm.notification.data.sender.name))]),
+        _vm._v(", sent you a new notification\n  ")
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3d56c96a", esExports)
+  }
+}
+
+/***/ }),
 /* 372 */,
 /* 373 */,
-/* 374 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "notification-dropdown-single"
-    }
-  }, [_c('a', {
-    attrs: {
-      "href": '/teacher/' + _vm.section_slug + '/' + _vm.app_cat_slug + '/' + _vm.app_slug + '/' + _vm.token
-    },
-    on: {
-      "click": _vm.markAsRead
-    }
-  }, [_c('i', {
-    staticClass: "fa fa-globe"
-  }), _vm._v(" -\n    "), _c('span', [_vm._v(_vm._s(_vm.notification.data.sender.name))]), _vm._v(", sent you a new notification\n  ")])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-54f0833e", module.exports)
-  }
-}
-
-/***/ }),
-/* 375 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    ref: "dropdown",
-    attrs: {
-      "id": "notifications-dropdown"
-    }
-  }, _vm._l((_vm.notifications), function(notification) {
-    return _c('notification-dropdown-single', {
-      key: notification.key,
-      staticClass: "notif",
-      attrs: {
-        "notification": notification
-      }
-    })
-  }))
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-564207cb", module.exports)
-  }
-}
-
-/***/ }),
+/* 374 */,
+/* 375 */,
 /* 376 */,
 /* 377 */,
 /* 378 */,
-/* 379 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    attrs: {
-      "id": "notifications"
-    }
-  }, _vm._l((_vm.notifications), function(notification) {
-    return _c('notification-single', {
-      key: notification.key,
-      attrs: {
-        "notification": notification
-      }
-    })
-  }))
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-6ad11b1b", module.exports)
-  }
-}
-
-/***/ }),
+/* 379 */,
 /* 380 */,
 /* 381 */,
 /* 382 */,
 /* 383 */,
 /* 384 */,
-/* 385 */,
-/* 386 */,
-/* 387 */,
-/* 388 */,
-/* 389 */,
-/* 390 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 385 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    ref: "notification_bg",
-    attrs: {
-      "id": "notification-single"
-    }
-  }, [_c('div', {
-    staticClass: "notification-content"
-  }, [_c('div', {
-    staticClass: "icon-left"
-  }, [_c('div', {
-    ref: "icon_bg",
-    staticClass: "icon_bg"
-  }, [_c('i', {
-    ref: "icon",
-    staticClass: "fa fa-exclamation"
-  })])]), _vm._v(" "), _c('div', {
-    ref: "divider",
-    staticClass: "divider"
-  }), _vm._v(" "), _c('div', {
-    ref: "notification",
-    staticClass: "notification"
-  }, [_c('div', {
-    staticClass: "name"
-  }, [_vm._v("\n        " + _vm._s(_vm.notification.notification.data.sender.name) + ",\n      ")]), _vm._v(" "), _c('div', {
-    staticClass: "message"
-  }, [_vm._v("\n        " + _vm._s(_vm.notification.message) + "\n      ")])]), _vm._v(" "), _c('div', {
-    ref: "close_btn",
-    staticClass: "close-notification"
-  }, [_c('i', {
-    staticClass: "fa fa-times",
-    on: {
-      "click": _vm.dismissNotification
-    }
-  })])])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "main-menu-component" } }, [
+    _c(
+      "nav",
+      {
+        staticClass: "navbar navbar-toggleable-md navbar-light fixed-top",
+        attrs: { id: "main-menu" }
+      },
+      [
+        _vm._m(0, false, false),
+        _vm._v(" "),
+        _c("div", { staticClass: "navbar-brand" }, [
+          _c("a", { attrs: { href: "/" } }, [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  id: "main-logo",
+                  width: "102px",
+                  height: "26px",
+                  viewBox: "0 0 102 26",
+                  version: "1.1",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                }
+              },
+              [
+                _c(
+                  "g",
+                  {
+                    attrs: {
+                      id: "Symbols",
+                      stroke: "none",
+                      "stroke-width": "1",
+                      fill: "none",
+                      "fill-rule": "evenodd"
+                    }
+                  },
+                  [
+                    _c(
+                      "g",
+                      { attrs: { id: "main-logo", "fill-rule": "nonzero" } },
+                      [
+                        _c("g", { attrs: { id: "Group" } }, [
+                          _c(
+                            "g",
+                            {
+                              attrs: {
+                                id: "text",
+                                transform: "translate(54.516129, 3.774194)"
+                              }
+                            },
+                            [
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M5.23310771,18.4389946 C6.25875014,18.4389946 7.10783707,18.1210949 7.96843849,17.3138979 L7.20208529,15.8579748 C7.20208529,15.8579748 6.47112849,16.6125078 5.44548606,16.6125078 C4.3609918,16.6125078 3.46499399,15.7784999 3.46499399,14.2301753 C3.46499399,12.5358276 4.49020995,11.8473641 5.41008967,11.8473641 C6.65962493,11.8473641 7.35561181,12.6287079 7.35561181,12.6287079 L7.50871186,10.7490782 C7.50871186,10.7490782 6.69502132,10.0476882 5.20922581,10.0476882 C3.06369273,10.0476882 1.31903445,11.4375417 1.31903445,14.2301753 C1.31903445,17.0357357 3.09951558,18.4389946 5.23310771,18.4389946 L5.23310771,18.4389946 Z M16.5160273,14.243102 C16.5160273,11.5696807 14.7709426,10.0342828 12.5900131,10.0342828 C10.4090837,10.0342828 8.67593986,11.5696807 8.67593986,14.2301753 C8.67593986,16.9035966 10.4090837,18.4389946 12.5900131,18.4389946 C14.7709426,18.4389946 16.5160273,16.9035966 16.5160273,14.243102 L16.5160273,14.243102 Z M14.3581268,14.243102 C14.3581268,15.7650945 13.5683182,16.6125078 12.5900131,16.6125078 C11.6232225,16.6125078 10.8214729,15.7650945 10.8214729,14.2301753 C10.8214729,12.7345149 11.6232225,11.8473641 12.5900131,11.8473641 C13.5683182,11.8473641 14.3581268,12.7345149 14.3581268,14.243102 L14.3581268,14.243102 Z M24.4618775,16.5861757 C22.7760711,16.5861757 23.0473013,14.6797353 21.8920142,14.3493877 C22.30483,14.269434 23.0588157,13.7269938 23.0588157,12.549233 C23.0588157,10.8682906 21.8681323,10.1400897 19.8049065,10.1400897 L17.9306036,10.1400897 L17.9306036,18.3461142 L20.0526812,18.3461142 L20.0526812,15.1565848 C20.5832007,15.1565848 20.8309754,15.5271485 21.0663827,16.0035193 C21.5265358,16.9701449 21.8804997,18.4121838 24.0848846,18.4121838 L24.4618775,16.5861757 Z M21.0309863,12.6550399 C21.0309863,13.1840748 20.6544199,13.5153799 20.0526812,13.5153799 L20.0526812,11.8741749 C20.618597,11.8741749 21.0309863,12.1915959 21.0309863,12.6550399 L21.0309863,12.6550399 Z M31.9953384,18.4121838 L31.9953384,10.1400897 L29.8732608,10.1400897 L29.8732608,14.0444147 L25.6410465,10.0740202 L25.2870826,10.0740202 L25.2870826,18.3461142 L27.4091602,18.3461142 L27.4091602,14.4288626 L31.641801,18.4121838 L31.9953384,18.4121838 Z M38.8217244,18.3461142 L39.1987173,16.5335116 L35.8859563,16.5335116 L35.8859563,14.9047546 L37.6191001,14.9047546 L37.6191001,13.0916732 L35.8859563,13.0916732 L35.8859563,11.9402445 L38.2558086,11.9402445 L38.2558086,10.1400897 L33.7638786,10.1400897 L33.7638786,18.3461142 L38.8217244,18.3461142 Z M46.9091602,16.5861757 C45.2233537,16.5861757 45.4945839,14.6797353 44.3392969,14.3493877 C44.7521126,14.269434 45.5065249,13.7269938 45.5065249,12.549233 C45.5065249,10.8682906 44.315415,10.1400897 42.2521892,10.1400897 L40.3778863,10.1400897 L40.3778863,18.3461142 L42.4999639,18.3461142 L42.4999639,15.1565848 C43.0300569,15.1565848 43.2778316,15.5271485 43.5136654,16.0035193 C43.973392,16.9701449 44.3273559,18.4121838 46.5317408,18.4121838 L46.9091602,16.5861757 Z M43.478269,12.6550399 C43.478269,13.1840748 43.1008496,13.5153799 42.4999639,13.5153799 L42.4999639,11.8741749 C43.0658797,11.8741749 43.478269,12.1915959 43.478269,12.6550399 L43.478269,12.6550399 Z",
+                                  id: "Fill-1095",
+                                  fill: "#656A6B"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M27.7687534,4.88770738 L27.7687534,3.07462599 L26.0825205,3.07462599 L26.0825205,1.90931306 L28.5116512,1.90931306 L28.5116512,0.123042492 L23.9604429,0.123042492 L23.9604429,8.32906702 L26.0825205,8.32906702 L26.0825205,4.88770738 L27.7687534,4.88770738 Z M29.3364297,8.32954579 L31.4585074,8.32954579 L31.4585074,0.123042492 L29.3364297,0.123042492 L29.3364297,8.32954579 Z M37.3654401,8.32906702 L37.7428595,6.51550688 L35.1137179,6.51550688 L35.1137179,0.123042492 L32.9912138,0.123042492 L32.9912138,8.32906702 L37.3654401,8.32906702 Z M39.9706998,0.0698996255 L39.6525588,0.0698996255 L38.2733789,8.32906702 L40.3596337,8.32906702 L40.8666976,4.74168419 L42.4467414,7.28344523 L44.0148442,4.74168419 L44.5338491,8.32906702 L46.6201039,8.32906702 L45.2289831,0.0698996255 L44.9104155,0.0698996255 L42.4467414,4.22605476 L39.9706998,0.0698996255 Z",
+                                  id: "Fill-1097",
+                                  fill: "#656A6B"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("path", {
+                                attrs: {
+                                  d:
+                                    "M6.05268343,1.92300573 L6.05268343,0.122850986 L1.08908584,0.122850986 L0.712092947,1.92300573 L2.43329579,1.92300573 L2.43329579,8.32887552 L4.53191799,8.32887552 L4.53191799,1.92300573 L6.05268343,1.92300573 Z M13.5038371,8.32887552 L13.5038371,0.122850986 L11.381333,0.122850986 L11.381333,2.92889006 L9.10615528,2.92889006 L9.10615528,0.122850986 L6.99559213,0.122850986 L6.99559213,8.32887552 L9.10615528,8.32887552 L9.10615528,4.74245021 L11.381333,4.74245021 L11.381333,8.32887552 L13.5038371,8.32887552 Z M20.0939628,8.32887552 L20.4709557,6.51579413 L17.1586211,6.51579413 L17.1586211,4.88751587 L18.8913384,4.88751587 L18.8913384,3.07395572 L17.1586211,3.07395572 L17.1586211,1.92300573 L19.528047,1.92300573 L19.528047,0.122850986 L15.036117,0.122850986 L15.036117,8.32887552 L20.0939628,8.32887552 Z",
+                                  id: "Fill-1099",
+                                  fill: "#A5B1B4"
+                                }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("g", { attrs: { id: "logo" } }, [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M3.98384254,8.51956744 L3.98384254,8.72878755 L4.34804155,8.62441688 L3.98384254,8.51956744 Z M24.6374237,14.441885 L18.6754773,12.731738 L0.0872542373,18.0996463 L24.6374237,25.1915857 L24.6374237,14.441885 Z M14.4206605,11.5108884 L14.369485,11.4979618 L13.2943729,11.80868 L13.2943729,13.0730972 L14.4206605,12.7484948 L14.4206605,11.5108884 Z M7.08507818,13.6002169 L7.08507818,14.8646341 L8.21435101,14.5400318 L8.21435101,13.2760933 L7.08507818,13.6002169 Z M10.190152,12.7044484 L10.190152,13.9688656 L11.3189984,13.6442633 L11.3189984,12.3798461 L10.190152,12.7044484 Z M2.00846802,15.0676303 L0.879621651,15.3917539 L0.879621651,16.6561711 L2.00846802,16.3315687 L2.00846802,15.0676303 Z M3.98384254,14.4959854 L3.98384254,15.7604026 L5.11311536,15.4358003 L5.11311536,14.1718618 L3.98384254,14.4959854 Z M2.00846802,8.03601524 L0.879621651,8.36061761 L0.879621651,9.62503481 L2.00846802,9.30043244 L2.00846802,8.03601524 Z",
+                                id: "Fill-1105",
+                                fill: "#FADA3E"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M16.3958218,12.177185 L16.3958218,12.0790383 L14.4204472,11.5112235 L14.4204472,12.7483512 L13.2945861,13.0729535 L13.2945861,11.8085363 L14.3692717,11.4978181 L4.34825478,8.62427325 L3.98405577,8.72912269 L3.98405577,8.51942381 L4.26462548e-05,7.37709157 L4.26462548e-05,18.0760432 L0.0874674686,18.0995026 L18.6752641,12.7315944 L16.5647009,12.1269148 L16.3958218,12.177185 Z M0.87940842,8.36047398 L2.00868125,8.03635037 L2.00868125,9.30028881 L0.87940842,9.62489118 L0.87940842,8.36047398 Z M3.98405577,15.760259 L3.98405577,14.4963206 L5.11290213,14.1717182 L5.11290213,15.4361354 L3.98405577,15.760259 Z M0.87940842,15.392089 L2.00868125,15.0674867 L2.00868125,16.3319039 L0.87940842,16.6560275 L0.87940842,15.392089 Z M10.1899388,13.968722 L10.1899388,12.7047836 L11.3192116,12.3801812 L11.3192116,13.6441196 L10.1899388,13.968722 Z M7.08529142,14.8644905 L7.08529142,13.6005521 L8.21456424,13.2759497 L8.21456424,14.5403669 L7.08529142,14.8644905 Z",
+                                id: "Fill-1107",
+                                fill: "#F0871F"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M17.5250519,11.8494228 L16.5646583,12.1266275 L18.6752214,12.7317859 L24.6371679,11.0111061 L24.6371679,0.260926684 L0,7.37680432 L3.98401312,8.51961532 L3.98401312,7.46489699 L5.11328595,7.14029462 L5.11328595,8.40471182 L4.34821214,8.62446476 L14.3692291,11.4980096 L14.4208311,11.4841255 L14.4208311,11.5109363 L16.3957791,12.0792298 L16.3957791,10.9129593 L17.5250519,10.5850056 L17.5250519,11.8494228 Z M22.6050738,2.08645595 L23.7313614,1.76233234 L23.7313614,3.02627077 L22.6050738,3.35087314 L22.6050738,2.08645595 Z M17.5250519,3.55386932 L17.5250519,4.81780775 L16.3957791,5.14576147 L16.3957791,3.88134428 L17.5250519,3.55386932 Z M14.4208311,4.45298916 L14.4208311,5.71692759 L13.2945435,6.04152996 L13.2945435,4.77759153 L14.4208311,4.45298916 Z M19.5004265,4.24999299 L19.5004265,2.98557579 L20.6292728,2.65762206 L20.6292728,3.92203926 L19.5004265,4.24999299 Z M22.6050738,10.3824882 L22.6050738,9.11807102 L23.7313614,8.79346864 L23.7313614,10.0578858 L22.6050738,10.3824882 Z M19.5004265,11.2811293 L19.5004265,10.0171909 L20.6292728,9.68923713 L20.6292728,10.9536543 L19.5004265,11.2811293 Z M7.08524877,7.83306694 L7.08524877,6.56912851 L8.2145216,6.24452614 L8.2145216,7.50894333 L7.08524877,7.83306694 Z M10.1898961,5.67336002 L11.3187425,5.34875765 L11.3187425,6.61269608 L10.1898961,6.93729845 L10.1898961,5.67336002 Z",
+                                id: "Fill-1109",
+                                fill: "#F49F52"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("polygon", {
+                              attrs: {
+                                id: "Fill-1111",
+                                fill: "#ED736E",
+                                points:
+                                  "49.2748475 18.0929914 49.2748475 7.36004756 30.6055965 12.7246044"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("polygon", {
+                              attrs: {
+                                id: "Fill-1113",
+                                fill: "#4CBAB7",
+                                points:
+                                  "49.2748475 18.1098439 49.2748475 18.0930872 30.6055965 12.7247002 24.6376796 14.4425074 24.6376796 25.1922081"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("polygon", {
+                              attrs: {
+                                id: "Fill-1115",
+                                fill: "#EC6666",
+                                points:
+                                  "49.2748475 7.36004756 49.2748475 7.3432908 24.6376796 0.260926684 24.6376796 11.0106273 30.6055965 12.7246044"
+                              }
+                            })
+                          ])
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "navbar-brand" }, [
+          _c("a", { attrs: { href: "#" } }, [
+            _c(
+              "svg",
+              {
+                attrs: {
+                  width: "77px",
+                  height: "26px",
+                  viewBox: "0 0 77 26",
+                  version: "1.1",
+                  xmlns: "http://www.w3.org/2000/svg",
+                  "xmlns:xlink": "http://www.w3.org/1999/xlink"
+                }
+              },
+              [
+                _c("defs"),
+                _vm._v(" "),
+                _c(
+                  "g",
+                  {
+                    attrs: {
+                      id: "Page-1",
+                      stroke: "none",
+                      "stroke-width": "1",
+                      fill: "none",
+                      "fill-rule": "evenodd"
+                    }
+                  },
+                  [
+                    _c(
+                      "g",
+                      {
+                        attrs: {
+                          id: "creative-europe-logo",
+                          transform: "translate(0.188235, 0.000000)"
+                        }
+                      },
+                      [
+                        _c(
+                          "g",
+                          {
+                            attrs: {
+                              id: "text",
+                              transform: "translate(42.976471, 0.000000)"
+                            }
+                          },
+                          [
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M5.36578824,6.15741176 C5.20932941,6.22745882 5.06556471,6.29505882 4.93801176,6.35501176 C4.81045882,6.41603529 4.64252941,6.48088235 4.43498824,6.54725882 C4.25987059,6.60185882 4.07022353,6.65018824 3.86451765,6.68949412 C3.65865882,6.7288 3.43261176,6.74883529 3.18637647,6.74883529 C2.71975294,6.74883529 2.29717647,6.68230588 1.9162,6.55001176 C1.53705882,6.41618824 1.20532941,6.20834118 0.923,5.92677647 C0.647552941,5.64888235 0.430682353,5.29803529 0.277741176,4.87056471 C0.120976471,4.44324706 0.0445058824,3.94557647 0.0445058824,3.38076471 C0.0445058824,2.84394118 0.117458824,2.36462353 0.268564706,1.94281176 C0.418294118,1.51901176 0.633329412,1.16265882 0.915505882,0.870235294 C1.18728235,0.587752941 1.51687059,0.3718 1.90335294,0.223294118 C2.28998824,0.0737176471 2.71791765,0 3.18989412,0 C3.53462353,0 3.87904706,0.0428235294 4.22347059,0.127552941 C4.56605882,0.211364706 4.94688235,0.360788235 5.36578824,0.573223529 L5.36578824,1.60022353 L5.30247059,1.60022353 C4.94871765,1.30122353 4.59695294,1.08175294 4.251,0.945176471 C3.90275294,0.807529412 3.52896471,0.740082353 3.13345882,0.740082353 C2.80907059,0.740082353 2.51787059,0.791929412 2.25710588,0.898682353 C1.99634118,1.00528235 1.76478824,1.17015294 1.56076471,1.3962 C1.36209412,1.61291765 1.20884706,1.89004706 1.09811765,2.22468235 C0.986623529,2.55901176 0.932023529,2.94442353 0.932023529,3.38107059 C0.932023529,3.8376 0.992129412,4.23218824 1.11417647,4.56192941 C1.23637647,4.89182353 1.39467059,5.15977647 1.58645882,5.36563529 C1.78665882,5.58250588 2.02371765,5.74202353 2.29136471,5.84495294 C2.55962353,5.9488 2.84363529,5.99988235 3.14263529,5.99988235 C3.55251765,5.99988235 3.939,5.92876471 4.29810588,5.78652941 C4.65721176,5.64444706 4.99414118,5.42925882 5.30598824,5.14325882 L5.36578824,5.14325882 L5.36578824,6.15741176 L5.36578824,6.15741176 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M9.18778824,2.6416 L9.1442,2.6416 C9.02567059,2.61345882 8.90698824,2.59143529 8.79411765,2.57874118 C8.67941176,2.56512941 8.54650588,2.55870588 8.38958824,2.55870588 C8.14014118,2.55870588 7.89910588,2.61529412 7.66755294,2.72632941 C7.43462353,2.83935294 7.21025882,2.98327059 6.99369412,3.16190588 L6.99369412,6.63015294 L6.18448235,6.63015294 L6.18448235,1.74505882 L6.99369412,1.74505882 L6.99369412,2.46571765 C7.31594118,2.20434118 7.60071765,2.01836471 7.84649412,1.90885882 C8.09058824,1.79950588 8.34202353,1.74490588 8.59896471,1.74490588 C8.73967059,1.74490588 8.84152941,1.74842353 8.90331765,1.75561176 C8.96724706,1.76310588 9.06191765,1.77671765 9.18763529,1.79675294 L9.18763529,2.6416 L9.18778824,2.6416 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M13.8041647,4.27195294 L10.2576118,4.27195294 C10.2576118,4.57370588 10.3033412,4.83508235 10.3908235,5.05745882 C10.4819765,5.28167059 10.6023412,5.46382353 10.7571176,5.60697647 C10.9085294,5.74645882 11.0851765,5.85107059 11.2911882,5.92234118 C11.4952118,5.99162353 11.7214118,6.02710588 11.9690235,6.02710588 C12.2972353,6.02710588 12.6271294,5.95981176 12.9571765,5.82858824 C13.2905882,5.69552941 13.5256588,5.56507059 13.6677412,5.43675294 L13.7094941,5.43675294 L13.7094941,6.33344706 C13.4380235,6.45014118 13.1589059,6.54756471 12.8745882,6.62587059 C12.5887412,6.70524706 12.2914235,6.74348235 11.9782,6.74348235 C11.18,6.74348235 10.5547765,6.52477647 10.1065059,6.08552941 C9.65991765,5.6472 9.43585882,5.02304706 9.43585882,4.21643529 C9.43585882,3.41731765 9.64921176,2.78307059 10.0789765,2.31292941 C10.5093529,1.84447059 11.0743176,1.6094 11.7741765,1.6094 C12.4247882,1.6094 12.9239882,1.80164706 13.2775882,2.18705882 C13.6295059,2.57155294 13.8041647,3.11847059 13.8041647,3.82643529 L13.8041647,4.27195294 L13.8041647,4.27195294 Z M13.0152941,3.64321176 C13.0131529,3.21115294 12.9056353,2.87774118 12.6962588,2.6416 C12.4829059,2.40576471 12.1621882,2.28723529 11.7319647,2.28723529 C11.2982235,2.28723529 10.9519647,2.41662353 10.6951765,2.67723529 C10.4379294,2.93601176 10.2924824,3.25856471 10.2576118,3.64321176 L13.0152941,3.64321176 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M18.4714706,6.63030588 L17.6657765,6.63030588 L17.6657765,6.10984706 C17.5931294,6.15909412 17.4967765,6.22745882 17.3742706,6.31692941 C17.2520706,6.40609412 17.1341529,6.47736471 17.0191412,6.53012941 C16.8840941,6.59757647 16.7293176,6.65309412 16.5543529,6.69775294 C16.3792353,6.74332941 16.1735294,6.7652 15.9381529,6.7652 C15.5047176,6.7652 15.1367412,6.62036471 14.8337647,6.32962353 C14.5332353,6.03811765 14.3818235,5.6654 14.3818235,5.21330588 C14.3818235,4.84242353 14.4601294,4.54357647 14.6168941,4.31401176 C14.7719765,4.08612941 14.9961882,3.90581176 15.2875412,3.77458824 C15.5793529,3.64351765 15.9328,3.55481176 16.3428353,3.50770588 C16.7527176,3.46121176 17.1941059,3.42649412 17.6657765,3.40278824 L17.6657765,3.27707059 C17.6657765,3.08925882 17.6332,2.93432941 17.5692706,2.81228235 C17.5038118,2.69023529 17.4106706,2.59357647 17.2906118,2.52429412 C17.1759059,2.45669412 17.0390235,2.41111765 16.8769059,2.38756471 C16.7164706,2.36477647 16.5471647,2.353 16.3717412,2.353 C16.1605294,2.353 15.9236235,2.38205882 15.6611765,2.43864706 C15.4007176,2.49508235 15.1309294,2.57705882 14.8522706,2.68549412 L14.8083765,2.68549412 L14.8083765,1.85089412 C14.9666706,1.80623529 15.1945529,1.75882353 15.4935529,1.70590588 C15.7922471,1.65314118 16.0858941,1.6276 16.3774,1.6276 C16.7164706,1.6276 17.0118,1.65497647 17.2633882,1.71232941 C17.5143647,1.76983529 17.7318471,1.86634118 17.9158353,2.00291765 C18.0963059,2.13689412 18.2345647,2.31002353 18.3292353,2.52429412 C18.4242118,2.73565882 18.4714706,2.99978824 18.4714706,3.31515294 L18.4714706,6.63030588 L18.4714706,6.63030588 Z M17.6659294,5.42818824 L17.6659294,4.06777647 C17.4183176,4.08230588 17.1284941,4.10417647 16.7930941,4.13338824 C16.458,4.1626 16.1935647,4.20435294 15.9970353,4.25925882 C15.7654824,4.32655294 15.5776706,4.4304 15.4332941,4.57263529 C15.2893765,4.7138 15.2185647,4.90788235 15.2185647,5.1558 C15.2185647,5.43644706 15.3003882,5.64704706 15.4680118,5.78821176 C15.6341059,5.93029412 15.8892118,5.99957647 16.2318,5.99957647 C16.5144353,5.99957647 16.7752,5.94482353 17.0099647,5.83271765 C17.2468706,5.71984706 17.4654235,5.58418824 17.6659294,5.42818824 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M22.1331882,6.58641176 C21.9799412,6.62648235 21.8141529,6.6612 21.6355176,6.68750588 C21.4547412,6.71304706 21.2946118,6.72681176 21.1543647,6.72681176 C20.6644941,6.72681176 20.2905529,6.59207059 20.0354471,6.32396471 C19.7785059,6.05616471 19.6509529,5.62609412 19.6509529,5.0336 L19.6509529,2.43574118 L19.1043412,2.43574118 L19.1043412,1.74505882 L19.6509529,1.74505882 L19.6509529,0.340752941 L20.462,0.340752941 L20.462,1.74505882 L22.1333412,1.74505882 L22.1333412,2.43574118 L20.462,2.43574118 L20.462,4.66195294 C20.462,4.91889412 20.4673529,5.1194 20.4783647,5.26331765 C20.4893765,5.40723529 20.5312824,5.54396471 20.5984235,5.66784706 C20.6626588,5.78454118 20.7498353,5.86927059 20.8591882,5.92402353 C20.9703765,5.97770588 21.1378471,6.00416471 21.3658824,6.00416471 C21.4987882,6.00416471 21.6373529,5.98504706 21.7792824,5.94589412 C21.9232,5.90674118 22.0256706,5.87385882 22.0914353,5.84648235 L22.1331882,5.84648235 L22.1331882,6.58641176 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M23.6676471,0.926670588 L22.7547412,0.926670588 L22.7547412,0.0737176471 L23.6676471,0.0737176471 L23.6676471,0.926670588 Z M23.6165647,6.63030588 L22.8073529,6.63030588 L22.8073529,1.74505882 L23.6165647,1.74505882 L23.6165647,6.63030588 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("polygon", {
+                              attrs: {
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero",
+                                points:
+                                  "29.0293059 1.74505882 27.0811412 6.63015294 26.2665765 6.63015294 24.3311059 1.74505882 25.2111294 1.74505882 26.702 5.63328235 28.1800235 1.74505882"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M33.6037765,4.27195294 L30.0553882,4.27195294 C30.0553882,4.57370588 30.1011176,4.83508235 30.1904353,5.05745882 C30.2779176,5.28167059 30.4019529,5.46382353 30.5567294,5.60697647 C30.7061529,5.74645882 30.8829529,5.85107059 31.0889647,5.92234118 C31.2948235,5.99162353 31.5191882,6.02710588 31.7668,6.02710588 C32.0950118,6.02710588 32.4249059,5.95981176 32.7564824,5.82858824 C33.0883647,5.69552941 33.3252706,5.56507059 33.4656706,5.43675294 L33.5089529,5.43675294 L33.5089529,6.33344706 C33.2356471,6.45014118 32.9572941,6.54756471 32.6725176,6.62587059 C32.3882,6.70524706 32.0896588,6.74348235 31.7761294,6.74348235 C30.9779294,6.74348235 30.3545412,6.52477647 29.9058118,6.08552941 C29.4576941,5.6472 29.2334824,5.02304706 29.2334824,4.21643529 C29.2334824,3.41731765 29.4488235,2.78307059 29.8787412,2.31292941 C30.3071294,1.84447059 30.8722471,1.6094 31.5736353,1.6094 C32.2224118,1.6094 32.7239059,1.80164706 33.0755176,2.18705882 C33.4274353,2.57155294 33.6039294,3.11847059 33.6039294,3.82643529 L33.6039294,4.27195294 L33.6037765,4.27195294 Z M32.8149059,3.64321176 C32.8110824,3.21115294 32.7034118,2.87774118 32.4920471,2.6416 C32.2823647,2.40576471 31.9618,2.28723529 31.5298941,2.28723529 C31.0961529,2.28723529 30.7517294,2.41662353 30.4944824,2.67723529 C30.2375412,2.93601176 30.0899529,3.25856471 30.0553882,3.64321176 L32.8149059,3.64321176 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("polygon", {
+                              attrs: {
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero",
+                                points:
+                                  "4.63901176 15.4219765 0.4108 15.4219765 0.4108 8.9102 4.63901176 8.9102 4.63901176 9.68025882 1.2636 9.68025882 1.2636 11.4653882 4.63901176 11.4653882 4.63901176 12.2343765 1.2636 12.2343765 1.2636 14.6528353 4.63901176 14.6528353"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M9.53037647,15.4219765 L8.71932941,15.4219765 L8.71932941,14.8805647 C8.44602353,15.0995765 8.18556471,15.2661294 7.93397647,15.3834353 C7.68422353,15.5004353 7.40877647,15.5587059 7.1084,15.5587059 C6.60354118,15.5587059 6.20803529,15.4011765 5.92555294,15.0874941 C5.64475294,14.7750353 5.50435294,14.3148353 5.50435294,13.7079647 L5.50435294,10.5376471 L6.3154,10.5376471 L6.3154,13.3196471 C6.3154,13.5663412 6.32641176,13.7789294 6.35042353,13.9546588 C6.37229412,14.1314588 6.42123529,14.2827176 6.49617647,14.4075176 C6.57264706,14.5359882 6.67481176,14.6297412 6.79701176,14.6874 C6.92104706,14.7455176 7.10105882,14.7747294 7.33612941,14.7747294 C7.54581176,14.7747294 7.77583529,14.7202824 8.02314118,14.6087882 C8.27136471,14.4977529 8.5046,14.3564353 8.71948235,14.1843765 L8.71948235,10.5376471 L9.53052941,10.5376471 L9.53052941,15.4219765 L9.53037647,15.4219765 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M13.7151529,11.4332706 L13.6729412,11.4332706 C13.5525765,11.4049765 13.4360353,11.3832588 13.3213294,11.3704118 C13.2081529,11.3569529 13.0734118,11.3505294 12.9183294,11.3505294 C12.6685765,11.3505294 12.4263176,11.4069647 12.1949176,11.5199882 C11.9616824,11.6313294 11.7373176,11.7769294 11.5225882,11.9535765 L11.5225882,15.4219765 L10.7112353,15.4219765 L10.7112353,10.5376471 L11.5225882,10.5376471 L11.5225882,11.2595294 C11.8451412,10.9958588 12.1271647,10.8100353 12.3735529,10.7017529 C12.6179529,10.5924 12.8693882,10.5378 13.1244941,10.5378 C13.2648941,10.5378 13.3667529,10.5413176 13.4303765,10.5485059 C13.4943059,10.5558471 13.5892824,10.5696118 13.715,10.5898 L13.715,11.4332706 L13.7151529,11.4332706 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M18.4206941,12.9816471 C18.4206941,13.7783176 18.2201882,14.4067529 17.8173412,14.8661882 C17.4146471,15.3280706 16.8770588,15.5585529 16.2007529,15.5585529 C15.5212353,15.5585529 14.9799765,15.3279176 14.5789647,14.8661882 C14.1778,14.4067529 13.9772941,13.7783176 13.9772941,12.9816471 C13.9772941,12.1851294 14.1778,11.5563882 14.5789647,11.0954235 C14.9798235,10.6326235 15.5210824,10.4029059 16.2007529,10.4029059 C16.8770588,10.4029059 17.4148,10.6324706 17.8173412,11.0954235 C18.2203412,11.5563882 18.4206941,12.1851294 18.4206941,12.9816471 Z M17.5841059,12.9816471 C17.5841059,12.3493882 17.4619059,11.8790941 17.2178118,11.5719882 C16.9737176,11.2648824 16.6344941,11.1099529 16.2007529,11.1099529 C15.7616588,11.1099529 15.4207529,11.2648824 15.1768118,11.5719882 C14.9342471,11.8790941 14.8123529,12.3493882 14.8123529,12.9816471 C14.8123529,13.5940235 14.9342471,14.0585059 15.1800235,14.3749412 C15.4244235,14.6912235 15.7633412,14.8496706 16.2007529,14.8496706 C16.6309765,14.8496706 16.9717294,14.6932118 17.2161294,14.3793765 C17.4619059,14.066 17.5841059,13.5993765 17.5841059,12.9816471 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M23.5783294,12.9206235 C23.5783294,13.3170471 23.5218941,13.6798235 23.4104,14.0075765 C23.2978353,14.3356353 23.1392353,14.6136824 22.9368941,14.8403412 C22.7472471,15.0562941 22.5231882,15.223 22.2662471,15.3406118 C22.0073176,15.4599059 21.7372235,15.5181765 21.4495412,15.5181765 C21.1978,15.5181765 20.9740471,15.4909529 20.7694118,15.4342118 C20.5675294,15.3794588 20.3613647,15.2932 20.1516824,15.1775765 L20.1516824,17.2239294 L19.3427765,17.2239294 L19.3427765,10.5376471 L20.1516824,10.5376471 L20.1516824,11.0496941 C20.3685529,10.8655529 20.6092824,10.7115412 20.8772353,10.5868941 C21.1470235,10.4636235 21.4331765,10.4027529 21.7372235,10.4027529 C22.3188588,10.4027529 22.7686588,10.6251294 23.0933529,11.0686588 C23.4160588,11.5126471 23.5783294,12.1305294 23.5783294,12.9206235 Z M22.7415882,12.9424941 C22.7415882,12.3536706 22.6412588,11.9135059 22.4447294,11.6221529 C22.2460588,11.3303412 21.9417059,11.1845882 21.5315176,11.1845882 C21.2982824,11.1845882 21.0630588,11.2355176 20.8279882,11.3378353 C20.5929176,11.4398471 20.3685529,11.5745882 20.1516824,11.7405294 L20.1516824,14.508 C20.3814,14.6136824 20.5803765,14.6837294 20.7440235,14.7221176 C20.9098118,14.7602 21.0977765,14.7793176 21.3074588,14.7793176 C21.7575647,14.7793176 22.1091765,14.6253059 22.3645882,14.3156 C22.6161765,14.0077294 22.7415882,13.5486 22.7415882,12.9424941 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("path", {
+                              attrs: {
+                                d:
+                                  "M28.5958706,13.0653059 L25.0490118,13.0653059 C25.0490118,13.3652235 25.0947412,13.6266 25.1840588,13.8506588 C25.2733765,14.0731882 25.3934353,14.2553412 25.5485176,14.3995647 C25.6982471,14.5398118 25.8767294,14.6438118 26.0825882,14.7140118 C26.2866118,14.7840588 26.5128118,14.8189294 26.7604235,14.8189294 C27.0886353,14.8189294 27.4166941,14.7513294 27.7485765,14.6199529 C28.0798471,14.4870471 28.3167529,14.3565882 28.4571529,14.2282706 L28.5007412,14.2282706 L28.5007412,15.1257294 C28.2277412,15.2415059 27.9487765,15.3396941 27.6646118,15.4183059 C27.3819765,15.4967647 27.0829765,15.5366824 26.7679176,15.5366824 C25.9694118,15.5366824 25.3460235,15.3162941 24.8979059,14.8776588 C24.4494824,14.4385647 24.2255765,13.8164 24.2255765,13.0079529 C24.2255765,12.2092941 24.4403059,11.5742824 24.8708353,11.1059765 C25.3010588,10.6358353 25.8658706,10.4024471 26.5657294,10.4024471 C27.2163412,10.4024471 27.7155412,10.5936235 28.0673059,10.9784235 C28.4192235,11.3627647 28.5960235,11.9095294 28.5960235,12.6193294 L28.5960235,13.0653059 L28.5958706,13.0653059 Z M27.8063882,12.4356471 C27.8048588,12.0038941 27.6970353,11.6695647 27.4858235,11.4332706 C27.2743059,11.1974353 26.9535882,11.0790588 26.5233647,11.0790588 C26.0896235,11.0790588 25.7436706,11.2082941 25.4865765,11.4689059 C25.2296353,11.7295176 25.0835765,12.0502353 25.0490118,12.4354941 L27.8063882,12.4354941 L27.8063882,12.4356471 Z",
+                                fill: "#204EA0",
+                                "fill-rule": "nonzero"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "g",
+                              {
+                                attrs: {
+                                  id: "media-logo",
+                                  transform: "translate(0.305882, 19.729412)"
+                                }
+                              },
+                              [
+                                _c(
+                                  "g",
+                                  {
+                                    attrs: {
+                                      id: "Group",
+                                      "fill-rule": "nonzero"
+                                    }
+                                  },
+                                  [
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        points:
+                                          "1.36056471 1.42051765 1.35888235 1.4196 0.156 1.4196 0.156 0.281564706 0.276058824 0.281564706 0.154164706 0.152176471 0.154164706 2.22621176 0.154164706 1.42051765"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#224F9F",
+                                        points:
+                                          "0.156 4.8334 0.156 4.8334 0.154164706 3.69490588 0.154164706 3.69490588 0.154164706 5.97036471 1.25488235 5.97036471 1.25488235 5.96944706 0.154164706 5.96944706"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        points:
+                                          "0.156 4.83431765 0.156 4.8334 0.156 4.8334 0.154164706 5.96944706 1.25488235 5.96944706 1.25488235 4.83431765"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        points:
+                                          "5.67442353 4.83431765 4.54097647 4.83431765 4.54097647 5.96944706 5.55604706 5.96944706 5.67442353 5.96944706"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        points:
+                                          "10.0777529 4.83431765 7.83578824 4.83431765 7.83578824 4.83431765 6.76076471 4.83431765 6.76076471 5.96944706 8.75267059 5.96944706 10.0756118 5.96944706"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        x: "16.4436235",
+                                        y: "4.83431765",
+                                        width: "1.11891765",
+                                        height: "1.13512941"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#F9A528",
+                                        points:
+                                          "22.7769176 5.8474 22.3372118 4.83431765 18.3046118 4.83431765 17.8211647 5.96944706 19.0424 5.96944706 19.3686235 5.09477647 21.2603529 5.09844706 21.5882588 5.96944706 22.3392 5.96944706 22.8276941 5.96944706"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M15.0748,4.83431765 L12.8348235,4.83431765 C12.8348235,4.83431765 12.8329882,4.83431765 12.8313059,4.83431765 L12.2903529,4.83431765 L12.2903529,4.83431765 L11.1530824,4.83431765 L11.1530824,5.96944706 L12.8458353,5.96944706 C13.7572118,5.95675294 14.5661176,5.51398824 15.0748,4.83431765 Z",
+                                        fill: "#F9A528"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        points:
+                                          "1.89448235 3.69490588 2.95543529 4.8334 2.96262353 4.8334 3.94129412 3.69490588"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        points:
+                                          "1.25488235 3.69490588 0.154164706 3.69490588 0.156 4.8334 1.25488235 4.8334"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        points:
+                                          "4.53929412 3.69490588 4.54097647 4.8334 5.67442353 4.8334 5.67442353 3.69490588"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        x: "6.76076471",
+                                        y: "3.69490588",
+                                        width: "1.07502353",
+                                        height: "1.13834118"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        x: "16.4436235",
+                                        y: "3.69490588",
+                                        width: "1.11891765",
+                                        height: "1.13834118"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        points:
+                                          "20.7827176 3.93915294 19.8441176 3.93915294 19.9316 3.69490588 18.7891294 3.69490588 18.3046118 4.8334 22.3353765 4.8334 21.8416824 3.69490588 20.6915647 3.69490588"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M14.404,3.69490588 C14.1820824,4.34307059 13.5765882,4.81948235 12.8644941,4.83324706 L15.0749529,4.83324706 C15.3207294,4.50228235 15.4979882,4.11610588 15.5798118,3.69490588 L14.404,3.69490588 Z",
+                                        fill: "#A6CC3C"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#A6CC3C",
+                                        x: "11.1530824",
+                                        y: "3.69490588",
+                                        width: "1.13727059",
+                                        height: "1.13834118"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#4BB86A",
+                                        points:
+                                          "0.154164706 3.69490588 1.25488235 3.69490588 1.25488235 3.01141176 1.89448235 3.69490588 3.94129412 3.69490588 4.53929412 3.00254118 4.53929412 3.69490588 5.67442353 3.69490588 5.67442353 2.55855294 3.46182353 2.55855294 2.95696471 3.10256471 2.4414 2.55855294 0.154164706 2.55855294 0.154164706 3.69490588"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#4BB86A",
+                                        points:
+                                          "7.83578824 3.69398824 10.0756118 3.69490588 10.0740824 2.55855294 6.75862353 2.55855294 6.76076471 3.69490588 7.83578824 3.69490588"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#4BB86A",
+                                        x: "16.4436235",
+                                        y: "2.55855294",
+                                        width: "1.11891765",
+                                        height: "1.13635294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#4BB86A",
+                                        points:
+                                          "18.7891294 3.69490588 19.9316 3.69490588 20.3017176 2.68090588 20.6915647 3.69490588 21.8416824 3.69490588 21.3478353 2.55855294 19.2702824 2.55855294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M15.5686471,2.55855294 L14.3896235,2.55855294 C14.4567647,2.74483529 14.495,2.94411765 14.495,3.14814118 C14.495,3.34054118 14.4624235,3.52361176 14.4038471,3.69475294 L15.5796588,3.69475294 C15.6125412,3.51917647 15.6322706,3.33671765 15.6322706,3.14982353 C15.6322706,2.94778824 15.6104,2.74927059 15.5686471,2.55855294 Z",
+                                        fill: "#4BB86A"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#4BB86A",
+                                        points:
+                                          "11.1530824 2.55855294 11.1530824 3.69490588 12.2902 3.69490588 12.2863765 2.55855294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#224F9F",
+                                        points:
+                                          "21.3531882 2.55855294 20.8576588 1.42051765 20.8523059 1.42051765 21.3456941 2.55855294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#079EC5",
+                                        points:
+                                          "2.4414 2.55855294 1.36056471 1.42051765 0.154164706 1.42051765 0.154164706 2.22621176 0.154164706 2.55855294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#079EC5",
+                                        points:
+                                          "4.51711765 1.42051765 3.46350588 2.55855294 5.67442353 2.55855294 5.67442353 1.42051765"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#079EC5",
+                                        points:
+                                          "10.0740824 2.55687059 7.83578824 2.55687059 7.84144706 1.42235294 10.0777529 1.42235294 10.0777529 1.42051765 6.75862353 1.42051765 6.75862353 2.55855294 10.0740824 2.55855294"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#079EC5",
+                                        x: "16.4436235",
+                                        y: "1.42051765",
+                                        width: "1.11891765",
+                                        height: "1.13803529"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#079EC5",
+                                        points:
+                                          "19.2702824 2.55855294 21.3456941 2.55855294 20.8523059 1.42051765 19.7551059 1.42051765"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M12.2863765,2.55855294 L12.2863765,1.42418824 L12.8313059,1.42418824 C13.5440118,1.42418824 14.1525647,1.911 14.3896235,2.55855294 L15.5686471,2.55855294 C15.4811647,2.13872941 15.3006941,1.75224706 15.0512471,1.42051765 L11.1530824,1.42051765 L11.1530824,2.55855294 L12.2863765,2.55855294 Z",
+                                        fill: "#079EC5"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#1C78BE",
+                                        points:
+                                          "5.67442353 1.4196 5.67442353 0.281564706 5.57424706 0.281564706 4.51895294 1.4196"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#1C78BE",
+                                        points:
+                                          "0.156 1.4196 1.35888235 1.4196 0.276058824 0.281564706 0.156 0.281564706"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("rect", {
+                                      attrs: {
+                                        fill: "#1C78BE",
+                                        x: "6.75862353",
+                                        y: "0.286917647",
+                                        width: "3.31897647",
+                                        height: "1.13268235"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#1C78BE",
+                                        points:
+                                          "17.5607059 0.286917647 16.4436235 0.286917647 16.4436235 1.4196 17.5625412 1.4196"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("polygon", {
+                                      attrs: {
+                                        fill: "#1C78BE",
+                                        points:
+                                          "20.8523059 1.4196 20.3584588 0.281564706 20.2377882 0.281564706 19.7551059 1.4196"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("path", {
+                                      attrs: {
+                                        d:
+                                          "M12.8019412,0.286917647 L11.1530824,0.284929412 L11.1530824,1.4196 L15.0494118,1.4196 C14.5332353,0.734423529 13.7189765,0.286917647 12.8019412,0.286917647 Z",
+                                        fill: "#1C78BE"
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("g", {
+                                  attrs: {
+                                    id: "Group",
+                                    transform: "translate(0.152941, 0.152941)"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("g", {
+                                  attrs: {
+                                    id: "Group",
+                                    transform: "translate(0.611765, 0.152941)"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "g",
+                          { attrs: { id: "flag", "fill-rule": "nonzero" } },
+                          [
+                            _c("rect", {
+                              attrs: {
+                                fill: "#224F9F",
+                                x: "0.103082353",
+                                y: "0",
+                                width: "37.9021882",
+                                height: "26"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "g",
+                              {
+                                attrs: {
+                                  id: "Group",
+                                  transform: "translate(9.329412, 3.594118)",
+                                  "stroke-width": "0.5",
+                                  stroke: "#FAED36",
+                                  fill: "#FAED36"
+                                }
+                              },
+                              [
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "19.2282235 9.12936471 18.8327176 9.12125882 18.2478706 9.11024706 18.0563882 8.58887059 17.9323529 8.25561176 17.8104588 8.58887059 17.6205059 9.11024706 17.0356588 9.12125882 16.6404588 9.12936471 16.9630118 9.36183529 17.4239765 9.69264706 17.2563529 10.2146353 17.1413412 10.5700706 17.4531882 10.3643647 17.9323529 10.0470118 18.4171765 10.3643647 18.7252 10.5700706 18.6121765 10.2146353 18.4460824 9.69264706 18.9055176 9.36183529"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "16.3249412 5.57562353 16.1591529 6.09852941 16.0462824 6.45304706 16.3559882 6.24978824 16.8372941 5.92815294 17.3221176 6.24978824 17.628 6.45304706 17.5168118 6.09852941 17.3493412 5.57562353 17.8086235 5.24465882 18.1328588 5.01218824 17.7376588 5.00515294 17.1506706 4.99597647 16.9611765 4.47307059 16.8372941 4.13675294 16.7147882 4.47307059 16.5257529 4.99597647 15.9406 5.00515294 15.5450941 5.01218824 15.8658118 5.24465882"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "14.1727529 2.00154118 13.9812706 1.47955294 13.8572353 1.14415294 13.7354941 1.47955294 13.5456941 2.00154118 12.9608471 2.01163529 12.5633529 2.02065882 12.8877412 2.25221176 13.3488588 2.58394118 13.1813882 3.10608235 13.0663765 3.4606 13.3779176 3.25825882 13.8572353 2.93830588 14.3403765 3.25825882 14.6503882 3.4606 14.5353765 3.10608235 14.3711176 2.58394118 14.8305529 2.25221176 15.1528 2.02065882 14.7594353 2.01163529"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "10.0066353 0.897305882 9.81515294 0.376847059 9.69081176 0.0414470588 9.57075294 0.376847059 9.37927059 0.897305882 8.79442353 0.91 8.39708235 0.916423529 8.72147059 1.14858824 9.18090588 1.48138824 9.01481176 2.00429412 8.90010588 2.35789412 9.20996471 2.15555294 9.69081176 1.83483529 10.1756353 2.15555294 10.4836588 2.35789412 10.3710941 2.00429412 10.205 1.48138824 10.6644353 1.14858824 10.9848471 0.916423529 10.5914824 0.91"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "5.87661176 2.00154118 5.68512941 1.47955294 5.56507059 1.14415294 5.44287059 1.47955294 5.25169412 2.00154118 4.66654118 2.01163529 4.2692 2.01790588 4.59175294 2.25129412 5.05302353 2.58210588 4.88692941 3.10409412 4.77252941 3.4606 5.08208235 3.25458824 5.56507059 2.93662353 6.04438824 3.25458824 6.35424706 3.4606 6.24137647 3.10409412 6.07528235 2.58210588 6.53471765 2.25129412 6.85910588 2.01790588 6.46176471 2.01163529"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "2.86978824 4.96416471 2.68151765 4.44370588 2.55962353 4.10937647 2.43604706 4.44370588 2.2464 4.96416471 1.66109412 4.97502353 1.26558824 4.98236471 1.58829412 5.2156 2.04772941 5.54732941 1.88010588 6.06855294 1.76861176 6.42383529 2.0748 6.21981176 2.55794118 5.90092941 3.04092941 6.21981176 3.3488 6.42383529 3.23562353 6.06855294 3.06983529 5.54732941 3.53110588 5.2156 3.85197647 4.98236471 3.45616471 4.97502353"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "1.9162 10.3568706 2.22605882 10.5625765 2.11334118 10.2056118 1.94724706 9.68423529 2.40637647 9.35265882 2.72908235 9.12125882 2.33388235 9.11284706 1.74872941 9.10305882 1.55755294 8.5826 1.43535294 8.24827059 1.31284706 8.5826 1.12167059 9.10305882 0.536823529 9.11284706 0.141317647 9.12125882 0.461882353 9.35265882 0.923 9.68423529 0.757211765 10.2056118 0.644341176 10.5625765 0.952058824 10.3568706 1.43535294 10.0379882"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "2.85663529 13.1873529 2.66545882 12.6678118 2.54509412 12.3333294 2.42105882 12.6678118 2.22988235 13.1873529 1.64503529 13.2000471 1.24952941 13.2087647 1.57177647 13.4384824 2.03121176 13.7722 1.86511765 14.2934235 1.75041176 14.6459529 2.06027059 14.4445294 2.54142353 14.1258 3.02441176 14.4445294 3.33243529 14.6476353 3.21956471 14.2934235 3.05561176 13.7722 3.51458824 13.4384824 3.83545882 13.2087647 3.43995294 13.2000471"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "5.84021176 16.1778118 5.65071765 15.6547529 5.52851765 15.3205765 5.40463529 15.6547529 5.21529412 16.1778118 4.62830588 16.1869882 4.2328 16.1960118 4.55718824 16.4275647 5.01448235 16.7592941 4.85052941 17.2802118 4.73582353 17.6359529 5.04354118 17.4334588 5.52851765 17.1135059 6.00768235 17.4334588 6.31952941 17.6359529 6.20451765 17.2802118 6.03903529 16.7592941 6.49816471 16.4275647 6.82255294 16.1960118 6.42536471 16.1869882"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "10.0026588 17.2812824 9.81331765 16.7629647 9.68912941 16.4264941 9.56891765 16.7629647 9.37743529 17.2812824 8.79258824 17.2932118 8.39509412 17.3025412 8.71764706 17.5356235 9.17922353 17.8653647 9.01129412 18.3867412 8.90010588 18.7430941 9.20812941 18.5381529 9.68912941 18.2182 10.1724235 18.5381529 10.4802941 18.7430941 10.3692588 18.3867412 10.2013294 17.8653647 10.6607647 17.5356235 10.9831647 17.3025412 10.5896471 17.2932118"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "14.1345176 16.1978471 13.9430353 15.6766235 13.8208353 15.3421412 13.6986353 15.6766235 13.5089882 16.1978471 12.9241412 16.2106941 12.5268 16.2180353 12.8514941 16.4494353 13.3106235 16.7810118 13.1445294 17.3025412 13.0316588 17.6576706 13.3396824 17.4553294 13.8208353 17.1355294 14.3038235 17.4553294 14.6100118 17.6576706 14.5008118 17.3025412 14.3347176 16.7810118 14.7920118 16.4494353 15.1148706 16.2180353 14.7193647 16.2106941"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("polygon", {
+                                  attrs: {
+                                    points:
+                                      "17.1359882 13.2237529 16.9445059 12.7022235 16.8226118 12.3689647 16.7004118 12.7022235 16.5089294 13.2237529 15.9237765 13.2344588 15.5285765 13.2419529 15.8526588 13.4751882 16.3105647 13.806 16.1449294 14.3289059 16.0334353 14.6834235 16.3399294 14.4792471 16.8226118 14.1603647 17.3052941 14.4792471 17.6117882 14.6834235 17.4986118 14.3289059 17.3346588 13.806 17.7940941 13.4751882 18.1166471 13.2419529 17.7208353 13.2344588"
+                                  }
+                                })
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "collapse navbar-collapse justify-content-end",
+            attrs: { id: "menu-main" }
+          },
+          [
+            _c("ul", { staticClass: "navbar-nav justify-content-around" }, [
+              _c(
+                "li",
+                {
+                  staticClass: "nav-item",
+                  attrs: {
+                    "data-toggle": "tooltip",
+                    "data-placement": "bottom",
+                    "data-html": "true",
+                    title: "Apps"
+                  }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { href: "/" + _vm.type }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-home",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "nav-item",
+                  attrs: {
+                    "data-toggle": "tooltip",
+                    "data-placement": "bottom",
+                    "data-html": "true",
+                    title: "Network"
+                  }
+                },
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { href: "/" + _vm.type + "/network" }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fa fa-users",
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm.type == "teacher"
+                ? _c("li", { staticClass: "nav-item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: {
+                          href: "/" + _vm.type + "/settings",
+                          "data-toggle": "tooltip",
+                          "data-placement": "bottom",
+                          "data-html": "true",
+                          title: "Student settings"
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-user",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "nav-item",
+                  attrs: {
+                    id: "notifications-menu",
+                    "data-toggle": "tooltip",
+                    "data-placement": "bottom",
+                    "data-html": "true",
+                    title: "Notifications"
+                  }
+                },
+                [
+                  _c("notifications-menu", {
+                    attrs: { notifications: _vm.notifs }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "nav-item",
+                  attrs: {
+                    "data-toggle": "tooltip",
+                    "data-placement": "bottom",
+                    "data-html": "true",
+                    title: "Change Language"
+                  }
+                },
+                [
+                  _vm._m(1, false, false),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dropdown-menu dropdown-menu-right px-2",
+                      attrs: { "aria-labelledby": "dropdownMenuLink" }
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item markasread",
+                          attrs: { href: "/set-locale/en" }
+                        },
+                        [_vm._v("\n              English\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item markasread",
+                          attrs: { href: "/set-locale/fr" }
+                        },
+                        [_vm._v("\n              Francais\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item markasread",
+                          attrs: { href: "/set-locale/it" }
+                        },
+                        [_vm._v("\n              Italiano\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item markasread",
+                          attrs: { href: "/set-locale/sr" }
+                        },
+                        [_vm._v("\n              српски\n            ")]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "dropdown-divider" }),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item markasread",
+                          attrs: { href: "/" + _vm.type + "/logout" }
+                        },
+                        [_vm._v("\n              Logout\n            ")]
+                      )
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("notifications-dropdown-menu", {
+              attrs: { notifications: _vm.notifs }
+            }),
+            _vm._v(" "),
+            _c("notifications", {
+              attrs: { user: _vm.userParsed, user_type: _vm.user_type }
+            })
+          ],
+          1
+        )
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "navbar-toggler navbar-toggler-right",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "#menu-main",
+          "aria-controls": "menu-main",
+          "aria-expanded": "false",
+          "aria-label": "Toggle navigation"
+        }
+      },
+      [_c("span", { staticClass: "navbar-toggler-icon" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link",
+        attrs: {
+          href: "#",
+          id: "dropdownMenuLink",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-cog", attrs: { "aria-hidden": "true" } })]
+    )
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-fd6d6120", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-78a3af2e", esExports)
   }
 }
 
 /***/ }),
+/* 386 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "a",
+    {
+      class: "nav-link " + _vm.menu_class,
+      attrs: { id: "notifications-menu", href: "#" },
+      on: { click: _vm.toggleDropdown }
+    },
+    [
+      _c("div", { staticClass: "notification-container" }, [
+        _c("i", { staticClass: "fa fa-bell" }),
+        _vm._v(" "),
+        this.notifications.length > 0
+          ? _c("div", { staticClass: "notification-badge" }, [
+              _c("div", { staticClass: "notification-text" }, [
+                _vm._v(
+                  "\n        " + _vm._s(this.notifications.length) + "\n      "
+                )
+              ])
+            ])
+          : _vm._e()
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-88343120", esExports)
+  }
+}
+
+/***/ }),
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
 /* 391 */,
 /* 392 */,
 /* 393 */,
 /* 394 */,
-/* 395 */,
+/* 395 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { ref: "notification_bg", attrs: { id: "notification-single" } },
+    [
+      _c("div", { staticClass: "notification-content" }, [
+        _c("div", { staticClass: "icon-left" }, [
+          _c("div", { ref: "icon_bg", staticClass: "icon_bg" }, [
+            _c("i", { ref: "icon", staticClass: "fa fa-exclamation" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { ref: "divider", staticClass: "divider" }),
+        _vm._v(" "),
+        _c("div", { ref: "notification", staticClass: "notification" }, [
+          _c("div", { staticClass: "name" }, [
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.notification.notification.data.sender.name) +
+                ",\n      "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "message" }, [
+            _vm._v("\n        " + _vm._s(_vm.notification.message) + "\n      ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { ref: "close_btn", staticClass: "close-notification" }, [
+          _c("i", {
+            staticClass: "fa fa-times",
+            on: { click: _vm.dismissNotification }
+          })
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d162934c", esExports)
+  }
+}
+
+/***/ }),
 /* 396 */,
 /* 397 */,
-/* 398 */
+/* 398 */,
+/* 399 */,
+/* 400 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(277);
+var content = __webpack_require__(276);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("1c2ed7bc", content, false);
+var update = __webpack_require__(7)("6d0610fc", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1e48d39a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsMenu.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0c50e5a1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationsDropdownMenu.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-0c50e5a1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationsDropdownMenu.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -29017,32 +30376,29 @@ if(false) {
 }
 
 /***/ }),
-/* 399 */,
-/* 400 */,
 /* 401 */,
 /* 402 */,
 /* 403 */,
 /* 404 */,
 /* 405 */,
 /* 406 */,
-/* 407 */,
-/* 408 */
+/* 407 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(287);
+var content = __webpack_require__(283);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("2aabf4d7", content, false);
+var update = __webpack_require__(7)("508562ed", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-49f2c950\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./MainMenuComponent.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2c8d89f1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Notifications.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-2c8d89f1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Notifications.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -29052,119 +30408,66 @@ if(false) {
 }
 
 /***/ }),
+/* 408 */,
 /* 409 */,
 /* 410 */,
 /* 411 */,
-/* 412 */,
+/* 412 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(288);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("d59f661e", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d56c96a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationDropdownSingle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3d56c96a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationDropdownSingle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 413 */,
-/* 414 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(293);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(7)("1dcfe9e0", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-54f0833e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationDropdownSingle.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 415 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(294);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(7)("5046c3e7", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-564207cb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationsDropdownMenu.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 414 */,
+/* 415 */,
 /* 416 */,
 /* 417 */,
 /* 418 */,
-/* 419 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(298);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(7)("4550c02c", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6ad11b1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Notifications.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 419 */,
 /* 420 */,
 /* 421 */,
 /* 422 */,
 /* 423 */,
 /* 424 */,
 /* 425 */,
-/* 426 */,
-/* 427 */,
-/* 428 */,
-/* 429 */,
-/* 430 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(309);
+var content = __webpack_require__(302);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(7)("c21357bc", content, false);
+var update = __webpack_require__(7)("0722b0dc", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-fd6d6120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./NotificationSingle.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78a3af2e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./MainMenuComponent.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-78a3af2e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./MainMenuComponent.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -29174,12 +30477,66 @@ if(false) {
 }
 
 /***/ }),
+/* 427 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(303);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("d05fe9bc", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-88343120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationsMenu.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-88343120\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationsMenu.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 428 */,
+/* 429 */,
+/* 430 */,
 /* 431 */,
 /* 432 */,
 /* 433 */,
 /* 434 */,
 /* 435 */,
-/* 436 */,
+/* 436 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(312);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("6be7fea3", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d162934c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationSingle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-d162934c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./NotificationSingle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
 /* 437 */,
 /* 438 */,
 /* 439 */,
@@ -29189,11 +30546,20 @@ if(false) {
 /* 443 */,
 /* 444 */,
 /* 445 */,
-/* 446 */
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */,
+/* 450 */,
+/* 451 */,
+/* 452 */,
+/* 453 */,
+/* 454 */,
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(220);
+module.exports = __webpack_require__(223);
 
 
 /***/ })
-],[446]);
+],[455]);
