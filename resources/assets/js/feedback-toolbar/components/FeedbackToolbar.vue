@@ -203,8 +203,8 @@ export default {
 
     > .feedback-bg {
       position: relative;
-      margin-top: $spacer;
-      margin-left: $spacer;
+      margin-bottom: $spacer / 2;
+      margin-left: $spacer / 2;
       width: $spacer * 2;
       height: $spacer * 2;
       background-color: $tfc-dark-green-var;
@@ -219,8 +219,8 @@ export default {
 
     > .feedback-dialog {
       position: absolute;
-      top: 0;
-      left: $spacer;
+      bottom: 0;
+      left: $spacer / 2;
       // display: flex;
       flex-direction: column;
       background-color: $tfc-green-var;
