@@ -48,6 +48,9 @@
                         <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                       </li>
                     @endforeach
+                    <li class="nav-item">
+                      <a class="library-link nav-link" data-toggle="tab" href="#upload-library">Uploads</a>
+                    </li>
                   </ul>
                 </div>
               </nav>
@@ -64,6 +67,27 @@
                     </div>
                   </div>
                 @endforeach
+                <div id="upload-library" class="assets wrapper tab-pane" role="tabpanel">
+                  <div class="row scroller">
+                    <div class="col">
+                      <form id="uploadForm" method="post" enctype="multipart/form-data">
+                        {{ csrf_field() }}
+                        {{ method_field('POST') }}
+                        <input id="app_category" type="hidden" name="app_category" value="{{ $app_category->slug }}">
+                        <input id="app_slug" type="hidden" name="app_slug" value="{{ $app->slug }}">
+                        <div class="form-group">
+                          <input id="media" type="file" name="media" class="form-control">
+                        </div>
+                        <div class="container-fluid d-flex justify-content-around">
+                          <button id="upload-this-media" type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                        </div>
+                      </form>
+                      <div id="uploads" class="assets">
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -126,6 +150,31 @@
         $('#library').height(video_player);
     });
 
+    $('form#uploadForm').submit(function(event) {
+      event.preventDefault();
+      console.log(session.token);
+      var formData = new FormData();
+      formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+      formData.append('media', $('#media')[0].files[0]);
+      formData.append('session_token', session.token);
+
+      var app_category = $('#app_category').val();
+      var app_slug = $('#app_slug').val();
+
+      console.log($('#media')[0].files[0]);
+
+      axios.post('{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}', formData)
+        .then(response => {
+          console.log(response);
+          var data = '';
+          data += '<div class="asset col-md-3 col-sm-4 pb-3">'
+          data +=   '<img src="'+response.data.img+'" alt="image asset" class="img-fluid" data-img-src="'+response.data.img+'"/>'
+          data +=   '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>'
+          data += '</div>'
+          $('#uploads').append(data);
+        });
+    })
+
     $(document).ready(function($) {
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
         var json_data = '';
@@ -135,7 +184,7 @@
           responsiveCanvas(canvas)
         });
 
-        $('.assets .asset').click(function(e) {
+        $('body').on('click', '.assets .asset', function(e) {
             e.preventDefault();
             var $this = $(this);
             var image_obj = $this.data('image-image-obj');
