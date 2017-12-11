@@ -1,44 +1,31 @@
 @extends('layouts.admin')
 @section('title', 'Images')
 @section('content')
-<div id="app">
+<div id="app" class="container">
   <div class="row">
     <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-blue py-3 px-5">
-            <h3>Nuova Immagine</h3>
-          </div>
+      <div class="box blue">
+        <div class="box-header">
+          <h3>Nuova Immagine</h3>
         </div>
-        <div class="row">
-          <div class="col blue p-5">
-            <image-form-upload
-                action=""
-                method="POST"
-                token="{{ csrf_token() }}"
-                options="{{ $categories }}"
-                sections="{{ $sections }}"
-                app_categories="{{ $app_categories }}"
-                apps="{{ $apps }}"
-              >
-            </image-form-upload>
-          </div>
+        <div class="box-body">
+          <image-form-upload
+              action=""
+              method="POST"
+              token="{{ csrf_token() }}"
+              options="{{ $categories }}"
+              sections="{{ $sections }}"
+              app_categories="{{ $app_categories }}"
+              apps="{{ $apps }}"
+          />
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-orange py-3 px-5">
-            <h3>Immagini Caricati</h3>
-          </div>
+      <div class="box orange mt">
+        <div class="box-header">
+          <h3>Immagini Caricati</h3>
         </div>
-        <div class="row">
-          <div class="col orange p-5">
-            <image-crud items="{{ $medias }}" token="{{ csrf_token() }}"></image-crud>
-          </div>
+        <div class="box-body">
+          <image-crud items="{{ $medias }}" token="{{ csrf_token() }}"></image-crud>
         </div>
       </div>
     </div>

@@ -1,44 +1,34 @@
 @extends('layouts.admin')
 @section('title', 'Video')
 @section('content')
-<div id="app">
+<div id="app" class="container">
   <div class="row">
     <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-blue py-3 px-5">
-            <h3>Nuovo Video</h3>
-          </div>
+      <div class="box blue">
+        <div class="box-header">
+          <h3>Nuovo Video</h3>
         </div>
-        <div class="row">
-          <div class="col blue p-5">
-            <video-form-upload
-                action=""
-                method="POST"
-                token="{{ csrf_token() }}"
-                options="{{ $categories }}"
-                sections="{{ $sections }}"
-                app_categories="{{ $app_categories }}"
-                apps="{{ $apps }}"
-              >
-            </video-form-upload>
-          </div>
+        <div class="box-body">
+          <video-form-upload
+            action=""
+            method="POST"
+            token="{{ csrf_token() }}"
+            options="{{ $categories }}"
+            sections="{{ $sections }}"
+            app_categories="{{ $app_categories }}"
+            apps="{{ $apps }}"
+          />
         </div>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div class="box container-fluid mb-4">
-        <div class="row">
-          <div class="col dark-orange py-3 px-5">
-            <h3>Video Caricati</h3>
-          </div>
+      <div class="box orange mt">
+        <div class="box-header">
+          <h3>Video Caricati</h3>
         </div>
-        <div class="row">
-          <div class="col orange p-5">
-            <video-crud items="{{ $videos }}" token="{{ csrf_token() }}"></video-crud>
-          </div>
+        <div class="box-body">
+          <video-crud
+            items="{{ $videos }}"
+            token="{{ csrf_token() }}"
+          />
         </div>
       </div>
     </div>
