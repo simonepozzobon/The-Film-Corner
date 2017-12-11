@@ -153,7 +153,7 @@
 
         console.log($('#media')[0].files[0]);
 
-        axios.post('{{ route('teacher.creative-studio.upload.img', [$app_category, $app->slug]) }}', formData)
+        axios.post('{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}', formData)
           .then(response => {
             console.log(response);
             var data = '';
