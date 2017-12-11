@@ -373,11 +373,13 @@ class CreativeStudioController extends Controller
   {
     // manca aggiungere la sessione al form
     // manca fare una verifica della dimensione del file
+    // return response($request->all());
 
     $utility = new Utility;
     $file = $request->file('media');
     $ext = $file->getClientOriginalExtension();
     $check = $utility->verifyExt($ext, ['image']);
+
 
     // verify the extension
     if ($check == false) {
@@ -388,6 +390,7 @@ class CreativeStudioController extends Controller
     } else {
 
       $teacher = Auth::guard('teacher')->user();
+
       $app = App::where('slug', '=', $app_slug)->with('category')->first();
       $app_category = AppCategory::find($app->app_category_id);
       $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();

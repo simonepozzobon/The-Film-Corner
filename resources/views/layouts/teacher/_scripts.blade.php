@@ -44,6 +44,7 @@
             $.cookie('tfc-sessions', JSON.stringify(sessions));
             // Nuovo sistema per la sessione
             $('body').trigger('session-loaded', session);
+            localStorage.setItem('tfc-sessions', JSON.stringify(sessions));
             console.log($.parseJSON($.cookie('tfc-sessions')));
           },
           error: function (xhr, status) {
