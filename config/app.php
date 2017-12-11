@@ -282,6 +282,8 @@ return [
         'Utility' => 'App\Utility',
         'GeneralText' => 'App\GeneralText',
         'SharedSession' => 'App\SharedSession',
+        'Filmography' => 'App\Filmography',
+        'Credit' => 'App\Credit',
     ],
 
 ];

@@ -14,11 +14,15 @@
       <div class="modal-body">
         <h3>Credits</h3>
         <ul class="list-unstyled">
-          <li>Prova - Gianni</li>
+          @foreach (\Credit::get_all() as $key => $credit)
+            <li>{{ $credit->name }} - {{ $credit->role }}</li>
+          @endforeach
         </ul>
-        <h3>Filmography</h3>
+        <h3 class="mt">Filmography</h3>
         <ul class="list-unstyled">
-          <li>Prova - Gianni</li>
+          @foreach (\Filmography::get_all() as $key => $filmography)
+            <li>{{ $filmography->title }} - {{ $filmography->description }}</li>
+          @endforeach
         </ul>
       </div>
       <div class="modal-footer">
