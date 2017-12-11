@@ -11413,13 +11413,13 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 219:
+/***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _FeedbackToolbar = __webpack_require__(347);
+var _FeedbackToolbar = __webpack_require__(352);
 
 var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
 
@@ -11657,7 +11657,67 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 259:
+/***/ 26:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
+
+/***/ }),
+
+/***/ 264:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11667,7 +11727,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _gsap = __webpack_require__(49);
+var _gsap = __webpack_require__(45);
 
 var _axios = __webpack_require__(16);
 
@@ -11860,66 +11920,6 @@ exports.default = {
     }
   }
 };
-
-/***/ }),
-
-/***/ 26:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-function InterceptorManager() {
-  this.handlers = [];
-}
-
-/**
- * Add a new interceptor to the stack
- *
- * @param {Function} fulfilled The function to handle `then` for a `Promise`
- * @param {Function} rejected The function to handle `reject` for a `Promise`
- *
- * @return {Number} An ID used to remove interceptor later
- */
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-  this.handlers.push({
-    fulfilled: fulfilled,
-    rejected: rejected
-  });
-  return this.handlers.length - 1;
-};
-
-/**
- * Remove an interceptor from the stack
- *
- * @param {Number} id The ID that was returned by `use`
- */
-InterceptorManager.prototype.eject = function eject(id) {
-  if (this.handlers[id]) {
-    this.handlers[id] = null;
-  }
-};
-
-/**
- * Iterate over all the registered interceptors
- *
- * This method is particularly useful for skipping over any
- * interceptors that may have become `null` calling `eject`.
- *
- * @param {Function} fn The function to call for each interceptor
- */
-InterceptorManager.prototype.forEach = function forEach(fn) {
-  utils.forEach(this.handlers, function forEachHandler(h) {
-    if (h !== null) {
-      fn(h);
-    }
-  });
-};
-
-module.exports = InterceptorManager;
-
 
 /***/ }),
 
@@ -12292,14 +12292,6 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 305:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
-
-/***/ }),
-
 /***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12341,6 +12333,14 @@ function btoa(input) {
 
 module.exports = btoa;
 
+
+/***/ }),
+
+/***/ 310:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -12503,18 +12503,40 @@ module.exports = (
 
 /***/ }),
 
-/***/ 347:
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+
+/***/ }),
+
+/***/ 352:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(259);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(264);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(397);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(435)
+  __webpack_require__(440)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -12557,28 +12579,6 @@ if (false) {(function () {
 })()}
 
 /* harmony default export */ __webpack_exports__["default"] = (Component.exports);
-
-
-/***/ }),
-
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */
-module.exports = function isAbsoluteURL(url) {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-  // by any combination of letters, digits, plus, period, or hyphen.
-  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
 
 
 /***/ }),
@@ -12759,7 +12759,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 392:
+/***/ 397:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13035,13 +13035,13 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 435:
+/***/ 440:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(305);
+var content = __webpack_require__(310);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -13062,15 +13062,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 462:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(219);
-
-
-/***/ }),
-
-/***/ 49:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -21040,6 +21032,14 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 /***/ }),
 
+/***/ 467:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(224);
+
+
+/***/ }),
+
 /***/ 5:
 /***/ (function(module, exports) {
 
@@ -21618,4 +21618,4 @@ module.exports = function xhrAdapter(config) {
 
 /***/ })
 
-},[462]);
+},[467]);

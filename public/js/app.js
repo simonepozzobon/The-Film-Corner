@@ -11613,133 +11613,6 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 215:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(56);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _laravelEcho = __webpack_require__(321);
-
-var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
-
-var _iscroll = __webpack_require__(320);
-
-var _iscroll2 = _interopRequireDefault(_iscroll);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
- */
-window.$ = window.jQuery = __webpack_require__(56);
-window.Tether = __webpack_require__(128);
-__webpack_require__(204);
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(277);
-
-/**
- * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
- */
-
-window.io = __webpack_require__(93);
-window.Echo = new _laravelEcho2.default({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
-});
-
-/**
- * Importo anche Tooltip.js per i tooltip (usati specialmente nel menu delle applicazioni)
- */
-
-(0, _jquery2.default)(function () {
-  (0, _jquery2.default)('[data-toggle="tooltip"]').tooltip();
-});
-
-/**
- * Setup di Iscroll per le librerie nelle app
- */
-
-// verifico se ci sono librerie
-var libraryEls = document.querySelectorAll('.library');
-if (libraryEls.length > 0) {
-  // inizializzo la variabile contenitore per le instance di Iscroll
-  var scrollEl;
-
-  // catturo l'evento per le dimensioni della libreria
-  document.addEventListener('library-resized', initScroll, false);
-
-  // quando attivo il tab (evento Bootstrap)
-  (0, _jquery2.default)('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-
-    // Elimino l'instance di Iscroll
-    if (typeof scrollEl != 'undefined' || scrollEl != null) {
-      scrollEl.destroy();
-      scrollEl = null;
-    }
-
-    // inizializzo la nuova instance di Iscroll
-    scrollEl = new _iscroll2.default(e.target.hash, {
-      scrollbars: true,
-      mouseWheel: true,
-      shrinkScrollbars: 'scale'
-    });
-  });
-}
-
-// Creo la funzione per impostare la dimensione del wrapper / assets
-function initScroll(e) {
-  // Le dimensioni che dovrà avere la libreria
-  var height = Math.round((0, _jquery2.default)(e.target).height()),
-      width = Math.round((0, _jquery2.default)(e.target).width()) + 32,
-      wrappers = (0, _jquery2.default)('.assets');
-
-  // var debug = {
-  //     'height': height,
-  //     'width': width,
-  //     'wrappers': wrappers,
-  // }
-  // console.dir(debug)
-  // console.log('ridimensionata')
-
-  wrappers.each(function (index, el) {
-    (0, _jquery2.default)(el).css('height', height);
-    (0, _jquery2.default)(el).css('width', width);
-    (0, _jquery2.default)(el).css('position', 'relative');
-    (0, _jquery2.default)(el).css('overflow', 'hidden');
-
-    var scroller = (0, _jquery2.default)(el).find('.scroller');
-    scroller.css('position', 'absolute');
-    scroller.css('width', '100%');
-  });
-
-  // inizializzo IScroll sul primo tab attivo
-  var firstEl = (0, _jquery2.default)('.assets.active').attr('id');
-  if (typeof firstEl != 'undefined' || firstEl != null) {
-    scrollEl = new _iscroll2.default('#' + firstEl, {
-      scrollbars: true,
-      mouseWheel: true,
-      shrinkScrollbars: 'scale'
-    });
-  }
-}
-
-/**
- * read more on apps
- */
-
-/***/ }),
-
 /***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12354,6 +12227,133 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 
+/***/ 220:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(56);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _laravelEcho = __webpack_require__(326);
+
+var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
+
+var _iscroll = __webpack_require__(325);
+
+var _iscroll2 = _interopRequireDefault(_iscroll);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
+ */
+window.$ = window.jQuery = __webpack_require__(56);
+window.Tether = __webpack_require__(133);
+__webpack_require__(209);
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(282);
+
+/**
+ * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
+ */
+
+window.io = __webpack_require__(93);
+window.Echo = new _laravelEcho2.default({
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001'
+});
+
+/**
+ * Importo anche Tooltip.js per i tooltip (usati specialmente nel menu delle applicazioni)
+ */
+
+(0, _jquery2.default)(function () {
+  (0, _jquery2.default)('[data-toggle="tooltip"]').tooltip();
+});
+
+/**
+ * Setup di Iscroll per le librerie nelle app
+ */
+
+// verifico se ci sono librerie
+var libraryEls = document.querySelectorAll('.library');
+if (libraryEls.length > 0) {
+  // inizializzo la variabile contenitore per le instance di Iscroll
+  var scrollEl;
+
+  // catturo l'evento per le dimensioni della libreria
+  document.addEventListener('library-resized', initScroll, false);
+
+  // quando attivo il tab (evento Bootstrap)
+  (0, _jquery2.default)('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+    // Elimino l'instance di Iscroll
+    if (typeof scrollEl != 'undefined' || scrollEl != null) {
+      scrollEl.destroy();
+      scrollEl = null;
+    }
+
+    // inizializzo la nuova instance di Iscroll
+    scrollEl = new _iscroll2.default(e.target.hash, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale'
+    });
+  });
+}
+
+// Creo la funzione per impostare la dimensione del wrapper / assets
+function initScroll(e) {
+  // Le dimensioni che dovrà avere la libreria
+  var height = Math.round((0, _jquery2.default)(e.target).height()),
+      width = Math.round((0, _jquery2.default)(e.target).width()) + 32,
+      wrappers = (0, _jquery2.default)('.assets');
+
+  // var debug = {
+  //     'height': height,
+  //     'width': width,
+  //     'wrappers': wrappers,
+  // }
+  // console.dir(debug)
+  // console.log('ridimensionata')
+
+  wrappers.each(function (index, el) {
+    (0, _jquery2.default)(el).css('height', height);
+    (0, _jquery2.default)(el).css('width', width);
+    (0, _jquery2.default)(el).css('position', 'relative');
+    (0, _jquery2.default)(el).css('overflow', 'hidden');
+
+    var scroller = (0, _jquery2.default)(el).find('.scroller');
+    scroller.css('position', 'absolute');
+    scroller.css('width', '100%');
+  });
+
+  // inizializzo IScroll sul primo tab attivo
+  var firstEl = (0, _jquery2.default)('.assets.active').attr('id');
+  if (typeof firstEl != 'undefined' || firstEl != null) {
+    scrollEl = new _iscroll2.default('#' + firstEl, {
+      scrollbars: true,
+      mouseWheel: true,
+      shrinkScrollbars: 'scale'
+    });
+  }
+}
+
+/**
+ * read more on apps
+ */
+
+/***/ }),
+
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12720,13 +12720,42 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 277:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-window._ = __webpack_require__(46);
+/**
+ * Update an Error with the specified config, error code, and response.
+ *
+ * @param {Error} error The error to update.
+ * @param {Object} config The config.
+ * @param {string} [code] The error code (for example, 'ECONNABORTED').
+ * @param {Object} [request] The request.
+ * @param {Object} [response] The response.
+ * @returns {Error} The error.
+ */
+module.exports = function enhanceError(error, config, code, request, response) {
+  error.config = config;
+  if (code) {
+    error.code = code;
+  }
+  error.request = request;
+  error.response = response;
+  return error;
+};
+
+
+/***/ }),
+
+/***/ 282:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+window._ = __webpack_require__(47);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -12735,9 +12764,9 @@ window._ = __webpack_require__(46);
  */
 window.$ = window.jQuery = __webpack_require__(56);
 
-window.Tether = __webpack_require__(128);
+window.Tether = __webpack_require__(133);
 
-__webpack_require__(205);
+__webpack_require__(210);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12772,35 +12801,6 @@ window.axios.defaults.headers.common = {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Update an Error with the specified config, error code, and response.
- *
- * @param {Error} error The error to update.
- * @param {Object} config The config.
- * @param {string} [code] The error code (for example, 'ECONNABORTED').
- * @param {Object} [request] The request.
- * @param {Object} [response] The response.
- * @returns {Error} The error.
- */
-module.exports = function enhanceError(error, config, code, request, response) {
-  error.config = config;
-  if (code) {
-    error.code = code;
-  }
-  error.request = request;
-  error.response = response;
-  return error;
-};
-
 
 /***/ }),
 
@@ -13177,7 +13177,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 320:
+/***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*! iScroll v5.2.0 ~ (c) 2008-2016 Matteo Spinelli ~ http://cubiq.org/license */
@@ -15276,7 +15276,7 @@ if ( typeof module != 'undefined' && module.exports ) {
 
 /***/ }),
 
-/***/ 321:
+/***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
@@ -16503,15 +16503,15 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 458:
+/***/ 463:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(215);
+module.exports = __webpack_require__(220);
 
 
 /***/ }),
 
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -33604,7 +33604,7 @@ module.exports = __webpack_require__(215);
 
 /***/ }),
 
-/***/ 47:
+/***/ 48:
 /***/ (function(module, exports) {
 
 
@@ -33617,7 +33617,7 @@ module.exports = function(a, b){
 
 /***/ }),
 
-/***/ 48:
+/***/ 49:
 /***/ (function(module, exports) {
 
 /**
@@ -34222,7 +34222,7 @@ var debug = __webpack_require__(14)('socket.io-parser');
 var Emitter = __webpack_require__(53);
 var hasBin = __webpack_require__(62);
 var binary = __webpack_require__(96);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 
 /**
  * Protocol version.
@@ -34716,10 +34716,10 @@ function polling (opts) {
  */
 
 var Transport = __webpack_require__(50);
-var parseqs = __webpack_require__(48);
+var parseqs = __webpack_require__(49);
 var parser = __webpack_require__(22);
-var inherit = __webpack_require__(47);
-var yeast = __webpack_require__(69);
+var inherit = __webpack_require__(48);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(14)('engine.io-client:polling');
 
 /**
@@ -35046,7 +35046,7 @@ module.exports = function(arr, obj){
 
 /***/ }),
 
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports) {
 
 /**
@@ -35092,7 +35092,7 @@ module.exports = function parseuri(str) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -35101,10 +35101,10 @@ module.exports = function parseuri(str) {
  */
 
 var eio = __webpack_require__(82);
-var Socket = __webpack_require__(67);
+var Socket = __webpack_require__(68);
 var Emitter = __webpack_require__(53);
 var parser = __webpack_require__(54);
-var on = __webpack_require__(66);
+var on = __webpack_require__(67);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(14)('socket.io-client:manager');
 var indexOf = __webpack_require__(63);
@@ -35672,7 +35672,7 @@ Manager.prototype.onreconnect = function () {
 
 /***/ }),
 
-/***/ 66:
+/***/ 67:
 /***/ (function(module, exports) {
 
 
@@ -35703,7 +35703,7 @@ function on (obj, ev, fn) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -35714,10 +35714,10 @@ function on (obj, ev, fn) {
 var parser = __webpack_require__(54);
 var Emitter = __webpack_require__(53);
 var toArray = __webpack_require__(97);
-var on = __webpack_require__(66);
+var on = __webpack_require__(67);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(14)('socket.io-client:socket');
-var parseqs = __webpack_require__(48);
+var parseqs = __webpack_require__(49);
 
 /**
  * Module exports.
@@ -36128,7 +36128,7 @@ Socket.prototype.compress = function (compress) {
 
 /***/ }),
 
-/***/ 68:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -36149,7 +36149,7 @@ function isBuf(obj) {
 
 /***/ }),
 
-/***/ 69:
+/***/ 70:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -36769,8 +36769,8 @@ var Emitter = __webpack_require__(52);
 var debug = __webpack_require__(14)('engine.io-client:socket');
 var index = __webpack_require__(63);
 var parser = __webpack_require__(22);
-var parseuri = __webpack_require__(64);
-var parseqs = __webpack_require__(48);
+var parseuri = __webpack_require__(65);
+var parseqs = __webpack_require__(49);
 
 /**
  * Module exports.
@@ -37517,7 +37517,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  */
 
 var Polling = __webpack_require__(61);
-var inherit = __webpack_require__(47);
+var inherit = __webpack_require__(48);
 
 /**
  * Module exports.
@@ -37757,7 +37757,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 var XMLHttpRequest = __webpack_require__(51);
 var Polling = __webpack_require__(61);
 var Emitter = __webpack_require__(52);
-var inherit = __webpack_require__(47);
+var inherit = __webpack_require__(48);
 var debug = __webpack_require__(14)('engine.io-client:polling-xhr');
 
 /**
@@ -38177,9 +38177,9 @@ function unloadHandler () {
 
 var Transport = __webpack_require__(50);
 var parser = __webpack_require__(22);
-var parseqs = __webpack_require__(48);
-var inherit = __webpack_require__(47);
-var yeast = __webpack_require__(69);
+var parseqs = __webpack_require__(49);
+var inherit = __webpack_require__(48);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(14)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
@@ -39179,7 +39179,7 @@ function plural(ms, n, name) {
 
 var url = __webpack_require__(94);
 var parser = __webpack_require__(54);
-var Manager = __webpack_require__(65);
+var Manager = __webpack_require__(66);
 var debug = __webpack_require__(14)('socket.io-client');
 
 /**
@@ -39264,8 +39264,8 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(65);
-exports.Socket = __webpack_require__(67);
+exports.Manager = __webpack_require__(66);
+exports.Socket = __webpack_require__(68);
 
 
 /***/ }),
@@ -39278,7 +39278,7 @@ exports.Socket = __webpack_require__(67);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(64);
+var parseuri = __webpack_require__(65);
 var debug = __webpack_require__(14)('socket.io-client:url');
 
 /**
@@ -39375,7 +39375,7 @@ module.exports = Array.isArray || function (arr) {
  */
 
 var isArray = __webpack_require__(95);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -39534,4 +39534,4 @@ function toArray(list, index) {
 
 /***/ })
 
-},[458]);
+},[463]);

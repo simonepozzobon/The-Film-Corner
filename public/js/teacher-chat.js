@@ -431,7 +431,7 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 131:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -470,7 +470,7 @@ Object.defineProperty(exports, "__esModule", {
 var axios = __webpack_require__(16);
 var io = __webpack_require__(93);
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
-var _ = __webpack_require__(46);
+var _ = __webpack_require__(47);
 var $ = __webpack_require__(56);
 
 exports.default = {
@@ -598,7 +598,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 132:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
@@ -1000,18 +1000,78 @@ module.exports = __webpack_require__(23);
 
 /***/ }),
 
-/***/ 198:
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(19);
+exports.setImmediate = setImmediate;
+exports.clearImmediate = clearImmediate;
+
+
+/***/ }),
+
+/***/ 203:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_tfcChat_vue__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_tfcChat_vue__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_tfcChat_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_tfcChat_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5abefee2_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_tfcChat_vue__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_5abefee2_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_tfcChat_vue__ = __webpack_require__(204);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(200)
+  __webpack_require__(205)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -1058,7 +1118,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 199:
+/***/ 204:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1171,73 +1231,13 @@ if (false) {
 
 /***/ }),
 
-/***/ 20:
-/***/ (function(module, exports, __webpack_require__) {
-
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(19);
-exports.setImmediate = setImmediate;
-exports.clearImmediate = clearImmediate;
-
-
-/***/ }),
-
-/***/ 200:
+/***/ 205:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(132);
+var content = __webpack_require__(137);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -12600,31 +12600,6 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 
-/***/ 227:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(21);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _tfcChat = __webpack_require__(198);
-
-var _tfcChat2 = _interopRequireDefault(_tfcChat);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _vue2.default({
-  el: '#teacher-chat',
-  components: {
-    tfcChat: _tfcChat2.default
-  }
-});
-
-/***/ }),
-
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12682,6 +12657,31 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
+
+/***/ }),
+
+/***/ 232:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(21);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _tfcChat = __webpack_require__(203);
+
+var _tfcChat2 = _interopRequireDefault(_tfcChat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
+  el: '#teacher-chat',
+  components: {
+    tfcChat: _tfcChat2.default
+  }
+});
 
 /***/ }),
 
@@ -13866,7 +13866,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 46:
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -30959,7 +30959,15 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 47:
+/***/ 475:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(232);
+
+
+/***/ }),
+
+/***/ 48:
 /***/ (function(module, exports) {
 
 
@@ -30972,15 +30980,7 @@ module.exports = function(a, b){
 
 /***/ }),
 
-/***/ 470:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(227);
-
-
-/***/ }),
-
-/***/ 48:
+/***/ 49:
 /***/ (function(module, exports) {
 
 /**
@@ -31642,7 +31642,7 @@ var debug = __webpack_require__(14)('socket.io-parser');
 var Emitter = __webpack_require__(53);
 var hasBin = __webpack_require__(62);
 var binary = __webpack_require__(96);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 
 /**
  * Protocol version.
@@ -32246,10 +32246,10 @@ function polling (opts) {
  */
 
 var Transport = __webpack_require__(50);
-var parseqs = __webpack_require__(48);
+var parseqs = __webpack_require__(49);
 var parser = __webpack_require__(22);
-var inherit = __webpack_require__(47);
-var yeast = __webpack_require__(69);
+var inherit = __webpack_require__(48);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(14)('engine.io-client:polling');
 
 /**
@@ -32576,7 +32576,7 @@ module.exports = function(arr, obj){
 
 /***/ }),
 
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports) {
 
 /**
@@ -32622,7 +32622,7 @@ module.exports = function parseuri(str) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32631,10 +32631,10 @@ module.exports = function parseuri(str) {
  */
 
 var eio = __webpack_require__(82);
-var Socket = __webpack_require__(67);
+var Socket = __webpack_require__(68);
 var Emitter = __webpack_require__(53);
 var parser = __webpack_require__(54);
-var on = __webpack_require__(66);
+var on = __webpack_require__(67);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(14)('socket.io-client:manager');
 var indexOf = __webpack_require__(63);
@@ -33202,7 +33202,7 @@ Manager.prototype.onreconnect = function () {
 
 /***/ }),
 
-/***/ 66:
+/***/ 67:
 /***/ (function(module, exports) {
 
 
@@ -33233,7 +33233,7 @@ function on (obj, ev, fn) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33244,10 +33244,10 @@ function on (obj, ev, fn) {
 var parser = __webpack_require__(54);
 var Emitter = __webpack_require__(53);
 var toArray = __webpack_require__(97);
-var on = __webpack_require__(66);
+var on = __webpack_require__(67);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(14)('socket.io-client:socket');
-var parseqs = __webpack_require__(48);
+var parseqs = __webpack_require__(49);
 
 /**
  * Module exports.
@@ -33658,7 +33658,7 @@ Socket.prototype.compress = function (compress) {
 
 /***/ }),
 
-/***/ 68:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -33676,82 +33676,6 @@ function isBuf(obj) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-
-/***/ 69:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')
-  , length = 64
-  , map = {}
-  , seed = 0
-  , i = 0
-  , prev;
-
-/**
- * Return a string representing the specified number.
- *
- * @param {Number} num The number to convert.
- * @returns {String} The string representation of the number.
- * @api public
- */
-function encode(num) {
-  var encoded = '';
-
-  do {
-    encoded = alphabet[num % length] + encoded;
-    num = Math.floor(num / length);
-  } while (num > 0);
-
-  return encoded;
-}
-
-/**
- * Return the integer value specified by the given string.
- *
- * @param {String} str The string to convert.
- * @returns {Number} The integer value represented by the string.
- * @api public
- */
-function decode(str) {
-  var decoded = 0;
-
-  for (i = 0; i < str.length; i++) {
-    decoded = decoded * length + map[str.charAt(i)];
-  }
-
-  return decoded;
-}
-
-/**
- * Yeast: A tiny growing id generator.
- *
- * @returns {String} A unique id.
- * @api public
- */
-function yeast() {
-  var now = encode(+new Date());
-
-  if (now !== prev) return seed = 0, prev = now;
-  return now +'.'+ encode(seed++);
-}
-
-//
-// Map each character to its index.
-//
-for (; i < length; i++) map[alphabet[i]] = i;
-
-//
-// Expose the `yeast`, `encode` and `decode` functions.
-//
-yeast.encode = encode;
-yeast.decode = decode;
-module.exports = yeast;
-
 
 /***/ }),
 
@@ -33973,6 +33897,82 @@ function applyToTag (styleElement, obj) {
     styleElement.appendChild(document.createTextNode(css))
   }
 }
+
+
+/***/ }),
+
+/***/ 70:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')
+  , length = 64
+  , map = {}
+  , seed = 0
+  , i = 0
+  , prev;
+
+/**
+ * Return a string representing the specified number.
+ *
+ * @param {Number} num The number to convert.
+ * @returns {String} The string representation of the number.
+ * @api public
+ */
+function encode(num) {
+  var encoded = '';
+
+  do {
+    encoded = alphabet[num % length] + encoded;
+    num = Math.floor(num / length);
+  } while (num > 0);
+
+  return encoded;
+}
+
+/**
+ * Return the integer value specified by the given string.
+ *
+ * @param {String} str The string to convert.
+ * @returns {Number} The integer value represented by the string.
+ * @api public
+ */
+function decode(str) {
+  var decoded = 0;
+
+  for (i = 0; i < str.length; i++) {
+    decoded = decoded * length + map[str.charAt(i)];
+  }
+
+  return decoded;
+}
+
+/**
+ * Yeast: A tiny growing id generator.
+ *
+ * @returns {String} A unique id.
+ * @api public
+ */
+function yeast() {
+  var now = encode(+new Date());
+
+  if (now !== prev) return seed = 0, prev = now;
+  return now +'.'+ encode(seed++);
+}
+
+//
+// Map each character to its index.
+//
+for (; i < length; i++) map[alphabet[i]] = i;
+
+//
+// Expose the `yeast`, `encode` and `decode` functions.
+//
+yeast.encode = encode;
+yeast.decode = decode;
+module.exports = yeast;
 
 
 /***/ }),
@@ -34521,8 +34521,8 @@ var Emitter = __webpack_require__(52);
 var debug = __webpack_require__(14)('engine.io-client:socket');
 var index = __webpack_require__(63);
 var parser = __webpack_require__(22);
-var parseuri = __webpack_require__(64);
-var parseqs = __webpack_require__(48);
+var parseuri = __webpack_require__(65);
+var parseqs = __webpack_require__(49);
 
 /**
  * Module exports.
@@ -35269,7 +35269,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  */
 
 var Polling = __webpack_require__(61);
-var inherit = __webpack_require__(47);
+var inherit = __webpack_require__(48);
 
 /**
  * Module exports.
@@ -35509,7 +35509,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 var XMLHttpRequest = __webpack_require__(51);
 var Polling = __webpack_require__(61);
 var Emitter = __webpack_require__(52);
-var inherit = __webpack_require__(47);
+var inherit = __webpack_require__(48);
 var debug = __webpack_require__(14)('engine.io-client:polling-xhr');
 
 /**
@@ -35929,9 +35929,9 @@ function unloadHandler () {
 
 var Transport = __webpack_require__(50);
 var parser = __webpack_require__(22);
-var parseqs = __webpack_require__(48);
-var inherit = __webpack_require__(47);
-var yeast = __webpack_require__(69);
+var parseqs = __webpack_require__(49);
+var inherit = __webpack_require__(48);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(14)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
@@ -36931,7 +36931,7 @@ function plural(ms, n, name) {
 
 var url = __webpack_require__(94);
 var parser = __webpack_require__(54);
-var Manager = __webpack_require__(65);
+var Manager = __webpack_require__(66);
 var debug = __webpack_require__(14)('socket.io-client');
 
 /**
@@ -37016,8 +37016,8 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(65);
-exports.Socket = __webpack_require__(67);
+exports.Manager = __webpack_require__(66);
+exports.Socket = __webpack_require__(68);
 
 
 /***/ }),
@@ -37030,7 +37030,7 @@ exports.Socket = __webpack_require__(67);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(64);
+var parseuri = __webpack_require__(65);
 var debug = __webpack_require__(14)('socket.io-client:url');
 
 /**
@@ -37127,7 +37127,7 @@ module.exports = Array.isArray || function (arr) {
  */
 
 var isArray = __webpack_require__(95);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -37286,4 +37286,4 @@ function toArray(list, index) {
 
 /***/ })
 
-},[470]);
+},[475]);

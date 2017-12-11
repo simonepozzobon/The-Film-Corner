@@ -3,8 +3,8 @@
     <tr id="list-el" ref="row">
       <td ref="items" v-for="(option, key, index) in options" :key="option.key" @click="edit" :data-property="option.title">{{get_property(option.title)}}</td>
       <td>
-        <span v-if="language.short != 'en'" @click="translationPanel(this.event, language)" v-for="language in item.translated" :key="language.key" class="badge badge-red mb">{{language.short}}</span>
-        <span v-else class="badge badge-red mb" @click="editDefault(this.event, language)">{{language.short}}</span>
+        <span v-if="language.short != 'en'" @click="translationPanel($event, language)" v-for="language in item.translated" :key="language.key" class="badge badge-red mb">{{language.short}}</span>
+        <span v-else class="badge badge-red mb" @click="editDefault($event, language)">{{language.short}}</span>
       </td>
     </tr>
     <tr>
@@ -195,6 +195,7 @@ export default {
 
     translationPanel(e, language)
     {
+      console.log(e);
       if (!this.toolbar.translation) {
         this.language = language
         this.toolbar.cache = e.target
@@ -210,6 +211,7 @@ export default {
 
     editDefault(e, language)
     {
+      console.log(e);
       if (this.toolbar.status) {
         this.hide_tools()
       }
