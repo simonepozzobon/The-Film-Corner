@@ -4,8 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class AppKeywordTranslation extends Model
+class CaptionTranslation extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['description'];
 }

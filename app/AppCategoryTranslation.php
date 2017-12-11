@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class AppCategoryTranslation extends Model
 {
     public $timestamps = false;
-    protected $fillable = ['name', 'desription'];
+    protected $fillable = ['name', 'description'];
 }

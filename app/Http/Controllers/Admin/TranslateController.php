@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\App;
+use App\Caption;
 use App\Language;
 use App\AppKeyword;
 use App\AppSection;
@@ -63,6 +64,10 @@ class TranslateController extends Controller
 
             case 'general_texts':
                 $items = GeneralText::all();
+                break;
+
+            case 'captions':
+                $items = Caption::all();
                 break;
         }
 

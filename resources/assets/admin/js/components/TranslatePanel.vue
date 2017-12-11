@@ -66,6 +66,13 @@ export default {
           { title: 'description', type: 'textarea' },
         ]
       },
+      {
+        title: 'Captions',
+        value: 'captions',
+        options: [
+          { title: 'description', type: 'textarea' }
+        ]
+      },
     ],
     languages: '',
     category: 'apps',

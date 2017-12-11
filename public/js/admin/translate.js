@@ -12163,6 +12163,10 @@ exports.default = {
         title: 'General Texts',
         value: 'general_texts',
         options: [{ title: 'description', type: 'textarea' }]
+      }, {
+        title: 'Captions',
+        value: 'captions',
+        options: [{ title: 'description', type: 'textarea' }]
       }],
       languages: '',
       category: 'apps',
