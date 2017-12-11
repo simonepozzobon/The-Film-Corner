@@ -1,7 +1,6 @@
 module.exports = {
   ready: function()
   {
-    var $ = require('jquery');
-    
+    var $ = require('jquery')
   }
 }

@@ -14,7 +14,7 @@ var _moJs = __webpack_require__(72);
 
 var _moJs2 = _interopRequireDefault(_moJs);
 
-var _jquery = __webpack_require__(50);
+var _jquery = __webpack_require__(56);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 

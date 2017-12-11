@@ -9988,14 +9988,6 @@ var _vue = __webpack_require__(21);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _moJs = __webpack_require__(72);
-
-var _moJs2 = _interopRequireDefault(_moJs);
-
-var _axios = __webpack_require__(16);
-
-var _axios2 = _interopRequireDefault(_axios);
-
 var _ImageFormUpload = __webpack_require__(328);
 
 var _ImageFormUpload2 = _interopRequireDefault(_ImageFormUpload);
@@ -10006,7 +9998,7 @@ var _ImageCrud2 = _interopRequireDefault(_ImageCrud);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var app = new _vue2.default({
+new _vue2.default({
   el: '#app',
   components: {
     ImageFormUpload: _ImageFormUpload2.default,
@@ -20811,16 +20803,20 @@ module.exports.default = axios;
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+
+var _SingleElement = __webpack_require__(487);
+
+var _SingleElement2 = _interopRequireDefault(_SingleElement);
+
+var _moJs = __webpack_require__(72);
+
+var _moJs2 = _interopRequireDefault(_moJs);
 
 var _axios = __webpack_require__(16);
 
 var _axios2 = _interopRequireDefault(_axios);
-
-var _mojsPlayer = __webpack_require__(103);
-
-var _mojsPlayer2 = _interopRequireDefault(_mojsPlayer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -20844,242 +20840,214 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-// import MojsCurveEditor from 'mojs-curve-editor';
 
 exports.default = {
-    props: ['items', 'msg', 'token'],
-    data: function data() {
-        return {
-            images: '',
-            opened: false,
-            t_position: '',
-            modal: '',
-            t_center: '',
-            previous_el: ''
-
-        };
+  props: {
+    items: {
+      default: '',
+      type: String
     },
-    mounted: function mounted() {
-        var vue = this;
+    msg: {
+      default: '',
+      type: String
+    },
+    token: {
+      default: '',
+      type: String
+    }
+  },
+  data: function data() {
+    return {
+      opened: false,
+      t_position: '',
+      modal: '',
+      t_center: '',
+      previous_el: ''
+    };
+  },
+  components: {
+    SingleElement: _SingleElement2.default
+  },
+  computed: {
+    images: function images() {
+      return JSON.parse(this.items);
+    }
+  },
+  mounted: function mounted() {},
 
-        this.$parent.$on('newImageLoaded', function (response) {
-            vue.addImage(response);
+  methods: {
+    addImage: function addImage(response) {
+      var newImage = {
+        id: response.image.id,
+        title: response.image.title,
+        img: response.image.img,
+        path: response.image.path
+      };
+      this.images.unshift(newImage);
+    },
+
+    deleteImage: function deleteImage(id) {
+      var vue = this;
+      var formData = new FormData();
+      formData.append('_token', this.token);
+
+      (0, _axios2.default)({
+        method: 'delete',
+        url: '/api/apps/image/' + id,
+        data: formData
+      }).then(function () {
+        vue.closeModal(id);
+        vue.deleteRow(id);
+      });
+    },
+
+    toggleModal: function toggleModal(el) {
+      // Da modificare
+      var button = document.getElementById('button-' + el);
+      var t_center = this.t_center;
+
+      var vue = this;
+      var modal = document.getElementById('modal-' + el);
+      this.modal = modal;
+      // Get the position of the button relative to the window
+      var b_width = button.offsetWidth;
+      var b_center = b_width / 2;
+      var b_y = button.offsetHeight / 2 * -1;
+
+      var b_left = this.getOffsetLeft(button);
+      var b_top = this.getOffsetTop(button);
+
+      if (this.opened == false) {
+        modal.style.display = 'inherit';
+        var modal_y = modal.offsetHeight * -1 / 2;
+
+        // Get the size of the Modal
+        var m_center_x = modal.offsetWidth / 2;
+
+        var burst = new _moJs2.default.Burst({
+          count: 10,
+          duration: 300,
+          radius: { 40: 80 },
+          y: 0,
+          x: 0,
+          left: b_left + b_center,
+          top: b_top + b_center,
+          origin: '0 100%',
+          children: {
+            shape: 'line',
+            stroke: '#e8a360',
+            strokeWidth: 2
+          },
+          onComplete: function onComplete() {
+            vue.deleteEl(burst.el);
+          }
         });
 
-        this.images = JSON.parse(this.items);
-        console.log(this.$refs['table']);
-        this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
+        var modalElOpen = new _moJs2.default.Html({
+          el: '#modal-' + el,
+          opacity: { 0: 1 },
+          scaleY: { 0.1: 1 },
+          scaleX: { 0: 1.5 },
+          // top: 0,
+          // left: 0,
+          x: _defineProperty({}, -m_center_x + b_center, t_center + m_center_x),
+          y: modal_y + b_y,
+          easing: 'sin.in',
+          duration: 150,
+          delay: 150
+        }).then({
+          scaleY: { 1: 1.1 },
+          scaleX: { 1.5: 1.1 },
+          duration: 50,
+          easing: 'sin.in.out'
+        }).then({
+          scaleY: { 1.1: 1 },
+          scaleX: { 1.1: 1 },
+          duration: 50,
+          easing: 'sin.out'
+        });
+
+        var timelineOpen = new _moJs2.default.Timeline().add(burst, modalElOpen).play();
+        this.opened = true;
+        this.previous_el = el;
+      } else {
+        this.closeModal(this.previous_el);
+      }
     },
 
-    methods: {
-        addImage: function addImage(response) {
-            console.log('triggered method inside');
-            console.log(response);
-            var newImage = {
-                id: response.image.id,
-                title: response.image.title,
-                img: response.image.img,
-                path: response.image.path
-            };
-            this.images.unshift(newImage);
-        },
-        deleteImage: function deleteImage(id) {
-            var vue = this;
-            var formData = new FormData();
-            formData.append('_token', this.token);
+    closeModal: function closeModal(el) {
 
-            (0, _axios2.default)({
-                method: 'delete',
-                url: '/api/apps/image/' + id,
-                data: formData
-            }).then(function (response) {
-                console.log(response);
-                vue.closeModal(id);
-                vue.deleteRow(id);
-            }).catch(function (error) {
-                console.log(error);
-            });
-        },
-        toggleModal: function toggleModal(el) {
-            // Da modificare
-            var button = document.getElementById('button-' + el);
-            var opened = this.opened;
-            var t_center = this.t_center;
+      var t_center = this.t_center;
 
-            var vue = this;
-            var modal = document.getElementById('modal-' + el);
-            this.modal = modal;
-            // Get the position of the button relative to the window
-            var b_position = button.getBoundingClientRect();
-            var b_width = button.offsetWidth;
-            var b_center = b_width / 2;
-            var b_y = button.offsetHeight / 2 * -1;
+      var button = document.getElementById('button-' + el);
+      var b_center = button.offsetWidth / 2;
+      var b_y = button.offsetHeight / 2 * -1;
 
-            var b_left = this.getOffsetLeft(button);
-            var b_top = this.getOffsetTop(button);
+      var modal = this.modal;
+      var modal_y = modal.offsetHeight * -1 / 2;
+      var m_center_x = modal.offsetWidth / 2;
 
-            if (this.opened == false) {
-                modal.style.display = 'inherit';
-                var modal_y = modal.offsetHeight * -1 / 2;
-
-                // Get the size of the Modal
-                var m_center_x = modal.offsetWidth / 2;
-
-                var burst = new mojs.Burst({
-                    count: 10,
-                    duration: 300,
-                    radius: { 40: 80 },
-                    y: 0,
-                    x: 0,
-                    left: b_left + b_center,
-                    top: b_top + b_center,
-                    origin: '0 100%',
-                    children: {
-                        shape: 'line',
-                        stroke: '#e8a360',
-                        stroke: '#e8a360',
-                        strokeWidth: 2
-                    },
-                    onComplete: function onComplete() {
-                        vue.deleteEl(burst.el);
-                    }
-                });
-
-                var modalElOpen = new mojs.Html({
-                    el: '#modal-' + el,
-                    opacity: { 0: 1 },
-                    scaleY: { 0.1: 1 },
-                    scaleX: { 0: 1.5 },
-                    // top: 0,
-                    // left: 0,
-                    x: _defineProperty({}, -m_center_x + b_center, t_center + m_center_x),
-                    y: modal_y + b_y,
-                    easing: 'sin.in',
-                    duration: 150,
-                    delay: 150
-                }).then({
-                    scaleY: { 1: 1.1 },
-                    scaleX: { 1.5: 1.1 },
-                    duration: 50,
-                    easing: 'sin.in.out'
-                }).then({
-                    scaleY: { 1.1: 1 },
-                    scaleX: { 1.1: 1 },
-                    duration: 50,
-                    easing: 'sin.out'
-                });
-
-                var timelineOpen = new mojs.Timeline().add(burst, modalElOpen).play();
-                this.opened = true;
-                this.previous_el = el;
-            } else {
-                this.closeModal(this.previous_el);
-            }
-        },
-        closeModal: function closeModal(el) {
-
-            var t_center = this.t_center;
-
-            var button = document.getElementById('button-' + el);
-            var b_center = button.offsetWidth / 2;
-            var b_y = button.offsetHeight / 2 * -1;
-
-            var modal = this.modal;
-            var modal_y = modal.offsetHeight * -1 / 2;
-            var m_center_x = modal.offsetWidth / 2;
-
-            var modalElClose = new mojs.Html({
-                el: '#modal-' + el,
-                scaleX: { 1: 1.1 },
-                scaleY: { 1: 1.1 },
-                x: t_center + m_center_x,
-                y: modal_y + b_y,
-                duration: 50,
-                easing: 'sin.in.out'
-            }).then({
-                opacity: { 1: 0 },
-                scaleX: { 1.1: 0 },
-                scaleY: { 1.1: 0 },
-                x: _defineProperty({}, t_center + m_center_x, -m_center_x + b_center),
-                duration: 100,
-                easing: 'sin.in.out',
-                onComplete: function onComplete() {
-                    modal.style.display = 'none';
-                }
-            }).play();
-            this.opened = false;
-        },
-        deleteRow: function deleteRow(el) {
-            var rowHeight = document.getElementById('row-' + el);
-            var vue = this;
-            var row = new mojs.Html({
-                el: '#row-' + el,
-                height: { 100: 0 },
-                opacity: { 1: 0 },
-                onComplete: function onComplete() {
-                    vue.deleteEl(row.el);
-                }
-            }).play();
-        },
-        getOffsetLeft: function getOffsetLeft(elem) {
-            var offsetLeft = 0;
-            do {
-                if (!isNaN(elem.offsetLeft)) {
-                    offsetLeft += elem.offsetLeft;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetLeft;
-        },
-        getOffsetTop: function getOffsetTop(elem) {
-            var offsetTop = 0;
-            do {
-                if (!isNaN(elem.offsetTop)) {
-                    offsetTop += elem.offsetTop;
-                }
-            } while (elem = elem.offsetParent);
-            return offsetTop;
-        },
-        deleteEl: function deleteEl(el) {
-            if (el) {
-                el.parentNode.removeChild(el);
-            }
+      var modalElClose = new _moJs2.default.Html({
+        el: '#modal-' + el,
+        scaleX: { 1: 1.1 },
+        scaleY: { 1: 1.1 },
+        x: t_center + m_center_x,
+        y: modal_y + b_y,
+        duration: 50,
+        easing: 'sin.in.out'
+      }).then({
+        opacity: { 1: 0 },
+        scaleX: { 1.1: 0 },
+        scaleY: { 1.1: 0 },
+        x: _defineProperty({}, t_center + m_center_x, -m_center_x + b_center),
+        duration: 100,
+        easing: 'sin.in.out',
+        onComplete: function onComplete() {
+          modal.style.display = 'none';
         }
+      }).play();
+      this.opened = false;
+    },
+
+    deleteRow: function deleteRow(el) {
+      var rowHeight = document.getElementById('row-' + el);
+      var vue = this;
+      var row = new _moJs2.default.Html({
+        el: '#row-' + el,
+        height: { 100: 0 },
+        opacity: { 1: 0 },
+        onComplete: function onComplete() {
+          vue.deleteEl(row.el);
+        }
+      }).play();
+    },
+
+    getOffsetLeft: function getOffsetLeft(elem) {
+      var offsetLeft = 0;
+      do {
+        if (!isNaN(elem.offsetLeft)) {
+          offsetLeft += elem.offsetLeft;
+        }
+      } while (elem == elem.offsetParent);
+      return offsetLeft;
+    },
+
+    getOffsetTop: function getOffsetTop(elem) {
+      var offsetTop = 0;
+      do {
+        if (!isNaN(elem.offsetTop)) {
+          offsetTop += elem.offsetTop;
+        }
+      } while (elem == elem.offsetParent);
+      return offsetTop;
+    },
+
+    deleteEl: function deleteEl(el) {
+      if (el) {
+        el.parentNode.removeChild(el);
+      }
     }
+  }
 };
 
 /***/ }),
@@ -21980,7 +21948,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -22987,148 +22955,21 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("table", { ref: "table", staticClass: "table table-hover" }, [
-    _vm._m(0, false, false),
-    _vm._v(" "),
-    _c(
-      "tbody",
+  return _c(
+    "table",
+    { ref: "table", staticClass: "table table-hover" },
+    [
+      _vm._m(0, false, false),
+      _vm._v(" "),
       _vm._l(_vm.images, function(image) {
-        return _c(
-          "tr",
-          { ref: "test", refInFor: true, attrs: { id: "row-" + image.id } },
-          [
-            _c("td", { staticClass: "align-middle" }, [
-              _vm._v(_vm._s(image.id))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "align-middle" }, [
-              _vm._v(_vm._s(image.title))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "align-middle" }, [
-              _c("img", {
-                staticClass: "img-fluid",
-                attrs: { src: image.img, width: "57" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "align-middle" }, [
-              _vm._v(_vm._s(image.path))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "align-middle" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-secondary btn-orange btn-target",
-                  attrs: { id: "button-" + image.id, "data-target": image.id },
-                  on: {
-                    click: function($event) {
-                      _vm.toggleModal(image.id)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fa fa-trash-o" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "custom-modal",
-                  staticStyle: { display: "none", position: "absolute" },
-                  attrs: { id: "modal-" + image.id }
-                },
-                [
-                  _c("div", { staticClass: "box container-fluid" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col dark-blue py-3" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col d-flex justify-content-end" },
-                          [
-                            _c(
-                              "a",
-                              {
-                                attrs: { "data-modal": "close" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.closeModal(image.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-times",
-                                  attrs: { "aria-hidden": "true" }
-                                })
-                              ]
-                            )
-                          ]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col blue px-5 py-4" }, [
-                        _vm._m(1, true, false),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-6" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-secondary btn-blue btn-left",
-                                attrs: { "data-modal": "close" },
-                                on: {
-                                  click: function($event) {
-                                    _vm.closeModal(image.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-undo",
-                                  attrs: { "aria-hidden": "true" }
-                                }),
-                                _vm._v(" Undo")
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-6" }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-secondary btn-blue btn-right",
-                                on: {
-                                  click: function($event) {
-                                    _vm.deleteImage(image.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", {
-                                  staticClass: "fa fa-trash-o",
-                                  attrs: { "aria-hidden": "true" }
-                                }),
-                                _vm._v(" Delete")
-                              ]
-                            )
-                          ])
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ]
-        )
+        return _c("single-element", {
+          key: image.key,
+          attrs: { element: image }
+        })
       })
-    )
-  ])
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
@@ -23142,19 +22983,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Image")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Percorso")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Tools")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row pb-4" }, [
-      _c("div", { staticClass: "col" }, [
-        _c("h3", { staticClass: "text-center" }, [_vm._v("Are you shure")])
-      ])
+      _c("th", [_vm._v("Percorso")])
     ])
   }
 ]
@@ -40594,6 +40423,178 @@ module.exports = __webpack_require__(209);
 }.call(this));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(44)(module)))
+
+/***/ }),
+
+/***/ 485:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+  name: 'SingleElement',
+  props: {
+    element: {
+      default: function _default() {},
+      type: Object
+    }
+  },
+  data: function data() {
+    return {};
+  }
+};
+
+/***/ }),
+
+/***/ 486:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+
+/***/ 487:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_SingleElement_vue__ = __webpack_require__(485);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_SingleElement_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_SingleElement_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6a8abda6_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_SingleElement_vue__ = __webpack_require__(488);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(489)
+}
+var normalizeComponent = __webpack_require__(6)
+/* script */
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-6a8abda6"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_SingleElement_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6a8abda6_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_SingleElement_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/components/SingleElement.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6a8abda6", Component.options)
+  } else {
+    hotAPI.reload("data-v-6a8abda6", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 488:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tbody", { attrs: { id: "single-element" } }, [
+    _c("tr", [
+      _c("td", [_vm._v(_vm._s(_vm.element.id))]),
+      _vm._v(" "),
+      _c("td", [_vm._v(_vm._s(_vm.element.title))]),
+      _vm._v(" "),
+      _c("td", [
+        _c("img", {
+          staticClass: "img-fluid",
+          attrs: { src: _vm.element.img, width: "57" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("td", [_vm._v(_vm._s(_vm.element.path))])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6a8abda6", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 489:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(486);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(7)("0c5feda3", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a8abda6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./SingleElement.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6a8abda6\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./SingleElement.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 

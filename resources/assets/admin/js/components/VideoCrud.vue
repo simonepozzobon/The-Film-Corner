@@ -6,62 +6,24 @@
       <th>Title</th>
       <th>Image</th>
       <th>Percorso</th>
-      <th>Tools</th>
     </thead>
-    <tbody>
-      <tr v-for="video in videos" :id="'row-'+video.id" ref="test">
-        <td class="align-middle">{{video.id}}</td>
-        <td class="align-middle">{{video.title}}</td>
-        <td class="align-middle">
-            <img :src="video.img" class="img-fluid" width="57">
-        </td>
-        <td class="align-middle">{{video.path}}</td>
-        <td  class="align-middle">
-          <button :id="'button-'+video.id" @click="toggleModal(video.id)" class="btn btn-secondary btn-orange btn-target" :data-target="video.id"><i class="fa fa-trash-o"></i></button>
-              <div :id="'modal-'+video.id" class="custom-modal" style="display: none; position: absolute;">
-                <div class="box container-fluid">
-                  <div class="row">
-                    <div class="col dark-blue py-3">
-                      <div class="col d-flex justify-content-end">
-                        <a @click="closeModal(video.id)" data-modal="close"><i class="fa fa-times" aria-hidden="true"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col blue px-5 py-4">
-                      <div class="row pb-4">
-                        <div class="col">
-                          <h3 class="text-center">Are you shure</h3>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-6">
-                          <button @click="closeModal(video.id)" class="btn btn-secondary btn-blue btn-left" data-modal="close"><i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
-                        </div>
-                        <div class="col-6">
-                          <button @click="deleteVideo(video.id)" class="btn btn-secondary btn-blue btn-right"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        </td>
-      </tr>
-    </tbody>
+    <single-element
+      v-for="video in videos"
+      :key="video.key"
+      :element="video"
+    />
   </table>
 </template>
 
 <script>
-import axios from 'axios';
-import MojsPlayer from 'mojs-player';
-// import MojsCurveEditor from 'mojs-curve-editor';
+import mojs from 'mo-js'
+import axios from 'axios'
+import SingleElement from './SingleElement.vue'
 
 export default {
     props: ['items', 'msg', 'token'],
     data () {
         return {
-          videos: '',
           opened: false,
           t_position: '',
           modal: '',
@@ -70,6 +32,15 @@ export default {
 
         }
     },
+    computed: {
+      videos: function()
+      {
+        return JSON.parse(this.items)
+      }
+    },
+    components: {
+      SingleElement
+    },
     mounted () {
       var vue = this;
 
@@ -77,7 +48,6 @@ export default {
         vue.addVideo(response);
       });
 
-      this.videos = JSON.parse(this.items);
       console.log(this.$refs['table']);
       this.t_center = this.$refs['table'].offsetWidth / 2 * -1;
 
