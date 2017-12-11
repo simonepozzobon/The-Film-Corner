@@ -88743,7 +88743,7 @@ function extend() {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {
+
 
 var _angular = __webpack_require__(104);
 
@@ -88903,32 +88903,32 @@ _angular2.default.module('uploadCtrl', []).controller('uploadController', ['$sco
   $scope.uploadForm = function () {
     console.log('---------');
     console.log('Session token');
-    console.log($('#token').val());
+    console.log((0, _jquery2.default)('#token').val());
     console.log('---------');
 
     // Preparo i dati da inviare sotto forma di form
     var formData = new FormData();
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    formData.append('media', $('#media')[0].files[0]);
-    formData.append('session', $('#token').val());
+    formData.append('_token', (0, _jquery2.default)('meta[name="csrf-token"]').attr('content'));
+    formData.append('media', (0, _jquery2.default)('#media')[0].files[0]);
+    formData.append('session', (0, _jquery2.default)('#token').val());
 
     // prendo il nome della cateogria e lo slug dell'applicazione
-    var app_category = $('#app_category').val();
-    var app_slug = $('#app_slug').val();
+    var app_category = (0, _jquery2.default)('#app_category').val();
+    var app_slug = (0, _jquery2.default)('#app_slug').val();
 
     // effettuo l'invio ajax
-    $.ajax({
+    _jquery2.default.ajax({
       type: 'post',
       url: '/teacher/creative-studio/' + app_category + '/' + app_slug + '/upload',
       headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        'X-CSRF-TOKEN': (0, _jquery2.default)('meta[name="csrf-token"]').attr('content')
       },
       data: formData,
       processData: false,
       contentType: false,
       success: function success(response) {
         console.log(response);
-        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
+        var data = (0, _jquery2.default)('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
 
         $compile(data)($scope);
         $scope.$apply();
@@ -88939,7 +88939,7 @@ _angular2.default.module('uploadCtrl', []).controller('uploadController', ['$sco
     });
 
     console.log('invio dati');
-    console.log($('#media')[0].files[0]);
+    console.log((0, _jquery2.default)('#media')[0].files[0]);
   };
 }]);
 
@@ -89139,8 +89139,7 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 });
 
 // Define the Application
-var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant('CSRF_TOKEN', '{{ csrf_token() }}');
 
 /***/ }),
 /* 217 */,

@@ -48,7 +48,7 @@
                     </li>
                   @endforeach
                   <li class="nav-item">
-                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">Upload</a>
+                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">Uploads</a>
                   </li>
                 </ul>
               </div>
@@ -68,25 +68,32 @@
               @endforeach
               <div id="upload-library" class="assets wrapper tab-pane" role="tabpanel">
                 <div class="row scroller">
-                    <div class="col">
-                      <div class="row">
-                        <div class="col">
-                          <form>
-                            {{ csrf_field() }}
-                            {{ method_field('POST') }}
-                            <div class="form-group">
-                              <input type="file" name="media" class="form-control" >
-                            </div>
-                          </form>
-                        </div>
+                  <div class="col">
+                    <form id="uploadForm" method="post" enctype="multipart/form-data">
+                      {{ csrf_field() }}
+                      {{ method_field('POST') }}
+                      <input id="app_category" type="hidden" name="app_category" value="{{ $app_category->id }}">
+                      <input id="app_slug" type="hidden" name="app_slug" value="{{ $app->slug }}">
+                      <div class="form-group">
+                        <input id="media" type="file" name="media" class="form-control">
                       </div>
-                      <div class="row">
-                        <div class="asset col-md-3 col-sm-4 pb-3">
-                          <img src="" alt="image asset" class="img-fluid" data-img-src=""/>
-                          <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>
-                        </div>
+                      <div class="container-fluid d-flex justify-content-around">
+                        <button id="upload-this-media" type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
                       </div>
+                    </form>
+                    <div class="container-fluid pt-4">
+                      <table id="uploads" class="table table-hover">
+                        <thead>
+                          <th>Preview</th>
+                          <th>Title</th>
+                          <th>Tools</th>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                      </table>
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,6 +156,11 @@
         // canvas.setBackgroundImage('https://i.imgur.com/AR5Mes8.jpg', canvas.renderAll.bind(canvas));
 
         var json_data = '';
+
+        $('#upload-this-media').on('click', function(event) {
+          event.preventDefault();
+          uploadMedia();
+        })
 
         responsiveCanvas(canvas);
         $(window).resize( function() {
@@ -357,5 +369,46 @@
         libraryEl.dispatchEvent(event);
     }
 
+    function uploadMedia()
+    {
+      var formData = new FormData();
+      formData.append('_token', $('meta[name="csrf-token"]').attr('content'))
+      formData.append('media', $('#media')[0].files[0])
+      formData.append('session', $('#token').val())
+
+      var app_category = $('#app_category').val()
+      var app_slug = $('#app_slug').val()
+
+      $.ajax({
+        type: 'post',
+        url:  '/teacher/creative-studio/'+app_category+'/'+app_slug+'/upload-img',
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log(response)
+          var data = $('<tr>' +
+                          '<td class="align-middle">' +
+                            '<img src="'+response.img+'" width="57">' +
+                          '</td>' +
+                          '<td class="align-middle">'+response.name+'</td>' +
+                          '<td class="align-middle" ng-controller="toolController">' +
+                            '<div class="btn-group">' +
+                              '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
+                                '<i class="fa fa-plus" aria-hidden="true"></i>' +
+                              '</button>' +
+                            '</div>' +
+                          '</td>' +
+                        '</tr>').appendTo('#uploads')
+        },
+        error: function (errors) {
+          console.log('/teacher/creative-studio/'+app_category+'/'+app_slug+'/upload-img');
+          console.log(errors)
+        }
+      })
+    }
   </script>
 @endsection
