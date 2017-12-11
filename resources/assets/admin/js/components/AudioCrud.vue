@@ -11,6 +11,7 @@
       v-for="audio in audios"
       :key="audio.key"
       :element="audio"
+      type="audio"
     />
   </table>
 </template>

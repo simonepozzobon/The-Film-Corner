@@ -65,23 +65,23 @@ Route::get('/logout', 'Auth\LoginController@logout');
 // Admin Panel Routes
 Route::prefix('admin')->group(function () {
 
-    Route::prefix('/video-library')->group(function() {
-        Route::resource('/video-api-library', 'Admin\VideoLibraryController');
-        Route::get('/', function() {
-            return view('admin.video_library.index');
-        })->name('video-library.index');
-    });
+    // Route::prefix('/video-library')->group(function() {
+    //     Route::resource('/video-api-library', 'Admin\VideoLibraryController');
+    //     Route::get('/', function() {
+    //         return view('admin.video_library.index');
+    //     })->name('video-library.index');
+    // });
 
     // Apps menu settings
-    Route::prefix('app')->group(function () {
-        Route::resource('app_1', 'Admin\App\App1Controller');
-
-        // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
-        Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
-        Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
-        Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
-        Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
-    });
+    // Route::prefix('app')->group(function () {
+    //     Route::resource('app_1', 'Admin\App\App1Controller');
+    //
+    //     // Padiglione 2 - Path Warm Up - App 12 - Sound Studio (Libreria Audio)
+    //     Route::get('/sound-studio/audio-api-index', 'Admin\App\SoundStudioController@index')->name('app.sound-studio.index');
+    //     Route::post('/sound-studio/audio-api-library', 'Admin\App\SoundStudioController@store')->name('app.sound-studio.store');
+    //     Route::delete('/sound-studio/audio-api-delete/{id}', 'Admin\App\SoundStudioController@destroy')->name('app.sound-studio.destroy');
+    //     Route::get('/sound-studio', 'Admin\App\SoundStudioController@view')->name('app.sound-studio.view');
+    // });
 
     // Auth
     Route::get('/login', 'Auth\AdminLoginController@showLoginForm')->name('admin.login');
@@ -93,6 +93,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/video', 'Admin\VideoController@adminVideo')->name('admin.video');
     Route::get('/audio', 'Admin\AudioController@adminAudio')->name('admin.audio');
     Route::get('/images', 'Admin\ImageController@adminImage')->name('admin.image');
+    Route::get('/get-media-paths/{type}/{id}', 'Admin\GeneralController@get_paths')->name('admin.get_paths');
 
     // Web menu routes
     Route::resource('posts', 'Admin\PostController');

@@ -14,6 +14,7 @@
       v-for="image in images"
       :key="image.key"
       :element="image"
+      type="image"
     />
   </table>
 </template>
