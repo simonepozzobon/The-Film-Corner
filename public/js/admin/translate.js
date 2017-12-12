@@ -12199,7 +12199,7 @@ exports.default = {
       }, {
         title: 'Captions',
         value: 'captions',
-        options: [{ title: 'description', type: 'textarea' }]
+        options: [{ title: 'title', type: 'input' }, { title: 'description', type: 'textarea' }]
       }],
       languages: '',
       category: 'apps',

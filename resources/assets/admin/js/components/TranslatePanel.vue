@@ -70,6 +70,7 @@ export default {
         title: 'Captions',
         value: 'captions',
         options: [
+          { title: 'title', type: 'input' },
           { title: 'description', type: 'textarea' }
         ]
       },
