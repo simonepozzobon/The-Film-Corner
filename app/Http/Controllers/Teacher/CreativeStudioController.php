@@ -234,7 +234,8 @@ class CreativeStudioController extends Controller
 
       case 'active-parallel-action':
         $elements = $app->videos()->get();
-        $session = json_encode($session);
+        $session = $session;
+        $timelines = json_encode($session->timelines);
         return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
         break;
 

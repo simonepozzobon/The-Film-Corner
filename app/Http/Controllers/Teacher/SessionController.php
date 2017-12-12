@@ -442,14 +442,20 @@ class SessionController extends Controller
 
       // Creative Studio - Warm Up - App 11 - Active Intercut Cross-Cutting
       case 11:
+        $data = [
+          'timelines' => $request['timelines'],
+          'notes' => $request['notes']
+        ];
 
-        $session->content = json_encode($request['timelines']);
+        $session->content = json_encode($data);
+        // $session->content = json_encode($request['timelines']);
         break;
 
       // Creative Studio - Warm Up - App 12 - Sound studio
       case 12:
         $data = [
           'video' => $request['video'],
+          'notes' => $request['notes'],
           'timelines' => $request['timelines'],
         ];
 

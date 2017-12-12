@@ -284,6 +284,7 @@
             '_token'    : $('input[name=_token]').val(),
             'app_id'    : id,
             'token'     : token,
+            'notes'     : $('#notes').val(),
             'title'     : $('input[name="title"]').val(),
             'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
           };
@@ -300,6 +301,7 @@
             'app_id'    : id,
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
+            'notes'     : $('#notes').val(),
             'video'     : $('[ng-controller="DemoMediaTimelineController"]').scope().videoData.player.src(),
             'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
           };
