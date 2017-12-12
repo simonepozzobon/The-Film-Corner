@@ -220,7 +220,7 @@ class FilmSpecificController extends Controller
         $flatten = $audios->transform(function($audio, $key) {
           return Storage::disk('local')->url($audio);
         });
-        
+
         $random_audio = $flatten->random();
 
         return view('teacher.film-specific.whats-going-on.index', compact('app', 'app_category', 'random_audio'));
@@ -354,8 +354,8 @@ class FilmSpecificController extends Controller
 
       case 'parallel-action':
         $elements = $app->videos()->get();
-        $session = json_encode($session);
-        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'app_session', 'token', 'is_student'));
+        $timelines = json_encode($session->timelines);
+        return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'timelines', 'app_session', 'token', 'is_student'));
         break;
 
       case 'offscreen':

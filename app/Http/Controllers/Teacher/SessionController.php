@@ -209,8 +209,12 @@ class SessionController extends Controller
 
       // Film Specific - Editing - App 4 - Intercut Cross Cutting
       case 4:
+        $data = [
+          'timelines' => $request['timelines'],
+          'notes' => $request['notes']
+        ];
 
-        $session->content = json_encode($request['timelines']);
+        $session->content = json_encode($data);
         break;
 
 

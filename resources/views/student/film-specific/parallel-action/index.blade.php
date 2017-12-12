@@ -99,9 +99,9 @@
                 </button>
               </div>
 
-              <button type="button" name="button" class="btn btn-secondary btn-orange">
+              {{-- <button type="button" name="button" class="btn btn-secondary btn-orange">
                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Add Note
-              </button>
+              </button> --}}
             </div>
           </div>
         </div>
@@ -121,6 +121,16 @@
                   event-click="onEventClick(timelineData, eventData)"
                   tick-ratio="25">
                 </mt-timelines>
+              </div>
+            </div>
+          </div>
+          <div class="box blue mt">
+            <div class="box-header">
+              Notes
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what your work and your choices..."></textarea>
               </div>
             </div>
           </div>

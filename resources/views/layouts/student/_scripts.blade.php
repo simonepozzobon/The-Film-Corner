@@ -151,6 +151,7 @@
             'app_id'    : id,
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
+            'notes'     : $('#notes').val(),
             'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
           };
 
