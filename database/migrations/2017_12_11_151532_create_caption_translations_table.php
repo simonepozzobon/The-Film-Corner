@@ -16,6 +16,7 @@ class CreateCaptionTranslationsTable extends Migration
         Schema::create('caption_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('caption_id')->unsigned();
+            $table->string('title')->nullable();
             $table->text('description');
             $table->string('locale')->index();
 

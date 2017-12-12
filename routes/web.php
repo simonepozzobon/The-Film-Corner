@@ -91,8 +91,11 @@ Route::prefix('admin')->group(function () {
 
     // Nuovo pannello video
     Route::get('/video', 'Admin\VideoController@adminVideo')->name('admin.video');
+    Route::get('/get-videos', 'Admin\VideoController@get_videos')->name('admin.get_videos');
     Route::get('/audio', 'Admin\AudioController@adminAudio')->name('admin.audio');
+    Route::get('/get-audios', 'Admin\AudioController@get_audios')->name('admin.get_audios');
     Route::get('/images', 'Admin\ImageController@adminImage')->name('admin.image');
+    Route::get('/get-images', 'Admin\ImageController@get_images')->name('admin.get_images');
     Route::get('/get-media-paths/{type}/{id}', 'Admin\GeneralController@get_paths')->name('admin.get_paths');
 
     // Web menu routes
@@ -152,6 +155,11 @@ Route::prefix('admin')->group(function () {
     Route::prefix('apps')->group(function(){
         Route::get('/glossary', 'Admin\GlossaryController@index')->name('admin.apps.glossary.index');
         Route::post('/glossary', 'Admin\GlossaryController@store')->name('admin.apps.glossary.store');
+        Route::prefix('/captions')->group(function() {
+            Route::get('/', 'Admin\CaptionController@index')->name('admin.apps.captions.index');
+            Route::get('/get_captions', 'Admin\CaptionController@get_captions')->name('admin.apps.captions.get_captions');
+            Route::post('/store_caption', 'Admin\CaptionController@store_caption')->name('admin.apps.captions.store_caption');
+        });
     });
 
     Route::prefix('footer')->group(function(){

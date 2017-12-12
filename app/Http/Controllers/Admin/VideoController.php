@@ -104,4 +104,44 @@ class VideoController extends Controller
     {
 
     }
+
+    public function get_videos()
+    {
+        $categories = MediaCategory::all();
+        $sections = AppSection::all();
+        $app_categories = AppCategory::all();
+        $apps = App::all();
+        $videos = Video::where('category_id', '=', 3)->orderBy('id', 'desc')->with('apps')->get();
+
+        foreach ($videos as $key => $video) {
+            $video->img = Storage::disk('local')->url($video->img);
+            $app = $video->apps()->first();
+
+            if ($app) {
+                $category = $app->category()->first();
+
+                // Se il video è assegnato ad una categoria e questa non è nulla
+                // ricavo lo studio collegato dalla categoria
+                if (isset($category) && $category != null) {
+                    $pavilion = $category->section()->first();
+                }
+
+                // Se categoria e studio non sono nulli allora creo la prima path
+                if (isset($category) && $category != null && isset($pavilion) && $pavilion != null) {
+                    $original_path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+                }
+
+                // Cerco se ci sono sottolibrerie collegate a questo video per poi
+                // ricostruire i percorsi dello stesso
+                if ($video->mediaSubCategories()->count() > 0) {
+                    dd($video->mediaSubCategories()->get());
+                }
+            } else {
+                $paths = collect();
+            }
+
+        }
+
+        return response($videos);
+    }
 }

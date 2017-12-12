@@ -24,6 +24,7 @@ mix
   .js('resources/assets/admin/js/translate.js', 'public/js/admin/')
   .js('resources/assets/admin/js/keywords.js', 'public/js/admin/')
   .js('resources/assets/admin/js/footer/footer.js', 'public/js/admin/')
+  .js('resources/assets/admin/js/captions/captions.js', 'public/js/admin/')
 
   .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
   .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
@@ -62,7 +63,8 @@ mix
   .webpackConfig({
     resolve:{
       alias: {
-        'styles': path.resolve(__dirname, 'resources/assets/sass')
+        'styles': path.resolve(__dirname, 'resources/assets/sass'),
+        '_js': path.resolve(__dirname, 'resources/assets/js')
       }
     }
   })

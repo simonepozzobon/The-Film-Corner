@@ -32,28 +32,26 @@
 
   {{-- Desktop --}}
   <div class="collapse navbar-collapse justify-content-end" id="menu-main">
-    <ul class="navbar-nav justify-content-around">
-      <li id="libraries-menu" class="nav-item">
-        <a href="#" id="librarieDropdown" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Libraries
         </a>
-        <ul class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="librarieDropdown">
-            <li>
-              <a class="dropdown-item" href="{{ route('admin.video') }}">
-                Video
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{ route('admin.audio') }}">
-                Audio
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="{{ route('admin.image') }}">
-                Images
-              </a>
-            </li>
-        </ul>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('admin.video') }}">
+            Video
+          </a>
+          <a class="dropdown-item" href="{{ route('admin.audio') }}">
+            Audio
+          </a>
+          <a class="dropdown-item" href="{{ route('admin.image') }}">
+            Images
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="{{ route('admin.apps.captions.index') }}">
+            Captions
+          </a>
+        </div>
       </li>
       <li class="nav-item">
         <a href="{{ route('admin.translate.index') }}" class="nav-link">
