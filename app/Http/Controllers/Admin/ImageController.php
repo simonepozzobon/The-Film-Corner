@@ -58,4 +58,12 @@ class ImageController extends Controller
 
         return response($medias);
     }
+
+    public function save_image(Request $request)
+    {
+        $media = Media::find($request->id);
+        $media->title = $request->title;
+        $media->save();
+        return response($media, 200);
+    }
 }

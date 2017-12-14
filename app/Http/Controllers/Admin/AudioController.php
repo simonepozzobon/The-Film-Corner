@@ -48,4 +48,12 @@ class AudioController extends Controller
         return response($audios);
     }
 
+    public function save_audio(Request $request)
+    {
+        $audio = Audio::find($request->id);
+        $audio->title = $request->title;
+        $audio->save();
+        return response($audio, 200);
+    }
+
 }
