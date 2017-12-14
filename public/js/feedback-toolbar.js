@@ -11517,7 +11517,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var _FeedbackToolbar = __webpack_require__(365);
+var _FeedbackToolbar = __webpack_require__(368);
 
 var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
 
@@ -11806,7 +11806,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 273:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12385,14 +12385,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 319:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
-
-/***/ }),
-
 /***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12412,6 +12404,14 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
+
+/***/ }),
+
+/***/ 321:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -12594,18 +12594,18 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 365:
+/***/ 368:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(273);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(274);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(414);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(455)
+  __webpack_require__(460)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -12895,7 +12895,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 410:
+/***/ 414:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20978,13 +20978,13 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 /***/ }),
 
-/***/ 455:
+/***/ 460:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(319);
+var content = __webpack_require__(321);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21005,7 +21005,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 485:
+/***/ 490:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(231);
@@ -21618,4 +21618,4 @@ module.exports = Cancel;
 
 /***/ })
 
-},[485]);
+},[490]);

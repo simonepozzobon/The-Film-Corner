@@ -30,6 +30,8 @@ Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
 */
 Route::get('/', 'FrontendController@home_page')->name('home.page');
 
+Route::get('/filmography', 'Main\FilmographyController@index')->name('filmography');
+
 Route::get('/set-locale/{lang}', 'FrontendController@set_locale')->name('set.locale');
 
 Route::prefix('conference')->group(function() {

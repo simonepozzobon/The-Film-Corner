@@ -124,11 +124,17 @@
         <li class="nav-item">
           <a href="{{ url('/') }}#project" class="nav-link">The Project</a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a href="{{ route('conference') }}" class="nav-link">Conference</a>
+        </li> --}}
+        <li class="nav-item">
+          <a href="#" class="nav-link disabled">Schools</a>
         </li>
         <li class="nav-item">
           <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ url('/') }}" class="nav-link">Filmography</a>
         </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

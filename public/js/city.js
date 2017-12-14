@@ -819,7 +819,7 @@ setInterval(newLemmings, refreshTime);
 
 /***/ }),
 
-/***/ 487:
+/***/ 492:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(233);
@@ -12845,4 +12845,4 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ })
 
-},[487]);
+},[492]);
