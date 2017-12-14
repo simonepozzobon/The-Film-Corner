@@ -29,7 +29,7 @@
           <ul>
             <li></li>
           </ul>
-          <h1 class="mt">NORTHER IRELAND</h1>
+          <h1 class="mt">NORTHERN IRELAND</h1>
           <ul>
             <li></li>
           </ul>
