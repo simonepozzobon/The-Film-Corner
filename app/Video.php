@@ -41,7 +41,7 @@ class Video extends Model
 
     public function appSection()
     {
-        return $this->morphedByMany('App\AppCategory', 'videoable');
+        return $this->morphedByMany('App\AppSection', 'videoable');
     }
 
     public function mediaSubCategories()

@@ -144,4 +144,12 @@ class VideoController extends Controller
 
         return response($videos);
     }
+
+    public function save_video(Request $request)
+    {
+        $video = Video::find($request->id);
+        $video->title = $request->title;
+        $video->save();
+        return response($video, 200);
+    }
 }

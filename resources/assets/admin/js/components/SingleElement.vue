@@ -23,7 +23,7 @@
           class="edit-form"
         >
           <div class="form-group">
-            Video Category: {{ this.response }}
+            <!-- Video Category: {{ this.response }} -->
           </div>
           <div class="form-group">
             <label>Title:</label>
@@ -34,7 +34,10 @@
             >
           </div>
           <div class="btns">
-            <button class="btn btn-orange">
+            <button
+              class="btn btn-orange"
+              @click="saveVideoEdit"
+            >
               <i class="fa fa-floppy-o"/>
               Save
             </button>
@@ -57,7 +60,10 @@
             >
           </div>
           <div class="btns">
-            <button class="btn btn-orange">
+            <button
+              class="btn btn-orange"
+              @click="saveAudioEdit"
+            >
               <i class="fa fa-floppy-o"/>
               Save
             </button>
@@ -95,7 +101,7 @@
           <div class="btns">
             <button
               class="btn btn-orange"
-              @click="saveEdits"
+              @click="saveImageEdit"
             >
               <i class="fa fa-floppy-o"/>
               Save
@@ -198,6 +204,39 @@ export default {
               this.image.category.id = 0
             }
           }
+        })
+    },
+    saveVideoEdit: function()
+    {
+      var data = new FormData()
+      data.append('id', this.video.id)
+      data.append('title', this.video.title)
+      axios.post('/admin/save-video', data)
+        .then(() => {
+          this.element.title = this.video.title
+          this.toggleEdit()
+        })
+    },
+    saveAudioEdit: function()
+    {
+      var data = new FormData()
+      data.append('id', this.audio.id)
+      data.append('title', this.audio.title)
+      axios.post('/admin/save-audio', data)
+        .then(() => {
+          this.element.title = this.video.title
+          this.toggleEdit()
+        })
+    },
+    saveImageEdit: function()
+    {
+      var data = new FormData()
+      data.append('id', this.image.id)
+      data.append('title', this.image.title)
+      axios.post('/admin/save-image', data)
+        .then(() => {
+          this.element.title = this.video.title
+          this.toggleEdit()
         })
     }
   }

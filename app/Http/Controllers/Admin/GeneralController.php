@@ -14,11 +14,11 @@ class GeneralController extends Controller
     {
         switch ($type) {
             case 'audio':
-                $item = Audio::where('id', $id)->with('app', 'app.category', 'app.category.pavilion')->first();
+                $item = Audio::where('id', $id)->with('apps', 'appCategories', 'appSection')->first();
                 break;
 
             case 'video':
-                $item = Video::where('id', $id)->with('app', 'app.category', 'app.category.pavilion')->first();
+                $item = Video::where('id', $id)->with('apps', 'appCategories', 'appSection')->first();
                 break;
 
             case 'image':

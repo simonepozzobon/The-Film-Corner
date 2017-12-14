@@ -77,10 +77,13 @@ Route::prefix('admin')->group(function () {
     // Nuovo pannello video
     Route::get('/video', 'Admin\VideoController@adminVideo')->name('admin.video');
     Route::get('/get-videos', 'Admin\VideoController@get_videos')->name('admin.get_videos');
+    Route::post('/save-video', 'Admin\VideoController@save_video')->name('admin.save_video');
     Route::get('/audio', 'Admin\AudioController@adminAudio')->name('admin.audio');
     Route::get('/get-audios', 'Admin\AudioController@get_audios')->name('admin.get_audios');
+    Route::post('/save-audio', 'Admin\AudioController@save_audio')->name('admin.save_audio');
     Route::get('/images', 'Admin\ImageController@adminImage')->name('admin.image');
     Route::get('/get-images', 'Admin\ImageController@get_images')->name('admin.get_images');
+    Route::post('/save-image', 'Admin\ImageController@save_image')->name('admin.save_image');
     Route::get('/get-media-paths/{type}/{id}', 'Admin\GeneralController@get_paths')->name('admin.get_paths');
 
     // Web menu routes

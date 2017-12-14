@@ -485,9 +485,48 @@ exports.default = {
           }
         }
       });
+    },
+    saveVideoEdit: function saveVideoEdit() {
+      var _this2 = this;
+
+      var data = new FormData();
+      data.append('id', this.video.id);
+      data.append('title', this.video.title);
+      _axios2.default.post('/admin/save-video', data).then(function () {
+        _this2.element.title = _this2.video.title;
+        _this2.toggleEdit();
+      });
+    },
+    saveAudioEdit: function saveAudioEdit() {
+      var _this3 = this;
+
+      var data = new FormData();
+      data.append('id', this.audio.id);
+      data.append('title', this.audio.title);
+      _axios2.default.post('/admin/save-audio', data).then(function () {
+        _this3.element.title = _this3.video.title;
+        _this3.toggleEdit();
+      });
+    },
+    saveImageEdit: function saveImageEdit() {
+      var _this4 = this;
+
+      var data = new FormData();
+      data.append('id', this.image.id);
+      data.append('title', this.image.title);
+      _axios2.default.post('/admin/save-image', data).then(function () {
+        _this4.element.title = _this4.video.title;
+        _this4.toggleEdit();
+      });
     }
   }
 }; //
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10131,13 +10170,7 @@ var render = function() {
       _c("td", { attrs: { colspan: "4" } }, [
         _vm.type == "video"
           ? _c("div", { staticClass: "edit-form", attrs: { id: "video" } }, [
-              _c("div", { staticClass: "form-group" }, [
-                _vm._v(
-                  "\n          Video Category: " +
-                    _vm._s(this.response) +
-                    "\n        "
-                )
-              ]),
+              _c("div", { staticClass: "form-group" }),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Title:")]),
@@ -10165,7 +10198,19 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _vm._m(0, false, false)
+              _c("div", { staticClass: "btns" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-orange",
+                    on: { click: _vm.saveVideoEdit }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-floppy-o" }),
+                    _vm._v("\n            Save\n          ")
+                  ]
+                )
+              ])
             ])
           : _vm.type == "audio"
             ? _c("div", { staticClass: "edit-form", attrs: { id: "audio" } }, [
@@ -10203,7 +10248,19 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _vm._m(1, false, false)
+                _c("div", { staticClass: "btns" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-orange",
+                      on: { click: _vm.saveAudioEdit }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-floppy-o" }),
+                      _vm._v("\n            Save\n          ")
+                    ]
+                  )
+                ])
               ])
             : _vm.type == "image"
               ? _c(
@@ -10303,7 +10360,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-orange",
-                          on: { click: _vm.saveEdits }
+                          on: { click: _vm.saveImageEdit }
                         },
                         [
                           _c("i", { staticClass: "fa fa-floppy-o" }),
@@ -10318,30 +10375,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btns" }, [
-      _c("button", { staticClass: "btn btn-orange" }, [
-        _c("i", { staticClass: "fa fa-floppy-o" }),
-        _vm._v("\n            Save\n          ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btns" }, [
-      _c("button", { staticClass: "btn btn-orange" }, [
-        _c("i", { staticClass: "fa fa-floppy-o" }),
-        _vm._v("\n            Save\n          ")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
