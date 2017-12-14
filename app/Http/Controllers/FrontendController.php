@@ -31,11 +31,16 @@ class FrontendController extends Controller
         return view('new', compact('posts', 'partners', 'colors'));
     }
 
+    public function schools()
+    {
+        return view('public.schools.index');
+    }
+
     public function set_locale($lang)
     {
         \App::setLocale($lang);
         session(['my_locale' => $lang]);
-        
+
         return redirect()->back();
     }
 }

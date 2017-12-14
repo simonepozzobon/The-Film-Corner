@@ -128,13 +128,13 @@
           <a href="{{ route('conference') }}" class="nav-link">Conference</a>
         </li> --}}
         <li class="nav-item">
-          <a href="#" class="nav-link disabled">Schools</a>
+          <a href="{{ url('/schools') }}" class="nav-link">Schools</a>
         </li>
         <li class="nav-item">
           <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
         </li>
         <li class="nav-item">
-          <a href="{{ url('/') }}" class="nav-link">Filmography</a>
+          <a href="{{ url('/filmography') }}" class="nav-link">Filmography</a>
         </li>
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
