@@ -12,7 +12,7 @@ webpackJsonp([21],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 
@@ -340,14 +340,7 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
-
-/***/ }),
-
-/***/ 242:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 
@@ -379,18 +372,25 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 483:
+/***/ 247:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 484:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(224);
 __webpack_require__(219);
-__webpack_require__(245);
 __webpack_require__(246);
-__webpack_require__(242);
+__webpack_require__(247);
 __webpack_require__(243);
-module.exports = __webpack_require__(244);
+__webpack_require__(244);
+module.exports = __webpack_require__(245);
 
 
 /***/ })
 
-},[483]);
+},[484]);

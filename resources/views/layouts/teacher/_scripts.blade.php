@@ -549,4 +549,5 @@
       }
   });
 </script>
+<script src="{{ mix('js/scroll.js') }}"></script>
 @endif

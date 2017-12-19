@@ -5375,22 +5375,11 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56), __webpack_require__(138)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50), __webpack_require__(138)))
 
 /***/ }),
 
-/***/ 501:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(56);
-__webpack_require__(138);
-__webpack_require__(215);
-module.exports = __webpack_require__(214);
-
-
-/***/ }),
-
-/***/ 56:
+/***/ 50:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -15649,6 +15638,17 @@ return jQuery;
 } );
 
 
+/***/ }),
+
+/***/ 503:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(50);
+__webpack_require__(138);
+__webpack_require__(215);
+module.exports = __webpack_require__(214);
+
+
 /***/ })
 
-},[501]);
+},[503]);

@@ -88,8 +88,8 @@
                     <div class="col">
                       @foreach ($app->audios()->get() as $key => $audio)
                         <div class="asset-audio row" data-audio-src="{{ Storage::disk('local')->url($audio->src) }}">
-                          <div class="col-md-2">
-                            <h3 class="text-center droppable"><i class="fa fa-file-audio-o"></i></h3>
+                          <div class="col-md-2 droppable">
+                            <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
                           </div>
                           <div class="col-md-10">
                             <p>{{ $audio->title }}</p>
@@ -389,7 +389,7 @@
       console.log('sessione caricata '+session.token);
 
       droppable.on('drag:stop', (dragEvent) => {
-
+        console.log('draggin');
         // Fermo il player
         stop();
 
