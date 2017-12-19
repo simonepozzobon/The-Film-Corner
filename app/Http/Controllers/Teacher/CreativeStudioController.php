@@ -153,7 +153,7 @@ class CreativeStudioController extends Controller
         $categories = $app->mediaCategory()->get();
         $images = collect();
         foreach ($categories as $key => $category) {
-          $library = $category->media_on_sub_category();
+          $library = $category->medias()->get();
           $flatten = $library->transform(function($media, $key) {
             return Storage::disk('local')->url($media->src);
           });
@@ -161,6 +161,7 @@ class CreativeStudioController extends Controller
         }
         $libraries_count = $images->count();
         $images = json_encode($images);
+
         return view('teacher.creative-studio.storytelling.index', compact('app', 'app_category', 'images', 'libraries_count'));
         break;
 

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(AppKeywordsTableSeeder::class);
         // $this->call(AppTableSeeder::class);
         // $this->call(AppLanguages::class);
-        $this->call(TeachersTableSeeder::class);
+        // $this->call(TeachersTableSeeder::class);
+        $this->call(MediaCategoriesTableSeeder::class);
     }
 }

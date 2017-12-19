@@ -159,6 +159,10 @@ Route::prefix('admin')->group(function () {
         Route::post('/update_filmography', 'Admin\FooterController@update_filmography')->name('admin.filmography.update');
         Route::get('/', 'Admin\FooterController@index')->name('admin.footer');
     });
+
+    Route::prefix('tools')->group(function(){
+        Route::get('/flush-media', 'ToolController@flush_media');
+    });
 });
 
 
