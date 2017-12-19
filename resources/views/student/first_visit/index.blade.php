@@ -5,7 +5,20 @@
     @include('components.apps.heading_simple', ['title' => 'Welcome'])
     <div class="row mt">
       <div class="col">
-        <welcome-form user="{{ Auth::guard('student')->user() }}" user_type="{{ get_class(Auth::guard('student')->user()) }}" form="{{ $form }}"></welcome-form>
+        @php
+          $text = [
+            'part_1' => GeneralText::field('welcome_part_1'),
+            'part_2' => GeneralText::field('welcome_part_2'),
+            'part_3' => GeneralText::field('welcome_part_3'),
+          ];
+          $texts = json_encode($text)
+        @endphp
+        <welcome-form
+          user="{{ Auth::guard('student')->user() }}"
+          user_type="{{ get_class(Auth::guard('student')->user()) }}"
+          form="{{ $form }}"
+          texts="{{ $texts }}"
+        />
       </div>
     </div>
     <div class="row mt">

@@ -32,8 +32,12 @@ class TeacherController extends Controller
                 ->useLog('first-visit')
                 ->log('visited');
 
-            return view('teacher.first_visit.index', $teacher);
+            $form = WelcomeForm::where([
+                ['userable_id', '=', $teacher->id],
+                ['userable_type', '=', get_class($teacher)]
+            ])->first();
 
+            return view('teacher.first_visit.index', compact('teacher', 'form'));
         } else {
             $visited = true;
             return view('teacher')->with('teacher', $teacher);

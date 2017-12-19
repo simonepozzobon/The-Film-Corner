@@ -32,11 +32,14 @@ class StudentController extends Controller
                 ->useLog('first-visit')
                 ->log('visited');
 
-            return view('student.first_visit.index', $student);
+            $form = WelcomeForm::where([
+                      ['userable_id', '=', $teacher->id],
+                      ['userable_type', '=', get_class($student)]
+                  ])->first();
 
         } else {
             $visited = true;
-            return view('student')->with('student', $student);
+            return view('student', compact('student', 'form'));
         }
 
     }
