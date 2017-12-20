@@ -58,7 +58,7 @@
                 @foreach ($app->mediaCategory()->get() as $key => $library)
                   <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
                     <div class="row scroller">
-                      @foreach ($library->media_on_sub_category() as $key => $media)
+                      @foreach ($library->medias()->get() as $key => $media)
                         <div class="asset col-md-3 col-sm-4 pb-3">
                           <img src="{{ Storage::disk('local')->url($media->thumb) }}" alt="image asset" class="img-fluid" data-img-src="{{ Storage::disk('local')->url($media->src) }}"/>
                           <a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>
