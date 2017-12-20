@@ -30,4 +30,5 @@ class ToolController extends Controller
 
         dd($categories);
     }
+
 }

@@ -33,7 +33,7 @@ class StudentController extends Controller
                 ->log('visited');
 
             $form = WelcomeForm::where([
-                      ['userable_id', '=', $teacher->id],
+                      ['userable_id', '=', $student->id],
                       ['userable_type', '=', get_class($student)]
                   ])->first();
 
