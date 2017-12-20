@@ -34,7 +34,7 @@ class SharedSession extends Model
         $shared->app_id = $app_id;
 
         $class = get_class($session);
-        if ($class = 'App\AppsSessions\StudentAppSession') {
+        if ($class == 'App\AppsSessions\StudentAppSession') {
             $shared->userable_type = 'App\Student';
             $shared->userable_id = $session->student_id;
         } else {
