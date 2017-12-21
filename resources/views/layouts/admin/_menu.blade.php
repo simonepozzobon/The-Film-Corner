@@ -31,53 +31,55 @@
   </div>
 
   {{-- Desktop --}}
-  <div class="collapse navbar-collapse justify-content-end" id="menu-main">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Libraries
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="{{ route('admin.video') }}">
-            Video
+  @if (Auth::guard('admin')->user())
+    <div class="collapse navbar-collapse justify-content-end" id="menu-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Libraries
           </a>
-          <a class="dropdown-item" href="{{ route('admin.audio') }}">
-            Audio
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="{{ route('admin.video') }}">
+              Video
+            </a>
+            <a class="dropdown-item" href="{{ route('admin.audio') }}">
+              Audio
+            </a>
+            <a class="dropdown-item" href="{{ route('admin.image') }}">
+              Images
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ route('admin.apps.captions.index') }}">
+              Captions
+            </a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.translate.index') }}" class="nav-link">
+            Translate
           </a>
-          <a class="dropdown-item" href="{{ route('admin.image') }}">
-            Images
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.conference.gallery.index') }}" class="nav-link">
+            Conference
           </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{{ route('admin.apps.captions.index') }}">
-            Captions
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('admin.apps.glossary.index') }}" class="nav-link">
+            Glossary
           </a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a href="{{ route('admin.translate.index') }}" class="nav-link">
-          Translate
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ route('admin.conference.gallery.index') }}" class="nav-link">
-          Conference
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="{{ route('admin.apps.glossary.index') }}" class="nav-link">
-          Glossary
-        </a>
-      </li>
-      <li id="footer" class="nav-item">
-        <a href="{{ route('admin.footer') }}" class="nav-link">
-          Footer
-        </a>
-      </li>
-      <li id="teacher" class="nav-item">
-        <a href="{{ route('admin.teacher.index') }}" class="nav-link">
-          Teachers
-        </a>
-      </li>
-    </ul>
-  </div>
+        </li>
+        <li id="footer" class="nav-item">
+          <a href="{{ route('admin.footer') }}" class="nav-link">
+            Footer
+          </a>
+        </li>
+        <li id="teacher" class="nav-item">
+          <a href="{{ route('admin.teacher.index') }}" class="nav-link">
+            Teachers
+          </a>
+        </li>
+      </ul>
+    </div>
+  @endif
 </nav>
