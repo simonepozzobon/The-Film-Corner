@@ -1,4 +1,4 @@
-webpackJsonp([19],{
+webpackJsonp([20],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -7,7 +7,7 @@ webpackJsonp([19],{
 
 
 var bind = __webpack_require__(12);
-var isBuffer = __webpack_require__(39);
+var isBuffer = __webpack_require__(38);
 
 /*global toString:true*/
 
@@ -358,7 +358,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(27);
+var enhanceError = __webpack_require__(26);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -397,10 +397,10 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 14:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(22);
+module.exports = __webpack_require__(21);
 
 /***/ }),
 
@@ -11386,7 +11386,7 @@ exports.clearImmediate = clearImmediate;
 
 /***/ }),
 
-/***/ 22:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11394,7 +11394,7 @@ exports.clearImmediate = clearImmediate;
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(12);
-var Axios = __webpack_require__(24);
+var Axios = __webpack_require__(23);
 var defaults = __webpack_require__(4);
 
 /**
@@ -11429,14 +11429,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(9);
-axios.CancelToken = __webpack_require__(23);
+axios.CancelToken = __webpack_require__(22);
 axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(38);
+axios.spread = __webpack_require__(37);
 
 module.exports = axios;
 
@@ -11446,7 +11446,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 23:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11511,32 +11511,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 232:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _FeedbackToolbar = __webpack_require__(370);
-
-var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
-
-var _vue = __webpack_require__(18);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _vue2.default({
-  el: '#feedback-toolbar',
-  components: {
-    FeedbackToolbar: _FeedbackToolbar2.default
-  }
-});
-
-/***/ }),
-
-/***/ 24:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11544,10 +11519,10 @@ new _vue2.default({
 
 var defaults = __webpack_require__(4);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(25);
-var dispatchRequest = __webpack_require__(26);
-var isAbsoluteURL = __webpack_require__(34);
-var combineURLs = __webpack_require__(32);
+var InterceptorManager = __webpack_require__(24);
+var dispatchRequest = __webpack_require__(25);
+var isAbsoluteURL = __webpack_require__(33);
+var combineURLs = __webpack_require__(31);
 
 /**
  * Create a new instance of Axios
@@ -11630,7 +11605,32 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 25:
+/***/ 232:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _FeedbackToolbar = __webpack_require__(379);
+
+var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
+
+var _vue = __webpack_require__(18);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
+  el: '#feedback-toolbar',
+  components: {
+    FeedbackToolbar: _FeedbackToolbar2.default
+  }
+});
+
+/***/ }),
+
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11690,14 +11690,14 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 26:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(29);
+var transformData = __webpack_require__(28);
 var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(4);
 
@@ -11777,7 +11777,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11806,7 +11806,41 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 276:
+/***/ 27:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var createError = __webpack_require__(11);
+
+/**
+ * Resolve or reject a Promise based on response status.
+ *
+ * @param {Function} resolve A function that resolves the promise.
+ * @param {Function} reject A function that rejects the promise.
+ * @param {object} response The response.
+ */
+module.exports = function settle(resolve, reject, response) {
+  var validateStatus = response.config.validateStatus;
+  // Note: status is not exposed by XDomainRequest
+  if (!response.status || !validateStatus || validateStatus(response.status)) {
+    resolve(response);
+  } else {
+    reject(createError(
+      'Request failed with status code ' + response.status,
+      response.config,
+      null,
+      response.request,
+      response
+    ));
+  }
+};
+
+
+/***/ }),
+
+/***/ 279:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11816,9 +11850,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _gsap = __webpack_require__(43);
+var _gsap = __webpack_require__(42);
 
-var _axios = __webpack_require__(14);
+var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
@@ -12018,40 +12052,6 @@ exports.default = {
 "use strict";
 
 
-var createError = __webpack_require__(11);
-
-/**
- * Resolve or reject a Promise based on response status.
- *
- * @param {Function} resolve A function that resolves the promise.
- * @param {Function} reject A function that rejects the promise.
- * @param {object} response The response.
- */
-module.exports = function settle(resolve, reject, response) {
-  var validateStatus = response.config.validateStatus;
-  // Note: status is not exposed by XDomainRequest
-  if (!response.status || !validateStatus || validateStatus(response.status)) {
-    resolve(response);
-  } else {
-    reject(createError(
-      'Request failed with status code ' + response.status,
-      response.config,
-      null,
-      response.request,
-      response
-    ));
-  }
-};
-
-
-/***/ }),
-
-/***/ 29:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var utils = __webpack_require__(0);
 
 /**
@@ -12070,6 +12070,50 @@ module.exports = function transformData(data, headers, fns) {
 
   return data;
 };
+
+
+/***/ }),
+
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
+
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+
+function E() {
+  this.message = 'String contains an invalid character';
+}
+E.prototype = new Error;
+E.prototype.code = 5;
+E.prototype.name = 'InvalidCharacterError';
+
+function btoa(input) {
+  var str = String(input);
+  var output = '';
+  for (
+    // initialize result and counter
+    var block, charCode, idx = 0, map = chars;
+    // if the next str index does not exist:
+    //   change the mapping table to "="
+    //   check if d has no fractional digits
+    str.charAt(idx | 0) || (map = '=', idx % 1);
+    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
+    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
+  ) {
+    charCode = str.charCodeAt(idx += 3 / 4);
+    if (charCode > 0xFF) {
+      throw new E();
+    }
+    block = block << 8 | charCode;
+  }
+  return output;
+}
+
+module.exports = btoa;
 
 
 /***/ }),
@@ -12271,50 +12315,6 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-// btoa polyfill for IE<10 courtesy https://github.com/davidchambers/Base64.js
-
-var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
-
-function E() {
-  this.message = 'String contains an invalid character';
-}
-E.prototype = new Error;
-E.prototype.code = 5;
-E.prototype.name = 'InvalidCharacterError';
-
-function btoa(input) {
-  var str = String(input);
-  var output = '';
-  for (
-    // initialize result and counter
-    var block, charCode, idx = 0, map = chars;
-    // if the next str index does not exist:
-    //   change the mapping table to "="
-    //   check if d has no fractional digits
-    str.charAt(idx | 0) || (map = '=', idx % 1);
-    // "8 - idx % 1 * 8" generates the sequence 2, 4, 6, 8
-    output += map.charAt(63 & block >> 8 - idx % 1 * 8)
-  ) {
-    charCode = str.charCodeAt(idx += 3 / 4);
-    if (charCode > 0xFF) {
-      throw new E();
-    }
-    block = block << 8 | charCode;
-  }
-  return output;
-}
-
-module.exports = btoa;
-
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var utils = __webpack_require__(0);
 
 function encode(val) {
@@ -12385,7 +12385,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 32:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12407,15 +12407,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 323:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 33:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12476,7 +12468,15 @@ module.exports = (
 
 /***/ }),
 
-/***/ 34:
+/***/ 329:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      -webkit-transform: translate(-50%, -50%);\n              transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -webkit-box-orient: vertical;\n    -webkit-box-direction: normal;\n        -ms-flex-direction: column;\n            flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      -webkit-box-align: center;\n          -ms-flex-align: center;\n              align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 900;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -webkit-box;\n        display: -ms-flexbox;\n        display: flex;\n        -webkit-box-pack: center;\n            -ms-flex-pack: center;\n                justify-content: center;\n        -webkit-box-align: center;\n            -ms-flex-align: center;\n                align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12498,7 +12498,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12574,7 +12574,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 36:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12594,7 +12594,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12639,18 +12639,53 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 370:
+/***/ 37:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ 379:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(279);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_FeedbackToolbar_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_FeedbackToolbar_vue__ = __webpack_require__(428);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(462)
+  __webpack_require__(477)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -12698,41 +12733,6 @@ if (false) {(function () {
 /***/ }),
 
 /***/ 38:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
-/***/ 39:
 /***/ (function(module, exports) {
 
 /*!
@@ -12767,7 +12767,7 @@ function isSlowBuffer (obj) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(36);
+var normalizeHeaderName = __webpack_require__(35);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -12895,120 +12895,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 416:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "feedback-toolbar" } }, [
-    _c(
-      "div",
-      {
-        staticClass: "feedback-bg",
-        attrs: {
-          "data-toggle": "tooltip",
-          "data-placement": "right",
-          "data-html": "true",
-          title: "Leave a feedback"
-        },
-        on: {
-          mouseenter: _vm.mouseEnter,
-          mouseleave: _vm.mouseLeave,
-          click: _vm.toggleDialog
-        }
-      },
-      [_vm._m(0, false, false)]
-    ),
-    _vm._v(" "),
-    _c("div", { ref: "feedback_dialog", staticClass: "feedback-dialog" }, [
-      _c("div", { staticClass: "dialog-title" }, [
-        _c("div", { staticClass: "text" }, [
-          _vm._v("\n        Leave a Feedback to The Film Corner\n      ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "icon", on: { click: _vm.toggleDialog } }, [
-          _c("i", { staticClass: "fa fa-times" })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { ref: "dialog_content", staticClass: "dialog-content" }, [
-        _c("div", { staticClass: "valutation" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-danger", on: { click: _vm.setNegative } },
-            [_c("i", { staticClass: "fa fa-thumbs-down" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-success", on: { click: _vm.setPositive } },
-            [_c("i", { staticClass: "fa fa-thumbs-up" })]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "comment" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.comment,
-                  expression: "comment"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { placeholder: "Your comment or idea..." },
-              domProps: { value: _vm.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.comment = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "btns" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", on: { click: _vm.sendFeedback } },
-            [_c("i", { staticClass: "fa fa-paper-plane" })]
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "feedback-content" }, [
-      _c("i", { staticClass: "fa fa-envelope-o" })
-    ])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-741be5b7", esExports)
-  }
-}
-
-/***/ }),
-
-/***/ 43:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -20978,13 +20865,126 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 /***/ }),
 
-/***/ 462:
+/***/ 428:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "feedback-toolbar" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "feedback-bg",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "right",
+          "data-html": "true",
+          title: "Leave a feedback"
+        },
+        on: {
+          mouseenter: _vm.mouseEnter,
+          mouseleave: _vm.mouseLeave,
+          click: _vm.toggleDialog
+        }
+      },
+      [_vm._m(0, false, false)]
+    ),
+    _vm._v(" "),
+    _c("div", { ref: "feedback_dialog", staticClass: "feedback-dialog" }, [
+      _c("div", { staticClass: "dialog-title" }, [
+        _c("div", { staticClass: "text" }, [
+          _vm._v("\n        Leave a Feedback to The Film Corner\n      ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon", on: { click: _vm.toggleDialog } }, [
+          _c("i", { staticClass: "fa fa-times" })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { ref: "dialog_content", staticClass: "dialog-content" }, [
+        _c("div", { staticClass: "valutation" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-danger", on: { click: _vm.setNegative } },
+            [_c("i", { staticClass: "fa fa-thumbs-down" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-success", on: { click: _vm.setPositive } },
+            [_c("i", { staticClass: "fa fa-thumbs-up" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.comment,
+                  expression: "comment"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Your comment or idea..." },
+              domProps: { value: _vm.comment },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.comment = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "btns" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-primary", on: { click: _vm.sendFeedback } },
+            [_c("i", { staticClass: "fa fa-paper-plane" })]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "feedback-content" }, [
+      _c("i", { staticClass: "fa fa-envelope-o" })
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-741be5b7", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 477:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(323);
+var content = __webpack_require__(329);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21002,14 +21002,6 @@ if(false) {
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
 }
-
-/***/ }),
-
-/***/ 493:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(232);
-
 
 /***/ }),
 
@@ -21066,6 +21058,14 @@ module.exports = function() {
 	};
 	return list;
 };
+
+
+/***/ }),
+
+/***/ 508:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(232);
 
 
 /***/ }),
@@ -21409,12 +21409,12 @@ function applyToTag (styleElement, obj) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(28);
-var buildURL = __webpack_require__(31);
-var parseHeaders = __webpack_require__(37);
-var isURLSameOrigin = __webpack_require__(35);
+var settle = __webpack_require__(27);
+var buildURL = __webpack_require__(30);
+var parseHeaders = __webpack_require__(36);
+var isURLSameOrigin = __webpack_require__(34);
 var createError = __webpack_require__(11);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(30);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -21511,7 +21511,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(33);
+      var cookies = __webpack_require__(32);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -21618,4 +21618,4 @@ module.exports = Cancel;
 
 /***/ })
 
-},[493]);
+},[508]);

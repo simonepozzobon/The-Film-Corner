@@ -79,23 +79,19 @@
               {{-- Control Bar --}}
               <div class="btn-group mr-1">
                 <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPlay()">
-                  <i class="fa fa-play" aria-hidden="true"></i> Play
+                  <i class="fa fa-play" aria-hidden="true"></i>
                 </button>
                 <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorPause()">
-                  <i class="fa fa-pause" aria-hidden="true"></i> Pause
+                  <i class="fa fa-pause" aria-hidden="true"></i>
                 </button>
                 <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorStop()">
-                  <i class="fa fa-stop" aria-hidden="true"></i> Stop
+                  <i class="fa fa-stop" aria-hidden="true"></i>
                 </button>
-              </div>
-
-
-              <div class="btn-group">
                 <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorRewind()">
-                  <i class="fa fa-backward" aria-hidden="true"></i> Rewind
+                  <i class="fa fa-backward" aria-hidden="true"></i>
                 </button>
                 <button type="button" name="button" class="btn btn-secondary btn-orange" ng-click="editorForward()">
-                  <i class="fa fa-forward" aria-hidden="true"></i> Forward
+                  <i class="fa fa-forward" aria-hidden="true"></i>
                 </button>
               </div>
 
