@@ -108,3 +108,7 @@ a.badge {
 .badge-green-var {
   @include badge-variant($tfc-green-var);
 }
+
+.badge-orange {
+  @include badge-variant($tfc-orange);
+}
