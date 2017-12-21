@@ -11646,7 +11646,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 227:
+/***/ 228:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11656,7 +11656,7 @@ var _jquery = __webpack_require__(50);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _laravelEcho = __webpack_require__(340);
+var _laravelEcho = __webpack_require__(341);
 
 var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
 
@@ -11675,7 +11675,7 @@ __webpack_require__(214);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(293);
+__webpack_require__(294);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -12090,7 +12090,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 293:
+/***/ 294:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12561,7 +12561,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 340:
+/***/ 341:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
@@ -31403,10 +31403,10 @@ module.exports = function(a, b){
 
 /***/ }),
 
-/***/ 487:
+/***/ 489:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(227);
+module.exports = __webpack_require__(228);
 
 
 /***/ }),
@@ -37355,4 +37355,4 @@ function toArray(list, index) {
 
 /***/ })
 
-},[487]);
+},[489]);

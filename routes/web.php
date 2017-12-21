@@ -110,8 +110,8 @@ Route::prefix('admin')->group(function () {
 
     // Users menu routes
     Route::get('/admins', 'Admin\AdminController@index')->name('admin.admins.index');
-    Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
-    Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
+    // Route::resource('teachers', 'Admin\TeacherController', ['except' => ['create']]);
+    // Route::post('teachers/{teacher}', 'Admin\TeacherController@storeStudent')->name('teacher.store.student');
     Route::resource('students', 'Admin\StudentController', ['except' => ['create']]);
     Route::resource('users', 'Admin\UserController', ['except' => ['create']]);
     Route::resource('schools', 'Admin\SchoolController', ['except' => ['create']]);
@@ -158,6 +158,14 @@ Route::prefix('admin')->group(function () {
         Route::post('/update_credit', 'Admin\FooterController@update_credit')->name('admin.credit.update');
         Route::post('/update_filmography', 'Admin\FooterController@update_filmography')->name('admin.filmography.update');
         Route::get('/', 'Admin\FooterController@index')->name('admin.footer');
+    });
+
+    Route::prefix('teacher')->group(function() {
+        Route::get('/get-teachers', 'Admin\TeacherController@get_teachers')->name('admin.teacher.get_teachers');
+        Route::post('/save', 'Admin\TeacherController@save')->name('admin.teacher.save');
+        Route::post('/new', 'Admin\TeacherController@new')->name('admin.teacher.new');
+        Route::post('/delete', 'Admin\TeacherController@destroy')->name('admin.teacher.destroy');
+        Route::get('/', 'Admin\TeacherController@index')->name('admin.teacher.index');
     });
 
     Route::prefix('tools')->group(function(){

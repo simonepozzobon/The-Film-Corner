@@ -32,11 +32,55 @@ class TeacherController extends Controller
      */
     public function index()
     {
-      $teachers = Teacher::all();
-      $schools = School::all();
-      return view('admin.teachers.index')
-                    ->with('teachers', $teachers)
-                    ->with('schools', $schools);
+        // $teachers = Teacher::all();
+        // $schools = School::all();
+        // return view('admin.teachers.index')
+        //               ->with('teachers', $teachers)
+        //               ->with('schools', $schools);
+        return view('admin.teachers.index');
+    }
+
+    public function get_teachers()
+    {
+        $teachers = Teacher::all();
+        return response($teachers);
+    }
+
+    public function save(Request $request)
+    {
+        $teacher = Teacher::find($request->id);
+        $teacher->name = $request->name;
+        $teacher->email = $request->email;
+
+        if ($request->password != null) {
+            $teacher->password = Hash::make($request->password);
+        }
+
+        $teacher->students_slots = $request->students_slots;
+        $teacher->save();
+
+        return response($teacher);
+    }
+
+    public function new(Request $request)
+    {
+        $teacher = new Teacher();
+        $teacher->name = $request->name;
+        $teacher->email = $request->email;
+        $teacher->password = Hash::make($request->password);
+        $teacher->students_slots = $request->students_slots;
+        $teacher->save();
+
+        return response($teacher);
+    }
+
+    public function destroy(Request $request)
+    {
+        $teacher = Teacher::find($request->id);
+        $teacher->delete();
+        return response([
+            'status' => 'deleted'
+        ]);
     }
 
     /**
@@ -151,15 +195,15 @@ class TeacherController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-      $teacher = Teacher::findOrFail($id);
-      $file = $teacher->profile_img;
-      Storage::delete($file);
-      $teacher->delete();
-      session()->flash('success', 'Teacher Deleted!');
-      return redirect('/admin/teachers');
-    }
+    // public function destroy($id)
+    // {
+    //   $teacher = Teacher::findOrFail($id);
+    //   $file = $teacher->profile_img;
+    //   Storage::delete($file);
+    //   $teacher->delete();
+    //   session()->flash('success', 'Teacher Deleted!');
+    //   return redirect('/admin/teachers');
+    // }
 
     public function storeStudent(Request $request, $id)
     {

@@ -73,6 +73,11 @@
           Footer
         </a>
       </li>
+      <li id="teacher" class="nav-item">
+        <a href="{{ route('admin.teacher.index') }}" class="nav-link">
+          Teachers
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

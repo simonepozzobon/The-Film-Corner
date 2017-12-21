@@ -25,6 +25,7 @@ mix
   .js('resources/assets/admin/js/keywords.js', 'public/js/admin/')
   .js('resources/assets/admin/js/footer/footer.js', 'public/js/admin/')
   .js('resources/assets/admin/js/captions/captions.js', 'public/js/admin/')
+  .js('resources/assets/admin/js/teachers/teachers.js', 'public/js/admin/')
 
   .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
   .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
