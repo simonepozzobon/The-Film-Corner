@@ -274,6 +274,12 @@
 // Main Menu Responsive
 //
 
+#main-menu-container {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 #main-menu {
   position: sticky;
   top: 0;
