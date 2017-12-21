@@ -29,11 +29,16 @@ class SettingsController extends Controller
 
         // preparo la formattazione delle notifiche
         $sessions = collect();
-        foreach ($notifications as $key => $notification) {
-            $token = $notification->data['session']['token'];
-            $session = StudentAppSession::where('token', '=', $token)->first();
-            $session->notification = $notification;
-            $sessions->push($session);
+        if ($notifications->count() > 0) {
+            foreach ($notifications as $key => $notification) {
+                $token = $notification->data['session']['token'];
+                $session = StudentAppSession::where('token', '=', $token)->first();
+                if ($session) {
+                    $session->notification = $notification;
+                    $sessions->push($session);
+                }
+
+            }
         }
 
         // Estraggo gli id degli studenti appartenenti all'insegnante e li
