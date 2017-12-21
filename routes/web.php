@@ -237,6 +237,7 @@ Route::prefix('teacher')->group(function() {
       Route::post('/update', 'Teacher\SessionController@updateSession')->name('update.session');
       Route::post('/share-approved', 'Teacher\SessionController@shareApproved')->name('teacher.session.share_approved');
       Route::post('/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
+      Route::post('/delete', 'Teacher\SessionController@destroy')->name('teacher.session.delete');
       Route::post('/approve', 'Teacher\SessionController@approveSession')->name('teacher.session.approve');
     });
 
@@ -307,6 +308,7 @@ Route::prefix('student')->group(function() {
     Route::get('/session/{student_id}/{app_id}', 'Student\SessionController@openSessions')->name('open.sessions');
     Route::post('/session/new', 'Student\SessionController@newSession')->name('new.session');
     Route::post('/session/update', 'Student\SessionController@updateSession')->name('update.session');
+    Route::post('/delete', 'Teacher\SessionController@destroy')->name('student.session.delete');
     Route::post('/session/share', 'Student\SessionController@shareSession')->name('student.session.share');
 });
 

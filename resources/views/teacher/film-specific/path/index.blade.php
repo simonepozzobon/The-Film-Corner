@@ -165,7 +165,7 @@
             data +=     '<div class="btn-group">';
             data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-'+color+'"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
             data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
-            data +=       '<a class="btn btn-'+color+'"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
+            data +=       '<a href="#" id="delete-session" onclick="deleteSession(\''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
             data +=     '</div>';
             data +=   '</td>';
             data += '</tr>';
@@ -258,6 +258,36 @@
       console.log(appId);
       console.log(sessionToken);
       console.log('--------');
+  }
+
+  function deleteSession(sessionToken)
+  {
+    var formData = {
+      '_token'  : '{{ csrf_token() }}',
+      'token' : sessionToken
+    };
+
+    console.log(formData);
+
+    $.ajax({
+      type: 'POST',
+      url:  '{{ route('teacher.session.delete') }}',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+      },
+      data: formData,
+      success: function (response) {
+        console.log(response);
+        // Remove previous modal
+        $('#sessionModal').modal('hide');
+        $('body').removeClass('modal-open');
+        $('.modal-backdrop').remove();
+      },
+      error: function (xhr, status) {
+          console.log(xhr);
+          console.log(status);
+      }
+    });
   }
 </script>
 @endsection

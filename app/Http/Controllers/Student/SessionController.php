@@ -632,4 +632,13 @@ class SessionController extends Controller
 
     return response()->json($data);
   }
+
+  public function destroy(Request $request)
+  {
+    $session = StudentAppSession::where('token', '=', $request['token'])->first();
+    $session->delete();
+    return response([
+      'status' => 'deleted'
+    ]);
+  }
 }

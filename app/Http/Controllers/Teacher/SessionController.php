@@ -669,4 +669,13 @@ class SessionController extends Controller
       'session' => $shared,
     ], 200);
   }
+
+  public function destroy(Request $request)
+  {
+    $session = AppsSession::where('token', '=', $request['token'])->first();
+    $session->delete();
+    return response([
+      'status' => 'deleted'
+    ]);
+  }
 }
