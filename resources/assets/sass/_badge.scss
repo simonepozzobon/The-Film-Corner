@@ -112,3 +112,23 @@ a.badge {
 .badge-orange {
   @include badge-variant($tfc-orange);
 }
+
+.badge-dark-green {
+  @include badge-variant($tfc-dark-green);
+  color: $black;
+}
+
+.badge-dark-orange {
+  @include badge-variant($tfc-dark-orange);
+  color: $black;
+}
+
+.badge-dark-blue {
+  @include badge-variant($tfc-dark-blue);
+  color: $black;
+}
+
+.badge-dark-yellow {
+  @include badge-variant($tfc-dark-yellow);
+  color: $black;
+}

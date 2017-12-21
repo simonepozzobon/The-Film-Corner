@@ -11,9 +11,9 @@
               {{ $item->title }}
             </div>
             <div class="box-body">
-              <h6 class="d-inline-block"><span class="badge badge-default">{{ $item->app_category }}</span></h6>
-              <h6 class="d-inline-block"><span class="badge badge-default">{{ $item->app_name }}</span></h6>
-                {{ $item->notes }}
+              <h6 class=""><span class="badge badge-dark-{{ $item->colors[0] }}">{{ $item->app_category }}</span></h6>
+              <h6 class=""><span class="badge badge-dark-{{ $item->colors[0] }}">{{ $item->app_name }}</span></h6>
+                <p>{{ $item->notes }}</p>
             </div>
             <div class="box-body">
               <network-icons
