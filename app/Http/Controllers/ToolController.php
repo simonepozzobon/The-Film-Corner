@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\App;
+use App\Media;
+use App\Video;
 use App\MediaSubCategory;
 use Illuminate\Http\Request;
 
@@ -29,6 +31,39 @@ class ToolController extends Controller
         }
 
         dd($categories);
+    }
+
+    public function soundstudio_library()
+    {
+        $app = App::find(12);
+        $category = 2; // General, App, Example => App
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        // Rimuovo la vecchia libreria
+        $app->videos()->where('category_id', '=', 2)->detach();
+        $app->audios()->where('category_id', '=', 2)->detach();
+
+        // preparo la creazione della nuova
+        $media_origin = App::find(8); // sound Atmosphere, video muti
+        $videos = $media_origin->videos()->where('category_id', '=', 2)->get();
+        $audios = $media_origin->audios()->where('category_id', '=', 2)->get();
+
+        // Salvo i nuovi video
+        foreach ($videos as $key => $video) {
+            $app->videos()->save($video);
+            $app_category->videos()->save($video);
+            $pavilion->videos()->save($video);
+        }
+
+        // Salvo i nuovi audio
+        foreach ($audios as $key => $audio) {
+            $app->audios()->save($audio);
+            $app_category->audios()->save($audio);
+            $pavilion->audios()->save($audio);
+        }
+
+        echo ('Fatto');
     }
 
 }

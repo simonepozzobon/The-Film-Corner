@@ -121,7 +121,6 @@ class CreativeStudioController extends Controller
 
       case 'sound-studio':
         $elements = $app->audios()->get();
-
         $videos = $app->videos()->get();
         $videos = collect($videos->pluck('src')->all());
 

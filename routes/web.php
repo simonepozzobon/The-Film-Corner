@@ -170,6 +170,7 @@ Route::prefix('admin')->group(function () {
 
     Route::prefix('tools')->group(function(){
         Route::get('/flush-media', 'ToolController@flush_media');
+        Route::get('/soundstudio', 'ToolController@soundstudio_library');
     });
 });
 
