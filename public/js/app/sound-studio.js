@@ -89421,11 +89421,12 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 503 */,
 /* 504 */,
 /* 505 */,
-/* 506 */
+/* 506 */,
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(230);
 
 
 /***/ })
-],[506]);
+],[507]);
