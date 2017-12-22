@@ -50,7 +50,13 @@
 body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+  min-height: 100%;
+  position: relative;
+}
+
+html {
+  height: 100%;
+  box-sizing: border-box;
 }
 
 @import "resources/assets/admin/sass/_style.scss";
