@@ -29,6 +29,11 @@ class Video extends Model
         return $this->morphedByMany('App\Student', 'videoable');
     }
 
+    public function guests()
+    {
+        return $this->morphedByMany('App\Guest', 'videoable');
+    }
+
     public function apps()
     {
         return $this->morphedByMany('App\App', 'videoable');

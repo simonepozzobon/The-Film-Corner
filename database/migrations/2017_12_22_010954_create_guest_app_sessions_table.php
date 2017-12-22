@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudentAppsSessions extends Migration
+class CreateGuestAppSessionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateStudentAppsSessions extends Migration
      */
     public function up()
     {
-        Schema::create('student_apps_sessions', function (Blueprint $table) {
+        Schema::create('guest_app_sessions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('student_id');
+            $table->integer('guest_id');
             $table->integer('app_id');
             $table->string('title')->default('Untitled');
             $table->boolean('is_empty')->default(1);
@@ -26,12 +26,12 @@ class CreateStudentAppsSessions extends Migration
     }
 
     /**
-    * Reverse the migrations.
-    *
-    * @return void
-    */
+     * Reverse the migrations.
+     *
+     * @return void
+     */
     public function down()
     {
-        Schema::dropIfExists('student_apps_sessions');
+        Schema::dropIfExists('guest_app_sessions');
     }
 }

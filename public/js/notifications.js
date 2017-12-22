@@ -12294,6 +12294,11 @@ var io = __webpack_require__(93); //
 //
 //
 //
+//
+//
+//
+//
+//
 
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
 exports.default = {
@@ -12316,8 +12321,10 @@ exports.default = {
     type: function type() {
       if (this.user_type == 'App\\Student') {
         return 'student';
-      } else {
+      } else if (this.user_type == 'App\\Teacher') {
         return 'teacher';
+      } else {
+        return 'guest';
       }
     },
     userParsed: function userParsed() {
@@ -23519,7 +23526,29 @@ var render = function() {
                       ]
                     )
                   ])
-                : _vm._e(),
+                : _vm.type == "guest"
+                  ? _c("li", { staticClass: "nav-item" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link",
+                          attrs: {
+                            href: "/" + _vm.type + "/settings",
+                            "data-toggle": "tooltip",
+                            "data-placement": "bottom",
+                            "data-html": "true",
+                            title: "Student settings"
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-user",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ])
+                  : _vm._e(),
               _vm._v(" "),
               _c(
                 "li",

@@ -159,6 +159,11 @@
               <i class="fa fa-user" aria-hidden="true"/>
             </a>
           </li>
+          <li class="nav-item" v-else-if="type == 'guest'">
+            <a :href="'/'+type+'/settings'" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
+              <i class="fa fa-user" aria-hidden="true"/>
+            </a>
+          </li>
           <li id="notifications-menu" class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Notifications">
             <notifications-menu :notifications="notifs"/>
           </li>
@@ -226,8 +231,10 @@ export default {
     {
       if (this.user_type == 'App\\Student') {
         return 'student'
-      } else {
+      } else if (this.user_type == 'App\\Teacher') {
         return 'teacher'
+      } else {
+        return 'guest'
       }
     },
     userParsed: function()

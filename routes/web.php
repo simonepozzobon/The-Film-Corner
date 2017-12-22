@@ -314,3 +314,82 @@ Route::prefix('student')->group(function() {
 });
 
 // Route::get('/translate', 'Admin\TranslateController@translate')->name('test.admin');
+
+
+/*
+|
+|
+|--------------------------------------------------------------------------
+| Guest Routes (Guest Panel)
+|--------------------------------------------------------------------------
+|
+*/
+
+// Guest Panel Guest
+Route::prefix('guest')->group(function() {
+    // Auth
+    Route::get('/login', 'Auth\GuestLoginController@showLoginForm')->name('guest.login');
+    Route::post('/login', 'Auth\GuestLoginController@login')->name('guest.login.submit');
+    Route::get('/logout', 'Auth\GuestLoginController@logout')->name('guest.logout');
+    Route::get('/', 'GuestController@index')->name('guest');
+    Route::get('/welcome','GuestController@welcome')->name('guest.welcome');
+
+    // Video Editor
+    Route::post('/video-edit/video-edit-api', 'VideoEditorController@updateEditor')->name('update.guest.editor');
+    Route::post('/audio-edit/audio-edit-api', 'AudioEditorController@updateEditor')->name('update.guest.audio.editor');
+
+    // Pagine Principali dei padiglioni
+
+    // Film Specific
+    Route::get('/film-specific', 'GuestController@filmSpecific')->name('guest.film-specific');
+    Route::get('/film-specific/{category}', 'Guest\FilmSpecificController@index')->name('guest.film-specific.index');
+    Route::get('/film-specific/{category}/{app_slug}/{token}', 'Guest\FilmSpecificController@openSession')->name('guest.film-specific.open.session');
+    Route::get('/film-specific/{category}/{app_slug}', 'Guest\FilmSpecificController@app')->name('guest.film-specific.app');
+
+    // Film Specific
+    Route::post('/creative-studio/{category}/{app_slug}/upload-img', 'Guest\CreativeStudioController@uploadImg')->name('guest.creative-studio.upload.img');
+    Route::post('/creative-studio/{category}/{app_slug}/upload', 'Guest\CreativeStudioController@uploadVideo')->name('guest.creative-studio.upload');
+    Route::get('/creative-studio/{category}/{app_slug}/{token}', 'Guest\CreativeStudioController@openSession')->name('guest.creative-studio.open.session');
+    Route::get('/creative-studio/{category}/{app_slug}', 'Guest\CreativeStudioController@app')->name('guest.creative-studio.app');
+    Route::get('/creative-studio/{category}', 'Guest\CreativeStudioController@index')->name('guest.creative-studio.index');
+    Route::get('/creative-studio', 'GuestController@creativeStudio')->name('guest.creative-studio');
+
+    Route::get('/cinema', 'GuestController@cinemaPav')->name('guest.cinema-pav');
+    Route::get('/path_1', 'GuestController@path')->name('guest.path');
+
+    // Settings
+    Route::prefix('settings')->group(function() {
+      Route::get('/', 'Guest\SettingsController@index')->name('guest.settings.index');
+      Route::post('/store-student', 'Guest\SettingsController@storeStudent')->name('guest.student.store');
+      Route::post('/save-student', 'Guest\SettingsController@save_student')->name('guest.settings.save_student');
+      Route::post('/destroy-student', 'Guest\SettingsController@destroy_student')->name('guest.settings.destroy_student');
+      Route::post('/delete-student', 'Guest\SettingsController@deleteStudent')->name('guest.student.delete');
+      Route::post('/update-student', 'Guest\SettingsController@update_student')->name('guest.settings.update_student');
+      Route::get('/get-slots', 'Guest\SettingsController@get_slots')->name('guest.settings.get_slots');
+    });
+
+    // Network
+    Route::get('/network', 'Guest\NetworkController@index')->name('guest.network.index');
+    Route::get('/network/{token}', 'Guest\NetworkController@single')->name('guest.network.single');
+
+    // Sessioni
+    Route::prefix('session')->group(function() {
+      Route::get('/{guest_id}/{app_id}', 'Guest\SessionController@openSessions')->name('open.sessions');
+      Route::post('/new', 'Guest\SessionController@newSession')->name('new.session');
+      Route::post('/update', 'Guest\SessionController@updateSession')->name('update.session');
+      Route::post('/share-approved', 'Guest\SessionController@shareApproved')->name('guest.session.share_approved');
+      Route::post('/share', 'Guest\SessionController@shareSession')->name('guest.session.share');
+      Route::post('/delete', 'Guest\SessionController@destroy')->name('guest.session.delete');
+      Route::post('/approve', 'Guest\SessionController@approveSession')->name('guest.session.approve');
+    });
+
+
+    // Notifications
+    Route::prefix('notifications')->group(function() {
+      Route::get('/markasread/{id}', 'Guest\NotificationController@markAsRead')->name('guest.notifications.markasread');
+      Route::post('/markasunread', 'Guest\NotificationController@markAsUnread')->name('guest.notifications.markasunread');
+      Route::get('/get', 'Guest\NotificationController@getNotifications')->name('guest.notifications.getnew');
+      Route::post('/delete', 'Guest\NotificationController@delete')->name('guest.notifications.delete');
+      Route::post('/destroy', 'Guest\NotificationController@destroy')->name('guest.notifications.destroy');
+    });
+});

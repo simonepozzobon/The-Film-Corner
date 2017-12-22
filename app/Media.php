@@ -37,6 +37,11 @@ class Media extends Model
         return $this->morphedByMany('App\Student', 'mediaable');
     }
 
+    public function guests()
+    {
+        return $this->morphedByMany('App\Guest', 'mediaable');
+    }
+
     public function static_pages()
     {
         return $this->morphedByMany('App\StaticPage', 'mediaable');
