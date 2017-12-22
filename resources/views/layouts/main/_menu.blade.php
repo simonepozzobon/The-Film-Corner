@@ -124,9 +124,6 @@
         <li class="nav-item">
           <a href="{{ url('/') }}#project" class="nav-link">The Project</a>
         </li>
-        {{-- <li class="nav-item">
-          <a href="{{ route('conference') }}" class="nav-link">Conference</a>
-        </li> --}}
         <li class="nav-item">
           <a href="{{ url('/schools') }}" class="nav-link">Schools</a>
         </li>
@@ -143,7 +140,7 @@
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
           <a class="dropdown-item" href="{{ route('teacher.login') }}">Teacher Login</a>
           <a class="dropdown-item" href="{{ route('student.login') }}">Student Login</a>
-          <a class="dropdown-item" href="{{ route('guest.login≥') }}">Guest Login</a>
+          <a class="dropdown-item" href="{{ route('guest.login') }}">Guest Login</a>
         </div>
       </li>
       </ul>
