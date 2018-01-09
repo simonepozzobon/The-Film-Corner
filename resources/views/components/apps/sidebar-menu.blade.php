@@ -42,7 +42,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+          <h5 class="modal-title" id="saveModalLabel">{{ GeneralText::field('save') }} {{ $app->title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
@@ -53,13 +53,13 @@
 
           <div class="modal-body">
             <div class="form-group">
-              <label for="">Title:</label>
+              <label for="">{{ GeneralText::field('title') }}:</label>
               <input type="text" name="title" class="form-control">
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-            <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
+            <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ GeneralText::field('save') }}</button>
           </div>
         </form>
       </div>
@@ -70,7 +70,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+          <h5 class="modal-title" id="saveModalLabel">{{ GeneralText::field('save') }} {{ $app->title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
@@ -83,8 +83,8 @@
             Are you sure?
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-            <button type="button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+            <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
+            <button type="button" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ GeneralText::field('save') }}</button>
           </div>
         </form>
       </div>
@@ -95,7 +95,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Close {{ $app->title }}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ GeneralText::field('close') }} {{ $app->title }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <i class="fa fa-times" aria-hidden="true"></i>
         </button>
@@ -108,7 +108,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
         <a class="btn btn-danger text-white" href="{{ url('/') }}/{{ $type }}/{{ $app->category->section->slug }}/{{ $app->category->slug }}"><i class="fa fa-window-close" aria-hidden="true"></i> Close</a>
       </div>
     </div>

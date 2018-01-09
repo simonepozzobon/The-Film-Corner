@@ -7,15 +7,15 @@
     <div class="col">
       <div class="title-wrapper bg-faded">
         <div class="icons-left">
-          <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="Close App">
+          <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('close_app') }}">
             <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-window-close text-danger"></i></a>
           </div>
           @if ($student == false)
-            <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="Save This Session">
+            <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('save_this_session') }}">
               <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-floppy-o text-primary"></i></a>
             </div>
             @if (isset($app_session) && $app_session->teacher_shared == 1)
-            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
+            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('open_chat') }}">
               <a href="#" data-toggle="collapse" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
             </div>
             @endif
@@ -23,7 +23,7 @@
             <div id="approve-btn" class="icon approve" data-toggle="tooltip" data-html="true" title="Approve student's work">
               <a href="#" data-toggle="modal" data-target="#approveSession"><i class="fa fa-thumbs-o-up text-success"></i></a>
             </div>
-            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="Open Chat">
+            <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('open_chat') }}">
               <a href="#" data-toggle="collapse" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
             </div>
           @endif
@@ -34,14 +34,14 @@
         <div class="icons-right">
           {{-- Se ci sono esempi, fa vedere il pulsante per gli esempi --}}
           @if ($app->examples()['count'] > 0)
-            <div id="example-btn" class="icon" data-toggle="tooltip" data-html="true" title="Show Examples">
+            <div id="example-btn" class="icon" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('show_examples') }}">
               <a href="#" data-toggle="modal" data-target="#examples"><i class="fa fa-eye"></i></a>
             </div>
           @endif
-          <div id="help-btn" class="icon" data-toggle="tooltip" data-html="true" title="Help">
+          <div id="help-btn" class="icon" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('help') }}">
             <a id="read-more-icon"><i class="fa fa-question"></i></a>
           </div>
-          <div id="print-btn" class="icon" data-toggle="tooltip" data-html="true" title="Print">
+          <div id="print-btn" class="icon" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('print') }}">
             <a id="print-this-page"><i class="fa fa-print"></i></a>
           </div>
         </div>
@@ -56,7 +56,7 @@
           </div>
         </div>
         <div class="btns">
-            <a id="read-more-btn" href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
+            <a id="read-more-btn" href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">{{ GeneralText::field('read_more') }}</a>
         </div>
         <script>
           var button = document.getElementById('read-more-btn'),
@@ -103,7 +103,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="examplesModalLabel">Examples</h5>
+            <h5 class="modal-title" id="examplesModalLabel">{{ GeneralText::field('examples') }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <i class="fa fa-times" aria-hidden="true"></i>
             </button>
@@ -172,7 +172,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+            <h5 class="modal-title" id="saveModalLabel">{{ GeneralText::field('save') }} {{ $app->title }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <i class="fa fa-times" aria-hidden="true"></i>
             </button>
@@ -183,13 +183,13 @@
               {{ csrf_field() }}
               {{ method_field('POST') }}
               <div class="form-group">
-                <label for="">Title:</label>
+                <label for="">{{ GeneralText::field('title') }}:</label>
                 <input type="text" name="title" class="form-control">
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
-              <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
+              <button type="button" class="btn btn-primary" onclick="AppSession.updateSession({{ $app->id }})"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ GeneralText::field('save') }}</button>
               </form>
             </div>
         </div>
@@ -200,7 +200,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="saveModalLabel">Save {{ $app->title }}</h5>
+            <h5 class="modal-title" id="saveModalLabel">{{ GeneralText::field('save') }} {{ $app->title }}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <i class="fa fa-times" aria-hidden="true"></i>
             </button>
@@ -210,12 +210,12 @@
           </div>
 
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
               <form class="" action="{{ route('teacher.session.approve') }}" method="POST">
                 {{ csrf_field() }}
                 {{ method_field('POST') }}
                 <input type="hidden" name="token" value="{{ $app_session->token }}">
-                <button type="submit" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                <button type="submit" class="btn btn-primary" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> {{ GeneralText::field('save') }}</button>
               </form>
             </div>
         </div>
@@ -226,7 +226,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="closeModalLabel">Close {{ $app->title }}</h5>
+          <h5 class="modal-title" id="closeModalLabel">{{ GeneralText::field('close') }} {{ $app->title }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
@@ -239,8 +239,8 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo" aria-hidden="true"></i> Cancel</button>
-          <a class="btn btn-danger text-white" href="{{ url('/') }}/{{ $type }}/{{ $app->category->section->slug }}/{{ $app->category->slug }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Close</a>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-undo" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
+          <a class="btn btn-danger text-white" href="{{ url('/') }}/{{ $type }}/{{ $app->category->section->slug }}/{{ $app->category->slug }}"><i class="fa fa-sign-out" aria-hidden="true"></i> {{ GeneralText::field('close') }}</a>
         </div>
       </div>
     </div>
