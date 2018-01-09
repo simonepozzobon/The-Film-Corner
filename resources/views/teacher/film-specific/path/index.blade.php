@@ -81,7 +81,7 @@
                 </div>
               </div>
               <div class="box-btns">
-                <a href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">Read More</a>
+                <a href="#{{ $app->slug }}" class="read-more" data-id="{{ $app->slug }}">{{ GeneralText::field('read_more') }}</a>
               </div>
             </div>
           @endforeach
