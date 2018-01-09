@@ -20,6 +20,8 @@
             <li>Clsse 2B della Scuola Secondaria di Primo Grado Breda, Sesto San Giovanni (MI) – Prof.ssa Mattei</li>
             <li>Classe 2D della Scuola Secondaria di Primo Grado Bellani, Monza (MB)– Prof.ssa Cascina</li>
             <li>Classe 2F dell’I.I.S. Podesti Calzecchi Onesti, Ancona (AN) – Prof.ssa Gregorini</li>
+            <li>Classe 3V1 del Liceo Artistico P. Candiani, Busto Arsizio (VA) - Prof.ssa Madonia</li>
+            <li>Classe 3V2 del Liceo Artistico P. Candiani, Busto Arsizio (VA)- Prof. Cunocchiella</li>
           </ul>
           <h1 class="mt">SERBIA</h1>
           <ul>
