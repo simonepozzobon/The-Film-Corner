@@ -112,24 +112,30 @@
             @foreach ($app->examples() as $key => $examples)
               @if ($key == 'videos')
                 @foreach ($examples as $key => $example)
-                  <div class="video-example embed-responsive embed-responsive-16by9">
-                    <video class="embed-responsive-item" controls>
-                      <source src="{{ Storage::disk('local')->url($example->src) }}" type="video/mp4">
-                    </video>
+                  <div class="d-flex justify-content-center pb-3">
+                    <div class="video-example embed-responsive embed-responsive-16by9">
+                      <video class="embed-responsive-item" controls>
+                        <source src="{{ Storage::disk('local')->url($example->src) }}" type="video/mp4">
+                      </video>
+                    </div>
                   </div>
                 @endforeach
               @elseif ($key == 'images')
                 @foreach ($examples as $key => $example)
-                  <div class="image-example">
-                    <img src="{{ Storage::disk('local')->url($example->src) }}" alt="" class="img-fluid">
+                  <div class="d-flex justify-content-center pb-3">
+                    <div class="image-example">
+                      <img src="{{ Storage::disk('local')->url($example->src) }}" alt="" class="img-fluid">
+                    </div>
                   </div>
                 @endforeach
               @elseif ($key == 'audios')
                 @foreach ($examples as $key => $example)
-                  <div class="audio-example embed-responsive">
-                    <audio class="embed-responsive-item" controls>
-                      <source src="{{ Storage::disk('local')->url($example->src) }}" type="audio/wav">
-                    </audio>
+                  <div class="d-flex justify-content-center pb-3">
+                    <div class="audio-example embed-responsive">
+                      <audio class="embed-responsive-item" controls>
+                        <source src="{{ Storage::disk('local')->url($example->src) }}" type="audio/wav">
+                      </audio>
+                    </div>
                   </div>
                 @endforeach
               @endif
