@@ -19,7 +19,13 @@
   <body>
     @include('layouts.teacher._menu')
 
-    @yield('content')
+    @if ($type == 'app')
+      <main>
+        @yield('content')
+      </main>
+    @else
+      @yield('content')
+    @endif
 
     @php
       if (!isset($footer)) {
