@@ -469,6 +469,7 @@ footer {
     padding-top: ($spacer * 2);
     padding-bottom: ($spacer * 2);
     height: auto;
+    position: relative;
 
     > .row {
       width: 100%;
@@ -476,6 +477,8 @@ footer {
       margin-right: $spacer;
 
       > .col-md-4 {
+        padding-bottom: $spacer * 2;
+        
         > h3 {
           text-transform: uppercase;
         }
