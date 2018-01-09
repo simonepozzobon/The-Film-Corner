@@ -119,6 +119,12 @@
                       </video>
                     </div>
                   </div>
+                  @if ($example->caption())
+                    <h4>{{ $example->caption()->title }}</h4>
+                    <p>
+                      {{ $example->caption()->description }}
+                    </p>
+                  @endif
                 @endforeach
               @elseif ($key == 'images')
                 @foreach ($examples as $key => $example)
@@ -127,6 +133,12 @@
                       <img src="{{ Storage::disk('local')->url($example->src) }}" alt="" class="img-fluid">
                     </div>
                   </div>
+                  @if ($example->caption())
+                    <h4>{{ $example->caption()->title }}</h4>
+                    <p>
+                      {{ $example->caption()->description }}
+                    </p>
+                  @endif
                 @endforeach
               @elseif ($key == 'audios')
                 @foreach ($examples as $key => $example)
@@ -137,6 +149,12 @@
                       </audio>
                     </div>
                   </div>
+                  @if ($example->caption())
+                    <h4>{{ $example->caption()->title }}</h4>
+                    <p>
+                      {{ $example->caption()->description }}
+                    </p>
+                  @endif
                 @endforeach
               @endif
             @endforeach

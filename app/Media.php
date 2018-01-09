@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Caption;
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
@@ -76,6 +77,15 @@ class Media extends Model
         } else {
             return $library = '';
         }
+    }
+
+    public function caption()
+    {
+        $caption = Caption::where([
+            ['mediable_id', '=', $this->id],
+            ['mediable_type', '=', get_class($this)]
+        ])->first();
+        return $caption;
     }
 
 }
