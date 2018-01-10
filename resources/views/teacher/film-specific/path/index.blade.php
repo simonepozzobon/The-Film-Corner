@@ -163,9 +163,9 @@
             data +=   '</td>';
             data +=   '<td class="align-middle">';
             data +=     '<div class="btn-group">';
-            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-'+color+'"><i class="fa fa-folder-open-o" aria-hidden="true"></i> Open</a>';
-            data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</a>';
-            data +=       '<a href="#" id="delete-session" onclick="deleteSession(\''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a>';
+            data +=       '<a href="/teacher/film-specific/'+response.category+'/'+response.app['slug']+'/'+response.sessions[i]['token']+'" class="btn btn-'+color+'"><i class="fa fa-folder-open-o" aria-hidden="true"></i> {{ GeneralText::field('open') }}</a>';
+            data +=       '<a href="#" id="share-session" onclick="shareSession('+teacherId+', '+appId+', \''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-share-alt" aria-hidden="true"></i> {{ GeneralText::field('share') }}</a>';
+            data +=       '<a href="#" id="delete-session" onclick="deleteSession(\''+response.sessions[i]['token']+'\')" class="btn btn-'+color+'"><i class="fa fa-trash-o" aria-hidden="true"></i> {{ GeneralText::field('delete') }}</a>';
             data +=     '</div>';
             data +=   '</td>';
             data += '</tr>';
@@ -176,7 +176,7 @@
           data +=         '</table>';
           data +=       '</div>';
           data +=       '<div class="modal-footer">';
-          data +=         '<button type="button" class="btn btn-'+color+'" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>';
+          data +=         '<button type="button" class="btn btn-'+color+'" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('close') }}</button>';
           data +=       '</div>';
           data +=     '</div>';
           data +=   '</div>';
@@ -219,8 +219,8 @@
 
     data +=       '</div>';
     data +=       '<div class="modal-footer">';
-    data +=         '<button id="share-confirm" type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-share-alt" aria-hidden="true"></i> Share</button>';
-    data +=         '<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Close</button>';
+    data +=         '<button id="share-confirm" type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-share-alt" aria-hidden="true"></i> {{ GeneralText::field('share') }}</button>';
+    data +=         '<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('close') }}</button>';
     data +=       '</div>';
     data +=     '</div>';
     data +=   '</div>';
