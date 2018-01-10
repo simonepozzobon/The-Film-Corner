@@ -134,15 +134,36 @@
           <a href="{{ url('/filmography') }}" class="nav-link">Filmography</a>
         </li>
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Login
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
-          <a class="dropdown-item" href="{{ route('teacher.login') }}">Teacher Login</a>
-          <a class="dropdown-item" href="{{ route('student.login') }}">Student Login</a>
-          <a class="dropdown-item" href="{{ route('guest.login') }}">Guest Login</a>
-        </div>
-      </li>
+          <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Login
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+            <a class="dropdown-item" href="{{ route('teacher.login') }}">Teacher Login</a>
+            <a class="dropdown-item" href="{{ route('student.login') }}">Student Login</a>
+            <a class="dropdown-item" href="{{ route('guest.login') }}">Guest Login</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a href="#" id="languageDropdown" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Language
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
+            <a class="dropdown-item" href="/set-locale/en">
+              English
+            </a>
+            <a class="dropdown-item" href="/set-locale/fr">
+              Francais
+            </a>
+            <a class="dropdown-item" href="/set-locale/it">
+              Italiano
+            </a>
+            <a class="dropdown-item" href="/set-locale/sr">
+              српски
+            </a>
+          </div>
+
+
+        </li>
       </ul>
     </div>
 </nav>
