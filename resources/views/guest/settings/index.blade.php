@@ -2,10 +2,13 @@
 @section('title', 'Profile')
 @section('content')
   <div id="main" class="container">
-    @include('components.apps.heading_simple', ['title' => 'Profile'])
-    <div class="box green">
+    @php
+      $profile = GeneralText::field('profile');
+    @endphp
+    @include('components.apps.heading_simple', ['title' => $profile])
+    <div class="box green mt">
       <div class="box-body">
-        Not available for guest user!
+        Not available for guests!
       </div>
     </div>
   </div>

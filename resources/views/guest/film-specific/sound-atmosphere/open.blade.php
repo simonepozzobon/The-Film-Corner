@@ -10,7 +10,7 @@
       <div class="col-md-8">
         <div class="box blue">
           <div class="box-header">
-            Create your atmosphere
+            {{ GeneralText::field('scene') }}
           </div>
           <div id="media-element" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
@@ -25,7 +25,7 @@
       <div class="col-md-4">
         <div class="box yellow">
           <div class="box-header">
-            Library
+            {{ GeneralText::field('library') }}
           </div>
           <div class="box-body library">
             <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -35,10 +35,10 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav" role="tablist">
                   <li class="nav-item">
-                    <a class="library-link nav-link active" data-toggle="tab" href="#video-library">Video</a>
+                    <a class="library-link nav-link active" data-toggle="tab" href="#video-library">{{ GeneralText::field('video') }}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="library-link nav-link" data-toggle="tab" href="#audio-library">Audio</a>
+                    <a class="library-link nav-link" data-toggle="tab" href="#audio-library">{{ GeneralText::field('audio') }}</a>
                   </li>
                 </ul>
               </div>
@@ -116,7 +116,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control input-green" placeholder="Why you choose this soundtrack?">{{ $session->notes }}</textarea>

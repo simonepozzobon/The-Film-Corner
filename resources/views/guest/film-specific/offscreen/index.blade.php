@@ -10,7 +10,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Video
+              {{ GeneralText::field('video') }}
             </div>
             <div id="video-player" class="box-body">
               <div class="embed-responsive embed-responsive-16by9">
@@ -24,7 +24,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div id="video-library" class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -34,7 +34,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#offscreen-library">Video</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#offscreen-library">{{ GeneralText::field('video') }}</a>
                     </li>
                   </ul>
                 </div>
@@ -95,7 +95,7 @@
         <div class="col">
           <div class="box green">
             <div class="box-header">
-              Notes
+              {{ GeneralText::field('notes') }}
             </div>
             <div class="box-body">
               <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what is happening outside the screen"></textarea>

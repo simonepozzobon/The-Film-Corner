@@ -10,7 +10,7 @@
       <div class="col-md-6">
         <div class="box blue">
           <div class="box-header">
-            First Video
+            {{ GeneralText::field('first_video') }}
           </div>
           <div id="video-player-left" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
@@ -24,7 +24,7 @@
       <div class="col-md-6">
         <div class="box yellow">
           <div class="box-header">
-            Second Video
+            {{ GeneralText::field('second_video') }}
           </div>
           <div id="video-player-right" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
@@ -70,7 +70,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control">{{ $session->notes }}</textarea>

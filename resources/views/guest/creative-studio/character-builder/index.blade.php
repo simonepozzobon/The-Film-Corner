@@ -21,7 +21,7 @@
       <div class="col-md-8">
         <div class="box blue">
           <div class="box-header">
-            Character
+            {{ GeneralText::field('character') }}
           </div>
           <div id="canvas-wrapper" class="box-body" style="min-height: 30rem">
             <div id="container-canvas">
@@ -33,7 +33,7 @@
       <div class="col-md-4">
         <div class="box yellow">
           <div class="box-header">
-            Library
+            {{ GeneralText::field('library') }}
           </div>
           <div class="box-body library">
             <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -48,7 +48,7 @@
                     </li>
                   @endforeach
                   <li class="nav-item">
-                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">Uploads</a>
+                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">{{ GeneralText::field('uploads') }}</a>
                   </li>
                 </ul>
               </div>
@@ -78,7 +78,7 @@
                         <input id="media" type="file" name="media" class="form-control">
                       </div>
                       <div class="container-fluid d-flex justify-content-around">
-                        <button id="upload-this-media" type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                        <button id="upload-this-media" type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
                       </div>
                     </form>
                     <div id="uploads" class="assets">
@@ -97,16 +97,16 @@
         <div class="box orange">
           <div class="box-btns pt">
             <div class="btns pr-4">
-              <a id="deselect" href="#" class="btn btn-orange">Deselect All</a>
+              <a id="deselect" href="#" class="btn btn-orange">{{ GeneralText::field('deselect_all') }}</a>
             </div>
             <div class="btns pr-4">
-              <a id="back" href="#" class="btn btn-orange">Move Back</a>
-              <a id="backward" href="#" class="btn btn-orange">Move Backward</a>
-              <a id="forward" href="#" class="btn btn-orange">Move Forward</a>
-              <a id="front" href="#" class="btn btn-orange">Move To Front</a>
+              <a id="back" href="#" class="btn btn-orange">{{ GeneralText::field('move_back') }}</a>
+              <a id="backward" href="#" class="btn btn-orange">{{ GeneralText::field('move_backward') }}</a>
+              <a id="forward" href="#" class="btn btn-orange">{{ GeneralText::field('move:_forward') }}</a>
+              <a id="front" href="#" class="btn btn-orange">{{ GeneralText::field('move_to_front') }}</a>
             </div>
             <div class="btns">
-              <a id="destroy" href="#" class="btn btn-orange">Remove</a>
+              <a id="destroy" href="#" class="btn btn-orange">{{ GeneralText::field('remove') }}</a>
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe your character"></textarea>
