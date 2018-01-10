@@ -10,7 +10,7 @@
       <div class="col-md-6">
         <div class="box blue">
           <div class="box-header">
-            First Video
+            {{ GeneralText::field('first_video') }}
           </div>
           <div id="video-player-left" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
@@ -24,7 +24,7 @@
       <div class="col-md-6">
         <div class="box yellow">
           <div class="box-header">
-            Second Video
+            {{ GeneralText::field('second_video') }}
           </div>
           <div id="video-player-right" class="box-body">
             <div class="embed-responsive embed-responsive-16by9">
@@ -42,13 +42,13 @@
           <div class="box-btns pt">
             <div class="btn-group pr-4">
               <button id="reload-left" type="button" name="button" class="btn btn-secondary btn-orange">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Change Left
+                <i class="fa fa-refresh" aria-hidden="true"></i> {{ GeneralText::field('change_left') }}
               </button>
               <button id="reload" type="button" name="button" class="btn btn-secondary btn-orange">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Change Both
+                <i class="fa fa-refresh" aria-hidden="true"></i> {{ GeneralText::field('change_both') }}
               </button>
               <button id="reload-right" type="button" name="button" class="btn btn-secondary btn-orange">
-                <i class="fa fa-refresh" aria-hidden="true"></i> Change Right
+                <i class="fa fa-refresh" aria-hidden="true"></i> {{ GeneralText::field('change_right') }}
               </button>
             </div>
             <div class="btn-group">
@@ -76,7 +76,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control"></textarea>
