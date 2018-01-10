@@ -39,7 +39,7 @@ return [
     | you can specify what default should be used here.
     |
     */
-    'locale' => 'en',
+    'locale' => null,
 
     /*
     |--------------------------------------------------------------------------
