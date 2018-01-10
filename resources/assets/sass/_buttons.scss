@@ -87,6 +87,10 @@ fieldset[disabled] a.btn {
   @include tfc-button-variant($tfc-orange, $tfc-dark-orange);
 }
 
+.btn-gray {
+  @include tfc-button-variant($gray-lightest, $gray-lighter);
+}
+
 
 
 // Remove all backgrounds

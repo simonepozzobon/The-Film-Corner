@@ -214,6 +214,14 @@
       background-color: $tfc-orange;
     }
   }
+  &.gray {
+    >.box-header {
+      background-color: $gray-lighter;
+    }
+    >.box-body, &>.box-btns {
+      background-color: $gray-lightest;
+    }
+  }
 }
 
 
@@ -478,7 +486,7 @@ footer {
 
       > .col-md-4 {
         padding-bottom: $spacer * 2;
-        
+
         > h3 {
           text-transform: uppercase;
         }
