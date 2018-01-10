@@ -1,4 +1,4 @@
-webpackJsonp([15],{
+webpackJsonp([16],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -404,7 +404,7 @@ module.exports = __webpack_require__(21);
 
 /***/ }),
 
-/***/ 18:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11128,11 +11128,11 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(20).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(19).setImmediate))
 
 /***/ }),
 
-/***/ 19:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -11326,7 +11326,7 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 20:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -11379,7 +11379,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(19);
+__webpack_require__(18);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
@@ -11517,11 +11517,11 @@ module.exports = CancelToken;
 "use strict";
 
 
-var _MainPanel = __webpack_require__(367);
+var _MainPanel = __webpack_require__(374);
 
 var _MainPanel2 = _interopRequireDefault(_MainPanel);
 
-var _vue = __webpack_require__(18);
+var _vue = __webpack_require__(17);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -11806,7 +11806,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 265:
+/***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11816,7 +11816,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _gsap = __webpack_require__(42);
+var _gsap = __webpack_require__(40);
 
 var _axios = __webpack_require__(13);
 
@@ -11984,7 +11984,7 @@ exports.default = {
 
 /***/ }),
 
-/***/ 266:
+/***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11994,13 +11994,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _gsap = __webpack_require__(42);
+var _gsap = __webpack_require__(40);
 
 var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _ElementSingle = __webpack_require__(366);
+var _ElementSingle = __webpack_require__(373);
 
 var _ElementSingle2 = _interopRequireDefault(_ElementSingle);
 
@@ -12725,7 +12725,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 302:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
@@ -12752,14 +12752,6 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
-
-/***/ }),
-
-/***/ 319:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#panelCredits[data-v-49416f64],\n#panelFilmography[data-v-49416f64],\n#add_panel_film[data-v-49416f64],\n#add_panel_credit[data-v-49416f64] {\n  display: none;\n  opacity: 0;\n}\n.box-body[data-v-49416f64] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.box-body .box-tools[data-v-49416f64] {\n    padding-bottom: 2rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -12821,6 +12813,14 @@ module.exports = (
   })()
 );
 
+
+/***/ }),
+
+/***/ 324:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#panelCredits[data-v-49416f64],\n#panelFilmography[data-v-49416f64],\n#add_panel_film[data-v-49416f64],\n#add_panel_credit[data-v-49416f64] {\n  display: none;\n  opacity: 0;\n}\n.box-body[data-v-49416f64] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-orient: vertical;\n  -webkit-box-direction: normal;\n      -ms-flex-direction: column;\n          flex-direction: column;\n}\n.box-body .box-tools[data-v-49416f64] {\n    padding-bottom: 2rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -12987,18 +12987,53 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 366:
+/***/ 37:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ 373:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_ElementSingle_vue__ = __webpack_require__(265);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_ElementSingle_vue__ = __webpack_require__(266);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_ElementSingle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_ElementSingle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1ccff4fd_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_ElementSingle_vue__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1ccff4fd_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_ElementSingle_vue__ = __webpack_require__(413);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(451)
+  __webpack_require__(465)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -13045,18 +13080,18 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 367:
+/***/ 374:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainPanel_vue__ = __webpack_require__(266);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainPanel_vue__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainPanel_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_bustCache_MainPanel_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49416f64_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_MainPanel_vue__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_49416f64_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_bustCache_MainPanel_vue__ = __webpack_require__(430);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(468)
+  __webpack_require__(482)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -13103,41 +13138,6 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
 /***/ 38:
 /***/ (function(module, exports) {
 
@@ -13161,6 +13161,40 @@ function isBuffer (obj) {
 // For Node v0.10 support. Remove this eventually.
 function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
 }
 
 
@@ -13268,562 +13302,6 @@ module.exports = defaults;
 /***/ }),
 
 /***/ 40:
-/***/ (function(module, exports) {
-
-/**
- * Translates the list format produced by css-loader into something
- * easier to manipulate.
- */
-module.exports = function listToStyles (parentId, list) {
-  var styles = []
-  var newStyles = {}
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i]
-    var id = item[0]
-    var css = item[1]
-    var media = item[2]
-    var sourceMap = item[3]
-    var part = {
-      id: parentId + ':' + i,
-      css: css,
-      media: media,
-      sourceMap: sourceMap
-    }
-    if (!newStyles[id]) {
-      styles.push(newStyles[id] = { id: id, parts: [part] })
-    } else {
-      newStyles[id].parts.push(part)
-    }
-  }
-  return styles
-}
-
-
-/***/ }),
-
-/***/ 402:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("tbody", { attrs: { id: "element-single" } }, [
-    _c("tr", { on: { click: _vm.editRow } }, [
-      _c("td", [_vm._v(_vm._s(_vm.col_1))]),
-      _vm._v(" "),
-      _c("td", [_vm._v(_vm._s(_vm.col_2))])
-    ]),
-    _vm._v(" "),
-    _c(
-      "tr",
-      {
-        ref: "edit_row",
-        staticClass: "align-middle",
-        attrs: { id: "edit-row" }
-      },
-      [
-        _vm.type == "filmography"
-          ? _c("td", [
-              _c("label", [_vm._v(_vm._s(this.field_1))]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.film.title,
-                    expression: "film.title"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.film.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.film, "title", $event.target.value)
-                  }
-                }
-              })
-            ])
-          : _c("td", [
-              _c("label", [_vm._v(_vm._s(this.field_1))]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.credit.name,
-                    expression: "credit.name"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.credit.name },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.credit, "name", $event.target.value)
-                  }
-                }
-              })
-            ]),
-        _vm._v(" "),
-        _vm.type == "filmography"
-          ? _c("td", [
-              _c("label", [_vm._v(_vm._s(this.field_2))]),
-              _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.film.description,
-                    expression: "film.description"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { rows: "8" },
-                domProps: { value: _vm.film.description },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.film, "description", $event.target.value)
-                  }
-                }
-              })
-            ])
-          : _c("td", [
-              _c("label", [_vm._v(_vm._s(this.field_2))]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.credit.role,
-                    expression: "credit.role"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.credit.role },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.credit, "role", $event.target.value)
-                  }
-                }
-              })
-            ]),
-        _vm._v(" "),
-        _c("td", { staticClass: "savebtn" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-blue", on: { click: _vm.saveEdits } },
-            [
-              _c("i", { staticClass: "fa fa-floppy-o" }),
-              _vm._v(" Save\n      ")
-            ]
-          )
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1ccff4fd", esExports)
-  }
-}
-
-/***/ }),
-
-/***/ 419:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container", attrs: { id: "main-panel" } }, [
-    _c("div", { staticClass: "box green" }, [
-      _c("div", { staticClass: "box-header" }, [
-        _vm._v("\n      Edit Footer\n    ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box-body" }, [
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.edit,
-                expression: "edit"
-              }
-            ],
-            staticClass: "form-control",
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.edit = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "1" } }, [_vm._v("Credits")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "2" } }, [_vm._v("Filmography")])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box-btns" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-green", on: { click: _vm.changePanel } },
-          [_vm._v("\n        Edit\n      ")]
-        )
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        ref: "panelCredits",
-        staticClass: "box blue mt",
-        attrs: { id: "panelCredits" }
-      },
-      [
-        _c("div", { staticClass: "box-header" }, [
-          _c("div", { staticClass: "title" }, [
-            _vm._v("\n        Credits\n      ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "btns", on: { click: _vm.closePanel } }, [
-            _c("i", { staticClass: "fa fa-times" })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "box-tools" }, [
-            _c("div", { staticClass: "box-tools" }, [
-              _c(
-                "button",
-                { staticClass: "btn btn-blue", on: { click: _vm.addCredit } },
-                [
-                  _c("i", { staticClass: "fa fa-plus" }),
-                  _vm._v(" Add Credit\n          ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "button",
-                { staticClass: "btn btn-blue", on: { click: _vm.undoCredit } },
-                [
-                  _c("i", { staticClass: "fa fa-undo" }),
-                  _vm._v(" Undo\n          ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  ref: "add_panel_credit",
-                  staticClass: "box-form mt",
-                  attrs: { id: "add_panel_credit" }
-                },
-                [
-                  _c("label", [_vm._v("Name:")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.credit.name,
-                        expression: "credit.name"
-                      }
-                    ],
-                    staticClass: "form-control mb",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.credit.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.credit, "name", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", [_vm._v("Role:")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.credit.role,
-                        expression: "credit.role"
-                      }
-                    ],
-                    staticClass: "form-control mb",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.credit.role },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.credit, "role", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-blue",
-                      on: { click: _vm.saveCredit }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-floppy-o" }),
-                      _vm._v(" Save\n            ")
-                    ]
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "box-content" }, [
-            _c(
-              "table",
-              { staticClass: "table table-hover" },
-              [
-                _vm._m(0, false, false),
-                _vm._v(" "),
-                _vm._l(this.credits, function(credit) {
-                  return _c("element-single", {
-                    key: credit.key,
-                    attrs: {
-                      field_1: "Name",
-                      col_1: credit.name,
-                      field_2: "Role",
-                      col_2: credit.role,
-                      element: credit,
-                      type: "credit"
-                    }
-                  })
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        ref: "panelFilmography",
-        staticClass: "box blue mt",
-        attrs: { id: "panelFilmography" }
-      },
-      [
-        _c("div", { staticClass: "box-header" }, [
-          _c("div", { staticClass: "title" }, [
-            _vm._v("\n        Filmography\n      ")
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "btns", on: { click: _vm.closePanel } }, [
-            _c("i", { staticClass: "fa fa-times" })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
-          _c("div", { staticClass: "box-tools" }, [
-            _c(
-              "button",
-              { staticClass: "btn btn-blue", on: { click: _vm.addFilm } },
-              [
-                _c("i", { staticClass: "fa fa-plus" }),
-                _vm._v(" Add Film\n        ")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-blue", on: { click: _vm.undoFilm } },
-              [
-                _c("i", { staticClass: "fa fa-undo" }),
-                _vm._v(" Undo\n        ")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                ref: "add_panel_film",
-                staticClass: "box-form mt",
-                attrs: { id: "add_panel_film" }
-              },
-              [
-                _c("label", [_vm._v("Title:")]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.film.title,
-                      expression: "film.title"
-                    }
-                  ],
-                  staticClass: "form-control mb",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.film.title },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.film, "title", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("label", [_vm._v("Description:")]),
-                _vm._v(" "),
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.film.description,
-                      expression: "film.description"
-                    }
-                  ],
-                  staticClass: "form-control mb",
-                  attrs: { rows: "8" },
-                  domProps: { value: _vm.film.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.film, "description", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { staticClass: "btn btn-blue", on: { click: _vm.saveFilm } },
-                  [
-                    _c("i", { staticClass: "fa fa-floppy-o" }),
-                    _vm._v(" Save\n          ")
-                  ]
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "box-content" }, [
-            _c(
-              "table",
-              { staticClass: "table table-hover" },
-              [
-                _vm._m(1, false, false),
-                _vm._v(" "),
-                _vm._l(this.filmographies, function(filmography) {
-                  return _c("element-single", {
-                    key: filmography.key,
-                    attrs: {
-                      field_1: "Title",
-                      col_1: filmography.title,
-                      field_2: "Description",
-                      col_2: filmography.description,
-                      element: filmography,
-                      type: "filmography"
-                    }
-                  })
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("th", [_vm._v("Name")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Role")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("th", [_vm._v("Title")]),
-      _vm._v(" "),
-      _c("th", [_vm._v("Description")])
-    ])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-49416f64", esExports)
-  }
-}
-
-/***/ }),
-
-/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -21793,13 +21271,535 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 /***/ }),
 
-/***/ 451:
+/***/ 413:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("tbody", { attrs: { id: "element-single" } }, [
+    _c("tr", { on: { click: _vm.editRow } }, [
+      _c("td", [_vm._v(_vm._s(_vm.col_1))]),
+      _vm._v(" "),
+      _c("td", [_vm._v(_vm._s(_vm.col_2))])
+    ]),
+    _vm._v(" "),
+    _c(
+      "tr",
+      {
+        ref: "edit_row",
+        staticClass: "align-middle",
+        attrs: { id: "edit-row" }
+      },
+      [
+        _vm.type == "filmography"
+          ? _c("td", [
+              _c("label", [_vm._v(_vm._s(this.field_1))]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.film.title,
+                    expression: "film.title"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.film.title },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.film, "title", $event.target.value)
+                  }
+                }
+              })
+            ])
+          : _c("td", [
+              _c("label", [_vm._v(_vm._s(this.field_1))]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.credit.name,
+                    expression: "credit.name"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.credit.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.credit, "name", $event.target.value)
+                  }
+                }
+              })
+            ]),
+        _vm._v(" "),
+        _vm.type == "filmography"
+          ? _c("td", [
+              _c("label", [_vm._v(_vm._s(this.field_2))]),
+              _vm._v(" "),
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.film.description,
+                    expression: "film.description"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "8" },
+                domProps: { value: _vm.film.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.film, "description", $event.target.value)
+                  }
+                }
+              })
+            ])
+          : _c("td", [
+              _c("label", [_vm._v(_vm._s(this.field_2))]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.credit.role,
+                    expression: "credit.role"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.credit.role },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.credit, "role", $event.target.value)
+                  }
+                }
+              })
+            ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "savebtn" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-blue", on: { click: _vm.saveEdits } },
+            [
+              _c("i", { staticClass: "fa fa-floppy-o" }),
+              _vm._v(" Save\n      ")
+            ]
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1ccff4fd", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 430:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container", attrs: { id: "main-panel" } }, [
+    _c("div", { staticClass: "box green" }, [
+      _c("div", { staticClass: "box-header" }, [
+        _vm._v("\n      Edit Footer\n    ")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-body" }, [
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.edit,
+                expression: "edit"
+              }
+            ],
+            staticClass: "form-control",
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.edit = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "1" } }, [_vm._v("Credits")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "2" } }, [_vm._v("Filmography")])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "box-btns" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-green", on: { click: _vm.changePanel } },
+          [_vm._v("\n        Edit\n      ")]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        ref: "panelCredits",
+        staticClass: "box blue mt",
+        attrs: { id: "panelCredits" }
+      },
+      [
+        _c("div", { staticClass: "box-header" }, [
+          _c("div", { staticClass: "title" }, [
+            _vm._v("\n        Credits\n      ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "btns", on: { click: _vm.closePanel } }, [
+            _c("i", { staticClass: "fa fa-times" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", { staticClass: "box-tools" }, [
+            _c("div", { staticClass: "box-tools" }, [
+              _c(
+                "button",
+                { staticClass: "btn btn-blue", on: { click: _vm.addCredit } },
+                [
+                  _c("i", { staticClass: "fa fa-plus" }),
+                  _vm._v(" Add Credit\n          ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                { staticClass: "btn btn-blue", on: { click: _vm.undoCredit } },
+                [
+                  _c("i", { staticClass: "fa fa-undo" }),
+                  _vm._v(" Undo\n          ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  ref: "add_panel_credit",
+                  staticClass: "box-form mt",
+                  attrs: { id: "add_panel_credit" }
+                },
+                [
+                  _c("label", [_vm._v("Name:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.credit.name,
+                        expression: "credit.name"
+                      }
+                    ],
+                    staticClass: "form-control mb",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.credit.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.credit, "name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", [_vm._v("Role:")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.credit.role,
+                        expression: "credit.role"
+                      }
+                    ],
+                    staticClass: "form-control mb",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.credit.role },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.credit, "role", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-blue",
+                      on: { click: _vm.saveCredit }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-floppy-o" }),
+                      _vm._v(" Save\n            ")
+                    ]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-content" }, [
+            _c(
+              "table",
+              { staticClass: "table table-hover" },
+              [
+                _vm._m(0, false, false),
+                _vm._v(" "),
+                _vm._l(this.credits, function(credit) {
+                  return _c("element-single", {
+                    key: credit.key,
+                    attrs: {
+                      field_1: "Name",
+                      col_1: credit.name,
+                      field_2: "Role",
+                      col_2: credit.role,
+                      element: credit,
+                      type: "credit"
+                    }
+                  })
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        ref: "panelFilmography",
+        staticClass: "box blue mt",
+        attrs: { id: "panelFilmography" }
+      },
+      [
+        _c("div", { staticClass: "box-header" }, [
+          _c("div", { staticClass: "title" }, [
+            _vm._v("\n        Filmography\n      ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "btns", on: { click: _vm.closePanel } }, [
+            _c("i", { staticClass: "fa fa-times" })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box-body" }, [
+          _c("div", { staticClass: "box-tools" }, [
+            _c(
+              "button",
+              { staticClass: "btn btn-blue", on: { click: _vm.addFilm } },
+              [
+                _c("i", { staticClass: "fa fa-plus" }),
+                _vm._v(" Add Film\n        ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-blue", on: { click: _vm.undoFilm } },
+              [
+                _c("i", { staticClass: "fa fa-undo" }),
+                _vm._v(" Undo\n        ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                ref: "add_panel_film",
+                staticClass: "box-form mt",
+                attrs: { id: "add_panel_film" }
+              },
+              [
+                _c("label", [_vm._v("Title:")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.film.title,
+                      expression: "film.title"
+                    }
+                  ],
+                  staticClass: "form-control mb",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.film.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.film, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("label", [_vm._v("Description:")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.film.description,
+                      expression: "film.description"
+                    }
+                  ],
+                  staticClass: "form-control mb",
+                  attrs: { rows: "8" },
+                  domProps: { value: _vm.film.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.film, "description", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-blue", on: { click: _vm.saveFilm } },
+                  [
+                    _c("i", { staticClass: "fa fa-floppy-o" }),
+                    _vm._v(" Save\n          ")
+                  ]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-content" }, [
+            _c(
+              "table",
+              { staticClass: "table table-hover" },
+              [
+                _vm._m(1, false, false),
+                _vm._v(" "),
+                _vm._l(this.filmographies, function(filmography) {
+                  return _c("element-single", {
+                    key: filmography.key,
+                    attrs: {
+                      field_1: "Title",
+                      col_1: filmography.title,
+                      field_2: "Description",
+                      col_2: filmography.description,
+                      element: filmography,
+                      type: "filmography"
+                    }
+                  })
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Role")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("Title")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Description")])
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-49416f64", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 465:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(302);
+var content = __webpack_require__(307);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21820,13 +21820,13 @@ if(false) {
 
 /***/ }),
 
-/***/ 468:
+/***/ 482:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(319);
+var content = __webpack_require__(324);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21844,14 +21844,6 @@ if(false) {
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
 }
-
-/***/ }),
-
-/***/ 497:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(220);
-
 
 /***/ }),
 
@@ -21908,6 +21900,14 @@ module.exports = function() {
 	};
 	return list;
 };
+
+
+/***/ }),
+
+/***/ 513:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(220);
 
 
 /***/ }),
@@ -22041,7 +22041,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(40)
+var listToStyles = __webpack_require__(39)
 
 /*
 type StyleObject = {
@@ -22460,4 +22460,4 @@ module.exports = Cancel;
 
 /***/ })
 
-},[497]);
+},[513]);

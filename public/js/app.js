@@ -352,7 +352,7 @@ module.exports = function isCancel(value) {
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -420,7 +420,7 @@ module.exports = __webpack_require__(21);
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(81);
+exports = module.exports = __webpack_require__(82);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -604,7 +604,7 @@ function localstorage() {
 
 /***/ }),
 
-/***/ 18:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11328,11 +11328,11 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(20).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(1), __webpack_require__(19).setImmediate))
 
 /***/ }),
 
-/***/ 19:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -11526,7 +11526,7 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 20:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -11579,7 +11579,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(19);
+__webpack_require__(18);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
@@ -11711,7 +11711,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 228:
+/***/ 229:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11721,7 +11721,7 @@ var _jquery = __webpack_require__(50);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _laravelEcho = __webpack_require__(347);
+var _laravelEcho = __webpack_require__(354);
 
 var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
 
@@ -11740,13 +11740,13 @@ __webpack_require__(215);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(297);
+__webpack_require__(301);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
  */
 
-window.io = __webpack_require__(93);
+window.io = __webpack_require__(94);
 window.Echo = new _laravelEcho2.default({
   broadcaster: 'socket.io',
   host: window.location.hostname + ':6001'
@@ -12134,61 +12134,6 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 297:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-window._ = __webpack_require__(47);
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-window.$ = window.jQuery = __webpack_require__(50);
-
-window.Tether = __webpack_require__(139);
-
-__webpack_require__(216);
-
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
-window.Vue = __webpack_require__(18);
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = __webpack_require__(13);
-
-window.axios.defaults.headers.common = {
-  // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
-};
-
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from "laravel-echo"
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
-
-/***/ }),
-
 /***/ 3:
 /***/ (function(module, exports) {
 
@@ -12456,6 +12401,61 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
+/***/ 301:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+window._ = __webpack_require__(47);
+
+/**
+ * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * for JavaScript based Bootstrap features such as modals and tabs. This
+ * code may be modified to fit the specific needs of your application.
+ */
+window.$ = window.jQuery = __webpack_require__(50);
+
+window.Tether = __webpack_require__(139);
+
+__webpack_require__(216);
+
+/**
+ * Vue is a modern JavaScript library for building interactive web interfaces
+ * using reactive data binding and reusable components. Vue's API is clean
+ * and simple, leaving you to focus on building your next great project.
+ */
+
+window.Vue = __webpack_require__(17);
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = __webpack_require__(13);
+
+window.axios.defaults.headers.common = {
+  // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest'
+};
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+// import Echo from "laravel-echo"
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'your-pusher-key'
+// });
+
+/***/ }),
+
 /***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12637,7 +12637,27 @@ module.exports = (
 
 /***/ }),
 
-/***/ 347:
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+module.exports = function normalizeHeaderName(headers, normalizedName) {
+  utils.forEach(headers, function processHeader(value, name) {
+    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
+      headers[normalizedName] = value;
+      delete headers[name];
+    }
+  });
+};
+
+
+/***/ }),
+
+/***/ 354:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
@@ -13425,26 +13445,6 @@ module.exports = Echo;
 
 /***/ }),
 
-/***/ 35:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-module.exports = function normalizeHeaderName(headers, normalizedName) {
-  utils.forEach(headers, function processHeader(value, name) {
-    if (name !== normalizedName && name.toUpperCase() === normalizedName.toUpperCase()) {
-      headers[normalizedName] = value;
-      delete headers[name];
-    }
-  });
-};
-
-
-/***/ }),
-
 /***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13654,22 +13654,22 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var keys = __webpack_require__(88);
+var keys = __webpack_require__(89);
 var hasBinary = __webpack_require__(62);
-var sliceBuffer = __webpack_require__(77);
-var after = __webpack_require__(87);
-var utf8 = __webpack_require__(89);
+var sliceBuffer = __webpack_require__(78);
+var after = __webpack_require__(88);
+var utf8 = __webpack_require__(90);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(79);
+  base64encoder = __webpack_require__(80);
 }
 
 /**
@@ -13727,7 +13727,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(80);
+var Blob = __webpack_require__(81);
 
 /**
  * Encodes a packet.
@@ -31447,14 +31447,6 @@ exports.decode = function(qs){
 
 /***/ }),
 
-/***/ 505:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(228);
-
-
-/***/ }),
-
 /***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -31462,7 +31454,7 @@ module.exports = __webpack_require__(228);
  * Module dependencies.
  */
 
-var parser = __webpack_require__(41);
+var parser = __webpack_require__(42);
 var Emitter = __webpack_require__(53);
 
 /**
@@ -31624,7 +31616,7 @@ Transport.prototype.onClose = function () {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(91);
+var hasCORS = __webpack_require__(92);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -31661,6 +31653,14 @@ module.exports = function (opts) {
 };
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+
+/***/ 522:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(229);
+
 
 /***/ }),
 
@@ -32015,7 +32015,7 @@ Emitter.prototype.hasListeners = function(event){
 var debug = __webpack_require__(15)('socket.io-parser');
 var Emitter = __webpack_require__(54);
 var hasBin = __webpack_require__(62);
-var binary = __webpack_require__(96);
+var binary = __webpack_require__(97);
 var isBuf = __webpack_require__(68);
 
 /**
@@ -32449,9 +32449,9 @@ module.exports = function(obj, fn){
  */
 
 var XMLHttpRequest = __webpack_require__(52);
-var XHR = __webpack_require__(85);
-var JSONP = __webpack_require__(84);
-var websocket = __webpack_require__(86);
+var XHR = __webpack_require__(86);
+var JSONP = __webpack_require__(85);
+var websocket = __webpack_require__(87);
 
 /**
  * Export transports.
@@ -32511,7 +32511,7 @@ function polling (opts) {
 
 var Transport = __webpack_require__(51);
 var parseqs = __webpack_require__(49);
-var parser = __webpack_require__(41);
+var parser = __webpack_require__(42);
 var inherit = __webpack_require__(48);
 var yeast = __webpack_require__(69);
 var debug = __webpack_require__(15)('engine.io-client:polling');
@@ -32763,7 +32763,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(90);
+var isArray = __webpack_require__(91);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -32894,7 +32894,7 @@ module.exports = function parseuri(str) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(82);
+var eio = __webpack_require__(83);
 var Socket = __webpack_require__(67);
 var Emitter = __webpack_require__(54);
 var parser = __webpack_require__(55);
@@ -32902,7 +32902,7 @@ var on = __webpack_require__(66);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(15)('socket.io-client:manager');
 var indexOf = __webpack_require__(63);
-var Backoff = __webpack_require__(78);
+var Backoff = __webpack_require__(79);
 
 /**
  * IE6+ hasOwnProperty
@@ -33507,7 +33507,7 @@ function on (obj, ev, fn) {
 
 var parser = __webpack_require__(55);
 var Emitter = __webpack_require__(54);
-var toArray = __webpack_require__(97);
+var toArray = __webpack_require__(98);
 var on = __webpack_require__(66);
 var bind = __webpack_require__(59);
 var debug = __webpack_require__(15)('socket.io-client:socket');
@@ -34019,7 +34019,7 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ 77:
+/***/ 78:
 /***/ (function(module, exports) {
 
 /**
@@ -34055,7 +34055,7 @@ module.exports = function(arraybuffer, start, end) {
 
 /***/ }),
 
-/***/ 78:
+/***/ 79:
 /***/ (function(module, exports) {
 
 
@@ -34143,80 +34143,6 @@ Backoff.prototype.setJitter = function(jitter){
   this.jitter = jitter;
 };
 
-
-
-/***/ }),
-
-/***/ 79:
-/***/ (function(module, exports) {
-
-/*
- * base64-arraybuffer
- * https://github.com/niklasvh/base64-arraybuffer
- *
- * Copyright (c) 2012 Niklas von Hertzen
- * Licensed under the MIT license.
- */
-(function(){
-  "use strict";
-
-  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-  // Use a lookup table to find the index.
-  var lookup = new Uint8Array(256);
-  for (var i = 0; i < chars.length; i++) {
-    lookup[chars.charCodeAt(i)] = i;
-  }
-
-  exports.encode = function(arraybuffer) {
-    var bytes = new Uint8Array(arraybuffer),
-    i, len = bytes.length, base64 = "";
-
-    for (i = 0; i < len; i+=3) {
-      base64 += chars[bytes[i] >> 2];
-      base64 += chars[((bytes[i] & 3) << 4) | (bytes[i + 1] >> 4)];
-      base64 += chars[((bytes[i + 1] & 15) << 2) | (bytes[i + 2] >> 6)];
-      base64 += chars[bytes[i + 2] & 63];
-    }
-
-    if ((len % 3) === 2) {
-      base64 = base64.substring(0, base64.length - 1) + "=";
-    } else if (len % 3 === 1) {
-      base64 = base64.substring(0, base64.length - 2) + "==";
-    }
-
-    return base64;
-  };
-
-  exports.decode =  function(base64) {
-    var bufferLength = base64.length * 0.75,
-    len = base64.length, i, p = 0,
-    encoded1, encoded2, encoded3, encoded4;
-
-    if (base64[base64.length - 1] === "=") {
-      bufferLength--;
-      if (base64[base64.length - 2] === "=") {
-        bufferLength--;
-      }
-    }
-
-    var arraybuffer = new ArrayBuffer(bufferLength),
-    bytes = new Uint8Array(arraybuffer);
-
-    for (i = 0; i < len; i+=4) {
-      encoded1 = lookup[base64.charCodeAt(i)];
-      encoded2 = lookup[base64.charCodeAt(i+1)];
-      encoded3 = lookup[base64.charCodeAt(i+2)];
-      encoded4 = lookup[base64.charCodeAt(i+3)];
-
-      bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
-      bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
-      bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
-    }
-
-    return arraybuffer;
-  };
-})();
 
 
 /***/ }),
@@ -34411,6 +34337,80 @@ module.exports = function xhrAdapter(config) {
 /***/ }),
 
 /***/ 80:
+/***/ (function(module, exports) {
+
+/*
+ * base64-arraybuffer
+ * https://github.com/niklasvh/base64-arraybuffer
+ *
+ * Copyright (c) 2012 Niklas von Hertzen
+ * Licensed under the MIT license.
+ */
+(function(){
+  "use strict";
+
+  var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+  // Use a lookup table to find the index.
+  var lookup = new Uint8Array(256);
+  for (var i = 0; i < chars.length; i++) {
+    lookup[chars.charCodeAt(i)] = i;
+  }
+
+  exports.encode = function(arraybuffer) {
+    var bytes = new Uint8Array(arraybuffer),
+    i, len = bytes.length, base64 = "";
+
+    for (i = 0; i < len; i+=3) {
+      base64 += chars[bytes[i] >> 2];
+      base64 += chars[((bytes[i] & 3) << 4) | (bytes[i + 1] >> 4)];
+      base64 += chars[((bytes[i + 1] & 15) << 2) | (bytes[i + 2] >> 6)];
+      base64 += chars[bytes[i + 2] & 63];
+    }
+
+    if ((len % 3) === 2) {
+      base64 = base64.substring(0, base64.length - 1) + "=";
+    } else if (len % 3 === 1) {
+      base64 = base64.substring(0, base64.length - 2) + "==";
+    }
+
+    return base64;
+  };
+
+  exports.decode =  function(base64) {
+    var bufferLength = base64.length * 0.75,
+    len = base64.length, i, p = 0,
+    encoded1, encoded2, encoded3, encoded4;
+
+    if (base64[base64.length - 1] === "=") {
+      bufferLength--;
+      if (base64[base64.length - 2] === "=") {
+        bufferLength--;
+      }
+    }
+
+    var arraybuffer = new ArrayBuffer(bufferLength),
+    bytes = new Uint8Array(arraybuffer);
+
+    for (i = 0; i < len; i+=4) {
+      encoded1 = lookup[base64.charCodeAt(i)];
+      encoded2 = lookup[base64.charCodeAt(i+1)];
+      encoded3 = lookup[base64.charCodeAt(i+2)];
+      encoded4 = lookup[base64.charCodeAt(i+3)];
+
+      bytes[p++] = (encoded1 << 2) | (encoded2 >> 4);
+      bytes[p++] = ((encoded2 & 15) << 4) | (encoded3 >> 2);
+      bytes[p++] = ((encoded3 & 3) << 6) | (encoded4 & 63);
+    }
+
+    return arraybuffer;
+  };
+})();
+
+
+/***/ }),
+
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -34514,7 +34514,7 @@ module.exports = (function() {
 
 /***/ }),
 
-/***/ 81:
+/***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -34530,7 +34530,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(92);
+exports.humanize = __webpack_require__(93);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -34723,11 +34723,11 @@ function coerce(val) {
 
 /***/ }),
 
-/***/ 82:
+/***/ 83:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(83);
+module.exports = __webpack_require__(84);
 
 /**
  * Exports parser
@@ -34735,12 +34735,12 @@ module.exports = __webpack_require__(83);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(41);
+module.exports.parser = __webpack_require__(42);
 
 
 /***/ }),
 
-/***/ 83:
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -34751,7 +34751,7 @@ var transports = __webpack_require__(60);
 var Emitter = __webpack_require__(53);
 var debug = __webpack_require__(15)('engine.io-client:socket');
 var index = __webpack_require__(63);
-var parser = __webpack_require__(41);
+var parser = __webpack_require__(42);
 var parseuri = __webpack_require__(64);
 var parseqs = __webpack_require__(49);
 
@@ -34888,7 +34888,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(51);
 Socket.transports = __webpack_require__(60);
-Socket.parser = __webpack_require__(41);
+Socket.parser = __webpack_require__(42);
 
 /**
  * Creates transport of the given type.
@@ -35491,7 +35491,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 
 /***/ }),
 
-/***/ 84:
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -35730,7 +35730,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 /***/ }),
 
-/***/ 85:
+/***/ 86:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -36151,7 +36151,7 @@ function unloadHandler () {
 
 /***/ }),
 
-/***/ 86:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -36159,7 +36159,7 @@ function unloadHandler () {
  */
 
 var Transport = __webpack_require__(51);
-var parser = __webpack_require__(41);
+var parser = __webpack_require__(42);
 var parseqs = __webpack_require__(49);
 var inherit = __webpack_require__(48);
 var yeast = __webpack_require__(69);
@@ -36168,7 +36168,7 @@ var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(102);
+    NodeWebSocket = __webpack_require__(103);
   } catch (e) { }
 }
 
@@ -36445,7 +36445,7 @@ WS.prototype.check = function () {
 
 /***/ }),
 
-/***/ 87:
+/***/ 88:
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -36480,7 +36480,7 @@ function noop() {}
 
 /***/ }),
 
-/***/ 88:
+/***/ 89:
 /***/ (function(module, exports) {
 
 
@@ -36506,7 +36506,34 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ }),
 
-/***/ 89:
+/***/ 9:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -36768,34 +36795,7 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ }),
 
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-
-/***/ 90:
+/***/ 91:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -36807,7 +36807,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 91:
+/***/ 92:
 /***/ (function(module, exports) {
 
 
@@ -36831,7 +36831,7 @@ try {
 
 /***/ }),
 
-/***/ 92:
+/***/ 93:
 /***/ (function(module, exports) {
 
 /**
@@ -36990,7 +36990,7 @@ function plural(ms, n, name) {
 
 /***/ }),
 
-/***/ 93:
+/***/ 94:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36998,7 +36998,7 @@ function plural(ms, n, name) {
  * Module dependencies.
  */
 
-var url = __webpack_require__(94);
+var url = __webpack_require__(95);
 var parser = __webpack_require__(55);
 var Manager = __webpack_require__(65);
 var debug = __webpack_require__(15)('socket.io-client');
@@ -37091,7 +37091,7 @@ exports.Socket = __webpack_require__(67);
 
 /***/ }),
 
-/***/ 94:
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -37174,7 +37174,7 @@ function url (uri, loc) {
 
 /***/ }),
 
-/***/ 95:
+/***/ 96:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -37186,7 +37186,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 96:
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -37195,7 +37195,7 @@ module.exports = Array.isArray || function (arr) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(95);
+var isArray = __webpack_require__(96);
 var isBuf = __webpack_require__(68);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -37335,7 +37335,7 @@ exports.removeBlobs = function(data, callback) {
 
 /***/ }),
 
-/***/ 97:
+/***/ 98:
 /***/ (function(module, exports) {
 
 module.exports = toArray
@@ -37355,4 +37355,4 @@ function toArray(list, index) {
 
 /***/ })
 
-},[505]);
+},[522]);

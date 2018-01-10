@@ -168,6 +168,15 @@ Route::prefix('admin')->group(function () {
         Route::get('/', 'Admin\TeacherController@index')->name('admin.teacher.index');
     });
 
+    Route::prefix('guest')->group(function() {
+        Route::get('/get-guests', 'Admin\GuestController@get_guests')->name('admin.guest.get_guests');
+        Route::post('/save', 'Admin\GuestController@save')->name('admin.guest.save');
+        Route::post('/new', 'Admin\GuestController@new')->name('admin.guest.new');
+        Route::post('/delete', 'Admin\GuestController@destroy')->name('admin.guest.destroy');
+        Route::get('/', 'Admin\GuestController@index')->name('admin.guest.index');
+    });
+
+
     Route::prefix('tools')->group(function(){
         Route::get('/flush-media', 'ToolController@flush_media');
         Route::get('/soundstudio', 'ToolController@soundstudio_library');

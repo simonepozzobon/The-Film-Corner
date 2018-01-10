@@ -12,6 +12,7 @@
   "/js/admin/audio.js": "/js/admin/audio.js",
   "/js/admin/translate.js": "/js/admin/translate.js",
   "/js/admin/teachers.js": "/js/admin/teachers.js",
+  "/js/admin/guests.js": "/js/admin/guests.js",
   "/js/admin/captions.js": "/js/admin/captions.js",
   "/js/admin/main.js": "/js/admin/main.js",
   "/js/admin/footer.js": "/js/admin/footer.js",

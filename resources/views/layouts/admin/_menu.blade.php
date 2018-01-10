@@ -75,9 +75,18 @@
           </a>
         </li>
         <li id="teacher" class="nav-item">
-          <a href="{{ route('admin.teacher.index') }}" class="nav-link">
-            Teachers
+          <a href="#" id="accountsDropdown" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Accounts
           </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountsDropdown">
+            <a href="{{ route('admin.teacher.index') }}" class="nav-link">
+              Teachers
+            </a>
+            <a href="{{ route('admin.guest.index') }}" class="nav-link">
+              Guests
+            </a>
+          </div>
+
         </li>
       </ul>
     </div>
