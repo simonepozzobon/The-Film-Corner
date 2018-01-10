@@ -12013,6 +12013,7 @@ exports.default = {
       data.append('comment', this.comment);
       data.append('user_id', this.userParsed.id);
       data.append('user_type', this.user_type);
+      data.append('location', window.location.href);
 
       var vue = this;
       _axios2.default.post('/api/v1/send-feedback', data).then(function () {
