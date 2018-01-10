@@ -82,6 +82,15 @@ export default {
           { title: 'description', type: 'textarea' }
         ]
       },
+      {
+        title: 'Partners',
+        value: 'partners',
+        options: [
+          { title: 'name', type: 'input' },
+          { title: 'location', type: 'input' },
+          { title: 'description', type: 'textarea' }
+        ]
+      },
     ],
     languages: '',
     category: 'apps',

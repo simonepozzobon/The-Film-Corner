@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\App;
 use App\Media;
 use App\Video;
+use App\Partner;
+use App\PartnerTranslation;
 use App\MediaSubCategory;
 use App\Filmography;
 use App\FilmographyTranslation;
@@ -79,6 +81,22 @@ class ToolController extends Controller
             $t->locale = 'en';
             $t->save();
             echo 'filomgraphy '.$filmography->id.' saved <br>';
+        }
+        echo 'Completato';
+    }
+
+    public function translate_partner()
+    {
+        $partners = Partner::all();
+        foreach ($partners as $key => $partner) {
+            $t = new PartnerTranslation();
+            $t->partner_id = $partner->id;
+            $t->name = $partner->name;
+            $t->location = $partner->location;
+            $t->description = $partner->description;
+            $t->locale = 'en';
+            $t->save();
+            echo 'partner '.$partner->id.' saved <br>';
         }
         echo 'Completato';
     }

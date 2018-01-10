@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\App;
 use App\Caption;
+use App\Partner;
 use App\Language;
 use App\AppKeyword;
 use App\AppSection;
@@ -58,6 +59,10 @@ class TranslateController extends Controller
 
             case 'filmographies':
                 $items = Filmography::all();
+                break;
+
+            case 'partners':
+                $items = Partner::all();
                 break;
         }
 

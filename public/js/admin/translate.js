@@ -12320,6 +12320,10 @@ exports.default = {
         title: 'Filmography',
         value: 'filmographies',
         options: [{ title: 'title', type: 'input' }, { title: 'description', type: 'textarea' }]
+      }, {
+        title: 'Partners',
+        value: 'partners',
+        options: [{ title: 'name', type: 'input' }, { title: 'location', type: 'input' }, { title: 'description', type: 'textarea' }]
       }],
       languages: '',
       category: 'apps',
