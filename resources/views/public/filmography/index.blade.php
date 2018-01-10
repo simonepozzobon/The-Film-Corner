@@ -7,7 +7,7 @@
       <div class="conference-container">
         <h1 class="mt">FILMOGRAPHY</h1>
         <ul>
-          @foreach (\Filmography::get_all() as $key => $filmography)
+          @foreach ($filmographies as $key => $filmography)
             <li>{{ $filmography->title }} - {{ $filmography->description }}</li>
           @endforeach
         </ul>

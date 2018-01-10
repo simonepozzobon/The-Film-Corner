@@ -6,11 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filmography extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
+    public $translatedAttributes = ['title', 'description'];
     protected $table = 'filmographies';
 
-    public static function get_all()
-    {
-        $filmographies = Filmography::orderBy('title')->get();
-        return $filmographies;
-    }
 }

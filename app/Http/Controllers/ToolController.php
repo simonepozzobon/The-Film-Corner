@@ -6,6 +6,8 @@ use App\App;
 use App\Media;
 use App\Video;
 use App\MediaSubCategory;
+use App\Filmography;
+use App\FilmographyTranslation;
 use Illuminate\Http\Request;
 
 class ToolController extends Controller
@@ -64,6 +66,21 @@ class ToolController extends Controller
         }
 
         echo ('Fatto');
+    }
+
+    public function translate_filmography()
+    {
+        $filmographies = Filmography::all();
+        foreach ($filmographies as $key => $filmography) {
+            $t = new FilmographyTranslation();
+            $t->filmography_id = $filmography->id;
+            $t->title = $filmography->title;
+            $t->description = $filmography->description;
+            $t->locale = 'en';
+            $t->save();
+            echo 'filomgraphy '.$filmography->id.' saved <br>';
+        }
+        echo 'Completato';
     }
 
 }
