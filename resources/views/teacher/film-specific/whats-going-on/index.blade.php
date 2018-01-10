@@ -7,7 +7,7 @@
       <div class="col-md-8">
         <div class="box blue">
           <div class="box-header">
-            Audio Track
+            {{ GeneralText::field('audio_track') }}
           </div>
           <div class="box-body">
             <div id="waveform"></div>
@@ -17,7 +17,7 @@
       <div class="col-md-4">
         <div class="box yellow">
           <div class="box-header">
-            Library
+            {{ GeneralText::field('library') }}
           </div>
           <div class="box-body library">
             <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -27,7 +27,7 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav" role="tablist">
                   <li class="nav-item">
-                    <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">Audio</a>
+                    <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">{{ GeneralText::field('audio') }}</a>
                   </li>
                 </ul>
               </div>
@@ -59,7 +59,7 @@
         <div class="box orange">
           <div class="box-btns pt">
             <button class="btn btn-orange" onclick="player.playPause()">
-              <i class="fa fa-play" aria-hidden="true"></i> Play
+              <i class="fa fa-play" aria-hidden="true"></i> {{ GeneralText::field('play') }}
             </button>
           </div>
         </div>
@@ -69,7 +69,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Listen to the audioclip and try to guess what’s happening"></textarea>
