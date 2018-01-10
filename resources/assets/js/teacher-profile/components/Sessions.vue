@@ -2,7 +2,7 @@
   <div id="sessions">
     <div class="box blue">
       <div class="box-header">
-        Activities
+        {{ title }}
       </div>
       <div class="box-body">
         <notification v-for="notification in notifications" :key="notification.key" :notification="notification"/>
@@ -15,6 +15,10 @@ import Notification from './Notification.vue'
 export default {
   name: 'Sessions',
   props: {
+    title: {
+      type: String,
+      default: 'Activities',
+    },
     notifications: {
       default: function() {},
       type: Array

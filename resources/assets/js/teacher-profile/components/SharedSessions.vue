@@ -2,7 +2,7 @@
   <div id="shared-sessions">
     <div class="box green mt">
       <div class="box-header">
-        Network
+        {{ title }}
       </div>
       <div class="box-body">
         <shared-session-single
@@ -19,6 +19,10 @@ import SharedSessionSingle from './SharedSessionSingle.vue'
 export default {
   name: 'SharedSessions',
   props: {
+    title: {
+      type: String,
+      default: 'Network',
+    },
     sessions: {
       default: function() {},
       type: Array

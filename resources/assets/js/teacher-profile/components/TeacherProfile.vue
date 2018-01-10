@@ -1,11 +1,20 @@
 <template>
   <div id="teacher-profile" class="row mt">
     <div class="col-md-8">
-      <sessions :notifications="notificationsUpdated"/>
-      <shared-sessions :sessions="sharedSessions"/>
+      <sessions
+        :title="translationParsed.activities"
+        :notifications="notificationsUpdated"
+      />
+      <shared-sessions
+        :title="translationParsed.network"
+        :sessions="sharedSessions"
+      />
     </div>
     <div class="col-md-4">
-      <student-panel :students="studentsParsed"/>
+      <student-panel
+        :title="translationParsed.students"
+        :students="studentsParsed"
+      />
     </div>
   </div>
 </template>
@@ -41,6 +50,10 @@ export default {
     shared_sessions: {
       default: '',
       type: String
+    },
+    translation: {
+      default: '',
+      type: String
     }
   },
   computed: {
@@ -65,6 +78,10 @@ export default {
     shared_sessionsParsed: function()
     {
       return JSON.parse(this.shared_sessions)
+    },
+    translationParsed: function()
+    {
+      return JSON.parse(this.translation)
     },
   },
   data: () => ({

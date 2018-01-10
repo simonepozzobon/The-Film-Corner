@@ -3,7 +3,7 @@
     <div class="box yellow">
       <div class="box-header">
         <div class="content">
-          Students
+          {{ title }}
         </div>
         <div class="tools">
           <i id="close" ref="close_btn" class="fa fa-times" @click="closePanel"></i>
@@ -92,6 +92,10 @@ import {TweenMax, TimelineMax, Power4} from 'gsap'
 export default {
   name: 'StudentPanel',
   props: {
+    title: {
+      type: String,
+      default: 'Students',
+    },
     students: {
       type: Array,
       default: function() {}

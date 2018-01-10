@@ -45216,6 +45216,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   name: 'Sessions',
   props: {
+    title: {
+      type: String,
+      default: 'Activities'
+    },
     notifications: {
       default: function _default() {},
       type: Array
@@ -45310,6 +45314,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   name: 'SharedSessions',
   props: {
+    title: {
+      type: String,
+      default: 'Network'
+    },
     sessions: {
       default: function _default() {},
       type: Array
@@ -45542,6 +45550,10 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = {
   name: 'StudentPanel',
   props: {
+    title: {
+      type: String,
+      default: 'Students'
+    },
     students: {
       type: Array,
       default: function _default() {}
@@ -45821,6 +45833,15 @@ var io = __webpack_require__(93); //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
 
@@ -45846,6 +45867,10 @@ exports.default = {
     shared_sessions: {
       default: '',
       type: String
+    },
+    translation: {
+      default: '',
+      type: String
     }
   },
   computed: {
@@ -45866,6 +45891,9 @@ exports.default = {
     },
     shared_sessionsParsed: function shared_sessionsParsed() {
       return JSON.parse(this.shared_sessions);
+    },
+    translationParsed: function translationParsed() {
+      return JSON.parse(this.translation);
     }
   },
   data: function data() {
@@ -46566,7 +46594,7 @@ var render = function() {
   return _c("div", { attrs: { id: "sessions" } }, [
     _c("div", { staticClass: "box blue" }, [
       _c("div", { staticClass: "box-header" }, [
-        _vm._v("\n      Activities\n    ")
+        _vm._v("\n      " + _vm._s(_vm.title) + "\n    ")
       ]),
       _vm._v(" "),
       _c(
@@ -46651,7 +46679,7 @@ var render = function() {
   return _c("div", { attrs: { id: "shared-sessions" } }, [
     _c("div", { staticClass: "box green mt" }, [
       _c("div", { staticClass: "box-header" }, [
-        _vm._v("\n      Network\n    ")
+        _vm._v("\n      " + _vm._s(_vm.title) + "\n    ")
       ]),
       _vm._v(" "),
       _c(
@@ -46705,10 +46733,18 @@ var render = function() {
         { staticClass: "col-md-8" },
         [
           _c("sessions", {
-            attrs: { notifications: _vm.notificationsUpdated }
+            attrs: {
+              title: _vm.translationParsed.activities,
+              notifications: _vm.notificationsUpdated
+            }
           }),
           _vm._v(" "),
-          _c("shared-sessions", { attrs: { sessions: _vm.sharedSessions } })
+          _c("shared-sessions", {
+            attrs: {
+              title: _vm.translationParsed.network,
+              sessions: _vm.sharedSessions
+            }
+          })
         ],
         1
       ),
@@ -46716,7 +46752,14 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-4" },
-        [_c("student-panel", { attrs: { students: _vm.studentsParsed } })],
+        [
+          _c("student-panel", {
+            attrs: {
+              title: _vm.translationParsed.students,
+              students: _vm.studentsParsed
+            }
+          })
+        ],
         1
       )
     ]
@@ -46963,7 +47006,7 @@ var render = function() {
     _c("div", { staticClass: "box yellow" }, [
       _c("div", { staticClass: "box-header" }, [
         _c("div", { staticClass: "content" }, [
-          _vm._v("\n        Students\n      ")
+          _vm._v("\n        " + _vm._s(_vm.title) + "\n      ")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "tools" }, [
