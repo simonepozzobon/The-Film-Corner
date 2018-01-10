@@ -74,6 +74,14 @@ export default {
           { title: 'description', type: 'textarea' }
         ]
       },
+      {
+        title: 'Filmography',
+        value: 'filmographies',
+        options: [
+          { title: 'title', type: 'input' },
+          { title: 'description', type: 'textarea' }
+        ]
+      },
     ],
     languages: '',
     category: 'apps',

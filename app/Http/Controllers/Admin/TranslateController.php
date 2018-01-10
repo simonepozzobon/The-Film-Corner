@@ -9,6 +9,7 @@ use App\AppKeyword;
 use App\AppSection;
 use App\AppCategory;
 use App\GeneralText;
+use App\Filmography;
 use App\AppKeywordTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -25,22 +26,7 @@ class TranslateController extends Controller
 
     public function index()
     {
-        // $locales = Language::all();
-        // $apps = App::all();
-        // $apps = $apps->transform(function($item, $key) use ($locales) {
-        //     $item->model = get_class($item).'Translation';
-        //     $item->table = $item->getTable();
-        //
-        //     $translated = [];
-        //     foreach ($locales as $key => $locale) {
-        //         if ($item->hasTranslation($locale->short)) {
-        //             array_push($translated, $locale->short);
-        //         }
-        //     }
-        //     $item->translated = $translated;
-        //     return $item;
-        // });
-        return view('admin.translate.index', compact('apps'));
+        return view('admin.translate.index');
     }
 
     public function get_elements(Request $r)
@@ -68,6 +54,10 @@ class TranslateController extends Controller
 
             case 'captions':
                 $items = Caption::all();
+                break;
+
+            case 'filmographies':
+                $items = Filmography::all();
                 break;
         }
 
