@@ -77,14 +77,14 @@
               {
                   longDesc.classList.remove('d-none');
                   shortDesc.classList.add('d-none');
-                  button.innerHTML = 'Read Less'
+                  button.innerHTML = '{{ GeneralText::field('read_less') }}'
               }
 
               else
               {
                   shortDesc.classList.remove('d-none');
                   longDesc.classList.add('d-none');
-                  button.innerHTML = 'Read More';
+                  button.innerHTML = '{{ GeneralText::field('read_more') }}';
               }
 
               opened = !opened;

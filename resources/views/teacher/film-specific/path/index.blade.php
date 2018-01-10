@@ -112,7 +112,7 @@
 
     short_description.addClass('d-none');
     long_description.removeClass('d-none');
-    $(this).html('Read Less').removeClass('read-more').addClass('read-less');
+    $(this).html('{{ GeneralText::field('read_less') }}').removeClass('read-more').addClass('read-less');
   });
 
   $(document.body).on('click', '.read-less', function(event) {
@@ -125,7 +125,7 @@
 
     long_description.addClass('d-none');
     short_description.removeClass('d-none');
-    $(this).html('Read More').removeClass('read-less').addClass('read-more');
+    $(this).html('{{ GeneralText::field('read_more') }}').removeClass('read-less').addClass('read-more');
   })
 
   function openSessions(teacherId, appId, color) {

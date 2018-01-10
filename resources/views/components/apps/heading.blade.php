@@ -19,7 +19,7 @@
           {!! $app_category->description !!}
         </div>
         <div class="btns">
-          <a href="" id="read-more-btn" class="text-default text-muted" data-id="{{ $app_category->slug }}">Read More</a>
+          <a href="" id="read-more-btn" class="text-default text-muted" data-id="{{ $app_category->slug }}">{{ GeneralText::field('read_more') }}</a>
         </div>
       </div>
       <script>
@@ -39,14 +39,14 @@
             {
                 longDesc.classList.remove('d-none');
                 shortDesc.classList.add('d-none');
-                button.innerHTML = 'Read Less'
+                button.innerHTML = '{{ GeneralText::field('read_less') }}'
             }
 
             else
             {
                 shortDesc.classList.remove('d-none');
                 longDesc.classList.add('d-none');
-                button.innerHTML = 'Read More';
+                button.innerHTML = '{{ GeneralText::field('read_more') }}';
             }
 
             opened = !opened;
