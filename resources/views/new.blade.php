@@ -152,7 +152,7 @@
             <a href="{{ route('conference') }}" class="btn btn-orange"><i class="fa fa-check"></i> Apply</a>
           </div>
         </div>
-        <div class="box blue mt">
+        <div id="project" class="box blue mt">
           <div class="box-header">
             The Project
           </div>
