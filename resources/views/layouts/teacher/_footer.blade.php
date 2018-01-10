@@ -19,7 +19,7 @@
           @endforeach
         </ul>
         <h3 class="mt">Filmography</h3>
-        <ul class="list-unstyled">
+        <ul class="list">
           @foreach (\Filmography::get_all() as $key => $filmography)
             <li>{{ $filmography->title }} - {{ $filmography->description }}</li>
           @endforeach

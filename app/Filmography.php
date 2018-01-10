@@ -11,4 +11,9 @@ class Filmography extends Model
     public $translatedAttributes = ['title', 'description'];
     protected $table = 'filmographies';
 
+    public static function get_all()
+    {
+        $filmographies = Filmography::all();
+        return $filmographies;
+    }
 }

@@ -305,8 +305,8 @@ export default {
     position: relative;
 
     > .feedback-tooltip {
-      position: fixed;
-      bottom: $spacer;
+      position: relative;
+      bottom: - ($spacer * 3 / 2);
       left: $spacer * 3;
       width: 100%;
       text-transform: uppercase;
