@@ -77,7 +77,7 @@
                   {{ substr(strip_tags($app->description), 0, 200) }}{{ strlen(strip_tags($app->description)) > 200 ? '...' : "" }}
                 </div>
                 <div class="long-description d-none">
-                  {{ $app->description }}
+                  {!! $app->description !!}
                 </div>
               </div>
               <div class="box-btns">
