@@ -17,7 +17,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Preview
+              {{ GeneralText::field('preview') }}
             </div>
             <div id="video-player" class="box-body">
               <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
@@ -30,7 +30,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div id="video-library" class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -40,7 +40,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#video-editor-library">Video</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#video-editor-library">{{ GeneralText::field('video') }}</a>
                     </li>
                   </ul>
                 </div>
@@ -121,7 +121,7 @@
           </div>
           <div class="box blue mt">
             <div class="box-header">
-              Notes
+              {{ GeneralText::field('notes') }}
             </div>
             <div class="box-body">
               <div class="form-group">

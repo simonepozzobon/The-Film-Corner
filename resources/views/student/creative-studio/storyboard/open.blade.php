@@ -39,7 +39,7 @@
         <div class="col-md-4 mt">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -49,7 +49,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#uploads">Upload</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#uploads">{{ GeneralText::field('upload') }}</a>
                     </li>
                   </ul>
                 </div>

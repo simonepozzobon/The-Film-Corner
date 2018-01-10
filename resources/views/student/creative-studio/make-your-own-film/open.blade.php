@@ -11,7 +11,7 @@
         <div class="col">
           <div class="box blue">
             <div class="box-header">
-              Your Submission
+              {{ GeneralText::field('your_submission') }}
             </div>
             <div class="box-body">
               @foreach ($app_session->videos()->get() as $key => $video)

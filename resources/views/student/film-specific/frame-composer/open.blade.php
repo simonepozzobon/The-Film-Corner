@@ -20,7 +20,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Frame
+              {{ GeneralText::field('frame') }}
             </div>
             <div class="box-body">
               <input id="loadCanvas" type="hidden" name="" value="{{ $session->json_data }}">
@@ -35,7 +35,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -73,21 +73,21 @@
       <div class="row mt">
         <div class="box orange">
           <div id="controls" class="box-btns pt">
-            <a id="deselect" href="#" class="btn btn-secondary btn-orange">Deselect All</a>
+            <a id="deselect" href="#" class="btn btn-secondary btn-orange">{{ GeneralText::field('deselect_all') }}</a>
             <div class="btn-group">
-              <a id="back" href="#" class="btn btn-orange">Move Back</a>
-              <a id="backward" href="#" class="btn btn-orange">Move Backward</a>
-              <a id="forward" href="#" class="btn btn-orange">Move Forward</a>
-              <a id="front" href="#" class="btn btn-orange">Move To Front</a>
+              <a id="back" href="#" class="btn btn-orange">{{ GeneralText::field('move_back') }}</a>
+              <a id="backward" href="#" class="btn btn-orange">{{ GeneralText::field('move_backward') }}</a>
+              <a id="forward" href="#" class="btn btn-orange">{{ GeneralText::field('move_forward') }}</a>
+              <a id="front" href="#" class="btn btn-orange">{{ GeneralText::field('move_to_front') }}</a>
             </div>
-            <a id="destroy" href="#" class="btn btn-orange">Remove</a>
+            <a id="destroy" href="#" class="btn btn-orange">{{ GeneralText::field('remove') }}</a>
           </div>
         </div>
       </div>
       <div class="row mt">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="What criteris did you use in yout composition?">{{ $session->notes }}</textarea>

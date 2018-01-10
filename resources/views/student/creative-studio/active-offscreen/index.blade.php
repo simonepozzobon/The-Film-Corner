@@ -11,7 +11,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Scene
+              {{ GeneralText::field('scene') }}
             </div>
             <div id="video-player" class="box-body">
               <div class="embed-responsive embed-responsive-16by9">
@@ -25,7 +25,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -35,7 +35,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#video-library">Video</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#video-library">{{ GeneralText::field('video') }}</a>
                     </li>
                   </ul>
                 </div>
@@ -107,7 +107,7 @@
                 </div>
                 <input id="videoRef" type="hidden" name="video_ref" value="21">
                 <div class="container-fluid d-flex justify-content-around">
-                  <button type="submit" name="button" class="btn btn-green"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                  <button type="submit" name="button" class="btn btn-green"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
                 </div>
               </form>
             </div>
@@ -124,7 +124,7 @@
               </div>
               <table id="videos" class="table table-hover d-none">
                 <thead>
-                  <th>Video</th>
+                  <th>{{ GeneralText::field('video') }}</th>
                   <th></th>
                 </thead>
                 <tbody>

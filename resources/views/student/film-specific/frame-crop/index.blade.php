@@ -21,7 +21,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Scene
+              {{ GeneralText::field('scene') }}
             </div>
             <div class="box-body">
               <div id="photosphere"></div>
@@ -31,7 +31,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div class="box-body">
               <nav class="navbar navbar-toggleable-sm navbar-light">
@@ -68,8 +68,8 @@
         <div class="col">
           <div class="box orange">
             <div class="box-btns pt">
-              <button id="capture" type="button" name="button" class="btn btn-secondary btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> Snap</button>
-              <button type="button" name="button" class="btn btn-secondary btn-orange" data-toggle="modal" data-target="#clear-all"><i class="fa fa-trash-o"></i> Clear All</button>
+              <button id="capture" type="button" name="button" class="btn btn-secondary btn-orange" ><i class="fa fa-camera" aria-hidden="true"></i> {{ GeneralText::field('snap') }}</button>
+              <button type="button" name="button" class="btn btn-secondary btn-orange" data-toggle="modal" data-target="#clear-all"><i class="fa fa-trash-o"></i> {{ GeneralText::field('clear_all') }}</button>
             </div>
           </div>
         </div>
@@ -81,7 +81,7 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Clear All</h5>
+              <h5 class="modal-title" id="exampleModalLabel">{{ GeneralText::field('clear_all') }}</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i class="fa fa-times" aria-hidden="true"></i>
               </button>
@@ -94,8 +94,8 @@
               </p>
             </div>
             <div class="modal-footer">
-              <button id="clear-all-confirm" class="btn btn-danger text-white" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i> Clear All</button>
-              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> Cancel</button>
+              <button id="clear-all-confirm" class="btn btn-danger text-white" href="#"><i class="fa fa-trash-o" aria-hidden="true"></i> {{ GeneralText::field('clear_all') }}</button>
+              <button type="button" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('cancel') }}</button>
             </div>
           </div>
         </div>

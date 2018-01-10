@@ -46,7 +46,7 @@
       <div class="col-md-8">
         <div class="box blue">
           <div class="box-header">
-            Your Scene
+            {{ GeneralText::field('scene') }}
           </div>
           <div class="box-body">
             <div id="player" class="">
@@ -64,7 +64,7 @@
       <div class="col-md-4">
         <div class="box yellow">
           <div class="box-header">
-            Library
+            {{ GeneralText::field('library') }}
           </div>
           <div id="library" class="box-body library">
             <nav class="navbar navbar-toggleable-sm navbar-library yellow">
@@ -74,10 +74,10 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">Audio</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#audio-library">{{ GeneralText::field('audio') }}</a>
                     </li>
                     <li class="nav-item">
-                      <a class="library-link nav-link" data-toggle="tab" href="#image-library">Image</a>
+                      <a class="library-link nav-link" data-toggle="tab" href="#image-library">{{ GeneralText::field('images') }}</a>
                     </li>
                 </ul>
               </div>

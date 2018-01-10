@@ -17,7 +17,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Preview
+              {{ GeneralText::field('preview') }}
             </div>
             <div id="video-player" class="box-body">
               <vjs-video-container id="video-editor" vjs-ratio="16:9" vjs-media="mediaToggle">
@@ -40,10 +40,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#library-video">Video</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#library-video">{{ GeneralText::field('video') }}</a>
                     </li>
                     <li class="nav-item">
-                      <a class="library-link nav-link" data-toggle="tab" href="#upload">Uploads</a>
+                      <a class="library-link nav-link" data-toggle="tab" href="#upload">{{ GeneralText::field('uploads') }}</a>
                     </li>
                   </ul>
                 </div>
@@ -83,15 +83,15 @@
                           <input id="media" type="file" name="media" class="form-control" ng-model="media">
                         </div>
                         <div class="container-fluid d-flex justify-content-around">
-                          <button type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                          <button type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
                         </div>
                       </form>
                       <div class="container-fluid pt-4">
                         <table id="uploads" class="table table-hover">
                           <thead>
-                            <th>Preview</th>
-                            <th>Title</th>
-                            <th>Tools</th>
+                            <th>{{ GeneralText::field('preview') }}</th>
+                            <th>{{ GeneralText::field('title') }}</th>
+                            <th>{{ GeneralText::field('tools') }}</th>
                           </thead>
                           <tbody>
 
@@ -155,7 +155,7 @@
           </div>
           <div class="box blue mt">
             <div class="box-header">
-              Notes
+              {{ GeneralText::field('notes') }}
             </div>
             <div class="box-body">
               <div class="form-group">

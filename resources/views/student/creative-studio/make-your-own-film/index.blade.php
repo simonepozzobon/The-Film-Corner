@@ -11,7 +11,7 @@
         <div class="col">
           <div class="box blue">
             <div class="box-header">
-              Submission
+              {{ GeneralText::field('submission') }}
             </div>
             <div id="response" class="box-body">
               <form id="uploadForm" method="post" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
                 </div>
                 <input id="videoRef" type="hidden" name="video_ref" value="21">
                 <div class="container-fluid d-flex justify-content-around">
-                  <button type="submit" name="button" class="btn btn-blue"><i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                  <button type="submit" name="button" class="btn btn-blue"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
                 </div>
               </form>
             </div>

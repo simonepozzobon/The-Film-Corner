@@ -11,7 +11,7 @@
         <div class="col-md-6">
           <div class="box blue">
             <div class="box-header">
-              First Image
+              {{ GeneralText::field('first_image') }}
             </div>
             <div class="box-body">
               <img id="img-left" src="{{ $session->images[0] }}" alt="" class="img-fluid">
@@ -21,7 +21,7 @@
         <div class="col-md-6">
           <div class="box yellow">
             <div class="box-header">
-              Second Image
+              {{ GeneralText::field('second_image') }}
             </div>
             <div class="box-body">
               <img id="img-right" src="{{ $session->images[1] }}" alt="" class="img-fluid">
@@ -35,7 +35,7 @@
         <div class="box orange">
           <div class="box-btns pt">
             <button id="reload" type="button" name="button" class="btn btn-secondary btn-orange">
-              <i class="fa fa-refresh" aria-hidden="true"></i> Change images
+              <i class="fa fa-refresh" aria-hidden="true"></i> {{ GeneralText::field('change_images') }}
             </button>
           </div>
         </div>
@@ -45,7 +45,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="What are the differences between two pictures?">{{ $session->notes }}</textarea>

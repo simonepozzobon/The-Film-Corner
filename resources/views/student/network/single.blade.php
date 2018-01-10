@@ -24,7 +24,7 @@
       <div class="col">
         <div class="box green">
           <div class="box-header">
-            Notes
+            {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
             {{ $item->notes }}
