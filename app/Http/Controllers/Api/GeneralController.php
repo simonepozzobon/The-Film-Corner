@@ -50,7 +50,7 @@ class GeneralController extends Controller
         $feedback->comment = $request->comment;
         $feedback->userable_id = $request->user_id;
         $feedback->userable_type = $request->user_type;
-        $feddback->source = $request->location;
+        $feedback->source = $request->location;
         $feedback->save();
 
         return response($feedback);
