@@ -11,7 +11,7 @@
         <div class="col-md-8">
           <div class="box blue">
             <div class="box-header">
-              Scene
+              {{ GeneralText::field('scene') }}
             </div>
             <div id="video-player" class="box-body">
               <div class="embed-responsive embed-responsive-16by9">
@@ -25,7 +25,7 @@
         <div class="col-md-4">
           <div class="box yellow">
             <div class="box-header">
-              Library
+              {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
               <nav class="navbar navbar-toggleable-sm navbar-library yellow">
