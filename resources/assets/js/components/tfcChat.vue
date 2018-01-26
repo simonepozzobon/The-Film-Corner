@@ -27,7 +27,7 @@
 <script>
 var axios = require('axios')
 var io = require('socket.io-client')
-var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect: true})
+var socket = io.connect('http://'+ window.location.hostname +':6002', {reconnect: true})
 var _ = require('lodash')
 var $ = require('jquery')
 

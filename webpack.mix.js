@@ -61,7 +61,7 @@ mix
     tether: ['Tether'],
   })
   .browserSync({
-    proxy: 'http://www.simonepozzobon.dev/',
+    proxy: 'http://thefilmcorner.test/',
     browser: 'google chrome'
   })
   .webpackConfig({

@@ -94,7 +94,21 @@
                             <th>{{ GeneralText::field('tools') }}</th>
                           </thead>
                           <tbody>
-
+                            @foreach ($app_session->videos()->get() as $uploadVideo)
+                              <tr>
+                                <td class="align-middle">
+                                  <img src="{{ Storage::disk('local')->url($uploadVideo->img) }}" width="57">
+                                </td>
+                                <td class="align-middle">{{ $uploadVideo->title }}</td>
+                                <td class="align-middle" ng-controller="toolController">
+                                  <div class="btn-group">
+                                    <button ng-click="addElement('{{ $uploadVideo->id }}','{{ $uploadVideo->title }}', '{{ $uploadVideo->duration }}', '{{ $uploadVideo->src }}')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                                      <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                  </div>
+                                </td>
+                              </tr>
+                            @endforeach
                           </tbody>
                         </table>
                       </div>
