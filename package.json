@@ -54,6 +54,7 @@
     "video.js": "^6.5.1",
     "vjs-video": "^0.1.11",
     "vue": "^2.5.9",
+    "vue-draggable-resizable": "^1.6.1",
     "vue-socket.io": "^2.1.1",
     "vueify": "^9.4.1"
   }
