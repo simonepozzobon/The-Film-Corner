@@ -159,7 +159,7 @@
             </div>
             <div class="box-body">
               <div class="form-group">
-                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what your work and your choices..."></textarea>
+                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('active_parallel_action_desc') }}"></textarea>
               </div>
             </div>
           </div>

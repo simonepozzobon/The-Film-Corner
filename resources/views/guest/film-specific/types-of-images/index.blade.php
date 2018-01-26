@@ -47,7 +47,7 @@
               {{ GeneralText::field('notes') }}
             </div>
             <div class="box-body">
-              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="What are the differences between two pictures?"></textarea>
+              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('type_of_images_desc') }}"></textarea>
             </div>
           </div>
         </div>

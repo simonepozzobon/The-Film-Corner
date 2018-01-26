@@ -119,7 +119,7 @@
             {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
-            <textarea id="notes" name="notes" rows="8" class="form-control input-green" placeholder="Why you choose this soundtrack?">{{ $session->notes }}</textarea>
+            <textarea id="notes" name="notes" rows="8" class="form-control input-green" placeholder="{{ GeneralText::field('sound_atmosphere_desc') }}">{{ $session->notes }}</textarea>
           </div>
         </div>
       </div>

@@ -74,7 +74,7 @@
             {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
-            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Listen to the audioclip and try to guess what’s happening">{{ $session->notes }}</textarea>
+            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('whats_going_on_desc') }}">{{ $session->notes }}</textarea>
           </div>
         </div>
       </div>

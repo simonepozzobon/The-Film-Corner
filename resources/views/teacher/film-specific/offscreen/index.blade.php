@@ -98,7 +98,7 @@
               {{ GeneralText::field('notes') }}
             </div>
             <div class="box-body">
-              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what is happening outside the screen"></textarea>
+              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('offscreen_desc') }}"></textarea>
             </div>
           </div>
         </div>

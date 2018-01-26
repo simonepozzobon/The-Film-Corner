@@ -99,7 +99,7 @@
               Notes
             </div>
             <div class="box-body">
-              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what is happening outside the screen">{{ $session->notes }}</textarea>
+              <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('offscreen_desc') }}">{{ $session->notes }}</textarea>
             </div>
           </div>
         </div>

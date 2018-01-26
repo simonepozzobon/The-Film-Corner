@@ -90,7 +90,7 @@
             {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
-            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="What criteris did you use in yout composition?">{{ $session->notes }}</textarea>
+            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('frame_composer_desc') }}">{{ $session->notes }}</textarea>
           </div>
         </div>
       </div>

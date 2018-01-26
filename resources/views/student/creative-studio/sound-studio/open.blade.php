@@ -126,7 +126,7 @@
             </div>
             <div class="box-body">
               <div class="form-group">
-                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe what your work and your choices...">{{ $session->notes }}</textarea>
+                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('sound_studio_desc') }}">{{ $session->notes }}</textarea>
               </div>
             </div>
           </div>

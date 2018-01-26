@@ -119,7 +119,7 @@
             {{ GeneralText::field('notes') }}
           </div>
           <div class="box-body">
-            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="Describe your character"></textarea>
+            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('character_builder_desc') }}"></textarea>
           </div>
         </div>
       </div>
