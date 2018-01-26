@@ -200,7 +200,9 @@
           <div id="container-{{ $partner->id_tag }}" class="col-md-2 text-center">
             <div class="row">
               <div class="col">
-                <img src="{{ Storage::disk('local')->url($partner->logo_url) }}" id="partner-{{ $partner->id_tag }}" class="img-fluid" alt="{{ $partner->name }}">
+                <a href="" data-toggle="modal" data-target="#{{ $partner->id_tag }}">
+                  <img src="{{ Storage::disk('local')->url($partner->logo_url) }}" id="partner-{{ $partner->id_tag }}" class="img-fluid" alt="{{ $partner->name }}">
+                </a>
               </div>
             </div>
             <div class="row">
