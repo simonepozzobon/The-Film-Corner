@@ -213,7 +213,7 @@
 
     data +=         '<h4 class="text-center">Are You Sure?</h4>'
     data +=         '<p class="text-center">'
-    data +=           'This will make your work public!'
+    data +=           'This will share your work with your teacher!'
     data +=           '{{ csrf_field() }}';
     data +=         '</p>';
 
@@ -244,7 +244,39 @@
           'token' : sessionToken
         },
         success: function (response) {
-          console.log(response);
+          console.log('share response ',response);
+          if (response.status == 'too_many_shared') {
+            $('#sessionModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+            var data = ''
+            data += '<div class="modal fade" id="sessionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">';
+            data +=   '<div class="modal-dialog modal-lg" role="document">';
+            data +=     '<div class="modal-content">';
+            data +=       '<div class="modal-header">';
+            data +=         '<h5 class="modal-title" id="exampleModalLabel">Please wait</h5>';
+            data +=         '<button type="button" class="close" data-dismiss="modal" aria-label="Close">';
+            data +=           '<i class="fa fa-times" aria-hidden="true"></i>';
+            data +=         '</button>';
+            data +=       '</div>';
+            data +=       '<div class="modal-body">';
+
+            data +=         '<h4 class="text-center">Give your teacher a while</h4>'
+            data +=         '<p class="text-center">'
+            data +=           'You reached the limit of shared sessions. Wait for your teacher response.'
+            data +=           '{{ csrf_field() }}';
+            data +=         '</p>';
+
+            data +=       '</div>';
+            data +=       '<div class="modal-footer">';
+            data +=         '<button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {{ GeneralText::field('close') }}</button>';
+            data +=       '</div>';
+            data +=     '</div>';
+            data +=   '</div>';
+            data += '</div>';
+            $('#modalSession').html(data);
+            $('#sessionModal').modal('show');
+          }
         },
         error: function (xhr, status) {
             console.log(xhr);

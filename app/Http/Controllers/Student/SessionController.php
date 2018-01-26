@@ -595,9 +595,17 @@ class SessionController extends Controller
   {
     // Raccolgo le informazioni necessarie per creare la notifica e condividere la sessione
     $session = StudentAppSession::where('token', '=', $request['token'])->with('student', 'app')->first();
-    $student = $session->student()->first();
-    $app = $session->app()->first();
-    $teacher = $student->teacher()->first();
+    $student = $session->student;
+    $app = $session->app;
+    $teacher = $student->teacher;
+
+    $currently_shared = $session->count_currently_shared_sessions($student->id);
+
+    if ($currently_shared > 2) {
+      return response()->json([
+        'status' => 'too_many_shared'
+      ]);
+    }
 
     // utilizzo il sistema di Laravel per creare una nuova notifica
     $sender = $student;

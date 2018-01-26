@@ -22,7 +22,6 @@ Route::prefix('feedback')->group(function() {
 // Feedback controller
 Route::post('/feedback', 'Main\FooterController@store')->name('send.feedback');
 
-
 /*
 |--------------------------------------------------------------------------
 | COMPLETED
