@@ -67,9 +67,9 @@
                        </div>
                      </div>
                   @endif
-                  <a href="#" onclick="openSessions({{ Auth::guard('guest')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
+                  {{-- <a href="#" onclick="openSessions({{ Auth::guard('guest')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
                     <i class="fa fa-folder-open-o" aria-hidden="true"></i>
-                  </a>
+                  </a> --}}
                 </div>
               </div>
               <div class="box-body">

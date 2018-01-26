@@ -2,6 +2,11 @@
   if (!isset($student)) {
     $student = false;
   }
+  if (isset($type) && $type == 'guest') {
+    $guest = true;
+  } else {
+    $guest = false;
+  }
 @endphp
   <div class="row mt">
     <div class="col">
@@ -11,9 +16,11 @@
             <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-window-close text-danger"></i></a>
           </div>
           @if ($student == false)
-            <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('save_this_session') }}">
-              <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-floppy-o text-primary"></i></a>
-            </div>
+            @if (!$guest)
+              <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('save_this_session') }}">
+                <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-floppy-o text-primary"></i></a>
+              </div>
+            @endif
             @if (isset($app_session) && $app_session->teacher_shared == 1)
             <div id="comment-btn" class="icon comment" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('open_chat') }}">
               <a href="#" data-toggle="collapse" data-target="#chat"><i class="fa fa-comment-o text-warning"></i></a>
