@@ -1,10 +1,15 @@
 import Vue from 'vue'
 
 import Timeline from './components/Timeline.vue'
+import VideoPreview from './components/VideoPreview.vue'
 
-const timeline = new Vue({
+import VueVideoPlayer from 'vue-video-player'
+Vue.use(VueVideoPlayer)
+
+new Vue({
   el: '#timeline',
   components: {
-    Timeline
+    Timeline,
+    VideoPreview,
   }
 })

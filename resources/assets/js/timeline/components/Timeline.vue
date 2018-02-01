@@ -1,7 +1,7 @@
 <template>
   <div
     id="timeline"
-    class="container timeline-container">
+    class="timeline-container">
     <transition-group
       :css="false"
       tag="div"
@@ -14,7 +14,7 @@
         :data-index="index"
         @delete_track="onDeleteTrack"/>
     </transition-group>
-    <div class="playhead">
+    <div id="playhead" class="playhead">
     </div>
     <div class="test">
       <button
@@ -57,8 +57,10 @@ export default {
     ]
   }),
   methods: {
-    addDemoTrack: function()
-    {
+    playheadStart: function(){
+      var playhead = document.getElementById('playhead')
+    },
+    addDemoTrack: function(){
       var demoTrack = {
         'id': Math.random().toString(36).substr(2, 9),
         'title': 'Titolo '+(this.tracks.length + 1),
@@ -112,6 +114,9 @@ export default {
         })
     },
   },
+  mounted(){
+    this.playheadStart()
+  },
 }
 </script>
 <style lang="scss" scoped>
@@ -123,7 +128,7 @@ export default {
     background: $gray-lightest;
     border-top: 1px solid rgba($black, .1);
 
-    &.container {
+    &.timeline-container {
       padding: 0;
     }
 
