@@ -62,7 +62,8 @@ mix
   })
   .browserSync({
     proxy: 'http://thefilmcorner.test/',
-    browser: 'google chrome'
+    browser: 'google chrome',
+    port: 3002,
   })
   .webpackConfig({
     resolve:{

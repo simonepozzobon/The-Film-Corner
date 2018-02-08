@@ -41,7 +41,9 @@
                         {{ method_field('POST') }}
                         <div class="d-flex justify-content-between pb-4">
                           <input id="media" type="file" name="media" class="form-control">
-                          <button id="upload" type="submit" name="button" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i></button>
+                          <button id="upload" type="submit" name="button" class="btn btn-yellow">
+                              <i class="fa fa-upload" aria-hidden="true"></i>
+                          </button>
                         </div>
                       </form>
                       <ul id="assets" class="assets row list-unstyled">
@@ -116,8 +118,9 @@
 
         });
 
-        $('form#uploadForm').submit(function(e) {
-            e.preventDefault();
+        $('form#uploadForm').submit(function(event) {
+            console.log('clicked')
+            event.preventDefault();
 
             var formData = new FormData();
             formData.append('_token', $('meta[name="csrf-token"]').attr('content'));

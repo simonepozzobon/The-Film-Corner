@@ -143,8 +143,10 @@
 
         });
 
-        $('form#uploadForm').submit(function(e) {
-            e.preventDefault();
+        $('form#uploadForm').submit(function(event) {
+            console.log('clicked')
+            event.preventDefault();
+
 
             var formData = new FormData();
             formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
