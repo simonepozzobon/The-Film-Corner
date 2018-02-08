@@ -397,7 +397,7 @@ class CreativeStudioController extends Controller
       $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
 
       // Se c'è un problema con la sessione ritorno un errore
-      if ($app_session == null || $student == null) {
+      if ($app_session == null || $teacher == null) {
         return response()->json(['Session is corrupted'], 500);
       } else if ($teacher == null) {
         return response()->json(['Not authorized'], 500);
