@@ -389,7 +389,9 @@ class CreativeStudioController extends Controller
 
       // Se c'è un problema con la sessione ritorno un errore
       if ($app_session == null || $student == null) {
-        return response()->json(['Session is corrupted'], 404);
+        return response()->json(['Session is corrupted'], 500);
+      } else if ($student == null) {
+        return response()->json(['Not authorized'], 500);
       }
 
       //Creo il nome del file
