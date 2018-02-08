@@ -397,8 +397,10 @@ class CreativeStudioController extends Controller
       $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
 
       // Se c'è un problema con la sessione ritorno un errore
-      if ($app_session == null || $teacher == null) {
-        return response()->json(['Session is corrupted'], 404);
+      if ($app_session == null && $teacher == null) {
+        return response()->json(['Session is corrupted'], 500);
+      } else if ($teacher == null) {
+        return response()->json(['Not authorized'], 500);
       }
 
       //Creo il nome del file
@@ -413,7 +415,9 @@ class CreativeStudioController extends Controller
       $img->save();
 
       // creo il link tra video e sessione
-      $app_session->medias()->save($img);
+      if ($app_session) {
+        $app_session->medias()->save($img);
+      }
       $teacher->medias()->save($img);
 
       $data = [

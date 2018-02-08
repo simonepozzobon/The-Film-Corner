@@ -58,6 +58,7 @@ return [
     */
 
     'files' => storage_path('framework/sessions'),
+    'lockfile_dir' => storage_path('framework/sessions/lockdir'),
 
     /*
     |--------------------------------------------------------------------------

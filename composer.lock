@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "02d9781a5bc2c3e06ddc3ae4bfea38d7",
+    "content-hash": "4d9e1597536b1dc0dcbfca7edb4832f8",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -2447,6 +2447,7 @@
                 "xls",
                 "xlsx"
             ],
+            "abandoned": "phpoffice/phpspreadsheet",
             "time": "2015-05-01T07:00:55+00:00"
         },
         {
@@ -2855,16 +2856,16 @@
         },
         {
             "name": "rairlie/laravel-locking-session",
-            "version": "v1.0.0",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rairlie/laravel-locking-session.git",
-                "reference": "69a15ea66425e89622445f3b8d5521c0544f4ff9"
+                "reference": "ced0762caab8faec692c6434386849fac72409ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rairlie/laravel-locking-session/zipball/69a15ea66425e89622445f3b8d5521c0544f4ff9",
-                "reference": "69a15ea66425e89622445f3b8d5521c0544f4ff9",
+                "url": "https://api.github.com/repos/rairlie/laravel-locking-session/zipball/ced0762caab8faec692c6434386849fac72409ee",
+                "reference": "ced0762caab8faec692c6434386849fac72409ee",
                 "shasum": ""
             },
             "require": {
@@ -2892,7 +2893,7 @@
                 "laravel",
                 "session"
             ],
-            "time": "2016-03-16T08:34:09+00:00"
+            "time": "2017-11-28T22:28:43+00:00"
         },
         {
             "name": "ramsey/uuid",

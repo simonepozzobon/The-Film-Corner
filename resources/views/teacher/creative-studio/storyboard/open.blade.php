@@ -102,7 +102,11 @@
       counter++;
     });
 
-    $(document).ready(function(){
+    var token = null;
+    $('body').on('session-loaded', function(e, session) {
+        console.log('sessione caricata '+session.token);
+        token = session.token
+
 
         var session = $.parseJSON($.cookie('tfc-sessions'));
 
@@ -151,7 +155,7 @@
             var formData = new FormData();
             formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
             formData.append('media', $('input[name="media"]')[0].files[0]);
-            formData.append('session_token', session[0].token);
+            formData.append('session_token', token);
 
             $.ajax({
                 type: 'post',
