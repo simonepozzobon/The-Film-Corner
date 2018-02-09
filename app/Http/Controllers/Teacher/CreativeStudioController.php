@@ -415,9 +415,7 @@ class CreativeStudioController extends Controller
         $img->save();
 
         // creo il link tra video e sessione
-        if ($app_session) {
-            $app_session->medias()->save($img);
-        }
+        $app_session->medias()->save($img);
         $teacher->medias()->save($img);
 
         $data = [

@@ -20715,20 +20715,24 @@ exports.default = {
 	props: {
 		app_id: {
 			type: String,
-			default: ''
+			default: null
 		},
 		csrf_field: {
 			type: String,
-			default: ''
+			default: null
 		},
 		route: {
 			type: String,
-			default: ''
+			default: null
+		},
+		app_id: {
+			type: String,
+			default: null
 		}
 	},
 	data: function data() {
 		return {
-			assets_list: '',
+			assets_list: null,
 			error_msg: null,
 			file: null
 		};
@@ -20743,6 +20747,7 @@ exports.default = {
 			this.file = files[0];
 			this.error_msg = null;
 		},
+		formatResponse: function formatResponse(response) {},
 		loaderHide: function loaderHide() {
 			var t1 = new _gsap.TimelineMax();
 			t1.to(this.$refs.loader, .2, {
@@ -20789,7 +20794,7 @@ exports.default = {
 			var data = new FormData();
 			data.append('_token', this.csrf_field);
 			data.append('media', this.file);
-			data.append('session_token', this.sessionToken); // bisogna trovare un modo per catturare il token
+			data.append('session_token', this.sessionToken);
 
 			// Start the request
 			var request = new XMLHttpRequest();

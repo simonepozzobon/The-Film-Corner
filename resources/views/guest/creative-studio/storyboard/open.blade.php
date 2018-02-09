@@ -60,6 +60,7 @@
                     <div class="col">
                       <upload-form
                           csrf_field="{{ csrf_token() }}"
+                          app_id="{{ $app->id }}"
                           route="{{ route('guest.creative-studio.upload.img', [$app_category, $app->slug]) }}">
                       </upload-form>
                       <ul id="upload-assets" class="assets row list-unstyled">
