@@ -12,7 +12,7 @@ webpackJsonp([23],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ }),
 
@@ -340,7 +340,7 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ }),
 
@@ -379,7 +379,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 533:
+/***/ 532:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(226);
@@ -393,4 +393,4 @@ module.exports = __webpack_require__(248);
 
 /***/ })
 
-},[533]);
+},[532]);

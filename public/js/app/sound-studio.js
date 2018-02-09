@@ -63,7 +63,7 @@ var _toTitleCase = __webpack_require__(72);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -3347,8 +3347,7 @@ exports['default'] = log;
 /* 52 */,
 /* 53 */,
 /* 54 */,
-/* 55 */,
-/* 56 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3403,6 +3402,7 @@ function mergeOptions() {
 
 
 /***/ }),
+/* 56 */,
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -4562,7 +4562,7 @@ var _htmlTrackElementList = __webpack_require__(202);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -7030,7 +7030,7 @@ var _xhr = __webpack_require__(141);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -11726,7 +11726,7 @@ var _tuple2 = _interopRequireDefault(_tuple);
 
 var _obj = __webpack_require__(44);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -16269,7 +16269,7 @@ var _plugins = __webpack_require__(192);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(56);
+var _mergeOptions2 = __webpack_require__(55);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
@@ -82410,7 +82410,7 @@ var _modalDialog = __webpack_require__(133);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -84783,7 +84783,7 @@ var _window2 = _interopRequireDefault(_window);
 
 var _obj = __webpack_require__(44);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -86788,7 +86788,7 @@ var _track = __webpack_require__(112);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -88599,7 +88599,7 @@ var _track = __webpack_require__(112);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(56);
+var _mergeOptions = __webpack_require__(55);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -88765,7 +88765,7 @@ var _angular = __webpack_require__(105);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(50);
+var _jquery = __webpack_require__(56);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -89145,7 +89145,7 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ }),
 /* 233 */,
@@ -89453,12 +89453,11 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 535 */,
 /* 536 */,
 /* 537 */,
-/* 538 */,
-/* 539 */
+/* 538 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(232);
 
 
 /***/ })
-],[539]);
+],[538]);

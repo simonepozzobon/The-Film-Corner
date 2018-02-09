@@ -29,5 +29,7 @@ window.Echo = new Echo({
 })
 
 /**
- * read more on apps
+ * require bootstrap-fileinput
  */
+
+// require('bootstrap-fileinput')

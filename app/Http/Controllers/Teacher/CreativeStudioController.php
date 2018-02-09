@@ -384,49 +384,49 @@ class CreativeStudioController extends Controller
 
     // verify the extension
     if ($check == false) {
-      $data = [
-        'msg' => 'Error, file not supported'
-      ];
-      return response()->json($data);
+        $data = [
+            'msg' => 'Error, file not supported'
+        ];
+        return response()->json($data);
     } else {
 
-      $teacher = Auth::guard('teacher')->user();
+        $teacher = Auth::guard('teacher')->user();
 
-      $app = App::where('slug', '=', $app_slug)->with('category')->first();
-      $app_category = AppCategory::find($app->app_category_id);
-      $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
+        $app = App::where('slug', '=', $app_slug)->with('category')->first();
+        $app_category = AppCategory::find($app->app_category_id);
+        $app_session = AppsSession::where('token', '=', $request->input('session_token'))->first();
 
-      // Se c'è un problema con la sessione ritorno un errore
-      if ($app_session == null || $teacher == null) {
-        return response()->json(['Session is corrupted'], 500);
-      } else if ($teacher == null) {
-        return response()->json(['Not authorized'], 500);
-      }
+        // Se c'è un problema con la sessione ritorno un errore
+        if ($app_session == null || $teacher == null) {
+            return response()->json(['Session is corrupted'], 500);
+        } else if ($teacher == null) {
+            return response()->json(['Not authorized'], 500);
+        }
 
-      //Creo il nome del file
-      $filename = uniqid();
-      $imgStore = $utility->storeImg($file, $filename, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id);
+        //Creo il nome del file
+        $filename = uniqid();
+        $imgStore = $utility->storeImg($file, $filename, 'apps/'.$app_category->slug.'/'.$app->slug.'/'.$teacher->id);
 
-      $img = new Media;
-      $img->src = $imgStore['src'];
-      $img->thumb = $imgStore['thumb'];
-      $img->landscape = $imgStore['landscape'];
-      $img->portrait = $imgStore['portrait'];
-      $img->save();
+        $img = new Media;
+        $img->src = $imgStore['src'];
+        $img->thumb = $imgStore['thumb'];
+        $img->landscape = $imgStore['landscape'];
+        $img->portrait = $imgStore['portrait'];
+        $img->save();
 
-      // creo il link tra video e sessione
-      if ($app_session) {
-        $app_session->medias()->save($img);
-      }
-      $teacher->medias()->save($img);
+        // creo il link tra video e sessione
+        if ($app_session) {
+            $app_session->medias()->save($img);
+        }
+        $teacher->medias()->save($img);
 
-      $data = [
-        'img_id' => $img->id,
-        'img' => Storage::disk('local')->url($imgStore['src']),
-        'src' => $imgStore['src']
-      ];
+        $data = [
+            'img_id' => $img->id,
+            'img' => Storage::disk('local')->url($imgStore['src']),
+            'src' => $imgStore['src']
+        ];
 
-      return response()->json($data);
+        return response()->json($data);
     }
   }
 }

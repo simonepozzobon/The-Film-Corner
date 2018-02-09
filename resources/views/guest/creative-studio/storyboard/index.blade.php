@@ -36,15 +36,11 @@
                 <div id="uploads" class="assets tab-pane active" role="tabpanel">
                   <div class="row scroller">
                     <div class="col">
-                      <form id="uploadForm" method="post" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{ method_field('POST') }}
-                        <div class="d-flex justify-content-between pb-4">
-                          <input id="media" type="file" name="media" class="form-control">
-                          <button id="upload" type="submit" name="button" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i></button>
-                        </div>
-                      </form>
-                      <ul id="assets" class="assets row list-unstyled">
+                      <upload-form
+                        csrf_field="{{ csrf_token() }}"
+                        route="{{ route('guest.creative-studio.upload.img', [$app_category, $app->slug]) }}">
+                      </upload-form>
+                      <ul id="upload-assets" class="assets row list-unstyled">
                         @foreach ($app->medias()->get() as $key => $media)
                           @if ($media->category_id == 2)
                             <li class="col-md-3 asset">
@@ -65,12 +61,11 @@
   </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/upload.js') }}"></script>
   <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
     var AppSession = new TfcSessions();
     var session = AppSession.initSession({{ $app->id }});
-
-
 
     $('#storyboard').sortable();
     var counter = 0;
@@ -79,11 +74,11 @@
     $('body').on('session-loaded', function(e, session) {
         console.log('sessione caricata '+session.token);
         token = session.token
+        $('#session-token').val(session.token)
         resizeLibrary();
-        var session = $.parseJSON($.cookie('tfc-sessions'));
 
         // Storyboard appen frame
-        $('#assets').on('click', 'li', function(e){
+        $('#upload-assets').on('click', 'li', function(e){
             e.preventDefault();
             if (counter <= 9) {
               counter++;
@@ -117,40 +112,6 @@
               alert('limit reached');
             }
 
-        });
-
-        $('form#uploadForm').submit(function(event) {
-            console.log('clicked')
-            event.preventDefault();
-
-            var formData = new FormData();
-            formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-            formData.append('media', $('input[name="media"]')[0].files[0]);
-            formData.append('session_token', token);
-
-            $.ajax({
-                type: 'post',
-                url:  '{{ route('guest.creative-studio.upload.img', [$app_category, $app->slug]) }}',
-                headers: {
-                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    console.log(response);
-
-                    var data = '';
-                    data += '<li class="col-md-3 asset">';
-                    data +=  '<img src="'+response.img+'" class="img-fluid w-100">';
-                    data += '</li>';
-
-                    $('#assets').prepend(data);
-                },
-                error: function (errors) {
-                    console.log(errors);
-                }
-            });
         });
     });
 

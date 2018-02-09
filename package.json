@@ -37,6 +37,7 @@
     "angular": "^1.6.7",
     "angular-media-timeline": "*",
     "any-resize-event": "^1.0.0",
+    "bootstrap-fileinput": "^4.4.7",
     "dropzone": "^5.1.1",
     "express": "^4.16.2",
     "fabric": "^2.0.0-rc.3",
