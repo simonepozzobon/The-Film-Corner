@@ -104,7 +104,7 @@ export default {
 			}
 
 			// Reset the progress-bar
-			vue.$refs.progress_bar.style.width = '0%'
+			this.$refs.progress_bar.style.width = '0%'
 
 			// show loader
 			this.loaderShow()
