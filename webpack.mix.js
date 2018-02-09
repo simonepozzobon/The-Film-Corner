@@ -47,7 +47,7 @@ mix
   .js('resources/assets/js/studio-home.js', 'public/js/app')
   .js('resources/assets/js/first-visit', 'public/js')
 
-  .js('resources/assets/js/scroll', 'public/js')
+  // .js('resources/assets/js/scroll', 'public/js')
 
   .js('resources/assets/js/app.js', 'public/js')
   .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
