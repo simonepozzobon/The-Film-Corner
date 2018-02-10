@@ -20241,8 +20241,8 @@ exports.default = {
 
 			var vue = this;
 			return new Promise(function (resolve, reject) {
-				switch (parseInt(_this.app_id)) {
-					case 10:
+				switch (true) {
+					case parseInt(_this.app_id) == 10:
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = document.createElement('tr');
 						asset.setAttribute('id', 'video-' + response.video_id);
@@ -20261,7 +20261,7 @@ exports.default = {
 						resolve('done');
 						break;
 
-					case 11:
+					case parseInt(_this.app_id) == 11:
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
 
@@ -20271,8 +20271,7 @@ exports.default = {
 						resolve('done');
 						break;
 
-					case 13:
-						console.log('triggered');
+					case parseInt(_this.app_id) == 13:
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = document.createElement('div');
 						asset.className = 'asset col-md-3 col-sm-4 pb-3';
@@ -20282,13 +20281,33 @@ exports.default = {
 						resolve('done');
 						break;
 
-					case 15:
+					case parseInt(_this.app_id) == 15:
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = document.createElement('li');
 						asset.className = 'col-md-3 asset';
 						asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
 						_this.assets_list.appendChild(asset);
 						resolve('done');
+						break;
+
+					case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
+						// contests
+						_this.assets_list = document.getElementById('response');
+						var asset = document.createElement('div');
+						_this.$refs.input.style.display = 'none';
+						_this.$refs.loader.style.display = 'none';
+						_this.error_msg = '';
+
+						asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
+						_this.assets_list.appendChild(asset);
+
+						var video = {
+							'img': response.img,
+							'video': response.src
+						};
+
+						localStorage.setItem('app-16-video', JSON.stringify(video));
+						resolve('stop');
 						break;
 				}
 				reject('I can\'t manage this response');
@@ -20352,16 +20371,17 @@ exports.default = {
 			}, false);
 
 			request.addEventListener('load', function (e) {
-				console.log('risposta dal server', e);
-				if (e.target.status != 200) {
+				if (parseInt(e.target.status) != 200) {
 					// error
 					vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
 				} else {
 					// success
 					var XMLresponse = JSON.parse(e.target.responseText);
-					console.log('XMLResponse ', XMLresponse);
 					vue.formatResponse(XMLresponse).then(function (response) {
-						vue.loaderHide();
+						console.log(response);
+						if (response == 'done') {
+							vue.loaderHide();
+						}
 					}).catch(function (error) {
 						vue.error_msg = 'Oops the server can\'t manage the response';
 					});

@@ -73,8 +73,8 @@ export default {
 		formatResponse: function(response) {
 			var vue = this
 			return new Promise((resolve, reject) => {
-				switch (parseInt(this.app_id)) {
-					case 10:
+				switch (true) {
+					case parseInt(this.app_id) == 10:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset = document.createElement('tr')
 						asset.setAttribute('id', 'video-'+response.video_id)
@@ -99,7 +99,7 @@ export default {
 						resolve('done')
 						break;
 
-					case 11:
+					case parseInt(this.app_id) == 11:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset =
 							'<tr>'+
@@ -122,8 +122,7 @@ export default {
 						resolve('done')
 						break;
 
-					case 13:
-						console.log('triggered')
+					case parseInt(this.app_id) == 13:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset = document.createElement('div')
 						asset.className = 'asset col-md-3 col-sm-4 pb-3'
@@ -135,13 +134,34 @@ export default {
 						resolve('done')
 						break;
 
-					case 15:
+					case parseInt(this.app_id) == 15:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset = document.createElement('li')
 						asset.className = 'col-md-3 asset'
 						asset.innerHTML = '<img src="'+response.img+'" class="img-fluid w-100">'
 						this.assets_list.appendChild(asset)
 						resolve('done')
+						break;
+
+					case parseInt(this.app_id) == 16 || parseInt(this.app_id) == 17: // contests
+						this.assets_list = document.getElementById('response')
+						var asset = document.createElement('div')
+						this.$refs.input.style.display = 'none'
+						this.$refs.loader.style.display = 'none'
+						this.error_msg = ''
+
+						asset.innerHTML =
+							'<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>'+
+			            	'<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>'
+						this.assets_list.appendChild(asset)
+
+						var video = {
+							'img' : response.img,
+							'video' : response.src
+						};
+
+						localStorage.setItem('app-16-video', JSON.stringify(video));
+						resolve('stop')
 						break;
 				}
 				reject('I can\'t manage this response')
@@ -207,16 +227,17 @@ export default {
                 }, false)
 
 			request.addEventListener('load', function(e){
-				console.log('risposta dal server', e)
-                if (e.target.status != 200) {
+                if (parseInt(e.target.status) != 200) {
 					// error
 					vue.error_msg = 'Oops something went wrong, plase save the session and reload the page'
                 } else {
 					// success
 					var XMLresponse = JSON.parse(e.target.responseText)
-					console.log('XMLResponse ',XMLresponse)
 					vue.formatResponse(XMLresponse).then(response => {
-						vue.loaderHide()
+						console.log(response)
+						if (response == 'done') {
+							vue.loaderHide()
+						}
 					}).catch(error => {
 						vue.error_msg = 'Oops the server can\'t manage the response'
 					})
