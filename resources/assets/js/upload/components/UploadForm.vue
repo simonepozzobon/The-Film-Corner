@@ -12,7 +12,7 @@
 
 			<button
 				id="upload"
-				class="btn btn-yellow"
+				:class="'btn btn-'+color"
 				@click="sendUpload">
 				<i class="fa fa-upload" aria-hidden="true"></i>
 			</button>
@@ -41,6 +41,10 @@ export default {
 		app_id: {
 			type: String,
 			default: null,
+		},
+		color: {
+			type: String,
+			default: 'yellow',
 		},
 		csrf_field: {
 			type: String,
