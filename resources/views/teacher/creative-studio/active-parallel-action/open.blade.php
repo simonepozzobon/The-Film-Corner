@@ -185,10 +185,10 @@
 
 
     // Pass the variable to angular JS for init
+    var timelines = '';
     @isset($timelines)
       var timelines = {!! $timelines !!};
     @endisset
-    var timelines = '';
     var token = '{{ $token }}';
     $('#token').val(token);
     $('#session-token').attr('value', token)

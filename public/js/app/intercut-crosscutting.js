@@ -88926,7 +88926,7 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
 
   // Inizializzo la sessione
   var init = $window.timelines;
-  console.log(init);
+  // console.log(init)
   var counter = 0;
 
   if (typeof session == 'undefined' && typeof init != 'undefined') {
@@ -88944,10 +88944,10 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   }
 
   $scope.$on('timelineChanged', function (e, timeline) {
-    console.log('-----');
-    console.log('timelineChanged Event Before Send');
-    console.log(timeline);
-    console.log('-----');
+    // console.log('-----')
+    // console.log('timelineChanged Event Before Send')
+    // console.log(timeline)
+    // console.log('-----')
 
     var timelines = Timeline.getTimelines($scope);
     // if (typeof session == 'undefined') {
@@ -88955,12 +88955,12 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
     //   timelines = $window.timelines;
     // }
     Video.send(timelines).then(function successCallback(response) {
-      console.log(timelines);
-      console.log(response.data);
-      console.log('-------');
-      console.log('DEBUG');
-      console.log(response);
-      console.log('-------');
+      // console.log(timelines)
+      // console.log(response.data)
+      // console.log('-------')
+      // console.log('DEBUG')
+      // console.log(response)
+      // console.log('-------')
       localStorage.setItem('tfc-video-editing', '/' + response.data);
       $scope.mediaToggle = {
         sources: [{
@@ -89031,7 +89031,7 @@ _angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller(
   });
 
   $scope.onTickChange = function (tick) {
-    console.log(tick);
+    // console.log(tick)
   };
 
   $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
@@ -89068,10 +89068,10 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
 
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
-    console.log('addding element to angularjs');
+    // console.log('addding element to angularjs')
     var d = duration * 100 / 5;
     if (typeof session == 'undefined') {
-      console.log('non trovata');
+      // console.log('non trovata')
       var token = $window.token;
     } else {
       var token = session.token;
@@ -89112,7 +89112,7 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
   };
 
   $scope.sendFeedback = function () {
-    console.log($scope.feedbackData);
+    // console.log($scope.feedbackData)
     Feedback.send($scope.feedbackData);
   };
 });

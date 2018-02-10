@@ -236,7 +236,7 @@ class CreativeStudioController extends Controller
         $elements = $app->videos()->get();
         $session = $session;
         $timelines = json_encode($session->timelines);
-        return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'token'));
+        return view('teacher.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'timelines', 'token'));
         break;
 
       case 'sound-studio':
