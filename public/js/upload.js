@@ -20730,15 +20730,11 @@ exports.default = {
 		return {
 			assets_list: null,
 			error_msg: null,
-			file: null
+			file: null,
+			session_token: ''
 		};
 	},
-	computed: {
-		sessionToken: function sessionToken() {
-			alert('triggered');
-			return document.getElementById('session-token').value;
-		}
-	},
+	computed: {},
 	methods: {
 		filesChange: function filesChange(name, files) {
 			this.file = files[0];
@@ -20796,7 +20792,8 @@ exports.default = {
 			});
 		},
 		sendUpload: function sendUpload() {
-			if (!this.sessionToken) {
+			this.session_token = document.getElementById('session-token').value;
+			if (!this.session_token) {
 				this.error_msg = 'This session is corrupted. Please, save and reload the application';
 				return false;
 			}
@@ -20817,8 +20814,8 @@ exports.default = {
 			var data = new FormData();
 			data.append('_token', this.csrf_field);
 			data.append('media', this.file);
-			data.append('session_token', this.sessionToken);
-			data.append('session', this.sessionToken);
+			data.append('session_token', session_token);
+			data.append('session', session_token);
 
 			// Start the request
 			var request = new XMLHttpRequest();

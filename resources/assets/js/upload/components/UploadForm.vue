@@ -55,12 +55,10 @@ export default {
 		assets_list: null,
 		error_msg: null,
 		file: null,
+		session_token: '',
 	}),
 	computed: {
-		sessionToken: function() {
-			alert('triggered')
-			return document.getElementById('session-token').value
-		}
+
 	},
 	methods: {
 		filesChange: function(name, files) {
@@ -132,7 +130,8 @@ export default {
 				})
 		},
 		sendUpload: function() {
-			if (!this.sessionToken) {
+			this.session_token = document.getElementById('session-token').value
+			if (!this.session_token) {
 				this.error_msg = 'This session is corrupted. Please, save and reload the application'
 				return false
 			}
@@ -153,8 +152,8 @@ export default {
 			var data = new FormData()
 			data.append('_token', this.csrf_field)
 			data.append('media', this.file)
-			data.append('session_token', this.sessionToken)
-			data.append('session', this.sessionToken)
+			data.append('session_token', session_token)
+			data.append('session', session_token)
 
 			// Start the request
 			var request = new XMLHttpRequest();
