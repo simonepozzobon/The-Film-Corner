@@ -116,13 +116,12 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = VideoLibrary::all();
+        $elements = $app->videos()->get();
         return view('student.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
         $elements = $app->audios()->get();
-
         $videos = $app->videos()->get();
         $videos = collect($videos->pluck('src')->all());
 
