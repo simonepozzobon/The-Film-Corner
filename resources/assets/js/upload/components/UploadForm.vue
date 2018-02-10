@@ -98,7 +98,6 @@ export default {
 						this.videos.push(video)
 						localStorage.setItem('app-10-video-uploaded', JSON.stringify(this.videos));
 
-
 					case 11:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset =
