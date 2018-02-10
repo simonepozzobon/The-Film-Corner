@@ -20814,8 +20814,8 @@ exports.default = {
 			var data = new FormData();
 			data.append('_token', this.csrf_field);
 			data.append('media', this.file);
-			data.append('session_token', session_token);
-			data.append('session', session_token);
+			data.append('session_token', this.session_token);
+			data.append('session', this.session_token);
 
 			// Start the request
 			var request = new XMLHttpRequest();
