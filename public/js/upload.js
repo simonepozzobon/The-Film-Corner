@@ -20240,11 +20240,9 @@ exports.default = {
 			var _this = this;
 
 			var vue = this;
-			console.log('response inside formatting', response);
 			return new Promise(function (resolve, reject) {
 				switch (parseInt(_this.app_id)) {
 					case 10:
-						console.log('triggered');
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = document.createElement('tr');
 						asset.setAttribute('id', 'video-' + response.video_id);
@@ -20260,12 +20258,27 @@ exports.default = {
 						_this.videos.push(video);
 						localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
 
+						resolve('done');
+						break;
+
 					case 11:
 						_this.assets_list = document.getElementById('upload-assets');
 						var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
 
 						var event = new CustomEvent('new-video-on-library', { 'detail': asset });
 						_this.assets_list.dispatchEvent(event); // send the event to angularjs
+
+						resolve('done');
+						break;
+
+					case 13:
+						console.log('triggered');
+						_this.assets_list = document.getElementById('upload-assets');
+						var asset = document.createElement('div');
+						asset.className = 'asset col-md-3 col-sm-4 pb-3';
+						asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
+						_this.assets_list.appendChild(asset);
+
 						resolve('done');
 						break;
 
@@ -20883,36 +20896,40 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("div", { ref: "input", attrs: { id: "input-box" } }, [
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { id: "media", type: "file", name: "media" },
-        on: {
-          change: function($event) {
-            _vm.filesChange($event.target.name, $event.target.files)
+    _c(
+      "div",
+      { ref: "input", staticClass: "mb-3", attrs: { id: "input-box" } },
+      [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { id: "media", type: "file", name: "media" },
+          on: {
+            change: function($event) {
+              _vm.filesChange($event.target.name, $event.target.files)
+            }
           }
-        }
-      }),
-      _vm._v(" "),
-      _c("input", {
-        attrs: { id: "session-token", type: "hidden", value: "" }
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          class: "ml-3 btn btn-" + _vm.color,
-          attrs: { id: "upload" },
-          on: { click: _vm.sendUpload }
-        },
-        [
-          _c("i", {
-            staticClass: "fa fa-upload",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]
-      )
-    ]),
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { id: "session-token", type: "hidden", value: "" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            class: "ml-3 btn btn-" + _vm.color,
+            attrs: { id: "upload" },
+            on: { click: _vm.sendUpload }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-upload",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
+        )
+      ]
+    ),
     _vm._v(" "),
     _c("div", { ref: "loader", attrs: { id: "loader" } }, [
       _c("i", { staticClass: "fa fa-refresh fa-spin" }),

@@ -48,7 +48,7 @@
                     </li>
                   @endforeach
                   <li class="nav-item">
-                    <a class="library-link nav-link" data-toggle="tab" href="#upload-library">{{ GeneralText::field('uploads') }}</a>
+                    <a class="library-link nav-link" data-toggle="tab" href="#uploads">{{ GeneralText::field('uploads') }}</a>
                   </li>
                 </ul>
               </div>
@@ -66,22 +66,15 @@
                   </div>
                 </div>
               @endforeach
-              <div id="upload-library" class="assets wrapper tab-pane" role="tabpanel">
+              <div id="uploads" class="assets wrapper tab-pane" role="tabpanel">
                 <div class="row scroller">
                   <div class="col">
-                    <form id="uploadForm" method="post" enctype="multipart/form-data">
-                      {{ csrf_field() }}
-                      {{ method_field('POST') }}
-                      <input id="app_category" type="hidden" name="app_category" value="{{ $app_category->slug }}">
-                      <input id="app_slug" type="hidden" name="app_slug" value="{{ $app->slug }}">
-                      <div class="form-group">
-                        <input id="media" type="file" name="media" class="form-control">
-                      </div>
-                      <div class="container-fluid d-flex justify-content-around">
-                        <button id="upload-this-media" type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
-                      </div>
-                    </form>
-                    <div id="uploads" class="assets">
+                    <upload-form
+                        csrf_field="{{ csrf_token() }}"
+                        app_id="{{ $app->id }}"
+                        route="{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}">
+                    </upload-form>
+                    <div id="upload-assets" class="row assets">
 
                     </div>
                   </div>
@@ -128,6 +121,7 @@
 </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/upload.js') }}"></script>
   <script src="{{ asset('plugins/fabric/fabric.min.js') }}"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
@@ -140,30 +134,7 @@
     });
 
     $('body').on('session-loaded', function(e, session) {
-      $('form#uploadForm').submit(function(event) {
-        event.preventDefault();
-        console.log(session.token);
-        var formData = new FormData();
-        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        formData.append('media', $('#media')[0].files[0]);
-        formData.append('session_token', session.token);
-
-        var app_category = $('#app_category').val();
-        var app_slug = $('#app_slug').val();
-
-        console.log($('#media')[0].files[0]);
-
-        axios.post('{{ route('student.creative-studio.upload.img', [$app_category, $app->slug]) }}', formData)
-          .then(response => {
-            console.log(response);
-            var data = '';
-            data += '<div class="asset col-md-3 col-sm-4 pb-3">'
-            data +=   '<img src="'+response.data.img+'" alt="image asset" class="img-fluid" data-img-src="'+response.data.img+'"/>'
-            data +=   '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>'
-            data += '</div>'
-            $('#uploads').append(data);
-          });
-      })
+      $('#session-token').attr('value', session.token)
     });
 
     $(document).ready(function($) {

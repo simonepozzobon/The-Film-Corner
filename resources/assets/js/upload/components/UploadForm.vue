@@ -1,6 +1,6 @@
 <template lang="html">
 	<div class="">
-		<div id="input-box" class="" ref="input">
+		<div id="input-box" class="mb-3" ref="input">
 			<input
 				id="media"
 				type="file"
@@ -72,11 +72,9 @@ export default {
 		},
 		formatResponse: function(response) {
 			var vue = this
-			console.log('response inside formatting', response)
 			return new Promise((resolve, reject) => {
 				switch (parseInt(this.app_id)) {
 					case 10:
-						console.log('triggered')
 						this.assets_list = document.getElementById('upload-assets')
 						var asset = document.createElement('tr')
 						asset.setAttribute('id', 'video-'+response.video_id)
@@ -98,6 +96,9 @@ export default {
 						this.videos.push(video)
 						localStorage.setItem('app-10-video-uploaded', JSON.stringify(this.videos));
 
+						resolve('done')
+						break;
+
 					case 11:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset =
@@ -117,6 +118,20 @@ export default {
 
 						var event = new CustomEvent('new-video-on-library', {'detail': asset})
 				        this.assets_list.dispatchEvent(event) // send the event to angularjs
+
+						resolve('done')
+						break;
+
+					case 13:
+						console.log('triggered')
+						this.assets_list = document.getElementById('upload-assets')
+						var asset = document.createElement('div')
+						asset.className = 'asset col-md-3 col-sm-4 pb-3'
+						asset.innerHTML =
+							'<img src="'+response.img+'" alt="image asset" class="img-fluid" data-img-src="'+response.img+'"/>'+
+							'<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>'
+						this.assets_list.appendChild(asset)
+
 						resolve('done')
 						break;
 
