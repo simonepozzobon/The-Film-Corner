@@ -58,6 +58,7 @@ export default {
 	}),
 	computed: {
 		sessionToken: function() {
+			alert('triggered')
 			return document.getElementById('session-token').value
 		}
 	},

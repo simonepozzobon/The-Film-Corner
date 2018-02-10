@@ -20735,6 +20735,7 @@ exports.default = {
 	},
 	computed: {
 		sessionToken: function sessionToken() {
+			alert('triggered');
 			return document.getElementById('session-token').value;
 		}
 	},
