@@ -40,19 +40,19 @@ export default {
 	props: {
 		app_id: {
 			type: String,
-			default: '',
+			default: null,
 		},
 		csrf_field: {
 			type: String,
-			default: '',
+			default: null,
 		},
 		route: {
 			type: String,
-			default: '',
+			default: null,
 		},
 	},
 	data: () => ({
-		assets_list: '',
+		assets_list: null,
 		error_msg: null,
 		file: null,
 	}),
@@ -65,6 +65,44 @@ export default {
 		filesChange: function(name, files) {
 			this.file = files[0]
 			this.error_msg = null
+		},
+		formatResponse: function(response) {
+			var vue = this
+			return new Promise((resolve, reject) => {
+				switch (parseInt(this.app_id)) {
+					case 11:
+						this.assets_list = document.getElementById('upload-assets')
+						var asset =
+							'<tr>'+
+								'<td class="align-middle">' +
+									'<img src="'+response.img+'" width="57">'+
+								'</td>'+
+								'<td class="align-middle">'+response.name+'</td>'+
+								'<td class="align-middle" ng-controller="toolController">'+
+									'<div class="btn-group">'+
+										'<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">'+
+											'<i class="fa fa-plus" aria-hidden="true"></i>'+
+										'</button>'+
+									'</div>'+
+								'</td>'+
+							'</tr>'
+
+						var event = new CustomEvent('new-video-on-library', {'detail': asset})
+				        this.assets_list.dispatchEvent(event) // send the event to angularjs
+						resolve('done')
+						break;
+
+					case 15:
+						this.assets_list = document.getElementById('upload-assets')
+						var asset = document.createElement('li')
+						asset.className = 'col-md-3 asset'
+						asset.innerHTML = '<img src="'+response.img+'" class="img-fluid w-100">'
+						this.assets_list.appendChild(asset)
+						resolve('done')
+						break;
+				}
+				reject('I can\'t manage this response')
+			})
 		},
 		loaderHide: function() {
 			var t1 = new TimelineMax()
@@ -114,7 +152,8 @@ export default {
 			var data = new FormData()
 			data.append('_token', this.csrf_field)
 			data.append('media', this.file)
-			data.append('session_token', this.sessionToken) // bisogna trovare un modo per catturare il token
+			data.append('session_token', this.sessionToken)
+			data.append('session', this.sessionToken)
 
 			// Start the request
 			var request = new XMLHttpRequest();
@@ -129,12 +168,13 @@ export default {
 					vue.error_msg = 'Oops something went wrong, plase save the session and reload the page'
                 } else {
 					// success
-					var response = JSON.parse(e.target.responseText)
-					var asset = document.createElement('li')
-					asset.className = 'col-md-3 asset'
-					asset.innerHTML = '<img src="'+response.img+'" class="img-fluid w-100">'
-					vue.assets_list.appendChild(asset)
-					vue.loaderHide()
+					var XMLresponse = JSON.parse(e.target.responseText)
+					console.log('XMLResponse ',XMLresponse)
+					vue.formatResponse(XMLresponse).then(response => {
+						vue.loaderHide()
+					}).catch(error => {
+						vue.error_msg = 'Oops the server can\'t manage the response'
+					})
                 }
             }, false)
 
@@ -143,7 +183,6 @@ export default {
 		},
 	},
 	mounted() {
-		this.assets_list = document.getElementById('upload-assets')
 	}
 }
 </script>

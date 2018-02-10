@@ -152,63 +152,12 @@ angular.module('mainCtrl', [])
 angular.module('uploadCtrl', [])
   .controller('uploadController', ['$scope', '$window', '$compile', function($scope, $window, $compile, $http, Video) {
     // models
-
-
-    $scope.uploadForm = function() {
-      console.log('---------')
-      console.log('Session token')
-      console.log($('#token').val())
-      console.log('---------')
-
-      // Preparo i dati da inviare sotto forma di form
-      var formData = new FormData()
-      formData.append('_token', $('meta[name="csrf-token"]').attr('content'))
-      formData.append('media', $('#media')[0].files[0])
-      formData.append('session', $('#token').val())
-
-      // prendo il nome della cateogria e lo slug dell'applicazione
-      var app_category = $('#app_category').val()
-      var app_slug = $('#app_slug').val()
-
-      // effettuo l'invio ajax
-      $.ajax({
-        type: 'post',
-        url:  '/teacher/creative-studio/'+app_category+'/'+app_slug+'/upload',
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          console.log(response)
-          var data = $('<tr>' +
-                          '<td class="align-middle">' +
-                            '<img src="'+response.img+'" width="57">' +
-                          '</td>' +
-                          '<td class="align-middle">'+response.name+'</td>' +
-                          '<td class="align-middle" ng-controller="toolController">' +
-                            '<div class="btn-group">' +
-                              '<button ng-click="addElement(\''+response.video_id+'\',\''+response.name+'\', \''+response.duration+'\', \''+response.src+'\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
-                                '<i class="fa fa-plus" aria-hidden="true"></i>' +
-                              '</button>' +
-                            '</div>' +
-                          '</td>' +
-                        '</tr>').appendTo('#uploads')
-
-          $compile(data)($scope)
-          $scope.$apply()
-        },
-        error: function (errors) {
-          console.log(errors)
-        }
-      })
-
-
-      console.log('invio dati')
-      console.log($('#media')[0].files[0])
-    }
-
+    var element = $window.document.getElementById('upload-assets')
+    element.addEventListener('new-video-on-library', function(e) {
+      var data = $(e.detail).appendTo('#upload-assets')
+      $compile(data)($scope)
+      $scope.$apply()
+    })
   }])
 
 // Define the video controller
@@ -369,6 +318,7 @@ angular.module('toolCtrl', [])
 
     // Aggiunge un elemento dalla libreria alla timeline
     $scope.addElement = function(id, title, duration, url) {
+      console.log('addding element to angularjs')
       var d = (duration * 100) / 5
       if (typeof session == 'undefined') {
         console.log('non trovata')

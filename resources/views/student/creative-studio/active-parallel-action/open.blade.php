@@ -43,7 +43,7 @@
                       <a class="library-link nav-link active" data-toggle="tab" href="#library-video">{{ GeneralText::field('video') }}</a>
                     </li>
                     <li class="nav-item">
-                      <a class="library-link nav-link" data-toggle="tab" href="#upload">{{ GeneralText::field('uploads') }}</a>
+                      <a class="library-link nav-link" data-toggle="tab" href="#uploads">{{ GeneralText::field('uploads') }}</a>
                     </li>
                   </ul>
                 </div>
@@ -70,29 +70,16 @@
                     </div>
                   </div>
                 </div>
-                <div id="upload" class="assets tab-pane" role="tabpanel">
+                <div id="uploads" class="assets tab-pane" role="tabpanel">
                   <div class="row scroller">
                     <div class="col">
-                      <form id="uploadForm" method="post" enctype="multipart/form-data" ng-submit="uploadForm()" ng-controller="uploadController">
-                        {{ csrf_field() }}
-                        {{ method_field('POST') }}
-                        <input id="token" type="hidden" name="session_token" ng-model="session_token" value="">
-                        <input id="app_category" type="hidden" name="app_category" ng-model="app_category" value="{{ $app_category->id }}">
-                        <input id="app_slug" type="hidden" name="app_slug" ng-model="app_slug" value="{{ $app->slug }}">
-                        <div class="form-group">
-                          <input id="media" type="file" name="media" class="form-control" ng-model="media">
-                        </div>
-                        <div class="container-fluid d-flex justify-content-around">
-                          <button type="submit" class="btn btn-yellow"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
-                        </div>
-                      </form>
-                      <div class="container-fluid pt-4">
-                        <table id="uploads" class="table table-hover">
-                          <thead>
-                            <th>{{ GeneralText::field('preview') }}</th>
-                            <th>{{ GeneralText::field('title') }}</th>
-                            <th>{{ GeneralText::field('tools') }}</th>
-                          </thead>
+                      <upload-form
+                          csrf_field="{{ csrf_token() }}"
+                          app_id="{{ $app->id }}"
+                          route="{{ route('student.creative-studio.upload', [$app_category, $app->slug]) }}">
+                      </upload-form>
+                      <div class="" ng-Controller="uploadController">
+                        <table id="upload-assets" class="table table-hover">
                           <tbody>
                             @foreach ($app_session->videos()->get() as $uploadVideo)
                               <tr>
@@ -225,4 +212,5 @@
 
   </script>
   <script src="{{ mix('js/app/intercut-crosscutting.js') }}"></script>
+  <script src="{{ mix('js/upload.js') }}"></script>
 @endsection
