@@ -41,7 +41,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav" role="tablist">
                     <li class="nav-item">
-                      <a class="library-link nav-link active" data-toggle="tab" href="#library">{{ GeneralText::field('audio') }}</a>
+                      <a class="library-link nav-link active" data-toggle="tab" href="#library">Audio</a>
                     </li>
                   </ul>
                 </div>
