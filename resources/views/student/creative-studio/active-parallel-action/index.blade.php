@@ -156,6 +156,7 @@
   </div>
 @endsection
 @section('scripts')
+  <script src="{{ mix('js/upload.js') }}"></script>
   <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script type="text/javascript">
     var AppSession = new TfcSessions();
@@ -188,5 +189,4 @@
     }
   </script>
   <script src="{{ mix('js/app/intercut-crosscutting.js') }}"></script>
-  <script src="{{ mix('js/upload.js') }}"></script>
 @endsection
