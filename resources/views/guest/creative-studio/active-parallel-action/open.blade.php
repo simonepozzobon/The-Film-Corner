@@ -190,7 +190,7 @@
     var timelines = '';
     var token = '{{ $token }}';
     $('#token').val(token);
-    $('#session-token').val(token)
+    $('#session-token').attr('value', session.token)
     console.log('---------');
     console.log('Logging all\'inizio');
     console.log(timelines);
