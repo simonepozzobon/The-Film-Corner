@@ -93,23 +93,18 @@
         </div>
       </div>
       <div class="row mt">
-        <div class="col-md-8">
+        <div id="uploads" class="col-md-8">
           <div class="box green">
             <div class="box-header">
               Upload your offscreen video
             </div>
             <div class="box-body">
-              <form id="uploadForm" method="post" enctype="multipart/form-data">
-                {{ csrf_field() }}
-                {{ method_field('POST') }}
-                <div class="form-group">
-                  <input id="media" type="file" name="media" class="form-control">
-                </div>
-                <input id="videoRef" type="hidden" name="video_ref" value="21">
-                <div class="container-fluid d-flex justify-content-around">
-                  <button type="submit" name="button" class="btn btn-green"><i class="fa fa-upload" aria-hidden="true"></i> {{ GeneralText::field('upload') }}</button>
-                </div>
-              </form>
+              <upload-form
+                  csrf_field="{{ csrf_token() }}"
+                  app_id="{{ $app->id }}"
+                  color="green"
+                  route="{{ route('guest.creative-studio.upload', [$app_category, $app->slug]) }}">
+              </upload-form>
             </div>
           </div>
         </div>
@@ -123,12 +118,7 @@
                 <span class="alert alert-warning d-block text-center">No video uploaded yet!</span>
               </div>
               <table id="videos" class="table table-hover d-none">
-                <thead>
-                  <th>{{ GeneralText::field('video') }}</th>
-                  <th></th>
-                </thead>
-                <tbody>
-                </tbody>
+
               </table>
             </div>
           </div>
@@ -138,7 +128,8 @@
   </div>
 @endsection
 @section('scripts')
-   <script src="{{ asset('plugins/videojs/video.js') }}"></script>
+  <script src="{{ mix('js/upload.js') }}"></script>
+  <script src="{{ asset('plugins/videojs/video.js') }}"></script>
 
   <script type="text/javascript">
     var AppSession = new TfcSessions();
@@ -209,62 +200,10 @@
 
     $('body').on('session-loaded', function(e, session) {
       console.log('sessione caricata '+session.token);
+      $('#session-token').attr('value', session.token)
 
       // save the video src
       localStorage.setItem('app-10-video', $('#video-main source').attr('src'));
-
-
-      $('form#uploadForm').submit(function(event) {
-        event.preventDefault();
-        console.log(session.token);
-
-        console.log($('#media')[0]);
-
-        var formData = new FormData();
-        formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-        formData.append('media', $('#media')[0].files[0]);
-        formData.append('video_ref', $('#videoRef').val());
-        formData.append('session', session.token);
-
-        $.ajax({
-          type: 'post',
-          url:  '{{ route('guest.creative-studio.upload', [$app_category, $app->slug]) }}',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: function (response) {
-            console.log(response);
-            $('#no-video').addClass('d-none');
-            $('#videos').removeClass('d-none');
-            var data = '';
-            data += '<tr id="video-'+response.video_id+'">';
-            data +=    '<td><img src="'+response.img+'" width="57" class="img-fluid"></td>';
-            data +=    '<td>';
-            data +=     '<input id="video-id-src" type="hidden" name="" value="'+response.src+'">';
-            data +=     '<div class="btn-group">';
-            data +=        '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>';
-            data +=        '<button type="button" class="btn btn-blue" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>';
-            data +=      '</div>';
-            data +=    '</td>';
-            data += '</tr>';
-            $('#videos').append(data);
-
-            var video = {
-                'img' : response.img,
-                'video' : response.src
-            };
-
-            videos.push(video);
-            localStorage.setItem('app-10-video-uploaded', JSON.stringify(videos));
-          },
-          error: function (errors) {
-            console.log(errors);
-          }
-        });
-      });
     });
   </script>
 @endsection

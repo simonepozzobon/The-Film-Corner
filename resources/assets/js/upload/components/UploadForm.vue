@@ -12,7 +12,7 @@
 
 			<button
 				id="upload"
-				:class="'btn btn-'+color"
+				:class="'ml-3 btn btn-'+color"
 				@click="sendUpload">
 				<i class="fa fa-upload" aria-hidden="true"></i>
 			</button>
@@ -60,6 +60,7 @@ export default {
 		error_msg: null,
 		file: null,
 		session_token: '',
+		videos: [],
 	}),
 	computed: {
 
@@ -71,8 +72,33 @@ export default {
 		},
 		formatResponse: function(response) {
 			var vue = this
+			console.log('response inside formatting', response)
 			return new Promise((resolve, reject) => {
 				switch (parseInt(this.app_id)) {
+					case 10:
+						console.log('triggered')
+						this.assets_list = document.getElementById('upload-assets')
+						var asset = document.createElement('tr')
+						asset.setAttribute('id', 'video-'+response.video_id)
+						asset.innerHTML =
+							'<td><img src="'+response.img+'" width="57" class="img-fluid"></td>'+
+							'<td>'+
+								'<input id="video-id-src" type="hidden" name="" value="'+response.src+'">'+
+								'<div class="btn-group">'+
+									// '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
+									'<button type="button" class="btn btn-blue" onclick="videoDelete('+response.video_id+')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>'+
+								'</div>'+
+							'</td>'
+						this.assets_list.appendChild(asset)
+
+						var video = {
+			                'img' : response.img,
+			                'video' : response.src
+			            };
+						this.videos.push(video)
+						localStorage.setItem('app-10-video-uploaded', JSON.stringify(this.videos));
+
+
 					case 11:
 						this.assets_list = document.getElementById('upload-assets')
 						var asset =
@@ -167,6 +193,7 @@ export default {
                 }, false)
 
 			request.addEventListener('load', function(e){
+				console.log('risposta dal server', e)
                 if (e.target.status != 200) {
 					// error
 					vue.error_msg = 'Oops something went wrong, plase save the session and reload the page'
