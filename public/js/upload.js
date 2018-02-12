@@ -20339,7 +20339,7 @@ exports.default = {
 		},
 		sendUpload: function sendUpload() {
 			this.session_token = document.getElementById('session-token').value;
-			if (!this.session_token) {
+			if (!this.session_token || this.session.token != 'null') {
 				this.error_msg = 'This session is corrupted. Please, save and reload the application';
 				return false;
 			}
@@ -20931,7 +20931,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("input", {
-          attrs: { id: "session-token", type: "hidden", value: "" }
+          attrs: { id: "session-token", type: "hidden", value: "null" }
         }),
         _vm._v(" "),
         _c(
