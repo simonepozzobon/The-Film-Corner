@@ -170,7 +170,8 @@
     $('body').on('session-loaded', function(e, session){
       console.log('sessione caricata '+session.token);
       $('#token').val(session.token);
-      $('#session-token').attr('value', session.token)
+      // $('#session-token').attr('value', session.token)
+      document.getElementById('session-token').value = session.token
     });
 
     function resizeLibrary()

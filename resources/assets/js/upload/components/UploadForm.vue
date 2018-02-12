@@ -195,7 +195,7 @@ export default {
 		},
 		sendUpload: function() {
 			this.session_token = document.getElementById('session-token').value
-			if (!this.session_token || this.session_token != 'null') {
+			if (!this.session_token || this.session_token == 'null') {
 				this.error_msg = 'This session is corrupted. Please, save and reload the application'
 				return false
 			}
