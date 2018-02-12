@@ -22,6 +22,7 @@
 			<div id="progress-bar" class="progress" style="width: 100%">
 				<div ref="progress_bar" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
+			<div id="percent">{{ this.percent }}%</div>
 		</div>
 		<div v-if="error_msg" class="d-flex justify-content-around pb-4">
 			<div class="error">
@@ -60,6 +61,7 @@ export default {
 		assets_list: null,
 		error_msg: null,
 		file: null,
+		percent: 0,
 		session_token: '',
 		videos: [],
 	}),
@@ -208,6 +210,7 @@ export default {
 
 			// Reset the progress-bar
 			this.$refs.progress_bar.style.width = '0%'
+			this.percent = 0
 
 			// show loader
 			this.loaderShow()
@@ -225,6 +228,7 @@ export default {
 			request.upload.addEventListener('progress', function(e){
                    	var percent = Math.round((e.loaded / e.total) * 100)
 					vue.$refs.progress_bar.style.width = percent+'%'
+					vue.percent = percent
                 }, false)
 
 			request.addEventListener('load', function(e){
@@ -263,11 +267,28 @@ export default {
 
 	#progress-bar {
 		margin-left: 32px;
+
+		> .progress-bar {
+			height: auto;
+		}
 	}
 
 	#loader {
 		display: none;
 		opacity: 0;
+		position: relative;
+
+		> i {
+			position: absolute;
+			height: 16px;
+			width: inherit;
+			top: 25%;
+			transform: translateY(-50%);
+		}
+
+		> #percent {
+			margin-left: 32px;
+		}
 	}
 
 </style>

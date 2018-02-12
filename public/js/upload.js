@@ -20196,6 +20196,7 @@ exports.default = {
 			assets_list: null,
 			error_msg: null,
 			file: null,
+			percent: 0,
 			session_token: '',
 			videos: []
 		};
@@ -20321,6 +20322,7 @@ exports.default = {
 
 			// Reset the progress-bar
 			this.$refs.progress_bar.style.width = '0%';
+			this.percent = 0;
 
 			// show loader
 			this.loaderShow();
@@ -20338,6 +20340,7 @@ exports.default = {
 			request.upload.addEventListener('progress', function (e) {
 				var percent = Math.round(e.loaded / e.total * 100);
 				vue.$refs.progress_bar.style.width = percent + '%';
+				vue.percent = percent;
 			}, false);
 
 			request.addEventListener('load', function (e) {
@@ -20366,6 +20369,7 @@ exports.default = {
 		(0, _jquery2.default)(document).trigger('upload-module-loaded', null);
 	}
 }; //
+//
 //
 //
 //
@@ -20510,7 +20514,7 @@ module.exports = function isAbsoluteURL(url) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#input-box {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n#progress-bar {\n  margin-left: 32px;\n}\n#loader {\n  display: none;\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n#input-box {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n}\n#progress-bar {\n  margin-left: 32px;\n}\n#progress-bar > .progress-bar {\n    height: auto;\n}\n#loader {\n  display: none;\n  opacity: 0;\n  position: relative;\n}\n#loader > i {\n    position: absolute;\n    height: 16px;\n    width: inherit;\n    top: 25%;\n    -webkit-transform: translateY(-50%);\n            transform: translateY(-50%);\n}\n#loader > #percent {\n    margin-left: 32px;\n}\n", ""]);
 
 /***/ }),
 
@@ -20977,7 +20981,11 @@ var render = function() {
             }
           })
         ]
-      )
+      ),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "percent" } }, [
+        _vm._v(_vm._s(this.percent) + "%")
+      ])
     ]),
     _vm._v(" "),
     _vm.error_msg
