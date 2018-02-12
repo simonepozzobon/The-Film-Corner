@@ -34,6 +34,7 @@
 <script>
 import {TimelineMax, TweenMax, Sine} from 'gsap'
 import axios from 'axios'
+import $ from 'jquery'
 
 export default {
 	name: 'UploadForm',
@@ -249,6 +250,7 @@ export default {
 		},
 	},
 	mounted() {
+		$(document).trigger('upload-module-loaded', null)
 	}
 }
 </script>
