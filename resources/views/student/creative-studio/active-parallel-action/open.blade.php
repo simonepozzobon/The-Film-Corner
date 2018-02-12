@@ -191,6 +191,9 @@
     var token = '{{ $token }}';
     $('#token').val(token);
     $('#session-token').attr('value', token)
+    $(document).on('upload-module-loaded', function(event) {
+      $('#session-token').attr('value', token)
+    })
     console.log('---------');
     console.log('Logging all\'inizio');
     console.log(timelines);

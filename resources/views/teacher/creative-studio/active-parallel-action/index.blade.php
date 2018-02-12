@@ -172,7 +172,6 @@
       $('#token').val(session.token);
       $('#session-token').attr('value', session.token)
       $(document).on('upload-module-loaded', function(event) {
-        alert('caricata')
         $('#session-token').attr('value', session.token)
       })
     });

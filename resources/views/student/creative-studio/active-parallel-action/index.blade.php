@@ -171,6 +171,9 @@
       console.log('sessione caricata '+session.token);
       $('#token').val(session.token);
       $('#session-token').attr('value', session.token)
+      $(document).on('upload-module-loaded', function(event) {
+        $('#session-token').attr('value', session.token)
+      })
     });
 
     function resizeLibrary()
