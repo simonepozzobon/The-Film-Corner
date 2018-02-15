@@ -297,7 +297,7 @@ class Utility extends Model
         $obj = json_decode($share->content);
 
         $item->media_type = 'video';
-        $item->featured_media = Storage::disk('local')->url($obj->videos[0]->video);
+        $item->featured_media = Storage::disk('local')->url($obj->video);
         $item->notes = '';
         break;
 
