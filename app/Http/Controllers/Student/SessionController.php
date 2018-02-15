@@ -210,7 +210,8 @@ class SessionController extends Controller
       case 4:
         $data = [
           'timelines' => $request['timelines'],
-          'notes' => $request['notes']
+          'notes' => $request['notes'],
+          'video' => $request['video'],
         ];
 
         $session->content = json_encode($data);
@@ -443,7 +444,8 @@ class SessionController extends Controller
       case 11:
         $data = [
           'timelines' => $request['timelines'],
-          'notes' => $request['notes']
+          'notes' => $request['notes'],
+          'video' => $request['video'],
         ];
 
         $session->content = json_encode($data);

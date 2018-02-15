@@ -153,6 +153,7 @@
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
             'notes'     : $('#notes').val(),
+            'video'     : localStorage.getItem('app-4-video'),
             'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
           };
 
@@ -286,6 +287,7 @@
             'token'     : token,
             'notes'     : $('#notes').val(),
             'title'     : $('input[name="title"]').val(),
+            'video'     : localStorage.getItem('app-11-video'),
             'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
           };
 

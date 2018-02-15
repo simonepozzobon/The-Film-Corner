@@ -88933,9 +88933,10 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
 
     // Rigenera Il video
     Video.send(init, counter).then(function successCallback(response) {
+      localStorage.setItem('app-' + response.data.app + '-video');
       $scope.mediaToggle = {
         sources: [{
-          src: '/' + response.data,
+          src: '/' + response.data.export,
           type: 'video/mp4'
         }]
       };
@@ -88956,15 +88957,15 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
     // }
     Video.send(timelines).then(function successCallback(response) {
       // console.log(timelines)
-      // console.log(response.data)
       // console.log('-------')
       // console.log('DEBUG')
       // console.log(response)
       // console.log('-------')
-      localStorage.setItem('tfc-video-editing', '/' + response.data);
+      localStorage.setItem('app-' + response.data.app + '-video', response.data.export);
+      // localStorage.setItem('tfc-video-editing', '/'+response.data.export)
       $scope.mediaToggle = {
         sources: [{
-          src: '/' + response.data,
+          src: '/' + response.data.export,
           type: 'video/mp4'
         }]
       };

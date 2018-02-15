@@ -230,6 +230,14 @@ class Utility extends Model
         $item->notes = $obj->notes;
         break;
 
+      case '4':
+        $obj = json_decode($share->content);
+
+        $item->media_type = 'video';
+        $item->featured_media = $obj->video;
+        $item->notes = $obj->notes;
+      break;
+
       // Film Specific - Editing - App 5 - Offscreen
       case '5':
         $obj = json_decode($share->content);
@@ -284,7 +292,7 @@ class Utility extends Model
         $item->notes = '';
         break;
 
-      // Creative Studio - Warm up - App 10 - Active Offscreen
+      // Creative Studio - Warm up - App 11 - Active Parallel Action
       case '11':
         $obj = json_decode($share->content);
 
@@ -293,7 +301,7 @@ class Utility extends Model
         $item->notes = '';
         break;
 
-      // Creative Studio - Warm up - App 10 - Active Offscreen
+      // Creative Studio - Warm up - App 12 - Sound Studio
       case '12':
         $obj = json_decode($share->content);
 

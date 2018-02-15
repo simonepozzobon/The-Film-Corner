@@ -7,6 +7,9 @@ use Lanin\Laravel\ApiDebugger\Facade;
 use Illuminate\Support\Facades\Storage;
 use App\Test;
 use App\Video;
+use App\AppsSessions\AppsSession;
+use App\AppsSessions\GuestAppSession;
+use App\AppsSessions\StudentAppSession;
 
 class VideoEditorController extends Controller
 {
@@ -145,7 +148,19 @@ class VideoEditorController extends Controller
 
         exec($cli);
 
-        return response($exportPublicPath);
+        // Find the session relative to this video
+        $session = AppsSession::where('token', '=', $session_id)->first();
+        if (!$session) {
+            $session = StudentSession::where('token', '=', $session_id)->first();
+        }
+        if (!$session) {
+            $session = GuestSession::where('token', '=', $session_id)->first();
+        }
+
+        return response([
+            'app' => $session->app_id,
+            'export' => $exportPublicPath,
+        ]);
     }
 
 }
