@@ -41,13 +41,13 @@ mix
   .js('resources/assets/js/notification/notifications', 'public/js')
   .js('resources/assets/js/feedback-toolbar/feedback-toolbar', 'public/js')
   .js('resources/assets/js/upload/upload', 'public/js')
+  .js('resources/assets/js/fullscreen/message.js', 'public/js')
 
 
   .js('resources/assets/js/conference/speakers', 'public/js/conference')
 
   .js('resources/assets/js/studio-home.js', 'public/js/app')
   .js('resources/assets/js/first-visit', 'public/js')
-
   // .js('resources/assets/js/scroll', 'public/js')
 
   .js('resources/assets/js/app.js', 'public/js')
@@ -64,7 +64,7 @@ mix
   .browserSync({
     proxy: 'http://thefilmcorner.test/',
     browser: 'google chrome',
-    port: 3002,
+    port: 3006,
   })
   .webpackConfig({
     resolve:{

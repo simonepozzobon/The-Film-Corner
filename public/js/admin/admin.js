@@ -1,4 +1,4 @@
-webpackJsonp([24],{
+webpackJsonp([25],{
 
 /***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
@@ -12,7 +12,7 @@ webpackJsonp([24],{
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 
@@ -340,21 +340,14 @@ $(document).ready(function () {
     return ImagePickerOption;
   }();
 }).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
-
-/***/ }),
-
-/***/ 246:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 
 /***/ 247:
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: \n@import \"fileinput\";\n^\n      File to import not found or unreadable: fileinput.\nParent style sheet: stdin\n      in /Users/simonepozzobon/laravel/resources/assets/sass/app.scss (line 64, column 1)\n    at runLoaders (/Users/simonepozzobon/laravel/node_modules/webpack/lib/NormalModule.js:192:19)\n    at /Users/simonepozzobon/laravel/node_modules/loader-runner/lib/LoaderRunner.js:364:11\n    at /Users/simonepozzobon/laravel/node_modules/loader-runner/lib/LoaderRunner.js:230:18\n    at context.callback (/Users/simonepozzobon/laravel/node_modules/loader-runner/lib/LoaderRunner.js:111:13)\n    at Object.asyncSassJobQueue.push [as callback] (/Users/simonepozzobon/laravel/node_modules/sass-loader/lib/loader.js:55:13)\n    at Object.<anonymous> (/Users/simonepozzobon/laravel/node_modules/sass-loader/node_modules/async/dist/async.js:2244:31)\n    at Object.callback (/Users/simonepozzobon/laravel/node_modules/sass-loader/node_modules/async/dist/async.js:906:16)\n    at options.error (/Users/simonepozzobon/laravel/node_modules/node-sass/lib/index.js:294:32)");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
@@ -379,18 +372,25 @@ throw new Error("Module build failed: ModuleBuildError: Module build failed: \n@
 
 /***/ }),
 
-/***/ 537:
+/***/ 251:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 543:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(226);
 __webpack_require__(220);
-__webpack_require__(249);
 __webpack_require__(250);
-__webpack_require__(246);
+__webpack_require__(251);
 __webpack_require__(247);
-module.exports = __webpack_require__(248);
+__webpack_require__(248);
+module.exports = __webpack_require__(249);
 
 
 /***/ })
 
-},[537]);
+},[543]);

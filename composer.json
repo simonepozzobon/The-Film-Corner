@@ -13,7 +13,6 @@
         "egeloen/google-map": "^2.0",
         "egeloen/serializer": "^1.0",
         "intervention/image": "^2.3",
-        "kartik-v/bootstrap-fileinput": "dev-master",
         "laravel/framework": "5.4.*",
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
