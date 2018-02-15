@@ -234,7 +234,7 @@ class Utility extends Model
         $obj = json_decode($share->content);
 
         $item->media_type = 'video';
-        $item->featured_media = $obj->video;
+        $item->featured_media = '/'.$obj->video;
         $item->notes = $obj->notes;
       break;
 
@@ -297,7 +297,7 @@ class Utility extends Model
         $obj = json_decode($share->content);
 
         $item->media_type = 'video';
-        $item->featured_media = $obj->video;
+        $item->featured_media = '/'.$obj->video;
         $item->notes = '';
         break;
 
