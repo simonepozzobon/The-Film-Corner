@@ -20466,6 +20466,10 @@ var io = __webpack_require__(94); //
 //
 //
 //
+//
+//
+//
+//
 
 var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
 exports.default = {
@@ -23625,7 +23629,9 @@ var render = function() {
                     ]
                   )
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _vm._m(2, false, false)
             ]),
             _vm._v(" "),
             _c("notifications-dropdown-menu", {
@@ -23681,6 +23687,33 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "fa fa-cog", attrs: { "aria-hidden": "true" } })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "nav-item" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link",
+          attrs: {
+            href: "/downloads/user-guide/TFC_Users_Guide_EN.pdf",
+            target: "_blank",
+            "data-toggle": "tooltip",
+            "data-placement": "bottom",
+            "data-html": "true",
+            title: "User Guide"
+          }
+        },
+        [
+          _c("i", {
+            staticClass: "fa fa-book",
+            attrs: { "aria-hidden": "true" }
+          })
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true

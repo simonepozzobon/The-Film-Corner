@@ -190,7 +190,11 @@
               </a>
             </div>
           </li>
-
+          <li class="nav-item">
+            <a href="/downloads/user-guide/TFC_Users_Guide_EN.pdf" target="_blank" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="User Guide">
+              <i class="fa fa-book" aria-hidden="true"/>
+            </a>
+          </li>
         </ul>
         <notifications-dropdown-menu :notifications="notifs"/>
         <notifications

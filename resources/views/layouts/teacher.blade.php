@@ -18,9 +18,9 @@
   </head>
   <body>
     @include('layouts.teacher._menu')
-    {{-- <div id="fullscreen-messages">
-      <message></message>
-    </div> --}}
+    <div id="fullscreen-messages">
+      {{-- <message></message> --}}
+    </div>
     @if ($type == 'app')
       <main>
         @yield('content')
