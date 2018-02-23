@@ -245,7 +245,7 @@
         },
         success: function (response) {
           console.log(response);
-          if (response.status == 'too_many_shared') {
+          if (response.status == 'too_many_shared' || response.status == 'already_shared') {
             $('#sessionModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();

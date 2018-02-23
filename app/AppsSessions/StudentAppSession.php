@@ -49,4 +49,14 @@ class StudentAppSession extends Model
             ['teacher_approved', '=', 0],
         ])->count();
     }
+
+    public function check_if_already_shared($studentId, $token)
+    {
+        return StudentAppSession::where([
+            ['student_id', '=', $studentId],
+            ['teacher_shared', '=', 1],
+            ['teacher_approved', '=', 0],
+            ['token', '=', $token]
+        ])->count();
+    }
 }
