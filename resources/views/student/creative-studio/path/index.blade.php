@@ -276,6 +276,9 @@
             data += '</div>';
             $('#modalSession').html(data);
             $('#sessionModal').modal('show');
+          } else {
+            var message = new CustomEvent('fullscreen-message', {detail: 'Shared!'})
+            document.dispatchEvent(message)
           }
         },
         error: function (xhr, status) {
