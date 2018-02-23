@@ -20062,101 +20062,29 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 252:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 253:
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gsap__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gsap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_gsap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_scrollmonitor__ = __webpack_require__(367);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_scrollmonitor___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_scrollmonitor__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
+var _gsap = __webpack_require__(19);
 
+var _axios = __webpack_require__(13);
 
-/* harmony default export */ __webpack_exports__["a"] = ({
+var _axios2 = _interopRequireDefault(_axios);
+
+var _scrollmonitor = __webpack_require__(368);
+
+var _scrollmonitor2 = _interopRequireDefault(_scrollmonitor);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
   name: 'FeedbackToolbar',
   props: {
     user: {
@@ -20188,37 +20116,37 @@ module.exports = function dispatchRequest(config) {
     mouseEnter: function mouseEnter() {
       if (!this.status) {
         if (this.button_color) {
-          __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to('.feedback-bg', .3, {
+          _gsap.TweenMax.to('.feedback-bg', .3, {
             backgroundColor: 'rgb(37, 37, 37)', // tfc-green-var
             color: 'rgb(149, 226, 218)',
             border: '1px solid rgba(37, 37, 37, 0)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
         } else {
-          var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+          var t1 = new _gsap.TimelineMax();
           t1.to('.feedback-bg', .3, {
             backgroundColor: 'rgb(149, 226, 218)', // tfc-green-var
             color: 'rgb(37, 37, 37)',
             border: '1px solid rgba(37, 37, 37, 0)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
 
-          var t2 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+          var t2 = new _gsap.TimelineMax();
           t2.to(this.$refs.feedback_tooltip, .2, {
             color: 'rgb(183, 204, 94)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           }).to(this.$refs.feedback_tooltip, .2, {
             color: 'rgb(233, 200, 69)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           }).to(this.$refs.feedback_tooltip, .2, {
             color: 'rgb(166, 219, 226)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           }).to(this.$refs.feedback_tooltip, .2, {
             color: 'rgb(232, 163, 96)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           }).to(this.$refs.feedback_tooltip, .2, {
             color: 'rgb(149, 226, 218)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
         }
       } else {
@@ -20228,23 +20156,23 @@ module.exports = function dispatchRequest(config) {
     mouseLeave: function mouseLeave() {
       if (!this.status) {
         if (this.button_color) {
-          __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to('.feedback-bg', .4, {
+          _gsap.TweenMax.to('.feedback-bg', .4, {
             backgroundColor: 'rgb(149, 226, 218)', // tfc-dark-green-var
             color: 'rgb(37, 37, 37)',
             border: '1px solid rgba(37, 37, 37, 0)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
         } else {
-          __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to('.feedback-bg', .4, {
+          _gsap.TweenMax.to('.feedback-bg', .4, {
             backgroundColor: 'rgba(149, 226, 218, 0)', // tfc-dark-green-var
             color: 'rgb(37, 37, 37)',
             border: '1px solid rgba(37, 37, 37, 1)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
 
-          __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to(this.$refs.feedback_tooltip, .4, {
+          _gsap.TweenMax.to(this.$refs.feedback_tooltip, .4, {
             color: 'rgb(37, 37, 37)',
-            ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+            ease: _gsap.Power4.easeInOut
           });
         }
       } else {
@@ -20261,13 +20189,13 @@ module.exports = function dispatchRequest(config) {
       }
     },
     openDialog: function openDialog() {
-      var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+      var t1 = new _gsap.TimelineMax();
       t1.to(this.$refs.feedback_dialog, .4, {
         opacity: 1,
         width: '44rem',
         height: '24rem',
         display: 'flex',
-        ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+        ease: _gsap.Power4.easeInOut
       }).staggerTo([this.$refs.dialog_title, this.$refs.dialog_content], .4, {
         delay: .1,
         opacity: 1,
@@ -20277,17 +20205,17 @@ module.exports = function dispatchRequest(config) {
       this.status = true;
     },
     closeDialog: function closeDialog() {
-      var t1 = new __WEBPACK_IMPORTED_MODULE_0_gsap__["TimelineMax"]();
+      var t1 = new _gsap.TimelineMax();
       t1.to([this.$refs.dialog_title, this.$refs.dialog_content], .4, {
         opacity: 0,
         display: 'none'
       }).to(this.$refs.feedback_dialog, .4, {
         width: '4rem',
         height: '4rem',
-        ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+        ease: _gsap.Power4.easeInOut
       }).to(this.$refs.feedback_dialog, .4, {
         opacity: 0,
-        ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+        ease: _gsap.Power4.easeInOut
       }).set(this.$refs.feedback_dialog, {
         display: 'none',
         onComplete: this.mouseLeave
@@ -20310,7 +20238,7 @@ module.exports = function dispatchRequest(config) {
       data.append('location', window.location.href);
 
       var vue = this;
-      __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/api/v1/send-feedback', data).then(function () {
+      _axios2.default.post('/api/v1/send-feedback', data).then(function () {
         vue.comment = '';
         vue.closeDialog();
       });
@@ -20318,7 +20246,7 @@ module.exports = function dispatchRequest(config) {
     scrolling: function scrolling() {
       var _this = this;
 
-      var elementWatcher = __WEBPACK_IMPORTED_MODULE_2_scrollmonitor___default.a.create('footer');
+      var elementWatcher = _scrollmonitor2.default.create('footer');
 
       elementWatcher.enterViewport(function () {
         _this.button_color = false;
@@ -20333,24 +20261,102 @@ module.exports = function dispatchRequest(config) {
       });
     },
     showTooltip: function showTooltip() {
-      __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to(this.$refs.feedback_tooltip, .4, {
+      _gsap.TweenMax.to(this.$refs.feedback_tooltip, .4, {
         opacity: 1,
         display: 'block',
-        ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+        ease: _gsap.Power4.easeInOut
       });
     },
     hideTooltip: function hideTooltip() {
-      __WEBPACK_IMPORTED_MODULE_0_gsap__["TweenMax"].to(this.$refs.feedback_tooltip, .4, {
+      _gsap.TweenMax.to(this.$refs.feedback_tooltip, .4, {
         opacity: 0,
         display: 'none',
-        ease: __WEBPACK_IMPORTED_MODULE_0_gsap__["Power4"].easeInOut
+        ease: _gsap.Power4.easeInOut
       });
     }
   },
   mounted: function mounted() {
     this.scrolling();
   }
-});
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -20489,22 +20495,26 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 290:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ 291:
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_FeedbackToolbar_vue__ = __webpack_require__(410);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue__);
 
 
+var _FeedbackToolbar = __webpack_require__(411);
 
+var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
 
-new __WEBPACK_IMPORTED_MODULE_1_vue___default.a({
+var _vue = __webpack_require__(16);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
   el: '#feedback-toolbar',
   components: {
-    FeedbackToolbar: __WEBPACK_IMPORTED_MODULE_0__components_FeedbackToolbar_vue__["a" /* default */]
+    FeedbackToolbar: _FeedbackToolbar2.default
   }
 });
 
@@ -20767,7 +20777,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 345:
+/***/ 346:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
@@ -20840,7 +20850,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 367:
+/***/ 368:
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define("scrollMonitor",[],e):"object"==typeof exports?exports.scrollMonitor=e():t.scrollMonitor=e()}(this,function(){return function(t){function e(o){if(i[o])return i[o].exports;var s=i[o]={exports:{},id:o,loaded:!1};return t[o].call(s.exports,s,s.exports,e),s.loaded=!0,s.exports}var i={};return e.m=t,e.c=i,e.p="",e(0)}([function(t,e,i){"use strict";var o=i(1),s=o.isInBrowser,n=i(2),r=new n(s?document.body:null);r.setStateFromDOM(null),r.listenToDOM(),s&&(window.scrollMonitor=r),t.exports=r},function(t,e){"use strict";e.VISIBILITYCHANGE="visibilityChange",e.ENTERVIEWPORT="enterViewport",e.FULLYENTERVIEWPORT="fullyEnterViewport",e.EXITVIEWPORT="exitViewport",e.PARTIALLYEXITVIEWPORT="partiallyExitViewport",e.LOCATIONCHANGE="locationChange",e.STATECHANGE="stateChange",e.eventTypes=[e.VISIBILITYCHANGE,e.ENTERVIEWPORT,e.FULLYENTERVIEWPORT,e.EXITVIEWPORT,e.PARTIALLYEXITVIEWPORT,e.LOCATIONCHANGE,e.STATECHANGE],e.isOnServer="undefined"==typeof window,e.isInBrowser=!e.isOnServer,e.defaultOffsets={top:0,bottom:0}},function(t,e,i){"use strict";function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t){return c?0:t===document.body?window.innerHeight||document.documentElement.clientHeight:t.clientHeight}function n(t){return c?0:t===document.body?Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.documentElement.clientHeight):t.scrollHeight}function r(t){return c?0:t===document.body?window.pageYOffset||document.documentElement&&document.documentElement.scrollTop||document.body.scrollTop:t.scrollTop}var h=i(1),c=h.isOnServer,a=h.isInBrowser,l=h.eventTypes,p=i(3),u=!1;if(a)try{var w=Object.defineProperty({},"passive",{get:function(){u=!0}});window.addEventListener("test",null,w)}catch(t){}var d=!!u&&{capture:!1,passive:!0},f=function(){function t(e,i){function h(){if(a.viewportTop=r(e),a.viewportBottom=a.viewportTop+a.viewportHeight,a.documentHeight=n(e),a.documentHeight!==p){for(u=a.watchers.length;u--;)a.watchers[u].recalculateLocation();p=a.documentHeight}}function c(){for(w=a.watchers.length;w--;)a.watchers[w].update();for(w=a.watchers.length;w--;)a.watchers[w].triggerCallbacks()}o(this,t);var a=this;this.item=e,this.watchers=[],this.viewportTop=null,this.viewportBottom=null,this.documentHeight=n(e),this.viewportHeight=s(e),this.DOMListener=function(){t.prototype.DOMListener.apply(a,arguments)},this.eventTypes=l,i&&(this.containerWatcher=i.create(e));var p,u,w;this.update=function(){h(),c()},this.recalculateLocations=function(){this.documentHeight=0,this.update()}}return t.prototype.listenToDOM=function(){a&&(window.addEventListener?(this.item===document.body?window.addEventListener("scroll",this.DOMListener,d):this.item.addEventListener("scroll",this.DOMListener,d),window.addEventListener("resize",this.DOMListener)):(this.item===document.body?window.attachEvent("onscroll",this.DOMListener):this.item.attachEvent("onscroll",this.DOMListener),window.attachEvent("onresize",this.DOMListener)),this.destroy=function(){window.addEventListener?(this.item===document.body?(window.removeEventListener("scroll",this.DOMListener,d),this.containerWatcher.destroy()):this.item.removeEventListener("scroll",this.DOMListener,d),window.removeEventListener("resize",this.DOMListener)):(this.item===document.body?(window.detachEvent("onscroll",this.DOMListener),this.containerWatcher.destroy()):this.item.detachEvent("onscroll",this.DOMListener),window.detachEvent("onresize",this.DOMListener))})},t.prototype.destroy=function(){},t.prototype.DOMListener=function(t){this.setStateFromDOM(t)},t.prototype.setStateFromDOM=function(t){var e=r(this.item),i=s(this.item),o=n(this.item);this.setState(e,i,o,t)},t.prototype.setState=function(t,e,i,o){var s=e!==this.viewportHeight||i!==this.contentHeight;if(this.latestEvent=o,this.viewportTop=t,this.viewportHeight=e,this.viewportBottom=t+e,this.contentHeight=i,s)for(var n=this.watchers.length;n--;)this.watchers[n].recalculateLocation();this.updateAndTriggerWatchers(o)},t.prototype.updateAndTriggerWatchers=function(t){for(var e=this.watchers.length;e--;)this.watchers[e].update();for(e=this.watchers.length;e--;)this.watchers[e].triggerCallbacks(t)},t.prototype.createCustomContainer=function(){return new t},t.prototype.createContainer=function(e){"string"==typeof e?e=document.querySelector(e):e&&e.length>0&&(e=e[0]);var i=new t(e,this);return i.setStateFromDOM(),i.listenToDOM(),i},t.prototype.create=function(t,e){"string"==typeof t?t=document.querySelector(t):t&&t.length>0&&(t=t[0]);var i=new p(this,t,e);return this.watchers.push(i),i},t.prototype.beget=function(t,e){return this.create(t,e)},t}();t.exports=f},function(t,e,i){"use strict";function o(t,e,i){function o(t,e){if(0!==t.length)for(E=t.length;E--;)y=t[E],y.callback.call(s,e,s),y.isOne&&t.splice(E,1)}var s=this;this.watchItem=e,this.container=t,i?i===+i?this.offsets={top:i,bottom:i}:this.offsets={top:i.top||w.top,bottom:i.bottom||w.bottom}:this.offsets=w,this.callbacks={};for(var d=0,f=u.length;d<f;d++)s.callbacks[u[d]]=[];this.locked=!1;var m,v,b,I,E,y;this.triggerCallbacks=function(t){switch(this.isInViewport&&!m&&o(this.callbacks[r],t),this.isFullyInViewport&&!v&&o(this.callbacks[h],t),this.isAboveViewport!==b&&this.isBelowViewport!==I&&(o(this.callbacks[n],t),v||this.isFullyInViewport||(o(this.callbacks[h],t),o(this.callbacks[a],t)),m||this.isInViewport||(o(this.callbacks[r],t),o(this.callbacks[c],t))),!this.isFullyInViewport&&v&&o(this.callbacks[a],t),!this.isInViewport&&m&&o(this.callbacks[c],t),this.isInViewport!==m&&o(this.callbacks[n],t),!0){case m!==this.isInViewport:case v!==this.isFullyInViewport:case b!==this.isAboveViewport:case I!==this.isBelowViewport:o(this.callbacks[p],t)}m=this.isInViewport,v=this.isFullyInViewport,b=this.isAboveViewport,I=this.isBelowViewport},this.recalculateLocation=function(){if(!this.locked){var t=this.top,e=this.bottom;if(this.watchItem.nodeName){var i=this.watchItem.style.display;"none"===i&&(this.watchItem.style.display="");for(var s=0,n=this.container;n.containerWatcher;)s+=n.containerWatcher.top-n.containerWatcher.container.viewportTop,n=n.containerWatcher.container;var r=this.watchItem.getBoundingClientRect();this.top=r.top+this.container.viewportTop-s,this.bottom=r.bottom+this.container.viewportTop-s,"none"===i&&(this.watchItem.style.display=i)}else this.watchItem===+this.watchItem?this.watchItem>0?this.top=this.bottom=this.watchItem:this.top=this.bottom=this.container.documentHeight-this.watchItem:(this.top=this.watchItem.top,this.bottom=this.watchItem.bottom);this.top-=this.offsets.top,this.bottom+=this.offsets.bottom,this.height=this.bottom-this.top,void 0===t&&void 0===e||this.top===t&&this.bottom===e||o(this.callbacks[l],null)}},this.recalculateLocation(),this.update(),m=this.isInViewport,v=this.isFullyInViewport,b=this.isAboveViewport,I=this.isBelowViewport}var s=i(1),n=s.VISIBILITYCHANGE,r=s.ENTERVIEWPORT,h=s.FULLYENTERVIEWPORT,c=s.EXITVIEWPORT,a=s.PARTIALLYEXITVIEWPORT,l=s.LOCATIONCHANGE,p=s.STATECHANGE,u=s.eventTypes,w=s.defaultOffsets;o.prototype={on:function(t,e,i){switch(!0){case t===n&&!this.isInViewport&&this.isAboveViewport:case t===r&&this.isInViewport:case t===h&&this.isFullyInViewport:case t===c&&this.isAboveViewport&&!this.isInViewport:case t===a&&this.isInViewport&&this.isAboveViewport:if(e.call(this,this.container.latestEvent,this),i)return}if(!this.callbacks[t])throw new Error("Tried to add a scroll monitor listener of type "+t+". Your options are: "+u.join(", "));this.callbacks[t].push({callback:e,isOne:i||!1})},off:function(t,e){if(!this.callbacks[t])throw new Error("Tried to remove a scroll monitor listener of type "+t+". Your options are: "+u.join(", "));for(var i,o=0;i=this.callbacks[t][o];o++)if(i.callback===e){this.callbacks[t].splice(o,1);break}},one:function(t,e){this.on(t,e,!0)},recalculateSize:function(){this.height=this.watchItem.offsetHeight+this.offsets.top+this.offsets.bottom,this.bottom=this.top+this.height},update:function(){this.isAboveViewport=this.top<this.container.viewportTop,this.isBelowViewport=this.bottom>this.container.viewportBottom,this.isInViewport=this.top<this.container.viewportBottom&&this.bottom>this.container.viewportTop,this.isFullyInViewport=this.top>=this.container.viewportTop&&this.bottom<=this.container.viewportBottom||this.isAboveViewport&&this.isBelowViewport},destroy:function(){var t=this.container.watchers.indexOf(this),e=this;this.container.watchers.splice(t,1);for(var i=0,o=u.length;i<o;i++)e.callbacks[u[i]].length=0},lock:function(){this.locked=!0},unlock:function(){this.locked=!1}};for(var d=function(t){return function(e,i){this.on.call(this,t,e,i)}},f=0,m=u.length;f<m;f++){var v=u[f];o.prototype[v]=d(v)}t.exports=o}])});
@@ -20968,17 +20978,19 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 410:
+/***/ 411:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__ = __webpack_require__(252);
-/* unused harmony namespace reexport */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FeedbackToolbar_vue__ = __webpack_require__(466);
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__ = __webpack_require__(253);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FeedbackToolbar_vue__ = __webpack_require__(467);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(522)
+  __webpack_require__(523)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -20995,7 +21007,7 @@ var __vue_scopeId__ = "data-v-741be5b7"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_true_presets_env_modules_false_targets_browsers_2_uglify_true_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue___default.a,
   __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FeedbackToolbar_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
@@ -21020,12 +21032,12 @@ if (false) {(function () {
   })
 })()}
 
-/* harmony default export */ __webpack_exports__["a"] = (Component.exports);
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
 
 
 /***/ }),
 
-/***/ 466:
+/***/ 467:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21243,13 +21255,13 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 522:
+/***/ 523:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(345);
+var content = __webpack_require__(346);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21270,10 +21282,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 557:
+/***/ 558:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(290);
+module.exports = __webpack_require__(291);
 
 
 /***/ }),
@@ -21826,4 +21838,4 @@ module.exports = Cancel;
 
 /***/ })
 
-},[557]);
+},[558]);

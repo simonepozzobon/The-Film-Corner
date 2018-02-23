@@ -1,22 +1,28 @@
 webpackJsonp([25],{
 
-/***/ 276:
+/***/ 277:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function($) {// require('/settings.js');
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+// require('/settings.js');
 
 
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
 
 /***/ }),
 
-/***/ 282:
+/***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(jQuery) {// Image Picker
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {
+
+// Image Picker
 // by Rodrigo Vera
 //
 // Version 0.3.1
@@ -333,15 +339,8 @@ $(document).ready(function () {
 
     return ImagePickerOption;
   }();
-}).call(this);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
-
-/***/ }),
-
-/***/ 303:
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
+}).call(undefined);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
 
 /***/ }),
 
@@ -373,18 +372,25 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 549:
+/***/ 308:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 550:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(282);
-__webpack_require__(276);
-__webpack_require__(306);
+__webpack_require__(283);
+__webpack_require__(277);
 __webpack_require__(307);
-__webpack_require__(303);
+__webpack_require__(308);
 __webpack_require__(304);
-module.exports = __webpack_require__(305);
+__webpack_require__(305);
+module.exports = __webpack_require__(306);
 
 
 /***/ })
 
-},[549]);
+},[550]);
