@@ -1,7 +1,7 @@
 <template>
 	<div id="fullscreen-message">
 		<div id="display-message" class="message text-success" ref="message">
-			Messaggio
+			{{ this.message }}
 		</div>
 	</div>
 </template>
@@ -22,11 +22,12 @@ export default {
 				ease: Power4.easeInOut,
 			})
 				.to('#display-message', .2, {
+					delay: 0.3,
 					opacity: 1,
 					display: 'block',
 					ease: Sine.easeInOut,
 					onComplete: function() {
-						setTimeout(vue.hideMessage, 7000)
+						setTimeout(vue.hideMessage, 2500)
 					}
 				})
 		},
@@ -47,7 +48,8 @@ export default {
 	},
 	created() {
 		document.addEventListener('fullscreen-message', (message) => {
-			this.message = message
+			console.log('evento ricevuto', message.detail);
+			this.message = message.detail
 			this.showMessage()
 		})
 	},
@@ -66,7 +68,7 @@ export default {
 		width: 100%;
 		height: 100%;
 		z-index: 9999;
-		background-color: rgba($modal-content-bg, .8);
+		background-color: rgba($modal-content-bg, 1);
 
 		display: none;
 		opacity: 0;

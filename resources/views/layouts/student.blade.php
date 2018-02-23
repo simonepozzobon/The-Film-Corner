@@ -16,8 +16,11 @@
     @include('layouts.student._head')
   </head>
   <body>
-
     @include('layouts.student._menu')
+
+    <div id="fullscreen-messages">
+      <message></message>
+    </div>
 
     @if ($type == 'app')
       <main>
@@ -34,5 +37,6 @@
     @endphp
     @include('layouts.student._footer', ['footer' => $footer])
     @include('layouts.student._scripts', ['type' => $type])
+    <script src="{{ mix('js/message.js') }}"></script>
   </body>
 </html>
