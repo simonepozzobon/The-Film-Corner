@@ -20,12 +20,12 @@
   <div class="row">
     <div class="col-md-4">
       <app-box title="Utenti Online" color="blue">
-        <h1>{{ $users->count() }}</h1>
+        {{-- <h1>{{ $users->count() }}</h1> --}}
       </app-box>
     </div>
     <div class="col-md-4">
       <app-box title="Sessioni" color="blue">
-        <h1>{{ $sessions->count() }}</h1>
+        {{-- <h1>{{ $sessions->count() }}</h1> --}}
       </app-box>
     </div>
     <div class="col-md-4">
