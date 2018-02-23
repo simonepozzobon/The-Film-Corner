@@ -19,7 +19,7 @@
   <body>
     @include('layouts.teacher._menu')
     <div id="fullscreen-messages">
-      {{-- <message></message> --}}
+      <message></message>
     </div>
     @if ($type == 'app')
       <main>
