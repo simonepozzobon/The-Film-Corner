@@ -49,9 +49,9 @@ class AdminController extends Controller
       $users = 0;
       $page_views = 0;
       $page_views_tot = 0;
-      foreach ($page_views as $key => $page_view) {
-        $page_views_tot = $page_views_tot + $page_view->total;
-      }
+      // foreach ($page_views as $key => $page_view) {
+      //   $page_views_tot = $page_views_tot + $page_view->total;
+      // }
 
       return view('admin', compact('users', 'sessions', 'page_views_tot', 'visited'));
     }
