@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
-use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
+// use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
 
 class AdminController extends Controller
 {
@@ -42,9 +42,12 @@ class AdminController extends Controller
           $visited = true;
       }
 
-      $sessions = Tracker::sessions(60 * 24);
-      $users = Tracker::onlineUsers();
-      $page_views = Tracker::pageViews(60 * 24 * 30);
+      // $sessions = Tracker::sessions(60 * 24);
+      // $users = Tracker::onlineUsers();
+      // $page_views = Tracker::pageViews(60 * 24 * 30);
+      $sessions = 0;
+      $users = 0;
+      $page_views = 0;
       $page_views_tot = 0;
       foreach ($page_views as $key => $page_view) {
         $page_views_tot = $page_views_tot + $page_view->total;
