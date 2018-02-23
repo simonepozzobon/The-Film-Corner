@@ -1,28 +1,22 @@
 webpackJsonp([25],{
 
-/***/ 220:
+/***/ 276:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-// require('/settings.js');
+/* WEBPACK VAR INJECTION */(function($) {// require('/settings.js');
 
 
 $(document).ready(function () {
   $('.image-picker').imagepicker();
 });
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ }),
 
-/***/ 226:
+/***/ 282:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* WEBPACK VAR INJECTION */(function(jQuery) {
-
-// Image Picker
+/* WEBPACK VAR INJECTION */(function(jQuery) {// Image Picker
 // by Rodrigo Vera
 //
 // Version 0.3.1
@@ -339,58 +333,58 @@ $(document).ready(function () {
 
     return ImagePickerOption;
   }();
-}).call(undefined);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
+}).call(this);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56)))
 
 /***/ }),
 
-/***/ 247:
+/***/ 303:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 248:
+/***/ 304:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 249:
+/***/ 305:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 250:
+/***/ 306:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 251:
+/***/ 307:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
 
-/***/ 543:
+/***/ 549:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(226);
-__webpack_require__(220);
-__webpack_require__(250);
-__webpack_require__(251);
-__webpack_require__(247);
-__webpack_require__(248);
-module.exports = __webpack_require__(249);
+__webpack_require__(282);
+__webpack_require__(276);
+__webpack_require__(306);
+__webpack_require__(307);
+__webpack_require__(303);
+__webpack_require__(304);
+module.exports = __webpack_require__(305);
 
 
 /***/ })
 
-},[543]);
+},[549]);
