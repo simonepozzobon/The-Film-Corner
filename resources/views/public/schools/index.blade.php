@@ -23,18 +23,34 @@
             <li>Classe 3V1 del Liceo Artistico P. Candiani, Busto Arsizio (VA) - Prof.ssa Madonia</li>
             <li>Classe 3V2 del Liceo Artistico P. Candiani, Busto Arsizio (VA)- Prof. Cunocchiella</li>
           </ul>
+          <h1 class="mt">NORTHERN IRELAND</h1>
+          <ul>
+            <li>Lisneal College - Derry</li>
+            <li>Foyle College - Derry</li>
+            <li>Oakgrove Integrated College - Derry</li>
+            <li>St Cecilia's College - Derry</li>
+            <li>St Joseph's College - Derry</li>
+          </ul>
           <h1 class="mt">SERBIA</h1>
           <ul>
-            <li></li>
+            <li>Artmedia School, Belgrade</li>
+            <li>Contemporary Gymnasium, Belgrade</li>
+            <li>ITHS - Contemporary Gymnasium, Belgrade</li>
+            <li>School for Design, Belgrade</li>
           </ul>
           <h1 class="mt">UK</h1>
           <ul>
-            <li></li>
+            <li>Gosden House School, Horsham Road, Guildford GU5 0AH - Robin Harrison</li>
+            <li>Congleton High School, Box Lane, Congleton, Cheshire, CW12 4NS - Miss G Early</li>
+            <li>Liverpool College, Queens DriveLiverpool, L18 8BG - Joanna Lane</li>
+            <li>Glenthorne High School, 270 Sutton Common Road, Sutton SM3 9PS - Nils Go</li>
+            <li>Valley Road School, 26 Valley Road,  Henley On Thames, RG9 1RR - Julie Green</li>
+            <li>University College London, Institute of Education - Kostas Voros</li>
+            <li>Alleyns School, Townley Road, London SE22 8SU - Mark Grogan</li>
+            <li>Scottish Scree Education - Graham Fitzpatrick</li>
+            <li>Association of Media Educators, Scotland - Rick Instrell</li>
           </ul>
-          <h1 class="mt">NORTHERN IRELAND</h1>
-          <ul>
-            <li></li>
-          </ul>
+
       </div>
     </div>
   </div>
