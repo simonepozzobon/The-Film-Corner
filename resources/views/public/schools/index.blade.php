@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title', 'Filmography')
+@section('title', 'Schools')
 @section('content')
 <div class="container">
   <div class="row mt">
