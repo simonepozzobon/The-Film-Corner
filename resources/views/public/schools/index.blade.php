@@ -41,7 +41,7 @@
           <h1 class="mt">UK</h1>
           <ul>
             <li>Gosden House School, Horsham Road, Guildford GU5 0AH</li>
-            <li>Congleton High School, Box Lane, Congleton, Cheshire, CW12 4NS - Mi</li>
+            <li>Congleton High School, Box Lane, Congleton, Cheshire, CW12 4NS</li>
             <li>Liverpool College, Queens DriveLiverpool, L18 8BG</li>
             <li>Glenthorne High School, 270 Sutton Common Road, Sutton SM3 9PS</li>
             <li>Valley Road School, 26 Valley Road,  Henley On Thames, RG9 1RR</li>
