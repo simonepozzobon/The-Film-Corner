@@ -1,0 +1,63 @@
+{
+  "_class": "group",
+  "do_objectID": "0A4E2EDB-BA3E-4744-BC31-B7593A0B24B5",
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 24,
+    "width": 30,
+    "x": 143.8331571394964,
+    "y": 465.0097051808791
+  },
+  "hasClickThrough": false,
+  "isFlippedHorizontal": true,
+  "isFlippedVertical": true,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "layers": [
+    {
+      "class": "shapeGroup",
+      "id": "42A7B5B0-D52B-4220-A659-7C3FD9E0D2D9"
+    },
+    {
+      "class": "shapeGroup",
+      "id": "14049DD1-2C44-4C4A-AACC-27D58490ADE3"
+    },
+    {
+      "class": "shapeGroup",
+      "id": "BCBA57D1-EC36-4B83-BE45-73CFDB0ACD70"
+    },
+    {
+      "class": "shapeGroup",
+      "id": "D3C36919-A26B-4996-98BA-82BFBE72B042"
+    }
+  ],
+  "name": "camera",
+  "nameIsFixed": true,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 303,
+  "shouldBreakMaskChain": false,
+  "style": {
+    "_class": "style",
+    "endDecorationType": 0,
+    "miterLimit": 10,
+    "startDecorationType": 0
+  },
+  "userInfo": {
+    "com.animaapp.stc-sketch-plugin": {
+      "kModelPropertiesKey": {
+      }
+    }
+  }
+}

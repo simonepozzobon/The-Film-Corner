@@ -11550,7 +11550,147 @@ var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(globa
 			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
 			_blankArray = [];
 
+<<<<<<< HEAD
 		TweenMax.version = "1.20.4";
+=======
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * VERSION: 1.20.3
+ * DATE: 2017-10-02
+ * UPDATES AND DOCS AT: http://greensock.com
+ * 
+ * Includes all of the following: TweenLite, TweenMax, TimelineLite, TimelineMax, EasePack, CSSPlugin, RoundPropsPlugin, BezierPlugin, AttrPlugin, DirectionalRotationPlugin
+ *
+ * @license Copyright (c) 2008-2017, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ **/
+var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
+(_gsScope._gsQueue || (_gsScope._gsQueue = [])).push( function() {
+
+	"use strict";
+
+	_gsScope._gsDefine("TweenMax", ["core.Animation","core.SimpleTimeline","TweenLite"], function(Animation, SimpleTimeline, TweenLite) {
+
+		var _slice = function(a) { //don't use [].slice because that doesn't work in IE8 with a NodeList that's returned by querySelectorAll()
+				var b = [],
+					l = a.length,
+					i;
+				for (i = 0; i !== l; b.push(a[i++]));
+				return b;
+			},
+			_applyCycle = function(vars, targets, i) {
+				var alt = vars.cycle,
+					p, val;
+				for (p in alt) {
+					val = alt[p];
+					vars[p] = (typeof(val) === "function") ? val(i, targets[i]) : val[i % val.length];
+				}
+				delete vars.cycle;
+			},
+			TweenMax = function(target, duration, vars) {
+				TweenLite.call(this, target, duration, vars);
+				this._cycle = 0;
+				this._yoyo = (this.vars.yoyo === true || !!this.vars.yoyoEase);
+				this._repeat = this.vars.repeat || 0;
+				this._repeatDelay = this.vars.repeatDelay || 0;
+				if (this._repeat) {
+					this._uncache(true); //ensures that if there is any repeat, the totalDuration will get recalculated to accurately report it.
+				}
+				this.render = TweenMax.prototype.render; //speed optimization (avoid prototype lookup on this "hot" method)
+			},
+			_tinyNum = 0.0000000001,
+			TweenLiteInternals = TweenLite._internals,
+			_isSelector = TweenLiteInternals.isSelector,
+			_isArray = TweenLiteInternals.isArray,
+			p = TweenMax.prototype = TweenLite.to({}, 0.1, {}),
+			_blankArray = [];
+
+		TweenMax.version = "1.20.3";
+>>>>>>> master
 		p.constructor = TweenMax;
 		p.kill()._gc = false;
 		TweenMax.killTweensOf = TweenMax.killDelayedCallsTo = TweenLite.killTweensOf;
@@ -19478,8 +19618,55 @@ if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); } //necessary in case Tween
 
 /***/ }),
 
+<<<<<<< HEAD
 /***/ 2:
 /***/ (function(module, exports) {
+=======
+/***/ 21:
+/***/ (function(module, exports) {
+
+/**
+ * Translates the list format produced by css-loader into something
+ * easier to manipulate.
+ */
+module.exports = function listToStyles (parentId, list) {
+  var styles = []
+  var newStyles = {}
+  for (var i = 0; i < list.length; i++) {
+    var item = list[i]
+    var id = item[0]
+    var css = item[1]
+    var media = item[2]
+    var sourceMap = item[3]
+    var part = {
+      id: parentId + ':' + i,
+      css: css,
+      media: media,
+      sourceMap: sourceMap
+    }
+    if (!newStyles[id]) {
+      styles.push(newStyles[id] = { id: id, parts: [part] })
+    } else {
+      newStyles[id].parts.push(part)
+    }
+  }
+  return styles
+}
+
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+var bind = __webpack_require__(12);
+var Axios = __webpack_require__(24);
+var defaults = __webpack_require__(5);
+>>>>>>> master
 
 // shim for using process in browser
 var process = module.exports = {};
@@ -20452,7 +20639,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+<<<<<<< HEAD
 var _gsap = __webpack_require__(19);
+=======
+var _gsap = __webpack_require__(20);
+>>>>>>> master
 
 exports.default = {
   name: 'NotificationSingle',
@@ -20694,7 +20885,11 @@ var _NotificationDropdownSingle = __webpack_require__(414);
 
 var _NotificationDropdownSingle2 = _interopRequireDefault(_NotificationDropdownSingle);
 
+<<<<<<< HEAD
 var _gsap = __webpack_require__(19);
+=======
+var _gsap = __webpack_require__(20);
+>>>>>>> master
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -27080,7 +27275,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(20)
+var listToStyles = __webpack_require__(21)
 
 /*
 type StyleObject = {

@@ -1,7 +1,11 @@
 <template>
 	<div id="fullscreen-message">
 		<div id="display-message" class="message text-success" ref="message">
+<<<<<<< HEAD
 			{{ this.message }}
+=======
+			Messaggio
+>>>>>>> master
 		</div>
 	</div>
 </template>
@@ -22,12 +26,19 @@ export default {
 				ease: Power4.easeInOut,
 			})
 				.to('#display-message', .2, {
+<<<<<<< HEAD
 					delay: 0.3,
+=======
+>>>>>>> master
 					opacity: 1,
 					display: 'block',
 					ease: Sine.easeInOut,
 					onComplete: function() {
+<<<<<<< HEAD
 						setTimeout(vue.hideMessage, 2500)
+=======
+						setTimeout(vue.hideMessage, 7000)
+>>>>>>> master
 					}
 				})
 		},
@@ -48,11 +59,24 @@ export default {
 	},
 	created() {
 		document.addEventListener('fullscreen-message', (message) => {
+<<<<<<< HEAD
 			console.log('evento ricevuto', message.detail);
 			this.message = message.detail
 			this.showMessage()
 		})
 	},
+=======
+			this.message = message
+			this.showMessage()
+		})
+	},
+	mounted() {
+	  //do something after mounting vue instance
+
+	  // this.showMessage()
+
+	}
+>>>>>>> master
 }
 </script>
 <style lang="scss" scoped>
@@ -69,6 +93,9 @@ export default {
 		height: 100%;
 		z-index: 9999;
 		background-color: rgba($modal-content-bg, 1);
+
+		display: none;
+		opacity: 0;
 
 		display: none;
 		opacity: 0;

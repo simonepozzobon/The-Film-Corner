@@ -1,0 +1,70 @@
+{
+  "_class": "page",
+  "do_objectID": "5A380408-9AE3-4827-A8DB-60AAA2DEF754",
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 300,
+    "width": 300,
+    "x": 0,
+    "y": 0
+  },
+  "hasClickThrough": true,
+  "horizontalRulerData": {
+    "_class": "rulerData",
+    "base": -245,
+    "guides": [
+    ]
+  },
+  "includeInCloudUpload": true,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "layers": [
+    {
+      "class": "shapeGroup",
+      "id": "C2A26D3B-4D51-475A-A1BA-52AA22D90684"
+    },
+    {
+      "class": "shapeGroup",
+      "id": "E3269A3D-A3DB-47D4-BCEC-2D0A119720F0"
+    },
+    {
+      "class": "text",
+      "id": "3EC22152-213E-4039-AB89-0B84CB996B47"
+    },
+    {
+      "class": "group",
+      "id": "FDF2AF2F-8688-488F-9BAE-56C09C562906"
+    }
+  ],
+  "name": "Sessions Panel",
+  "nameIsFixed": true,
+  "resizingConstraint": 63,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "style": {
+    "_class": "style",
+    "endDecorationType": 0,
+    "miterLimit": 10,
+    "startDecorationType": 0
+  },
+  "verticalRulerData": {
+    "_class": "rulerData",
+    "base": -192,
+    "guides": [
+    ]
+  }
+}
