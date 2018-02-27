@@ -40,15 +40,15 @@
           </ul>
           <h1 class="mt">UK</h1>
           <ul>
-            <li>Gosden House School, Horsham Road, Guildford GU5 0AH - Robin Harrison</li>
-            <li>Congleton High School, Box Lane, Congleton, Cheshire, CW12 4NS - Miss G Early</li>
-            <li>Liverpool College, Queens DriveLiverpool, L18 8BG - Joanna Lane</li>
-            <li>Glenthorne High School, 270 Sutton Common Road, Sutton SM3 9PS - Nils Go</li>
-            <li>Valley Road School, 26 Valley Road,  Henley On Thames, RG9 1RR - Julie Green</li>
-            <li>University College London, Institute of Education - Kostas Voros</li>
-            <li>Alleyns School, Townley Road, London SE22 8SU - Mark Grogan</li>
-            <li>Scottish Scree Education - Graham Fitzpatrick</li>
-            <li>Association of Media Educators, Scotland - Rick Instrell</li>
+            <li>Gosden House School, Horsham Road, Guildford GU5 0AH</li>
+            <li>Congleton High School, Box Lane, Congleton, Cheshire, CW12 4NS - Mi</li>
+            <li>Liverpool College, Queens DriveLiverpool, L18 8BG</li>
+            <li>Glenthorne High School, 270 Sutton Common Road, Sutton SM3 9PS</li>
+            <li>Valley Road School, 26 Valley Road,  Henley On Thames, RG9 1RR</li>
+            <li>University College London, Institute of Education</li>
+            <li>Alleyns School, Townley Road, London SE22 8SU</li>
+            <li>Scottish Scree Education</li>
+            <li>Association of Media Educators, Scotland</li>
           </ul>
 
       </div>
