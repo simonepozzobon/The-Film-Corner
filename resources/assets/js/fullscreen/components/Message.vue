@@ -1,21 +1,61 @@
 <template>
 	<div id="fullscreen-message">
-		<div class="message text-success">
+		<div id="display-message" class="message text-success" ref="message">
 			Messaggio
 		</div>
 	</div>
 </template>
 <script>
+import {TimelineMax, Sine, Power4} from 'gsap'
 export default {
 	name: 'Message',
 	data: () => ({
 		message: '',
 	}),
-	methods: {},
+	methods: {
+		showMessage: function() {
+			var vue = this
+			var t1 = new TimelineMax()
+			t1.to('#fullscreen-message', .4, {
+				opacity: 1,
+				display: 'inherit',
+				ease: Power4.easeInOut,
+			})
+				.to('#display-message', .2, {
+					opacity: 1,
+					display: 'block',
+					ease: Sine.easeInOut,
+					onComplete: function() {
+						setTimeout(vue.hideMessage, 7000)
+					}
+				})
+		},
+		hideMessage: function() {
+			var t1 = new TimelineMax()
+			t1.to('#display-message', .2, {
+				opacity: 0,
+				display: 'none',
+				ease: Sine.easeInOut,
+			})
+				.to('#fullscreen-message', .2, {
+					opacity: 0,
+					display: 'none',
+					ease: Power4.easeInOut,
+				})
+
+		},
+	},
 	created() {
 		document.addEventListener('fullscreen-message', (message) => {
-			alert('message')
+			this.message = message
+			this.showMessage()
 		})
+	},
+	mounted() {
+	  //do something after mounting vue instance
+
+	  // this.showMessage()
+
 	}
 }
 </script>
@@ -34,6 +74,9 @@ export default {
 		z-index: 9999;
 		background-color: rgba($modal-content-bg, .8);
 
+		display: none;
+		opacity: 0;
+
 		> .message {
 			font-family: $font-family-serif;
 		    font-weight: 900;
@@ -45,6 +88,9 @@ export default {
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
+
+			display: none;
+			opacity: 0;
 		}
 	}
 
