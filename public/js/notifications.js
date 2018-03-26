@@ -20076,7 +20076,7 @@ module.exports = function dispatchRequest(config) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _Notifications = __webpack_require__(416);
@@ -20290,105 +20290,107 @@ var io = __webpack_require__(95); //
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
+var socket = io.connect('http://' + window.location.hostname + ':6001', {
+    reconnect: true
+});
 exports.default = {
-  name: 'MainMenuComponent',
-  props: {
-    user: {
-      default: '',
-      type: String
+    name: 'MainMenuComponent',
+    props: {
+        locale: {
+            type: String,
+            default: 'en'
+        },
+        user: {
+            default: '',
+            type: String
+        },
+        user_type: {
+            default: '',
+            type: String
+        },
+        notifications: {
+            default: '',
+            type: String
+        }
     },
-    user_type: {
-      default: '',
-      type: String
+    computed: {
+        type: function type() {
+            if (this.user_type == 'App\\Student') {
+                return 'student';
+            } else if (this.user_type == 'App\\Teacher') {
+                return 'teacher';
+            } else {
+                return 'guest';
+            }
+        },
+        userParsed: function userParsed() {
+            return JSON.parse(this.user);
+        },
+        notifsParsed: function notifsParsed() {
+            return JSON.parse(this.notifications);
+        },
+        guideLink: function guideLink() {
+            if (this.locale == 'fr') {
+                return '/downloads/user-guide/TFC_Users_Guide_FR.pdf';
+            } else if (this.locale == 'it') {
+                return '/downloads/user-guide/TFC_Users_Guide_ITA.pdf';
+            } else if (this.locale == 'sr') {
+                return '/downloads/user-guide/TFC_Users_Guide_EN.pdf';
+            }
+            return '/downloads/user-guide/TFC_Users_Guide_EN.pdf';
+        }
     },
-    notifications: {
-      default: '',
-      type: String
-    }
-  },
-  computed: {
-    type: function type() {
-      if (this.user_type == 'App\\Student') {
-        return 'student';
-      } else if (this.user_type == 'App\\Teacher') {
-        return 'teacher';
-      } else {
-        return 'guest';
-      }
+    data: function data() {
+        return {
+            notifs: []
+        };
     },
-    userParsed: function userParsed() {
-      return JSON.parse(this.user);
-    },
-    notifsParsed: function notifsParsed() {
-      return JSON.parse(this.notifications);
-    }
-  },
-  data: function data() {
-    return {
-      notifs: []
-    };
-  },
-  created: function created() {
-    var _this = this;
+    created: function created() {
+        var _this = this;
 
-    var vue = this;
+        var vue = this;
 
-    this.notifs = this.notifsParsed;
+        this.notifs = this.notifsParsed;
 
-    this.$root.$on('mark-as-read', function (notification) {
-      _this.markAsRead(notification);
-    });
-
-    socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data, 'sent you a new notification.');
-    });
-
-    socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data, 'approved your work.');
-    });
-  },
-
-  methods: {
-    markAsRead: function markAsRead(notification) {
-      var vue = this;
-      _axios2.default.get('/' + this.type + '/notifications/markasread/' + notification.id).then(function () {
-        vue.notifs = vue.notifs.filter(function (element) {
-          return element.id != notification.id;
+        this.$root.$on('mark-as-read', function (notification) {
+            _this.markAsRead(notification);
         });
-      });
+
+        socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
+            vue.pushNotification(data, 'sent you a new notification.');
+        });
+
+        socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
+            vue.pushNotification(data, 'approved your work.');
+        });
     },
-    pushNotification: function pushNotification(notification, msg) {
-      this.notifs.unshift(notification);
 
-      var content = {
-        notification: notification,
-        message: msg
-      };
+    methods: {
+        markAsRead: function markAsRead(notification) {
+            var vue = this;
+            _axios2.default.get('/' + this.type + '/notifications/markasread/' + notification.id).then(function () {
+                vue.notifs = vue.notifs.filter(function (element) {
+                    return element.id != notification.id;
+                });
+            });
+        },
+        pushNotification: function pushNotification(notification, msg) {
+            this.notifs.unshift(notification);
 
-      this.$root.$emit('new-notification', content);
+            var content = {
+                notification: notification,
+                message: msg
+            };
+
+            this.$root.$emit('new-notification', content);
+        }
+    },
+    components: {
+        Notifications: _Notifications2.default,
+        NotificationsMenu: _NotificationsMenu2.default,
+        NotificationsDropdownMenu: _NotificationsDropdownMenu2.default
     }
-  },
-  components: {
-    Notifications: _Notifications2.default,
-    NotificationsMenu: _NotificationsMenu2.default,
-    NotificationsDropdownMenu: _NotificationsDropdownMenu2.default
-  }
 };
 
 /***/ }),
@@ -23877,7 +23879,11 @@ var render = function() {
                           staticClass: "dropdown-item markasread",
                           attrs: { href: "/set-locale/en" }
                         },
-                        [_vm._v("\n              English\n            ")]
+                        [
+                          _vm._v(
+                            "\n                            English\n                        "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -23886,7 +23892,11 @@ var render = function() {
                           staticClass: "dropdown-item markasread",
                           attrs: { href: "/set-locale/fr" }
                         },
-                        [_vm._v("\n              Francais\n            ")]
+                        [
+                          _vm._v(
+                            "\n                            Francais\n                        "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -23895,7 +23905,11 @@ var render = function() {
                           staticClass: "dropdown-item markasread",
                           attrs: { href: "/set-locale/it" }
                         },
-                        [_vm._v("\n              Italiano\n            ")]
+                        [
+                          _vm._v(
+                            "\n                            Italiano\n                        "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -23904,7 +23918,11 @@ var render = function() {
                           staticClass: "dropdown-item markasread",
                           attrs: { href: "/set-locale/sr" }
                         },
-                        [_vm._v("\n              српски\n            ")]
+                        [
+                          _vm._v(
+                            "\n                            српски\n                        "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "dropdown-divider" }),
@@ -23915,14 +23933,39 @@ var render = function() {
                           staticClass: "dropdown-item markasread",
                           attrs: { href: "/" + _vm.type + "/logout" }
                         },
-                        [_vm._v("\n              Logout\n            ")]
+                        [
+                          _vm._v(
+                            "\n                                Logout\n                            "
+                          )
+                        ]
                       )
                     ]
                   )
                 ]
               ),
               _vm._v(" "),
-              _vm._m(2)
+              _c("li", { staticClass: "nav-item" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav-link",
+                    attrs: {
+                      href: _vm.guideLink,
+                      target: "_blank",
+                      "data-toggle": "tooltip",
+                      "data-placement": "bottom",
+                      "data-html": "true",
+                      title: "User Guide"
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-book",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("notifications-dropdown-menu", {
@@ -23978,33 +24021,6 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "fa fa-cog", attrs: { "aria-hidden": "true" } })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item" }, [
-      _c(
-        "a",
-        {
-          staticClass: "nav-link",
-          attrs: {
-            href: "/downloads/user-guide/TFC_Users_Guide_EN.pdf",
-            target: "_blank",
-            "data-toggle": "tooltip",
-            "data-placement": "bottom",
-            "data-html": "true",
-            title: "User Guide"
-          }
-        },
-        [
-          _c("i", {
-            staticClass: "fa fa-book",
-            attrs: { "aria-hidden": "true" }
-          })
-        ]
-      )
-    ])
   }
 ]
 render._withStripped = true
