@@ -19348,7 +19348,6 @@ exports.default = {
 				display: 'inherit',
 				ease: _gsap.Power4.easeInOut
 			}).to('#display-message', .2, {
-				delay: 0.3,
 				opacity: 1,
 				display: 'block',
 				ease: _gsap.Sine.easeInOut,
@@ -19378,6 +19377,12 @@ exports.default = {
 			_this.message = message.detail;
 			_this.showMessage();
 		});
+	},
+	mounted: function mounted() {
+		//do something after mounting vue instance
+
+		// this.showMessage()
+
 	}
 }; //
 //
@@ -19418,7 +19423,7 @@ new _vue2.default({
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n#fullscreen-message[data-v-cdc4aa00] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: #f7f7f9;\n  display: none;\n  opacity: 0;\n}\n#fullscreen-message > .message[data-v-cdc4aa00] {\n    font-family: \"Raleway\", sans-serif;\n    font-weight: 900;\n    text-transform: uppercase;\n    color: #252525;\n    font-size: 2.25rem;\n    line-height: 2.83rem;\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    display: none;\n    opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n#fullscreen-message[data-v-cdc4aa00] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: #f7f7f9;\n  display: none;\n  opacity: 0;\n  display: none;\n  opacity: 0;\n}\n#fullscreen-message > .message[data-v-cdc4aa00] {\n    font-family: \"Raleway\", sans-serif;\n    font-weight: 900;\n    text-transform: uppercase;\n    color: #252525;\n    font-size: 2.25rem;\n    line-height: 2.83rem;\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    display: none;\n    opacity: 0;\n}\n", ""]);
 
 /***/ }),
 

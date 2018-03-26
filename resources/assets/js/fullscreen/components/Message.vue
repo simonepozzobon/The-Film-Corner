@@ -22,7 +22,6 @@ export default {
 				ease: Power4.easeInOut,
 			})
 				.to('#display-message', .2, {
-					delay: 0.3,
 					opacity: 1,
 					display: 'block',
 					ease: Sine.easeInOut,
@@ -53,6 +52,12 @@ export default {
 			this.showMessage()
 		})
 	},
+	mounted() {
+	  //do something after mounting vue instance
+
+	  // this.showMessage()
+
+	}
 }
 </script>
 <style lang="scss" scoped>
@@ -69,6 +74,9 @@ export default {
 		height: 100%;
 		z-index: 9999;
 		background-color: rgba($modal-content-bg, 1);
+
+		display: none;
+		opacity: 0;
 
 		display: none;
 		opacity: 0;

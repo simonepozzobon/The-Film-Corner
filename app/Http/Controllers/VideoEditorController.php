@@ -151,10 +151,10 @@ class VideoEditorController extends Controller
         // Find the session relative to this video
         $session = AppsSession::where('token', '=', $session_id)->first();
         if (!$session) {
-            $session = StudentSession::where('token', '=', $session_id)->first();
+            $session = StudentAppSession::where('token', '=', $session_id)->first();
         }
         if (!$session) {
-            $session = GuestSession::where('token', '=', $session_id)->first();
+            $session = GuestAppSession::where('token', '=', $session_id)->first();
         }
 
         return response([

@@ -1,0 +1,54 @@
+{
+  "_class": "text",
+  "attributedString": {
+    "_class": "MSAttributedString",
+    "archivedAttributedString": {
+      "_archive": "YnBsaXN0MDDUAQIDBAUGaGlYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QGQcIDxAcHR4fJysyNUBDRkpOVldYWVpeYmRVJG51bGzTCQoLDA0OWE5TU3RyaW5nViRjbGFzc1xOU0F0dHJpYnV0ZXOAAoAYgANfECFTdHVkaW9zIC8gRmlsbSBTcGVjaWZpYyAvIEZyYW1pbmfTERIKExcbV05TLmtleXNaTlMub2JqZWN0c6MUFRaABIAFgAajGBkagAeAC4APgBdXTlNDb2xvcl8QEE5TUGFyYWdyYXBoU3R5bGVfEB9NU0F0dHJpYnV0ZWRTdHJpbmdGb250QXR0cmlidXRl1CAhIgojJCUmVU5TUkdCXE5TQ29sb3JTcGFjZV8QEk5TQ3VzdG9tQ29sb3JTcGFjZU8QJzAuMTQ1MDk4MDM5MiAwLjE0NTA5ODAzOTIgMC4xNDUwOTgwMzkyABABgAiACtIoCikqVE5TSUQQAYAJ0iwtLi9aJGNsYXNzbmFtZVgkY2xhc3Nlc1xOU0NvbG9yU3BhY2WiMDFcTlNDb2xvclNwYWNlWE5TT2JqZWN00iwtMzRXTlNDb2xvcqIzMdY2Cjc4OTo7PD0+JD9aTlNUYWJTdG9wc18QD05TTWluTGluZUhlaWdodFxOU1RleHRCbG9ja3NfEB9OU0FsbG93c1RpZ2h0ZW5pbmdGb3JUcnVuY2F0aW9uXxAPTlNNYXhMaW5lSGVpZ2h0gACADiNAOeNT987ZF4AMI0A541P3ztkX0hIKQUKggA3SLC1ERVdOU0FycmF5okQx0iwtR0hfEBdOU011dGFibGVQYXJhZ3JhcGhTdHlsZaNHSTFfEBBOU1BhcmFncmFwaFN0eWxl0gpLTE1fEBpOU0ZvbnREZXNjcmlwdG9yQXR0cmlidXRlc4AWgBDTERIKT1JVolBRgBGAEqJTVIATgBSAFV8QE05TRm9udFNpemVBdHRyaWJ1dGVfEBNOU0ZvbnROYW1lQXR0cmlidXRlI0AwAAAAAAAAXxAPUmFsZXdheS1SZWd1bGFy0iwtW1xfEBNOU011dGFibGVEaWN0aW9uYXJ5o1tdMVxOU0RpY3Rpb25hcnnSLC1fYF8QEE5TRm9udERlc2NyaXB0b3KiYTFfEBBOU0ZvbnREZXNjcmlwdG9y0iwtXWOiXTHSLC1lZl8QEk5TQXR0cmlidXRlZFN0cmluZ6JnMV8QEk5TQXR0cmlidXRlZFN0cmluZ18QD05TS2V5ZWRBcmNoaXZlctFqa1Ryb290gAEACAARABoAIwAtADIANwBTAFkAYABpAHAAfQB/AIEAgwCnAK4AtgDBAMUAxwDJAMsAzwDRANMA1QDXAN8A8gEUAR0BIwEwAUUBbwFxAXMBdQF6AX8BgQGDAYgBkwGcAakBrAG5AcIBxwHPAdIB3wHqAfwCCQIrAj0CPwJBAkoCTAJVAloCWwJdAmICagJtAnICjAKQAqMCqALFAscCyQLQAtMC1QLXAtoC3ALeAuAC9gMMAxUDJwMsA0IDRgNTA1gDawNuA4EDhgOJA44DowOmA7sDzQPQA9UAAAAAAAACAQAAAAAAAABsAAAAAAAAAAAAAAAAAAAD1w=="
+    }
+  },
+  "automaticallyDrawOnUnderlyingPath": false,
+  "do_objectID": "A33E2E14-AD49-44DE-BB20-27836E24357C",
+  "dontSynchroniseWithSymbol": false,
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 25.888,
+    "width": 1255,
+    "x": 32.5,
+    "y": 34
+  },
+  "glyphBounds": "{{0, 7}, {245, 16}}",
+  "heightIsClipped": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 0,
+  "lineSpacingBehaviour": 2,
+  "name": "Studios / Film Speci",
+  "nameIsFixed": false,
+  "resizingConstraint": 26,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "style": {
+    "sharedObjectID": "F2C4D8A0-9F50-4E27-8EEE-6F944CF696E6"
+  },
+  "textBehaviour": 1,
+  "userInfo": {
+    "com.animaapp.stc-sketch-plugin": {
+      "kModelPropertiesKey": {
+        "isAutoWidth": 0
+      }
+    }
+  }
+}

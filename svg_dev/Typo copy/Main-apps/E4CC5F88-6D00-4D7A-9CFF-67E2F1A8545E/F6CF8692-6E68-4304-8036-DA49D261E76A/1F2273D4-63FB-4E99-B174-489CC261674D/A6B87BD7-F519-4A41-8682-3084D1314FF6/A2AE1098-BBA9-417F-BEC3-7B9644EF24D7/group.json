@@ -1,0 +1,71 @@
+{
+  "_class": "group",
+  "do_objectID": "A2AE1098-BBA9-417F-BEC3-7B9644EF24D7",
+  "exportOptions": {
+    "_class": "exportOptions",
+    "exportFormats": [
+    ],
+    "includedLayerIds": [
+    ],
+    "layerOptions": 0,
+    "shouldTrim": false
+  },
+  "frame": {
+    "_class": "rect",
+    "constrainProportions": false,
+    "height": 330,
+    "width": 890,
+    "x": 0,
+    "y": 0
+  },
+  "hasClickThrough": false,
+  "isFlippedHorizontal": false,
+  "isFlippedVertical": false,
+  "isLocked": false,
+  "isVisible": true,
+  "layerListExpandedType": 2,
+  "layers": [
+    {
+      "class": "group",
+      "id": "FBBE001F-B963-40E9-85C4-6BDF78C24068"
+    },
+    {
+      "class": "group",
+      "id": "2B9B3EDA-01C9-4D88-AD9F-D6B2070A6429"
+    }
+  ],
+  "name": "box",
+  "nameIsFixed": true,
+  "resizingConstraint": 27,
+  "resizingType": 0,
+  "rotation": 0,
+  "shouldBreakMaskChain": false,
+  "style": {
+    "_class": "style",
+    "endDecorationType": 0,
+    "miterLimit": 10,
+    "startDecorationType": 0
+  },
+  "userInfo": {
+    "com.animaapp.stc-sketch-plugin": {
+      "kModelPropertiesKey": {
+      }
+    },
+    "com.matt-curtis.sketch.constraints": {
+      "constraints": {
+        "centerHorizontally": 0,
+        "centerRelativeTo": 1,
+        "centerVertically": 0,
+        "disabled": 0,
+        "pinRelativeTo": 1,
+        "sizeRelativeTo": 1,
+        "useBottomPinning": 0,
+        "useFixedHeight": 0,
+        "useFixedWidth": 0,
+        "useLeftPinning": 0,
+        "useRightPinning": 0,
+        "useTopPinning": 0
+      }
+    }
+  }
+}
