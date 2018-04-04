@@ -205,6 +205,8 @@ angular.module('videoCtrl', ['vjs.video'])
         // console.log('DEBUG')
         // console.log(response)
         // console.log('-------')
+        $('#debug-field').val(JSON.stringify(response.data))
+        console.log(response)
         localStorage.setItem('app-'+response.data.app+'-video', response.data.export)
         // localStorage.setItem('tfc-video-editing', '/'+response.data.export)
         $scope.mediaToggle = {
@@ -345,8 +347,6 @@ angular.module('toolCtrl', [])
           }]
         }]
       }
-
-      console.log(timeline)
 
       Timeline.addTimeline(timeline)
       Timeline.getTimelines($scope)

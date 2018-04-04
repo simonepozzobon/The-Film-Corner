@@ -89267,6 +89267,8 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
       // console.log('DEBUG')
       // console.log(response)
       // console.log('-------')
+      (0, _jquery2.default)('#debug-field').val(JSON.stringify(response.data));
+      console.log(response);
       localStorage.setItem('app-' + response.data.app + '-video', response.data.export);
       // localStorage.setItem('tfc-video-editing', '/'+response.data.export)
       $scope.mediaToggle = {
@@ -89401,8 +89403,6 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
         }]
       }]
     };
-
-    console.log(timeline);
 
     Timeline.addTimeline(timeline);
     Timeline.getTimelines($scope);
