@@ -12084,7 +12084,7 @@ module.exports = function dispatchRequest(config) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _axios = __webpack_require__(13);
@@ -12138,102 +12138,123 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 
 exports.default = {
-  name: 'WelcomeForm',
-  props: {
-    'user': {
-      default: '',
-      type: String
+    name: 'WelcomeForm',
+    props: {
+        'user': {
+            default: '',
+            type: String
+        },
+        'user_type': {
+            default: '',
+            type: String
+        },
+        'form': {
+            default: '',
+            type: String
+        },
+        'texts': {
+            default: '',
+            type: String
+        },
+        first_word: {
+            default: '',
+            type: String
+        },
+        second_word: {
+            default: '',
+            type: String
+        },
+        third_word: {
+            default: '',
+            type: String
+        },
+        short_introduction: {
+            default: '',
+            type: String
+        },
+        your_answer: {
+            default: '',
+            type: String
+        }
+
     },
-    'user_type': {
-      default: '',
-      type: String
+    data: function data() {
+        return {
+            word_1: '',
+            word_2: '',
+            word_3: '',
+            answer: ''
+        };
     },
-    'form': {
-      default: '',
-      type: String
+    computed: {
+
+        userParsed: function userParsed() {
+            return JSON.parse(this.user);
+        },
+
+        formParsed: function formParsed() {
+            if (this.form) {
+                return JSON.parse(this.form);
+            } else {
+                return '';
+            }
+        },
+
+        textsParsed: function textsParsed() {
+            if (this.texts) {
+                return JSON.parse(this.texts);
+            }
+        }
     },
-    'texts': {
-      default: '',
-      type: [String]
+    watch: {
+        word_1: function word_1() {
+            this.save();
+        },
+        word_2: function word_2() {
+            this.save();
+        },
+        word_3: function word_3() {
+            this.save();
+        },
+        answer: function answer() {
+            this.save();
+        }
+    },
+    created: function created() {
+        this.word_1 = this.properNull(this.formParsed.word_1);
+        this.word_2 = this.properNull(this.formParsed.word_2);
+        this.word_3 = this.properNull(this.formParsed.word_3);
+        this.answer = this.properNull(this.formParsed.answer);
+    },
+    mounted: function mounted() {
+        this.$refs.part_1.innerHTML = this.textsParsed.part_1;
+        this.$refs.part_2.innerHTML = this.textsParsed.part_2;
+        this.$refs.part_3.innerHTML = this.textsParsed.part_3;
+    },
+
+    methods: {
+        // save the form
+        save: _lodash2.default.debounce(function () {
+            var data = new FormData();
+            data.append('user', this.user);
+            data.append('user_type', this.user_type);
+            data.append('word_1', this.word_1);
+            data.append('word_2', this.word_2);
+            data.append('word_3', this.word_3);
+            data.append('answer', this.answer);
+
+            //send the request
+            _axios2.default.post('/api/v1/welcome/save', data);
+        }, 500),
+
+        properNull: function properNull(value) {
+            if (value == 'null') {
+                return value = null;
+            } else {
+                return value;
+            }
+        }
     }
-  },
-  data: function data() {
-    return {
-      word_1: '',
-      word_2: '',
-      word_3: '',
-      answer: ''
-    };
-  },
-  computed: {
-
-    userParsed: function userParsed() {
-      return JSON.parse(this.user);
-    },
-
-    formParsed: function formParsed() {
-      if (this.form) {
-        return JSON.parse(this.form);
-      } else {
-        return '';
-      }
-    },
-
-    textsParsed: function textsParsed() {
-      if (this.texts) {
-        return JSON.parse(this.texts);
-      }
-    }
-  },
-  watch: {
-    word_1: function word_1() {
-      this.save();
-    },
-    word_2: function word_2() {
-      this.save();
-    },
-    word_3: function word_3() {
-      this.save();
-    },
-    answer: function answer() {
-      this.save();
-    }
-  },
-  created: function created() {
-    this.word_1 = this.properNull(this.formParsed.word_1);
-    this.word_2 = this.properNull(this.formParsed.word_2);
-    this.word_3 = this.properNull(this.formParsed.word_3);
-    this.answer = this.properNull(this.formParsed.answer);
-  },
-  mounted: function mounted() {
-    this.$refs.part_1.innerHTML = this.textsParsed.part_1;
-    this.$refs.part_2.innerHTML = this.textsParsed.part_2;
-    this.$refs.part_3.innerHTML = this.textsParsed.part_3;
-  },
-
-  methods: {
-    // save the form
-    save: _lodash2.default.debounce(function () {
-      var data = new FormData();
-      data.append('user', this.user);
-      data.append('user_type', this.user_type);
-      data.append('word_1', this.word_1);
-      data.append('word_2', this.word_2);
-      data.append('word_3', this.word_3);
-      data.append('answer', this.answer);
-
-      //send the request
-      _axios2.default.post('/api/v1/welcome/save', data);
-    }, 500),
-
-    properNull: function properNull(value) {
-      if (value == 'null') {
-        return value = null;
-      } else {
-        return value;
-      }
-    }
-  }
 };
 
 /***/ }),
@@ -12917,7 +12938,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "box blue", attrs: { id: "welcome-form" } }, [
     _c("div", { staticClass: "box-header" }, [
-      _vm._v("\n    Short Introduction\n  ")
+      _vm._v("\n        " + _vm._s(_vm.short_introduction) + "\n    ")
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "box-body" }, [
@@ -12936,7 +12957,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "First word..." },
+              attrs: { type: "text", placeholder: _vm.first_word + "..." },
               domProps: { value: _vm.word_1 },
               on: {
                 input: function($event) {
@@ -12962,7 +12983,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Second word..." },
+              attrs: { type: "text", placeholder: _vm.second_word + "..." },
               domProps: { value: _vm.word_2 },
               on: {
                 input: function($event) {
@@ -12988,7 +13009,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Third word..." },
+              attrs: { type: "text", placeholder: _vm.third_word + "..." },
               domProps: { value: _vm.word_3 },
               on: {
                 input: function($event) {
@@ -13018,7 +13039,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { rows: "4", placeholder: "Your answer..." },
+              attrs: { rows: "4", placeholder: _vm.your_answer + "..." },
               domProps: { value: _vm.answer },
               on: {
                 input: function($event) {
