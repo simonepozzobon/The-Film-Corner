@@ -89142,8 +89142,6 @@ _angular2.default.module('appService', []).factory('Feedback', function ($http, 
           };
           Timeline.addTimeline(timeline);
         }
-        console.log('BEFORE SENDING');
-        console.dir(media);
       }
 
       return $http({
@@ -89378,6 +89376,10 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
     // console.log('addding element to angularjs')
+    console.log(id);
+    console.log(title);
+    console.log(duration);
+    console.log(url);
     var d = duration * 100 / 5;
     if (typeof session == 'undefined') {
       // console.log('non trovata')
