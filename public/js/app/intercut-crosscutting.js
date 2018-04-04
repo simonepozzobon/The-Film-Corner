@@ -89142,6 +89142,8 @@ _angular2.default.module('appService', []).factory('Feedback', function ($http, 
           };
           Timeline.addTimeline(timeline);
         }
+        console.log('BEFORE SENDING');
+        console.dir(media);
       }
 
       return $http({

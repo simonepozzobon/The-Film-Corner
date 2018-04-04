@@ -70,6 +70,8 @@ angular.module('appService', [])
             }
             Timeline.addTimeline(timeline)
           }
+          console.log('BEFORE SENDING')
+          console.dir(media)
         }
 
 
