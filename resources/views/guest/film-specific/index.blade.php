@@ -99,18 +99,18 @@
               </g>
           </g>
           <g id="texts" transform="translate(358.000000, 134.000000)" font-family="Raleway" fill="#FFFFFF" font-weight="bold">
-              <text id="FRAMING" class="texts" font-size="40" onclick="goPage('framing')">
-                  <tspan x="0.8154" y="418.740728">FRAMING</tspan>
-              </text>
-              <text id="EDITING" class="texts" font-size="40" onclick="goPage('editing')">
-                  <tspan x="515.1354" y="418.740728">EDITING</tspan>
-              </text>
-              <text id="SOUND" class="texts" font-size="40" onclick="goPage('sound')">
-                  <tspan x="1028.0154" y="418.740728">SOUND</tspan>
-              </text>
-              <text id="FILM-SPECIFIC" font-size="78.3243">
-                  <tspan x="294.874" y="57.2541317">FILM SPECIFIC</tspan>
-              </text>
+            <text id="FRAMING" class="texts" text-anchor="middle" font-size="40" onclick="goPage('framing')" style="text-transform: uppercase;" transform="translate(100, 0)">
+                <tspan x="0.8154" y="418.740728">{{ $section->appCategories->where('id', 1)->first()->name }}</tspan>
+            </text>
+            <text id="EDITING" class="texts" text-anchor="middle" font-size="40" onclick="goPage('editing')" style="text-transform: uppercase;" transform="translate(80, 0)">
+                <tspan x="515.1354" y="418.740728">{{ $section->appCategories->where('id', 2)->first()->name }}</tspan>
+            </text>
+            <text id="SOUND" class="texts" text-anchor="middle" font-size="40" onclick="goPage('sound')" style="text-transform: uppercase;" transform="translate(80, 0)">
+                <tspan x="1028.0154" y="418.740728">{{ $section->appCategories->where('id', 3)->first()->name }}</tspan>
+            </text>
+            <text id="FILM-SPECIFIC" text-anchor="middle" font-size="40" transform="translate(300, 0)" style="text-transform: uppercase;">
+                <tspan x="294.874" y="57.2541317">{{ $section->name }}</tspan>
+            </text>
           </g>
       </g>
   </svg>
@@ -118,7 +118,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="saveModalLabel">Info - Film Specific</h5>
+          <h5 class="modal-title" id="saveModalLabel">Info - {{ $section->name }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>
