@@ -89133,10 +89133,10 @@ _angular2.default.module('appService', []).factory('Audio', function ($http, CSR
         }
       }
 
-      console.log('---------');
-      console.log('prima inviio');
-      console.log(media);
-      console.log('---------');
+      // console.log('---------');
+      // console.log('prima inviio');
+      // console.log(media);
+      // console.log('---------');
 
       return $http({
         method: 'POST',
@@ -89210,10 +89210,10 @@ _angular2.default.module('uploadCtrl', []).controller('uploadController', ['$sco
 
 
   $scope.uploadForm = function () {
-    console.log('---------');
-    console.log('Session token');
-    console.log($('#token').val());
-    console.log('---------');
+    // console.log('---------');
+    // console.log('Session token');
+    // console.log($('#token').val());
+    // console.log('---------');
 
     // Preparo i dati da inviare sotto forma di form
     var formData = new FormData();
@@ -89279,10 +89279,10 @@ _angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController
   }
 
   $scope.$on('timelineChanged', function (e, timeline) {
-    console.log('-----');
-    console.log('timelineChanged Event Before Send');
-    console.log(timeline);
-    console.log('-----');
+    // console.log('-----');
+    // console.log('timelineChanged Event Before Send');
+    // console.log(timeline);
+    // console.log('-----');
 
     var timelines = Timeline.getTimelines($scope);
     Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
