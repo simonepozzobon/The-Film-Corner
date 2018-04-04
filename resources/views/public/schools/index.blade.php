@@ -22,6 +22,8 @@
             <li>Classe 2F dell’I.I.S. Podesti Calzecchi Onesti, Ancona (AN) – Prof.ssa Gregorini</li>
             <li>Classe 3V1 del Liceo Artistico P. Candiani, Busto Arsizio (VA) - Prof.ssa Madonia</li>
             <li>Classe 3V2 del Liceo Artistico P. Candiani, Busto Arsizio (VA)- Prof. Cunocchiella</li>
+            <li>Classei 3A dell’IIS Via Sarandì, Roma – Prof. Campogiani e Prof.ssa Maffi</li>
+            <li>Classei 3B dell’IIS Via Sarandì, Roma – Prof. Campogiani e Prof.ssa Maffi</li>
           </ul>
           <h1 class="mt">NORTHERN IRELAND</h1>
           <ul>
