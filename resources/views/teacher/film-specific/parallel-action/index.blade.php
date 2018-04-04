@@ -74,11 +74,6 @@
       </div>
       <div class="row mt">
         <div class="col">
-          <textarea id="debug-field" cols="30" rows="10" class="form-control"></textarea>
-        </div>
-      </div>
-      <div class="row mt">
-        <div class="col">
           <div class="box orange">
             <div class="box-btns pt">
               {{-- Control Bar --}}
