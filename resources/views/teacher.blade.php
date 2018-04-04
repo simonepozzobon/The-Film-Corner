@@ -261,16 +261,16 @@
           </g>
       </g>
       <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(105.000000, 203.000000)" font-family="Raleway" font-weight="bold">
-          <text id="CREATIVE-STUDIO" font-size="46" fill="#FD4E50" onclick="goPage('creative-studio')">
-              <tspan x="1496.525" y="34">CREATIVE</tspan>
-              <tspan x="1526.724" y="75">STUDIO</tspan>
+          <text id="CREATIVE-STUDIO" font-size="42" x="1496.525" y="34" fill="#FD4E50" onclick="goPage('creative-studio')" transform="translate(1626, 0)">
+              <tspan x="0" text-anchor="middle">{{ GeneralText::field('creative') }}</tspan>
+              <tspan x="0" dy="42" text-anchor="middle">{{ GeneralText::field('studio') }}</tspan>
           </text>
-          <text id="WELCOME-1" font-size="40" fill="#F9DA5E" onclick="goPage('welcome')">
-              <tspan x="743.26" y="141">WELCOME</tspan>
+          <text id="WELCOME-1" font-size="40" x="743.26" y="141" fill="#F9DA5E" onclick="goPage('welcome')" transform="translate(863, 0)">
+              <tspan x="0" text-anchor="middle">{{ GeneralText::field('welcome_panel') }}</tspan>
           </text>
-          <text id="FILM-SPECIFIC-3" font-size="44" fill="#3FB7AE" onclick="goPage('film-specific')">
-              <tspan x="51.462" y="104">FILM</tspan>
-              <tspan x="0.796" y="143">SPECIFIC</tspan>
+          <text id="FILM-SPECIFIC-3" font-size="38" x="0" y="104" fill="#3FB7AE" onclick="goPage('film-specific')" transform="translate(110, 0)">
+              <tspan x="0" text-anchor="middle">{{ GeneralText::field('film') }}</tspan>
+              <tspan x="0" dy="39" text-anchor="middle">{{ GeneralText::field('specific') }}</tspan>
           </text>
       </g>
   </svg>
