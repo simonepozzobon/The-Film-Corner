@@ -89376,11 +89376,6 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
   // Aggiunge un elemento dalla libreria alla timeline
   $scope.addElement = function (id, title, duration, url) {
     // console.log('addding element to angularjs')
-    console.log(id);
-    console.log(title);
-    console.log(duration);
-    console.log(url);
-    var d = duration * 100 / 5;
     if (typeof session == 'undefined') {
       // console.log('non trovata')
       var token = $window.token;
@@ -89405,6 +89400,9 @@ _angular2.default.module('toolCtrl', []).controller('toolController', function (
         }]
       }]
     };
+
+    console.log(timeline);
+
     Timeline.addTimeline(timeline);
     Timeline.getTimelines($scope);
     $scope.$emit('timelineChanged', timeline);
