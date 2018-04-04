@@ -320,6 +320,7 @@ angular.module('toolCtrl', [])
     // Aggiunge un elemento dalla libreria alla timeline
     $scope.addElement = function(id, title, duration, url) {
       // console.log('addding element to angularjs')
+      var d = (duration * 100) / 5
       if (typeof session == 'undefined') {
         // console.log('non trovata')
         var token = $window.token
