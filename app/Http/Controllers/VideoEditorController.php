@@ -157,6 +157,8 @@ class VideoEditorController extends Controller
             $session = GuestAppSession::where('token', '=', $session_id)->first();
         }
 
+        return 'ciao';
+
         return [
             'app' => $session->app_id,
             'session' => $session_id
