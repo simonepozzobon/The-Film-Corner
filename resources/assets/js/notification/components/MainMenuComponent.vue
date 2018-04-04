@@ -171,7 +171,7 @@
                             Italiano
                         </a>
                         <a class="dropdown-item markasread" href="/set-locale/sr">
-                            српски
+                            Srpski
                         </a>
                         <div class="dropdown-divider"></div>
                             <a class="dropdown-item markasread" :href="'/'+type+'/logout'">

@@ -519,4 +519,15 @@ class Utility extends Model
 
   }
 
+  /*
+   *
+   * Force encoding in UTF-8
+   *
+  */
+
+  public static function force_utf_encoding($string)
+  {
+      return utf8_encode($string);
+  }
+
 }

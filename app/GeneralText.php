@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Utility;
 use Illuminate\Database\Eloquent\Model;
 
 class GeneralText extends Model

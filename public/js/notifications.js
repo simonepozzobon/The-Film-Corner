@@ -23920,7 +23920,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                            српски\n                        "
+                            "\n                            Srpski\n                        "
                           )
                         ]
                       ),
