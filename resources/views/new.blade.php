@@ -36,6 +36,34 @@
       <div class="col">
         <div class="box blue">
           <div class="box-header">
+            {{ GeneralText::field('contest_news_title') }}
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ asset('img/icons/oscar.svg') }}" class="img-fluid w-100" >
+              </div>
+              <div class="col-md-8">
+                <div class="h-100 align-middle">
+                  <div class="">
+                    <p class="mb">
+                      {!! GeneralText::field('contest_news') !!}
+                    </p>
+                    <div class="d-flex justify-content-center">
+                      <a href="{{ asset('downloads/contest/My_Corner_Contest_Rules_of_Partecipation.pdf') }}" target="_blank" class="btn btn-blue"><i class="fa fa-book"></i> {{ GeneralText::field('contest_news_btn') }}</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt">
+      <div class="col">
+        <div class="box yellow">
+          <div class="box-header">
             Greetings from The Film Corner International Conference
           </div>
           <div class="box-body">
@@ -56,7 +84,7 @@
                       here is the gallery.
                     </p>
                     <div class="d-flex justify-content-center">
-                      <a href="{{ route('conference.gallery') }}" class="btn btn-blue"><i class="fa fa-picture-o"></i> Gallery</a>
+                      <a href="{{ route('conference.gallery') }}" class="btn btn-yellow"><i class="fa fa-picture-o"></i> Gallery</a>
                     </div>
                   </div>
                 </div>
@@ -70,7 +98,7 @@
     {{-- News --}}
     <div class="row mt">
       <div class="col">
-        <div class="box yellow">
+        <div class="box green">
           <div class="box-header">
             The Film Corner at #Venezia74
           </div>
@@ -80,23 +108,25 @@
                 <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
               </div>
               <div class="col-md-8">
-                The Film Corner will be present at the 74th Venice International Film Festival!<br>
-                <br>
-                On Sunday, September 3rd at 11 am at the Italian Pavilion, the Film Corner International Conference will be presented at the festivalgoers.<br>
-                the Film Corner International Conference will take place in 2017 on November 9th and 10th in Milan, as part of the X edition of the Piccolo Grande Cinema Festival, addressed to young audiences and organised by Cineteca Italiana, which is the leading organisation of the project.<br>
-                The conference is open to the public and addressed to professionals and trainers of film education, media education, information and communication technology as well as gaming professionals.<br>
-                <br>
-                Our speakers: Matteo Pavesi (Fondazione Cineteca Italiana Director), Silvia Pareti, Simone Moraldi (Fondazione Cineteca Italiana Special Project Manager) and Gianni Canova (film critic).<br>
-                <br>
-                For further information and participation requests write to <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
+                <p>
+                  The Film Corner will be present at the 74th Venice International Film Festival!<br>
+                  <br>
+                  On Sunday, September 3rd at 11 am at the Italian Pavilion, the Film Corner International Conference will be presented at the festivalgoers.<br>
+                  the Film Corner International Conference will take place in 2017 on November 9th and 10th in Milan, as part of the X edition of the Piccolo Grande Cinema Festival, addressed to young audiences and organised by Cineteca Italiana, which is the leading organisation of the project.<br>
+                  The conference is open to the public and addressed to professionals and trainers of film education, media education, information and communication technology as well as gaming professionals.<br>
+                  <br>
+                  Our speakers: Matteo Pavesi (Fondazione Cineteca Italiana Director), Silvia Pareti, Simone Moraldi (Fondazione Cineteca Italiana Special Project Manager) and Gianni Canova (film critic).<br>
+                  <br>
+                  For further information and participation requests write to <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <a href="{{ route('conference') }}" class="btn btn-green"><i class="fa fa-check"></i> Apply</a>
+                </div>
               </div>
             </div>
           </div>
-          <div class="box-btns">
-            <a href="{{ route('conference') }}" class="btn btn-yellow"><i class="fa fa-check"></i> Apply</a>
-          </div>
         </div>
-        <div class="box mt green">
+        <div class="box mt orange">
           <div class="box-header">
             Deadline extended
           </div>
@@ -106,21 +136,24 @@
                 <img src="{{ asset('img/icons/time.svg') }}" class="img-fluid w-100" >
               </div>
               <div class="col-md-8">
-                Dear visitors,<br>
-                welcome to the website of the European project The Film Corner. Online and offline activities for film literacy, promoted by Fondazione Cineteca Italiana and supported by the Creative Europe Program of the European Union.<br>
-                <br>
-                As you could read on the website, the project is aimed at the design, development and testing of an interactive digital platform for film literacy addressed to students between 12 and 17 years old.<br>
-                <br>
-                The Film Corner International Conference will take place in Milan on 9th and 10th November 2017. Participation is completely free and the deadline for enrolment is 10th October.<br>
-                Click <a href="{{ route('conference') }}">here</a> for all the information and follow us on our <a href="https://www.facebook.com/TheFilmCorner/" target="_blank">facebook</a> page.<br>
+                <p>
+                  Dear visitors,<br>
+                  welcome to the website of the European project The Film Corner. Online and offline activities for film literacy, promoted by Fondazione Cineteca Italiana and supported by the Creative Europe Program of the European Union.<br>
+                  <br>
+                  As you could read on the website, the project is aimed at the design, development and testing of an interactive digital platform for film literacy addressed to students between 12 and 17 years old.<br>
+                  <br>
+                  The Film Corner International Conference will take place in Milan on 9th and 10th November 2017. Participation is completely free and the deadline for enrolment is 10th October.<br>
+                  Click <a href="{{ route('conference') }}">here</a> for all the information and follow us on our <a href="https://www.facebook.com/TheFilmCorner/" target="_blank">facebook</a> page.<br>
+                </p>
+                <div class="d-flex justify-content-center">
+                  <a href="{{ route('conference') }}" class="btn btn-orange"><i class="fa fa-check"></i> Apply</a>
+                </div>
               </div>
             </div>
           </div>
-          <div class="box-btns">
-            <a href="{{ route('conference') }}" class="btn btn-green"><i class="fa fa-check"></i> Apply</a>
-          </div>
+
         </div>
-        <div class="box orange mt">
+        <div class="box blue mt">
           <div class="box-header">
             International Conference
           </div>
@@ -139,20 +172,22 @@
                   <div class="col">
                     <h3 class="text-center">When and Where</h3>
                     <hr>
-                    <h5>2017, Thu, November 9th</h5>
-                    5pm Italian time - MIC-Interactive Film Museum, viale Fulvio Testi, 121, Milan, Italy
-                    <h5>2017, Fri, November 10th</h5>
-                    9 a.m. - 6 p.m. Italian time, Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy
+                    <p>
+                      <h5>2017, Thu, November 9th</h5>
+                      5pm Italian time - MIC-Interactive Film Museum, viale Fulvio Testi, 121, Milan, Italy
+                      <h5>2017, Fri, November 10th</h5>
+                      9 a.m. - 6 p.m. Italian time, Cinema Oberdan, Viale Vittorio Veneto, 2, Milan, Italy
+                    </p>
+                    <div class="d-flex justify-content-center">
+                      <a href="{{ route('conference') }}" class="btn btn-blue"><i class="fa fa-check"></i> Apply</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="box-btns">
-            <a href="{{ route('conference') }}" class="btn btn-orange"><i class="fa fa-check"></i> Apply</a>
-          </div>
         </div>
-        <div id="project" class="box blue mt">
+        <div id="project" class="box yellow mt">
           <div class="box-header">
             {{ GeneralText::field('the_project') }}
           </div>
@@ -167,7 +202,7 @@
             </div>
           </div>
         </div>
-        <div class="box yellow mt">
+        <div class="box green mt">
           <div class="box-header">
             Partners
           </div>
