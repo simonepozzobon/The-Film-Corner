@@ -5,7 +5,7 @@
         To: {{ toname }}
       </div>
       <div class="box-body chat">
-        <div id="questo" class="messages" ref="messages">
+        <div id="chat-messages" class="messages" ref="messages">
           <div v-for="message in messages" :class="'messages-body'">
             <div :class="'message '+message.color+' '+message.type+' w-75'">
               <span class="msg">{{ message.msg }}</span>
@@ -38,8 +38,18 @@ export default {
     messages: [],
     msg: '',
     conts: '',
+    status: false,
   }),
   mounted() {
+    // check and listen for the status of the chat
+    this.checkStatus()
+    $('#chat').on('hidden.bs.collapse', () => {
+      this.checkStatus()
+    })
+    $('#chat').on('shown.bs.collapse', () => {
+      this.checkStatus()
+    })
+
     var vue = this
     this.resizeChat()
     this.loadHistory()
@@ -56,19 +66,34 @@ export default {
           'pos': 'justify-content-start',
         }
         this.messages.push(message)
+        if (!this.status) {
+          $('#chat').collapse('show')
+        }
       }
     })
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username)
     })
     window.addEventListener( 'resize', _.debounce(vue.resizeChat, 50) )
-    $('#chat').on( 'shown.bs.collapse', () => {
-      var questo = document.getElementById('questo')
-      questo.scrollTop = (questo.scrollHeight)
-    })
-
   },
   methods: {
+    checkStatus () {
+      if ($('#chat').hasClass('show')) {
+        this.status = true
+        this.scrollToBottom()
+      } else {
+        this.status = false
+      }
+    },
+
+    scrollToBottom() {
+      var element = document.getElementById('chat-messages')
+      console.log(element.scrollHeight)
+      setTimeout(function() {
+        element.scrollTop = element.scrollHeight
+      }, 50)
+    },
+
     sendMsg (e)
     {
       e.preventDefault()
@@ -91,6 +116,7 @@ export default {
           }
           vue.messages.push(message)
           vue.msg = ''
+          vue.scrollToBottom()
         })
         .catch((error) => {
           console.log(error)

@@ -653,11 +653,21 @@ exports.default = {
     return {
       messages: [],
       msg: '',
-      conts: ''
+      conts: '',
+      status: false
     };
   },
   mounted: function mounted() {
     var _this = this;
+
+    // check and listen for the status of the chat
+    this.checkStatus();
+    $('#chat').on('hidden.bs.collapse', function () {
+      _this.checkStatus();
+    });
+    $('#chat').on('shown.bs.collapse', function () {
+      _this.checkStatus();
+    });
 
     var vue = this;
     this.resizeChat();
@@ -675,19 +685,33 @@ exports.default = {
           'pos': 'justify-content-start'
         };
         _this.messages.push(message);
+        if (!_this.status) {
+          $('#chat').collapse('show');
+        }
       }
     });
     socket.on('chat:UserSignin', function (data) {
       _this.messages.push(data.username);
     });
     window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
-    $('#chat').on('shown.bs.collapse', function () {
-      var questo = document.getElementById('questo');
-      questo.scrollTop = questo.scrollHeight;
-    });
   },
 
   methods: {
+    checkStatus: function checkStatus() {
+      if ($('#chat').hasClass('show')) {
+        this.status = true;
+        this.scrollToBottom();
+      } else {
+        this.status = false;
+      }
+    },
+    scrollToBottom: function scrollToBottom() {
+      var element = document.getElementById('chat-messages');
+      console.log(element.scrollHeight);
+      setTimeout(function () {
+        element.scrollTop = element.scrollHeight;
+      }, 50);
+    },
     sendMsg: function sendMsg(e) {
       e.preventDefault();
       var vue = this;
@@ -708,6 +732,7 @@ exports.default = {
         };
         vue.messages.push(message);
         vue.msg = '';
+        vue.scrollToBottom();
       }).catch(function (error) {
         console.log(error);
       });
@@ -12073,7 +12098,7 @@ var render = function() {
             {
               ref: "messages",
               staticClass: "messages",
-              attrs: { id: "questo" }
+              attrs: { id: "chat-messages" }
             },
             _vm._l(_vm.messages, function(message) {
               return _c("div", { class: "messages-body" }, [
