@@ -101,4 +101,59 @@ class ToolController extends Controller
         echo 'Completato';
     }
 
+    public function remove_video_from_sound_atmosphere()
+    {
+        $sound_atmosphere = App::find(8);
+
+        $app_category = $sound_atmosphere->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        $videos = $sound_atmosphere->videos()->where('category_id', '=', 2)->get();
+
+        foreach ($videos as $key => $video) {
+            echo 'Deleting '.$video->id;
+            $id = $video->id;
+            $app_category->videos()->where([
+                ['category_id', '=', 2],
+                ['video_id', '=', $id],
+            ])->detach();
+            $pavilion->videos()->where([
+                ['category_id', '=', 2],
+                ['video_id', '=', $id],
+            ])->detach();
+            echo 'Deleted!';
+        }
+
+        echo 'Deleting the app videos';
+        $sound_atmosphere->videos()->where('category_id', '=', 2)->detach();
+        echo 'Deleted!';
+
+        $sound_studio = App::find(12);
+
+        $app_category = $sound_studio->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        $videos = $sound_studio->videos()->where('category_id', '=', 2)->get();
+
+        foreach ($videos as $key => $video) {
+            echo 'Deleting '.$video->id;
+            $id = $video->id;
+            $app_category->videos()->where([
+                ['category_id', '=', 2],
+                ['video_id', '=', $id],
+            ])->detach();
+            $pavilion->videos()->where([
+                ['category_id', '=', 2],
+                ['video_id', '=', $id],
+            ])->detach();
+            echo 'Deleted!';
+        }
+
+        echo 'Deleting the app videos';
+        $sound_studio->videos()->where('category_id', '=', 2)->detach();
+        echo 'Deleted!';
+
+        // $videos = Video::where('')
+    }
+
 }

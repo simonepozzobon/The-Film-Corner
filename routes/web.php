@@ -177,10 +177,11 @@ Route::prefix('admin')->group(function () {
 
 
     Route::prefix('tools')->group(function(){
-        Route::get('/flush-media', 'ToolController@flush_media');
-        Route::get('/soundstudio', 'ToolController@soundstudio_library');
-        Route::get('/translate_filmography', 'ToolController@translate_filmography');
-        Route::get('/translate_partner', 'ToolController@translate_partner');
+        // Route::get('/flush-media', 'ToolController@flush_media');
+        // Route::get('/soundstudio', 'ToolController@soundstudio_library');
+        // Route::get('/translate_filmography', 'ToolController@translate_filmography');
+        // Route::get('/translate_partner', 'ToolController@translate_partner');
+        Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
     });
 });
 
