@@ -648,7 +648,7 @@ var $ = __webpack_require__(50);
 
 exports.default = {
   name: 'TfcChat',
-  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'sessiontoken'],
+  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'token'],
   data: function data() {
     return {
       messages: [],
@@ -666,13 +666,16 @@ exports.default = {
       console.log('CLIENT CONNECTED');
     });
     socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start'
-      };
-      _this.messages.push(message);
+      console.log('messaggio', data);
+      if (_this.token == data.session) {
+        var message = {
+          'msg': data.message,
+          'type': 'received',
+          'color': 'green',
+          'pos': 'justify-content-start'
+        };
+        _this.messages.push(message);
+      }
     });
     socket.on('chat:UserSignin', function (data) {
       _this.messages.push(data.username);
@@ -694,10 +697,9 @@ exports.default = {
         'from_type': vue.fromtype,
         'to_id': vue.toid,
         'to_type': vue.totype,
-        'token': vue.sessiontoken,
+        'token': vue.token,
         'message': vue.msg
       }).then(function (response) {
-        console.log(response);
         var message = {
           'msg': vue.msg,
           'type': 'sent',
@@ -717,7 +719,7 @@ exports.default = {
         'from_type': vue.fromtype,
         'to_id': vue.toid,
         'to_type': vue.totype,
-        'token': vue.sessiontoken
+        'token': vue.token
       }).then(function (response) {
         if (response.data.success != false) {
           _.each(response.data, function (msg) {
@@ -761,7 +763,7 @@ exports.default = {
       //       'from_type': vue.fromtype,
       //       'to_id': vue.toid,
       //       'to_type': vue.totype,
-      //       'token': vue.sessiontoken,
+      //       'token': vue.token,
       //   })
       //   , 500);
 

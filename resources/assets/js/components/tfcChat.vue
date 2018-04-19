@@ -33,7 +33,7 @@ var $ = require('jquery')
 
 export default {
   name: 'TfcChat',
-  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'sessiontoken'],
+  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'token'],
   data: () => ({
     messages: [],
     msg: '',
@@ -47,13 +47,16 @@ export default {
       console.log('CLIENT CONNECTED')
     })
     socket.on('chat:newMessage:'+this.fromid+':'+this.fromtype, (data) => {
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start',
+      console.log('messaggio', data)
+      if (this.token == data.session) {
+        var message = {
+          'msg': data.message,
+          'type': 'received',
+          'color': 'green',
+          'pos': 'justify-content-start',
+        }
+        this.messages.push(message)
       }
-      this.messages.push(message)
     })
     socket.on('chat:UserSignin', (data) => {
       this.messages.push(data.username)
@@ -76,11 +79,10 @@ export default {
         'from_type': vue.fromtype,
         'to_id': vue.toid,
         'to_type': vue.totype,
-        'token': vue.sessiontoken,
+        'token': vue.token,
         'message' : vue.msg,
       })
         .then((response) => {
-          console.log(response)
           var message = {
             'msg': vue.msg,
             'type': 'sent',
@@ -103,7 +105,7 @@ export default {
         'from_type': vue.fromtype,
         'to_id': vue.toid,
         'to_type': vue.totype,
-        'token': vue.sessiontoken,
+        'token': vue.token,
       })
         .then((response) => {
           if (response.data.success != false)
@@ -158,7 +160,7 @@ export default {
       //       'from_type': vue.fromtype,
       //       'to_id': vue.toid,
       //       'to_type': vue.totype,
-      //       'token': vue.sessiontoken,
+      //       'token': vue.token,
       //   })
       //   , 500);
 

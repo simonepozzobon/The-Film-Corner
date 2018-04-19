@@ -20,7 +20,8 @@ class ChatController extends Controller
             'to_id' => $request->to_id,
             'to_type' => $request->to_type,
             'data' => [
-                'message' => $request->message
+                'message' => $request->message,
+                'session' => $request->token,
             ]
         ];
 
@@ -31,7 +32,8 @@ class ChatController extends Controller
 
         $conversation = Conversation::where([
             ['teacher_id', '=', $teacher],
-            ['student_id', '=', $student]
+            ['student_id', '=', $student],
+            ['token', '=', $request->token],
         ])->first();
 
         if ($conversation != null)
@@ -65,7 +67,7 @@ class ChatController extends Controller
             $conversation = new Conversation();
             $conversation->teacher_id = $teacher;
             $conversation->student_id = $student;
-            $conversation->token = 'prova';
+            $conversation->token = $request->token;
             $conversation->content = $messages;
             $conversation->save();
             // return response()->json([
@@ -98,6 +100,7 @@ class ChatController extends Controller
         $conversation = Conversation::where([
             ['teacher_id', '=', $teacher],
             ['student_id', '=', $student],
+            ['token', '=', $request->token],
         ])->first();
 
         if ($conversation != null) {

@@ -20530,6 +20530,10 @@ exports.default = {
         socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, function (data) {
             vue.pushNotification(data, 'approved your work.');
         });
+
+        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, function (data) {
+            console.log(data);
+        });
     },
 
     methods: {

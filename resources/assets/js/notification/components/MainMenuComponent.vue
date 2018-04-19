@@ -268,6 +268,10 @@ export default {
         socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, (data) => {
             vue.pushNotification(data, 'approved your work.')
         })
+
+        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, data => {
+            console.log(data)
+        })
     },
     methods: {
         markAsRead: function(notification) {
