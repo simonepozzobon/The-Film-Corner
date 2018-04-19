@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Student;
 use App\Teacher;
+use App\SharedSession;
 use App\Conversation;
+use App\Notifications\ChatNotification;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\AppsSessions\StudentAppSession;
 use Illuminate\Support\Facades\Redis;
 
 class ChatController extends Controller
@@ -75,6 +78,41 @@ class ChatController extends Controller
             // ], 200);
         }
 
+        // get the sender object
+        $senderController = 'App\\'.ucfirst($request->to_type);
+        $senderClass = new $senderController;
+        $sender = $senderClass->find($request->to_id);
+
+        // get the receiver object
+        $receiverController = 'App\\'.ucfirst($request->to_type);
+        $receiverClass = new $receiverController;
+        $receiver = $receiverClass->find($request->to_id);
+
+        // get the session object
+        $session = StudentAppSession::where('token', $request->token)->with('app', 'student')->first();
+
+        if ($sender && $receiver && $session) {
+            $app = $session->app;
+            $receiver->notify( new ChatNotification($session, $sender, $receiver) );
+
+            $notification = [
+              'event' => 'chatMessage',
+              'from_id' => $sender->id,
+              'from_type' => get_class($sender),
+              'to_id' => $receiver->id,
+              'to_type' => get_class($receiver),
+              'data' => [
+                  'sender' => $sender,
+                  'session' => $session,
+                  'app' => $app
+              ]
+            ];
+
+            Redis::publish('notification', json_encode($notification));
+
+            return response()->json($data, 200);
+        }
+
         return response()->json($data, 200);
     }
 
@@ -135,5 +173,24 @@ class ChatController extends Controller
         }
 
         return $teacher;
+    }
+
+    public function removeNotifications(Request $request)
+    {
+        // get the sender object
+        $userController = 'App\\'.ucfirst($request->user_class);
+        $userClass = new $userController;
+        $user = $userClass->find($request->user_id);
+
+        $notifications = $user->notifications()->where('type', '=', 'App\\Notifications\\ChatNotification')->get();
+
+        foreach ($notifications as $key => $notification) {
+            $decode = $notification->data;
+            if ($decode['session']['token'] == $request->token) {
+                $notification->delete();
+            }
+        }
+
+        return 'success';
     }
 }

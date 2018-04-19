@@ -247,10 +247,17 @@ export default {
                 return '/downloads/user-guide/TFC_Users_Guide_EN.pdf'
             }
             return '/downloads/user-guide/TFC_Users_Guide_EN.pdf'
+        },
+        chatOpen: function() {
+            if ($('#chat').hasClass('show') && this.chatExists) {
+                return true
+            }
+            return false
         }
     },
     data: () => ({
-        notifs: []
+        notifs: [],
+        chatExists: false,
     }),
     created() {
         var vue = this
@@ -269,9 +276,22 @@ export default {
             vue.pushNotification(data, 'approved your work.')
         })
 
-        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, data => {
-            console.log(data)
+        socket.on('notification:chatMessage:' + this.userParsed.id + ':' + this.user_type, (data) => {
+            console.log('chat', data)
+            if (!this.chatOpen) {
+                vue.pushNotification(data, 'sent you a new message.')
+            }
         })
+
+        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, data => {
+            console.log('chat notification', data)
+        })
+
+        socket.on('connect', function(){
+          if (document.getElementById('chat')) {
+              this.chatExists = true
+          }
+      }.bind(this))
     },
     methods: {
         markAsRead: function(notification) {

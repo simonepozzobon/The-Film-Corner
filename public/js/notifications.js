@@ -20239,7 +20239,7 @@ module.exports = function settle(resolve, reject, response) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 Object.defineProperty(exports, "__esModule", {
     value: true
@@ -20505,11 +20505,18 @@ exports.default = {
                 return '/downloads/user-guide/TFC_Users_Guide_EN.pdf';
             }
             return '/downloads/user-guide/TFC_Users_Guide_EN.pdf';
+        },
+        chatOpen: function chatOpen() {
+            if ($('#chat').hasClass('show') && this.chatExists) {
+                return true;
+            }
+            return false;
         }
     },
     data: function data() {
         return {
-            notifs: []
+            notifs: [],
+            chatExists: false
         };
     },
     created: function created() {
@@ -20531,9 +20538,22 @@ exports.default = {
             vue.pushNotification(data, 'approved your work.');
         });
 
-        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, function (data) {
-            console.log(data);
+        socket.on('notification:chatMessage:' + this.userParsed.id + ':' + this.user_type, function (data) {
+            console.log('chat', data);
+            if (!_this.chatOpen) {
+                vue.pushNotification(data, 'sent you a new message.');
+            }
         });
+
+        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, function (data) {
+            console.log('chat notification', data);
+        });
+
+        socket.on('connect', function () {
+            if (document.getElementById('chat')) {
+                this.chatExists = true;
+            }
+        }.bind(this));
     },
 
     methods: {
@@ -20562,6 +20582,7 @@ exports.default = {
         NotificationsDropdownMenu: _NotificationsDropdownMenu2.default
     }
 };
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
 
 /***/ }),
 
@@ -20574,6 +20595,8 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+//
+//
 //
 //
 //
@@ -20603,6 +20626,12 @@ exports.default = {
     },
     token: function token() {
       return this.notification.data.session.token;
+    },
+    isChat: function isChat() {
+      if (this.notification.type === 'App\\Notifications\\ChatNotification') {
+        return true;
+      }
+      return false;
     }
   },
   methods: {
@@ -22607,7 +22636,10 @@ var render = function() {
         _c("i", { staticClass: "fa fa-globe" }),
         _vm._v(" -\n    "),
         _c("span", [_vm._v(_vm._s(_vm.notification.data.sender.name))]),
-        _vm._v(", sent you a new notification\n  ")
+        _vm._v(",\n    "),
+        this.isChat
+          ? _c("span", [_vm._v("sent you a new message")])
+          : _c("span", [_vm._v("sent you a new notification")])
       ]
     )
   ])

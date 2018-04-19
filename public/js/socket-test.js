@@ -611,7 +611,7 @@ function localstorage() {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 //
 //
@@ -642,158 +642,177 @@ Object.defineProperty(exports, "__esModule", {
 
 var axios = __webpack_require__(13);
 var io = __webpack_require__(94);
-var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
+var socket = io.connect('http://' + window.location.hostname + ':6001', {
+	reconnect: true
+});
 var _ = __webpack_require__(47);
 var $ = __webpack_require__(50);
 
 exports.default = {
-  name: 'TfcChat',
-  props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'token'],
-  data: function data() {
-    return {
-      messages: [],
-      msg: '',
-      conts: '',
-      status: false
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
+	name: 'TfcChat',
+	props: ['fromtype', 'fromid', 'toid', 'totype', 'toname', 'token'],
+	data: function data() {
+		return {
+			messages: [],
+			msg: '',
+			conts: '',
+			status: false
+		};
+	},
+	mounted: function mounted() {
+		var _this = this;
 
-    // check and listen for the status of the chat
-    this.checkStatus();
-    $('#chat').on('hidden.bs.collapse', function () {
-      _this.checkStatus();
-    });
-    $('#chat').on('shown.bs.collapse', function () {
-      _this.checkStatus();
-    });
+		// check and listen for the status of the chat
+		this.checkStatus();
+		$('#chat').on('hidden.bs.collapse', function () {
+			_this.checkStatus();
+		});
+		$('#chat').on('shown.bs.collapse', function () {
+			_this.checkStatus();
+			_this.markMessagesAsRead();
+		});
 
-    var vue = this;
-    this.resizeChat();
-    this.loadHistory();
-    socket.on('connect', function () {
-      console.log('CLIENT CONNECTED');
-    });
-    socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-      console.log('messaggio', data);
-      if (_this.token == data.session) {
-        var message = {
-          'msg': data.message,
-          'type': 'received',
-          'color': 'green',
-          'pos': 'justify-content-start'
-        };
-        _this.messages.push(message);
-        if (!_this.status) {
-          $('#chat').collapse('show');
-        }
-      }
-    });
-    socket.on('chat:UserSignin', function (data) {
-      _this.messages.push(data.username);
-    });
-    window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
-  },
+		var vue = this;
+		this.resizeChat();
+		this.loadHistory();
+		socket.on('connect', function () {
+			console.log('CLIENT CONNECTED');
+		});
+		socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
+			// console.log(data)
+			if (_this.token == data.session) {
+				var message = {
+					'msg': data.message,
+					'type': 'received',
+					'color': 'green',
+					'pos': 'justify-content-start'
+				};
+				_this.messages.push(message);
+				if (!_this.status) {
+					$('#chat').collapse('show');
+				}
+			}
+		});
+		socket.on('chat:UserSignin', function (data) {
+			_this.messages.push(data.username);
+		});
+		window.addEventListener('resize', _.debounce(vue.resizeChat, 50));
+	},
 
-  methods: {
-    checkStatus: function checkStatus() {
-      if ($('#chat').hasClass('show')) {
-        this.status = true;
-        this.scrollToBottom();
-      } else {
-        this.status = false;
-      }
-    },
-    scrollToBottom: function scrollToBottom() {
-      var element = document.getElementById('chat-messages');
-      console.log(element.scrollHeight);
-      setTimeout(function () {
-        element.scrollTop = element.scrollHeight;
-      }, 50);
-    },
-    sendMsg: function sendMsg(e) {
-      e.preventDefault();
-      var vue = this;
+	methods: {
+		markMessagesAsRead: function markMessagesAsRead() {
+			var data = new FormData();
+			data.append('user_id', this.fromid);
+			data.append('user_class', this.fromtype);
+			data.append('token', this.token);
 
-      axios.post('/api/v1/chat-notification', {
-        'from_id': vue.fromid,
-        'from_type': vue.fromtype,
-        'to_id': vue.toid,
-        'to_type': vue.totype,
-        'token': vue.token,
-        'message': vue.msg
-      }).then(function (response) {
-        var message = {
-          'msg': vue.msg,
-          'type': 'sent',
-          'color': 'yellow',
-          'pos': 'justify-content-end'
-        };
-        vue.messages.push(message);
-        vue.msg = '';
-        vue.scrollToBottom();
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-    loadHistory: function loadHistory() {
-      var vue = this;
-      axios.post('/api/v1/chat-history', {
-        'from_id': vue.fromid,
-        'from_type': vue.fromtype,
-        'to_id': vue.toid,
-        'to_type': vue.totype,
-        'token': vue.token
-      }).then(function (response) {
-        if (response.data.success != false) {
-          _.each(response.data, function (msg) {
-            // console.log(msg);
-            var history;
-            if (msg.from == vue.fromid) {
-              history = {
-                'msg': msg.message,
-                'type': 'sent',
-                'color': 'yellow',
-                'pos': 'justify-content-end'
-              };
-              vue.messages.push(history);
-            }
-            if (msg.from == vue.toid) {
-              history = {
-                'msg': msg.message,
-                'type': 'received',
-                'color': 'green',
-                'pos': 'justify-content-start'
-              };
-              vue.messages.push(history);
-            }
-          });
-        } else {
-          console.log(response.data.status);
-        }
-      }).catch(function (error) {
-        console.log(error);
-      });
-    },
-    resizeChat: function resizeChat() {
-      var height = window.innerHeight / 4;
-      this.$refs['messages'].style.height = height + 'px';
-    },
-    typingMsg: function typingMsg() {
-      // var vue = this
-      // _.debounce(
-      //   axios.post('/api/v1/chat-typing', {
-      //       'from_id': vue.fromid,
-      //       'from_type': vue.fromtype,
-      //       'to_id': vue.toid,
-      //       'to_type': vue.totype,
-      //       'token': vue.token,
-      //   })
-      //   , 500);
+			axios.post('/api/v1/remove-notifications', data).then(function (response) {
+				// this call delete all the notifications from this conversation
+				// console.log(response)
+			});
+		},
+		checkStatus: function checkStatus() {
+			if ($('#chat').hasClass('show')) {
+				this.status = true;
+				this.scrollToBottom();
+			} else {
+				this.status = false;
+			}
+		},
 
-    }
-  }
+		scrollToBottom: function scrollToBottom() {
+			var element = document.getElementById('chat-messages');
+			setTimeout(function () {
+				element.scrollTop = element.scrollHeight;
+			}, 50);
+		},
+
+		sendMsg: function sendMsg(e) {
+			e.preventDefault();
+			var vue = this;
+
+			axios.post('/api/v1/chat-notification', {
+				'from_id': vue.fromid,
+				'from_type': vue.fromtype,
+				'to_id': vue.toid,
+				'to_type': vue.totype,
+				'token': vue.token,
+				'message': vue.msg
+			}).then(function (response) {
+				console.log(response);
+				var message = {
+					'msg': vue.msg,
+					'type': 'sent',
+					'color': 'yellow',
+					'pos': 'justify-content-end'
+				};
+				vue.messages.push(message);
+				vue.msg = '';
+				vue.scrollToBottom();
+			}).catch(function (error) {
+				console.log(error);
+			});
+		},
+
+		loadHistory: function loadHistory() {
+			var vue = this;
+			axios.post('/api/v1/chat-history', {
+				'from_id': vue.fromid,
+				'from_type': vue.fromtype,
+				'to_id': vue.toid,
+				'to_type': vue.totype,
+				'token': vue.token
+			}).then(function (response) {
+				if (response.data.success != false) {
+					_.each(response.data, function (msg) {
+						// console.log(msg);
+						var history;
+						if (msg.from == vue.fromid) {
+							history = {
+								'msg': msg.message,
+								'type': 'sent',
+								'color': 'yellow',
+								'pos': 'justify-content-end'
+							};
+							vue.messages.push(history);
+						}
+						if (msg.from == vue.toid) {
+							history = {
+								'msg': msg.message,
+								'type': 'received',
+								'color': 'green',
+								'pos': 'justify-content-start'
+							};
+							vue.messages.push(history);
+						}
+					});
+				} else {
+					console.log(response.data.status);
+				}
+			}).catch(function (error) {
+				console.log(error);
+			});
+		},
+
+		resizeChat: function resizeChat() {
+			var height = window.innerHeight / 4;
+			this.$refs['messages'].style.height = height + 'px';
+		},
+
+		typingMsg: function typingMsg() {
+			// var vue = this
+			// _.debounce(
+			//   axios.post('/api/v1/chat-typing', {
+			//       'from_id': vue.fromid,
+			//       'from_type': vue.fromtype,
+			//       'to_id': vue.toid,
+			//       'to_type': vue.totype,
+			//       'token': vue.token,
+			//   })
+			//   , 500);
+
+		}
+	}
 };
 
 /***/ }),
@@ -12089,7 +12108,7 @@ var render = function() {
     [
       _c("div", { staticClass: "box blue" }, [
         _c("div", { staticClass: "box-header" }, [
-          _vm._v("\n      To: " + _vm._s(_vm.toname) + "\n    ")
+          _vm._v("\n\t\t\tTo: " + _vm._s(_vm.toname) + "\n\t\t")
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "box-body chat" }, [
