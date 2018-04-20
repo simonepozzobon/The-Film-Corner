@@ -20299,7 +20299,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _gsap = __webpack_require__(20);
@@ -20308,159 +20308,126 @@ var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _EventBus = __webpack_require__(77);
+
+var _EventBus2 = _interopRequireDefault(_EventBus);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 exports.default = {
-  name: 'Notification',
-  props: {
-    'notification': {
-      default: function _default() {},
-      type: [Object, Array]
-    }
-  },
-  computed: {
-    status: function status() {
-      if (this.notification.read_at != null) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    approved: function approved() {
-      if (this.notification.teacher_approved == 1) {
-        return true;
-      } else {
-        return false;
-      }
-    },
-    section_slug: function section_slug() {
-      return this.notification.data.session.app.category.section.slug;
-    },
-    app_cat_slug: function app_cat_slug() {
-      return this.notification.data.session.app.category.slug;
-    },
-    app_slug: function app_slug() {
-      return this.notification.data.session.app.slug;
-    },
-    token: function token() {
-      return this.notification.data.session.token;
-    }
-  },
-  mounted: function mounted() {
-    this.showNotification();
-  },
-  methods: {
-    showNotification: function showNotification() {
-      _gsap.TweenMax.to(this.$refs.notification, .8, {
-        opacity: 1,
-        display: 'flex',
-        easing: _gsap.Power4.easeInOut
-      });
-    },
-    showDelete: function showDelete() {
-      _gsap.TweenMax.to(this.$refs.icons_right, .4, {
-        opacity: 1,
-        display: 'inherit',
-        easing: _gsap.Power4.easeInOut
-      });
-    },
-    hideDelete: function hideDelete() {
-      _gsap.TweenMax.to(this.$refs.icons_right, .4, {
-        opacity: 0,
-        display: 'none',
-        easing: _gsap.Power4.easeInOut
-      });
-    },
-    deleteNotification: function deleteNotification() {
-      var _this = this;
+	name: 'Notification',
+	props: {
+		'notification': {
+			default: function _default() {},
+			type: [Object, Array]
+		}
+	},
+	computed: {
+		status: function status() {
+			if (this.notification.read_at != null) {
+				return true;
+			}
+			return false;
+		},
+		approved: function approved() {
+			if (this.notification.teacher_approved == 1) {
+				return true;
+			}
+			return false;
+		},
+		section_slug: function section_slug() {
+			return this.notification.data.session.app.category.section.slug;
+		},
+		app_cat_slug: function app_cat_slug() {
+			return this.notification.data.session.app.category.slug;
+		},
+		app_slug: function app_slug() {
+			return this.notification.data.session.app.slug;
+		},
+		token: function token() {
+			return this.notification.data.session.token;
+		}
+	},
+	mounted: function mounted() {
+		this.showNotification();
+	},
+	methods: {
+		showNotification: function showNotification() {
+			_gsap.TweenMax.to(this.$refs.notification, .8, {
+				opacity: 1,
+				display: 'flex',
+				easing: _gsap.Power4.easeInOut
+			});
+		},
+		showDelete: function showDelete() {
+			_gsap.TweenMax.to(this.$refs.icons_right, .4, {
+				opacity: 1,
+				display: 'inherit',
+				easing: _gsap.Power4.easeInOut
+			});
+		},
+		hideDelete: function hideDelete() {
+			_gsap.TweenMax.to(this.$refs.icons_right, .4, {
+				opacity: 0,
+				display: 'none',
+				easing: _gsap.Power4.easeInOut
+			});
+		},
+		deleteNotification: function deleteNotification() {
+			var _this = this;
 
-      var vue = this;
-      var data = new FormData();
-      data.append('id', this.notification.id);
+			var vue = this;
+			var data = new FormData();
+			data.append('id', this.notification.id);
 
-      _axios2.default.post('/teacher/notifications/destroy', data).then(function () {
-        vue.$root.$emit('notification-deleted', _this.notification);
-      });
-    },
-    markAsRead: function markAsRead() {
-      this.$root.$emit('notification-mark-as-read', this.notification);
-    },
-    shareSession: function shareSession() {
-      var vue = this;
+			_axios2.default.post('/teacher/notifications/destroy', data).then(function () {
+				vue.$root.$emit('notification-deleted', _this.notification);
+			});
+		},
+		markAsRead: function markAsRead() {
+			this.$root.$emit('notification-mark-as-read', this.notification);
+		},
+		shareSession: function shareSession() {
+			var vue = this;
 
-      var data = new FormData();
-      data.append('token', this.notification.data.session.token);
+			var data = new FormData();
+			data.append('token', this.notification.data.session.token);
 
-      _axios2.default.post('/teacher/session/share-approved', data).then(function (response) {
-        console.log('session condivisa', response);
-      });
-    }
-  }
-};
+			_axios2.default.post('/teacher/session/share-approved', data).then(function (response) {
+				_EventBus2.default.$emit('session-shared', response);
+			});
+		}
+	}
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -20520,8 +20487,32 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
+
+var _gsap = __webpack_require__(20);
+
+var _EventBus = __webpack_require__(77);
+
+var _EventBus2 = _interopRequireDefault(_EventBus);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -20553,13 +20544,59 @@ Object.defineProperty(exports, "__esModule", {
 //
 
 exports.default = {
-  name: 'SharedSessionSingle',
-  props: {
-    session: {
-      default: function _default() {},
-      type: Object
+    name: 'SharedSessionSingle',
+    props: {
+        session: {
+            default: function _default() {},
+            type: Object
+        }
+    },
+    data: function data() {
+        return {
+            isOpen: false
+        };
+    },
+    methods: {
+        deleteSession: function deleteSession() {
+            var vue = this;
+            if (this.isOpen) {
+                // close the panel
+                var t1 = new _gsap.TimelineMax();
+                t1.to('#delete-session-' + this.session.id, .2, {
+                    display: 'none',
+                    opacity: 0,
+                    onComplete: function onComplete() {
+                        vue.isOpen = false;
+                    }
+                });
+            } else {
+                // open the panel
+                var t1 = new _gsap.TimelineMax();
+                t1.to('#delete-session-' + this.session.id, .4, {
+                    display: 'flex',
+                    opacity: 1,
+                    onComplete: function onComplete() {
+                        vue.isOpen = true;
+                    }
+                });
+            }
+        },
+        confirmDelete: function confirmDelete() {
+            var _this = this;
+
+            var data = new FormData();
+            data.append('id', this.session.id);
+
+            axios.post('/teacher/session/shared-destroy', data).then(function (response) {
+                console.log(response);
+                if (response.data == 'success') {
+                    _EventBus2.default.$emit('shared-session-deleted', _this.session.id);
+                }
+            }).catch(function (errors) {
+                console.log(errors);
+            });
+        }
     }
-  }
 };
 
 /***/ }),
@@ -21113,7 +21150,7 @@ module.exports = btoa;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+	value: true
 });
 
 var _Sessions = __webpack_require__(413);
@@ -21128,6 +21165,10 @@ var _SharedSessions = __webpack_require__(415);
 
 var _SharedSessions2 = _interopRequireDefault(_SharedSessions);
 
+var _EventBus = __webpack_require__(77);
+
+var _EventBus2 = _interopRequireDefault(_EventBus);
+
 var _axios = __webpack_require__(13);
 
 var _axios2 = _interopRequireDefault(_axios);
@@ -21138,15 +21179,6 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var io = __webpack_require__(94); //
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -21159,133 +21191,150 @@ var io = __webpack_require__(94); //
 //
 //
 
-var socket = io.connect('http://' + window.location.hostname + ':6001', { reconnect: true });
+var io = __webpack_require__(94);
+var socket = io.connect('http://' + window.location.hostname + ':6001', {
+	reconnect: true
+});
 
 exports.default = {
-  name: 'TeacherProfile',
-  props: {
-    students: {
-      default: '',
-      type: String
-    },
-    notifications: {
-      default: '',
-      type: String
-    },
-    user: {
-      default: '',
-      type: String
-    },
-    user_type: {
-      default: '',
-      type: String
-    },
-    shared_sessions: {
-      default: '',
-      type: String
-    },
-    translation: {
-      default: '',
-      type: String
-    }
-  },
-  computed: {
-    studentsParsed: function studentsParsed() {
-      return JSON.parse(this.students);
-    },
-    notificationsParsed: function notificationsParsed() {
-      var parsed = JSON.parse(this.notifications);
-      parsed = _lodash2.default.each(parsed, function (single) {
-        single.data = single.notification.data;
-        single.read_at = single.notification.read_at;
-        single.id = single.notification.id;
-      });
-      return parsed;
-    },
-    userParsed: function userParsed() {
-      return JSON.parse(this.user);
-    },
-    shared_sessionsParsed: function shared_sessionsParsed() {
-      return JSON.parse(this.shared_sessions);
-    },
-    translationParsed: function translationParsed() {
-      return JSON.parse(this.translation);
-    }
-  },
-  data: function data() {
-    return {
-      notificationsUpdated: [],
-      sharedSessions: []
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
+	name: 'TeacherProfile',
+	props: {
+		students: {
+			default: '',
+			type: String
+		},
+		notifications: {
+			default: '',
+			type: String
+		},
+		user: {
+			default: '',
+			type: String
+		},
+		user_type: {
+			default: '',
+			type: String
+		},
+		shared_sessions: {
+			default: '',
+			type: String
+		},
+		translation: {
+			default: '',
+			type: String
+		}
+	},
+	computed: {
+		studentsParsed: function studentsParsed() {
+			return JSON.parse(this.students);
+		},
+		notificationsParsed: function notificationsParsed() {
+			var parsed = JSON.parse(this.notifications);
+			parsed = _lodash2.default.each(parsed, function (single) {
+				single.data = single.notification.data;
+				single.read_at = single.notification.read_at;
+				single.id = single.notification.id;
+			});
+			return parsed;
+		},
+		userParsed: function userParsed() {
+			return JSON.parse(this.user);
+		},
+		shared_sessionsParsed: function shared_sessionsParsed() {
+			return JSON.parse(this.shared_sessions);
+		},
+		translationParsed: function translationParsed() {
+			return JSON.parse(this.translation);
+		}
+	},
+	data: function data() {
+		return {
+			notificationsUpdated: [],
+			sharedSessions: []
+		};
+	},
+	mounted: function mounted() {
+		var _this = this;
 
-    var vue = this;
-    this.notificationsUpdated = this.notificationsParsed;
-    this.sharedSessions = this.shared_sessionsParsed;
+		var vue = this;
+		this.notificationsUpdated = this.notificationsParsed;
+		this.sharedSessions = this.shared_sessionsParsed;
 
-    socket.on('connect', function () {
-      console.log('CLIENT CONNECTED');
-    });
+		socket.on('connect', function () {
+			console.log('CLIENT CONNECTED');
+		});
 
-    // need to be changed to notifications
-    socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
-      var message = {
-        'msg': data.message,
-        'type': 'received',
-        'color': 'green',
-        'pos': 'justify-content-start'
-      };
-      _this.messages.push(message);
-    });
+		// need to be changed to notifications
+		socket.on('chat:newMessage:' + this.fromid + ':' + this.fromtype, function (data) {
+			var message = {
+				'msg': data.message,
+				'type': 'received',
+				'color': 'green',
+				'pos': 'justify-content-start'
+			};
+			_this.messages.push(message);
+		});
 
-    socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
-      vue.pushNotification(data);
-    });
+		socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, function (data) {
+			vue.pushNotification(data);
+		});
 
-    this.$root.$on('notification-deleted', function (notification) {
-      _this.deleteNotification(notification);
-    });
+		this.$root.$on('notification-deleted', function (notification) {
+			_this.deleteNotification(notification);
+		});
 
-    this.$root.$on('notification-mark-as-read', function (notification) {
-      _this.markAsRead(notification);
-    });
-  },
+		this.$root.$on('notification-mark-as-read', function (notification) {
+			_this.markAsRead(notification);
+		});
 
-  methods: {
-    pushNotification: function pushNotification(notification) {
-      this.notificationsUpdated.unshift(notification);
-    },
-    deleteNotification: function deleteNotification(notification) {
-      this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
-        return value.id !== notification.id;
-      });
-    },
-    markAsRead: function markAsRead(notification) {
-      var foundIndex = this.notificationsUpdated.findIndex(function (element) {
-        return element.id == notification.id;
-      });
-      if (foundIndex != -1) {
-        if (this.notificationsUpdated[foundIndex].read_at == null) {
-          this.notificationsUpdated[foundIndex].read_at = 10;
-          _axios2.default.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id);
-        } else {
-          this.notificationsUpdated[foundIndex].read_at = null;
+		_EventBus2.default.$on('session-shared', function (response) {
+			console.log('ricevuto', response);
+			_this.sharedSessions.push(response.session);
+		});
 
-          var data = new FormData();
-          data.append('id', this.notificationsUpdated[foundIndex].id);
+		_EventBus2.default.$on('shared-session-deleted', function (id) {
+			var index = _this.sharedSessions.findIndex(function (session) {
+				return session.id == id;
+			});
+			if (index > -1) {
+				_this.sharedSessions.splice(index, 1);
+			}
+		});
+	},
 
-          _axios2.default.post('/teacher/notifications/markasunread', data);
-        }
-      }
-    }
-  },
-  components: {
-    Sessions: _Sessions2.default,
-    StudentPanel: _StudentPanel2.default,
-    SharedSessions: _SharedSessions2.default
-  }
+	methods: {
+		pushNotification: function pushNotification(notification) {
+			this.notificationsUpdated.unshift(notification);
+		},
+		deleteNotification: function deleteNotification(notification) {
+			this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
+				return value.id !== notification.id;
+			});
+		},
+		markAsRead: function markAsRead(notification) {
+			var foundIndex = this.notificationsUpdated.findIndex(function (element) {
+				return element.id == notification.id;
+			});
+			if (foundIndex != -1) {
+				if (this.notificationsUpdated[foundIndex].read_at == null) {
+					this.notificationsUpdated[foundIndex].read_at = 10;
+					_axios2.default.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id);
+				} else {
+					this.notificationsUpdated[foundIndex].read_at = null;
+
+					var data = new FormData();
+					data.append('id', this.notificationsUpdated[foundIndex].id);
+
+					_axios2.default.post('/teacher/notifications/markasunread', data);
+				}
+			}
+		}
+	},
+	components: {
+		Sessions: _Sessions2.default,
+		StudentPanel: _StudentPanel2.default,
+		SharedSessions: _SharedSessions2.default
+	}
 };
 
 /***/ }),
@@ -21591,7 +21640,7 @@ module.exports = (
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
-exports.push([module.i, "\n#shared-session-single > .shared-container[data-v-98e0edba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding-bottom: 1.33333rem;\n}\n#shared-session-single > .shared-container > .shared-content > a[data-v-98e0edba] {\n    text-transform: capitalize;\n    color: #252525;\n}\n#shared-session-single > .shared-container > .stats[data-v-98e0edba] {\n    margin-left: auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n}\n#shared-session-single > .shared-container > .stats > .mr[data-v-98e0edba] {\n      margin-right: 1rem;\n}\n#shared-session-single > .shared-container > .stats > .stat[data-v-98e0edba] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n#shared-session-single > .shared-container > .stats > .stat > .text[data-v-98e0edba] {\n        margin-right: 0.5rem;\n}\n#shared-session-single > .shared-container > .stats > .stat > .icon[data-v-98e0edba] {\n        color: #636c72;\n}\n", ""]);
+exports.push([module.i, "\n.shared-session-single > .delete-session[data-v-98e0edba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-pack: center;\n      -ms-flex-pack: center;\n          justify-content: center;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  display: none;\n  opacity: 0;\n}\n.shared-session-single > .delete-session > button[data-v-98e0edba] {\n    margin: 0 2rem 2rem 2rem;\n}\n.shared-session-single > .shared-container[data-v-98e0edba] {\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  -webkit-box-align: center;\n      -ms-flex-align: center;\n          align-items: center;\n  padding-bottom: 1.33333rem;\n}\n.shared-session-single > .shared-container > .shared-content > a[data-v-98e0edba] {\n    text-transform: capitalize;\n    color: #252525;\n}\n.shared-session-single > .shared-container > .stats[data-v-98e0edba] {\n    margin-left: auto;\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -webkit-box-pack: justify;\n        -ms-flex-pack: justify;\n            justify-content: space-between;\n    -webkit-box-align: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n.shared-session-single > .shared-container > .stats > .mr[data-v-98e0edba] {\n      margin-right: 1rem;\n}\n.shared-session-single > .shared-container > .stats > .stat[data-v-98e0edba] {\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n}\n.shared-session-single > .shared-container > .stats > .stat > .text[data-v-98e0edba] {\n        margin-right: 0.5rem;\n}\n.shared-session-single > .shared-container > .stats > .stat > .icon[data-v-98e0edba] {\n        color: #636c72;\n}\n.shared-session-single > .shared-container > .stats > .delete > .icon[data-v-98e0edba] {\n      margin-left: 2rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -23122,45 +23171,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "shared-session-single" } }, [
-    _c("div", { staticClass: "shared-container" }, [
-      _c("div", { staticClass: "shared-content" }, [
-        _c("a", { attrs: { href: "/teacher/network/" + _vm.session.token } }, [
-          _vm._v(
-            "\n        " +
-              _vm._s(_vm.session.title) +
-              " - " +
-              _vm._s(_vm.session.app.title) +
-              " made by " +
-              _vm._s(_vm.session.userable.name) +
-              "\n      "
+  return _c(
+    "div",
+    {
+      staticClass: "shared-session-single",
+      attrs: { id: "shared-session-single-" + _vm.session.id }
+    },
+    [
+      _c("div", { staticClass: "shared-container" }, [
+        _c("div", { staticClass: "shared-content" }, [
+          _c(
+            "a",
+            { attrs: { href: "/teacher/network/" + _vm.session.token } },
+            [
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.session.title) +
+                  " - " +
+                  _vm._s(_vm.session.app.title) +
+                  " made by " +
+                  _vm._s(_vm.session.userable.name) +
+                  "\n        "
+              )
+            ]
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "stats" }, [
+          _c("div", { staticClass: "stat mr" }, [
+            _c("div", { staticClass: "text" }, [
+              _vm._v(
+                "\n\t\t\t\t\t" +
+                  _vm._s(_vm.session.comments_count) +
+                  "\n\t\t\t\t"
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0, false, false)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "stat" }, [
+            _c("div", { staticClass: "text" }, [
+              _vm._v(
+                "\n\t\t\t\t\t" + _vm._s(_vm.session.likes.length) + "\n\t\t\t\t"
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(1, false, false)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "stat delete" }, [
+            _c("div", { staticClass: "icon" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-green",
+                  on: { click: _vm.deleteSession }
+                },
+                [_c("i", { staticClass: "fa fa-trash-o" })]
+              )
+            ])
+          ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "stats" }, [
-        _c("div", { staticClass: "stat mr" }, [
-          _c("div", { staticClass: "text" }, [
-            _vm._v(
-              "\n          " + _vm._s(_vm.session.comments_count) + "\n        "
-            )
-          ]),
+      _c(
+        "div",
+        {
+          staticClass: "delete-session",
+          attrs: { id: "delete-session-" + _vm.session.id }
+        },
+        [
+          _c(
+            "button",
+            {
+              staticClass: "confirm btn btn-green",
+              on: { click: _vm.confirmDelete }
+            },
+            [_c("i", { staticClass: "fa fa-check" })]
+          ),
           _vm._v(" "),
-          _vm._m(0, false, false)
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "stat" }, [
-          _c("div", { staticClass: "text" }, [
-            _vm._v(
-              "\n          " + _vm._s(_vm.session.likes.length) + "\n        "
-            )
-          ]),
-          _vm._v(" "),
-          _vm._m(1, false, false)
-        ])
-      ])
-    ])
-  ])
+          _c(
+            "button",
+            {
+              staticClass: "undo btn btn-green",
+              on: { click: _vm.deleteSession }
+            },
+            [_c("i", { staticClass: "fa fa-times" })]
+          )
+        ]
+      )
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -23234,7 +23336,7 @@ var render = function() {
             _vm._v(
               " - " +
                 _vm._s(this.notification.data.session.app.title) +
-                "\n      "
+                "\n\t\t\t"
             )
           ]),
           _vm._v(" "),
@@ -23247,7 +23349,7 @@ var render = function() {
                     attrs: { href: "#" },
                     on: { click: _vm.shareSession }
                   },
-                  [_vm._v("\n          Share\n        ")]
+                  [_vm._v("\n            Share\n          ")]
                 )
               : _vm._e(),
             _vm._v(" "),
@@ -23267,7 +23369,7 @@ var render = function() {
                     _vm.token
                 }
               },
-              [_vm._v("\n          Open\n        ")]
+              [_vm._v("\n            Open\n          ")]
             ),
             _vm._v(" "),
             _c("i", {
@@ -43982,6 +44084,33 @@ function applyToTag (styleElement, obj) {
   }
 }
 
+
+/***/ }),
+
+/***/ 77:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.EventBus = undefined;
+
+var _vue = __webpack_require__(17);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EventBus = exports.EventBus = new _vue2.default({
+    created: function created() {
+        console.log('EventBus loaded');
+    }
+});
+
+exports.default = EventBus;
 
 /***/ }),
 

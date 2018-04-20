@@ -22066,7 +22066,7 @@ function applyToTag (styleElement, obj) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.EventBus = undefined;
 
@@ -22076,7 +22076,13 @@ var _vue2 = _interopRequireDefault(_vue);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var EventBus = exports.EventBus = new _vue2.default();
+var EventBus = exports.EventBus = new _vue2.default({
+    created: function created() {
+        console.log('EventBus loaded');
+    }
+});
+
+exports.default = EventBus;
 
 /***/ }),
 
