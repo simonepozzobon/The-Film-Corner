@@ -21198,6 +21198,11 @@ var socket = io.connect('http://' + window.location.hostname + ':6001', {
 
 exports.default = {
 	name: 'TeacherProfile',
+	components: {
+		Sessions: _Sessions2.default,
+		StudentPanel: _StudentPanel2.default,
+		SharedSessions: _SharedSessions2.default
+	},
 	props: {
 		students: {
 			default: '',
@@ -21224,6 +21229,12 @@ exports.default = {
 			type: String
 		}
 	},
+	data: function data() {
+		return {
+			notificationsUpdated: [],
+			sharedSessions: []
+		};
+	},
 	computed: {
 		studentsParsed: function studentsParsed() {
 			return JSON.parse(this.students);
@@ -21247,11 +21258,33 @@ exports.default = {
 			return JSON.parse(this.translation);
 		}
 	},
-	data: function data() {
-		return {
-			notificationsUpdated: [],
-			sharedSessions: []
-		};
+	methods: {
+		pushNotification: function pushNotification(notification) {
+			this.notificationsUpdated.unshift(notification);
+		},
+		deleteNotification: function deleteNotification(notification) {
+			this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
+				return value.id !== notification.id;
+			});
+		},
+		markAsRead: function markAsRead(notification) {
+			var foundIndex = this.notificationsUpdated.findIndex(function (element) {
+				return element.id == notification.id;
+			});
+			if (foundIndex != -1) {
+				if (this.notificationsUpdated[foundIndex].read_at == null) {
+					this.notificationsUpdated[foundIndex].read_at = 10;
+					_axios2.default.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id);
+				} else {
+					this.notificationsUpdated[foundIndex].read_at = null;
+
+					var data = new FormData();
+					data.append('id', this.notificationsUpdated[foundIndex].id);
+
+					_axios2.default.post('/teacher/notifications/markasunread', data);
+				}
+			}
+		}
 	},
 	mounted: function mounted() {
 		var _this = this;
@@ -21288,8 +21321,14 @@ exports.default = {
 		});
 
 		_EventBus2.default.$on('session-shared', function (response) {
-			console.log('ricevuto', response);
-			_this.sharedSessions.push(response.session);
+			console.log('ricevuto', response.data);
+			var session = response.data.session;
+
+			session.userable = {
+				name: ''
+			};
+
+			_this.sharedSessions.push(response.data.session);
 		});
 
 		_EventBus2.default.$on('shared-session-deleted', function (id) {
@@ -21300,40 +21339,6 @@ exports.default = {
 				_this.sharedSessions.splice(index, 1);
 			}
 		});
-	},
-
-	methods: {
-		pushNotification: function pushNotification(notification) {
-			this.notificationsUpdated.unshift(notification);
-		},
-		deleteNotification: function deleteNotification(notification) {
-			this.notificationsUpdated = this.notificationsUpdated.filter(function (value) {
-				return value.id !== notification.id;
-			});
-		},
-		markAsRead: function markAsRead(notification) {
-			var foundIndex = this.notificationsUpdated.findIndex(function (element) {
-				return element.id == notification.id;
-			});
-			if (foundIndex != -1) {
-				if (this.notificationsUpdated[foundIndex].read_at == null) {
-					this.notificationsUpdated[foundIndex].read_at = 10;
-					_axios2.default.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id);
-				} else {
-					this.notificationsUpdated[foundIndex].read_at = null;
-
-					var data = new FormData();
-					data.append('id', this.notificationsUpdated[foundIndex].id);
-
-					_axios2.default.post('/teacher/notifications/markasunread', data);
-				}
-			}
-		}
-	},
-	components: {
-		Sessions: _Sessions2.default,
-		StudentPanel: _StudentPanel2.default,
-		SharedSessions: _SharedSessions2.default
 	}
 };
 

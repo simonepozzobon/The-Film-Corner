@@ -24,6 +24,11 @@ var socket = io.connect('http://' + window.location.hostname + ':6001', {
 
 export default {
 	name: 'TeacherProfile',
+	components: {
+		Sessions,
+		StudentPanel,
+		SharedSessions
+	},
 	props: {
 		students: {
 			default: '',
@@ -50,6 +55,12 @@ export default {
 			type: String
 		}
 	},
+	data: function() {
+		return {
+			notificationsUpdated: [],
+			sharedSessions: [],
+		}
+	},
 	computed: {
 		studentsParsed: function() {
 			return JSON.parse(this.students)
@@ -73,11 +84,35 @@ export default {
 			return JSON.parse(this.translation)
 		},
 	},
-	data: () => ({
-		notificationsUpdated: [],
-		sharedSessions: [],
-	}),
-	mounted() {
+	methods: {
+		pushNotification: function(notification) {
+			this.notificationsUpdated.unshift(notification)
+		},
+		deleteNotification: function(notification) {
+			this.notificationsUpdated = this.notificationsUpdated.filter(function(value) {
+				return value.id !== notification.id
+			})
+		},
+		markAsRead: function(notification) {
+			var foundIndex = this.notificationsUpdated.findIndex((element) => {
+				return element.id == notification.id
+			})
+			if (foundIndex != -1) {
+				if (this.notificationsUpdated[foundIndex].read_at == null) {
+					this.notificationsUpdated[foundIndex].read_at = 10
+					axios.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id)
+				} else {
+					this.notificationsUpdated[foundIndex].read_at = null
+
+					var data = new FormData()
+					data.append('id', this.notificationsUpdated[foundIndex].id)
+
+					axios.post('/teacher/notifications/markasunread', data)
+				}
+			}
+		}
+	},
+	mounted: function() {
 		var vue = this
 		this.notificationsUpdated = this.notificationsParsed
 		this.sharedSessions = this.shared_sessionsParsed
@@ -110,8 +145,14 @@ export default {
 		})
 
 		EventBus.$on('session-shared', response => {
-			console.log('ricevuto', response)
-			this.sharedSessions.push(response.session)
+			console.log('ricevuto', response.data)
+			var session = response.data.session
+
+			session.userable = {
+				name: '',
+			}
+
+			this.sharedSessions.push(response.data.session)
 		})
 
 		EventBus.$on('shared-session-deleted', id => {
@@ -123,39 +164,6 @@ export default {
 			}
 		})
 	},
-	methods: {
-		pushNotification: function(notification) {
-			this.notificationsUpdated.unshift(notification)
-		},
-		deleteNotification: function(notification) {
-			this.notificationsUpdated = this.notificationsUpdated.filter(function(value) {
-				return value.id !== notification.id
-			})
-		},
-		markAsRead: function(notification) {
-			var foundIndex = this.notificationsUpdated.findIndex((element) => {
-				return element.id == notification.id
-			})
-			if (foundIndex != -1) {
-				if (this.notificationsUpdated[foundIndex].read_at == null) {
-					this.notificationsUpdated[foundIndex].read_at = 10
-					axios.get('/teacher/notifications/markasread/' + this.notificationsUpdated[foundIndex].id)
-				} else {
-					this.notificationsUpdated[foundIndex].read_at = null
-
-					var data = new FormData()
-					data.append('id', this.notificationsUpdated[foundIndex].id)
-
-					axios.post('/teacher/notifications/markasunread', data)
-				}
-			}
-		}
-	},
-	components: {
-		Sessions,
-		StudentPanel,
-		SharedSessions
-	}
 }
 </script>
 <style lang="scss" scoped>
