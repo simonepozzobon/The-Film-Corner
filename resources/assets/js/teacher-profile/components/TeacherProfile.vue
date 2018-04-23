@@ -145,14 +145,9 @@ export default {
 		})
 
 		EventBus.$on('session-shared', response => {
-			console.log('ricevuto', response.data)
-			var session = response.data.session
-
-			session.userable = {
-				name: '',
-			}
-
 			this.sharedSessions.push(response.data.session)
+			var message = new CustomEvent('fullscreen-message', {detail: 'Shared!'})
+			document.dispatchEvent(message)
 		})
 
 		EventBus.$on('shared-session-deleted', id => {

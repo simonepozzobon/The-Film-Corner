@@ -17,11 +17,11 @@
 			</div>
 			<div class="icons-right" ref="icons_right">
 				<a v-if="this.approved" href="#" class="btn btn-sm btn-blue mr" @click="shareSession">
-            Share
-          </a>
+					Share
+				</a>
 				<a :href="'/teacher/'+section_slug+'/'+app_cat_slug+'/'+app_slug+'/'+token" class="btn btn-sm btn-blue">
-            Open
-          </a>
+					Open
+				</a>
 				<i class="fa fa-times text-muted" @click="deleteNotification" />
 			</div>
 		</div>

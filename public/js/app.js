@@ -11328,11 +11328,11 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(19).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(20).setImmediate))
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -11526,66 +11526,6 @@ module.exports = Vue$3;
 
 /***/ }),
 
-/***/ 19:
-/***/ (function(module, exports, __webpack_require__) {
-
-var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(18);
-exports.setImmediate = setImmediate;
-exports.clearImmediate = clearImmediate;
-
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, exports) {
 
@@ -11773,6 +11713,66 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 process.umask = function() { return 0; };
+
+
+/***/ }),
+
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(19);
+exports.setImmediate = setImmediate;
+exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
@@ -13563,7 +13563,7 @@ function isSlowBuffer (obj) {
  */
 
 var keys = __webpack_require__(89);
-var hasBinary = __webpack_require__(62);
+var hasBinary = __webpack_require__(63);
 var sliceBuffer = __webpack_require__(78);
 var after = __webpack_require__(88);
 var utf8 = __webpack_require__(90);
@@ -32016,9 +32016,9 @@ module.exports = __webpack_require__(230);
 
 var debug = __webpack_require__(15)('socket.io-parser');
 var Emitter = __webpack_require__(54);
-var hasBin = __webpack_require__(62);
+var hasBin = __webpack_require__(63);
 var binary = __webpack_require__(97);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 
 /**
  * Protocol version.
@@ -32413,7 +32413,7 @@ function error() {
 
 /***/ }),
 
-/***/ 59:
+/***/ 60:
 /***/ (function(module, exports) {
 
 /**
@@ -32443,7 +32443,7 @@ module.exports = function(obj, fn){
 
 /***/ }),
 
-/***/ 60:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -32504,7 +32504,7 @@ function polling (opts) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -32515,7 +32515,7 @@ var Transport = __webpack_require__(51);
 var parseqs = __webpack_require__(49);
 var parser = __webpack_require__(42);
 var inherit = __webpack_require__(48);
-var yeast = __webpack_require__(69);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(15)('engine.io-client:polling');
 
 /**
@@ -32756,7 +32756,7 @@ Polling.prototype.uri = function () {
 
 /***/ }),
 
-/***/ 62:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -32826,7 +32826,7 @@ function hasBinary (obj) {
 
 /***/ }),
 
-/***/ 63:
+/***/ 64:
 /***/ (function(module, exports) {
 
 
@@ -32842,7 +32842,7 @@ module.exports = function(arr, obj){
 
 /***/ }),
 
-/***/ 64:
+/***/ 65:
 /***/ (function(module, exports) {
 
 /**
@@ -32888,7 +32888,7 @@ module.exports = function parseuri(str) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32897,13 +32897,13 @@ module.exports = function parseuri(str) {
  */
 
 var eio = __webpack_require__(83);
-var Socket = __webpack_require__(67);
+var Socket = __webpack_require__(68);
 var Emitter = __webpack_require__(54);
 var parser = __webpack_require__(55);
-var on = __webpack_require__(66);
-var bind = __webpack_require__(59);
+var on = __webpack_require__(67);
+var bind = __webpack_require__(60);
 var debug = __webpack_require__(15)('socket.io-client:manager');
-var indexOf = __webpack_require__(63);
+var indexOf = __webpack_require__(64);
 var Backoff = __webpack_require__(79);
 
 /**
@@ -33468,7 +33468,7 @@ Manager.prototype.onreconnect = function () {
 
 /***/ }),
 
-/***/ 66:
+/***/ 67:
 /***/ (function(module, exports) {
 
 
@@ -33499,7 +33499,7 @@ function on (obj, ev, fn) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33510,8 +33510,8 @@ function on (obj, ev, fn) {
 var parser = __webpack_require__(55);
 var Emitter = __webpack_require__(54);
 var toArray = __webpack_require__(98);
-var on = __webpack_require__(66);
-var bind = __webpack_require__(59);
+var on = __webpack_require__(67);
+var bind = __webpack_require__(60);
 var debug = __webpack_require__(15)('socket.io-client:socket');
 var parseqs = __webpack_require__(49);
 
@@ -33924,7 +33924,7 @@ Socket.prototype.compress = function (compress) {
 
 /***/ }),
 
-/***/ 68:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -33945,7 +33945,7 @@ function isBuf(obj) {
 
 /***/ }),
 
-/***/ 69:
+/***/ 70:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34749,12 +34749,12 @@ module.exports.parser = __webpack_require__(42);
  * Module dependencies.
  */
 
-var transports = __webpack_require__(60);
+var transports = __webpack_require__(61);
 var Emitter = __webpack_require__(53);
 var debug = __webpack_require__(15)('engine.io-client:socket');
-var index = __webpack_require__(63);
+var index = __webpack_require__(64);
 var parser = __webpack_require__(42);
-var parseuri = __webpack_require__(64);
+var parseuri = __webpack_require__(65);
 var parseqs = __webpack_require__(49);
 
 /**
@@ -34889,7 +34889,7 @@ Socket.protocol = parser.protocol; // this is an int
 
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(51);
-Socket.transports = __webpack_require__(60);
+Socket.transports = __webpack_require__(61);
 Socket.parser = __webpack_require__(42);
 
 /**
@@ -35501,7 +35501,7 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(61);
+var Polling = __webpack_require__(62);
 var inherit = __webpack_require__(48);
 
 /**
@@ -35740,7 +35740,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
  */
 
 var XMLHttpRequest = __webpack_require__(52);
-var Polling = __webpack_require__(61);
+var Polling = __webpack_require__(62);
 var Emitter = __webpack_require__(53);
 var inherit = __webpack_require__(48);
 var debug = __webpack_require__(15)('engine.io-client:polling-xhr');
@@ -36164,7 +36164,7 @@ var Transport = __webpack_require__(51);
 var parser = __webpack_require__(42);
 var parseqs = __webpack_require__(49);
 var inherit = __webpack_require__(48);
-var yeast = __webpack_require__(69);
+var yeast = __webpack_require__(70);
 var debug = __webpack_require__(15)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
@@ -37002,7 +37002,7 @@ function plural(ms, n, name) {
 
 var url = __webpack_require__(95);
 var parser = __webpack_require__(55);
-var Manager = __webpack_require__(65);
+var Manager = __webpack_require__(66);
 var debug = __webpack_require__(15)('socket.io-client');
 
 /**
@@ -37087,8 +37087,8 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(65);
-exports.Socket = __webpack_require__(67);
+exports.Manager = __webpack_require__(66);
+exports.Socket = __webpack_require__(68);
 
 
 /***/ }),
@@ -37101,7 +37101,7 @@ exports.Socket = __webpack_require__(67);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(64);
+var parseuri = __webpack_require__(65);
 var debug = __webpack_require__(15)('socket.io-client:url');
 
 /**
@@ -37198,7 +37198,7 @@ module.exports = Array.isArray || function (arr) {
  */
 
 var isArray = __webpack_require__(96);
-var isBuf = __webpack_require__(68);
+var isBuf = __webpack_require__(69);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';

@@ -48,7 +48,7 @@ var _fn = __webpack_require__(14);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -60,7 +60,7 @@ var _log = __webpack_require__(46);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -1880,7 +1880,7 @@ exports['default'] = Component;
 exports.__esModule = true;
 exports.throttle = exports.bind = undefined;
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 /**
  * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
@@ -2001,7 +2001,7 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -3420,7 +3420,7 @@ var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -3967,7 +3967,8 @@ exports['default'] = formatTime;
 /* 68 */,
 /* 69 */,
 /* 70 */,
-/* 71 */
+/* 71 */,
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3998,7 +3999,7 @@ function newGUID() {
 
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4031,7 +4032,7 @@ exports['default'] = toTitleCase;
 
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4039,7 +4040,7 @@ exports['default'] = toTitleCase;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(74);
+var _clickableComponent = __webpack_require__(75);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -4214,7 +4215,7 @@ exports['default'] = Button;
 
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4542,7 +4543,7 @@ exports['default'] = ClickableComponent;
 
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4590,7 +4591,7 @@ var _log = __webpack_require__(46);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(76);
+var _timeRanges = __webpack_require__(77);
 
 var _buffer = __webpack_require__(138);
 
@@ -5964,7 +5965,7 @@ exports['default'] = Tech;
 
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6116,7 +6117,6 @@ exports.createTimeRange = createTimeRanges;
 
 
 /***/ }),
-/* 77 */,
 /* 78 */,
 /* 79 */,
 /* 80 */,
@@ -6432,7 +6432,7 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(74);
+var _clickableComponent = __webpack_require__(75);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -7779,7 +7779,7 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -9944,7 +9944,7 @@ module.exports = VTTRegion;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(73);
+var _button = __webpack_require__(74);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -10596,7 +10596,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(74);
+var _clickableComponent = __webpack_require__(75);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -10616,7 +10616,7 @@ var _fn = __webpack_require__(14);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -11688,7 +11688,7 @@ var _fn = __webpack_require__(14);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(71);
+var _guid = __webpack_require__(72);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -11700,11 +11700,11 @@ var _log = __webpack_require__(46);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(76);
+var _timeRanges = __webpack_require__(77);
 
 var _buffer = __webpack_require__(138);
 
@@ -11738,7 +11738,7 @@ var _modalDialog = __webpack_require__(133);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(75);
+var _tech = __webpack_require__(76);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -16105,7 +16105,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(76);
+var _timeRanges = __webpack_require__(77);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -16289,7 +16289,7 @@ var _videoTrack = __webpack_require__(209);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(76);
+var _timeRanges = __webpack_require__(77);
 
 var _formatTime = __webpack_require__(58);
 
@@ -16317,7 +16317,7 @@ var _xhr = __webpack_require__(141);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(75);
+var _tech = __webpack_require__(76);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -78311,7 +78311,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(73);
+var _button = __webpack_require__(74);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -78440,7 +78440,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(73);
+var _button = __webpack_require__(74);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -78908,7 +78908,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(73);
+var _button = __webpack_require__(74);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -79140,7 +79140,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(73);
+var _button = __webpack_require__(74);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -80891,7 +80891,7 @@ var _chaptersTrackMenuItem = __webpack_require__(177);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -82770,7 +82770,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(74);
+var _clickableComponent = __webpack_require__(75);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -83004,7 +83004,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(74);
+var _clickableComponent = __webpack_require__(75);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -83552,7 +83552,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(75);
+var _tech = __webpack_require__(76);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -83564,7 +83564,7 @@ var _url = __webpack_require__(102);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(76);
+var _timeRanges = __webpack_require__(77);
 
 var _flashRtmp = __webpack_require__(197);
 
@@ -84741,7 +84741,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(75);
+var _tech = __webpack_require__(76);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -84787,7 +84787,7 @@ var _mergeOptions = __webpack_require__(56);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -86691,11 +86691,11 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(75);
+var _tech = __webpack_require__(76);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(72);
+var _toTitleCase = __webpack_require__(73);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 

@@ -92,6 +92,7 @@ export default {
             axios.post('/teacher/session/shared-destroy', data).then(response => {
                     console.log(response)
                     if (response.data == 'success') {
+                        this.deleteSession()
                         EventBus.$emit('shared-session-deleted', this.session.id)
                     }
                 })
