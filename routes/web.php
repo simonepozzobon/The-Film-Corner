@@ -182,6 +182,7 @@ Route::prefix('admin')->group(function () {
         // Route::get('/translate_filmography', 'ToolController@translate_filmography');
         // Route::get('/translate_partner', 'ToolController@translate_partner');
         Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
+        Route::get('/soundstudio-video', 'ToolController@soundstudio_video_library');
     });
 });
 
