@@ -1,5 +1,8 @@
 <template lang="html">
 	<div class="">
+        <div id="title" v-if="this.has_title" class="mb-3" ref="title">
+            <input type="text" v-model="title" class="form-control" placeholder="Title">
+        </div>
 		<div id="input-box" class="mb-3" ref="input">
 			<input
 				id="media"
@@ -25,8 +28,8 @@
 			<div id="percent">{{ this.percent }}%</div>
 		</div>
 		<div v-if="error_msg" class="d-flex justify-content-around pb-4">
-			<div class="error">
-				{{ this.error_msg }}
+			<div class="error text-danger">
+				<b>{{ this.error_msg }}</b>
 			</div>
 		</div>
 	</div>
@@ -60,6 +63,10 @@ export default {
             type: String,
             default: null,
         },
+        has_title: {
+            type: Boolean,
+            default: false,
+        }
     },
     data: () => ({
         assets_list: null,
@@ -67,6 +74,7 @@ export default {
         file: null,
         percent: 0,
         session_token: '',
+        title: '',
         videos: [],
     }),
     computed: {
@@ -157,6 +165,7 @@ export default {
                         this.assets_list = document.getElementById('response')
                         var asset = document.createElement('div')
                         this.$refs.input.style.display = 'none'
+                        this.$refs.title.style.display = 'none'
                         this.$refs.loader.style.display = 'none'
                         this.error_msg = ''
 
@@ -184,6 +193,11 @@ export default {
                     display: 'none',
                     ease: Sine.easeInOut,
                 })
+                .to(this.$refs.title, .2, {
+                    opacity: 1,
+                    display: 'block',
+                    ease: Sine.easeInOut,
+                })
                 .to(this.$refs.input, .2, {
                     opacity: 1,
                     display: 'flex',
@@ -193,6 +207,11 @@ export default {
         loaderShow: function() {
             var t1 = new TimelineMax()
             t1.to(this.$refs.input, .2, {
+                    opacity: 0,
+                    display: 'none',
+                    ease: Sine.easeInOut,
+                })
+                .to(this.$refs.title, .2, {
                     opacity: 0,
                     display: 'none',
                     ease: Sine.easeInOut,
@@ -208,6 +227,13 @@ export default {
             if (!this.session_token || this.session_token == 'null') {
                 this.error_msg = 'This session is corrupted. Please, save and reload the application'
                 return false
+            }
+
+            if (this.has_title == true) {
+                if (this.title == 'Untitled' || this.title == '') {
+                    this.error_msg = 'You must insert a title!'
+                    return false
+                }
             }
 
             if (!this.file) {
@@ -229,6 +255,10 @@ export default {
             data.append('media', this.file)
             data.append('session_token', this.session_token)
             data.append('session', this.session_token)
+            if (this.has_title) {
+                data.append('directly-save', true)
+                data.append('title', this.title)
+            }
 
             // Start the request
             var request = new XMLHttpRequest();

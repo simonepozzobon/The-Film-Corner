@@ -357,6 +357,19 @@ class CreativeStudioController extends Controller
       $app_session->videos()->save($video);
       $teacher->videos()->save($video);
 
+      // se è un contest devo anche salvare la sessione
+      if ($app->id == 16 || $app->id == 17) {
+        $data = [
+          'video' => [
+            'img' => $videoStore['img'],
+            'video' => $videoStore['src']
+          ]
+        ];
+        $app_session->is_empty = 0;
+        $app_session->title = $request['title'];
+        $app_session->content = json_encode($data);
+        $app_session->save();
+      }
 
       $data = [
         'name' => $title,

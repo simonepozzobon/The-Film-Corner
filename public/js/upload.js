@@ -20192,6 +20192,10 @@ exports.default = {
         route: {
             type: String,
             default: null
+        },
+        has_title: {
+            type: Boolean,
+            default: false
         }
     },
     data: function data() {
@@ -20201,6 +20205,7 @@ exports.default = {
             file: null,
             percent: 0,
             session_token: '',
+            title: '',
             videos: []
         };
     },
@@ -20271,6 +20276,7 @@ exports.default = {
                         _this.assets_list = document.getElementById('response');
                         var asset = document.createElement('div');
                         _this.$refs.input.style.display = 'none';
+                        _this.$refs.title.style.display = 'none';
                         _this.$refs.loader.style.display = 'none';
                         _this.error_msg = '';
 
@@ -20295,6 +20301,10 @@ exports.default = {
                 opacity: 0,
                 display: 'none',
                 ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
+                opacity: 1,
+                display: 'block',
+                ease: _gsap.Sine.easeInOut
             }).to(this.$refs.input, .2, {
                 opacity: 1,
                 display: 'flex',
@@ -20304,6 +20314,10 @@ exports.default = {
         loaderShow: function loaderShow() {
             var t1 = new _gsap.TimelineMax();
             t1.to(this.$refs.input, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
                 opacity: 0,
                 display: 'none',
                 ease: _gsap.Sine.easeInOut
@@ -20318,6 +20332,13 @@ exports.default = {
             if (!this.session_token || this.session_token == 'null') {
                 this.error_msg = 'This session is corrupted. Please, save and reload the application';
                 return false;
+            }
+
+            if (this.has_title == true) {
+                if (this.title == 'Untitled' || this.title == '') {
+                    this.error_msg = 'You must insert a title!';
+                    return false;
+                }
             }
 
             if (!this.file) {
@@ -20339,6 +20360,10 @@ exports.default = {
             data.append('media', this.file);
             data.append('session_token', this.session_token);
             data.append('session', this.session_token);
+            if (this.has_title) {
+                data.append('directly-save', true);
+                data.append('title', this.title);
+            }
 
             // Start the request
             var request = new XMLHttpRequest();
@@ -20374,6 +20399,9 @@ exports.default = {
         (0, _jquery2.default)(document).trigger('upload-module-loaded', null);
     }
 }; //
+//
+//
+//
 //
 //
 //
@@ -21069,6 +21097,36 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
+    this.has_title
+      ? _c(
+          "div",
+          { ref: "title", staticClass: "mb-3", attrs: { id: "title" } },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.title,
+                  expression: "title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.title = $event.target.value
+                }
+              }
+            })
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "div",
       { ref: "input", staticClass: "mb-3", attrs: { id: "input-box" } },
@@ -21135,8 +21193,8 @@ var render = function() {
     _vm._v(" "),
     _vm.error_msg
       ? _c("div", { staticClass: "d-flex justify-content-around pb-4" }, [
-          _c("div", { staticClass: "error" }, [
-            _vm._v("\n\t\t\t" + _vm._s(this.error_msg) + "\n\t\t")
+          _c("div", { staticClass: "error text-danger" }, [
+            _c("b", [_vm._v(_vm._s(this.error_msg))])
           ])
         ])
       : _vm._e()

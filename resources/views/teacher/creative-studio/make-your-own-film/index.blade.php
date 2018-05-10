@@ -5,7 +5,13 @@
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher'])
+    @php
+      $options = [
+        'save' => false,
+        'close-warning' => false,
+      ];
+    @endphp
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher', 'options' => $options])
     <div id="app">
       <div class="row mt">
         <div class="col">
@@ -19,6 +25,7 @@
                   csrf_field="{{ csrf_token() }}"
                   app_id="{{ $app->id }}"
                   color="blue"
+                  :has_title="true"
                   route="{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}">
                 </upload-form>
               </div>
