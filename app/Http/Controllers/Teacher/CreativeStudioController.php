@@ -361,7 +361,7 @@ class CreativeStudioController extends Controller
       if ($app->id == 16 || $app->id == 17) {
         $data = [
           'video' => [
-            'img' => $videoStore['img'],
+            'img' => Storage::disk('local')->url($videoStore['img']),
             'video' => $videoStore['src']
           ]
         ];
