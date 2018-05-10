@@ -1,4 +1,7 @@
 import Vue from 'vue'
+import $ from 'jquery'
+
+window.$ = window.jQuery = require('jquery')
 
 import List from './contest/list.vue'
 

@@ -69050,7 +69050,7 @@ exports.default = {
     watch: {
         appName: function appName(filter) {
             if (filter > 0) {
-                var filtered = this.results.filter(function (session) {
+                var filtered = this.sessions.filter(function (session) {
                     return session.app.id == filter;
                 });
                 this.results = filtered;
@@ -81040,11 +81040,17 @@ var _vue = __webpack_require__(16);
 
 var _vue2 = _interopRequireDefault(_vue);
 
+var _jquery = __webpack_require__(53);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
 var _list = __webpack_require__(527);
 
 var _list2 = _interopRequireDefault(_list);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+window.$ = window.jQuery = __webpack_require__(53);
 
 var app = new _vue2.default({
   el: '#app',

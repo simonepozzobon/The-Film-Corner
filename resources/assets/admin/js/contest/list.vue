@@ -60,7 +60,7 @@ export default {
     watch: {
         appName: function(filter) {
             if (filter > 0) {
-                var filtered = this.results.filter(session => {
+                var filtered = this.sessions.filter(session => {
                     return session.app.id == filter
                 })
                 this.results = filtered
