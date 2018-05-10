@@ -186,7 +186,7 @@ Route::prefix('admin')->group(function () {
     });
 
     Route::prefix('contest')->group(function() {
-        Route::get('/', 'Admin\ContestController@get_video')->name('admin.contest.index');
+        Route::get('/', 'Admin\ContestController@index')->name('admin.contest.index');
     });
 });
 

@@ -35,10 +35,6 @@ class ContestController extends Controller
 
         $sessions = collect();
 
-        dump($teacher);
-        dump($student);
-        dd('stop');
-
         foreach ($teacher as $key => $t) {
             $sessionJson = json_decode($t->content);
             $t->session = $sessionJson;
