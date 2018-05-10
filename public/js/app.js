@@ -1,4 +1,4 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -6,8 +6,8 @@ webpackJsonp([6],{
 "use strict";
 
 
-var bind = __webpack_require__(12);
-var isBuffer = __webpack_require__(38);
+var bind = __webpack_require__(13);
+var isBuffer = __webpack_require__(39);
 
 /*global toString:true*/
 
@@ -345,14 +345,48 @@ module.exports = g;
 "use strict";
 
 
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
 };
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
 
 
 /***/ }),
 
-/***/ 103:
+/***/ 100:
+/***/ (function(module, exports) {
+
+module.exports = toArray
+
+function toArray(list, index) {
+    var array = []
+
+    index = index || 0
+
+    for (var i = index || 0; i < list.length; i++) {
+        array[i - index] = list[i]
+    }
+
+    return array
+}
+
+
+/***/ }),
+
+/***/ 106:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -365,7 +399,20 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(26);
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var enhanceError = __webpack_require__(27);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -385,7 +432,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -404,14 +451,14 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(21);
+module.exports = __webpack_require__(22);
 
 /***/ }),
 
-/***/ 15:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11227,11 +11274,11 @@ Vue$3.compile = compileToFunctions;
 
 module.exports = Vue$3;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(18).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(1), __webpack_require__(20).setImmediate))
 
 /***/ }),
 
-/***/ 17:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -11422,74 +11469,6 @@ module.exports = Vue$3;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(2)))
-
-/***/ }),
-
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) {
-  if (timeout) {
-    timeout.close();
-  }
-};
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// setimmediate attaches itself to the global object
-__webpack_require__(17);
-// On some exotic environments, it's not clear which object `setimmeidate` was
-// able to install onto.  Search each possibility in the same order as the
-// `setimmediate` library.
-exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
-                       (typeof global !== "undefined" && global.setImmediate) ||
-                       (this && this.setImmediate);
-exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
-                         (typeof global !== "undefined" && global.clearImmediate) ||
-                         (this && this.clearImmediate);
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
 
@@ -11684,15 +11663,83 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 21:
+/***/ 20:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var apply = Function.prototype.apply;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) {
+  if (timeout) {
+    timeout.close();
+  }
+};
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// setimmediate attaches itself to the global object
+__webpack_require__(19);
+// On some exotic environments, it's not clear which object `setimmeidate` was
+// able to install onto.  Search each possibility in the same order as the
+// `setimmediate` library.
+exports.setImmediate = (typeof self !== "undefined" && self.setImmediate) ||
+                       (typeof global !== "undefined" && global.setImmediate) ||
+                       (this && this.setImmediate);
+exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
+                         (typeof global !== "undefined" && global.clearImmediate) ||
+                         (this && this.clearImmediate);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+
+/***/ }),
+
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(12);
-var Axios = __webpack_require__(23);
+var bind = __webpack_require__(13);
+var Axios = __webpack_require__(24);
 var defaults = __webpack_require__(5);
 
 /**
@@ -11726,15 +11773,15 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
-axios.CancelToken = __webpack_require__(22);
-axios.isCancel = __webpack_require__(10);
+axios.Cancel = __webpack_require__(10);
+axios.CancelToken = __webpack_require__(23);
+axios.isCancel = __webpack_require__(11);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(37);
+axios.spread = __webpack_require__(38);
 
 module.exports = axios;
 
@@ -11744,13 +11791,13 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(10);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -11809,7 +11856,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 23:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11817,10 +11864,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(5);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(24);
-var dispatchRequest = __webpack_require__(25);
-var isAbsoluteURL = __webpack_require__(33);
-var combineURLs = __webpack_require__(31);
+var InterceptorManager = __webpack_require__(25);
+var dispatchRequest = __webpack_require__(26);
+var isAbsoluteURL = __webpack_require__(34);
+var combineURLs = __webpack_require__(32);
 
 /**
  * Create a new instance of Axios
@@ -11903,7 +11950,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11963,15 +12010,15 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(28);
-var isCancel = __webpack_require__(10);
+var transformData = __webpack_require__(29);
+var isCancel = __webpack_require__(11);
 var defaults = __webpack_require__(5);
 
 /**
@@ -12050,7 +12097,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12079,13 +12126,13 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 27:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var createError = __webpack_require__(11);
+var createError = __webpack_require__(12);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -12113,7 +12160,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 28:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12141,56 +12188,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 288:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(52);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-var _laravelEcho = __webpack_require__(368);
-
-var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
- */
-window.$ = window.jQuery = __webpack_require__(52);
-window.Tether = __webpack_require__(147);
-__webpack_require__(218);
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(310);
-
-/**
- * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
- */
-
-window.io = __webpack_require__(95);
-window.Echo = new _laravelEcho2.default({
-  broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
-});
-
-/**
- * require bootstrap-fileinput
- */
-
-// require('bootstrap-fileinput')
-
-/***/ }),
-
-/***/ 29:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12234,7 +12232,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 30:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12310,7 +12308,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12332,62 +12330,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 310:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-window._ = __webpack_require__(48);
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-window.$ = window.jQuery = __webpack_require__(52);
-
-window.Tether = __webpack_require__(147);
-
-__webpack_require__(219);
-
-/**
- * Vue is a modern JavaScript library for building interactive web interfaces
- * using reactive data binding and reusable components. Vue's API is clean
- * and simple, leaving you to focus on building your next great project.
- */
-
-window.Vue = __webpack_require__(15);
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = __webpack_require__(13);
-
-window.axios.defaults.headers.common = {
-  // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
-  'X-Requested-With': 'XMLHttpRequest'
-};
-
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from "laravel-echo"
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
-// });
-
-/***/ }),
-
-/***/ 32:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12448,7 +12391,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12470,7 +12413,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12546,7 +12489,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 35:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12566,7 +12509,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 36:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12611,807 +12554,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 368:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-var _extends = Object.assign || function (target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
-
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
-    }
-  }
-
-  return target;
-};
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
-var Connector = function () {
-    function Connector(options) {
-        classCallCheck(this, Connector);
-
-        this._defaultOptions = {
-            auth: {
-                headers: {}
-            },
-            authEndpoint: '/broadcasting/auth',
-            broadcaster: 'pusher',
-            csrfToken: null,
-            host: null,
-            key: null,
-            namespace: 'App.Events'
-        };
-        this.setOptions(options);
-        this.connect();
-    }
-
-    createClass(Connector, [{
-        key: 'setOptions',
-        value: function setOptions(options) {
-            this.options = _extends(this._defaultOptions, options);
-            if (this.csrfToken()) {
-                this.options.auth.headers['X-CSRF-TOKEN'] = this.csrfToken();
-            }
-            return options;
-        }
-    }, {
-        key: 'csrfToken',
-        value: function csrfToken() {
-            var selector = void 0;
-            if (typeof window !== 'undefined' && window['Laravel'] && window['Laravel'].csrfToken) {
-                return window['Laravel'].csrfToken;
-            } else if (this.options.csrfToken) {
-                return this.options.csrfToken;
-            } else if (typeof document !== 'undefined' && (selector = document.querySelector('meta[name="csrf-token"]'))) {
-                return selector.getAttribute('content');
-            }
-            return null;
-        }
-    }]);
-    return Connector;
-}();
-
-var Channel = function () {
-    function Channel() {
-        classCallCheck(this, Channel);
-    }
-
-    createClass(Channel, [{
-        key: 'notification',
-        value: function notification(callback) {
-            return this.listen('.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', callback);
-        }
-    }, {
-        key: 'listenForWhisper',
-        value: function listenForWhisper(event, callback) {
-            return this.listen('.client-' + event, callback);
-        }
-    }]);
-    return Channel;
-}();
-
-var EventFormatter = function () {
-    function EventFormatter(namespace) {
-        classCallCheck(this, EventFormatter);
-
-        this.setNamespace(namespace);
-    }
-
-    createClass(EventFormatter, [{
-        key: 'format',
-        value: function format(event) {
-            if (event.charAt(0) === '.' || event.charAt(0) === '\\') {
-                return event.substr(1);
-            } else if (this.namespace) {
-                event = this.namespace + '.' + event;
-            }
-            return event.replace(/\./g, '\\');
-        }
-    }, {
-        key: 'setNamespace',
-        value: function setNamespace(value) {
-            this.namespace = value;
-        }
-    }]);
-    return EventFormatter;
-}();
-
-var PusherChannel = function (_Channel) {
-    inherits(PusherChannel, _Channel);
-
-    function PusherChannel(pusher, name, options) {
-        classCallCheck(this, PusherChannel);
-
-        var _this = possibleConstructorReturn(this, (PusherChannel.__proto__ || Object.getPrototypeOf(PusherChannel)).call(this));
-
-        _this.name = name;
-        _this.pusher = pusher;
-        _this.options = options;
-        _this.eventFormatter = new EventFormatter(_this.options.namespace);
-        _this.subscribe();
-        return _this;
-    }
-
-    createClass(PusherChannel, [{
-        key: 'subscribe',
-        value: function subscribe() {
-            this.subscription = this.pusher.subscribe(this.name);
-        }
-    }, {
-        key: 'unsubscribe',
-        value: function unsubscribe() {
-            this.pusher.unsubscribe(this.name);
-        }
-    }, {
-        key: 'listen',
-        value: function listen(event, callback) {
-            this.on(this.eventFormatter.format(event), callback);
-            return this;
-        }
-    }, {
-        key: 'stopListening',
-        value: function stopListening(event) {
-            this.subscription.unbind(this.eventFormatter.format(event));
-            return this;
-        }
-    }, {
-        key: 'on',
-        value: function on(event, callback) {
-            this.subscription.bind(event, callback);
-            return this;
-        }
-    }]);
-    return PusherChannel;
-}(Channel);
-
-var PusherPrivateChannel = function (_PusherChannel) {
-    inherits(PusherPrivateChannel, _PusherChannel);
-
-    function PusherPrivateChannel() {
-        classCallCheck(this, PusherPrivateChannel);
-        return possibleConstructorReturn(this, (PusherPrivateChannel.__proto__ || Object.getPrototypeOf(PusherPrivateChannel)).apply(this, arguments));
-    }
-
-    createClass(PusherPrivateChannel, [{
-        key: 'whisper',
-        value: function whisper(eventName, data) {
-            this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
-            return this;
-        }
-    }]);
-    return PusherPrivateChannel;
-}(PusherChannel);
-
-var PusherPresenceChannel = function (_PusherChannel) {
-    inherits(PusherPresenceChannel, _PusherChannel);
-
-    function PusherPresenceChannel() {
-        classCallCheck(this, PusherPresenceChannel);
-        return possibleConstructorReturn(this, (PusherPresenceChannel.__proto__ || Object.getPrototypeOf(PusherPresenceChannel)).apply(this, arguments));
-    }
-
-    createClass(PusherPresenceChannel, [{
-        key: 'here',
-        value: function here(callback) {
-            this.on('pusher:subscription_succeeded', function (data) {
-                callback(Object.keys(data.members).map(function (k) {
-                    return data.members[k];
-                }));
-            });
-            return this;
-        }
-    }, {
-        key: 'joining',
-        value: function joining(callback) {
-            this.on('pusher:member_added', function (member) {
-                callback(member.info);
-            });
-            return this;
-        }
-    }, {
-        key: 'leaving',
-        value: function leaving(callback) {
-            this.on('pusher:member_removed', function (member) {
-                callback(member.info);
-            });
-            return this;
-        }
-    }, {
-        key: 'whisper',
-        value: function whisper(eventName, data) {
-            this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
-            return this;
-        }
-    }]);
-    return PusherPresenceChannel;
-}(PusherChannel);
-
-var SocketIoChannel = function (_Channel) {
-    inherits(SocketIoChannel, _Channel);
-
-    function SocketIoChannel(socket, name, options) {
-        classCallCheck(this, SocketIoChannel);
-
-        var _this = possibleConstructorReturn(this, (SocketIoChannel.__proto__ || Object.getPrototypeOf(SocketIoChannel)).call(this));
-
-        _this.events = {};
-        _this.name = name;
-        _this.socket = socket;
-        _this.options = options;
-        _this.eventFormatter = new EventFormatter(_this.options.namespace);
-        _this.subscribe();
-        _this.configureReconnector();
-        return _this;
-    }
-
-    createClass(SocketIoChannel, [{
-        key: 'subscribe',
-        value: function subscribe() {
-            this.socket.emit('subscribe', {
-                channel: this.name,
-                auth: this.options.auth || {}
-            });
-        }
-    }, {
-        key: 'unsubscribe',
-        value: function unsubscribe() {
-            this.unbind();
-            this.socket.emit('unsubscribe', {
-                channel: this.name,
-                auth: this.options.auth || {}
-            });
-        }
-    }, {
-        key: 'listen',
-        value: function listen(event, callback) {
-            this.on(this.eventFormatter.format(event), callback);
-            return this;
-        }
-    }, {
-        key: 'on',
-        value: function on(event, callback) {
-            var _this2 = this;
-
-            var listener = function listener(channel, data) {
-                if (_this2.name == channel) {
-                    callback(data);
-                }
-            };
-            this.socket.on(event, listener);
-            this.bind(event, listener);
-        }
-    }, {
-        key: 'configureReconnector',
-        value: function configureReconnector() {
-            var _this3 = this;
-
-            var listener = function listener() {
-                _this3.subscribe();
-            };
-            this.socket.on('reconnect', listener);
-            this.bind('reconnect', listener);
-        }
-    }, {
-        key: 'bind',
-        value: function bind(event, callback) {
-            this.events[event] = this.events[event] || [];
-            this.events[event].push(callback);
-        }
-    }, {
-        key: 'unbind',
-        value: function unbind() {
-            var _this4 = this;
-
-            Object.keys(this.events).forEach(function (event) {
-                _this4.events[event].forEach(function (callback) {
-                    _this4.socket.removeListener(event, callback);
-                });
-                delete _this4.events[event];
-            });
-        }
-    }]);
-    return SocketIoChannel;
-}(Channel);
-
-var SocketIoPrivateChannel = function (_SocketIoChannel) {
-    inherits(SocketIoPrivateChannel, _SocketIoChannel);
-
-    function SocketIoPrivateChannel() {
-        classCallCheck(this, SocketIoPrivateChannel);
-        return possibleConstructorReturn(this, (SocketIoPrivateChannel.__proto__ || Object.getPrototypeOf(SocketIoPrivateChannel)).apply(this, arguments));
-    }
-
-    createClass(SocketIoPrivateChannel, [{
-        key: 'whisper',
-        value: function whisper(eventName, data) {
-            this.socket.emit('client event', {
-                channel: this.name,
-                event: 'client-' + eventName,
-                data: data
-            });
-            return this;
-        }
-    }]);
-    return SocketIoPrivateChannel;
-}(SocketIoChannel);
-
-var SocketIoPresenceChannel = function (_SocketIoPrivateChann) {
-    inherits(SocketIoPresenceChannel, _SocketIoPrivateChann);
-
-    function SocketIoPresenceChannel() {
-        classCallCheck(this, SocketIoPresenceChannel);
-        return possibleConstructorReturn(this, (SocketIoPresenceChannel.__proto__ || Object.getPrototypeOf(SocketIoPresenceChannel)).apply(this, arguments));
-    }
-
-    createClass(SocketIoPresenceChannel, [{
-        key: 'here',
-        value: function here(callback) {
-            this.on('presence:subscribed', function (members) {
-                callback(members.map(function (m) {
-                    return m.user_info;
-                }));
-            });
-            return this;
-        }
-    }, {
-        key: 'joining',
-        value: function joining(callback) {
-            this.on('presence:joining', function (member) {
-                return callback(member.user_info);
-            });
-            return this;
-        }
-    }, {
-        key: 'leaving',
-        value: function leaving(callback) {
-            this.on('presence:leaving', function (member) {
-                return callback(member.user_info);
-            });
-            return this;
-        }
-    }]);
-    return SocketIoPresenceChannel;
-}(SocketIoPrivateChannel);
-
-var PusherConnector = function (_Connector) {
-    inherits(PusherConnector, _Connector);
-
-    function PusherConnector() {
-        var _ref;
-
-        classCallCheck(this, PusherConnector);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = possibleConstructorReturn(this, (_ref = PusherConnector.__proto__ || Object.getPrototypeOf(PusherConnector)).call.apply(_ref, [this].concat(args)));
-
-        _this.channels = {};
-        return _this;
-    }
-
-    createClass(PusherConnector, [{
-        key: 'connect',
-        value: function connect() {
-            this.pusher = new Pusher(this.options.key, this.options);
-        }
-    }, {
-        key: 'listen',
-        value: function listen(name, event, callback) {
-            return this.channel(name).listen(event, callback);
-        }
-    }, {
-        key: 'channel',
-        value: function channel(name) {
-            if (!this.channels[name]) {
-                this.channels[name] = new PusherChannel(this.pusher, name, this.options);
-            }
-            return this.channels[name];
-        }
-    }, {
-        key: 'privateChannel',
-        value: function privateChannel(name) {
-            if (!this.channels['private-' + name]) {
-                this.channels['private-' + name] = new PusherPrivateChannel(this.pusher, 'private-' + name, this.options);
-            }
-            return this.channels['private-' + name];
-        }
-    }, {
-        key: 'presenceChannel',
-        value: function presenceChannel(name) {
-            if (!this.channels['presence-' + name]) {
-                this.channels['presence-' + name] = new PusherPresenceChannel(this.pusher, 'presence-' + name, this.options);
-            }
-            return this.channels['presence-' + name];
-        }
-    }, {
-        key: 'leave',
-        value: function leave(name) {
-            var _this2 = this;
-
-            var channels = [name, 'private-' + name, 'presence-' + name];
-            channels.forEach(function (name, index) {
-                if (_this2.channels[name]) {
-                    _this2.channels[name].unsubscribe();
-                    delete _this2.channels[name];
-                }
-            });
-        }
-    }, {
-        key: 'socketId',
-        value: function socketId() {
-            return this.pusher.connection.socket_id;
-        }
-    }, {
-        key: 'disconnect',
-        value: function disconnect() {
-            this.pusher.disconnect();
-        }
-    }]);
-    return PusherConnector;
-}(Connector);
-
-var SocketIoConnector = function (_Connector) {
-    inherits(SocketIoConnector, _Connector);
-
-    function SocketIoConnector() {
-        var _ref;
-
-        classCallCheck(this, SocketIoConnector);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        var _this = possibleConstructorReturn(this, (_ref = SocketIoConnector.__proto__ || Object.getPrototypeOf(SocketIoConnector)).call.apply(_ref, [this].concat(args)));
-
-        _this.channels = {};
-        return _this;
-    }
-
-    createClass(SocketIoConnector, [{
-        key: 'connect',
-        value: function connect() {
-            var io = this.getSocketIO();
-            this.socket = io(this.options.host, this.options);
-            return this.socket;
-        }
-    }, {
-        key: 'getSocketIO',
-        value: function getSocketIO() {
-            if (typeof io !== 'undefined') {
-                return io;
-            }
-            if (this.options.client !== 'undefined') {
-                return this.options.client;
-            }
-            throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
-        }
-    }, {
-        key: 'listen',
-        value: function listen(name, event, callback) {
-            return this.channel(name).listen(event, callback);
-        }
-    }, {
-        key: 'channel',
-        value: function channel(name) {
-            if (!this.channels[name]) {
-                this.channels[name] = new SocketIoChannel(this.socket, name, this.options);
-            }
-            return this.channels[name];
-        }
-    }, {
-        key: 'privateChannel',
-        value: function privateChannel(name) {
-            if (!this.channels['private-' + name]) {
-                this.channels['private-' + name] = new SocketIoPrivateChannel(this.socket, 'private-' + name, this.options);
-            }
-            return this.channels['private-' + name];
-        }
-    }, {
-        key: 'presenceChannel',
-        value: function presenceChannel(name) {
-            if (!this.channels['presence-' + name]) {
-                this.channels['presence-' + name] = new SocketIoPresenceChannel(this.socket, 'presence-' + name, this.options);
-            }
-            return this.channels['presence-' + name];
-        }
-    }, {
-        key: 'leave',
-        value: function leave(name) {
-            var _this2 = this;
-
-            var channels = [name, 'private-' + name, 'presence-' + name];
-            channels.forEach(function (name) {
-                if (_this2.channels[name]) {
-                    _this2.channels[name].unsubscribe();
-                    delete _this2.channels[name];
-                }
-            });
-        }
-    }, {
-        key: 'socketId',
-        value: function socketId() {
-            return this.socket.id;
-        }
-    }, {
-        key: 'disconnect',
-        value: function disconnect() {
-            this.socket.disconnect();
-        }
-    }]);
-    return SocketIoConnector;
-}(Connector);
-
-var Echo = function () {
-    function Echo(options) {
-        classCallCheck(this, Echo);
-
-        this.options = options;
-        if (typeof Vue === 'function' && Vue.http) {
-            this.registerVueRequestInterceptor();
-        }
-        if (typeof axios === 'function') {
-            this.registerAxiosRequestInterceptor();
-        }
-        if (typeof jQuery === 'function') {
-            this.registerjQueryAjaxSetup();
-        }
-        if (this.options.broadcaster == 'pusher') {
-            this.connector = new PusherConnector(this.options);
-        } else if (this.options.broadcaster == 'socket.io') {
-            this.connector = new SocketIoConnector(this.options);
-        }
-    }
-
-    createClass(Echo, [{
-        key: 'registerVueRequestInterceptor',
-        value: function registerVueRequestInterceptor() {
-            var _this = this;
-
-            Vue.http.interceptors.push(function (request, next) {
-                if (_this.socketId()) {
-                    request.headers.set('X-Socket-ID', _this.socketId());
-                }
-                next();
-            });
-        }
-    }, {
-        key: 'registerAxiosRequestInterceptor',
-        value: function registerAxiosRequestInterceptor() {
-            var _this2 = this;
-
-            axios.interceptors.request.use(function (config) {
-                if (_this2.socketId()) {
-                    config.headers['X-Socket-Id'] = _this2.socketId();
-                }
-                return config;
-            });
-        }
-    }, {
-        key: 'registerjQueryAjaxSetup',
-        value: function registerjQueryAjaxSetup() {
-            var _this3 = this;
-
-            if (typeof jQuery.ajax != 'undefined') {
-                jQuery.ajaxSetup({
-                    beforeSend: function beforeSend(xhr) {
-                        if (_this3.socketId()) {
-                            xhr.setRequestHeader('X-Socket-Id', _this3.socketId());
-                        }
-                    }
-                });
-            }
-        }
-    }, {
-        key: 'listen',
-        value: function listen(channel, event, callback) {
-            return this.connector.listen(channel, event, callback);
-        }
-    }, {
-        key: 'channel',
-        value: function channel(_channel) {
-            return this.connector.channel(_channel);
-        }
-    }, {
-        key: 'private',
-        value: function _private(channel) {
-            return this.connector.privateChannel(channel);
-        }
-    }, {
-        key: 'join',
-        value: function join(channel) {
-            return this.connector.presenceChannel(channel);
-        }
-    }, {
-        key: 'leave',
-        value: function leave(channel) {
-            this.connector.leave(channel);
-        }
-    }, {
-        key: 'socketId',
-        value: function socketId() {
-            return this.connector.socketId();
-        }
-    }, {
-        key: 'disconnect',
-        value: function disconnect() {
-            this.connector.disconnect();
-        }
-    }]);
-    return Echo;
-}();
-
-module.exports = Echo;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
-
-/***/ }),
-
-/***/ 37:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13446,7 +12589,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 38:
+/***/ 39:
 /***/ (function(module, exports) {
 
 /*!
@@ -13474,7 +12617,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -13644,22 +12787,71 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
-/***/ 42:
+/***/ 422:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _jquery = __webpack_require__(53);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _laravelEcho = __webpack_require__(503);
+
+var _laravelEcho2 = _interopRequireDefault(_laravelEcho);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
+ */
+window.$ = window.jQuery = __webpack_require__(53);
+window.Tether = __webpack_require__(149);
+__webpack_require__(227);
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(444);
+
+/**
+ * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
+ */
+
+window.io = __webpack_require__(97);
+window.Echo = new _laravelEcho2.default({
+  broadcaster: 'socket.io',
+  host: window.location.hostname + ':6001'
+});
+
+/**
+ * require bootstrap-fileinput
+ */
+
+// require('bootstrap-fileinput')
+
+/***/ }),
+
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var keys = __webpack_require__(92);
-var hasBinary = __webpack_require__(62);
-var sliceBuffer = __webpack_require__(81);
-var after = __webpack_require__(80);
-var utf8 = __webpack_require__(93);
+var keys = __webpack_require__(94);
+var hasBinary = __webpack_require__(64);
+var sliceBuffer = __webpack_require__(83);
+var after = __webpack_require__(82);
+var utf8 = __webpack_require__(95);
 
 var base64encoder;
 if (global && global.ArrayBuffer) {
-  base64encoder = __webpack_require__(83);
+  base64encoder = __webpack_require__(85);
 }
 
 /**
@@ -13717,7 +12909,7 @@ var err = { type: 'error', data: 'parser error' };
  * Create a blob api even for blob builder when vendor prefixes exist
  */
 
-var Blob = __webpack_require__(84);
+var Blob = __webpack_require__(86);
 
 /**
  * Encodes a packet.
@@ -14258,7 +13450,7 @@ exports.decodePayloadAsBinary = function (data, binaryType, callback) {
 
 /***/ }),
 
-/***/ 45:
+/***/ 44:
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -14287,7 +13479,62 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 46:
+/***/ 444:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+window._ = __webpack_require__(48);
+
+/**
+ * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * for JavaScript based Bootstrap features such as modals and tabs. This
+ * code may be modified to fit the specific needs of your application.
+ */
+window.$ = window.jQuery = __webpack_require__(53);
+
+window.Tether = __webpack_require__(149);
+
+__webpack_require__(228);
+
+/**
+ * Vue is a modern JavaScript library for building interactive web interfaces
+ * using reactive data binding and reusable components. Vue's API is clean
+ * and simple, leaving you to focus on building your next great project.
+ */
+
+window.Vue = __webpack_require__(16);
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = __webpack_require__(14);
+
+window.axios.defaults.headers.common = {
+  // 'X-CSRF-TOKEN': window.Laravel.csrfToken,
+  'X-Requested-With': 'XMLHttpRequest'
+};
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+// import Echo from "laravel-echo"
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'your-pusher-key'
+// });
+
+/***/ }),
+
+/***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -14296,7 +13543,7 @@ module.exports = function(module) {
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(85);
+exports = module.exports = __webpack_require__(87);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -31582,20 +30829,7 @@ function localstorage() {
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(45)(module)))
-
-/***/ }),
-
-/***/ 49:
-/***/ (function(module, exports) {
-
-
-module.exports = function(a, b){
-  var fn = function(){};
-  fn.prototype = b.prototype;
-  a.prototype = new fn;
-  a.prototype.constructor = a;
-};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1), __webpack_require__(44)(module)))
 
 /***/ }),
 
@@ -31606,7 +30840,7 @@ module.exports = function(a, b){
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(35);
+var normalizeHeaderName = __webpack_require__(36);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -31622,10 +30856,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(8);
+    adapter = __webpack_require__(9);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(8);
+    adapter = __webpack_require__(9);
   }
   return adapter;
 }
@@ -31701,6 +30935,819 @@ module.exports = defaults;
 /***/ }),
 
 /***/ 50:
+/***/ (function(module, exports) {
+
+
+module.exports = function(a, b){
+  var fn = function(){};
+  fn.prototype = b.prototype;
+  a.prototype = new fn;
+  a.prototype.constructor = a;
+};
+
+/***/ }),
+
+/***/ 503:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(jQuery) {var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];
+
+    for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
+var Connector = function () {
+    function Connector(options) {
+        classCallCheck(this, Connector);
+
+        this._defaultOptions = {
+            auth: {
+                headers: {}
+            },
+            authEndpoint: '/broadcasting/auth',
+            broadcaster: 'pusher',
+            csrfToken: null,
+            host: null,
+            key: null,
+            namespace: 'App.Events'
+        };
+        this.setOptions(options);
+        this.connect();
+    }
+
+    createClass(Connector, [{
+        key: 'setOptions',
+        value: function setOptions(options) {
+            this.options = _extends(this._defaultOptions, options);
+            if (this.csrfToken()) {
+                this.options.auth.headers['X-CSRF-TOKEN'] = this.csrfToken();
+            }
+            return options;
+        }
+    }, {
+        key: 'csrfToken',
+        value: function csrfToken() {
+            var selector = void 0;
+            if (typeof window !== 'undefined' && window['Laravel'] && window['Laravel'].csrfToken) {
+                return window['Laravel'].csrfToken;
+            } else if (this.options.csrfToken) {
+                return this.options.csrfToken;
+            } else if (typeof document !== 'undefined' && (selector = document.querySelector('meta[name="csrf-token"]'))) {
+                return selector.getAttribute('content');
+            }
+            return null;
+        }
+    }]);
+    return Connector;
+}();
+
+var Channel = function () {
+    function Channel() {
+        classCallCheck(this, Channel);
+    }
+
+    createClass(Channel, [{
+        key: 'notification',
+        value: function notification(callback) {
+            return this.listen('.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', callback);
+        }
+    }, {
+        key: 'listenForWhisper',
+        value: function listenForWhisper(event, callback) {
+            return this.listen('.client-' + event, callback);
+        }
+    }]);
+    return Channel;
+}();
+
+var EventFormatter = function () {
+    function EventFormatter(namespace) {
+        classCallCheck(this, EventFormatter);
+
+        this.setNamespace(namespace);
+    }
+
+    createClass(EventFormatter, [{
+        key: 'format',
+        value: function format(event) {
+            if (event.charAt(0) === '.' || event.charAt(0) === '\\') {
+                return event.substr(1);
+            } else if (this.namespace) {
+                event = this.namespace + '.' + event;
+            }
+            return event.replace(/\./g, '\\');
+        }
+    }, {
+        key: 'setNamespace',
+        value: function setNamespace(value) {
+            this.namespace = value;
+        }
+    }]);
+    return EventFormatter;
+}();
+
+var PusherChannel = function (_Channel) {
+    inherits(PusherChannel, _Channel);
+
+    function PusherChannel(pusher, name, options) {
+        classCallCheck(this, PusherChannel);
+
+        var _this = possibleConstructorReturn(this, (PusherChannel.__proto__ || Object.getPrototypeOf(PusherChannel)).call(this));
+
+        _this.name = name;
+        _this.pusher = pusher;
+        _this.options = options;
+        _this.eventFormatter = new EventFormatter(_this.options.namespace);
+        _this.subscribe();
+        return _this;
+    }
+
+    createClass(PusherChannel, [{
+        key: 'subscribe',
+        value: function subscribe() {
+            this.subscription = this.pusher.subscribe(this.name);
+        }
+    }, {
+        key: 'unsubscribe',
+        value: function unsubscribe() {
+            this.pusher.unsubscribe(this.name);
+        }
+    }, {
+        key: 'listen',
+        value: function listen(event, callback) {
+            this.on(this.eventFormatter.format(event), callback);
+            return this;
+        }
+    }, {
+        key: 'stopListening',
+        value: function stopListening(event) {
+            this.subscription.unbind(this.eventFormatter.format(event));
+            return this;
+        }
+    }, {
+        key: 'on',
+        value: function on(event, callback) {
+            this.subscription.bind(event, callback);
+            return this;
+        }
+    }]);
+    return PusherChannel;
+}(Channel);
+
+var PusherPrivateChannel = function (_PusherChannel) {
+    inherits(PusherPrivateChannel, _PusherChannel);
+
+    function PusherPrivateChannel() {
+        classCallCheck(this, PusherPrivateChannel);
+        return possibleConstructorReturn(this, (PusherPrivateChannel.__proto__ || Object.getPrototypeOf(PusherPrivateChannel)).apply(this, arguments));
+    }
+
+    createClass(PusherPrivateChannel, [{
+        key: 'whisper',
+        value: function whisper(eventName, data) {
+            this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
+            return this;
+        }
+    }]);
+    return PusherPrivateChannel;
+}(PusherChannel);
+
+var PusherPresenceChannel = function (_PusherChannel) {
+    inherits(PusherPresenceChannel, _PusherChannel);
+
+    function PusherPresenceChannel() {
+        classCallCheck(this, PusherPresenceChannel);
+        return possibleConstructorReturn(this, (PusherPresenceChannel.__proto__ || Object.getPrototypeOf(PusherPresenceChannel)).apply(this, arguments));
+    }
+
+    createClass(PusherPresenceChannel, [{
+        key: 'here',
+        value: function here(callback) {
+            this.on('pusher:subscription_succeeded', function (data) {
+                callback(Object.keys(data.members).map(function (k) {
+                    return data.members[k];
+                }));
+            });
+            return this;
+        }
+    }, {
+        key: 'joining',
+        value: function joining(callback) {
+            this.on('pusher:member_added', function (member) {
+                callback(member.info);
+            });
+            return this;
+        }
+    }, {
+        key: 'leaving',
+        value: function leaving(callback) {
+            this.on('pusher:member_removed', function (member) {
+                callback(member.info);
+            });
+            return this;
+        }
+    }, {
+        key: 'whisper',
+        value: function whisper(eventName, data) {
+            this.pusher.channels.channels[this.name].trigger('client-' + eventName, data);
+            return this;
+        }
+    }]);
+    return PusherPresenceChannel;
+}(PusherChannel);
+
+var SocketIoChannel = function (_Channel) {
+    inherits(SocketIoChannel, _Channel);
+
+    function SocketIoChannel(socket, name, options) {
+        classCallCheck(this, SocketIoChannel);
+
+        var _this = possibleConstructorReturn(this, (SocketIoChannel.__proto__ || Object.getPrototypeOf(SocketIoChannel)).call(this));
+
+        _this.events = {};
+        _this.name = name;
+        _this.socket = socket;
+        _this.options = options;
+        _this.eventFormatter = new EventFormatter(_this.options.namespace);
+        _this.subscribe();
+        _this.configureReconnector();
+        return _this;
+    }
+
+    createClass(SocketIoChannel, [{
+        key: 'subscribe',
+        value: function subscribe() {
+            this.socket.emit('subscribe', {
+                channel: this.name,
+                auth: this.options.auth || {}
+            });
+        }
+    }, {
+        key: 'unsubscribe',
+        value: function unsubscribe() {
+            this.unbind();
+            this.socket.emit('unsubscribe', {
+                channel: this.name,
+                auth: this.options.auth || {}
+            });
+        }
+    }, {
+        key: 'listen',
+        value: function listen(event, callback) {
+            this.on(this.eventFormatter.format(event), callback);
+            return this;
+        }
+    }, {
+        key: 'on',
+        value: function on(event, callback) {
+            var _this2 = this;
+
+            var listener = function listener(channel, data) {
+                if (_this2.name == channel) {
+                    callback(data);
+                }
+            };
+            this.socket.on(event, listener);
+            this.bind(event, listener);
+        }
+    }, {
+        key: 'configureReconnector',
+        value: function configureReconnector() {
+            var _this3 = this;
+
+            var listener = function listener() {
+                _this3.subscribe();
+            };
+            this.socket.on('reconnect', listener);
+            this.bind('reconnect', listener);
+        }
+    }, {
+        key: 'bind',
+        value: function bind(event, callback) {
+            this.events[event] = this.events[event] || [];
+            this.events[event].push(callback);
+        }
+    }, {
+        key: 'unbind',
+        value: function unbind() {
+            var _this4 = this;
+
+            Object.keys(this.events).forEach(function (event) {
+                _this4.events[event].forEach(function (callback) {
+                    _this4.socket.removeListener(event, callback);
+                });
+                delete _this4.events[event];
+            });
+        }
+    }]);
+    return SocketIoChannel;
+}(Channel);
+
+var SocketIoPrivateChannel = function (_SocketIoChannel) {
+    inherits(SocketIoPrivateChannel, _SocketIoChannel);
+
+    function SocketIoPrivateChannel() {
+        classCallCheck(this, SocketIoPrivateChannel);
+        return possibleConstructorReturn(this, (SocketIoPrivateChannel.__proto__ || Object.getPrototypeOf(SocketIoPrivateChannel)).apply(this, arguments));
+    }
+
+    createClass(SocketIoPrivateChannel, [{
+        key: 'whisper',
+        value: function whisper(eventName, data) {
+            this.socket.emit('client event', {
+                channel: this.name,
+                event: 'client-' + eventName,
+                data: data
+            });
+            return this;
+        }
+    }]);
+    return SocketIoPrivateChannel;
+}(SocketIoChannel);
+
+var SocketIoPresenceChannel = function (_SocketIoPrivateChann) {
+    inherits(SocketIoPresenceChannel, _SocketIoPrivateChann);
+
+    function SocketIoPresenceChannel() {
+        classCallCheck(this, SocketIoPresenceChannel);
+        return possibleConstructorReturn(this, (SocketIoPresenceChannel.__proto__ || Object.getPrototypeOf(SocketIoPresenceChannel)).apply(this, arguments));
+    }
+
+    createClass(SocketIoPresenceChannel, [{
+        key: 'here',
+        value: function here(callback) {
+            this.on('presence:subscribed', function (members) {
+                callback(members.map(function (m) {
+                    return m.user_info;
+                }));
+            });
+            return this;
+        }
+    }, {
+        key: 'joining',
+        value: function joining(callback) {
+            this.on('presence:joining', function (member) {
+                return callback(member.user_info);
+            });
+            return this;
+        }
+    }, {
+        key: 'leaving',
+        value: function leaving(callback) {
+            this.on('presence:leaving', function (member) {
+                return callback(member.user_info);
+            });
+            return this;
+        }
+    }]);
+    return SocketIoPresenceChannel;
+}(SocketIoPrivateChannel);
+
+var PusherConnector = function (_Connector) {
+    inherits(PusherConnector, _Connector);
+
+    function PusherConnector() {
+        var _ref;
+
+        classCallCheck(this, PusherConnector);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        var _this = possibleConstructorReturn(this, (_ref = PusherConnector.__proto__ || Object.getPrototypeOf(PusherConnector)).call.apply(_ref, [this].concat(args)));
+
+        _this.channels = {};
+        return _this;
+    }
+
+    createClass(PusherConnector, [{
+        key: 'connect',
+        value: function connect() {
+            this.pusher = new Pusher(this.options.key, this.options);
+        }
+    }, {
+        key: 'listen',
+        value: function listen(name, event, callback) {
+            return this.channel(name).listen(event, callback);
+        }
+    }, {
+        key: 'channel',
+        value: function channel(name) {
+            if (!this.channels[name]) {
+                this.channels[name] = new PusherChannel(this.pusher, name, this.options);
+            }
+            return this.channels[name];
+        }
+    }, {
+        key: 'privateChannel',
+        value: function privateChannel(name) {
+            if (!this.channels['private-' + name]) {
+                this.channels['private-' + name] = new PusherPrivateChannel(this.pusher, 'private-' + name, this.options);
+            }
+            return this.channels['private-' + name];
+        }
+    }, {
+        key: 'presenceChannel',
+        value: function presenceChannel(name) {
+            if (!this.channels['presence-' + name]) {
+                this.channels['presence-' + name] = new PusherPresenceChannel(this.pusher, 'presence-' + name, this.options);
+            }
+            return this.channels['presence-' + name];
+        }
+    }, {
+        key: 'leave',
+        value: function leave(name) {
+            var _this2 = this;
+
+            var channels = [name, 'private-' + name, 'presence-' + name];
+            channels.forEach(function (name, index) {
+                if (_this2.channels[name]) {
+                    _this2.channels[name].unsubscribe();
+                    delete _this2.channels[name];
+                }
+            });
+        }
+    }, {
+        key: 'socketId',
+        value: function socketId() {
+            return this.pusher.connection.socket_id;
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.pusher.disconnect();
+        }
+    }]);
+    return PusherConnector;
+}(Connector);
+
+var SocketIoConnector = function (_Connector) {
+    inherits(SocketIoConnector, _Connector);
+
+    function SocketIoConnector() {
+        var _ref;
+
+        classCallCheck(this, SocketIoConnector);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        var _this = possibleConstructorReturn(this, (_ref = SocketIoConnector.__proto__ || Object.getPrototypeOf(SocketIoConnector)).call.apply(_ref, [this].concat(args)));
+
+        _this.channels = {};
+        return _this;
+    }
+
+    createClass(SocketIoConnector, [{
+        key: 'connect',
+        value: function connect() {
+            var io = this.getSocketIO();
+            this.socket = io(this.options.host, this.options);
+            return this.socket;
+        }
+    }, {
+        key: 'getSocketIO',
+        value: function getSocketIO() {
+            if (typeof io !== 'undefined') {
+                return io;
+            }
+            if (this.options.client !== 'undefined') {
+                return this.options.client;
+            }
+            throw new Error('Socket.io client not found. Should be globally available or passed via options.client');
+        }
+    }, {
+        key: 'listen',
+        value: function listen(name, event, callback) {
+            return this.channel(name).listen(event, callback);
+        }
+    }, {
+        key: 'channel',
+        value: function channel(name) {
+            if (!this.channels[name]) {
+                this.channels[name] = new SocketIoChannel(this.socket, name, this.options);
+            }
+            return this.channels[name];
+        }
+    }, {
+        key: 'privateChannel',
+        value: function privateChannel(name) {
+            if (!this.channels['private-' + name]) {
+                this.channels['private-' + name] = new SocketIoPrivateChannel(this.socket, 'private-' + name, this.options);
+            }
+            return this.channels['private-' + name];
+        }
+    }, {
+        key: 'presenceChannel',
+        value: function presenceChannel(name) {
+            if (!this.channels['presence-' + name]) {
+                this.channels['presence-' + name] = new SocketIoPresenceChannel(this.socket, 'presence-' + name, this.options);
+            }
+            return this.channels['presence-' + name];
+        }
+    }, {
+        key: 'leave',
+        value: function leave(name) {
+            var _this2 = this;
+
+            var channels = [name, 'private-' + name, 'presence-' + name];
+            channels.forEach(function (name) {
+                if (_this2.channels[name]) {
+                    _this2.channels[name].unsubscribe();
+                    delete _this2.channels[name];
+                }
+            });
+        }
+    }, {
+        key: 'socketId',
+        value: function socketId() {
+            return this.socket.id;
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.socket.disconnect();
+        }
+    }]);
+    return SocketIoConnector;
+}(Connector);
+
+var Echo = function () {
+    function Echo(options) {
+        classCallCheck(this, Echo);
+
+        this.options = options;
+        if (typeof Vue === 'function' && Vue.http) {
+            this.registerVueRequestInterceptor();
+        }
+        if (typeof axios === 'function') {
+            this.registerAxiosRequestInterceptor();
+        }
+        if (typeof jQuery === 'function') {
+            this.registerjQueryAjaxSetup();
+        }
+        if (this.options.broadcaster == 'pusher') {
+            this.connector = new PusherConnector(this.options);
+        } else if (this.options.broadcaster == 'socket.io') {
+            this.connector = new SocketIoConnector(this.options);
+        }
+    }
+
+    createClass(Echo, [{
+        key: 'registerVueRequestInterceptor',
+        value: function registerVueRequestInterceptor() {
+            var _this = this;
+
+            Vue.http.interceptors.push(function (request, next) {
+                if (_this.socketId()) {
+                    request.headers.set('X-Socket-ID', _this.socketId());
+                }
+                next();
+            });
+        }
+    }, {
+        key: 'registerAxiosRequestInterceptor',
+        value: function registerAxiosRequestInterceptor() {
+            var _this2 = this;
+
+            axios.interceptors.request.use(function (config) {
+                if (_this2.socketId()) {
+                    config.headers['X-Socket-Id'] = _this2.socketId();
+                }
+                return config;
+            });
+        }
+    }, {
+        key: 'registerjQueryAjaxSetup',
+        value: function registerjQueryAjaxSetup() {
+            var _this3 = this;
+
+            if (typeof jQuery.ajax != 'undefined') {
+                jQuery.ajaxSetup({
+                    beforeSend: function beforeSend(xhr) {
+                        if (_this3.socketId()) {
+                            xhr.setRequestHeader('X-Socket-Id', _this3.socketId());
+                        }
+                    }
+                });
+            }
+        }
+    }, {
+        key: 'listen',
+        value: function listen(channel, event, callback) {
+            return this.connector.listen(channel, event, callback);
+        }
+    }, {
+        key: 'channel',
+        value: function channel(_channel) {
+            return this.connector.channel(_channel);
+        }
+    }, {
+        key: 'private',
+        value: function _private(channel) {
+            return this.connector.privateChannel(channel);
+        }
+    }, {
+        key: 'join',
+        value: function join(channel) {
+            return this.connector.presenceChannel(channel);
+        }
+    }, {
+        key: 'leave',
+        value: function leave(channel) {
+            this.connector.leave(channel);
+        }
+    }, {
+        key: 'socketId',
+        value: function socketId() {
+            return this.connector.socketId();
+        }
+    }, {
+        key: 'disconnect',
+        value: function disconnect() {
+            this.connector.disconnect();
+        }
+    }]);
+    return Echo;
+}();
+
+module.exports = Echo;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
+
+/***/ }),
+
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process) {/**
@@ -31709,7 +31756,7 @@ module.exports = defaults;
  * Expose `debug()` as the module.
  */
 
-exports = module.exports = __webpack_require__(91);
+exports = module.exports = __webpack_require__(93);
 exports.log = log;
 exports.formatArgs = formatArgs;
 exports.save = save;
@@ -31903,7 +31950,7 @@ function localstorage() {
 
 /***/ }),
 
-/***/ 51:
+/***/ 52:
 /***/ (function(module, exports) {
 
 /**
@@ -31947,15 +31994,15 @@ exports.decode = function(qs){
 
 /***/ }),
 
-/***/ 53:
+/***/ 54:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var parser = __webpack_require__(42);
-var Emitter = __webpack_require__(41);
+var parser = __webpack_require__(43);
+var Emitter = __webpack_require__(42);
 
 /**
  * Module exports.
@@ -32111,12 +32158,12 @@ Transport.prototype.onClose = function () {
 
 /***/ }),
 
-/***/ 54:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {// browser shim for xmlhttprequest module
 
-var hasCORS = __webpack_require__(94);
+var hasCORS = __webpack_require__(96);
 
 module.exports = function (opts) {
   var xdomain = opts.xdomain;
@@ -32156,7 +32203,7 @@ module.exports = function (opts) {
 
 /***/ }),
 
-/***/ 55:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -32164,11 +32211,11 @@ module.exports = function (opts) {
  * Module dependencies.
  */
 
-var debug = __webpack_require__(46)('socket.io-parser');
-var Emitter = __webpack_require__(41);
-var hasBin = __webpack_require__(62);
-var binary = __webpack_require__(97);
-var isBuf = __webpack_require__(70);
+var debug = __webpack_require__(47)('socket.io-parser');
+var Emitter = __webpack_require__(42);
+var hasBin = __webpack_require__(64);
+var binary = __webpack_require__(99);
+var isBuf = __webpack_require__(72);
 
 /**
  * Protocol version.
@@ -32563,15 +32610,7 @@ function error() {
 
 /***/ }),
 
-/***/ 556:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(288);
-
-
-/***/ }),
-
-/***/ 59:
+/***/ 61:
 /***/ (function(module, exports) {
 
 /**
@@ -32601,17 +32640,17 @@ module.exports = function(obj, fn){
 
 /***/ }),
 
-/***/ 60:
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies
  */
 
-var XMLHttpRequest = __webpack_require__(54);
-var XHR = __webpack_require__(89);
-var JSONP = __webpack_require__(88);
-var websocket = __webpack_require__(90);
+var XMLHttpRequest = __webpack_require__(55);
+var XHR = __webpack_require__(91);
+var JSONP = __webpack_require__(90);
+var websocket = __webpack_require__(92);
 
 /**
  * Export transports.
@@ -32662,19 +32701,19 @@ function polling (opts) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(53);
-var parseqs = __webpack_require__(51);
-var parser = __webpack_require__(42);
-var inherit = __webpack_require__(49);
-var yeast = __webpack_require__(71);
-var debug = __webpack_require__(50)('engine.io-client:polling');
+var Transport = __webpack_require__(54);
+var parseqs = __webpack_require__(52);
+var parser = __webpack_require__(43);
+var inherit = __webpack_require__(50);
+var yeast = __webpack_require__(73);
+var debug = __webpack_require__(51)('engine.io-client:polling');
 
 /**
  * Module exports.
@@ -32687,7 +32726,7 @@ module.exports = Polling;
  */
 
 var hasXHR2 = (function () {
-  var XMLHttpRequest = __webpack_require__(54);
+  var XMLHttpRequest = __webpack_require__(55);
   var xhr = new XMLHttpRequest({ xdomain: false });
   return null != xhr.responseType;
 })();
@@ -32914,7 +32953,7 @@ Polling.prototype.uri = function () {
 
 /***/ }),
 
-/***/ 62:
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/* global Blob File */
@@ -32923,7 +32962,7 @@ Polling.prototype.uri = function () {
  * Module requirements.
  */
 
-var isArray = __webpack_require__(64);
+var isArray = __webpack_require__(66);
 
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
@@ -32984,7 +33023,7 @@ function hasBinary (obj) {
 
 /***/ }),
 
-/***/ 63:
+/***/ 65:
 /***/ (function(module, exports) {
 
 
@@ -33000,7 +33039,7 @@ module.exports = function(arr, obj){
 
 /***/ }),
 
-/***/ 64:
+/***/ 66:
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -33012,7 +33051,7 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ 65:
+/***/ 67:
 /***/ (function(module, exports) {
 
 /**
@@ -33171,7 +33210,7 @@ function plural(ms, n, name) {
 
 /***/ }),
 
-/***/ 66:
+/***/ 68:
 /***/ (function(module, exports) {
 
 /**
@@ -33217,7 +33256,7 @@ module.exports = function parseuri(str) {
 
 /***/ }),
 
-/***/ 67:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33225,15 +33264,15 @@ module.exports = function parseuri(str) {
  * Module dependencies.
  */
 
-var eio = __webpack_require__(86);
-var Socket = __webpack_require__(69);
-var Emitter = __webpack_require__(41);
-var parser = __webpack_require__(55);
-var on = __webpack_require__(68);
-var bind = __webpack_require__(59);
-var debug = __webpack_require__(46)('socket.io-client:manager');
-var indexOf = __webpack_require__(63);
-var Backoff = __webpack_require__(82);
+var eio = __webpack_require__(88);
+var Socket = __webpack_require__(71);
+var Emitter = __webpack_require__(42);
+var parser = __webpack_require__(56);
+var on = __webpack_require__(70);
+var bind = __webpack_require__(61);
+var debug = __webpack_require__(47)('socket.io-client:manager');
+var indexOf = __webpack_require__(65);
+var Backoff = __webpack_require__(84);
 
 /**
  * IE6+ hasOwnProperty
@@ -33797,7 +33836,15 @@ Manager.prototype.onreconnect = function () {
 
 /***/ }),
 
-/***/ 68:
+/***/ 691:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(422);
+
+
+/***/ }),
+
+/***/ 70:
 /***/ (function(module, exports) {
 
 
@@ -33828,7 +33875,7 @@ function on (obj, ev, fn) {
 
 /***/ }),
 
-/***/ 69:
+/***/ 71:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -33836,13 +33883,13 @@ function on (obj, ev, fn) {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(55);
-var Emitter = __webpack_require__(41);
-var toArray = __webpack_require__(98);
-var on = __webpack_require__(68);
-var bind = __webpack_require__(59);
-var debug = __webpack_require__(46)('socket.io-client:socket');
-var parseqs = __webpack_require__(51);
+var parser = __webpack_require__(56);
+var Emitter = __webpack_require__(42);
+var toArray = __webpack_require__(100);
+var on = __webpack_require__(70);
+var bind = __webpack_require__(61);
+var debug = __webpack_require__(47)('socket.io-client:socket');
+var parseqs = __webpack_require__(52);
 
 /**
  * Module exports.
@@ -34253,7 +34300,7 @@ Socket.prototype.compress = function (compress) {
 
 /***/ }),
 
-/***/ 70:
+/***/ 72:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -34274,7 +34321,7 @@ function isBuf(obj) {
 
 /***/ }),
 
-/***/ 71:
+/***/ 73:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -34350,196 +34397,7 @@ module.exports = yeast;
 
 /***/ }),
 
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var settle = __webpack_require__(27);
-var buildURL = __webpack_require__(30);
-var parseHeaders = __webpack_require__(36);
-var isURLSameOrigin = __webpack_require__(34);
-var createError = __webpack_require__(11);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(29);
-
-module.exports = function xhrAdapter(config) {
-  return new Promise(function dispatchXhrRequest(resolve, reject) {
-    var requestData = config.data;
-    var requestHeaders = config.headers;
-
-    if (utils.isFormData(requestData)) {
-      delete requestHeaders['Content-Type']; // Let the browser set it
-    }
-
-    var request = new XMLHttpRequest();
-    var loadEvent = 'onreadystatechange';
-    var xDomain = false;
-
-    // For IE 8/9 CORS support
-    // Only supports POST and GET calls and doesn't returns the response headers.
-    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
-    if (process.env.NODE_ENV !== 'test' &&
-        typeof window !== 'undefined' &&
-        window.XDomainRequest && !('withCredentials' in request) &&
-        !isURLSameOrigin(config.url)) {
-      request = new window.XDomainRequest();
-      loadEvent = 'onload';
-      xDomain = true;
-      request.onprogress = function handleProgress() {};
-      request.ontimeout = function handleTimeout() {};
-    }
-
-    // HTTP basic authentication
-    if (config.auth) {
-      var username = config.auth.username || '';
-      var password = config.auth.password || '';
-      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
-    }
-
-    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
-
-    // Set the request timeout in MS
-    request.timeout = config.timeout;
-
-    // Listen for ready state
-    request[loadEvent] = function handleLoad() {
-      if (!request || (request.readyState !== 4 && !xDomain)) {
-        return;
-      }
-
-      // The request errored out and we didn't get a response, this will be
-      // handled by onerror instead
-      // With one exception: request that using file: protocol, most browsers
-      // will return status as 0 even though it's a successful request
-      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
-        return;
-      }
-
-      // Prepare the response
-      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
-      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
-      var response = {
-        data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
-        status: request.status === 1223 ? 204 : request.status,
-        statusText: request.status === 1223 ? 'No Content' : request.statusText,
-        headers: responseHeaders,
-        config: config,
-        request: request
-      };
-
-      settle(resolve, reject, response);
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle low level network errors
-    request.onerror = function handleError() {
-      // Real errors are hidden from us by the browser
-      // onerror should only fire if it's a network error
-      reject(createError('Network Error', config, null, request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Handle timeout
-    request.ontimeout = function handleTimeout() {
-      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
-        request));
-
-      // Clean up request
-      request = null;
-    };
-
-    // Add xsrf header
-    // This is only done if running in a standard browser environment.
-    // Specifically not if we're in a web worker, or react-native.
-    if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(32);
-
-      // Add xsrf header
-      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
-          cookies.read(config.xsrfCookieName) :
-          undefined;
-
-      if (xsrfValue) {
-        requestHeaders[config.xsrfHeaderName] = xsrfValue;
-      }
-    }
-
-    // Add headers to the request
-    if ('setRequestHeader' in request) {
-      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
-        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
-          // Remove Content-Type if data is undefined
-          delete requestHeaders[key];
-        } else {
-          // Otherwise add header to the request
-          request.setRequestHeader(key, val);
-        }
-      });
-    }
-
-    // Add withCredentials to request if needed
-    if (config.withCredentials) {
-      request.withCredentials = true;
-    }
-
-    // Add responseType to request if needed
-    if (config.responseType) {
-      try {
-        request.responseType = config.responseType;
-      } catch (e) {
-        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
-        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
-        if (config.responseType !== 'json') {
-          throw e;
-        }
-      }
-    }
-
-    // Handle progress if needed
-    if (typeof config.onDownloadProgress === 'function') {
-      request.addEventListener('progress', config.onDownloadProgress);
-    }
-
-    // Not all browsers support upload events
-    if (typeof config.onUploadProgress === 'function' && request.upload) {
-      request.upload.addEventListener('progress', config.onUploadProgress);
-    }
-
-    if (config.cancelToken) {
-      // Handle cancellation
-      config.cancelToken.promise.then(function onCanceled(cancel) {
-        if (!request) {
-          return;
-        }
-
-        request.abort();
-        reject(cancel);
-        // Clean up request
-        request = null;
-      });
-    }
-
-    if (requestData === undefined) {
-      requestData = null;
-    }
-
-    // Send the request
-    request.send(requestData);
-  });
-};
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-
-/***/ 80:
+/***/ 82:
 /***/ (function(module, exports) {
 
 module.exports = after
@@ -34574,7 +34432,7 @@ function noop() {}
 
 /***/ }),
 
-/***/ 81:
+/***/ 83:
 /***/ (function(module, exports) {
 
 /**
@@ -34610,7 +34468,7 @@ module.exports = function(arraybuffer, start, end) {
 
 /***/ }),
 
-/***/ 82:
+/***/ 84:
 /***/ (function(module, exports) {
 
 
@@ -34702,7 +34560,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 /***/ }),
 
-/***/ 83:
+/***/ 85:
 /***/ (function(module, exports) {
 
 /*
@@ -34776,7 +34634,7 @@ Backoff.prototype.setJitter = function(jitter){
 
 /***/ }),
 
-/***/ 84:
+/***/ 86:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -34880,7 +34738,7 @@ module.exports = (function() {
 
 /***/ }),
 
-/***/ 85:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -34896,7 +34754,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(65);
+exports.humanize = __webpack_require__(67);
 
 /**
  * The currently active debug mode names, and names to skip.
@@ -35089,11 +34947,11 @@ function coerce(val) {
 
 /***/ }),
 
-/***/ 86:
+/***/ 88:
 /***/ (function(module, exports, __webpack_require__) {
 
 
-module.exports = __webpack_require__(87);
+module.exports = __webpack_require__(89);
 
 /**
  * Exports parser
@@ -35101,25 +34959,25 @@ module.exports = __webpack_require__(87);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(42);
+module.exports.parser = __webpack_require__(43);
 
 
 /***/ }),
 
-/***/ 87:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var transports = __webpack_require__(60);
-var Emitter = __webpack_require__(41);
-var debug = __webpack_require__(50)('engine.io-client:socket');
-var index = __webpack_require__(63);
-var parser = __webpack_require__(42);
-var parseuri = __webpack_require__(66);
-var parseqs = __webpack_require__(51);
+var transports = __webpack_require__(62);
+var Emitter = __webpack_require__(42);
+var debug = __webpack_require__(51)('engine.io-client:socket');
+var index = __webpack_require__(65);
+var parser = __webpack_require__(43);
+var parseuri = __webpack_require__(68);
+var parseqs = __webpack_require__(52);
 
 /**
  * Module exports.
@@ -35252,9 +35110,9 @@ Socket.protocol = parser.protocol; // this is an int
  */
 
 Socket.Socket = Socket;
-Socket.Transport = __webpack_require__(53);
-Socket.transports = __webpack_require__(60);
-Socket.parser = __webpack_require__(42);
+Socket.Transport = __webpack_require__(54);
+Socket.transports = __webpack_require__(62);
+Socket.parser = __webpack_require__(43);
 
 /**
  * Creates transport of the given type.
@@ -35857,7 +35715,196 @@ Socket.prototype.filterUpgrades = function (upgrades) {
 
 /***/ }),
 
-/***/ 88:
+/***/ 9:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var settle = __webpack_require__(28);
+var buildURL = __webpack_require__(31);
+var parseHeaders = __webpack_require__(37);
+var isURLSameOrigin = __webpack_require__(35);
+var createError = __webpack_require__(12);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(30);
+
+module.exports = function xhrAdapter(config) {
+  return new Promise(function dispatchXhrRequest(resolve, reject) {
+    var requestData = config.data;
+    var requestHeaders = config.headers;
+
+    if (utils.isFormData(requestData)) {
+      delete requestHeaders['Content-Type']; // Let the browser set it
+    }
+
+    var request = new XMLHttpRequest();
+    var loadEvent = 'onreadystatechange';
+    var xDomain = false;
+
+    // For IE 8/9 CORS support
+    // Only supports POST and GET calls and doesn't returns the response headers.
+    // DON'T do this for testing b/c XMLHttpRequest is mocked, not XDomainRequest.
+    if (process.env.NODE_ENV !== 'test' &&
+        typeof window !== 'undefined' &&
+        window.XDomainRequest && !('withCredentials' in request) &&
+        !isURLSameOrigin(config.url)) {
+      request = new window.XDomainRequest();
+      loadEvent = 'onload';
+      xDomain = true;
+      request.onprogress = function handleProgress() {};
+      request.ontimeout = function handleTimeout() {};
+    }
+
+    // HTTP basic authentication
+    if (config.auth) {
+      var username = config.auth.username || '';
+      var password = config.auth.password || '';
+      requestHeaders.Authorization = 'Basic ' + btoa(username + ':' + password);
+    }
+
+    request.open(config.method.toUpperCase(), buildURL(config.url, config.params, config.paramsSerializer), true);
+
+    // Set the request timeout in MS
+    request.timeout = config.timeout;
+
+    // Listen for ready state
+    request[loadEvent] = function handleLoad() {
+      if (!request || (request.readyState !== 4 && !xDomain)) {
+        return;
+      }
+
+      // The request errored out and we didn't get a response, this will be
+      // handled by onerror instead
+      // With one exception: request that using file: protocol, most browsers
+      // will return status as 0 even though it's a successful request
+      if (request.status === 0 && !(request.responseURL && request.responseURL.indexOf('file:') === 0)) {
+        return;
+      }
+
+      // Prepare the response
+      var responseHeaders = 'getAllResponseHeaders' in request ? parseHeaders(request.getAllResponseHeaders()) : null;
+      var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
+      var response = {
+        data: responseData,
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        status: request.status === 1223 ? 204 : request.status,
+        statusText: request.status === 1223 ? 'No Content' : request.statusText,
+        headers: responseHeaders,
+        config: config,
+        request: request
+      };
+
+      settle(resolve, reject, response);
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle low level network errors
+    request.onerror = function handleError() {
+      // Real errors are hidden from us by the browser
+      // onerror should only fire if it's a network error
+      reject(createError('Network Error', config, null, request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Handle timeout
+    request.ontimeout = function handleTimeout() {
+      reject(createError('timeout of ' + config.timeout + 'ms exceeded', config, 'ECONNABORTED',
+        request));
+
+      // Clean up request
+      request = null;
+    };
+
+    // Add xsrf header
+    // This is only done if running in a standard browser environment.
+    // Specifically not if we're in a web worker, or react-native.
+    if (utils.isStandardBrowserEnv()) {
+      var cookies = __webpack_require__(33);
+
+      // Add xsrf header
+      var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
+          cookies.read(config.xsrfCookieName) :
+          undefined;
+
+      if (xsrfValue) {
+        requestHeaders[config.xsrfHeaderName] = xsrfValue;
+      }
+    }
+
+    // Add headers to the request
+    if ('setRequestHeader' in request) {
+      utils.forEach(requestHeaders, function setRequestHeader(val, key) {
+        if (typeof requestData === 'undefined' && key.toLowerCase() === 'content-type') {
+          // Remove Content-Type if data is undefined
+          delete requestHeaders[key];
+        } else {
+          // Otherwise add header to the request
+          request.setRequestHeader(key, val);
+        }
+      });
+    }
+
+    // Add withCredentials to request if needed
+    if (config.withCredentials) {
+      request.withCredentials = true;
+    }
+
+    // Add responseType to request if needed
+    if (config.responseType) {
+      try {
+        request.responseType = config.responseType;
+      } catch (e) {
+        // Expected DOMException thrown by browsers not compatible XMLHttpRequest Level 2.
+        // But, this can be suppressed for 'json' type as it can be parsed by default 'transformResponse' function.
+        if (config.responseType !== 'json') {
+          throw e;
+        }
+      }
+    }
+
+    // Handle progress if needed
+    if (typeof config.onDownloadProgress === 'function') {
+      request.addEventListener('progress', config.onDownloadProgress);
+    }
+
+    // Not all browsers support upload events
+    if (typeof config.onUploadProgress === 'function' && request.upload) {
+      request.upload.addEventListener('progress', config.onUploadProgress);
+    }
+
+    if (config.cancelToken) {
+      // Handle cancellation
+      config.cancelToken.promise.then(function onCanceled(cancel) {
+        if (!request) {
+          return;
+        }
+
+        request.abort();
+        reject(cancel);
+        // Clean up request
+        request = null;
+      });
+    }
+
+    if (requestData === undefined) {
+      requestData = null;
+    }
+
+    // Send the request
+    request.send(requestData);
+  });
+};
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -35865,8 +35912,8 @@ Socket.prototype.filterUpgrades = function (upgrades) {
  * Module requirements.
  */
 
-var Polling = __webpack_require__(61);
-var inherit = __webpack_require__(49);
+var Polling = __webpack_require__(63);
+var inherit = __webpack_require__(50);
 
 /**
  * Module exports.
@@ -36096,18 +36143,18 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 /***/ }),
 
-/***/ 89:
+/***/ 91:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module requirements.
  */
 
-var XMLHttpRequest = __webpack_require__(54);
-var Polling = __webpack_require__(61);
-var Emitter = __webpack_require__(41);
-var inherit = __webpack_require__(49);
-var debug = __webpack_require__(50)('engine.io-client:polling-xhr');
+var XMLHttpRequest = __webpack_require__(55);
+var Polling = __webpack_require__(63);
+var Emitter = __webpack_require__(42);
+var inherit = __webpack_require__(50);
+var debug = __webpack_require__(51)('engine.io-client:polling-xhr');
 
 /**
  * Module exports.
@@ -36524,51 +36571,24 @@ function unloadHandler () {
 
 /***/ }),
 
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
-
-
-/***/ }),
-
-/***/ 90:
+/***/ 92:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * Module dependencies.
  */
 
-var Transport = __webpack_require__(53);
-var parser = __webpack_require__(42);
-var parseqs = __webpack_require__(51);
-var inherit = __webpack_require__(49);
-var yeast = __webpack_require__(71);
-var debug = __webpack_require__(50)('engine.io-client:websocket');
+var Transport = __webpack_require__(54);
+var parser = __webpack_require__(43);
+var parseqs = __webpack_require__(52);
+var inherit = __webpack_require__(50);
+var yeast = __webpack_require__(73);
+var debug = __webpack_require__(51)('engine.io-client:websocket');
 var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 var NodeWebSocket;
 if (typeof window === 'undefined') {
   try {
-    NodeWebSocket = __webpack_require__(103);
+    NodeWebSocket = __webpack_require__(106);
   } catch (e) { }
 }
 
@@ -36845,7 +36865,7 @@ WS.prototype.check = function () {
 
 /***/ }),
 
-/***/ 91:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36861,7 +36881,7 @@ exports.coerce = coerce;
 exports.disable = disable;
 exports.enable = enable;
 exports.enabled = enabled;
-exports.humanize = __webpack_require__(65);
+exports.humanize = __webpack_require__(67);
 
 /**
  * Active `debug` instances.
@@ -37077,7 +37097,7 @@ function coerce(val) {
 
 /***/ }),
 
-/***/ 92:
+/***/ 94:
 /***/ (function(module, exports) {
 
 
@@ -37103,7 +37123,7 @@ module.exports = Object.keys || function keys (obj){
 
 /***/ }),
 
-/***/ 93:
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/*! https://mths.be/utf8js v2.1.2 by @mathias */
@@ -37361,11 +37381,11 @@ module.exports = Object.keys || function keys (obj){
 
 }(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(45)(module), __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(44)(module), __webpack_require__(1)))
 
 /***/ }),
 
-/***/ 94:
+/***/ 96:
 /***/ (function(module, exports) {
 
 
@@ -37389,7 +37409,7 @@ try {
 
 /***/ }),
 
-/***/ 95:
+/***/ 97:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -37397,10 +37417,10 @@ try {
  * Module dependencies.
  */
 
-var url = __webpack_require__(96);
-var parser = __webpack_require__(55);
-var Manager = __webpack_require__(67);
-var debug = __webpack_require__(46)('socket.io-client');
+var url = __webpack_require__(98);
+var parser = __webpack_require__(56);
+var Manager = __webpack_require__(69);
+var debug = __webpack_require__(47)('socket.io-client');
 
 /**
  * Module exports.
@@ -37484,13 +37504,13 @@ exports.connect = lookup;
  * @api public
  */
 
-exports.Manager = __webpack_require__(67);
-exports.Socket = __webpack_require__(69);
+exports.Manager = __webpack_require__(69);
+exports.Socket = __webpack_require__(71);
 
 
 /***/ }),
 
-/***/ 96:
+/***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {
@@ -37498,8 +37518,8 @@ exports.Socket = __webpack_require__(69);
  * Module dependencies.
  */
 
-var parseuri = __webpack_require__(66);
-var debug = __webpack_require__(46)('socket.io-client:url');
+var parseuri = __webpack_require__(68);
+var debug = __webpack_require__(47)('socket.io-client:url');
 
 /**
  * Module exports.
@@ -37573,7 +37593,7 @@ function url (uri, loc) {
 
 /***/ }),
 
-/***/ 97:
+/***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/*global Blob,File*/
@@ -37582,8 +37602,8 @@ function url (uri, loc) {
  * Module requirements
  */
 
-var isArray = __webpack_require__(64);
-var isBuf = __webpack_require__(70);
+var isArray = __webpack_require__(66);
+var isBuf = __webpack_require__(72);
 var toString = Object.prototype.toString;
 var withNativeBlob = typeof global.Blob === 'function' || toString.call(global.Blob) === '[object BlobConstructor]';
 var withNativeFile = typeof global.File === 'function' || toString.call(global.File) === '[object FileConstructor]';
@@ -37720,26 +37740,6 @@ exports.removeBlobs = function(data, callback) {
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
-/***/ }),
-
-/***/ 98:
-/***/ (function(module, exports) {
-
-module.exports = toArray
-
-function toArray(list, index) {
-    var array = []
-
-    index = index || 0
-
-    for (var i = index || 0; i < list.length; i++) {
-        array[i - index] = list[i]
-    }
-
-    return array
-}
-
-
 /***/ })
 
-},[556]);
+},[691]);
