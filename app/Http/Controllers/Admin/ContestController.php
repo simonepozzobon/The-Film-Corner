@@ -17,20 +17,20 @@ class ContestController extends Controller
     function get_video() {
         $teacher = AppsSession::where([
                 ['app_id', '=', 16],
-                ['title', '!=', 'Untitled']
+                ['is_empty', '!=', 1]
             ])->orWhere([
                 ['app_id', '=', 17],
-                ['title', '!=', 'Untitled']
+                ['is_empty', '!=', 1]
             ])->with('teacher', 'app')->get();
 
         $student = StudentAppSession::orWhere([
                 ['app_id', '=', 16],
                 ['teacher_approved', '=', 1],
-                ['title', '!=', 'Untitled']
+                ['is_empty', '!=', 1]
             ])->orWhere([
                 ['app_id', '=', 17],
                 ['teacher_approved', '=', 1],
-                ['title', '!=', 'Untitled']
+                ['is_empty', '!=', 1]
             ])->with('student', 'app')->get();
 
         $sessions = collect();
