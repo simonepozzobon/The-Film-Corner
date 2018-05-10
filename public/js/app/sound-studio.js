@@ -40,7 +40,7 @@ var _window = __webpack_require__(40);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -1953,7 +1953,8 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 
 
 /***/ }),
-/* 15 */
+/* 15 */,
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2857,7 +2858,6 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 
 /***/ }),
-/* 16 */,
 /* 17 */,
 /* 18 */,
 /* 19 */,
@@ -2929,7 +2929,7 @@ if (typeof document !== 'undefined') {
 exports.__esModule = true;
 exports.BACKGROUND_SIZE_SUPPORTED = exports.TOUCH_ENABLED = exports.IS_ANY_SAFARI = exports.IS_SAFARI = exports.IE_VERSION = exports.IS_IE8 = exports.CHROME_VERSION = exports.IS_CHROME = exports.IS_EDGE = exports.IS_FIREFOX = exports.IS_NATIVE_ANDROID = exports.IS_OLD_ANDROID = exports.ANDROID_VERSION = exports.IS_ANDROID = exports.IOS_VERSION = exports.IS_IOS = exports.IS_IPOD = exports.IS_IPHONE = exports.IS_IPAD = undefined;
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -3416,7 +3416,7 @@ exports.off = off;
 exports.trigger = trigger;
 exports.one = one;
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -4228,7 +4228,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -8091,7 +8091,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -8747,7 +8747,7 @@ var _menu = __webpack_require__(129);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -9098,7 +9098,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -9303,7 +9303,7 @@ exports['default'] = Menu;
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -9819,7 +9819,7 @@ var _events = __webpack_require__(57);
 
 var Events = _interopRequireWildcard(_events);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -13499,7 +13499,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -14376,7 +14376,7 @@ var _browser = __webpack_require__(43);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -77425,7 +77425,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -77685,7 +77685,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -78029,7 +78029,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -78158,7 +78158,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -79970,7 +79970,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -80085,7 +80085,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -80210,7 +80210,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -81293,7 +81293,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -81406,7 +81406,7 @@ var _fn = __webpack_require__(14);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -81583,7 +81583,7 @@ exports['default'] = PosterImage;
 exports.__esModule = true;
 exports.hasLoaded = exports.autoSetupTimeout = exports.autoSetup = undefined;
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -81946,7 +81946,7 @@ var _tech = __webpack_require__(77);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -83139,7 +83139,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -86383,7 +86383,7 @@ var _component = __webpack_require__(3);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(15);
+var _dom = __webpack_require__(16);
 
 var _fn = __webpack_require__(14);
 
@@ -89061,7 +89061,8 @@ module.exports = __webpack_amd_options__;
 /* 286 */,
 /* 287 */,
 /* 288 */,
-/* 289 */
+/* 289 */,
+/* 290 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89454,7 +89455,6 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(52)))
 
 /***/ }),
-/* 290 */,
 /* 291 */,
 /* 292 */,
 /* 293 */,
@@ -89720,11 +89720,13 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 /* 553 */,
 /* 554 */,
 /* 555 */,
-/* 556 */
+/* 556 */,
+/* 557 */,
+/* 558 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(289);
+module.exports = __webpack_require__(290);
 
 
 /***/ })
-],[556]);
+],[558]);

@@ -43,6 +43,8 @@ Route::prefix('v1')->group(function() {
     // Feedbacks
     Route::post('/send-feedback', 'Api\GeneralController@save_feedback');
 
+    // Admin Contest
+    Route::get('/get-contest', 'Admin\ContestController@get_video');
 });
 
 // General request

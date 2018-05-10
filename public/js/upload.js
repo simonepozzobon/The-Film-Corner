@@ -404,7 +404,7 @@ module.exports = __webpack_require__(21);
 
 /***/ }),
 
-/***/ 16:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20132,7 +20132,7 @@ module.exports = function settle(resolve, reject, response) {
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _gsap = __webpack_require__(19);
@@ -20148,202 +20148,204 @@ var _jquery2 = _interopRequireDefault(_jquery);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-	name: 'UploadForm',
-	props: {
-		app_id: {
-			type: String,
-			default: null
-		},
-		color: {
-			type: String,
-			default: 'yellow'
-		},
-		csrf_field: {
-			type: String,
-			default: null
-		},
-		route: {
-			type: String,
-			default: null
-		}
-	},
-	data: function data() {
-		return {
-			assets_list: null,
-			error_msg: null,
-			file: null,
-			percent: 0,
-			session_token: '',
-			videos: []
-		};
-	},
-	computed: {},
-	methods: {
-		filesChange: function filesChange(name, files) {
-			this.file = files[0];
-			this.error_msg = null;
-		},
-		formatResponse: function formatResponse(response) {
-			var _this = this;
+    name: 'UploadForm',
+    props: {
+        app_id: {
+            type: String,
+            default: null
+        },
+        color: {
+            type: String,
+            default: 'yellow'
+        },
+        csrf_field: {
+            type: String,
+            default: null
+        },
+        route: {
+            type: String,
+            default: null
+        }
+    },
+    data: function data() {
+        return {
+            assets_list: null,
+            error_msg: null,
+            file: null,
+            percent: 0,
+            session_token: '',
+            videos: []
+        };
+    },
+    computed: {},
+    methods: {
+        filesChange: function filesChange(name, files) {
+            this.file = files[0];
+            this.error_msg = null;
+        },
+        formatResponse: function formatResponse(response) {
+            var _this = this;
 
-			var vue = this;
-			return new Promise(function (resolve, reject) {
-				switch (true) {
-					case parseInt(_this.app_id) == 10:
-						_this.assets_list = document.getElementById('upload-assets');
-						var asset = document.createElement('tr');
-						asset.setAttribute('id', 'video-' + response.video_id);
-						asset.innerHTML = '<td><img src="' + response.img + '" width="57" class="img-fluid"></td>' + '<td>' + '<input id="video-id-src" type="hidden" name="" value="' + response.src + '">' + '<div class="btn-group">' +
-						// '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
-						'<button type="button" class="btn btn-blue" onclick="videoDelete(' + response.video_id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' + '</div>' + '</td>';
-						_this.assets_list.appendChild(asset);
+            var vue = this;
+            return new Promise(function (resolve, reject) {
+                switch (true) {
+                    case parseInt(_this.app_id) == 10:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('tr');
+                        asset.setAttribute('id', 'video-' + response.video_id);
+                        asset.innerHTML = '<td><img src="' + response.img + '" width="57" class="img-fluid"></td>' + '<td>' + '<input id="video-id-src" type="hidden" name="" value="' + response.src + '">' + '<div class="btn-group">' +
+                        // '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
+                        '<button type="button" class="btn btn-blue" onclick="videoDelete(' + response.video_id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' + '</div>' + '</td>';
+                        _this.assets_list.appendChild(asset);
 
-						var video = {
-							'img': response.img,
-							'video': response.src
-						};
-						_this.videos.push(video);
-						localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
+                        _this.videos.push(video);
+                        localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
 
-						resolve('done');
-						break;
+                        resolve('done');
+                        break;
 
-					case parseInt(_this.app_id) == 11:
-						_this.assets_list = document.getElementById('upload-assets');
-						var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
+                    case parseInt(_this.app_id) == 11:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
 
-						var event = new CustomEvent('new-video-on-library', { 'detail': asset });
-						_this.assets_list.dispatchEvent(event); // send the event to angularjs
+                        var event = new CustomEvent('new-video-on-library', {
+                            'detail': asset
+                        });
+                        _this.assets_list.dispatchEvent(event); // send the event to angularjs
 
-						resolve('done');
-						break;
+                        resolve('done');
+                        break;
 
-					case parseInt(_this.app_id) == 13:
-						_this.assets_list = document.getElementById('upload-assets');
-						var asset = document.createElement('div');
-						asset.className = 'asset col-md-3 col-sm-4 pb-3';
-						asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
-						_this.assets_list.appendChild(asset);
+                    case parseInt(_this.app_id) == 13:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('div');
+                        asset.className = 'asset col-md-3 col-sm-4 pb-3';
+                        asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
+                        _this.assets_list.appendChild(asset);
 
-						resolve('done');
-						break;
+                        resolve('done');
+                        break;
 
-					case parseInt(_this.app_id) == 15:
-						_this.assets_list = document.getElementById('upload-assets');
-						var asset = document.createElement('li');
-						asset.className = 'col-md-3 asset';
-						asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
-						_this.assets_list.appendChild(asset);
-						resolve('done');
-						break;
+                    case parseInt(_this.app_id) == 15:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('li');
+                        asset.className = 'col-md-3 asset';
+                        asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
+                        _this.assets_list.appendChild(asset);
+                        resolve('done');
+                        break;
 
-					case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
-						// contests
-						_this.assets_list = document.getElementById('response');
-						var asset = document.createElement('div');
-						_this.$refs.input.style.display = 'none';
-						_this.$refs.loader.style.display = 'none';
-						_this.error_msg = '';
+                    case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
+                        // contests
+                        _this.assets_list = document.getElementById('response');
+                        var asset = document.createElement('div');
+                        _this.$refs.input.style.display = 'none';
+                        _this.$refs.loader.style.display = 'none';
+                        _this.error_msg = '';
 
-						asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
-						_this.assets_list.appendChild(asset);
+                        asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
+                        _this.assets_list.appendChild(asset);
 
-						var video = {
-							'img': response.img,
-							'video': response.src
-						};
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
 
-						localStorage.setItem('app-16-video', JSON.stringify(video));
-						resolve('stop');
-						break;
-				}
-				reject('I can\'t manage this response');
-			});
-		},
-		loaderHide: function loaderHide() {
-			var t1 = new _gsap.TimelineMax();
-			t1.to(this.$refs.loader, .2, {
-				opacity: 0,
-				display: 'none',
-				ease: _gsap.Sine.easeInOut
-			}).to(this.$refs.input, .2, {
-				opacity: 1,
-				display: 'flex',
-				ease: _gsap.Sine.easeInOut
-			});
-		},
-		loaderShow: function loaderShow() {
-			var t1 = new _gsap.TimelineMax();
-			t1.to(this.$refs.input, .2, {
-				opacity: 0,
-				display: 'none',
-				ease: _gsap.Sine.easeInOut
-			}).to(this.$refs.loader, .2, {
-				opacity: 1,
-				display: 'flex',
-				ease: _gsap.Sine.easeInOut
-			});
-		},
-		sendUpload: function sendUpload() {
-			this.session_token = document.getElementById('session-token').value;
-			if (!this.session_token || this.session_token == 'null') {
-				this.error_msg = 'This session is corrupted. Please, save and reload the application';
-				return false;
-			}
+                        localStorage.setItem('app-' + _this.app_id + '-video', JSON.stringify(video));
+                        resolve('stop');
+                        break;
+                }
+                reject('I can\'t manage this response');
+            });
+        },
+        loaderHide: function loaderHide() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.loader, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.input, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        loaderShow: function loaderShow() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.input, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.loader, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        sendUpload: function sendUpload() {
+            this.session_token = document.getElementById('session-token').value;
+            if (!this.session_token || this.session_token == 'null') {
+                this.error_msg = 'This session is corrupted. Please, save and reload the application';
+                return false;
+            }
 
-			if (!this.file) {
-				this.error_msg = 'You must pick a file!';
-				return false;
-			}
+            if (!this.file) {
+                this.error_msg = 'You must pick a file!';
+                return false;
+            }
 
-			// Reset the progress-bar
-			this.$refs.progress_bar.style.width = '0%';
-			this.percent = 0;
+            // Reset the progress-bar
+            this.$refs.progress_bar.style.width = '0%';
+            this.percent = 0;
 
-			// show loader
-			this.loaderShow();
+            // show loader
+            this.loaderShow();
 
-			// Prepare the form
-			var vue = this;
-			var data = new FormData();
-			data.append('_token', this.csrf_field);
-			data.append('media', this.file);
-			data.append('session_token', this.session_token);
-			data.append('session', this.session_token);
+            // Prepare the form
+            var vue = this;
+            var data = new FormData();
+            data.append('_token', this.csrf_field);
+            data.append('media', this.file);
+            data.append('session_token', this.session_token);
+            data.append('session', this.session_token);
 
-			// Start the request
-			var request = new XMLHttpRequest();
-			request.upload.addEventListener('progress', function (e) {
-				var percent = Math.round(e.loaded / e.total * 100);
-				vue.$refs.progress_bar.style.width = percent + '%';
-				vue.percent = percent;
-			}, false);
+            // Start the request
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function (e) {
+                var percent = Math.round(e.loaded / e.total * 100);
+                vue.$refs.progress_bar.style.width = percent + '%';
+                vue.percent = percent;
+            }, false);
 
-			request.addEventListener('load', function (e) {
-				if (parseInt(e.target.status) != 200) {
-					// error
-					vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
-				} else {
-					// success
-					var XMLresponse = JSON.parse(e.target.responseText);
-					vue.formatResponse(XMLresponse).then(function (response) {
-						console.log(response);
-						if (response == 'done') {
-							vue.loaderHide();
-						}
-					}).catch(function (error) {
-						vue.error_msg = 'Oops the server can\'t manage the response';
-					});
-				}
-			}, false);
+            request.addEventListener('load', function (e) {
+                if (parseInt(e.target.status) != 200) {
+                    // error
+                    vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
+                } else {
+                    // success
+                    var XMLresponse = JSON.parse(e.target.responseText);
+                    vue.formatResponse(XMLresponse).then(function (response) {
+                        console.log(response);
+                        if (response == 'done') {
+                            vue.loaderHide();
+                        }
+                    }).catch(function (error) {
+                        vue.error_msg = 'Oops the server can\'t manage the response';
+                    });
+                }
+            }, false);
 
-			request.open('post', this.route);
-			request.send(data);
-		}
-	},
-	mounted: function mounted() {
-		(0, _jquery2.default)(document).trigger('upload-module-loaded', null);
-	}
+            request.open('post', this.route);
+            request.send(data);
+        }
+    },
+    mounted: function mounted() {
+        (0, _jquery2.default)(document).trigger('upload-module-loaded', null);
+    }
 }; //
 //
 //
@@ -20529,17 +20531,17 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 303:
+/***/ 304:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _vue = __webpack_require__(16);
+var _vue = __webpack_require__(15);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _UploadForm = __webpack_require__(431);
+var _UploadForm = __webpack_require__(432);
 
 var _UploadForm2 = _interopRequireDefault(_UploadForm);
 
@@ -20735,7 +20737,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 343:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)();
@@ -20928,7 +20930,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 431:
+/***/ 432:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20936,11 +20938,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__ = __webpack_require__(273);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_650736c2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__ = __webpack_require__(464);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_650736c2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__ = __webpack_require__(465);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(520)
+  __webpack_require__(521)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -20987,7 +20989,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 464:
+/***/ 465:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21183,13 +21185,13 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 520:
+/***/ 521:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(343);
+var content = __webpack_require__(344);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -21210,10 +21212,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 570:
+/***/ 572:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(303);
+module.exports = __webpack_require__(304);
 
 
 /***/ }),
@@ -21766,4 +21768,4 @@ module.exports = Cancel;
 
 /***/ })
 
-},[570]);
+},[572]);

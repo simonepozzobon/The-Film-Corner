@@ -30,6 +30,7 @@
   "/css/app/2.1/dropzone.css": "/css/app/2.1/dropzone.css",
   "/css/app.css": "/css/app.css",
   "/css/admin/admin.css": "/css/admin/admin.css",
+  "/js/admin/contest.js": "/js/admin/contest.js",
   "/js/vendor.js": "/js/vendor.js",
   "/js/city.js": "/js/city.js",
   "/js/conference/speakers.js": "/js/conference/speakers.js",

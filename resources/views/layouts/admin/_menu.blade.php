@@ -35,6 +35,9 @@
     <div class="collapse navbar-collapse justify-content-end" id="menu-main">
       <ul class="navbar-nav">
         <li class="nav-item">
+          <a href="{{ route('admin.contest.index') }}" class="nav-link">Contest</a>
+        </li>
+        <li class="nav-item">
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Libraries
           </a>
