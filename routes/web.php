@@ -177,10 +177,12 @@ Route::prefix('admin')->group(function () {
 
 
     Route::prefix('tools')->group(function(){
-        Route::get('/flush-media', 'ToolController@flush_media');
-        Route::get('/soundstudio', 'ToolController@soundstudio_library');
-        Route::get('/translate_filmography', 'ToolController@translate_filmography');
-        Route::get('/translate_partner', 'ToolController@translate_partner');
+        // Route::get('/flush-media', 'ToolController@flush_media');
+        // Route::get('/soundstudio', 'ToolController@soundstudio_library');
+        // Route::get('/translate_filmography', 'ToolController@translate_filmography');
+        // Route::get('/translate_partner', 'ToolController@translate_partner');
+        Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
+        Route::get('/soundstudio-video', 'ToolController@soundstudio_video_library');
     });
 
     Route::prefix('contest')->group(function() {
@@ -251,6 +253,7 @@ Route::prefix('teacher')->group(function() {
       Route::post('/new', 'Teacher\SessionController@newSession')->name('new.session');
       Route::post('/update', 'Teacher\SessionController@updateSession')->name('update.session');
       Route::post('/share-approved', 'Teacher\SessionController@shareApproved')->name('teacher.session.share_approved');
+      Route::post('/shared-destroy', 'Teacher\SessionController@destroyShared')->name('teacher.session.shared_destroy');
       Route::post('/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
       Route::post('/delete', 'Teacher\SessionController@destroy')->name('teacher.session.delete');
       Route::post('/approve', 'Teacher\SessionController@approveSession')->name('teacher.session.approve');

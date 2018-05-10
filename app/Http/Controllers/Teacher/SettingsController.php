@@ -32,7 +32,7 @@ class SettingsController extends Controller
         if ($notifications->count() > 0) {
             foreach ($notifications as $key => $notification) {
                 $token = $notification->data['session']['token'];
-                $session = StudentAppSession::where('token', '=', $token)->first();
+                $session = StudentAppSession::where('token', '=', $token)->with('app')->first();
                 if ($session) {
                     $session->notification = $notification;
                     $sessions->push($session);

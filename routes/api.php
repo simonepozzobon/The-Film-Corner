@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function() {
     Route::post('chat-notification', 'Api\ChatController@message');
     Route::post('chat-history', 'Api\ChatController@history');
     Route::post('chat-typing', 'Api\ChatController@typing');
+    Route::post('remove-notifications', 'Api\ChatController@removeNotifications');
 
     // Video Editor
     Route::post('/video-edit', 'VideoEditorController@updateEditor');

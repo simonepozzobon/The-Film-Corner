@@ -40,8 +40,14 @@
             };
 
             sessions.push(session);
+
+            var jsonSession = JSON.stringify(sessions)
+
             // Vecchio sistema con i cookies
-            $.cookie('tfc-sessions', JSON.stringify(sessions));
+            $.cookie('tfc-sessions', jsonSession);
+
+            localStorage.setItem('tfc-actual-session', jsonSession);
+
             // Nuovo sistema per la sessione
             $('body').trigger('session-loaded', session);
             localStorage.setItem('tfc-sessions', JSON.stringify(sessions));
@@ -478,8 +484,13 @@
         };
 
         sessions.push(session);
+        var jsonSession = JSON.stringify(sessions)
+
         // Vecchio sistema con i cookies
-        $.cookie('tfc-sessions', JSON.stringify(sessions));
+        $.cookie('tfc-sessions', jsonSession);
+
+        localStorage.setItem('tfc-actual-session', jsonSession);
+
         console.log('session loaded');
     }
   };

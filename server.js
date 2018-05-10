@@ -22,7 +22,7 @@ redis.on('message', (channel, message) => {
     // io.emit(channel + ':' + message.event, message.data) //es. chat:UserSignin, data
     // channel:event:to_id:to_type - message.data
     io.emit(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type, message.data)
-    console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type)
+    console.log('Messaggio ricevuto per ' + message.to_id + ' ' + message.to_type + ' - tipo di evento ' + message.event)
     // console.log(channel + ':' + message.event + ':' + message.to_id + ':' + message.to_type)
   }
   else if (channel == 'notification') {

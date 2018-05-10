@@ -155,6 +155,13 @@ class SharedSession extends Model
             break;
         }
         $shared->save();
+
+        $shared->app = $shared->app->get();
+        $shared->author = $shared->author()->get();
+        $shared->comments = $shared->comments()->get();
+        $shared->likes = $shared->likes()->get();
+        $shared->comments_count = 0;
+        
         return $shared;
     }
 }

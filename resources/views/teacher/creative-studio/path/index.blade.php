@@ -245,6 +245,8 @@
         },
         success: function (response) {
           console.log(response);
+          var message = new CustomEvent('fullscreen-message', {detail: 'Shared!'})
+          document.dispatchEvent(message)
         },
         error: function (xhr, status) {
             console.log(xhr);
