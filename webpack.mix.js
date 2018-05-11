@@ -30,6 +30,7 @@ mix
   .js('resources/assets/admin/js/contest.js', 'public/js/admin/')
 
   .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
+  .js('resources/assets/js/city.js', '/public/js/vue_city.js')
   .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
   .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
   .js('resources/assets/js/timeline/timeline.js', 'public/js')
@@ -43,7 +44,6 @@ mix
   .js('resources/assets/js/feedback-toolbar/feedback-toolbar', 'public/js')
   .js('resources/assets/js/upload/upload', 'public/js')
   .js('resources/assets/js/fullscreen/message.js', 'public/js')
-
 
   .js('resources/assets/js/conference/speakers', 'public/js/conference')
 

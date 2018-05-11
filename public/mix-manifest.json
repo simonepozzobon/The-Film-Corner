@@ -25,6 +25,7 @@
   "/js/network.js": "/js/network.js",
   "/js/upload.js": "/js/upload.js",
   "/js/message.js": "/js/message.js",
+  "//js/vue_city.js": "//js/vue_city.js",
   "/js/admin/admin.js": "/js/admin/admin.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",

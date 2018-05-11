@@ -28,7 +28,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 101:
+/***/ 102:
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -48,7 +48,7 @@ module.exports = function tsml (sa) {
 
 /***/ }),
 
-/***/ 102:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56,7 +56,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(128);
+var _trackButton = __webpack_require__(129);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -159,7 +159,7 @@ exports['default'] = TextTrackButton;
 
 /***/ }),
 
-/***/ 103:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -336,7 +336,7 @@ exports['default'] = EventTarget;
 
 /***/ }),
 
-/***/ 104:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -481,7 +481,7 @@ exports['default'] = MenuItem;
 
 /***/ }),
 
-/***/ 105:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -813,7 +813,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -1010,9 +1010,9 @@ var _track = __webpack_require__(120);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(106);
 
-var _xhr = __webpack_require__(141);
+var _xhr = __webpack_require__(142);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
@@ -1519,7 +1519,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1772,7 +1772,7 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1952,7 +1952,7 @@ function computedStyle(el, prop) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 123:
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -1978,7 +1978,7 @@ function extend() {
 
 /***/ }),
 
-/***/ 127:
+/***/ 128:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1994,7 +1994,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -2140,7 +2140,7 @@ exports['default'] = MuteToggle;
 
 /***/ }),
 
-/***/ 128:
+/***/ 129:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2148,7 +2148,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(131);
+var _menuButton = __webpack_require__(132);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -2226,7 +2226,7 @@ exports['default'] = TrackButton;
 
 /***/ }),
 
-/***/ 129:
+/***/ 130:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2234,7 +2234,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(135);
+var _slider = __webpack_require__(136);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -2415,7 +2415,7 @@ exports['default'] = VolumeBar;
 
 /***/ }),
 
-/***/ 130:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2634,7 +2634,7 @@ exports['default'] = MediaError;
 
 /***/ }),
 
-/***/ 131:
+/***/ 132:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2650,11 +2650,11 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(132);
+var _menu = __webpack_require__(133);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -2994,7 +2994,7 @@ exports['default'] = MenuButton;
 
 /***/ }),
 
-/***/ 132:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3006,7 +3006,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -3204,7 +3204,7 @@ exports['default'] = Menu;
 
 /***/ }),
 
-/***/ 133:
+/***/ 134:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3212,7 +3212,7 @@ exports['default'] = Menu;
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -3705,7 +3705,7 @@ exports['default'] = ModalDialog;
 
 /***/ }),
 
-/***/ 134:
+/***/ 135:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3729,7 +3729,7 @@ var _events = __webpack_require__(58);
 
 var Events = _interopRequireWildcard(_events);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -3755,9 +3755,9 @@ var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
 var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(138);
+var _buffer = __webpack_require__(139);
 
-var _stylesheet = __webpack_require__(139);
+var _stylesheet = __webpack_require__(140);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -3765,7 +3765,7 @@ var _fullscreenApi = __webpack_require__(195);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(130);
+var _mediaError = __webpack_require__(131);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -3783,7 +3783,7 @@ var _textTrackListConverter = __webpack_require__(211);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(133);
+var _modalDialog = __webpack_require__(134);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
@@ -3791,11 +3791,11 @@ var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(136);
+var _audioTrackList = __webpack_require__(137);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(137);
+var _videoTrackList = __webpack_require__(138);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
@@ -7398,7 +7398,7 @@ exports['default'] = Player;
 
 /***/ }),
 
-/***/ 135:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7410,7 +7410,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -7759,7 +7759,7 @@ exports['default'] = Slider;
 
 /***/ }),
 
-/***/ 136:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7948,7 +7948,7 @@ exports['default'] = AudioTrackList;
 
 /***/ }),
 
-/***/ 137:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8149,7 +8149,7 @@ exports['default'] = VideoTrackList;
 
 /***/ }),
 
-/***/ 138:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8206,7 +8206,7 @@ function bufferedPercent(buffered, duration) {
 
 /***/ }),
 
-/***/ 139:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8262,7 +8262,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 /***/ }),
 
-/***/ 140:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8292,7 +8292,7 @@ var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -8300,7 +8300,7 @@ var _setup = __webpack_require__(201);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(139);
+var _stylesheet = __webpack_require__(140);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -8308,7 +8308,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -8316,7 +8316,7 @@ var _events = __webpack_require__(58);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(134);
+var _player = __webpack_require__(135);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -8354,7 +8354,7 @@ var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -8368,7 +8368,7 @@ var _extend = __webpack_require__(194);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(141);
+var _xhr = __webpack_require__(142);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
@@ -8992,7 +8992,7 @@ exports['default'] = videojs;
 
 /***/ }),
 
-/***/ 141:
+/***/ 142:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9000,7 +9000,7 @@ exports['default'] = videojs;
 var window = __webpack_require__(41)
 var isFunction = __webpack_require__(77)
 var parseHeaders = __webpack_require__(113)
-var xtend = __webpack_require__(122)
+var xtend = __webpack_require__(123)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -70150,13 +70150,13 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     //module loader detection derrived from http://tinyurl.com/hs2coz2
     if (("function").match(/^(object|function)$/) && __webpack_require__(223)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(110), __webpack_require__(140)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(110), __webpack_require__(141)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(110), __webpack_require__(140));
+        module.exports = factory(__webpack_require__(110), __webpack_require__(141));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -70906,7 +70906,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(128);
+var _trackButton = __webpack_require__(129);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -71033,7 +71033,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -71184,7 +71184,7 @@ __webpack_require__(190);
 
 __webpack_require__(192);
 
-__webpack_require__(127);
+__webpack_require__(128);
 
 __webpack_require__(181);
 
@@ -71401,7 +71401,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -71647,11 +71647,11 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(131);
+var _menuButton = __webpack_require__(132);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(132);
+var _menu = __webpack_require__(133);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -71663,7 +71663,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -71882,7 +71882,2502 @@ exports['default'] = PlaybackRateMenuButton;
 
 /***/ }),
 
-/***/ 17:
+/***/ 170:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _menuItem = __webpack_require__(105);
+
+var _menuItem2 = _interopRequireDefault(_menuItem);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file playback-rate-menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The specific menu item type for selecting a playback rate.
+ *
+ * @extends MenuItem
+ */
+var PlaybackRateMenuItem = function (_MenuItem) {
+  _inherits(PlaybackRateMenuItem, _MenuItem);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function PlaybackRateMenuItem(player, options) {
+    _classCallCheck(this, PlaybackRateMenuItem);
+
+    var label = options.rate;
+    var rate = parseFloat(label, 10);
+
+    // Modify options for parent MenuItem class's init.
+    options.label = label;
+    options.selected = rate === 1;
+    options.selectable = true;
+
+    var _this = _possibleConstructorReturn(this, _MenuItem.call(this, player, options));
+
+    _this.label = label;
+    _this.rate = rate;
+
+    _this.on(player, 'ratechange', _this.update);
+    return _this;
+  }
+
+  /**
+   * This gets called when an `PlaybackRateMenuItem` is "clicked". See
+   * {@link ClickableComponent} for more detailed information on what a click can be.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `keydown`, `tap`, or `click` event that caused this function to be
+   *        called.
+   *
+   * @listens tap
+   * @listens click
+   */
+
+
+  PlaybackRateMenuItem.prototype.handleClick = function handleClick(event) {
+    _MenuItem.prototype.handleClick.call(this);
+    this.player().playbackRate(this.rate);
+  };
+
+  /**
+   * Update the PlaybackRateMenuItem when the playbackrate changes.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `ratechange` event that caused this function to run.
+   *
+   * @listens Player#ratechange
+   */
+
+
+  PlaybackRateMenuItem.prototype.update = function update(event) {
+    this.selected(this.player().playbackRate() === this.rate);
+  };
+
+  return PlaybackRateMenuItem;
+}(_menuItem2['default']);
+
+/**
+ * The text that should display over the `PlaybackRateMenuItem`s controls. Added for localization.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+PlaybackRateMenuItem.prototype.contentElType = 'button';
+
+_component2['default'].registerComponent('PlaybackRateMenuItem', PlaybackRateMenuItem);
+exports['default'] = PlaybackRateMenuItem;
+
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(19);
+
+var Dom = _interopRequireWildcard(_dom);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file load-progress-bar.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Shows loading progress
+ *
+ * @extends Component
+ */
+var LoadProgressBar = function (_Component) {
+  _inherits(LoadProgressBar, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function LoadProgressBar(player, options) {
+    _classCallCheck(this, LoadProgressBar);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.partEls_ = [];
+    _this.on(player, 'progress', _this.update);
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  LoadProgressBar.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-load-progress',
+      innerHTML: '<span class="vjs-control-text"><span>' + this.localize('Loaded') + '</span>: 0%</span>'
+    });
+  };
+
+  /**
+   * Update progress bar
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `progress` event that caused this function to run.
+   *
+   * @listens Player#progress
+   */
+
+
+  LoadProgressBar.prototype.update = function update(event) {
+    var buffered = this.player_.buffered();
+    var duration = this.player_.duration();
+    var bufferedEnd = this.player_.bufferedEnd();
+    var children = this.partEls_;
+
+    // get the percent width of a time compared to the total end
+    var percentify = function percentify(time, end) {
+      // no NaN
+      var percent = time / end || 0;
+
+      return (percent >= 1 ? 1 : percent) * 100 + '%';
+    };
+
+    // update the width of the progress bar
+    this.el_.style.width = percentify(bufferedEnd, duration);
+
+    // add child elements to represent the individual buffered time ranges
+    for (var i = 0; i < buffered.length; i++) {
+      var start = buffered.start(i);
+      var end = buffered.end(i);
+      var part = children[i];
+
+      if (!part) {
+        part = this.el_.appendChild(Dom.createEl());
+        children[i] = part;
+      }
+
+      // set the percent based on the width of the progress bar (bufferedEnd)
+      part.style.left = percentify(start, bufferedEnd);
+      part.style.width = percentify(end - start, bufferedEnd);
+    }
+
+    // remove unused buffered range elements
+    for (var _i = children.length; _i > buffered.length; _i--) {
+      this.el_.removeChild(children[_i - 1]);
+    }
+    children.length = buffered.length;
+  };
+
+  return LoadProgressBar;
+}(_component2['default']);
+
+_component2['default'].registerComponent('LoadProgressBar', LoadProgressBar);
+exports['default'] = LoadProgressBar;
+
+
+/***/ }),
+
+/***/ 172:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(19);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+var _computedStyle = __webpack_require__(121);
+
+var _computedStyle2 = _interopRequireDefault(_computedStyle);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file mouse-time-display.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The Mouse Time Display component shows the time you will seek to
+ * when hovering over the progress bar
+ *
+ * @extends Component
+ */
+var MouseTimeDisplay = function (_Component) {
+  _inherits(MouseTimeDisplay, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function MouseTimeDisplay(player, options) {
+    _classCallCheck(this, MouseTimeDisplay);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
+      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
+    }
+
+    if (_this.keepTooltipsInside) {
+      _this.tooltip = Dom.createEl('div', { className: 'vjs-time-tooltip' });
+      _this.el().appendChild(_this.tooltip);
+      _this.addClass('vjs-keep-tooltips-inside');
+    }
+
+    _this.update(0, 0);
+
+    player.on('ready', function () {
+      _this.on(player.controlBar.progressControl.el(), 'mousemove', Fn.throttle(Fn.bind(_this, _this.handleMouseMove), 25));
+    });
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  MouseTimeDisplay.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-mouse-display'
+    });
+  };
+
+  /**
+   * Handle the mouse move event on the `MouseTimeDisplay`.
+   *
+   * @param {EventTarget~Event} event
+   *        The `mousemove` event that caused this to event to run.
+   *
+   * @listen mousemove
+   */
+
+
+  MouseTimeDisplay.prototype.handleMouseMove = function handleMouseMove(event) {
+    var duration = this.player_.duration();
+    var newTime = this.calculateDistance(event) * duration;
+    var position = event.pageX - Dom.findElPosition(this.el().parentNode).left;
+
+    this.update(newTime, position);
+  };
+
+  /**
+   * Update the time and posistion of the `MouseTimeDisplay`.
+   *
+   * @param {number} newTime
+   *        Time to change the `MouseTimeDisplay` to.
+   *
+   * @param {nubmer} position
+   *        Postion from the left of the in pixels.
+   */
+
+
+  MouseTimeDisplay.prototype.update = function update(newTime, position) {
+    var time = (0, _formatTime2['default'])(newTime, this.player_.duration());
+
+    this.el().style.left = position + 'px';
+    this.el().setAttribute('data-current-time', time);
+
+    if (this.keepTooltipsInside) {
+      var clampedPosition = this.clampPosition_(position);
+      var difference = position - clampedPosition + 1;
+      var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltip, 'width'));
+      var tooltipWidthHalf = tooltipWidth / 2;
+
+      this.tooltip.innerHTML = time;
+      this.tooltip.style.right = '-' + (tooltipWidthHalf - difference) + 'px';
+    }
+  };
+
+  /**
+   * Get the mouse pointers x coordinate in pixels.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `mousemove` event that was passed to this function by
+   *        {@link MouseTimeDisplay#handleMouseMove}
+   *
+   * @return {number}
+   *         THe x position in pixels of the mouse pointer.
+   */
+
+
+  MouseTimeDisplay.prototype.calculateDistance = function calculateDistance(event) {
+    return Dom.getPointerPosition(this.el().parentNode, event).x;
+  };
+
+  /**
+   * This takes in a horizontal position for the bar and returns a clamped position.
+   * Clamped position means that it will keep the position greater than half the width
+   * of the tooltip and smaller than the player width minus half the width o the tooltip.
+   * It will only clamp the position if `keepTooltipsInside` option is set.
+   *
+   * @param {number} position
+   *        The position the bar wants to be
+   *
+   * @return {number}
+   *         The (potentially) new clamped position.
+   *
+   * @private
+   */
+
+
+  MouseTimeDisplay.prototype.clampPosition_ = function clampPosition_(position) {
+    if (!this.keepTooltipsInside) {
+      return position;
+    }
+
+    var playerWidth = parseFloat((0, _computedStyle2['default'])(this.player().el(), 'width'));
+    var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltip, 'width'));
+    var tooltipWidthHalf = tooltipWidth / 2;
+    var actualPosition = position;
+
+    if (position < tooltipWidthHalf) {
+      actualPosition = Math.ceil(tooltipWidthHalf);
+    } else if (position > playerWidth - tooltipWidthHalf) {
+      actualPosition = Math.floor(playerWidth - tooltipWidthHalf);
+    }
+
+    return actualPosition;
+  };
+
+  return MouseTimeDisplay;
+}(_component2['default']);
+
+_component2['default'].registerComponent('MouseTimeDisplay', MouseTimeDisplay);
+exports['default'] = MouseTimeDisplay;
+
+
+/***/ }),
+
+/***/ 173:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file play-progress-bar.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Shows play progress
+ *
+ * @extends Component
+ */
+var PlayProgressBar = function (_Component) {
+  _inherits(PlayProgressBar, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function PlayProgressBar(player, options) {
+    _classCallCheck(this, PlayProgressBar);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.updateDataAttr();
+    _this.on(player, 'timeupdate', _this.updateDataAttr);
+    player.ready(Fn.bind(_this, _this.updateDataAttr));
+
+    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
+      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
+    }
+
+    if (_this.keepTooltipsInside) {
+      _this.addClass('vjs-keep-tooltips-inside');
+    }
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  PlayProgressBar.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-play-progress vjs-slider-bar',
+      innerHTML: '<span class="vjs-control-text"><span>' + this.localize('Progress') + '</span>: 0%</span>'
+    });
+  };
+
+  /**
+   * Update the data-current-time attribute on the `PlayProgressBar`.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` event that caused this to run.
+   *
+   * @listens Player#timeupdate
+   */
+
+
+  PlayProgressBar.prototype.updateDataAttr = function updateDataAttr(event) {
+    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
+
+    this.el_.setAttribute('data-current-time', (0, _formatTime2['default'])(time, this.player_.duration()));
+  };
+
+  return PlayProgressBar;
+}(_component2['default']);
+
+_component2['default'].registerComponent('PlayProgressBar', PlayProgressBar);
+exports['default'] = PlayProgressBar;
+
+
+/***/ }),
+
+/***/ 174:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+__webpack_require__(175);
+
+__webpack_require__(172);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file progress-control.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The Progress Control component contains the seek bar, load progress,
+ * and play progress.
+ *
+ * @extends Component
+ */
+var ProgressControl = function (_Component) {
+  _inherits(ProgressControl, _Component);
+
+  function ProgressControl() {
+    _classCallCheck(this, ProgressControl);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+  ProgressControl.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-progress-control vjs-control'
+    });
+  };
+
+  return ProgressControl;
+}(_component2['default']);
+
+/**
+ * Default options for `ProgressControl`
+ *
+ * @type {Object}
+ * @private
+ */
+
+
+ProgressControl.prototype.options_ = {
+  children: ['seekBar']
+};
+
+_component2['default'].registerComponent('ProgressControl', ProgressControl);
+exports['default'] = ProgressControl;
+
+
+/***/ }),
+
+/***/ 175:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _slider = __webpack_require__(136);
+
+var _slider2 = _interopRequireDefault(_slider);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+var _computedStyle = __webpack_require__(121);
+
+var _computedStyle2 = _interopRequireDefault(_computedStyle);
+
+__webpack_require__(171);
+
+__webpack_require__(173);
+
+__webpack_require__(176);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file seek-bar.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Seek Bar and holder for the progress bars
+ *
+ * @extends Slider
+ */
+var SeekBar = function (_Slider) {
+  _inherits(SeekBar, _Slider);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function SeekBar(player, options) {
+    _classCallCheck(this, SeekBar);
+
+    var _this = _possibleConstructorReturn(this, _Slider.call(this, player, options));
+
+    _this.on(player, 'timeupdate', _this.updateProgress);
+    _this.on(player, 'ended', _this.updateProgress);
+    player.ready(Fn.bind(_this, _this.updateProgress));
+
+    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
+      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
+    }
+
+    if (_this.keepTooltipsInside) {
+      _this.tooltipProgressBar = _this.addChild('TooltipProgressBar');
+    }
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  SeekBar.prototype.createEl = function createEl() {
+    return _Slider.prototype.createEl.call(this, 'div', {
+      className: 'vjs-progress-holder'
+    }, {
+      'aria-label': 'progress bar'
+    });
+  };
+
+  /**
+   * Update the seek bars tooltip and width.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` or `ended` event that caused this to run.
+   *
+   * @listens Player#timeupdate
+   * @listens Player#ended
+   */
+
+
+  SeekBar.prototype.updateProgress = function updateProgress(event) {
+    this.updateAriaAttributes(this.el_);
+
+    if (this.keepTooltipsInside) {
+      this.updateAriaAttributes(this.tooltipProgressBar.el_);
+      this.tooltipProgressBar.el_.style.width = this.bar.el_.style.width;
+
+      var playerWidth = parseFloat((0, _computedStyle2['default'])(this.player().el(), 'width'));
+      var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltipProgressBar.tooltip, 'width'));
+      var tooltipStyle = this.tooltipProgressBar.el().style;
+
+      tooltipStyle.maxWidth = Math.floor(playerWidth - tooltipWidth / 2) + 'px';
+      tooltipStyle.minWidth = Math.ceil(tooltipWidth / 2) + 'px';
+      tooltipStyle.right = '-' + tooltipWidth / 2 + 'px';
+    }
+  };
+
+  /**
+   * Update ARIA accessibility attributes
+   *
+   * @param {Element} el
+   *        The element to update with aria accessibility attributes.
+   */
+
+
+  SeekBar.prototype.updateAriaAttributes = function updateAriaAttributes(el) {
+    // Allows for smooth scrubbing, when player can't keep up.
+    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
+
+    // machine readable value of progress bar (percentage complete)
+    el.setAttribute('aria-valuenow', (this.getPercent() * 100).toFixed(2));
+    // human readable value of progress bar (time complete)
+    el.setAttribute('aria-valuetext', (0, _formatTime2['default'])(time, this.player_.duration()));
+  };
+
+  /**
+   * Get percentage of video played
+   *
+   * @return {number}
+   *         The percentage played
+   */
+
+
+  SeekBar.prototype.getPercent = function getPercent() {
+    var percent = this.player_.currentTime() / this.player_.duration();
+
+    return percent >= 1 ? 1 : percent;
+  };
+
+  /**
+   * Handle mouse down on seek bar
+   *
+   * @param {EventTarget~Event} event
+   *        The `mousedown` event that caused this to run.
+   *
+   * @listens mousedown
+   */
+
+
+  SeekBar.prototype.handleMouseDown = function handleMouseDown(event) {
+    this.player_.scrubbing(true);
+
+    this.videoWasPlaying = !this.player_.paused();
+    this.player_.pause();
+
+    _Slider.prototype.handleMouseDown.call(this, event);
+  };
+
+  /**
+   * Handle mouse move on seek bar
+   *
+   * @param {EventTarget~Event} event
+   *        The `mousemove` event that caused this to run.
+   *
+   * @listens mousemove
+   */
+
+
+  SeekBar.prototype.handleMouseMove = function handleMouseMove(event) {
+    var newTime = this.calculateDistance(event) * this.player_.duration();
+
+    // Don't let video end while scrubbing.
+    if (newTime === this.player_.duration()) {
+      newTime = newTime - 0.1;
+    }
+
+    // Set new time (tell player to seek to new time)
+    this.player_.currentTime(newTime);
+  };
+
+  /**
+   * Handle mouse up on seek bar
+   *
+   * @param {EventTarget~Event} event
+   *        The `mouseup` event that caused this to run.
+   *
+   * @listens mouseup
+   */
+
+
+  SeekBar.prototype.handleMouseUp = function handleMouseUp(event) {
+    _Slider.prototype.handleMouseUp.call(this, event);
+
+    this.player_.scrubbing(false);
+    if (this.videoWasPlaying) {
+      this.player_.play();
+    }
+  };
+
+  /**
+   * Move more quickly fast forward for keyboard-only users
+   */
+
+
+  SeekBar.prototype.stepForward = function stepForward() {
+    // more quickly fast forward for keyboard-only users
+    this.player_.currentTime(this.player_.currentTime() + 5);
+  };
+
+  /**
+   * Move more quickly rewind for keyboard-only users
+   */
+
+
+  SeekBar.prototype.stepBack = function stepBack() {
+    // more quickly rewind for keyboard-only users
+    this.player_.currentTime(this.player_.currentTime() - 5);
+  };
+
+  return SeekBar;
+}(_slider2['default']);
+
+/**
+ * Default options for the `SeekBar`
+ *
+ * @type {Object}
+ * @private
+ */
+
+
+SeekBar.prototype.options_ = {
+  children: ['loadProgressBar', 'mouseTimeDisplay', 'playProgressBar'],
+  barName: 'playProgressBar'
+};
+
+/**
+ * Call the update event for this Slider when this event happens on the player.
+ *
+ * @type {string}
+ */
+SeekBar.prototype.playerEvent = 'timeupdate';
+
+_component2['default'].registerComponent('SeekBar', SeekBar);
+exports['default'] = SeekBar;
+
+
+/***/ }),
+
+/***/ 176:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file play-progress-bar.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Shows play progress
+ *
+ * @extends Component
+ */
+var TooltipProgressBar = function (_Component) {
+  _inherits(TooltipProgressBar, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function TooltipProgressBar(player, options) {
+    _classCallCheck(this, TooltipProgressBar);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.updateDataAttr();
+    _this.on(player, 'timeupdate', _this.updateDataAttr);
+    player.ready(Fn.bind(_this, _this.updateDataAttr));
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  TooltipProgressBar.prototype.createEl = function createEl() {
+    var el = _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-tooltip-progress-bar vjs-slider-bar',
+      innerHTML: '<div class="vjs-time-tooltip"></div>\n        <span class="vjs-control-text"><span>' + this.localize('Progress') + '</span>: 0%</span>'
+    });
+
+    this.tooltip = el.querySelector('.vjs-time-tooltip');
+
+    return el;
+  };
+
+  /**
+   * Updatet the data-current-time attribute for TooltipProgressBar
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` event that caused this function to run.
+   *
+   * @listens Player#timeupdate
+   */
+
+
+  TooltipProgressBar.prototype.updateDataAttr = function updateDataAttr(event) {
+    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
+    var formattedTime = (0, _formatTime2['default'])(time, this.player_.duration());
+
+    this.el_.setAttribute('data-current-time', formattedTime);
+    this.tooltip.innerHTML = formattedTime;
+  };
+
+  return TooltipProgressBar;
+}(_component2['default']);
+
+_component2['default'].registerComponent('TooltipProgressBar', TooltipProgressBar);
+exports['default'] = TooltipProgressBar;
+
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _spacer = __webpack_require__(178);
+
+var _spacer2 = _interopRequireDefault(_spacer);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file custom-control-spacer.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Spacer specifically meant to be used as an insertion point for new plugins, etc.
+ *
+ * @extends Spacer
+ */
+var CustomControlSpacer = function (_Spacer) {
+  _inherits(CustomControlSpacer, _Spacer);
+
+  function CustomControlSpacer() {
+    _classCallCheck(this, CustomControlSpacer);
+
+    return _possibleConstructorReturn(this, _Spacer.apply(this, arguments));
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+  CustomControlSpacer.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-custom-control-spacer ' + _Spacer.prototype.buildCSSClass.call(this);
+  };
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  CustomControlSpacer.prototype.createEl = function createEl() {
+    var el = _Spacer.prototype.createEl.call(this, {
+      className: this.buildCSSClass()
+    });
+
+    // No-flex/table-cell mode requires there be some content
+    // in the cell to fill the remaining space of the table.
+    el.innerHTML = '&nbsp;';
+    return el;
+  };
+
+  return CustomControlSpacer;
+}(_spacer2['default']);
+
+_component2['default'].registerComponent('CustomControlSpacer', CustomControlSpacer);
+exports['default'] = CustomControlSpacer;
+
+
+/***/ }),
+
+/***/ 178:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file spacer.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Just an empty spacer element that can be used as an append point for plugins, etc.
+ * Also can be used to create space between elements when necessary.
+ *
+ * @extends Component
+ */
+var Spacer = function (_Component) {
+  _inherits(Spacer, _Component);
+
+  function Spacer() {
+    _classCallCheck(this, Spacer);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+  Spacer.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-spacer ' + _Component.prototype.buildCSSClass.call(this);
+  };
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  Spacer.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: this.buildCSSClass()
+    });
+  };
+
+  return Spacer;
+}(_component2['default']);
+
+_component2['default'].registerComponent('Spacer', Spacer);
+
+exports['default'] = Spacer;
+
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackMenuItem = __webpack_require__(116);
+
+var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file caption-settings-menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The menu item for caption track settings menu
+ *
+ * @extends TextTrackMenuItem
+ */
+var CaptionSettingsMenuItem = function (_TextTrackMenuItem) {
+  _inherits(CaptionSettingsMenuItem, _TextTrackMenuItem);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function CaptionSettingsMenuItem(player, options) {
+    _classCallCheck(this, CaptionSettingsMenuItem);
+
+    options.track = {
+      player: player,
+      kind: options.kind,
+      label: options.kind + ' settings',
+      selectable: false,
+      'default': false,
+      mode: 'disabled'
+    };
+
+    // CaptionSettingsMenuItem has no concept of 'selected'
+    options.selectable = false;
+
+    var _this = _possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
+
+    _this.addClass('vjs-texttrack-settings');
+    _this.controlText(', opens ' + options.kind + ' settings dialog');
+    return _this;
+  }
+
+  /**
+   * This gets called when an `CaptionSettingsMenuItem` is "clicked". See
+   * {@link ClickableComponent} for more detailed information on what a click can be.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `keydown`, `tap`, or `click` event that caused this function to be
+   *        called.
+   *
+   * @listens tap
+   * @listens click
+   */
+
+
+  CaptionSettingsMenuItem.prototype.handleClick = function handleClick(event) {
+    this.player().getChild('textTrackSettings').show();
+    this.player().getChild('textTrackSettings').el_.focus();
+  };
+
+  return CaptionSettingsMenuItem;
+}(_textTrackMenuItem2['default']);
+
+_component2['default'].registerComponent('CaptionSettingsMenuItem', CaptionSettingsMenuItem);
+exports['default'] = CaptionSettingsMenuItem;
+
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackButton = __webpack_require__(103);
+
+var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _captionSettingsMenuItem = __webpack_require__(179);
+
+var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file captions-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The button component for toggling and selecting captions
+ *
+ * @extends TextTrackButton
+ */
+var CaptionsButton = function (_TextTrackButton) {
+  _inherits(CaptionsButton, _TextTrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {Component~ReadyCallback} [ready]
+   *        The function to call when this component is ready.
+   */
+  function CaptionsButton(player, options, ready) {
+    _classCallCheck(this, CaptionsButton);
+
+    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
+
+    _this.el_.setAttribute('aria-label', 'Captions Menu');
+    return _this;
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+
+
+  CaptionsButton.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-captions-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
+  };
+
+  /**
+   * Create caption menu items
+   *
+   * @return {CaptionSettingsMenuItem[]}
+   *         The array of current menu items.
+   */
+
+
+  CaptionsButton.prototype.createItems = function createItems() {
+    var items = [];
+
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
+      items.push(new _captionSettingsMenuItem2['default'](this.player_, { kind: this.kind_ }));
+
+      this.hideThreshold_ += 1;
+    }
+
+    return _TextTrackButton.prototype.createItems.call(this, items);
+  };
+
+  return CaptionsButton;
+}(_textTrackButton2['default']);
+
+/**
+ * `kind` of TextTrack to look for to associate it with this menu.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+CaptionsButton.prototype.kind_ = 'captions';
+
+/**
+ * The text that should display over the `CaptionsButton`s controls. Added for localization.
+ *
+ * @type {string}
+ * @private
+ */
+CaptionsButton.prototype.controlText_ = 'Captions';
+
+_component2['default'].registerComponent('CaptionsButton', CaptionsButton);
+exports['default'] = CaptionsButton;
+
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackButton = __webpack_require__(103);
+
+var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _chaptersTrackMenuItem = __webpack_require__(182);
+
+var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
+
+var _toTitleCase = __webpack_require__(76);
+
+var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file chapters-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The button component for toggling and selecting chapters
+ * Chapters act much differently than other text tracks
+ * Cues are navigation vs. other tracks of alternative languages
+ *
+ * @extends TextTrackButton
+ */
+var ChaptersButton = function (_TextTrackButton) {
+  _inherits(ChaptersButton, _TextTrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {Component~ReadyCallback} [ready]
+   *        The function to call when this function is ready.
+   */
+  function ChaptersButton(player, options, ready) {
+    _classCallCheck(this, ChaptersButton);
+
+    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
+
+    _this.el_.setAttribute('aria-label', 'Chapters Menu');
+    return _this;
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+
+
+  ChaptersButton.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-chapters-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
+  };
+
+  /**
+   * Update the menu based on the current state of its items.
+   *
+   * @param {EventTarget~Event} [event]
+   *        An event that triggered this function to run.
+   *
+   * @listens TextTrackList#addtrack
+   * @listens TextTrackList#removetrack
+   * @listens TextTrackList#change
+   */
+
+
+  ChaptersButton.prototype.update = function update(event) {
+    if (!this.track_ || event && (event.type === 'addtrack' || event.type === 'removetrack')) {
+      this.setTrack(this.findChaptersTrack());
+    }
+    _TextTrackButton.prototype.update.call(this);
+  };
+
+  /**
+   * Set the currently selected track for the chapters button.
+   *
+   * @param {TextTrack} track
+   *        The new track to select. Nothing will change if this is the currently selected
+   *        track.
+   */
+
+
+  ChaptersButton.prototype.setTrack = function setTrack(track) {
+    if (this.track_ === track) {
+      return;
+    }
+
+    if (!this.updateHandler_) {
+      this.updateHandler_ = this.update.bind(this);
+    }
+
+    // here this.track_ refers to the old track instance
+    if (this.track_) {
+      var remoteTextTrackEl = this.player_.remoteTextTrackEls().getTrackElementByTrack_(this.track_);
+
+      if (remoteTextTrackEl) {
+        remoteTextTrackEl.removeEventListener('load', this.updateHandler_);
+      }
+
+      this.track_ = null;
+    }
+
+    this.track_ = track;
+
+    // here this.track_ refers to the new track instance
+    if (this.track_) {
+      this.track_.mode = 'hidden';
+
+      var _remoteTextTrackEl = this.player_.remoteTextTrackEls().getTrackElementByTrack_(this.track_);
+
+      if (_remoteTextTrackEl) {
+        _remoteTextTrackEl.addEventListener('load', this.updateHandler_);
+      }
+    }
+  };
+
+  /**
+   * Find the track object that is currently in use by this ChaptersButton
+   *
+   * @return {TextTrack|undefined}
+   *         The current track or undefined if none was found.
+   */
+
+
+  ChaptersButton.prototype.findChaptersTrack = function findChaptersTrack() {
+    var tracks = this.player_.textTracks() || [];
+
+    for (var i = tracks.length - 1; i >= 0; i--) {
+      // We will always choose the last track as our chaptersTrack
+      var track = tracks[i];
+
+      if (track.kind === this.kind_) {
+        return track;
+      }
+    }
+  };
+
+  /**
+   * Get the caption for the ChaptersButton based on the track label. This will also
+   * use the current tracks localized kind as a fallback if a label does not exist.
+   *
+   * @return {string}
+   *         The tracks current label or the localized track kind.
+   */
+
+
+  ChaptersButton.prototype.getMenuCaption = function getMenuCaption() {
+    if (this.track_ && this.track_.label) {
+      return this.track_.label;
+    }
+    return this.localize((0, _toTitleCase2['default'])(this.kind_));
+  };
+
+  /**
+   * Create menu from chapter track
+   *
+   * @return {Menu}
+   *         New menu for the chapter buttons
+   */
+
+
+  ChaptersButton.prototype.createMenu = function createMenu() {
+    this.options_.title = this.getMenuCaption();
+    return _TextTrackButton.prototype.createMenu.call(this);
+  };
+
+  /**
+   * Create a menu item for each text track
+   *
+   * @return {TextTrackMenuItem[]}
+   *         Array of menu items
+   */
+
+
+  ChaptersButton.prototype.createItems = function createItems() {
+    var items = [];
+
+    if (!this.track_) {
+      return items;
+    }
+
+    var cues = this.track_.cues;
+
+    if (!cues) {
+      return items;
+    }
+
+    for (var i = 0, l = cues.length; i < l; i++) {
+      var cue = cues[i];
+      var mi = new _chaptersTrackMenuItem2['default'](this.player_, { track: this.track_, cue: cue });
+
+      items.push(mi);
+    }
+
+    return items;
+  };
+
+  return ChaptersButton;
+}(_textTrackButton2['default']);
+
+/**
+ * `kind` of TextTrack to look for to associate it with this menu.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+ChaptersButton.prototype.kind_ = 'chapters';
+
+/**
+ * The text that should display over the `ChaptersButton`s controls. Added for localization.
+ *
+ * @type {string}
+ * @private
+ */
+ChaptersButton.prototype.controlText_ = 'Chapters';
+
+_component2['default'].registerComponent('ChaptersButton', ChaptersButton);
+exports['default'] = ChaptersButton;
+
+
+/***/ }),
+
+/***/ 182:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _menuItem = __webpack_require__(105);
+
+var _menuItem2 = _interopRequireDefault(_menuItem);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file chapters-track-menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The chapter track menu item
+ *
+ * @extends MenuItem
+ */
+var ChaptersTrackMenuItem = function (_MenuItem) {
+  _inherits(ChaptersTrackMenuItem, _MenuItem);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function ChaptersTrackMenuItem(player, options) {
+    _classCallCheck(this, ChaptersTrackMenuItem);
+
+    var track = options.track;
+    var cue = options.cue;
+    var currentTime = player.currentTime();
+
+    // Modify options for parent MenuItem class's init.
+    options.selectable = true;
+    options.label = cue.text;
+    options.selected = cue.startTime <= currentTime && currentTime < cue.endTime;
+
+    var _this = _possibleConstructorReturn(this, _MenuItem.call(this, player, options));
+
+    _this.track = track;
+    _this.cue = cue;
+    track.addEventListener('cuechange', Fn.bind(_this, _this.update));
+    return _this;
+  }
+
+  /**
+   * This gets called when an `ChaptersTrackMenuItem` is "clicked". See
+   * {@link ClickableComponent} for more detailed information on what a click can be.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `keydown`, `tap`, or `click` event that caused this function to be
+   *        called.
+   *
+   * @listens tap
+   * @listens click
+   */
+
+
+  ChaptersTrackMenuItem.prototype.handleClick = function handleClick(event) {
+    _MenuItem.prototype.handleClick.call(this);
+    this.player_.currentTime(this.cue.startTime);
+    this.update(this.cue.startTime);
+  };
+
+  /**
+   * Update chapter menu item
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `cuechange` event that caused this function to run.
+   *
+   * @listens TextTrack#cuechange
+   */
+
+
+  ChaptersTrackMenuItem.prototype.update = function update(event) {
+    var cue = this.cue;
+    var currentTime = this.player_.currentTime();
+
+    // vjs.log(currentTime, cue.startTime);
+    this.selected(cue.startTime <= currentTime && currentTime < cue.endTime);
+  };
+
+  return ChaptersTrackMenuItem;
+}(_menuItem2['default']);
+
+_component2['default'].registerComponent('ChaptersTrackMenuItem', ChaptersTrackMenuItem);
+exports['default'] = ChaptersTrackMenuItem;
+
+
+/***/ }),
+
+/***/ 183:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackButton = __webpack_require__(103);
+
+var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _fn = __webpack_require__(15);
+
+var Fn = _interopRequireWildcard(_fn);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file descriptions-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The button component for toggling and selecting descriptions
+ *
+ * @extends TextTrackButton
+ */
+var DescriptionsButton = function (_TextTrackButton) {
+  _inherits(DescriptionsButton, _TextTrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {Component~ReadyCallback} [ready]
+   *        The function to call when this component is ready.
+   */
+  function DescriptionsButton(player, options, ready) {
+    _classCallCheck(this, DescriptionsButton);
+
+    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
+
+    _this.el_.setAttribute('aria-label', 'Descriptions Menu');
+
+    var tracks = player.textTracks();
+
+    if (tracks) {
+      var changeHandler = Fn.bind(_this, _this.handleTracksChange);
+
+      tracks.addEventListener('change', changeHandler);
+      _this.on('dispose', function () {
+        tracks.removeEventListener('change', changeHandler);
+      });
+    }
+    return _this;
+  }
+
+  /**
+   * Handle text track change
+   *
+   * @param {EventTarget~Event} event
+   *        The event that caused this function to run
+   *
+   * @listens TextTrackList#change
+   */
+
+
+  DescriptionsButton.prototype.handleTracksChange = function handleTracksChange(event) {
+    var tracks = this.player().textTracks();
+    var disabled = false;
+
+    // Check whether a track of a different kind is showing
+    for (var i = 0, l = tracks.length; i < l; i++) {
+      var track = tracks[i];
+
+      if (track.kind !== this.kind_ && track.mode === 'showing') {
+        disabled = true;
+        break;
+      }
+    }
+
+    // If another track is showing, disable this menu button
+    if (disabled) {
+      this.disable();
+    } else {
+      this.enable();
+    }
+  };
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+
+
+  DescriptionsButton.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-descriptions-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
+  };
+
+  return DescriptionsButton;
+}(_textTrackButton2['default']);
+
+/**
+ * `kind` of TextTrack to look for to associate it with this menu.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+DescriptionsButton.prototype.kind_ = 'descriptions';
+
+/**
+ * The text that should display over the `DescriptionsButton`s controls. Added for localization.
+ *
+ * @type {string}
+ * @private
+ */
+DescriptionsButton.prototype.controlText_ = 'Descriptions';
+
+_component2['default'].registerComponent('DescriptionsButton', DescriptionsButton);
+exports['default'] = DescriptionsButton;
+
+
+/***/ }),
+
+/***/ 184:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackMenuItem = __webpack_require__(116);
+
+var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file off-text-track-menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * A special menu item for turning of a specific type of text track
+ *
+ * @extends TextTrackMenuItem
+ */
+var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
+  _inherits(OffTextTrackMenuItem, _TextTrackMenuItem);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function OffTextTrackMenuItem(player, options) {
+    _classCallCheck(this, OffTextTrackMenuItem);
+
+    // Create pseudo track info
+    // Requires options['kind']
+    options.track = {
+      player: player,
+      kind: options.kind,
+      label: options.kind + ' off',
+      'default': false,
+      mode: 'disabled'
+    };
+
+    // MenuItem is selectable
+    options.selectable = true;
+
+    var _this = _possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
+
+    _this.selected(true);
+    return _this;
+  }
+
+  /**
+   * Handle text track change
+   *
+   * @param {EventTarget~Event} event
+   *        The event that caused this function to run
+   */
+
+
+  OffTextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
+    var tracks = this.player().textTracks();
+    var selected = true;
+
+    for (var i = 0, l = tracks.length; i < l; i++) {
+      var track = tracks[i];
+
+      if (track.kind === this.track.kind && track.mode === 'showing') {
+        selected = false;
+        break;
+      }
+    }
+
+    this.selected(selected);
+  };
+
+  return OffTextTrackMenuItem;
+}(_textTrackMenuItem2['default']);
+
+_component2['default'].registerComponent('OffTextTrackMenuItem', OffTextTrackMenuItem);
+exports['default'] = OffTextTrackMenuItem;
+
+
+/***/ }),
+
+/***/ 185:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _textTrackButton = __webpack_require__(103);
+
+var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file subtitles-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The button component for toggling and selecting subtitles
+ *
+ * @extends TextTrackButton
+ */
+var SubtitlesButton = function (_TextTrackButton) {
+  _inherits(SubtitlesButton, _TextTrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   *
+   * @param {Component~ReadyCallback} [ready]
+   *        The function to call when this component is ready.
+   */
+  function SubtitlesButton(player, options, ready) {
+    _classCallCheck(this, SubtitlesButton);
+
+    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
+
+    _this.el_.setAttribute('aria-label', 'Subtitles Menu');
+    return _this;
+  }
+
+  /**
+   * Builds the default DOM `className`.
+   *
+   * @return {string}
+   *         The DOM `className` for this object.
+   */
+
+
+  SubtitlesButton.prototype.buildCSSClass = function buildCSSClass() {
+    return 'vjs-subtitles-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
+  };
+
+  return SubtitlesButton;
+}(_textTrackButton2['default']);
+
+/**
+ * `kind` of TextTrack to look for to associate it with this menu.
+ *
+ * @type {string}
+ * @private
+ */
+
+
+SubtitlesButton.prototype.kind_ = 'subtitles';
+
+/**
+ * The text that should display over the `SubtitlesButton`s controls. Added for localization.
+ *
+ * @type {string}
+ * @private
+ */
+SubtitlesButton.prototype.controlText_ = 'Subtitles';
+
+_component2['default'].registerComponent('SubtitlesButton', SubtitlesButton);
+exports['default'] = SubtitlesButton;
+
+
+/***/ }),
+
+/***/ 186:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(19);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file current-time-display.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Displays the current time
+ *
+ * @extends Component
+ */
+var CurrentTimeDisplay = function (_Component) {
+  _inherits(CurrentTimeDisplay, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function CurrentTimeDisplay(player, options) {
+    _classCallCheck(this, CurrentTimeDisplay);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.on(player, 'timeupdate', _this.updateContent);
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  CurrentTimeDisplay.prototype.createEl = function createEl() {
+    var el = _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-current-time vjs-time-control vjs-control'
+    });
+
+    this.contentEl_ = Dom.createEl('div', {
+      className: 'vjs-current-time-display',
+      // label the current time for screen reader users
+      innerHTML: '<span class="vjs-control-text">Current Time </span>' + '0:00'
+    }, {
+      // tell screen readers not to automatically read the time as it changes
+      'aria-live': 'off'
+    });
+
+    el.appendChild(this.contentEl_);
+    return el;
+  };
+
+  /**
+   * Update current time display
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` event that caused this function to run.
+   *
+   * @listens Player#timeupdate
+   */
+
+
+  CurrentTimeDisplay.prototype.updateContent = function updateContent(event) {
+    // Allows for smooth scrubbing, when player can't keep up.
+    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
+    var localizedText = this.localize('Current Time');
+    var formattedTime = (0, _formatTime2['default'])(time, this.player_.duration());
+
+    if (formattedTime !== this.formattedTime_) {
+      this.formattedTime_ = formattedTime;
+      this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> ' + formattedTime;
+    }
+  };
+
+  return CurrentTimeDisplay;
+}(_component2['default']);
+
+_component2['default'].registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
+exports['default'] = CurrentTimeDisplay;
+
+
+/***/ }),
+
+/***/ 187:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(19);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file duration-display.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Displays the duration
+ *
+ * @extends Component
+ */
+var DurationDisplay = function (_Component) {
+  _inherits(DurationDisplay, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function DurationDisplay(player, options) {
+    _classCallCheck(this, DurationDisplay);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.on(player, 'durationchange', _this.updateContent);
+
+    // Also listen for timeupdate and loadedmetadata because removing those
+    // listeners could have broken dependent applications/libraries. These
+    // can likely be removed for 6.0.
+    _this.on(player, 'timeupdate', _this.updateContent);
+    _this.on(player, 'loadedmetadata', _this.updateContent);
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  DurationDisplay.prototype.createEl = function createEl() {
+    var el = _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-duration vjs-time-control vjs-control'
+    });
+
+    this.contentEl_ = Dom.createEl('div', {
+      className: 'vjs-duration-display',
+      // label the duration time for screen reader users
+      innerHTML: '<span class="vjs-control-text">' + this.localize('Duration Time') + '</span> 0:00'
+    }, {
+      // tell screen readers not to automatically read the time as it changes
+      'aria-live': 'off'
+    });
+
+    el.appendChild(this.contentEl_);
+    return el;
+  };
+
+  /**
+   * Update duration time display.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `durationchange`, `timeupdate`, or `loadedmetadata` event that caused
+   *        this function to be called.
+   *
+   * @listens Player#durationchange
+   * @listens Player#timeupdate
+   * @listens Player#loadedmetadata
+   */
+
+
+  DurationDisplay.prototype.updateContent = function updateContent(event) {
+    var duration = this.player_.duration();
+
+    if (duration && this.duration_ !== duration) {
+      this.duration_ = duration;
+      var localizedText = this.localize('Duration Time');
+      var formattedTime = (0, _formatTime2['default'])(duration);
+
+      // label the duration time for screen reader users
+      this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> ' + formattedTime;
+    }
+  };
+
+  return DurationDisplay;
+}(_component2['default']);
+
+_component2['default'].registerComponent('DurationDisplay', DurationDisplay);
+exports['default'] = DurationDisplay;
+
+
+/***/ }),
+
+/***/ 188:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(19);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _formatTime = __webpack_require__(59);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file remaining-time-display.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Displays the time left in the video
+ *
+ * @extends Component
+ */
+var RemainingTimeDisplay = function (_Component) {
+  _inherits(RemainingTimeDisplay, _Component);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function RemainingTimeDisplay(player, options) {
+    _classCallCheck(this, RemainingTimeDisplay);
+
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.on(player, 'timeupdate', _this.updateContent);
+    _this.on(player, 'durationchange', _this.updateContent);
+    return _this;
+  }
+
+  /**
+   * Create the `Component`'s DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+
+
+  RemainingTimeDisplay.prototype.createEl = function createEl() {
+    var el = _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-remaining-time vjs-time-control vjs-control'
+    });
+
+    this.contentEl_ = Dom.createEl('div', {
+      className: 'vjs-remaining-time-display',
+      // label the remaining time for screen reader users
+      innerHTML: '<span class="vjs-control-text">' + this.localize('Remaining Time') + '</span> -0:00'
+    }, {
+      // tell screen readers not to automatically read the time as it changes
+      'aria-live': 'off'
+    });
+
+    el.appendChild(this.contentEl_);
+    return el;
+  };
+
+  /**
+   * Update remaining time display.
+   *
+   * @param {EventTarget~Event} [event]
+   *        The `timeupdate` or `durationchange` event that caused this to run.
+   *
+   * @listens Player#timeupdate
+   * @listens Player#durationchange
+   */
+
+
+  RemainingTimeDisplay.prototype.updateContent = function updateContent(event) {
+    if (this.player_.duration()) {
+      var localizedText = this.localize('Remaining Time');
+      var formattedTime = (0, _formatTime2['default'])(this.player_.remainingTime());
+
+      if (formattedTime !== this.formattedTime_) {
+        this.formattedTime_ = formattedTime;
+        this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> -' + formattedTime;
+      }
+    }
+
+    // Allows for smooth scrubbing, when player can't keep up.
+    // var time = (this.player_.scrubbing()) ? this.player_.getCache().currentTime : this.player_.currentTime();
+    // this.contentEl_.innerHTML = vjs.formatTime(time, this.player_.duration());
+  };
+
+  return RemainingTimeDisplay;
+}(_component2['default']);
+
+_component2['default'].registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
+exports['default'] = RemainingTimeDisplay;
+
+
+/***/ }),
+
+/***/ 189:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(4);
+
+var _component2 = _interopRequireDefault(_component);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file time-divider.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The separator between the current time and duration.
+ * Can be hidden if it's not needed in the design.
+ *
+ * @extends Component
+ */
+var TimeDivider = function (_Component) {
+  _inherits(TimeDivider, _Component);
+
+  function TimeDivider() {
+    _classCallCheck(this, TimeDivider);
+
+    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
+  }
+
+  /**
+   * Create the component's DOM element
+   *
+   * @return {Element}
+   *         The element that was created.
+   */
+  TimeDivider.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
+      className: 'vjs-time-control vjs-time-divider',
+      innerHTML: '<div><span>/</span></div>'
+    });
+  };
+
+  return TimeDivider;
+}(_component2['default']);
+
+_component2['default'].registerComponent('TimeDivider', TimeDivider);
+exports['default'] = TimeDivider;
+
+
+/***/ }),
+
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -71937,7 +74432,7 @@ var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(101);
+var _tsml = __webpack_require__(102);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -72787,2501 +75282,6 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /***/ }),
 
-/***/ 170:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _menuItem = __webpack_require__(104);
-
-var _menuItem2 = _interopRequireDefault(_menuItem);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file playback-rate-menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The specific menu item type for selecting a playback rate.
- *
- * @extends MenuItem
- */
-var PlaybackRateMenuItem = function (_MenuItem) {
-  _inherits(PlaybackRateMenuItem, _MenuItem);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function PlaybackRateMenuItem(player, options) {
-    _classCallCheck(this, PlaybackRateMenuItem);
-
-    var label = options.rate;
-    var rate = parseFloat(label, 10);
-
-    // Modify options for parent MenuItem class's init.
-    options.label = label;
-    options.selected = rate === 1;
-    options.selectable = true;
-
-    var _this = _possibleConstructorReturn(this, _MenuItem.call(this, player, options));
-
-    _this.label = label;
-    _this.rate = rate;
-
-    _this.on(player, 'ratechange', _this.update);
-    return _this;
-  }
-
-  /**
-   * This gets called when an `PlaybackRateMenuItem` is "clicked". See
-   * {@link ClickableComponent} for more detailed information on what a click can be.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `keydown`, `tap`, or `click` event that caused this function to be
-   *        called.
-   *
-   * @listens tap
-   * @listens click
-   */
-
-
-  PlaybackRateMenuItem.prototype.handleClick = function handleClick(event) {
-    _MenuItem.prototype.handleClick.call(this);
-    this.player().playbackRate(this.rate);
-  };
-
-  /**
-   * Update the PlaybackRateMenuItem when the playbackrate changes.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `ratechange` event that caused this function to run.
-   *
-   * @listens Player#ratechange
-   */
-
-
-  PlaybackRateMenuItem.prototype.update = function update(event) {
-    this.selected(this.player().playbackRate() === this.rate);
-  };
-
-  return PlaybackRateMenuItem;
-}(_menuItem2['default']);
-
-/**
- * The text that should display over the `PlaybackRateMenuItem`s controls. Added for localization.
- *
- * @type {string}
- * @private
- */
-
-
-PlaybackRateMenuItem.prototype.contentElType = 'button';
-
-_component2['default'].registerComponent('PlaybackRateMenuItem', PlaybackRateMenuItem);
-exports['default'] = PlaybackRateMenuItem;
-
-
-/***/ }),
-
-/***/ 171:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(17);
-
-var Dom = _interopRequireWildcard(_dom);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file load-progress-bar.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Shows loading progress
- *
- * @extends Component
- */
-var LoadProgressBar = function (_Component) {
-  _inherits(LoadProgressBar, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function LoadProgressBar(player, options) {
-    _classCallCheck(this, LoadProgressBar);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.partEls_ = [];
-    _this.on(player, 'progress', _this.update);
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  LoadProgressBar.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-load-progress',
-      innerHTML: '<span class="vjs-control-text"><span>' + this.localize('Loaded') + '</span>: 0%</span>'
-    });
-  };
-
-  /**
-   * Update progress bar
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `progress` event that caused this function to run.
-   *
-   * @listens Player#progress
-   */
-
-
-  LoadProgressBar.prototype.update = function update(event) {
-    var buffered = this.player_.buffered();
-    var duration = this.player_.duration();
-    var bufferedEnd = this.player_.bufferedEnd();
-    var children = this.partEls_;
-
-    // get the percent width of a time compared to the total end
-    var percentify = function percentify(time, end) {
-      // no NaN
-      var percent = time / end || 0;
-
-      return (percent >= 1 ? 1 : percent) * 100 + '%';
-    };
-
-    // update the width of the progress bar
-    this.el_.style.width = percentify(bufferedEnd, duration);
-
-    // add child elements to represent the individual buffered time ranges
-    for (var i = 0; i < buffered.length; i++) {
-      var start = buffered.start(i);
-      var end = buffered.end(i);
-      var part = children[i];
-
-      if (!part) {
-        part = this.el_.appendChild(Dom.createEl());
-        children[i] = part;
-      }
-
-      // set the percent based on the width of the progress bar (bufferedEnd)
-      part.style.left = percentify(start, bufferedEnd);
-      part.style.width = percentify(end - start, bufferedEnd);
-    }
-
-    // remove unused buffered range elements
-    for (var _i = children.length; _i > buffered.length; _i--) {
-      this.el_.removeChild(children[_i - 1]);
-    }
-    children.length = buffered.length;
-  };
-
-  return LoadProgressBar;
-}(_component2['default']);
-
-_component2['default'].registerComponent('LoadProgressBar', LoadProgressBar);
-exports['default'] = LoadProgressBar;
-
-
-/***/ }),
-
-/***/ 172:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(17);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-var _computedStyle = __webpack_require__(121);
-
-var _computedStyle2 = _interopRequireDefault(_computedStyle);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file mouse-time-display.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The Mouse Time Display component shows the time you will seek to
- * when hovering over the progress bar
- *
- * @extends Component
- */
-var MouseTimeDisplay = function (_Component) {
-  _inherits(MouseTimeDisplay, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function MouseTimeDisplay(player, options) {
-    _classCallCheck(this, MouseTimeDisplay);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
-      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
-    }
-
-    if (_this.keepTooltipsInside) {
-      _this.tooltip = Dom.createEl('div', { className: 'vjs-time-tooltip' });
-      _this.el().appendChild(_this.tooltip);
-      _this.addClass('vjs-keep-tooltips-inside');
-    }
-
-    _this.update(0, 0);
-
-    player.on('ready', function () {
-      _this.on(player.controlBar.progressControl.el(), 'mousemove', Fn.throttle(Fn.bind(_this, _this.handleMouseMove), 25));
-    });
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  MouseTimeDisplay.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-mouse-display'
-    });
-  };
-
-  /**
-   * Handle the mouse move event on the `MouseTimeDisplay`.
-   *
-   * @param {EventTarget~Event} event
-   *        The `mousemove` event that caused this to event to run.
-   *
-   * @listen mousemove
-   */
-
-
-  MouseTimeDisplay.prototype.handleMouseMove = function handleMouseMove(event) {
-    var duration = this.player_.duration();
-    var newTime = this.calculateDistance(event) * duration;
-    var position = event.pageX - Dom.findElPosition(this.el().parentNode).left;
-
-    this.update(newTime, position);
-  };
-
-  /**
-   * Update the time and posistion of the `MouseTimeDisplay`.
-   *
-   * @param {number} newTime
-   *        Time to change the `MouseTimeDisplay` to.
-   *
-   * @param {nubmer} position
-   *        Postion from the left of the in pixels.
-   */
-
-
-  MouseTimeDisplay.prototype.update = function update(newTime, position) {
-    var time = (0, _formatTime2['default'])(newTime, this.player_.duration());
-
-    this.el().style.left = position + 'px';
-    this.el().setAttribute('data-current-time', time);
-
-    if (this.keepTooltipsInside) {
-      var clampedPosition = this.clampPosition_(position);
-      var difference = position - clampedPosition + 1;
-      var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltip, 'width'));
-      var tooltipWidthHalf = tooltipWidth / 2;
-
-      this.tooltip.innerHTML = time;
-      this.tooltip.style.right = '-' + (tooltipWidthHalf - difference) + 'px';
-    }
-  };
-
-  /**
-   * Get the mouse pointers x coordinate in pixels.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `mousemove` event that was passed to this function by
-   *        {@link MouseTimeDisplay#handleMouseMove}
-   *
-   * @return {number}
-   *         THe x position in pixels of the mouse pointer.
-   */
-
-
-  MouseTimeDisplay.prototype.calculateDistance = function calculateDistance(event) {
-    return Dom.getPointerPosition(this.el().parentNode, event).x;
-  };
-
-  /**
-   * This takes in a horizontal position for the bar and returns a clamped position.
-   * Clamped position means that it will keep the position greater than half the width
-   * of the tooltip and smaller than the player width minus half the width o the tooltip.
-   * It will only clamp the position if `keepTooltipsInside` option is set.
-   *
-   * @param {number} position
-   *        The position the bar wants to be
-   *
-   * @return {number}
-   *         The (potentially) new clamped position.
-   *
-   * @private
-   */
-
-
-  MouseTimeDisplay.prototype.clampPosition_ = function clampPosition_(position) {
-    if (!this.keepTooltipsInside) {
-      return position;
-    }
-
-    var playerWidth = parseFloat((0, _computedStyle2['default'])(this.player().el(), 'width'));
-    var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltip, 'width'));
-    var tooltipWidthHalf = tooltipWidth / 2;
-    var actualPosition = position;
-
-    if (position < tooltipWidthHalf) {
-      actualPosition = Math.ceil(tooltipWidthHalf);
-    } else if (position > playerWidth - tooltipWidthHalf) {
-      actualPosition = Math.floor(playerWidth - tooltipWidthHalf);
-    }
-
-    return actualPosition;
-  };
-
-  return MouseTimeDisplay;
-}(_component2['default']);
-
-_component2['default'].registerComponent('MouseTimeDisplay', MouseTimeDisplay);
-exports['default'] = MouseTimeDisplay;
-
-
-/***/ }),
-
-/***/ 173:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file play-progress-bar.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Shows play progress
- *
- * @extends Component
- */
-var PlayProgressBar = function (_Component) {
-  _inherits(PlayProgressBar, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function PlayProgressBar(player, options) {
-    _classCallCheck(this, PlayProgressBar);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.updateDataAttr();
-    _this.on(player, 'timeupdate', _this.updateDataAttr);
-    player.ready(Fn.bind(_this, _this.updateDataAttr));
-
-    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
-      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
-    }
-
-    if (_this.keepTooltipsInside) {
-      _this.addClass('vjs-keep-tooltips-inside');
-    }
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  PlayProgressBar.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-play-progress vjs-slider-bar',
-      innerHTML: '<span class="vjs-control-text"><span>' + this.localize('Progress') + '</span>: 0%</span>'
-    });
-  };
-
-  /**
-   * Update the data-current-time attribute on the `PlayProgressBar`.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `timeupdate` event that caused this to run.
-   *
-   * @listens Player#timeupdate
-   */
-
-
-  PlayProgressBar.prototype.updateDataAttr = function updateDataAttr(event) {
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-
-    this.el_.setAttribute('data-current-time', (0, _formatTime2['default'])(time, this.player_.duration()));
-  };
-
-  return PlayProgressBar;
-}(_component2['default']);
-
-_component2['default'].registerComponent('PlayProgressBar', PlayProgressBar);
-exports['default'] = PlayProgressBar;
-
-
-/***/ }),
-
-/***/ 174:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-__webpack_require__(175);
-
-__webpack_require__(172);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file progress-control.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The Progress Control component contains the seek bar, load progress,
- * and play progress.
- *
- * @extends Component
- */
-var ProgressControl = function (_Component) {
-  _inherits(ProgressControl, _Component);
-
-  function ProgressControl() {
-    _classCallCheck(this, ProgressControl);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-  ProgressControl.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-progress-control vjs-control'
-    });
-  };
-
-  return ProgressControl;
-}(_component2['default']);
-
-/**
- * Default options for `ProgressControl`
- *
- * @type {Object}
- * @private
- */
-
-
-ProgressControl.prototype.options_ = {
-  children: ['seekBar']
-};
-
-_component2['default'].registerComponent('ProgressControl', ProgressControl);
-exports['default'] = ProgressControl;
-
-
-/***/ }),
-
-/***/ 175:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _slider = __webpack_require__(135);
-
-var _slider2 = _interopRequireDefault(_slider);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-var _computedStyle = __webpack_require__(121);
-
-var _computedStyle2 = _interopRequireDefault(_computedStyle);
-
-__webpack_require__(171);
-
-__webpack_require__(173);
-
-__webpack_require__(176);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file seek-bar.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Seek Bar and holder for the progress bars
- *
- * @extends Slider
- */
-var SeekBar = function (_Slider) {
-  _inherits(SeekBar, _Slider);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function SeekBar(player, options) {
-    _classCallCheck(this, SeekBar);
-
-    var _this = _possibleConstructorReturn(this, _Slider.call(this, player, options));
-
-    _this.on(player, 'timeupdate', _this.updateProgress);
-    _this.on(player, 'ended', _this.updateProgress);
-    player.ready(Fn.bind(_this, _this.updateProgress));
-
-    if (options.playerOptions && options.playerOptions.controlBar && options.playerOptions.controlBar.progressControl && options.playerOptions.controlBar.progressControl.keepTooltipsInside) {
-      _this.keepTooltipsInside = options.playerOptions.controlBar.progressControl.keepTooltipsInside;
-    }
-
-    if (_this.keepTooltipsInside) {
-      _this.tooltipProgressBar = _this.addChild('TooltipProgressBar');
-    }
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  SeekBar.prototype.createEl = function createEl() {
-    return _Slider.prototype.createEl.call(this, 'div', {
-      className: 'vjs-progress-holder'
-    }, {
-      'aria-label': 'progress bar'
-    });
-  };
-
-  /**
-   * Update the seek bars tooltip and width.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `timeupdate` or `ended` event that caused this to run.
-   *
-   * @listens Player#timeupdate
-   * @listens Player#ended
-   */
-
-
-  SeekBar.prototype.updateProgress = function updateProgress(event) {
-    this.updateAriaAttributes(this.el_);
-
-    if (this.keepTooltipsInside) {
-      this.updateAriaAttributes(this.tooltipProgressBar.el_);
-      this.tooltipProgressBar.el_.style.width = this.bar.el_.style.width;
-
-      var playerWidth = parseFloat((0, _computedStyle2['default'])(this.player().el(), 'width'));
-      var tooltipWidth = parseFloat((0, _computedStyle2['default'])(this.tooltipProgressBar.tooltip, 'width'));
-      var tooltipStyle = this.tooltipProgressBar.el().style;
-
-      tooltipStyle.maxWidth = Math.floor(playerWidth - tooltipWidth / 2) + 'px';
-      tooltipStyle.minWidth = Math.ceil(tooltipWidth / 2) + 'px';
-      tooltipStyle.right = '-' + tooltipWidth / 2 + 'px';
-    }
-  };
-
-  /**
-   * Update ARIA accessibility attributes
-   *
-   * @param {Element} el
-   *        The element to update with aria accessibility attributes.
-   */
-
-
-  SeekBar.prototype.updateAriaAttributes = function updateAriaAttributes(el) {
-    // Allows for smooth scrubbing, when player can't keep up.
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-
-    // machine readable value of progress bar (percentage complete)
-    el.setAttribute('aria-valuenow', (this.getPercent() * 100).toFixed(2));
-    // human readable value of progress bar (time complete)
-    el.setAttribute('aria-valuetext', (0, _formatTime2['default'])(time, this.player_.duration()));
-  };
-
-  /**
-   * Get percentage of video played
-   *
-   * @return {number}
-   *         The percentage played
-   */
-
-
-  SeekBar.prototype.getPercent = function getPercent() {
-    var percent = this.player_.currentTime() / this.player_.duration();
-
-    return percent >= 1 ? 1 : percent;
-  };
-
-  /**
-   * Handle mouse down on seek bar
-   *
-   * @param {EventTarget~Event} event
-   *        The `mousedown` event that caused this to run.
-   *
-   * @listens mousedown
-   */
-
-
-  SeekBar.prototype.handleMouseDown = function handleMouseDown(event) {
-    this.player_.scrubbing(true);
-
-    this.videoWasPlaying = !this.player_.paused();
-    this.player_.pause();
-
-    _Slider.prototype.handleMouseDown.call(this, event);
-  };
-
-  /**
-   * Handle mouse move on seek bar
-   *
-   * @param {EventTarget~Event} event
-   *        The `mousemove` event that caused this to run.
-   *
-   * @listens mousemove
-   */
-
-
-  SeekBar.prototype.handleMouseMove = function handleMouseMove(event) {
-    var newTime = this.calculateDistance(event) * this.player_.duration();
-
-    // Don't let video end while scrubbing.
-    if (newTime === this.player_.duration()) {
-      newTime = newTime - 0.1;
-    }
-
-    // Set new time (tell player to seek to new time)
-    this.player_.currentTime(newTime);
-  };
-
-  /**
-   * Handle mouse up on seek bar
-   *
-   * @param {EventTarget~Event} event
-   *        The `mouseup` event that caused this to run.
-   *
-   * @listens mouseup
-   */
-
-
-  SeekBar.prototype.handleMouseUp = function handleMouseUp(event) {
-    _Slider.prototype.handleMouseUp.call(this, event);
-
-    this.player_.scrubbing(false);
-    if (this.videoWasPlaying) {
-      this.player_.play();
-    }
-  };
-
-  /**
-   * Move more quickly fast forward for keyboard-only users
-   */
-
-
-  SeekBar.prototype.stepForward = function stepForward() {
-    // more quickly fast forward for keyboard-only users
-    this.player_.currentTime(this.player_.currentTime() + 5);
-  };
-
-  /**
-   * Move more quickly rewind for keyboard-only users
-   */
-
-
-  SeekBar.prototype.stepBack = function stepBack() {
-    // more quickly rewind for keyboard-only users
-    this.player_.currentTime(this.player_.currentTime() - 5);
-  };
-
-  return SeekBar;
-}(_slider2['default']);
-
-/**
- * Default options for the `SeekBar`
- *
- * @type {Object}
- * @private
- */
-
-
-SeekBar.prototype.options_ = {
-  children: ['loadProgressBar', 'mouseTimeDisplay', 'playProgressBar'],
-  barName: 'playProgressBar'
-};
-
-/**
- * Call the update event for this Slider when this event happens on the player.
- *
- * @type {string}
- */
-SeekBar.prototype.playerEvent = 'timeupdate';
-
-_component2['default'].registerComponent('SeekBar', SeekBar);
-exports['default'] = SeekBar;
-
-
-/***/ }),
-
-/***/ 176:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file play-progress-bar.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Shows play progress
- *
- * @extends Component
- */
-var TooltipProgressBar = function (_Component) {
-  _inherits(TooltipProgressBar, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function TooltipProgressBar(player, options) {
-    _classCallCheck(this, TooltipProgressBar);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.updateDataAttr();
-    _this.on(player, 'timeupdate', _this.updateDataAttr);
-    player.ready(Fn.bind(_this, _this.updateDataAttr));
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  TooltipProgressBar.prototype.createEl = function createEl() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-tooltip-progress-bar vjs-slider-bar',
-      innerHTML: '<div class="vjs-time-tooltip"></div>\n        <span class="vjs-control-text"><span>' + this.localize('Progress') + '</span>: 0%</span>'
-    });
-
-    this.tooltip = el.querySelector('.vjs-time-tooltip');
-
-    return el;
-  };
-
-  /**
-   * Updatet the data-current-time attribute for TooltipProgressBar
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `timeupdate` event that caused this function to run.
-   *
-   * @listens Player#timeupdate
-   */
-
-
-  TooltipProgressBar.prototype.updateDataAttr = function updateDataAttr(event) {
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-    var formattedTime = (0, _formatTime2['default'])(time, this.player_.duration());
-
-    this.el_.setAttribute('data-current-time', formattedTime);
-    this.tooltip.innerHTML = formattedTime;
-  };
-
-  return TooltipProgressBar;
-}(_component2['default']);
-
-_component2['default'].registerComponent('TooltipProgressBar', TooltipProgressBar);
-exports['default'] = TooltipProgressBar;
-
-
-/***/ }),
-
-/***/ 177:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _spacer = __webpack_require__(178);
-
-var _spacer2 = _interopRequireDefault(_spacer);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file custom-control-spacer.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Spacer specifically meant to be used as an insertion point for new plugins, etc.
- *
- * @extends Spacer
- */
-var CustomControlSpacer = function (_Spacer) {
-  _inherits(CustomControlSpacer, _Spacer);
-
-  function CustomControlSpacer() {
-    _classCallCheck(this, CustomControlSpacer);
-
-    return _possibleConstructorReturn(this, _Spacer.apply(this, arguments));
-  }
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-  CustomControlSpacer.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-custom-control-spacer ' + _Spacer.prototype.buildCSSClass.call(this);
-  };
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  CustomControlSpacer.prototype.createEl = function createEl() {
-    var el = _Spacer.prototype.createEl.call(this, {
-      className: this.buildCSSClass()
-    });
-
-    // No-flex/table-cell mode requires there be some content
-    // in the cell to fill the remaining space of the table.
-    el.innerHTML = '&nbsp;';
-    return el;
-  };
-
-  return CustomControlSpacer;
-}(_spacer2['default']);
-
-_component2['default'].registerComponent('CustomControlSpacer', CustomControlSpacer);
-exports['default'] = CustomControlSpacer;
-
-
-/***/ }),
-
-/***/ 178:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file spacer.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Just an empty spacer element that can be used as an append point for plugins, etc.
- * Also can be used to create space between elements when necessary.
- *
- * @extends Component
- */
-var Spacer = function (_Component) {
-  _inherits(Spacer, _Component);
-
-  function Spacer() {
-    _classCallCheck(this, Spacer);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-  }
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-  Spacer.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-spacer ' + _Component.prototype.buildCSSClass.call(this);
-  };
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  Spacer.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: this.buildCSSClass()
-    });
-  };
-
-  return Spacer;
-}(_component2['default']);
-
-_component2['default'].registerComponent('Spacer', Spacer);
-
-exports['default'] = Spacer;
-
-
-/***/ }),
-
-/***/ 179:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackMenuItem = __webpack_require__(116);
-
-var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file caption-settings-menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The menu item for caption track settings menu
- *
- * @extends TextTrackMenuItem
- */
-var CaptionSettingsMenuItem = function (_TextTrackMenuItem) {
-  _inherits(CaptionSettingsMenuItem, _TextTrackMenuItem);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function CaptionSettingsMenuItem(player, options) {
-    _classCallCheck(this, CaptionSettingsMenuItem);
-
-    options.track = {
-      player: player,
-      kind: options.kind,
-      label: options.kind + ' settings',
-      selectable: false,
-      'default': false,
-      mode: 'disabled'
-    };
-
-    // CaptionSettingsMenuItem has no concept of 'selected'
-    options.selectable = false;
-
-    var _this = _possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
-
-    _this.addClass('vjs-texttrack-settings');
-    _this.controlText(', opens ' + options.kind + ' settings dialog');
-    return _this;
-  }
-
-  /**
-   * This gets called when an `CaptionSettingsMenuItem` is "clicked". See
-   * {@link ClickableComponent} for more detailed information on what a click can be.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `keydown`, `tap`, or `click` event that caused this function to be
-   *        called.
-   *
-   * @listens tap
-   * @listens click
-   */
-
-
-  CaptionSettingsMenuItem.prototype.handleClick = function handleClick(event) {
-    this.player().getChild('textTrackSettings').show();
-    this.player().getChild('textTrackSettings').el_.focus();
-  };
-
-  return CaptionSettingsMenuItem;
-}(_textTrackMenuItem2['default']);
-
-_component2['default'].registerComponent('CaptionSettingsMenuItem', CaptionSettingsMenuItem);
-exports['default'] = CaptionSettingsMenuItem;
-
-
-/***/ }),
-
-/***/ 180:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackButton = __webpack_require__(102);
-
-var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _captionSettingsMenuItem = __webpack_require__(179);
-
-var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file captions-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The button component for toggling and selecting captions
- *
- * @extends TextTrackButton
- */
-var CaptionsButton = function (_TextTrackButton) {
-  _inherits(CaptionsButton, _TextTrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} [ready]
-   *        The function to call when this component is ready.
-   */
-  function CaptionsButton(player, options, ready) {
-    _classCallCheck(this, CaptionsButton);
-
-    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
-
-    _this.el_.setAttribute('aria-label', 'Captions Menu');
-    return _this;
-  }
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-
-
-  CaptionsButton.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-captions-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
-  };
-
-  /**
-   * Create caption menu items
-   *
-   * @return {CaptionSettingsMenuItem[]}
-   *         The array of current menu items.
-   */
-
-
-  CaptionsButton.prototype.createItems = function createItems() {
-    var items = [];
-
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
-      items.push(new _captionSettingsMenuItem2['default'](this.player_, { kind: this.kind_ }));
-
-      this.hideThreshold_ += 1;
-    }
-
-    return _TextTrackButton.prototype.createItems.call(this, items);
-  };
-
-  return CaptionsButton;
-}(_textTrackButton2['default']);
-
-/**
- * `kind` of TextTrack to look for to associate it with this menu.
- *
- * @type {string}
- * @private
- */
-
-
-CaptionsButton.prototype.kind_ = 'captions';
-
-/**
- * The text that should display over the `CaptionsButton`s controls. Added for localization.
- *
- * @type {string}
- * @private
- */
-CaptionsButton.prototype.controlText_ = 'Captions';
-
-_component2['default'].registerComponent('CaptionsButton', CaptionsButton);
-exports['default'] = CaptionsButton;
-
-
-/***/ }),
-
-/***/ 181:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackButton = __webpack_require__(102);
-
-var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _chaptersTrackMenuItem = __webpack_require__(182);
-
-var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
-
-var _toTitleCase = __webpack_require__(76);
-
-var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file chapters-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The button component for toggling and selecting chapters
- * Chapters act much differently than other text tracks
- * Cues are navigation vs. other tracks of alternative languages
- *
- * @extends TextTrackButton
- */
-var ChaptersButton = function (_TextTrackButton) {
-  _inherits(ChaptersButton, _TextTrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} [ready]
-   *        The function to call when this function is ready.
-   */
-  function ChaptersButton(player, options, ready) {
-    _classCallCheck(this, ChaptersButton);
-
-    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
-
-    _this.el_.setAttribute('aria-label', 'Chapters Menu');
-    return _this;
-  }
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-
-
-  ChaptersButton.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-chapters-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
-  };
-
-  /**
-   * Update the menu based on the current state of its items.
-   *
-   * @param {EventTarget~Event} [event]
-   *        An event that triggered this function to run.
-   *
-   * @listens TextTrackList#addtrack
-   * @listens TextTrackList#removetrack
-   * @listens TextTrackList#change
-   */
-
-
-  ChaptersButton.prototype.update = function update(event) {
-    if (!this.track_ || event && (event.type === 'addtrack' || event.type === 'removetrack')) {
-      this.setTrack(this.findChaptersTrack());
-    }
-    _TextTrackButton.prototype.update.call(this);
-  };
-
-  /**
-   * Set the currently selected track for the chapters button.
-   *
-   * @param {TextTrack} track
-   *        The new track to select. Nothing will change if this is the currently selected
-   *        track.
-   */
-
-
-  ChaptersButton.prototype.setTrack = function setTrack(track) {
-    if (this.track_ === track) {
-      return;
-    }
-
-    if (!this.updateHandler_) {
-      this.updateHandler_ = this.update.bind(this);
-    }
-
-    // here this.track_ refers to the old track instance
-    if (this.track_) {
-      var remoteTextTrackEl = this.player_.remoteTextTrackEls().getTrackElementByTrack_(this.track_);
-
-      if (remoteTextTrackEl) {
-        remoteTextTrackEl.removeEventListener('load', this.updateHandler_);
-      }
-
-      this.track_ = null;
-    }
-
-    this.track_ = track;
-
-    // here this.track_ refers to the new track instance
-    if (this.track_) {
-      this.track_.mode = 'hidden';
-
-      var _remoteTextTrackEl = this.player_.remoteTextTrackEls().getTrackElementByTrack_(this.track_);
-
-      if (_remoteTextTrackEl) {
-        _remoteTextTrackEl.addEventListener('load', this.updateHandler_);
-      }
-    }
-  };
-
-  /**
-   * Find the track object that is currently in use by this ChaptersButton
-   *
-   * @return {TextTrack|undefined}
-   *         The current track or undefined if none was found.
-   */
-
-
-  ChaptersButton.prototype.findChaptersTrack = function findChaptersTrack() {
-    var tracks = this.player_.textTracks() || [];
-
-    for (var i = tracks.length - 1; i >= 0; i--) {
-      // We will always choose the last track as our chaptersTrack
-      var track = tracks[i];
-
-      if (track.kind === this.kind_) {
-        return track;
-      }
-    }
-  };
-
-  /**
-   * Get the caption for the ChaptersButton based on the track label. This will also
-   * use the current tracks localized kind as a fallback if a label does not exist.
-   *
-   * @return {string}
-   *         The tracks current label or the localized track kind.
-   */
-
-
-  ChaptersButton.prototype.getMenuCaption = function getMenuCaption() {
-    if (this.track_ && this.track_.label) {
-      return this.track_.label;
-    }
-    return this.localize((0, _toTitleCase2['default'])(this.kind_));
-  };
-
-  /**
-   * Create menu from chapter track
-   *
-   * @return {Menu}
-   *         New menu for the chapter buttons
-   */
-
-
-  ChaptersButton.prototype.createMenu = function createMenu() {
-    this.options_.title = this.getMenuCaption();
-    return _TextTrackButton.prototype.createMenu.call(this);
-  };
-
-  /**
-   * Create a menu item for each text track
-   *
-   * @return {TextTrackMenuItem[]}
-   *         Array of menu items
-   */
-
-
-  ChaptersButton.prototype.createItems = function createItems() {
-    var items = [];
-
-    if (!this.track_) {
-      return items;
-    }
-
-    var cues = this.track_.cues;
-
-    if (!cues) {
-      return items;
-    }
-
-    for (var i = 0, l = cues.length; i < l; i++) {
-      var cue = cues[i];
-      var mi = new _chaptersTrackMenuItem2['default'](this.player_, { track: this.track_, cue: cue });
-
-      items.push(mi);
-    }
-
-    return items;
-  };
-
-  return ChaptersButton;
-}(_textTrackButton2['default']);
-
-/**
- * `kind` of TextTrack to look for to associate it with this menu.
- *
- * @type {string}
- * @private
- */
-
-
-ChaptersButton.prototype.kind_ = 'chapters';
-
-/**
- * The text that should display over the `ChaptersButton`s controls. Added for localization.
- *
- * @type {string}
- * @private
- */
-ChaptersButton.prototype.controlText_ = 'Chapters';
-
-_component2['default'].registerComponent('ChaptersButton', ChaptersButton);
-exports['default'] = ChaptersButton;
-
-
-/***/ }),
-
-/***/ 182:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _menuItem = __webpack_require__(104);
-
-var _menuItem2 = _interopRequireDefault(_menuItem);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file chapters-track-menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The chapter track menu item
- *
- * @extends MenuItem
- */
-var ChaptersTrackMenuItem = function (_MenuItem) {
-  _inherits(ChaptersTrackMenuItem, _MenuItem);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function ChaptersTrackMenuItem(player, options) {
-    _classCallCheck(this, ChaptersTrackMenuItem);
-
-    var track = options.track;
-    var cue = options.cue;
-    var currentTime = player.currentTime();
-
-    // Modify options for parent MenuItem class's init.
-    options.selectable = true;
-    options.label = cue.text;
-    options.selected = cue.startTime <= currentTime && currentTime < cue.endTime;
-
-    var _this = _possibleConstructorReturn(this, _MenuItem.call(this, player, options));
-
-    _this.track = track;
-    _this.cue = cue;
-    track.addEventListener('cuechange', Fn.bind(_this, _this.update));
-    return _this;
-  }
-
-  /**
-   * This gets called when an `ChaptersTrackMenuItem` is "clicked". See
-   * {@link ClickableComponent} for more detailed information on what a click can be.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `keydown`, `tap`, or `click` event that caused this function to be
-   *        called.
-   *
-   * @listens tap
-   * @listens click
-   */
-
-
-  ChaptersTrackMenuItem.prototype.handleClick = function handleClick(event) {
-    _MenuItem.prototype.handleClick.call(this);
-    this.player_.currentTime(this.cue.startTime);
-    this.update(this.cue.startTime);
-  };
-
-  /**
-   * Update chapter menu item
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `cuechange` event that caused this function to run.
-   *
-   * @listens TextTrack#cuechange
-   */
-
-
-  ChaptersTrackMenuItem.prototype.update = function update(event) {
-    var cue = this.cue;
-    var currentTime = this.player_.currentTime();
-
-    // vjs.log(currentTime, cue.startTime);
-    this.selected(cue.startTime <= currentTime && currentTime < cue.endTime);
-  };
-
-  return ChaptersTrackMenuItem;
-}(_menuItem2['default']);
-
-_component2['default'].registerComponent('ChaptersTrackMenuItem', ChaptersTrackMenuItem);
-exports['default'] = ChaptersTrackMenuItem;
-
-
-/***/ }),
-
-/***/ 183:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackButton = __webpack_require__(102);
-
-var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _fn = __webpack_require__(15);
-
-var Fn = _interopRequireWildcard(_fn);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file descriptions-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The button component for toggling and selecting descriptions
- *
- * @extends TextTrackButton
- */
-var DescriptionsButton = function (_TextTrackButton) {
-  _inherits(DescriptionsButton, _TextTrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} [ready]
-   *        The function to call when this component is ready.
-   */
-  function DescriptionsButton(player, options, ready) {
-    _classCallCheck(this, DescriptionsButton);
-
-    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
-
-    _this.el_.setAttribute('aria-label', 'Descriptions Menu');
-
-    var tracks = player.textTracks();
-
-    if (tracks) {
-      var changeHandler = Fn.bind(_this, _this.handleTracksChange);
-
-      tracks.addEventListener('change', changeHandler);
-      _this.on('dispose', function () {
-        tracks.removeEventListener('change', changeHandler);
-      });
-    }
-    return _this;
-  }
-
-  /**
-   * Handle text track change
-   *
-   * @param {EventTarget~Event} event
-   *        The event that caused this function to run
-   *
-   * @listens TextTrackList#change
-   */
-
-
-  DescriptionsButton.prototype.handleTracksChange = function handleTracksChange(event) {
-    var tracks = this.player().textTracks();
-    var disabled = false;
-
-    // Check whether a track of a different kind is showing
-    for (var i = 0, l = tracks.length; i < l; i++) {
-      var track = tracks[i];
-
-      if (track.kind !== this.kind_ && track.mode === 'showing') {
-        disabled = true;
-        break;
-      }
-    }
-
-    // If another track is showing, disable this menu button
-    if (disabled) {
-      this.disable();
-    } else {
-      this.enable();
-    }
-  };
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-
-
-  DescriptionsButton.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-descriptions-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
-  };
-
-  return DescriptionsButton;
-}(_textTrackButton2['default']);
-
-/**
- * `kind` of TextTrack to look for to associate it with this menu.
- *
- * @type {string}
- * @private
- */
-
-
-DescriptionsButton.prototype.kind_ = 'descriptions';
-
-/**
- * The text that should display over the `DescriptionsButton`s controls. Added for localization.
- *
- * @type {string}
- * @private
- */
-DescriptionsButton.prototype.controlText_ = 'Descriptions';
-
-_component2['default'].registerComponent('DescriptionsButton', DescriptionsButton);
-exports['default'] = DescriptionsButton;
-
-
-/***/ }),
-
-/***/ 184:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackMenuItem = __webpack_require__(116);
-
-var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file off-text-track-menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * A special menu item for turning of a specific type of text track
- *
- * @extends TextTrackMenuItem
- */
-var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
-  _inherits(OffTextTrackMenuItem, _TextTrackMenuItem);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function OffTextTrackMenuItem(player, options) {
-    _classCallCheck(this, OffTextTrackMenuItem);
-
-    // Create pseudo track info
-    // Requires options['kind']
-    options.track = {
-      player: player,
-      kind: options.kind,
-      label: options.kind + ' off',
-      'default': false,
-      mode: 'disabled'
-    };
-
-    // MenuItem is selectable
-    options.selectable = true;
-
-    var _this = _possibleConstructorReturn(this, _TextTrackMenuItem.call(this, player, options));
-
-    _this.selected(true);
-    return _this;
-  }
-
-  /**
-   * Handle text track change
-   *
-   * @param {EventTarget~Event} event
-   *        The event that caused this function to run
-   */
-
-
-  OffTextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
-    var tracks = this.player().textTracks();
-    var selected = true;
-
-    for (var i = 0, l = tracks.length; i < l; i++) {
-      var track = tracks[i];
-
-      if (track.kind === this.track.kind && track.mode === 'showing') {
-        selected = false;
-        break;
-      }
-    }
-
-    this.selected(selected);
-  };
-
-  return OffTextTrackMenuItem;
-}(_textTrackMenuItem2['default']);
-
-_component2['default'].registerComponent('OffTextTrackMenuItem', OffTextTrackMenuItem);
-exports['default'] = OffTextTrackMenuItem;
-
-
-/***/ }),
-
-/***/ 185:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _textTrackButton = __webpack_require__(102);
-
-var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file subtitles-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The button component for toggling and selecting subtitles
- *
- * @extends TextTrackButton
- */
-var SubtitlesButton = function (_TextTrackButton) {
-  _inherits(SubtitlesButton, _TextTrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   *
-   * @param {Component~ReadyCallback} [ready]
-   *        The function to call when this component is ready.
-   */
-  function SubtitlesButton(player, options, ready) {
-    _classCallCheck(this, SubtitlesButton);
-
-    var _this = _possibleConstructorReturn(this, _TextTrackButton.call(this, player, options, ready));
-
-    _this.el_.setAttribute('aria-label', 'Subtitles Menu');
-    return _this;
-  }
-
-  /**
-   * Builds the default DOM `className`.
-   *
-   * @return {string}
-   *         The DOM `className` for this object.
-   */
-
-
-  SubtitlesButton.prototype.buildCSSClass = function buildCSSClass() {
-    return 'vjs-subtitles-button ' + _TextTrackButton.prototype.buildCSSClass.call(this);
-  };
-
-  return SubtitlesButton;
-}(_textTrackButton2['default']);
-
-/**
- * `kind` of TextTrack to look for to associate it with this menu.
- *
- * @type {string}
- * @private
- */
-
-
-SubtitlesButton.prototype.kind_ = 'subtitles';
-
-/**
- * The text that should display over the `SubtitlesButton`s controls. Added for localization.
- *
- * @type {string}
- * @private
- */
-SubtitlesButton.prototype.controlText_ = 'Subtitles';
-
-_component2['default'].registerComponent('SubtitlesButton', SubtitlesButton);
-exports['default'] = SubtitlesButton;
-
-
-/***/ }),
-
-/***/ 186:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(17);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file current-time-display.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Displays the current time
- *
- * @extends Component
- */
-var CurrentTimeDisplay = function (_Component) {
-  _inherits(CurrentTimeDisplay, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function CurrentTimeDisplay(player, options) {
-    _classCallCheck(this, CurrentTimeDisplay);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.on(player, 'timeupdate', _this.updateContent);
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  CurrentTimeDisplay.prototype.createEl = function createEl() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-current-time vjs-time-control vjs-control'
-    });
-
-    this.contentEl_ = Dom.createEl('div', {
-      className: 'vjs-current-time-display',
-      // label the current time for screen reader users
-      innerHTML: '<span class="vjs-control-text">Current Time </span>' + '0:00'
-    }, {
-      // tell screen readers not to automatically read the time as it changes
-      'aria-live': 'off'
-    });
-
-    el.appendChild(this.contentEl_);
-    return el;
-  };
-
-  /**
-   * Update current time display
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `timeupdate` event that caused this function to run.
-   *
-   * @listens Player#timeupdate
-   */
-
-
-  CurrentTimeDisplay.prototype.updateContent = function updateContent(event) {
-    // Allows for smooth scrubbing, when player can't keep up.
-    var time = this.player_.scrubbing() ? this.player_.getCache().currentTime : this.player_.currentTime();
-    var localizedText = this.localize('Current Time');
-    var formattedTime = (0, _formatTime2['default'])(time, this.player_.duration());
-
-    if (formattedTime !== this.formattedTime_) {
-      this.formattedTime_ = formattedTime;
-      this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> ' + formattedTime;
-    }
-  };
-
-  return CurrentTimeDisplay;
-}(_component2['default']);
-
-_component2['default'].registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
-exports['default'] = CurrentTimeDisplay;
-
-
-/***/ }),
-
-/***/ 187:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(17);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file duration-display.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Displays the duration
- *
- * @extends Component
- */
-var DurationDisplay = function (_Component) {
-  _inherits(DurationDisplay, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function DurationDisplay(player, options) {
-    _classCallCheck(this, DurationDisplay);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.on(player, 'durationchange', _this.updateContent);
-
-    // Also listen for timeupdate and loadedmetadata because removing those
-    // listeners could have broken dependent applications/libraries. These
-    // can likely be removed for 6.0.
-    _this.on(player, 'timeupdate', _this.updateContent);
-    _this.on(player, 'loadedmetadata', _this.updateContent);
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  DurationDisplay.prototype.createEl = function createEl() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-duration vjs-time-control vjs-control'
-    });
-
-    this.contentEl_ = Dom.createEl('div', {
-      className: 'vjs-duration-display',
-      // label the duration time for screen reader users
-      innerHTML: '<span class="vjs-control-text">' + this.localize('Duration Time') + '</span> 0:00'
-    }, {
-      // tell screen readers not to automatically read the time as it changes
-      'aria-live': 'off'
-    });
-
-    el.appendChild(this.contentEl_);
-    return el;
-  };
-
-  /**
-   * Update duration time display.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `durationchange`, `timeupdate`, or `loadedmetadata` event that caused
-   *        this function to be called.
-   *
-   * @listens Player#durationchange
-   * @listens Player#timeupdate
-   * @listens Player#loadedmetadata
-   */
-
-
-  DurationDisplay.prototype.updateContent = function updateContent(event) {
-    var duration = this.player_.duration();
-
-    if (duration && this.duration_ !== duration) {
-      this.duration_ = duration;
-      var localizedText = this.localize('Duration Time');
-      var formattedTime = (0, _formatTime2['default'])(duration);
-
-      // label the duration time for screen reader users
-      this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> ' + formattedTime;
-    }
-  };
-
-  return DurationDisplay;
-}(_component2['default']);
-
-_component2['default'].registerComponent('DurationDisplay', DurationDisplay);
-exports['default'] = DurationDisplay;
-
-
-/***/ }),
-
-/***/ 188:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(17);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _formatTime = __webpack_require__(59);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file remaining-time-display.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Displays the time left in the video
- *
- * @extends Component
- */
-var RemainingTimeDisplay = function (_Component) {
-  _inherits(RemainingTimeDisplay, _Component);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function RemainingTimeDisplay(player, options) {
-    _classCallCheck(this, RemainingTimeDisplay);
-
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.on(player, 'timeupdate', _this.updateContent);
-    _this.on(player, 'durationchange', _this.updateContent);
-    return _this;
-  }
-
-  /**
-   * Create the `Component`'s DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-
-
-  RemainingTimeDisplay.prototype.createEl = function createEl() {
-    var el = _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-remaining-time vjs-time-control vjs-control'
-    });
-
-    this.contentEl_ = Dom.createEl('div', {
-      className: 'vjs-remaining-time-display',
-      // label the remaining time for screen reader users
-      innerHTML: '<span class="vjs-control-text">' + this.localize('Remaining Time') + '</span> -0:00'
-    }, {
-      // tell screen readers not to automatically read the time as it changes
-      'aria-live': 'off'
-    });
-
-    el.appendChild(this.contentEl_);
-    return el;
-  };
-
-  /**
-   * Update remaining time display.
-   *
-   * @param {EventTarget~Event} [event]
-   *        The `timeupdate` or `durationchange` event that caused this to run.
-   *
-   * @listens Player#timeupdate
-   * @listens Player#durationchange
-   */
-
-
-  RemainingTimeDisplay.prototype.updateContent = function updateContent(event) {
-    if (this.player_.duration()) {
-      var localizedText = this.localize('Remaining Time');
-      var formattedTime = (0, _formatTime2['default'])(this.player_.remainingTime());
-
-      if (formattedTime !== this.formattedTime_) {
-        this.formattedTime_ = formattedTime;
-        this.contentEl_.innerHTML = '<span class="vjs-control-text">' + localizedText + '</span> -' + formattedTime;
-      }
-    }
-
-    // Allows for smooth scrubbing, when player can't keep up.
-    // var time = (this.player_.scrubbing()) ? this.player_.getCache().currentTime : this.player_.currentTime();
-    // this.contentEl_.innerHTML = vjs.formatTime(time, this.player_.duration());
-  };
-
-  return RemainingTimeDisplay;
-}(_component2['default']);
-
-_component2['default'].registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
-exports['default'] = RemainingTimeDisplay;
-
-
-/***/ }),
-
-/***/ 189:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file time-divider.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The separator between the current time and duration.
- * Can be hidden if it's not needed in the design.
- *
- * @extends Component
- */
-var TimeDivider = function (_Component) {
-  _inherits(TimeDivider, _Component);
-
-  function TimeDivider() {
-    _classCallCheck(this, TimeDivider);
-
-    return _possibleConstructorReturn(this, _Component.apply(this, arguments));
-  }
-
-  /**
-   * Create the component's DOM element
-   *
-   * @return {Element}
-   *         The element that was created.
-   */
-  TimeDivider.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
-      className: 'vjs-time-control vjs-time-divider',
-      innerHTML: '<div><span>/</span></div>'
-    });
-  };
-
-  return TimeDivider;
-}(_component2['default']);
-
-_component2['default'].registerComponent('TimeDivider', TimeDivider);
-exports['default'] = TimeDivider;
-
-
-/***/ }),
-
 /***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -75294,7 +75294,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(129);
+__webpack_require__(130);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -75464,11 +75464,11 @@ var _popupButton = __webpack_require__(198);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(127);
+var _muteToggle = __webpack_require__(128);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(129);
+var _volumeBar = __webpack_require__(130);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -75703,7 +75703,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(133);
+var _modalDialog = __webpack_require__(134);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
@@ -76038,7 +76038,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(134);
+var _player = __webpack_require__(135);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -76206,7 +76206,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -76320,7 +76320,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -76498,7 +76498,7 @@ exports['default'] = PosterImage;
 exports.__esModule = true;
 exports.hasLoaded = exports.autoSetupTimeout = exports.autoSetup = undefined;
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -76863,11 +76863,11 @@ var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -78057,11 +78057,11 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -78073,7 +78073,7 @@ var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(101);
+var _tsml = __webpack_require__(102);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -80393,7 +80393,7 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -81310,7 +81310,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var _fn = __webpack_require__(15);
 
@@ -83935,7 +83935,7 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -85797,7 +85797,7 @@ if (typeof document !== 'undefined') {
 
 /***/ }),
 
-/***/ 423:
+/***/ 424:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86176,7 +86176,7 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 exports.__esModule = true;
 exports.BACKGROUND_SIZE_SUPPORTED = exports.TOUCH_ENABLED = exports.IS_ANY_SAFARI = exports.IS_SAFARI = exports.IE_VERSION = exports.IS_IE8 = exports.CHROME_VERSION = exports.IS_CHROME = exports.IS_EDGE = exports.IS_FIREFOX = exports.IS_NATIVE_ANDROID = exports.IS_OLD_ANDROID = exports.ANDROID_VERSION = exports.IS_ANDROID = exports.IOS_VERSION = exports.IS_IOS = exports.IS_IPOD = exports.IS_IPHONE = exports.IS_IPAD = undefined;
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -86657,7 +86657,7 @@ exports.off = off;
 exports.trigger = trigger;
 exports.one = one;
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -87198,10 +87198,10 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 692:
+/***/ 698:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(423);
+module.exports = __webpack_require__(424);
 
 
 /***/ }),
@@ -87490,7 +87490,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(17);
+var _dom = __webpack_require__(19);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -87839,11 +87839,11 @@ var _textTrackList = __webpack_require__(212);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(137);
+var _videoTrackList = __webpack_require__(138);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(136);
+var _audioTrackList = __webpack_require__(137);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
@@ -87857,9 +87857,9 @@ var _log2 = _interopRequireDefault(_log);
 
 var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(138);
+var _buffer = __webpack_require__(139);
 
-var _mediaError = __webpack_require__(130);
+var _mediaError = __webpack_require__(131);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -89383,4 +89383,4 @@ exports.createTimeRange = createTimeRanges;
 
 /***/ })
 
-},[692]);
+},[698]);

@@ -7,8 +7,14 @@
 @endsection
 @section('content')
   <main>
+
+  <div id="city">
+    <svg-el></svg-el>
+  </div>
+
   {{-- Main Hero Cover --}}
-  @include('components.home.svg')
+  {{-- @include('components.home.svg') --}}
+
   {{-- PLACE FOR PARTNERS MODAL --}}
   @foreach ($partners as $key => $partner)
     <script id="js-modal-template-{{ $partner->id_tag }}" type="text/template">
@@ -278,17 +284,8 @@
 @endsection
 @section('scripts')
   <script type="text/javascript">
-    var h = $('#logo-img').height();
-    setHeight(h);
-
-    $(window).resize(function() {
-      var h = $('#logo-img').height();
-      setHeight(h);
-    });
-
-    function setHeight(a) {
-      $('.main-wrapper').height(a);
-    };
+    
   </script>
-  <script src="{{ asset('js/city.js') }}"></script>
+  {{-- <script src="{{ asset('js/city.js') }}"></script> --}}
+  <script src="{{ asset('js/vue_city.js') }}"></script>
 @endsection

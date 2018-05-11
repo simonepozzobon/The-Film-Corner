@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		30: 0
+/******/ 		31: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/admin/contest","1":"/js/teacher-profile","2":"/js/app/sound-studio","3":"/js/app/intercut-crosscutting","4":"/js/notifications","5":"/js/socket-test","6":"/js/teacher-chat","7":"/js/app","8":"/js/network-single","9":"/js/admin/video","10":"/js/admin/image","11":"/js/admin/audio","12":"/js/admin/translate","13":"/js/timeline","14":"/js/admin/teachers","15":"/js/admin/guests","16":"/js/admin/captions","17":"/js/admin/main","18":"/js/admin/footer","19":"/js/app/studio-home","20":"/js/admin/keywords","21":"/js/feedback-toolbar","22":"/js/first-visit","23":"/js/network","24":"/js/upload","25":"/js/message","26":"/js/admin/admin","27":"/js/vendor","28":"/js/city","29":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/admin/contest","1":"/js/teacher-profile","2":"/js/app/sound-studio","3":"/js/app/intercut-crosscutting","4":"/js/notifications","5":"/js/socket-test","6":"/js/teacher-chat","7":"/js/app","8":"/js/network-single","9":"/js/admin/video","10":"/js/admin/image","11":"/js/admin/audio","12":"/js/admin/translate","13":"/js/timeline","14":"/js/admin/teachers","15":"/js/admin/guests","16":"/js/admin/captions","17":"/js/admin/main","18":"/js/admin/footer","19":"/js/app/studio-home","20":"/js/admin/keywords","21":"/js/feedback-toolbar","22":"/js/first-visit","23":"/js/network","24":"/js/upload","25":"/js/message","26":"//js/vue_city","27":"/js/admin/admin","28":"/js/vendor","29":"/js/city","30":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
