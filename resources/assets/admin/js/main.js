@@ -6,8 +6,9 @@ import AppBox from './components/AppBox.vue';
 import AlertTutorial from './components/AlertTutorial.vue';
 
 const app = new Vue({
-  el: '#app',
-  components: {
-    AppBox, AlertTutorial
-  }
+    el: '#app',
+    components: {
+        AppBox,
+        AlertTutorial
+    }
 })

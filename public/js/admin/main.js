@@ -12794,10 +12794,11 @@ var _AlertTutorial2 = _interopRequireDefault(_AlertTutorial);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var app = new _vue2.default({
-  el: '#app',
-  components: {
-    AppBox: _AppBox2.default, AlertTutorial: _AlertTutorial2.default
-  }
+    el: '#app',
+    components: {
+        AppBox: _AppBox2.default,
+        AlertTutorial: _AlertTutorial2.default
+    }
 });
 
 /***/ }),

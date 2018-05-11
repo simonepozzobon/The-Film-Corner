@@ -17,20 +17,30 @@
       <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
     </alert-tutorial>
   @endif
-  <div class="row">
+  <div class="row pb-3">
     <div class="col-md-4">
-      <app-box title="Utenti Online" color="blue">
-        {{-- <h1>{{ $users->count() }}</h1> --}}
+      <app-box title="App Insegnanti" color="blue">
+        <h1>{{ $stats['teacher_sessions'] }}</h1>
+        <p>Numero di applicazioni svolte dagli insegnanti</p>
       </app-box>
     </div>
     <div class="col-md-4">
-      <app-box title="Sessioni" color="blue">
-        {{-- <h1>{{ $sessions->count() }}</h1> --}}
+      <app-box title="App Studenti" color="blue">
+        <h1>{{ $stats['student_sessions'] }}</h1>
+        <p>Numero di applicazioni svolte dagli studenti</p>
       </app-box>
     </div>
     <div class="col-md-4">
       <app-box title="Visualizzazioni" color="blue">
-        <h1>{{ $page_views_tot }}</h1>
+        <h1>{{ $stats['page_views_60dd'] }}</h1>
+        <p>Visualizzazioni di pagina</p>
+      </app-box>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <app-box title="Ciao" color="blue">
+
       </app-box>
     </div>
   </div>
