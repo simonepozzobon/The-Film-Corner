@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\AppsSessions\StudentAppSession;
@@ -46,12 +47,19 @@ class AdminController extends Controller
         }
 
         $tracker = new Tracker();
-        dump(Tracker::isEnabled());
+        $now = Carbon::now()->toDateString();
+        $start = Carbon::parse('first day of September 2017');
+
+        $dateInMinutes = $start->diffInMinutes($now);
 
         // $sessions = Tracker::sessions(60 * 24);
         // $users = Tracker::onlineUsers();
-        $page_views = Tracker::pageViews(60 * 24 * 90);
-        dd($page_views);
+        $pageViews = Tracker::pageViews($dateInMinutes);
+        $pageViewsTot = 0;
+        foreach ($pageViews as $key => $day) {
+            $pageViewsTot = $pageViewsTot + $day->total;
+        }
+
         $sessions = 0;
         $users = 0;
         $page_views_tot = 0;
@@ -62,7 +70,7 @@ class AdminController extends Controller
         $stats = [
             'teacher_sessions' => $teacher_sessions,
             'student_sessions' => $student_sessions,
-            'page_views_60dd' => $page_views,
+            'page_views_60dd' => $pageViewsTot,
         ];
 
         // foreach ($page_views as $key => $page_view) {
