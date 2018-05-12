@@ -11,23 +11,16 @@ use Spatie\Activitylog\Models\Activity;
 
 use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
 
+use Analytics;
+use Spatie\Analytics\Period;
+
 class AdminController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth:admin', ['except' => 'logout']);
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $admin = Auth::guard('admin')->user();
@@ -47,36 +40,51 @@ class AdminController extends Controller
         }
 
         $tracker = new Tracker();
-        $now = Carbon::now()->toDateString();
+        $now = Carbon::now();
         $start = Carbon::parse('first day of September 2017');
 
         $dateInMinutes = $start->diffInMinutes($now);
-
-        // $sessions = Tracker::sessions(60 * 24);
-        // $users = Tracker::onlineUsers();
         $pageViews = Tracker::pageViews($dateInMinutes);
         $pageViewsTot = 0;
         foreach ($pageViews as $key => $day) {
             $pageViewsTot = $pageViewsTot + $day->total;
         }
 
-        $sessions = 0;
-        $users = 0;
-        $page_views_tot = 0;
-
         $teacher_sessions = AppsSession::where('is_empty', 0)->count();
         $student_sessions = StudentAppSession::where('is_empty', 0)->count();
+
+        // Most Visited Page this week
+        $mostVisitedPages = Analytics::fetchMostVisitedPages(Period::days(7));
+        $mostVisitedPage = $mostVisitedPages->filter(function($page, $key) {
+            return ($page['url'] != '/' && strpos($page['url'], 'admin') == false);
+        })->first();
+
+
+        // Visitors
+        $period = Period::create($start, $now);
+        $visitors = Analytics::fetchTotalVisitorsAndPageViews($period);
+        $visitorsTot = 0;
+        foreach ($visitors as $key => $day) {
+            $visitorsTot = $visitorsTot + $day['visitors'];
+        }
+
+        // Browser
+        $browsers = Analytics::fetchTopBrowsers($period, 10);
+
+        // Users Type
+        $usersType = Analytics::fetchUserTypes($period);
+        dump($usersType);
 
         $stats = [
             'teacher_sessions' => $teacher_sessions,
             'student_sessions' => $student_sessions,
             'page_views_60dd' => $pageViewsTot,
+            'most_visited_page' => $mostVisitedPage,
+            'visitors_tot' => $visitorsTot,
+            'browsers' => $browsers,
+            'users_type' => $usersType,
         ];
 
-        // foreach ($page_views as $key => $page_view) {
-        //   $page_views_tot = $page_views_tot + $page_view->total;
-        // }
-
-        return view('admin', compact('users', 'sessions', 'page_views_tot', 'visited', 'stats'));
+        return view('admin', compact('visited', 'stats'));
     }
 }

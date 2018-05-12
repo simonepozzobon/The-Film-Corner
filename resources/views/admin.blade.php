@@ -18,30 +18,69 @@
     </alert-tutorial>
   @endif
   <div class="row pb-3">
-    <div class="col-md-4">
-      <app-box title="App Insegnanti" color="blue">
-        <h1>{{ $stats['teacher_sessions'] }}</h1>
-        <p>Numero di applicazioni svolte dagli insegnanti</p>
-      </app-box>
+    <div class="col-md-8">
+      <div class="row pb-3">
+        <div class="col-md-12">
+          <app-box title="Pagina della settimana" color="yellow">
+            <p>Pagina più visitata della settimana</p>
+            <h1 class="d-inline-block">{{ $stats['most_visited_page']['pageViews'] }}</h1><span> Visite</span>
+            - <a href="{{ $stats['most_visited_page']['url'] }}" target="_blank">{{ $stats['most_visited_page']['pageTitle'] }}</a>
+          </app-box>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <app-box title="App Insegnanti" color="blue">
+            <p>Numero di applicazioni svolte dagli insegnanti</p>
+            <h1>{{ $stats['teacher_sessions'] }}</h1>
+          </app-box>
+        </div>
+        <div class="col-md-6">
+          <app-box title="App Studenti" color="orange">
+            <p>Numero di applicazioni svolte dagli studenti</p>
+            <h1>{{ $stats['student_sessions'] }}</h1>
+          </app-box>
+        </div>
+      </div>
     </div>
     <div class="col-md-4">
-      <app-box title="App Studenti" color="blue">
-        <h1>{{ $stats['student_sessions'] }}</h1>
-        <p>Numero di applicazioni svolte dagli studenti</p>
+      <app-box title="10 Browser più usati" color="blue">
+        <ul>
+          @foreach ($stats['browsers'] as $browser)
+            <li>{{ $browser['browser'] }} - {{ $browser['sessions'] }}</li>
+          @endforeach
+        </ul>
       </app-box>
     </div>
+
+  </div>
+  <div class="row pb-3">
     <div class="col-md-4">
-      <app-box title="Visualizzazioni" color="blue">
-        <h1>{{ $stats['page_views_60dd'] }}</h1>
-        <p>Visualizzazioni di pagina</p>
+      <app-box title="Visualizzazioni" color="green">
+        <p>Visitatori Unici</p>
+        <h1>{{ $stats['visitors_tot'] }}</h1>
+      </app-box>
+    </div>
+    <div class="col-md-8">
+      <app-box title="Tipi di Utenti" color="orange">
+        @foreach ($stats['users_type'] as $userType)
+          <div>
+            <h1>{{ $userType['sessions'] }}</h1><p>{{ $userType['type'] }}</p>
+          </div>
+        @endforeach
       </app-box>
     </div>
   </div>
   <div class="row">
-    <div class="col-md-4">
-      <app-box title="Ciao" color="blue">
-
+    <div class="col-md-7">
+      <app-box title="Visualizzazioni" color="green">
+        <p>Visualizzazioni di pagina totali</p>
+        <h1>{{ $stats['page_views_60dd'] }}</h1>
       </app-box>
+
+    </div>
+    <div class="col-md-5">
+
     </div>
   </div>
 </main>

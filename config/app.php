@@ -179,6 +179,8 @@ return [
         // Translatable
         Dimsav\Translatable\TranslatableServiceProvider::class,
 
+        // Google Analytics
+        Spatie\Analytics\AnalyticsServiceProvider::class,
 
     ],
 
@@ -254,6 +256,9 @@ return [
         'Filmography' => 'App\Filmography',
         'Credit' => 'App\Credit',
 
+
+        // Google Analytics
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
 
 
     ],
