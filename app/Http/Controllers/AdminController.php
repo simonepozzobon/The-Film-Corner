@@ -93,6 +93,7 @@ class AdminController extends Controller
             ];
             $geos->push($geo);
         }
+        dump($geos);
 
         $stats = [
             'teacher_sessions' => $teacher_sessions,
