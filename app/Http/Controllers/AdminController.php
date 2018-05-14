@@ -73,7 +73,26 @@ class AdminController extends Controller
 
         // Users Type
         $usersType = Analytics::fetchUserTypes($period);
-        dump($usersType);
+
+        // Durata media della sessione
+        $sessionTime = Analytics::performQuery($period, 'ga:sessions,ga:sessionDuration');
+        $sessionTimeSessions = $sessionTime->totalsForAllResults['ga:sessions'];
+        $sessionTimeSessionsDuration = $sessionTime->totalsForAllResults['ga:sessionDuration'];
+        $sessionTime = gmdate('H:i:s', ($sessionTimeSessionsDuration / $sessionTimeSessions));
+
+        // Geo country
+        $geos = Analytics::performQuery($period, 'ga:sessions', [
+            'dimensions' => 'ga:country'
+        ]);
+        $results = $geos->rows;
+        $geos = collect();
+        foreach ($results as $key => $result) {
+            $geo = (object) [
+                'country' => $result[0],
+                'views' => $result[1]
+            ];
+            $geos->push($geo);
+        }
 
         $stats = [
             'teacher_sessions' => $teacher_sessions,
@@ -83,6 +102,8 @@ class AdminController extends Controller
             'visitors_tot' => $visitorsTot,
             'browsers' => $browsers,
             'users_type' => $usersType,
+            'session_time_avg' => $sessionTime,
+            'geos' => $geos,
         ];
 
         return view('admin', compact('visited', 'stats'));
