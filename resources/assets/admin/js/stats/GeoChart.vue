@@ -20,8 +20,8 @@
 
 <script>
 import {TimelineMax} from 'gsap'
-import EventBus from '_js/EventBus'
 import AppBox from '../components/AppBox.vue'
+import EventBus from '_js/EventBus'
 
 export default {
     name: 'GeoChart',
@@ -124,5 +124,33 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+@import '~styles/variables';
+@import '~styles/mixins';
+
+    #geo-list {
+        display: none;
+        opacity: 0;
+        transition: $transition-collapse;
+    }
+
+    #geo-chart {
+        transition: $transition-collapse;
+    }
+
+    #country-tools {
+        > .map, > .listed {
+            cursor: pointer;
+            transition: $transition-base;
+
+            &:hover {
+                color: rgba($black, .33);
+            }
+
+            &.active {
+                color: $tfc-red;
+                transition: $transition-base;
+            }
+        }
+    }
 </style>

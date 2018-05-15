@@ -5,8 +5,8 @@
                 <geo-chart :geosOrdered="this.geosOrdered"/>
             </div>
         </div>
-        <div class="row pb-3">
-            <div class="col-md-8">
+        <div id="row-2" class="row pb-3">
+            <div class="col-md-6">
                 <div class="row pb-3">
                     <div class="col-md-12">
                         <app-box title="Pagina della settimana" color="yellow">
@@ -18,29 +18,21 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <app-box title="App Insegnanti" color="green">
+                        <app-box title="Insegnanti" color="green">
                             <p>Numero di applicazioni svolte dagli insegnanti</p>
                             <h1>{{ this.statsObj.teacher_sessions }}</h1>
                         </app-box>
                     </div>
                     <div class="col-md-6">
-                        <app-box title="App Studenti" color="orange">
+                        <app-box title="Studenti" color="orange">
                             <p>Numero di applicazioni svolte dagli studenti</p>
                             <h1>{{ this.statsObj.student_sessions }}</h1>
                         </app-box>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <app-box title="10 Browser più usati" color="blue">
-                    <ul class="list-unstyled">
-                        <li v-for="browser in this.statsObj.browsers">{{ browser.sessions }} - {{ browser.browser }}</li>
-                    </ul>
-                    <div class="d-flex align-items-center pl-3" slot="tools">
-                        <div id="browser-list"></div>
-                        <div id="broswer-chart"></div>
-                    </div>
-                </app-box>
+            <div class="col-md-6">
+                <browser-chart :browsers="this.statsObj.browsers"/>
             </div>
         </div>
         <div class="row pb-3">
@@ -54,7 +46,7 @@
                 <app-box title="Tipi di Utenti" color="yellow">
                     <div class="d-flex justify-content-around">
                         <div v-for="userType in this.statsObj.users_type">
-                            <h1>{{ userType.sessions }}</h1><p>{{ userType.type }}</p>
+                            <p>{{ userType.type }}</p><h1>{{ userType.sessions }}</h1>
                         </div>
                     </div>
                 </app-box>
@@ -74,7 +66,7 @@
                 </app-box>
             </div>
         </div>
-
+        
     </div>
 </template>
 
@@ -82,13 +74,15 @@
 import _ from 'lodash'
 
 import AppBox from '../components/AppBox.vue'
-import GeoChart from './GeoChart.vue'
 import EventBus from '_js/EventBus'
+import GeoChart from './GeoChart.vue'
+import BrowserChart from './BrowserChart.vue'
 
 export default {
     name: 'StatsPanel',
     components: {
         AppBox,
+        BrowserChart,
         GeoChart,
     },
     props: {
@@ -145,33 +139,4 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/variables';
-@import '~styles/mixins';
-
-    #geo-list {
-        display: none;
-        opacity: 0;
-        transition: $transition-collapse;
-    }
-
-    #geo-chart {
-        transition: $transition-collapse;
-    }
-
-    #country-tools {
-        > .map, > .listed {
-            cursor: pointer;
-            transition: $transition-base;
-
-            &:hover {
-                color: rgba($black, .33);
-            }
-
-            &.active {
-                color: $tfc-red;
-                transition: $transition-base;
-            }
-        }
-    }
-
 </style>
