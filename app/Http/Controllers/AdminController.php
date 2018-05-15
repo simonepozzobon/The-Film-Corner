@@ -96,17 +96,16 @@ class AdminController extends Controller
         // dump($geos);
 
         // Users Age
-        $userAge = Analytics::performQuery($period, 'ga:users', [
+        $userAge = Analytics::performQuery($period, 'ga:sessions', [
             'dimensions' => 'ga:userAgeBracket'
         ]);
         $usersAge = $userAge->rows;
 
         // Users Gender
-        $usersGender = Analytics::performQuery($period, 'ga:users', [
+        $usersGender = Analytics::performQuery($period, 'ga:sessions', [
             'dimensions' => 'ga:userGender',
         ]);
         $usersGender = $usersGender->rows;
-
 
         $stats = [
             'teacher_sessions' => $teacher_sessions,
@@ -120,7 +119,9 @@ class AdminController extends Controller
             'geos' => $geos,
             'geosArr' => $results,
             'users_age' => $usersAge,
-            'users_gender' => $usersGender
+            'users_gender' => $usersGender,
+            'start_date' => $period->startDate->date,
+            'end_date' => $period->endDate->date,
         ];
 
         return view('admin', compact('visited', 'stats'));

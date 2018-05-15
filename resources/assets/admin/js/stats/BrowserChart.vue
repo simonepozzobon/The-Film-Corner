@@ -1,5 +1,5 @@
 <template lang="html">
-    <app-box title="10 Browser più usati" color="blue">
+    <app-box title="10 Browser più usati" color="gray">
         <div id="browser-chart"></div>
         <div id="browser-list">
             <ul class="list-unstyled">
