@@ -17,10 +17,7 @@
       <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
     </alert-tutorial>
   @endif
-  <stats-panel stats="{{ json_encode($stats) }}">
-
-  </stats-panel>
-  
+  <stats-panel stats="{{ json_encode($stats) }}"></stats-panel>
 </main>
 @endsection
 @section('scripts')

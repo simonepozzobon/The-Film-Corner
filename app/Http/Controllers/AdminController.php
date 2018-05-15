@@ -93,7 +93,7 @@ class AdminController extends Controller
             ];
             $geos->push($geo);
         }
-        dump($geos);
+        // dump($geos);
 
         $stats = [
             'teacher_sessions' => $teacher_sessions,
@@ -105,6 +105,7 @@ class AdminController extends Controller
             'users_type' => $usersType,
             'session_time_avg' => $sessionTime,
             'geos' => $geos,
+            'geosArr' => $results,
         ];
 
         return view('admin', compact('visited', 'stats'));
