@@ -61,8 +61,6 @@ export default {
             var convertedArr = this.convertData()
             data.addRows(convertedArr)
 
-            this.setHeight()
-
             var options = {
                 backgroundColor: { fill: '' },
             }
@@ -79,11 +77,6 @@ export default {
                 ])
             }
             return data
-        },
-        setHeight: function() {
-            var element = document.getElementById('row-2')
-            var elHeight = element.clientHeight - 32
-            console.log(elHeight)
         },
         tooglePieChart: function(type) {
             if (this.browserOpts == 0 && type == 'list') {

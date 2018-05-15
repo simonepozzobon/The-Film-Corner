@@ -66,7 +66,13 @@
                 </app-box>
             </div>
         </div>
-        
+        <div class="row pb-3">
+            <div class="col-md-12">
+                <users-age
+                    :users_age="this.statsObj.users_age"
+                    :users_gender="this.statsObj.users_gender"/>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -74,9 +80,10 @@
 import _ from 'lodash'
 
 import AppBox from '../components/AppBox.vue'
+import BrowserChart from './BrowserChart.vue'
 import EventBus from '_js/EventBus'
 import GeoChart from './GeoChart.vue'
-import BrowserChart from './BrowserChart.vue'
+import UsersAge from './UsersAge.vue'
 
 export default {
     name: 'StatsPanel',
@@ -84,6 +91,7 @@ export default {
         AppBox,
         BrowserChart,
         GeoChart,
+        UsersAge,
     },
     props: {
         stats: {

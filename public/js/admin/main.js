@@ -38525,6 +38525,10 @@ var _AppBox = __webpack_require__(514);
 
 var _AppBox2 = _interopRequireDefault(_AppBox);
 
+var _BrowserChart = __webpack_require__(734);
+
+var _BrowserChart2 = _interopRequireDefault(_BrowserChart);
+
 var _EventBus = __webpack_require__(60);
 
 var _EventBus2 = _interopRequireDefault(_EventBus);
@@ -38533,18 +38537,98 @@ var _GeoChart = __webpack_require__(729);
 
 var _GeoChart2 = _interopRequireDefault(_GeoChart);
 
-var _BrowserChart = __webpack_require__(734);
+var _UsersAge = __webpack_require__(743);
 
-var _BrowserChart2 = _interopRequireDefault(_BrowserChart);
+var _UsersAge2 = _interopRequireDefault(_UsersAge);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'StatsPanel',
     components: {
         AppBox: _AppBox2.default,
         BrowserChart: _BrowserChart2.default,
-        GeoChart: _GeoChart2.default
+        GeoChart: _GeoChart2.default,
+        UsersAge: _UsersAge2.default
     },
     props: {
         stats: {
@@ -38596,78 +38680,7 @@ exports.default = {
             _EventBus2.default.$emit('google-charts-load', google);
         });
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -38898,6 +38911,22 @@ var render = function() {
               _c("h1", [_vm._v(_vm._s(this.statsObj.session_time_avg))])
             ]
           )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row pb-3" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("users-age", {
+            attrs: {
+              users_age: this.statsObj.users_age,
+              users_gender: this.statsObj.users_gender
+            }
+          })
         ],
         1
       )
@@ -39314,8 +39343,6 @@ exports.default = {
             var convertedArr = this.convertData();
             data.addRows(convertedArr);
 
-            this.setHeight();
-
             var options = {
                 backgroundColor: { fill: '' }
             };
@@ -39329,11 +39356,6 @@ exports.default = {
                 data.push([this.browsers[i].browser, parseInt(this.browsers[i].sessions)]);
             }
             return data;
-        },
-        setHeight: function setHeight() {
-            var element = document.getElementById('row-2');
-            var elHeight = element.clientHeight - 32;
-            console.log(elHeight);
         },
         tooglePieChart: function tooglePieChart(type) {
             var _this = this;
@@ -51596,6 +51618,248 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a6ddb3d0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BrowserChart.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-a6ddb3d0\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./BrowserChart.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
+/***/ 741:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _AppBox = __webpack_require__(514);
+
+var _AppBox2 = _interopRequireDefault(_AppBox);
+
+var _EventBus = __webpack_require__(60);
+
+var _EventBus2 = _interopRequireDefault(_EventBus);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'UsersAge',
+    components: {
+        AppBox: _AppBox2.default
+    },
+    props: {
+        users_age: {
+            type: Array,
+            default: function _default() {}
+        },
+        users_gender: {
+            type: Array,
+            default: function _default() {}
+        }
+    },
+    computed: {
+        convertDataAge: function convertDataAge() {
+            var data = [];
+            for (var i = 0; i < this.users_age.length; i++) {
+                data.push([this.users_age[i][0], parseInt(this.users_age[i][1])]);
+            }
+            return data;
+        },
+        convertDataGender: function convertDataGender() {
+            var data = [];
+            for (var i = 0; i < this.users_gender.length; i++) {
+                data.push([this.users_gender[i][0], parseInt(this.users_gender[i][1])]);
+            }
+            return data;
+        }
+    },
+    methods: {
+        usersAge: function usersAge() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Età');
+            data.addColumn('number', 'Indice');
+
+            data.addRows(this.convertDataAge);
+
+            var options = {
+                backgroundColor: { fill: '' }
+            };
+
+            this.chart = new google.visualization.PieChart(document.getElementById('users-age-chart'));
+            this.chart.draw(data, options);
+        },
+        userGender: function userGender() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Sesso');
+            data.addColumn('number', 'Indice');
+
+            data.addRows(this.convertDataGender);
+
+            var options = {
+                backgroundColor: { fill: '' }
+            };
+
+            this.chart = new google.visualization.PieChart(document.getElementById('users-gender-chart'));
+            this.chart.draw(data, options);
+        }
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        _EventBus2.default.$on('google-charts-load', function () {
+            _this.usersAge();
+            _this.userGender();
+        });
+    }
+};
+
+/***/ }),
+
+/***/ 743:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue__ = __webpack_require__(741);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6c3f02d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UsersAge_vue__ = __webpack_require__(744);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(747)
+}
+var normalizeComponent = __webpack_require__(7)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UsersAge_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6c3f02d9_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UsersAge_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/admin/js/stats/UsersAge.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6c3f02d9", Component.options)
+  } else {
+    hotAPI.reload("data-v-6c3f02d9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 744:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "app-box",
+    { attrs: { color: "gray", title: "Età e sesso degli utenti" } },
+    [
+      _c("p", [
+        _vm._v(
+          "\n        Età e sesso degli utenti che hanno usato la piattaforma.\n        Purtroppo il tracciamento dell'età è legato al computer usato e non\n        è veramente indicativo sulla reale età degli utenti. Potrebbe indicare\n        più realisticamente l'età degli insegnanti.\n    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "charts-container" } }, [
+        _c("div", { attrs: { id: "users-age-chart" } }),
+        _vm._v(" "),
+        _c("div", { attrs: { id: "users-gender-chart" } })
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6c3f02d9", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 746:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)();
+exports.push([module.i, "\n#charts-container {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n#charts-container > #users-age-chart,\n  #charts-container > #users-gender-chart {\n    min-height: 400px;\n    width: 50%;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 747:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(746);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("41a57681", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6c3f02d9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UsersAge.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6c3f02d9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UsersAge.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
