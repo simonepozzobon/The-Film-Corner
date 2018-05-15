@@ -68494,6 +68494,15 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 720 */,
@@ -68564,200 +68573,231 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "stats-panel" } }, [
-    _c("div", { staticClass: "row pb-3" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [_c("geo-chart", { attrs: { geosOrdered: this.geosOrdered } })],
-        1
-      )
-    ]),
+    _vm._m(0),
     _vm._v(" "),
-    _c("div", { staticClass: "row pb-3", attrs: { id: "row-2" } }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "row pb-3" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-12" },
-            [
-              _c(
-                "app-box",
-                { attrs: { title: "Pagina della settimana", color: "blue" } },
-                [
-                  _c("p", [_vm._v("Pagina più visitata della settimana")]),
-                  _vm._v(" "),
-                  _c("h1", { staticClass: "d-inline-block" }, [
-                    _vm._v(_vm._s(this.statsObj.most_visited_page.pageViews))
-                  ]),
-                  _c("span", [_vm._v(" Visite")]),
-                  _vm._v("\n                        - "),
-                  _c(
-                    "a",
-                    {
-                      attrs: {
-                        href: this.statsObj.most_visited_page.url,
-                        target: "_blank"
-                      }
-                    },
-                    [_vm._v(_vm._s(this.statsObj.most_visited_page.pageTitle))]
-                  )
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-6" },
-            [
-              _c(
-                "app-box",
-                { attrs: { title: "Insegnanti", color: "green" } },
-                [
-                  _c("p", [
-                    _vm._v("Numero di applicazioni svolte dagli insegnanti")
-                  ]),
-                  _vm._v(" "),
-                  _c("h1", [_vm._v(_vm._s(this.statsObj.teacher_sessions))])
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-6" },
-            [
-              _c("app-box", { attrs: { title: "Studenti", color: "yellow" } }, [
-                _c("p", [
-                  _vm._v("Numero di applicazioni svolte dagli studenti")
-                ]),
-                _vm._v(" "),
-                _c("h1", [_vm._v(_vm._s(this.statsObj.student_sessions))])
-              ])
-            ],
-            1
-          )
-        ])
+    _c("div", { attrs: { id: "stats" } }, [
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [_c("geo-chart", { attrs: { geosOrdered: this.geosOrdered } })],
+          1
+        )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-6" },
-        [_c("browser-chart", { attrs: { browsers: this.statsObj.browsers } })],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row pb-3" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-4" },
-        [
-          _c("app-box", { attrs: { title: "Visitatori", color: "gray" } }, [
-            _c("p", [_vm._v("Visitatori Unici")]),
-            _vm._v(" "),
-            _c("h1", [_vm._v(_vm._s(this.statsObj.visitors_tot))])
-          ])
-        ],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-8" },
-        [
-          _c("app-box", { attrs: { title: "Tipi di Utenti", color: "gray" } }, [
+      _c("div", { staticClass: "row pb-3", attrs: { id: "row-2" } }, [
+        _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "row pb-3" }, [
             _c(
               "div",
-              { staticClass: "d-flex justify-content-around" },
-              _vm._l(this.statsObj.users_type, function(userType) {
-                return _c("div", [
-                  _c("p", [_vm._v(_vm._s(userType.type))]),
-                  _c("h1", [_vm._v(_vm._s(userType.sessions))])
-                ])
-              })
+              { staticClass: "col-md-12" },
+              [
+                _c(
+                  "app-box",
+                  { attrs: { title: "Pagina della settimana", color: "blue" } },
+                  [
+                    _c("p", [_vm._v("Pagina più visitata della settimana")]),
+                    _vm._v(" "),
+                    _c("h1", { staticClass: "d-inline-block" }, [
+                      _vm._v(_vm._s(this.statsObj.most_visited_page.pageViews))
+                    ]),
+                    _c("span", [_vm._v(" Visite")]),
+                    _vm._v("\n                            - "),
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: this.statsObj.most_visited_page.url,
+                          target: "_blank"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(this.statsObj.most_visited_page.pageTitle)
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c(
+                  "app-box",
+                  { attrs: { title: "Insegnanti", color: "green" } },
+                  [
+                    _c("p", [
+                      _vm._v("Numero di applicazioni svolte dagli insegnanti")
+                    ]),
+                    _vm._v(" "),
+                    _c("h1", [_vm._v(_vm._s(this.statsObj.teacher_sessions))])
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c(
+                  "app-box",
+                  { attrs: { title: "Studenti", color: "yellow" } },
+                  [
+                    _c("p", [
+                      _vm._v("Numero di applicazioni svolte dagli studenti")
+                    ]),
+                    _vm._v(" "),
+                    _c("h1", [_vm._v(_vm._s(this.statsObj.student_sessions))])
+                  ]
+                )
+              ],
+              1
             )
           ])
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row pb-3" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-6" },
-        [
-          _c(
-            "app-box",
-            { attrs: { title: "Visualizzazioni", color: "orange" } },
-            [
-              _c("p", [_vm._v("Visualizzazioni di pagina totali")]),
-              _vm._v(" "),
-              _c("h1", [_vm._v(_vm._s(this.statsObj.page_views_60dd))])
-            ]
-          )
-        ],
-        1
-      ),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c("browser-chart", { attrs: { browsers: this.statsObj.browsers } })
+          ],
+          1
+        )
+      ]),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-6" },
-        [
-          _c(
-            "app-box",
-            { attrs: { title: "Durata Media Utilizzo", color: "blue" } },
-            [
-              _c("p", [_vm._v("Durata media delle sessioni")]),
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-4" },
+          [
+            _c("app-box", { attrs: { title: "Visitatori", color: "gray" } }, [
+              _c("p", [_vm._v("Visitatori Unici")]),
               _vm._v(" "),
-              _c("h1", [_vm._v(_vm._s(this.statsObj.session_time_avg))])
-            ]
-          )
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row pb-3" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("users-age", {
-            attrs: {
-              users_age: this.statsObj.users_age,
-              users_gender: this.statsObj.users_gender
-            }
-          })
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row pb-3" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("tracking-time", {
-            attrs: {
-              start_date: this.statsObj.start_date,
-              end_date: this.statsObj.end_date
-            }
-          })
-        ],
-        1
-      )
+              _c("h1", [_vm._v(_vm._s(this.statsObj.visitors_tot))])
+            ])
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-8" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Tipi di Utenti", color: "gray" } },
+              [
+                _c(
+                  "div",
+                  { staticClass: "d-flex justify-content-around" },
+                  _vm._l(this.statsObj.users_type, function(userType) {
+                    return _c("div", [
+                      _c("p", [_vm._v(_vm._s(userType.type))]),
+                      _c("h1", [_vm._v(_vm._s(userType.sessions))])
+                    ])
+                  })
+                )
+              ]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Visualizzazioni", color: "orange" } },
+              [
+                _c("p", [_vm._v("Visualizzazioni di pagina totali")]),
+                _vm._v(" "),
+                _c("h1", [_vm._v(_vm._s(this.statsObj.page_views_60dd))])
+              ]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Durata Media Utilizzo", color: "blue" } },
+              [
+                _c("p", [_vm._v("Durata media delle sessioni")]),
+                _vm._v(" "),
+                _c("h1", [_vm._v(_vm._s(this.statsObj.session_time_avg))])
+              ]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("users-age", {
+              attrs: {
+                users_age: this.statsObj.users_age,
+                users_gender: this.statsObj.users_gender
+              }
+            })
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("tracking-time", {
+              attrs: {
+                start_date: this.statsObj.start_date,
+                end_date: this.statsObj.end_date
+              }
+            })
+          ],
+          1
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pb-3", attrs: { id: "only-desktop" } }, [
+      _c("div", { staticClass: "box gray" }, [
+        _c("div", { staticClass: "box-body" }, [
+          _c("p", [_vm._v("Le statistiche sono visibili solo su desktop")])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -68775,7 +68815,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "", ""]);
+exports.push([module.i, "\n#only-desktop {\n  display: block;\n  opacity: 1;\n  transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#stats {\n  display: none;\n  opacity: 0;\n  transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n@media (min-width: 992px) {\n#only-desktop {\n    display: none;\n    opacity: 0;\n    transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#stats {\n    display: block;\n    opacity: 1;\n    transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n}\n", ""]);
 
 /***/ }),
 /* 726 */
@@ -69398,7 +69438,7 @@ if(false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n#browser-list {\n  display: none;\n  opacity: 0;\n}\n#browser-tools > .pie, #browser-tools > .listed {\n  cursor: pointer;\n  transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#browser-tools > .pie:hover, #browser-tools > .listed:hover {\n    color: rgba(37, 37, 37, 0.33);\n}\n#browser-tools > .pie.active, #browser-tools > .listed.active {\n    color: #ff878f;\n    transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#browser-chart {\n  min-height: 400px;\n}\n", ""]);
+exports.push([module.i, "\n#browser-list {\n  display: none;\n  opacity: 0;\n}\n#browser-tools > .pie, #browser-tools > .listed {\n  cursor: pointer;\n  transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#browser-tools > .pie:hover, #browser-tools > .listed:hover {\n    color: rgba(37, 37, 37, 0.33);\n}\n#browser-tools > .pie.active, #browser-tools > .listed.active {\n    color: #ff878f;\n    transition: all 0.2s cubic-bezier(1, 0.25, 1, 0.25);\n}\n#browser-chart {\n  min-height: 400px;\n  width: 100%;\n}\n", ""]);
 
 /***/ }),
 /* 740 */
@@ -69815,6 +69855,10 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "arrow text-muted" }, [
+            _c("i", { staticClass: "fa fa-arrow-right" }),
+            _vm._v(" "),
+            _c("i", { staticClass: "fa fa-arrow-right" }),
+            _vm._v(" "),
             _c("i", { staticClass: "fa fa-arrow-right" })
           ]),
           _vm._v(" "),

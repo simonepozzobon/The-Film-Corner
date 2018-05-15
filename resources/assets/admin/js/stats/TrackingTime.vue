@@ -5,7 +5,7 @@
                 <h4>{{ this.convertStart }}</h4>
             </div>
             <div class="arrow text-muted">
-                <i class="fa fa-arrow-right"></i>
+                <i class="fa fa-arrow-right"></i> <i class="fa fa-arrow-right"></i> <i class="fa fa-arrow-right"></i>
             </div>
             <div class="end-date">
                 <h4>{{ this.convertEnd }}</h4>

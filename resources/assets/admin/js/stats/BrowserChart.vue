@@ -147,6 +147,7 @@ export default {
 
 #browser-chart {
     min-height: 400px;
+    width: 100%;
 }
 
 </style>
