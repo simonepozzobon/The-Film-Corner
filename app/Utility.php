@@ -252,7 +252,7 @@ class Utility extends Model
         $obj = json_decode($share->content);
 
         $item->media_type = 'image';
-        $item->featured_media = $obj->imgL;
+        $item->featured_media = $obj->videoL;
         $item->notes = $obj->notes;
         break;
 
