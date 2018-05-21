@@ -1,4 +1,6 @@
 {
+  "/js/admin/main.js": "/js/admin/main.js",
+  "/js/admin/contest.js": "/js/admin/contest.js",
   "/js/teacher-profile.js": "/js/teacher-profile.js",
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
@@ -6,9 +8,7 @@
   "/js/socket-test.js": "/js/socket-test.js",
   "/js/teacher-chat.js": "/js/teacher-chat.js",
   "/js/app.js": "/js/app.js",
-  "/js/admin/main.js": "/js/admin/main.js",
   "/js/network-single.js": "/js/network-single.js",
-  "/js/admin/contest.js": "/js/admin/contest.js",
   "/js/admin/video.js": "/js/admin/video.js",
   "/js/admin/image.js": "/js/admin/image.js",
   "/js/admin/audio.js": "/js/admin/audio.js",

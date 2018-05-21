@@ -1,34 +1,6 @@
-webpackJsonp([1],{
+webpackJsonp([3],{
 
-/***/ 1:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 101:
+/***/ 109:
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -48,7 +20,7 @@ module.exports = function tsml (sa) {
 
 /***/ }),
 
-/***/ 102:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -56,19 +28,19 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(130);
+var _trackButton = __webpack_require__(260);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _textTrackMenuItem = __webpack_require__(116);
+var _textTrackMenuItem = __webpack_require__(123);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _offTextTrackMenuItem = __webpack_require__(181);
+var _offTextTrackMenuItem = __webpack_require__(316);
 
 var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
 
@@ -159,7 +131,7 @@ exports['default'] = TextTrackButton;
 
 /***/ }),
 
-/***/ 103:
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -167,7 +139,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -336,7 +308,7 @@ exports['default'] = EventTarget;
 
 /***/ }),
 
-/***/ 104:
+/***/ 112:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -344,15 +316,15 @@ exports['default'] = EventTarget;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(77);
+var _clickableComponent = __webpack_require__(79);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -467,8 +439,7 @@ var MenuItem = function (_ClickableComponent) {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
-        // Note that a space clears out the selected state text
-        this.controlText(' ');
+        this.controlText('');
       }
     }
   };
@@ -482,7 +453,7 @@ exports['default'] = MenuItem;
 
 /***/ }),
 
-/***/ 105:
+/***/ 113:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -663,19 +634,19 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 /***/ }),
 
-/***/ 107:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(152);
+__webpack_require__(282);
 module.exports = angular;
 
 
 /***/ }),
 
-/***/ 108:
+/***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(75)
+var isFunction = __webpack_require__(77)
 
 module.exports = forEach
 
@@ -725,11 +696,11 @@ function forEachObject(object, iterator, context) {
 
 /***/ }),
 
-/***/ 109:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(111)
-  , forEach = __webpack_require__(108)
+var trim = __webpack_require__(122)
+  , forEach = __webpack_require__(118)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -762,7 +733,7 @@ module.exports = function (headers) {
 
 /***/ }),
 
-/***/ 110:
+/***/ 121:
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -783,7 +754,7 @@ function SafeParseTuple(obj, reviver) {
 
 /***/ }),
 
-/***/ 111:
+/***/ 122:
 /***/ (function(module, exports) {
 
 
@@ -804,1853 +775,7 @@ exports.right = function(str){
 
 /***/ }),
 
-/***/ 112:
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-// Default exports for Node. Export the extended versions of VTTCue and
-// VTTRegion in Node since we likely want the capability to convert back and
-// forth between JSON. If we don't then it's not that big of a deal since we're
-// off browser.
-
-var window = __webpack_require__(74);
-
-var vttjs = module.exports = {
-  WebVTT: __webpack_require__(113),
-  VTTCue: __webpack_require__(114),
-  VTTRegion: __webpack_require__(115)
-};
-
-window.vttjs = vttjs;
-window.WebVTT = vttjs.WebVTT;
-
-var cueShim = vttjs.VTTCue;
-var regionShim = vttjs.VTTRegion;
-var nativeVTTCue = window.VTTCue;
-var nativeVTTRegion = window.VTTRegion;
-
-vttjs.shim = function() {
-  window.VTTCue = cueShim;
-  window.VTTRegion = regionShim;
-};
-
-vttjs.restore = function() {
-  window.VTTCue = nativeVTTCue;
-  window.VTTRegion = nativeVTTRegion;
-};
-
-if (!window.VTTCue) {
-  vttjs.shim();
-}
-
-
-/***/ }),
-
-/***/ 113:
-/***/ (function(module, exports) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
-var _objCreate = Object.create || (function() {
-  function F() {}
-  return function(o) {
-    if (arguments.length !== 1) {
-      throw new Error('Object.create shim only accepts one parameter.');
-    }
-    F.prototype = o;
-    return new F();
-  };
-})();
-
-// Creates a new ParserError object from an errorData object. The errorData
-// object should have default code and message properties. The default message
-// property can be overriden by passing in a message parameter.
-// See ParsingError.Errors below for acceptable errors.
-function ParsingError(errorData, message) {
-  this.name = "ParsingError";
-  this.code = errorData.code;
-  this.message = message || errorData.message;
-}
-ParsingError.prototype = _objCreate(Error.prototype);
-ParsingError.prototype.constructor = ParsingError;
-
-// ParsingError metadata for acceptable ParsingErrors.
-ParsingError.Errors = {
-  BadSignature: {
-    code: 0,
-    message: "Malformed WebVTT signature."
-  },
-  BadTimeStamp: {
-    code: 1,
-    message: "Malformed time stamp."
-  }
-};
-
-// Try to parse input as a time stamp.
-function parseTimeStamp(input) {
-
-  function computeSeconds(h, m, s, f) {
-    return (h | 0) * 3600 + (m | 0) * 60 + (s | 0) + (f | 0) / 1000;
-  }
-
-  var m = input.match(/^(\d+):(\d{2})(:\d{2})?\.(\d{3})/);
-  if (!m) {
-    return null;
-  }
-
-  if (m[3]) {
-    // Timestamp takes the form of [hours]:[minutes]:[seconds].[milliseconds]
-    return computeSeconds(m[1], m[2], m[3].replace(":", ""), m[4]);
-  } else if (m[1] > 59) {
-    // Timestamp takes the form of [hours]:[minutes].[milliseconds]
-    // First position is hours as it's over 59.
-    return computeSeconds(m[1], m[2], 0,  m[4]);
-  } else {
-    // Timestamp takes the form of [minutes]:[seconds].[milliseconds]
-    return computeSeconds(0, m[1], m[2], m[4]);
-  }
-}
-
-// A settings object holds key/value pairs and will ignore anything but the first
-// assignment to a specific key.
-function Settings() {
-  this.values = _objCreate(null);
-}
-
-Settings.prototype = {
-  // Only accept the first assignment to any key.
-  set: function(k, v) {
-    if (!this.get(k) && v !== "") {
-      this.values[k] = v;
-    }
-  },
-  // Return the value for a key, or a default value.
-  // If 'defaultKey' is passed then 'dflt' is assumed to be an object with
-  // a number of possible default values as properties where 'defaultKey' is
-  // the key of the property that will be chosen; otherwise it's assumed to be
-  // a single value.
-  get: function(k, dflt, defaultKey) {
-    if (defaultKey) {
-      return this.has(k) ? this.values[k] : dflt[defaultKey];
-    }
-    return this.has(k) ? this.values[k] : dflt;
-  },
-  // Check whether we have a value for a key.
-  has: function(k) {
-    return k in this.values;
-  },
-  // Accept a setting if its one of the given alternatives.
-  alt: function(k, v, a) {
-    for (var n = 0; n < a.length; ++n) {
-      if (v === a[n]) {
-        this.set(k, v);
-        break;
-      }
-    }
-  },
-  // Accept a setting if its a valid (signed) integer.
-  integer: function(k, v) {
-    if (/^-?\d+$/.test(v)) { // integer
-      this.set(k, parseInt(v, 10));
-    }
-  },
-  // Accept a setting if its a valid percentage.
-  percent: function(k, v) {
-    var m;
-    if ((m = v.match(/^([\d]{1,3})(\.[\d]*)?%$/))) {
-      v = parseFloat(v);
-      if (v >= 0 && v <= 100) {
-        this.set(k, v);
-        return true;
-      }
-    }
-    return false;
-  }
-};
-
-// Helper function to parse input into groups separated by 'groupDelim', and
-// interprete each group as a key/value pair separated by 'keyValueDelim'.
-function parseOptions(input, callback, keyValueDelim, groupDelim) {
-  var groups = groupDelim ? input.split(groupDelim) : [input];
-  for (var i in groups) {
-    if (typeof groups[i] !== "string") {
-      continue;
-    }
-    var kv = groups[i].split(keyValueDelim);
-    if (kv.length !== 2) {
-      continue;
-    }
-    var k = kv[0];
-    var v = kv[1];
-    callback(k, v);
-  }
-}
-
-function parseCue(input, cue, regionList) {
-  // Remember the original input if we need to throw an error.
-  var oInput = input;
-  // 4.1 WebVTT timestamp
-  function consumeTimeStamp() {
-    var ts = parseTimeStamp(input);
-    if (ts === null) {
-      throw new ParsingError(ParsingError.Errors.BadTimeStamp,
-                            "Malformed timestamp: " + oInput);
-    }
-    // Remove time stamp from input.
-    input = input.replace(/^[^\sa-zA-Z-]+/, "");
-    return ts;
-  }
-
-  // 4.4.2 WebVTT cue settings
-  function consumeCueSettings(input, cue) {
-    var settings = new Settings();
-
-    parseOptions(input, function (k, v) {
-      switch (k) {
-      case "region":
-        // Find the last region we parsed with the same region id.
-        for (var i = regionList.length - 1; i >= 0; i--) {
-          if (regionList[i].id === v) {
-            settings.set(k, regionList[i].region);
-            break;
-          }
-        }
-        break;
-      case "vertical":
-        settings.alt(k, v, ["rl", "lr"]);
-        break;
-      case "line":
-        var vals = v.split(","),
-            vals0 = vals[0];
-        settings.integer(k, vals0);
-        settings.percent(k, vals0) ? settings.set("snapToLines", false) : null;
-        settings.alt(k, vals0, ["auto"]);
-        if (vals.length === 2) {
-          settings.alt("lineAlign", vals[1], ["start", "middle", "end"]);
-        }
-        break;
-      case "position":
-        vals = v.split(",");
-        settings.percent(k, vals[0]);
-        if (vals.length === 2) {
-          settings.alt("positionAlign", vals[1], ["start", "middle", "end"]);
-        }
-        break;
-      case "size":
-        settings.percent(k, v);
-        break;
-      case "align":
-        settings.alt(k, v, ["start", "middle", "end", "left", "right"]);
-        break;
-      }
-    }, /:/, /\s/);
-
-    // Apply default values for any missing fields.
-    cue.region = settings.get("region", null);
-    cue.vertical = settings.get("vertical", "");
-    cue.line = settings.get("line", "auto");
-    cue.lineAlign = settings.get("lineAlign", "start");
-    cue.snapToLines = settings.get("snapToLines", true);
-    cue.size = settings.get("size", 100);
-    cue.align = settings.get("align", "middle");
-    cue.position = settings.get("position", {
-      start: 0,
-      left: 0,
-      middle: 50,
-      end: 100,
-      right: 100
-    }, cue.align);
-    cue.positionAlign = settings.get("positionAlign", {
-      start: "start",
-      left: "start",
-      middle: "middle",
-      end: "end",
-      right: "end"
-    }, cue.align);
-  }
-
-  function skipWhitespace() {
-    input = input.replace(/^\s+/, "");
-  }
-
-  // 4.1 WebVTT cue timings.
-  skipWhitespace();
-  cue.startTime = consumeTimeStamp();   // (1) collect cue start time
-  skipWhitespace();
-  if (input.substr(0, 3) !== "-->") {     // (3) next characters must match "-->"
-    throw new ParsingError(ParsingError.Errors.BadTimeStamp,
-                           "Malformed time stamp (time stamps must be separated by '-->'): " +
-                           oInput);
-  }
-  input = input.substr(3);
-  skipWhitespace();
-  cue.endTime = consumeTimeStamp();     // (5) collect cue end time
-
-  // 4.1 WebVTT cue settings list.
-  skipWhitespace();
-  consumeCueSettings(input, cue);
-}
-
-var ESCAPE = {
-  "&amp;": "&",
-  "&lt;": "<",
-  "&gt;": ">",
-  "&lrm;": "\u200e",
-  "&rlm;": "\u200f",
-  "&nbsp;": "\u00a0"
-};
-
-var TAG_NAME = {
-  c: "span",
-  i: "i",
-  b: "b",
-  u: "u",
-  ruby: "ruby",
-  rt: "rt",
-  v: "span",
-  lang: "span"
-};
-
-var TAG_ANNOTATION = {
-  v: "title",
-  lang: "lang"
-};
-
-var NEEDS_PARENT = {
-  rt: "ruby"
-};
-
-// Parse content into a document fragment.
-function parseContent(window, input) {
-  function nextToken() {
-    // Check for end-of-string.
-    if (!input) {
-      return null;
-    }
-
-    // Consume 'n' characters from the input.
-    function consume(result) {
-      input = input.substr(result.length);
-      return result;
-    }
-
-    var m = input.match(/^([^<]*)(<[^>]+>?)?/);
-    // If there is some text before the next tag, return it, otherwise return
-    // the tag.
-    return consume(m[1] ? m[1] : m[2]);
-  }
-
-  // Unescape a string 's'.
-  function unescape1(e) {
-    return ESCAPE[e];
-  }
-  function unescape(s) {
-    while ((m = s.match(/&(amp|lt|gt|lrm|rlm|nbsp);/))) {
-      s = s.replace(m[0], unescape1);
-    }
-    return s;
-  }
-
-  function shouldAdd(current, element) {
-    return !NEEDS_PARENT[element.localName] ||
-           NEEDS_PARENT[element.localName] === current.localName;
-  }
-
-  // Create an element for this tag.
-  function createElement(type, annotation) {
-    var tagName = TAG_NAME[type];
-    if (!tagName) {
-      return null;
-    }
-    var element = window.document.createElement(tagName);
-    element.localName = tagName;
-    var name = TAG_ANNOTATION[type];
-    if (name && annotation) {
-      element[name] = annotation.trim();
-    }
-    return element;
-  }
-
-  var rootDiv = window.document.createElement("div"),
-      current = rootDiv,
-      t,
-      tagStack = [];
-
-  while ((t = nextToken()) !== null) {
-    if (t[0] === '<') {
-      if (t[1] === "/") {
-        // If the closing tag matches, move back up to the parent node.
-        if (tagStack.length &&
-            tagStack[tagStack.length - 1] === t.substr(2).replace(">", "")) {
-          tagStack.pop();
-          current = current.parentNode;
-        }
-        // Otherwise just ignore the end tag.
-        continue;
-      }
-      var ts = parseTimeStamp(t.substr(1, t.length - 2));
-      var node;
-      if (ts) {
-        // Timestamps are lead nodes as well.
-        node = window.document.createProcessingInstruction("timestamp", ts);
-        current.appendChild(node);
-        continue;
-      }
-      var m = t.match(/^<([^.\s/0-9>]+)(\.[^\s\\>]+)?([^>\\]+)?(\\?)>?$/);
-      // If we can't parse the tag, skip to the next tag.
-      if (!m) {
-        continue;
-      }
-      // Try to construct an element, and ignore the tag if we couldn't.
-      node = createElement(m[1], m[3]);
-      if (!node) {
-        continue;
-      }
-      // Determine if the tag should be added based on the context of where it
-      // is placed in the cuetext.
-      if (!shouldAdd(current, node)) {
-        continue;
-      }
-      // Set the class list (as a list of classes, separated by space).
-      if (m[2]) {
-        node.className = m[2].substr(1).replace('.', ' ');
-      }
-      // Append the node to the current node, and enter the scope of the new
-      // node.
-      tagStack.push(m[1]);
-      current.appendChild(node);
-      current = node;
-      continue;
-    }
-
-    // Text nodes are leaf nodes.
-    current.appendChild(window.document.createTextNode(unescape(t)));
-  }
-
-  return rootDiv;
-}
-
-// This is a list of all the Unicode characters that have a strong
-// right-to-left category. What this means is that these characters are
-// written right-to-left for sure. It was generated by pulling all the strong
-// right-to-left characters out of the Unicode data table. That table can
-// found at: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
-var strongRTLRanges = [[0x5be, 0x5be], [0x5c0, 0x5c0], [0x5c3, 0x5c3], [0x5c6, 0x5c6],
- [0x5d0, 0x5ea], [0x5f0, 0x5f4], [0x608, 0x608], [0x60b, 0x60b], [0x60d, 0x60d],
- [0x61b, 0x61b], [0x61e, 0x64a], [0x66d, 0x66f], [0x671, 0x6d5], [0x6e5, 0x6e6],
- [0x6ee, 0x6ef], [0x6fa, 0x70d], [0x70f, 0x710], [0x712, 0x72f], [0x74d, 0x7a5],
- [0x7b1, 0x7b1], [0x7c0, 0x7ea], [0x7f4, 0x7f5], [0x7fa, 0x7fa], [0x800, 0x815],
- [0x81a, 0x81a], [0x824, 0x824], [0x828, 0x828], [0x830, 0x83e], [0x840, 0x858],
- [0x85e, 0x85e], [0x8a0, 0x8a0], [0x8a2, 0x8ac], [0x200f, 0x200f],
- [0xfb1d, 0xfb1d], [0xfb1f, 0xfb28], [0xfb2a, 0xfb36], [0xfb38, 0xfb3c],
- [0xfb3e, 0xfb3e], [0xfb40, 0xfb41], [0xfb43, 0xfb44], [0xfb46, 0xfbc1],
- [0xfbd3, 0xfd3d], [0xfd50, 0xfd8f], [0xfd92, 0xfdc7], [0xfdf0, 0xfdfc],
- [0xfe70, 0xfe74], [0xfe76, 0xfefc], [0x10800, 0x10805], [0x10808, 0x10808],
- [0x1080a, 0x10835], [0x10837, 0x10838], [0x1083c, 0x1083c], [0x1083f, 0x10855],
- [0x10857, 0x1085f], [0x10900, 0x1091b], [0x10920, 0x10939], [0x1093f, 0x1093f],
- [0x10980, 0x109b7], [0x109be, 0x109bf], [0x10a00, 0x10a00], [0x10a10, 0x10a13],
- [0x10a15, 0x10a17], [0x10a19, 0x10a33], [0x10a40, 0x10a47], [0x10a50, 0x10a58],
- [0x10a60, 0x10a7f], [0x10b00, 0x10b35], [0x10b40, 0x10b55], [0x10b58, 0x10b72],
- [0x10b78, 0x10b7f], [0x10c00, 0x10c48], [0x1ee00, 0x1ee03], [0x1ee05, 0x1ee1f],
- [0x1ee21, 0x1ee22], [0x1ee24, 0x1ee24], [0x1ee27, 0x1ee27], [0x1ee29, 0x1ee32],
- [0x1ee34, 0x1ee37], [0x1ee39, 0x1ee39], [0x1ee3b, 0x1ee3b], [0x1ee42, 0x1ee42],
- [0x1ee47, 0x1ee47], [0x1ee49, 0x1ee49], [0x1ee4b, 0x1ee4b], [0x1ee4d, 0x1ee4f],
- [0x1ee51, 0x1ee52], [0x1ee54, 0x1ee54], [0x1ee57, 0x1ee57], [0x1ee59, 0x1ee59],
- [0x1ee5b, 0x1ee5b], [0x1ee5d, 0x1ee5d], [0x1ee5f, 0x1ee5f], [0x1ee61, 0x1ee62],
- [0x1ee64, 0x1ee64], [0x1ee67, 0x1ee6a], [0x1ee6c, 0x1ee72], [0x1ee74, 0x1ee77],
- [0x1ee79, 0x1ee7c], [0x1ee7e, 0x1ee7e], [0x1ee80, 0x1ee89], [0x1ee8b, 0x1ee9b],
- [0x1eea1, 0x1eea3], [0x1eea5, 0x1eea9], [0x1eeab, 0x1eebb], [0x10fffd, 0x10fffd]];
-
-function isStrongRTLChar(charCode) {
-  for (var i = 0; i < strongRTLRanges.length; i++) {
-    var currentRange = strongRTLRanges[i];
-    if (charCode >= currentRange[0] && charCode <= currentRange[1]) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function determineBidi(cueDiv) {
-  var nodeStack = [],
-      text = "",
-      charCode;
-
-  if (!cueDiv || !cueDiv.childNodes) {
-    return "ltr";
-  }
-
-  function pushNodes(nodeStack, node) {
-    for (var i = node.childNodes.length - 1; i >= 0; i--) {
-      nodeStack.push(node.childNodes[i]);
-    }
-  }
-
-  function nextTextNode(nodeStack) {
-    if (!nodeStack || !nodeStack.length) {
-      return null;
-    }
-
-    var node = nodeStack.pop(),
-        text = node.textContent || node.innerText;
-    if (text) {
-      // TODO: This should match all unicode type B characters (paragraph
-      // separator characters). See issue #115.
-      var m = text.match(/^.*(\n|\r)/);
-      if (m) {
-        nodeStack.length = 0;
-        return m[0];
-      }
-      return text;
-    }
-    if (node.tagName === "ruby") {
-      return nextTextNode(nodeStack);
-    }
-    if (node.childNodes) {
-      pushNodes(nodeStack, node);
-      return nextTextNode(nodeStack);
-    }
-  }
-
-  pushNodes(nodeStack, cueDiv);
-  while ((text = nextTextNode(nodeStack))) {
-    for (var i = 0; i < text.length; i++) {
-      charCode = text.charCodeAt(i);
-      if (isStrongRTLChar(charCode)) {
-        return "rtl";
-      }
-    }
-  }
-  return "ltr";
-}
-
-function computeLinePos(cue) {
-  if (typeof cue.line === "number" &&
-      (cue.snapToLines || (cue.line >= 0 && cue.line <= 100))) {
-    return cue.line;
-  }
-  if (!cue.track || !cue.track.textTrackList ||
-      !cue.track.textTrackList.mediaElement) {
-    return -1;
-  }
-  var track = cue.track,
-      trackList = track.textTrackList,
-      count = 0;
-  for (var i = 0; i < trackList.length && trackList[i] !== track; i++) {
-    if (trackList[i].mode === "showing") {
-      count++;
-    }
-  }
-  return ++count * -1;
-}
-
-function StyleBox() {
-}
-
-// Apply styles to a div. If there is no div passed then it defaults to the
-// div on 'this'.
-StyleBox.prototype.applyStyles = function(styles, div) {
-  div = div || this.div;
-  for (var prop in styles) {
-    if (styles.hasOwnProperty(prop)) {
-      div.style[prop] = styles[prop];
-    }
-  }
-};
-
-StyleBox.prototype.formatStyle = function(val, unit) {
-  return val === 0 ? 0 : val + unit;
-};
-
-// Constructs the computed display state of the cue (a div). Places the div
-// into the overlay which should be a block level element (usually a div).
-function CueStyleBox(window, cue, styleOptions) {
-  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-  var color = "rgba(255, 255, 255, 1)";
-  var backgroundColor = "rgba(0, 0, 0, 0.8)";
-
-  if (isIE8) {
-    color = "rgb(255, 255, 255)";
-    backgroundColor = "rgb(0, 0, 0)";
-  }
-
-  StyleBox.call(this);
-  this.cue = cue;
-
-  // Parse our cue's text into a DOM tree rooted at 'cueDiv'. This div will
-  // have inline positioning and will function as the cue background box.
-  this.cueDiv = parseContent(window, cue.text);
-  var styles = {
-    color: color,
-    backgroundColor: backgroundColor,
-    position: "relative",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    display: "inline"
-  };
-
-  if (!isIE8) {
-    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
-                                             : cue.vertical === "lr" ? "vertical-lr"
-                                                                     : "vertical-rl";
-    styles.unicodeBidi = "plaintext";
-  }
-  this.applyStyles(styles, this.cueDiv);
-
-  // Create an absolutely positioned div that will be used to position the cue
-  // div. Note, all WebVTT cue-setting alignments are equivalent to the CSS
-  // mirrors of them except "middle" which is "center" in CSS.
-  this.div = window.document.createElement("div");
-  styles = {
-    textAlign: cue.align === "middle" ? "center" : cue.align,
-    font: styleOptions.font,
-    whiteSpace: "pre-line",
-    position: "absolute"
-  };
-
-  if (!isIE8) {
-    styles.direction = determineBidi(this.cueDiv);
-    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
-                                             : cue.vertical === "lr" ? "vertical-lr"
-                                                                     : "vertical-rl".
-    stylesunicodeBidi =  "plaintext";
-  }
-
-  this.applyStyles(styles);
-
-  this.div.appendChild(this.cueDiv);
-
-  // Calculate the distance from the reference edge of the viewport to the text
-  // position of the cue box. The reference edge will be resolved later when
-  // the box orientation styles are applied.
-  var textPos = 0;
-  switch (cue.positionAlign) {
-  case "start":
-    textPos = cue.position;
-    break;
-  case "middle":
-    textPos = cue.position - (cue.size / 2);
-    break;
-  case "end":
-    textPos = cue.position - cue.size;
-    break;
-  }
-
-  // Horizontal box orientation; textPos is the distance from the left edge of the
-  // area to the left edge of the box and cue.size is the distance extending to
-  // the right from there.
-  if (cue.vertical === "") {
-    this.applyStyles({
-      left:  this.formatStyle(textPos, "%"),
-      width: this.formatStyle(cue.size, "%")
-    });
-  // Vertical box orientation; textPos is the distance from the top edge of the
-  // area to the top edge of the box and cue.size is the height extending
-  // downwards from there.
-  } else {
-    this.applyStyles({
-      top: this.formatStyle(textPos, "%"),
-      height: this.formatStyle(cue.size, "%")
-    });
-  }
-
-  this.move = function(box) {
-    this.applyStyles({
-      top: this.formatStyle(box.top, "px"),
-      bottom: this.formatStyle(box.bottom, "px"),
-      left: this.formatStyle(box.left, "px"),
-      right: this.formatStyle(box.right, "px"),
-      height: this.formatStyle(box.height, "px"),
-      width: this.formatStyle(box.width, "px")
-    });
-  };
-}
-CueStyleBox.prototype = _objCreate(StyleBox.prototype);
-CueStyleBox.prototype.constructor = CueStyleBox;
-
-// Represents the co-ordinates of an Element in a way that we can easily
-// compute things with such as if it overlaps or intersects with another Element.
-// Can initialize it with either a StyleBox or another BoxPosition.
-function BoxPosition(obj) {
-  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-
-  // Either a BoxPosition was passed in and we need to copy it, or a StyleBox
-  // was passed in and we need to copy the results of 'getBoundingClientRect'
-  // as the object returned is readonly. All co-ordinate values are in reference
-  // to the viewport origin (top left).
-  var lh, height, width, top;
-  if (obj.div) {
-    height = obj.div.offsetHeight;
-    width = obj.div.offsetWidth;
-    top = obj.div.offsetTop;
-
-    var rects = (rects = obj.div.childNodes) && (rects = rects[0]) &&
-                rects.getClientRects && rects.getClientRects();
-    obj = obj.div.getBoundingClientRect();
-    // In certain cases the outter div will be slightly larger then the sum of
-    // the inner div's lines. This could be due to bold text, etc, on some platforms.
-    // In this case we should get the average line height and use that. This will
-    // result in the desired behaviour.
-    lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length)
-               : 0;
-
-  }
-  this.left = obj.left;
-  this.right = obj.right;
-  this.top = obj.top || top;
-  this.height = obj.height || height;
-  this.bottom = obj.bottom || (top + (obj.height || height));
-  this.width = obj.width || width;
-  this.lineHeight = lh !== undefined ? lh : obj.lineHeight;
-
-  if (isIE8 && !this.lineHeight) {
-    this.lineHeight = 13;
-  }
-}
-
-// Move the box along a particular axis. Optionally pass in an amount to move
-// the box. If no amount is passed then the default is the line height of the
-// box.
-BoxPosition.prototype.move = function(axis, toMove) {
-  toMove = toMove !== undefined ? toMove : this.lineHeight;
-  switch (axis) {
-  case "+x":
-    this.left += toMove;
-    this.right += toMove;
-    break;
-  case "-x":
-    this.left -= toMove;
-    this.right -= toMove;
-    break;
-  case "+y":
-    this.top += toMove;
-    this.bottom += toMove;
-    break;
-  case "-y":
-    this.top -= toMove;
-    this.bottom -= toMove;
-    break;
-  }
-};
-
-// Check if this box overlaps another box, b2.
-BoxPosition.prototype.overlaps = function(b2) {
-  return this.left < b2.right &&
-         this.right > b2.left &&
-         this.top < b2.bottom &&
-         this.bottom > b2.top;
-};
-
-// Check if this box overlaps any other boxes in boxes.
-BoxPosition.prototype.overlapsAny = function(boxes) {
-  for (var i = 0; i < boxes.length; i++) {
-    if (this.overlaps(boxes[i])) {
-      return true;
-    }
-  }
-  return false;
-};
-
-// Check if this box is within another box.
-BoxPosition.prototype.within = function(container) {
-  return this.top >= container.top &&
-         this.bottom <= container.bottom &&
-         this.left >= container.left &&
-         this.right <= container.right;
-};
-
-// Check if this box is entirely within the container or it is overlapping
-// on the edge opposite of the axis direction passed. For example, if "+x" is
-// passed and the box is overlapping on the left edge of the container, then
-// return true.
-BoxPosition.prototype.overlapsOppositeAxis = function(container, axis) {
-  switch (axis) {
-  case "+x":
-    return this.left < container.left;
-  case "-x":
-    return this.right > container.right;
-  case "+y":
-    return this.top < container.top;
-  case "-y":
-    return this.bottom > container.bottom;
-  }
-};
-
-// Find the percentage of the area that this box is overlapping with another
-// box.
-BoxPosition.prototype.intersectPercentage = function(b2) {
-  var x = Math.max(0, Math.min(this.right, b2.right) - Math.max(this.left, b2.left)),
-      y = Math.max(0, Math.min(this.bottom, b2.bottom) - Math.max(this.top, b2.top)),
-      intersectArea = x * y;
-  return intersectArea / (this.height * this.width);
-};
-
-// Convert the positions from this box to CSS compatible positions using
-// the reference container's positions. This has to be done because this
-// box's positions are in reference to the viewport origin, whereas, CSS
-// values are in referecne to their respective edges.
-BoxPosition.prototype.toCSSCompatValues = function(reference) {
-  return {
-    top: this.top - reference.top,
-    bottom: reference.bottom - this.bottom,
-    left: this.left - reference.left,
-    right: reference.right - this.right,
-    height: this.height,
-    width: this.width
-  };
-};
-
-// Get an object that represents the box's position without anything extra.
-// Can pass a StyleBox, HTMLElement, or another BoxPositon.
-BoxPosition.getSimpleBoxPosition = function(obj) {
-  var height = obj.div ? obj.div.offsetHeight : obj.tagName ? obj.offsetHeight : 0;
-  var width = obj.div ? obj.div.offsetWidth : obj.tagName ? obj.offsetWidth : 0;
-  var top = obj.div ? obj.div.offsetTop : obj.tagName ? obj.offsetTop : 0;
-
-  obj = obj.div ? obj.div.getBoundingClientRect() :
-                obj.tagName ? obj.getBoundingClientRect() : obj;
-  var ret = {
-    left: obj.left,
-    right: obj.right,
-    top: obj.top || top,
-    height: obj.height || height,
-    bottom: obj.bottom || (top + (obj.height || height)),
-    width: obj.width || width
-  };
-  return ret;
-};
-
-// Move a StyleBox to its specified, or next best, position. The containerBox
-// is the box that contains the StyleBox, such as a div. boxPositions are
-// a list of other boxes that the styleBox can't overlap with.
-function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
-
-  // Find the best position for a cue box, b, on the video. The axis parameter
-  // is a list of axis, the order of which, it will move the box along. For example:
-  // Passing ["+x", "-x"] will move the box first along the x axis in the positive
-  // direction. If it doesn't find a good position for it there it will then move
-  // it along the x axis in the negative direction.
-  function findBestPosition(b, axis) {
-    var bestPosition,
-        specifiedPosition = new BoxPosition(b),
-        percentage = 1; // Highest possible so the first thing we get is better.
-
-    for (var i = 0; i < axis.length; i++) {
-      while (b.overlapsOppositeAxis(containerBox, axis[i]) ||
-             (b.within(containerBox) && b.overlapsAny(boxPositions))) {
-        b.move(axis[i]);
-      }
-      // We found a spot where we aren't overlapping anything. This is our
-      // best position.
-      if (b.within(containerBox)) {
-        return b;
-      }
-      var p = b.intersectPercentage(containerBox);
-      // If we're outside the container box less then we were on our last try
-      // then remember this position as the best position.
-      if (percentage > p) {
-        bestPosition = new BoxPosition(b);
-        percentage = p;
-      }
-      // Reset the box position to the specified position.
-      b = new BoxPosition(specifiedPosition);
-    }
-    return bestPosition || specifiedPosition;
-  }
-
-  var boxPosition = new BoxPosition(styleBox),
-      cue = styleBox.cue,
-      linePos = computeLinePos(cue),
-      axis = [];
-
-  // If we have a line number to align the cue to.
-  if (cue.snapToLines) {
-    var size;
-    switch (cue.vertical) {
-    case "":
-      axis = [ "+y", "-y" ];
-      size = "height";
-      break;
-    case "rl":
-      axis = [ "+x", "-x" ];
-      size = "width";
-      break;
-    case "lr":
-      axis = [ "-x", "+x" ];
-      size = "width";
-      break;
-    }
-
-    var step = boxPosition.lineHeight,
-        position = step * Math.round(linePos),
-        maxPosition = containerBox[size] + step,
-        initialAxis = axis[0];
-
-    // If the specified intial position is greater then the max position then
-    // clamp the box to the amount of steps it would take for the box to
-    // reach the max position.
-    if (Math.abs(position) > maxPosition) {
-      position = position < 0 ? -1 : 1;
-      position *= Math.ceil(maxPosition / step) * step;
-    }
-
-    // If computed line position returns negative then line numbers are
-    // relative to the bottom of the video instead of the top. Therefore, we
-    // need to increase our initial position by the length or width of the
-    // video, depending on the writing direction, and reverse our axis directions.
-    if (linePos < 0) {
-      position += cue.vertical === "" ? containerBox.height : containerBox.width;
-      axis = axis.reverse();
-    }
-
-    // Move the box to the specified position. This may not be its best
-    // position.
-    boxPosition.move(initialAxis, position);
-
-  } else {
-    // If we have a percentage line value for the cue.
-    var calculatedPercentage = (boxPosition.lineHeight / containerBox.height) * 100;
-
-    switch (cue.lineAlign) {
-    case "middle":
-      linePos -= (calculatedPercentage / 2);
-      break;
-    case "end":
-      linePos -= calculatedPercentage;
-      break;
-    }
-
-    // Apply initial line position to the cue box.
-    switch (cue.vertical) {
-    case "":
-      styleBox.applyStyles({
-        top: styleBox.formatStyle(linePos, "%")
-      });
-      break;
-    case "rl":
-      styleBox.applyStyles({
-        left: styleBox.formatStyle(linePos, "%")
-      });
-      break;
-    case "lr":
-      styleBox.applyStyles({
-        right: styleBox.formatStyle(linePos, "%")
-      });
-      break;
-    }
-
-    axis = [ "+y", "-x", "+x", "-y" ];
-
-    // Get the box position again after we've applied the specified positioning
-    // to it.
-    boxPosition = new BoxPosition(styleBox);
-  }
-
-  var bestPosition = findBestPosition(boxPosition, axis);
-  styleBox.move(bestPosition.toCSSCompatValues(containerBox));
-}
-
-function WebVTT() {
-  // Nothing
-}
-
-// Helper to allow strings to be decoded instead of the default binary utf8 data.
-WebVTT.StringDecoder = function() {
-  return {
-    decode: function(data) {
-      if (!data) {
-        return "";
-      }
-      if (typeof data !== "string") {
-        throw new Error("Error - expected string data.");
-      }
-      return decodeURIComponent(encodeURIComponent(data));
-    }
-  };
-};
-
-WebVTT.convertCueToDOMTree = function(window, cuetext) {
-  if (!window || !cuetext) {
-    return null;
-  }
-  return parseContent(window, cuetext);
-};
-
-var FONT_SIZE_PERCENT = 0.05;
-var FONT_STYLE = "sans-serif";
-var CUE_BACKGROUND_PADDING = "1.5%";
-
-// Runs the processing model over the cues and regions passed to it.
-// @param overlay A block level element (usually a div) that the computed cues
-//                and regions will be placed into.
-WebVTT.processCues = function(window, cues, overlay) {
-  if (!window || !cues || !overlay) {
-    return null;
-  }
-
-  // Remove all previous children.
-  while (overlay.firstChild) {
-    overlay.removeChild(overlay.firstChild);
-  }
-
-  var paddedOverlay = window.document.createElement("div");
-  paddedOverlay.style.position = "absolute";
-  paddedOverlay.style.left = "0";
-  paddedOverlay.style.right = "0";
-  paddedOverlay.style.top = "0";
-  paddedOverlay.style.bottom = "0";
-  paddedOverlay.style.margin = CUE_BACKGROUND_PADDING;
-  overlay.appendChild(paddedOverlay);
-
-  // Determine if we need to compute the display states of the cues. This could
-  // be the case if a cue's state has been changed since the last computation or
-  // if it has not been computed yet.
-  function shouldCompute(cues) {
-    for (var i = 0; i < cues.length; i++) {
-      if (cues[i].hasBeenReset || !cues[i].displayState) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // We don't need to recompute the cues' display states. Just reuse them.
-  if (!shouldCompute(cues)) {
-    for (var i = 0; i < cues.length; i++) {
-      paddedOverlay.appendChild(cues[i].displayState);
-    }
-    return;
-  }
-
-  var boxPositions = [],
-      containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay),
-      fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
-  var styleOptions = {
-    font: fontSize + "px " + FONT_STYLE
-  };
-
-  (function() {
-    var styleBox, cue;
-
-    for (var i = 0; i < cues.length; i++) {
-      cue = cues[i];
-
-      // Compute the intial position and styles of the cue div.
-      styleBox = new CueStyleBox(window, cue, styleOptions);
-      paddedOverlay.appendChild(styleBox.div);
-
-      // Move the cue div to it's correct line position.
-      moveBoxToLinePosition(window, styleBox, containerBox, boxPositions);
-
-      // Remember the computed div so that we don't have to recompute it later
-      // if we don't have too.
-      cue.displayState = styleBox.div;
-
-      boxPositions.push(BoxPosition.getSimpleBoxPosition(styleBox));
-    }
-  })();
-};
-
-WebVTT.Parser = function(window, vttjs, decoder) {
-  if (!decoder) {
-    decoder = vttjs;
-    vttjs = {};
-  }
-  if (!vttjs) {
-    vttjs = {};
-  }
-
-  this.window = window;
-  this.vttjs = vttjs;
-  this.state = "INITIAL";
-  this.buffer = "";
-  this.decoder = decoder || new TextDecoder("utf8");
-  this.regionList = [];
-};
-
-WebVTT.Parser.prototype = {
-  // If the error is a ParsingError then report it to the consumer if
-  // possible. If it's not a ParsingError then throw it like normal.
-  reportOrThrowError: function(e) {
-    if (e instanceof ParsingError) {
-      this.onparsingerror && this.onparsingerror(e);
-    } else {
-      throw e;
-    }
-  },
-  parse: function (data) {
-    var self = this;
-
-    // If there is no data then we won't decode it, but will just try to parse
-    // whatever is in buffer already. This may occur in circumstances, for
-    // example when flush() is called.
-    if (data) {
-      // Try to decode the data that we received.
-      self.buffer += self.decoder.decode(data, {stream: true});
-    }
-
-    function collectNextLine() {
-      var buffer = self.buffer;
-      var pos = 0;
-      while (pos < buffer.length && buffer[pos] !== '\r' && buffer[pos] !== '\n') {
-        ++pos;
-      }
-      var line = buffer.substr(0, pos);
-      // Advance the buffer early in case we fail below.
-      if (buffer[pos] === '\r') {
-        ++pos;
-      }
-      if (buffer[pos] === '\n') {
-        ++pos;
-      }
-      self.buffer = buffer.substr(pos);
-      return line;
-    }
-
-    // 3.4 WebVTT region and WebVTT region settings syntax
-    function parseRegion(input) {
-      var settings = new Settings();
-
-      parseOptions(input, function (k, v) {
-        switch (k) {
-        case "id":
-          settings.set(k, v);
-          break;
-        case "width":
-          settings.percent(k, v);
-          break;
-        case "lines":
-          settings.integer(k, v);
-          break;
-        case "regionanchor":
-        case "viewportanchor":
-          var xy = v.split(',');
-          if (xy.length !== 2) {
-            break;
-          }
-          // We have to make sure both x and y parse, so use a temporary
-          // settings object here.
-          var anchor = new Settings();
-          anchor.percent("x", xy[0]);
-          anchor.percent("y", xy[1]);
-          if (!anchor.has("x") || !anchor.has("y")) {
-            break;
-          }
-          settings.set(k + "X", anchor.get("x"));
-          settings.set(k + "Y", anchor.get("y"));
-          break;
-        case "scroll":
-          settings.alt(k, v, ["up"]);
-          break;
-        }
-      }, /=/, /\s/);
-
-      // Create the region, using default values for any values that were not
-      // specified.
-      if (settings.has("id")) {
-        var region = new (self.vttjs.VTTRegion || self.window.VTTRegion)();
-        region.width = settings.get("width", 100);
-        region.lines = settings.get("lines", 3);
-        region.regionAnchorX = settings.get("regionanchorX", 0);
-        region.regionAnchorY = settings.get("regionanchorY", 100);
-        region.viewportAnchorX = settings.get("viewportanchorX", 0);
-        region.viewportAnchorY = settings.get("viewportanchorY", 100);
-        region.scroll = settings.get("scroll", "");
-        // Register the region.
-        self.onregion && self.onregion(region);
-        // Remember the VTTRegion for later in case we parse any VTTCues that
-        // reference it.
-        self.regionList.push({
-          id: settings.get("id"),
-          region: region
-        });
-      }
-    }
-
-    // draft-pantos-http-live-streaming-20
-    // https://tools.ietf.org/html/draft-pantos-http-live-streaming-20#section-3.5
-    // 3.5 WebVTT
-    function parseTimestampMap(input) {
-      var settings = new Settings();
-
-      parseOptions(input, function(k, v) {
-        switch(k) {
-        case "MPEGT":
-          settings.integer(k + 'S', v);
-          break;
-        case "LOCA":
-          settings.set(k + 'L', parseTimeStamp(v));
-          break;
-        }
-      }, /[^\d]:/, /,/);
-
-      self.ontimestampmap && self.ontimestampmap({
-        "MPEGTS": settings.get("MPEGTS"),
-        "LOCAL": settings.get("LOCAL")
-      });
-    }
-
-    // 3.2 WebVTT metadata header syntax
-    function parseHeader(input) {
-      if (input.match(/X-TIMESTAMP-MAP/)) {
-        // This line contains HLS X-TIMESTAMP-MAP metadata
-        parseOptions(input, function(k, v) {
-          switch(k) {
-          case "X-TIMESTAMP-MAP":
-            parseTimestampMap(v);
-            break;
-          }
-        }, /=/);
-      } else {
-        parseOptions(input, function (k, v) {
-          switch (k) {
-          case "Region":
-            // 3.3 WebVTT region metadata header syntax
-            parseRegion(v);
-            break;
-          }
-        }, /:/);
-      }
-
-    }
-
-    // 5.1 WebVTT file parsing.
-    try {
-      var line;
-      if (self.state === "INITIAL") {
-        // We can't start parsing until we have the first line.
-        if (!/\r\n|\n/.test(self.buffer)) {
-          return this;
-        }
-
-        line = collectNextLine();
-
-        var m = line.match(/^WEBVTT([ \t].*)?$/);
-        if (!m || !m[0]) {
-          throw new ParsingError(ParsingError.Errors.BadSignature);
-        }
-
-        self.state = "HEADER";
-      }
-
-      var alreadyCollectedLine = false;
-      while (self.buffer) {
-        // We can't parse a line until we have the full line.
-        if (!/\r\n|\n/.test(self.buffer)) {
-          return this;
-        }
-
-        if (!alreadyCollectedLine) {
-          line = collectNextLine();
-        } else {
-          alreadyCollectedLine = false;
-        }
-
-        switch (self.state) {
-        case "HEADER":
-          // 13-18 - Allow a header (metadata) under the WEBVTT line.
-          if (/:/.test(line)) {
-            parseHeader(line);
-          } else if (!line) {
-            // An empty line terminates the header and starts the body (cues).
-            self.state = "ID";
-          }
-          continue;
-        case "NOTE":
-          // Ignore NOTE blocks.
-          if (!line) {
-            self.state = "ID";
-          }
-          continue;
-        case "ID":
-          // Check for the start of NOTE blocks.
-          if (/^NOTE($|[ \t])/.test(line)) {
-            self.state = "NOTE";
-            break;
-          }
-          // 19-29 - Allow any number of line terminators, then initialize new cue values.
-          if (!line) {
-            continue;
-          }
-          self.cue = new (self.vttjs.VTTCue || self.window.VTTCue)(0, 0, "");
-          self.state = "CUE";
-          // 30-39 - Check if self line contains an optional identifier or timing data.
-          if (line.indexOf("-->") === -1) {
-            self.cue.id = line;
-            continue;
-          }
-          // Process line as start of a cue.
-          /*falls through*/
-        case "CUE":
-          // 40 - Collect cue timings and settings.
-          try {
-            parseCue(line, self.cue, self.regionList);
-          } catch (e) {
-            self.reportOrThrowError(e);
-            // In case of an error ignore rest of the cue.
-            self.cue = null;
-            self.state = "BADCUE";
-            continue;
-          }
-          self.state = "CUETEXT";
-          continue;
-        case "CUETEXT":
-          var hasSubstring = line.indexOf("-->") !== -1;
-          // 34 - If we have an empty line then report the cue.
-          // 35 - If we have the special substring '-->' then report the cue,
-          // but do not collect the line as we need to process the current
-          // one as a new cue.
-          if (!line || hasSubstring && (alreadyCollectedLine = true)) {
-            // We are done parsing self cue.
-            self.oncue && self.oncue(self.cue);
-            self.cue = null;
-            self.state = "ID";
-            continue;
-          }
-          if (self.cue.text) {
-            self.cue.text += "\n";
-          }
-          self.cue.text += line;
-          continue;
-        case "BADCUE": // BADCUE
-          // 54-62 - Collect and discard the remaining cue.
-          if (!line) {
-            self.state = "ID";
-          }
-          continue;
-        }
-      }
-    } catch (e) {
-      self.reportOrThrowError(e);
-
-      // If we are currently parsing a cue, report what we have.
-      if (self.state === "CUETEXT" && self.cue && self.oncue) {
-        self.oncue(self.cue);
-      }
-      self.cue = null;
-      // Enter BADWEBVTT state if header was not parsed correctly otherwise
-      // another exception occurred so enter BADCUE state.
-      self.state = self.state === "INITIAL" ? "BADWEBVTT" : "BADCUE";
-    }
-    return this;
-  },
-  flush: function () {
-    var self = this;
-    try {
-      // Finish decoding the stream.
-      self.buffer += self.decoder.decode();
-      // Synthesize the end of the current cue or region.
-      if (self.cue || self.state === "HEADER") {
-        self.buffer += "\n\n";
-        self.parse();
-      }
-      // If we've flushed, parsed, and we're still on the INITIAL state then
-      // that means we don't have enough of the stream to parse the first
-      // line.
-      if (self.state === "INITIAL") {
-        throw new ParsingError(ParsingError.Errors.BadSignature);
-      }
-    } catch(e) {
-      self.reportOrThrowError(e);
-    }
-    self.onflush && self.onflush();
-    return this;
-  }
-};
-
-module.exports = WebVTT;
-
-
-/***/ }),
-
-/***/ 114:
-/***/ (function(module, exports) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var autoKeyword = "auto";
-var directionSetting = {
-  "": true,
-  "lr": true,
-  "rl": true
-};
-var alignSetting = {
-  "start": true,
-  "middle": true,
-  "end": true,
-  "left": true,
-  "right": true
-};
-
-function findDirectionSetting(value) {
-  if (typeof value !== "string") {
-    return false;
-  }
-  var dir = directionSetting[value.toLowerCase()];
-  return dir ? value.toLowerCase() : false;
-}
-
-function findAlignSetting(value) {
-  if (typeof value !== "string") {
-    return false;
-  }
-  var align = alignSetting[value.toLowerCase()];
-  return align ? value.toLowerCase() : false;
-}
-
-function extend(obj) {
-  var i = 1;
-  for (; i < arguments.length; i++) {
-    var cobj = arguments[i];
-    for (var p in cobj) {
-      obj[p] = cobj[p];
-    }
-  }
-
-  return obj;
-}
-
-function VTTCue(startTime, endTime, text) {
-  var cue = this;
-  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
-  var baseObj = {};
-
-  if (isIE8) {
-    cue = document.createElement('custom');
-  } else {
-    baseObj.enumerable = true;
-  }
-
-  /**
-   * Shim implementation specific properties. These properties are not in
-   * the spec.
-   */
-
-  // Lets us know when the VTTCue's data has changed in such a way that we need
-  // to recompute its display state. This lets us compute its display state
-  // lazily.
-  cue.hasBeenReset = false;
-
-  /**
-   * VTTCue and TextTrackCue properties
-   * http://dev.w3.org/html5/webvtt/#vttcue-interface
-   */
-
-  var _id = "";
-  var _pauseOnExit = false;
-  var _startTime = startTime;
-  var _endTime = endTime;
-  var _text = text;
-  var _region = null;
-  var _vertical = "";
-  var _snapToLines = true;
-  var _line = "auto";
-  var _lineAlign = "start";
-  var _position = 50;
-  var _positionAlign = "middle";
-  var _size = 50;
-  var _align = "middle";
-
-  Object.defineProperty(cue,
-    "id", extend({}, baseObj, {
-      get: function() {
-        return _id;
-      },
-      set: function(value) {
-        _id = "" + value;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "pauseOnExit", extend({}, baseObj, {
-      get: function() {
-        return _pauseOnExit;
-      },
-      set: function(value) {
-        _pauseOnExit = !!value;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "startTime", extend({}, baseObj, {
-      get: function() {
-        return _startTime;
-      },
-      set: function(value) {
-        if (typeof value !== "number") {
-          throw new TypeError("Start time must be set to a number.");
-        }
-        _startTime = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "endTime", extend({}, baseObj, {
-      get: function() {
-        return _endTime;
-      },
-      set: function(value) {
-        if (typeof value !== "number") {
-          throw new TypeError("End time must be set to a number.");
-        }
-        _endTime = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "text", extend({}, baseObj, {
-      get: function() {
-        return _text;
-      },
-      set: function(value) {
-        _text = "" + value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "region", extend({}, baseObj, {
-      get: function() {
-        return _region;
-      },
-      set: function(value) {
-        _region = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "vertical", extend({}, baseObj, {
-      get: function() {
-        return _vertical;
-      },
-      set: function(value) {
-        var setting = findDirectionSetting(value);
-        // Have to check for false because the setting an be an empty string.
-        if (setting === false) {
-          throw new SyntaxError("An invalid or illegal string was specified.");
-        }
-        _vertical = setting;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "snapToLines", extend({}, baseObj, {
-      get: function() {
-        return _snapToLines;
-      },
-      set: function(value) {
-        _snapToLines = !!value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "line", extend({}, baseObj, {
-      get: function() {
-        return _line;
-      },
-      set: function(value) {
-        if (typeof value !== "number" && value !== autoKeyword) {
-          throw new SyntaxError("An invalid number or illegal string was specified.");
-        }
-        _line = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "lineAlign", extend({}, baseObj, {
-      get: function() {
-        return _lineAlign;
-      },
-      set: function(value) {
-        var setting = findAlignSetting(value);
-        if (!setting) {
-          throw new SyntaxError("An invalid or illegal string was specified.");
-        }
-        _lineAlign = setting;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "position", extend({}, baseObj, {
-      get: function() {
-        return _position;
-      },
-      set: function(value) {
-        if (value < 0 || value > 100) {
-          throw new Error("Position must be between 0 and 100.");
-        }
-        _position = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "positionAlign", extend({}, baseObj, {
-      get: function() {
-        return _positionAlign;
-      },
-      set: function(value) {
-        var setting = findAlignSetting(value);
-        if (!setting) {
-          throw new SyntaxError("An invalid or illegal string was specified.");
-        }
-        _positionAlign = setting;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "size", extend({}, baseObj, {
-      get: function() {
-        return _size;
-      },
-      set: function(value) {
-        if (value < 0 || value > 100) {
-          throw new Error("Size must be between 0 and 100.");
-        }
-        _size = value;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  Object.defineProperty(cue,
-    "align", extend({}, baseObj, {
-      get: function() {
-        return _align;
-      },
-      set: function(value) {
-        var setting = findAlignSetting(value);
-        if (!setting) {
-          throw new SyntaxError("An invalid or illegal string was specified.");
-        }
-        _align = setting;
-        this.hasBeenReset = true;
-      }
-    }));
-
-  /**
-   * Other <track> spec defined properties
-   */
-
-  // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
-  cue.displayState = undefined;
-
-  if (isIE8) {
-    return cue;
-  }
-}
-
-/**
- * VTTCue methods
- */
-
-VTTCue.prototype.getCueAsHTML = function() {
-  // Assume WebVTT.convertCueToDOMTree is on the global.
-  return WebVTT.convertCueToDOMTree(window, this.text);
-};
-
-module.exports = VTTCue;
-
-
-/***/ }),
-
-/***/ 115:
-/***/ (function(module, exports) {
-
-/**
- * Copyright 2013 vtt.js Contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-var scrollSetting = {
-  "": true,
-  "up": true
-};
-
-function findScrollSetting(value) {
-  if (typeof value !== "string") {
-    return false;
-  }
-  var scroll = scrollSetting[value.toLowerCase()];
-  return scroll ? value.toLowerCase() : false;
-}
-
-function isValidPercentValue(value) {
-  return typeof value === "number" && (value >= 0 && value <= 100);
-}
-
-// VTTRegion shim http://dev.w3.org/html5/webvtt/#vttregion-interface
-function VTTRegion() {
-  var _width = 100;
-  var _lines = 3;
-  var _regionAnchorX = 0;
-  var _regionAnchorY = 100;
-  var _viewportAnchorX = 0;
-  var _viewportAnchorY = 100;
-  var _scroll = "";
-
-  Object.defineProperties(this, {
-    "width": {
-      enumerable: true,
-      get: function() {
-        return _width;
-      },
-      set: function(value) {
-        if (!isValidPercentValue(value)) {
-          throw new Error("Width must be between 0 and 100.");
-        }
-        _width = value;
-      }
-    },
-    "lines": {
-      enumerable: true,
-      get: function() {
-        return _lines;
-      },
-      set: function(value) {
-        if (typeof value !== "number") {
-          throw new TypeError("Lines must be set to a number.");
-        }
-        _lines = value;
-      }
-    },
-    "regionAnchorY": {
-      enumerable: true,
-      get: function() {
-        return _regionAnchorY;
-      },
-      set: function(value) {
-        if (!isValidPercentValue(value)) {
-          throw new Error("RegionAnchorX must be between 0 and 100.");
-        }
-        _regionAnchorY = value;
-      }
-    },
-    "regionAnchorX": {
-      enumerable: true,
-      get: function() {
-        return _regionAnchorX;
-      },
-      set: function(value) {
-        if(!isValidPercentValue(value)) {
-          throw new Error("RegionAnchorY must be between 0 and 100.");
-        }
-        _regionAnchorX = value;
-      }
-    },
-    "viewportAnchorY": {
-      enumerable: true,
-      get: function() {
-        return _viewportAnchorY;
-      },
-      set: function(value) {
-        if (!isValidPercentValue(value)) {
-          throw new Error("ViewportAnchorY must be between 0 and 100.");
-        }
-        _viewportAnchorY = value;
-      }
-    },
-    "viewportAnchorX": {
-      enumerable: true,
-      get: function() {
-        return _viewportAnchorX;
-      },
-      set: function(value) {
-        if (!isValidPercentValue(value)) {
-          throw new Error("ViewportAnchorX must be between 0 and 100.");
-        }
-        _viewportAnchorX = value;
-      }
-    },
-    "scroll": {
-      enumerable: true,
-      get: function() {
-        return _scroll;
-      },
-      set: function(value) {
-        var setting = findScrollSetting(value);
-        // Have to check for false as an empty string is a legal value.
-        if (setting === false) {
-          throw new SyntaxError("An invalid or illegal string was specified.");
-        }
-        _scroll = setting;
-      }
-    }
-  });
-}
-
-module.exports = VTTRegion;
-
-
-/***/ }),
-
-/***/ 116:
+/***/ 123:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2660,15 +785,15 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(112);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -2827,7 +952,7 @@ exports['default'] = TextTrackMenuItem;
 
 /***/ }),
 
-/***/ 117:
+/***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2835,17 +960,17 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(206);
+var _textTrackCueList = __webpack_require__(341);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(118);
+var _trackEnums = __webpack_require__(125);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -2853,21 +978,21 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(120);
+var _track = __webpack_require__(127);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(113);
 
-var _xhr = __webpack_require__(143);
+var _xhr = __webpack_require__(273);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -3284,7 +1409,7 @@ exports['default'] = TextTrack;
 
 /***/ }),
 
-/***/ 118:
+/***/ 125:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3358,7 +1483,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 /***/ }),
 
-/***/ 119:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3366,11 +1491,11 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(111);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -3599,7 +1724,7 @@ exports['default'] = TrackList;
 
 /***/ }),
 
-/***/ 120:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3607,7 +1732,7 @@ exports['default'] = TrackList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -3615,11 +1740,11 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(72);
+var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(111);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -3749,7 +1874,7 @@ exports['default'] = Track;
 
 /***/ }),
 
-/***/ 121:
+/***/ 128:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3799,7 +1924,7 @@ function computedStyle(el, prop) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 130:
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -3825,7 +1950,1023 @@ function extend() {
 
 /***/ }),
 
-/***/ 129:
+/***/ 15:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.throttle = exports.bind = undefined;
+
+var _guid = __webpack_require__(75);
+
+/**
+ * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
+ * It also stores a unique id on the function so it can be easily removed from events.
+ *
+ * @param {Mixed} context
+ *        The object to bind as scope.
+ *
+ * @param {Function} fn
+ *        The function to be bound to a scope.
+ *
+ * @param {number} [uid]
+ *        An optional unique ID for the function to be set
+ *
+ * @return {Function}
+ *         The new function that will be bound into the context given
+ */
+var bind = exports.bind = function bind(context, fn, uid) {
+  // Make sure the function has a unique ID
+  if (!fn.guid) {
+    fn.guid = (0, _guid.newGUID)();
+  }
+
+  // Create the new function that changes the context
+  var bound = function bound() {
+    return fn.apply(context, arguments);
+  };
+
+  // Allow for the ability to individualize this function
+  // Needed in the case where multiple objects might share the same prototype
+  // IF both items add an event listener with the same function, then you try to remove just one
+  // it will remove both because they both have the same guid.
+  // when using this, you need to use the bind method when you remove the listener as well.
+  // currently used in text tracks
+  bound.guid = uid ? uid + '_' + fn.guid : fn.guid;
+
+  return bound;
+};
+
+/**
+ * Wraps the given function, `fn`, with a new function that only invokes `fn`
+ * at most once per every `wait` milliseconds.
+ *
+ * @param  {Function} fn
+ *         The function to be throttled.
+ *
+ * @param  {Number}   wait
+ *         The number of milliseconds by which to throttle.
+ *
+ * @return {Function}
+ */
+/**
+ * @file fn.js
+ * @module fn
+ */
+var throttle = exports.throttle = function throttle(fn, wait) {
+  var last = Date.now();
+
+  var throttled = function throttled() {
+    var now = Date.now();
+
+    if (now - last >= wait) {
+      fn.apply(undefined, arguments);
+      last = now;
+    }
+  };
+
+  return throttled;
+};
+
+
+/***/ }),
+
+/***/ 18:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.$$ = exports.$ = undefined;
+
+var _templateObject = _taggedTemplateLiteralLoose(['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.'], ['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.']);
+
+exports.isReal = isReal;
+exports.isEl = isEl;
+exports.getEl = getEl;
+exports.createEl = createEl;
+exports.textContent = textContent;
+exports.insertElFirst = insertElFirst;
+exports.getElData = getElData;
+exports.hasElData = hasElData;
+exports.removeElData = removeElData;
+exports.hasElClass = hasElClass;
+exports.addElClass = addElClass;
+exports.removeElClass = removeElClass;
+exports.toggleElClass = toggleElClass;
+exports.setElAttributes = setElAttributes;
+exports.getElAttributes = getElAttributes;
+exports.getAttribute = getAttribute;
+exports.setAttribute = setAttribute;
+exports.removeAttribute = removeAttribute;
+exports.blockTextSelection = blockTextSelection;
+exports.unblockTextSelection = unblockTextSelection;
+exports.findElPosition = findElPosition;
+exports.getPointerPosition = getPointerPosition;
+exports.isTextNode = isTextNode;
+exports.emptyEl = emptyEl;
+exports.normalizeContent = normalizeContent;
+exports.appendContent = appendContent;
+exports.insertContent = insertContent;
+
+var _document = __webpack_require__(40);
+
+var _document2 = _interopRequireDefault(_document);
+
+var _window = __webpack_require__(41);
+
+var _window2 = _interopRequireDefault(_window);
+
+var _guid = __webpack_require__(75);
+
+var Guid = _interopRequireWildcard(_guid);
+
+var _log = __webpack_require__(48);
+
+var _log2 = _interopRequireDefault(_log);
+
+var _tsml = __webpack_require__(109);
+
+var _tsml2 = _interopRequireDefault(_tsml);
+
+var _obj = __webpack_require__(46);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _taggedTemplateLiteralLoose(strings, raw) { strings.raw = raw; return strings; } /**
+                                                                                           * @file dom.js
+                                                                                           * @module dom
+                                                                                           */
+
+
+/**
+ * Detect if a value is a string with any non-whitespace characters.
+ *
+ * @param {string} str
+ *        The string to check
+ *
+ * @return {boolean}
+ *         - True if the string is non-blank
+ *         - False otherwise
+ *
+ */
+function isNonBlankString(str) {
+  return typeof str === 'string' && /\S/.test(str);
+}
+
+/**
+ * Throws an error if the passed string has whitespace. This is used by
+ * class methods to be relatively consistent with the classList API.
+ *
+ * @param {string} str
+ *         The string to check for whitespace.
+ *
+ * @throws {Error}
+ *         Throws an error if there is whitespace in the string.
+ *
+ */
+function throwIfWhitespace(str) {
+  if (/\s/.test(str)) {
+    throw new Error('class has illegal whitespace characters');
+  }
+}
+
+/**
+ * Produce a regular expression for matching a className within an elements className.
+ *
+ * @param {string} className
+ *         The className to generate the RegExp for.
+ *
+ * @return {RegExp}
+ *         The RegExp that will check for a specific `className` in an elements
+ *         className.
+ */
+function classRegExp(className) {
+  return new RegExp('(^|\\s)' + className + '($|\\s)');
+}
+
+/**
+ * Whether the current DOM interface appears to be real.
+ *
+ * @return {Boolean}
+ */
+function isReal() {
+  return (
+
+    // Both document and window will never be undefined thanks to `global`.
+    _document2['default'] === _window2['default'].document &&
+
+    // In IE < 9, DOM methods return "object" as their type, so all we can
+    // confidently check is that it exists.
+    typeof _document2['default'].createElement !== 'undefined'
+  );
+}
+
+/**
+ * Determines, via duck typing, whether or not a value is a DOM element.
+ *
+ * @param {Mixed} value
+ *        The thing to check
+ *
+ * @return {boolean}
+ *         - True if it is a DOM element
+ *         - False otherwise
+ */
+function isEl(value) {
+  return (0, _obj.isObject)(value) && value.nodeType === 1;
+}
+
+/**
+ * Creates functions to query the DOM using a given method.
+ *
+ * @param {string} method
+ *         The method to create the query with.
+ *
+ * @return {Function}
+ *         The query method
+ */
+function createQuerier(method) {
+  return function (selector, context) {
+    if (!isNonBlankString(selector)) {
+      return _document2['default'][method](null);
+    }
+    if (isNonBlankString(context)) {
+      context = _document2['default'].querySelector(context);
+    }
+
+    var ctx = isEl(context) ? context : _document2['default'];
+
+    return ctx[method] && ctx[method](selector);
+  };
+}
+
+/**
+ * Shorthand for document.getElementById()
+ * Also allows for CSS (jQuery) ID syntax. But nothing other than IDs.
+ *
+ * @param {string} id
+ *         The id of the element to get
+ *
+ * @return {Element|null}
+ *         Element with supplied ID or null if there wasn't one.
+ */
+function getEl(id) {
+  if (id.indexOf('#') === 0) {
+    id = id.slice(1);
+  }
+
+  return _document2['default'].getElementById(id);
+}
+
+/**
+ * Creates an element and applies properties.
+ *
+ * @param {string} [tagName='div']
+ *         Name of tag to be created.
+ *
+ * @param {Object} [properties={}]
+ *         Element properties to be applied.
+ *
+ * @param {Object} [attributes={}]
+ *         Element attributes to be applied.
+ *
+ * @param {String|Element|TextNode|Array|Function} [content]
+ *         Contents for the element (see: {@link dom:normalizeContent})
+ *
+ * @return {Element}
+ *         The element that was created.
+ */
+function createEl() {
+  var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
+  var properties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var content = arguments[3];
+
+  var el = _document2['default'].createElement(tagName);
+
+  Object.getOwnPropertyNames(properties).forEach(function (propName) {
+    var val = properties[propName];
+
+    // See #2176
+    // We originally were accepting both properties and attributes in the
+    // same object, but that doesn't work so well.
+    if (propName.indexOf('aria-') !== -1 || propName === 'role' || propName === 'type') {
+      _log2['default'].warn((0, _tsml2['default'])(_templateObject, propName, val));
+      el.setAttribute(propName, val);
+
+      // Handle textContent since it's not supported everywhere and we have a
+      // method for it.
+    } else if (propName === 'textContent') {
+      textContent(el, val);
+    } else {
+      el[propName] = val;
+    }
+  });
+
+  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
+    el.setAttribute(attrName, attributes[attrName]);
+  });
+
+  if (content) {
+    appendContent(el, content);
+  }
+
+  return el;
+}
+
+/**
+ * Injects text into an element, replacing any existing contents entirely.
+ *
+ * @param {Element} el
+ *        The element to add text content into
+ *
+ * @param {string} text
+ *        The text content to add.
+ *
+ * @return {Element}
+ *         The element with added text content.
+ */
+function textContent(el, text) {
+  if (typeof el.textContent === 'undefined') {
+    el.innerText = text;
+  } else {
+    el.textContent = text;
+  }
+  return el;
+}
+
+/**
+ * Insert an element as the first child node of another
+ *
+ * @param {Element} child
+ *        Element to insert
+ *
+ * @param {Element} parent
+ *        Element to insert child into
+ *
+ */
+function insertElFirst(child, parent) {
+  if (parent.firstChild) {
+    parent.insertBefore(child, parent.firstChild);
+  } else {
+    parent.appendChild(child);
+  }
+}
+
+/**
+ * Element Data Store. Allows for binding data to an element without putting it directly on the element.
+ * Ex. Event listeners are stored here.
+ * (also from jsninja.com, slightly modified and updated for closure compiler)
+ *
+ * @type {Object}
+ * @private
+ */
+var elData = {};
+
+/*
+ * Unique attribute name to store an element's guid in
+ *
+ * @type {string}
+ * @constant
+ * @private
+ */
+var elIdAttr = 'vdata' + new Date().getTime();
+
+/**
+ * Returns the cache object where data for an element is stored
+ *
+ * @param {Element} el
+ *        Element to store data for.
+ *
+ * @return {Object}
+ *         The cache object for that el that was passed in.
+ */
+function getElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    id = el[elIdAttr] = Guid.newGUID();
+  }
+
+  if (!elData[id]) {
+    elData[id] = {};
+  }
+
+  return elData[id];
+}
+
+/**
+ * Returns whether or not an element has cached data
+ *
+ * @param {Element} el
+ *        Check if this element has cached data.
+ *
+ * @return {boolean}
+ *         - True if the DOM element has cached data.
+ *         - False otherwise.
+ */
+function hasElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    return false;
+  }
+
+  return !!Object.getOwnPropertyNames(elData[id]).length;
+}
+
+/**
+ * Delete data for the element from the cache and the guid attr from getElementById
+ *
+ * @param {Element} el
+ *        Remove cached data for this element.
+ */
+function removeElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    return;
+  }
+
+  // Remove all stored data
+  delete elData[id];
+
+  // Remove the elIdAttr property from the DOM node
+  try {
+    delete el[elIdAttr];
+  } catch (e) {
+    if (el.removeAttribute) {
+      el.removeAttribute(elIdAttr);
+    } else {
+      // IE doesn't appear to support removeAttribute on the document element
+      el[elIdAttr] = null;
+    }
+  }
+}
+
+/**
+ * Check if an element has a CSS class
+ *
+ * @param {Element} element
+ *        Element to check
+ *
+ * @param {string} classToCheck
+ *        Class name to check for
+ *
+ * @return {boolean}
+ *         - True if the element had the class
+ *         - False otherwise.
+ *
+ * @throws {Error}
+ *         Throws an error if `classToCheck` has white space.
+ */
+function hasElClass(element, classToCheck) {
+  throwIfWhitespace(classToCheck);
+  if (element.classList) {
+    return element.classList.contains(classToCheck);
+  }
+  return classRegExp(classToCheck).test(element.className);
+}
+
+/**
+ * Add a CSS class name to an element
+ *
+ * @param {Element} element
+ *        Element to add class name to.
+ *
+ * @param {string} classToAdd
+ *        Class name to add.
+ *
+ * @return {Element}
+ *         The dom element with the added class name.
+ */
+function addElClass(element, classToAdd) {
+  if (element.classList) {
+    element.classList.add(classToAdd);
+
+    // Don't need to `throwIfWhitespace` here because `hasElClass` will do it
+    // in the case of classList not being supported.
+  } else if (!hasElClass(element, classToAdd)) {
+    element.className = (element.className + ' ' + classToAdd).trim();
+  }
+
+  return element;
+}
+
+/**
+ * Remove a CSS class name from an element
+ *
+ * @param {Element} element
+ *        Element to remove a class name from.
+ *
+ * @param {string} classToRemove
+ *        Class name to remove
+ *
+ * @return {Element}
+ *         The dom element with class name removed.
+ */
+function removeElClass(element, classToRemove) {
+  if (element.classList) {
+    element.classList.remove(classToRemove);
+  } else {
+    throwIfWhitespace(classToRemove);
+    element.className = element.className.split(/\s+/).filter(function (c) {
+      return c !== classToRemove;
+    }).join(' ');
+  }
+
+  return element;
+}
+
+/**
+ * The callback definition for toggleElClass.
+ *
+ * @callback Dom~PredicateCallback
+ * @param {Element} element
+ *        The DOM element of the Component.
+ *
+ * @param {string} classToToggle
+ *        The `className` that wants to be toggled
+ *
+ * @return {boolean|undefined}
+ *         - If true the `classToToggle` will get added to `element`.
+ *         - If false the `classToToggle` will get removed from `element`.
+ *         - If undefined this callback will be ignored
+ */
+
+/**
+ * Adds or removes a CSS class name on an element depending on an optional
+ * condition or the presence/absence of the class name.
+ *
+ * @param {Element} element
+ *        The element to toggle a class name on.
+ *
+ * @param {string} classToToggle
+ *        The class that should be toggled
+ *
+ * @param {boolean|PredicateCallback} [predicate]
+ *        See the return value for {@link Dom~PredicateCallback}
+ *
+ * @return {Element}
+ *         The element with a class that has been toggled.
+ */
+function toggleElClass(element, classToToggle, predicate) {
+
+  // This CANNOT use `classList` internally because IE does not support the
+  // second parameter to the `classList.toggle()` method! Which is fine because
+  // `classList` will be used by the add/remove functions.
+  var has = hasElClass(element, classToToggle);
+
+  if (typeof predicate === 'function') {
+    predicate = predicate(element, classToToggle);
+  }
+
+  if (typeof predicate !== 'boolean') {
+    predicate = !has;
+  }
+
+  // If the necessary class operation matches the current state of the
+  // element, no action is required.
+  if (predicate === has) {
+    return;
+  }
+
+  if (predicate) {
+    addElClass(element, classToToggle);
+  } else {
+    removeElClass(element, classToToggle);
+  }
+
+  return element;
+}
+
+/**
+ * Apply attributes to an HTML element.
+ *
+ * @param {Element} el
+ *        Element to add attributes to.
+ *
+ * @param {Object} [attributes]
+ *        Attributes to be applied.
+ */
+function setElAttributes(el, attributes) {
+  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
+    var attrValue = attributes[attrName];
+
+    if (attrValue === null || typeof attrValue === 'undefined' || attrValue === false) {
+      el.removeAttribute(attrName);
+    } else {
+      el.setAttribute(attrName, attrValue === true ? '' : attrValue);
+    }
+  });
+}
+
+/**
+ * Get an element's attribute values, as defined on the HTML tag
+ * Attributes are not the same as properties. They're defined on the tag
+ * or with setAttribute (which shouldn't be used with HTML)
+ * This will return true or false for boolean attributes.
+ *
+ * @param {Element} tag
+ *        Element from which to get tag attributes.
+ *
+ * @return {Object}
+ *         All attributes of the element.
+ */
+function getElAttributes(tag) {
+  var obj = {};
+
+  // known boolean attributes
+  // we can check for matching boolean properties, but older browsers
+  // won't know about HTML5 boolean attributes that we still read from
+  var knownBooleans = ',' + 'autoplay,controls,playsinline,loop,muted,default,defaultMuted' + ',';
+
+  if (tag && tag.attributes && tag.attributes.length > 0) {
+    var attrs = tag.attributes;
+
+    for (var i = attrs.length - 1; i >= 0; i--) {
+      var attrName = attrs[i].name;
+      var attrVal = attrs[i].value;
+
+      // check for known booleans
+      // the matching element property will return a value for typeof
+      if (typeof tag[attrName] === 'boolean' || knownBooleans.indexOf(',' + attrName + ',') !== -1) {
+        // the value of an included boolean attribute is typically an empty
+        // string ('') which would equal false if we just check for a false value.
+        // we also don't want support bad code like autoplay='false'
+        attrVal = attrVal !== null ? true : false;
+      }
+
+      obj[attrName] = attrVal;
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Get the value of an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to get the value of
+ *
+ * @return {string}
+ *         value of the attribute
+ */
+function getAttribute(el, attribute) {
+  return el.getAttribute(attribute);
+}
+
+/**
+ * Set the value of an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to set
+ *
+ * @param {string} value
+ *        Value to set the attribute to
+ */
+function setAttribute(el, attribute, value) {
+  el.setAttribute(attribute, value);
+}
+
+/**
+ * Remove an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to remove
+ */
+function removeAttribute(el, attribute) {
+  el.removeAttribute(attribute);
+}
+
+/**
+ * Attempt to block the ability to select text while dragging controls
+ */
+function blockTextSelection() {
+  _document2['default'].body.focus();
+  _document2['default'].onselectstart = function () {
+    return false;
+  };
+}
+
+/**
+ * Turn off text selection blocking
+ */
+function unblockTextSelection() {
+  _document2['default'].onselectstart = function () {
+    return true;
+  };
+}
+
+/**
+ * The postion of a DOM element on the page.
+ *
+ * @typedef {Object} Dom~Position
+ *
+ * @property {number} left
+ *           Pixels to the left
+ *
+ * @property {number} top
+ *           Pixels on top
+ */
+
+/**
+ * Offset Left.
+ * getBoundingClientRect technique from
+ * John Resig
+ *
+ * @see http://ejohn.org/blog/getboundingclientrect-is-awesome/
+ *
+ * @param {Element} el
+ *        Element from which to get offset
+ *
+ * @return {Dom~Position}
+ *         The position of the element that was passed in.
+ */
+function findElPosition(el) {
+  var box = void 0;
+
+  if (el.getBoundingClientRect && el.parentNode) {
+    box = el.getBoundingClientRect();
+  }
+
+  if (!box) {
+    return {
+      left: 0,
+      top: 0
+    };
+  }
+
+  var docEl = _document2['default'].documentElement;
+  var body = _document2['default'].body;
+
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+  var scrollLeft = _window2['default'].pageXOffset || body.scrollLeft;
+  var left = box.left + scrollLeft - clientLeft;
+
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var scrollTop = _window2['default'].pageYOffset || body.scrollTop;
+  var top = box.top + scrollTop - clientTop;
+
+  // Android sometimes returns slightly off decimal values, so need to round
+  return {
+    left: Math.round(left),
+    top: Math.round(top)
+  };
+}
+
+/**
+ * x and y coordinates for a dom element or mouse pointer
+ *
+ * @typedef {Object} Dom~Coordinates
+ *
+ * @property {number} x
+ *           x coordinate in pixels
+ *
+ * @property {number} y
+ *           y coordinate in pixels
+ */
+
+/**
+ * Get pointer position in element
+ * Returns an object with x and y coordinates.
+ * The base on the coordinates are the bottom left of the element.
+ *
+ * @param {Element} el
+ *        Element on which to get the pointer position on
+ *
+ * @param {EventTarget~Event} event
+ *        Event object
+ *
+ * @return {Dom~Coordinates}
+ *         A Coordinates object corresponding to the mouse position.
+ *
+ */
+function getPointerPosition(el, event) {
+  var position = {};
+  var box = findElPosition(el);
+  var boxW = el.offsetWidth;
+  var boxH = el.offsetHeight;
+
+  var boxY = box.top;
+  var boxX = box.left;
+  var pageY = event.pageY;
+  var pageX = event.pageX;
+
+  if (event.changedTouches) {
+    pageX = event.changedTouches[0].pageX;
+    pageY = event.changedTouches[0].pageY;
+  }
+
+  position.y = Math.max(0, Math.min(1, (boxY - pageY + boxH) / boxH));
+  position.x = Math.max(0, Math.min(1, (pageX - boxX) / boxW));
+
+  return position;
+}
+
+/**
+ * Determines, via duck typing, whether or not a value is a text node.
+ *
+ * @param {Mixed} value
+ *        Check if this value is a text node.
+ *
+ * @return {boolean}
+ *         - True if it is a text node
+ *         - False otherwise
+ */
+function isTextNode(value) {
+  return (0, _obj.isObject)(value) && value.nodeType === 3;
+}
+
+/**
+ * Empties the contents of an element.
+ *
+ * @param {Element} el
+ *        The element to empty children from
+ *
+ * @return {Element}
+ *         The element with no children
+ */
+function emptyEl(el) {
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
+  return el;
+}
+
+/**
+ * Normalizes content for eventual insertion into the DOM.
+ *
+ * This allows a wide range of content definition methods, but protects
+ * from falling into the trap of simply writing to `innerHTML`, which is
+ * an XSS concern.
+ *
+ * The content for an element can be passed in multiple types and
+ * combinations, whose behavior is as follows:
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        - String: Normalized into a text node.
+ *        - Element/TextNode: Passed through.
+ *        - Array: A one-dimensional array of strings, elements, nodes, or functions
+ *          (which return single strings, elements, or nodes).
+ *        - Function: If the sole argument, is expected to produce a string, element,
+ *          node, or array as defined above.
+ *
+ * @return {Array}
+ *         All of the content that was passed in normalized.
+ */
+function normalizeContent(content) {
+
+  // First, invoke content if it is a function. If it produces an array,
+  // that needs to happen before normalization.
+  if (typeof content === 'function') {
+    content = content();
+  }
+
+  // Next up, normalize to an array, so one or many items can be normalized,
+  // filtered, and returned.
+  return (Array.isArray(content) ? content : [content]).map(function (value) {
+
+    // First, invoke value if it is a function to produce a new value,
+    // which will be subsequently normalized to a Node of some kind.
+    if (typeof value === 'function') {
+      value = value();
+    }
+
+    if (isEl(value) || isTextNode(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string' && /\S/.test(value)) {
+      return _document2['default'].createTextNode(value);
+    }
+  }).filter(function (value) {
+    return value;
+  });
+}
+
+/**
+ * Normalizes and appends content to an element.
+ *
+ * @param {Element} el
+ *        Element to append normalized content to.
+ *
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        See the `content` argument of {@link dom:normalizeContent}
+ *
+ * @return {Element}
+ *         The element with appended normalized content.
+ */
+function appendContent(el, content) {
+  normalizeContent(content).forEach(function (node) {
+    return el.appendChild(node);
+  });
+  return el;
+}
+
+/**
+ * Normalizes and inserts content into an element; this is identical to
+ * `appendContent()`, except it empties the element first.
+ *
+ * @param {Element} el
+ *        Element to insert normalized content into.
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        See the `content` argument of {@link dom:normalizeContent}
+ *
+ * @return {Element}
+ *         The element with inserted normalized content.
+ *
+ */
+function insertContent(el, content) {
+  return appendContent(emptyEl(el), content);
+}
+
+/**
+ * Finds a single DOM element matching `selector` within the optional
+ * `context` of another DOM element (defaulting to `document`).
+ *
+ * @param {string} selector
+ *        A valid CSS selector, which will be passed to `querySelector`.
+ *
+ * @param {Element|String} [context=document]
+ *        A DOM element within which to query. Can also be a selector
+ *        string in which case the first matching element will be used
+ *        as context. If missing (or no element matches selector), falls
+ *        back to `document`.
+ *
+ * @return {Element|null}
+ *         The element that was found or null.
+ */
+var $ = exports.$ = createQuerier('querySelector');
+
+/**
+ * Finds a all DOM elements matching `selector` within the optional
+ * `context` of another DOM element (defaulting to `document`).
+ *
+ * @param {string} selector
+ *           A valid CSS selector, which will be passed to `querySelectorAll`.
+ *
+ * @param {Element|String} [context=document]
+ *           A DOM element within which to query. Can also be a selector
+ *           string in which case the first matching element will be used
+ *           as context. If missing (or no element matches selector), falls
+ *           back to `document`.
+ *
+ * @return {NodeList}
+ *         A element list of elements that were found. Will be empty if none were found.
+ *
+ */
+var $$ = exports.$$ = createQuerier('querySelectorAll');
+
+
+/***/ }),
+
+/***/ 2:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 259:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3833,11 +2974,11 @@ function extend() {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(76);
+var _button = __webpack_require__(78);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -3987,7 +3128,7 @@ exports['default'] = MuteToggle;
 
 /***/ }),
 
-/***/ 130:
+/***/ 260:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3995,15 +3136,15 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(133);
+var _menuButton = __webpack_require__(263);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -4073,7 +3214,7 @@ exports['default'] = TrackButton;
 
 /***/ }),
 
-/***/ 131:
+/***/ 261:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4081,19 +3222,19 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(137);
+var _slider = __webpack_require__(267);
 
 var _slider2 = _interopRequireDefault(_slider);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(188);
+__webpack_require__(323);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -4262,7 +3403,7 @@ exports['default'] = VolumeBar;
 
 /***/ }),
 
-/***/ 132:
+/***/ 262:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4270,7 +3411,7 @@ exports['default'] = VolumeBar;
 
 exports.__esModule = true;
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 /**
  * A Custom `MediaError` class which mimics the standard HTML5 `MediaError` class.
@@ -4481,7 +3622,7 @@ exports['default'] = MediaError;
 
 /***/ }),
 
-/***/ 133:
+/***/ 263:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4489,15 +3630,15 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(77);
+var _clickableComponent = __webpack_require__(79);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(134);
+var _menu = __webpack_require__(264);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -4505,11 +3646,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -4841,7 +3982,7 @@ exports['default'] = MenuButton;
 
 /***/ }),
 
-/***/ 134:
+/***/ 264:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4849,7 +3990,7 @@ exports['default'] = MenuButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -4857,11 +3998,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -5051,7 +4192,7 @@ exports['default'] = Menu;
 
 /***/ }),
 
-/***/ 135:
+/***/ 265:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5063,11 +4204,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -5552,7 +4693,7 @@ exports['default'] = ModalDialog;
 
 /***/ }),
 
-/***/ 136:
+/***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5560,7 +4701,7 @@ exports['default'] = ModalDialog;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -5572,7 +4713,7 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -5580,93 +4721,93 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(72);
+var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(79);
+var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(140);
+var _buffer = __webpack_require__(270);
 
-var _stylesheet = __webpack_require__(141);
+var _stylesheet = __webpack_require__(271);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(192);
+var _fullscreenApi = __webpack_require__(327);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(132);
+var _mediaError = __webpack_require__(262);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(110);
+var _tuple = __webpack_require__(121);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(208);
+var _textTrackListConverter = __webpack_require__(343);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(135);
+var _modalDialog = __webpack_require__(265);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(78);
+var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(138);
+var _audioTrackList = __webpack_require__(268);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(139);
+var _videoTrackList = __webpack_require__(269);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-__webpack_require__(202);
+__webpack_require__(337);
 
-__webpack_require__(200);
+__webpack_require__(335);
 
-__webpack_require__(197);
+__webpack_require__(332);
 
-__webpack_require__(207);
+__webpack_require__(342);
 
-__webpack_require__(193);
+__webpack_require__(328);
 
-__webpack_require__(158);
+__webpack_require__(293);
 
-__webpack_require__(159);
+__webpack_require__(294);
 
-__webpack_require__(162);
+__webpack_require__(297);
 
-__webpack_require__(190);
+__webpack_require__(325);
 
-__webpack_require__(210);
+__webpack_require__(345);
 
-__webpack_require__(201);
+__webpack_require__(336);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -6060,7 +5201,7 @@ var Player = function (_Component) {
     Player.players[_this.id_] = _this;
 
     // Add a major version class to aid css in plugins
-    var majorVersion = '5.20.4'.split('.')[0];
+    var majorVersion = '5.20.5'.split('.')[0];
 
     _this.addClass('vjs-v' + majorVersion);
 
@@ -9245,7 +8386,7 @@ exports['default'] = Player;
 
 /***/ }),
 
-/***/ 137:
+/***/ 267:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9253,7 +8394,7 @@ exports['default'] = Player;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -9261,7 +8402,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -9606,7 +8747,7 @@ exports['default'] = Slider;
 
 /***/ }),
 
-/***/ 138:
+/***/ 268:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9614,11 +8755,11 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(119);
+var _trackList = __webpack_require__(126);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -9795,7 +8936,7 @@ exports['default'] = AudioTrackList;
 
 /***/ }),
 
-/***/ 139:
+/***/ 269:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9803,11 +8944,11 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(119);
+var _trackList = __webpack_require__(126);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -9996,90 +9137,7 @@ exports['default'] = VideoTrackList;
 
 /***/ }),
 
-/***/ 14:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.throttle = exports.bind = undefined;
-
-var _guid = __webpack_require__(72);
-
-/**
- * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
- * It also stores a unique id on the function so it can be easily removed from events.
- *
- * @param {Mixed} context
- *        The object to bind as scope.
- *
- * @param {Function} fn
- *        The function to be bound to a scope.
- *
- * @param {number} [uid]
- *        An optional unique ID for the function to be set
- *
- * @return {Function}
- *         The new function that will be bound into the context given
- */
-var bind = exports.bind = function bind(context, fn, uid) {
-  // Make sure the function has a unique ID
-  if (!fn.guid) {
-    fn.guid = (0, _guid.newGUID)();
-  }
-
-  // Create the new function that changes the context
-  var bound = function bound() {
-    return fn.apply(context, arguments);
-  };
-
-  // Allow for the ability to individualize this function
-  // Needed in the case where multiple objects might share the same prototype
-  // IF both items add an event listener with the same function, then you try to remove just one
-  // it will remove both because they both have the same guid.
-  // when using this, you need to use the bind method when you remove the listener as well.
-  // currently used in text tracks
-  bound.guid = uid ? uid + '_' + fn.guid : fn.guid;
-
-  return bound;
-};
-
-/**
- * Wraps the given function, `fn`, with a new function that only invokes `fn`
- * at most once per every `wait` milliseconds.
- *
- * @param  {Function} fn
- *         The function to be throttled.
- *
- * @param  {Number}   wait
- *         The number of milliseconds by which to throttle.
- *
- * @return {Function}
- */
-/**
- * @file fn.js
- * @module fn
- */
-var throttle = exports.throttle = function throttle(fn, wait) {
-  var last = Date.now();
-
-  var throttled = function throttled() {
-    var now = Date.now();
-
-    if (now - last >= wait) {
-      fn.apply(undefined, arguments);
-      last = now;
-    }
-  };
-
-  return throttled;
-};
-
-
-/***/ }),
-
-/***/ 140:
+/***/ 270:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10088,7 +9146,7 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(79);
+var _timeRanges = __webpack_require__(81);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -10136,7 +9194,7 @@ function bufferedPercent(buffered, duration) {
 
 /***/ }),
 
-/***/ 141:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10192,7 +9250,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 /***/ }),
 
-/***/ 142:
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10218,7 +9276,7 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -10226,83 +9284,83 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _setup = __webpack_require__(198);
+var _setup = __webpack_require__(333);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(141);
+var _stylesheet = __webpack_require__(271);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(111);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(136);
+var _player = __webpack_require__(266);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(194);
+var _plugins = __webpack_require__(329);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(57);
+var _mergeOptions2 = __webpack_require__(59);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(117);
+var _textTrack = __webpack_require__(124);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(203);
+var _audioTrack = __webpack_require__(338);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(211);
+var _videoTrack = __webpack_require__(346);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(79);
+var _timeRanges = __webpack_require__(81);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(113);
 
 var Url = _interopRequireWildcard(_url);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
-var _computedStyle = __webpack_require__(121);
+var _computedStyle = __webpack_require__(128);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(191);
+var _extend = __webpack_require__(326);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(143);
+var _xhr = __webpack_require__(273);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(78);
+var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -10496,7 +9554,7 @@ setup.autoSetupTimeout(1, videojs);
  *
  * @type {string}
  */
-videojs.VERSION = '5.20.4';
+videojs.VERSION = '5.20.5';
 
 /**
  * The global options object. These are the settings that take effect
@@ -10922,15 +9980,15 @@ exports['default'] = videojs;
 
 /***/ }),
 
-/***/ 143:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var window = __webpack_require__(41)
-var isFunction = __webpack_require__(75)
-var parseHeaders = __webpack_require__(109)
-var xtend = __webpack_require__(122)
+var isFunction = __webpack_require__(77)
+var parseHeaders = __webpack_require__(120)
+var xtend = __webpack_require__(130)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -11165,7 +10223,7 @@ function noop() {}
 
 /***/ }),
 
-/***/ 151:
+/***/ 281:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11939,12 +10997,12 @@ angular.module('mt.media-timeline', [])
 
 /***/ }),
 
-/***/ 152:
+/***/ 282:
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.7
- * (c) 2010-2017 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.7.0
+ * (c) 2010-2018 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window) {'use strict';
@@ -12003,7 +11061,7 @@ function isValidObjectMaxDepth(maxDepth) {
  * @description
  *
  * This object provides a utility for producing rich Error messages within
- * Angular. It can be called as follows:
+ * AngularJS. It can be called as follows:
  *
  * var exampleMinErr = minErr('example');
  * throw exampleMinErr('one', 'This {0} is {1}', foo, bar);
@@ -12031,6 +11089,11 @@ function isValidObjectMaxDepth(maxDepth) {
 
 function minErr(module, ErrorConstructor) {
   ErrorConstructor = ErrorConstructor || Error;
+
+  var url = 'https://errors.angularjs.org/1.7.0/';
+  var regex = url.replace('.', '\\.') + '[\\s\\S]*';
+  var errRegExp = new RegExp(regex, 'g');
+
   return function() {
     var code = arguments[0],
       template = arguments[1],
@@ -12040,18 +11103,22 @@ function minErr(module, ErrorConstructor) {
       }),
       paramPrefix, i;
 
+    // A minErr message has two parts: the message itself and the url that contains the
+    // encoded message.
+    // The message's parameters can contain other error messages which also include error urls.
+    // To prevent the messages from getting too long, we strip the error urls from the parameters.
+
     message += template.replace(/\{\d+\}/g, function(match) {
       var index = +match.slice(1, -1);
 
       if (index < templateArgs.length) {
-        return templateArgs[index];
+        return templateArgs[index].replace(errRegExp, '');
       }
 
       return match;
     });
 
-    message += '\nhttp://errors.angularjs.org/1.6.7/' +
-      (module ? module + '/' : '') + code;
+    message += '\n' + url + (module ? module + '/' : '') + code;
 
     for (i = 0, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
       message += paramPrefix + 'p' + i + '=' + encodeURIComponent(templateArgs[i]);
@@ -12082,8 +11149,6 @@ function minErr(module, ErrorConstructor) {
 
   lowercase,
   uppercase,
-  manualLowercase,
-  manualUppercase,
   nodeName_,
   isArrayLike,
   forEach,
@@ -12136,6 +11201,7 @@ function minErr(module, ErrorConstructor) {
   fromJson,
   convertTimezoneToLocal,
   timezoneToOffset,
+  addDateMinutes,
   startingTag,
   tryDecodeURIComponent,
   parseKeyValue,
@@ -12190,15 +11256,7 @@ var VALIDITY_STATE_PROPERTY = 'validity';
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 /**
- * @ngdoc function
- * @name angular.lowercase
- * @module ng
- * @kind function
- *
- * @deprecated
- * sinceVersion="1.5.0"
- * removeVersion="1.7.0"
- * Use [String.prototype.toLowerCase](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase) instead.
+ * @private
  *
  * @description Converts the specified string to lowercase.
  * @param {string} string String to be converted to lowercase.
@@ -12207,46 +11265,13 @@ var hasOwnProperty = Object.prototype.hasOwnProperty;
 var lowercase = function(string) {return isString(string) ? string.toLowerCase() : string;};
 
 /**
- * @ngdoc function
- * @name angular.uppercase
- * @module ng
- * @kind function
- *
- * @deprecated
- * sinceVersion="1.5.0"
- * removeVersion="1.7.0"
- * Use [String.prototype.toUpperCase](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) instead.
+ * @private
  *
  * @description Converts the specified string to uppercase.
  * @param {string} string String to be converted to uppercase.
  * @returns {string} Uppercased string.
  */
 var uppercase = function(string) {return isString(string) ? string.toUpperCase() : string;};
-
-
-var manualLowercase = function(s) {
-  /* eslint-disable no-bitwise */
-  return isString(s)
-      ? s.replace(/[A-Z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) | 32);})
-      : s;
-  /* eslint-enable */
-};
-var manualUppercase = function(s) {
-  /* eslint-disable no-bitwise */
-  return isString(s)
-      ? s.replace(/[a-z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) & ~32);})
-      : s;
-  /* eslint-enable */
-};
-
-
-// String#toLowerCase and String#toUpperCase don't produce correct results in browsers with Turkish
-// locale, for this reason we need to detect this case and redefine lowercase/uppercase methods
-// with correct but slower alternatives. See https://github.com/angular/angular.js/issues/11387
-if ('i' !== 'I'.toLowerCase()) {
-  lowercase = manualLowercase;
-  uppercase = manualUppercase;
-}
 
 
 var
@@ -12296,8 +11321,7 @@ function isArrayLike(obj) {
 
   // NodeList objects (with `item` method) and
   // other objects with suitable length characteristics are array-like
-  return isNumber(length) &&
-    (length >= 0 && ((length - 1) in obj || obj instanceof Array) || typeof obj.item === 'function');
+  return isNumber(length) && (length >= 0 && (length - 1) in obj || typeof obj.item === 'function');
 
 }
 
@@ -12712,12 +11736,14 @@ function isDate(value) {
  * @kind function
  *
  * @description
- * Determines if a reference is an `Array`. Alias of Array.isArray.
+ * Determines if a reference is an `Array`.
  *
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is an `Array`.
  */
-var isArray = Array.isArray;
+function isArray(arr) {
+  return Array.isArray(arr) || arr instanceof Array;
+}
 
 /**
  * @description
@@ -13246,7 +12272,7 @@ var csp = function() {
  * used to force either jqLite by leaving ng-jq blank or setting the name of
  * the jquery variable under window (eg. jQuery).
  *
- * Since angular looks for this directive when it is loaded (doesn't wait for the
+ * Since AngularJS looks for this directive when it is loaded (doesn't wait for the
  * DOMContentLoaded event), it must be placed on an element that comes before the script
  * which loads angular. Also, only the first instance of `ng-jq` will be used and all
  * others ignored.
@@ -13359,7 +12385,7 @@ function toJsonReplacer(key, value) {
  *
  * @description
  * Serializes input into a JSON-formatted string. Properties with leading $$ characters will be
- * stripped since angular uses this notation internally.
+ * stripped since AngularJS uses this notation internally.
  *
  * @param {Object|Array|Date|string|number|boolean} obj Input to be serialized into JSON.
  * @param {boolean|number} [pretty=2] If set to true, the JSON output will contain newlines and whitespace.
@@ -13445,7 +12471,7 @@ function convertTimezoneToLocal(date, timezone, reverse) {
  */
 function startingTag(element) {
   element = jqLite(element).clone().empty();
-  var elemHtml = jqLite('<div>').append(element).html();
+  var elemHtml = jqLite('<div></div>').append(element).html();
   try {
     return element[0].nodeType === NODE_TYPE_TEXT ? lowercase(elemHtml) :
         elemHtml.
@@ -13797,7 +12823,7 @@ function angularInit(element, bootstrap) {
   });
   if (appElement) {
     if (!isAutoBootstrapAllowed) {
-      window.console.error('Angular: disabling automatic bootstrap. <script> protocol indicates ' +
+      window.console.error('AngularJS: disabling automatic bootstrap. <script> protocol indicates ' +
           'an extension, document.location.href does not match.');
       return;
     }
@@ -13811,14 +12837,14 @@ function angularInit(element, bootstrap) {
  * @name angular.bootstrap
  * @module ng
  * @description
- * Use this function to manually start up angular application.
+ * Use this function to manually start up AngularJS application.
  *
  * For more information, see the {@link guide/bootstrap Bootstrap guide}.
  *
- * Angular will detect if it has been loaded into the browser more than once and only allow the
+ * AngularJS will detect if it has been loaded into the browser more than once and only allow the
  * first loaded script to be bootstrapped and will report a warning to the browser console for
  * each of the subsequent scripts. This prevents strange results in applications, where otherwise
- * multiple instances of Angular try to work on the DOM.
+ * multiple instances of AngularJS try to work on the DOM.
  *
  * <div class="alert alert-warning">
  * **Note:** Protractor based end-to-end tests cannot use this function to bootstrap manually.
@@ -13852,7 +12878,7 @@ function angularInit(element, bootstrap) {
  * </html>
  * ```
  *
- * @param {DOMElement} element DOM element which is the root of angular application.
+ * @param {DOMElement} element DOM element which is the root of AngularJS application.
  * @param {Array<String|Function|Array>=} modules an array of modules to load into the application.
  *     Each item in the array should be the name of a predefined module or a (DI annotated)
  *     function that will be invoked by the injector as a `config` block.
@@ -13952,9 +12978,9 @@ function reloadWithDebugInfo() {
  * @name angular.getTestability
  * @module ng
  * @description
- * Get the testability service for the instance of Angular on the given
+ * Get the testability service for the instance of AngularJS on the given
  * element.
- * @param {DOMElement} element DOM element which is the root of angular application.
+ * @param {DOMElement} element DOM element which is the root of AngularJS application.
  */
 function getTestability(rootElement) {
   var injector = angular.element(rootElement).injector();
@@ -13988,8 +13014,8 @@ function bindJQuery() {
                                  window[jqName];   // use jQuery specified by `ngJq`
 
   // Use jQuery if it exists with proper functionality, otherwise default to us.
-  // Angular 1.2+ requires jQuery 1.7+ for on()/off() support.
-  // Angular 1.3+ technically requires at least jQuery 2.1+ but it may work with older
+  // AngularJS 1.2+ requires jQuery 1.7+ for on()/off() support.
+  // AngularJS 1.3+ technically requires at least jQuery 2.1+ but it may work with older
   // versions. It will not work for sure with jQuery <1.7, though.
   if (jQuery && jQuery.fn.on) {
     jqLite = jQuery;
@@ -14000,24 +13026,24 @@ function bindJQuery() {
       injector: JQLitePrototype.injector,
       inheritedData: JQLitePrototype.inheritedData
     });
-
-    // All nodes removed from the DOM via various jQuery APIs like .remove()
-    // are passed through jQuery.cleanData. Monkey-patch this method to fire
-    // the $destroy event on all removed nodes.
-    originalCleanData = jQuery.cleanData;
-    jQuery.cleanData = function(elems) {
-      var events;
-      for (var i = 0, elem; (elem = elems[i]) != null; i++) {
-        events = jQuery._data(elem, 'events');
-        if (events && events.$destroy) {
-          jQuery(elem).triggerHandler('$destroy');
-        }
-      }
-      originalCleanData(elems);
-    };
   } else {
     jqLite = JQLite;
   }
+
+  // All nodes removed from the DOM via various jqLite/jQuery APIs like .remove()
+  // are passed through jqLite/jQuery.cleanData. Monkey-patch this method to fire
+  // the $destroy event on all removed nodes.
+  originalCleanData = jqLite.cleanData;
+  jqLite.cleanData = function(elems) {
+    var events;
+    for (var i = 0, elem; (elem = elems[i]) != null; i++) {
+      events = jqLite._data(elem).events;
+      if (events && events.$destroy) {
+        jqLite(elem).triggerHandler('$destroy');
+      }
+    }
+    originalCleanData(elems);
+  };
 
   angular.element = jqLite;
 
@@ -14156,7 +13182,7 @@ var NODE_TYPE_DOCUMENT_FRAGMENT = 11;
  * @module ng
  * @description
  *
- * Interface for configuring angular {@link angular.module modules}.
+ * Interface for configuring AngularJS {@link angular.module modules}.
  */
 
 function setupModuleLoader(window) {
@@ -14183,9 +13209,9 @@ function setupModuleLoader(window) {
      * @module ng
      * @description
      *
-     * The `angular.module` is a global place for creating, registering and retrieving Angular
+     * The `angular.module` is a global place for creating, registering and retrieving AngularJS
      * modules.
-     * All modules (angular core or 3rd party) that should be available to an application must be
+     * All modules (AngularJS core or 3rd party) that should be available to an application must be
      * registered using this mechanism.
      *
      * Passing one argument retrieves an existing {@link angular.Module},
@@ -14435,13 +13461,13 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#filter
            * @module ng
-           * @param {string} name Filter name - this must be a valid angular expression identifier
+           * @param {string} name Filter name - this must be a valid AngularJS expression identifier
            * @param {Function} filterFactory Factory function for creating new instance of filter.
            * @description
            * See {@link ng.$filterProvider#register $filterProvider.register()}.
            *
            * <div class="alert alert-warning">
-           * **Note:** Filter names must be valid angular {@link expression} identifiers, such as `uppercase` or `orderBy`.
+           * **Note:** Filter names must be valid AngularJS {@link expression} identifiers, such as `uppercase` or `orderBy`.
            * Names with special characters, such as hyphens and dots, are not allowed. If you wish to namespace
            * your filters, then you can use capitalization (`myappSubsectionFilterx`) or underscores
            * (`myapp_subsection_filterx`).
@@ -14478,7 +13504,8 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#component
            * @module ng
-           * @param {string} name Name of the component in camel-case (i.e. myComp which will match as my-comp)
+           * @param {string|Object} name Name of the component in camelCase (i.e. `myComp` which will match `<my-comp>`),
+           *    or an object map of components where the keys are the names and the values are the component definition objects.
            * @param {Object} options Component definition object (a simplified
            *    {@link ng.$compile#directive-definition-object directive definition object})
            *
@@ -14494,7 +13521,13 @@ function setupModuleLoader(window) {
            * @param {Function} configFn Execute this function on module load. Useful for service
            *    configuration.
            * @description
-           * Use this method to register work which needs to be performed on module loading.
+           * Use this method to configure services by injecting their
+           * {@link angular.Module#provider `providers`}, e.g. for adding routes to the
+           * {@link ngRoute.$routeProvider $routeProvider}.
+           *
+           * Note that you can only inject {@link angular.Module#provider `providers`} and
+           * {@link angular.Module#constant `constants`} into this function.
+           *
            * For more about how to configure services, see
            * {@link providers#provider-recipe Provider Recipe}.
            */
@@ -14734,11 +13767,11 @@ function toDebugString(obj, maxDepth) {
 var version = {
   // These placeholder strings will be replaced by grunt's `build` task.
   // They need to be double- or single-quoted.
-  full: '1.6.7',
+  full: '1.7.0',
   major: 1,
-  minor: 6,
-  dot: 7,
-  codeName: 'imperial-backstroke'
+  minor: 7,
+  dot: 0,
+  codeName: 'nonexistent-physiology'
 };
 
 
@@ -14768,8 +13801,6 @@ function publishExternalAPI(angular) {
     'isArray': isArray,
     'version': version,
     'isDate': isDate,
-    'lowercase': lowercase,
-    'uppercase': uppercase,
     'callbacks': {$$counter: 0},
     'getTestability': getTestability,
     'reloadWithDebugInfo': reloadWithDebugInfo,
@@ -14777,7 +13808,9 @@ function publishExternalAPI(angular) {
     '$$csp': csp,
     '$$encodeUriSegment': encodeUriSegment,
     '$$encodeUriQuery': encodeUriQuery,
-    '$$stringify': stringify
+    '$$lowercase': lowercase,
+    '$$stringify': stringify,
+    '$$uppercase': uppercase
   });
 
   angularModule = setupModuleLoader(window);
@@ -14884,7 +13917,7 @@ function publishExternalAPI(angular) {
       });
     }
   ])
-  .info({ angularVersion: '1.6.7' });
+  .info({ angularVersion: '1.7.0' });
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -14919,29 +13952,30 @@ function publishExternalAPI(angular) {
  *
  * If jQuery is available, `angular.element` is an alias for the
  * [jQuery](http://api.jquery.com/jQuery/) function. If jQuery is not available, `angular.element`
- * delegates to Angular's built-in subset of jQuery, called "jQuery lite" or **jqLite**.
+ * delegates to AngularJS's built-in subset of jQuery, called "jQuery lite" or **jqLite**.
  *
  * jqLite is a tiny, API-compatible subset of jQuery that allows
- * Angular to manipulate the DOM in a cross-browser compatible way. jqLite implements only the most
+ * AngularJS to manipulate the DOM in a cross-browser compatible way. jqLite implements only the most
  * commonly needed functionality with the goal of having a very small footprint.
  *
  * To use `jQuery`, simply ensure it is loaded before the `angular.js` file. You can also use the
  * {@link ngJq `ngJq`} directive to specify that jqlite should be used over jQuery, or to use a
  * specific version of jQuery if multiple versions exist on the page.
  *
- * <div class="alert alert-info">**Note:** All element references in Angular are always wrapped with jQuery or
+ * <div class="alert alert-info">**Note:** All element references in AngularJS are always wrapped with jQuery or
  * jqLite (such as the element argument in a directive's compile / link function). They are never raw DOM references.</div>
  *
  * <div class="alert alert-warning">**Note:** Keep in mind that this function will not find elements
  * by tag name / CSS selector. For lookups by tag name, try instead `angular.element(document).find(...)`
  * or `$document.find()`, or use the standard DOM APIs, e.g. `document.querySelectorAll()`.</div>
  *
- * ## Angular's jqLite
+ * ## AngularJS's jqLite
  * jqLite provides only the following jQuery methods:
  *
  * - [`addClass()`](http://api.jquery.com/addClass/) - Does not support a function as first argument
  * - [`after()`](http://api.jquery.com/after/)
- * - [`append()`](http://api.jquery.com/append/)
+ * - [`append()`](http://api.jquery.com/append/) - Contrary to jQuery, this doesn't clone elements
+ *   so will not work correctly when invoked on a jqLite object containing more than one DOM node
  * - [`attr()`](http://api.jquery.com/attr/) - Does not support functions as parameters
  * - [`bind()`](http://api.jquery.com/bind/) (_deprecated_, use [`on()`](http://api.jquery.com/on/)) - Does not support namespaces, selectors or eventData
  * - [`children()`](http://api.jquery.com/children/) - Does not support selectors
@@ -14977,7 +14011,7 @@ function publishExternalAPI(angular) {
  * - [`wrap()`](http://api.jquery.com/wrap/)
  *
  * ## jQuery/jqLite Extras
- * Angular also provides the following additional methods and events to both jQuery and jqLite:
+ * AngularJS also provides the following additional methods and events to both jQuery and jqLite:
  *
  * ### Events
  * - `$destroy` - AngularJS intercepts all jqLite/jQuery's DOM destruction apis and fires this event
@@ -15197,6 +14231,28 @@ function jqLiteDealoc(element, onlyDescendants) {
   }
 }
 
+function isEmptyObject(obj) {
+  var name;
+
+  for (name in obj) {
+    return false;
+  }
+  return true;
+}
+
+function removeIfEmptyData(element) {
+  var expandoId = element.ng339;
+  var expandoStore = expandoId && jqCache[expandoId];
+
+  var events = expandoStore && expandoStore.events;
+  var data = expandoStore && expandoStore.data;
+
+  if ((!data || isEmptyObject(data)) && (!events || isEmptyObject(events))) {
+    delete jqCache[expandoId];
+    element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
+  }
+}
+
 function jqLiteOff(element, type, fn, unsupported) {
   if (isDefined(unsupported)) throw jqLiteMinErr('offargs', 'jqLite#off() does not support the `selector` argument');
 
@@ -15233,6 +14289,8 @@ function jqLiteOff(element, type, fn, unsupported) {
       }
     });
   }
+
+  removeIfEmptyData(element);
 }
 
 function jqLiteRemoveData(element, name) {
@@ -15242,17 +14300,11 @@ function jqLiteRemoveData(element, name) {
   if (expandoStore) {
     if (name) {
       delete expandoStore.data[name];
-      return;
+    } else {
+      expandoStore.data = {};
     }
 
-    if (expandoStore.handle) {
-      if (expandoStore.events.$destroy) {
-        expandoStore.handle({}, '$destroy');
-      }
-      jqLiteOff(element);
-    }
-    delete jqCache[expandoId];
-    element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
+    removeIfEmptyData(element);
   }
 }
 
@@ -15502,6 +14554,7 @@ forEach({
   cleanData: function jqLiteCleanData(nodes) {
     for (var i = 0, ii = nodes.length; i < ii; i++) {
       jqLiteRemoveData(nodes[i]);
+      jqLiteOff(nodes[i]);
     }
   }
 }, function(fn, name) {
@@ -16128,8 +15181,8 @@ var $$MapProvider = [/** @this */function() {
  *   });
  * ```
  *
- * Sometimes you want to get access to the injector of a currently running Angular app
- * from outside Angular. Perhaps, you want to inject and compile some markup after the
+ * Sometimes you want to get access to the injector of a currently running AngularJS app
+ * from outside AngularJS. Perhaps, you want to inject and compile some markup after the
  * application has been bootstrapped. You can do this using the extra `injector()` added
  * to JQuery/jqLite elements. See {@link angular.element}.
  *
@@ -16486,7 +15539,7 @@ function annotate(fn, strictDi, name) {
  * with the {@link auto.$injector $injector}. Many of these functions are also exposed on
  * {@link angular.Module}.
  *
- * An Angular **service** is a singleton object created by a **service factory**.  These **service
+ * An AngularJS **service** is a singleton object created by a **service factory**.  These **service
  * factories** are functions which, in turn, are created by a **service provider**.
  * The **service providers** are constructor functions. When instantiated they must contain a
  * property called `$get`, which holds the **service factory** function.
@@ -16537,6 +15590,9 @@ function annotate(fn, strictDi, name) {
  * method {@link ng.$logProvider#debugEnabled debugEnabled}
  * which lets you specify whether the {@link ng.$log $log} service will log debug messages to the
  * console or not.
+ *
+ * It is possible to inject other providers into the provider function,
+ * but the injected provider must have been defined before the one that requires it.
  *
  * @param {string} name The name of the instance. NOTE: the provider will be available under `name +
                         'Provider'` key.
@@ -16714,7 +15770,7 @@ function annotate(fn, strictDi, name) {
  *
  * Value services are similar to constant services, except that they cannot be injected into a
  * module configuration function (see {@link angular.Module#config}) but they can be overridden by
- * an Angular {@link auto.$provide#decorator decorator}.
+ * an AngularJS {@link auto.$provide#decorator decorator}.
  *
  * @param {string} name The name of the instance.
  * @param {*} value The value.
@@ -16745,7 +15801,7 @@ function annotate(fn, strictDi, name) {
  *
  * But unlike {@link auto.$provide#value value}, a constant can be
  * injected into a module configuration function (see {@link angular.Module#config}) and it cannot
- * be overridden by an Angular {@link auto.$provide#decorator decorator}.
+ * be overridden by an AngularJS {@link auto.$provide#decorator decorator}.
  *
  * @param {string} name The name of the constant.
  * @param {*} value The constant value.
@@ -17017,9 +16073,7 @@ function createInjector(modulesToLoad, strictDi) {
       }
       var result = func.$$ngIsClass;
       if (!isBoolean(result)) {
-        // Support: Edge 12-13 only
-        // See: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/6156135/
-        result = func.$$ngIsClass = /^(?:class\b|constructor\()/.test(stringifyFn(func));
+        result = func.$$ngIsClass = /^class\b/.test(stringifyFn(func));
       }
       return result;
     }
@@ -17760,7 +16814,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        * @name $animate#pin
        * @kind function
        * @description Associates the provided element with a host parent element to allow the element to be animated even if it exists
-       *    outside of the DOM structure of the Angular application. By doing so, any animation triggered via `$animate` can be issued on the
+       *    outside of the DOM structure of the AngularJS application. By doing so, any animation triggered via `$animate` can be issued on the
        *    element despite being outside the realm of the application or within another application. Say for example if the application
        *    was bootstrapped on an element that is somewhere inside of the `<body>` tag, but we wanted to allow for an element to be situated
        *    as a direct child of `document.body`, then this can be achieved by pinning the element via `$animate.pin(element)`. Keep in mind
@@ -17808,13 +16862,77 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        * @ngdoc method
        * @name $animate#cancel
        * @kind function
-       * @description Cancels the provided animation.
+       * @description Cancels the provided animation and applies the end state of the animation.
+       * Note that this does not cancel the underlying operation, e.g. the setting of classes or
+       * adding the element to the DOM.
        *
-       * @param {Promise} animationPromise The animation promise that is returned when an animation is started.
+       * @param {animationRunner} animationRunner An animation runner returned by an $animate function.
+       *
+       * @example
+        <example module="animationExample" deps="angular-animate.js" animations="true" name="animate-cancel">
+          <file name="app.js">
+            angular.module('animationExample', ['ngAnimate']).component('cancelExample', {
+              templateUrl: 'template.html',
+              controller: function($element, $animate) {
+                this.runner = null;
+
+                this.addClass = function() {
+                  this.runner = $animate.addClass($element.find('div'), 'red');
+                  var ctrl = this;
+                  this.runner.finally(function() {
+                    ctrl.runner = null;
+                  });
+                };
+
+                this.removeClass = function() {
+                  this.runner = $animate.removeClass($element.find('div'), 'red');
+                  var ctrl = this;
+                  this.runner.finally(function() {
+                    ctrl.runner = null;
+                  });
+                };
+
+                this.cancel = function() {
+                  $animate.cancel(this.runner);
+                };
+              }
+            });
+          </file>
+          <file name="template.html">
+            <p>
+              <button id="add" ng-click="$ctrl.addClass()">Add</button>
+              <button ng-click="$ctrl.removeClass()">Remove</button>
+              <br>
+              <button id="cancel" ng-click="$ctrl.cancel()" ng-disabled="!$ctrl.runner">Cancel</button>
+              <br>
+              <div id="target">CSS-Animated Text</div>
+            </p>
+          </file>
+          <file name="index.html">
+            <cancel-example></cancel-example>
+          </file>
+          <file name="style.css">
+            .red-add, .red-remove {
+              transition: all 4s cubic-bezier(0.250, 0.460, 0.450, 0.940);
+            }
+
+            .red,
+            .red-add.red-add-active {
+              color: #FF0000;
+              font-size: 40px;
+            }
+
+            .red-remove.red-remove-active {
+              font-size: 10px;
+              color: black;
+            }
+
+          </file>
+        </example>
        */
       cancel: function(runner) {
-        if (runner.end) {
-          runner.end();
+        if (runner.cancel) {
+          runner.cancel();
         }
       },
 
@@ -17840,7 +16958,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       enter: function(element, parent, after, options) {
         parent = parent && jqLite(parent);
@@ -17872,7 +16990,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       move: function(element, parent, after, options) {
         parent = parent && jqLite(parent);
@@ -17899,7 +17017,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       leave: function(element, options) {
         return $$animateQueue.push(element, 'leave', prepareAnimateOptions(options), function() {
@@ -17929,7 +17047,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} animationRunner the animation runner
        */
       addClass: function(element, className, options) {
         options = prepareAnimateOptions(options);
@@ -17959,7 +17077,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       removeClass: function(element, className, options) {
         options = prepareAnimateOptions(options);
@@ -17990,7 +17108,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       setClass: function(element, add, remove, options) {
         options = prepareAnimateOptions(options);
@@ -18037,7 +17155,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Promise} the animation callback promise
+       * @return {Runner} the animation runner
        */
       animate: function(element, from, to, className, options) {
         options = prepareAnimateOptions(options);
@@ -18382,7 +17500,6 @@ function Browser(window, document, $log, $sniffer) {
 
   /**
    * @private
-   * Note: this method is used only by scenario runner
    * TODO(vojta): prefix this method with $$ ?
    * @param {function()} callback Function that will be called when no outstanding request
    */
@@ -18488,8 +17605,7 @@ function Browser(window, document, $log, $sniffer) {
       // - pendingLocation is needed as browsers don't allow to read out
       //   the new location.href if a reload happened or if there is a bug like in iOS 9 (see
       //   https://openradar.appspot.com/22186109).
-      // - the replacement is a workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=407172
-      return pendingLocation || location.href.replace(/%27/g,'\'');
+      return pendingLocation || location.href;
     }
   };
 
@@ -18552,7 +17668,7 @@ function Browser(window, document, $log, $sniffer) {
    * @description
    * Register callback function that will be called, when url changes.
    *
-   * It's only called when the url is changed from outside of angular:
+   * It's only called when the url is changed from outside of AngularJS:
    * - user types different url into address bar
    * - user clicks on history (forward/back) button
    * - user clicks on a link
@@ -18562,7 +17678,7 @@ function Browser(window, document, $log, $sniffer) {
    * The listener gets called with new url as parameter.
    *
    * NOTE: this api is intended for use only by the $location service. Please use the
-   * {@link ng.$location $location service} to monitor url changes in angular apps.
+   * {@link ng.$location $location service} to monitor url changes in AngularJS apps.
    *
    * @param {function(string)} listener Listener function to be called when url changes.
    * @return {function(string)} Returns the registered listener fn - handy if the fn is anonymous.
@@ -18597,7 +17713,7 @@ function Browser(window, document, $log, $sniffer) {
   };
 
   /**
-   * Checks whether the url has changed outside of Angular.
+   * Checks whether the url has changed outside of AngularJS.
    * Needs to be exported to be able to check for changes that have been done in sync,
    * as hashchange/popstate events fire in async.
    */
@@ -19204,7 +18320,7 @@ function $TemplateCacheProvider() {
  * ```
  *
  * ### Life-cycle hooks
- * Directive controllers can provide the following methods that are called by Angular at points in the life-cycle of the
+ * Directive controllers can provide the following methods that are called by AngularJS at points in the life-cycle of the
  * directive:
  * * `$onInit()` - Called on each controller after all the controllers on an element have been constructed and
  *   had their bindings initialized (and before the pre &amp; post linking functions for the directives on
@@ -19218,7 +18334,7 @@ function $TemplateCacheProvider() {
  *   changes. Any actions that you wish to take in response to the changes that you detect must be
  *   invoked from this hook; implementing this has no effect on when `$onChanges` is called. For example, this hook
  *   could be useful if you wish to perform a deep equality check, or to check a Date object, changes to which would not
- *   be detected by Angular's change detector and thus not trigger `$onChanges`. This hook is invoked with no arguments;
+ *   be detected by AngularJS's change detector and thus not trigger `$onChanges`. This hook is invoked with no arguments;
  *   if detecting changes, you must store the previous value(s) for comparison to the current values.
  * * `$onDestroy()` - Called on a controller when its containing scope is destroyed. Use this hook for releasing
  *   external resources, watches and event handlers. Note that components have their `$onDestroy()` hooks called in
@@ -19230,18 +18346,18 @@ function $TemplateCacheProvider() {
  *   they are waiting for their template to load asynchronously and their own compilation and linking has been
  *   suspended until that occurs.
  *
- * #### Comparison with Angular 2 life-cycle hooks
- * Angular 2 also uses life-cycle hooks for its components. While the Angular 1 life-cycle hooks are similar there are
- * some differences that you should be aware of, especially when it comes to moving your code from Angular 1 to Angular 2:
+ * #### Comparison with life-cycle hooks in the new Angular
+ * The new Angular also uses life-cycle hooks for its components. While the AngularJS life-cycle hooks are similar there are
+ * some differences that you should be aware of, especially when it comes to moving your code from AngularJS to Angular:
  *
- * * Angular 1 hooks are prefixed with `$`, such as `$onInit`. Angular 2 hooks are prefixed with `ng`, such as `ngOnInit`.
- * * Angular 1 hooks can be defined on the controller prototype or added to the controller inside its constructor.
- *   In Angular 2 you can only define hooks on the prototype of the Component class.
- * * Due to the differences in change-detection, you may get many more calls to `$doCheck` in Angular 1 than you would to
- *   `ngDoCheck` in Angular 2
+ * * AngularJS hooks are prefixed with `$`, such as `$onInit`. Angular hooks are prefixed with `ng`, such as `ngOnInit`.
+ * * AngularJS hooks can be defined on the controller prototype or added to the controller inside its constructor.
+ *   In Angular you can only define hooks on the prototype of the Component class.
+ * * Due to the differences in change-detection, you may get many more calls to `$doCheck` in AngularJS than you would to
+ *   `ngDoCheck` in Angular.
  * * Changes to the model inside `$doCheck` will trigger new turns of the digest loop, which will cause the changes to be
  *   propagated throughout the application.
- *   Angular 2 does not allow the `ngDoCheck` hook to trigger a change outside of the component. It will either throw an
+ *   Angular does not allow the `ngDoCheck` hook to trigger a change outside of the component. It will either throw an
  *   error or do nothing depending upon the state of `enableProdMode()`.
  *
  * #### Life-cycle hook examples
@@ -19387,21 +18503,22 @@ function $TemplateCacheProvider() {
  *   name. Given `<my-component my-attr="parentModel">` and the isolate scope definition `scope: {
  *   localModel: '=myAttr' }`, the property `localModel` on the directive's scope will reflect the
  *   value of `parentModel` on the parent scope. Changes to `parentModel` will be reflected in
- *   `localModel` and vice versa. Optional attributes should be marked as such with a question mark:
- *   `=?` or `=?attr`. If the binding expression is non-assignable, or if the attribute isn't
- *   optional and doesn't exist, an exception ({@link error/$compile/nonassign `$compile:nonassign`})
- *   will be thrown upon discovering changes to the local value, since it will be impossible to sync
- *   them back to the parent scope. By default, the {@link ng.$rootScope.Scope#$watch `$watch`}
+ *   `localModel` and vice versa. If the binding expression is non-assignable, or if the attribute
+ *   isn't  optional and doesn't exist, an exception
+ *   ({@link error/$compile/nonassign `$compile:nonassign`}) will be thrown upon discovering changes
+ *   to the local value, since it will be impossible to sync them back to the parent scope.
+ *
+ *   By default, the {@link ng.$rootScope.Scope#$watch `$watch`}
  *   method is used for tracking changes, and the equality check is based on object identity.
  *   However, if an object literal or an array literal is passed as the binding expression, the
  *   equality check is done by value (using the {@link angular.equals} function). It's also possible
  *   to watch the evaluated value shallowly with {@link ng.$rootScope.Scope#$watchCollection
- *   `$watchCollection`}: use `=*` or `=*attr` (`=*?` or `=*?attr` if the attribute is optional).
+ *   `$watchCollection`}: use `=*` or `=*attr`
  *
   * * `<` or `<attr` - set up a one-way (one-directional) binding between a local scope property and an
  *   expression passed via the attribute `attr`. The expression is evaluated in the context of the
  *   parent scope. If no `attr` name is specified then the attribute name is assumed to be the same as the
- *   local name. You can also make the binding optional by adding `?`: `<?` or `<?attr`.
+ *   local name.
  *
  *   For example, given `<my-component my-attr="parentModel">` and directive definition of
  *   `scope: { localModel:'<myAttr' }`, then the isolated scope property `localModel` will reflect the
@@ -19431,6 +18548,36 @@ function $TemplateCacheProvider() {
  *   and values into the expression wrapper fn. For example, if the expression is `increment(amount)`
  *   then we can specify the amount value by calling the `localFn` as `localFn({amount: 22})`.
  *
+ * All 4 kinds of bindings (`@`, `=`, `<`, and `&`) can be made optional by adding `?` to the expression.
+ * The marker must come after the mode and before the attribute name.
+ * See the {@link error/$compile/iscp Invalid Isolate Scope Definition error} for definition examples.
+ * This is useful to refine the interface directives provide.
+ * One subtle difference between optional and non-optional happens **when the binding attribute is not
+ * set**:
+ * - the binding is optional: the property will not be defined
+ * - the binding is not optional: the property is defined
+ *
+ * ```js
+ *app.directive('testDir', function() {
+    return {
+      scope: {
+        notoptional: '=',
+        optional: '=?',
+      },
+      bindToController: true,
+      controller: function() {
+        this.$onInit = function() {
+          console.log(this.hasOwnProperty('notoptional')) // true
+          console.log(this.hasOwnProperty('optional')) // false
+        }
+      }
+    }
+  })
+ *```
+ *
+ *
+ * ##### Combining directives with different scope defintions
+ *
  * In general it's possible to apply more than one directive to one element, but there might be limitations
  * depending on the type of scope required by the directives. The following points will help explain these limitations.
  * For simplicity only two directives are taken into account, but it is also applicable for several directives:
@@ -19457,12 +18604,6 @@ function $TemplateCacheProvider() {
  * properties. You can access these bindings once they have been initialized by providing a controller method called
  * `$onInit`, which is called after all the controllers on an element have been constructed and had their bindings
  * initialized.
- *
- * <div class="alert alert-warning">
- * **Deprecation warning:** if `$compileProcvider.preAssignBindingsEnabled(true)` was called, bindings for non-ES6 class
- * controllers are bound to `this` before the controller constructor is called but this use is now deprecated. Please
- * place initialization code that relies upon bindings inside a `$onInit` method on the controller, instead.
- * </div>
  *
  * It is also possible to set `bindToController` to an object hash with the same format as the `scope` property.
  * This will set up the scope bindings to the controller directly. Note that `scope` can still be used
@@ -19590,9 +18731,10 @@ function $TemplateCacheProvider() {
  * $sce#getTrustedResourceUrl $sce.getTrustedResourceUrl}.
  *
  *
- * #### `replace` (*DEPRECATED*)
- *
- * `replace` will be removed in next major release - i.e. v2.0).
+ * #### `replace`
+ * <div class="alert alert-danger">
+ * **Note:** `replace` is deprecated in AngularJS and has been removed in the new Angular (v2+).
+ * </div>
  *
  * Specifies what the template should replace. Defaults to `false`.
  *
@@ -19934,7 +19076,7 @@ function $TemplateCacheProvider() {
         });
       })
       .controller('GreeterController', ['$scope', function($scope) {
-        $scope.name = 'Angular';
+        $scope.name = 'AngularJS';
         $scope.html = 'Hello {{name}}';
       }]);
     </script>
@@ -19948,11 +19090,11 @@ function $TemplateCacheProvider() {
      it('should auto compile', function() {
        var textarea = $('textarea');
        var output = $('div[compile]');
-       // The initial state reads 'Hello Angular'.
-       expect(output.getText()).toBe('Hello Angular');
+       // The initial state reads 'Hello AngularJS'.
+       expect(output.getText()).toBe('Hello AngularJS');
        textarea.clear();
        textarea.sendKeys('{{name}}!');
-       expect(output.getText()).toBe('Angular!');
+       expect(output.getText()).toBe('AngularJS!');
      });
    </file>
  </example>
@@ -20006,7 +19148,7 @@ function $TemplateCacheProvider() {
  * element passed in, or the clone of the element if the `cloneAttachFn` is provided.
  *
  * After linking the view is not updated until after a call to $digest which typically is done by
- * Angular automatically.
+ * AngularJS automatically.
  *
  * If you need access to the bound view, there are two ways to do it:
  *
@@ -20032,7 +19174,7 @@ function $TemplateCacheProvider() {
  *
  *
  * For information on how the compiler works, see the
- * {@link guide/compiler Angular HTML Compiler} section of the Developer Guide.
+ * {@link guide/compiler AngularJS HTML Compiler} section of the Developer Guide.
  *
  * @knownIssue
  *
@@ -20042,6 +19184,59 @@ function $TemplateCacheProvider() {
    compiled again. This is an undesired effect and can lead to misbehaving directives, performance issues,
    and memory leaks. Refer to the Compiler Guide {@link guide/compiler#double-compilation-and-how-to-avoid-it
    section on double compilation} for an in-depth explanation and ways to avoid it.
+
+ * @knownIssue
+
+   ### Issues with `replace: true`
+ *
+ * <div class="alert alert-danger">
+ *   **Note**: {@link $compile#-replace- `replace: true`} is deprecated and not recommended to use,
+ *   mainly due to the issues listed here. It has been completely removed in the new Angular.
+ * </div>
+ *
+ * #### Attribute values are not merged
+ *
+ * When a `replace` directive encounters the same attribute on the original and the replace node,
+ * it will simply deduplicate the attribute and join the values with a space or with a `;` in case of
+ * the `style` attribute.
+ * ```html
+ * Original Node: <span class="original" style="color: red;"></span>
+ * Replace Template: <span class="replaced" style="background: blue;"></span>
+ * Result: <span class="original replaced" style="color: red; background: blue;"></span>
+ * ```
+ *
+ * That means attributes that contain AngularJS expressions will not be merged correctly, e.g.
+ * {@link ngShow} or {@link ngClass} will cause a {@link $parse} error:
+ *
+ * ```html
+ * Original Node: <span ng-class="{'something': something}" ng-show="!condition"></span>
+ * Replace Template: <span ng-class="{'else': else}" ng-show="otherCondition"></span>
+ * Result: <span ng-class="{'something': something} {'else': else}" ng-show="!condition otherCondition"></span>
+ * ```
+ *
+ * See issue [#5695](https://github.com/angular/angular.js/issues/5695).
+ *
+ * #### Directives are not deduplicated before compilation
+ *
+ * When the original node and the replace template declare the same directive(s), they will be
+ * {@link guide/compiler#double-compilation-and-how-to-avoid-it compiled twice} because the compiler
+ * does not deduplicate them. In many cases, this is not noticable, but e.g. {@link ngModel} will
+ * attach `$formatters` and `$parsers` twice.
+ *
+ * See issue [#2573](https://github.com/angular/angular.js/issues/2573).
+ *
+ * #### `transclude: element` in the replace template root can have
+ * unexpected effects
+ *
+ * When the replace template has a directive at the root node that uses
+ * {@link $compile#-transclude- `transclude: element`}, e.g.
+ * {@link ngIf} or {@link ngRepeat}, the DOM structure or scope inheritance can be incorrect.
+ * See the following issues:
+ *
+ * - Incorrect scope on replaced element:
+ * [#9837](https://github.com/angular/angular.js/issues/9837)
+ * - Different DOM between `template` and `templateUrl`:
+ * [#10612](https://github.com/angular/angular.js/issues/14326)
  *
  */
 
@@ -20073,11 +19268,13 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
   var bindingCache = createMap();
 
   function parseIsolateBindings(scope, directiveName, isController) {
-    var LOCAL_REGEXP = /^\s*([@&<]|=(\*?))(\??)\s*([\w$]*)\s*$/;
+    var LOCAL_REGEXP = /^([@&<]|=(\*?))(\??)\s*([\w$]*)$/;
 
     var bindings = createMap();
 
     forEach(scope, function(definition, scopeName) {
+      definition = definition.trim();
+
       if (definition in bindingCache) {
         bindings[scopeName] = bindingCache[definition];
         return;
@@ -20356,7 +19553,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
     // TODO(pete) remove the following `forEach` before we release 1.6.0
     // The component-router@0.2.0 looks for the annotations on the controller constructor
-    // Nothing in Angular looks for annotations on the factory function but we can't remove
+    // Nothing in AngularJS looks for annotations on the factory function but we can't remove
     // it from 1.5.x yet.
 
     // Copy any annotation properties (starting with $) over to the factory and controller constructor functions
@@ -20472,54 +19669,21 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
   /**
    * @ngdoc method
-   * @name  $compileProvider#preAssignBindingsEnabled
-   *
-   * @param {boolean=} enabled update the preAssignBindingsEnabled state if provided, otherwise just return the
-   * current preAssignBindingsEnabled state
-   * @returns {*} current value if used as getter or itself (chaining) if used as setter
-   *
-   * @kind function
-   *
-   * @description
-   * Call this method to enable/disable whether directive controllers are assigned bindings before
-   * calling the controller's constructor.
-   * If enabled (true), the compiler assigns the value of each of the bindings to the
-   * properties of the controller object before the constructor of this object is called.
-   *
-   * If disabled (false), the compiler calls the constructor first before assigning bindings.
-   *
-   * The default value is false.
-   *
-   * @deprecated
-   * sinceVersion="1.6.0"
-   * removeVersion="1.7.0"
-   *
-   * This method and the option to assign the bindings before calling the controller's constructor
-   * will be removed in v1.7.0.
-   */
-  var preAssignBindingsEnabled = false;
-  this.preAssignBindingsEnabled = function(enabled) {
-    if (isDefined(enabled)) {
-      preAssignBindingsEnabled = enabled;
-      return this;
-    }
-    return preAssignBindingsEnabled;
-  };
-
-  /**
-   * @ngdoc method
    * @name  $compileProvider#strictComponentBindingsEnabled
    *
-   * @param {boolean=} enabled update the strictComponentBindingsEnabled state if provided, otherwise just return the
-   * current strictComponentBindingsEnabled state
+   * @param {boolean=} enabled update the strictComponentBindingsEnabled state if provided,
+   * otherwise return the current strictComponentBindingsEnabled state.
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    *
    * @kind function
    *
    * @description
-   * Call this method to enable/disable strict component bindings check. If enabled, the compiler will enforce that
-   * for all bindings of a component that are not set as optional with `?`, an attribute needs to be provided
-   * on the component's HTML tag.
+   * Call this method to enable / disable the strict component bindings check. If enabled, the
+   * compiler will enforce that all scope / controller bindings of a
+   * {@link $compileProvider#directive directive} / {@link $compileProvider#component component}
+   * that are not set as optional with `?`, must be provided when the directive is instantiated.
+   * If not provided, the compiler will throw the
+   * {@link error/$compile/missingattr $compile:missingattr error}.
    *
    * The default value is false.
    */
@@ -20620,9 +19784,9 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
   this.$get = [
             '$injector', '$interpolate', '$exceptionHandler', '$templateRequest', '$parse',
-            '$controller', '$rootScope', '$sce', '$animate', '$$sanitizeUri',
+            '$controller', '$rootScope', '$sce', '$animate',
     function($injector,   $interpolate,   $exceptionHandler,   $templateRequest,   $parse,
-             $controller,   $rootScope,   $sce,   $animate,   $$sanitizeUri) {
+             $controller,   $rootScope,   $sce,   $animate) {
 
     var SIMPLE_ATTR_NAME = /^\w/;
     var specialAttrHolder = window.document.createElement('div');
@@ -20647,19 +19811,15 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         }
         // We must run this hook in an apply since the $$postDigest runs outside apply
         $rootScope.$apply(function() {
-          var errors = [];
           for (var i = 0, ii = onChangesQueue.length; i < ii; ++i) {
             try {
               onChangesQueue[i]();
             } catch (e) {
-              errors.push(e);
+              $exceptionHandler(e);
             }
           }
           // Reset the queue to trigger a new schedule next time there is a change
           onChangesQueue = undefined;
-          if (errors.length) {
-            throw errors;
-          }
         });
       } finally {
         onChangesTtl++;
@@ -20771,8 +19931,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        */
       $set: function(key, value, writeAttr, attrName) {
         // TODO: decide whether or not to throw an error if "class"
-        //is set through this function since it may cause $updateClass to
-        //become unstable.
+        // is set through this function since it may cause $updateClass to
+        // become unstable.
 
         var node = this.$$element[0],
             booleanKey = getBooleanAttrName(node, key),
@@ -20802,12 +19962,20 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
         nodeName = nodeName_(this.$$element);
 
-        if ((nodeName === 'a' && (key === 'href' || key === 'xlinkHref')) ||
-            (nodeName === 'img' && key === 'src')) {
-          // sanitize a[href] and img[src] values
-          this[key] = value = $$sanitizeUri(value, key === 'src');
-        } else if (nodeName === 'img' && key === 'srcset' && isDefined(value)) {
-          // sanitize img[srcset] values
+        // Sanitize img[srcset] values.
+        if (nodeName === 'img' && key === 'srcset' && value) {
+          if (!isString(value)) {
+            throw $compileMinErr('srcset', 'Can\'t pass trusted values to `$set(\'srcset\', value)`: "{0}"', value.toString());
+          }
+
+          // Such values are a bit too complex to handle automatically inside $sce.
+          // Instead, we sanitize each of the URIs individually, which works, even dynamically.
+
+          // It's not possible to work around this using `$sce.trustAsMediaUrl`.
+          // If you want to programmatically set explicitly trusted unsafe URLs, you should use
+          // `$sce.trustAsHtml` on the whole `img` tag and inject it into the DOM using the
+          // `ng-bind-html` directive.
+
           var result = '';
 
           // first check if there are spaces because it's not the same pattern
@@ -20824,16 +19992,16 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           for (var i = 0; i < nbrUrisWith2parts; i++) {
             var innerIdx = i * 2;
             // sanitize the uri
-            result += $$sanitizeUri(trim(rawUris[innerIdx]), true);
+            result += $sce.getTrustedMediaUrl(trim(rawUris[innerIdx]));
             // add the descriptor
-            result += (' ' + trim(rawUris[innerIdx + 1]));
+            result += ' ' + trim(rawUris[innerIdx + 1]);
           }
 
           // split the last item into uri and descriptor
           var lastTuple = trim(rawUris[i * 2]).split(/\s/);
 
           // sanitize the last uri
-          result += $$sanitizeUri(trim(lastTuple[0]), true);
+          result += $sce.getTrustedMediaUrl(trim(lastTuple[0]));
 
           // and add the last descriptor if any
           if (lastTuple.length === 2) {
@@ -21027,7 +20195,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           // for call to the link function.
           // Note: This will already clone the nodes...
           $linkNode = jqLite(
-            wrapTemplate(namespace, jqLite('<div>').append($compileNodes).html())
+            wrapTemplate(namespace, jqLite('<div></div>').append($compileNodes).html())
           );
         } else if (cloneConnectFn) {
           // important!!: we must call our jqLite.clone() since the jQuery one is trying to be smart
@@ -21581,17 +20749,6 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             compileNode = $compileNode[0];
             replaceWith(jqCollection, sliceArgs($template), compileNode);
 
-            // Support: Chrome < 50
-            // https://github.com/angular/angular.js/issues/14041
-
-            // In the versions of V8 prior to Chrome 50, the document fragment that is created
-            // in the `replaceWith` function is improperly garbage collected despite still
-            // being referenced by the `parentNode` property of all of the child nodes.  By adding
-            // a reference to the fragment via a different property, we can avoid that incorrect
-            // behavior.
-            // TODO: remove this line after Chrome 50 has been released
-            $template[0].$$parentNode = $template[0].parentNode;
-
             childTranscludeFn = compilationGenerator(mightHaveMultipleTransclusionError, $template, transcludeFn, terminalPriority,
                                         replaceDirective && replaceDirective.name, {
                                           // Don't pass in:
@@ -21851,33 +21008,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           var controller = elementControllers[name];
           var bindings = controllerDirective.$$bindings.bindToController;
 
-          if (preAssignBindingsEnabled) {
-            if (bindings) {
-              controller.bindingInfo =
-                initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
-            } else {
-              controller.bindingInfo = {};
-            }
-
-            var controllerResult = controller();
-            if (controllerResult !== controller.instance) {
-              // If the controller constructor has a return value, overwrite the instance
-              // from setupControllers
-              controller.instance = controllerResult;
-              $element.data('$' + controllerDirective.name + 'Controller', controllerResult);
-              if (controller.bindingInfo.removeWatches) {
-                controller.bindingInfo.removeWatches();
-              }
-              controller.bindingInfo =
-                initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
-            }
-          } else {
-            controller.instance = controller();
-            $element.data('$' + controllerDirective.name + 'Controller', controller.instance);
-            controller.bindingInfo =
-              initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
+          controller.instance = controller();
+          $element.data('$' + controllerDirective.name + 'Controller', controller.instance);
+          controller.bindingInfo =
+            initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
           }
-        }
 
         // Bind the required controllers to the controller, if `require` is an object and `bindToController` is truthy
         forEach(controllerDirectives, function(controllerDirective, name) {
@@ -22381,18 +21516,30 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       }
       var tag = nodeName_(node);
       // All tags with src attributes require a RESOURCE_URL value, except for
-      // img and various html5 media tags.
+      // img and various html5 media tags, which require the MEDIA_URL context.
       if (attrNormalizedName === 'src' || attrNormalizedName === 'ngSrc') {
         if (['img', 'video', 'audio', 'source', 'track'].indexOf(tag) === -1) {
           return $sce.RESOURCE_URL;
         }
-      // maction[xlink:href] can source SVG.  It's not limited to <maction>.
-      } else if (attrNormalizedName === 'xlinkHref' ||
+        return $sce.MEDIA_URL;
+      } else if (attrNormalizedName === 'xlinkHref') {
+        // Some xlink:href are okay, most aren't
+        if (tag === 'image') return $sce.MEDIA_URL;
+        if (tag === 'a') return $sce.URL;
+        return $sce.RESOURCE_URL;
+      } else if (
+          // Formaction
           (tag === 'form' && attrNormalizedName === 'action') ||
+          // If relative URLs can go where they are not expected to, then
+          // all sorts of trust issues can arise.
+          (tag === 'base' && attrNormalizedName === 'href') ||
           // links can be stylesheets or imports, which can run script in the current origin
           (tag === 'link' && attrNormalizedName === 'href')
       ) {
         return $sce.RESOURCE_URL;
+      } else if (tag === 'a' && (attrNormalizedName === 'href' ||
+                                 attrNormalizedName === 'ngHref')) {
+        return $sce.URL;
       }
     }
 
@@ -22523,7 +21670,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       }
 
       if (jqLite.hasData(firstElementToRemove)) {
-        // Copy over user data (that includes Angular's $scope etc.). Don't copy private
+        // Copy over user data (that includes AngularJS's $scope etc.). Don't copy private
         // data here because there's no public interface in jQuery to do that and copying over
         // event listeners (which is the main use of private data) wouldn't work anyway.
         jqLite.data(newNode, jqLite.data(firstElementToRemove));
@@ -22601,7 +21748,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
               // the value is there for use in the link fn
               destination[scopeName] = $interpolate(lastValue)(scope);
             } else if (isBoolean(lastValue)) {
-              // If the attributes is one of the BOOLEAN_ATTR then Angular will have converted
+              // If the attributes is one of the BOOLEAN_ATTR then AngularJS will have converted
               // the value to boolean rather than a string, so we special case this situation
               destination[scopeName] = lastValue;
             }
@@ -22663,21 +21810,21 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             if (optional && !attrs[attrName]) break;
 
             parentGet = $parse(attrs[attrName]);
-            var deepWatch = parentGet.literal;
+            var isLiteral = parentGet.literal;
 
             var initialValue = destination[scopeName] = parentGet(scope);
             initialChanges[scopeName] = new SimpleChange(_UNINITIALIZED_VALUE, destination[scopeName]);
 
             removeWatch = scope.$watch(parentGet, function parentValueWatchAction(newValue, oldValue) {
               if (oldValue === newValue) {
-                if (oldValue === initialValue || (deepWatch && equals(oldValue, initialValue))) {
+                if (oldValue === initialValue || (isLiteral && equals(oldValue, initialValue))) {
                   return;
                 }
                 oldValue = initialValue;
               }
               recordChanges(scopeName, newValue, oldValue);
               destination[scopeName] = newValue;
-            }, deepWatch);
+            });
 
             removeWatchCollection.push(removeWatch);
             break;
@@ -22767,7 +21914,7 @@ function directiveNormalize(name) {
  * @description
  * A shared object between directive compile / linking functions which contains normalized DOM
  * element attributes. The values reflect current binding state `{{ }}`. The normalization is
- * needed since all of these are treated as equivalent in Angular:
+ * needed since all of these are treated as equivalent in AngularJS:
  *
  * ```
  *    <span ng:bind="a" ng-bind="a" data-ng-bind="a" x-ng-bind="a">
@@ -22873,15 +22020,14 @@ function identifierForController(controller, ident) {
  * @this
  *
  * @description
- * The {@link ng.$controller $controller service} is used by Angular to create new
+ * The {@link ng.$controller $controller service} is used by AngularJS to create new
  * controllers.
  *
  * This provider allows controller registration via the
  * {@link ng.$controllerProvider#register register} method.
  */
 function $ControllerProvider() {
-  var controllers = {},
-      globals = false;
+  var controllers = {};
 
   /**
    * @ngdoc method
@@ -22909,22 +22055,7 @@ function $ControllerProvider() {
     }
   };
 
-  /**
-   * @ngdoc method
-   * @name $controllerProvider#allowGlobals
-   * @description If called, allows `$controller` to find controller constructors on `window`
-   *
-   * @deprecated
-   * sinceVersion="v1.3.0"
-   * removeVersion="v1.7.0"
-   * This method of finding controllers has been deprecated.
-   */
-  this.allowGlobals = function() {
-    globals = true;
-  };
-
-
-  this.$get = ['$injector', '$window', function($injector, $window) {
+  this.$get = ['$injector', function($injector) {
 
     /**
      * @ngdoc service
@@ -22937,8 +22068,6 @@ function $ControllerProvider() {
      *
      *    * check if a controller with given name is registered via `$controllerProvider`
      *    * check if evaluating the string on the current scope returns a constructor
-     *    * if $controllerProvider#allowGlobals, check `window[constructor]` on the global
-     *      `window` object (deprecated, not recommended)
      *
      *    The string can use the `controller as property` syntax, where the controller instance is published
      *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
@@ -22978,8 +22107,7 @@ function $ControllerProvider() {
         identifier = identifier || match[3];
         expression = controllers.hasOwnProperty(constructor)
             ? controllers[constructor]
-            : getter(locals.$scope, constructor, true) ||
-                (globals ? getter($window, constructor, true) : undefined);
+            : getter(locals.$scope, constructor, true);
 
         if (!expression) {
           throw $controllerMinErr('ctrlreg',
@@ -23111,7 +22239,7 @@ function $$IsDocumentHiddenProvider() {
  * @this
  *
  * @description
- * Any uncaught exception in angular expressions is delegated to this service.
+ * Any uncaught exception in AngularJS expressions is delegated to this service.
  * The default implementation simply delegates to `$log.error` which logs it into
  * the browser console.
  *
@@ -23213,7 +22341,7 @@ function $HttpParamSerializerProvider() {
    * * `{'foo': {'bar':'baz'}}` results in `foo=%7B%22bar%22%3A%22baz%22%7D` (stringified and encoded representation of an object)
    *
    * Note that serializer will sort the request parameters alphabetically.
-   * */
+   */
 
   this.$get = function() {
     return function ngParamSerializer(params) {
@@ -23280,7 +22408,7 @@ function $HttpParamSerializerJQLikeProvider() {
    * });
    * ```
    *
-   * */
+   */
   this.$get = function() {
     return function jQueryLikeParamSerializer(params) {
       if (!params) return '';
@@ -23289,7 +22417,6 @@ function $HttpParamSerializerJQLikeProvider() {
       return parts.join('&');
 
       function serialize(toSerialize, prefix, topLevel) {
-        if (toSerialize === null || isUndefined(toSerialize)) return;
         if (isArray(toSerialize)) {
           forEach(toSerialize, function(value, index) {
             serialize(value, prefix + '[' + (isObject(value) ? index : '') + ']');
@@ -23302,7 +22429,11 @@ function $HttpParamSerializerJQLikeProvider() {
                 (topLevel ? '' : ']'));
           });
         } else {
-          parts.push(encodeUriQuery(prefix) + '=' + encodeUriQuery(serializeValue(toSerialize)));
+          if (isFunction(toSerialize)) {
+            toSerialize = toSerialize();
+          }
+          parts.push(encodeUriQuery(prefix) + '=' +
+              (toSerialize == null ? '' : encodeUriQuery(serializeValue(toSerialize))));
         }
       }
     };
@@ -23437,7 +22568,7 @@ function isSuccess(status) {
  *
  * @description
  * Use `$httpProvider` to change the default behavior of the {@link ng.$http $http} service.
- * */
+ */
 function $HttpProvider() {
   /**
    * @ngdoc property
@@ -23491,7 +22622,7 @@ function $HttpProvider() {
    * - **`defaults.xsrfHeaderName`** - {string} - Name of HTTP header to populate with the
    * XSRF token. Defaults value is `'X-XSRF-TOKEN'`.
    *
-   **/
+   */
   var defaults = this.defaults = {
     // transform incoming response data
     transformResponse: [defaultHttpResponseTransform],
@@ -23538,7 +22669,7 @@ function $HttpProvider() {
    *
    * @returns {boolean|Object} If a value is specified, returns the $httpProvider for chaining.
    *    otherwise, returns the current configured value.
-   **/
+   */
   this.useApplyAsync = function(value) {
     if (isDefined(value)) {
       useApplyAsync = !!value;
@@ -23559,8 +22690,50 @@ function $HttpProvider() {
    * array, on request, but reverse order, on response.
    *
    * {@link ng.$http#interceptors Interceptors detailed info}
-   **/
+   */
   var interceptorFactories = this.interceptors = [];
+
+  /**
+   * @ngdoc property
+   * @name $httpProvider#xsrfWhitelistedOrigins
+   * @description
+   *
+   * Array containing URLs whose origins are trusted to receive the XSRF token. See the
+   * {@link ng.$http#security-considerations Security Considerations} sections for more details on
+   * XSRF.
+   *
+   * **Note:** An "origin" consists of the [URI scheme](https://en.wikipedia.org/wiki/URI_scheme),
+   * the [hostname](https://en.wikipedia.org/wiki/Hostname) and the
+   * [port number](https://en.wikipedia.org/wiki/Port_(computer_networking). For `http:` and
+   * `https:`, the port number can be omitted if using th default ports (80 and 443 respectively).
+   * Examples: `http://example.com`, `https://api.example.com:9876`
+   *
+   * <div class="alert alert-warning">
+   *   It is not possible to whitelist specific URLs/paths. The `path`, `query` and `fragment` parts
+   *   of a URL will be ignored. For example, `https://foo.com/path/bar?query=baz#fragment` will be
+   *   treated as `https://foo.com`, meaning that **all** requests to URLs starting with
+   *   `https://foo.com/` will include the XSRF token.
+   * </div>
+   *
+   * @example
+   *
+   * ```js
+   * // App served from `https://example.com/`.
+   * angular.
+   *   module('xsrfWhitelistedOriginsExample', []).
+   *   config(['$httpProvider', function($httpProvider) {
+   *     $httpProvider.xsrfWhitelistedOrigins.push('https://api.example.com');
+   *   }]).
+   *   run(['$http', function($http) {
+   *     // The XSRF token will be sent.
+   *     $http.get('https://api.example.com/preferences').then(...);
+   *
+   *     // The XSRF token will NOT be sent.
+   *     $http.get('https://stats.example.com/activity').then(...);
+   *   }]);
+   * ```
+   */
+  var xsrfWhitelistedOrigins = this.xsrfWhitelistedOrigins = [];
 
   this.$get = ['$browser', '$httpBackend', '$$cookieReader', '$cacheFactory', '$rootScope', '$q', '$injector', '$sce',
       function($browser, $httpBackend, $$cookieReader, $cacheFactory, $rootScope, $q, $injector, $sce) {
@@ -23586,6 +22759,11 @@ function $HttpProvider() {
     });
 
     /**
+     * A function to check request URLs against a list of allowed origins.
+     */
+    var urlIsAllowedOrigin = urlIsAllowedOriginFactory(xsrfWhitelistedOrigins);
+
+    /**
      * @ngdoc service
      * @kind function
      * @name $http
@@ -23596,7 +22774,7 @@ function $HttpProvider() {
      * @requires $injector
      *
      * @description
-     * The `$http` service is a core Angular service that facilitates communication with the remote
+     * The `$http` service is a core AngularJS service that facilitates communication with the remote
      * HTTP servers via the browser's [XMLHttpRequest](https://developer.mozilla.org/en/xmlhttprequest)
      * object or via [JSONP](http://en.wikipedia.org/wiki/JSONP).
      *
@@ -23613,7 +22791,9 @@ function $HttpProvider() {
      *
      * ## General usage
      * The `$http` service is a function which takes a single argument — a {@link $http#usage configuration object} —
-     * that is used to generate an HTTP request and returns  a {@link ng.$q promise}.
+     * that is used to generate an HTTP request and returns  a {@link ng.$q promise} that is
+     * resolved (request success) or rejected (request failure) with a
+     * {@link ng.$http#$http-returns response} object.
      *
      * ```js
      *   // Simple GET request example:
@@ -23628,24 +22808,6 @@ function $HttpProvider() {
      *       // or server returns response with an error status.
      *     });
      * ```
-     *
-     * The response object has these properties:
-     *
-     *   - **data** – `{string|Object}` – The response body transformed with the transform
-     *     functions.
-     *   - **status** – `{number}` – HTTP status code of the response.
-     *   - **headers** – `{function([headerName])}` – Header getter function.
-     *   - **config** – `{Object}` – The configuration object that was used to generate the request.
-     *   - **statusText** – `{string}` – HTTP status text of the response.
-     *   - **xhrStatus** – `{string}` – Status of the XMLHttpRequest (`complete`, `error`, `timeout` or `abort`).
-     *
-     * A response status code between 200 and 299 is considered a success status and will result in
-     * the success callback being called. Any response status code outside of that range is
-     * considered an error status and will result in the error callback being called.
-     * Also, status codes less than -1 are normalized to zero. -1 usually means the request was
-     * aborted, e.g. using a `config.timeout`.
-     * Note that if the response is a redirect, XMLHttpRequest will transparently follow it, meaning
-     * that the outcome (success or error) will be determined by the final response status code.
      *
      *
      * ## Shortcut methods
@@ -23735,7 +22897,7 @@ function $HttpProvider() {
      * which allows you to `push` or `unshift` a new transformation function into the transformation chain.
      *
      * <div class="alert alert-warning">
-     * **Note:** Angular does not make a copy of the `data` parameter before it is passed into the `transformRequest` pipeline.
+     * **Note:** AngularJS does not make a copy of the `data` parameter before it is passed into the `transformRequest` pipeline.
      * That means changes to the properties of `data` are not local to the transform function (since Javascript passes objects by reference).
      * For example, when calling `$http.get(url, $scope.myObject)`, modifications to the object's properties in a transformRequest
      * function will be reflected on the scope and in any templates where the object is data-bound.
@@ -23752,7 +22914,7 @@ function $HttpProvider() {
      * You can augment or replace the default transformations by modifying these properties by adding to or
      * replacing the array.
      *
-     * Angular provides the following default transformations:
+     * AngularJS provides the following default transformations:
      *
      * Request transformations (`$httpProvider.defaults.transformRequest` and `$http.defaults.transformRequest`) is
      * an array with one function that does the following:
@@ -23925,7 +23087,7 @@ function $HttpProvider() {
      * - [JSON vulnerability](http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx)
      * - [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery)
      *
-     * Both server and the client must cooperate in order to eliminate these threats. Angular comes
+     * Both server and the client must cooperate in order to eliminate these threats. AngularJS comes
      * pre-configured with strategies that address these issues, but for this to work backend server
      * cooperation is required.
      *
@@ -23935,7 +23097,7 @@ function $HttpProvider() {
      * allows third party website to turn your JSON resource URL into
      * [JSONP](http://en.wikipedia.org/wiki/JSONP) request under some conditions. To
      * counter this your server can prefix all JSON requests with following string `")]}',\n"`.
-     * Angular will automatically strip the prefix before processing it as JSON.
+     * AngularJS will automatically strip the prefix before processing it as JSON.
      *
      * For example if your server needs to return:
      * ```js
@@ -23948,34 +23110,51 @@ function $HttpProvider() {
      * ['one','two']
      * ```
      *
-     * Angular will strip the prefix, before processing the JSON.
+     * AngularJS will strip the prefix, before processing the JSON.
      *
      *
      * ### Cross Site Request Forgery (XSRF) Protection
      *
      * [XSRF](http://en.wikipedia.org/wiki/Cross-site_request_forgery) is an attack technique by
      * which the attacker can trick an authenticated user into unknowingly executing actions on your
-     * website. Angular provides a mechanism to counter XSRF. When performing XHR requests, the
+     * website. AngularJS provides a mechanism to counter XSRF. When performing XHR requests, the
      * $http service reads a token from a cookie (by default, `XSRF-TOKEN`) and sets it as an HTTP
-     * header (`X-XSRF-TOKEN`). Since only JavaScript that runs on your domain could read the
-     * cookie, your server can be assured that the XHR came from JavaScript running on your domain.
-     * The header will not be set for cross-domain requests.
+     * header (by default `X-XSRF-TOKEN`). Since only JavaScript that runs on your domain could read
+     * the cookie, your server can be assured that the XHR came from JavaScript running on your
+     * domain.
      *
      * To take advantage of this, your server needs to set a token in a JavaScript readable session
      * cookie called `XSRF-TOKEN` on the first HTTP GET request. On subsequent XHR requests the
-     * server can verify that the cookie matches `X-XSRF-TOKEN` HTTP header, and therefore be sure
-     * that only JavaScript running on your domain could have sent the request. The token must be
-     * unique for each user and must be verifiable by the server (to prevent the JavaScript from
+     * server can verify that the cookie matches the `X-XSRF-TOKEN` HTTP header, and therefore be
+     * sure that only JavaScript running on your domain could have sent the request. The token must
+     * be unique for each user and must be verifiable by the server (to prevent the JavaScript from
      * making up its own tokens). We recommend that the token is a digest of your site's
      * authentication cookie with a [salt](https://en.wikipedia.org/wiki/Salt_(cryptography&#41;)
      * for added security.
      *
-     * The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
-     * properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
-     * or the per-request config object.
+     * The header will &mdash; by default &mdash; **not** be set for cross-domain requests. This
+     * prevents unauthorized servers (e.g. malicious or compromised 3rd-party APIs) from gaining
+     * access to your users' XSRF tokens and exposing them to Cross Site Request Forgery. If you
+     * want to, you can whitelist additional origins to also receive the XSRF token, by adding them
+     * to {@link ng.$httpProvider#xsrfWhitelistedOrigins xsrfWhitelistedOrigins}. This might be
+     * useful, for example, if your application, served from `example.com`, needs to access your API
+     * at `api.example.com`.
+     * See {@link ng.$httpProvider#xsrfWhitelistedOrigins $httpProvider.xsrfWhitelistedOrigins} for
+     * more details.
      *
-     * In order to prevent collisions in environments where multiple Angular apps share the
-     * same domain or subdomain, we recommend that each application uses unique cookie name.
+     * <div class="alert alert-danger">
+     *   **Warning**<br />
+     *   Only whitelist origins that you have control over and make sure you understand the
+     *   implications of doing so.
+     * </div>
+     *
+     * The name of the cookie and the header can be specified using the `xsrfCookieName` and
+     * `xsrfHeaderName` properties of either `$httpProvider.defaults` at config-time,
+     * `$http.defaults` at run-time, or the per-request config object.
+     *
+     * In order to prevent collisions in environments where multiple AngularJS apps share the
+     * same domain or subdomain, we recommend that each application uses a unique cookie name.
+     *
      *
      * @param {object} config Object describing the request to be made and how it should be
      *    processed. The object has following properties:
@@ -24021,14 +23200,44 @@ function $HttpProvider() {
      *      See {@link $http#caching $http Caching} for more information.
      *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
      *      that should abort the request when resolved.
+     *
+     *      A numerical timeout or a promise returned from {@link ng.$timeout $timeout}, will set
+     *      the `xhrStatus` in the {@link $http#$http-returns response} to "timeout", and any other
+     *      resolved promise will set it to "abort", following standard XMLHttpRequest behavior.
+     *
      *    - **withCredentials** - `{boolean}` - whether to set the `withCredentials` flag on the
      *      XHR object. See [requests with credentials](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
      *      for more information.
      *    - **responseType** - `{string}` - see
      *      [XMLHttpRequest.responseType](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#xmlhttprequest-responsetype).
      *
-     * @returns {HttpPromise} Returns a {@link ng.$q `Promise}` that will be resolved to a response object
-     *                        when the request succeeds or fails.
+     * @returns {HttpPromise} A {@link ng.$q `Promise}` that will be resolved (request success)
+     *   or rejected (request failure) with a response object.
+     *
+     *   The response object has these properties:
+     *
+     *   - **data** – `{string|Object}` – The response body transformed with
+     *     the transform functions.
+     *   - **status** – `{number}` – HTTP status code of the response.
+     *   - **headers** – `{function([headerName])}` – Header getter function.
+     *   - **config** – `{Object}` – The configuration object that was used
+     *     to generate the request.
+     *   - **statusText** – `{string}` – HTTP status text of the response.
+     *   - **xhrStatus** – `{string}` – Status of the XMLHttpRequest
+     *     (`complete`, `error`, `timeout` or `abort`).
+     *
+     *
+     *   A response status code between 200 and 299 is considered a success status
+     *   and will result in the success callback being called. Any response status
+     *   code outside of that range is considered an error status and will result
+     *   in the error callback being called.
+     *   Also, status codes less than -1 are normalized to zero. -1 usually means
+     *   the request was aborted, e.g. using a `config.timeout`. More information
+     *   about the status might be available in the `xhrStatus` property.
+     *
+     *   Note that if the response is a redirect, XMLHttpRequest will transparently
+     *   follow it, meaning that the outcome (success or error) will be determined
+     *   by the final response status code.
      *
      *
      * @property {Array.<Object>} pendingRequests Array of config objects for currently pending
@@ -24278,8 +23487,9 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
 
     /**
@@ -24291,8 +23501,9 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
 
     /**
@@ -24304,8 +23515,9 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
 
     /**
@@ -24346,8 +23558,9 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
     createShortMethods('get', 'delete', 'head', 'jsonp');
 
@@ -24360,8 +23573,9 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
 
     /**
@@ -24373,8 +23587,9 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-     * @returns {HttpPromise} Future object
+     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+     * See {@link ng.$http#$http-returns `$http()` return value}.
      */
 
      /**
@@ -24386,8 +23601,9 @@ function $HttpProvider() {
       *
       * @param {string} url Relative or absolute URL specifying the destination of the request
       * @param {*} data Request content
-      * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
-      * @returns {HttpPromise} Future object
+      * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
+      * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
+      * See {@link ng.$http#$http-returns `$http()` return value}.
       */
     createShortMethodsWithData('post', 'put', 'patch');
 
@@ -24498,7 +23714,7 @@ function $HttpProvider() {
       // if we won't have the response in cache, set the xsrf headers and
       // send the request to the backend
       if (isUndefined(cachedResp)) {
-        var xsrfValue = urlIsSameOrigin(config.url)
+        var xsrfValue = urlIsAllowedOrigin(config.url)
             ? $$cookieReader()[config.xsrfCookieName || defaults.xsrfCookieName]
             : undefined;
         if (xsrfValue) {
@@ -24696,6 +23912,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
     } else {
 
       var xhr = createXhr(method, url);
+      var abortedByTimeout = false;
 
       xhr.open(method, url, true);
       forEach(headers, function(value, key) {
@@ -24736,7 +23953,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       };
 
       var requestAborted = function() {
-        completeRequest(callback, -1, null, null, '', 'abort');
+        completeRequest(callback, -1, null, null, '', abortedByTimeout ? 'timeout' : 'abort');
       };
 
       var requestTimeout = function() {
@@ -24746,11 +23963,11 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       };
 
       xhr.onerror = requestError;
-      xhr.onabort = requestAborted;
       xhr.ontimeout = requestTimeout;
+      xhr.onabort = requestAborted;
 
       forEach(eventHandlers, function(value, key) {
-          xhr.addEventListener(key, value);
+        xhr.addEventListener(key, value);
       });
 
       forEach(uploadEventHandlers, function(value, key) {
@@ -24781,14 +23998,26 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       xhr.send(isUndefined(post) ? null : post);
     }
 
+    // Since we are using xhr.abort() when a request times out, we have to set a flag that
+    // indicates to requestAborted if the request timed out or was aborted.
+    //
+    // http.timeout = numerical timeout   timeout
+    // http.timeout = $timeout            timeout
+    // http.timeout = promise             abort
+    // xhr.abort()                        abort (The xhr object is normally inaccessible, but
+    //                                    can be exposed with the xhrFactory)
     if (timeout > 0) {
-      var timeoutId = $browserDefer(timeoutRequest, timeout);
+      var timeoutId = $browserDefer(function() {
+        timeoutRequest('timeout');
+      }, timeout);
     } else if (isPromiseLike(timeout)) {
-      timeout.then(timeoutRequest);
+      timeout.then(function() {
+        timeoutRequest(isDefined(timeout.$$timeoutId) ? 'timeout' : 'abort');
+      });
     }
 
-
-    function timeoutRequest() {
+    function timeoutRequest(reason) {
+      abortedByTimeout = reason === 'timeout';
       if (jsonpDone) {
         jsonpDone();
       }
@@ -24868,9 +24097,9 @@ $interpolateMinErr.interr = function(text, err) {
  * Used for configuring the interpolation markup. Defaults to `{{` and `}}`.
  *
  * <div class="alert alert-danger">
- * This feature is sometimes used to mix different markup languages, e.g. to wrap an Angular
+ * This feature is sometimes used to mix different markup languages, e.g. to wrap an AngularJS
  * template within a Python Jinja template (or any other template language). Mixing templating
- * languages is **very dangerous**. The embedding template language will not safely escape Angular
+ * languages is **very dangerous**. The embedding template language will not safely escape AngularJS
  * expressions, so any user-controlled values in the template will cause Cross Site Scripting (XSS)
  * security bugs!
  * </div>
@@ -24919,9 +24148,8 @@ function $InterpolateProvider() {
     if (value) {
       startSymbol = value;
       return this;
-    } else {
-      return startSymbol;
     }
+    return startSymbol;
   };
 
   /**
@@ -24937,9 +24165,8 @@ function $InterpolateProvider() {
     if (value) {
       endSymbol = value;
       return this;
-    } else {
-      return endSymbol;
     }
+    return endSymbol;
   };
 
 
@@ -24986,7 +24213,7 @@ function $InterpolateProvider() {
      * ```js
      *   var $interpolate = ...; // injected
      *   var exp = $interpolate('Hello {{name | uppercase}}!');
-     *   expect(exp({name:'Angular'})).toEqual('Hello ANGULAR!');
+     *   expect(exp({name:'AngularJS'})).toEqual('Hello ANGULARJS!');
      * ```
      *
      * `$interpolate` takes an optional fourth argument, `allOrNothing`. If `allOrNothing` is
@@ -25004,8 +24231,8 @@ function $InterpolateProvider() {
      *   // "allOrNothing" mode
      *   exp = $interpolate('{{greeting}} {{name}}!', false, null, true);
      *   expect(exp(context)).toBeUndefined();
-     *   context.name = 'Angular';
-     *   expect(exp(context)).toEqual('Hello Angular!');
+     *   context.name = 'AngularJS';
+     *   expect(exp(context)).toEqual('Hello AngularJS!');
      * ```
      *
      * `allOrNothing` is useful for interpolating URLs. `ngSrc` and `ngSrcset` use this behavior.
@@ -25086,16 +24313,21 @@ function $InterpolateProvider() {
      * - `context`: evaluation context for all expressions embedded in the interpolated text
      */
     function $interpolate(text, mustHaveExpression, trustedContext, allOrNothing) {
+      var contextAllowsConcatenation = trustedContext === $sce.URL || trustedContext === $sce.MEDIA_URL;
+
       // Provide a quick exit and simplified result function for text with no interpolation
       if (!text.length || text.indexOf(startSymbol) === -1) {
-        var constantInterp;
-        if (!mustHaveExpression) {
-          var unescapedText = unescapeText(text);
-          constantInterp = valueFn(unescapedText);
-          constantInterp.exp = text;
-          constantInterp.expressions = [];
-          constantInterp.$$watchDelegate = constantWatchDelegate;
+        if (mustHaveExpression && !contextAllowsConcatenation) return;
+
+        var unescapedText = unescapeText(text);
+        if (contextAllowsConcatenation) {
+          unescapedText = $sce.getTrusted(trustedContext, unescapedText);
         }
+        var constantInterp = valueFn(unescapedText);
+        constantInterp.exp = text;
+        constantInterp.expressions = [];
+        constantInterp.$$watchDelegate = constantWatchDelegate;
+
         return constantInterp;
       }
 
@@ -25104,11 +24336,13 @@ function $InterpolateProvider() {
           endIndex,
           index = 0,
           expressions = [],
-          parseFns = [],
+          parseFns,
           textLength = text.length,
           exp,
           concat = [],
-          expressionPositions = [];
+          expressionPositions = [],
+          singleExpression;
+
 
       while (index < textLength) {
         if (((startIndex = text.indexOf(startSymbol, index)) !== -1) &&
@@ -25118,10 +24352,9 @@ function $InterpolateProvider() {
           }
           exp = text.substring(startIndex + startSymbolLength, endIndex);
           expressions.push(exp);
-          parseFns.push($parse(exp, parseStringifyInterceptor));
           index = endIndex + endSymbolLength;
           expressionPositions.push(concat.length);
-          concat.push('');
+          concat.push(''); // Placeholder that will get replaced with the evaluated expression.
         } else {
           // we did not find an interpolation, so we have to add the remainder to the separators array
           if (index !== textLength) {
@@ -25131,15 +24364,25 @@ function $InterpolateProvider() {
         }
       }
 
+      singleExpression = concat.length === 1 && expressionPositions.length === 1;
+      // Intercept expression if we need to stringify concatenated inputs, which may be SCE trusted
+      // objects rather than simple strings
+      // (we don't modify the expression if the input consists of only a single trusted input)
+      var interceptor = contextAllowsConcatenation && singleExpression ? undefined : parseStringifyInterceptor;
+      parseFns = expressions.map(function(exp) { return $parse(exp, interceptor); });
+
       // Concatenating expressions makes it hard to reason about whether some combination of
       // concatenated values are unsafe to use and could easily lead to XSS.  By requiring that a
-      // single expression be used for iframe[src], object[src], etc., we ensure that the value
-      // that's used is assigned or constructed by some JS code somewhere that is more testable or
-      // make it obvious that you bound the value to some user controlled value.  This helps reduce
-      // the load when auditing for XSS issues.
-      if (trustedContext && concat.length > 1) {
-          $interpolateMinErr.throwNoconcat(text);
-      }
+      // single expression be used for some $sce-managed secure contexts (RESOURCE_URLs mostly),
+      // we ensure that the value that's used is assigned or constructed by some JS code somewhere
+      // that is more testable or make it obvious that you bound the value to some user controlled
+      // value.  This helps reduce the load when auditing for XSS issues.
+
+      // Note that URL and MEDIA_URL $sce contexts do not need this, since `$sce` can sanitize the values
+      // passed to it. In that case, `$sce.getTrusted` will be called on either the single expression
+      // or on the overall concatenated string (losing trusted types used in the mix, by design).
+      // Both these methods will sanitize plain strings. Also, HTML could be included, but since it's
+      // only used in srcdoc attributes, this would not be very useful.
 
       if (!mustHaveExpression || expressions.length) {
         var compute = function(values) {
@@ -25147,13 +24390,16 @@ function $InterpolateProvider() {
             if (allOrNothing && isUndefined(values[i])) return;
             concat[expressionPositions[i]] = values[i];
           }
-          return concat.join('');
-        };
 
-        var getValue = function(value) {
-          return trustedContext ?
-            $sce.getTrusted(trustedContext, value) :
-            $sce.valueOf(value);
+          if (contextAllowsConcatenation) {
+            // If `singleExpression` then `concat[0]` might be a "trusted" value or `null`, rather than a string
+            return $sce.getTrusted(trustedContext, singleExpression ? concat[0] : concat.join(''));
+          } else if (trustedContext && concat.length > 1) {
+            // This context does not allow more than one part, e.g. expr + string or exp + exp.
+            $interpolateMinErr.throwNoconcat(text);
+          }
+          // In an unprivileged context or only one part: just concatenate and return.
+          return concat.join('');
         };
 
         return extend(function interpolationFn(context) {
@@ -25179,9 +24425,7 @@ function $InterpolateProvider() {
             var lastValue;
             return scope.$watchGroup(parseFns, /** @this */ function interpolateFnWatcher(values, oldValues) {
               var currValue = compute(values);
-              if (isFunction(listener)) {
-                listener.call(this, currValue, values !== oldValues ? lastValue : currValue, scope);
-              }
+              listener.call(this, currValue, values !== oldValues ? lastValue : currValue, scope);
               lastValue = currValue;
             });
           }
@@ -25190,7 +24434,13 @@ function $InterpolateProvider() {
 
       function parseStringifyInterceptor(value) {
         try {
-          value = getValue(value);
+          // In concatenable contexts, getTrusted comes at the end, to avoid sanitizing individual
+          // parts of a full URL. We don't care about losing the trustedness here.
+          // In non-concatenable contexts, where there is only one expression, this interceptor is
+          // not applied to the expression.
+          value = (trustedContext && !contextAllowsConcatenation) ?
+                    $sce.getTrusted(trustedContext, value) :
+                    $sce.valueOf(value);
           return allOrNothing && !isDefined(value) ? value : stringify(value);
         } catch (err) {
           $exceptionHandler($interpolateMinErr.interr(text, err));
@@ -25234,6 +24484,8 @@ function $InterpolateProvider() {
   }];
 }
 
+var $intervalMinErr = minErr('$interval');
+
 /** @this */
 function $IntervalProvider() {
   this.$get = ['$rootScope', '$window', '$q', '$$q', '$browser',
@@ -25241,132 +24493,132 @@ function $IntervalProvider() {
     var intervals = {};
 
 
-     /**
-      * @ngdoc service
-      * @name $interval
-      *
-      * @description
-      * Angular's wrapper for `window.setInterval`. The `fn` function is executed every `delay`
-      * milliseconds.
-      *
-      * The return value of registering an interval function is a promise. This promise will be
-      * notified upon each tick of the interval, and will be resolved after `count` iterations, or
-      * run indefinitely if `count` is not defined. The value of the notification will be the
-      * number of iterations that have run.
-      * To cancel an interval, call `$interval.cancel(promise)`.
-      *
-      * In tests you can use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
-      * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
-      * time.
-      *
-      * <div class="alert alert-warning">
-      * **Note**: Intervals created by this service must be explicitly destroyed when you are finished
-      * with them.  In particular they are not automatically destroyed when a controller's scope or a
-      * directive's element are destroyed.
-      * You should take this into consideration and make sure to always cancel the interval at the
-      * appropriate moment.  See the example below for more details on how and when to do this.
-      * </div>
-      *
-      * @param {function()} fn A function that should be called repeatedly. If no additional arguments
-      *   are passed (see below), the function is called with the current iteration count.
-      * @param {number} delay Number of milliseconds between each function call.
-      * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
-      *   indefinitely.
-      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
-      * @param {...*=} Pass additional parameters to the executed function.
-      * @returns {promise} A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.
-      *
-      * @example
-      * <example module="intervalExample" name="interval-service">
-      * <file name="index.html">
-      *   <script>
-      *     angular.module('intervalExample', [])
-      *       .controller('ExampleController', ['$scope', '$interval',
-      *         function($scope, $interval) {
-      *           $scope.format = 'M/d/yy h:mm:ss a';
-      *           $scope.blood_1 = 100;
-      *           $scope.blood_2 = 120;
-      *
-      *           var stop;
-      *           $scope.fight = function() {
-      *             // Don't start a new fight if we are already fighting
-      *             if ( angular.isDefined(stop) ) return;
-      *
-      *             stop = $interval(function() {
-      *               if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
-      *                 $scope.blood_1 = $scope.blood_1 - 3;
-      *                 $scope.blood_2 = $scope.blood_2 - 4;
-      *               } else {
-      *                 $scope.stopFight();
-      *               }
-      *             }, 100);
-      *           };
-      *
-      *           $scope.stopFight = function() {
-      *             if (angular.isDefined(stop)) {
-      *               $interval.cancel(stop);
-      *               stop = undefined;
-      *             }
-      *           };
-      *
-      *           $scope.resetFight = function() {
-      *             $scope.blood_1 = 100;
-      *             $scope.blood_2 = 120;
-      *           };
-      *
-      *           $scope.$on('$destroy', function() {
-      *             // Make sure that the interval is destroyed too
-      *             $scope.stopFight();
-      *           });
-      *         }])
-      *       // Register the 'myCurrentTime' directive factory method.
-      *       // We inject $interval and dateFilter service since the factory method is DI.
-      *       .directive('myCurrentTime', ['$interval', 'dateFilter',
-      *         function($interval, dateFilter) {
-      *           // return the directive link function. (compile function not needed)
-      *           return function(scope, element, attrs) {
-      *             var format,  // date format
-      *                 stopTime; // so that we can cancel the time updates
-      *
-      *             // used to update the UI
-      *             function updateTime() {
-      *               element.text(dateFilter(new Date(), format));
-      *             }
-      *
-      *             // watch the expression, and update the UI on change.
-      *             scope.$watch(attrs.myCurrentTime, function(value) {
-      *               format = value;
-      *               updateTime();
-      *             });
-      *
-      *             stopTime = $interval(updateTime, 1000);
-      *
-      *             // listen on DOM destroy (removal) event, and cancel the next UI update
-      *             // to prevent updating time after the DOM element was removed.
-      *             element.on('$destroy', function() {
-      *               $interval.cancel(stopTime);
-      *             });
-      *           }
-      *         }]);
-      *   </script>
-      *
-      *   <div>
-      *     <div ng-controller="ExampleController">
-      *       <label>Date format: <input ng-model="format"></label> <hr/>
-      *       Current time is: <span my-current-time="format"></span>
-      *       <hr/>
-      *       Blood 1 : <font color='red'>{{blood_1}}</font>
-      *       Blood 2 : <font color='red'>{{blood_2}}</font>
-      *       <button type="button" data-ng-click="fight()">Fight</button>
-      *       <button type="button" data-ng-click="stopFight()">StopFight</button>
-      *       <button type="button" data-ng-click="resetFight()">resetFight</button>
-      *     </div>
-      *   </div>
-      *
-      * </file>
-      * </example>
-      */
+    /**
+     * @ngdoc service
+     * @name $interval
+     *
+     * @description
+     * AngularJS's wrapper for `window.setInterval`. The `fn` function is executed every `delay`
+     * milliseconds.
+     *
+     * The return value of registering an interval function is a promise. This promise will be
+     * notified upon each tick of the interval, and will be resolved after `count` iterations, or
+     * run indefinitely if `count` is not defined. The value of the notification will be the
+     * number of iterations that have run.
+     * To cancel an interval, call `$interval.cancel(promise)`.
+     *
+     * In tests you can use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
+     * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
+     * time.
+     *
+     * <div class="alert alert-warning">
+     * **Note**: Intervals created by this service must be explicitly destroyed when you are finished
+     * with them.  In particular they are not automatically destroyed when a controller's scope or a
+     * directive's element are destroyed.
+     * You should take this into consideration and make sure to always cancel the interval at the
+     * appropriate moment.  See the example below for more details on how and when to do this.
+     * </div>
+     *
+     * @param {function()} fn A function that should be called repeatedly. If no additional arguments
+     *   are passed (see below), the function is called with the current iteration count.
+     * @param {number} delay Number of milliseconds between each function call.
+     * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
+     *   indefinitely.
+     * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+     *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+     * @param {...*=} Pass additional parameters to the executed function.
+     * @returns {promise} A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.
+     *
+     * @example
+     * <example module="intervalExample" name="interval-service">
+     * <file name="index.html">
+     *   <script>
+     *     angular.module('intervalExample', [])
+     *       .controller('ExampleController', ['$scope', '$interval',
+     *         function($scope, $interval) {
+     *           $scope.format = 'M/d/yy h:mm:ss a';
+     *           $scope.blood_1 = 100;
+     *           $scope.blood_2 = 120;
+     *
+     *           var stop;
+     *           $scope.fight = function() {
+     *             // Don't start a new fight if we are already fighting
+     *             if ( angular.isDefined(stop) ) return;
+     *
+     *             stop = $interval(function() {
+     *               if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
+     *                 $scope.blood_1 = $scope.blood_1 - 3;
+     *                 $scope.blood_2 = $scope.blood_2 - 4;
+     *               } else {
+     *                 $scope.stopFight();
+     *               }
+     *             }, 100);
+     *           };
+     *
+     *           $scope.stopFight = function() {
+     *             if (angular.isDefined(stop)) {
+     *               $interval.cancel(stop);
+     *               stop = undefined;
+     *             }
+     *           };
+     *
+     *           $scope.resetFight = function() {
+     *             $scope.blood_1 = 100;
+     *             $scope.blood_2 = 120;
+     *           };
+     *
+     *           $scope.$on('$destroy', function() {
+     *             // Make sure that the interval is destroyed too
+     *             $scope.stopFight();
+     *           });
+     *         }])
+     *       // Register the 'myCurrentTime' directive factory method.
+     *       // We inject $interval and dateFilter service since the factory method is DI.
+     *       .directive('myCurrentTime', ['$interval', 'dateFilter',
+     *         function($interval, dateFilter) {
+     *           // return the directive link function. (compile function not needed)
+     *           return function(scope, element, attrs) {
+     *             var format,  // date format
+     *                 stopTime; // so that we can cancel the time updates
+     *
+     *             // used to update the UI
+     *             function updateTime() {
+     *               element.text(dateFilter(new Date(), format));
+     *             }
+     *
+     *             // watch the expression, and update the UI on change.
+     *             scope.$watch(attrs.myCurrentTime, function(value) {
+     *               format = value;
+     *               updateTime();
+     *             });
+     *
+     *             stopTime = $interval(updateTime, 1000);
+     *
+     *             // listen on DOM destroy (removal) event, and cancel the next UI update
+     *             // to prevent updating time after the DOM element was removed.
+     *             element.on('$destroy', function() {
+     *               $interval.cancel(stopTime);
+     *             });
+     *           }
+     *         }]);
+     *   </script>
+     *
+     *   <div>
+     *     <div ng-controller="ExampleController">
+     *       <label>Date format: <input ng-model="format"></label> <hr/>
+     *       Current time is: <span my-current-time="format"></span>
+     *       <hr/>
+     *       Blood 1 : <font color='red'>{{blood_1}}</font>
+     *       Blood 2 : <font color='red'>{{blood_2}}</font>
+     *       <button type="button" data-ng-click="fight()">Fight</button>
+     *       <button type="button" data-ng-click="stopFight()">StopFight</button>
+     *       <button type="button" data-ng-click="resetFight()">resetFight</button>
+     *     </div>
+     *   </div>
+     *
+     * </file>
+     * </example>
+     */
     function interval(fn, delay, count, invokeApply) {
       var hasParams = arguments.length > 4,
           args = hasParams ? sliceArgs(arguments, 4) : [],
@@ -25411,26 +24663,36 @@ function $IntervalProvider() {
     }
 
 
-     /**
-      * @ngdoc method
-      * @name $interval#cancel
-      *
-      * @description
-      * Cancels a task associated with the `promise`.
-      *
-      * @param {Promise=} promise returned by the `$interval` function.
-      * @returns {boolean} Returns `true` if the task was successfully canceled.
-      */
+    /**
+     * @ngdoc method
+     * @name $interval#cancel
+     *
+     * @description
+     * Cancels a task associated with the `promise`.
+     *
+     * @param {Promise=} promise returned by the `$interval` function.
+     * @returns {boolean} Returns `true` if the task was successfully canceled.
+     */
     interval.cancel = function(promise) {
-      if (promise && promise.$$intervalId in intervals) {
-        // Interval cancels should not report as unhandled promise.
-        markQExceptionHandled(intervals[promise.$$intervalId].promise);
-        intervals[promise.$$intervalId].reject('canceled');
-        $window.clearInterval(promise.$$intervalId);
-        delete intervals[promise.$$intervalId];
-        return true;
+      if (!promise) return false;
+
+      if (!promise.hasOwnProperty('$$intervalId')) {
+        throw $intervalMinErr('badprom',
+            '`$interval.cancel()` called with a promise that was not generated by `$interval()`.');
       }
-      return false;
+
+      if (!intervals.hasOwnProperty(promise.$$intervalId)) return false;
+
+      var id = promise.$$intervalId;
+      var deferred = intervals[id];
+
+      // Interval cancels should not report an unhandled promise.
+      markQExceptionHandled(deferred.promise);
+      deferred.reject('canceled');
+      $window.clearInterval(id);
+      delete intervals[id];
+
+      return true;
     };
 
     return interval;
@@ -25523,7 +24785,7 @@ var $jsonpCallbacksProvider = /** @this */ function() {
  * @name $locale
  *
  * @description
- * $locale service provides localization rules for various Angular components. As of right now the
+ * $locale service provides localization rules for various AngularJS components. As of right now the
  * only public api is:
  *
  * * `id` – `{string}` – locale id formatted as `languageId-countryId` (e.g. `en-us`)
@@ -25780,7 +25042,7 @@ function LocationHashbangUrl(appBase, appBaseNoFile, hashPrefix) {
      *  * a.setAttribute('href', '/foo')
      *   * a.pathname === '/C:/foo' //true
      *
-     * Inside of Angular, we're always using pathnames that
+     * Inside of AngularJS, we're always using pathnames that
      * do not include drive names for routing.
      */
     function removeWindowsDriveName(path, url, base) {
@@ -25951,7 +25213,7 @@ var locationPrototype = {
     }
 
     var match = PATH_MATCH.exec(url);
-    if (match[1] || url === '') this.path(decodeURI(match[1]));
+    if (match[1] || url === '') this.path(decodeURIComponent(match[1]));
     if (match[2] || match[1] || url === '') this.search(match[3] || '');
     this.hash(match[5] || '');
 
@@ -25987,7 +25249,7 @@ var locationPrototype = {
    *
    * Return host of current URL.
    *
-   * Note: compared to the non-angular version `location.host` which returns `hostname:port`, this returns the `hostname` portion only.
+   * Note: compared to the non-AngularJS version `location.host` which returns `hostname:port`, this returns the `hostname` portion only.
    *
    *
    * ```js
@@ -26460,15 +25722,13 @@ function $LocationProvider() {
 
       if (absHref && !elm.attr('target') && !event.isDefaultPrevented()) {
         if ($location.$$parseLinkUrl(absHref, relHref)) {
-          // We do a preventDefault for all urls that are part of the angular application,
+          // We do a preventDefault for all urls that are part of the AngularJS application,
           // in html5mode and also without, so that we are able to abort navigation without
           // getting double entries in the location history.
           event.preventDefault();
           // update location manually
           if ($location.absUrl() !== $browser.url()) {
             $rootScope.$apply();
-            // hack to work around FF6 bug 684208 when scenario runner clicks on links
-            $window.angular['ff-684208-preventDefault'] = true;
           }
         }
       }
@@ -26756,12 +26016,12 @@ var $parseMinErr = minErr('$parse');
 
 var objectValueOf = {}.constructor.prototype.valueOf;
 
-// Sandboxing Angular Expressions
+// Sandboxing AngularJS Expressions
 // ------------------------------
-// Angular expressions are no longer sandboxed. So it is now even easier to access arbitrary JS code by
+// AngularJS expressions are no longer sandboxed. So it is now even easier to access arbitrary JS code by
 // various means such as obtaining a reference to native JS functions like the Function constructor.
 //
-// As an example, consider the following Angular expression:
+// As an example, consider the following AngularJS expression:
 //
 //   {}.toString.constructor('alert("evil JS code")')
 //
@@ -28385,11 +27645,26 @@ Parser.prototype = {
   constructor: Parser,
 
   parse: function(text) {
-    var ast = this.ast.ast(text);
-    var fn = this.astCompiler.compile(ast);
-    fn.literal = isLiteral(ast);
-    fn.constant = isConstant(ast);
+    var ast = this.getAst(text);
+    var fn = this.astCompiler.compile(ast.ast);
+    fn.literal = isLiteral(ast.ast);
+    fn.constant = isConstant(ast.ast);
+    fn.oneTime = ast.oneTime;
     return fn;
+  },
+
+  getAst: function(exp) {
+    var oneTime = false;
+    exp = exp.trim();
+
+    if (exp.charAt(0) === ':' && exp.charAt(1) === ':') {
+      oneTime = true;
+      exp = exp.substring(2);
+    }
+    return {
+      ast: this.ast.ast(exp),
+      oneTime: oneTime
+    };
   }
 };
 
@@ -28406,15 +27681,15 @@ function getValueOf(value) {
  *
  * @description
  *
- * Converts Angular {@link guide/expression expression} into a function.
+ * Converts AngularJS {@link guide/expression expression} into a function.
  *
  * ```js
  *   var getter = $parse('user.name');
  *   var setter = getter.assign;
- *   var context = {user:{name:'angular'}};
+ *   var context = {user:{name:'AngularJS'}};
  *   var locals = {user:{name:'local'}};
  *
- *   expect(getter(context)).toEqual('angular');
+ *   expect(getter(context)).toEqual('AngularJS');
  *   setter(context, 'newValue');
  *   expect(context.user.name).toEqual('newValue');
  *   expect(getter(context, locals)).toEqual('local');
@@ -28480,7 +27755,7 @@ function $ParseProvider() {
   *
   * @description
   *
-  * Allows defining the set of characters that are allowed in Angular expressions. The function
+  * Allows defining the set of characters that are allowed in AngularJS expressions. The function
   * `identifierStart` will get called to know if a given character is a valid character to be the
   * first character for an identifier. The function `identifierContinue` will get called to know if
   * a given character is a valid character to be a follow-up identifier character. The functions
@@ -28512,10 +27787,11 @@ function $ParseProvider() {
           isIdentifierStart: isFunction(identStart) && identStart,
           isIdentifierContinue: isFunction(identContinue) && identContinue
         };
+    $parse.$$getAst = $$getAst;
     return $parse;
 
     function $parse(exp, interceptorFn) {
-      var parsedExpression, oneTime, cacheKey;
+      var parsedExpression, cacheKey;
 
       switch (typeof exp) {
         case 'string':
@@ -28525,22 +27801,11 @@ function $ParseProvider() {
           parsedExpression = cache[cacheKey];
 
           if (!parsedExpression) {
-            if (exp.charAt(0) === ':' && exp.charAt(1) === ':') {
-              oneTime = true;
-              exp = exp.substring(2);
-            }
             var lexer = new Lexer($parseOptions);
             var parser = new Parser(lexer, $filter, $parseOptions);
             parsedExpression = parser.parse(exp);
-            if (parsedExpression.constant) {
-              parsedExpression.$$watchDelegate = constantWatchDelegate;
-            } else if (oneTime) {
-              parsedExpression.$$watchDelegate = parsedExpression.literal ?
-                  oneTimeLiteralWatchDelegate : oneTimeWatchDelegate;
-            } else if (parsedExpression.inputs) {
-              parsedExpression.$$watchDelegate = inputsWatchDelegate;
-            }
-            cache[cacheKey] = parsedExpression;
+
+            cache[cacheKey] = addWatchDelegate(parsedExpression);
           }
           return addInterceptor(parsedExpression, interceptorFn);
 
@@ -28550,6 +27815,12 @@ function $ParseProvider() {
         default:
           return addInterceptor(noop, interceptorFn);
       }
+    }
+
+    function $$getAst(exp) {
+      var lexer = new Lexer($parseOptions);
+      var parser = new Parser(lexer, $filter, $parseOptions);
+      return parser.getAst(exp).ast;
     }
 
     function expressionInputDirtyCheck(newValue, oldValueOfValue, compareObjectIdentity) {
@@ -28622,57 +27893,48 @@ function $ParseProvider() {
     }
 
     function oneTimeWatchDelegate(scope, listener, objectEquality, parsedExpression, prettyPrintExpression) {
+      var isDone = parsedExpression.literal ? isAllDefined : isDefined;
       var unwatch, lastValue;
-      if (parsedExpression.inputs) {
-        unwatch = inputsWatchDelegate(scope, oneTimeListener, objectEquality, parsedExpression, prettyPrintExpression);
-      } else {
-        unwatch = scope.$watch(oneTimeWatch, oneTimeListener, objectEquality);
-      }
+
+      var exp = parsedExpression.$$intercepted || parsedExpression;
+      var post = parsedExpression.$$interceptor || identity;
+
+      var useInputs = parsedExpression.inputs && !exp.inputs;
+
+      // Propogate the literal/inputs/constant attributes
+      // ... but not oneTime since we are handling it
+      oneTimeWatch.literal = parsedExpression.literal;
+      oneTimeWatch.constant = parsedExpression.constant;
+      oneTimeWatch.inputs = parsedExpression.inputs;
+
+      // Allow other delegates to run on this wrapped expression
+      addWatchDelegate(oneTimeWatch);
+
+      unwatch = scope.$watch(oneTimeWatch, listener, objectEquality, prettyPrintExpression);
+
       return unwatch;
 
-      function oneTimeWatch(scope) {
-        return parsedExpression(scope);
+      function unwatchIfDone() {
+        if (isDone(lastValue)) {
+          unwatch();
+        }
       }
-      function oneTimeListener(value, old, scope) {
-        lastValue = value;
-        if (isFunction(listener)) {
-          listener(value, old, scope);
+
+      function oneTimeWatch(scope, locals, assign, inputs) {
+        lastValue = useInputs && inputs ? inputs[0] : exp(scope, locals, assign, inputs);
+        if (isDone(lastValue)) {
+          scope.$$postDigest(unwatchIfDone);
         }
-        if (isDefined(value)) {
-          scope.$$postDigest(function() {
-            if (isDefined(lastValue)) {
-              unwatch();
-            }
-          });
-        }
+        return post(lastValue);
       }
     }
 
-    function oneTimeLiteralWatchDelegate(scope, listener, objectEquality, parsedExpression) {
-      var unwatch, lastValue;
-      unwatch = scope.$watch(function oneTimeWatch(scope) {
-        return parsedExpression(scope);
-      }, function oneTimeListener(value, old, scope) {
-        lastValue = value;
-        if (isFunction(listener)) {
-          listener(value, old, scope);
-        }
-        if (isAllDefined(value)) {
-          scope.$$postDigest(function() {
-            if (isAllDefined(lastValue)) unwatch();
-          });
-        }
-      }, objectEquality);
-
-      return unwatch;
-
-      function isAllDefined(value) {
-        var allDefined = true;
-        forEach(value, function(val) {
-          if (!isDefined(val)) allDefined = false;
-        });
-        return allDefined;
-      }
+    function isAllDefined(value) {
+      var allDefined = true;
+      forEach(value, function(val) {
+        if (!isDefined(val)) allDefined = false;
+      });
+      return allDefined;
     }
 
     function constantWatchDelegate(scope, listener, objectEquality, parsedExpression) {
@@ -28683,49 +27945,74 @@ function $ParseProvider() {
       return unwatch;
     }
 
-    function addInterceptor(parsedExpression, interceptorFn) {
-      if (!interceptorFn) return parsedExpression;
-      var watchDelegate = parsedExpression.$$watchDelegate;
-      var useInputs = false;
-
-      var regularWatch =
-          watchDelegate !== oneTimeLiteralWatchDelegate &&
-          watchDelegate !== oneTimeWatchDelegate;
-
-      var fn = regularWatch ? function regularInterceptedExpression(scope, locals, assign, inputs) {
-        var value = useInputs && inputs ? inputs[0] : parsedExpression(scope, locals, assign, inputs);
-        return interceptorFn(value, scope, locals);
-      } : function oneTimeInterceptedExpression(scope, locals, assign, inputs) {
-        var value = parsedExpression(scope, locals, assign, inputs);
-        var result = interceptorFn(value, scope, locals);
-        // we only return the interceptor's result if the
-        // initial value is defined (for bind-once)
-        return isDefined(value) ? result : value;
-      };
-
-      // Propagate $$watchDelegates other then inputsWatchDelegate
-      useInputs = !parsedExpression.inputs;
-      if (watchDelegate && watchDelegate !== inputsWatchDelegate) {
-        fn.$$watchDelegate = watchDelegate;
-        fn.inputs = parsedExpression.inputs;
-      } else if (!interceptorFn.$stateful) {
-        // Treat interceptor like filters - assume non-stateful by default and use the inputsWatchDelegate
-        fn.$$watchDelegate = inputsWatchDelegate;
-        fn.inputs = parsedExpression.inputs ? parsedExpression.inputs : [parsedExpression];
+    function addWatchDelegate(parsedExpression) {
+      if (parsedExpression.constant) {
+        parsedExpression.$$watchDelegate = constantWatchDelegate;
+      } else if (parsedExpression.oneTime) {
+        parsedExpression.$$watchDelegate = oneTimeWatchDelegate;
+      } else if (parsedExpression.inputs) {
+        parsedExpression.$$watchDelegate = inputsWatchDelegate;
       }
 
-      if (fn.inputs) {
-        fn.inputs = fn.inputs.map(function(e) {
+      return parsedExpression;
+    }
+
+    function chainInterceptors(first, second) {
+      function chainedInterceptor(value) {
+        return second(first(value));
+      }
+      chainedInterceptor.$stateful = first.$stateful || second.$stateful;
+      chainedInterceptor.$$pure = first.$$pure && second.$$pure;
+
+      return chainedInterceptor;
+    }
+
+    function addInterceptor(parsedExpression, interceptorFn) {
+      if (!interceptorFn) return parsedExpression;
+
+      // Extract any existing interceptors out of the parsedExpression
+      // to ensure the original parsedExpression is always the $$intercepted
+      if (parsedExpression.$$interceptor) {
+        interceptorFn = chainInterceptors(parsedExpression.$$interceptor, interceptorFn);
+        parsedExpression = parsedExpression.$$intercepted;
+      }
+
+      var useInputs = false;
+
+      var fn = function interceptedExpression(scope, locals, assign, inputs) {
+        var value = useInputs && inputs ? inputs[0] : parsedExpression(scope, locals, assign, inputs);
+        return interceptorFn(value);
+      };
+
+      // Maintain references to the interceptor/intercepted
+      fn.$$intercepted = parsedExpression;
+      fn.$$interceptor = interceptorFn;
+
+      // Propogate the literal/oneTime/constant attributes
+      fn.literal = parsedExpression.literal;
+      fn.oneTime = parsedExpression.oneTime;
+      fn.constant = parsedExpression.constant;
+
+      // Treat the interceptor like filters.
+      // If it is not $stateful then only watch its inputs.
+      // If the expression itself has no inputs then use the full expression as an input.
+      if (!interceptorFn.$stateful) {
+        useInputs = !parsedExpression.inputs;
+        fn.inputs = parsedExpression.inputs ? parsedExpression.inputs : [parsedExpression];
+
+        if (!interceptorFn.$$pure) {
+          fn.inputs = fn.inputs.map(function(e) {
               // Remove the isPure flag of inputs when it is not absolute because they are now wrapped in a
-              // potentially non-pure interceptor function.
+              // non-pure interceptor function.
               if (e.isPure === PURITY_RELATIVE) {
                 return function depurifier(s) { return e(s); };
               }
               return e;
             });
+        }
       }
 
-      return fn;
+      return addWatchDelegate(fn);
     }
   }];
 }
@@ -28912,7 +28199,7 @@ function $ParseProvider() {
  *  There are two main differences:
  *
  * - $q is integrated with the {@link ng.$rootScope.Scope} Scope model observation
- *   mechanism in angular, which means faster propagation of resolution or rejection into your
+ *   mechanism in AngularJS, which means faster propagation of resolution or rejection into your
  *   models and avoiding unnecessary browser repaints, which would result in flickering UI.
  * - Q has many more features than $q, but that comes at a cost of bytes. $q is tiny, but contains
  *   all the important functionality needed for common async tasks.
@@ -29538,6 +28825,7 @@ function $RootScopeProvider() {
       this.$$watchersCount = 0;
       this.$id = nextUid();
       this.$$ChildScope = null;
+      this.$$suspended = false;
     }
     ChildScope.prototype = parent;
     return ChildScope;
@@ -29625,6 +28913,7 @@ function $RootScopeProvider() {
                      this.$$childHead = this.$$childTail = null;
       this.$root = this;
       this.$$destroyed = false;
+      this.$$suspended = false;
       this.$$listeners = {};
       this.$$listenerCount = {};
       this.$$watchersCount = 0;
@@ -29744,8 +29033,8 @@ function $RootScopeProvider() {
        *   according to the {@link angular.equals} function. To save the value of the object for
        *   later comparison, the {@link angular.copy} function is used. This therefore means that
        *   watching complex objects will have adverse memory and performance implications.
-       * - This should not be used to watch for changes in objects that are
-       *   or contain [File](https://developer.mozilla.org/docs/Web/API/File) objects due to limitations with {@link angular.copy `angular.copy`}.
+       * - This should not be used to watch for changes in objects that are (or contain)
+       *   [File](https://developer.mozilla.org/docs/Web/API/File) objects due to limitations with {@link angular.copy `angular.copy`}.
        * - The watch `listener` may change the model, which may trigger other `listener`s to fire.
        *   This is achieved by rerunning the watchers until no changes are detected. The rerun
        *   iteration limit is 10 to prevent an infinite loop deadlock.
@@ -29841,14 +29130,15 @@ function $RootScopeProvider() {
        */
       $watch: function(watchExp, listener, objectEquality, prettyPrintExpression) {
         var get = $parse(watchExp);
+        var fn = isFunction(listener) ? listener : noop;
 
         if (get.$$watchDelegate) {
-          return get.$$watchDelegate(this, listener, objectEquality, get, watchExp);
+          return get.$$watchDelegate(this, fn, objectEquality, get, watchExp);
         }
         var scope = this,
             array = scope.$$watchers,
             watcher = {
-              fn: listener,
+              fn: fn,
               last: initWatchVal,
               get: get,
               exp: prettyPrintExpression || watchExp,
@@ -29856,10 +29146,6 @@ function $RootScopeProvider() {
             };
 
         lastDirtyWatch = null;
-
-        if (!isFunction(listener)) {
-          watcher.fn = noop;
-        }
 
         if (!array) {
           array = scope.$$watchers = [];
@@ -29896,12 +29182,6 @@ function $RootScopeProvider() {
        *   values are examined for changes on every call to `$digest`.
        * - The `listener` is called whenever any expression in the `watchExpressions` array changes.
        *
-       * `$watchGroup` is more performant than watching each expression individually, and should be
-       * used when the listener does not need to know which expression has changed.
-       * If the listener needs to know which expression has changed,
-       * {@link ng.$rootScope.Scope#$watch $watch()} or
-       * {@link ng.$rootScope.Scope#$watchCollection $watchCollection()} should be used.
-       *
        * @param {Array.<string|Function(scope)>} watchExpressions Array of expressions that will be individually
        * watched using {@link ng.$rootScope.Scope#$watch $watch()}
        *
@@ -29910,34 +29190,7 @@ function $RootScopeProvider() {
        *    The `newValues` array contains the current values of the `watchExpressions`, with the indexes matching
        *    those of `watchExpression`
        *    and the `oldValues` array contains the previous values of the `watchExpressions`, with the indexes matching
-       *    those of `watchExpression`.
-       *
-       *    Note that `newValues` and `oldValues` reflect the differences in each **individual**
-       *    expression, and not the difference of the values between each call of the listener.
-       *    That means the difference between `newValues` and `oldValues` cannot be used to determine
-       *    which expression has changed / remained stable:
-       *
-       *    ```js
-       *
-       *    $scope.$watchGroup(['v1', 'v2'], function(newValues, oldValues) {
-       *      console.log(newValues, oldValues);
-       *    });
-       *
-       *    // newValues, oldValues initially
-       *    // [undefined, undefined], [undefined, undefined]
-       *
-       *    $scope.v1 = 'a';
-       *    $scope.v2 = 'a';
-       *
-       *    // ['a', 'a'], [undefined, undefined]
-       *
-       *    $scope.v2 = 'b'
-       *
-       *    // v1 hasn't changed since it became `'a'`, therefore its oldValue is still `undefined`
-       *    // ['a', 'b'], [undefined, 'a']
-       *
-       *    ```
-       *
+       *    those of `watchExpression`
        *    The `scope` refers to the current scope.
        * @returns {function()} Returns a de-registration function for all listeners.
        */
@@ -29970,9 +29223,8 @@ function $RootScopeProvider() {
         }
 
         forEach(watchExpressions, function(expr, i) {
-          var unwatchFn = self.$watch(expr, function watchGroupSubAction(value, oldValue) {
+          var unwatchFn = self.$watch(expr, function watchGroupSubAction(value) {
             newValues[i] = value;
-            oldValues[i] = oldValue;
             if (!changeReactionScheduled) {
               changeReactionScheduled = true;
               self.$evalAsync(watchGroupAction);
@@ -29984,11 +29236,17 @@ function $RootScopeProvider() {
         function watchGroupAction() {
           changeReactionScheduled = false;
 
-          if (firstRun) {
-            firstRun = false;
-            listener(newValues, newValues, self);
-          } else {
-            listener(newValues, oldValues, self);
+          try {
+            if (firstRun) {
+              firstRun = false;
+              listener(newValues, newValues, self);
+            } else {
+              listener(newValues, oldValues, self);
+            }
+          } finally {
+            for (var i = 0; i < watchExpressions.length; i++) {
+              oldValues[i] = newValues[i];
+            }
           }
         }
 
@@ -30056,7 +29314,11 @@ function $RootScopeProvider() {
        *    de-registration function is executed, the internal watch operation is terminated.
        */
       $watchCollection: function(obj, listener) {
-        $watchCollectionInterceptor.$stateful = true;
+        // Mark the interceptor as
+        // ... $$pure when literal since the instance will change when any input changes
+        $watchCollectionInterceptor.$$pure = $parse(obj).literal;
+        // ... $stateful when non-literal since we must read the state of the collection
+        $watchCollectionInterceptor.$stateful = !$watchCollectionInterceptor.$$pure;
 
         var self = this;
         // the current value, updated on each dirty-check run
@@ -30244,7 +29506,7 @@ function $RootScopeProvider() {
         var watch, value, last, fn, get,
             watchers,
             dirty, ttl = TTL,
-            next, current, target = this,
+            next, current, target = asyncQueue.length ? $rootScope : this,
             watchLog = [],
             logIdx, asyncTask;
 
@@ -30282,7 +29544,7 @@ function $RootScopeProvider() {
 
           traverseScopesLoop:
           do { // "traverse the scopes" loop
-            if ((watchers = current.$$watchers)) {
+            if ((watchers = !current.$$suspended && current.$$watchers)) {
               // process our watches
               watchers.$$digestWatchIndex = watchers.length;
               while (watchers.$$digestWatchIndex--) {
@@ -30326,7 +29588,9 @@ function $RootScopeProvider() {
             // Insanity Warning: scope depth-first traversal
             // yes, this code is a bit crazy, but it works and we have tests to prove it!
             // this piece should be kept in sync with the traversal in $broadcast
-            if (!(next = ((current.$$watchersCount && current.$$childHead) ||
+            // (though it differs due to having the extra check for $$suspended and does not
+            // check $$listenerCount)
+            if (!(next = ((!current.$$suspended && current.$$watchersCount && current.$$childHead) ||
                 (current !== target && current.$$nextSibling)))) {
               while (current !== target && !(next = current.$$nextSibling)) {
                 current = current.$parent;
@@ -30363,6 +29627,95 @@ function $RootScopeProvider() {
         $browser.$$checkUrlChange();
       },
 
+      /**
+       * @ngdoc method
+       * @name $rootScope.Scope#$suspend
+       * @kind function
+       *
+       * @description
+       * Suspend watchers of this scope subtree so that they will not be invoked during digest.
+       *
+       * This can be used to optimize your application when you know that running those watchers
+       * is redundant.
+       *
+       * **Warning**
+       *
+       * Suspending scopes from the digest cycle can have unwanted and difficult to debug results.
+       * Only use this approach if you are confident that you know what you are doing and have
+       * ample tests to ensure that bindings get updated as you expect.
+       *
+       * Some of the things to consider are:
+       *
+       * * Any external event on a directive/component will not trigger a digest while the hosting
+       *   scope is suspended - even if the event handler calls `$apply()` or `$rootScope.$digest()`.
+       * * Transcluded content exists on a scope that inherits from outside a directive but exists
+       *   as a child of the directive's containing scope. If the containing scope is suspended the
+       *   transcluded scope will also be suspended, even if the scope from which the transcluded
+       *   scope inherits is not suspended.
+       * * Multiple directives trying to manage the suspended status of a scope can confuse each other:
+       *    * A call to `$suspend()` on an already suspended scope is a no-op.
+       *    * A call to `$resume()` on a non-suspended scope is a no-op.
+       *    * If two directives suspend a scope, then one of them resumes the scope, the scope will no
+       *      longer be suspended. This could result in the other directive believing a scope to be
+       *      suspended when it is not.
+       * * If a parent scope is suspended then all its descendants will be also excluded from future
+       *   digests whether or not they have been suspended themselves. Note that this also applies to
+       *   isolate child scopes.
+       * * Calling `$digest()` directly on a descendant of a suspended scope will still run the watchers
+       *   for that scope and its descendants. When digesting we only check whether the current scope is
+       *   locally suspended, rather than checking whether it has a suspended ancestor.
+       * * Calling `$resume()` on a scope that has a suspended ancestor will not cause the scope to be
+       *   included in future digests until all its ancestors have been resumed.
+       * * Resolved promises, e.g. from explicit `$q` deferreds and `$http` calls, trigger `$apply()`
+       *   against the `$rootScope` and so will still trigger a global digest even if the promise was
+       *   initiated by a component that lives on a suspended scope.
+       */
+      $suspend: function() {
+        this.$$suspended = true;
+      },
+
+      /**
+       * @ngdoc method
+       * @name $rootScope.Scope#$isSuspended
+       * @kind function
+       *
+       * @description
+       * Call this method to determine if this scope has been explicitly suspended. It will not
+       * tell you whether an ancestor has been suspended.
+       * To determine if this scope will be excluded from a digest triggered at the $rootScope,
+       * for example, you must check all its ancestors:
+       *
+       * ```
+       * function isExcludedFromDigest(scope) {
+       *   while(scope) {
+       *     if (scope.$isSuspended()) return true;
+       *     scope = scope.$parent;
+       *   }
+       *   return false;
+       * ```
+       *
+       * Be aware that a scope may not be included in digests if it has a suspended ancestor,
+       * even if `$isSuspended()` returns false.
+       *
+       * @returns true if the current scope has been suspended.
+       */
+      $isSuspended: function() {
+        return this.$$suspended;
+      },
+
+      /**
+       * @ngdoc method
+       * @name $rootScope.Scope#$resume
+       * @kind function
+       *
+       * @description
+       * Resume watchers of this scope subtree in case it was suspended.
+       *
+       * See {@link $rootScope.Scope#$suspend} for information about the dangers of using this approach.
+       */
+      $resume: function() {
+        this.$$suspended = false;
+      },
 
       /**
        * @ngdoc event
@@ -30440,7 +29793,7 @@ function $RootScopeProvider() {
        *
        * @description
        * Executes the `expression` on the current scope and returns the result. Any exceptions in
-       * the expression are propagated (uncaught). This is useful when evaluating Angular
+       * the expression are propagated (uncaught). This is useful when evaluating AngularJS
        * expressions.
        *
        * @example
@@ -30453,7 +29806,7 @@ function $RootScopeProvider() {
            expect(scope.$eval(function(scope){ return scope.a + scope.b; })).toEqual(3);
        * ```
        *
-       * @param {(string|function())=} expression An angular expression to be executed.
+       * @param {(string|function())=} expression An AngularJS expression to be executed.
        *
        *    - `string`: execute using the rules as defined in  {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with the current `scope` parameter.
@@ -30488,7 +29841,7 @@ function $RootScopeProvider() {
        * will be scheduled. However, it is encouraged to always call code that changes the model
        * from within an `$apply` call. That includes code evaluated via `$evalAsync`.
        *
-       * @param {(string|function())=} expression An angular expression to be executed.
+       * @param {(string|function())=} expression An AngularJS expression to be executed.
        *
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with the current `scope` parameter.
@@ -30519,9 +29872,9 @@ function $RootScopeProvider() {
        * @kind function
        *
        * @description
-       * `$apply()` is used to execute an expression in angular from outside of the angular
+       * `$apply()` is used to execute an expression in AngularJS from outside of the AngularJS
        * framework. (For example from browser DOM events, setTimeout, XHR or third party libraries).
-       * Because we are calling into the angular framework we need to perform proper scope life
+       * Because we are calling into the AngularJS framework we need to perform proper scope life
        * cycle of {@link ng.$exceptionHandler exception handling},
        * {@link ng.$rootScope.Scope#$digest executing watches}.
        *
@@ -30550,7 +29903,7 @@ function $RootScopeProvider() {
        *    expression was executed using the {@link ng.$rootScope.Scope#$digest $digest()} method.
        *
        *
-       * @param {(string|function())=} exp An angular expression to be executed.
+       * @param {(string|function())=} exp An AngularJS expression to be executed.
        *
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with current `scope` parameter.
@@ -30590,7 +29943,7 @@ function $RootScopeProvider() {
        * This can be used to queue up multiple expressions which need to be evaluated in the same
        * digest.
        *
-       * @param {(string|function())=} exp An angular expression to be executed.
+       * @param {(string|function())=} exp An AngularJS expression to be executed.
        *
        *    - `string`: execute using the rules as defined in {@link guide/expression expression}.
        *    - `function(scope)`: execute the function with current `scope` parameter.
@@ -30798,7 +30151,8 @@ function $RootScopeProvider() {
           // Insanity Warning: scope depth-first traversal
           // yes, this code is a bit crazy, but it works and we have tests to prove it!
           // this piece should be kept in sync with the traversal in $digest
-          // (though it differs due to having the extra check for $$listenerCount)
+          // (though it differs due to having the extra check for $$listenerCount and
+          // does not check $$suspended)
           if (!(next = ((current.$$listenerCount[name] && current.$$childHead) ||
               (current !== target && current.$$nextSibling)))) {
             while (current !== target && !(next = current.$$nextSibling)) {
@@ -30884,7 +30238,7 @@ function $RootScopeProvider() {
  * @name $rootElement
  *
  * @description
- * The root element of Angular application. This is either the element where {@link
+ * The root element of AngularJS application. This is either the element where {@link
  * ng.directive:ngApp ngApp} was declared or the element passed into
  * {@link angular.bootstrap}. The element represents the root element of application. It is also the
  * location where the application's {@link auto.$injector $injector} service gets
@@ -30900,6 +30254,7 @@ function $RootScopeProvider() {
  * Private service to sanitize uris for links and images. Used by $compile and $sanitize.
  */
 function $$SanitizeUriProvider() {
+
   var aHrefSanitizationWhitelist = /^\s*(https?|s?ftp|mailto|tel|file):/,
     imgSrcSanitizationWhitelist = /^\s*((https?|ftp|file|blob):|data:image\/)/;
 
@@ -30908,12 +30263,16 @@ function $$SanitizeUriProvider() {
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during a[href] sanitization.
    *
-   * The sanitization is a security measure aimed at prevent XSS attacks via html links.
+   * The sanitization is a security measure aimed at prevent XSS attacks via HTML anchor links.
    *
-   * Any url about to be assigned to a[href] via data-binding is first normalized and turned into
-   * an absolute url. Afterwards, the url is matched against the `aHrefSanitizationWhitelist`
-   * regular expression. If a match is found, the original url is written into the dom. Otherwise,
-   * the absolute url is prefixed with `'unsafe:'` string and only then is it written into the DOM.
+   * Any url due to be assigned to an `a[href]` attribute via interpolation is marked as requiring
+   * the $sce.URL security context. When interpolation occurs a call is made to `$sce.trustAsUrl(url)`
+   * which in turn may call `$$sanitizeUri(url, isMedia)` to sanitize the potentially malicious URL.
+   *
+   * If the URL matches the `aHrefSanitizationWhitelist` regular expression, it is returned unchanged.
+   *
+   * If there is no match the URL is returned prefixed with `'unsafe:'` to ensure that when it is written
+   * to the DOM it is inactive and potentially malicious code will not be executed.
    *
    * @param {RegExp=} regexp New regexp to whitelist urls with.
    * @returns {RegExp|ng.$compileProvider} Current RegExp if called without value or self for
@@ -30933,12 +30292,17 @@ function $$SanitizeUriProvider() {
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during img[src] sanitization.
    *
-   * The sanitization is a security measure aimed at prevent XSS attacks via html links.
+   * The sanitization is a security measure aimed at prevent XSS attacks via HTML image src links.
    *
-   * Any url about to be assigned to img[src] via data-binding is first normalized and turned into
-   * an absolute url. Afterwards, the url is matched against the `imgSrcSanitizationWhitelist`
-   * regular expression. If a match is found, the original url is written into the dom. Otherwise,
-   * the absolute url is prefixed with `'unsafe:'` string and only then is it written into the DOM.
+   * Any URL due to be assigned to an `img[src]` attribute via interpolation is marked as requiring
+   * the $sce.MEDIA_URL security context. When interpolation occurs a call is made to
+   * `$sce.trustAsMediaUrl(url)` which in turn may call `$$sanitizeUri(url, isMedia)` to sanitize
+   * the potentially malicious URL.
+   *
+   * If the URL matches the `aImgSanitizationWhitelist` regular expression, it is returned unchanged.
+   *
+   * If there is no match the URL is returned prefixed with `'unsafe:'` to ensure that when it is written
+   * to the DOM it is inactive and potentially malicious code will not be executed.
    *
    * @param {RegExp=} regexp New regexp to whitelist urls with.
    * @returns {RegExp|ng.$compileProvider} Current RegExp if called without value or self for
@@ -30953,10 +30317,10 @@ function $$SanitizeUriProvider() {
   };
 
   this.$get = function() {
-    return function sanitizeUri(uri, isImage) {
-      var regex = isImage ? imgSrcSanitizationWhitelist : aHrefSanitizationWhitelist;
-      var normalizedVal;
-      normalizedVal = urlResolve(uri && uri.trim()).href;
+    return function sanitizeUri(uri, isMediaUrl) {
+      // if (!uri) return uri;
+      var regex = isMediaUrl ? imgSrcSanitizationWhitelist : aHrefSanitizationWhitelist;
+      var normalizedVal = urlResolve(uri && uri.trim()).href;
       if (normalizedVal !== '' && !normalizedVal.match(regex)) {
         return 'unsafe:' + normalizedVal;
       }
@@ -30987,12 +30351,17 @@ var SCE_CONTEXTS = {
   // Style statements or stylesheets. Currently unused in AngularJS.
   CSS: 'css',
 
-  // An URL used in a context where it does not refer to a resource that loads code. Currently
-  // unused in AngularJS.
+  // An URL used in a context where it refers to the source of media, which are not expected to be run
+  // as scripts, such as an image, audio, video, etc.
+  MEDIA_URL: 'mediaUrl',
+
+  // An URL used in a context where it does not refer to a resource that loads code.
+  // A value that can be trusted as a URL can also trusted as a MEDIA_URL.
   URL: 'url',
 
   // RESOURCE_URL is a subtype of URL used where the referred-to resource could be interpreted as
   // code. (e.g. ng-include, script src binding, templateUrl)
+  // A value that can be trusted as a RESOURCE_URL, can also trusted as a URL and a MEDIA_URL.
   RESOURCE_URL: 'resourceUrl',
 
   // Script. Currently unused in AngularJS.
@@ -31101,7 +30470,7 @@ function adjustMatchers(matchers) {
  * and
  * {@link ng.$sceDelegateProvider#resourceUrlBlacklist $sceDelegateProvider.resourceUrlBlacklist},
  *
- * For the general details about this service in Angular, read the main page for {@link ng.$sce
+ * For the general details about this service in AngularJS, read the main page for {@link ng.$sce
  * Strict Contextual Escaping (SCE)}.
  *
  * **Example**:  Consider the following case. <a name="example"></a>
@@ -31207,7 +30576,7 @@ function $SceDelegateProvider() {
     return resourceUrlBlacklist;
   };
 
-  this.$get = ['$injector', function($injector) {
+  this.$get = ['$injector', '$$sanitizeUri', function($injector, $$sanitizeUri) {
 
     var htmlSanitizer = function htmlSanitizer(html) {
       throw $sceMinErr('unsafe', 'Attempting to use an unsafe value in a safe context.');
@@ -31220,7 +30589,7 @@ function $SceDelegateProvider() {
 
     function matchUrl(matcher, parsedUrl) {
       if (matcher === 'self') {
-        return urlIsSameOrigin(parsedUrl);
+        return urlIsSameOrigin(parsedUrl) || urlIsSameOriginAsBaseUrl(parsedUrl);
       } else {
         // definitely a regex.  See adjustMatchers()
         return !!matcher.exec(parsedUrl.href);
@@ -31272,7 +30641,8 @@ function $SceDelegateProvider() {
 
     byType[SCE_CONTEXTS.HTML] = generateHolderType(trustedValueHolderBase);
     byType[SCE_CONTEXTS.CSS] = generateHolderType(trustedValueHolderBase);
-    byType[SCE_CONTEXTS.URL] = generateHolderType(trustedValueHolderBase);
+    byType[SCE_CONTEXTS.MEDIA_URL] = generateHolderType(trustedValueHolderBase);
+    byType[SCE_CONTEXTS.URL] = generateHolderType(byType[SCE_CONTEXTS.MEDIA_URL]);
     byType[SCE_CONTEXTS.JS] = generateHolderType(trustedValueHolderBase);
     byType[SCE_CONTEXTS.RESOURCE_URL] = generateHolderType(byType[SCE_CONTEXTS.URL]);
 
@@ -31351,15 +30721,27 @@ function $SceDelegateProvider() {
      * @name $sceDelegate#getTrusted
      *
      * @description
-     * Takes any input, and either returns a value that's safe to use in the specified context, or
-     * throws an exception.
+     * Given an object and a security context in which to assign it, returns a value that's safe to
+     * use in this context, which was represented by the parameter. To do so, this function either
+     * unwraps the safe type it has been given (for instance, a {@link ng.$sceDelegate#trustAs
+     * `$sceDelegate.trustAs`} result), or it might try to sanitize the value given, depending on
+     * the context and sanitizer availablility.
      *
-     * In practice, there are several cases. When given a string, this function runs checks
-     * and sanitization to make it safe without prior assumptions. When given the result of a {@link
-     * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`} call, it returns the originally supplied
-     * value if that value's context is valid for this call's context. Finally, this function can
-     * also throw when there is no way to turn `maybeTrusted` in a safe value (e.g., no sanitization
-     * is available or possible.)
+     * The contexts that can be sanitized are $sce.MEDIA_URL, $sce.URL and $sce.HTML. The first two are available
+     * by default, and the third one relies on the `$sanitize` service (which may be loaded through
+     * the `ngSanitize` module). Furthermore, for $sce.RESOURCE_URL context, a plain string may be
+     * accepted if the resource url policy defined by {@link ng.$sceDelegateProvider#resourceUrlWhitelist
+     * `$sceDelegateProvider.resourceUrlWhitelist`} and {@link ng.$sceDelegateProvider#resourceUrlBlacklist
+     * `$sceDelegateProvider.resourceUrlBlacklist`} accepts that resource.
+     *
+     * This function will throw if the safe type isn't appropriate for this context, or if the
+     * value given cannot be accepted in the context (which might be caused by sanitization not
+     * being available, or the value not being recognized as safe).
+     *
+     * <div class="alert alert-danger">
+     * Disabling auto-escaping is extremely dangerous, it usually creates a Cross Site Scripting
+     * (XSS) vulnerability in your application.
+     * </div>
      *
      * @param {string} type The context in which this value is to be used (such as `$sce.HTML`).
      * @param {*} maybeTrusted The result of a prior {@link ng.$sceDelegate#trustAs
@@ -31377,12 +30759,18 @@ function $SceDelegateProvider() {
       if (constructor && maybeTrusted instanceof constructor) {
         return maybeTrusted.$$unwrapTrustedValue();
       }
-      // Otherwise, if we get here, then we may either make it safe, or throw an exception. This
-      // depends on the context: some are sanitizatible (HTML), some use whitelists (RESOURCE_URL),
-      // some are impossible to do (JS). This step isn't implemented for CSS and URL, as AngularJS
-      // has no corresponding sinks.
-      if (type === SCE_CONTEXTS.RESOURCE_URL) {
-        // RESOURCE_URL uses a whitelist.
+
+      // If maybeTrusted is a trusted class instance but not of the correct trusted type
+      // then unwrap it and allow it to pass through to the rest of the checks
+      if (isFunction(maybeTrusted.$$unwrapTrustedValue)) {
+        maybeTrusted = maybeTrusted.$$unwrapTrustedValue();
+      }
+
+      // If we get here, then we will either sanitize the value or throw an exception.
+      if (type === SCE_CONTEXTS.MEDIA_URL || type === SCE_CONTEXTS.URL) {
+        // we attempt to sanitize non-resource URLs
+        return $$sanitizeUri(maybeTrusted, type === SCE_CONTEXTS.MEDIA_URL);
+      } else if (type === SCE_CONTEXTS.RESOURCE_URL) {
         if (isResourceUrlAllowedByPolicy(maybeTrusted)) {
           return maybeTrusted;
         } else {
@@ -31516,7 +30904,7 @@ function $SceDelegateProvider() {
  * This applies both to the {@link ng.directive:ngInclude `ng-include`} directive as well as
  * `templateUrl`'s specified by {@link guide/directive directives}.
  *
- * By default, Angular only loads templates from the same domain and protocol as the application
+ * By default, AngularJS only loads templates from the same domain and protocol as the application
  * document.  This is done by calling {@link ng.$sce#getTrustedResourceUrl
  * $sce.getTrustedResourceUrl} on the template URL.  To load templates from other domains and/or
  * protocols, you may either {@link ng.$sceDelegateProvider#resourceUrlWhitelist whitelist
@@ -31537,9 +30925,10 @@ function $SceDelegateProvider() {
  *
  * If your expressions are constant literals, they're automatically trusted and you don't need to
  * call `$sce.trustAs` on them (e.g.
- * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works. The `$sceDelegate` will
- * also use the `$sanitize` service if it is available when binding untrusted values to
- * `$sce.HTML` context. AngularJS provides an implementation in `angular-sanitize.js`, and if you
+ * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works (remember to include the
+ * `ngSanitize` module). The `$sceDelegate` will also use the `$sanitize` service if it is available
+ * when binding untrusted values to `$sce.HTML` context.
+ * AngularJS provides an implementation in `angular-sanitize.js`, and if you
  * wish to use it, you will also need to depend on the {@link ngSanitize `ngSanitize`} module in
  * your application.
  *
@@ -31559,17 +30948,27 @@ function $SceDelegateProvider() {
  *
  * | Context             | Notes          |
  * |---------------------|----------------|
- * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered, and the {@link ngSanitize.$sanitize $sanitize} service is available (implemented by the {@link ngSanitize ngSanitize} module) this will sanitize the value instead of throwing an error. |
- * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently, no bindings require this context. Feel free to use it in your own directives. |
- * | `$sce.URL`          | For URLs that are safe to follow as links.  Currently unused (`<a href=`, `<img src=`, and some others sanitize their urls and don't constitute an SCE context.) |
- * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG`, `VIDEO`, `AUDIO`, `SOURCE`, and `TRACK` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does (it's not just the URL that matters, but also what is at the end of it), and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
- * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently, no bindings require this context.  Feel free to use it in your own directives. |
+ * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered and the {@link ngSanitize $sanitize} module is present this will sanitize the value instead of throwing an error. |
+ * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently unused.  Feel free to use it in your own directives. |
+ * | `$sce.MEDIA_URL`    | For URLs that are safe to render as media. Is automatically converted from string by sanitizing when needed. |
+ * | `$sce.URL`          | For URLs that are safe to follow as links. Is automatically converted from string by sanitizing when needed. Note that `$sce.URL` makes a stronger statement about the URL than `$sce.MEDIA_URL` does and therefore contexts requiring values trusted for `$sce.URL` can be used anywhere that values trusted for `$sce.MEDIA_URL` are required.|
+ * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` or `$sce.MEDIA_URL` do and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` or `$sce.MEDIA_URL` are required. |
+ * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently unused.  Feel free to use it in your own directives. |
  *
  *
- * Be aware that `a[href]` and `img[src]` automatically sanitize their URLs and do not pass them
- * through {@link ng.$sce#getTrusted $sce.getTrusted}. There's no CSS-, URL-, or JS-context bindings
- * in AngularJS currently, so their corresponding `$sce.trustAs` functions aren't useful yet. This
- * might evolve.
+ * <div class="alert alert-warning">
+ * Be aware that, before AngularJS 1.7.0, `a[href]` and `img[src]` used to sanitize their
+ * interpolated values directly rather than rely upon {@link ng.$sce#getTrusted `$sce.getTrusted`}.
+ *
+ * **As of 1.7.0, this is no longer the case.**
+ *
+ * Now such interpolations are marked as requiring `$sce.URL` (for `a[href]`) or `$sce.MEDIA_URL`
+ * (for `img[src]`), so that the sanitization happens (via `$sce.getTrusted...`) when the `$interpolate`
+ * service evaluates the expressions.
+ * </div>
+ *
+ * There are no CSS or JS context bindings in AngularJS currently, so their corresponding `$sce.trustAs`
+ * functions aren't useful yet. This might evolve.
  *
  * ### Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
  *
@@ -31743,7 +31142,7 @@ function $SceProvider() {
    *     such a value.
    *
    * - getTrusted(contextEnum, value)
-   *     This function should return the a value that is safe to use in the context specified by
+   *     This function should return the value that is safe to use in the context specified by
    *     contextEnum or throw and exception otherwise.
    *
    * NOTE: This contract deliberately does NOT state that values returned by trustAs() must be
@@ -31813,7 +31212,7 @@ function $SceProvider() {
      * @name $sce#parseAs
      *
      * @description
-     * Converts Angular {@link guide/expression expression} into a function.  This is like {@link
+     * Converts AngularJS {@link guide/expression expression} into a function.  This is like {@link
      * ng.$parse $parse} and is identical when the expression is a literal constant.  Otherwise, it
      * wraps the expression in a call to {@link ng.$sce#getTrusted $sce.getTrusted(*type*,
      * *result*)}
@@ -32195,7 +31594,7 @@ function $SnifferProvider() {
   }];
 }
 
-var $templateRequestMinErr = minErr('$compile');
+var $templateRequestMinErr = minErr('$templateRequest');
 
 /**
  * @ngdoc provider
@@ -32269,7 +31668,7 @@ function $TemplateRequestProvider() {
 
         // We consider the template cache holds only trusted templates, so
         // there's no need to go through whitelisting again for keys that already
-        // are included in there. This also makes Angular accept any script
+        // are included in there. This also makes AngularJS accept any script
         // directive, no matter its name. However, we still need to unwrap trusted
         // types.
         if (!isString(tpl) || isUndefined($templateCache.get(tpl))) {
@@ -32294,8 +31693,7 @@ function $TemplateRequestProvider() {
             handleRequestFn.totalPendingRequests--;
           })
           .then(function(response) {
-            $templateCache.put(tpl, response.data);
-            return response.data;
+            return $templateCache.put(tpl, response.data);
           }, handleError);
 
         function handleError(resp) {
@@ -32434,6 +31832,8 @@ function $$TestabilityProvider() {
   }];
 }
 
+var $timeoutMinErr = minErr('$timeout');
+
 /** @this */
 function $TimeoutProvider() {
   this.$get = ['$rootScope', '$browser', '$q', '$$q', '$exceptionHandler',
@@ -32442,35 +31842,35 @@ function $TimeoutProvider() {
     var deferreds = {};
 
 
-     /**
-      * @ngdoc service
-      * @name $timeout
-      *
-      * @description
-      * Angular's wrapper for `window.setTimeout`. The `fn` function is wrapped into a try/catch
-      * block and delegates any exceptions to
-      * {@link ng.$exceptionHandler $exceptionHandler} service.
-      *
-      * The return value of calling `$timeout` is a promise, which will be resolved when
-      * the delay has passed and the timeout function, if provided, is executed.
-      *
-      * To cancel a timeout request, call `$timeout.cancel(promise)`.
-      *
-      * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
-      * synchronously flush the queue of deferred functions.
-      *
-      * If you only want a promise that will be resolved after some specified delay
-      * then you can call `$timeout` without the `fn` function.
-      *
-      * @param {function()=} fn A function, whose execution should be delayed.
-      * @param {number=} [delay=0] Delay in milliseconds.
-      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
-      * @param {...*=} Pass additional parameters to the executed function.
-      * @returns {Promise} Promise that will be resolved when the timeout is reached. The promise
-      *   will be resolved with the return value of the `fn` function.
-      *
-      */
+    /**
+     * @ngdoc service
+     * @name $timeout
+     *
+     * @description
+     * AngularJS's wrapper for `window.setTimeout`. The `fn` function is wrapped into a try/catch
+     * block and delegates any exceptions to
+     * {@link ng.$exceptionHandler $exceptionHandler} service.
+     *
+     * The return value of calling `$timeout` is a promise, which will be resolved when
+     * the delay has passed and the timeout function, if provided, is executed.
+     *
+     * To cancel a timeout request, call `$timeout.cancel(promise)`.
+     *
+     * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
+     * synchronously flush the queue of deferred functions.
+     *
+     * If you only want a promise that will be resolved after some specified delay
+     * then you can call `$timeout` without the `fn` function.
+     *
+     * @param {function()=} fn A function, whose execution should be delayed.
+     * @param {number=} [delay=0] Delay in milliseconds.
+     * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+     *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+     * @param {...*=} Pass additional parameters to the executed function.
+     * @returns {Promise} Promise that will be resolved when the timeout is reached. The promise
+     *   will be resolved with the return value of the `fn` function.
+     *
+     */
     function timeout(fn, delay, invokeApply) {
       if (!isFunction(fn)) {
         invokeApply = delay;
@@ -32504,27 +31904,37 @@ function $TimeoutProvider() {
     }
 
 
-     /**
-      * @ngdoc method
-      * @name $timeout#cancel
-      *
-      * @description
-      * Cancels a task associated with the `promise`. As a result of this, the promise will be
-      * resolved with a rejection.
-      *
-      * @param {Promise=} promise Promise returned by the `$timeout` function.
-      * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
-      *   canceled.
-      */
+    /**
+     * @ngdoc method
+     * @name $timeout#cancel
+     *
+     * @description
+     * Cancels a task associated with the `promise`. As a result of this, the promise will be
+     * resolved with a rejection.
+     *
+     * @param {Promise=} promise Promise returned by the `$timeout` function.
+     * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
+     *   canceled.
+     */
     timeout.cancel = function(promise) {
-      if (promise && promise.$$timeoutId in deferreds) {
-        // Timeout cancels should not report an unhandled promise.
-        markQExceptionHandled(deferreds[promise.$$timeoutId].promise);
-        deferreds[promise.$$timeoutId].reject('canceled');
-        delete deferreds[promise.$$timeoutId];
-        return $browser.defer.cancel(promise.$$timeoutId);
+      if (!promise) return false;
+
+      if (!promise.hasOwnProperty('$$timeoutId')) {
+        throw $timeoutMinErr('badprom',
+            '`$timeout.cancel()` called with a promise that was not generated by `$timeout()`.');
       }
-      return false;
+
+      if (!deferreds.hasOwnProperty(promise.$$timeoutId)) return false;
+
+      var id = promise.$$timeoutId;
+      var deferred = deferreds[id];
+
+      // Timeout cancels should not report an unhandled promise.
+      markQExceptionHandled(deferred.promise);
+      deferred.reject('canceled');
+      delete deferreds[id];
+
+      return $browser.defer.cancel(id);
     };
 
     return timeout;
@@ -32540,6 +31950,7 @@ function $TimeoutProvider() {
 // service.
 var urlParsingNode = window.document.createElement('a');
 var originUrl = urlResolve(window.location.href);
+var baseUrlParsingNode;
 
 
 /**
@@ -32571,23 +31982,26 @@ var originUrl = urlResolve(window.location.href);
  *   http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
  *
  * @kind function
- * @param {string} url The URL to be parsed.
+ * @param {string|object} url The URL to be parsed. If `url` is not a string, it will be returned
+ *     unchanged.
  * @description Normalizes and parses a URL.
  * @returns {object} Returns the normalized URL as a dictionary.
  *
- *   | member name   | Description    |
- *   |---------------|----------------|
+ *   | member name   | Description                                                            |
+ *   |---------------|------------------------------------------------------------------------|
  *   | href          | A normalized version of the provided URL if it was not an absolute URL |
- *   | protocol      | The protocol including the trailing colon                              |
+ *   | protocol      | The protocol without the trailing colon                                |
  *   | host          | The host and port (if the port is non-default) of the normalizedUrl    |
  *   | search        | The search params, minus the question mark                             |
- *   | hash          | The hash string, minus the hash symbol
- *   | hostname      | The hostname
- *   | port          | The port, without ":"
- *   | pathname      | The pathname, beginning with "/"
+ *   | hash          | The hash string, minus the hash symbol                                 |
+ *   | hostname      | The hostname                                                           |
+ *   | port          | The port, without ":"                                                  |
+ *   | pathname      | The pathname, beginning with "/"                                       |
  *
  */
 function urlResolve(url) {
+  if (!isString(url)) return url;
+
   var href = url;
 
   // Support: IE 9-11 only
@@ -32600,7 +32014,6 @@ function urlResolve(url) {
 
   urlParsingNode.setAttribute('href', href);
 
-  // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
   return {
     href: urlParsingNode.href,
     protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
@@ -32616,16 +32029,96 @@ function urlResolve(url) {
 }
 
 /**
- * Parse a request URL and determine whether this is a same-origin request as the application document.
+ * Parse a request URL and determine whether this is a same-origin request as the application
+ * document.
  *
  * @param {string|object} requestUrl The url of the request as a string that will be resolved
  * or a parsed URL object.
  * @returns {boolean} Whether the request is for the same origin as the application document.
  */
 function urlIsSameOrigin(requestUrl) {
-  var parsed = (isString(requestUrl)) ? urlResolve(requestUrl) : requestUrl;
-  return (parsed.protocol === originUrl.protocol &&
-          parsed.host === originUrl.host);
+  return urlsAreSameOrigin(requestUrl, originUrl);
+}
+
+/**
+ * Parse a request URL and determine whether it is same-origin as the current document base URL.
+ *
+ * Note: The base URL is usually the same as the document location (`location.href`) but can
+ * be overriden by using the `<base>` tag.
+ *
+ * @param {string|object} requestUrl The url of the request as a string that will be resolved
+ * or a parsed URL object.
+ * @returns {boolean} Whether the URL is same-origin as the document base URL.
+ */
+function urlIsSameOriginAsBaseUrl(requestUrl) {
+  return urlsAreSameOrigin(requestUrl, getBaseUrl());
+}
+
+/**
+ * Create a function that can check a URL's origin against a list of allowed/whitelisted origins.
+ * The current location's origin is implicitly trusted.
+ *
+ * @param {string[]} whitelistedOriginUrls - A list of URLs (strings), whose origins are trusted.
+ *
+ * @returns {Function} - A function that receives a URL (string or parsed URL object) and returns
+ *     whether it is of an allowed origin.
+ */
+function urlIsAllowedOriginFactory(whitelistedOriginUrls) {
+  var parsedAllowedOriginUrls = [originUrl].concat(whitelistedOriginUrls.map(urlResolve));
+
+  /**
+   * Check whether the specified URL (string or parsed URL object) has an origin that is allowed
+   * based on a list of whitelisted-origin URLs. The current location's origin is implicitly
+   * trusted.
+   *
+   * @param {string|Object} requestUrl - The URL to be checked (provided as a string that will be
+   *     resolved or a parsed URL object).
+   *
+   * @returns {boolean} - Whether the specified URL is of an allowed origin.
+   */
+  return function urlIsAllowedOrigin(requestUrl) {
+    var parsedUrl = urlResolve(requestUrl);
+    return parsedAllowedOriginUrls.some(urlsAreSameOrigin.bind(null, parsedUrl));
+  };
+}
+
+/**
+ * Determine if two URLs share the same origin.
+ *
+ * @param {string|Object} url1 - First URL to compare as a string or a normalized URL in the form of
+ *     a dictionary object returned by `urlResolve()`.
+ * @param {string|object} url2 - Second URL to compare as a string or a normalized URL in the form
+ *     of a dictionary object returned by `urlResolve()`.
+ *
+ * @returns {boolean} - True if both URLs have the same origin, and false otherwise.
+ */
+function urlsAreSameOrigin(url1, url2) {
+  url1 = urlResolve(url1);
+  url2 = urlResolve(url2);
+
+  return (url1.protocol === url2.protocol &&
+          url1.host === url2.host);
+}
+
+/**
+ * Returns the current document base URL.
+ * @returns {string}
+ */
+function getBaseUrl() {
+  if (window.document.baseURI) {
+    return window.document.baseURI;
+  }
+
+  // `document.baseURI` is available everywhere except IE
+  if (!baseUrlParsingNode) {
+    baseUrlParsingNode = window.document.createElement('a');
+    baseUrlParsingNode.href = '.';
+
+    // Work-around for IE bug described in Implementation Notes. The fix in `urlResolve()` is not
+    // suitable here because we need to track changes to the base URL.
+    baseUrlParsingNode = baseUrlParsingNode.cloneNode(false);
+  }
+  return baseUrlParsingNode.href;
 }
 
 /**
@@ -32636,7 +32129,7 @@ function urlIsSameOrigin(requestUrl) {
  * @description
  * A reference to the browser's `window` object. While `window`
  * is globally available in JavaScript, it causes testability problems, because
- * it is a global variable. In angular we always refer to it through the
+ * it is a global variable. In AngularJS we always refer to it through the
  * `$window` service, so it may be overridden, removed or mocked for testing.
  *
  * Expressions, like the one defined for the `ngClick` directive in the example
@@ -32759,7 +32252,7 @@ function $$CookieReaderProvider() {
  * annotated with dependencies and is responsible for creating a filter function.
  *
  * <div class="alert alert-warning">
- * **Note:** Filter names must be valid angular {@link expression} identifiers, such as `uppercase` or `orderBy`.
+ * **Note:** Filter names must be valid AngularJS {@link expression} identifiers, such as `uppercase` or `orderBy`.
  * Names with special characters, such as hyphens and dots, are not allowed. If you wish to namespace
  * your filters, then you can use capitalization (`myappSubsectionFilterx`) or underscores
  * (`myapp_subsection_filterx`).
@@ -32802,8 +32295,8 @@ function $$CookieReaderProvider() {
  * ```
  *
  *
- * For more information about how angular filters work, and how to create your own filters, see
- * {@link guide/filter Filters} in the Angular Developer Guide.
+ * For more information about how AngularJS filters work, and how to create your own filters, see
+ * {@link guide/filter Filters} in the AngularJS Developer Guide.
  */
 
 /**
@@ -32813,7 +32306,7 @@ function $$CookieReaderProvider() {
  * @description
  * Filters are used for formatting data displayed to the user.
  *
- * They can be used in view templates, controllers or services.Angular comes
+ * They can be used in view templates, controllers or services. AngularJS comes
  * with a collection of [built-in filters](api/ng/filter), but it is easy to
  * define your own as well.
  *
@@ -32855,7 +32348,7 @@ function $FilterProvider($provide) {
    *    the keys are the filter names and the values are the filter factories.
    *
    *    <div class="alert alert-warning">
-   *    **Note:** Filter names must be valid angular {@link expression} identifiers, such as `uppercase` or `orderBy`.
+   *    **Note:** Filter names must be valid AngularJS {@link expression} identifiers, such as `uppercase` or `orderBy`.
    *    Names with special characters, such as hyphens and dots, are not allowed. If you wish to namespace
    *    your filters, then you can use capitalization (`myappSubsectionFilterx`) or underscores
    *    (`myapp_subsection_filterx`).
@@ -33243,11 +32736,14 @@ function currencyFilter($locale) {
       fractionSize = formats.PATTERNS[1].maxFrac;
     }
 
+    // If the currency symbol is empty, trim whitespace around the symbol
+    var currencySymbolRe = !currencySymbol ? /\s*\u00A4\s*/g : /\u00A4/g;
+
     // if null or undefined pass it through
     return (amount == null)
         ? amount
         : formatNumber(amount, formats.PATTERNS[1], formats.GROUP_SEP, formats.DECIMAL_SEP, fractionSize).
-            replace(/\u00A4/g, currencySymbol);
+            replace(currencySymbolRe, currencySymbol);
   };
 }
 
@@ -34079,6 +33575,7 @@ function sliceFn(input, begin, end) {
  *      index: ...
  *    }
  *    ```
+ *    **Note:** `null` values use `'null'` as their type.
  * 2. The comparator function is used to sort the items, based on the derived values, types and
  *    indices.
  *
@@ -34113,11 +33610,15 @@ function sliceFn(input, begin, end) {
  *
  * The default, built-in comparator should be sufficient for most usecases. In short, it compares
  * numbers numerically, strings alphabetically (and case-insensitively), for objects falls back to
- * using their index in the original collection, and sorts values of different types by type.
+ * using their index in the original collection, sorts values of different types by type and puts
+ * `undefined` and `null` values at the end of the sorted list.
  *
  * More specifically, it follows these steps to determine the relative order of items:
  *
- * 1. If the compared values are of different types, compare the types themselves alphabetically.
+ * 1. If the compared values are of different types:
+ *    - If one of the values is undefined, consider it "greater than" the other.
+ *    - Else if one of the values is null, consider it "greater than" the other.
+ *    - Else compare the types themselves alphabetically.
  * 2. If both values are of type `string`, compare them alphabetically in a case- and
  *    locale-insensitive way.
  * 3. If both values are objects, compare their indices instead.
@@ -34128,9 +33629,10 @@ function sliceFn(input, begin, end) {
  *
  * **Note:** If you notice numbers not being sorted as expected, make sure they are actually being
  *           saved as numbers and not strings.
- * **Note:** For the purpose of sorting, `null` values are treated as the string `'null'` (i.e.
- *           `type: 'string'`, `value: 'null'`). This may cause unexpected sort order relative to
- *           other values.
+ * **Note:** For the purpose of sorting, `null` and `undefined` are considered "greater than"
+ *           any other value (with undefined "greater than" null). This effectively means that `null`
+ *           and `undefined` values end up at the end of a list sorted in ascending order.
+ * **Note:** `null` values use `'null'` as their type to be able to distinguish them from objects.
  *
  * @param {Array|ArrayLike} collection - The collection (array or array-like object) to sort.
  * @param {(Function|string|Array.<Function|string>)=} expression - A predicate (or list of
@@ -34140,7 +33642,7 @@ function sliceFn(input, begin, end) {
  *
  *    - `Function`: A getter function. This function will be called with each item as argument and
  *      the return value will be used for sorting.
- *    - `string`: An Angular expression. This expression will be evaluated against each item and the
+ *    - `string`: An AngularJS expression. This expression will be evaluated against each item and the
  *      result will be used for sorting. For example, use `'label'` to sort by a property called
  *      `label` or `'label.substring(0, 3)'` to sort by the first 3 characters of the `label`
  *      property.<br />
@@ -34697,8 +34199,7 @@ function orderByFilter($parse) {
   function getPredicateValue(value, index) {
     var type = typeof value;
     if (value === null) {
-      type = 'string';
-      value = 'null';
+      type = 'null';
     } else if (type === 'object') {
       value = objectValue(value);
     }
@@ -34729,7 +34230,11 @@ function orderByFilter($parse) {
         result = value1 < value2 ? -1 : 1;
       }
     } else {
-      result = type1 < type2 ? -1 : 1;
+      result = (type1 === 'undefined') ? 1 :
+        (type2 === 'undefined') ? -1 :
+        (type1 === 'null') ? 1 :
+        (type2 === 'null') ? -1 :
+        (type1 < type2) ? -1 : 1;
     }
 
     return result;
@@ -34786,10 +34291,10 @@ var htmlAnchorDirective = valueFn({
  * @priority 99
  *
  * @description
- * Using Angular markup like `{{hash}}` in an href attribute will
+ * Using AngularJS markup like `{{hash}}` in an href attribute will
  * make the link go to the wrong URL if the user clicks it before
- * Angular has a chance to replace the `{{hash}}` markup with its
- * value. Until Angular replaces the markup the link will be broken
+ * AngularJS has a chance to replace the `{{hash}}` markup with its
+ * value. Until AngularJS replaces the markup the link will be broken
  * and will most likely return a 404 error. The `ngHref` directive
  * solves this problem.
  *
@@ -34837,7 +34342,7 @@ var htmlAnchorDirective = valueFn({
 
           element(by.id('link-3')).click();
 
-          // At this point, we navigate away from an Angular page, so we need
+          // At this point, we navigate away from an AngularJS page, so we need
           // to use browser.driver to get the base webdriver.
 
           browser.wait(function() {
@@ -34866,7 +34371,7 @@ var htmlAnchorDirective = valueFn({
 
           element(by.id('link-6')).click();
 
-          // At this point, we navigate away from an Angular page, so we need
+          // At this point, we navigate away from an AngularJS page, so we need
           // to use browser.driver to get the base webdriver.
           browser.wait(function() {
             return browser.driver.getCurrentUrl().then(function(url) {
@@ -34885,9 +34390,9 @@ var htmlAnchorDirective = valueFn({
  * @priority 99
  *
  * @description
- * Using Angular markup like `{{hash}}` in a `src` attribute doesn't
+ * Using AngularJS markup like `{{hash}}` in a `src` attribute doesn't
  * work right: The browser will fetch from the URL with the literal
- * text `{{hash}}` until Angular replaces the expression inside
+ * text `{{hash}}` until AngularJS replaces the expression inside
  * `{{hash}}`. The `ngSrc` directive solves this problem.
  *
  * The buggy way to write it:
@@ -34911,9 +34416,9 @@ var htmlAnchorDirective = valueFn({
  * @priority 99
  *
  * @description
- * Using Angular markup like `{{hash}}` in a `srcset` attribute doesn't
+ * Using AngularJS markup like `{{hash}}` in a `srcset` attribute doesn't
  * work right: The browser will fetch from the URL with the literal
- * text `{{hash}}` until Angular replaces the expression inside
+ * text `{{hash}}` until AngularJS replaces the expression inside
  * `{{hash}}`. The `ngSrcset` directive solves this problem.
  *
  * The buggy way to write it:
@@ -35021,7 +34526,7 @@ var htmlAnchorDirective = valueFn({
     <example name="ng-readonly">
       <file name="index.html">
         <label>Check me to make text readonly: <input type="checkbox" ng-model="checked"></label><br/>
-        <input type="text" ng-readonly="checked" value="I'm Angular" aria-label="Readonly field" />
+        <input type="text" ng-readonly="checked" value="I'm AngularJS" aria-label="Readonly field" />
       </file>
       <file name="protractor.js" type="protractor">
         it('should toggle readonly attr', function() {
@@ -35215,7 +34720,7 @@ forEach(['src', 'srcset', 'href'], function(attrName) {
           // On IE, if "ng:src" directive declaration is used and "src" attribute doesn't exist
           // then calling element.setAttribute('src', 'foo') doesn't do anything, so we need
           // to set the property as well to achieve the desired effect.
-          // We use attr[attrName] value since $set can sanitize the url.
+          // We use attr[attrName] value since $set might have sanitized the url.
           if (msie && propName) element.prop(propName, attr[name]);
         });
       }
@@ -35232,7 +34737,8 @@ var nullFormCtrl = {
   $setValidity: noop,
   $setDirty: noop,
   $setPristine: noop,
-  $setSubmitted: noop
+  $setSubmitted: noop,
+  $$setSubmitted: noop
 },
 PENDING_CLASS = 'ng-pending',
 SUBMITTED_CLASS = 'ng-submitted';
@@ -35497,12 +35003,25 @@ FormController.prototype = {
    * @name form.FormController#$setSubmitted
    *
    * @description
-   * Sets the form to its submitted state.
+   * Sets the form to its `$submitted` state. This will also set `$submitted` on all child and
+   * parent forms of the form.
    */
   $setSubmitted: function() {
+    var rootForm = this;
+    while (rootForm.$$parentForm && (rootForm.$$parentForm !== nullFormCtrl)) {
+      rootForm = rootForm.$$parentForm;
+    }
+    rootForm.$$setSubmitted();
+  },
+
+  $$setSubmitted: function() {
     this.$$animate.addClass(this.$$element, SUBMITTED_CLASS);
     this.$submitted = true;
-    this.$$parentForm.$setSubmitted();
+    forEach(this.$$controls, function(control) {
+      if (control.$$setSubmitted) {
+        control.$$setSubmitted();
+      }
+    });
   }
 };
 
@@ -35561,16 +35080,21 @@ addSetValidityMethod({
  * @restrict EAC
  *
  * @description
- * Nestable alias of {@link ng.directive:form `form`} directive. HTML
- * does not allow nesting of form elements. It is useful to nest forms, for example if the validity of a
- * sub-group of controls needs to be determined.
+ * Helper directive that makes it possible to create control groups inside a
+ * {@link ng.directive:form `form`} directive.
+ * These "child forms" can be used, for example, to determine the validity of a sub-group of
+ * controls.
  *
- * Note: the purpose of `ngForm` is to group controls,
- * but not to be a replacement for the `<form>` tag with all of its capabilities
- * (e.g. posting to the server, ...).
+ * <div class="alert alert-danger">
+ * **Note**: `ngForm` cannot be used as a replacement for `<form>`, because it lacks its
+ * [built-in HTML functionality](https://html.spec.whatwg.org/#the-form-element).
+ * Specifically, you cannot submit `ngForm` like a `<form>` tag. That means,
+ * you cannot send data to the server with `ngForm`, or integrate it with
+ * {@link ng.directive:ngSubmit `ngSubmit`}.
+ * </div>
  *
- * @param {string=} ngForm|name Name of the form. If specified, the form controller will be published into
- *                       related scope, under this name.
+ * @param {string=} ngForm|name Name of the form. If specified, the form controller will
+ *                              be published into the related scope, under this name.
  *
  */
 
@@ -35588,9 +35112,9 @@ addSetValidityMethod({
  *
  * ## Alias: {@link ng.directive:ngForm `ngForm`}
  *
- * In Angular, forms can be nested. This means that the outer form is valid when all of the child
+ * In AngularJS, forms can be nested. This means that the outer form is valid when all of the child
  * forms are valid as well. However, browsers do not allow nesting of `<form>` elements, so
- * Angular provides the {@link ng.directive:ngForm `ngForm`} directive, which behaves identically to
+ * AngularJS provides the {@link ng.directive:ngForm `ngForm`} directive, which behaves identically to
  * `form` but can be nested. Nested forms can be useful, for example, if the validity of a sub-group
  * of controls needs to be determined.
  *
@@ -35607,12 +35131,12 @@ addSetValidityMethod({
  *
  * ## Submitting a form and preventing the default action
  *
- * Since the role of forms in client-side Angular applications is different than in classical
+ * Since the role of forms in client-side AngularJS applications is different than in classical
  * roundtrip apps, it is desirable for the browser not to translate the form submission into a full
  * page reload that sends the data to the server. Instead some javascript logic should be triggered
  * to handle the form submission in an application-specific way.
  *
- * For this reason, Angular prevents the default action (form submission to the server) unless the
+ * For this reason, AngularJS prevents the default action (form submission to the server) unless the
  * `<form>` element has an `action` attribute specified.
  *
  * You can use one of the following two ways to specify what javascript method should be called when
@@ -35950,10 +35474,10 @@ var inputType = {
    * @name input[text]
    *
    * @description
-   * Standard HTML text input with angular data binding, inherited by most of the `input` elements.
+   * Standard HTML text input with AngularJS data binding, inherited by most of the `input` elements.
    *
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} required Adds `required` validation error key if the value is not entered.
    * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
@@ -35968,7 +35492,7 @@ var inputType = {
    *    that contains the regular expression body that will be converted to a regular expression
    *    as in the ngPattern directive.
    * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
-   *    does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+   *    does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
    *    If the expression evaluates to a RegExp object, then this is used directly.
    *    If the expression evaluates to a string, then it will be converted to a RegExp
    *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -35976,9 +35500,9 @@ var inputType = {
    *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
    *    start at the index of the last search's match, thus not taking the whole input value into
    *    account.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
-   * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
+   * @param {boolean=} [ngTrim=true] If set to false AngularJS will not automatically trim the input.
    *    This parameter is ignored for input[type=password] controls, which will never trim the
    *    input.
    *
@@ -36052,13 +35576,13 @@ var inputType = {
      * modern browsers do not yet support this input type, it is important to provide cues to users on the
      * expected input format via a placeholder or label.
      *
-     * The model must always be a Date object, otherwise Angular will throw an error.
+     * The model must always be a Date object, otherwise AngularJS will throw an error.
      * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
      *
      * The timezone to be used to read/write the `Date` instance in the model can be defined using
      * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
      *
-     * @param {string} ngModel Assignable angular expression to data-bind to.
+     * @param {string} ngModel Assignable AngularJS expression to data-bind to.
      * @param {string=} name Property name of the form under which the control is published.
      * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`. This must be a
      *   valid ISO date string (yyyy-MM-dd). You can also use interpolation inside this attribute
@@ -36076,7 +35600,7 @@ var inputType = {
      * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
      *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
      *    `required` when you want to data-bind to the `required` attribute.
-     * @param {string=} ngChange Angular expression to be executed when input changes due to user
+     * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
      *    interaction with the input element.
      *
      * @example
@@ -36154,13 +35678,13 @@ var inputType = {
     * the HTML5 date input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * local datetime format (yyyy-MM-ddTHH:mm:ss), for example: `2010-12-28T14:57:00`.
     *
-    * The model must always be a Date object, otherwise Angular will throw an error.
+    * The model must always be a Date object, otherwise AngularJS will throw an error.
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
     * The timezone to be used to read/write the `Date` instance in the model can be defined using
     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
-    * @param {string} ngModel Assignable angular expression to data-bind to.
+    * @param {string} ngModel Assignable AngularJS expression to data-bind to.
     * @param {string=} name Property name of the form under which the control is published.
     * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
     *   This must be a valid ISO datetime format (yyyy-MM-ddTHH:mm:ss). You can also use interpolation
@@ -36178,7 +35702,7 @@ var inputType = {
     * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
     *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
     *    `required` when you want to data-bind to the `required` attribute.
-    * @param {string=} ngChange Angular expression to be executed when input changes due to user
+    * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
     *    interaction with the input element.
     *
     * @example
@@ -36257,13 +35781,13 @@ var inputType = {
    * local time format (HH:mm:ss), for example: `14:57:00`. Model must be a Date object. This binding will always output a
    * Date object to the model of January 1, 1970, or local date `new Date(1970, 0, 1, HH, mm, ss)`.
    *
-   * The model must always be a Date object, otherwise Angular will throw an error.
+   * The model must always be a Date object, otherwise AngularJS will throw an error.
    * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
    *
    * The timezone to be used to read/write the `Date` instance in the model can be defined using
    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
    *   This must be a valid ISO time format (HH:mm:ss). You can also use interpolation inside this
@@ -36281,7 +35805,7 @@ var inputType = {
    * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
    *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
    *    `required` when you want to data-bind to the `required` attribute.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -36359,13 +35883,17 @@ var inputType = {
     * the HTML5 week input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
     * week format (yyyy-W##), for example: `2013-W02`.
     *
-    * The model must always be a Date object, otherwise Angular will throw an error.
+    * The model must always be a Date object, otherwise AngularJS will throw an error.
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
+    *
+    * The value of the resulting Date object will be set to Thursday at 00:00:00 of the requested week,
+    * due to ISO-8601 week numbering standards. Information on ISO's system for numbering the weeks of the
+    * year can be found at: https://en.wikipedia.org/wiki/ISO_8601#Week_dates
     *
     * The timezone to be used to read/write the `Date` instance in the model can be defined using
     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
-    * @param {string} ngModel Assignable angular expression to data-bind to.
+    * @param {string} ngModel Assignable AngularJS expression to data-bind to.
     * @param {string=} name Property name of the form under which the control is published.
     * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
     *   This must be a valid ISO week format (yyyy-W##). You can also use interpolation inside this
@@ -36383,7 +35911,7 @@ var inputType = {
     * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
     *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
     *    `required` when you want to data-bind to the `required` attribute.
-    * @param {string=} ngChange Angular expression to be executed when input changes due to user
+    * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
     *    interaction with the input element.
     *
     * @example
@@ -36461,7 +35989,7 @@ var inputType = {
    * the HTML5 month input, a text element will be used. In that case, the text must be entered in a valid ISO-8601
    * month format (yyyy-MM), for example: `2009-01`.
    *
-   * The model must always be a Date object, otherwise Angular will throw an error.
+   * The model must always be a Date object, otherwise AngularJS will throw an error.
    * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
    * If the model is not set to the first of the month, the next view to model update will set it
    * to the first of the month.
@@ -36469,7 +35997,7 @@ var inputType = {
    * The timezone to be used to read/write the `Date` instance in the model can be defined using
    * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
    *   This must be a valid ISO month format (yyyy-MM). You can also use interpolation inside this
@@ -36488,7 +36016,7 @@ var inputType = {
    * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
    *    the element when the ngRequired expression evaluates to true. Use `ngRequired` instead of
    *    `required` when you want to data-bind to the `required` attribute.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -36566,7 +36094,7 @@ var inputType = {
    * error if not a valid number.
    *
    * <div class="alert alert-warning">
-   * The model must always be of type `number` otherwise Angular will throw an error.
+   * The model must always be of type `number` otherwise AngularJS will throw an error.
    * Be aware that a string containing a number is not enough. See the {@link ngModel:numfmt}
    * error docs for more information and an example of how to convert your model if necessary.
    * </div>
@@ -36581,7 +36109,7 @@ var inputType = {
    * will also be an empty string.
    *
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} min Sets the `min` validation error key if the value entered is less than `min`.
    *    Can be interpolated.
@@ -36608,7 +36136,7 @@ var inputType = {
    *    that contains the regular expression body that will be converted to a regular expression
    *    as in the ngPattern directive.
    * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
-   *    does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+   *    does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
    *    If the expression evaluates to a RegExp object, then this is used directly.
    *    If the expression evaluates to a string, then it will be converted to a RegExp
    *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -36616,7 +36144,7 @@ var inputType = {
    *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
    *    start at the index of the last search's match, thus not taking the whole input value into
    *    account.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -36691,7 +36219,7 @@ var inputType = {
    * the built-in validators (see the {@link guide/forms Forms guide})
    * </div>
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} required Sets `required` validation error key if the value is not entered.
    * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
@@ -36706,7 +36234,7 @@ var inputType = {
    *    that contains the regular expression body that will be converted to a regular expression
    *    as in the ngPattern directive.
    * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
-   *    does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+   *    does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
    *    If the expression evaluates to a RegExp object, then this is used directly.
    *    If the expression evaluates to a string, then it will be converted to a RegExp
    *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -36714,7 +36242,7 @@ var inputType = {
    *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
    *    start at the index of the last search's match, thus not taking the whole input value into
    *    account.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -36790,7 +36318,7 @@ var inputType = {
    * use `ng-pattern` or modify the built-in validators (see the {@link guide/forms Forms guide})
    * </div>
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} required Sets `required` validation error key if the value is not entered.
    * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
@@ -36805,7 +36333,7 @@ var inputType = {
    *    that contains the regular expression body that will be converted to a regular expression
    *    as in the ngPattern directive.
    * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
-   *    does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+   *    does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
    *    If the expression evaluates to a RegExp object, then this is used directly.
    *    If the expression evaluates to a string, then it will be converted to a RegExp
    *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -36813,7 +36341,7 @@ var inputType = {
    *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
    *    start at the index of the last search's match, thus not taking the whole input value into
    *    account.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -36881,14 +36409,41 @@ var inputType = {
    * @description
    * HTML radio button.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * **Note:**<br>
+   * All inputs controlled by {@link ngModel ngModel} (including those of type `radio`) will use the
+   * value of their `name` attribute to determine the property under which their
+   * {@link ngModel.NgModelController NgModelController} will be published on the parent
+   * {@link form.FormController FormController}. Thus, if you use the same `name` for multiple
+   * inputs of a form (e.g. a group of radio inputs), only _one_ `NgModelController` will be
+   * published on the parent `FormController` under that name. The rest of the controllers will
+   * continue to work as expected, but you won't be able to access them as properties on the parent
+   * `FormController`.
+   *
+   * <div class="alert alert-info">
+   *   <p>
+   *     In plain HTML forms, the `name` attribute is used to identify groups of radio inputs, so
+   *     that the browser can manage their state (checked/unchecked) based on the state of other
+   *     inputs in the same group.
+   *   </p>
+   *   <p>
+   *     In AngularJS forms, this is not necessary. The input's state will be updated based on the
+   *     value of the underlying model data.
+   *   </p>
+   * </div>
+   *
+   * <div class="alert alert-success">
+   *   If you omit the `name` attribute on a radio input, `ngModel` will automatically assign it a
+   *   unique name.
+   * </div>
+   *
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string} value The value to which the `ngModel` expression should be set when selected.
    *    Note that `value` only supports `string` values, i.e. the scope model needs to be a string,
    *    too. Use `ngValue` if you need complex models (`number`, `object`, ...).
    * @param {string=} name Property name of the form under which the control is published.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
-   * @param {string} ngValue Angular expression to which `ngModel` will be be set when the radio
+   * @param {string} ngValue AngularJS expression to which `ngModel` will be be set when the radio
    *    is selected. Should be used instead of the `value` attribute if you need
    *    a non-string `ngModel` (`boolean`, `array`, ...).
    *
@@ -36966,34 +36521,34 @@ var inputType = {
    * See the [HTML Spec on input[type=range]](https://www.w3.org/TR/html5/forms.html#range-state-(type=range))
    * for more info.
    *
-   * This has the following consequences for Angular:
+   * This has the following consequences for AngularJS:
    *
    * Since the element value should always reflect the current model value, a range input
    * will set the bound ngModel expression to the value that the browser has set for the
    * input element. For example, in the following input `<input type="range" ng-model="model.value">`,
    * if the application sets `model.value = null`, the browser will set the input to `'50'`.
-   * Angular will then set the model to `50`, to prevent input and model value being out of sync.
+   * AngularJS will then set the model to `50`, to prevent input and model value being out of sync.
    *
    * That means the model for range will immediately be set to `50` after `ngModel` has been
    * initialized. It also means a range input can never have the required error.
    *
    * This does not only affect changes to the model value, but also to the values of the `min`,
    * `max`, and `step` attributes. When these change in a way that will cause the browser to modify
-   * the input value, Angular will also update the model value.
+   * the input value, AngularJS will also update the model value.
    *
    * Automatic value adjustment also means that a range input element can never have the `required`,
    * `min`, or `max` errors.
    *
    * However, `step` is currently only fully implemented by Firefox. Other browsers have problems
    * when the step value changes dynamically - they do not adjust the element value correctly, but
-   * instead may set the `stepMismatch` error. If that's the case, the Angular will set the `step`
+   * instead may set the `stepMismatch` error. If that's the case, the AngularJS will set the `step`
    * error on the input, and set the model to `undefined`.
    *
    * Note that `input[range]` is not compatible with`ngMax`, `ngMin`, and `ngStep`, because they do
    * not set the `min` and `max` attributes, which means that the browser won't automatically adjust
    * the input value based on their values, and will always assume min = 0, max = 100, and step = 1.
    *
-   * @param {string}  ngModel Assignable angular expression to data-bind to.
+   * @param {string}  ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {string=} min Sets the `min` validation to ensure that the value entered is greater
    *                  than `min`. Can be interpolated.
@@ -37068,11 +36623,11 @@ var inputType = {
    * @description
    * HTML checkbox.
    *
-   * @param {string} ngModel Assignable angular expression to data-bind to.
+   * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string=} name Property name of the form under which the control is published.
    * @param {expression=} ngTrueValue The value to which the expression should be set when selected.
    * @param {expression=} ngFalseValue The value to which the expression should be set when not selected.
-   * @param {string=} ngChange Angular expression to be executed when input changes due to user
+   * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
    *    interaction with the input element.
    *
    * @example
@@ -37149,6 +36704,16 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
       composing = true;
     });
 
+    // Support: IE9+
+    element.on('compositionupdate', function(ev) {
+      // End composition when ev.data is empty string on 'compositionupdate' event.
+      // When the input de-focusses (e.g. by clicking away), IE triggers 'compositionupdate'
+      // instead of 'compositionend'.
+      if (isUndefined(ev.data) || ev.data === '') {
+        composing = false;
+      }
+    });
+
     element.on('compositionend', function() {
       composing = false;
       listener();
@@ -37207,9 +36772,9 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
       deferListener(event, this, this.value);
     });
 
-    // if user modifies input value using context menu in IE, we need "paste" and "cut" events to catch it
+    // if user modifies input value using context menu in IE, we need "paste", "cut" and "drop" events to catch it
     if ($sniffer.hasEvent('paste')) {
-      element.on('paste cut', deferListener);
+      element.on('paste cut drop', deferListener);
     }
   }
 
@@ -37279,7 +36844,7 @@ function weekParser(isoWeek, existingDate) {
 }
 
 function createDateParser(regexp, mapping) {
-  return function(iso, date) {
+  return function(iso, previousDate) {
     var parts, map;
 
     if (isDate(iso)) {
@@ -37301,15 +36866,15 @@ function createDateParser(regexp, mapping) {
 
       if (parts) {
         parts.shift();
-        if (date) {
+        if (previousDate) {
           map = {
-            yyyy: date.getFullYear(),
-            MM: date.getMonth() + 1,
-            dd: date.getDate(),
-            HH: date.getHours(),
-            mm: date.getMinutes(),
-            ss: date.getSeconds(),
-            sss: date.getMilliseconds() / 1000
+            yyyy: previousDate.getFullYear(),
+            MM: previousDate.getMonth() + 1,
+            dd: previousDate.getDate(),
+            HH: previousDate.getHours(),
+            mm: previousDate.getMinutes(),
+            ss: previousDate.getSeconds(),
+            sss: previousDate.getMilliseconds() / 1000
           };
         } else {
           map = { yyyy: 1970, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, sss: 0 };
@@ -37320,7 +36885,15 @@ function createDateParser(regexp, mapping) {
             map[mapping[index]] = +part;
           }
         });
-        return new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
+
+        var date = new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
+        if (map.yyyy < 100) {
+          // In the constructor, 2-digit years map to 1900-1999.
+          // Use `setFullYear()` to set the correct year.
+          date.setFullYear(map.yyyy);
+        }
+
+        return date;
       }
     }
 
@@ -37330,24 +36903,21 @@ function createDateParser(regexp, mapping) {
 
 function createDateInputType(type, regexp, parseDate, format) {
   return function dynamicDateInputType(scope, element, attr, ctrl, $sniffer, $browser, $filter) {
-    badInputChecker(scope, element, attr, ctrl);
+    badInputChecker(scope, element, attr, ctrl, type);
     baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
-    var timezone = ctrl && ctrl.$options.getOption('timezone');
     var previousDate;
+    var previousTimezone;
 
-    ctrl.$$parserName = type;
     ctrl.$parsers.push(function(value) {
       if (ctrl.$isEmpty(value)) return null;
+
       if (regexp.test(value)) {
         // Note: We cannot read ctrl.$modelValue, as there might be a different
         // parser/formatter in the processing chain so that the model
         // contains some different data format!
-        var parsedDate = parseDate(value, previousDate);
-        if (timezone) {
-          parsedDate = convertTimezoneToLocal(parsedDate, timezone);
-        }
-        return parsedDate;
+        return parseDateAndConvertTimeZoneToLocal(value, previousDate);
       }
+      ctrl.$$parserName = type;
       return undefined;
     });
 
@@ -37357,12 +36927,15 @@ function createDateInputType(type, regexp, parseDate, format) {
       }
       if (isValidDate(value)) {
         previousDate = value;
-        if (previousDate && timezone) {
+        var timezone = ctrl.$options.getOption('timezone');
+        if (timezone) {
+          previousTimezone = timezone;
           previousDate = convertTimezoneToLocal(previousDate, timezone, true);
         }
         return $filter('date')(value, format, timezone);
       } else {
         previousDate = null;
+        previousTimezone = null;
         return '';
       }
     });
@@ -37395,27 +36968,50 @@ function createDateInputType(type, regexp, parseDate, format) {
     }
 
     function parseObservedDateValue(val) {
-      return isDefined(val) && !isDate(val) ? parseDate(val) || undefined : val;
+      return isDefined(val) && !isDate(val) ? parseDateAndConvertTimeZoneToLocal(val) || undefined : val;
+    }
+
+    function parseDateAndConvertTimeZoneToLocal(value, previousDate) {
+      var timezone = ctrl.$options.getOption('timezone');
+
+      if (previousTimezone && previousTimezone !== timezone) {
+        // If the timezone has changed, adjust the previousDate to the default timezone
+        // so that the new date is converted with the correct timezone offset
+        previousDate = addDateMinutes(previousDate, timezoneToOffset(previousTimezone));
+      }
+
+      var parsedDate = parseDate(value, previousDate);
+
+      if (!isNaN(parsedDate) && timezone) {
+        parsedDate = convertTimezoneToLocal(parsedDate, timezone);
+      }
+      return parsedDate;
     }
   };
 }
 
-function badInputChecker(scope, element, attr, ctrl) {
+function badInputChecker(scope, element, attr, ctrl, parserName) {
   var node = element[0];
   var nativeValidation = ctrl.$$hasNativeValidators = isObject(node.validity);
   if (nativeValidation) {
     ctrl.$parsers.push(function(value) {
       var validity = element.prop(VALIDITY_STATE_PROPERTY) || {};
-      return validity.badInput || validity.typeMismatch ? undefined : value;
+      if (validity.badInput || validity.typeMismatch) {
+        ctrl.$$parserName = parserName;
+        return undefined;
+      }
+
+      return value;
     });
   }
 }
 
 function numberFormatterParser(ctrl) {
-  ctrl.$$parserName = 'number';
   ctrl.$parsers.push(function(value) {
     if (ctrl.$isEmpty(value))      return null;
     if (NUMBER_REGEXP.test(value)) return parseFloat(value);
+
+    ctrl.$$parserName = 'number';
     return undefined;
   });
 
@@ -37497,7 +37093,7 @@ function isValidForStep(viewValue, stepBase, step) {
 }
 
 function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-  badInputChecker(scope, element, attr, ctrl);
+  badInputChecker(scope, element, attr, ctrl, 'number');
   numberFormatterParser(ctrl);
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
@@ -37505,8 +37101,8 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   var maxVal;
 
   if (isDefined(attr.min) || attr.ngMin) {
-    ctrl.$validators.min = function(value) {
-      return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
+    ctrl.$validators.min = function(modelValue, viewValue) {
+      return ctrl.$isEmpty(viewValue) || isUndefined(minVal) || viewValue >= minVal;
     };
 
     attr.$observe('min', function(val) {
@@ -37517,8 +37113,8 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   }
 
   if (isDefined(attr.max) || attr.ngMax) {
-    ctrl.$validators.max = function(value) {
-      return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
+    ctrl.$validators.max = function(modelValue, viewValue) {
+      return ctrl.$isEmpty(viewValue) || isUndefined(maxVal) || viewValue <= maxVal;
     };
 
     attr.$observe('max', function(val) {
@@ -37544,7 +37140,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 }
 
 function rangeInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-  badInputChecker(scope, element, attr, ctrl);
+  badInputChecker(scope, element, attr, ctrl, 'range');
   numberFormatterParser(ctrl);
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
@@ -37683,7 +37279,6 @@ function urlInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
-  ctrl.$$parserName = 'url';
   ctrl.$validators.url = function(modelValue, viewValue) {
     var value = modelValue || viewValue;
     return ctrl.$isEmpty(value) || URL_REGEXP.test(value);
@@ -37696,7 +37291,6 @@ function emailInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
-  ctrl.$$parserName = 'email';
   ctrl.$validators.email = function(modelValue, viewValue) {
     var value = modelValue || viewValue;
     return ctrl.$isEmpty(value) || EMAIL_REGEXP.test(value);
@@ -37721,7 +37315,7 @@ function radioInputType(scope, element, attr, ctrl) {
     }
   };
 
-  element.on('click', listener);
+  element.on('change', listener);
 
   ctrl.$render = function() {
     var value = attr.value;
@@ -37755,7 +37349,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
     ctrl.$setViewValue(element[0].checked, ev && ev.type);
   };
 
-  element.on('click', listener);
+  element.on('change', listener);
 
   ctrl.$render = function() {
     element[0].checked = ctrl.$viewValue;
@@ -37784,11 +37378,11 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  * @restrict E
  *
  * @description
- * HTML textarea element control with angular data-binding. The data-binding and validation
+ * HTML textarea element control with AngularJS data-binding. The data-binding and validation
  * properties of this element are exactly the same as those of the
  * {@link ng.directive:input input element}.
  *
- * @param {string} ngModel Assignable angular expression to data-bind to.
+ * @param {string} ngModel Assignable AngularJS expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
  * @param {string=} required Sets `required` validation error key if the value is not entered.
  * @param {string=} ngRequired Adds `required` attribute and `required` validation constraint to
@@ -37800,7 +37394,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  *    maxlength. Setting the attribute to a negative or non-numeric value, allows view values of any
  *    length.
  * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
- *    does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+ *    does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
  *    If the expression evaluates to a RegExp object, then this is used directly.
  *    If the expression evaluates to a string, then it will be converted to a RegExp
  *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -37808,15 +37402,15 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
  *    start at the index of the last search's match, thus not taking the whole input value into
  *    account.
- * @param {string=} ngChange Angular expression to be executed when input changes due to user
+ * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
  *    interaction with the input element.
- * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
+ * @param {boolean=} [ngTrim=true] If set to false AngularJS will not automatically trim the input.
  *
  * @knownIssue
  *
  * When specifying the `placeholder` attribute of `<textarea>`, Internet Explorer will temporarily
  * insert the placeholder value as the textarea's content. If the placeholder value contains
- * interpolation (`{{ ... }}`), an error will be logged in the console when Angular tries to update
+ * interpolation (`{{ ... }}`), an error will be logged in the console when AngularJS tries to update
  * the value of the by-then-removed text node. This doesn't affect the functionality of the
  * textarea, but can be undesirable.
  *
@@ -37843,7 +37437,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  * Specifically, data binding and event handling via `ng-model` is unsupported for `input[file]`.
  * </div>
  *
- * @param {string} ngModel Assignable angular expression to data-bind to.
+ * @param {string} ngModel Assignable AngularJS expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
  * @param {string=} required Sets `required` validation error key if the value is not entered.
  * @param {boolean=} ngRequired Sets `required` attribute if set to true
@@ -37853,7 +37447,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  *    maxlength. Setting the attribute to a negative or non-numeric value, allows view values of any
  *    length.
  * @param {string=} ngPattern Sets `pattern` validation error key if the ngModel {@link ngModel.NgModelController#$viewValue $viewValue}
- *    value does not match a RegExp found by evaluating the Angular expression given in the attribute value.
+ *    value does not match a RegExp found by evaluating the AngularJS expression given in the attribute value.
  *    If the expression evaluates to a RegExp object, then this is used directly.
  *    If the expression evaluates to a string, then it will be converted to a RegExp
  *    after wrapping it in `^` and `$` characters. For instance, `"abc"` will be converted to
@@ -37861,9 +37455,9 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
  *    **Note:** Avoid using the `g` flag on the RegExp, as it will cause each successive search to
  *    start at the index of the last search's match, thus not taking the whole input value into
  *    account.
- * @param {string=} ngChange Angular expression to be executed when input changes due to user
+ * @param {string=} ngChange AngularJS expression to be executed when input changes due to user
  *    interaction with the input element.
- * @param {boolean=} [ngTrim=true] If set to false Angular will not automatically trim the input.
+ * @param {boolean=} [ngTrim=true] If set to false AngularJS will not automatically trim the input.
  *    This parameter is ignored for input[type=password] controls, which will never trim the
  *    input.
  *
@@ -38082,7 +37676,7 @@ var ngValueDirective = function() {
  * @restrict AC
  *
  * @description
- * The `ngBind` attribute tells Angular to replace the text content of the specified HTML element
+ * The `ngBind` attribute tells AngularJS to replace the text content of the specified HTML element
  * with the value of a given expression, and to update the text content when the value of that
  * expression changes.
  *
@@ -38090,7 +37684,7 @@ var ngValueDirective = function() {
  * `{{ expression }}` which is similar but less verbose.
  *
  * It is preferable to use `ngBind` instead of `{{ expression }}` if a template is momentarily
- * displayed by the browser in its raw state before Angular compiles it. Since `ngBind` is an
+ * displayed by the browser in its raw state before AngularJS compiles it. Since `ngBind` is an
  * element attribute, it makes the bindings invisible to the user while the page is loading.
  *
  * An alternative solution to this problem would be using the
@@ -38220,7 +37814,7 @@ var ngBindTemplateDirective = ['$interpolate', '$compile', function($interpolate
  * Evaluates the expression and inserts the resulting HTML into the element in a secure way. By default,
  * the resulting HTML content will be sanitized using the {@link ngSanitize.$sanitize $sanitize} service.
  * To utilize this functionality, ensure that `$sanitize` is available, for example, by including {@link
- * ngSanitize} in your module's dependencies (not in core Angular). In order to use {@link ngSanitize}
+ * ngSanitize} in your module's dependencies (not in core AngularJS). In order to use {@link ngSanitize}
  * in your module's dependencies, you need to include "angular-sanitize.js" in your application.
  *
  * You may also bypass sanitization for values you know are safe. To do so, bind to
@@ -38375,13 +37969,6 @@ function classDirective(name, selector) {
     return {
       restrict: 'AC',
       link: function(scope, element, attr) {
-        var expression = attr[name].trim();
-        var isOneTime = (expression.charAt(0) === ':') && (expression.charAt(1) === ':');
-
-        var watchInterceptor = isOneTime ? toFlatValue : toClassString;
-        var watchExpression = $parse(expression, watchInterceptor);
-        var watchAction = isOneTime ? ngClassOneTimeWatchAction : ngClassWatchAction;
-
         var classCounts = element.data('$classCounts');
         var oldModulo = true;
         var oldClassString;
@@ -38404,7 +37991,7 @@ function classDirective(name, selector) {
           scope.$watch(indexWatchExpression, ngClassIndexWatchAction);
         }
 
-        scope.$watch(watchExpression, watchAction, isOneTime);
+        scope.$watch($parse(attr[name], toClassString), ngClassWatchAction);
 
         function addClasses(classString) {
           classString = digestClassCounts(split(classString), 1);
@@ -38446,9 +38033,9 @@ function classDirective(name, selector) {
         }
 
         function ngClassIndexWatchAction(newModulo) {
-          // This watch-action should run before the `ngClass[OneTime]WatchAction()`, thus it
+          // This watch-action should run before the `ngClassWatchAction()`, thus it
           // adds/removes `oldClassString`. If the `ngClass` expression has changed as well, the
-          // `ngClass[OneTime]WatchAction()` will update the classes.
+          // `ngClassWatchAction()` will update the classes.
           if (newModulo === selector) {
             addClasses(oldClassString);
           } else {
@@ -38456,14 +38043,6 @@ function classDirective(name, selector) {
           }
 
           oldModulo = newModulo;
-        }
-
-        function ngClassOneTimeWatchAction(newClassValue) {
-          var newClassString = toClassString(newClassValue);
-
-          if (newClassString !== oldClassString) {
-            ngClassWatchAction(newClassString);
-          }
         }
 
         function ngClassWatchAction(newClassString) {
@@ -38512,34 +38091,6 @@ function classDirective(name, selector) {
     }
 
     return classString;
-  }
-
-  function toFlatValue(classValue) {
-    var flatValue = classValue;
-
-    if (isArray(classValue)) {
-      flatValue = classValue.map(toFlatValue);
-    } else if (isObject(classValue)) {
-      var hasUndefined = false;
-
-      flatValue = Object.keys(classValue).filter(function(key) {
-        var value = classValue[key];
-
-        if (!hasUndefined && isUndefined(value)) {
-          hasUndefined = true;
-        }
-
-        return value;
-      });
-
-      if (hasUndefined) {
-        // Prevent the `oneTimeLiteralWatchInterceptor` from unregistering
-        // the watcher, by including at least one `undefined` value.
-        flatValue.push(undefined);
-      }
-    }
-
-    return flatValue;
   }
 }
 
@@ -38742,6 +38293,12 @@ var ngClassDirective = classDirective('', true);
  * This directive can be applied only within the scope of an
  * {@link ng.directive:ngRepeat ngRepeat}.
  *
+ * @animations
+ * | Animation                        | Occurs                              |
+ * |----------------------------------|-------------------------------------|
+ * | {@link ng.$animate#addClass addClass}       | just before the class is applied to the element   |
+ * | {@link ng.$animate#removeClass removeClass} | just before the class is removed from the element |
+ *
  * @element ANY
  * @param {expression} ngClassOdd {@link guide/expression Expression} to eval. The result
  *   of the evaluation can be a string representing space delimited class names or an array.
@@ -38774,6 +38331,62 @@ var ngClassDirective = classDirective('', true);
        });
      </file>
    </example>
+ *
+ * <hr />
+ * @example
+ * An example on how to implement animations using `ngClassOdd`:
+ *
+   <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-class-odd-animate">
+     <file name="index.html">
+       <div ng-init="items=['Item 3', 'Item 2', 'Item 1', 'Item 0']">
+         <button ng-click="items.unshift('Item ' + items.length)">Add item</button>
+         <hr />
+         <table>
+           <tr ng-repeat="item in items" ng-class-odd="'odd'">
+             <td>{{ item }}</td>
+           </tr>
+         </table>
+       </div>
+     </file>
+     <file name="style.css">
+       .odd {
+         background: rgba(255, 255, 0, 0.25);
+       }
+
+       .odd-add, .odd-remove {
+         transition: 1.5s;
+       }
+     </file>
+     <file name="protractor.js" type="protractor">
+       it('should add new entries to the beginning of the list', function() {
+         var button = element(by.buttonText('Add item'));
+         var rows = element.all(by.repeater('item in items'));
+
+         expect(rows.count()).toBe(4);
+         expect(rows.get(0).getText()).toBe('Item 3');
+         expect(rows.get(1).getText()).toBe('Item 2');
+
+         button.click();
+
+         expect(rows.count()).toBe(5);
+         expect(rows.get(0).getText()).toBe('Item 4');
+         expect(rows.get(1).getText()).toBe('Item 3');
+       });
+
+       it('should add odd class to odd entries', function() {
+         var button = element(by.buttonText('Add item'));
+         var rows = element.all(by.repeater('item in items'));
+
+         expect(rows.get(0).getAttribute('class')).toMatch(/odd/);
+         expect(rows.get(1).getAttribute('class')).not.toMatch(/odd/);
+
+         button.click();
+
+         expect(rows.get(0).getAttribute('class')).toMatch(/odd/);
+         expect(rows.get(1).getAttribute('class')).not.toMatch(/odd/);
+       });
+     </file>
+   </example>
  */
 var ngClassOddDirective = classDirective('Odd', 0);
 
@@ -38789,6 +38402,12 @@ var ngClassOddDirective = classDirective('Odd', 0);
  *
  * This directive can be applied only within the scope of an
  * {@link ng.directive:ngRepeat ngRepeat}.
+ *
+ * @animations
+ * | Animation                        | Occurs                              |
+ * |----------------------------------|-------------------------------------|
+ * | {@link ng.$animate#addClass addClass}       | just before the class is applied to the element   |
+ * | {@link ng.$animate#removeClass removeClass} | just before the class is removed from the element |
  *
  * @element ANY
  * @param {expression} ngClassEven {@link guide/expression Expression} to eval. The
@@ -38822,6 +38441,62 @@ var ngClassOddDirective = classDirective('Odd', 0);
        });
      </file>
    </example>
+ *
+ * <hr />
+ * @example
+ * An example on how to implement animations using `ngClassEven`:
+ *
+   <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-class-even-animate">
+     <file name="index.html">
+       <div ng-init="items=['Item 3', 'Item 2', 'Item 1', 'Item 0']">
+         <button ng-click="items.unshift('Item ' + items.length)">Add item</button>
+         <hr />
+         <table>
+           <tr ng-repeat="item in items" ng-class-even="'even'">
+             <td>{{ item }}</td>
+           </tr>
+         </table>
+       </div>
+     </file>
+     <file name="style.css">
+       .even {
+         background: rgba(255, 255, 0, 0.25);
+       }
+
+       .even-add, .even-remove {
+         transition: 1.5s;
+       }
+     </file>
+     <file name="protractor.js" type="protractor">
+       it('should add new entries to the beginning of the list', function() {
+         var button = element(by.buttonText('Add item'));
+         var rows = element.all(by.repeater('item in items'));
+
+         expect(rows.count()).toBe(4);
+         expect(rows.get(0).getText()).toBe('Item 3');
+         expect(rows.get(1).getText()).toBe('Item 2');
+
+         button.click();
+
+         expect(rows.count()).toBe(5);
+         expect(rows.get(0).getText()).toBe('Item 4');
+         expect(rows.get(1).getText()).toBe('Item 3');
+       });
+
+       it('should add even class to even entries', function() {
+         var button = element(by.buttonText('Add item'));
+         var rows = element.all(by.repeater('item in items'));
+
+         expect(rows.get(0).getAttribute('class')).not.toMatch(/even/);
+         expect(rows.get(1).getAttribute('class')).toMatch(/even/);
+
+         button.click();
+
+         expect(rows.get(0).getAttribute('class')).not.toMatch(/even/);
+         expect(rows.get(1).getAttribute('class')).toMatch(/even/);
+       });
+     </file>
+   </example>
  */
 var ngClassEvenDirective = classDirective('Even', 1);
 
@@ -38831,7 +38506,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
  * @restrict AC
  *
  * @description
- * The `ngCloak` directive is used to prevent the Angular html template from being briefly
+ * The `ngCloak` directive is used to prevent the AngularJS html template from being briefly
  * displayed by the browser in its raw (uncompiled) form while your application is loading. Use this
  * directive to avoid the undesirable flicker effect caused by the html template display.
  *
@@ -38850,7 +38525,7 @@ var ngClassEvenDirective = classDirective('Even', 1);
  * ```
  *
  * When this css rule is loaded by the browser, all html elements (including their children) that
- * are tagged with the `ngCloak` directive are hidden. When Angular encounters this directive
+ * are tagged with the `ngCloak` directive are hidden. When AngularJS encounters this directive
  * during the compilation of the template it deletes the `ngCloak` element attribute, making
  * the compiled element visible.
  *
@@ -38915,14 +38590,10 @@ var ngCloakDirective = ngDirective({
  * The controller instance can be published into a scope property by specifying
  * `ng-controller="as propertyName"`.
  *
- * If the current `$controllerProvider` is configured to use globals (via
- * {@link ng.$controllerProvider#allowGlobals `$controllerProvider.allowGlobals()` }), this may
- * also be the name of a globally accessible constructor function (deprecated, not recommended).
- *
  * @example
  * Here is a simple form for editing user contact information. Adding, removing, clearing, and
  * greeting are methods declared on the controller (see source tab). These methods can
- * easily be called from the angular markup. Any changes to the data are automatically reflected
+ * easily be called from the AngularJS markup. Any changes to the data are automatically reflected
  * in the View without the need for a manual update.
  *
  * Two different declaration styles are included below:
@@ -38932,7 +38603,7 @@ var ngCloakDirective = ngDirective({
  * * one injects `$scope` into the controller:
  * `ng-controller="SettingsController2"`
  *
- * The second option is more common in the Angular community, and is generally used in boilerplates
+ * The second option is more common in the AngularJS community, and is generally used in boilerplates
  * and in this guide. However, there are advantages to binding properties directly to the controller
  * and avoiding scope.
  *
@@ -39129,31 +38800,31 @@ var ngControllerDirective = [function() {
  * @element ANY
  * @description
  *
- * Angular has some features that can conflict with certain restrictions that are applied when using
+ * AngularJS has some features that can conflict with certain restrictions that are applied when using
  * [CSP (Content Security Policy)](https://developer.mozilla.org/en/Security/CSP) rules.
  *
- * If you intend to implement CSP with these rules then you must tell Angular not to use these
+ * If you intend to implement CSP with these rules then you must tell AngularJS not to use these
  * features.
  *
  * This is necessary when developing things like Google Chrome Extensions or Universal Windows Apps.
  *
  *
- * The following default rules in CSP affect Angular:
+ * The following default rules in CSP affect AngularJS:
  *
  * * The use of `eval()`, `Function(string)` and similar functions to dynamically create and execute
- * code from strings is forbidden. Angular makes use of this in the {@link $parse} service to
- * provide a 30% increase in the speed of evaluating Angular expressions. (This CSP rule can be
+ * code from strings is forbidden. AngularJS makes use of this in the {@link $parse} service to
+ * provide a 30% increase in the speed of evaluating AngularJS expressions. (This CSP rule can be
  * disabled with the CSP keyword `unsafe-eval`, but it is generally not recommended as it would
  * weaken the protections offered by CSP.)
  *
  * * The use of inline resources, such as inline `<script>` and `<style>` elements, are forbidden.
- * This prevents apps from injecting custom styles directly into the document. Angular makes use of
+ * This prevents apps from injecting custom styles directly into the document. AngularJS makes use of
  * this to include some CSS rules (e.g. {@link ngCloak} and {@link ngHide}). To make these
  * directives work when a CSP rule is blocking inline styles, you must link to the `angular-csp.css`
  * in your HTML manually. (This CSP rule can be disabled with the CSP keyword `unsafe-inline`, but
  * it is generally not recommended as it would weaken the protections offered by CSP.)
  *
- * If you do not provide `ngCsp` then Angular tries to autodetect if CSP is blocking dynamic code
+ * If you do not provide `ngCsp` then AngularJS tries to autodetect if CSP is blocking dynamic code
  * creation from strings (e.g., `unsafe-eval` not specified in CSP header) and automatically
  * deactivates this feature in the {@link $parse} service. This autodetection, however, triggers a
  * CSP error to be logged in the console:
@@ -39170,31 +38841,31 @@ var ngControllerDirective = [function() {
  *
  * *Note: This directive is only available in the `ng-csp` and `data-ng-csp` attribute form.*
  *
- * You can specify which of the CSP related Angular features should be deactivated by providing
+ * You can specify which of the CSP related AngularJS features should be deactivated by providing
  * a value for the `ng-csp` attribute. The options are as follows:
  *
- * * no-inline-style: this stops Angular from injecting CSS styles into the DOM
+ * * no-inline-style: this stops AngularJS from injecting CSS styles into the DOM
  *
- * * no-unsafe-eval: this stops Angular from optimizing $parse with unsafe eval of strings
+ * * no-unsafe-eval: this stops AngularJS from optimizing $parse with unsafe eval of strings
  *
  * You can use these values in the following combinations:
  *
  *
- * * No declaration means that Angular will assume that you can do inline styles, but it will do
+ * * No declaration means that AngularJS will assume that you can do inline styles, but it will do
  * a runtime check for unsafe-eval. E.g. `<body>`. This is backwardly compatible with previous
- * versions of Angular.
+ * versions of AngularJS.
  *
- * * A simple `ng-csp` (or `data-ng-csp`) attribute will tell Angular to deactivate both inline
+ * * A simple `ng-csp` (or `data-ng-csp`) attribute will tell AngularJS to deactivate both inline
  * styles and unsafe eval. E.g. `<body ng-csp>`. This is backwardly compatible with previous
- * versions of Angular.
+ * versions of AngularJS.
  *
- * * Specifying only `no-unsafe-eval` tells Angular that we must not use eval, but that we can
+ * * Specifying only `no-unsafe-eval` tells AngularJS that we must not use eval, but that we can
  * inject inline styles. E.g. `<body ng-csp="no-unsafe-eval">`.
  *
- * * Specifying only `no-inline-style` tells Angular that we must not inject styles, but that we can
+ * * Specifying only `no-inline-style` tells AngularJS that we must not inject styles, but that we can
  * run eval - no automatic check for unsafe eval will occur. E.g. `<body ng-csp="no-inline-style">`
  *
- * * Specifying both `no-unsafe-eval` and `no-inline-style` tells Angular that we must not inject
+ * * Specifying both `no-unsafe-eval` and `no-inline-style` tells AngularJS that we must not inject
  * styles nor use eval, which is the same as an empty: ng-csp.
  * E.g.`<body ng-csp="no-inline-style;no-unsafe-eval">`
  *
@@ -39365,7 +39036,7 @@ var ngControllerDirective = [function() {
  */
 /*
  * A collection of directives that allows creation of custom event handlers that are defined as
- * angular expressions and are compiled and executed within the current scope.
+ * AngularJS expressions and are compiled and executed within the current scope.
  */
 var ngEventDirectives = {};
 
@@ -39663,7 +39334,7 @@ forEach(
  * @priority 0
  *
  * @description
- * Enables binding angular expressions to onsubmit events.
+ * Enables binding AngularJS expressions to onsubmit events.
  *
  * Additionally it prevents the default action (which for form means sending the request to the
  * server and reloading the current page), but only if the form does not contain `action`,
@@ -39971,7 +39642,7 @@ var ngIfDirective = ['$animate', '$compile', function($animate, $compile) {
  * application document. This is done by calling {@link $sce#getTrustedResourceUrl
  * $sce.getTrustedResourceUrl} on it. To load templates from other domains or protocols
  * you may either {@link ng.$sceDelegateProvider#resourceUrlWhitelist whitelist them} or
- * {@link $sce#trustAsResourceUrl wrap them} as trusted values. Refer to Angular's {@link
+ * {@link $sce#trustAsResourceUrl wrap them} as trusted values. Refer to AngularJS's {@link
  * ng.$sce Strict Contextual Escaping}.
  *
  * In addition, the browser's
@@ -40594,8 +40265,10 @@ var ngModelMinErr = minErr('ngModel');
  * };
  * ```
  *
- * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever the
- *     view value has changed. It is called with no arguments, and its return value is ignored.
+ * @property {Array.<Function>} $viewChangeListeners Array of functions to execute whenever
+ *     a change to {@link ngModel.NgModelController#$viewValue `$viewValue`} has caused a change
+ *     to {@link ngModel.NgModelController#$modelValue `$modelValue`}.
+ *     It is called with no arguments, and its return value is ignored.
  *     This can be used in place of additional $watches against the model value.
  *
  * @property {Object} $error An object hash with all failing validator ids as keys.
@@ -40617,7 +40290,7 @@ var ngModelMinErr = minErr('ngModel');
  * listening to DOM events.
  * Such DOM related logic should be provided by other directives which make use of
  * `NgModelController` for data-binding to control elements.
- * Angular provides this DOM logic for most {@link input `input`} elements.
+ * AngularJS provides this DOM logic for most {@link input `input`} elements.
  * At the end of this page you can find a {@link ngModel.NgModelController#custom-control-example
  * custom control example} that uses `ngModelController` to bind to `contenteditable` elements.
  *
@@ -40737,6 +40410,9 @@ function NgModelController($scope, $exceptionHandler, $attr, $element, $parse, $
   this.$name = $interpolate($attr.name || '', false)($scope);
   this.$$parentForm = nullFormCtrl;
   this.$options = defaultModelOptions;
+  this.$$updateEvents = '';
+  // Attach the correct context to the event handler function for updateOn
+  this.$$updateEventHandler = this.$$updateEventHandler.bind(this);
 
   this.$$parsedNgModel = $parse($attr.ngModel);
   this.$$parsedNgModelAssign = this.$$parsedNgModel.assign;
@@ -40744,12 +40420,11 @@ function NgModelController($scope, $exceptionHandler, $attr, $element, $parse, $
   this.$$ngModelSet = this.$$parsedNgModelAssign;
   this.$$pendingDebounce = null;
   this.$$parserValid = undefined;
+  this.$$parserName = 'parse';
 
   this.$$currentValidationRunId = 0;
 
-  // https://github.com/angular/angular.js/issues/15833
-  // Prevent `$$scope` from being iterated over by `copy` when NgModelController is deep watched
-  Object.defineProperty(this, '$$scope', {value: $scope});
+  this.$$scope = $scope;
   this.$$attr = $attr;
   this.$$element = $element;
   this.$$animate = $animate;
@@ -40933,7 +40608,7 @@ NgModelController.prototype = {
    * and reset the input to the last committed view value.
    *
    * It is also possible that you run into difficulties if you try to update the ngModel's `$modelValue`
-   * programmatically before these debounced/future events have resolved/occurred, because Angular's
+   * programmatically before these debounced/future events have resolved/occurred, because AngularJS's
    * dirty checking mechanism is not able to tell whether the model has actually changed or not.
    *
    * The `$rollbackViewValue()` method should be called before programmatically changing the model of an
@@ -41076,7 +40751,8 @@ NgModelController.prototype = {
     processAsyncValidators();
 
     function processParseErrors() {
-      var errorKey = that.$$parserName || 'parse';
+      var errorKey = that.$$parserName;
+
       if (isUndefined(that.$$parserValid)) {
         setValidity(errorKey, null);
       } else {
@@ -41088,6 +40764,7 @@ NgModelController.prototype = {
             setValidity(name, null);
           });
         }
+
         // Set the parse error last, to prevent unsetting it, should a $validators key == parserName
         setValidity(errorKey, that.$$parserValid);
         return that.$$parserValid;
@@ -41189,6 +40866,10 @@ NgModelController.prototype = {
     var that = this;
 
     this.$$parserValid = isUndefined(modelValue) ? undefined : true;
+
+    // Reset any previous parse error
+    this.$setValidity(this.$$parserName, null);
+    this.$$parserName = 'parse';
 
     if (this.$$parserValid) {
       for (var i = 0; i < this.$parsers.length; i++) {
@@ -41307,8 +40988,12 @@ NgModelController.prototype = {
 
     if (isNumber(debounceDelay[trigger])) {
       debounceDelay = debounceDelay[trigger];
-    } else if (isNumber(debounceDelay['default'])) {
+    } else if (isNumber(debounceDelay['default']) &&
+      this.$options.getOption('updateOn').indexOf(trigger) === -1
+    ) {
       debounceDelay = debounceDelay['default'];
+    } else if (isNumber(debounceDelay['*'])) {
+      debounceDelay = debounceDelay['*'];
     }
 
     this.$$timeout.cancel(this.$$pendingDebounce);
@@ -41342,11 +41027,22 @@ NgModelController.prototype = {
    * See {@link ngModelOptions} for information about what options can be specified
    * and how model option inheritance works.
    *
+   * <div class="alert alert-warning">
+   * **Note:** this function only affects the options set on the `ngModelController`,
+   * and not the options on the {@link ngModelOptions} directive from which they might have been
+   * obtained initially.
+   * </div>
+   *
+   * <div class="alert alert-danger">
+   * **Note:** it is not possible to override the `getterSetter` option.
+   * </div>
+   *
    * @param {Object} options a hash of settings to override the previous options
    *
    */
   $overrideModelOptions: function(options) {
     this.$options = this.$options.createChild(options);
+    this.$$setUpdateOnEvents();
   },
 
   /**
@@ -41494,6 +41190,21 @@ NgModelController.prototype = {
     this.$modelValue = this.$$rawModelValue = modelValue;
     this.$$parserValid = undefined;
     this.$processModelValue();
+  },
+
+  $$setUpdateOnEvents: function() {
+    if (this.$$updateEvents) {
+      this.$$element.off(this.$$updateEvents, this.$$updateEventHandler);
+    }
+
+    this.$$updateEvents = this.$options.getOption('updateOn');
+    if (this.$$updateEvents) {
+      this.$$element.on(this.$$updateEvents, this.$$updateEventHandler);
+    }
+  },
+
+  $$updateEventHandler: function(ev) {
+    this.$$debounceViewValueCommit(ev && ev.type);
   }
 };
 
@@ -41543,7 +41254,7 @@ function setupModelWatcher(ctrl) {
  *        classes and can be bound to as `{{ someForm.someControl.$error.myError }}`.
  * @param {boolean} isValid Whether the current state is valid (true), invalid (false), pending (undefined),
  *                          or skipped (null). Pending is used for unfulfilled `$asyncValidators`.
- *                          Skipped is used by Angular when validators do not run because of parse errors and
+ *                          Skipped is used by AngularJS when validators do not run because of parse errors and
  *                          when `$asyncValidators` do not run because any of the `$validators` failed.
  */
 addSetValidityMethod({
@@ -41703,7 +41414,7 @@ addSetValidityMethod({
  * to the view.
  *
  * <div class="alert alert-success">
- * **Best Practice:** It's best to keep getters fast because Angular is likely to call them more
+ * **Best Practice:** It's best to keep getters fast because AngularJS is likely to call them more
  * frequently than other parts of your code.
  * </div>
  *
@@ -41785,11 +41496,7 @@ var ngModelDirective = ['$rootScope', function($rootScope) {
         },
         post: function ngModelPostLink(scope, element, attr, ctrls) {
           var modelCtrl = ctrls[0];
-          if (modelCtrl.$options.getOption('updateOn')) {
-            element.on(modelCtrl.$options.getOption('updateOn'), function(ev) {
-              modelCtrl.$$debounceViewValueCommit(ev && ev.type);
-            });
-          }
+          modelCtrl.$$setUpdateOnEvents();
 
           function setTouched() {
             modelCtrl.$setTouched();
@@ -41911,8 +41618,8 @@ defaultModelOptions = new ModelOptions({
  * directives will use the options of their nearest `ngModelOptions` ancestor.
  *
  * The `ngModelOptions` settings are found by evaluating the value of the attribute directive as
- * an Angular expression. This expression should evaluate to an object, whose properties contain
- * the settings. For example: `<div "ng-model-options"="{ debounce: 100 }"`.
+ * an AngularJS expression. This expression should evaluate to an object, whose properties contain
+ * the settings. For example: `<div ng-model-options="{ debounce: 100 }"`.
  *
  * ## Inheriting Options
  *
@@ -41987,6 +41694,8 @@ defaultModelOptions = new ModelOptions({
  * `submit` event. Note that `ngClick` events will occur before the model is updated. Use `ngSubmit`
  * to have access to the updated model.
  *
+ * ### Overriding immediate updates
+ *
  * The following example shows how to override immediate updates. Changes on the inputs within the
  * form will update the model only when the control loses focus (blur event). If `escape` key is
  * pressed while the input field is focused, the value is reset to the value in the current model.
@@ -42046,6 +41755,8 @@ defaultModelOptions = new ModelOptions({
  *   </file>
  * </example>
  *
+ * ### Debouncing updates
+ *
  * The next example shows how to debounce model changes. Model will be updated only 1 sec after last change.
  * If the `Clear` button is pressed, any debounced action is canceled and the value becomes empty.
  *
@@ -42069,6 +41780,106 @@ defaultModelOptions = new ModelOptions({
  *       }]);
  *   </file>
  * </example>
+ *
+ * ### Default events, extra triggers, and catch-all debounce values
+ *
+ * This example shows the relationship between "default" update events and
+ * additional `updateOn` triggers.
+ *
+ * `default` events are those that are bound to the control, and when fired, update the `$viewValue`
+ * via {@link ngModel.NgModelController#$setViewValue $setViewValue}. Every event that is not listed
+ * in `updateOn` is considered a "default" event, since different control types have different
+ * default events.
+ *
+ * The control in this example updates by "default", "click", and "blur", with different `debounce`
+ * values. You can see that "click" doesn't have an individual `debounce` value -
+ * therefore it uses the `*` debounce value.
+ *
+ * There is also a button that calls {@link ngModel.NgModelController#$setViewValue $setViewValue}
+ * directly with a "custom" event. Since "custom" is not defined in the `updateOn` list,
+ * it is considered a "default" event and will update the
+ * control if "default" is defined in `updateOn`, and will receive the "default" debounce value.
+ * Note that this is just to illustrate how custom controls would possibly call `$setViewValue`.
+ *
+ * You can change the `updateOn` and `debounce` configuration to test different scenarios. This
+ * is done with {@link ngModel.NgModelController#$overrideModelOptions $overrideModelOptions}.
+ *
+  <example name="ngModelOptions-advanced" module="optionsExample">
+    <file name="index.html">
+       <model-update-demo></model-update-demo>
+    </file>
+    <file name="app.js">
+      angular.module('optionsExample', [])
+        .component('modelUpdateDemo', {
+          templateUrl: 'template.html',
+          controller: function() {
+            this.name = 'Chinua';
+
+            this.options = {
+              updateOn: 'default blur click',
+              debounce: {
+                default: 2000,
+                blur: 0,
+                '*': 1000
+              }
+            };
+
+            this.updateEvents = function() {
+              var eventList = this.options.updateOn.split(' ');
+              eventList.push('*');
+              var events = {};
+
+              for (var i = 0; i < eventList.length; i++) {
+                events[eventList[i]] = this.options.debounce[eventList[i]];
+              }
+
+              this.events = events;
+            };
+
+            this.updateOptions = function() {
+              var options = angular.extend(this.options, {
+                updateOn: Object.keys(this.events).join(' ').replace('*', ''),
+                debounce: this.events
+              });
+
+              this.form.input.$overrideModelOptions(options);
+            };
+
+            // Initialize the event form
+            this.updateEvents();
+          }
+        });
+    </file>
+    <file name="template.html">
+      <form name="$ctrl.form">
+        Input: <input type="text" name="input" ng-model="$ctrl.name" ng-model-options="$ctrl.options" />
+      </form>
+      Model: <tt>{{$ctrl.name}}</tt>
+      <hr>
+      <button ng-click="$ctrl.form.input.$setViewValue('some value', 'custom')">Trigger setViewValue with 'some value' and 'custom' event</button>
+
+      <hr>
+      <form ng-submit="$ctrl.updateOptions()">
+        <b>updateOn</b><br>
+        <input type="text" ng-model="$ctrl.options.updateOn" ng-change="$ctrl.updateEvents()" ng-model-options="{debounce: 500}">
+
+        <table>
+          <tr>
+            <th>Option</th>
+            <th>Debounce value</th>
+          </tr>
+          <tr ng-repeat="(key, value) in $ctrl.events">
+            <td>{{key}}</td>
+            <td><input type="number" ng-model="$ctrl.events[key]" /></td>
+          </tr>
+        </table>
+
+        <br>
+        <input type="submit" value="Update options">
+      </form>
+    </file>
+  </example>
+ *
  *
  * ## Model updates and validation
  *
@@ -42117,11 +41928,31 @@ defaultModelOptions = new ModelOptions({
  * You can specify the timezone that date/time input directives expect by providing its name in the
  * `timezone` property.
  *
+ *
+ * ## Programmatically changing options
+ *
+ * The `ngModelOptions` expression is only evaluated once when the directive is linked; it is not
+ * watched for changes. However, it is possible to override the options on a single
+ * {@link ngModel.NgModelController} instance with
+ * {@link ngModel.NgModelController#$overrideModelOptions `NgModelController#$overrideModelOptions()`}.
+ * See also the example for
+ * {@link ngModelOptions#default-events-extra-triggers-and-catch-all-debounce-values
+ * Default events, extra triggers, and catch-all debounce values}.
+ *
+ *
  * @param {Object} ngModelOptions options to apply to {@link ngModel} directives on this element and
  *   and its descendents. Valid keys are:
  *   - `updateOn`: string specifying which event should the input be bound to. You can set several
  *     events using an space delimited list. There is a special event called `default` that
- *     matches the default events belonging to the control.
+ *     matches the default events belonging to the control. These are the events that are bound to
+ *     the control, and when fired, update the `$viewValue` via `$setViewValue`.
+ *
+ *     `ngModelOptions` considers every event that is not listed in `updateOn` a "default" event,
+ *     since different control types use different default events.
+ *
+ *     See also the section {@link ngModelOptions#triggering-and-debouncing-model-updates
+ *     Triggering and debouncing model updates}.
+ *
  *   - `debounce`: integer value which contains the debounce model update value in milliseconds. A
  *     value of 0 triggers an immediate update. If an object is supplied instead, you can specify a
  *     custom value for each event. For example:
@@ -42129,6 +41960,14 @@ defaultModelOptions = new ModelOptions({
  *     ng-model-options="{
  *       updateOn: 'default blur',
  *       debounce: { 'default': 500, 'blur': 0 }
+ *     }"
+ *     ```
+ *     You can use the `*` key to specify a debounce value that applies to all events that are not
+ *     specifically listed. In the following example, `mouseup` would have a debounce delay of 1000:
+ *     ```
+ *     ng-model-options="{
+ *       updateOn: 'default blur mouseup',
+ *       debounce: { 'default': 500, 'blur': 0, '*': 1000 }
  *     }"
  *     ```
  *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
@@ -42140,6 +41979,8 @@ defaultModelOptions = new ModelOptions({
  *     continental US time zone abbreviations, but for general use, use a time zone offset, for
  *     example, `'+0430'` (4 hours, 30 minutes east of the Greenwich meridian)
  *     If not specified, the timezone of the browser will be used.
+ *     Note that changing the timezone will have no effect on the current date, and is only applied after
+ *     the next input / model change.
  *
  */
 var ngModelOptionsDirective = function() {
@@ -42185,10 +42026,11 @@ function defaults(dst, src) {
  * @element ANY
  *
  * @description
- * The `ngNonBindable` directive tells Angular not to compile or bind the contents of the current
- * DOM element. This is useful if the element contains what appears to be Angular directives and
- * bindings but which should be ignored by Angular. This could be the case if you have a site that
- * displays snippets of code, for instance.
+ * The `ngNonBindable` directive tells AngularJS not to compile or bind the contents of the current
+ * DOM element, including directives on the element itself that have a lower priority than
+ * `ngNonBindable`. This is useful if the element contains what appears to be AngularJS directives
+ * and bindings but which should be ignored by AngularJS. This could be the case if you have a site
+ * that displays snippets of code, for instance.
  *
  * @example
  * In this example there are two locations where a simple interpolation binding (`{{}}`) is present,
@@ -42933,7 +42775,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * @description
  * `ngPluralize` is a directive that displays messages according to en-US localization rules.
  * These rules are bundled with angular.js, but can be overridden
- * (see {@link guide/i18n Angular i18n} dev guide). You configure ngPluralize directive
+ * (see {@link guide/i18n AngularJS i18n} dev guide). You configure ngPluralize directive
  * by specifying the mappings between
  * [plural categories](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html)
  * and the strings to be displayed.
@@ -42941,7 +42783,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * ## Plural categories and explicit number rules
  * There are two
  * [plural categories](http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html)
- * in Angular's default en-US locale: "one" and "other".
+ * in AngularJS's default en-US locale: "one" and "other".
  *
  * While a plural category may match many numbers (for example, in en-US locale, "other" can match
  * any number that is not 1), an explicit number rule can only match one number. For example, the
@@ -42953,7 +42795,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * You can also provide an optional attribute, `offset`.
  *
  * The value of the `count` attribute can be either a string or an {@link guide/expression
- * Angular expression}; these are evaluated on the current scope for its bound value.
+ * AngularJS expression}; these are evaluated on the current scope for its bound value.
  *
  * The `when` attribute specifies the mappings between plural categories and the actual
  * string to be displayed. The value of the attribute should be a JSON object.
@@ -42975,7 +42817,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * show "a dozen people are viewing".
  *
  * You can use a set of closed braces (`{}`) as a placeholder for the number that you want substituted
- * into pluralized strings. In the previous example, Angular will replace `{}` with
+ * into pluralized strings. In the previous example, AngularJS will replace `{}` with
  * <span ng-non-bindable>`{{personCount}}`</span>. The closed braces `{}` is a placeholder
  * for <span ng-non-bindable>{{numberExpression}}</span>.
  *
@@ -43003,7 +42845,7 @@ var ngOptionsDirective = ['$compile', '$document', '$parse', function($compile, 
  * three explicit number rules 0, 1 and 2.
  * When one person, perhaps John, views the document, "John is viewing" will be shown.
  * When three people view the document, no explicit number rule is found, so
- * an offset of 2 is taken off 3, and Angular uses 1 to decide the plural category.
+ * an offset of 2 is taken off 3, and AngularJS uses 1 to decide the plural category.
  * In this case, plural category 'one' is matched and "John, Mary and one other person are viewing"
  * is shown.
  *
@@ -43206,14 +43048,14 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * However, there are a few limitations compared to array iteration:
  *
  * - The JavaScript specification does not define the order of keys
- *   returned for an object, so Angular relies on the order returned by the browser
+ *   returned for an object, so AngularJS relies on the order returned by the browser
  *   when running `for key in myObj`. Browsers generally follow the strategy of providing
  *   keys in the order in which they were defined, although there are exceptions when keys are deleted
  *   and reinstated. See the
  *   [MDN page on `delete` for more info](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete#Cross-browser_notes).
  *
  * - `ngRepeat` will silently *ignore* object keys starting with `$`, because
- *   it's a prefix used by Angular for public (`$`) and private (`$$`) properties.
+ *   it's a prefix used by AngularJS for public (`$`) and private (`$$`) properties.
  *
  * - The built-in filters {@link ng.orderBy orderBy} and {@link ng.filter filter} do not work with
  *   objects, and will throw an error if used with one.
@@ -43238,71 +43080,148 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  * For example, if an item is added to the collection, `ngRepeat` will know that all other items
  * already have DOM elements, and will not re-render them.
  *
- * The default tracking function (which tracks items by their identity) does not allow
- * duplicate items in arrays. This is because when there are duplicates, it is not possible
- * to maintain a one-to-one mapping between collection items and DOM elements.
- *
- * If you do need to repeat duplicate items, you can substitute the default tracking behavior
- * with your own using the `track by` expression.
- *
- * For example, you may track items by the index of each item in the collection, using the
- * special scope property `$index`:
- * ```html
- *    <div ng-repeat="n in [42, 42, 43, 43] track by $index">
- *      {{n}}
- *    </div>
- * ```
- *
- * You may also use arbitrary expressions in `track by`, including references to custom functions
- * on the scope:
- * ```html
- *    <div ng-repeat="n in [42, 42, 43, 43] track by myTrackingFunction(n)">
- *      {{n}}
- *    </div>
- * ```
+ * All different types of tracking functions, their syntax, and and their support for duplicate
+ * items in collections can be found in the
+ * {@link ngRepeat#ngRepeat-arguments ngRepeat expression description}.
  *
  * <div class="alert alert-success">
- * If you are working with objects that have a unique identifier property, you should track
- * by this identifier instead of the object instance. Should you reload your data later, `ngRepeat`
- * will not have to rebuild the DOM elements for items it has already rendered, even if the
- * JavaScript objects in the collection have been substituted for new ones. For large collections,
- * this significantly improves rendering performance. If you don't have a unique identifier,
- * `track by $index` can also provide a performance boost.
+ * **Best Practice:** If you are working with objects that have a unique identifier property, you
+ * should track by this identifier instead of the object instance,
+ * e.g. `item in items track by item.id`.
+ * Should you reload your data later, `ngRepeat` will not have to rebuild the DOM elements for items
+ * it has already rendered, even if the JavaScript objects in the collection have been substituted
+ * for new ones. For large collections, this significantly improves rendering performance.
  * </div>
  *
- * ```html
- *    <div ng-repeat="model in collection track by model.id">
- *      {{model.name}}
- *    </div>
- * ```
+ * ### Effects of DOM Element re-use
  *
- * <br />
- * <div class="alert alert-warning">
- * Avoid using `track by $index` when the repeated template contains
- * {@link guide/expression#one-time-binding one-time bindings}. In such cases, the `nth` DOM
- * element will always be matched with the `nth` item of the array, so the bindings on that element
- * will not be updated even when the corresponding item changes, essentially causing the view to get
- * out-of-sync with the underlying data.
- * </div>
+ * When DOM elements are re-used, ngRepeat updates the scope for the element, which will
+ * automatically update any active bindings on the template. However, other
+ * functionality will not be updated, because the element is not re-created:
  *
- * When no `track by` expression is provided, it is equivalent to tracking by the built-in
- * `$id` function, which tracks items by their identity:
- * ```html
- *    <div ng-repeat="obj in collection track by $id(obj)">
- *      {{obj.prop}}
- *    </div>
- * ```
+ * - Directives are not re-compiled
+ * - {@link guide/expression#one-time-binding one-time expressions} on the repeated template are not
+ * updated if they have stabilized.
  *
- * <br />
- * <div class="alert alert-warning">
- * **Note:** `track by` must always be the last expression:
- * </div>
- * ```
- *    <div ng-repeat="model in collection | orderBy: 'id' as filtered_result track by model.id">
- *      {{model.name}}
- *    </div>
- * ```
+ * The above affects all kinds of element re-use due to tracking, but may be especially visible
+ * when tracking by `$index` due to the way ngRepeat re-uses elements.
  *
+ * The following example shows the effects of different actions with tracking:
+
+  <example module="ngRepeat" name="ngRepeat-tracking" deps="angular-animate.js" animations="true">
+    <file name="script.js">
+      angular.module('ngRepeat', ['ngAnimate']).controller('repeatController', function($scope) {
+        var friends = [
+          {name:'John', age:25},
+          {name:'Mary', age:40},
+          {name:'Peter', age:85}
+        ];
+
+        $scope.removeFirst = function() {
+          $scope.friends.shift();
+        };
+
+        $scope.updateAge = function() {
+          $scope.friends.forEach(function(el) {
+            el.age = el.age + 5;
+          });
+        };
+
+        $scope.copy = function() {
+          $scope.friends = angular.copy($scope.friends);
+        };
+
+        $scope.reset = function() {
+          $scope.friends = angular.copy(friends);
+        };
+
+        $scope.reset();
+      });
+    </file>
+    <file name="index.html">
+      <div ng-controller="repeatController">
+        <ol>
+          <li>When you click "Update Age", only the first list updates the age, because all others have
+          a one-time binding on the age property. If you then click "Copy", the current friend list
+          is copied, and now the second list updates the age, because the identity of the collection items
+          has changed and the list must be re-rendered. The 3rd and 4th list stay the same, because all the
+          items are already known according to their tracking functions.
+          </li>
+          <li>When you click "Remove First", the 4th list has the wrong age on both remaining items. This is
+          due to tracking by $index: when the first collection item is removed, ngRepeat reuses the first
+          DOM element for the new first collection item, and so on. Since the age property is one-time
+          bound, the value remains from the collection item which was previously at this index.
+          </li>
+        </ol>
+
+        <button ng-click="removeFirst()">Remove First</button>
+        <button ng-click="updateAge()">Update Age</button>
+        <button ng-click="copy()">Copy</button>
+        <br><button ng-click="reset()">Reset List</button>
+        <br>
+        <code>track by $id(friend)</code> (default):
+        <ul class="example-animate-container">
+          <li class="animate-repeat" ng-repeat="friend in friends">
+            {{friend.name}} is {{friend.age}} years old.
+          </li>
+        </ul>
+        <code>track by $id(friend)</code> (default), with age one-time binding:
+        <ul class="example-animate-container">
+          <li class="animate-repeat" ng-repeat="friend in friends">
+            {{friend.name}} is {{::friend.age}} years old.
+          </li>
+        </ul>
+        <code>track by friend.name</code>, with age one-time binding:
+        <ul class="example-animate-container">
+          <li class="animate-repeat" ng-repeat="friend in friends track by friend.name">
+            {{friend.name}}  is {{::friend.age}} years old.
+          </li>
+        </ul>
+        <code>track by $index</code>, with age one-time binding:
+        <ul class="example-animate-container">
+          <li class="animate-repeat" ng-repeat="friend in friends track by $index">
+            {{friend.name}} is {{::friend.age}} years old.
+          </li>
+        </ul>
+      </div>
+    </file>
+    <file name="animations.css">
+      .example-animate-container {
+        background:white;
+        border:1px solid black;
+        list-style:none;
+        margin:0;
+        padding:0 10px;
+      }
+
+      .animate-repeat {
+        line-height:30px;
+        list-style:none;
+        box-sizing:border-box;
+      }
+
+      .animate-repeat.ng-move,
+      .animate-repeat.ng-enter,
+      .animate-repeat.ng-leave {
+        transition:all linear 0.5s;
+      }
+
+      .animate-repeat.ng-leave.ng-leave-active,
+      .animate-repeat.ng-move,
+      .animate-repeat.ng-enter {
+        opacity:0;
+        max-height:0;
+      }
+
+      .animate-repeat.ng-leave,
+      .animate-repeat.ng-move.ng-move-active,
+      .animate-repeat.ng-enter.ng-enter-active {
+        opacity:1;
+        max-height:30px;
+      }
+    </file>
+  </example>
+
  *
  * ## Special repeat start and end points
  * To repeat a series of elements instead of just one parent element, ngRepeat (as well as other ng directives) supports extending
@@ -43379,24 +43298,38 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *     more than one tracking expression value resolve to the same key. (This would mean that two distinct objects are
  *     mapped to the same DOM element, which is not possible.)
  *
+ *     *Default tracking: $id()*: `item in items` is equivalent to `item in items track by $id(item)`.
+ *     This implies that the DOM elements will be associated by item identity in the collection.
+ *
+ *     The built-in `$id()` function can be used to assign a unique
+ *     `$$hashKey` property to each item in the collection. This property is then used as a key to associated DOM elements
+ *     with the corresponding item in the collection by identity. Moving the same object would move
+ *     the DOM element in the same way in the DOM.
+ *     Note that the default id function does not support duplicate primitive values (`number`, `string`),
+ *     but supports duplictae non-primitive values (`object`) that are *equal* in shape.
+ *
+ *     *Custom Expression*: It is possible to use any AngularJS expression to compute the tracking
+ *     id, for example with a function, or using a property on the collection items.
+ *     `item in items track by item.id` is a typical pattern when the items have a unique identifier,
+ *     e.g. database id. In this case the object identity does not matter. Two objects are considered
+ *     equivalent as long as their `id` property is same.
+ *     Tracking by unique identifier is the most performant way and should be used whenever possible.
+ *
+ *     *$index*: This special property tracks the collection items by their index, and
+ *     re-uses the DOM elements that match that index, e.g. `item in items track by $index`. This can
+ *     be used for a performance improvement if no unique identfier is available and the identity of
+ *     the collection items cannot be easily computed. It also allows duplicates.
+ *
  *     <div class="alert alert-warning">
- *       <strong>Note:</strong> the `track by` expression must come last - after any filters, and the alias expression.
+ *       <strong>Note:</strong> Re-using DOM elements can have unforeseen effects. Read the
+ *       {@link ngRepeat#tracking-and-duplicates section on tracking and duplicates} for
+ *       more info.
  *     </div>
  *
- *     For example: `item in items` is equivalent to `item in items track by $id(item)`. This implies that the DOM elements
- *     will be associated by item identity in the array.
- *
- *     For example: `item in items track by $id(item)`. A built in `$id()` function can be used to assign a unique
- *     `$$hashKey` property to each item in the array. This property is then used as a key to associated DOM elements
- *     with the corresponding item in the array by identity. Moving the same object in array would move the DOM
- *     element in the same way in the DOM.
- *
- *     For example: `item in items track by item.id` is a typical pattern when the items come from the database. In this
- *     case the object identity does not matter. Two objects are considered equivalent as long as their `id`
- *     property is same.
- *
- *     For example: `item in items | filter:searchText track by item.id` is a pattern that might be used to apply a filter
- *     to items in conjunction with a tracking expression.
+ *     <div class="alert alert-warning">
+ *       <strong>Note:</strong> the `track by` expression must come last - after any filters, and the alias expression:
+ *       `item in items | filter:searchText as results  track by item.id`
+ *     </div>
  *
  *   * `variable in expression as alias_expression` – You can also provide an optional alias expression which will then store the
  *     intermediate results of the repeater after the filters have been applied. Typically this is used to render a special message
@@ -43405,10 +43338,10 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
  *     For example: `item in items | filter:x as results` will store the fragment of the repeated items as `results`, but only after
  *     the items have been processed through the filter.
  *
- *     Please note that `as [variable name] is not an operator but rather a part of ngRepeat micro-syntax so it can be used only at the end
- *     (and not as operator, inside an expression).
+ *     Please note that `as [variable name] is not an operator but rather a part of ngRepeat
+ *     micro-syntax so it can be used only after all filters (and not as operator, inside an expression).
  *
- *     For example: `item in items | filter : x | orderBy : order | limitTo : limit as results` .
+ *     For example: `item in items | filter : x | orderBy : order | limitTo : limit as results track by item.id` .
  *
  * @example
  * This example uses `ngRepeat` to display a list of people. A filter is used to restrict the displayed
@@ -43419,7 +43352,7 @@ var ngPluralizeDirective = ['$locale', '$interpolate', '$log', function($locale,
         I have {{friends.length}} friends. They are:
         <input type="search" ng-model="q" placeholder="filter friends..." aria-label="filter friends" />
         <ul class="example-animate-container">
-          <li class="animate-repeat" ng-repeat="friend in friends | filter:q as results">
+          <li class="animate-repeat" ng-repeat="friend in friends | filter:q as results track by friend.name">
             [{{$index + 1}}] {{friend.name}} who is {{friend.age}} years old.
           </li>
           <li class="animate-repeat" ng-if="results.length === 0">
@@ -43913,6 +43846,25 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
       });
     </file>
   </example>
+ *
+ * @knownIssue
+ *
+ * ### Flickering when using ngShow to toggle between elements
+ *
+ * When using {@link ngShow} and / or {@link ngHide} to toggle between elements, it can
+ * happen that both the element to show and the element to hide are visible for a very short time.
+ *
+ * This usually happens when the {@link ngAnimate ngAnimate module} is included, but no actual animations
+ * are defined for {@link ngShow} / {@link ngHide}. Internet Explorer is affected more often than
+ * other browsers.
+ *
+ * There are several way to mitigate this problem:
+ *
+ * - {@link guide/animations#how-to-selectively-enable-disable-and-skip-animations Disable animations on the affected elements}.
+ * - Use {@link ngIf} or {@link ngSwitch} instead of {@link ngShow} / {@link ngHide}.
+ * - Use the special CSS selector `ng-hide.ng-hide-animate` to set `{display: none}` or similar on the affected elements.
+ * - Use `ng-class="{'ng-hide': expression}` instead of instead of {@link ngShow} / {@link ngHide}.
+ * - Define an animation on the affected elements.
  */
 var ngShowDirective = ['$animate', function($animate) {
   return {
@@ -44113,6 +44065,25 @@ var ngShowDirective = ['$animate', function($animate) {
       });
     </file>
   </example>
+ *
+ * @knownIssue
+ *
+ * ### Flickering when using ngHide to toggle between elements
+ *
+ * When using {@link ngShow} and / or {@link ngHide} to toggle between elements, it can
+ * happen that both the element to show and the element to hide are visible for a very short time.
+ *
+ * This usually happens when the {@link ngAnimate ngAnimate module} is included, but no actual animations
+ * are defined for {@link ngShow} / {@link ngHide}. Internet Explorer is affected more often than
+ * other browsers.
+ *
+ * There are several way to mitigate this problem:
+ *
+ * - {@link guide/animations#how-to-selectively-enable-disable-and-skip-animations Disable animations on the affected elements}.
+ * - Use {@link ngIf} or {@link ngSwitch} instead of {@link ngShow} / {@link ngHide}.
+ * - Use the special CSS selector `ng-hide.ng-hide-animate` to set `{display: none}` or similar on the affected elements.
+ * - Use `ng-class="{'ng-hide': expression}` instead of instead of {@link ngShow} / {@link ngHide}.
+ * - Define an animation on the affected elements.
  */
 var ngHideDirective = ['$animate', function($animate) {
   return {
@@ -44182,12 +44153,12 @@ var ngHideDirective = ['$animate', function($animate) {
    </example>
  */
 var ngStyleDirective = ngDirective(function(scope, element, attr) {
-  scope.$watch(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
+  scope.$watchCollection(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
     if (oldStyles && (newStyles !== oldStyles)) {
       forEach(oldStyles, function(val, style) { element.css(style, '');});
     }
     if (newStyles) element.css(newStyles);
-  }, true);
+  });
 });
 
 /**
@@ -44576,7 +44547,6 @@ var ngTranscludeMinErr = minErr('ngTransclude');
 var ngTranscludeDirective = ['$compile', function($compile) {
   return {
     restrict: 'EAC',
-    terminal: true,
     compile: function ngTranscludeCompile(tElement) {
 
       // Remove and cache any original content to act as a fallback
@@ -45176,7 +45146,7 @@ var SelectController =
  * @restrict E
  *
  * @description
- * HTML `select` element with angular data-binding.
+ * HTML `select` element with AngularJS data-binding.
  *
  * The `select` directive is used together with {@link ngModel `ngModel`} to provide data-binding
  * between the scope and the `<select>` control (including setting default values).
@@ -45228,7 +45198,7 @@ var SelectController =
  * Chrome and Internet Explorer / Edge.
  *
  *
- * @param {string} ngModel Assignable angular expression to data-bind to.
+ * @param {string} ngModel Assignable AngularJS expression to data-bind to.
  * @param {string=} name Property name of the form under which the control is published.
  * @param {string=} multiple Allows multiple options to be selected. The selected values will be
  *     bound to the model as an array.
@@ -45236,7 +45206,7 @@ var SelectController =
  * @param {string=} ngRequired Adds required attribute and required validation constraint to
  * the element when the ngRequired expression evaluates to true. Use ngRequired instead of required
  * when you want to data-bind to the required attribute.
- * @param {string=} ngChange Angular expression to be executed when selected option(s) changes due to user
+ * @param {string=} ngChange AngularJS expression to be executed when selected option(s) changes due to user
  *    interaction with the select element.
  * @param {string=} ngOptions sets the options that the select is populated with and defines what is
  * set on the model on selection. See {@link ngOptions `ngOptions`}.
@@ -45611,7 +45581,7 @@ var optionDirective = ['$interpolate', function($interpolate) {
  * It is most often used for {@link input `input`} and {@link select `select`} controls, but can also be
  * applied to custom controls.
  *
- * The directive sets the `required` attribute on the element if the Angular expression inside
+ * The directive sets the `required` attribute on the element if the AngularJS expression inside
  * `ngRequired` evaluates to true. A special directive for setting `required` is necessary because we
  * cannot use interpolation inside `required`. See the {@link guide/interpolation interpolation guide}
  * for more info.
@@ -45805,7 +45775,7 @@ var patternDirective = function() {
  * It is most often used for text-based {@link input `input`} controls, but can also be applied to custom text-based controls.
  *
  * The validator sets the `maxlength` error key if the {@link ngModel.NgModelController#$viewValue `ngModel.$viewValue`}
- * is longer than the integer obtained by evaluating the Angular expression given in the
+ * is longer than the integer obtained by evaluating the AngularJS expression given in the
  * `ngMaxlength` attribute value.
  *
  * <div class="alert alert-info">
@@ -45896,7 +45866,7 @@ var maxlengthDirective = function() {
  * It is most often used for text-based {@link input `input`} controls, but can also be applied to custom text-based controls.
  *
  * The validator sets the `minlength` error key if the {@link ngModel.NgModelController#$viewValue `ngModel.$viewValue`}
- * is shorter than the integer obtained by evaluating the Angular expression given in the
+ * is shorter than the integer obtained by evaluating the AngularJS expression given in the
  * `ngMinlength` attribute value.
  *
  * <div class="alert alert-info">
@@ -45972,7 +45942,7 @@ var minlengthDirective = function() {
 if (window.angular.bootstrap) {
   // AngularJS is already loaded, so we can return here...
   if (window.console) {
-    console.log('WARNING: Tried to load angular more than once.');
+    console.log('WARNING: Tried to load AngularJS more than once.');
   }
   return;
 }
@@ -46136,12 +46106,12 @@ $provide.value("$locale", {
 
 /***/ }),
 
-/***/ 156:
+/***/ 287:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * @license
- * Video.js 6.5.1 <http://videojs.com/>
+ * Video.js 6.10.1 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/master/LICENSE>
@@ -46157,7 +46127,7 @@ $provide.value("$locale", {
 	(global.videojs = factory());
 }(this, (function () {
 
-var version = "6.5.1";
+var version = "6.10.1";
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -46551,7 +46521,7 @@ function isPlain(value) {
 var log = void 0;
 
 // This is the private tracking variable for logging level.
-var level = 'all';
+var level = 'info';
 
 // This is the private tracking variable for the logging history.
 var history = [];
@@ -46592,11 +46562,20 @@ var logByType = function logByType(type, args) {
 
   // If there's no console then don't try to output messages, but they will
   // still be stored in history.
-  //
+  if (!window_1.console) {
+    return;
+  }
+
   // Was setting these once outside of this function, but containing them
   // in the function makes it easier to test cases where console doesn't exist
   // when the module is executed.
-  var fn = window_1.console && window_1.console[type];
+  var fn = window_1.console[type];
+
+  if (!fn && type === 'debug') {
+    // Certain browsers don't have support for console.debug. For those, we
+    // should default to the closest comparable log.
+    fn = window_1.console.info || window_1.console.log;
+  }
 
   // Bail out if there's no console or if this type is not allowed by the
   // current logging level.
@@ -46656,18 +46635,22 @@ log = function log() {
  *
  * - `off`: Matches no calls. Any value that can be cast to `false` will have
  *   this effect. The most restrictive.
- * - `all` (default): Matches only Video.js-provided functions (`log`,
+ * - `all`: Matches only Video.js-provided functions (`debug`, `log`,
  *   `log.warn`, and `log.error`).
+ * - `debug`: Matches `log.debug`, `log`, `log.warn`, and `log.error` calls.
+ * - `info` (default): Matches `log`, `log.warn`, and `log.error` calls.
  * - `warn`: Matches `log.warn` and `log.error` calls.
  * - `error`: Matches only `log.error` calls.
  *
  * @type {Object}
  */
 log.levels = {
-  all: 'log|warn|error',
-  error: 'error',
+  all: 'debug|log|warn|error',
   off: '',
+  debug: 'debug|log|warn|error',
+  info: 'log|warn|error',
   warn: 'warn|error',
+  error: 'error',
   DEFAULT: level
 };
 
@@ -46760,6 +46743,21 @@ log.warn = function () {
   }
 
   return logByType('warn', args);
+};
+
+/**
+ * Logs debug messages. Similar to `console.debug`, but may also act as a comparable
+ * log if `console.debug` is not available
+ *
+ * @param {Mixed[]} args
+ *        One or more messages or objects that should be logged as debug.
+ */
+log.debug = function () {
+  for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+    args[_key4] = arguments[_key4];
+  }
+
+  return logByType('debug', args);
 };
 
 var log$1 = log;
@@ -47580,7 +47578,7 @@ function isSingleLeftClick(event) {
   // otherwise `mousedown` should be enough for a button
 
   if (event.button === undefined && event.buttons === undefined) {
-    // Why do we need `butttons` ?
+    // Why do we need `buttons` ?
     // Because, middle mouse sometimes have this:
     // e.button === 0 and e.buttons === 4
     // Furthermore, we want to prevent combination click, something like
@@ -48204,7 +48202,10 @@ function trigger(elem, event, hash) {
   // If an event name was passed as a string, creates an event out of it
   if (typeof event === 'string') {
     event = { type: event, target: elem };
+  } else if (!event.target) {
+    event.target = elem;
   }
+
   // Normalizes the event properties.
   event = fixEvent(event);
 
@@ -48287,8 +48288,8 @@ var videojs$2 = void 0;
  */
 var autoSetup = function autoSetup() {
 
-  // Protect against breakage in non-browser environments.
-  if (!isReal()) {
+  // Protect against breakage in non-browser environments and check global autoSetup option.
+  if (!isReal() || videojs$2.options.autoSetup === false) {
     return;
   }
 
@@ -48494,6 +48495,59 @@ var throttle = function throttle(fn, wait) {
   };
 
   return throttled;
+};
+
+/**
+ * Creates a debounced function that delays invoking `func` until after `wait`
+ * milliseconds have elapsed since the last time the debounced function was
+ * invoked.
+ *
+ * Inspired by lodash and underscore implementations.
+ *
+ * @param  {Function} func
+ *         The function to wrap with debounce behavior.
+ *
+ * @param  {number} wait
+ *         The number of milliseconds to wait after the last invocation.
+ *
+ * @param  {boolean} [immediate]
+ *         Whether or not to invoke the function immediately upon creation.
+ *
+ * @param  {Object} [context=window]
+ *         The "context" in which the debounced function should debounce. For
+ *         example, if this function should be tied to a Video.js player,
+ *         the player can be passed here. Alternatively, defaults to the
+ *         global `window` object.
+ *
+ * @return {Function}
+ *         A debounced function.
+ */
+var debounce = function debounce(func, wait, immediate) {
+  var context = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : window_1;
+
+  var timeout = void 0;
+
+  /* eslint-disable consistent-this */
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    var _later = function later() {
+      timeout = null;
+      _later = null;
+      if (!immediate) {
+        func.apply(self, args);
+      }
+    };
+
+    if (!timeout && immediate) {
+      func.apply(self, args);
+    }
+
+    context.clearTimeout(timeout);
+    timeout = context.setTimeout(_later, wait);
+  };
+  /* eslint-enable consistent-this */
 };
 
 /**
@@ -49492,7 +49546,7 @@ var Component = function () {
    * Localize a string given the string in english.
    *
    * If tokens are provided, it'll try and run a simple token replacement on the provided string.
-   * The tokens it loooks for look like `{1}` with the index being 1-indexed into the tokens array.
+   * The tokens it looks for look like `{1}` with the index being 1-indexed into the tokens array.
    *
    * If a `defaultValue` is provided, it'll use that over `string`,
    * if a value isn't found in provided language files.
@@ -49929,7 +49983,7 @@ var Component = function () {
   Component.prototype.triggerReady = function triggerReady() {
     this.isReady_ = true;
 
-    // Ensure ready is triggerd asynchronously
+    // Ensure ready is triggered asynchronously
     this.setTimeout(function () {
       var readyQueue = this.readyQueue_;
 
@@ -50941,7 +50995,7 @@ Component.registerComponent('Component', Component);
  *           Returns the time offset at which a specified time range begins.
  *
  * @property {time-ranges:indexFunction} end
- *           Returns the time offset at which a specified time range begins.
+ *           Returns the time offset at which a specified time range ends.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges
  */
@@ -50967,7 +51021,8 @@ function rangeCheck(fnName, index, maxIndex) {
 }
 
 /**
- * Check if any of the time ranges are over the maximum index.
+ * Get the time for the specified index at the start or end
+ * of a TimeRange object.
  *
  * @param {string} fnName
  *        The function name to use for logging
@@ -50994,7 +51049,7 @@ function getRange(fnName, valueIndex, ranges, rangeIndex) {
 }
 
 /**
- * Create a time range object givent ranges of time.
+ * Create a time range object given ranges of time.
  *
  * @param {Array} [ranges]
  *        An array of time ranges.
@@ -51263,7 +51318,7 @@ function SafeParseTuple(obj, reviver) {
  *         Whether or not the object is `Promise`-like.
  */
 function isPromise(value) {
-  return value !== undefined && typeof value.then === 'function';
+  return value !== undefined && value !== null && typeof value.then === 'function';
 }
 
 /**
@@ -53110,7 +53165,7 @@ var Url = (Object.freeze || Object)({
 	isCrossOrigin: isCrossOrigin
 });
 
-var index$1 = isFunction;
+var isFunction_1 = isFunction;
 
 var toString$1 = Object.prototype.toString;
 
@@ -53126,7 +53181,7 @@ function isFunction (fn) {
       fn === window.prompt))
 }
 
-var index$3 = createCommonjsModule(function (module, exports) {
+var trim_1 = createCommonjsModule(function (module, exports) {
 exports = module.exports = trim;
 
 function trim(str){
@@ -53142,13 +53197,13 @@ exports.right = function(str){
 };
 });
 
-var index$5 = forEach;
+var forEach_1 = forEach;
 
 var toString$2 = Object.prototype.toString;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function forEach(list, iterator, context) {
-    if (!index$1(iterator)) {
+    if (!isFunction_1(iterator)) {
         throw new TypeError('iterator must be a function')
     }
 
@@ -53197,12 +53252,12 @@ var parseHeaders = function (headers) {
 
   var result = {};
 
-  index$5(
-      index$3(headers).split('\n')
+  forEach_1(
+      trim_1(headers).split('\n')
     , function (row) {
         var index = row.indexOf(':')
-          , key = index$3(row.slice(0, index)).toLowerCase()
-          , value = index$3(row.slice(index + 1));
+          , key = trim_1(row.slice(0, index)).toLowerCase()
+          , value = trim_1(row.slice(index + 1));
 
         if (typeof(result[key]) === 'undefined') {
           result[key] = value;
@@ -53237,7 +53292,7 @@ function extend() {
     return target
 }
 
-var index = createXHR;
+var xhr = createXHR;
 createXHR.XMLHttpRequest = window_1.XMLHttpRequest || noop;
 createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window_1.XDomainRequest;
 
@@ -53265,7 +53320,7 @@ function isEmpty(obj){
 function initParams(uri, options, callback) {
     var params = uri;
 
-    if (index$1(options)) {
+    if (isFunction_1(options)) {
         callback = options;
         if (typeof uri === "string") {
             params = {uri:uri};
@@ -53543,7 +53598,7 @@ var loadTrack = function loadTrack(src, track) {
     opts.cors = crossOrigin;
   }
 
-  index(opts, bind(this, function (err, response, responseBody) {
+  xhr(opts, bind(this, function (err, response, responseBody) {
     if (err) {
       return log$1.error(err, response);
     }
@@ -54577,7 +54632,7 @@ function parseContent(window, input) {
       return result;
     }
 
-    var m = input.match(/^([^<]*)(<[^>]+>?)?/);
+    var m = input.match(/^([^<]*)(<[^>]*>?)?/);
     // If there is some text before the next tag, return it, otherwise return
     // the tag.
     return consume(m[1] ? m[1] : m[2]);
@@ -56253,6 +56308,42 @@ var Tech = function (_Component) {
     return _this;
   }
 
+  /**
+   * A special function to trigger source set in a way that will allow player
+   * to re-trigger if the player or tech are not ready yet.
+   *
+   * @fires Tech#sourceset
+   * @param {string} src The source string at the time of the source changing.
+   */
+
+
+  Tech.prototype.triggerSourceset = function triggerSourceset(src) {
+    var _this2 = this;
+
+    if (!this.isReady_) {
+      // on initial ready we have to trigger source set
+      // 1ms after ready so that player can watch for it.
+      this.one('ready', function () {
+        return _this2.setTimeout(function () {
+          return _this2.triggerSourceset(src);
+        }, 1);
+      });
+    }
+
+    /**
+     * Fired when the source is set on the tech causing the media element
+     * to reload.
+     *
+     * @see {@link Player#event:sourceset}
+     * @event Tech#sourceset
+     * @type {EventTarget~Event}
+     */
+    this.trigger({
+      src: src,
+      type: 'sourceset'
+    });
+  };
+
   /* Fallbacks for unsupported event types
   ================================================================================ */
 
@@ -56485,19 +56576,19 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.clearTracks = function clearTracks(types) {
-    var _this2 = this;
+    var _this3 = this;
 
     types = [].concat(types);
     // clear out all tracks because we can't reuse them between techs
     types.forEach(function (type) {
-      var list = _this2[type + 'Tracks']() || [];
+      var list = _this3[type + 'Tracks']() || [];
       var i = list.length;
 
       while (i--) {
         var track = list[i];
 
         if (type === 'text') {
-          _this2.removeRemoteTextTrack(track);
+          _this3.removeRemoteTextTrack(track);
         }
         list.removeTrack(track);
       }
@@ -56602,7 +56693,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.initTrackListeners = function initTrackListeners() {
-    var _this3 = this;
+    var _this4 = this;
 
     /**
      * Triggered when tracks are added or removed on the Tech {@link AudioTrackList}
@@ -56627,15 +56718,15 @@ var Tech = function (_Component) {
     NORMAL.names.forEach(function (name) {
       var props = NORMAL[name];
       var trackListChanges = function trackListChanges() {
-        _this3.trigger(name + 'trackchange');
+        _this4.trigger(name + 'trackchange');
       };
 
-      var tracks = _this3[props.getterName]();
+      var tracks = _this4[props.getterName]();
 
       tracks.addEventListener('removetrack', trackListChanges);
       tracks.addEventListener('addtrack', trackListChanges);
 
-      _this3.on('dispose', function () {
+      _this4.on('dispose', function () {
         tracks.removeEventListener('removetrack', trackListChanges);
         tracks.removeEventListener('addtrack', trackListChanges);
       });
@@ -56651,7 +56742,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addWebVttScript_ = function addWebVttScript_() {
-    var _this4 = this;
+    var _this5 = this;
 
     if (window_1.WebVTT) {
       return;
@@ -56682,7 +56773,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this4.trigger('vttjsloaded');
+        _this5.trigger('vttjsloaded');
       };
       script.onerror = function () {
         /**
@@ -56691,7 +56782,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this4.trigger('vttjserror');
+        _this5.trigger('vttjserror');
       };
       this.on('dispose', function () {
         script.onload = null;
@@ -56713,7 +56804,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.emulateTextTracks = function emulateTextTracks() {
-    var _this5 = this;
+    var _this6 = this;
 
     var tracks = this.textTracks();
     var remoteTracks = this.remoteTextTracks();
@@ -56730,7 +56821,7 @@ var Tech = function (_Component) {
     this.addWebVttScript_();
 
     var updateDisplay = function updateDisplay() {
-      return _this5.trigger('texttrackchange');
+      return _this6.trigger('texttrackchange');
     };
 
     var textTracksChanges = function textTracksChanges() {
@@ -56845,7 +56936,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addRemoteTextTrack = function addRemoteTextTrack() {
-    var _this6 = this;
+    var _this7 = this;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var manualCleanup = arguments[1];
@@ -56865,7 +56956,7 @@ var Tech = function (_Component) {
     if (manualCleanup !== true) {
       // create the TextTrackList if it doesn't exist
       this.ready(function () {
-        return _this6.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
+        return _this7.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
       });
     }
 
@@ -57178,6 +57269,18 @@ Tech.prototype.featuresPlaybackRate = false;
 Tech.prototype.featuresProgressEvents = false;
 
 /**
+ * Boolean indicating wether the `Tech` supports the `sourceset` event.
+ *
+ * A tech should set this to `true` and then use {@link Tech#triggerSourceset}
+ * to trigger a {@link Tech#event:sourceset} at the earliest time after getting
+ * a new source.
+ *
+ * @type {boolean}
+ * @default
+ */
+Tech.prototype.featuresSourceset = false;
+
+/**
  * Boolean indicating wether the `Tech` supports the `timeupdate` event. This is currently
  * not triggered by video-js-swf. This will be used to determine if
  * {@link Tech#manualTimeUpdates} should be called.
@@ -57315,7 +57418,7 @@ Tech.withSourceHandlers = function (_Tech) {
    * When using a source handler, prefer its implementation of
    * any function normally provided by the tech.
    */
-  var deferrable = ['seekable', 'duration'];
+  var deferrable = ['seekable', 'seeking', 'duration'];
 
   /**
    * A wrapper around {@link Tech#seekable} that will call a `SourceHandler`s seekable
@@ -57420,6 +57523,9 @@ Tech.registerTech('Tech', Tech);
 Tech.defaultTechOrder_ = [];
 
 var middlewares = {};
+var middlewareInstances = {};
+
+var TERMINATOR = {};
 
 function use(type, middleware) {
   middlewares[type] = middlewares[type] || [];
@@ -57440,12 +57546,39 @@ function setTech(middleware, tech) {
   });
 }
 
+/**
+ * Calls a getter on the tech first, through each middleware
+ * from right to left to the player.
+ */
 function get$1(middleware, tech, method) {
   return middleware.reduceRight(middlewareIterator(method), tech[method]());
 }
 
+/**
+ * Takes the argument given to the player and calls the setter method on each
+ * middlware from left to right to the tech.
+ */
 function set$1(middleware, tech, method, arg) {
   return tech[method](middleware.reduce(middlewareIterator(method), arg));
+}
+
+/**
+ * Takes the argument given to the player and calls the `call` version of the method
+ * on each middleware from left to right.
+ * Then, call the passed in method on the tech and return the result unchanged
+ * back to the player, through middleware, this time from right to left.
+ */
+function mediate(middleware, tech, method) {
+  var arg = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+
+  var callMethod = 'call' + toTitleCase(method);
+  var middlewareValue = middleware.reduce(middlewareIterator(callMethod), arg);
+  var terminated = middlewareValue === TERMINATOR;
+  var returnValue = terminated ? null : tech[method](middlewareValue);
+
+  executeRight(middleware, method, returnValue, terminated);
+
+  return returnValue;
 }
 
 var allowedGetters = {
@@ -57453,21 +57586,82 @@ var allowedGetters = {
   currentTime: 1,
   duration: 1,
   seekable: 1,
-  played: 1
+  played: 1,
+  paused: 1
 };
 
 var allowedSetters = {
   setCurrentTime: 1
 };
 
+var allowedMediators = {
+  play: 1,
+  pause: 1
+};
+
 function middlewareIterator(method) {
   return function (value, mw) {
+    // if the previous middleware terminated, pass along the termination
+    if (value === TERMINATOR) {
+      return TERMINATOR;
+    }
+
     if (mw[method]) {
       return mw[method](value);
     }
 
     return value;
   };
+}
+
+function executeRight(mws, method, value, terminated) {
+  for (var i = mws.length - 1; i >= 0; i--) {
+    var mw = mws[i];
+
+    if (mw[method]) {
+      mw[method](terminated, value);
+    }
+  }
+}
+
+function clearCacheForPlayer(player) {
+  middlewareInstances[player.id()] = null;
+}
+
+/**
+ * {
+ *  [playerId]: [[mwFactory, mwInstance], ...]
+ * }
+ */
+function getOrCreateFactory(player, mwFactory) {
+  var mws = middlewareInstances[player.id()];
+  var mw = null;
+
+  if (mws === undefined || mws === null) {
+    mw = mwFactory(player);
+    middlewareInstances[player.id()] = [[mwFactory, mw]];
+    return mw;
+  }
+
+  for (var i = 0; i < mws.length; i++) {
+    var _mws$i = mws[i],
+        mwf = _mws$i[0],
+        mwi = _mws$i[1];
+
+
+    if (mwf !== mwFactory) {
+      continue;
+    }
+
+    mw = mwi;
+  }
+
+  if (mw === null) {
+    mw = mwFactory(player);
+    mws.push([mwFactory, mw]);
+  }
+
+  return mw;
 }
 
 function setSourceHelper() {
@@ -57488,7 +57682,7 @@ function setSourceHelper() {
     // if we have an mwFactory, call it with the player to get the mw,
     // then call the mw's setSource method
   } else if (mwFactory) {
-    var mw = mwFactory(player);
+    var mw = getOrCreateFactory(player, mwFactory);
 
     mw.setSource(assign({}, src), function (err, _src) {
 
@@ -57501,7 +57695,7 @@ function setSourceHelper() {
       // we've succeeded, now we need to go deeper
       acc.push(mw);
 
-      // if it's the same time, continue does the current chain
+      // if it's the same type, continue down the current chain
       // otherwise, we want to go down the new chain
       setSourceHelper(_src, src.type === _src.type ? mwrest : middlewares[_src.type], next, player, acc, lastRun);
     });
@@ -57513,6 +57707,91 @@ function setSourceHelper() {
     setSourceHelper(src, middlewares['*'], next, player, acc, true);
   }
 }
+
+/**
+ * Mimetypes
+ *
+ * @see http://hul.harvard.edu/ois/////systems/wax/wax-public-help/mimetypes.htm
+ * @typedef Mimetypes~Kind
+ * @enum
+ */
+var MimetypesKind = {
+  opus: 'video/ogg',
+  ogv: 'video/ogg',
+  mp4: 'video/mp4',
+  mov: 'video/mp4',
+  m4v: 'video/mp4',
+  mkv: 'video/x-matroska',
+  mp3: 'audio/mpeg',
+  aac: 'audio/aac',
+  oga: 'audio/ogg',
+  m3u8: 'application/x-mpegURL'
+};
+
+/**
+ * Get the mimetype of a given src url if possible
+ *
+ * @param {string} src
+ *        The url to the src
+ *
+ * @return {string}
+ *         return the mimetype if it was known or empty string otherwise
+ */
+var getMimetype = function getMimetype() {
+  var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+  var ext = getFileExtension(src);
+  var mimetype = MimetypesKind[ext.toLowerCase()];
+
+  return mimetype || '';
+};
+
+/**
+ * Find the mime type of a given source string if possible. Uses the player
+ * source cache.
+ *
+ * @param {Player} player
+ *        The player object
+ *
+ * @param {string} src
+ *        The source string
+ *
+ * @return {string}
+ *         The type that was found
+ */
+var findMimetype = function findMimetype(player, src) {
+  if (!src) {
+    return '';
+  }
+
+  // 1. check for the type in the `source` cache
+  if (player.cache_.source.src === src && player.cache_.source.type) {
+    return player.cache_.source.type;
+  }
+
+  // 2. see if we have this source in our `currentSources` cache
+  var matchingSources = player.cache_.sources.filter(function (s) {
+    return s.src === src;
+  });
+
+  if (matchingSources.length) {
+    return matchingSources[0].type;
+  }
+
+  // 3. look for the src url in source elements and use the type there
+  var sources = player.$$('source');
+
+  for (var i = 0; i < sources.length; i++) {
+    var s = sources[i];
+
+    if (s.type && s.src && s.src === src) {
+      return s.type;
+    }
+  }
+
+  // 4. finally fallback to our list of mime types based on src url extension
+  return getMimetype(src);
+};
 
 /**
  * @module filter-source
@@ -57548,10 +57827,10 @@ var filterSource = function filterSource(src) {
     src = newsrc;
   } else if (typeof src === 'string' && src.trim()) {
     // convert string into object
-    src = [{ src: src }];
+    src = [fixSource({ src: src })];
   } else if (isObject(src) && typeof src.src === 'string' && src.src && src.src.trim()) {
     // src is already valid
-    src = [src];
+    src = [fixSource(src)];
   } else {
     // invalid source, turn it into an empty array
     src = [];
@@ -57559,6 +57838,24 @@ var filterSource = function filterSource(src) {
 
   return src;
 };
+
+/**
+ * Checks src mimetype, adding it when possible
+ *
+ * @param {Tech~SourceObject} src
+ *        The src object to check
+ * @return {Tech~SourceObject}
+ *        src Object with known type
+ */
+function fixSource(src) {
+  var mimetype = getMimetype(src.src);
+
+  if (!src.type && mimetype) {
+    src.type = mimetype;
+  }
+
+  return src;
+}
 
 /**
  * @file loader.js
@@ -57695,10 +57992,7 @@ var ClickableComponent = function (_Component) {
 
     // Add ARIA attributes for clickable element which is not a native HTML button
     attributes = assign({
-      'role': 'button',
-
-      // let the screen reader user know that the text of the element may change
-      'aria-live': 'polite'
+      role: 'button'
     }, attributes);
 
     this.tabIndex_ = props.tabIndex;
@@ -57731,6 +58025,9 @@ var ClickableComponent = function (_Component) {
   ClickableComponent.prototype.createControlTextEl = function createControlTextEl(el) {
     this.controlTextEl_ = createEl('span', {
       className: 'vjs-control-text'
+    }, {
+      // let the screen reader user know that the text of the element may change
+      'aria-live': 'polite'
     });
 
     if (el) {
@@ -58335,7 +58632,6 @@ var TextTrackDisplay = function (_Component) {
       return;
     }
 
-    var overrides = this.player_.textTrackSettings.getValues();
     var cues = [];
 
     for (var _i = 0; _i < track.activeCues.length; _i++) {
@@ -58343,6 +58639,12 @@ var TextTrackDisplay = function (_Component) {
     }
 
     window_1.WebVTT.processCues(window_1, cues, this.el_);
+
+    if (!this.player_.textTrackSettings) {
+      return;
+    }
+
+    var overrides = this.player_.textTrackSettings.getValues();
 
     var i = cues.length;
 
@@ -58431,11 +58733,22 @@ var LoadingSpinner = function (_Component) {
    * @return {Element}
    *         The dom element that gets created.
    */
-  LoadingSpinner.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'div', {
+  LoadingSpinner.prototype.createEl = function createEl$$1() {
+    var isAudio = this.player_.isAudio();
+    var playerType = this.localize(isAudio ? 'Audio Player' : 'Video Player');
+    var controlText = createEl('span', {
+      className: 'vjs-control-text',
+      innerHTML: this.localize('{1} is loading.', [playerType])
+    });
+
+    var el = _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-loading-spinner',
       dir: 'ltr'
     });
+
+    el.appendChild(controlText);
+
+    return el;
   };
 
   return LoadingSpinner;
@@ -58491,10 +58804,7 @@ var Button = function (_ClickableComponent) {
     attributes = assign({
 
       // Necessary since the default button type is "submit"
-      'type': 'button',
-
-      // let the screen reader user know that the text of the button may change
-      'aria-live': 'polite'
+      type: 'button'
     }, attributes);
 
     var el = Component.prototype.createEl.call(this, tag, props, attributes);
@@ -58545,7 +58855,7 @@ var Button = function (_ClickableComponent) {
   };
 
   /**
-   * Enable the `Button` element so that it cannot be activated or clicked. Use this with
+   * Disable the `Button` element so that it cannot be activated or clicked. Use this with
    * {@link Button#enable}.
    */
 
@@ -58919,25 +59229,23 @@ Component.registerComponent('PlayToggle', PlayToggle);
 
 /**
  * @file format-time.js
- * @module Format-time
+ * @module format-time
  */
 
 /**
- * Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
- * will force a number of leading zeros to cover the length of the guide.
- *
- * @param {number} seconds
- *        Number of seconds to be turned into a string
- *
- * @param {number} guide
- *        Number (in seconds) to model the string after
- *
- * @return {string}
- *         Time formatted as H:MM:SS or M:SS
- */
-function formatTime(seconds) {
-  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
-
+* Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
+* will force a number of leading zeros to cover the length of the guide.
+*
+* @param {number} seconds
+*        Number of seconds to be turned into a string
+*
+* @param {number} guide
+*        Number (in seconds) to model the string after
+*
+* @return {string}
+*         Time formatted as H:MM:SS or M:SS
+*/
+var defaultImplementation = function defaultImplementation(seconds, guide) {
   seconds = seconds < 0 ? 0 : seconds;
   var s = Math.floor(seconds % 60);
   var m = Math.floor(seconds / 60 % 60);
@@ -58963,7 +59271,33 @@ function formatTime(seconds) {
   s = s < 10 ? '0' + s : s;
 
   return h + m + s;
+};
+
+var implementation = defaultImplementation;
+
+/**
+ * Replaces the default formatTime implementation with a custom implementation.
+ *
+ * @param {Function} customImplementation
+ *        A function which will be used in place of the default formatTime implementation.
+ *        Will receive the current time in seconds and the guide (in seconds) as arguments.
+ */
+function setFormatTime(customImplementation) {
+  implementation = customImplementation;
 }
+
+/**
+ * Resets formatTime to the default implementation.
+ */
+function resetFormatTime() {
+  implementation = defaultImplementation;
+}
+
+var formatTime = function (seconds) {
+  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
+
+  return implementation(seconds, guide);
+};
 
 /**
  * @file time-display.js
@@ -59007,18 +59341,16 @@ var TimeDisplay = function (_Component) {
   TimeDisplay.prototype.createEl = function createEl$$1(plainName) {
     var className = this.buildCSSClass();
     var el = _Component.prototype.createEl.call(this, 'div', {
-      className: className + ' vjs-time-control vjs-control'
+      className: className + ' vjs-time-control vjs-control',
+      innerHTML: '<span class="vjs-control-text">' + this.localize(this.labelText_) + '\xA0</span>'
     });
 
-    this.contentEl_ = createEl('div', {
+    this.contentEl_ = createEl('span', {
       className: className + '-display'
     }, {
       // tell screen readers not to automatically read the time as it changes
       'aria-live': 'off'
-    }, createEl('span', {
-      className: 'vjs-control-text',
-      textContent: this.localize(this.controlText_)
-    }));
+    });
 
     this.updateTextNode_();
     el.appendChild(this.contentEl_);
@@ -59049,7 +59381,7 @@ var TimeDisplay = function (_Component) {
       this.contentEl_.removeChild(this.contentEl_.firstChild);
     }
 
-    this.textNode_ = document_1.createTextNode(this.formattedTime_ || '0:00');
+    this.textNode_ = document_1.createTextNode(this.formattedTime_ || this.formatTime_(0));
     this.contentEl_.appendChild(this.textNode_);
   };
 
@@ -59109,13 +59441,23 @@ var TimeDisplay = function (_Component) {
 }(Component);
 
 /**
- * The text that should display over the `TimeDisplay`s controls. Added to for localization.
+ * The text that is added to the `TimeDisplay` for screen reader users.
  *
  * @type {string}
  * @private
  */
 
 
+TimeDisplay.prototype.labelText_ = 'Time';
+
+/**
+ * The text that should display over the `TimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ *
+ * @deprecated in v7; controlText_ is not used in non-active display Components
+ */
 TimeDisplay.prototype.controlText_ = 'Time';
 
 Component.registerComponent('TimeDisplay', TimeDisplay);
@@ -59202,13 +59544,23 @@ var CurrentTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that should display over the `CurrentTimeDisplay`s controls. Added to for localization.
+ * The text that is added to the `CurrentTimeDisplay` for screen reader users.
  *
  * @type {string}
  * @private
  */
 
 
+CurrentTimeDisplay.prototype.labelText_ = 'Current Time';
+
+/**
+ * The text that should display over the `CurrentTimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ *
+ * @deprecated in v7; controlText_ is not used in non-active display Components
+ */
 CurrentTimeDisplay.prototype.controlText_ = 'Current Time';
 
 Component.registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
@@ -59289,14 +59641,24 @@ var DurationDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that should display over the `DurationDisplay`s controls. Added to for localization.
+ * The text that is added to the `DurationDisplay` for screen reader users.
  *
  * @type {string}
  * @private
  */
 
 
-DurationDisplay.prototype.controlText_ = 'Duration Time';
+DurationDisplay.prototype.labelText_ = 'Duration';
+
+/**
+ * The text that should display over the `DurationDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ *
+ * @deprecated in v7; controlText_ is not used in non-active display Components
+ */
+DurationDisplay.prototype.controlText_ = 'Duration';
 
 Component.registerComponent('DurationDisplay', DurationDisplay);
 
@@ -59393,6 +59755,7 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 
 
   RemainingTimeDisplay.prototype.formatTime_ = function formatTime_(time) {
+    // TODO: The "-" should be decorative, and not announced by a screen reader
     return '-' + _TimeDisplay.prototype.formatTime_.call(this, time);
   };
 
@@ -59444,13 +59807,23 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that should display over the `RemainingTimeDisplay`s controls. Added to for localization.
+ * The text that is added to the `RemainingTimeDisplay` for screen reader users.
  *
  * @type {string}
  * @private
  */
 
 
+RemainingTimeDisplay.prototype.labelText_ = 'Remaining Time';
+
+/**
+ * The text that should display over the `RemainingTimeDisplay`s controls. Added to for localization.
+ *
+ * @type {string}
+ * @private
+ *
+ * @deprecated in v7; controlText_ is not used in non-active display Components
+ */
 RemainingTimeDisplay.prototype.controlText_ = 'Remaining Time';
 
 Component.registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
@@ -59503,7 +59876,7 @@ var LiveDisplay = function (_Component) {
 
     this.contentEl_ = createEl('div', {
       className: 'vjs-live-display',
-      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '</span>' + this.localize('LIVE')
+      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '\xA0</span>' + this.localize('LIVE')
     }, {
       'aria-live': 'off'
     });
@@ -60357,32 +60730,45 @@ var SeekBar = function (_Slider) {
 
     var _this = possibleConstructorReturn(this, _Slider.call(this, player, options));
 
-    _this.update = throttle(bind(_this, _this.update), UPDATE_REFRESH_INTERVAL);
+    _this.setEventHandlers_();
+    return _this;
+  }
 
-    _this.on(player, 'timeupdate', _this.update);
-    _this.on(player, 'ended', _this.handleEnded);
+  /**
+   * Sets the event handlers
+   *
+   * @private
+   */
+
+
+  SeekBar.prototype.setEventHandlers_ = function setEventHandlers_() {
+    var _this2 = this;
+
+    this.update = throttle(bind(this, this.update), UPDATE_REFRESH_INTERVAL);
+
+    this.on(this.player_, 'timeupdate', this.update);
+    this.on(this.player_, 'ended', this.handleEnded);
 
     // when playing, let's ensure we smoothly update the play progress bar
     // via an interval
-    _this.updateInterval = null;
+    this.updateInterval = null;
 
-    _this.on(player, ['playing'], function () {
-      _this.clearInterval(_this.updateInterval);
+    this.on(this.player_, ['playing'], function () {
+      _this2.clearInterval(_this2.updateInterval);
 
-      _this.updateInterval = _this.setInterval(function () {
-        _this.requestAnimationFrame(function () {
-          _this.update();
+      _this2.updateInterval = _this2.setInterval(function () {
+        _this2.requestAnimationFrame(function () {
+          _this2.update();
         });
       }, UPDATE_REFRESH_INTERVAL);
     });
 
-    _this.on(player, ['ended', 'pause', 'waiting'], function () {
-      _this.clearInterval(_this.updateInterval);
+    this.on(this.player_, ['ended', 'pause', 'waiting'], function () {
+      _this2.clearInterval(_this2.updateInterval);
     });
 
-    _this.on(player, ['timeupdate', 'ended'], _this.update);
-    return _this;
-  }
+    this.on(this.player_, ['timeupdate', 'ended'], this.update);
+  };
 
   /**
    * Create the `Component`'s DOM element
@@ -60506,6 +60892,8 @@ var SeekBar = function (_Slider) {
       return;
     }
 
+    // Stop event propagation to prevent double fire in progress-control.js
+    event.stopPropagation();
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
@@ -60575,6 +60963,10 @@ var SeekBar = function (_Slider) {
   SeekBar.prototype.handleMouseUp = function handleMouseUp(event) {
     _Slider.prototype.handleMouseUp.call(this, event);
 
+    // Stop event propagation to prevent double fire in progress-control.js
+    if (event) {
+      event.stopPropagation();
+    }
     this.player_.scrubbing(false);
 
     /**
@@ -60586,7 +60978,7 @@ var SeekBar = function (_Slider) {
      */
     this.player_.trigger({ type: 'timeupdate', target: this, manuallyTriggered: true });
     if (this.videoWasPlaying) {
-      this.player_.play();
+      silencePromise(this.player_.play());
     }
   };
 
@@ -60741,22 +61133,25 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseMove = function handleMouseMove(event) {
     var seekBar = this.getChild('seekBar');
-    var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
-    var seekBarEl = seekBar.el();
-    var seekBarRect = getBoundingClientRect(seekBarEl);
-    var seekBarPoint = getPointerPosition(seekBarEl, event).x;
 
-    // The default skin has a gap on either side of the `SeekBar`. This means
-    // that it's possible to trigger this behavior outside the boundaries of
-    // the `SeekBar`. This ensures we stay within it at all times.
-    if (seekBarPoint > 1) {
-      seekBarPoint = 1;
-    } else if (seekBarPoint < 0) {
-      seekBarPoint = 0;
-    }
+    if (seekBar) {
+      var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
+      var seekBarEl = seekBar.el();
+      var seekBarRect = getBoundingClientRect(seekBarEl);
+      var seekBarPoint = getPointerPosition(seekBarEl, event).x;
 
-    if (mouseTimeDisplay) {
-      mouseTimeDisplay.update(seekBarRect, seekBarPoint);
+      // The default skin has a gap on either side of the `SeekBar`. This means
+      // that it's possible to trigger this behavior outside the boundaries of
+      // the `SeekBar`. This ensures we stay within it at all times.
+      if (seekBarPoint > 1) {
+        seekBarPoint = 1;
+      } else if (seekBarPoint < 0) {
+        seekBarPoint = 0;
+      }
+
+      if (mouseTimeDisplay) {
+        mouseTimeDisplay.update(seekBarRect, seekBarPoint);
+      }
     }
   };
 
@@ -60785,7 +61180,9 @@ var ProgressControl = function (_Component) {
   ProgressControl.prototype.handleMouseSeek = function handleMouseSeek(event) {
     var seekBar = this.getChild('seekBar');
 
-    seekBar.handleMouseMove(event);
+    if (seekBar) {
+      seekBar.handleMouseMove(event);
+    }
   };
 
   /**
@@ -60857,6 +61254,11 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseDown = function handleMouseDown(event) {
     var doc = this.el_.ownerDocument;
+    var seekBar = this.getChild('seekBar');
+
+    if (seekBar) {
+      seekBar.handleMouseDown(event);
+    }
 
     this.on(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.on(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -60877,6 +61279,11 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseUp = function handleMouseUp(event) {
     var doc = this.el_.ownerDocument;
+    var seekBar = this.getChild('seekBar');
+
+    if (seekBar) {
+      seekBar.handleMouseUp(event);
+    }
 
     this.off(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.off(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -61624,12 +62031,10 @@ var VolumePanel = function (_Component) {
     checkVolumeSupport(_this, player);
 
     // while the slider is active (the mouse has been pressed down and
-    // is dragging) or in focus we do not want to hide the VolumeBar
+    // is dragging) we do not want to hide the VolumeBar
     _this.on(_this.volumeControl, ['slideractive'], _this.sliderActive_);
-    _this.on(_this.muteToggle, 'focus', _this.sliderActive_);
 
     _this.on(_this.volumeControl, ['sliderinactive'], _this.sliderInactive_);
-    _this.on(_this.muteToggle, 'blur', _this.sliderInactive_);
     return _this;
   }
 
@@ -62257,9 +62662,12 @@ var MenuButton = function (_Component) {
 
       // set the focus into the submenu, except on iOS where it is resulting in
       // undesired scrolling behavior when the player is in an iframe
-      if (!IS_IOS && !isInFrame()) {
-        this.menu.focus();
+      if (IS_IOS && isInFrame()) {
+        // Return early so that the menu isn't focused
+        return;
       }
+
+      this.menu.focus();
     }
   };
 
@@ -62389,8 +62797,9 @@ var MenuItem = function (_ClickableComponent) {
     var _this = possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
 
     _this.selectable = options.selectable;
+    _this.isSelected_ = options.selected || false;
 
-    _this.selected(options.selected);
+    _this.selected(_this.isSelected_);
 
     if (_this.selectable) {
       // TODO: May need to be either menuitemcheckbox or menuitemradio,
@@ -62463,11 +62872,13 @@ var MenuItem = function (_ClickableComponent) {
         // aria-checked isn't fully supported by browsers/screen readers,
         // so indicate selected state to screen reader in the control text.
         this.controlText(', selected');
+        this.isSelected_ = true;
       } else {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
         this.controlText('');
+        this.isSelected_ = false;
       }
     }
   };
@@ -62620,7 +63031,13 @@ var TextTrackMenuItem = function (_MenuItem) {
 
 
   TextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
-    this.selected(this.track.mode === 'showing');
+    var shouldBeSelected = this.track.mode === 'showing';
+
+    // Prevent redundant selected() calls because they may cause
+    // screen readers to read the appended control text unnecessarily
+    if (shouldBeSelected !== this.isSelected_) {
+      this.selected(shouldBeSelected);
+    }
   };
 
   TextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -62712,18 +63129,22 @@ var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
 
   OffTextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
     var tracks = this.player().textTracks();
-    var selected = true;
+    var shouldBeSelected = true;
 
     for (var i = 0, l = tracks.length; i < l; i++) {
       var track = tracks[i];
 
       if (this.options_.kinds.indexOf(track.kind) > -1 && track.mode === 'showing') {
-        selected = false;
+        shouldBeSelected = false;
         break;
       }
     }
 
-    this.selected(selected);
+    // Prevent redundant selected() calls because they may cause
+    // screen readers to read the appended control text unnecessarily
+    if (shouldBeSelected !== this.isSelected_) {
+      this.selected(shouldBeSelected);
+    }
   };
 
   OffTextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -63441,7 +63862,7 @@ var CaptionsButton = function (_TextTrackButton) {
   CaptionsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.kind_ }));
 
       this.hideThreshold_ += 1;
@@ -63567,7 +63988,7 @@ var SubsCapsButton = function (_TextTrackButton) {
   SubsCapsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.label_ }));
 
       this.hideThreshold_ += 1;
@@ -63636,7 +64057,13 @@ var AudioTrackMenuItem = function (_MenuItem) {
 
     _this.track = track;
 
-    var changeHandler = bind(_this, _this.handleTracksChange);
+    var changeHandler = function changeHandler() {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this.handleTracksChange.apply(_this, args);
+    };
 
     tracks.addEventListener('change', changeHandler);
     _this.on('dispose', function () {
@@ -64170,7 +64597,7 @@ var CustomControlSpacer = function (_Spacer) {
 
     // No-flex/table-cell mode requires there be some content
     // in the cell to fill the remaining space of the table.
-    el.innerHTML = '&nbsp;';
+    el.innerHTML = '\xA0';
     return el;
   };
 
@@ -64207,10 +64634,6 @@ var ControlBar = function (_Component) {
     return _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-control-bar',
       dir: 'ltr'
-    }, {
-      // The control bar is a group, but we don't aria-label it to avoid
-      //  over-announcing by JAWS
-      role: 'group'
     });
   };
 
@@ -64577,11 +65000,12 @@ var TextTrackSettings = function (_ModalDialog) {
 
     var config = selectConfigs[key];
     var id = config.id.replace('%s', this.id_);
+    var selectLabelledbyIds = [legendId, id].join(' ').trim();
 
-    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + '">'].concat(config.options.map(function (o) {
-      var optionId = id + '-' + o[1];
+    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + selectLabelledbyIds + '">'].concat(config.options.map(function (o) {
+      var optionId = id + '-' + o[1].replace(/\W+/g, '');
 
-      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
+      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + selectLabelledbyIds + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
     })).concat('</select>').join('');
   };
 
@@ -64662,7 +65086,7 @@ var TextTrackSettings = function (_ModalDialog) {
 
   TextTrackSettings.prototype.createElFont_ = function createElFont_() {
     return createEl('div', {
-      className: 'vjs-track-settings-font">',
+      className: 'vjs-track-settings-font',
       innerHTML: ['<fieldset class="vjs-font-percent vjs-track-setting">', this.createElSelect_('fontPercent', '', 'legend'), '</fieldset>', '<fieldset class="vjs-edge-style vjs-track-setting">', this.createElSelect_('edgeStyle', '', 'legend'), '</fieldset>', '<fieldset class="vjs-font-family vjs-track-setting">', this.createElSelect_('fontFamily', '', 'legend'), '</fieldset>'].join('')
     });
   };
@@ -64837,6 +65261,445 @@ var TextTrackSettings = function (_ModalDialog) {
 
 Component.registerComponent('TextTrackSettings', TextTrackSettings);
 
+/**
+ * @file resize-manager.js
+ */
+/**
+ * A Resize Manager. It is in charge of triggering `playerresize` on the player in the right conditions.
+ *
+ * It'll either create an iframe and use a debounced resize handler on it or use the new {@link https://wicg.github.io/ResizeObserver/|ResizeObserver}.
+ *
+ * If the ResizeObserver is available natively, it will be used. A polyfill can be passed in as an option.
+ * If a `playerresize` event is not needed, the ResizeManager component can be removed from the player, see the example below.
+ * @example <caption>How to disable the resize manager</caption>
+ * const player = videojs('#vid', {
+ *   resizeManager: false
+ * });
+ *
+ * @see {@link https://wicg.github.io/ResizeObserver/|ResizeObserver specification}
+ *
+ * @extends Component
+ */
+
+var ResizeManager = function (_Component) {
+  inherits(ResizeManager, _Component);
+
+  /**
+   * Create the ResizeManager.
+   *
+   * @param {Object} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of ResizeManager options.
+   *
+   * @param {Object} [options.ResizeObserver]
+   *        A polyfill for ResizeObserver can be passed in here.
+   *        If this is set to null it will ignore the native ResizeObserver and fall back to the iframe fallback.
+   */
+  function ResizeManager(player, options) {
+    classCallCheck(this, ResizeManager);
+
+    var RESIZE_OBSERVER_AVAILABLE = options.ResizeObserver || window_1.ResizeObserver;
+
+    // if `null` was passed, we want to disable the ResizeObserver
+    if (options.ResizeObserver === null) {
+      RESIZE_OBSERVER_AVAILABLE = false;
+    }
+
+    // Only create an element when ResizeObserver isn't available
+    var options_ = mergeOptions({ createEl: !RESIZE_OBSERVER_AVAILABLE }, options);
+
+    var _this = possibleConstructorReturn(this, _Component.call(this, player, options_));
+
+    _this.ResizeObserver = options.ResizeObserver || window_1.ResizeObserver;
+    _this.loadListener_ = null;
+    _this.resizeObserver_ = null;
+    _this.debouncedHandler_ = debounce(function () {
+      _this.resizeHandler();
+    }, 100, false, player);
+
+    if (RESIZE_OBSERVER_AVAILABLE) {
+      _this.resizeObserver_ = new _this.ResizeObserver(_this.debouncedHandler_);
+      _this.resizeObserver_.observe(player.el());
+    } else {
+      _this.loadListener_ = function () {
+        if (_this.el_.contentWindow) {
+          on(_this.el_.contentWindow, 'resize', _this.debouncedHandler_);
+        }
+        _this.off('load', _this.loadListener_);
+      };
+
+      _this.on('load', _this.loadListener_);
+    }
+    return _this;
+  }
+
+  ResizeManager.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'iframe', {
+      className: 'vjs-resize-manager'
+    });
+  };
+
+  /**
+   * Called when a resize is triggered on the iframe or a resize is observed via the ResizeObserver
+   *
+   * @fires Player#playerresize
+   */
+
+
+  ResizeManager.prototype.resizeHandler = function resizeHandler() {
+    /**
+     * Called when the player size has changed
+     *
+     * @event Player#playerresize
+     * @type {EventTarget~Event}
+     */
+    this.player_.trigger('playerresize');
+  };
+
+  ResizeManager.prototype.dispose = function dispose() {
+    if (this.resizeObserver_) {
+      if (this.player_.el()) {
+        this.resizeObserver_.unobserve(this.player_.el());
+      }
+      this.resizeObserver_.disconnect();
+    }
+
+    if (this.el_ && this.el_.contentWindow) {
+      off(this.el_.contentWindow, 'resize', this.debouncedHandler_);
+    }
+
+    if (this.loadListener_) {
+      this.off('load', this.loadListener_);
+    }
+
+    this.ResizeObserver = null;
+    this.resizeObserver = null;
+    this.debouncedHandler_ = null;
+    this.loadListener_ = null;
+  };
+
+  return ResizeManager;
+}(Component);
+
+Component.registerComponent('ResizeManager', ResizeManager);
+
+/**
+ * This function is used to fire a sourceset when there is something
+ * similar to `mediaEl.load()` being called. It will try to find the source via
+ * the `src` attribute and then the `<source>` elements. It will then fire `sourceset`
+ * with the source that was found or empty string if we cannot know. If it cannot
+ * find a source then `sourceset` will not be fired.
+ *
+ * @param {Html5} tech
+ *        The tech object that sourceset was setup on
+ *
+ * @return {boolean}
+ *         returns false if the sourceset was not fired and true otherwise.
+ */
+var sourcesetLoad = function sourcesetLoad(tech) {
+  var el = tech.el();
+
+  // if `el.src` is set, that source will be loaded.
+  if (el.hasAttribute('src')) {
+    tech.triggerSourceset(el.src);
+    return true;
+  }
+
+  /**
+   * Since there isn't a src property on the media element, source elements will be used for
+   * implementing the source selection algorithm. This happens asynchronously and
+   * for most cases were there is more than one source we cannot tell what source will
+   * be loaded, without re-implementing the source selection algorithm. At this time we are not
+   * going to do that. There are three special cases that we do handle here though:
+   *
+   * 1. If there are no sources, do not fire `sourceset`.
+   * 2. If there is only one `<source>` with a `src` property/attribute that is our `src`
+   * 3. If there is more than one `<source>` but all of them have the same `src` url.
+   *    That will be our src.
+   */
+  var sources = tech.$$('source');
+  var srcUrls = [];
+  var src = '';
+
+  // if there are no sources, do not fire sourceset
+  if (!sources.length) {
+    return false;
+  }
+
+  // only count valid/non-duplicate source elements
+  for (var i = 0; i < sources.length; i++) {
+    var url = sources[i].src;
+
+    if (url && srcUrls.indexOf(url) === -1) {
+      srcUrls.push(url);
+    }
+  }
+
+  // there were no valid sources
+  if (!srcUrls.length) {
+    return false;
+  }
+
+  // there is only one valid source element url
+  // use that
+  if (srcUrls.length === 1) {
+    src = srcUrls[0];
+  }
+
+  tech.triggerSourceset(src);
+  return true;
+};
+
+/**
+ * our implementation of an `innerHTML` descriptor for browsers
+ * that do not have one.
+ */
+var innerHTMLDescriptorPolyfill = {};
+
+if (!IS_IE8) {
+  innerHTMLDescriptorPolyfill = Object.defineProperty({}, 'innerHTML', {
+    get: function get() {
+      return this.cloneNode(true).innerHTML;
+    },
+    set: function set(v) {
+      // make a dummy node to use innerHTML on
+      var dummy = document_1.createElement(this.nodeName.toLowerCase());
+
+      // set innerHTML to the value provided
+      dummy.innerHTML = v;
+
+      // make a document fragment to hold the nodes from dummy
+      var docFrag = document_1.createDocumentFragment();
+
+      // copy all of the nodes created by the innerHTML on dummy
+      // to the document fragment
+      while (dummy.childNodes.length) {
+        docFrag.appendChild(dummy.childNodes[0]);
+      }
+
+      // remove content
+      this.innerText = '';
+
+      // now we add all of that html in one by appending the
+      // document fragment. This is how innerHTML does it.
+      window_1.Element.prototype.appendChild.call(this, docFrag);
+
+      // then return the result that innerHTML's setter would
+      return this.innerHTML;
+    }
+  });
+}
+/**
+ * Get a property descriptor given a list of priorities and the
+ * property to get.
+ */
+var getDescriptor = function getDescriptor(priority, prop) {
+  var descriptor = {};
+
+  for (var i = 0; i < priority.length; i++) {
+    descriptor = Object.getOwnPropertyDescriptor(priority[i], prop);
+
+    if (descriptor && descriptor.set && descriptor.get) {
+      break;
+    }
+  }
+
+  descriptor.enumerable = true;
+  descriptor.configurable = true;
+
+  return descriptor;
+};
+
+var getInnerHTMLDescriptor = function getInnerHTMLDescriptor(tech) {
+  return getDescriptor([tech.el(), window_1.HTMLMediaElement.prototype, window_1.Element.prototype, innerHTMLDescriptorPolyfill], 'innerHTML');
+};
+
+/**
+ * Patches browser internal functions so that we can tell syncronously
+ * if a `<source>` was appended to the media element. For some reason this
+ * causes a `sourceset` if the the media element is ready and has no source.
+ * This happens when:
+ * - The page has just loaded and the media element does not have a source.
+ * - The media element was emptied of all sources, then `load()` was called.
+ *
+ * It does this by patching the following functions/properties when they are supported:
+ *
+ * - `append()` - can be used to add a `<source>` element to the media element
+ * - `appendChild()` - can be used to add a `<source>` element to the media element
+ * - `insertAdjacentHTML()` -  can be used to add a `<source>` element to the media element
+ * - `innerHTML` -  can be used to add a `<source>` element to the media element
+ *
+ * @param {Html5} tech
+ *        The tech object that sourceset is being setup on.
+ */
+var firstSourceWatch = function firstSourceWatch(tech) {
+  var el = tech.el();
+
+  // make sure firstSourceWatch isn't setup twice.
+  if (el.resetSourceWatch_) {
+    return;
+  }
+
+  var old = {};
+  var innerDescriptor = getInnerHTMLDescriptor(tech);
+  var appendWrapper = function appendWrapper(appendFn) {
+    return function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var retval = appendFn.apply(el, args);
+
+      sourcesetLoad(tech);
+
+      return retval;
+    };
+  };
+
+  ['append', 'appendChild', 'insertAdjacentHTML'].forEach(function (k) {
+    if (!el[k]) {
+      return;
+    }
+
+    // store the old function
+    old[k] = el[k];
+
+    // call the old function with a sourceset if a source
+    // was loaded
+    el[k] = appendWrapper(old[k]);
+  });
+
+  Object.defineProperty(el, 'innerHTML', mergeOptions(innerDescriptor, {
+    set: appendWrapper(innerDescriptor.set)
+  }));
+
+  el.resetSourceWatch_ = function () {
+    el.resetSourceWatch_ = null;
+    Object.keys(old).forEach(function (k) {
+      el[k] = old[k];
+    });
+
+    Object.defineProperty(el, 'innerHTML', innerDescriptor);
+  };
+
+  // on the first sourceset, we need to revert our changes
+  tech.one('sourceset', el.resetSourceWatch_);
+};
+
+/**
+ * our implementation of a `src` descriptor for browsers
+ * that do not have one.
+ */
+
+var srcDescriptorPolyfill = {};
+
+if (!IS_IE8) {
+  srcDescriptorPolyfill = Object.defineProperty({}, 'src', {
+    get: function get() {
+      if (this.hasAttribute('src')) {
+        return getAbsoluteURL(window_1.Element.prototype.getAttribute.call(this, 'src'));
+      }
+
+      return '';
+    },
+    set: function set(v) {
+      window_1.Element.prototype.setAttribute.call(this, 'src', v);
+
+      return v;
+    }
+  });
+}
+
+var getSrcDescriptor = function getSrcDescriptor(tech) {
+  return getDescriptor([tech.el(), window_1.HTMLMediaElement.prototype, srcDescriptorPolyfill], 'src');
+};
+
+/**
+ * setup `sourceset` handling on the `Html5` tech. This function
+ * patches the following element properties/functions:
+ *
+ * - `src` - to determine when `src` is set
+ * - `setAttribute()` - to determine when `src` is set
+ * - `load()` - this re-triggers the source selection algorithm, and can
+ *              cause a sourceset.
+ *
+ * If there is no source when we are adding `sourceset` support or during a `load()`
+ * we also patch the functions listed in `firstSourceWatch`.
+ *
+ * @param {Html5} tech
+ *        The tech to patch
+ */
+var setupSourceset = function setupSourceset(tech) {
+  if (!tech.featuresSourceset) {
+    return;
+  }
+
+  var el = tech.el();
+
+  // make sure sourceset isn't setup twice.
+  if (el.resetSourceset_) {
+    return;
+  }
+
+  var srcDescriptor = getSrcDescriptor(tech);
+  var oldSetAttribute = el.setAttribute;
+  var oldLoad = el.load;
+
+  Object.defineProperty(el, 'src', mergeOptions(srcDescriptor, {
+    set: function set(v) {
+      var retval = srcDescriptor.set.call(el, v);
+
+      // we use the getter here to get the actual value set on src
+      tech.triggerSourceset(el.src);
+
+      return retval;
+    }
+  }));
+
+  el.setAttribute = function (n, v) {
+    var retval = oldSetAttribute.call(el, n, v);
+
+    if (/src/i.test(n)) {
+      tech.triggerSourceset(el.src);
+    }
+
+    return retval;
+  };
+
+  el.load = function () {
+    var retval = oldLoad.call(el);
+
+    // if load was called, but there was no source to fire
+    // sourceset on. We have to watch for a source append
+    // as that can trigger a `sourceset` when the media element
+    // has no source
+    if (!sourcesetLoad(tech)) {
+      tech.triggerSourceset('');
+      firstSourceWatch(tech);
+    }
+
+    return retval;
+  };
+
+  if (el.currentSrc) {
+    tech.triggerSourceset(el.currentSrc);
+  } else if (!sourcesetLoad(tech)) {
+    firstSourceWatch(tech);
+  }
+
+  el.resetSourceset_ = function () {
+    el.resetSourceset_ = null;
+    el.load = oldLoad;
+    el.setAttribute = oldSetAttribute;
+    Object.defineProperty(el, 'src', srcDescriptor);
+    if (el.resetSourceWatch_) {
+      el.resetSourceWatch_();
+    }
+  };
+};
+
 var _templateObject$2 = taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
 /**
@@ -64877,6 +65740,11 @@ var Html5 = function (_Tech) {
       _this.setSource(source);
     } else {
       _this.handleLateInit_(_this.el_);
+    }
+
+    // setup sourceset after late sourceset/init
+    if (options.enableSourceset) {
+      _this.setupSourcesetHandling_();
     }
 
     if (_this.el_.hasChildNodes()) {
@@ -64943,11 +65811,24 @@ var Html5 = function (_Tech) {
 
 
   Html5.prototype.dispose = function dispose() {
+    if (this.el_ && this.el_.resetSourceset_) {
+      this.el_.resetSourceset_();
+    }
     Html5.disposeMediaElement(this.el_);
     this.options_ = null;
 
     // tech will handle clearing of the emulated track list
     _Tech.prototype.dispose.call(this);
+  };
+
+  /**
+   * Modify the media element so that we can detect when
+   * the source is changed. Fires `sourceset` just after the source has changed
+   */
+
+
+  Html5.prototype.setupSourcesetHandling_ = function setupSourcesetHandling_() {
+    setupSourceset(this);
   };
 
   /**
@@ -65152,7 +66033,7 @@ var Html5 = function (_Tech) {
     // when iOS/Safari or other browsers attempt to autoplay.
     var settingsAttrs = ['loop', 'muted', 'playsinline', 'autoplay'];
 
-    for (var i = settingsAttrs.length - 1; i >= 0; i--) {
+    for (var i = 0; i < settingsAttrs.length; i++) {
       var attr = settingsAttrs[i];
       var value = this.options_[attr];
 
@@ -65767,6 +66648,34 @@ Html5.canControlPlaybackRate = function () {
 };
 
 /**
+ * Check if we can override a video/audio elements attributes, with
+ * Object.defineProperty.
+ *
+ * @return {boolean}
+ *         - True if builtin attributes can be overriden
+ *         - False otherwise
+ */
+Html5.canOverrideAttributes = function () {
+  if (IS_IE8) {
+    return false;
+  }
+  // if we cannot overwrite the src/innerHTML property, there is no support
+  // iOS 7 safari for instance cannot do this.
+  try {
+    var noop = function noop() {};
+
+    Object.defineProperty(document_1.createElement('video'), 'src', { get: noop, set: noop });
+    Object.defineProperty(document_1.createElement('audio'), 'src', { get: noop, set: noop });
+    Object.defineProperty(document_1.createElement('video'), 'innerHTML', { get: noop, set: noop });
+    Object.defineProperty(document_1.createElement('audio'), 'innerHTML', { get: noop, set: noop });
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+};
+
+/**
  * Check to see if native `TextTrack`s are supported by this browser/device.
  *
  * @return {boolean}
@@ -65825,6 +66734,14 @@ Html5.prototype.featuresVolumeControl = Html5.canControlVolume();
  * @default {@link Html5.canControlPlaybackRate}
  */
 Html5.prototype.featuresPlaybackRate = Html5.canControlPlaybackRate();
+
+/**
+ * Boolean indicating wether the `Tech` supports the `sourceset` event.
+ *
+ * @type {boolean}
+ * @default
+ */
+Html5.prototype.featuresSourceset = Html5.canOverrideAttributes();
 
 /**
  * Boolean indicating whether the `HTML5` tech currently supports the media element
@@ -65896,7 +66813,8 @@ var mp4RE = /^video\/mp4/i;
 Html5.patchCanPlayType = function () {
 
   // Android 4.0 and above can play HLS to some extent but it reports being unable to do so
-  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX) {
+  // Firefox and Chrome report correctly
+  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX && !IS_CHROME) {
     Html5.TEST_VID.constructor.prototype.canPlayType = function (type) {
       if (type && mpegurlRE.test(type)) {
         return 'maybe';
@@ -66784,22 +67702,6 @@ var TECH_EVENTS_RETRIGGER = [
 'timeupdate',
 
 /**
- * Fires when the playing speed of the audio/video is changed
- *
- * @event Player#ratechange
- * @type {event}
- */
-/**
- * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
- *
- * @private
- * @method Player#handleTechRatechange_
- * @fires Player#ratechange
- * @listens Tech#ratechange
- */
-'ratechange',
-
-/**
  * Fires when the video's intrinsic dimensions change
  *
  * @event Player#resize
@@ -66847,6 +67749,16 @@ var TECH_EVENTS_RETRIGGER = [
  */
 'texttrackchange'];
 
+// events to queue when playback rate is zero
+// this is a hash for the sole purpose of mapping non-camel-cased event names
+// to camel-cased function names
+var TECH_EVENTS_QUEUE = {
+  canplay: 'CanPlay',
+  canplaythrough: 'CanPlayThrough',
+  playing: 'Playing',
+  seeked: 'Seeked'
+};
+
 /**
  * An instance of the `Player` class is created when any of the Video.js setup methods
  * are used to initialize a video.
@@ -66877,7 +67789,7 @@ var Player = function (_Component) {
     classCallCheck(this, Player);
 
     // Make sure tag ID exists
-    tag.id = tag.id || 'vjs_video_' + newGUID();
+    tag.id = tag.id || options.id || 'vjs_video_' + newGUID();
 
     // Set Options
     // The options argument overrides options set in the video tag
@@ -66923,9 +67835,16 @@ var Player = function (_Component) {
 
     // Run base component initializing with new options
 
-    // Turn off API access because we're loading a new tech that might load asynchronously
+    // Tracks when a tech changes the poster
     var _this = possibleConstructorReturn(this, _Component.call(this, null, options, ready));
 
+    _this.isPosterFromTech_ = false;
+
+    // Holds callback info that gets queued when playback rate is zero
+    // and a seek is happening
+    _this.queuedCallbacks_ = [];
+
+    // Turn off API access because we're loading a new tech that might load asynchronously
     _this.isReady_ = false;
 
     // Init state hasStarted_
@@ -66989,6 +67908,9 @@ var Player = function (_Component) {
     _this.scrubbing_ = false;
 
     _this.el_ = _this.createEl();
+
+    // Set default value for lastPlaybackRate
+    _this.cache_.lastPlaybackRate = _this.defaultPlaybackRate();
 
     // Make this an evented object and use `el_` as its event bus.
     evented(_this, { eventBusKey: 'el_' });
@@ -67068,8 +67990,8 @@ var Player = function (_Component) {
     // like the control bar show themselves if needed
     _this.userActive(true);
     _this.reportUserActivity();
-    _this.listenForUserActivity_();
 
+    _this.one('play', _this.listenForUserActivity_);
     _this.on('fullscreenchange', _this.handleFullscreenChange_);
     _this.on('stageclick', _this.handleStageClick_);
 
@@ -67118,6 +68040,8 @@ var Player = function (_Component) {
 
     if (this.tech_) {
       this.tech_.dispose();
+      this.isPosterFromTech_ = false;
+      this.poster_ = '';
     }
 
     if (this.playerElIngest_) {
@@ -67127,6 +68051,8 @@ var Player = function (_Component) {
     if (this.tag) {
       this.tag = null;
     }
+
+    clearCacheForPlayer(this);
 
     // the actual .el_ is removed here
     _Component.prototype.dispose.call(this);
@@ -67170,6 +68096,15 @@ var Player = function (_Component) {
       el.appendChild(tag);
 
       playerElIngest = this.playerElIngest_ = el;
+
+      // copy over properties from the video-js element
+      // ie8 doesn't support Object.keys nor hasOwnProperty
+      // on dom elements so we have to specify properties individually
+      ['autoplay', 'controls', 'crossOrigin', 'defaultMuted', 'defaultPlaybackRate', 'loop', 'muted', 'playbackRate', 'src', 'volume'].forEach(function (prop) {
+        if (typeof el[prop] !== 'undefined') {
+          tag[prop] = el[prop];
+        }
+      });
     }
 
     // set tabindex to -1 so we could focus on the player element
@@ -67535,7 +68470,9 @@ var Player = function (_Component) {
       'poster': this.poster(),
       'language': this.language(),
       'playerElIngest': this.playerElIngest_ || false,
-      'vtt.js': this.options_['vtt.js']
+      'vtt.js': this.options_['vtt.js'],
+      'canOverridePoster': !!this.options_.techCanOverridePoster,
+      'enableSourceset': this.options_.enableSourceset
     };
 
     ALL.names.forEach(function (name$$1) {
@@ -67574,14 +68511,25 @@ var Player = function (_Component) {
     TECH_EVENTS_RETRIGGER.forEach(function (event) {
       _this2.on(_this2.tech_, event, _this2['handleTech' + toTitleCase(event) + '_']);
     });
+
+    Object.keys(TECH_EVENTS_QUEUE).forEach(function (event) {
+      _this2.on(_this2.tech_, event, function (eventObj) {
+        if (_this2.tech_.playbackRate() === 0 && _this2.tech_.seeking()) {
+          _this2.queuedCallbacks_.push({
+            callback: _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'].bind(_this2),
+            event: eventObj
+          });
+          return;
+        }
+        _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'](eventObj);
+      });
+    });
+
     this.on(this.tech_, 'loadstart', this.handleTechLoadStart_);
+    this.on(this.tech_, 'sourceset', this.handleTechSourceset_);
     this.on(this.tech_, 'waiting', this.handleTechWaiting_);
-    this.on(this.tech_, 'canplay', this.handleTechCanPlay_);
-    this.on(this.tech_, 'canplaythrough', this.handleTechCanPlayThrough_);
-    this.on(this.tech_, 'playing', this.handleTechPlaying_);
     this.on(this.tech_, 'ended', this.handleTechEnded_);
     this.on(this.tech_, 'seeking', this.handleTechSeeking_);
-    this.on(this.tech_, 'seeked', this.handleTechSeeked_);
     this.on(this.tech_, 'play', this.handleTechPlay_);
     this.on(this.tech_, 'firstplay', this.handleTechFirstPlay_);
     this.on(this.tech_, 'pause', this.handleTechPause_);
@@ -67591,6 +68539,7 @@ var Player = function (_Component) {
     this.on(this.tech_, 'loadedmetadata', this.updateStyleEl_);
     this.on(this.tech_, 'posterchange', this.handleTechPosterChange_);
     this.on(this.tech_, 'textdata', this.handleTechTextData_);
+    this.on(this.tech_, 'ratechange', this.handleTechRateChange_);
 
     this.usingNativeControls(this.techGet_('controls'));
 
@@ -67634,6 +68583,13 @@ var Player = function (_Component) {
     this.tech_.dispose();
 
     this.tech_ = false;
+
+    if (this.isPosterFromTech_) {
+      this.poster_ = '';
+      this.trigger('posterchange');
+    }
+
+    this.isPosterFromTech_ = false;
   };
 
   /**
@@ -67796,6 +68752,144 @@ var Player = function (_Component) {
   };
 
   /**
+   * Update the internal source caches so that we return the correct source from
+   * `src()`, `currentSource()`, and `currentSources()`.
+   *
+   * > Note: `currentSources` will not be updated if the source that is passed in exists
+   *         in the current `currentSources` cache.
+   *
+   *
+   * @param {Tech~SourceObject} srcObj
+   *        A string or object source to update our caches to.
+   */
+
+
+  Player.prototype.updateSourceCaches_ = function updateSourceCaches_() {
+    var srcObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+
+    var src = srcObj;
+    var type = '';
+
+    if (typeof src !== 'string') {
+      src = srcObj.src;
+      type = srcObj.type;
+    }
+    // make sure all the caches are set to default values
+    // to prevent null checking
+    this.cache_.source = this.cache_.source || {};
+    this.cache_.sources = this.cache_.sources || [];
+
+    // try to get the type of the src that was passed in
+    if (src && !type) {
+      type = findMimetype(this, src);
+    }
+
+    // update `currentSource` cache always
+    this.cache_.source = { src: src, type: type };
+
+    var matchingSources = this.cache_.sources.filter(function (s) {
+      return s.src && s.src === src;
+    });
+    var sourceElSources = [];
+    var sourceEls = this.$$('source');
+    var matchingSourceEls = [];
+
+    for (var i = 0; i < sourceEls.length; i++) {
+      var sourceObj = getAttributes(sourceEls[i]);
+
+      sourceElSources.push(sourceObj);
+
+      if (sourceObj.src && sourceObj.src === src) {
+        matchingSourceEls.push(sourceObj.src);
+      }
+    }
+
+    // if we have matching source els but not matching sources
+    // the current source cache is not up to date
+    if (matchingSourceEls.length && !matchingSources.length) {
+      this.cache_.sources = sourceElSources;
+      // if we don't have matching source or source els set the
+      // sources cache to the `currentSource` cache
+    } else if (!matchingSources.length) {
+      this.cache_.sources = [this.cache_.source];
+    }
+
+    // update the tech `src` cache
+    this.cache_.src = src;
+  };
+
+  /**
+   * *EXPERIMENTAL* Fired when the source is set or changed on the {@link Tech}
+   * causing the media element to reload.
+   *
+   * It will fire for the initial source and each subsequent source.
+   * This event is a custom event from Video.js and is triggered by the {@link Tech}.
+   *
+   * The event object for this event contains a `src` property that will contain the source
+   * that was available when the event was triggered. This is generally only necessary if Video.js
+   * is switching techs while the source was being changed.
+   *
+   * It is also fired when `load` is called on the player (or media element)
+   * because the {@link https://html.spec.whatwg.org/multipage/media.html#dom-media-load|specification for `load`}
+   * says that the resource selection algorithm needs to be aborted and restarted.
+   * In this case, it is very likely that the `src` property will be set to the
+   * empty string `""` to indicate we do not know what the source will be but
+   * that it is changing.
+   *
+   * *This event is currently still experimental and may change in minor releases.*
+   * __To use this, pass `enableSourceset` option to the player.__
+   *
+   * @event Player#sourceset
+   * @type {EventTarget~Event}
+   * @prop {string} src
+   *                The source url available when the `sourceset` was triggered.
+   *                It will be an empty string if we cannot know what the source is
+   *                but know that the source will change.
+   */
+  /**
+   * Retrigger the `sourceset` event that was triggered by the {@link Tech}.
+   *
+   * @fires Player#sourceset
+   * @listens Tech#sourceset
+   * @private
+   */
+
+
+  Player.prototype.handleTechSourceset_ = function handleTechSourceset_(event) {
+    var _this4 = this;
+
+    // only update the source cache when the source
+    // was not updated using the player api
+    if (!this.changingSrc_) {
+      // update the source to the intial source right away
+      // in some cases this will be empty string
+      this.updateSourceCaches_(event.src);
+
+      // if the `sourceset` `src` was an empty string
+      // wait for a `loadstart` to update the cache to `currentSrc`.
+      // If a sourceset happens before a `loadstart`, we reset the state
+      // as this function will be called again.
+      if (!event.src) {
+        var updateCache = function updateCache(e) {
+          if (e.type !== 'sourceset') {
+            _this4.updateSourceCaches_(_this4.techGet_('currentSrc'));
+          }
+
+          _this4.tech_.off(['sourceset', 'loadstart'], updateCache);
+        };
+
+        this.tech_.one(['sourceset', 'loadstart'], updateCache);
+      }
+    }
+
+    this.trigger({
+      src: event.src,
+      type: 'sourceset'
+    });
+  };
+
+  /**
    * Add/remove the vjs-has-started class
    *
    * @fires Player#firstplay
@@ -67857,6 +68951,36 @@ var Player = function (_Component) {
   };
 
   /**
+   * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
+   *
+   * If there were any events queued while the playback rate was zero, fire
+   * those events now.
+   *
+   * @private
+   * @method Player#handleTechRateChange_
+   * @fires Player#ratechange
+   * @listens Tech#ratechange
+   */
+
+
+  Player.prototype.handleTechRateChange_ = function handleTechRateChange_() {
+    if (this.tech_.playbackRate() > 0 && this.cache_.lastPlaybackRate === 0) {
+      this.queuedCallbacks_.forEach(function (queued) {
+        return queued.callback(queued.event);
+      });
+      this.queuedCallbacks_ = [];
+    }
+    this.cache_.lastPlaybackRate = this.tech_.playbackRate();
+    /**
+     * Fires when the playing speed of the audio/video is changed
+     *
+     * @event Player#ratechange
+     * @type {event}
+     */
+    this.trigger('ratechange');
+  };
+
+  /**
    * Retrigger the `waiting` event that was triggered by the {@link Tech}.
    *
    * @fires Player#waiting
@@ -67866,7 +68990,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechWaiting_ = function handleTechWaiting_() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.addClass('vjs-waiting');
     /**
@@ -67877,7 +69001,7 @@ var Player = function (_Component) {
      */
     this.trigger('waiting');
     this.one('timeupdate', function () {
-      return _this4.removeClass('vjs-waiting');
+      return _this5.removeClass('vjs-waiting');
     });
   };
 
@@ -68287,6 +69411,8 @@ var Player = function (_Component) {
     this.ready(function () {
       if (method in allowedSetters) {
         return set$1(this.middleware_, this.tech_, method, arg);
+      } else if (method in allowedMediators) {
+        return mediate(this.middleware_, this.tech_, method, arg);
       }
 
       try {
@@ -68320,6 +69446,8 @@ var Player = function (_Component) {
 
     if (method in allowedGetters) {
       return get$1(this.middleware_, this.tech_, method);
+    } else if (method in allowedMediators) {
+      return mediate(this.middleware_, this.tech_, method);
     }
 
     // Flash likes to die and reload when you hide or reposition it.
@@ -68359,7 +69487,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.play = function play() {
-    var _this5 = this;
+    var _this6 = this;
 
     // If this is called while we have a play queued up on a loadstart, remove
     // that listener to avoid getting in a potentially bad state.
@@ -68379,8 +69507,8 @@ var Player = function (_Component) {
 
       this.playWaitingForReady_ = true;
       this.ready(function () {
-        _this5.playWaitingForReady_ = false;
-        silencePromise(_this5.play());
+        _this6.playWaitingForReady_ = false;
+        silencePromise(_this6.play());
       });
 
       // If the player/tech is ready and we have a source, we can attempt playback.
@@ -68396,8 +69524,8 @@ var Player = function (_Component) {
     } else {
 
       this.playOnLoadstart_ = function () {
-        _this5.playOnLoadstart_ = null;
-        silencePromise(_this5.play());
+        _this6.playOnLoadstart_ = null;
+        silencePromise(_this6.play());
       };
 
       this.one('loadstart', this.playOnLoadstart_);
@@ -68483,6 +69611,9 @@ var Player = function (_Component) {
 
   Player.prototype.currentTime = function currentTime(seconds) {
     if (typeof seconds !== 'undefined') {
+      if (seconds < 0) {
+        seconds = 0;
+      }
       this.techCall_('setCurrentTime', seconds);
       return;
     }
@@ -69004,7 +70135,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.selectSource = function selectSource(sources) {
-    var _this6 = this;
+    var _this7 = this;
 
     // Get only the techs specified in `techOrder` that exist and are supported by the
     // current platform
@@ -69053,7 +70184,7 @@ var Player = function (_Component) {
       var techName = _ref2[0],
           tech = _ref2[1];
 
-      if (tech.canPlaySource(source, _this6.options_[techName.toLowerCase()])) {
+      if (tech.canPlaySource(source, _this7.options_[techName.toLowerCase()])) {
         return { source: source, tech: techName };
       }
     };
@@ -69089,7 +70220,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.src = function src(source) {
-    var _this7 = this;
+    var _this8 = this;
 
     // getter usage
     if (typeof source === 'undefined') {
@@ -69110,40 +70241,42 @@ var Player = function (_Component) {
     }
 
     // intial sources
-    this.cache_.sources = sources;
     this.changingSrc_ = true;
 
-    // intial source
-    this.cache_.source = sources[0];
+    this.cache_.sources = sources;
+    this.updateSourceCaches_(sources[0]);
 
     // middlewareSource is the source after it has been changed by middleware
     setSource(this, sources[0], function (middlewareSource, mws) {
-      _this7.middleware_ = mws;
+      _this8.middleware_ = mws;
 
-      var err = _this7.src_(middlewareSource);
+      // since sourceSet is async we have to update the cache again after we select a source since
+      // the source that is selected could be out of order from the cache update above this callback.
+      _this8.cache_.sources = sources;
+      _this8.updateSourceCaches_(middlewareSource);
+
+      var err = _this8.src_(middlewareSource);
 
       if (err) {
         if (sources.length > 1) {
-          return _this7.src(sources.slice(1));
+          return _this8.src(sources.slice(1));
         }
 
+        _this8.changingSrc_ = false;
+
         // We need to wrap this in a timeout to give folks a chance to add error event handlers
-        _this7.setTimeout(function () {
+        _this8.setTimeout(function () {
           this.error({ code: 4, message: this.localize(this.options_.notSupportedMessage) });
         }, 0);
 
         // we could not find an appropriate tech, but let's still notify the delegate that this is it
         // this needs a better comment about why this is needed
-        _this7.triggerReady();
+        _this8.triggerReady();
 
         return;
       }
 
-      _this7.changingSrc_ = false;
-      // video element listed source
-      _this7.cache_.src = middlewareSource.src;
-
-      setTech(mws, _this7.tech_);
+      setTech(mws, _this8.tech_);
     });
   };
 
@@ -69163,6 +70296,8 @@ var Player = function (_Component) {
 
 
   Player.prototype.src_ = function src_(source) {
+    var _this9 = this;
+
     var sourceTech = this.selectSource([source]);
 
     if (!sourceTech) {
@@ -69171,13 +70306,16 @@ var Player = function (_Component) {
 
     if (!titleCaseEquals(sourceTech.tech, this.techName_)) {
       this.changingSrc_ = true;
-
       // load this technology with the chosen source
       this.loadTech_(sourceTech.tech, sourceTech.source);
+      this.tech_.ready(function () {
+        _this9.changingSrc_ = false;
+      });
       return false;
     }
 
     // wait until the tech is ready to set the source
+    // and set it synchronously if possible (#2326)
     this.ready(function () {
 
       // The setSource tech method was added with source handlers
@@ -69190,11 +70328,7 @@ var Player = function (_Component) {
         this.techCall_('src', source.src);
       }
 
-      if (this.options_.preload === 'auto') {
-        this.load();
-      }
-
-      // Set the source synchronously if possible (#2326)
+      this.changingSrc_ = false;
     }, true);
 
     return false;
@@ -69393,11 +70527,17 @@ var Player = function (_Component) {
       src = '';
     }
 
+    if (src === this.poster_) {
+      return;
+    }
+
     // update the internal poster variable
     this.poster_ = src;
 
     // update the tech's poster
     this.techCall_('setPoster', src);
+
+    this.isPosterFromTech_ = false;
 
     // alert components that the poster has been set
     /**
@@ -69424,11 +70564,16 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechPosterChange_ = function handleTechPosterChange_() {
-    if (!this.poster_ && this.tech_ && this.tech_.poster) {
-      this.poster_ = this.tech_.poster() || '';
+    if ((!this.poster_ || this.options_.techCanOverridePoster) && this.tech_ && this.tech_.poster) {
+      var newPoster = this.tech_.poster() || '';
 
-      // Let components know the poster has changed
-      this.trigger('posterchange');
+      if (newPoster !== this.poster_) {
+        this.poster_ = newPoster;
+        this.isPosterFromTech_ = true;
+
+        // Let components know the poster has changed
+        this.trigger('posterchange');
+      }
     }
   };
 
@@ -69778,12 +70923,14 @@ var Player = function (_Component) {
 
   Player.prototype.playbackRate = function playbackRate(rate) {
     if (rate !== undefined) {
+      // NOTE: this.cache_.lastPlaybackRate is set from the tech handler
+      // that is registered above
       this.techCall_('setPlaybackRate', rate);
       return;
     }
 
     if (this.tech_ && this.tech_.featuresPlaybackRate) {
-      return this.techGet_('playbackRate');
+      return this.cache_.lastPlaybackRate || this.techGet_('playbackRate');
     }
     return 1.0;
   };
@@ -70040,7 +71187,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.createModal = function createModal(content, options) {
-    var _this8 = this;
+    var _this10 = this;
 
     options = options || {};
     options.content = content || '';
@@ -70049,7 +71196,7 @@ var Player = function (_Component) {
 
     this.addChild(modal);
     modal.on('dispose', function () {
-      _this8.removeChild(modal);
+      _this10.removeChild(modal);
     });
 
     modal.open();
@@ -70246,6 +71393,10 @@ Player.prototype.options_ = {
   // Default message to show when a video cannot be played.
   notSupportedMessage: 'No compatible source was found for this media.'
 };
+
+if (!IS_IE8) {
+  Player.prototype.options_.children.push('resizeManager');
+}
 
 [
 /**
@@ -71038,6 +72189,19 @@ if (typeof HTMLVideoElement === 'undefined' && isReal()) {
 }
 
 /**
+ * Normalize an `id` value by trimming off a leading `#`
+ *
+ * @param   {string} id
+ *          A string, maybe with a leading `#`.
+ *
+ * @returns {string}
+ *          The string, without any leading `#`.
+ */
+var normalizeId = function normalizeId(id) {
+  return id.indexOf('#') === 0 ? id.slice(1) : id;
+};
+
+/**
  * Doubles as the main function for users to create a player instance and also
  * the main library object.
  * The `videojs` function can be used to initialize or retrieve a player.
@@ -71055,62 +72219,32 @@ if (typeof HTMLVideoElement === 'undefined' && isReal()) {
  *         A player instance
  */
 function videojs(id, options, ready) {
-  var tag = void 0;
+  var player = videojs.getPlayer(id);
 
-  // Allow for element or ID to be passed in
-  // String ID
-  if (typeof id === 'string') {
-    var players = videojs.getPlayers();
-
-    // Adjust for jQuery ID syntax
-    if (id.indexOf('#') === 0) {
-      id = id.slice(1);
+  if (player) {
+    if (options) {
+      log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
     }
-
-    // If a player instance has already been created for this ID return it.
-    if (players[id]) {
-
-      // If options or ready function are passed, warn
-      if (options) {
-        log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
-      }
-
-      if (ready) {
-        players[id].ready(ready);
-      }
-
-      return players[id];
+    if (ready) {
+      player.ready(ready);
     }
-
-    // Otherwise get element for ID
-    tag = $('#' + id);
-
-    // ID is a media element
-  } else {
-    tag = id;
+    return player;
   }
 
-  // Check for a useable element
-  // re: nodeName, could be a box div also
-  if (!tag || !tag.nodeName) {
+  var el = typeof id === 'string' ? $('#' + normalizeId(id)) : id;
+
+  if (!isEl(el)) {
     throw new TypeError('The element or ID supplied is not valid. (videojs)');
   }
 
-  // Element may have a player attr referring to an already created player instance.
-  // If so return that otherwise set up a new player below
-  if (tag.player || Player.players[tag.playerId]) {
-    return tag.player || Player.players[tag.playerId];
-  }
-
-  // Check if element is included in the DOM
-  if (isEl(tag) && !document_1.body.contains(tag)) {
+  if (!document_1.body.contains(el)) {
     log$1.warn('The element supplied is not included in the DOM');
   }
 
   options = options || {};
 
   videojs.hooks('beforesetup').forEach(function (hookFunction) {
-    var opts = hookFunction(tag, mergeOptions(options));
+    var opts = hookFunction(el, mergeOptions(options));
 
     if (!isObject(opts) || Array.isArray(opts)) {
       log$1.error('please return an object in beforesetup hooks');
@@ -71120,9 +72254,11 @@ function videojs(id, options, ready) {
     options = mergeOptions(options, opts);
   });
 
+  // We get the current "Player" component here in case an integration has
+  // replaced it with a custom player.
   var PlayerComponent = Component.getComponent('Player');
-  // If not, set up a new player
-  var player = new PlayerComponent(tag, options, ready);
+
+  player = new PlayerComponent(el, options, ready);
 
   videojs.hooks('setup').forEach(function (hookFunction) {
     return hookFunction(player);
@@ -71184,7 +72320,7 @@ videojs.hookOnce = function (type, fn) {
   videojs.hooks(type, [].concat(fn).map(function (original) {
     var wrapper = function wrapper() {
       videojs.removeHook(type, wrapper);
-      original.apply(undefined, arguments);
+      return original.apply(undefined, arguments);
     };
 
     return wrapper;
@@ -71204,14 +72340,14 @@ videojs.hookOnce = function (type, fn) {
  *         The function that was removed or undef
  */
 videojs.removeHook = function (type, fn) {
-  var index$$1 = videojs.hooks(type).indexOf(fn);
+  var index = videojs.hooks(type).indexOf(fn);
 
-  if (index$$1 <= -1) {
+  if (index <= -1) {
     return false;
   }
 
   videojs.hooks_[type] = videojs.hooks_[type].slice();
-  videojs.hooks_[type].splice(index$$1, 1);
+  videojs.hooks_[type].splice(index, 1);
 
   return true;
 };
@@ -71259,6 +72395,71 @@ videojs.options = Player.prototype.options_;
  */
 videojs.getPlayers = function () {
   return Player.players;
+};
+
+/**
+ * Get a single player based on an ID or DOM element.
+ *
+ * This is useful if you want to check if an element or ID has an associated
+ * Video.js player, but not create one if it doesn't.
+ *
+ * @param   {string|Element} id
+ *          An HTML element - `<video>`, `<audio>`, or `<video-js>` -
+ *          or a string matching the `id` of such an element.
+ *
+ * @returns {Player|undefined}
+ *          A player instance or `undefined` if there is no player instance
+ *          matching the argument.
+ */
+videojs.getPlayer = function (id) {
+  var players = Player.players;
+  var tag = void 0;
+
+  if (typeof id === 'string') {
+    var nId = normalizeId(id);
+    var player = players[nId];
+
+    if (player) {
+      return player;
+    }
+
+    tag = $('#' + nId);
+  } else {
+    tag = id;
+  }
+
+  if (isEl(tag)) {
+    var _tag = tag,
+        _player = _tag.player,
+        playerId = _tag.playerId;
+
+    // Element may have a `player` property referring to an already created
+    // player instance. If so, return that.
+
+    if (_player || players[playerId]) {
+      return _player || players[playerId];
+    }
+  }
+};
+
+/**
+ * Returns an array of all current players.
+ *
+ * @return {Array}
+ *         An array of all players. The array will be in the order that
+ *         `Object.keys` provides, which could potentially vary between
+ *         JavaScript engines.
+ *
+ */
+videojs.getAllPlayers = function () {
+  return (
+
+    // Disposed players leave a key with a `null` value, so we need to make sure
+    // we filter those out.
+    Object.keys(Player.players).map(function (k) {
+      return Player.players[k];
+    }).filter(Boolean)
+  );
 };
 
 /**
@@ -71316,7 +72517,38 @@ videojs.getTech = Tech.getTech;
  */
 videojs.registerTech = Tech.registerTech;
 
+/**
+ * Register a middleware to a source type.
+ *
+ * @param {String} type A string representing a MIME type.
+ * @param {function(player):object} middleware A middleware factory that takes a player.
+ */
 videojs.use = use;
+
+/**
+ * An object that can be returned by a middleware to signify
+ * that the middleware is being terminated.
+ *
+ * @type {object}
+ * @memberOf {videojs}
+ * @property {object} middleware.TERMINATOR
+ */
+// Object.defineProperty is not available in IE8
+if (!IS_IE8 && Object.defineProperty) {
+  Object.defineProperty(videojs, 'middleware', {
+    value: {},
+    writeable: false,
+    enumerable: true
+  });
+
+  Object.defineProperty(videojs.middleware, 'TERMINATOR', {
+    value: TERMINATOR,
+    writeable: false,
+    enumerable: true
+  });
+} else {
+  videojs.middleware = { TERMINATOR: TERMINATOR };
+}
 
 /**
  * A suite of browser and device tests from {@link browser}.
@@ -71486,9 +72718,32 @@ videojs.createTimeRange = videojs.createTimeRanges = createTimeRanges;
 videojs.formatTime = formatTime;
 
 /**
+ * Replaces format-time with a custom implementation, to be used in place of the default.
+ *
+ * @borrows format-time:setFormatTime as videojs.setFormatTime
+ *
+ * @method setFormatTime
+ *
+ * @param {Function} customFn
+ *        A custom format-time function which will be called with the current time and guide (in seconds) as arguments.
+ *        Passed fn should return a string.
+ */
+videojs.setFormatTime = setFormatTime;
+
+/**
+ * Resets format-time to the default implementation.
+ *
+ * @borrows format-time:resetFormatTime as videojs.resetFormatTime
+ *
+ * @method resetFormatTime
+ */
+videojs.resetFormatTime = resetFormatTime;
+
+/**
  * Resolve and parse the elements of a URL
  *
  * @borrows url:parseUrl as videojs.parseUrl
+ *
  */
 videojs.parseUrl = parseUrl;
 
@@ -71548,7 +72803,7 @@ videojs.trigger = trigger;
  *
  * @see https://github.com/Raynos/xhr
  */
-videojs.xhr = index;
+videojs.xhr = xhr;
 
 /**
  * TextTrack class
@@ -71730,11 +72985,11 @@ return videojs;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 
-/***/ 157:
+/***/ 292:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -71745,15 +73000,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function(root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(215)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(355)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(107), __webpack_require__(142)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(117), __webpack_require__(272)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(107), __webpack_require__(142));
+        module.exports = factory(__webpack_require__(117), __webpack_require__(272));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -72260,7 +73515,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 158:
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72268,11 +73523,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(76);
+var _button = __webpack_require__(78);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -72390,7 +73645,7 @@ exports['default'] = BigPlayButton;
 
 /***/ }),
 
-/***/ 159:
+/***/ 294:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72398,11 +73653,11 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(76);
+var _button = __webpack_require__(78);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -72495,7 +73750,7 @@ exports['default'] = CloseButton;
 
 /***/ }),
 
-/***/ 160:
+/***/ 295:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72503,15 +73758,15 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(130);
+var _trackButton = __webpack_require__(260);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(161);
+var _audioTrackMenuItem = __webpack_require__(296);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -72622,7 +73877,7 @@ exports['default'] = AudioTrackButton;
 
 /***/ }),
 
-/***/ 161:
+/***/ 296:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72630,15 +73885,15 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(112);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -72749,7 +74004,7 @@ exports['default'] = AudioTrackMenuItem;
 
 /***/ }),
 
-/***/ 162:
+/***/ 297:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72757,45 +74012,45 @@ exports['default'] = AudioTrackMenuItem;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(165);
+__webpack_require__(300);
 
-__webpack_require__(183);
+__webpack_require__(318);
 
-__webpack_require__(184);
+__webpack_require__(319);
 
-__webpack_require__(186);
+__webpack_require__(321);
 
-__webpack_require__(185);
+__webpack_require__(320);
 
-__webpack_require__(164);
+__webpack_require__(299);
 
-__webpack_require__(171);
+__webpack_require__(306);
 
-__webpack_require__(163);
+__webpack_require__(298);
 
-__webpack_require__(187);
+__webpack_require__(322);
 
-__webpack_require__(189);
+__webpack_require__(324);
 
-__webpack_require__(129);
+__webpack_require__(259);
 
-__webpack_require__(178);
+__webpack_require__(313);
 
-__webpack_require__(180);
+__webpack_require__(315);
 
-__webpack_require__(182);
+__webpack_require__(317);
 
-__webpack_require__(177);
+__webpack_require__(312);
 
-__webpack_require__(160);
+__webpack_require__(295);
 
-__webpack_require__(166);
+__webpack_require__(301);
 
-__webpack_require__(174);
+__webpack_require__(309);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -72862,7 +74117,7 @@ exports['default'] = ControlBar;
 
 /***/ }),
 
-/***/ 163:
+/***/ 298:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72870,11 +74125,11 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(76);
+var _button = __webpack_require__(78);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -72986,7 +74241,7 @@ exports['default'] = FullscreenToggle;
 
 /***/ }),
 
-/***/ 164:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72994,7 +74249,7 @@ exports['default'] = FullscreenToggle;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73096,7 +74351,7 @@ exports['default'] = LiveDisplay;
 
 /***/ }),
 
-/***/ 165:
+/***/ 300:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73104,11 +74359,11 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(76);
+var _button = __webpack_require__(78);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73236,7 +74491,7 @@ exports['default'] = PlayToggle;
 
 /***/ }),
 
-/***/ 166:
+/***/ 301:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73244,19 +74499,19 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(133);
+var _menuButton = __webpack_require__(263);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(134);
+var _menu = __webpack_require__(264);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(167);
+var _playbackRateMenuItem = __webpack_require__(302);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73479,7 +74734,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 /***/ }),
 
-/***/ 167:
+/***/ 302:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73487,11 +74742,11 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(112);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73594,7 +74849,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 /***/ }),
 
-/***/ 168:
+/***/ 303:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73602,7 +74857,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73724,7 +74979,7 @@ exports['default'] = LoadProgressBar;
 
 /***/ }),
 
-/***/ 169:
+/***/ 304:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73732,7 +74987,7 @@ exports['default'] = LoadProgressBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73740,15 +74995,15 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(121);
+var _computedStyle = __webpack_require__(128);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -73926,7 +75181,7 @@ exports['default'] = MouseTimeDisplay;
 
 /***/ }),
 
-/***/ 170:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73934,15 +75189,15 @@ exports['default'] = MouseTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -74035,7 +75290,7 @@ exports['default'] = PlayProgressBar;
 
 /***/ }),
 
-/***/ 171:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74043,13 +75298,13 @@ exports['default'] = PlayProgressBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(172);
+__webpack_require__(307);
 
-__webpack_require__(169);
+__webpack_require__(304);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -74110,7 +75365,7 @@ exports['default'] = ProgressControl;
 
 /***/ }),
 
-/***/ 172:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74118,31 +75373,31 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(137);
+var _slider = __webpack_require__(267);
 
 var _slider2 = _interopRequireDefault(_slider);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(121);
+var _computedStyle = __webpack_require__(128);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(168);
+__webpack_require__(303);
 
-__webpack_require__(170);
+__webpack_require__(305);
 
-__webpack_require__(173);
+__webpack_require__(308);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -74378,7 +75633,7 @@ exports['default'] = SeekBar;
 
 /***/ }),
 
-/***/ 173:
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74386,15 +75641,15 @@ exports['default'] = SeekBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -74485,7 +75740,7 @@ exports['default'] = TooltipProgressBar;
 
 /***/ }),
 
-/***/ 174:
+/***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74493,11 +75748,11 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(175);
+var _spacer = __webpack_require__(310);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74564,7 +75819,7 @@ exports['default'] = CustomControlSpacer;
 
 /***/ }),
 
-/***/ 175:
+/***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74572,7 +75827,7 @@ exports['default'] = CustomControlSpacer;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74636,7 +75891,7 @@ exports['default'] = Spacer;
 
 /***/ }),
 
-/***/ 176:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74644,11 +75899,11 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(116);
+var _textTrackMenuItem = __webpack_require__(123);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74729,7 +75984,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 /***/ }),
 
-/***/ 177:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74737,15 +75992,15 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(102);
+var _textTrackButton = __webpack_require__(110);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(176);
+var _captionSettingsMenuItem = __webpack_require__(311);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -74848,7 +76103,7 @@ exports['default'] = CaptionsButton;
 
 /***/ }),
 
-/***/ 178:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74856,19 +76111,19 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(102);
+var _textTrackButton = __webpack_require__(110);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(179);
+var _chaptersTrackMenuItem = __webpack_require__(314);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -75096,7 +76351,7 @@ exports['default'] = ChaptersButton;
 
 /***/ }),
 
-/***/ 179:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75104,15 +76359,15 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(104);
+var _menuItem = __webpack_require__(112);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -75212,912 +76467,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 /***/ }),
 
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.$$ = exports.$ = undefined;
-
-var _templateObject = _taggedTemplateLiteralLoose(['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.'], ['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.']);
-
-exports.isReal = isReal;
-exports.isEl = isEl;
-exports.getEl = getEl;
-exports.createEl = createEl;
-exports.textContent = textContent;
-exports.insertElFirst = insertElFirst;
-exports.getElData = getElData;
-exports.hasElData = hasElData;
-exports.removeElData = removeElData;
-exports.hasElClass = hasElClass;
-exports.addElClass = addElClass;
-exports.removeElClass = removeElClass;
-exports.toggleElClass = toggleElClass;
-exports.setElAttributes = setElAttributes;
-exports.getElAttributes = getElAttributes;
-exports.getAttribute = getAttribute;
-exports.setAttribute = setAttribute;
-exports.removeAttribute = removeAttribute;
-exports.blockTextSelection = blockTextSelection;
-exports.unblockTextSelection = unblockTextSelection;
-exports.findElPosition = findElPosition;
-exports.getPointerPosition = getPointerPosition;
-exports.isTextNode = isTextNode;
-exports.emptyEl = emptyEl;
-exports.normalizeContent = normalizeContent;
-exports.appendContent = appendContent;
-exports.insertContent = insertContent;
-
-var _document = __webpack_require__(40);
-
-var _document2 = _interopRequireDefault(_document);
-
-var _window = __webpack_require__(41);
-
-var _window2 = _interopRequireDefault(_window);
-
-var _guid = __webpack_require__(72);
-
-var Guid = _interopRequireWildcard(_guid);
-
-var _log = __webpack_require__(47);
-
-var _log2 = _interopRequireDefault(_log);
-
-var _tsml = __webpack_require__(101);
-
-var _tsml2 = _interopRequireDefault(_tsml);
-
-var _obj = __webpack_require__(45);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _taggedTemplateLiteralLoose(strings, raw) { strings.raw = raw; return strings; } /**
-                                                                                           * @file dom.js
-                                                                                           * @module dom
-                                                                                           */
-
-
-/**
- * Detect if a value is a string with any non-whitespace characters.
- *
- * @param {string} str
- *        The string to check
- *
- * @return {boolean}
- *         - True if the string is non-blank
- *         - False otherwise
- *
- */
-function isNonBlankString(str) {
-  return typeof str === 'string' && /\S/.test(str);
-}
-
-/**
- * Throws an error if the passed string has whitespace. This is used by
- * class methods to be relatively consistent with the classList API.
- *
- * @param {string} str
- *         The string to check for whitespace.
- *
- * @throws {Error}
- *         Throws an error if there is whitespace in the string.
- *
- */
-function throwIfWhitespace(str) {
-  if (/\s/.test(str)) {
-    throw new Error('class has illegal whitespace characters');
-  }
-}
-
-/**
- * Produce a regular expression for matching a className within an elements className.
- *
- * @param {string} className
- *         The className to generate the RegExp for.
- *
- * @return {RegExp}
- *         The RegExp that will check for a specific `className` in an elements
- *         className.
- */
-function classRegExp(className) {
-  return new RegExp('(^|\\s)' + className + '($|\\s)');
-}
-
-/**
- * Whether the current DOM interface appears to be real.
- *
- * @return {Boolean}
- */
-function isReal() {
-  return (
-
-    // Both document and window will never be undefined thanks to `global`.
-    _document2['default'] === _window2['default'].document &&
-
-    // In IE < 9, DOM methods return "object" as their type, so all we can
-    // confidently check is that it exists.
-    typeof _document2['default'].createElement !== 'undefined'
-  );
-}
-
-/**
- * Determines, via duck typing, whether or not a value is a DOM element.
- *
- * @param {Mixed} value
- *        The thing to check
- *
- * @return {boolean}
- *         - True if it is a DOM element
- *         - False otherwise
- */
-function isEl(value) {
-  return (0, _obj.isObject)(value) && value.nodeType === 1;
-}
-
-/**
- * Creates functions to query the DOM using a given method.
- *
- * @param {string} method
- *         The method to create the query with.
- *
- * @return {Function}
- *         The query method
- */
-function createQuerier(method) {
-  return function (selector, context) {
-    if (!isNonBlankString(selector)) {
-      return _document2['default'][method](null);
-    }
-    if (isNonBlankString(context)) {
-      context = _document2['default'].querySelector(context);
-    }
-
-    var ctx = isEl(context) ? context : _document2['default'];
-
-    return ctx[method] && ctx[method](selector);
-  };
-}
-
-/**
- * Shorthand for document.getElementById()
- * Also allows for CSS (jQuery) ID syntax. But nothing other than IDs.
- *
- * @param {string} id
- *         The id of the element to get
- *
- * @return {Element|null}
- *         Element with supplied ID or null if there wasn't one.
- */
-function getEl(id) {
-  if (id.indexOf('#') === 0) {
-    id = id.slice(1);
-  }
-
-  return _document2['default'].getElementById(id);
-}
-
-/**
- * Creates an element and applies properties.
- *
- * @param {string} [tagName='div']
- *         Name of tag to be created.
- *
- * @param {Object} [properties={}]
- *         Element properties to be applied.
- *
- * @param {Object} [attributes={}]
- *         Element attributes to be applied.
- *
- * @param {String|Element|TextNode|Array|Function} [content]
- *         Contents for the element (see: {@link dom:normalizeContent})
- *
- * @return {Element}
- *         The element that was created.
- */
-function createEl() {
-  var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
-  var properties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var content = arguments[3];
-
-  var el = _document2['default'].createElement(tagName);
-
-  Object.getOwnPropertyNames(properties).forEach(function (propName) {
-    var val = properties[propName];
-
-    // See #2176
-    // We originally were accepting both properties and attributes in the
-    // same object, but that doesn't work so well.
-    if (propName.indexOf('aria-') !== -1 || propName === 'role' || propName === 'type') {
-      _log2['default'].warn((0, _tsml2['default'])(_templateObject, propName, val));
-      el.setAttribute(propName, val);
-
-      // Handle textContent since it's not supported everywhere and we have a
-      // method for it.
-    } else if (propName === 'textContent') {
-      textContent(el, val);
-    } else {
-      el[propName] = val;
-    }
-  });
-
-  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
-    el.setAttribute(attrName, attributes[attrName]);
-  });
-
-  if (content) {
-    appendContent(el, content);
-  }
-
-  return el;
-}
-
-/**
- * Injects text into an element, replacing any existing contents entirely.
- *
- * @param {Element} el
- *        The element to add text content into
- *
- * @param {string} text
- *        The text content to add.
- *
- * @return {Element}
- *         The element with added text content.
- */
-function textContent(el, text) {
-  if (typeof el.textContent === 'undefined') {
-    el.innerText = text;
-  } else {
-    el.textContent = text;
-  }
-  return el;
-}
-
-/**
- * Insert an element as the first child node of another
- *
- * @param {Element} child
- *        Element to insert
- *
- * @param {Element} parent
- *        Element to insert child into
- *
- */
-function insertElFirst(child, parent) {
-  if (parent.firstChild) {
-    parent.insertBefore(child, parent.firstChild);
-  } else {
-    parent.appendChild(child);
-  }
-}
-
-/**
- * Element Data Store. Allows for binding data to an element without putting it directly on the element.
- * Ex. Event listeners are stored here.
- * (also from jsninja.com, slightly modified and updated for closure compiler)
- *
- * @type {Object}
- * @private
- */
-var elData = {};
-
-/*
- * Unique attribute name to store an element's guid in
- *
- * @type {string}
- * @constant
- * @private
- */
-var elIdAttr = 'vdata' + new Date().getTime();
-
-/**
- * Returns the cache object where data for an element is stored
- *
- * @param {Element} el
- *        Element to store data for.
- *
- * @return {Object}
- *         The cache object for that el that was passed in.
- */
-function getElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    id = el[elIdAttr] = Guid.newGUID();
-  }
-
-  if (!elData[id]) {
-    elData[id] = {};
-  }
-
-  return elData[id];
-}
-
-/**
- * Returns whether or not an element has cached data
- *
- * @param {Element} el
- *        Check if this element has cached data.
- *
- * @return {boolean}
- *         - True if the DOM element has cached data.
- *         - False otherwise.
- */
-function hasElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    return false;
-  }
-
-  return !!Object.getOwnPropertyNames(elData[id]).length;
-}
-
-/**
- * Delete data for the element from the cache and the guid attr from getElementById
- *
- * @param {Element} el
- *        Remove cached data for this element.
- */
-function removeElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    return;
-  }
-
-  // Remove all stored data
-  delete elData[id];
-
-  // Remove the elIdAttr property from the DOM node
-  try {
-    delete el[elIdAttr];
-  } catch (e) {
-    if (el.removeAttribute) {
-      el.removeAttribute(elIdAttr);
-    } else {
-      // IE doesn't appear to support removeAttribute on the document element
-      el[elIdAttr] = null;
-    }
-  }
-}
-
-/**
- * Check if an element has a CSS class
- *
- * @param {Element} element
- *        Element to check
- *
- * @param {string} classToCheck
- *        Class name to check for
- *
- * @return {boolean}
- *         - True if the element had the class
- *         - False otherwise.
- *
- * @throws {Error}
- *         Throws an error if `classToCheck` has white space.
- */
-function hasElClass(element, classToCheck) {
-  throwIfWhitespace(classToCheck);
-  if (element.classList) {
-    return element.classList.contains(classToCheck);
-  }
-  return classRegExp(classToCheck).test(element.className);
-}
-
-/**
- * Add a CSS class name to an element
- *
- * @param {Element} element
- *        Element to add class name to.
- *
- * @param {string} classToAdd
- *        Class name to add.
- *
- * @return {Element}
- *         The dom element with the added class name.
- */
-function addElClass(element, classToAdd) {
-  if (element.classList) {
-    element.classList.add(classToAdd);
-
-    // Don't need to `throwIfWhitespace` here because `hasElClass` will do it
-    // in the case of classList not being supported.
-  } else if (!hasElClass(element, classToAdd)) {
-    element.className = (element.className + ' ' + classToAdd).trim();
-  }
-
-  return element;
-}
-
-/**
- * Remove a CSS class name from an element
- *
- * @param {Element} element
- *        Element to remove a class name from.
- *
- * @param {string} classToRemove
- *        Class name to remove
- *
- * @return {Element}
- *         The dom element with class name removed.
- */
-function removeElClass(element, classToRemove) {
-  if (element.classList) {
-    element.classList.remove(classToRemove);
-  } else {
-    throwIfWhitespace(classToRemove);
-    element.className = element.className.split(/\s+/).filter(function (c) {
-      return c !== classToRemove;
-    }).join(' ');
-  }
-
-  return element;
-}
-
-/**
- * The callback definition for toggleElClass.
- *
- * @callback Dom~PredicateCallback
- * @param {Element} element
- *        The DOM element of the Component.
- *
- * @param {string} classToToggle
- *        The `className` that wants to be toggled
- *
- * @return {boolean|undefined}
- *         - If true the `classToToggle` will get added to `element`.
- *         - If false the `classToToggle` will get removed from `element`.
- *         - If undefined this callback will be ignored
- */
-
-/**
- * Adds or removes a CSS class name on an element depending on an optional
- * condition or the presence/absence of the class name.
- *
- * @param {Element} element
- *        The element to toggle a class name on.
- *
- * @param {string} classToToggle
- *        The class that should be toggled
- *
- * @param {boolean|PredicateCallback} [predicate]
- *        See the return value for {@link Dom~PredicateCallback}
- *
- * @return {Element}
- *         The element with a class that has been toggled.
- */
-function toggleElClass(element, classToToggle, predicate) {
-
-  // This CANNOT use `classList` internally because IE does not support the
-  // second parameter to the `classList.toggle()` method! Which is fine because
-  // `classList` will be used by the add/remove functions.
-  var has = hasElClass(element, classToToggle);
-
-  if (typeof predicate === 'function') {
-    predicate = predicate(element, classToToggle);
-  }
-
-  if (typeof predicate !== 'boolean') {
-    predicate = !has;
-  }
-
-  // If the necessary class operation matches the current state of the
-  // element, no action is required.
-  if (predicate === has) {
-    return;
-  }
-
-  if (predicate) {
-    addElClass(element, classToToggle);
-  } else {
-    removeElClass(element, classToToggle);
-  }
-
-  return element;
-}
-
-/**
- * Apply attributes to an HTML element.
- *
- * @param {Element} el
- *        Element to add attributes to.
- *
- * @param {Object} [attributes]
- *        Attributes to be applied.
- */
-function setElAttributes(el, attributes) {
-  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
-    var attrValue = attributes[attrName];
-
-    if (attrValue === null || typeof attrValue === 'undefined' || attrValue === false) {
-      el.removeAttribute(attrName);
-    } else {
-      el.setAttribute(attrName, attrValue === true ? '' : attrValue);
-    }
-  });
-}
-
-/**
- * Get an element's attribute values, as defined on the HTML tag
- * Attributes are not the same as properties. They're defined on the tag
- * or with setAttribute (which shouldn't be used with HTML)
- * This will return true or false for boolean attributes.
- *
- * @param {Element} tag
- *        Element from which to get tag attributes.
- *
- * @return {Object}
- *         All attributes of the element.
- */
-function getElAttributes(tag) {
-  var obj = {};
-
-  // known boolean attributes
-  // we can check for matching boolean properties, but older browsers
-  // won't know about HTML5 boolean attributes that we still read from
-  var knownBooleans = ',' + 'autoplay,controls,playsinline,loop,muted,default,defaultMuted' + ',';
-
-  if (tag && tag.attributes && tag.attributes.length > 0) {
-    var attrs = tag.attributes;
-
-    for (var i = attrs.length - 1; i >= 0; i--) {
-      var attrName = attrs[i].name;
-      var attrVal = attrs[i].value;
-
-      // check for known booleans
-      // the matching element property will return a value for typeof
-      if (typeof tag[attrName] === 'boolean' || knownBooleans.indexOf(',' + attrName + ',') !== -1) {
-        // the value of an included boolean attribute is typically an empty
-        // string ('') which would equal false if we just check for a false value.
-        // we also don't want support bad code like autoplay='false'
-        attrVal = attrVal !== null ? true : false;
-      }
-
-      obj[attrName] = attrVal;
-    }
-  }
-
-  return obj;
-}
-
-/**
- * Get the value of an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to get the value of
- *
- * @return {string}
- *         value of the attribute
- */
-function getAttribute(el, attribute) {
-  return el.getAttribute(attribute);
-}
-
-/**
- * Set the value of an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to set
- *
- * @param {string} value
- *        Value to set the attribute to
- */
-function setAttribute(el, attribute, value) {
-  el.setAttribute(attribute, value);
-}
-
-/**
- * Remove an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to remove
- */
-function removeAttribute(el, attribute) {
-  el.removeAttribute(attribute);
-}
-
-/**
- * Attempt to block the ability to select text while dragging controls
- */
-function blockTextSelection() {
-  _document2['default'].body.focus();
-  _document2['default'].onselectstart = function () {
-    return false;
-  };
-}
-
-/**
- * Turn off text selection blocking
- */
-function unblockTextSelection() {
-  _document2['default'].onselectstart = function () {
-    return true;
-  };
-}
-
-/**
- * The postion of a DOM element on the page.
- *
- * @typedef {Object} Dom~Position
- *
- * @property {number} left
- *           Pixels to the left
- *
- * @property {number} top
- *           Pixels on top
- */
-
-/**
- * Offset Left.
- * getBoundingClientRect technique from
- * John Resig
- *
- * @see http://ejohn.org/blog/getboundingclientrect-is-awesome/
- *
- * @param {Element} el
- *        Element from which to get offset
- *
- * @return {Dom~Position}
- *         The position of the element that was passed in.
- */
-function findElPosition(el) {
-  var box = void 0;
-
-  if (el.getBoundingClientRect && el.parentNode) {
-    box = el.getBoundingClientRect();
-  }
-
-  if (!box) {
-    return {
-      left: 0,
-      top: 0
-    };
-  }
-
-  var docEl = _document2['default'].documentElement;
-  var body = _document2['default'].body;
-
-  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-  var scrollLeft = _window2['default'].pageXOffset || body.scrollLeft;
-  var left = box.left + scrollLeft - clientLeft;
-
-  var clientTop = docEl.clientTop || body.clientTop || 0;
-  var scrollTop = _window2['default'].pageYOffset || body.scrollTop;
-  var top = box.top + scrollTop - clientTop;
-
-  // Android sometimes returns slightly off decimal values, so need to round
-  return {
-    left: Math.round(left),
-    top: Math.round(top)
-  };
-}
-
-/**
- * x and y coordinates for a dom element or mouse pointer
- *
- * @typedef {Object} Dom~Coordinates
- *
- * @property {number} x
- *           x coordinate in pixels
- *
- * @property {number} y
- *           y coordinate in pixels
- */
-
-/**
- * Get pointer position in element
- * Returns an object with x and y coordinates.
- * The base on the coordinates are the bottom left of the element.
- *
- * @param {Element} el
- *        Element on which to get the pointer position on
- *
- * @param {EventTarget~Event} event
- *        Event object
- *
- * @return {Dom~Coordinates}
- *         A Coordinates object corresponding to the mouse position.
- *
- */
-function getPointerPosition(el, event) {
-  var position = {};
-  var box = findElPosition(el);
-  var boxW = el.offsetWidth;
-  var boxH = el.offsetHeight;
-
-  var boxY = box.top;
-  var boxX = box.left;
-  var pageY = event.pageY;
-  var pageX = event.pageX;
-
-  if (event.changedTouches) {
-    pageX = event.changedTouches[0].pageX;
-    pageY = event.changedTouches[0].pageY;
-  }
-
-  position.y = Math.max(0, Math.min(1, (boxY - pageY + boxH) / boxH));
-  position.x = Math.max(0, Math.min(1, (pageX - boxX) / boxW));
-
-  return position;
-}
-
-/**
- * Determines, via duck typing, whether or not a value is a text node.
- *
- * @param {Mixed} value
- *        Check if this value is a text node.
- *
- * @return {boolean}
- *         - True if it is a text node
- *         - False otherwise
- */
-function isTextNode(value) {
-  return (0, _obj.isObject)(value) && value.nodeType === 3;
-}
-
-/**
- * Empties the contents of an element.
- *
- * @param {Element} el
- *        The element to empty children from
- *
- * @return {Element}
- *         The element with no children
- */
-function emptyEl(el) {
-  while (el.firstChild) {
-    el.removeChild(el.firstChild);
-  }
-  return el;
-}
-
-/**
- * Normalizes content for eventual insertion into the DOM.
- *
- * This allows a wide range of content definition methods, but protects
- * from falling into the trap of simply writing to `innerHTML`, which is
- * an XSS concern.
- *
- * The content for an element can be passed in multiple types and
- * combinations, whose behavior is as follows:
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        - String: Normalized into a text node.
- *        - Element/TextNode: Passed through.
- *        - Array: A one-dimensional array of strings, elements, nodes, or functions
- *          (which return single strings, elements, or nodes).
- *        - Function: If the sole argument, is expected to produce a string, element,
- *          node, or array as defined above.
- *
- * @return {Array}
- *         All of the content that was passed in normalized.
- */
-function normalizeContent(content) {
-
-  // First, invoke content if it is a function. If it produces an array,
-  // that needs to happen before normalization.
-  if (typeof content === 'function') {
-    content = content();
-  }
-
-  // Next up, normalize to an array, so one or many items can be normalized,
-  // filtered, and returned.
-  return (Array.isArray(content) ? content : [content]).map(function (value) {
-
-    // First, invoke value if it is a function to produce a new value,
-    // which will be subsequently normalized to a Node of some kind.
-    if (typeof value === 'function') {
-      value = value();
-    }
-
-    if (isEl(value) || isTextNode(value)) {
-      return value;
-    }
-
-    if (typeof value === 'string' && /\S/.test(value)) {
-      return _document2['default'].createTextNode(value);
-    }
-  }).filter(function (value) {
-    return value;
-  });
-}
-
-/**
- * Normalizes and appends content to an element.
- *
- * @param {Element} el
- *        Element to append normalized content to.
- *
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        See the `content` argument of {@link dom:normalizeContent}
- *
- * @return {Element}
- *         The element with appended normalized content.
- */
-function appendContent(el, content) {
-  normalizeContent(content).forEach(function (node) {
-    return el.appendChild(node);
-  });
-  return el;
-}
-
-/**
- * Normalizes and inserts content into an element; this is identical to
- * `appendContent()`, except it empties the element first.
- *
- * @param {Element} el
- *        Element to insert normalized content into.
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        See the `content` argument of {@link dom:normalizeContent}
- *
- * @return {Element}
- *         The element with inserted normalized content.
- *
- */
-function insertContent(el, content) {
-  return appendContent(emptyEl(el), content);
-}
-
-/**
- * Finds a single DOM element matching `selector` within the optional
- * `context` of another DOM element (defaulting to `document`).
- *
- * @param {string} selector
- *        A valid CSS selector, which will be passed to `querySelector`.
- *
- * @param {Element|String} [context=document]
- *        A DOM element within which to query. Can also be a selector
- *        string in which case the first matching element will be used
- *        as context. If missing (or no element matches selector), falls
- *        back to `document`.
- *
- * @return {Element|null}
- *         The element that was found or null.
- */
-var $ = exports.$ = createQuerier('querySelector');
-
-/**
- * Finds a all DOM elements matching `selector` within the optional
- * `context` of another DOM element (defaulting to `document`).
- *
- * @param {string} selector
- *           A valid CSS selector, which will be passed to `querySelectorAll`.
- *
- * @param {Element|String} [context=document]
- *           A DOM element within which to query. Can also be a selector
- *           string in which case the first matching element will be used
- *           as context. If missing (or no element matches selector), falls
- *           back to `document`.
- *
- * @return {NodeList}
- *         A element list of elements that were found. Will be empty if none were found.
- *
- */
-var $$ = exports.$$ = createQuerier('querySelectorAll');
-
-
-/***/ }),
-
-/***/ 180:
+/***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76125,15 +76475,15 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(102);
+var _textTrackButton = __webpack_require__(110);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -76261,7 +76611,7 @@ exports['default'] = DescriptionsButton;
 
 /***/ }),
 
-/***/ 181:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76269,11 +76619,11 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(116);
+var _textTrackMenuItem = __webpack_require__(123);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76360,7 +76710,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 /***/ }),
 
-/***/ 182:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76368,11 +76718,11 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(102);
+var _textTrackButton = __webpack_require__(110);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76455,7 +76805,7 @@ exports['default'] = SubtitlesButton;
 
 /***/ }),
 
-/***/ 183:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76463,7 +76813,7 @@ exports['default'] = SubtitlesButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76471,7 +76821,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -76571,7 +76921,7 @@ exports['default'] = CurrentTimeDisplay;
 
 /***/ }),
 
-/***/ 184:
+/***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76579,7 +76929,7 @@ exports['default'] = CurrentTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76587,7 +76937,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -76697,7 +77047,7 @@ exports['default'] = DurationDisplay;
 
 /***/ }),
 
-/***/ 185:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76705,7 +77055,7 @@ exports['default'] = DurationDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76713,7 +77063,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(59);
+var _formatTime = __webpack_require__(61);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -76819,7 +77169,7 @@ exports['default'] = RemainingTimeDisplay;
 
 /***/ }),
 
-/***/ 186:
+/***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76827,7 +77177,7 @@ exports['default'] = RemainingTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76879,7 +77229,7 @@ exports['default'] = TimeDivider;
 
 /***/ }),
 
-/***/ 187:
+/***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76887,11 +77237,11 @@ exports['default'] = TimeDivider;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(131);
+__webpack_require__(261);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -76978,7 +77328,7 @@ exports['default'] = VolumeControl;
 
 /***/ }),
 
-/***/ 188:
+/***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76986,7 +77336,7 @@ exports['default'] = VolumeControl;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77037,7 +77387,7 @@ exports['default'] = VolumeLevel;
 
 /***/ }),
 
-/***/ 189:
+/***/ 324:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77045,27 +77395,27 @@ exports['default'] = VolumeLevel;
 
 exports.__esModule = true;
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(196);
+var _popup = __webpack_require__(331);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(195);
+var _popupButton = __webpack_require__(330);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(129);
+var _muteToggle = __webpack_require__(259);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(131);
+var _volumeBar = __webpack_require__(261);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -77288,7 +77638,7 @@ exports['default'] = VolumeMenuButton;
 
 /***/ }),
 
-/***/ 190:
+/***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77296,15 +77646,15 @@ exports['default'] = VolumeMenuButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(135);
+var _modalDialog = __webpack_require__(265);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -77397,7 +77747,7 @@ exports['default'] = ErrorDisplay;
 
 /***/ }),
 
-/***/ 191:
+/***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77407,11 +77757,11 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -77505,7 +77855,7 @@ exports['default'] = extendFn;
 
 /***/ }),
 
-/***/ 192:
+/***/ 327:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77568,7 +77918,7 @@ exports['default'] = FullscreenApi;
 
 /***/ }),
 
-/***/ 193:
+/***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77576,7 +77926,7 @@ exports['default'] = FullscreenApi;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77627,7 +77977,7 @@ exports['default'] = LoadingSpinner;
 
 /***/ }),
 
-/***/ 194:
+/***/ 329:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77635,7 +77985,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(136);
+var _player = __webpack_require__(266);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -77661,7 +78011,7 @@ exports['default'] = plugin;
 
 /***/ }),
 
-/***/ 195:
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77669,11 +78019,11 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(77);
+var _clickableComponent = __webpack_require__(79);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77791,7 +78141,7 @@ exports['default'] = PopupButton;
 
 /***/ }),
 
-/***/ 196:
+/***/ 331:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77799,7 +78149,7 @@ exports['default'] = PopupButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77807,11 +78157,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -77897,7 +78247,7 @@ exports['default'] = Popup;
 
 /***/ }),
 
-/***/ 197:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77905,15 +78255,15 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(77);
+var _clickableComponent = __webpack_require__(79);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -77921,7 +78271,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -78086,7 +78436,7 @@ exports['default'] = PosterImage;
 
 /***/ }),
 
-/***/ 198:
+/***/ 333:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78099,7 +78449,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -78238,7 +78588,7 @@ exports.hasLoaded = hasLoaded;
 
 /***/ }),
 
-/***/ 199:
+/***/ 334:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78448,7 +78798,7 @@ exports['default'] = FlashRtmpDecorator;
 
 /***/ }),
 
-/***/ 200:
+/***/ 335:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78456,7 +78806,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(78);
+var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -78464,17 +78814,17 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(113);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(79);
+var _timeRanges = __webpack_require__(81);
 
-var _flashRtmp = __webpack_require__(199);
+var _flashRtmp = __webpack_require__(334);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -78482,7 +78832,7 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -79636,7 +79986,7 @@ exports['default'] = Flash;
 
 /***/ }),
 
-/***/ 201:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79646,11 +79996,11 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(78);
+var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -79658,23 +80008,23 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(105);
+var _url = __webpack_require__(113);
 
 var Url = _interopRequireWildcard(_url);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(101);
+var _tsml = __webpack_require__(109);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -79686,13 +80036,13 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -81585,7 +81935,7 @@ exports['default'] = Html5;
 
 /***/ }),
 
-/***/ 202:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81593,15 +81943,15 @@ exports['default'] = Html5;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(78);
+var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -81681,7 +82031,7 @@ exports['default'] = MediaLoader;
 
 /***/ }),
 
-/***/ 203:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81689,17 +82039,17 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(118);
+var _trackEnums = __webpack_require__(125);
 
-var _track = __webpack_require__(120);
+var _track = __webpack_require__(127);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -81818,7 +82168,7 @@ exports['default'] = AudioTrack;
 
 /***/ }),
 
-/***/ 204:
+/***/ 339:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81826,7 +82176,7 @@ exports['default'] = AudioTrack;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -81974,7 +82324,7 @@ exports['default'] = HtmlTrackElementList;
 
 /***/ }),
 
-/***/ 205:
+/***/ 340:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81982,7 +82332,7 @@ exports['default'] = HtmlTrackElementList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -81990,11 +82340,11 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(103);
+var _eventTarget = __webpack_require__(111);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(117);
+var _textTrack = __webpack_require__(124);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -82151,7 +82501,7 @@ exports['default'] = HTMLTrackElement;
 
 /***/ }),
 
-/***/ 206:
+/***/ 341:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82159,7 +82509,7 @@ exports['default'] = HTMLTrackElement;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -82311,7 +82661,7 @@ exports['default'] = TextTrackCueList;
 
 /***/ }),
 
-/***/ 207:
+/***/ 342:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82319,11 +82669,11 @@ exports['default'] = TextTrackCueList;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -82669,7 +83019,7 @@ exports['default'] = TextTrackDisplay;
 
 /***/ }),
 
-/***/ 208:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82779,7 +83129,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 /***/ }),
 
-/***/ 209:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82787,15 +83137,15 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(119);
+var _trackList = __webpack_require__(126);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -82891,7 +83241,7 @@ exports['default'] = TextTrackList;
 
 /***/ }),
 
-/***/ 210:
+/***/ 345:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82903,21 +83253,21 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
 var _dom = __webpack_require__(18);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -83500,7 +83850,7 @@ exports['default'] = TextTrackSettings;
 
 /***/ }),
 
-/***/ 211:
+/***/ 346:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83508,17 +83858,17 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(118);
+var _trackEnums = __webpack_require__(125);
 
-var _track = __webpack_require__(120);
+var _track = __webpack_require__(127);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -83636,7 +83986,1874 @@ exports['default'] = VideoTrack;
 
 /***/ }),
 
-/***/ 215:
+/***/ 347:
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * Copyright 2013 vtt.js Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// Default exports for Node. Export the extended versions of VTTCue and
+// VTTRegion in Node since we likely want the capability to convert back and
+// forth between JSON. If we don't then it's not that big of a deal since we're
+// off browser.
+
+var window = __webpack_require__(351);
+
+var vttjs = module.exports = {
+  WebVTT: __webpack_require__(348),
+  VTTCue: __webpack_require__(349),
+  VTTRegion: __webpack_require__(350)
+};
+
+window.vttjs = vttjs;
+window.WebVTT = vttjs.WebVTT;
+
+var cueShim = vttjs.VTTCue;
+var regionShim = vttjs.VTTRegion;
+var nativeVTTCue = window.VTTCue;
+var nativeVTTRegion = window.VTTRegion;
+
+vttjs.shim = function() {
+  window.VTTCue = cueShim;
+  window.VTTRegion = regionShim;
+};
+
+vttjs.restore = function() {
+  window.VTTCue = nativeVTTCue;
+  window.VTTRegion = nativeVTTRegion;
+};
+
+if (!window.VTTCue) {
+  vttjs.shim();
+}
+
+
+/***/ }),
+
+/***/ 348:
+/***/ (function(module, exports) {
+
+/**
+ * Copyright 2013 vtt.js Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
+var _objCreate = Object.create || (function() {
+  function F() {}
+  return function(o) {
+    if (arguments.length !== 1) {
+      throw new Error('Object.create shim only accepts one parameter.');
+    }
+    F.prototype = o;
+    return new F();
+  };
+})();
+
+// Creates a new ParserError object from an errorData object. The errorData
+// object should have default code and message properties. The default message
+// property can be overriden by passing in a message parameter.
+// See ParsingError.Errors below for acceptable errors.
+function ParsingError(errorData, message) {
+  this.name = "ParsingError";
+  this.code = errorData.code;
+  this.message = message || errorData.message;
+}
+ParsingError.prototype = _objCreate(Error.prototype);
+ParsingError.prototype.constructor = ParsingError;
+
+// ParsingError metadata for acceptable ParsingErrors.
+ParsingError.Errors = {
+  BadSignature: {
+    code: 0,
+    message: "Malformed WebVTT signature."
+  },
+  BadTimeStamp: {
+    code: 1,
+    message: "Malformed time stamp."
+  }
+};
+
+// Try to parse input as a time stamp.
+function parseTimeStamp(input) {
+
+  function computeSeconds(h, m, s, f) {
+    return (h | 0) * 3600 + (m | 0) * 60 + (s | 0) + (f | 0) / 1000;
+  }
+
+  var m = input.match(/^(\d+):(\d{2})(:\d{2})?\.(\d{3})/);
+  if (!m) {
+    return null;
+  }
+
+  if (m[3]) {
+    // Timestamp takes the form of [hours]:[minutes]:[seconds].[milliseconds]
+    return computeSeconds(m[1], m[2], m[3].replace(":", ""), m[4]);
+  } else if (m[1] > 59) {
+    // Timestamp takes the form of [hours]:[minutes].[milliseconds]
+    // First position is hours as it's over 59.
+    return computeSeconds(m[1], m[2], 0,  m[4]);
+  } else {
+    // Timestamp takes the form of [minutes]:[seconds].[milliseconds]
+    return computeSeconds(0, m[1], m[2], m[4]);
+  }
+}
+
+// A settings object holds key/value pairs and will ignore anything but the first
+// assignment to a specific key.
+function Settings() {
+  this.values = _objCreate(null);
+}
+
+Settings.prototype = {
+  // Only accept the first assignment to any key.
+  set: function(k, v) {
+    if (!this.get(k) && v !== "") {
+      this.values[k] = v;
+    }
+  },
+  // Return the value for a key, or a default value.
+  // If 'defaultKey' is passed then 'dflt' is assumed to be an object with
+  // a number of possible default values as properties where 'defaultKey' is
+  // the key of the property that will be chosen; otherwise it's assumed to be
+  // a single value.
+  get: function(k, dflt, defaultKey) {
+    if (defaultKey) {
+      return this.has(k) ? this.values[k] : dflt[defaultKey];
+    }
+    return this.has(k) ? this.values[k] : dflt;
+  },
+  // Check whether we have a value for a key.
+  has: function(k) {
+    return k in this.values;
+  },
+  // Accept a setting if its one of the given alternatives.
+  alt: function(k, v, a) {
+    for (var n = 0; n < a.length; ++n) {
+      if (v === a[n]) {
+        this.set(k, v);
+        break;
+      }
+    }
+  },
+  // Accept a setting if its a valid (signed) integer.
+  integer: function(k, v) {
+    if (/^-?\d+$/.test(v)) { // integer
+      this.set(k, parseInt(v, 10));
+    }
+  },
+  // Accept a setting if its a valid percentage.
+  percent: function(k, v) {
+    var m;
+    if ((m = v.match(/^([\d]{1,3})(\.[\d]*)?%$/))) {
+      v = parseFloat(v);
+      if (v >= 0 && v <= 100) {
+        this.set(k, v);
+        return true;
+      }
+    }
+    return false;
+  }
+};
+
+// Helper function to parse input into groups separated by 'groupDelim', and
+// interprete each group as a key/value pair separated by 'keyValueDelim'.
+function parseOptions(input, callback, keyValueDelim, groupDelim) {
+  var groups = groupDelim ? input.split(groupDelim) : [input];
+  for (var i in groups) {
+    if (typeof groups[i] !== "string") {
+      continue;
+    }
+    var kv = groups[i].split(keyValueDelim);
+    if (kv.length !== 2) {
+      continue;
+    }
+    var k = kv[0];
+    var v = kv[1];
+    callback(k, v);
+  }
+}
+
+function parseCue(input, cue, regionList) {
+  // Remember the original input if we need to throw an error.
+  var oInput = input;
+  // 4.1 WebVTT timestamp
+  function consumeTimeStamp() {
+    var ts = parseTimeStamp(input);
+    if (ts === null) {
+      throw new ParsingError(ParsingError.Errors.BadTimeStamp,
+                            "Malformed timestamp: " + oInput);
+    }
+    // Remove time stamp from input.
+    input = input.replace(/^[^\sa-zA-Z-]+/, "");
+    return ts;
+  }
+
+  // 4.4.2 WebVTT cue settings
+  function consumeCueSettings(input, cue) {
+    var settings = new Settings();
+
+    parseOptions(input, function (k, v) {
+      switch (k) {
+      case "region":
+        // Find the last region we parsed with the same region id.
+        for (var i = regionList.length - 1; i >= 0; i--) {
+          if (regionList[i].id === v) {
+            settings.set(k, regionList[i].region);
+            break;
+          }
+        }
+        break;
+      case "vertical":
+        settings.alt(k, v, ["rl", "lr"]);
+        break;
+      case "line":
+        var vals = v.split(","),
+            vals0 = vals[0];
+        settings.integer(k, vals0);
+        settings.percent(k, vals0) ? settings.set("snapToLines", false) : null;
+        settings.alt(k, vals0, ["auto"]);
+        if (vals.length === 2) {
+          settings.alt("lineAlign", vals[1], ["start", "middle", "end"]);
+        }
+        break;
+      case "position":
+        vals = v.split(",");
+        settings.percent(k, vals[0]);
+        if (vals.length === 2) {
+          settings.alt("positionAlign", vals[1], ["start", "middle", "end"]);
+        }
+        break;
+      case "size":
+        settings.percent(k, v);
+        break;
+      case "align":
+        settings.alt(k, v, ["start", "middle", "end", "left", "right"]);
+        break;
+      }
+    }, /:/, /\s/);
+
+    // Apply default values for any missing fields.
+    cue.region = settings.get("region", null);
+    cue.vertical = settings.get("vertical", "");
+    cue.line = settings.get("line", "auto");
+    cue.lineAlign = settings.get("lineAlign", "start");
+    cue.snapToLines = settings.get("snapToLines", true);
+    cue.size = settings.get("size", 100);
+    cue.align = settings.get("align", "middle");
+    cue.position = settings.get("position", {
+      start: 0,
+      left: 0,
+      middle: 50,
+      end: 100,
+      right: 100
+    }, cue.align);
+    cue.positionAlign = settings.get("positionAlign", {
+      start: "start",
+      left: "start",
+      middle: "middle",
+      end: "end",
+      right: "end"
+    }, cue.align);
+  }
+
+  function skipWhitespace() {
+    input = input.replace(/^\s+/, "");
+  }
+
+  // 4.1 WebVTT cue timings.
+  skipWhitespace();
+  cue.startTime = consumeTimeStamp();   // (1) collect cue start time
+  skipWhitespace();
+  if (input.substr(0, 3) !== "-->") {     // (3) next characters must match "-->"
+    throw new ParsingError(ParsingError.Errors.BadTimeStamp,
+                           "Malformed time stamp (time stamps must be separated by '-->'): " +
+                           oInput);
+  }
+  input = input.substr(3);
+  skipWhitespace();
+  cue.endTime = consumeTimeStamp();     // (5) collect cue end time
+
+  // 4.1 WebVTT cue settings list.
+  skipWhitespace();
+  consumeCueSettings(input, cue);
+}
+
+var ESCAPE = {
+  "&amp;": "&",
+  "&lt;": "<",
+  "&gt;": ">",
+  "&lrm;": "\u200e",
+  "&rlm;": "\u200f",
+  "&nbsp;": "\u00a0"
+};
+
+var TAG_NAME = {
+  c: "span",
+  i: "i",
+  b: "b",
+  u: "u",
+  ruby: "ruby",
+  rt: "rt",
+  v: "span",
+  lang: "span"
+};
+
+var TAG_ANNOTATION = {
+  v: "title",
+  lang: "lang"
+};
+
+var NEEDS_PARENT = {
+  rt: "ruby"
+};
+
+// Parse content into a document fragment.
+function parseContent(window, input) {
+  function nextToken() {
+    // Check for end-of-string.
+    if (!input) {
+      return null;
+    }
+
+    // Consume 'n' characters from the input.
+    function consume(result) {
+      input = input.substr(result.length);
+      return result;
+    }
+
+    var m = input.match(/^([^<]*)(<[^>]*>?)?/);
+    // If there is some text before the next tag, return it, otherwise return
+    // the tag.
+    return consume(m[1] ? m[1] : m[2]);
+  }
+
+  // Unescape a string 's'.
+  function unescape1(e) {
+    return ESCAPE[e];
+  }
+  function unescape(s) {
+    while ((m = s.match(/&(amp|lt|gt|lrm|rlm|nbsp);/))) {
+      s = s.replace(m[0], unescape1);
+    }
+    return s;
+  }
+
+  function shouldAdd(current, element) {
+    return !NEEDS_PARENT[element.localName] ||
+           NEEDS_PARENT[element.localName] === current.localName;
+  }
+
+  // Create an element for this tag.
+  function createElement(type, annotation) {
+    var tagName = TAG_NAME[type];
+    if (!tagName) {
+      return null;
+    }
+    var element = window.document.createElement(tagName);
+    element.localName = tagName;
+    var name = TAG_ANNOTATION[type];
+    if (name && annotation) {
+      element[name] = annotation.trim();
+    }
+    return element;
+  }
+
+  var rootDiv = window.document.createElement("div"),
+      current = rootDiv,
+      t,
+      tagStack = [];
+
+  while ((t = nextToken()) !== null) {
+    if (t[0] === '<') {
+      if (t[1] === "/") {
+        // If the closing tag matches, move back up to the parent node.
+        if (tagStack.length &&
+            tagStack[tagStack.length - 1] === t.substr(2).replace(">", "")) {
+          tagStack.pop();
+          current = current.parentNode;
+        }
+        // Otherwise just ignore the end tag.
+        continue;
+      }
+      var ts = parseTimeStamp(t.substr(1, t.length - 2));
+      var node;
+      if (ts) {
+        // Timestamps are lead nodes as well.
+        node = window.document.createProcessingInstruction("timestamp", ts);
+        current.appendChild(node);
+        continue;
+      }
+      var m = t.match(/^<([^.\s/0-9>]+)(\.[^\s\\>]+)?([^>\\]+)?(\\?)>?$/);
+      // If we can't parse the tag, skip to the next tag.
+      if (!m) {
+        continue;
+      }
+      // Try to construct an element, and ignore the tag if we couldn't.
+      node = createElement(m[1], m[3]);
+      if (!node) {
+        continue;
+      }
+      // Determine if the tag should be added based on the context of where it
+      // is placed in the cuetext.
+      if (!shouldAdd(current, node)) {
+        continue;
+      }
+      // Set the class list (as a list of classes, separated by space).
+      if (m[2]) {
+        node.className = m[2].substr(1).replace('.', ' ');
+      }
+      // Append the node to the current node, and enter the scope of the new
+      // node.
+      tagStack.push(m[1]);
+      current.appendChild(node);
+      current = node;
+      continue;
+    }
+
+    // Text nodes are leaf nodes.
+    current.appendChild(window.document.createTextNode(unescape(t)));
+  }
+
+  return rootDiv;
+}
+
+// This is a list of all the Unicode characters that have a strong
+// right-to-left category. What this means is that these characters are
+// written right-to-left for sure. It was generated by pulling all the strong
+// right-to-left characters out of the Unicode data table. That table can
+// found at: http://www.unicode.org/Public/UNIDATA/UnicodeData.txt
+var strongRTLRanges = [[0x5be, 0x5be], [0x5c0, 0x5c0], [0x5c3, 0x5c3], [0x5c6, 0x5c6],
+ [0x5d0, 0x5ea], [0x5f0, 0x5f4], [0x608, 0x608], [0x60b, 0x60b], [0x60d, 0x60d],
+ [0x61b, 0x61b], [0x61e, 0x64a], [0x66d, 0x66f], [0x671, 0x6d5], [0x6e5, 0x6e6],
+ [0x6ee, 0x6ef], [0x6fa, 0x70d], [0x70f, 0x710], [0x712, 0x72f], [0x74d, 0x7a5],
+ [0x7b1, 0x7b1], [0x7c0, 0x7ea], [0x7f4, 0x7f5], [0x7fa, 0x7fa], [0x800, 0x815],
+ [0x81a, 0x81a], [0x824, 0x824], [0x828, 0x828], [0x830, 0x83e], [0x840, 0x858],
+ [0x85e, 0x85e], [0x8a0, 0x8a0], [0x8a2, 0x8ac], [0x200f, 0x200f],
+ [0xfb1d, 0xfb1d], [0xfb1f, 0xfb28], [0xfb2a, 0xfb36], [0xfb38, 0xfb3c],
+ [0xfb3e, 0xfb3e], [0xfb40, 0xfb41], [0xfb43, 0xfb44], [0xfb46, 0xfbc1],
+ [0xfbd3, 0xfd3d], [0xfd50, 0xfd8f], [0xfd92, 0xfdc7], [0xfdf0, 0xfdfc],
+ [0xfe70, 0xfe74], [0xfe76, 0xfefc], [0x10800, 0x10805], [0x10808, 0x10808],
+ [0x1080a, 0x10835], [0x10837, 0x10838], [0x1083c, 0x1083c], [0x1083f, 0x10855],
+ [0x10857, 0x1085f], [0x10900, 0x1091b], [0x10920, 0x10939], [0x1093f, 0x1093f],
+ [0x10980, 0x109b7], [0x109be, 0x109bf], [0x10a00, 0x10a00], [0x10a10, 0x10a13],
+ [0x10a15, 0x10a17], [0x10a19, 0x10a33], [0x10a40, 0x10a47], [0x10a50, 0x10a58],
+ [0x10a60, 0x10a7f], [0x10b00, 0x10b35], [0x10b40, 0x10b55], [0x10b58, 0x10b72],
+ [0x10b78, 0x10b7f], [0x10c00, 0x10c48], [0x1ee00, 0x1ee03], [0x1ee05, 0x1ee1f],
+ [0x1ee21, 0x1ee22], [0x1ee24, 0x1ee24], [0x1ee27, 0x1ee27], [0x1ee29, 0x1ee32],
+ [0x1ee34, 0x1ee37], [0x1ee39, 0x1ee39], [0x1ee3b, 0x1ee3b], [0x1ee42, 0x1ee42],
+ [0x1ee47, 0x1ee47], [0x1ee49, 0x1ee49], [0x1ee4b, 0x1ee4b], [0x1ee4d, 0x1ee4f],
+ [0x1ee51, 0x1ee52], [0x1ee54, 0x1ee54], [0x1ee57, 0x1ee57], [0x1ee59, 0x1ee59],
+ [0x1ee5b, 0x1ee5b], [0x1ee5d, 0x1ee5d], [0x1ee5f, 0x1ee5f], [0x1ee61, 0x1ee62],
+ [0x1ee64, 0x1ee64], [0x1ee67, 0x1ee6a], [0x1ee6c, 0x1ee72], [0x1ee74, 0x1ee77],
+ [0x1ee79, 0x1ee7c], [0x1ee7e, 0x1ee7e], [0x1ee80, 0x1ee89], [0x1ee8b, 0x1ee9b],
+ [0x1eea1, 0x1eea3], [0x1eea5, 0x1eea9], [0x1eeab, 0x1eebb], [0x10fffd, 0x10fffd]];
+
+function isStrongRTLChar(charCode) {
+  for (var i = 0; i < strongRTLRanges.length; i++) {
+    var currentRange = strongRTLRanges[i];
+    if (charCode >= currentRange[0] && charCode <= currentRange[1]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function determineBidi(cueDiv) {
+  var nodeStack = [],
+      text = "",
+      charCode;
+
+  if (!cueDiv || !cueDiv.childNodes) {
+    return "ltr";
+  }
+
+  function pushNodes(nodeStack, node) {
+    for (var i = node.childNodes.length - 1; i >= 0; i--) {
+      nodeStack.push(node.childNodes[i]);
+    }
+  }
+
+  function nextTextNode(nodeStack) {
+    if (!nodeStack || !nodeStack.length) {
+      return null;
+    }
+
+    var node = nodeStack.pop(),
+        text = node.textContent || node.innerText;
+    if (text) {
+      // TODO: This should match all unicode type B characters (paragraph
+      // separator characters). See issue #115.
+      var m = text.match(/^.*(\n|\r)/);
+      if (m) {
+        nodeStack.length = 0;
+        return m[0];
+      }
+      return text;
+    }
+    if (node.tagName === "ruby") {
+      return nextTextNode(nodeStack);
+    }
+    if (node.childNodes) {
+      pushNodes(nodeStack, node);
+      return nextTextNode(nodeStack);
+    }
+  }
+
+  pushNodes(nodeStack, cueDiv);
+  while ((text = nextTextNode(nodeStack))) {
+    for (var i = 0; i < text.length; i++) {
+      charCode = text.charCodeAt(i);
+      if (isStrongRTLChar(charCode)) {
+        return "rtl";
+      }
+    }
+  }
+  return "ltr";
+}
+
+function computeLinePos(cue) {
+  if (typeof cue.line === "number" &&
+      (cue.snapToLines || (cue.line >= 0 && cue.line <= 100))) {
+    return cue.line;
+  }
+  if (!cue.track || !cue.track.textTrackList ||
+      !cue.track.textTrackList.mediaElement) {
+    return -1;
+  }
+  var track = cue.track,
+      trackList = track.textTrackList,
+      count = 0;
+  for (var i = 0; i < trackList.length && trackList[i] !== track; i++) {
+    if (trackList[i].mode === "showing") {
+      count++;
+    }
+  }
+  return ++count * -1;
+}
+
+function StyleBox() {
+}
+
+// Apply styles to a div. If there is no div passed then it defaults to the
+// div on 'this'.
+StyleBox.prototype.applyStyles = function(styles, div) {
+  div = div || this.div;
+  for (var prop in styles) {
+    if (styles.hasOwnProperty(prop)) {
+      div.style[prop] = styles[prop];
+    }
+  }
+};
+
+StyleBox.prototype.formatStyle = function(val, unit) {
+  return val === 0 ? 0 : val + unit;
+};
+
+// Constructs the computed display state of the cue (a div). Places the div
+// into the overlay which should be a block level element (usually a div).
+function CueStyleBox(window, cue, styleOptions) {
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+  var color = "rgba(255, 255, 255, 1)";
+  var backgroundColor = "rgba(0, 0, 0, 0.8)";
+
+  if (isIE8) {
+    color = "rgb(255, 255, 255)";
+    backgroundColor = "rgb(0, 0, 0)";
+  }
+
+  StyleBox.call(this);
+  this.cue = cue;
+
+  // Parse our cue's text into a DOM tree rooted at 'cueDiv'. This div will
+  // have inline positioning and will function as the cue background box.
+  this.cueDiv = parseContent(window, cue.text);
+  var styles = {
+    color: color,
+    backgroundColor: backgroundColor,
+    position: "relative",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    display: "inline"
+  };
+
+  if (!isIE8) {
+    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
+                                             : cue.vertical === "lr" ? "vertical-lr"
+                                                                     : "vertical-rl";
+    styles.unicodeBidi = "plaintext";
+  }
+  this.applyStyles(styles, this.cueDiv);
+
+  // Create an absolutely positioned div that will be used to position the cue
+  // div. Note, all WebVTT cue-setting alignments are equivalent to the CSS
+  // mirrors of them except "middle" which is "center" in CSS.
+  this.div = window.document.createElement("div");
+  styles = {
+    textAlign: cue.align === "middle" ? "center" : cue.align,
+    font: styleOptions.font,
+    whiteSpace: "pre-line",
+    position: "absolute"
+  };
+
+  if (!isIE8) {
+    styles.direction = determineBidi(this.cueDiv);
+    styles.writingMode = cue.vertical === "" ? "horizontal-tb"
+                                             : cue.vertical === "lr" ? "vertical-lr"
+                                                                     : "vertical-rl".
+    stylesunicodeBidi =  "plaintext";
+  }
+
+  this.applyStyles(styles);
+
+  this.div.appendChild(this.cueDiv);
+
+  // Calculate the distance from the reference edge of the viewport to the text
+  // position of the cue box. The reference edge will be resolved later when
+  // the box orientation styles are applied.
+  var textPos = 0;
+  switch (cue.positionAlign) {
+  case "start":
+    textPos = cue.position;
+    break;
+  case "middle":
+    textPos = cue.position - (cue.size / 2);
+    break;
+  case "end":
+    textPos = cue.position - cue.size;
+    break;
+  }
+
+  // Horizontal box orientation; textPos is the distance from the left edge of the
+  // area to the left edge of the box and cue.size is the distance extending to
+  // the right from there.
+  if (cue.vertical === "") {
+    this.applyStyles({
+      left:  this.formatStyle(textPos, "%"),
+      width: this.formatStyle(cue.size, "%")
+    });
+  // Vertical box orientation; textPos is the distance from the top edge of the
+  // area to the top edge of the box and cue.size is the height extending
+  // downwards from there.
+  } else {
+    this.applyStyles({
+      top: this.formatStyle(textPos, "%"),
+      height: this.formatStyle(cue.size, "%")
+    });
+  }
+
+  this.move = function(box) {
+    this.applyStyles({
+      top: this.formatStyle(box.top, "px"),
+      bottom: this.formatStyle(box.bottom, "px"),
+      left: this.formatStyle(box.left, "px"),
+      right: this.formatStyle(box.right, "px"),
+      height: this.formatStyle(box.height, "px"),
+      width: this.formatStyle(box.width, "px")
+    });
+  };
+}
+CueStyleBox.prototype = _objCreate(StyleBox.prototype);
+CueStyleBox.prototype.constructor = CueStyleBox;
+
+// Represents the co-ordinates of an Element in a way that we can easily
+// compute things with such as if it overlaps or intersects with another Element.
+// Can initialize it with either a StyleBox or another BoxPosition.
+function BoxPosition(obj) {
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+
+  // Either a BoxPosition was passed in and we need to copy it, or a StyleBox
+  // was passed in and we need to copy the results of 'getBoundingClientRect'
+  // as the object returned is readonly. All co-ordinate values are in reference
+  // to the viewport origin (top left).
+  var lh, height, width, top;
+  if (obj.div) {
+    height = obj.div.offsetHeight;
+    width = obj.div.offsetWidth;
+    top = obj.div.offsetTop;
+
+    var rects = (rects = obj.div.childNodes) && (rects = rects[0]) &&
+                rects.getClientRects && rects.getClientRects();
+    obj = obj.div.getBoundingClientRect();
+    // In certain cases the outter div will be slightly larger then the sum of
+    // the inner div's lines. This could be due to bold text, etc, on some platforms.
+    // In this case we should get the average line height and use that. This will
+    // result in the desired behaviour.
+    lh = rects ? Math.max((rects[0] && rects[0].height) || 0, obj.height / rects.length)
+               : 0;
+
+  }
+  this.left = obj.left;
+  this.right = obj.right;
+  this.top = obj.top || top;
+  this.height = obj.height || height;
+  this.bottom = obj.bottom || (top + (obj.height || height));
+  this.width = obj.width || width;
+  this.lineHeight = lh !== undefined ? lh : obj.lineHeight;
+
+  if (isIE8 && !this.lineHeight) {
+    this.lineHeight = 13;
+  }
+}
+
+// Move the box along a particular axis. Optionally pass in an amount to move
+// the box. If no amount is passed then the default is the line height of the
+// box.
+BoxPosition.prototype.move = function(axis, toMove) {
+  toMove = toMove !== undefined ? toMove : this.lineHeight;
+  switch (axis) {
+  case "+x":
+    this.left += toMove;
+    this.right += toMove;
+    break;
+  case "-x":
+    this.left -= toMove;
+    this.right -= toMove;
+    break;
+  case "+y":
+    this.top += toMove;
+    this.bottom += toMove;
+    break;
+  case "-y":
+    this.top -= toMove;
+    this.bottom -= toMove;
+    break;
+  }
+};
+
+// Check if this box overlaps another box, b2.
+BoxPosition.prototype.overlaps = function(b2) {
+  return this.left < b2.right &&
+         this.right > b2.left &&
+         this.top < b2.bottom &&
+         this.bottom > b2.top;
+};
+
+// Check if this box overlaps any other boxes in boxes.
+BoxPosition.prototype.overlapsAny = function(boxes) {
+  for (var i = 0; i < boxes.length; i++) {
+    if (this.overlaps(boxes[i])) {
+      return true;
+    }
+  }
+  return false;
+};
+
+// Check if this box is within another box.
+BoxPosition.prototype.within = function(container) {
+  return this.top >= container.top &&
+         this.bottom <= container.bottom &&
+         this.left >= container.left &&
+         this.right <= container.right;
+};
+
+// Check if this box is entirely within the container or it is overlapping
+// on the edge opposite of the axis direction passed. For example, if "+x" is
+// passed and the box is overlapping on the left edge of the container, then
+// return true.
+BoxPosition.prototype.overlapsOppositeAxis = function(container, axis) {
+  switch (axis) {
+  case "+x":
+    return this.left < container.left;
+  case "-x":
+    return this.right > container.right;
+  case "+y":
+    return this.top < container.top;
+  case "-y":
+    return this.bottom > container.bottom;
+  }
+};
+
+// Find the percentage of the area that this box is overlapping with another
+// box.
+BoxPosition.prototype.intersectPercentage = function(b2) {
+  var x = Math.max(0, Math.min(this.right, b2.right) - Math.max(this.left, b2.left)),
+      y = Math.max(0, Math.min(this.bottom, b2.bottom) - Math.max(this.top, b2.top)),
+      intersectArea = x * y;
+  return intersectArea / (this.height * this.width);
+};
+
+// Convert the positions from this box to CSS compatible positions using
+// the reference container's positions. This has to be done because this
+// box's positions are in reference to the viewport origin, whereas, CSS
+// values are in referecne to their respective edges.
+BoxPosition.prototype.toCSSCompatValues = function(reference) {
+  return {
+    top: this.top - reference.top,
+    bottom: reference.bottom - this.bottom,
+    left: this.left - reference.left,
+    right: reference.right - this.right,
+    height: this.height,
+    width: this.width
+  };
+};
+
+// Get an object that represents the box's position without anything extra.
+// Can pass a StyleBox, HTMLElement, or another BoxPositon.
+BoxPosition.getSimpleBoxPosition = function(obj) {
+  var height = obj.div ? obj.div.offsetHeight : obj.tagName ? obj.offsetHeight : 0;
+  var width = obj.div ? obj.div.offsetWidth : obj.tagName ? obj.offsetWidth : 0;
+  var top = obj.div ? obj.div.offsetTop : obj.tagName ? obj.offsetTop : 0;
+
+  obj = obj.div ? obj.div.getBoundingClientRect() :
+                obj.tagName ? obj.getBoundingClientRect() : obj;
+  var ret = {
+    left: obj.left,
+    right: obj.right,
+    top: obj.top || top,
+    height: obj.height || height,
+    bottom: obj.bottom || (top + (obj.height || height)),
+    width: obj.width || width
+  };
+  return ret;
+};
+
+// Move a StyleBox to its specified, or next best, position. The containerBox
+// is the box that contains the StyleBox, such as a div. boxPositions are
+// a list of other boxes that the styleBox can't overlap with.
+function moveBoxToLinePosition(window, styleBox, containerBox, boxPositions) {
+
+  // Find the best position for a cue box, b, on the video. The axis parameter
+  // is a list of axis, the order of which, it will move the box along. For example:
+  // Passing ["+x", "-x"] will move the box first along the x axis in the positive
+  // direction. If it doesn't find a good position for it there it will then move
+  // it along the x axis in the negative direction.
+  function findBestPosition(b, axis) {
+    var bestPosition,
+        specifiedPosition = new BoxPosition(b),
+        percentage = 1; // Highest possible so the first thing we get is better.
+
+    for (var i = 0; i < axis.length; i++) {
+      while (b.overlapsOppositeAxis(containerBox, axis[i]) ||
+             (b.within(containerBox) && b.overlapsAny(boxPositions))) {
+        b.move(axis[i]);
+      }
+      // We found a spot where we aren't overlapping anything. This is our
+      // best position.
+      if (b.within(containerBox)) {
+        return b;
+      }
+      var p = b.intersectPercentage(containerBox);
+      // If we're outside the container box less then we were on our last try
+      // then remember this position as the best position.
+      if (percentage > p) {
+        bestPosition = new BoxPosition(b);
+        percentage = p;
+      }
+      // Reset the box position to the specified position.
+      b = new BoxPosition(specifiedPosition);
+    }
+    return bestPosition || specifiedPosition;
+  }
+
+  var boxPosition = new BoxPosition(styleBox),
+      cue = styleBox.cue,
+      linePos = computeLinePos(cue),
+      axis = [];
+
+  // If we have a line number to align the cue to.
+  if (cue.snapToLines) {
+    var size;
+    switch (cue.vertical) {
+    case "":
+      axis = [ "+y", "-y" ];
+      size = "height";
+      break;
+    case "rl":
+      axis = [ "+x", "-x" ];
+      size = "width";
+      break;
+    case "lr":
+      axis = [ "-x", "+x" ];
+      size = "width";
+      break;
+    }
+
+    var step = boxPosition.lineHeight,
+        position = step * Math.round(linePos),
+        maxPosition = containerBox[size] + step,
+        initialAxis = axis[0];
+
+    // If the specified intial position is greater then the max position then
+    // clamp the box to the amount of steps it would take for the box to
+    // reach the max position.
+    if (Math.abs(position) > maxPosition) {
+      position = position < 0 ? -1 : 1;
+      position *= Math.ceil(maxPosition / step) * step;
+    }
+
+    // If computed line position returns negative then line numbers are
+    // relative to the bottom of the video instead of the top. Therefore, we
+    // need to increase our initial position by the length or width of the
+    // video, depending on the writing direction, and reverse our axis directions.
+    if (linePos < 0) {
+      position += cue.vertical === "" ? containerBox.height : containerBox.width;
+      axis = axis.reverse();
+    }
+
+    // Move the box to the specified position. This may not be its best
+    // position.
+    boxPosition.move(initialAxis, position);
+
+  } else {
+    // If we have a percentage line value for the cue.
+    var calculatedPercentage = (boxPosition.lineHeight / containerBox.height) * 100;
+
+    switch (cue.lineAlign) {
+    case "middle":
+      linePos -= (calculatedPercentage / 2);
+      break;
+    case "end":
+      linePos -= calculatedPercentage;
+      break;
+    }
+
+    // Apply initial line position to the cue box.
+    switch (cue.vertical) {
+    case "":
+      styleBox.applyStyles({
+        top: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    case "rl":
+      styleBox.applyStyles({
+        left: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    case "lr":
+      styleBox.applyStyles({
+        right: styleBox.formatStyle(linePos, "%")
+      });
+      break;
+    }
+
+    axis = [ "+y", "-x", "+x", "-y" ];
+
+    // Get the box position again after we've applied the specified positioning
+    // to it.
+    boxPosition = new BoxPosition(styleBox);
+  }
+
+  var bestPosition = findBestPosition(boxPosition, axis);
+  styleBox.move(bestPosition.toCSSCompatValues(containerBox));
+}
+
+function WebVTT() {
+  // Nothing
+}
+
+// Helper to allow strings to be decoded instead of the default binary utf8 data.
+WebVTT.StringDecoder = function() {
+  return {
+    decode: function(data) {
+      if (!data) {
+        return "";
+      }
+      if (typeof data !== "string") {
+        throw new Error("Error - expected string data.");
+      }
+      return decodeURIComponent(encodeURIComponent(data));
+    }
+  };
+};
+
+WebVTT.convertCueToDOMTree = function(window, cuetext) {
+  if (!window || !cuetext) {
+    return null;
+  }
+  return parseContent(window, cuetext);
+};
+
+var FONT_SIZE_PERCENT = 0.05;
+var FONT_STYLE = "sans-serif";
+var CUE_BACKGROUND_PADDING = "1.5%";
+
+// Runs the processing model over the cues and regions passed to it.
+// @param overlay A block level element (usually a div) that the computed cues
+//                and regions will be placed into.
+WebVTT.processCues = function(window, cues, overlay) {
+  if (!window || !cues || !overlay) {
+    return null;
+  }
+
+  // Remove all previous children.
+  while (overlay.firstChild) {
+    overlay.removeChild(overlay.firstChild);
+  }
+
+  var paddedOverlay = window.document.createElement("div");
+  paddedOverlay.style.position = "absolute";
+  paddedOverlay.style.left = "0";
+  paddedOverlay.style.right = "0";
+  paddedOverlay.style.top = "0";
+  paddedOverlay.style.bottom = "0";
+  paddedOverlay.style.margin = CUE_BACKGROUND_PADDING;
+  overlay.appendChild(paddedOverlay);
+
+  // Determine if we need to compute the display states of the cues. This could
+  // be the case if a cue's state has been changed since the last computation or
+  // if it has not been computed yet.
+  function shouldCompute(cues) {
+    for (var i = 0; i < cues.length; i++) {
+      if (cues[i].hasBeenReset || !cues[i].displayState) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // We don't need to recompute the cues' display states. Just reuse them.
+  if (!shouldCompute(cues)) {
+    for (var i = 0; i < cues.length; i++) {
+      paddedOverlay.appendChild(cues[i].displayState);
+    }
+    return;
+  }
+
+  var boxPositions = [],
+      containerBox = BoxPosition.getSimpleBoxPosition(paddedOverlay),
+      fontSize = Math.round(containerBox.height * FONT_SIZE_PERCENT * 100) / 100;
+  var styleOptions = {
+    font: fontSize + "px " + FONT_STYLE
+  };
+
+  (function() {
+    var styleBox, cue;
+
+    for (var i = 0; i < cues.length; i++) {
+      cue = cues[i];
+
+      // Compute the intial position and styles of the cue div.
+      styleBox = new CueStyleBox(window, cue, styleOptions);
+      paddedOverlay.appendChild(styleBox.div);
+
+      // Move the cue div to it's correct line position.
+      moveBoxToLinePosition(window, styleBox, containerBox, boxPositions);
+
+      // Remember the computed div so that we don't have to recompute it later
+      // if we don't have too.
+      cue.displayState = styleBox.div;
+
+      boxPositions.push(BoxPosition.getSimpleBoxPosition(styleBox));
+    }
+  })();
+};
+
+WebVTT.Parser = function(window, vttjs, decoder) {
+  if (!decoder) {
+    decoder = vttjs;
+    vttjs = {};
+  }
+  if (!vttjs) {
+    vttjs = {};
+  }
+
+  this.window = window;
+  this.vttjs = vttjs;
+  this.state = "INITIAL";
+  this.buffer = "";
+  this.decoder = decoder || new TextDecoder("utf8");
+  this.regionList = [];
+};
+
+WebVTT.Parser.prototype = {
+  // If the error is a ParsingError then report it to the consumer if
+  // possible. If it's not a ParsingError then throw it like normal.
+  reportOrThrowError: function(e) {
+    if (e instanceof ParsingError) {
+      this.onparsingerror && this.onparsingerror(e);
+    } else {
+      throw e;
+    }
+  },
+  parse: function (data) {
+    var self = this;
+
+    // If there is no data then we won't decode it, but will just try to parse
+    // whatever is in buffer already. This may occur in circumstances, for
+    // example when flush() is called.
+    if (data) {
+      // Try to decode the data that we received.
+      self.buffer += self.decoder.decode(data, {stream: true});
+    }
+
+    function collectNextLine() {
+      var buffer = self.buffer;
+      var pos = 0;
+      while (pos < buffer.length && buffer[pos] !== '\r' && buffer[pos] !== '\n') {
+        ++pos;
+      }
+      var line = buffer.substr(0, pos);
+      // Advance the buffer early in case we fail below.
+      if (buffer[pos] === '\r') {
+        ++pos;
+      }
+      if (buffer[pos] === '\n') {
+        ++pos;
+      }
+      self.buffer = buffer.substr(pos);
+      return line;
+    }
+
+    // 3.4 WebVTT region and WebVTT region settings syntax
+    function parseRegion(input) {
+      var settings = new Settings();
+
+      parseOptions(input, function (k, v) {
+        switch (k) {
+        case "id":
+          settings.set(k, v);
+          break;
+        case "width":
+          settings.percent(k, v);
+          break;
+        case "lines":
+          settings.integer(k, v);
+          break;
+        case "regionanchor":
+        case "viewportanchor":
+          var xy = v.split(',');
+          if (xy.length !== 2) {
+            break;
+          }
+          // We have to make sure both x and y parse, so use a temporary
+          // settings object here.
+          var anchor = new Settings();
+          anchor.percent("x", xy[0]);
+          anchor.percent("y", xy[1]);
+          if (!anchor.has("x") || !anchor.has("y")) {
+            break;
+          }
+          settings.set(k + "X", anchor.get("x"));
+          settings.set(k + "Y", anchor.get("y"));
+          break;
+        case "scroll":
+          settings.alt(k, v, ["up"]);
+          break;
+        }
+      }, /=/, /\s/);
+
+      // Create the region, using default values for any values that were not
+      // specified.
+      if (settings.has("id")) {
+        var region = new (self.vttjs.VTTRegion || self.window.VTTRegion)();
+        region.width = settings.get("width", 100);
+        region.lines = settings.get("lines", 3);
+        region.regionAnchorX = settings.get("regionanchorX", 0);
+        region.regionAnchorY = settings.get("regionanchorY", 100);
+        region.viewportAnchorX = settings.get("viewportanchorX", 0);
+        region.viewportAnchorY = settings.get("viewportanchorY", 100);
+        region.scroll = settings.get("scroll", "");
+        // Register the region.
+        self.onregion && self.onregion(region);
+        // Remember the VTTRegion for later in case we parse any VTTCues that
+        // reference it.
+        self.regionList.push({
+          id: settings.get("id"),
+          region: region
+        });
+      }
+    }
+
+    // draft-pantos-http-live-streaming-20
+    // https://tools.ietf.org/html/draft-pantos-http-live-streaming-20#section-3.5
+    // 3.5 WebVTT
+    function parseTimestampMap(input) {
+      var settings = new Settings();
+
+      parseOptions(input, function(k, v) {
+        switch(k) {
+        case "MPEGT":
+          settings.integer(k + 'S', v);
+          break;
+        case "LOCA":
+          settings.set(k + 'L', parseTimeStamp(v));
+          break;
+        }
+      }, /[^\d]:/, /,/);
+
+      self.ontimestampmap && self.ontimestampmap({
+        "MPEGTS": settings.get("MPEGTS"),
+        "LOCAL": settings.get("LOCAL")
+      });
+    }
+
+    // 3.2 WebVTT metadata header syntax
+    function parseHeader(input) {
+      if (input.match(/X-TIMESTAMP-MAP/)) {
+        // This line contains HLS X-TIMESTAMP-MAP metadata
+        parseOptions(input, function(k, v) {
+          switch(k) {
+          case "X-TIMESTAMP-MAP":
+            parseTimestampMap(v);
+            break;
+          }
+        }, /=/);
+      } else {
+        parseOptions(input, function (k, v) {
+          switch (k) {
+          case "Region":
+            // 3.3 WebVTT region metadata header syntax
+            parseRegion(v);
+            break;
+          }
+        }, /:/);
+      }
+
+    }
+
+    // 5.1 WebVTT file parsing.
+    try {
+      var line;
+      if (self.state === "INITIAL") {
+        // We can't start parsing until we have the first line.
+        if (!/\r\n|\n/.test(self.buffer)) {
+          return this;
+        }
+
+        line = collectNextLine();
+
+        var m = line.match(/^WEBVTT([ \t].*)?$/);
+        if (!m || !m[0]) {
+          throw new ParsingError(ParsingError.Errors.BadSignature);
+        }
+
+        self.state = "HEADER";
+      }
+
+      var alreadyCollectedLine = false;
+      while (self.buffer) {
+        // We can't parse a line until we have the full line.
+        if (!/\r\n|\n/.test(self.buffer)) {
+          return this;
+        }
+
+        if (!alreadyCollectedLine) {
+          line = collectNextLine();
+        } else {
+          alreadyCollectedLine = false;
+        }
+
+        switch (self.state) {
+        case "HEADER":
+          // 13-18 - Allow a header (metadata) under the WEBVTT line.
+          if (/:/.test(line)) {
+            parseHeader(line);
+          } else if (!line) {
+            // An empty line terminates the header and starts the body (cues).
+            self.state = "ID";
+          }
+          continue;
+        case "NOTE":
+          // Ignore NOTE blocks.
+          if (!line) {
+            self.state = "ID";
+          }
+          continue;
+        case "ID":
+          // Check for the start of NOTE blocks.
+          if (/^NOTE($|[ \t])/.test(line)) {
+            self.state = "NOTE";
+            break;
+          }
+          // 19-29 - Allow any number of line terminators, then initialize new cue values.
+          if (!line) {
+            continue;
+          }
+          self.cue = new (self.vttjs.VTTCue || self.window.VTTCue)(0, 0, "");
+          self.state = "CUE";
+          // 30-39 - Check if self line contains an optional identifier or timing data.
+          if (line.indexOf("-->") === -1) {
+            self.cue.id = line;
+            continue;
+          }
+          // Process line as start of a cue.
+          /*falls through*/
+        case "CUE":
+          // 40 - Collect cue timings and settings.
+          try {
+            parseCue(line, self.cue, self.regionList);
+          } catch (e) {
+            self.reportOrThrowError(e);
+            // In case of an error ignore rest of the cue.
+            self.cue = null;
+            self.state = "BADCUE";
+            continue;
+          }
+          self.state = "CUETEXT";
+          continue;
+        case "CUETEXT":
+          var hasSubstring = line.indexOf("-->") !== -1;
+          // 34 - If we have an empty line then report the cue.
+          // 35 - If we have the special substring '-->' then report the cue,
+          // but do not collect the line as we need to process the current
+          // one as a new cue.
+          if (!line || hasSubstring && (alreadyCollectedLine = true)) {
+            // We are done parsing self cue.
+            self.oncue && self.oncue(self.cue);
+            self.cue = null;
+            self.state = "ID";
+            continue;
+          }
+          if (self.cue.text) {
+            self.cue.text += "\n";
+          }
+          self.cue.text += line;
+          continue;
+        case "BADCUE": // BADCUE
+          // 54-62 - Collect and discard the remaining cue.
+          if (!line) {
+            self.state = "ID";
+          }
+          continue;
+        }
+      }
+    } catch (e) {
+      self.reportOrThrowError(e);
+
+      // If we are currently parsing a cue, report what we have.
+      if (self.state === "CUETEXT" && self.cue && self.oncue) {
+        self.oncue(self.cue);
+      }
+      self.cue = null;
+      // Enter BADWEBVTT state if header was not parsed correctly otherwise
+      // another exception occurred so enter BADCUE state.
+      self.state = self.state === "INITIAL" ? "BADWEBVTT" : "BADCUE";
+    }
+    return this;
+  },
+  flush: function () {
+    var self = this;
+    try {
+      // Finish decoding the stream.
+      self.buffer += self.decoder.decode();
+      // Synthesize the end of the current cue or region.
+      if (self.cue || self.state === "HEADER") {
+        self.buffer += "\n\n";
+        self.parse();
+      }
+      // If we've flushed, parsed, and we're still on the INITIAL state then
+      // that means we don't have enough of the stream to parse the first
+      // line.
+      if (self.state === "INITIAL") {
+        throw new ParsingError(ParsingError.Errors.BadSignature);
+      }
+    } catch(e) {
+      self.reportOrThrowError(e);
+    }
+    self.onflush && self.onflush();
+    return this;
+  }
+};
+
+module.exports = WebVTT;
+
+
+/***/ }),
+
+/***/ 349:
+/***/ (function(module, exports) {
+
+/**
+ * Copyright 2013 vtt.js Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var autoKeyword = "auto";
+var directionSetting = {
+  "": true,
+  "lr": true,
+  "rl": true
+};
+var alignSetting = {
+  "start": true,
+  "middle": true,
+  "end": true,
+  "left": true,
+  "right": true
+};
+
+function findDirectionSetting(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  var dir = directionSetting[value.toLowerCase()];
+  return dir ? value.toLowerCase() : false;
+}
+
+function findAlignSetting(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  var align = alignSetting[value.toLowerCase()];
+  return align ? value.toLowerCase() : false;
+}
+
+function extend(obj) {
+  var i = 1;
+  for (; i < arguments.length; i++) {
+    var cobj = arguments[i];
+    for (var p in cobj) {
+      obj[p] = cobj[p];
+    }
+  }
+
+  return obj;
+}
+
+function VTTCue(startTime, endTime, text) {
+  var cue = this;
+  var isIE8 = (/MSIE\s8\.0/).test(navigator.userAgent);
+  var baseObj = {};
+
+  if (isIE8) {
+    cue = document.createElement('custom');
+  } else {
+    baseObj.enumerable = true;
+  }
+
+  /**
+   * Shim implementation specific properties. These properties are not in
+   * the spec.
+   */
+
+  // Lets us know when the VTTCue's data has changed in such a way that we need
+  // to recompute its display state. This lets us compute its display state
+  // lazily.
+  cue.hasBeenReset = false;
+
+  /**
+   * VTTCue and TextTrackCue properties
+   * http://dev.w3.org/html5/webvtt/#vttcue-interface
+   */
+
+  var _id = "";
+  var _pauseOnExit = false;
+  var _startTime = startTime;
+  var _endTime = endTime;
+  var _text = text;
+  var _region = null;
+  var _vertical = "";
+  var _snapToLines = true;
+  var _line = "auto";
+  var _lineAlign = "start";
+  var _position = 50;
+  var _positionAlign = "middle";
+  var _size = 50;
+  var _align = "middle";
+
+  Object.defineProperty(cue,
+    "id", extend({}, baseObj, {
+      get: function() {
+        return _id;
+      },
+      set: function(value) {
+        _id = "" + value;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "pauseOnExit", extend({}, baseObj, {
+      get: function() {
+        return _pauseOnExit;
+      },
+      set: function(value) {
+        _pauseOnExit = !!value;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "startTime", extend({}, baseObj, {
+      get: function() {
+        return _startTime;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("Start time must be set to a number.");
+        }
+        _startTime = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "endTime", extend({}, baseObj, {
+      get: function() {
+        return _endTime;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("End time must be set to a number.");
+        }
+        _endTime = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "text", extend({}, baseObj, {
+      get: function() {
+        return _text;
+      },
+      set: function(value) {
+        _text = "" + value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "region", extend({}, baseObj, {
+      get: function() {
+        return _region;
+      },
+      set: function(value) {
+        _region = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "vertical", extend({}, baseObj, {
+      get: function() {
+        return _vertical;
+      },
+      set: function(value) {
+        var setting = findDirectionSetting(value);
+        // Have to check for false because the setting an be an empty string.
+        if (setting === false) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _vertical = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "snapToLines", extend({}, baseObj, {
+      get: function() {
+        return _snapToLines;
+      },
+      set: function(value) {
+        _snapToLines = !!value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "line", extend({}, baseObj, {
+      get: function() {
+        return _line;
+      },
+      set: function(value) {
+        if (typeof value !== "number" && value !== autoKeyword) {
+          throw new SyntaxError("An invalid number or illegal string was specified.");
+        }
+        _line = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "lineAlign", extend({}, baseObj, {
+      get: function() {
+        return _lineAlign;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _lineAlign = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "position", extend({}, baseObj, {
+      get: function() {
+        return _position;
+      },
+      set: function(value) {
+        if (value < 0 || value > 100) {
+          throw new Error("Position must be between 0 and 100.");
+        }
+        _position = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "positionAlign", extend({}, baseObj, {
+      get: function() {
+        return _positionAlign;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _positionAlign = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "size", extend({}, baseObj, {
+      get: function() {
+        return _size;
+      },
+      set: function(value) {
+        if (value < 0 || value > 100) {
+          throw new Error("Size must be between 0 and 100.");
+        }
+        _size = value;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  Object.defineProperty(cue,
+    "align", extend({}, baseObj, {
+      get: function() {
+        return _align;
+      },
+      set: function(value) {
+        var setting = findAlignSetting(value);
+        if (!setting) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _align = setting;
+        this.hasBeenReset = true;
+      }
+    }));
+
+  /**
+   * Other <track> spec defined properties
+   */
+
+  // http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#text-track-cue-display-state
+  cue.displayState = undefined;
+
+  if (isIE8) {
+    return cue;
+  }
+}
+
+/**
+ * VTTCue methods
+ */
+
+VTTCue.prototype.getCueAsHTML = function() {
+  // Assume WebVTT.convertCueToDOMTree is on the global.
+  return WebVTT.convertCueToDOMTree(window, this.text);
+};
+
+module.exports = VTTCue;
+
+
+/***/ }),
+
+/***/ 350:
+/***/ (function(module, exports) {
+
+/**
+ * Copyright 2013 vtt.js Contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+var scrollSetting = {
+  "": true,
+  "up": true
+};
+
+function findScrollSetting(value) {
+  if (typeof value !== "string") {
+    return false;
+  }
+  var scroll = scrollSetting[value.toLowerCase()];
+  return scroll ? value.toLowerCase() : false;
+}
+
+function isValidPercentValue(value) {
+  return typeof value === "number" && (value >= 0 && value <= 100);
+}
+
+// VTTRegion shim http://dev.w3.org/html5/webvtt/#vttregion-interface
+function VTTRegion() {
+  var _width = 100;
+  var _lines = 3;
+  var _regionAnchorX = 0;
+  var _regionAnchorY = 100;
+  var _viewportAnchorX = 0;
+  var _viewportAnchorY = 100;
+  var _scroll = "";
+
+  Object.defineProperties(this, {
+    "width": {
+      enumerable: true,
+      get: function() {
+        return _width;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("Width must be between 0 and 100.");
+        }
+        _width = value;
+      }
+    },
+    "lines": {
+      enumerable: true,
+      get: function() {
+        return _lines;
+      },
+      set: function(value) {
+        if (typeof value !== "number") {
+          throw new TypeError("Lines must be set to a number.");
+        }
+        _lines = value;
+      }
+    },
+    "regionAnchorY": {
+      enumerable: true,
+      get: function() {
+        return _regionAnchorY;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("RegionAnchorX must be between 0 and 100.");
+        }
+        _regionAnchorY = value;
+      }
+    },
+    "regionAnchorX": {
+      enumerable: true,
+      get: function() {
+        return _regionAnchorX;
+      },
+      set: function(value) {
+        if(!isValidPercentValue(value)) {
+          throw new Error("RegionAnchorY must be between 0 and 100.");
+        }
+        _regionAnchorX = value;
+      }
+    },
+    "viewportAnchorY": {
+      enumerable: true,
+      get: function() {
+        return _viewportAnchorY;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("ViewportAnchorY must be between 0 and 100.");
+        }
+        _viewportAnchorY = value;
+      }
+    },
+    "viewportAnchorX": {
+      enumerable: true,
+      get: function() {
+        return _viewportAnchorX;
+      },
+      set: function(value) {
+        if (!isValidPercentValue(value)) {
+          throw new Error("ViewportAnchorX must be between 0 and 100.");
+        }
+        _viewportAnchorX = value;
+      }
+    },
+    "scroll": {
+      enumerable: true,
+      get: function() {
+        return _scroll;
+      },
+      set: function(value) {
+        var setting = findScrollSetting(value);
+        // Have to check for false as an empty string is a legal value.
+        if (setting === false) {
+          throw new SyntaxError("An invalid or illegal string was specified.");
+        }
+        _scroll = setting;
+      }
+    }
+  });
+}
+
+module.exports = VTTRegion;
+
+
+/***/ }),
+
+/***/ 351:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var win;
+
+if (typeof window !== "undefined") {
+    win = window;
+} else if (typeof global !== "undefined") {
+    win = global;
+} else if (typeof self !== "undefined"){
+    win = self;
+} else {
+    win = {};
+}
+
+module.exports = win;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 355:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -83646,408 +85863,14 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 218:
+/***/ 358:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 237:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-var _angular = __webpack_require__(107);
-
-var _angular2 = _interopRequireDefault(_angular);
-
-var _jquery = __webpack_require__(50);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// VideoJS
-__webpack_require__(156);
-
-// Angular VideoJS
-__webpack_require__(157);
-
-// dropzone
-// require('dropzone/dist/dropzone.js');
-
-// Angular Media Timeline
-__webpack_require__(151);
-
-'use strict';
-
-// Define the service
-_angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
-
-  return {
-    send: function send(timelines, videoSrc, counter) {
-      var media = [];
-
-      for (var i = 0; i < timelines.length; i++) {
-        var edit = {
-          session: timelines[i].session,
-          file: videoSrc,
-          id: timelines[i].id,
-          media_url: timelines[i].media_url,
-          start: timelines[i].lines[0].events[0].start,
-          duration: timelines[i].lines[0].events[0].duration
-        };
-        media.push(edit);
-      }
-
-      // Ricompone la timelines
-      if (typeof session == 'undefined' && counter == 0) {
-        for (var i = 0; i < timelines.length; i++) {
-          var timeline = {
-            session: timelines[i].session,
-            file: videoSrc,
-            id: timelines[i].id,
-            name: timelines[i].name,
-            media_url: timelines[i].media_url,
-            data: { id: timelines[i].data.id },
-            lines: [{
-              events: [{
-                name: timelines[i].lines[0].events.name,
-                data: { id: timelines[i].lines[0].events[0].data.id },
-                start: timelines[i].lines[0].events[0].start,
-                duration: timelines[i].lines[0].events[0].duration
-              }]
-            }]
-          };
-          Timeline.addTimeline(timeline);
-        }
-      }
-
-      // console.log('---------');
-      // console.log('prima inviio');
-      // console.log(media);
-      // console.log('---------');
-
-      return $http({
-        method: 'POST',
-        url: '/api/v1/audio-edit', //url: "{{ route('categories.index') }}",
-        data: media
-      });
-    }
-  };
-}).factory('Timeline', function () {
-  var timelines = [];
-  var k = [];
-  return {
-
-    getTimelines: function getTimelines($scope) {
-
-      // Verifico se c'è un oggetto all'inizio
-      var lenght = null;
-      var start = false;
-      for (var i = 0; i < timelines.length; i++) {
-        if (timelines[i].lines[0].events[0].start == 0) {
-          start = true;
-        }
-        lenght = i + 1;
-      }
-
-      // prendo l'inizio
-      if (lenght > 0) {
-
-        var distance = timelines[0].lines[0].events[0].start;
-
-        for (var i = 0; i < timelines.length; i++) {
-          if (timelines[i].lines[0].events[0].start < distance) {
-            distance = timelines[i].lines[0].events[0].start;
-          }
-        }
-        $scope.$broadcast('startReset', distance);
-      }
-
-      return timelines;
-    },
-
-    addTimeline: function addTimeline(timeline) {
-      timelines.push(timeline);
-    },
-
-    // Convert ticks on seconds
-    tToS: function tToS(t) {
-      var s = t * 5 / 100;
-      return s;
-    }
-
-    // getCurrentPos: function () {
-    // }
-  };
-});
-
-// Define the controller
-_angular2.default.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
-  // models
-  $scope.videoData = {}; // Initialize the object
-
-  // get function from factory of the Audio service
-  // Audio.get().then(function(response) {
-  //     $scope.categories = response.data;
-  //   });
-});
-
-// Define the upload Controller
-_angular2.default.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
-  // models
-
-
-  $scope.uploadForm = function () {
-    // console.log('---------');
-    // console.log('Session token');
-    // console.log($('#token').val());
-    // console.log('---------');
-
-    // Preparo i dati da inviare sotto forma di form
-    var formData = new FormData();
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    formData.append('media', $('#media')[0].files[0]);
-    formData.append('session', $('#token').val());
-
-    // prendo il nome della cateogria e lo slug dell'applicazione
-    var app_category = $('#app_category').val();
-    var app_slug = $('#app_slug').val();
-
-    // effettuo l'invio ajax
-    $.ajax({
-      type: 'post',
-      url: '/teacher/creative-studio/' + app_category + '/' + app_slug + '/upload',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function success(response) {
-        console.log(response);
-        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
-
-        $compile(data)($scope);
-        $scope.$apply();
-      },
-      error: function error(errors) {
-        console.log(errors);
-      }
-    });
-
-    // console.log('invio dati');
-    // console.log($('#media')[0].files[0]);
-  };
-}]);
-
-// Define the video controller
-_angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
-
-  // Inizializzo la sessione
-  var init = $window.timelines;
-  var counter = 0;
-
-  if (typeof session == 'undefined' && typeof init != 'undefined') {
-    $scope.$on('vjsVideoReady', function (e, videoData) {
-      console.log('video player', videoData.player.src());
-      // salvo il player in video data
-      $scope.videoData = videoData;
-
-      // Rigenera Il video
-      Audio.send(init, $scope.videoData.player.src(), counter).then(function successCallback(response) {
-        $scope.mediaToggle = {
-          sources: [{
-            src: '/' + response.data,
-            type: 'video/mp4'
-          }]
-        };
-        counter = 1;
-      });
-    });
-  }
-
-  $scope.$on('timelineChanged', function (e, timeline) {
-    // console.log('-----');
-    // console.log('timelineChanged Event Before Send');
-    // console.log(timeline);
-    // console.log('-----');
-
-    var timelines = Timeline.getTimelines($scope);
-    Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
-      // console.log(timelines);
-      // console.log(response.data[2]);
-      // console.log('-------');
-      console.log('DEBUG');
-      console.log(response);
-      console.log('-------');
-      $scope.mediaToggle = {
-        sources: [{
-          src: '/' + response.data,
-          type: 'video/mp4'
-        }]
-      };
-    });
-  });
-
-  //listen for when the vjs-media object changes
-  $scope.$on('vjsVideoReady', function (e, videoData) {
-    console.log('video player', videoData.player.src());
-
-    // salvo il player in video data
-    $scope.videoData = videoData;
-
-    $scope.editorPlay = function () {
-      videoData.player.trigger('loadstart');
-      var media = Timeline.getTimelines($scope);
-      videoData.player.play();
-    };
-
-    $scope.editorPause = function () {
-      videoData.player.pause();
-    };
-
-    $scope.editorStop = function () {
-      videoData.player.pause();
-      videoData.player.currentTime(0);
-    };
-
-    $scope.editorRewind = function () {
-      videoData.player.pause();
-      var now = videoData.player.currentTime();
-      videoData.player.currentTime(now - 2);
-    };
-
-    $scope.editorForward = function () {
-      videoData.player.pause();
-      var now = videoData.player.currentTime();
-      videoData.player.currentTime(now + 2);
-    };
-
-    videoData.player.on('timeupdate', function () {
-      var time = {
-        time: this.currentTime()
-      };
-      $scope.$broadcast('editorPlay', time);
-    });
-    //}
-  });
-}]);
-
-_angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
-  $scope.tick = 0;
-  $scope.disable = false;
-  $scope.timelines = Timeline.getTimelines($scope);
-
-  // this force start always from the first position
-  $scope.$on('startReset', function (e, distance) {
-    $scope.$apply(function () {
-      $scope.tick = distance;
-    });
-  });
-
-  $scope.$on('editorPlay', function (e, data) {
-    $scope.$apply(function () {
-      $scope.tick = data.time * 100 / 5;
-    });
-  });
-
-  $scope.onTickChange = function (tick) {
-    console.log(tick);
-  };
-
-  $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
-    // convert tick to s
-    var newStartTime = Timeline.tToS(newStartTick);
-    var data = {
-      timelineData: timelineData,
-      eventData: eventData,
-      newStartTime: newStartTime,
-      newStartTick: newStartTick
-    };
-    Timeline.getTimelines($scope);
-    $scope.$emit('timelineChanged', data);
-  };
-
-  $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
-    // convert tick to s
-    var newDurationS = Timeline.tToS(newDuration);
-    var data = {
-      timelineData: timelineData,
-      eventData: eventData,
-      newDuration: newDuration,
-      newDurationS: newDurationS
-    };
-    $scope.$emit('timelineChanged', data);
-  };
-
-  $scope.changeTick = function (ticks) {
-    $scope.tick = ticks;
-  };
-});
-
-_angular2.default.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
-
-  // Aggiunge un elemento dalla libreria alla timeline
-  $scope.addElement = function (id, title, duration, url) {
-    // console.log(url);
-    var d = duration * 100 / 5;
-    if (typeof session == 'undefined') {
-      console.log('non trovata');
-      var token = $window.token;
-    } else {
-      var token = session.token;
-    }
-
-    var timeline = {
-      session: token,
-      file: $scope.videoData.player.src(),
-      id: new Date().getTime(),
-      name: title,
-      media_url: url,
-      data: { id: title + '-guid' },
-      lines: [{
-        events: [{
-          name: 'animation' + id,
-          data: { id: 'animation' + id + '-guid' },
-          start: 0,
-          duration: d
-        }]
-      }]
-    };
-    Timeline.addTimeline(timeline);
-    Timeline.getTimelines($scope);
-    $scope.$emit('timelineChanged', timeline);
-  };
-});
-
-_angular2.default.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
-  $scope.feedbackData = {};
-
-  $scope.setPositive = function () {
-    $scope.feedbackData.status = 'positive';
-  };
-
-  $scope.setNegative = function () {
-    $scope.feedbackData.status = 'negative';
-  };
-
-  $scope.sendFeedback = function () {
-    console.log($scope.feedbackData);
-    Feedback.send($scope.feedbackData);
-  };
-});
-
-// Define the Application
-var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(50)))
-
-/***/ }),
-
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -84063,27 +85886,27 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(72);
+var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(73);
+var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -85886,7 +87709,7 @@ exports['default'] = Component;
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(218);
+var minDoc = __webpack_require__(358);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -85900,7 +87723,7 @@ if (typeof document !== 'undefined') {
     module.exports = doccy;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 
@@ -85917,11 +87740,405 @@ if (typeof document !== 'undefined') {
     module.exports = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 
-/***/ 43:
+/***/ 438:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var _angular = __webpack_require__(117);
+
+var _angular2 = _interopRequireDefault(_angular);
+
+var _jquery = __webpack_require__(53);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// VideoJS
+__webpack_require__(287);
+
+// Angular VideoJS
+__webpack_require__(292);
+
+// dropzone
+// require('dropzone/dist/dropzone.js');
+
+// Angular Media Timeline
+__webpack_require__(281);
+
+'use strict';
+
+// Define the service
+_angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
+
+  return {
+    send: function send(timelines, videoSrc, counter) {
+      var media = [];
+
+      for (var i = 0; i < timelines.length; i++) {
+        var edit = {
+          session: timelines[i].session,
+          file: videoSrc,
+          id: timelines[i].id,
+          media_url: timelines[i].media_url,
+          start: timelines[i].lines[0].events[0].start,
+          duration: timelines[i].lines[0].events[0].duration
+        };
+        media.push(edit);
+      }
+
+      // Ricompone la timelines
+      if (typeof session == 'undefined' && counter == 0) {
+        for (var i = 0; i < timelines.length; i++) {
+          var timeline = {
+            session: timelines[i].session,
+            file: videoSrc,
+            id: timelines[i].id,
+            name: timelines[i].name,
+            media_url: timelines[i].media_url,
+            data: { id: timelines[i].data.id },
+            lines: [{
+              events: [{
+                name: timelines[i].lines[0].events.name,
+                data: { id: timelines[i].lines[0].events[0].data.id },
+                start: timelines[i].lines[0].events[0].start,
+                duration: timelines[i].lines[0].events[0].duration
+              }]
+            }]
+          };
+          Timeline.addTimeline(timeline);
+        }
+      }
+
+      // console.log('---------');
+      // console.log('prima inviio');
+      // console.log(media);
+      // console.log('---------');
+
+      return $http({
+        method: 'POST',
+        url: '/api/v1/audio-edit', //url: "{{ route('categories.index') }}",
+        data: media
+      });
+    }
+  };
+}).factory('Timeline', function () {
+  var timelines = [];
+  var k = [];
+  return {
+
+    getTimelines: function getTimelines($scope) {
+
+      // Verifico se c'è un oggetto all'inizio
+      var lenght = null;
+      var start = false;
+      for (var i = 0; i < timelines.length; i++) {
+        if (timelines[i].lines[0].events[0].start == 0) {
+          start = true;
+        }
+        lenght = i + 1;
+      }
+
+      // prendo l'inizio
+      if (lenght > 0) {
+
+        var distance = timelines[0].lines[0].events[0].start;
+
+        for (var i = 0; i < timelines.length; i++) {
+          if (timelines[i].lines[0].events[0].start < distance) {
+            distance = timelines[i].lines[0].events[0].start;
+          }
+        }
+        $scope.$broadcast('startReset', distance);
+      }
+
+      return timelines;
+    },
+
+    addTimeline: function addTimeline(timeline) {
+      timelines.push(timeline);
+    },
+
+    // Convert ticks on seconds
+    tToS: function tToS(t) {
+      var s = t * 5 / 100;
+      return s;
+    }
+
+    // getCurrentPos: function () {
+    // }
+  };
+});
+
+// Define the controller
+_angular2.default.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
+  // models
+  $scope.videoData = {}; // Initialize the object
+
+  // get function from factory of the Audio service
+  // Audio.get().then(function(response) {
+  //     $scope.categories = response.data;
+  //   });
+});
+
+// Define the upload Controller
+_angular2.default.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
+  // models
+
+
+  $scope.uploadForm = function () {
+    // console.log('---------');
+    // console.log('Session token');
+    // console.log($('#token').val());
+    // console.log('---------');
+
+    // Preparo i dati da inviare sotto forma di form
+    var formData = new FormData();
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    formData.append('media', $('#media')[0].files[0]);
+    formData.append('session', $('#token').val());
+
+    // prendo il nome della cateogria e lo slug dell'applicazione
+    var app_category = $('#app_category').val();
+    var app_slug = $('#app_slug').val();
+
+    // effettuo l'invio ajax
+    $.ajax({
+      type: 'post',
+      url: '/teacher/creative-studio/' + app_category + '/' + app_slug + '/upload',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(response) {
+        console.log(response);
+        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
+
+        $compile(data)($scope);
+        $scope.$apply();
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+
+    // console.log('invio dati');
+    // console.log($('#media')[0].files[0]);
+  };
+}]);
+
+// Define the video controller
+_angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
+
+  // Inizializzo la sessione
+  var init = $window.timelines;
+  var counter = 0;
+
+  if (typeof session == 'undefined' && typeof init != 'undefined') {
+    $scope.$on('vjsVideoReady', function (e, videoData) {
+      console.log('video player', videoData.player.src());
+      // salvo il player in video data
+      $scope.videoData = videoData;
+
+      // Rigenera Il video
+      Audio.send(init, $scope.videoData.player.src(), counter).then(function successCallback(response) {
+        $scope.mediaToggle = {
+          sources: [{
+            src: '/' + response.data,
+            type: 'video/mp4'
+          }]
+        };
+        counter = 1;
+      });
+    });
+  }
+
+  $scope.$on('timelineChanged', function (e, timeline) {
+    // console.log('-----');
+    // console.log('timelineChanged Event Before Send');
+    // console.log(timeline);
+    // console.log('-----');
+
+    var timelines = Timeline.getTimelines($scope);
+    Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
+      // console.log(timelines);
+      // console.log(response.data[2]);
+      // console.log('-------');
+      console.log('DEBUG');
+      console.log(response);
+      console.log('-------');
+      $scope.mediaToggle = {
+        sources: [{
+          src: '/' + response.data,
+          type: 'video/mp4'
+        }]
+      };
+    });
+  });
+
+  //listen for when the vjs-media object changes
+  $scope.$on('vjsVideoReady', function (e, videoData) {
+    console.log('video player', videoData.player.src());
+
+    // salvo il player in video data
+    $scope.videoData = videoData;
+
+    $scope.editorPlay = function () {
+      videoData.player.trigger('loadstart');
+      var media = Timeline.getTimelines($scope);
+      videoData.player.play();
+    };
+
+    $scope.editorPause = function () {
+      videoData.player.pause();
+    };
+
+    $scope.editorStop = function () {
+      videoData.player.pause();
+      videoData.player.currentTime(0);
+    };
+
+    $scope.editorRewind = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now - 2);
+    };
+
+    $scope.editorForward = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now + 2);
+    };
+
+    videoData.player.on('timeupdate', function () {
+      var time = {
+        time: this.currentTime()
+      };
+      $scope.$broadcast('editorPlay', time);
+    });
+    //}
+  });
+}]);
+
+_angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
+  $scope.tick = 0;
+  $scope.disable = false;
+  $scope.timelines = Timeline.getTimelines($scope);
+
+  // this force start always from the first position
+  $scope.$on('startReset', function (e, distance) {
+    $scope.$apply(function () {
+      $scope.tick = distance;
+    });
+  });
+
+  $scope.$on('editorPlay', function (e, data) {
+    $scope.$apply(function () {
+      $scope.tick = data.time * 100 / 5;
+    });
+  });
+
+  $scope.onTickChange = function (tick) {
+    console.log(tick);
+  };
+
+  $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
+    // convert tick to s
+    var newStartTime = Timeline.tToS(newStartTick);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newStartTime: newStartTime,
+      newStartTick: newStartTick
+    };
+    Timeline.getTimelines($scope);
+    $scope.$emit('timelineChanged', data);
+  };
+
+  $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
+    // convert tick to s
+    var newDurationS = Timeline.tToS(newDuration);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newDuration: newDuration,
+      newDurationS: newDurationS
+    };
+    $scope.$emit('timelineChanged', data);
+  };
+
+  $scope.changeTick = function (ticks) {
+    $scope.tick = ticks;
+  };
+});
+
+_angular2.default.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
+
+  // Aggiunge un elemento dalla libreria alla timeline
+  $scope.addElement = function (id, title, duration, url) {
+    // console.log(url);
+    var d = duration * 100 / 5;
+    if (typeof session == 'undefined') {
+      console.log('non trovata');
+      var token = $window.token;
+    } else {
+      var token = session.token;
+    }
+
+    var timeline = {
+      session: token,
+      file: $scope.videoData.player.src(),
+      id: new Date().getTime(),
+      name: title,
+      media_url: url,
+      data: { id: title + '-guid' },
+      lines: [{
+        events: [{
+          name: 'animation' + id,
+          data: { id: 'animation' + id + '-guid' },
+          start: 0,
+          duration: d
+        }]
+      }]
+    };
+    Timeline.addTimeline(timeline);
+    Timeline.getTimelines($scope);
+    $scope.$emit('timelineChanged', timeline);
+  };
+});
+
+_angular2.default.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
+  $scope.feedbackData = {};
+
+  $scope.setPositive = function () {
+    $scope.feedbackData.status = 'positive';
+  };
+
+  $scope.setNegative = function () {
+    $scope.feedbackData.status = 'negative';
+  };
+
+  $scope.sendFeedback = function () {
+    console.log($scope.feedbackData);
+    Feedback.send($scope.feedbackData);
+  };
+});
+
+// Define the Application
+var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
+
+/***/ }),
+
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86034,7 +88251,7 @@ var BACKGROUND_SIZE_SUPPORTED = exports.BACKGROUND_SIZE_SUPPORTED = Dom.isReal()
 
 /***/ }),
 
-/***/ 45:
+/***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86194,7 +88411,7 @@ function isPlain(value) {
 
 /***/ }),
 
-/***/ 47:
+/***/ 48:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86207,9 +88424,9 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _browser = __webpack_require__(43);
+var _browser = __webpack_require__(45);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -86342,7 +88559,7 @@ exports['default'] = log;
 
 /***/ }),
 
-/***/ 57:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86351,7 +88568,7 @@ exports['default'] = log;
 exports.__esModule = true;
 exports['default'] = mergeOptions;
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 /**
  * Deep-merge one or more options objects, recursively merging **only** plain
@@ -86398,7 +88615,7 @@ function mergeOptions() {
 
 /***/ }),
 
-/***/ 58:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86415,11 +88632,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(72);
+var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -86892,15 +89109,7 @@ function one(elem, type, fn) {
 
 /***/ }),
 
-/***/ 587:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(237);
-
-
-/***/ }),
-
-/***/ 59:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86960,7 +89169,15 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 72:
+/***/ 725:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(438);
+
+
+/***/ }),
+
+/***/ 75:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86992,7 +89209,7 @@ function newGUID() {
 
 /***/ }),
 
-/***/ 73:
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87026,28 +89243,7 @@ exports['default'] = toTitleCase;
 
 /***/ }),
 
-/***/ 74:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var win;
-
-if (typeof window !== "undefined") {
-    win = window;
-} else if (typeof global !== "undefined") {
-    win = global;
-} else if (typeof self !== "undefined"){
-    win = self;
-} else {
-    win = {};
-}
-
-module.exports = win;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
-
-/***/ }),
-
-/***/ 75:
+/***/ 77:
 /***/ (function(module, exports) {
 
 module.exports = isFunction
@@ -87069,7 +89265,7 @@ function isFunction (fn) {
 
 /***/ }),
 
-/***/ 76:
+/***/ 78:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87077,19 +89273,19 @@ function isFunction (fn) {
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(77);
+var _clickableComponent = __webpack_require__(79);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -87253,7 +89449,7 @@ exports['default'] = Button;
 
 /***/ }),
 
-/***/ 77:
+/***/ 79:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87261,7 +89457,7 @@ exports['default'] = Button;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -87269,15 +89465,15 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(58);
+var _events = __webpack_require__(60);
 
 var Events = _interopRequireWildcard(_events);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -87285,7 +89481,7 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -87420,7 +89616,7 @@ var ClickableComponent = function (_Component) {
   ClickableComponent.prototype.controlText = function controlText(text) {
     var el = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.el();
 
-    if (!text) {
+    if (text === undefined) {
       return this.controlText_ || 'Need Text';
     }
 
@@ -87582,7 +89778,7 @@ exports['default'] = ClickableComponent;
 
 /***/ }),
 
-/***/ 78:
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87590,51 +89786,51 @@ exports['default'] = ClickableComponent;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(3);
+var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(205);
+var _htmlTrackElement = __webpack_require__(340);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(204);
+var _htmlTrackElementList = __webpack_require__(339);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(57);
+var _mergeOptions = __webpack_require__(59);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(117);
+var _textTrack = __webpack_require__(124);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(209);
+var _textTrackList = __webpack_require__(344);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(139);
+var _videoTrackList = __webpack_require__(269);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(138);
+var _audioTrackList = __webpack_require__(268);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _fn = __webpack_require__(14);
+var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(79);
+var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(140);
+var _buffer = __webpack_require__(270);
 
-var _mediaError = __webpack_require__(132);
+var _mediaError = __webpack_require__(262);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -87646,7 +89842,7 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(45);
+var _obj = __webpack_require__(46);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -88237,7 +90433,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(112);
+      var vtt = __webpack_require__(347);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -89005,7 +91201,7 @@ exports['default'] = Tech;
 
 /***/ }),
 
-/***/ 79:
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89015,7 +91211,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(47);
+var _log = __webpack_require__(48);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -89158,4 +91354,4 @@ exports.createTimeRange = createTimeRanges;
 
 /***/ })
 
-},[587]);
+},[725]);
