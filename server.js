@@ -49,6 +49,6 @@ redis.on('message', (channel, message) => {
   }
 })
 
-server.listen('6001')
+server.listen('server')
 
-console.log('Server is running at port 6002')
+console.log('Server is running at port ', serverPort)
