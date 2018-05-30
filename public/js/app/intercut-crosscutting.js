@@ -1,6 +1,6 @@
 webpackJsonp([4],{
 
-/***/ 109:
+/***/ 102:
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -20,7 +20,7 @@ module.exports = function tsml (sa) {
 
 /***/ }),
 
-/***/ 110:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -28,7 +28,7 @@ module.exports = function tsml (sa) {
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(260);
+var _trackButton = __webpack_require__(253);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -36,11 +36,11 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _textTrackMenuItem = __webpack_require__(123);
+var _textTrackMenuItem = __webpack_require__(116);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _offTextTrackMenuItem = __webpack_require__(316);
+var _offTextTrackMenuItem = __webpack_require__(309);
 
 var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
 
@@ -131,7 +131,7 @@ exports['default'] = TextTrackButton;
 
 /***/ }),
 
-/***/ 111:
+/***/ 104:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -139,7 +139,7 @@ exports['default'] = TextTrackButton;
 
 exports.__esModule = true;
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -308,7 +308,7 @@ exports['default'] = EventTarget;
 
 /***/ }),
 
-/***/ 112:
+/***/ 105:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -453,7 +453,7 @@ exports['default'] = MenuItem;
 
 /***/ }),
 
-/***/ 113:
+/***/ 106:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -634,16 +634,16 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 
 /***/ }),
 
-/***/ 117:
+/***/ 110:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(282);
+__webpack_require__(275);
 module.exports = angular;
 
 
 /***/ }),
 
-/***/ 118:
+/***/ 111:
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(77)
@@ -696,11 +696,11 @@ function forEachObject(object, iterator, context) {
 
 /***/ }),
 
-/***/ 120:
+/***/ 113:
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(122)
-  , forEach = __webpack_require__(118)
+var trim = __webpack_require__(115)
+  , forEach = __webpack_require__(111)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -733,7 +733,7 @@ module.exports = function (headers) {
 
 /***/ }),
 
-/***/ 121:
+/***/ 114:
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -754,7 +754,7 @@ function SafeParseTuple(obj, reviver) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 115:
 /***/ (function(module, exports) {
 
 
@@ -775,7 +775,7 @@ exports.right = function(str){
 
 /***/ }),
 
-/***/ 123:
+/***/ 116:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -785,7 +785,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -952,7 +952,7 @@ exports['default'] = TextTrackMenuItem;
 
 /***/ }),
 
-/***/ 124:
+/***/ 117:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,7 +960,7 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(341);
+var _textTrackCueList = __webpack_require__(334);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
@@ -968,9 +968,9 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(118);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -978,17 +978,17 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(120);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(106);
 
-var _xhr = __webpack_require__(273);
+var _xhr = __webpack_require__(266);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -1409,7 +1409,7 @@ exports['default'] = TextTrack;
 
 /***/ }),
 
-/***/ 125:
+/***/ 118:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1483,7 +1483,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 /***/ }),
 
-/***/ 126:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1491,7 +1491,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1724,7 +1724,7 @@ exports['default'] = TrackList;
 
 /***/ }),
 
-/***/ 127:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1744,7 +1744,7 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1874,7 +1874,7 @@ exports['default'] = Track;
 
 /***/ }),
 
-/***/ 128:
+/***/ 121:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1924,7 +1924,7 @@ function computedStyle(el, prop) {
 
 /***/ }),
 
-/***/ 130:
+/***/ 123:
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -2084,11 +2084,11 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(109);
+var _tsml = __webpack_require__(102);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -2966,7 +2966,7 @@ module.exports = g;
 
 /***/ }),
 
-/***/ 259:
+/***/ 252:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3128,7 +3128,7 @@ exports['default'] = MuteToggle;
 
 /***/ }),
 
-/***/ 260:
+/***/ 253:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3136,7 +3136,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(263);
+var _menuButton = __webpack_require__(256);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -3214,7 +3214,7 @@ exports['default'] = TrackButton;
 
 /***/ }),
 
-/***/ 261:
+/***/ 254:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3222,7 +3222,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(267);
+var _slider = __webpack_require__(260);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -3234,7 +3234,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(323);
+__webpack_require__(316);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -3403,7 +3403,7 @@ exports['default'] = VolumeBar;
 
 /***/ }),
 
-/***/ 262:
+/***/ 255:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3622,7 +3622,7 @@ exports['default'] = MediaError;
 
 /***/ }),
 
-/***/ 263:
+/***/ 256:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3638,7 +3638,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(264);
+var _menu = __webpack_require__(257);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -3982,7 +3982,7 @@ exports['default'] = MenuButton;
 
 /***/ }),
 
-/***/ 264:
+/***/ 257:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4002,7 +4002,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4192,7 +4192,7 @@ exports['default'] = Menu;
 
 /***/ }),
 
-/***/ 265:
+/***/ 258:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4693,7 +4693,7 @@ exports['default'] = ModalDialog;
 
 /***/ }),
 
-/***/ 266:
+/***/ 259:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4713,7 +4713,7 @@ var _window = __webpack_require__(41);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4733,7 +4733,7 @@ var _browser = __webpack_require__(45);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4743,35 +4743,35 @@ var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
 var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(270);
+var _buffer = __webpack_require__(263);
 
-var _stylesheet = __webpack_require__(271);
+var _stylesheet = __webpack_require__(264);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(327);
+var _fullscreenApi = __webpack_require__(320);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(262);
+var _mediaError = __webpack_require__(255);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(121);
+var _tuple = __webpack_require__(114);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
 var _obj = __webpack_require__(46);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(343);
+var _textTrackListConverter = __webpack_require__(336);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(265);
+var _modalDialog = __webpack_require__(258);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
@@ -4779,35 +4779,35 @@ var _tech = __webpack_require__(80);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(268);
+var _audioTrackList = __webpack_require__(261);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(269);
+var _videoTrackList = __webpack_require__(262);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-__webpack_require__(337);
-
-__webpack_require__(335);
-
-__webpack_require__(332);
-
-__webpack_require__(342);
+__webpack_require__(330);
 
 __webpack_require__(328);
 
-__webpack_require__(293);
-
-__webpack_require__(294);
-
-__webpack_require__(297);
-
 __webpack_require__(325);
 
-__webpack_require__(345);
+__webpack_require__(335);
 
-__webpack_require__(336);
+__webpack_require__(321);
+
+__webpack_require__(286);
+
+__webpack_require__(287);
+
+__webpack_require__(290);
+
+__webpack_require__(318);
+
+__webpack_require__(338);
+
+__webpack_require__(329);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -8386,7 +8386,7 @@ exports['default'] = Player;
 
 /***/ }),
 
-/***/ 267:
+/***/ 260:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8747,7 +8747,7 @@ exports['default'] = Slider;
 
 /***/ }),
 
-/***/ 268:
+/***/ 261:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8755,7 +8755,7 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(119);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -8936,7 +8936,7 @@ exports['default'] = AudioTrackList;
 
 /***/ }),
 
-/***/ 269:
+/***/ 262:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8944,7 +8944,7 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(119);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -9137,7 +9137,7 @@ exports['default'] = VideoTrackList;
 
 /***/ }),
 
-/***/ 270:
+/***/ 263:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9194,7 +9194,7 @@ function bufferedPercent(buffered, duration) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 264:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9250,7 +9250,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 /***/ }),
 
-/***/ 272:
+/***/ 265:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9284,11 +9284,11 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _setup = __webpack_require__(333);
+var _setup = __webpack_require__(326);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(271);
+var _stylesheet = __webpack_require__(264);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
@@ -9296,23 +9296,23 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(266);
+var _player = __webpack_require__(259);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(329);
+var _plugins = __webpack_require__(322);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(59);
+var _mergeOptions2 = __webpack_require__(58);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
@@ -9320,43 +9320,43 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(117);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(338);
+var _audioTrack = __webpack_require__(331);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(346);
+var _videoTrack = __webpack_require__(339);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
 var _timeRanges = __webpack_require__(81);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
 var _obj = __webpack_require__(46);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(121);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(326);
+var _extend = __webpack_require__(319);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(273);
+var _xhr = __webpack_require__(266);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
@@ -9980,15 +9980,15 @@ exports['default'] = videojs;
 
 /***/ }),
 
-/***/ 273:
+/***/ 266:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var window = __webpack_require__(41)
 var isFunction = __webpack_require__(77)
-var parseHeaders = __webpack_require__(120)
-var xtend = __webpack_require__(130)
+var parseHeaders = __webpack_require__(113)
+var xtend = __webpack_require__(123)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -10223,7 +10223,7 @@ function noop() {}
 
 /***/ }),
 
-/***/ 281:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10997,11 +10997,11 @@ angular.module('mt.media-timeline', [])
 
 /***/ }),
 
-/***/ 282:
+/***/ 275:
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.7.0
+ * @license AngularJS v1.6.9
  * (c) 2010-2018 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -11089,11 +11089,6 @@ function isValidObjectMaxDepth(maxDepth) {
 
 function minErr(module, ErrorConstructor) {
   ErrorConstructor = ErrorConstructor || Error;
-
-  var url = 'https://errors.angularjs.org/1.7.0/';
-  var regex = url.replace('.', '\\.') + '[\\s\\S]*';
-  var errRegExp = new RegExp(regex, 'g');
-
   return function() {
     var code = arguments[0],
       template = arguments[1],
@@ -11103,22 +11098,18 @@ function minErr(module, ErrorConstructor) {
       }),
       paramPrefix, i;
 
-    // A minErr message has two parts: the message itself and the url that contains the
-    // encoded message.
-    // The message's parameters can contain other error messages which also include error urls.
-    // To prevent the messages from getting too long, we strip the error urls from the parameters.
-
     message += template.replace(/\{\d+\}/g, function(match) {
       var index = +match.slice(1, -1);
 
       if (index < templateArgs.length) {
-        return templateArgs[index].replace(errRegExp, '');
+        return templateArgs[index];
       }
 
       return match;
     });
 
-    message += '\n' + url + (module ? module + '/' : '') + code;
+    message += '\nhttp://errors.angularjs.org/1.6.9/' +
+      (module ? module + '/' : '') + code;
 
     for (i = 0, paramPrefix = '?'; i < templateArgs.length; i++, paramPrefix = '&') {
       message += paramPrefix + 'p' + i + '=' + encodeURIComponent(templateArgs[i]);
@@ -11149,6 +11140,8 @@ function minErr(module, ErrorConstructor) {
 
   lowercase,
   uppercase,
+  manualLowercase,
+  manualUppercase,
   nodeName_,
   isArrayLike,
   forEach,
@@ -11201,7 +11194,6 @@ function minErr(module, ErrorConstructor) {
   fromJson,
   convertTimezoneToLocal,
   timezoneToOffset,
-  addDateMinutes,
   startingTag,
   tryDecodeURIComponent,
   parseKeyValue,
@@ -11256,7 +11248,15 @@ var VALIDITY_STATE_PROPERTY = 'validity';
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 /**
- * @private
+ * @ngdoc function
+ * @name angular.lowercase
+ * @module ng
+ * @kind function
+ *
+ * @deprecated
+ * sinceVersion="1.5.0"
+ * removeVersion="1.7.0"
+ * Use [String.prototype.toLowerCase](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase) instead.
  *
  * @description Converts the specified string to lowercase.
  * @param {string} string String to be converted to lowercase.
@@ -11265,13 +11265,46 @@ var hasOwnProperty = Object.prototype.hasOwnProperty;
 var lowercase = function(string) {return isString(string) ? string.toLowerCase() : string;};
 
 /**
- * @private
+ * @ngdoc function
+ * @name angular.uppercase
+ * @module ng
+ * @kind function
+ *
+ * @deprecated
+ * sinceVersion="1.5.0"
+ * removeVersion="1.7.0"
+ * Use [String.prototype.toUpperCase](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase) instead.
  *
  * @description Converts the specified string to uppercase.
  * @param {string} string String to be converted to uppercase.
  * @returns {string} Uppercased string.
  */
 var uppercase = function(string) {return isString(string) ? string.toUpperCase() : string;};
+
+
+var manualLowercase = function(s) {
+  /* eslint-disable no-bitwise */
+  return isString(s)
+      ? s.replace(/[A-Z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) | 32);})
+      : s;
+  /* eslint-enable */
+};
+var manualUppercase = function(s) {
+  /* eslint-disable no-bitwise */
+  return isString(s)
+      ? s.replace(/[a-z]/g, function(ch) {return String.fromCharCode(ch.charCodeAt(0) & ~32);})
+      : s;
+  /* eslint-enable */
+};
+
+
+// String#toLowerCase and String#toUpperCase don't produce correct results in browsers with Turkish
+// locale, for this reason we need to detect this case and redefine lowercase/uppercase methods
+// with correct but slower alternatives. See https://github.com/angular/angular.js/issues/11387
+if ('i' !== 'I'.toLowerCase()) {
+  lowercase = manualLowercase;
+  uppercase = manualUppercase;
+}
 
 
 var
@@ -11321,7 +11354,8 @@ function isArrayLike(obj) {
 
   // NodeList objects (with `item` method) and
   // other objects with suitable length characteristics are array-like
-  return isNumber(length) && (length >= 0 && (length - 1) in obj || typeof obj.item === 'function');
+  return isNumber(length) &&
+    (length >= 0 && ((length - 1) in obj || obj instanceof Array) || typeof obj.item === 'function');
 
 }
 
@@ -11736,14 +11770,12 @@ function isDate(value) {
  * @kind function
  *
  * @description
- * Determines if a reference is an `Array`.
+ * Determines if a reference is an `Array`. Alias of Array.isArray.
  *
  * @param {*} value Reference to check.
  * @returns {boolean} True if `value` is an `Array`.
  */
-function isArray(arr) {
-  return Array.isArray(arr) || arr instanceof Array;
-}
+var isArray = Array.isArray;
 
 /**
  * @description
@@ -12471,7 +12503,7 @@ function convertTimezoneToLocal(date, timezone, reverse) {
  */
 function startingTag(element) {
   element = jqLite(element).clone().empty();
-  var elemHtml = jqLite('<div></div>').append(element).html();
+  var elemHtml = jqLite('<div>').append(element).html();
   try {
     return element[0].nodeType === NODE_TYPE_TEXT ? lowercase(elemHtml) :
         elemHtml.
@@ -13026,24 +13058,24 @@ function bindJQuery() {
       injector: JQLitePrototype.injector,
       inheritedData: JQLitePrototype.inheritedData
     });
+
+    // All nodes removed from the DOM via various jQuery APIs like .remove()
+    // are passed through jQuery.cleanData. Monkey-patch this method to fire
+    // the $destroy event on all removed nodes.
+    originalCleanData = jQuery.cleanData;
+    jQuery.cleanData = function(elems) {
+      var events;
+      for (var i = 0, elem; (elem = elems[i]) != null; i++) {
+        events = jQuery._data(elem, 'events');
+        if (events && events.$destroy) {
+          jQuery(elem).triggerHandler('$destroy');
+        }
+      }
+      originalCleanData(elems);
+    };
   } else {
     jqLite = JQLite;
   }
-
-  // All nodes removed from the DOM via various jqLite/jQuery APIs like .remove()
-  // are passed through jqLite/jQuery.cleanData. Monkey-patch this method to fire
-  // the $destroy event on all removed nodes.
-  originalCleanData = jqLite.cleanData;
-  jqLite.cleanData = function(elems) {
-    var events;
-    for (var i = 0, elem; (elem = elems[i]) != null; i++) {
-      events = jqLite._data(elem).events;
-      if (events && events.$destroy) {
-        jqLite(elem).triggerHandler('$destroy');
-      }
-    }
-    originalCleanData(elems);
-  };
 
   angular.element = jqLite;
 
@@ -13504,8 +13536,7 @@ function setupModuleLoader(window) {
            * @ngdoc method
            * @name angular.Module#component
            * @module ng
-           * @param {string|Object} name Name of the component in camelCase (i.e. `myComp` which will match `<my-comp>`),
-           *    or an object map of components where the keys are the names and the values are the component definition objects.
+           * @param {string} name Name of the component in camel-case (i.e. myComp which will match as my-comp)
            * @param {Object} options Component definition object (a simplified
            *    {@link ng.$compile#directive-definition-object directive definition object})
            *
@@ -13767,11 +13798,11 @@ function toDebugString(obj, maxDepth) {
 var version = {
   // These placeholder strings will be replaced by grunt's `build` task.
   // They need to be double- or single-quoted.
-  full: '1.7.0',
+  full: '1.6.9',
   major: 1,
-  minor: 7,
-  dot: 0,
-  codeName: 'nonexistent-physiology'
+  minor: 6,
+  dot: 9,
+  codeName: 'fiery-basilisk'
 };
 
 
@@ -13801,6 +13832,8 @@ function publishExternalAPI(angular) {
     'isArray': isArray,
     'version': version,
     'isDate': isDate,
+    'lowercase': lowercase,
+    'uppercase': uppercase,
     'callbacks': {$$counter: 0},
     'getTestability': getTestability,
     'reloadWithDebugInfo': reloadWithDebugInfo,
@@ -13808,9 +13841,7 @@ function publishExternalAPI(angular) {
     '$$csp': csp,
     '$$encodeUriSegment': encodeUriSegment,
     '$$encodeUriQuery': encodeUriQuery,
-    '$$lowercase': lowercase,
-    '$$stringify': stringify,
-    '$$uppercase': uppercase
+    '$$stringify': stringify
   });
 
   angularModule = setupModuleLoader(window);
@@ -13917,7 +13948,7 @@ function publishExternalAPI(angular) {
       });
     }
   ])
-  .info({ angularVersion: '1.7.0' });
+  .info({ angularVersion: '1.6.9' });
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -13974,8 +14005,7 @@ function publishExternalAPI(angular) {
  *
  * - [`addClass()`](http://api.jquery.com/addClass/) - Does not support a function as first argument
  * - [`after()`](http://api.jquery.com/after/)
- * - [`append()`](http://api.jquery.com/append/) - Contrary to jQuery, this doesn't clone elements
- *   so will not work correctly when invoked on a jqLite object containing more than one DOM node
+ * - [`append()`](http://api.jquery.com/append/)
  * - [`attr()`](http://api.jquery.com/attr/) - Does not support functions as parameters
  * - [`bind()`](http://api.jquery.com/bind/) (_deprecated_, use [`on()`](http://api.jquery.com/on/)) - Does not support namespaces, selectors or eventData
  * - [`children()`](http://api.jquery.com/children/) - Does not support selectors
@@ -14231,28 +14261,6 @@ function jqLiteDealoc(element, onlyDescendants) {
   }
 }
 
-function isEmptyObject(obj) {
-  var name;
-
-  for (name in obj) {
-    return false;
-  }
-  return true;
-}
-
-function removeIfEmptyData(element) {
-  var expandoId = element.ng339;
-  var expandoStore = expandoId && jqCache[expandoId];
-
-  var events = expandoStore && expandoStore.events;
-  var data = expandoStore && expandoStore.data;
-
-  if ((!data || isEmptyObject(data)) && (!events || isEmptyObject(events))) {
-    delete jqCache[expandoId];
-    element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
-  }
-}
-
 function jqLiteOff(element, type, fn, unsupported) {
   if (isDefined(unsupported)) throw jqLiteMinErr('offargs', 'jqLite#off() does not support the `selector` argument');
 
@@ -14289,8 +14297,6 @@ function jqLiteOff(element, type, fn, unsupported) {
       }
     });
   }
-
-  removeIfEmptyData(element);
 }
 
 function jqLiteRemoveData(element, name) {
@@ -14300,11 +14306,17 @@ function jqLiteRemoveData(element, name) {
   if (expandoStore) {
     if (name) {
       delete expandoStore.data[name];
-    } else {
-      expandoStore.data = {};
+      return;
     }
 
-    removeIfEmptyData(element);
+    if (expandoStore.handle) {
+      if (expandoStore.events.$destroy) {
+        expandoStore.handle({}, '$destroy');
+      }
+      jqLiteOff(element);
+    }
+    delete jqCache[expandoId];
+    element.ng339 = undefined; // don't delete DOM expandos. IE and Chrome don't like it
   }
 }
 
@@ -14554,7 +14566,6 @@ forEach({
   cleanData: function jqLiteCleanData(nodes) {
     for (var i = 0, ii = nodes.length; i < ii; i++) {
       jqLiteRemoveData(nodes[i]);
-      jqLiteOff(nodes[i]);
     }
   }
 }, function(fn, name) {
@@ -16073,7 +16084,9 @@ function createInjector(modulesToLoad, strictDi) {
       }
       var result = func.$$ngIsClass;
       if (!isBoolean(result)) {
-        result = func.$$ngIsClass = /^class\b/.test(stringifyFn(func));
+        // Support: Edge 12-13 only
+        // See: https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/6156135/
+        result = func.$$ngIsClass = /^(?:class\b|constructor\()/.test(stringifyFn(func));
       }
       return result;
     }
@@ -16862,77 +16875,13 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        * @ngdoc method
        * @name $animate#cancel
        * @kind function
-       * @description Cancels the provided animation and applies the end state of the animation.
-       * Note that this does not cancel the underlying operation, e.g. the setting of classes or
-       * adding the element to the DOM.
+       * @description Cancels the provided animation.
        *
-       * @param {animationRunner} animationRunner An animation runner returned by an $animate function.
-       *
-       * @example
-        <example module="animationExample" deps="angular-animate.js" animations="true" name="animate-cancel">
-          <file name="app.js">
-            angular.module('animationExample', ['ngAnimate']).component('cancelExample', {
-              templateUrl: 'template.html',
-              controller: function($element, $animate) {
-                this.runner = null;
-
-                this.addClass = function() {
-                  this.runner = $animate.addClass($element.find('div'), 'red');
-                  var ctrl = this;
-                  this.runner.finally(function() {
-                    ctrl.runner = null;
-                  });
-                };
-
-                this.removeClass = function() {
-                  this.runner = $animate.removeClass($element.find('div'), 'red');
-                  var ctrl = this;
-                  this.runner.finally(function() {
-                    ctrl.runner = null;
-                  });
-                };
-
-                this.cancel = function() {
-                  $animate.cancel(this.runner);
-                };
-              }
-            });
-          </file>
-          <file name="template.html">
-            <p>
-              <button id="add" ng-click="$ctrl.addClass()">Add</button>
-              <button ng-click="$ctrl.removeClass()">Remove</button>
-              <br>
-              <button id="cancel" ng-click="$ctrl.cancel()" ng-disabled="!$ctrl.runner">Cancel</button>
-              <br>
-              <div id="target">CSS-Animated Text</div>
-            </p>
-          </file>
-          <file name="index.html">
-            <cancel-example></cancel-example>
-          </file>
-          <file name="style.css">
-            .red-add, .red-remove {
-              transition: all 4s cubic-bezier(0.250, 0.460, 0.450, 0.940);
-            }
-
-            .red,
-            .red-add.red-add-active {
-              color: #FF0000;
-              font-size: 40px;
-            }
-
-            .red-remove.red-remove-active {
-              font-size: 10px;
-              color: black;
-            }
-
-          </file>
-        </example>
+       * @param {Promise} animationPromise The animation promise that is returned when an animation is started.
        */
       cancel: function(runner) {
-        if (runner.cancel) {
-          runner.cancel();
+        if (runner.end) {
+          runner.end();
         }
       },
 
@@ -16958,7 +16907,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       enter: function(element, parent, after, options) {
         parent = parent && jqLite(parent);
@@ -16990,7 +16939,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       move: function(element, parent, after, options) {
         parent = parent && jqLite(parent);
@@ -17017,7 +16966,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       leave: function(element, options) {
         return $$animateQueue.push(element, 'leave', prepareAnimateOptions(options), function() {
@@ -17047,7 +16996,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} animationRunner the animation runner
+       * @return {Promise} the animation callback promise
        */
       addClass: function(element, className, options) {
         options = prepareAnimateOptions(options);
@@ -17077,7 +17026,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       removeClass: function(element, className, options) {
         options = prepareAnimateOptions(options);
@@ -17108,7 +17057,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       setClass: function(element, add, remove, options) {
         options = prepareAnimateOptions(options);
@@ -17155,7 +17104,7 @@ var $AnimateProvider = ['$provide', /** @this */ function($provide) {
        *   - **removeClass** - `{string}` - space-separated CSS classes to remove from element
        *   - **to** - `{Object}` - CSS properties & values at end of animation. Must have matching `from`
        *
-       * @return {Runner} the animation runner
+       * @return {Promise} the animation callback promise
        */
       animate: function(element, from, to, className, options) {
         options = prepareAnimateOptions(options);
@@ -17605,7 +17554,8 @@ function Browser(window, document, $log, $sniffer) {
       // - pendingLocation is needed as browsers don't allow to read out
       //   the new location.href if a reload happened or if there is a bug like in iOS 9 (see
       //   https://openradar.appspot.com/22186109).
-      return pendingLocation || location.href;
+      // - the replacement is a workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=407172
+      return pendingLocation || location.href.replace(/%27/g,'\'');
     }
   };
 
@@ -18503,22 +18453,21 @@ function $TemplateCacheProvider() {
  *   name. Given `<my-component my-attr="parentModel">` and the isolate scope definition `scope: {
  *   localModel: '=myAttr' }`, the property `localModel` on the directive's scope will reflect the
  *   value of `parentModel` on the parent scope. Changes to `parentModel` will be reflected in
- *   `localModel` and vice versa. If the binding expression is non-assignable, or if the attribute
- *   isn't  optional and doesn't exist, an exception
- *   ({@link error/$compile/nonassign `$compile:nonassign`}) will be thrown upon discovering changes
- *   to the local value, since it will be impossible to sync them back to the parent scope.
- *
- *   By default, the {@link ng.$rootScope.Scope#$watch `$watch`}
+ *   `localModel` and vice versa. Optional attributes should be marked as such with a question mark:
+ *   `=?` or `=?attr`. If the binding expression is non-assignable, or if the attribute isn't
+ *   optional and doesn't exist, an exception ({@link error/$compile/nonassign `$compile:nonassign`})
+ *   will be thrown upon discovering changes to the local value, since it will be impossible to sync
+ *   them back to the parent scope. By default, the {@link ng.$rootScope.Scope#$watch `$watch`}
  *   method is used for tracking changes, and the equality check is based on object identity.
  *   However, if an object literal or an array literal is passed as the binding expression, the
  *   equality check is done by value (using the {@link angular.equals} function). It's also possible
  *   to watch the evaluated value shallowly with {@link ng.$rootScope.Scope#$watchCollection
- *   `$watchCollection`}: use `=*` or `=*attr`
+ *   `$watchCollection`}: use `=*` or `=*attr` (`=*?` or `=*?attr` if the attribute is optional).
  *
   * * `<` or `<attr` - set up a one-way (one-directional) binding between a local scope property and an
  *   expression passed via the attribute `attr`. The expression is evaluated in the context of the
  *   parent scope. If no `attr` name is specified then the attribute name is assumed to be the same as the
- *   local name.
+ *   local name. You can also make the binding optional by adding `?`: `<?` or `<?attr`.
  *
  *   For example, given `<my-component my-attr="parentModel">` and directive definition of
  *   `scope: { localModel:'<myAttr' }`, then the isolated scope property `localModel` will reflect the
@@ -18548,36 +18497,6 @@ function $TemplateCacheProvider() {
  *   and values into the expression wrapper fn. For example, if the expression is `increment(amount)`
  *   then we can specify the amount value by calling the `localFn` as `localFn({amount: 22})`.
  *
- * All 4 kinds of bindings (`@`, `=`, `<`, and `&`) can be made optional by adding `?` to the expression.
- * The marker must come after the mode and before the attribute name.
- * See the {@link error/$compile/iscp Invalid Isolate Scope Definition error} for definition examples.
- * This is useful to refine the interface directives provide.
- * One subtle difference between optional and non-optional happens **when the binding attribute is not
- * set**:
- * - the binding is optional: the property will not be defined
- * - the binding is not optional: the property is defined
- *
- * ```js
- *app.directive('testDir', function() {
-    return {
-      scope: {
-        notoptional: '=',
-        optional: '=?',
-      },
-      bindToController: true,
-      controller: function() {
-        this.$onInit = function() {
-          console.log(this.hasOwnProperty('notoptional')) // true
-          console.log(this.hasOwnProperty('optional')) // false
-        }
-      }
-    }
-  })
- *```
- *
- *
- * ##### Combining directives with different scope defintions
- *
  * In general it's possible to apply more than one directive to one element, but there might be limitations
  * depending on the type of scope required by the directives. The following points will help explain these limitations.
  * For simplicity only two directives are taken into account, but it is also applicable for several directives:
@@ -18604,6 +18523,12 @@ function $TemplateCacheProvider() {
  * properties. You can access these bindings once they have been initialized by providing a controller method called
  * `$onInit`, which is called after all the controllers on an element have been constructed and had their bindings
  * initialized.
+ *
+ * <div class="alert alert-warning">
+ * **Deprecation warning:** if `$compileProcvider.preAssignBindingsEnabled(true)` was called, bindings for non-ES6 class
+ * controllers are bound to `this` before the controller constructor is called but this use is now deprecated. Please
+ * place initialization code that relies upon bindings inside a `$onInit` method on the controller, instead.
+ * </div>
  *
  * It is also possible to set `bindToController` to an object hash with the same format as the `scope` property.
  * This will set up the scope bindings to the controller directly. Note that `scope` can still be used
@@ -18731,10 +18656,9 @@ function $TemplateCacheProvider() {
  * $sce#getTrustedResourceUrl $sce.getTrustedResourceUrl}.
  *
  *
- * #### `replace`
- * <div class="alert alert-danger">
- * **Note:** `replace` is deprecated in AngularJS and has been removed in the new Angular (v2+).
- * </div>
+ * #### `replace` (*DEPRECATED*)
+ *
+ * `replace` will be removed in next major release - i.e. v2.0).
  *
  * Specifies what the template should replace. Defaults to `false`.
  *
@@ -19184,59 +19108,6 @@ function $TemplateCacheProvider() {
    compiled again. This is an undesired effect and can lead to misbehaving directives, performance issues,
    and memory leaks. Refer to the Compiler Guide {@link guide/compiler#double-compilation-and-how-to-avoid-it
    section on double compilation} for an in-depth explanation and ways to avoid it.
-
- * @knownIssue
-
-   ### Issues with `replace: true`
- *
- * <div class="alert alert-danger">
- *   **Note**: {@link $compile#-replace- `replace: true`} is deprecated and not recommended to use,
- *   mainly due to the issues listed here. It has been completely removed in the new Angular.
- * </div>
- *
- * #### Attribute values are not merged
- *
- * When a `replace` directive encounters the same attribute on the original and the replace node,
- * it will simply deduplicate the attribute and join the values with a space or with a `;` in case of
- * the `style` attribute.
- * ```html
- * Original Node: <span class="original" style="color: red;"></span>
- * Replace Template: <span class="replaced" style="background: blue;"></span>
- * Result: <span class="original replaced" style="color: red; background: blue;"></span>
- * ```
- *
- * That means attributes that contain AngularJS expressions will not be merged correctly, e.g.
- * {@link ngShow} or {@link ngClass} will cause a {@link $parse} error:
- *
- * ```html
- * Original Node: <span ng-class="{'something': something}" ng-show="!condition"></span>
- * Replace Template: <span ng-class="{'else': else}" ng-show="otherCondition"></span>
- * Result: <span ng-class="{'something': something} {'else': else}" ng-show="!condition otherCondition"></span>
- * ```
- *
- * See issue [#5695](https://github.com/angular/angular.js/issues/5695).
- *
- * #### Directives are not deduplicated before compilation
- *
- * When the original node and the replace template declare the same directive(s), they will be
- * {@link guide/compiler#double-compilation-and-how-to-avoid-it compiled twice} because the compiler
- * does not deduplicate them. In many cases, this is not noticable, but e.g. {@link ngModel} will
- * attach `$formatters` and `$parsers` twice.
- *
- * See issue [#2573](https://github.com/angular/angular.js/issues/2573).
- *
- * #### `transclude: element` in the replace template root can have
- * unexpected effects
- *
- * When the replace template has a directive at the root node that uses
- * {@link $compile#-transclude- `transclude: element`}, e.g.
- * {@link ngIf} or {@link ngRepeat}, the DOM structure or scope inheritance can be incorrect.
- * See the following issues:
- *
- * - Incorrect scope on replaced element:
- * [#9837](https://github.com/angular/angular.js/issues/9837)
- * - Different DOM between `template` and `templateUrl`:
- * [#10612](https://github.com/angular/angular.js/issues/14326)
  *
  */
 
@@ -19268,13 +19139,11 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
   var bindingCache = createMap();
 
   function parseIsolateBindings(scope, directiveName, isController) {
-    var LOCAL_REGEXP = /^([@&<]|=(\*?))(\??)\s*([\w$]*)$/;
+    var LOCAL_REGEXP = /^\s*([@&<]|=(\*?))(\??)\s*([\w$]*)\s*$/;
 
     var bindings = createMap();
 
     forEach(scope, function(definition, scopeName) {
-      definition = definition.trim();
-
       if (definition in bindingCache) {
         bindings[scopeName] = bindingCache[definition];
         return;
@@ -19669,21 +19538,54 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
   /**
    * @ngdoc method
-   * @name  $compileProvider#strictComponentBindingsEnabled
+   * @name  $compileProvider#preAssignBindingsEnabled
    *
-   * @param {boolean=} enabled update the strictComponentBindingsEnabled state if provided,
-   * otherwise return the current strictComponentBindingsEnabled state.
+   * @param {boolean=} enabled update the preAssignBindingsEnabled state if provided, otherwise just return the
+   * current preAssignBindingsEnabled state
    * @returns {*} current value if used as getter or itself (chaining) if used as setter
    *
    * @kind function
    *
    * @description
-   * Call this method to enable / disable the strict component bindings check. If enabled, the
-   * compiler will enforce that all scope / controller bindings of a
-   * {@link $compileProvider#directive directive} / {@link $compileProvider#component component}
-   * that are not set as optional with `?`, must be provided when the directive is instantiated.
-   * If not provided, the compiler will throw the
-   * {@link error/$compile/missingattr $compile:missingattr error}.
+   * Call this method to enable/disable whether directive controllers are assigned bindings before
+   * calling the controller's constructor.
+   * If enabled (true), the compiler assigns the value of each of the bindings to the
+   * properties of the controller object before the constructor of this object is called.
+   *
+   * If disabled (false), the compiler calls the constructor first before assigning bindings.
+   *
+   * The default value is false.
+   *
+   * @deprecated
+   * sinceVersion="1.6.0"
+   * removeVersion="1.7.0"
+   *
+   * This method and the option to assign the bindings before calling the controller's constructor
+   * will be removed in v1.7.0.
+   */
+  var preAssignBindingsEnabled = false;
+  this.preAssignBindingsEnabled = function(enabled) {
+    if (isDefined(enabled)) {
+      preAssignBindingsEnabled = enabled;
+      return this;
+    }
+    return preAssignBindingsEnabled;
+  };
+
+  /**
+   * @ngdoc method
+   * @name  $compileProvider#strictComponentBindingsEnabled
+   *
+   * @param {boolean=} enabled update the strictComponentBindingsEnabled state if provided, otherwise just return the
+   * current strictComponentBindingsEnabled state
+   * @returns {*} current value if used as getter or itself (chaining) if used as setter
+   *
+   * @kind function
+   *
+   * @description
+   * Call this method to enable/disable strict component bindings check. If enabled, the compiler will enforce that
+   * for all bindings of a component that are not set as optional with `?`, an attribute needs to be provided
+   * on the component's HTML tag.
    *
    * The default value is false.
    */
@@ -19784,9 +19686,9 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
   this.$get = [
             '$injector', '$interpolate', '$exceptionHandler', '$templateRequest', '$parse',
-            '$controller', '$rootScope', '$sce', '$animate',
+            '$controller', '$rootScope', '$sce', '$animate', '$$sanitizeUri',
     function($injector,   $interpolate,   $exceptionHandler,   $templateRequest,   $parse,
-             $controller,   $rootScope,   $sce,   $animate) {
+             $controller,   $rootScope,   $sce,   $animate,   $$sanitizeUri) {
 
     var SIMPLE_ATTR_NAME = /^\w/;
     var specialAttrHolder = window.document.createElement('div');
@@ -19811,15 +19713,19 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
         }
         // We must run this hook in an apply since the $$postDigest runs outside apply
         $rootScope.$apply(function() {
+          var errors = [];
           for (var i = 0, ii = onChangesQueue.length; i < ii; ++i) {
             try {
               onChangesQueue[i]();
             } catch (e) {
-              $exceptionHandler(e);
+              errors.push(e);
             }
           }
           // Reset the queue to trigger a new schedule next time there is a change
           onChangesQueue = undefined;
+          if (errors.length) {
+            throw errors;
+          }
         });
       } finally {
         onChangesTtl++;
@@ -19931,8 +19837,8 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
        */
       $set: function(key, value, writeAttr, attrName) {
         // TODO: decide whether or not to throw an error if "class"
-        // is set through this function since it may cause $updateClass to
-        // become unstable.
+        //is set through this function since it may cause $updateClass to
+        //become unstable.
 
         var node = this.$$element[0],
             booleanKey = getBooleanAttrName(node, key),
@@ -19962,20 +19868,12 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
 
         nodeName = nodeName_(this.$$element);
 
-        // Sanitize img[srcset] values.
-        if (nodeName === 'img' && key === 'srcset' && value) {
-          if (!isString(value)) {
-            throw $compileMinErr('srcset', 'Can\'t pass trusted values to `$set(\'srcset\', value)`: "{0}"', value.toString());
-          }
-
-          // Such values are a bit too complex to handle automatically inside $sce.
-          // Instead, we sanitize each of the URIs individually, which works, even dynamically.
-
-          // It's not possible to work around this using `$sce.trustAsMediaUrl`.
-          // If you want to programmatically set explicitly trusted unsafe URLs, you should use
-          // `$sce.trustAsHtml` on the whole `img` tag and inject it into the DOM using the
-          // `ng-bind-html` directive.
-
+        if ((nodeName === 'a' && (key === 'href' || key === 'xlinkHref')) ||
+            (nodeName === 'img' && key === 'src')) {
+          // sanitize a[href] and img[src] values
+          this[key] = value = $$sanitizeUri(value, key === 'src');
+        } else if (nodeName === 'img' && key === 'srcset' && isDefined(value)) {
+          // sanitize img[srcset] values
           var result = '';
 
           // first check if there are spaces because it's not the same pattern
@@ -19992,16 +19890,16 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           for (var i = 0; i < nbrUrisWith2parts; i++) {
             var innerIdx = i * 2;
             // sanitize the uri
-            result += $sce.getTrustedMediaUrl(trim(rawUris[innerIdx]));
+            result += $$sanitizeUri(trim(rawUris[innerIdx]), true);
             // add the descriptor
-            result += ' ' + trim(rawUris[innerIdx + 1]);
+            result += (' ' + trim(rawUris[innerIdx + 1]));
           }
 
           // split the last item into uri and descriptor
           var lastTuple = trim(rawUris[i * 2]).split(/\s/);
 
           // sanitize the last uri
-          result += $sce.getTrustedMediaUrl(trim(lastTuple[0]));
+          result += $$sanitizeUri(trim(lastTuple[0]), true);
 
           // and add the last descriptor if any
           if (lastTuple.length === 2) {
@@ -20195,7 +20093,7 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           // for call to the link function.
           // Note: This will already clone the nodes...
           $linkNode = jqLite(
-            wrapTemplate(namespace, jqLite('<div></div>').append($compileNodes).html())
+            wrapTemplate(namespace, jqLite('<div>').append($compileNodes).html())
           );
         } else if (cloneConnectFn) {
           // important!!: we must call our jqLite.clone() since the jQuery one is trying to be smart
@@ -20749,6 +20647,17 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             compileNode = $compileNode[0];
             replaceWith(jqCollection, sliceArgs($template), compileNode);
 
+            // Support: Chrome < 50
+            // https://github.com/angular/angular.js/issues/14041
+
+            // In the versions of V8 prior to Chrome 50, the document fragment that is created
+            // in the `replaceWith` function is improperly garbage collected despite still
+            // being referenced by the `parentNode` property of all of the child nodes.  By adding
+            // a reference to the fragment via a different property, we can avoid that incorrect
+            // behavior.
+            // TODO: remove this line after Chrome 50 has been released
+            $template[0].$$parentNode = $template[0].parentNode;
+
             childTranscludeFn = compilationGenerator(mightHaveMultipleTransclusionError, $template, transcludeFn, terminalPriority,
                                         replaceDirective && replaceDirective.name, {
                                           // Don't pass in:
@@ -21008,11 +20917,33 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
           var controller = elementControllers[name];
           var bindings = controllerDirective.$$bindings.bindToController;
 
-          controller.instance = controller();
-          $element.data('$' + controllerDirective.name + 'Controller', controller.instance);
-          controller.bindingInfo =
-            initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
+          if (preAssignBindingsEnabled) {
+            if (bindings) {
+              controller.bindingInfo =
+                initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
+            } else {
+              controller.bindingInfo = {};
+            }
+
+            var controllerResult = controller();
+            if (controllerResult !== controller.instance) {
+              // If the controller constructor has a return value, overwrite the instance
+              // from setupControllers
+              controller.instance = controllerResult;
+              $element.data('$' + controllerDirective.name + 'Controller', controllerResult);
+              if (controller.bindingInfo.removeWatches) {
+                controller.bindingInfo.removeWatches();
+              }
+              controller.bindingInfo =
+                initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
+            }
+          } else {
+            controller.instance = controller();
+            $element.data('$' + controllerDirective.name + 'Controller', controller.instance);
+            controller.bindingInfo =
+              initializeDirectiveBindings(controllerScope, attrs, controller.instance, bindings, controllerDirective);
           }
+        }
 
         // Bind the required controllers to the controller, if `require` is an object and `bindToController` is truthy
         forEach(controllerDirectives, function(controllerDirective, name) {
@@ -21516,30 +21447,18 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
       }
       var tag = nodeName_(node);
       // All tags with src attributes require a RESOURCE_URL value, except for
-      // img and various html5 media tags, which require the MEDIA_URL context.
+      // img and various html5 media tags.
       if (attrNormalizedName === 'src' || attrNormalizedName === 'ngSrc') {
         if (['img', 'video', 'audio', 'source', 'track'].indexOf(tag) === -1) {
           return $sce.RESOURCE_URL;
         }
-        return $sce.MEDIA_URL;
-      } else if (attrNormalizedName === 'xlinkHref') {
-        // Some xlink:href are okay, most aren't
-        if (tag === 'image') return $sce.MEDIA_URL;
-        if (tag === 'a') return $sce.URL;
-        return $sce.RESOURCE_URL;
-      } else if (
-          // Formaction
+      // maction[xlink:href] can source SVG.  It's not limited to <maction>.
+      } else if (attrNormalizedName === 'xlinkHref' ||
           (tag === 'form' && attrNormalizedName === 'action') ||
-          // If relative URLs can go where they are not expected to, then
-          // all sorts of trust issues can arise.
-          (tag === 'base' && attrNormalizedName === 'href') ||
           // links can be stylesheets or imports, which can run script in the current origin
           (tag === 'link' && attrNormalizedName === 'href')
       ) {
         return $sce.RESOURCE_URL;
-      } else if (tag === 'a' && (attrNormalizedName === 'href' ||
-                                 attrNormalizedName === 'ngHref')) {
-        return $sce.URL;
       }
     }
 
@@ -21810,21 +21729,21 @@ function $CompileProvider($provide, $$sanitizeUriProvider) {
             if (optional && !attrs[attrName]) break;
 
             parentGet = $parse(attrs[attrName]);
-            var isLiteral = parentGet.literal;
+            var deepWatch = parentGet.literal;
 
             var initialValue = destination[scopeName] = parentGet(scope);
             initialChanges[scopeName] = new SimpleChange(_UNINITIALIZED_VALUE, destination[scopeName]);
 
             removeWatch = scope.$watch(parentGet, function parentValueWatchAction(newValue, oldValue) {
               if (oldValue === newValue) {
-                if (oldValue === initialValue || (isLiteral && equals(oldValue, initialValue))) {
+                if (oldValue === initialValue || (deepWatch && equals(oldValue, initialValue))) {
                   return;
                 }
                 oldValue = initialValue;
               }
               recordChanges(scopeName, newValue, oldValue);
               destination[scopeName] = newValue;
-            });
+            }, deepWatch);
 
             removeWatchCollection.push(removeWatch);
             break;
@@ -22027,7 +21946,8 @@ function identifierForController(controller, ident) {
  * {@link ng.$controllerProvider#register register} method.
  */
 function $ControllerProvider() {
-  var controllers = {};
+  var controllers = {},
+      globals = false;
 
   /**
    * @ngdoc method
@@ -22055,7 +21975,22 @@ function $ControllerProvider() {
     }
   };
 
-  this.$get = ['$injector', function($injector) {
+  /**
+   * @ngdoc method
+   * @name $controllerProvider#allowGlobals
+   * @description If called, allows `$controller` to find controller constructors on `window`
+   *
+   * @deprecated
+   * sinceVersion="v1.3.0"
+   * removeVersion="v1.7.0"
+   * This method of finding controllers has been deprecated.
+   */
+  this.allowGlobals = function() {
+    globals = true;
+  };
+
+
+  this.$get = ['$injector', '$window', function($injector, $window) {
 
     /**
      * @ngdoc service
@@ -22068,6 +22003,8 @@ function $ControllerProvider() {
      *
      *    * check if a controller with given name is registered via `$controllerProvider`
      *    * check if evaluating the string on the current scope returns a constructor
+     *    * if $controllerProvider#allowGlobals, check `window[constructor]` on the global
+     *      `window` object (deprecated, not recommended)
      *
      *    The string can use the `controller as property` syntax, where the controller instance is published
      *    as the specified property on the `scope`; the `scope` must be injected into `locals` param for this
@@ -22107,7 +22044,8 @@ function $ControllerProvider() {
         identifier = identifier || match[3];
         expression = controllers.hasOwnProperty(constructor)
             ? controllers[constructor]
-            : getter(locals.$scope, constructor, true);
+            : getter(locals.$scope, constructor, true) ||
+                (globals ? getter($window, constructor, true) : undefined);
 
         if (!expression) {
           throw $controllerMinErr('ctrlreg',
@@ -22341,7 +22279,7 @@ function $HttpParamSerializerProvider() {
    * * `{'foo': {'bar':'baz'}}` results in `foo=%7B%22bar%22%3A%22baz%22%7D` (stringified and encoded representation of an object)
    *
    * Note that serializer will sort the request parameters alphabetically.
-   */
+   * */
 
   this.$get = function() {
     return function ngParamSerializer(params) {
@@ -22408,7 +22346,7 @@ function $HttpParamSerializerJQLikeProvider() {
    * });
    * ```
    *
-   */
+   * */
   this.$get = function() {
     return function jQueryLikeParamSerializer(params) {
       if (!params) return '';
@@ -22417,6 +22355,7 @@ function $HttpParamSerializerJQLikeProvider() {
       return parts.join('&');
 
       function serialize(toSerialize, prefix, topLevel) {
+        if (toSerialize === null || isUndefined(toSerialize)) return;
         if (isArray(toSerialize)) {
           forEach(toSerialize, function(value, index) {
             serialize(value, prefix + '[' + (isObject(value) ? index : '') + ']');
@@ -22429,11 +22368,7 @@ function $HttpParamSerializerJQLikeProvider() {
                 (topLevel ? '' : ']'));
           });
         } else {
-          if (isFunction(toSerialize)) {
-            toSerialize = toSerialize();
-          }
-          parts.push(encodeUriQuery(prefix) + '=' +
-              (toSerialize == null ? '' : encodeUriQuery(serializeValue(toSerialize))));
+          parts.push(encodeUriQuery(prefix) + '=' + encodeUriQuery(serializeValue(toSerialize)));
         }
       }
     };
@@ -22568,7 +22503,7 @@ function isSuccess(status) {
  *
  * @description
  * Use `$httpProvider` to change the default behavior of the {@link ng.$http $http} service.
- */
+ * */
 function $HttpProvider() {
   /**
    * @ngdoc property
@@ -22622,7 +22557,7 @@ function $HttpProvider() {
    * - **`defaults.xsrfHeaderName`** - {string} - Name of HTTP header to populate with the
    * XSRF token. Defaults value is `'X-XSRF-TOKEN'`.
    *
-   */
+   **/
   var defaults = this.defaults = {
     // transform incoming response data
     transformResponse: [defaultHttpResponseTransform],
@@ -22669,7 +22604,7 @@ function $HttpProvider() {
    *
    * @returns {boolean|Object} If a value is specified, returns the $httpProvider for chaining.
    *    otherwise, returns the current configured value.
-   */
+   **/
   this.useApplyAsync = function(value) {
     if (isDefined(value)) {
       useApplyAsync = !!value;
@@ -22690,50 +22625,8 @@ function $HttpProvider() {
    * array, on request, but reverse order, on response.
    *
    * {@link ng.$http#interceptors Interceptors detailed info}
-   */
+   **/
   var interceptorFactories = this.interceptors = [];
-
-  /**
-   * @ngdoc property
-   * @name $httpProvider#xsrfWhitelistedOrigins
-   * @description
-   *
-   * Array containing URLs whose origins are trusted to receive the XSRF token. See the
-   * {@link ng.$http#security-considerations Security Considerations} sections for more details on
-   * XSRF.
-   *
-   * **Note:** An "origin" consists of the [URI scheme](https://en.wikipedia.org/wiki/URI_scheme),
-   * the [hostname](https://en.wikipedia.org/wiki/Hostname) and the
-   * [port number](https://en.wikipedia.org/wiki/Port_(computer_networking). For `http:` and
-   * `https:`, the port number can be omitted if using th default ports (80 and 443 respectively).
-   * Examples: `http://example.com`, `https://api.example.com:9876`
-   *
-   * <div class="alert alert-warning">
-   *   It is not possible to whitelist specific URLs/paths. The `path`, `query` and `fragment` parts
-   *   of a URL will be ignored. For example, `https://foo.com/path/bar?query=baz#fragment` will be
-   *   treated as `https://foo.com`, meaning that **all** requests to URLs starting with
-   *   `https://foo.com/` will include the XSRF token.
-   * </div>
-   *
-   * @example
-   *
-   * ```js
-   * // App served from `https://example.com/`.
-   * angular.
-   *   module('xsrfWhitelistedOriginsExample', []).
-   *   config(['$httpProvider', function($httpProvider) {
-   *     $httpProvider.xsrfWhitelistedOrigins.push('https://api.example.com');
-   *   }]).
-   *   run(['$http', function($http) {
-   *     // The XSRF token will be sent.
-   *     $http.get('https://api.example.com/preferences').then(...);
-   *
-   *     // The XSRF token will NOT be sent.
-   *     $http.get('https://stats.example.com/activity').then(...);
-   *   }]);
-   * ```
-   */
-  var xsrfWhitelistedOrigins = this.xsrfWhitelistedOrigins = [];
 
   this.$get = ['$browser', '$httpBackend', '$$cookieReader', '$cacheFactory', '$rootScope', '$q', '$injector', '$sce',
       function($browser, $httpBackend, $$cookieReader, $cacheFactory, $rootScope, $q, $injector, $sce) {
@@ -22757,11 +22650,6 @@ function $HttpProvider() {
       reversedInterceptors.unshift(isString(interceptorFactory)
           ? $injector.get(interceptorFactory) : $injector.invoke(interceptorFactory));
     });
-
-    /**
-     * A function to check request URLs against a list of allowed origins.
-     */
-    var urlIsAllowedOrigin = urlIsAllowedOriginFactory(xsrfWhitelistedOrigins);
 
     /**
      * @ngdoc service
@@ -22791,9 +22679,7 @@ function $HttpProvider() {
      *
      * ## General usage
      * The `$http` service is a function which takes a single argument — a {@link $http#usage configuration object} —
-     * that is used to generate an HTTP request and returns  a {@link ng.$q promise} that is
-     * resolved (request success) or rejected (request failure) with a
-     * {@link ng.$http#$http-returns response} object.
+     * that is used to generate an HTTP request and returns  a {@link ng.$q promise}.
      *
      * ```js
      *   // Simple GET request example:
@@ -22808,6 +22694,24 @@ function $HttpProvider() {
      *       // or server returns response with an error status.
      *     });
      * ```
+     *
+     * The response object has these properties:
+     *
+     *   - **data** – `{string|Object}` – The response body transformed with the transform
+     *     functions.
+     *   - **status** – `{number}` – HTTP status code of the response.
+     *   - **headers** – `{function([headerName])}` – Header getter function.
+     *   - **config** – `{Object}` – The configuration object that was used to generate the request.
+     *   - **statusText** – `{string}` – HTTP status text of the response.
+     *   - **xhrStatus** – `{string}` – Status of the XMLHttpRequest (`complete`, `error`, `timeout` or `abort`).
+     *
+     * A response status code between 200 and 299 is considered a success status and will result in
+     * the success callback being called. Any response status code outside of that range is
+     * considered an error status and will result in the error callback being called.
+     * Also, status codes less than -1 are normalized to zero. -1 usually means the request was
+     * aborted, e.g. using a `config.timeout`.
+     * Note that if the response is a redirect, XMLHttpRequest will transparently follow it, meaning
+     * that the outcome (success or error) will be determined by the final response status code.
      *
      *
      * ## Shortcut methods
@@ -23119,42 +23023,25 @@ function $HttpProvider() {
      * which the attacker can trick an authenticated user into unknowingly executing actions on your
      * website. AngularJS provides a mechanism to counter XSRF. When performing XHR requests, the
      * $http service reads a token from a cookie (by default, `XSRF-TOKEN`) and sets it as an HTTP
-     * header (by default `X-XSRF-TOKEN`). Since only JavaScript that runs on your domain could read
-     * the cookie, your server can be assured that the XHR came from JavaScript running on your
-     * domain.
+     * header (`X-XSRF-TOKEN`). Since only JavaScript that runs on your domain could read the
+     * cookie, your server can be assured that the XHR came from JavaScript running on your domain.
+     * The header will not be set for cross-domain requests.
      *
      * To take advantage of this, your server needs to set a token in a JavaScript readable session
      * cookie called `XSRF-TOKEN` on the first HTTP GET request. On subsequent XHR requests the
-     * server can verify that the cookie matches the `X-XSRF-TOKEN` HTTP header, and therefore be
-     * sure that only JavaScript running on your domain could have sent the request. The token must
-     * be unique for each user and must be verifiable by the server (to prevent the JavaScript from
+     * server can verify that the cookie matches `X-XSRF-TOKEN` HTTP header, and therefore be sure
+     * that only JavaScript running on your domain could have sent the request. The token must be
+     * unique for each user and must be verifiable by the server (to prevent the JavaScript from
      * making up its own tokens). We recommend that the token is a digest of your site's
      * authentication cookie with a [salt](https://en.wikipedia.org/wiki/Salt_(cryptography&#41;)
      * for added security.
      *
-     * The header will &mdash; by default &mdash; **not** be set for cross-domain requests. This
-     * prevents unauthorized servers (e.g. malicious or compromised 3rd-party APIs) from gaining
-     * access to your users' XSRF tokens and exposing them to Cross Site Request Forgery. If you
-     * want to, you can whitelist additional origins to also receive the XSRF token, by adding them
-     * to {@link ng.$httpProvider#xsrfWhitelistedOrigins xsrfWhitelistedOrigins}. This might be
-     * useful, for example, if your application, served from `example.com`, needs to access your API
-     * at `api.example.com`.
-     * See {@link ng.$httpProvider#xsrfWhitelistedOrigins $httpProvider.xsrfWhitelistedOrigins} for
-     * more details.
-     *
-     * <div class="alert alert-danger">
-     *   **Warning**<br />
-     *   Only whitelist origins that you have control over and make sure you understand the
-     *   implications of doing so.
-     * </div>
-     *
-     * The name of the cookie and the header can be specified using the `xsrfCookieName` and
-     * `xsrfHeaderName` properties of either `$httpProvider.defaults` at config-time,
-     * `$http.defaults` at run-time, or the per-request config object.
+     * The name of the headers can be specified using the xsrfHeaderName and xsrfCookieName
+     * properties of either $httpProvider.defaults at config-time, $http.defaults at run-time,
+     * or the per-request config object.
      *
      * In order to prevent collisions in environments where multiple AngularJS apps share the
-     * same domain or subdomain, we recommend that each application uses a unique cookie name.
-     *
+     * same domain or subdomain, we recommend that each application uses unique cookie name.
      *
      * @param {object} config Object describing the request to be made and how it should be
      *    processed. The object has following properties:
@@ -23200,44 +23087,14 @@ function $HttpProvider() {
      *      See {@link $http#caching $http Caching} for more information.
      *    - **timeout** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise}
      *      that should abort the request when resolved.
-     *
-     *      A numerical timeout or a promise returned from {@link ng.$timeout $timeout}, will set
-     *      the `xhrStatus` in the {@link $http#$http-returns response} to "timeout", and any other
-     *      resolved promise will set it to "abort", following standard XMLHttpRequest behavior.
-     *
      *    - **withCredentials** - `{boolean}` - whether to set the `withCredentials` flag on the
      *      XHR object. See [requests with credentials](https://developer.mozilla.org/docs/Web/HTTP/Access_control_CORS#Requests_with_credentials)
      *      for more information.
      *    - **responseType** - `{string}` - see
      *      [XMLHttpRequest.responseType](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest#xmlhttprequest-responsetype).
      *
-     * @returns {HttpPromise} A {@link ng.$q `Promise}` that will be resolved (request success)
-     *   or rejected (request failure) with a response object.
-     *
-     *   The response object has these properties:
-     *
-     *   - **data** – `{string|Object}` – The response body transformed with
-     *     the transform functions.
-     *   - **status** – `{number}` – HTTP status code of the response.
-     *   - **headers** – `{function([headerName])}` – Header getter function.
-     *   - **config** – `{Object}` – The configuration object that was used
-     *     to generate the request.
-     *   - **statusText** – `{string}` – HTTP status text of the response.
-     *   - **xhrStatus** – `{string}` – Status of the XMLHttpRequest
-     *     (`complete`, `error`, `timeout` or `abort`).
-     *
-     *
-     *   A response status code between 200 and 299 is considered a success status
-     *   and will result in the success callback being called. Any response status
-     *   code outside of that range is considered an error status and will result
-     *   in the error callback being called.
-     *   Also, status codes less than -1 are normalized to zero. -1 usually means
-     *   the request was aborted, e.g. using a `config.timeout`. More information
-     *   about the status might be available in the `xhrStatus` property.
-     *
-     *   Note that if the response is a redirect, XMLHttpRequest will transparently
-     *   follow it, meaning that the outcome (success or error) will be determined
-     *   by the final response status code.
+     * @returns {HttpPromise} Returns a {@link ng.$q `Promise}` that will be resolved to a response object
+     *                        when the request succeeds or fails.
      *
      *
      * @property {Array.<Object>} pendingRequests Array of config objects for currently pending
@@ -23487,9 +23344,8 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
 
     /**
@@ -23501,9 +23357,8 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
 
     /**
@@ -23515,9 +23370,8 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
 
     /**
@@ -23558,9 +23412,8 @@ function $HttpProvider() {
      *
      * @param {string|TrustedObject} url Absolute or relative URL of the resource that is being requested;
      *                                   or an object created by a call to `$sce.trustAsResourceUrl(url)`.
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
     createShortMethods('get', 'delete', 'head', 'jsonp');
 
@@ -23573,9 +23426,8 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
 
     /**
@@ -23587,9 +23439,8 @@ function $HttpProvider() {
      *
      * @param {string} url Relative or absolute URL specifying the destination of the request
      * @param {*} data Request content
-     * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-     * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-     * See {@link ng.$http#$http-returns `$http()` return value}.
+     * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+     * @returns {HttpPromise} Future object
      */
 
      /**
@@ -23601,9 +23452,8 @@ function $HttpProvider() {
       *
       * @param {string} url Relative or absolute URL specifying the destination of the request
       * @param {*} data Request content
-      * @param {Object=} config Optional configuration object. See {@link ng.$http#$http-arguments `$http()` arguments}.
-      * @returns {HttpPromise}  A Promise that will be resolved or rejected with a response object.
-      * See {@link ng.$http#$http-returns `$http()` return value}.
+      * @param {Object=} config Optional configuration object. See https://docs.angularjs.org/api/ng/service/$http#usage
+      * @returns {HttpPromise} Future object
       */
     createShortMethodsWithData('post', 'put', 'patch');
 
@@ -23714,7 +23564,7 @@ function $HttpProvider() {
       // if we won't have the response in cache, set the xsrf headers and
       // send the request to the backend
       if (isUndefined(cachedResp)) {
-        var xsrfValue = urlIsAllowedOrigin(config.url)
+        var xsrfValue = urlIsSameOrigin(config.url)
             ? $$cookieReader()[config.xsrfCookieName || defaults.xsrfCookieName]
             : undefined;
         if (xsrfValue) {
@@ -23912,7 +23762,6 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
     } else {
 
       var xhr = createXhr(method, url);
-      var abortedByTimeout = false;
 
       xhr.open(method, url, true);
       forEach(headers, function(value, key) {
@@ -23953,7 +23802,7 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       };
 
       var requestAborted = function() {
-        completeRequest(callback, -1, null, null, '', abortedByTimeout ? 'timeout' : 'abort');
+        completeRequest(callback, -1, null, null, '', 'abort');
       };
 
       var requestTimeout = function() {
@@ -23963,11 +23812,11 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       };
 
       xhr.onerror = requestError;
-      xhr.ontimeout = requestTimeout;
       xhr.onabort = requestAborted;
+      xhr.ontimeout = requestTimeout;
 
       forEach(eventHandlers, function(value, key) {
-        xhr.addEventListener(key, value);
+          xhr.addEventListener(key, value);
       });
 
       forEach(uploadEventHandlers, function(value, key) {
@@ -23998,26 +23847,14 @@ function createHttpBackend($browser, createXhr, $browserDefer, callbacks, rawDoc
       xhr.send(isUndefined(post) ? null : post);
     }
 
-    // Since we are using xhr.abort() when a request times out, we have to set a flag that
-    // indicates to requestAborted if the request timed out or was aborted.
-    //
-    // http.timeout = numerical timeout   timeout
-    // http.timeout = $timeout            timeout
-    // http.timeout = promise             abort
-    // xhr.abort()                        abort (The xhr object is normally inaccessible, but
-    //                                    can be exposed with the xhrFactory)
     if (timeout > 0) {
-      var timeoutId = $browserDefer(function() {
-        timeoutRequest('timeout');
-      }, timeout);
+      var timeoutId = $browserDefer(timeoutRequest, timeout);
     } else if (isPromiseLike(timeout)) {
-      timeout.then(function() {
-        timeoutRequest(isDefined(timeout.$$timeoutId) ? 'timeout' : 'abort');
-      });
+      timeout.then(timeoutRequest);
     }
 
-    function timeoutRequest(reason) {
-      abortedByTimeout = reason === 'timeout';
+
+    function timeoutRequest() {
       if (jsonpDone) {
         jsonpDone();
       }
@@ -24148,8 +23985,9 @@ function $InterpolateProvider() {
     if (value) {
       startSymbol = value;
       return this;
+    } else {
+      return startSymbol;
     }
-    return startSymbol;
   };
 
   /**
@@ -24165,8 +24003,9 @@ function $InterpolateProvider() {
     if (value) {
       endSymbol = value;
       return this;
+    } else {
+      return endSymbol;
     }
-    return endSymbol;
   };
 
 
@@ -24213,7 +24052,7 @@ function $InterpolateProvider() {
      * ```js
      *   var $interpolate = ...; // injected
      *   var exp = $interpolate('Hello {{name | uppercase}}!');
-     *   expect(exp({name:'AngularJS'})).toEqual('Hello ANGULARJS!');
+     *   expect(exp({name:'AngularJS'})).toEqual('Hello ANGULAR!');
      * ```
      *
      * `$interpolate` takes an optional fourth argument, `allOrNothing`. If `allOrNothing` is
@@ -24313,21 +24152,16 @@ function $InterpolateProvider() {
      * - `context`: evaluation context for all expressions embedded in the interpolated text
      */
     function $interpolate(text, mustHaveExpression, trustedContext, allOrNothing) {
-      var contextAllowsConcatenation = trustedContext === $sce.URL || trustedContext === $sce.MEDIA_URL;
-
       // Provide a quick exit and simplified result function for text with no interpolation
       if (!text.length || text.indexOf(startSymbol) === -1) {
-        if (mustHaveExpression && !contextAllowsConcatenation) return;
-
-        var unescapedText = unescapeText(text);
-        if (contextAllowsConcatenation) {
-          unescapedText = $sce.getTrusted(trustedContext, unescapedText);
+        var constantInterp;
+        if (!mustHaveExpression) {
+          var unescapedText = unescapeText(text);
+          constantInterp = valueFn(unescapedText);
+          constantInterp.exp = text;
+          constantInterp.expressions = [];
+          constantInterp.$$watchDelegate = constantWatchDelegate;
         }
-        var constantInterp = valueFn(unescapedText);
-        constantInterp.exp = text;
-        constantInterp.expressions = [];
-        constantInterp.$$watchDelegate = constantWatchDelegate;
-
         return constantInterp;
       }
 
@@ -24336,13 +24170,11 @@ function $InterpolateProvider() {
           endIndex,
           index = 0,
           expressions = [],
-          parseFns,
+          parseFns = [],
           textLength = text.length,
           exp,
           concat = [],
-          expressionPositions = [],
-          singleExpression;
-
+          expressionPositions = [];
 
       while (index < textLength) {
         if (((startIndex = text.indexOf(startSymbol, index)) !== -1) &&
@@ -24352,9 +24184,10 @@ function $InterpolateProvider() {
           }
           exp = text.substring(startIndex + startSymbolLength, endIndex);
           expressions.push(exp);
+          parseFns.push($parse(exp, parseStringifyInterceptor));
           index = endIndex + endSymbolLength;
           expressionPositions.push(concat.length);
-          concat.push(''); // Placeholder that will get replaced with the evaluated expression.
+          concat.push('');
         } else {
           // we did not find an interpolation, so we have to add the remainder to the separators array
           if (index !== textLength) {
@@ -24364,25 +24197,15 @@ function $InterpolateProvider() {
         }
       }
 
-      singleExpression = concat.length === 1 && expressionPositions.length === 1;
-      // Intercept expression if we need to stringify concatenated inputs, which may be SCE trusted
-      // objects rather than simple strings
-      // (we don't modify the expression if the input consists of only a single trusted input)
-      var interceptor = contextAllowsConcatenation && singleExpression ? undefined : parseStringifyInterceptor;
-      parseFns = expressions.map(function(exp) { return $parse(exp, interceptor); });
-
       // Concatenating expressions makes it hard to reason about whether some combination of
       // concatenated values are unsafe to use and could easily lead to XSS.  By requiring that a
-      // single expression be used for some $sce-managed secure contexts (RESOURCE_URLs mostly),
-      // we ensure that the value that's used is assigned or constructed by some JS code somewhere
-      // that is more testable or make it obvious that you bound the value to some user controlled
-      // value.  This helps reduce the load when auditing for XSS issues.
-
-      // Note that URL and MEDIA_URL $sce contexts do not need this, since `$sce` can sanitize the values
-      // passed to it. In that case, `$sce.getTrusted` will be called on either the single expression
-      // or on the overall concatenated string (losing trusted types used in the mix, by design).
-      // Both these methods will sanitize plain strings. Also, HTML could be included, but since it's
-      // only used in srcdoc attributes, this would not be very useful.
+      // single expression be used for iframe[src], object[src], etc., we ensure that the value
+      // that's used is assigned or constructed by some JS code somewhere that is more testable or
+      // make it obvious that you bound the value to some user controlled value.  This helps reduce
+      // the load when auditing for XSS issues.
+      if (trustedContext && concat.length > 1) {
+          $interpolateMinErr.throwNoconcat(text);
+      }
 
       if (!mustHaveExpression || expressions.length) {
         var compute = function(values) {
@@ -24390,16 +24213,13 @@ function $InterpolateProvider() {
             if (allOrNothing && isUndefined(values[i])) return;
             concat[expressionPositions[i]] = values[i];
           }
-
-          if (contextAllowsConcatenation) {
-            // If `singleExpression` then `concat[0]` might be a "trusted" value or `null`, rather than a string
-            return $sce.getTrusted(trustedContext, singleExpression ? concat[0] : concat.join(''));
-          } else if (trustedContext && concat.length > 1) {
-            // This context does not allow more than one part, e.g. expr + string or exp + exp.
-            $interpolateMinErr.throwNoconcat(text);
-          }
-          // In an unprivileged context or only one part: just concatenate and return.
           return concat.join('');
+        };
+
+        var getValue = function(value) {
+          return trustedContext ?
+            $sce.getTrusted(trustedContext, value) :
+            $sce.valueOf(value);
         };
 
         return extend(function interpolationFn(context) {
@@ -24434,13 +24254,7 @@ function $InterpolateProvider() {
 
       function parseStringifyInterceptor(value) {
         try {
-          // In concatenable contexts, getTrusted comes at the end, to avoid sanitizing individual
-          // parts of a full URL. We don't care about losing the trustedness here.
-          // In non-concatenable contexts, where there is only one expression, this interceptor is
-          // not applied to the expression.
-          value = (trustedContext && !contextAllowsConcatenation) ?
-                    $sce.getTrusted(trustedContext, value) :
-                    $sce.valueOf(value);
+          value = getValue(value);
           return allOrNothing && !isDefined(value) ? value : stringify(value);
         } catch (err) {
           $exceptionHandler($interpolateMinErr.interr(text, err));
@@ -24484,8 +24298,6 @@ function $InterpolateProvider() {
   }];
 }
 
-var $intervalMinErr = minErr('$interval');
-
 /** @this */
 function $IntervalProvider() {
   this.$get = ['$rootScope', '$window', '$q', '$$q', '$browser',
@@ -24493,132 +24305,132 @@ function $IntervalProvider() {
     var intervals = {};
 
 
-    /**
-     * @ngdoc service
-     * @name $interval
-     *
-     * @description
-     * AngularJS's wrapper for `window.setInterval`. The `fn` function is executed every `delay`
-     * milliseconds.
-     *
-     * The return value of registering an interval function is a promise. This promise will be
-     * notified upon each tick of the interval, and will be resolved after `count` iterations, or
-     * run indefinitely if `count` is not defined. The value of the notification will be the
-     * number of iterations that have run.
-     * To cancel an interval, call `$interval.cancel(promise)`.
-     *
-     * In tests you can use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
-     * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
-     * time.
-     *
-     * <div class="alert alert-warning">
-     * **Note**: Intervals created by this service must be explicitly destroyed when you are finished
-     * with them.  In particular they are not automatically destroyed when a controller's scope or a
-     * directive's element are destroyed.
-     * You should take this into consideration and make sure to always cancel the interval at the
-     * appropriate moment.  See the example below for more details on how and when to do this.
-     * </div>
-     *
-     * @param {function()} fn A function that should be called repeatedly. If no additional arguments
-     *   are passed (see below), the function is called with the current iteration count.
-     * @param {number} delay Number of milliseconds between each function call.
-     * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
-     *   indefinitely.
-     * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-     *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
-     * @param {...*=} Pass additional parameters to the executed function.
-     * @returns {promise} A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.
-     *
-     * @example
-     * <example module="intervalExample" name="interval-service">
-     * <file name="index.html">
-     *   <script>
-     *     angular.module('intervalExample', [])
-     *       .controller('ExampleController', ['$scope', '$interval',
-     *         function($scope, $interval) {
-     *           $scope.format = 'M/d/yy h:mm:ss a';
-     *           $scope.blood_1 = 100;
-     *           $scope.blood_2 = 120;
-     *
-     *           var stop;
-     *           $scope.fight = function() {
-     *             // Don't start a new fight if we are already fighting
-     *             if ( angular.isDefined(stop) ) return;
-     *
-     *             stop = $interval(function() {
-     *               if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
-     *                 $scope.blood_1 = $scope.blood_1 - 3;
-     *                 $scope.blood_2 = $scope.blood_2 - 4;
-     *               } else {
-     *                 $scope.stopFight();
-     *               }
-     *             }, 100);
-     *           };
-     *
-     *           $scope.stopFight = function() {
-     *             if (angular.isDefined(stop)) {
-     *               $interval.cancel(stop);
-     *               stop = undefined;
-     *             }
-     *           };
-     *
-     *           $scope.resetFight = function() {
-     *             $scope.blood_1 = 100;
-     *             $scope.blood_2 = 120;
-     *           };
-     *
-     *           $scope.$on('$destroy', function() {
-     *             // Make sure that the interval is destroyed too
-     *             $scope.stopFight();
-     *           });
-     *         }])
-     *       // Register the 'myCurrentTime' directive factory method.
-     *       // We inject $interval and dateFilter service since the factory method is DI.
-     *       .directive('myCurrentTime', ['$interval', 'dateFilter',
-     *         function($interval, dateFilter) {
-     *           // return the directive link function. (compile function not needed)
-     *           return function(scope, element, attrs) {
-     *             var format,  // date format
-     *                 stopTime; // so that we can cancel the time updates
-     *
-     *             // used to update the UI
-     *             function updateTime() {
-     *               element.text(dateFilter(new Date(), format));
-     *             }
-     *
-     *             // watch the expression, and update the UI on change.
-     *             scope.$watch(attrs.myCurrentTime, function(value) {
-     *               format = value;
-     *               updateTime();
-     *             });
-     *
-     *             stopTime = $interval(updateTime, 1000);
-     *
-     *             // listen on DOM destroy (removal) event, and cancel the next UI update
-     *             // to prevent updating time after the DOM element was removed.
-     *             element.on('$destroy', function() {
-     *               $interval.cancel(stopTime);
-     *             });
-     *           }
-     *         }]);
-     *   </script>
-     *
-     *   <div>
-     *     <div ng-controller="ExampleController">
-     *       <label>Date format: <input ng-model="format"></label> <hr/>
-     *       Current time is: <span my-current-time="format"></span>
-     *       <hr/>
-     *       Blood 1 : <font color='red'>{{blood_1}}</font>
-     *       Blood 2 : <font color='red'>{{blood_2}}</font>
-     *       <button type="button" data-ng-click="fight()">Fight</button>
-     *       <button type="button" data-ng-click="stopFight()">StopFight</button>
-     *       <button type="button" data-ng-click="resetFight()">resetFight</button>
-     *     </div>
-     *   </div>
-     *
-     * </file>
-     * </example>
-     */
+     /**
+      * @ngdoc service
+      * @name $interval
+      *
+      * @description
+      * AngularJS's wrapper for `window.setInterval`. The `fn` function is executed every `delay`
+      * milliseconds.
+      *
+      * The return value of registering an interval function is a promise. This promise will be
+      * notified upon each tick of the interval, and will be resolved after `count` iterations, or
+      * run indefinitely if `count` is not defined. The value of the notification will be the
+      * number of iterations that have run.
+      * To cancel an interval, call `$interval.cancel(promise)`.
+      *
+      * In tests you can use {@link ngMock.$interval#flush `$interval.flush(millis)`} to
+      * move forward by `millis` milliseconds and trigger any functions scheduled to run in that
+      * time.
+      *
+      * <div class="alert alert-warning">
+      * **Note**: Intervals created by this service must be explicitly destroyed when you are finished
+      * with them.  In particular they are not automatically destroyed when a controller's scope or a
+      * directive's element are destroyed.
+      * You should take this into consideration and make sure to always cancel the interval at the
+      * appropriate moment.  See the example below for more details on how and when to do this.
+      * </div>
+      *
+      * @param {function()} fn A function that should be called repeatedly. If no additional arguments
+      *   are passed (see below), the function is called with the current iteration count.
+      * @param {number} delay Number of milliseconds between each function call.
+      * @param {number=} [count=0] Number of times to repeat. If not set, or 0, will repeat
+      *   indefinitely.
+      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+      * @param {...*=} Pass additional parameters to the executed function.
+      * @returns {promise} A promise which will be notified on each iteration. It will resolve once all iterations of the interval complete.
+      *
+      * @example
+      * <example module="intervalExample" name="interval-service">
+      * <file name="index.html">
+      *   <script>
+      *     angular.module('intervalExample', [])
+      *       .controller('ExampleController', ['$scope', '$interval',
+      *         function($scope, $interval) {
+      *           $scope.format = 'M/d/yy h:mm:ss a';
+      *           $scope.blood_1 = 100;
+      *           $scope.blood_2 = 120;
+      *
+      *           var stop;
+      *           $scope.fight = function() {
+      *             // Don't start a new fight if we are already fighting
+      *             if ( angular.isDefined(stop) ) return;
+      *
+      *             stop = $interval(function() {
+      *               if ($scope.blood_1 > 0 && $scope.blood_2 > 0) {
+      *                 $scope.blood_1 = $scope.blood_1 - 3;
+      *                 $scope.blood_2 = $scope.blood_2 - 4;
+      *               } else {
+      *                 $scope.stopFight();
+      *               }
+      *             }, 100);
+      *           };
+      *
+      *           $scope.stopFight = function() {
+      *             if (angular.isDefined(stop)) {
+      *               $interval.cancel(stop);
+      *               stop = undefined;
+      *             }
+      *           };
+      *
+      *           $scope.resetFight = function() {
+      *             $scope.blood_1 = 100;
+      *             $scope.blood_2 = 120;
+      *           };
+      *
+      *           $scope.$on('$destroy', function() {
+      *             // Make sure that the interval is destroyed too
+      *             $scope.stopFight();
+      *           });
+      *         }])
+      *       // Register the 'myCurrentTime' directive factory method.
+      *       // We inject $interval and dateFilter service since the factory method is DI.
+      *       .directive('myCurrentTime', ['$interval', 'dateFilter',
+      *         function($interval, dateFilter) {
+      *           // return the directive link function. (compile function not needed)
+      *           return function(scope, element, attrs) {
+      *             var format,  // date format
+      *                 stopTime; // so that we can cancel the time updates
+      *
+      *             // used to update the UI
+      *             function updateTime() {
+      *               element.text(dateFilter(new Date(), format));
+      *             }
+      *
+      *             // watch the expression, and update the UI on change.
+      *             scope.$watch(attrs.myCurrentTime, function(value) {
+      *               format = value;
+      *               updateTime();
+      *             });
+      *
+      *             stopTime = $interval(updateTime, 1000);
+      *
+      *             // listen on DOM destroy (removal) event, and cancel the next UI update
+      *             // to prevent updating time after the DOM element was removed.
+      *             element.on('$destroy', function() {
+      *               $interval.cancel(stopTime);
+      *             });
+      *           }
+      *         }]);
+      *   </script>
+      *
+      *   <div>
+      *     <div ng-controller="ExampleController">
+      *       <label>Date format: <input ng-model="format"></label> <hr/>
+      *       Current time is: <span my-current-time="format"></span>
+      *       <hr/>
+      *       Blood 1 : <font color='red'>{{blood_1}}</font>
+      *       Blood 2 : <font color='red'>{{blood_2}}</font>
+      *       <button type="button" data-ng-click="fight()">Fight</button>
+      *       <button type="button" data-ng-click="stopFight()">StopFight</button>
+      *       <button type="button" data-ng-click="resetFight()">resetFight</button>
+      *     </div>
+      *   </div>
+      *
+      * </file>
+      * </example>
+      */
     function interval(fn, delay, count, invokeApply) {
       var hasParams = arguments.length > 4,
           args = hasParams ? sliceArgs(arguments, 4) : [],
@@ -24663,36 +24475,26 @@ function $IntervalProvider() {
     }
 
 
-    /**
-     * @ngdoc method
-     * @name $interval#cancel
-     *
-     * @description
-     * Cancels a task associated with the `promise`.
-     *
-     * @param {Promise=} promise returned by the `$interval` function.
-     * @returns {boolean} Returns `true` if the task was successfully canceled.
-     */
+     /**
+      * @ngdoc method
+      * @name $interval#cancel
+      *
+      * @description
+      * Cancels a task associated with the `promise`.
+      *
+      * @param {Promise=} promise returned by the `$interval` function.
+      * @returns {boolean} Returns `true` if the task was successfully canceled.
+      */
     interval.cancel = function(promise) {
-      if (!promise) return false;
-
-      if (!promise.hasOwnProperty('$$intervalId')) {
-        throw $intervalMinErr('badprom',
-            '`$interval.cancel()` called with a promise that was not generated by `$interval()`.');
+      if (promise && promise.$$intervalId in intervals) {
+        // Interval cancels should not report as unhandled promise.
+        markQExceptionHandled(intervals[promise.$$intervalId].promise);
+        intervals[promise.$$intervalId].reject('canceled');
+        $window.clearInterval(promise.$$intervalId);
+        delete intervals[promise.$$intervalId];
+        return true;
       }
-
-      if (!intervals.hasOwnProperty(promise.$$intervalId)) return false;
-
-      var id = promise.$$intervalId;
-      var deferred = intervals[id];
-
-      // Interval cancels should not report an unhandled promise.
-      markQExceptionHandled(deferred.promise);
-      deferred.reject('canceled');
-      $window.clearInterval(id);
-      delete intervals[id];
-
-      return true;
+      return false;
     };
 
     return interval;
@@ -25729,6 +25531,8 @@ function $LocationProvider() {
           // update location manually
           if ($location.absUrl() !== $browser.url()) {
             $rootScope.$apply();
+            // hack to work around FF6 bug 684208 when scenario runner clicks on links
+            $window.angular['ff-684208-preventDefault'] = true;
           }
         }
       }
@@ -27804,8 +27608,15 @@ function $ParseProvider() {
             var lexer = new Lexer($parseOptions);
             var parser = new Parser(lexer, $filter, $parseOptions);
             parsedExpression = parser.parse(exp);
-
-            cache[cacheKey] = addWatchDelegate(parsedExpression);
+            if (parsedExpression.constant) {
+              parsedExpression.$$watchDelegate = constantWatchDelegate;
+            } else if (parsedExpression.oneTime) {
+              parsedExpression.$$watchDelegate = parsedExpression.literal ?
+                  oneTimeLiteralWatchDelegate : oneTimeWatchDelegate;
+            } else if (parsedExpression.inputs) {
+              parsedExpression.$$watchDelegate = inputsWatchDelegate;
+            }
+            cache[cacheKey] = parsedExpression;
           }
           return addInterceptor(parsedExpression, interceptorFn);
 
@@ -27893,48 +27704,57 @@ function $ParseProvider() {
     }
 
     function oneTimeWatchDelegate(scope, listener, objectEquality, parsedExpression, prettyPrintExpression) {
-      var isDone = parsedExpression.literal ? isAllDefined : isDefined;
       var unwatch, lastValue;
-
-      var exp = parsedExpression.$$intercepted || parsedExpression;
-      var post = parsedExpression.$$interceptor || identity;
-
-      var useInputs = parsedExpression.inputs && !exp.inputs;
-
-      // Propogate the literal/inputs/constant attributes
-      // ... but not oneTime since we are handling it
-      oneTimeWatch.literal = parsedExpression.literal;
-      oneTimeWatch.constant = parsedExpression.constant;
-      oneTimeWatch.inputs = parsedExpression.inputs;
-
-      // Allow other delegates to run on this wrapped expression
-      addWatchDelegate(oneTimeWatch);
-
-      unwatch = scope.$watch(oneTimeWatch, listener, objectEquality, prettyPrintExpression);
-
+      if (parsedExpression.inputs) {
+        unwatch = inputsWatchDelegate(scope, oneTimeListener, objectEquality, parsedExpression, prettyPrintExpression);
+      } else {
+        unwatch = scope.$watch(oneTimeWatch, oneTimeListener, objectEquality);
+      }
       return unwatch;
 
-      function unwatchIfDone() {
-        if (isDone(lastValue)) {
-          unwatch();
-        }
+      function oneTimeWatch(scope) {
+        return parsedExpression(scope);
       }
-
-      function oneTimeWatch(scope, locals, assign, inputs) {
-        lastValue = useInputs && inputs ? inputs[0] : exp(scope, locals, assign, inputs);
-        if (isDone(lastValue)) {
-          scope.$$postDigest(unwatchIfDone);
+      function oneTimeListener(value, old, scope) {
+        lastValue = value;
+        if (isFunction(listener)) {
+          listener(value, old, scope);
         }
-        return post(lastValue);
+        if (isDefined(value)) {
+          scope.$$postDigest(function() {
+            if (isDefined(lastValue)) {
+              unwatch();
+            }
+          });
+        }
       }
     }
 
-    function isAllDefined(value) {
-      var allDefined = true;
-      forEach(value, function(val) {
-        if (!isDefined(val)) allDefined = false;
-      });
-      return allDefined;
+    function oneTimeLiteralWatchDelegate(scope, listener, objectEquality, parsedExpression) {
+      var unwatch, lastValue;
+      unwatch = scope.$watch(function oneTimeWatch(scope) {
+        return parsedExpression(scope);
+      }, function oneTimeListener(value, old, scope) {
+        lastValue = value;
+        if (isFunction(listener)) {
+          listener(value, old, scope);
+        }
+        if (isAllDefined(value)) {
+          scope.$$postDigest(function() {
+            if (isAllDefined(lastValue)) unwatch();
+          });
+        }
+      }, objectEquality);
+
+      return unwatch;
+
+      function isAllDefined(value) {
+        var allDefined = true;
+        forEach(value, function(val) {
+          if (!isDefined(val)) allDefined = false;
+        });
+        return allDefined;
+      }
     }
 
     function constantWatchDelegate(scope, listener, objectEquality, parsedExpression) {
@@ -27945,74 +27765,49 @@ function $ParseProvider() {
       return unwatch;
     }
 
-    function addWatchDelegate(parsedExpression) {
-      if (parsedExpression.constant) {
-        parsedExpression.$$watchDelegate = constantWatchDelegate;
-      } else if (parsedExpression.oneTime) {
-        parsedExpression.$$watchDelegate = oneTimeWatchDelegate;
-      } else if (parsedExpression.inputs) {
-        parsedExpression.$$watchDelegate = inputsWatchDelegate;
-      }
-
-      return parsedExpression;
-    }
-
-    function chainInterceptors(first, second) {
-      function chainedInterceptor(value) {
-        return second(first(value));
-      }
-      chainedInterceptor.$stateful = first.$stateful || second.$stateful;
-      chainedInterceptor.$$pure = first.$$pure && second.$$pure;
-
-      return chainedInterceptor;
-    }
-
     function addInterceptor(parsedExpression, interceptorFn) {
       if (!interceptorFn) return parsedExpression;
-
-      // Extract any existing interceptors out of the parsedExpression
-      // to ensure the original parsedExpression is always the $$intercepted
-      if (parsedExpression.$$interceptor) {
-        interceptorFn = chainInterceptors(parsedExpression.$$interceptor, interceptorFn);
-        parsedExpression = parsedExpression.$$intercepted;
-      }
-
+      var watchDelegate = parsedExpression.$$watchDelegate;
       var useInputs = false;
 
-      var fn = function interceptedExpression(scope, locals, assign, inputs) {
+      var regularWatch =
+          watchDelegate !== oneTimeLiteralWatchDelegate &&
+          watchDelegate !== oneTimeWatchDelegate;
+
+      var fn = regularWatch ? function regularInterceptedExpression(scope, locals, assign, inputs) {
         var value = useInputs && inputs ? inputs[0] : parsedExpression(scope, locals, assign, inputs);
-        return interceptorFn(value);
+        return interceptorFn(value, scope, locals);
+      } : function oneTimeInterceptedExpression(scope, locals, assign, inputs) {
+        var value = parsedExpression(scope, locals, assign, inputs);
+        var result = interceptorFn(value, scope, locals);
+        // we only return the interceptor's result if the
+        // initial value is defined (for bind-once)
+        return isDefined(value) ? result : value;
       };
 
-      // Maintain references to the interceptor/intercepted
-      fn.$$intercepted = parsedExpression;
-      fn.$$interceptor = interceptorFn;
-
-      // Propogate the literal/oneTime/constant attributes
-      fn.literal = parsedExpression.literal;
-      fn.oneTime = parsedExpression.oneTime;
-      fn.constant = parsedExpression.constant;
-
-      // Treat the interceptor like filters.
-      // If it is not $stateful then only watch its inputs.
-      // If the expression itself has no inputs then use the full expression as an input.
-      if (!interceptorFn.$stateful) {
-        useInputs = !parsedExpression.inputs;
+      // Propagate $$watchDelegates other then inputsWatchDelegate
+      useInputs = !parsedExpression.inputs;
+      if (watchDelegate && watchDelegate !== inputsWatchDelegate) {
+        fn.$$watchDelegate = watchDelegate;
+        fn.inputs = parsedExpression.inputs;
+      } else if (!interceptorFn.$stateful) {
+        // Treat interceptor like filters - assume non-stateful by default and use the inputsWatchDelegate
+        fn.$$watchDelegate = inputsWatchDelegate;
         fn.inputs = parsedExpression.inputs ? parsedExpression.inputs : [parsedExpression];
+      }
 
-        if (!interceptorFn.$$pure) {
-          fn.inputs = fn.inputs.map(function(e) {
+      if (fn.inputs) {
+        fn.inputs = fn.inputs.map(function(e) {
               // Remove the isPure flag of inputs when it is not absolute because they are now wrapped in a
-              // non-pure interceptor function.
+              // potentially non-pure interceptor function.
               if (e.isPure === PURITY_RELATIVE) {
                 return function depurifier(s) { return e(s); };
               }
               return e;
             });
-        }
       }
 
-      return addWatchDelegate(fn);
+      return fn;
     }
   }];
 }
@@ -28825,7 +28620,6 @@ function $RootScopeProvider() {
       this.$$watchersCount = 0;
       this.$id = nextUid();
       this.$$ChildScope = null;
-      this.$$suspended = false;
     }
     ChildScope.prototype = parent;
     return ChildScope;
@@ -28913,7 +28707,6 @@ function $RootScopeProvider() {
                      this.$$childHead = this.$$childTail = null;
       this.$root = this;
       this.$$destroyed = false;
-      this.$$suspended = false;
       this.$$listeners = {};
       this.$$listenerCount = {};
       this.$$watchersCount = 0;
@@ -29033,8 +28826,8 @@ function $RootScopeProvider() {
        *   according to the {@link angular.equals} function. To save the value of the object for
        *   later comparison, the {@link angular.copy} function is used. This therefore means that
        *   watching complex objects will have adverse memory and performance implications.
-       * - This should not be used to watch for changes in objects that are (or contain)
-       *   [File](https://developer.mozilla.org/docs/Web/API/File) objects due to limitations with {@link angular.copy `angular.copy`}.
+       * - This should not be used to watch for changes in objects that are
+       *   or contain [File](https://developer.mozilla.org/docs/Web/API/File) objects due to limitations with {@link angular.copy `angular.copy`}.
        * - The watch `listener` may change the model, which may trigger other `listener`s to fire.
        *   This is achieved by rerunning the watchers until no changes are detected. The rerun
        *   iteration limit is 10 to prevent an infinite loop deadlock.
@@ -29182,6 +28975,12 @@ function $RootScopeProvider() {
        *   values are examined for changes on every call to `$digest`.
        * - The `listener` is called whenever any expression in the `watchExpressions` array changes.
        *
+       * `$watchGroup` is more performant than watching each expression individually, and should be
+       * used when the listener does not need to know which expression has changed.
+       * If the listener needs to know which expression has changed,
+       * {@link ng.$rootScope.Scope#$watch $watch()} or
+       * {@link ng.$rootScope.Scope#$watchCollection $watchCollection()} should be used.
+       *
        * @param {Array.<string|Function(scope)>} watchExpressions Array of expressions that will be individually
        * watched using {@link ng.$rootScope.Scope#$watch $watch()}
        *
@@ -29190,7 +28989,34 @@ function $RootScopeProvider() {
        *    The `newValues` array contains the current values of the `watchExpressions`, with the indexes matching
        *    those of `watchExpression`
        *    and the `oldValues` array contains the previous values of the `watchExpressions`, with the indexes matching
-       *    those of `watchExpression`
+       *    those of `watchExpression`.
+       *
+       *    Note that `newValues` and `oldValues` reflect the differences in each **individual**
+       *    expression, and not the difference of the values between each call of the listener.
+       *    That means the difference between `newValues` and `oldValues` cannot be used to determine
+       *    which expression has changed / remained stable:
+       *
+       *    ```js
+       *
+       *    $scope.$watchGroup(['v1', 'v2'], function(newValues, oldValues) {
+       *      console.log(newValues, oldValues);
+       *    });
+       *
+       *    // newValues, oldValues initially
+       *    // [undefined, undefined], [undefined, undefined]
+       *
+       *    $scope.v1 = 'a';
+       *    $scope.v2 = 'a';
+       *
+       *    // ['a', 'a'], [undefined, undefined]
+       *
+       *    $scope.v2 = 'b'
+       *
+       *    // v1 hasn't changed since it became `'a'`, therefore its oldValue is still `undefined`
+       *    // ['a', 'b'], [undefined, 'a']
+       *
+       *    ```
+       *
        *    The `scope` refers to the current scope.
        * @returns {function()} Returns a de-registration function for all listeners.
        */
@@ -29223,8 +29049,9 @@ function $RootScopeProvider() {
         }
 
         forEach(watchExpressions, function(expr, i) {
-          var unwatchFn = self.$watch(expr, function watchGroupSubAction(value) {
+          var unwatchFn = self.$watch(expr, function watchGroupSubAction(value, oldValue) {
             newValues[i] = value;
+            oldValues[i] = oldValue;
             if (!changeReactionScheduled) {
               changeReactionScheduled = true;
               self.$evalAsync(watchGroupAction);
@@ -29236,17 +29063,11 @@ function $RootScopeProvider() {
         function watchGroupAction() {
           changeReactionScheduled = false;
 
-          try {
-            if (firstRun) {
-              firstRun = false;
-              listener(newValues, newValues, self);
-            } else {
-              listener(newValues, oldValues, self);
-            }
-          } finally {
-            for (var i = 0; i < watchExpressions.length; i++) {
-              oldValues[i] = newValues[i];
-            }
+          if (firstRun) {
+            firstRun = false;
+            listener(newValues, newValues, self);
+          } else {
+            listener(newValues, oldValues, self);
           }
         }
 
@@ -29314,11 +29135,7 @@ function $RootScopeProvider() {
        *    de-registration function is executed, the internal watch operation is terminated.
        */
       $watchCollection: function(obj, listener) {
-        // Mark the interceptor as
-        // ... $$pure when literal since the instance will change when any input changes
-        $watchCollectionInterceptor.$$pure = $parse(obj).literal;
-        // ... $stateful when non-literal since we must read the state of the collection
-        $watchCollectionInterceptor.$stateful = !$watchCollectionInterceptor.$$pure;
+        $watchCollectionInterceptor.$stateful = true;
 
         var self = this;
         // the current value, updated on each dirty-check run
@@ -29506,7 +29323,7 @@ function $RootScopeProvider() {
         var watch, value, last, fn, get,
             watchers,
             dirty, ttl = TTL,
-            next, current, target = asyncQueue.length ? $rootScope : this,
+            next, current, target = this,
             watchLog = [],
             logIdx, asyncTask;
 
@@ -29544,7 +29361,7 @@ function $RootScopeProvider() {
 
           traverseScopesLoop:
           do { // "traverse the scopes" loop
-            if ((watchers = !current.$$suspended && current.$$watchers)) {
+            if ((watchers = current.$$watchers)) {
               // process our watches
               watchers.$$digestWatchIndex = watchers.length;
               while (watchers.$$digestWatchIndex--) {
@@ -29588,9 +29405,7 @@ function $RootScopeProvider() {
             // Insanity Warning: scope depth-first traversal
             // yes, this code is a bit crazy, but it works and we have tests to prove it!
             // this piece should be kept in sync with the traversal in $broadcast
-            // (though it differs due to having the extra check for $$suspended and does not
-            // check $$listenerCount)
-            if (!(next = ((!current.$$suspended && current.$$watchersCount && current.$$childHead) ||
+            if (!(next = ((current.$$watchersCount && current.$$childHead) ||
                 (current !== target && current.$$nextSibling)))) {
               while (current !== target && !(next = current.$$nextSibling)) {
                 current = current.$parent;
@@ -29627,95 +29442,6 @@ function $RootScopeProvider() {
         $browser.$$checkUrlChange();
       },
 
-      /**
-       * @ngdoc method
-       * @name $rootScope.Scope#$suspend
-       * @kind function
-       *
-       * @description
-       * Suspend watchers of this scope subtree so that they will not be invoked during digest.
-       *
-       * This can be used to optimize your application when you know that running those watchers
-       * is redundant.
-       *
-       * **Warning**
-       *
-       * Suspending scopes from the digest cycle can have unwanted and difficult to debug results.
-       * Only use this approach if you are confident that you know what you are doing and have
-       * ample tests to ensure that bindings get updated as you expect.
-       *
-       * Some of the things to consider are:
-       *
-       * * Any external event on a directive/component will not trigger a digest while the hosting
-       *   scope is suspended - even if the event handler calls `$apply()` or `$rootScope.$digest()`.
-       * * Transcluded content exists on a scope that inherits from outside a directive but exists
-       *   as a child of the directive's containing scope. If the containing scope is suspended the
-       *   transcluded scope will also be suspended, even if the scope from which the transcluded
-       *   scope inherits is not suspended.
-       * * Multiple directives trying to manage the suspended status of a scope can confuse each other:
-       *    * A call to `$suspend()` on an already suspended scope is a no-op.
-       *    * A call to `$resume()` on a non-suspended scope is a no-op.
-       *    * If two directives suspend a scope, then one of them resumes the scope, the scope will no
-       *      longer be suspended. This could result in the other directive believing a scope to be
-       *      suspended when it is not.
-       * * If a parent scope is suspended then all its descendants will be also excluded from future
-       *   digests whether or not they have been suspended themselves. Note that this also applies to
-       *   isolate child scopes.
-       * * Calling `$digest()` directly on a descendant of a suspended scope will still run the watchers
-       *   for that scope and its descendants. When digesting we only check whether the current scope is
-       *   locally suspended, rather than checking whether it has a suspended ancestor.
-       * * Calling `$resume()` on a scope that has a suspended ancestor will not cause the scope to be
-       *   included in future digests until all its ancestors have been resumed.
-       * * Resolved promises, e.g. from explicit `$q` deferreds and `$http` calls, trigger `$apply()`
-       *   against the `$rootScope` and so will still trigger a global digest even if the promise was
-       *   initiated by a component that lives on a suspended scope.
-       */
-      $suspend: function() {
-        this.$$suspended = true;
-      },
-
-      /**
-       * @ngdoc method
-       * @name $rootScope.Scope#$isSuspended
-       * @kind function
-       *
-       * @description
-       * Call this method to determine if this scope has been explicitly suspended. It will not
-       * tell you whether an ancestor has been suspended.
-       * To determine if this scope will be excluded from a digest triggered at the $rootScope,
-       * for example, you must check all its ancestors:
-       *
-       * ```
-       * function isExcludedFromDigest(scope) {
-       *   while(scope) {
-       *     if (scope.$isSuspended()) return true;
-       *     scope = scope.$parent;
-       *   }
-       *   return false;
-       * ```
-       *
-       * Be aware that a scope may not be included in digests if it has a suspended ancestor,
-       * even if `$isSuspended()` returns false.
-       *
-       * @returns true if the current scope has been suspended.
-       */
-      $isSuspended: function() {
-        return this.$$suspended;
-      },
-
-      /**
-       * @ngdoc method
-       * @name $rootScope.Scope#$resume
-       * @kind function
-       *
-       * @description
-       * Resume watchers of this scope subtree in case it was suspended.
-       *
-       * See {@link $rootScope.Scope#$suspend} for information about the dangers of using this approach.
-       */
-      $resume: function() {
-        this.$$suspended = false;
-      },
 
       /**
        * @ngdoc event
@@ -30151,8 +29877,7 @@ function $RootScopeProvider() {
           // Insanity Warning: scope depth-first traversal
           // yes, this code is a bit crazy, but it works and we have tests to prove it!
           // this piece should be kept in sync with the traversal in $digest
-          // (though it differs due to having the extra check for $$listenerCount and
-          // does not check $$suspended)
+          // (though it differs due to having the extra check for $$listenerCount)
           if (!(next = ((current.$$listenerCount[name] && current.$$childHead) ||
               (current !== target && current.$$nextSibling)))) {
             while (current !== target && !(next = current.$$nextSibling)) {
@@ -30254,7 +29979,6 @@ function $RootScopeProvider() {
  * Private service to sanitize uris for links and images. Used by $compile and $sanitize.
  */
 function $$SanitizeUriProvider() {
-
   var aHrefSanitizationWhitelist = /^\s*(https?|s?ftp|mailto|tel|file):/,
     imgSrcSanitizationWhitelist = /^\s*((https?|ftp|file|blob):|data:image\/)/;
 
@@ -30263,16 +29987,12 @@ function $$SanitizeUriProvider() {
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during a[href] sanitization.
    *
-   * The sanitization is a security measure aimed at prevent XSS attacks via HTML anchor links.
+   * The sanitization is a security measure aimed at prevent XSS attacks via html links.
    *
-   * Any url due to be assigned to an `a[href]` attribute via interpolation is marked as requiring
-   * the $sce.URL security context. When interpolation occurs a call is made to `$sce.trustAsUrl(url)`
-   * which in turn may call `$$sanitizeUri(url, isMedia)` to sanitize the potentially malicious URL.
-   *
-   * If the URL matches the `aHrefSanitizationWhitelist` regular expression, it is returned unchanged.
-   *
-   * If there is no match the URL is returned prefixed with `'unsafe:'` to ensure that when it is written
-   * to the DOM it is inactive and potentially malicious code will not be executed.
+   * Any url about to be assigned to a[href] via data-binding is first normalized and turned into
+   * an absolute url. Afterwards, the url is matched against the `aHrefSanitizationWhitelist`
+   * regular expression. If a match is found, the original url is written into the dom. Otherwise,
+   * the absolute url is prefixed with `'unsafe:'` string and only then is it written into the DOM.
    *
    * @param {RegExp=} regexp New regexp to whitelist urls with.
    * @returns {RegExp|ng.$compileProvider} Current RegExp if called without value or self for
@@ -30292,17 +30012,12 @@ function $$SanitizeUriProvider() {
    * Retrieves or overrides the default regular expression that is used for whitelisting of safe
    * urls during img[src] sanitization.
    *
-   * The sanitization is a security measure aimed at prevent XSS attacks via HTML image src links.
+   * The sanitization is a security measure aimed at prevent XSS attacks via html links.
    *
-   * Any URL due to be assigned to an `img[src]` attribute via interpolation is marked as requiring
-   * the $sce.MEDIA_URL security context. When interpolation occurs a call is made to
-   * `$sce.trustAsMediaUrl(url)` which in turn may call `$$sanitizeUri(url, isMedia)` to sanitize
-   * the potentially malicious URL.
-   *
-   * If the URL matches the `aImgSanitizationWhitelist` regular expression, it is returned unchanged.
-   *
-   * If there is no match the URL is returned prefixed with `'unsafe:'` to ensure that when it is written
-   * to the DOM it is inactive and potentially malicious code will not be executed.
+   * Any url about to be assigned to img[src] via data-binding is first normalized and turned into
+   * an absolute url. Afterwards, the url is matched against the `imgSrcSanitizationWhitelist`
+   * regular expression. If a match is found, the original url is written into the dom. Otherwise,
+   * the absolute url is prefixed with `'unsafe:'` string and only then is it written into the DOM.
    *
    * @param {RegExp=} regexp New regexp to whitelist urls with.
    * @returns {RegExp|ng.$compileProvider} Current RegExp if called without value or self for
@@ -30317,10 +30032,10 @@ function $$SanitizeUriProvider() {
   };
 
   this.$get = function() {
-    return function sanitizeUri(uri, isMediaUrl) {
-      // if (!uri) return uri;
-      var regex = isMediaUrl ? imgSrcSanitizationWhitelist : aHrefSanitizationWhitelist;
-      var normalizedVal = urlResolve(uri && uri.trim()).href;
+    return function sanitizeUri(uri, isImage) {
+      var regex = isImage ? imgSrcSanitizationWhitelist : aHrefSanitizationWhitelist;
+      var normalizedVal;
+      normalizedVal = urlResolve(uri && uri.trim()).href;
       if (normalizedVal !== '' && !normalizedVal.match(regex)) {
         return 'unsafe:' + normalizedVal;
       }
@@ -30351,17 +30066,12 @@ var SCE_CONTEXTS = {
   // Style statements or stylesheets. Currently unused in AngularJS.
   CSS: 'css',
 
-  // An URL used in a context where it refers to the source of media, which are not expected to be run
-  // as scripts, such as an image, audio, video, etc.
-  MEDIA_URL: 'mediaUrl',
-
-  // An URL used in a context where it does not refer to a resource that loads code.
-  // A value that can be trusted as a URL can also trusted as a MEDIA_URL.
+  // An URL used in a context where it does not refer to a resource that loads code. Currently
+  // unused in AngularJS.
   URL: 'url',
 
   // RESOURCE_URL is a subtype of URL used where the referred-to resource could be interpreted as
   // code. (e.g. ng-include, script src binding, templateUrl)
-  // A value that can be trusted as a RESOURCE_URL, can also trusted as a URL and a MEDIA_URL.
   RESOURCE_URL: 'resourceUrl',
 
   // Script. Currently unused in AngularJS.
@@ -30576,7 +30286,7 @@ function $SceDelegateProvider() {
     return resourceUrlBlacklist;
   };
 
-  this.$get = ['$injector', '$$sanitizeUri', function($injector, $$sanitizeUri) {
+  this.$get = ['$injector', function($injector) {
 
     var htmlSanitizer = function htmlSanitizer(html) {
       throw $sceMinErr('unsafe', 'Attempting to use an unsafe value in a safe context.');
@@ -30589,7 +30299,7 @@ function $SceDelegateProvider() {
 
     function matchUrl(matcher, parsedUrl) {
       if (matcher === 'self') {
-        return urlIsSameOrigin(parsedUrl) || urlIsSameOriginAsBaseUrl(parsedUrl);
+        return urlIsSameOrigin(parsedUrl);
       } else {
         // definitely a regex.  See adjustMatchers()
         return !!matcher.exec(parsedUrl.href);
@@ -30641,8 +30351,7 @@ function $SceDelegateProvider() {
 
     byType[SCE_CONTEXTS.HTML] = generateHolderType(trustedValueHolderBase);
     byType[SCE_CONTEXTS.CSS] = generateHolderType(trustedValueHolderBase);
-    byType[SCE_CONTEXTS.MEDIA_URL] = generateHolderType(trustedValueHolderBase);
-    byType[SCE_CONTEXTS.URL] = generateHolderType(byType[SCE_CONTEXTS.MEDIA_URL]);
+    byType[SCE_CONTEXTS.URL] = generateHolderType(trustedValueHolderBase);
     byType[SCE_CONTEXTS.JS] = generateHolderType(trustedValueHolderBase);
     byType[SCE_CONTEXTS.RESOURCE_URL] = generateHolderType(byType[SCE_CONTEXTS.URL]);
 
@@ -30721,27 +30430,15 @@ function $SceDelegateProvider() {
      * @name $sceDelegate#getTrusted
      *
      * @description
-     * Given an object and a security context in which to assign it, returns a value that's safe to
-     * use in this context, which was represented by the parameter. To do so, this function either
-     * unwraps the safe type it has been given (for instance, a {@link ng.$sceDelegate#trustAs
-     * `$sceDelegate.trustAs`} result), or it might try to sanitize the value given, depending on
-     * the context and sanitizer availablility.
+     * Takes any input, and either returns a value that's safe to use in the specified context, or
+     * throws an exception.
      *
-     * The contexts that can be sanitized are $sce.MEDIA_URL, $sce.URL and $sce.HTML. The first two are available
-     * by default, and the third one relies on the `$sanitize` service (which may be loaded through
-     * the `ngSanitize` module). Furthermore, for $sce.RESOURCE_URL context, a plain string may be
-     * accepted if the resource url policy defined by {@link ng.$sceDelegateProvider#resourceUrlWhitelist
-     * `$sceDelegateProvider.resourceUrlWhitelist`} and {@link ng.$sceDelegateProvider#resourceUrlBlacklist
-     * `$sceDelegateProvider.resourceUrlBlacklist`} accepts that resource.
-     *
-     * This function will throw if the safe type isn't appropriate for this context, or if the
-     * value given cannot be accepted in the context (which might be caused by sanitization not
-     * being available, or the value not being recognized as safe).
-     *
-     * <div class="alert alert-danger">
-     * Disabling auto-escaping is extremely dangerous, it usually creates a Cross Site Scripting
-     * (XSS) vulnerability in your application.
-     * </div>
+     * In practice, there are several cases. When given a string, this function runs checks
+     * and sanitization to make it safe without prior assumptions. When given the result of a {@link
+     * ng.$sceDelegate#trustAs `$sceDelegate.trustAs`} call, it returns the originally supplied
+     * value if that value's context is valid for this call's context. Finally, this function can
+     * also throw when there is no way to turn `maybeTrusted` in a safe value (e.g., no sanitization
+     * is available or possible.)
      *
      * @param {string} type The context in which this value is to be used (such as `$sce.HTML`).
      * @param {*} maybeTrusted The result of a prior {@link ng.$sceDelegate#trustAs
@@ -30759,18 +30456,12 @@ function $SceDelegateProvider() {
       if (constructor && maybeTrusted instanceof constructor) {
         return maybeTrusted.$$unwrapTrustedValue();
       }
-
-      // If maybeTrusted is a trusted class instance but not of the correct trusted type
-      // then unwrap it and allow it to pass through to the rest of the checks
-      if (isFunction(maybeTrusted.$$unwrapTrustedValue)) {
-        maybeTrusted = maybeTrusted.$$unwrapTrustedValue();
-      }
-
-      // If we get here, then we will either sanitize the value or throw an exception.
-      if (type === SCE_CONTEXTS.MEDIA_URL || type === SCE_CONTEXTS.URL) {
-        // we attempt to sanitize non-resource URLs
-        return $$sanitizeUri(maybeTrusted, type === SCE_CONTEXTS.MEDIA_URL);
-      } else if (type === SCE_CONTEXTS.RESOURCE_URL) {
+      // Otherwise, if we get here, then we may either make it safe, or throw an exception. This
+      // depends on the context: some are sanitizatible (HTML), some use whitelists (RESOURCE_URL),
+      // some are impossible to do (JS). This step isn't implemented for CSS and URL, as AngularJS
+      // has no corresponding sinks.
+      if (type === SCE_CONTEXTS.RESOURCE_URL) {
+        // RESOURCE_URL uses a whitelist.
         if (isResourceUrlAllowedByPolicy(maybeTrusted)) {
           return maybeTrusted;
         } else {
@@ -30925,10 +30616,9 @@ function $SceDelegateProvider() {
  *
  * If your expressions are constant literals, they're automatically trusted and you don't need to
  * call `$sce.trustAs` on them (e.g.
- * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works (remember to include the
- * `ngSanitize` module). The `$sceDelegate` will also use the `$sanitize` service if it is available
- * when binding untrusted values to `$sce.HTML` context.
- * AngularJS provides an implementation in `angular-sanitize.js`, and if you
+ * `<div ng-bind-html="'<b>implicitly trusted</b>'"></div>`) just works. The `$sceDelegate` will
+ * also use the `$sanitize` service if it is available when binding untrusted values to
+ * `$sce.HTML` context. AngularJS provides an implementation in `angular-sanitize.js`, and if you
  * wish to use it, you will also need to depend on the {@link ngSanitize `ngSanitize`} module in
  * your application.
  *
@@ -30948,27 +30638,17 @@ function $SceDelegateProvider() {
  *
  * | Context             | Notes          |
  * |---------------------|----------------|
- * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered and the {@link ngSanitize $sanitize} module is present this will sanitize the value instead of throwing an error. |
- * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently unused.  Feel free to use it in your own directives. |
- * | `$sce.MEDIA_URL`    | For URLs that are safe to render as media. Is automatically converted from string by sanitizing when needed. |
- * | `$sce.URL`          | For URLs that are safe to follow as links. Is automatically converted from string by sanitizing when needed. Note that `$sce.URL` makes a stronger statement about the URL than `$sce.MEDIA_URL` does and therefore contexts requiring values trusted for `$sce.URL` can be used anywhere that values trusted for `$sce.MEDIA_URL` are required.|
- * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` or `$sce.MEDIA_URL` do and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` or `$sce.MEDIA_URL` are required. |
- * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently unused.  Feel free to use it in your own directives. |
+ * | `$sce.HTML`         | For HTML that's safe to source into the application.  The {@link ng.directive:ngBindHtml ngBindHtml} directive uses this context for bindings. If an unsafe value is encountered, and the {@link ngSanitize.$sanitize $sanitize} service is available (implemented by the {@link ngSanitize ngSanitize} module) this will sanitize the value instead of throwing an error. |
+ * | `$sce.CSS`          | For CSS that's safe to source into the application.  Currently, no bindings require this context. Feel free to use it in your own directives. |
+ * | `$sce.URL`          | For URLs that are safe to follow as links.  Currently unused (`<a href=`, `<img src=`, and some others sanitize their urls and don't constitute an SCE context.) |
+ * | `$sce.RESOURCE_URL` | For URLs that are not only safe to follow as links, but whose contents are also safe to include in your application.  Examples include `ng-include`, `src` / `ngSrc` bindings for tags other than `IMG`, `VIDEO`, `AUDIO`, `SOURCE`, and `TRACK` (e.g. `IFRAME`, `OBJECT`, etc.)  <br><br>Note that `$sce.RESOURCE_URL` makes a stronger statement about the URL than `$sce.URL` does (it's not just the URL that matters, but also what is at the end of it), and therefore contexts requiring values trusted for `$sce.RESOURCE_URL` can be used anywhere that values trusted for `$sce.URL` are required. |
+ * | `$sce.JS`           | For JavaScript that is safe to execute in your application's context.  Currently, no bindings require this context.  Feel free to use it in your own directives. |
  *
  *
- * <div class="alert alert-warning">
- * Be aware that, before AngularJS 1.7.0, `a[href]` and `img[src]` used to sanitize their
- * interpolated values directly rather than rely upon {@link ng.$sce#getTrusted `$sce.getTrusted`}.
- *
- * **As of 1.7.0, this is no longer the case.**
- *
- * Now such interpolations are marked as requiring `$sce.URL` (for `a[href]`) or `$sce.MEDIA_URL`
- * (for `img[src]`), so that the sanitization happens (via `$sce.getTrusted...`) when the `$interpolate`
- * service evaluates the expressions.
- * </div>
- *
- * There are no CSS or JS context bindings in AngularJS currently, so their corresponding `$sce.trustAs`
- * functions aren't useful yet. This might evolve.
+ * Be aware that `a[href]` and `img[src]` automatically sanitize their URLs and do not pass them
+ * through {@link ng.$sce#getTrusted $sce.getTrusted}. There's no CSS-, URL-, or JS-context bindings
+ * in AngularJS currently, so their corresponding `$sce.trustAs` functions aren't useful yet. This
+ * might evolve.
  *
  * ### Format of items in {@link ng.$sceDelegateProvider#resourceUrlWhitelist resourceUrlWhitelist}/{@link ng.$sceDelegateProvider#resourceUrlBlacklist Blacklist} <a name="resourceUrlPatternItem"></a>
  *
@@ -31142,7 +30822,7 @@ function $SceProvider() {
    *     such a value.
    *
    * - getTrusted(contextEnum, value)
-   *     This function should return the value that is safe to use in the context specified by
+   *     This function should return the a value that is safe to use in the context specified by
    *     contextEnum or throw and exception otherwise.
    *
    * NOTE: This contract deliberately does NOT state that values returned by trustAs() must be
@@ -31594,7 +31274,7 @@ function $SnifferProvider() {
   }];
 }
 
-var $templateRequestMinErr = minErr('$templateRequest');
+var $templateRequestMinErr = minErr('$compile');
 
 /**
  * @ngdoc provider
@@ -31693,7 +31373,8 @@ function $TemplateRequestProvider() {
             handleRequestFn.totalPendingRequests--;
           })
           .then(function(response) {
-            return $templateCache.put(tpl, response.data);
+            $templateCache.put(tpl, response.data);
+            return response.data;
           }, handleError);
 
         function handleError(resp) {
@@ -31832,8 +31513,6 @@ function $$TestabilityProvider() {
   }];
 }
 
-var $timeoutMinErr = minErr('$timeout');
-
 /** @this */
 function $TimeoutProvider() {
   this.$get = ['$rootScope', '$browser', '$q', '$$q', '$exceptionHandler',
@@ -31842,35 +31521,35 @@ function $TimeoutProvider() {
     var deferreds = {};
 
 
-    /**
-     * @ngdoc service
-     * @name $timeout
-     *
-     * @description
-     * AngularJS's wrapper for `window.setTimeout`. The `fn` function is wrapped into a try/catch
-     * block and delegates any exceptions to
-     * {@link ng.$exceptionHandler $exceptionHandler} service.
-     *
-     * The return value of calling `$timeout` is a promise, which will be resolved when
-     * the delay has passed and the timeout function, if provided, is executed.
-     *
-     * To cancel a timeout request, call `$timeout.cancel(promise)`.
-     *
-     * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
-     * synchronously flush the queue of deferred functions.
-     *
-     * If you only want a promise that will be resolved after some specified delay
-     * then you can call `$timeout` without the `fn` function.
-     *
-     * @param {function()=} fn A function, whose execution should be delayed.
-     * @param {number=} [delay=0] Delay in milliseconds.
-     * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
-     *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
-     * @param {...*=} Pass additional parameters to the executed function.
-     * @returns {Promise} Promise that will be resolved when the timeout is reached. The promise
-     *   will be resolved with the return value of the `fn` function.
-     *
-     */
+     /**
+      * @ngdoc service
+      * @name $timeout
+      *
+      * @description
+      * AngularJS's wrapper for `window.setTimeout`. The `fn` function is wrapped into a try/catch
+      * block and delegates any exceptions to
+      * {@link ng.$exceptionHandler $exceptionHandler} service.
+      *
+      * The return value of calling `$timeout` is a promise, which will be resolved when
+      * the delay has passed and the timeout function, if provided, is executed.
+      *
+      * To cancel a timeout request, call `$timeout.cancel(promise)`.
+      *
+      * In tests you can use {@link ngMock.$timeout `$timeout.flush()`} to
+      * synchronously flush the queue of deferred functions.
+      *
+      * If you only want a promise that will be resolved after some specified delay
+      * then you can call `$timeout` without the `fn` function.
+      *
+      * @param {function()=} fn A function, whose execution should be delayed.
+      * @param {number=} [delay=0] Delay in milliseconds.
+      * @param {boolean=} [invokeApply=true] If set to `false` skips model dirty checking, otherwise
+      *   will invoke `fn` within the {@link ng.$rootScope.Scope#$apply $apply} block.
+      * @param {...*=} Pass additional parameters to the executed function.
+      * @returns {Promise} Promise that will be resolved when the timeout is reached. The promise
+      *   will be resolved with the return value of the `fn` function.
+      *
+      */
     function timeout(fn, delay, invokeApply) {
       if (!isFunction(fn)) {
         invokeApply = delay;
@@ -31904,37 +31583,27 @@ function $TimeoutProvider() {
     }
 
 
-    /**
-     * @ngdoc method
-     * @name $timeout#cancel
-     *
-     * @description
-     * Cancels a task associated with the `promise`. As a result of this, the promise will be
-     * resolved with a rejection.
-     *
-     * @param {Promise=} promise Promise returned by the `$timeout` function.
-     * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
-     *   canceled.
-     */
+     /**
+      * @ngdoc method
+      * @name $timeout#cancel
+      *
+      * @description
+      * Cancels a task associated with the `promise`. As a result of this, the promise will be
+      * resolved with a rejection.
+      *
+      * @param {Promise=} promise Promise returned by the `$timeout` function.
+      * @returns {boolean} Returns `true` if the task hasn't executed yet and was successfully
+      *   canceled.
+      */
     timeout.cancel = function(promise) {
-      if (!promise) return false;
-
-      if (!promise.hasOwnProperty('$$timeoutId')) {
-        throw $timeoutMinErr('badprom',
-            '`$timeout.cancel()` called with a promise that was not generated by `$timeout()`.');
+      if (promise && promise.$$timeoutId in deferreds) {
+        // Timeout cancels should not report an unhandled promise.
+        markQExceptionHandled(deferreds[promise.$$timeoutId].promise);
+        deferreds[promise.$$timeoutId].reject('canceled');
+        delete deferreds[promise.$$timeoutId];
+        return $browser.defer.cancel(promise.$$timeoutId);
       }
-
-      if (!deferreds.hasOwnProperty(promise.$$timeoutId)) return false;
-
-      var id = promise.$$timeoutId;
-      var deferred = deferreds[id];
-
-      // Timeout cancels should not report an unhandled promise.
-      markQExceptionHandled(deferred.promise);
-      deferred.reject('canceled');
-      delete deferreds[id];
-
-      return $browser.defer.cancel(id);
+      return false;
     };
 
     return timeout;
@@ -31950,7 +31619,6 @@ function $TimeoutProvider() {
 // service.
 var urlParsingNode = window.document.createElement('a');
 var originUrl = urlResolve(window.location.href);
-var baseUrlParsingNode;
 
 
 /**
@@ -31982,26 +31650,23 @@ var baseUrlParsingNode;
  *   http://james.padolsey.com/javascript/parsing-urls-with-the-dom/
  *
  * @kind function
- * @param {string|object} url The URL to be parsed. If `url` is not a string, it will be returned
- *     unchanged.
+ * @param {string} url The URL to be parsed.
  * @description Normalizes and parses a URL.
  * @returns {object} Returns the normalized URL as a dictionary.
  *
- *   | member name   | Description                                                            |
- *   |---------------|------------------------------------------------------------------------|
+ *   | member name   | Description    |
+ *   |---------------|----------------|
  *   | href          | A normalized version of the provided URL if it was not an absolute URL |
- *   | protocol      | The protocol without the trailing colon                                |
+ *   | protocol      | The protocol including the trailing colon                              |
  *   | host          | The host and port (if the port is non-default) of the normalizedUrl    |
  *   | search        | The search params, minus the question mark                             |
- *   | hash          | The hash string, minus the hash symbol                                 |
- *   | hostname      | The hostname                                                           |
- *   | port          | The port, without ":"                                                  |
- *   | pathname      | The pathname, beginning with "/"                                       |
+ *   | hash          | The hash string, minus the hash symbol
+ *   | hostname      | The hostname
+ *   | port          | The port, without ":"
+ *   | pathname      | The pathname, beginning with "/"
  *
  */
 function urlResolve(url) {
-  if (!isString(url)) return url;
-
   var href = url;
 
   // Support: IE 9-11 only
@@ -32014,6 +31679,7 @@ function urlResolve(url) {
 
   urlParsingNode.setAttribute('href', href);
 
+  // urlParsingNode provides the UrlUtils interface - http://url.spec.whatwg.org/#urlutils
   return {
     href: urlParsingNode.href,
     protocol: urlParsingNode.protocol ? urlParsingNode.protocol.replace(/:$/, '') : '',
@@ -32029,96 +31695,16 @@ function urlResolve(url) {
 }
 
 /**
- * Parse a request URL and determine whether this is a same-origin request as the application
- * document.
+ * Parse a request URL and determine whether this is a same-origin request as the application document.
  *
  * @param {string|object} requestUrl The url of the request as a string that will be resolved
  * or a parsed URL object.
  * @returns {boolean} Whether the request is for the same origin as the application document.
  */
 function urlIsSameOrigin(requestUrl) {
-  return urlsAreSameOrigin(requestUrl, originUrl);
-}
-
-/**
- * Parse a request URL and determine whether it is same-origin as the current document base URL.
- *
- * Note: The base URL is usually the same as the document location (`location.href`) but can
- * be overriden by using the `<base>` tag.
- *
- * @param {string|object} requestUrl The url of the request as a string that will be resolved
- * or a parsed URL object.
- * @returns {boolean} Whether the URL is same-origin as the document base URL.
- */
-function urlIsSameOriginAsBaseUrl(requestUrl) {
-  return urlsAreSameOrigin(requestUrl, getBaseUrl());
-}
-
-/**
- * Create a function that can check a URL's origin against a list of allowed/whitelisted origins.
- * The current location's origin is implicitly trusted.
- *
- * @param {string[]} whitelistedOriginUrls - A list of URLs (strings), whose origins are trusted.
- *
- * @returns {Function} - A function that receives a URL (string or parsed URL object) and returns
- *     whether it is of an allowed origin.
- */
-function urlIsAllowedOriginFactory(whitelistedOriginUrls) {
-  var parsedAllowedOriginUrls = [originUrl].concat(whitelistedOriginUrls.map(urlResolve));
-
-  /**
-   * Check whether the specified URL (string or parsed URL object) has an origin that is allowed
-   * based on a list of whitelisted-origin URLs. The current location's origin is implicitly
-   * trusted.
-   *
-   * @param {string|Object} requestUrl - The URL to be checked (provided as a string that will be
-   *     resolved or a parsed URL object).
-   *
-   * @returns {boolean} - Whether the specified URL is of an allowed origin.
-   */
-  return function urlIsAllowedOrigin(requestUrl) {
-    var parsedUrl = urlResolve(requestUrl);
-    return parsedAllowedOriginUrls.some(urlsAreSameOrigin.bind(null, parsedUrl));
-  };
-}
-
-/**
- * Determine if two URLs share the same origin.
- *
- * @param {string|Object} url1 - First URL to compare as a string or a normalized URL in the form of
- *     a dictionary object returned by `urlResolve()`.
- * @param {string|object} url2 - Second URL to compare as a string or a normalized URL in the form
- *     of a dictionary object returned by `urlResolve()`.
- *
- * @returns {boolean} - True if both URLs have the same origin, and false otherwise.
- */
-function urlsAreSameOrigin(url1, url2) {
-  url1 = urlResolve(url1);
-  url2 = urlResolve(url2);
-
-  return (url1.protocol === url2.protocol &&
-          url1.host === url2.host);
-}
-
-/**
- * Returns the current document base URL.
- * @returns {string}
- */
-function getBaseUrl() {
-  if (window.document.baseURI) {
-    return window.document.baseURI;
-  }
-
-  // `document.baseURI` is available everywhere except IE
-  if (!baseUrlParsingNode) {
-    baseUrlParsingNode = window.document.createElement('a');
-    baseUrlParsingNode.href = '.';
-
-    // Work-around for IE bug described in Implementation Notes. The fix in `urlResolve()` is not
-    // suitable here because we need to track changes to the base URL.
-    baseUrlParsingNode = baseUrlParsingNode.cloneNode(false);
-  }
-  return baseUrlParsingNode.href;
+  var parsed = (isString(requestUrl)) ? urlResolve(requestUrl) : requestUrl;
+  return (parsed.protocol === originUrl.protocol &&
+          parsed.host === originUrl.host);
 }
 
 /**
@@ -33575,7 +33161,6 @@ function sliceFn(input, begin, end) {
  *      index: ...
  *    }
  *    ```
- *    **Note:** `null` values use `'null'` as their type.
  * 2. The comparator function is used to sort the items, based on the derived values, types and
  *    indices.
  *
@@ -33610,15 +33195,11 @@ function sliceFn(input, begin, end) {
  *
  * The default, built-in comparator should be sufficient for most usecases. In short, it compares
  * numbers numerically, strings alphabetically (and case-insensitively), for objects falls back to
- * using their index in the original collection, sorts values of different types by type and puts
- * `undefined` and `null` values at the end of the sorted list.
+ * using their index in the original collection, and sorts values of different types by type.
  *
  * More specifically, it follows these steps to determine the relative order of items:
  *
- * 1. If the compared values are of different types:
- *    - If one of the values is undefined, consider it "greater than" the other.
- *    - Else if one of the values is null, consider it "greater than" the other.
- *    - Else compare the types themselves alphabetically.
+ * 1. If the compared values are of different types, compare the types themselves alphabetically.
  * 2. If both values are of type `string`, compare them alphabetically in a case- and
  *    locale-insensitive way.
  * 3. If both values are objects, compare their indices instead.
@@ -33629,10 +33210,9 @@ function sliceFn(input, begin, end) {
  *
  * **Note:** If you notice numbers not being sorted as expected, make sure they are actually being
  *           saved as numbers and not strings.
- * **Note:** For the purpose of sorting, `null` and `undefined` are considered "greater than"
- *           any other value (with undefined "greater than" null). This effectively means that `null`
- *           and `undefined` values end up at the end of a list sorted in ascending order.
- * **Note:** `null` values use `'null'` as their type to be able to distinguish them from objects.
+ * **Note:** For the purpose of sorting, `null` values are treated as the string `'null'` (i.e.
+ *           `type: 'string'`, `value: 'null'`). This may cause unexpected sort order relative to
+ *           other values.
  *
  * @param {Array|ArrayLike} collection - The collection (array or array-like object) to sort.
  * @param {(Function|string|Array.<Function|string>)=} expression - A predicate (or list of
@@ -34199,7 +33779,8 @@ function orderByFilter($parse) {
   function getPredicateValue(value, index) {
     var type = typeof value;
     if (value === null) {
-      type = 'null';
+      type = 'string';
+      value = 'null';
     } else if (type === 'object') {
       value = objectValue(value);
     }
@@ -34230,11 +33811,7 @@ function orderByFilter($parse) {
         result = value1 < value2 ? -1 : 1;
       }
     } else {
-      result = (type1 === 'undefined') ? 1 :
-        (type2 === 'undefined') ? -1 :
-        (type1 === 'null') ? 1 :
-        (type2 === 'null') ? -1 :
-        (type1 < type2) ? -1 : 1;
+      result = type1 < type2 ? -1 : 1;
     }
 
     return result;
@@ -34720,7 +34297,7 @@ forEach(['src', 'srcset', 'href'], function(attrName) {
           // On IE, if "ng:src" directive declaration is used and "src" attribute doesn't exist
           // then calling element.setAttribute('src', 'foo') doesn't do anything, so we need
           // to set the property as well to achieve the desired effect.
-          // We use attr[attrName] value since $set might have sanitized the url.
+          // We use attr[attrName] value since $set can sanitize the url.
           if (msie && propName) element.prop(propName, attr[name]);
         });
       }
@@ -34737,8 +34314,7 @@ var nullFormCtrl = {
   $setValidity: noop,
   $setDirty: noop,
   $setPristine: noop,
-  $setSubmitted: noop,
-  $$setSubmitted: noop
+  $setSubmitted: noop
 },
 PENDING_CLASS = 'ng-pending',
 SUBMITTED_CLASS = 'ng-submitted';
@@ -35003,25 +34579,12 @@ FormController.prototype = {
    * @name form.FormController#$setSubmitted
    *
    * @description
-   * Sets the form to its `$submitted` state. This will also set `$submitted` on all child and
-   * parent forms of the form.
+   * Sets the form to its submitted state.
    */
   $setSubmitted: function() {
-    var rootForm = this;
-    while (rootForm.$$parentForm && (rootForm.$$parentForm !== nullFormCtrl)) {
-      rootForm = rootForm.$$parentForm;
-    }
-    rootForm.$$setSubmitted();
-  },
-
-  $$setSubmitted: function() {
     this.$$animate.addClass(this.$$element, SUBMITTED_CLASS);
     this.$submitted = true;
-    forEach(this.$$controls, function(control) {
-      if (control.$$setSubmitted) {
-        control.$$setSubmitted();
-      }
-    });
+    this.$$parentForm.$setSubmitted();
   }
 };
 
@@ -35080,21 +34643,16 @@ addSetValidityMethod({
  * @restrict EAC
  *
  * @description
- * Helper directive that makes it possible to create control groups inside a
- * {@link ng.directive:form `form`} directive.
- * These "child forms" can be used, for example, to determine the validity of a sub-group of
- * controls.
+ * Nestable alias of {@link ng.directive:form `form`} directive. HTML
+ * does not allow nesting of form elements. It is useful to nest forms, for example if the validity of a
+ * sub-group of controls needs to be determined.
  *
- * <div class="alert alert-danger">
- * **Note**: `ngForm` cannot be used as a replacement for `<form>`, because it lacks its
- * [built-in HTML functionality](https://html.spec.whatwg.org/#the-form-element).
- * Specifically, you cannot submit `ngForm` like a `<form>` tag. That means,
- * you cannot send data to the server with `ngForm`, or integrate it with
- * {@link ng.directive:ngSubmit `ngSubmit`}.
- * </div>
+ * Note: the purpose of `ngForm` is to group controls,
+ * but not to be a replacement for the `<form>` tag with all of its capabilities
+ * (e.g. posting to the server, ...).
  *
- * @param {string=} ngForm|name Name of the form. If specified, the form controller will
- *                              be published into the related scope, under this name.
+ * @param {string=} ngForm|name Name of the form. If specified, the form controller will be published into
+ *                       related scope, under this name.
  *
  */
 
@@ -35886,10 +35444,6 @@ var inputType = {
     * The model must always be a Date object, otherwise AngularJS will throw an error.
     * Invalid `Date` objects (dates whose `getTime()` is `NaN`) will be rendered as an empty string.
     *
-    * The value of the resulting Date object will be set to Thursday at 00:00:00 of the requested week,
-    * due to ISO-8601 week numbering standards. Information on ISO's system for numbering the weeks of the
-    * year can be found at: https://en.wikipedia.org/wiki/ISO_8601#Week_dates
-    *
     * The timezone to be used to read/write the `Date` instance in the model can be defined using
     * {@link ng.directive:ngModelOptions ngModelOptions}. By default, this is the timezone of the browser.
     *
@@ -36409,33 +35963,6 @@ var inputType = {
    * @description
    * HTML radio button.
    *
-   * **Note:**<br>
-   * All inputs controlled by {@link ngModel ngModel} (including those of type `radio`) will use the
-   * value of their `name` attribute to determine the property under which their
-   * {@link ngModel.NgModelController NgModelController} will be published on the parent
-   * {@link form.FormController FormController}. Thus, if you use the same `name` for multiple
-   * inputs of a form (e.g. a group of radio inputs), only _one_ `NgModelController` will be
-   * published on the parent `FormController` under that name. The rest of the controllers will
-   * continue to work as expected, but you won't be able to access them as properties on the parent
-   * `FormController`.
-   *
-   * <div class="alert alert-info">
-   *   <p>
-   *     In plain HTML forms, the `name` attribute is used to identify groups of radio inputs, so
-   *     that the browser can manage their state (checked/unchecked) based on the state of other
-   *     inputs in the same group.
-   *   </p>
-   *   <p>
-   *     In AngularJS forms, this is not necessary. The input's state will be updated based on the
-   *     value of the underlying model data.
-   *   </p>
-   * </div>
-   *
-   * <div class="alert alert-success">
-   *   If you omit the `name` attribute on a radio input, `ngModel` will automatically assign it a
-   *   unique name.
-   * </div>
-   *
    * @param {string} ngModel Assignable AngularJS expression to data-bind to.
    * @param {string} value The value to which the `ngModel` expression should be set when selected.
    *    Note that `value` only supports `string` values, i.e. the scope model needs to be a string,
@@ -36556,8 +36083,8 @@ var inputType = {
    *                  Can be interpolated.
    * @param {string=} step Sets the `step` validation to ensure that the value entered matches the `step`
    *                  Can be interpolated.
-   * @param {expression=} ngChange AngularJS expression to be executed when the ngModel value changes due
-   *                      to user interaction with the input element.
+   * @param {string=} ngChange AngularJS expression to be executed when the ngModel value changes due
+   *                  to user interaction with the input element.
    * @param {expression=} ngChecked If the expression is truthy, then the `checked` attribute will be set on the
    *                      element. **Note** : `ngChecked` should not be used alongside `ngModel`.
    *                      Checkout {@link ng.directive:ngChecked ngChecked} for usage.
@@ -36704,16 +36231,6 @@ function baseInputType(scope, element, attr, ctrl, $sniffer, $browser) {
       composing = true;
     });
 
-    // Support: IE9+
-    element.on('compositionupdate', function(ev) {
-      // End composition when ev.data is empty string on 'compositionupdate' event.
-      // When the input de-focusses (e.g. by clicking away), IE triggers 'compositionupdate'
-      // instead of 'compositionend'.
-      if (isUndefined(ev.data) || ev.data === '') {
-        composing = false;
-      }
-    });
-
     element.on('compositionend', function() {
       composing = false;
       listener();
@@ -36844,7 +36361,7 @@ function weekParser(isoWeek, existingDate) {
 }
 
 function createDateParser(regexp, mapping) {
-  return function(iso, previousDate) {
+  return function(iso, date) {
     var parts, map;
 
     if (isDate(iso)) {
@@ -36866,15 +36383,15 @@ function createDateParser(regexp, mapping) {
 
       if (parts) {
         parts.shift();
-        if (previousDate) {
+        if (date) {
           map = {
-            yyyy: previousDate.getFullYear(),
-            MM: previousDate.getMonth() + 1,
-            dd: previousDate.getDate(),
-            HH: previousDate.getHours(),
-            mm: previousDate.getMinutes(),
-            ss: previousDate.getSeconds(),
-            sss: previousDate.getMilliseconds() / 1000
+            yyyy: date.getFullYear(),
+            MM: date.getMonth() + 1,
+            dd: date.getDate(),
+            HH: date.getHours(),
+            mm: date.getMinutes(),
+            ss: date.getSeconds(),
+            sss: date.getMilliseconds() / 1000
           };
         } else {
           map = { yyyy: 1970, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, sss: 0 };
@@ -36885,15 +36402,7 @@ function createDateParser(regexp, mapping) {
             map[mapping[index]] = +part;
           }
         });
-
-        var date = new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
-        if (map.yyyy < 100) {
-          // In the constructor, 2-digit years map to 1900-1999.
-          // Use `setFullYear()` to set the correct year.
-          date.setFullYear(map.yyyy);
-        }
-
-        return date;
+        return new Date(map.yyyy, map.MM - 1, map.dd, map.HH, map.mm, map.ss || 0, map.sss * 1000 || 0);
       }
     }
 
@@ -36903,21 +36412,24 @@ function createDateParser(regexp, mapping) {
 
 function createDateInputType(type, regexp, parseDate, format) {
   return function dynamicDateInputType(scope, element, attr, ctrl, $sniffer, $browser, $filter) {
-    badInputChecker(scope, element, attr, ctrl, type);
+    badInputChecker(scope, element, attr, ctrl);
     baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
+    var timezone = ctrl && ctrl.$options.getOption('timezone');
     var previousDate;
-    var previousTimezone;
 
+    ctrl.$$parserName = type;
     ctrl.$parsers.push(function(value) {
       if (ctrl.$isEmpty(value)) return null;
-
       if (regexp.test(value)) {
         // Note: We cannot read ctrl.$modelValue, as there might be a different
         // parser/formatter in the processing chain so that the model
         // contains some different data format!
-        return parseDateAndConvertTimeZoneToLocal(value, previousDate);
+        var parsedDate = parseDate(value, previousDate);
+        if (timezone) {
+          parsedDate = convertTimezoneToLocal(parsedDate, timezone);
+        }
+        return parsedDate;
       }
-      ctrl.$$parserName = type;
       return undefined;
     });
 
@@ -36927,15 +36439,12 @@ function createDateInputType(type, regexp, parseDate, format) {
       }
       if (isValidDate(value)) {
         previousDate = value;
-        var timezone = ctrl.$options.getOption('timezone');
-        if (timezone) {
-          previousTimezone = timezone;
+        if (previousDate && timezone) {
           previousDate = convertTimezoneToLocal(previousDate, timezone, true);
         }
         return $filter('date')(value, format, timezone);
       } else {
         previousDate = null;
-        previousTimezone = null;
         return '';
       }
     });
@@ -36968,50 +36477,27 @@ function createDateInputType(type, regexp, parseDate, format) {
     }
 
     function parseObservedDateValue(val) {
-      return isDefined(val) && !isDate(val) ? parseDateAndConvertTimeZoneToLocal(val) || undefined : val;
-    }
-
-    function parseDateAndConvertTimeZoneToLocal(value, previousDate) {
-      var timezone = ctrl.$options.getOption('timezone');
-
-      if (previousTimezone && previousTimezone !== timezone) {
-        // If the timezone has changed, adjust the previousDate to the default timezone
-        // so that the new date is converted with the correct timezone offset
-        previousDate = addDateMinutes(previousDate, timezoneToOffset(previousTimezone));
-      }
-
-      var parsedDate = parseDate(value, previousDate);
-
-      if (!isNaN(parsedDate) && timezone) {
-        parsedDate = convertTimezoneToLocal(parsedDate, timezone);
-      }
-      return parsedDate;
+      return isDefined(val) && !isDate(val) ? parseDate(val) || undefined : val;
     }
   };
 }
 
-function badInputChecker(scope, element, attr, ctrl, parserName) {
+function badInputChecker(scope, element, attr, ctrl) {
   var node = element[0];
   var nativeValidation = ctrl.$$hasNativeValidators = isObject(node.validity);
   if (nativeValidation) {
     ctrl.$parsers.push(function(value) {
       var validity = element.prop(VALIDITY_STATE_PROPERTY) || {};
-      if (validity.badInput || validity.typeMismatch) {
-        ctrl.$$parserName = parserName;
-        return undefined;
-      }
-
-      return value;
+      return validity.badInput || validity.typeMismatch ? undefined : value;
     });
   }
 }
 
 function numberFormatterParser(ctrl) {
+  ctrl.$$parserName = 'number';
   ctrl.$parsers.push(function(value) {
     if (ctrl.$isEmpty(value))      return null;
     if (NUMBER_REGEXP.test(value)) return parseFloat(value);
-
-    ctrl.$$parserName = 'number';
     return undefined;
   });
 
@@ -37093,7 +36579,7 @@ function isValidForStep(viewValue, stepBase, step) {
 }
 
 function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-  badInputChecker(scope, element, attr, ctrl, 'number');
+  badInputChecker(scope, element, attr, ctrl);
   numberFormatterParser(ctrl);
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
@@ -37101,8 +36587,8 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   var maxVal;
 
   if (isDefined(attr.min) || attr.ngMin) {
-    ctrl.$validators.min = function(modelValue, viewValue) {
-      return ctrl.$isEmpty(viewValue) || isUndefined(minVal) || viewValue >= minVal;
+    ctrl.$validators.min = function(value) {
+      return ctrl.$isEmpty(value) || isUndefined(minVal) || value >= minVal;
     };
 
     attr.$observe('min', function(val) {
@@ -37113,8 +36599,8 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   }
 
   if (isDefined(attr.max) || attr.ngMax) {
-    ctrl.$validators.max = function(modelValue, viewValue) {
-      return ctrl.$isEmpty(viewValue) || isUndefined(maxVal) || viewValue <= maxVal;
+    ctrl.$validators.max = function(value) {
+      return ctrl.$isEmpty(value) || isUndefined(maxVal) || value <= maxVal;
     };
 
     attr.$observe('max', function(val) {
@@ -37140,7 +36626,7 @@ function numberInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 }
 
 function rangeInputType(scope, element, attr, ctrl, $sniffer, $browser) {
-  badInputChecker(scope, element, attr, ctrl, 'range');
+  badInputChecker(scope, element, attr, ctrl);
   numberFormatterParser(ctrl);
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
 
@@ -37279,6 +36765,7 @@ function urlInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
+  ctrl.$$parserName = 'url';
   ctrl.$validators.url = function(modelValue, viewValue) {
     var value = modelValue || viewValue;
     return ctrl.$isEmpty(value) || URL_REGEXP.test(value);
@@ -37291,6 +36778,7 @@ function emailInputType(scope, element, attr, ctrl, $sniffer, $browser) {
   baseInputType(scope, element, attr, ctrl, $sniffer, $browser);
   stringBasedInputType(ctrl);
 
+  ctrl.$$parserName = 'email';
   ctrl.$validators.email = function(modelValue, viewValue) {
     var value = modelValue || viewValue;
     return ctrl.$isEmpty(value) || EMAIL_REGEXP.test(value);
@@ -37315,7 +36803,7 @@ function radioInputType(scope, element, attr, ctrl) {
     }
   };
 
-  element.on('change', listener);
+  element.on('click', listener);
 
   ctrl.$render = function() {
     var value = attr.value;
@@ -37349,7 +36837,7 @@ function checkboxInputType(scope, element, attr, ctrl, $sniffer, $browser, $filt
     ctrl.$setViewValue(element[0].checked, ev && ev.type);
   };
 
-  element.on('change', listener);
+  element.on('click', listener);
 
   ctrl.$render = function() {
     element[0].checked = ctrl.$viewValue;
@@ -37969,6 +37457,13 @@ function classDirective(name, selector) {
     return {
       restrict: 'AC',
       link: function(scope, element, attr) {
+        var expression = attr[name].trim();
+        var isOneTime = (expression.charAt(0) === ':') && (expression.charAt(1) === ':');
+
+        var watchInterceptor = isOneTime ? toFlatValue : toClassString;
+        var watchExpression = $parse(expression, watchInterceptor);
+        var watchAction = isOneTime ? ngClassOneTimeWatchAction : ngClassWatchAction;
+
         var classCounts = element.data('$classCounts');
         var oldModulo = true;
         var oldClassString;
@@ -37991,7 +37486,7 @@ function classDirective(name, selector) {
           scope.$watch(indexWatchExpression, ngClassIndexWatchAction);
         }
 
-        scope.$watch($parse(attr[name], toClassString), ngClassWatchAction);
+        scope.$watch(watchExpression, watchAction, isOneTime);
 
         function addClasses(classString) {
           classString = digestClassCounts(split(classString), 1);
@@ -38033,9 +37528,9 @@ function classDirective(name, selector) {
         }
 
         function ngClassIndexWatchAction(newModulo) {
-          // This watch-action should run before the `ngClassWatchAction()`, thus it
+          // This watch-action should run before the `ngClass[OneTime]WatchAction()`, thus it
           // adds/removes `oldClassString`. If the `ngClass` expression has changed as well, the
-          // `ngClassWatchAction()` will update the classes.
+          // `ngClass[OneTime]WatchAction()` will update the classes.
           if (newModulo === selector) {
             addClasses(oldClassString);
           } else {
@@ -38043,6 +37538,14 @@ function classDirective(name, selector) {
           }
 
           oldModulo = newModulo;
+        }
+
+        function ngClassOneTimeWatchAction(newClassValue) {
+          var newClassString = toClassString(newClassValue);
+
+          if (newClassString !== oldClassString) {
+            ngClassWatchAction(newClassString);
+          }
         }
 
         function ngClassWatchAction(newClassString) {
@@ -38091,6 +37594,34 @@ function classDirective(name, selector) {
     }
 
     return classString;
+  }
+
+  function toFlatValue(classValue) {
+    var flatValue = classValue;
+
+    if (isArray(classValue)) {
+      flatValue = classValue.map(toFlatValue);
+    } else if (isObject(classValue)) {
+      var hasUndefined = false;
+
+      flatValue = Object.keys(classValue).filter(function(key) {
+        var value = classValue[key];
+
+        if (!hasUndefined && isUndefined(value)) {
+          hasUndefined = true;
+        }
+
+        return value;
+      });
+
+      if (hasUndefined) {
+        // Prevent the `oneTimeLiteralWatchInterceptor` from unregistering
+        // the watcher, by including at least one `undefined` value.
+        flatValue.push(undefined);
+      }
+    }
+
+    return flatValue;
   }
 }
 
@@ -38293,12 +37824,6 @@ var ngClassDirective = classDirective('', true);
  * This directive can be applied only within the scope of an
  * {@link ng.directive:ngRepeat ngRepeat}.
  *
- * @animations
- * | Animation                        | Occurs                              |
- * |----------------------------------|-------------------------------------|
- * | {@link ng.$animate#addClass addClass}       | just before the class is applied to the element   |
- * | {@link ng.$animate#removeClass removeClass} | just before the class is removed from the element |
- *
  * @element ANY
  * @param {expression} ngClassOdd {@link guide/expression Expression} to eval. The result
  *   of the evaluation can be a string representing space delimited class names or an array.
@@ -38331,62 +37856,6 @@ var ngClassDirective = classDirective('', true);
        });
      </file>
    </example>
- *
- * <hr />
- * @example
- * An example on how to implement animations using `ngClassOdd`:
- *
-   <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-class-odd-animate">
-     <file name="index.html">
-       <div ng-init="items=['Item 3', 'Item 2', 'Item 1', 'Item 0']">
-         <button ng-click="items.unshift('Item ' + items.length)">Add item</button>
-         <hr />
-         <table>
-           <tr ng-repeat="item in items" ng-class-odd="'odd'">
-             <td>{{ item }}</td>
-           </tr>
-         </table>
-       </div>
-     </file>
-     <file name="style.css">
-       .odd {
-         background: rgba(255, 255, 0, 0.25);
-       }
-
-       .odd-add, .odd-remove {
-         transition: 1.5s;
-       }
-     </file>
-     <file name="protractor.js" type="protractor">
-       it('should add new entries to the beginning of the list', function() {
-         var button = element(by.buttonText('Add item'));
-         var rows = element.all(by.repeater('item in items'));
-
-         expect(rows.count()).toBe(4);
-         expect(rows.get(0).getText()).toBe('Item 3');
-         expect(rows.get(1).getText()).toBe('Item 2');
-
-         button.click();
-
-         expect(rows.count()).toBe(5);
-         expect(rows.get(0).getText()).toBe('Item 4');
-         expect(rows.get(1).getText()).toBe('Item 3');
-       });
-
-       it('should add odd class to odd entries', function() {
-         var button = element(by.buttonText('Add item'));
-         var rows = element.all(by.repeater('item in items'));
-
-         expect(rows.get(0).getAttribute('class')).toMatch(/odd/);
-         expect(rows.get(1).getAttribute('class')).not.toMatch(/odd/);
-
-         button.click();
-
-         expect(rows.get(0).getAttribute('class')).toMatch(/odd/);
-         expect(rows.get(1).getAttribute('class')).not.toMatch(/odd/);
-       });
-     </file>
-   </example>
  */
 var ngClassOddDirective = classDirective('Odd', 0);
 
@@ -38402,12 +37871,6 @@ var ngClassOddDirective = classDirective('Odd', 0);
  *
  * This directive can be applied only within the scope of an
  * {@link ng.directive:ngRepeat ngRepeat}.
- *
- * @animations
- * | Animation                        | Occurs                              |
- * |----------------------------------|-------------------------------------|
- * | {@link ng.$animate#addClass addClass}       | just before the class is applied to the element   |
- * | {@link ng.$animate#removeClass removeClass} | just before the class is removed from the element |
  *
  * @element ANY
  * @param {expression} ngClassEven {@link guide/expression Expression} to eval. The
@@ -38438,62 +37901,6 @@ var ngClassOddDirective = classDirective('Odd', 0);
            toMatch(/odd/);
          expect(element(by.repeater('name in names').row(1).column('name')).getAttribute('class')).
            toMatch(/even/);
-       });
-     </file>
-   </example>
- *
- * <hr />
- * @example
- * An example on how to implement animations using `ngClassEven`:
- *
-   <example module="ngAnimate" deps="angular-animate.js" animations="true" name="ng-class-even-animate">
-     <file name="index.html">
-       <div ng-init="items=['Item 3', 'Item 2', 'Item 1', 'Item 0']">
-         <button ng-click="items.unshift('Item ' + items.length)">Add item</button>
-         <hr />
-         <table>
-           <tr ng-repeat="item in items" ng-class-even="'even'">
-             <td>{{ item }}</td>
-           </tr>
-         </table>
-       </div>
-     </file>
-     <file name="style.css">
-       .even {
-         background: rgba(255, 255, 0, 0.25);
-       }
-
-       .even-add, .even-remove {
-         transition: 1.5s;
-       }
-     </file>
-     <file name="protractor.js" type="protractor">
-       it('should add new entries to the beginning of the list', function() {
-         var button = element(by.buttonText('Add item'));
-         var rows = element.all(by.repeater('item in items'));
-
-         expect(rows.count()).toBe(4);
-         expect(rows.get(0).getText()).toBe('Item 3');
-         expect(rows.get(1).getText()).toBe('Item 2');
-
-         button.click();
-
-         expect(rows.count()).toBe(5);
-         expect(rows.get(0).getText()).toBe('Item 4');
-         expect(rows.get(1).getText()).toBe('Item 3');
-       });
-
-       it('should add even class to even entries', function() {
-         var button = element(by.buttonText('Add item'));
-         var rows = element.all(by.repeater('item in items'));
-
-         expect(rows.get(0).getAttribute('class')).not.toMatch(/even/);
-         expect(rows.get(1).getAttribute('class')).toMatch(/even/);
-
-         button.click();
-
-         expect(rows.get(0).getAttribute('class')).not.toMatch(/even/);
-         expect(rows.get(1).getAttribute('class')).toMatch(/even/);
        });
      </file>
    </example>
@@ -38589,6 +37996,10 @@ var ngCloakDirective = ngDirective({
  *
  * The controller instance can be published into a scope property by specifying
  * `ng-controller="as propertyName"`.
+ *
+ * If the current `$controllerProvider` is configured to use globals (via
+ * {@link ng.$controllerProvider#allowGlobals `$controllerProvider.allowGlobals()` }), this may
+ * also be the name of a globally accessible constructor function (deprecated, not recommended).
  *
  * @example
  * Here is a simple form for editing user contact information. Adding, removing, clearing, and
@@ -40420,11 +39831,12 @@ function NgModelController($scope, $exceptionHandler, $attr, $element, $parse, $
   this.$$ngModelSet = this.$$parsedNgModelAssign;
   this.$$pendingDebounce = null;
   this.$$parserValid = undefined;
-  this.$$parserName = 'parse';
 
   this.$$currentValidationRunId = 0;
 
-  this.$$scope = $scope;
+  // https://github.com/angular/angular.js/issues/15833
+  // Prevent `$$scope` from being iterated over by `copy` when NgModelController is deep watched
+  Object.defineProperty(this, '$$scope', {value: $scope});
   this.$$attr = $attr;
   this.$$element = $element;
   this.$$animate = $animate;
@@ -40751,8 +40163,7 @@ NgModelController.prototype = {
     processAsyncValidators();
 
     function processParseErrors() {
-      var errorKey = that.$$parserName;
-
+      var errorKey = that.$$parserName || 'parse';
       if (isUndefined(that.$$parserValid)) {
         setValidity(errorKey, null);
       } else {
@@ -40764,7 +40175,6 @@ NgModelController.prototype = {
             setValidity(name, null);
           });
         }
-
         // Set the parse error last, to prevent unsetting it, should a $validators key == parserName
         setValidity(errorKey, that.$$parserValid);
         return that.$$parserValid;
@@ -40866,10 +40276,6 @@ NgModelController.prototype = {
     var that = this;
 
     this.$$parserValid = isUndefined(modelValue) ? undefined : true;
-
-    // Reset any previous parse error
-    this.$setValidity(this.$$parserName, null);
-    this.$$parserName = 'parse';
 
     if (this.$$parserValid) {
       for (var i = 0; i < this.$parsers.length; i++) {
@@ -40988,12 +40394,8 @@ NgModelController.prototype = {
 
     if (isNumber(debounceDelay[trigger])) {
       debounceDelay = debounceDelay[trigger];
-    } else if (isNumber(debounceDelay['default']) &&
-      this.$options.getOption('updateOn').indexOf(trigger) === -1
-    ) {
+    } else if (isNumber(debounceDelay['default'])) {
       debounceDelay = debounceDelay['default'];
-    } else if (isNumber(debounceDelay['*'])) {
-      debounceDelay = debounceDelay['*'];
     }
 
     this.$$timeout.cancel(this.$$pendingDebounce);
@@ -41781,105 +41183,6 @@ defaultModelOptions = new ModelOptions({
  *   </file>
  * </example>
  *
- * ### Default events, extra triggers, and catch-all debounce values
- *
- * This example shows the relationship between "default" update events and
- * additional `updateOn` triggers.
- *
- * `default` events are those that are bound to the control, and when fired, update the `$viewValue`
- * via {@link ngModel.NgModelController#$setViewValue $setViewValue}. Every event that is not listed
- * in `updateOn` is considered a "default" event, since different control types have different
- * default events.
- *
- * The control in this example updates by "default", "click", and "blur", with different `debounce`
- * values. You can see that "click" doesn't have an individual `debounce` value -
- * therefore it uses the `*` debounce value.
- *
- * There is also a button that calls {@link ngModel.NgModelController#$setViewValue $setViewValue}
- * directly with a "custom" event. Since "custom" is not defined in the `updateOn` list,
- * it is considered a "default" event and will update the
- * control if "default" is defined in `updateOn`, and will receive the "default" debounce value.
- * Note that this is just to illustrate how custom controls would possibly call `$setViewValue`.
- *
- * You can change the `updateOn` and `debounce` configuration to test different scenarios. This
- * is done with {@link ngModel.NgModelController#$overrideModelOptions $overrideModelOptions}.
- *
-  <example name="ngModelOptions-advanced" module="optionsExample">
-    <file name="index.html">
-       <model-update-demo></model-update-demo>
-    </file>
-    <file name="app.js">
-      angular.module('optionsExample', [])
-        .component('modelUpdateDemo', {
-          templateUrl: 'template.html',
-          controller: function() {
-            this.name = 'Chinua';
-
-            this.options = {
-              updateOn: 'default blur click',
-              debounce: {
-                default: 2000,
-                blur: 0,
-                '*': 1000
-              }
-            };
-
-            this.updateEvents = function() {
-              var eventList = this.options.updateOn.split(' ');
-              eventList.push('*');
-              var events = {};
-
-              for (var i = 0; i < eventList.length; i++) {
-                events[eventList[i]] = this.options.debounce[eventList[i]];
-              }
-
-              this.events = events;
-            };
-
-            this.updateOptions = function() {
-              var options = angular.extend(this.options, {
-                updateOn: Object.keys(this.events).join(' ').replace('*', ''),
-                debounce: this.events
-              });
-
-              this.form.input.$overrideModelOptions(options);
-            };
-
-            // Initialize the event form
-            this.updateEvents();
-          }
-        });
-    </file>
-    <file name="template.html">
-      <form name="$ctrl.form">
-        Input: <input type="text" name="input" ng-model="$ctrl.name" ng-model-options="$ctrl.options" />
-      </form>
-      Model: <tt>{{$ctrl.name}}</tt>
-      <hr>
-      <button ng-click="$ctrl.form.input.$setViewValue('some value', 'custom')">Trigger setViewValue with 'some value' and 'custom' event</button>
-
-      <hr>
-      <form ng-submit="$ctrl.updateOptions()">
-        <b>updateOn</b><br>
-        <input type="text" ng-model="$ctrl.options.updateOn" ng-change="$ctrl.updateEvents()" ng-model-options="{debounce: 500}">
-
-        <table>
-          <tr>
-            <th>Option</th>
-            <th>Debounce value</th>
-          </tr>
-          <tr ng-repeat="(key, value) in $ctrl.events">
-            <td>{{key}}</td>
-            <td><input type="number" ng-model="$ctrl.events[key]" /></td>
-          </tr>
-        </table>
-
-        <br>
-        <input type="submit" value="Update options">
-      </form>
-    </file>
-  </example>
- *
  *
  * ## Model updates and validation
  *
@@ -41935,9 +41238,6 @@ defaultModelOptions = new ModelOptions({
  * watched for changes. However, it is possible to override the options on a single
  * {@link ngModel.NgModelController} instance with
  * {@link ngModel.NgModelController#$overrideModelOptions `NgModelController#$overrideModelOptions()`}.
- * See also the example for
- * {@link ngModelOptions#default-events-extra-triggers-and-catch-all-debounce-values
- * Default events, extra triggers, and catch-all debounce values}.
  *
  *
  * @param {Object} ngModelOptions options to apply to {@link ngModel} directives on this element and
@@ -41958,18 +41258,14 @@ defaultModelOptions = new ModelOptions({
  *     custom value for each event. For example:
  *     ```
  *     ng-model-options="{
- *       updateOn: 'default blur',
+ *       updateOn: 'default blur click',
  *       debounce: { 'default': 500, 'blur': 0 }
  *     }"
  *     ```
- *     You can use the `*` key to specify a debounce value that applies to all events that are not
- *     specifically listed. In the following example, `mouseup` would have a debounce delay of 1000:
- *     ```
- *     ng-model-options="{
- *       updateOn: 'default blur mouseup',
- *       debounce: { 'default': 500, 'blur': 0, '*': 1000 }
- *     }"
- *     ```
+ *
+ *     "default" also applies to all events that are listed in `updateOn` but are not
+ *     listed in `debounce`, i.e. "click" would also be debounced by 500 milliseconds.
+ *
  *   - `allowInvalid`: boolean value which indicates that the model can be set with values that did
  *     not validate correctly instead of the default behavior of setting the model to undefined.
  *   - `getterSetter`: boolean value which determines whether or not to treat functions bound to
@@ -41979,8 +41275,6 @@ defaultModelOptions = new ModelOptions({
  *     continental US time zone abbreviations, but for general use, use a time zone offset, for
  *     example, `'+0430'` (4 hours, 30 minutes east of the Greenwich meridian)
  *     If not specified, the timezone of the browser will be used.
- *     Note that changing the timezone will have no effect on the current date, and is only applied after
- *     the next input / model change.
  *
  */
 var ngModelOptionsDirective = function() {
@@ -43846,25 +43140,6 @@ var NG_HIDE_IN_PROGRESS_CLASS = 'ng-hide-animate';
       });
     </file>
   </example>
- *
- * @knownIssue
- *
- * ### Flickering when using ngShow to toggle between elements
- *
- * When using {@link ngShow} and / or {@link ngHide} to toggle between elements, it can
- * happen that both the element to show and the element to hide are visible for a very short time.
- *
- * This usually happens when the {@link ngAnimate ngAnimate module} is included, but no actual animations
- * are defined for {@link ngShow} / {@link ngHide}. Internet Explorer is affected more often than
- * other browsers.
- *
- * There are several way to mitigate this problem:
- *
- * - {@link guide/animations#how-to-selectively-enable-disable-and-skip-animations Disable animations on the affected elements}.
- * - Use {@link ngIf} or {@link ngSwitch} instead of {@link ngShow} / {@link ngHide}.
- * - Use the special CSS selector `ng-hide.ng-hide-animate` to set `{display: none}` or similar on the affected elements.
- * - Use `ng-class="{'ng-hide': expression}` instead of instead of {@link ngShow} / {@link ngHide}.
- * - Define an animation on the affected elements.
  */
 var ngShowDirective = ['$animate', function($animate) {
   return {
@@ -44065,25 +43340,6 @@ var ngShowDirective = ['$animate', function($animate) {
       });
     </file>
   </example>
- *
- * @knownIssue
- *
- * ### Flickering when using ngHide to toggle between elements
- *
- * When using {@link ngShow} and / or {@link ngHide} to toggle between elements, it can
- * happen that both the element to show and the element to hide are visible for a very short time.
- *
- * This usually happens when the {@link ngAnimate ngAnimate module} is included, but no actual animations
- * are defined for {@link ngShow} / {@link ngHide}. Internet Explorer is affected more often than
- * other browsers.
- *
- * There are several way to mitigate this problem:
- *
- * - {@link guide/animations#how-to-selectively-enable-disable-and-skip-animations Disable animations on the affected elements}.
- * - Use {@link ngIf} or {@link ngSwitch} instead of {@link ngShow} / {@link ngHide}.
- * - Use the special CSS selector `ng-hide.ng-hide-animate` to set `{display: none}` or similar on the affected elements.
- * - Use `ng-class="{'ng-hide': expression}` instead of instead of {@link ngShow} / {@link ngHide}.
- * - Define an animation on the affected elements.
  */
 var ngHideDirective = ['$animate', function($animate) {
   return {
@@ -44153,12 +43409,12 @@ var ngHideDirective = ['$animate', function($animate) {
    </example>
  */
 var ngStyleDirective = ngDirective(function(scope, element, attr) {
-  scope.$watchCollection(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
+  scope.$watch(attr.ngStyle, function ngStyleWatchAction(newStyles, oldStyles) {
     if (oldStyles && (newStyles !== oldStyles)) {
       forEach(oldStyles, function(val, style) { element.css(style, '');});
     }
     if (newStyles) element.css(newStyles);
-  });
+  }, true);
 });
 
 /**
@@ -46106,12 +45362,12 @@ $provide.value("$locale", {
 
 /***/ }),
 
-/***/ 287:
+/***/ 280:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
  * @license
- * Video.js 6.10.1 <http://videojs.com/>
+ * Video.js 6.6.3 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/master/LICENSE>
@@ -46127,7 +45383,7 @@ $provide.value("$locale", {
 	(global.videojs = factory());
 }(this, (function () {
 
-var version = "6.10.1";
+var version = "6.6.3";
 
 var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 'undefined' ? global : typeof self !== 'undefined' ? self : {};
 
@@ -47578,7 +46834,7 @@ function isSingleLeftClick(event) {
   // otherwise `mousedown` should be enough for a button
 
   if (event.button === undefined && event.buttons === undefined) {
-    // Why do we need `buttons` ?
+    // Why do we need `butttons` ?
     // Because, middle mouse sometimes have this:
     // e.button === 0 and e.buttons === 4
     // Furthermore, we want to prevent combination click, something like
@@ -48202,10 +47458,7 @@ function trigger(elem, event, hash) {
   // If an event name was passed as a string, creates an event out of it
   if (typeof event === 'string') {
     event = { type: event, target: elem };
-  } else if (!event.target) {
-    event.target = elem;
   }
-
   // Normalizes the event properties.
   event = fixEvent(event);
 
@@ -48288,8 +47541,8 @@ var videojs$2 = void 0;
  */
 var autoSetup = function autoSetup() {
 
-  // Protect against breakage in non-browser environments and check global autoSetup option.
-  if (!isReal() || videojs$2.options.autoSetup === false) {
+  // Protect against breakage in non-browser environments.
+  if (!isReal()) {
     return;
   }
 
@@ -48495,59 +47748,6 @@ var throttle = function throttle(fn, wait) {
   };
 
   return throttled;
-};
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked.
- *
- * Inspired by lodash and underscore implementations.
- *
- * @param  {Function} func
- *         The function to wrap with debounce behavior.
- *
- * @param  {number} wait
- *         The number of milliseconds to wait after the last invocation.
- *
- * @param  {boolean} [immediate]
- *         Whether or not to invoke the function immediately upon creation.
- *
- * @param  {Object} [context=window]
- *         The "context" in which the debounced function should debounce. For
- *         example, if this function should be tied to a Video.js player,
- *         the player can be passed here. Alternatively, defaults to the
- *         global `window` object.
- *
- * @return {Function}
- *         A debounced function.
- */
-var debounce = function debounce(func, wait, immediate) {
-  var context = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : window_1;
-
-  var timeout = void 0;
-
-  /* eslint-disable consistent-this */
-  return function () {
-    var self = this;
-    var args = arguments;
-
-    var _later = function later() {
-      timeout = null;
-      _later = null;
-      if (!immediate) {
-        func.apply(self, args);
-      }
-    };
-
-    if (!timeout && immediate) {
-      func.apply(self, args);
-    }
-
-    context.clearTimeout(timeout);
-    timeout = context.setTimeout(_later, wait);
-  };
-  /* eslint-enable consistent-this */
 };
 
 /**
@@ -49546,7 +48746,7 @@ var Component = function () {
    * Localize a string given the string in english.
    *
    * If tokens are provided, it'll try and run a simple token replacement on the provided string.
-   * The tokens it looks for look like `{1}` with the index being 1-indexed into the tokens array.
+   * The tokens it loooks for look like `{1}` with the index being 1-indexed into the tokens array.
    *
    * If a `defaultValue` is provided, it'll use that over `string`,
    * if a value isn't found in provided language files.
@@ -49983,7 +49183,7 @@ var Component = function () {
   Component.prototype.triggerReady = function triggerReady() {
     this.isReady_ = true;
 
-    // Ensure ready is triggered asynchronously
+    // Ensure ready is triggerd asynchronously
     this.setTimeout(function () {
       var readyQueue = this.readyQueue_;
 
@@ -50995,7 +50195,7 @@ Component.registerComponent('Component', Component);
  *           Returns the time offset at which a specified time range begins.
  *
  * @property {time-ranges:indexFunction} end
- *           Returns the time offset at which a specified time range ends.
+ *           Returns the time offset at which a specified time range begins.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges
  */
@@ -51021,8 +50221,7 @@ function rangeCheck(fnName, index, maxIndex) {
 }
 
 /**
- * Get the time for the specified index at the start or end
- * of a TimeRange object.
+ * Check if any of the time ranges are over the maximum index.
  *
  * @param {string} fnName
  *        The function name to use for logging
@@ -51049,7 +50248,7 @@ function getRange(fnName, valueIndex, ranges, rangeIndex) {
 }
 
 /**
- * Create a time range object given ranges of time.
+ * Create a time range object givent ranges of time.
  *
  * @param {Array} [ranges]
  *        An array of time ranges.
@@ -51318,7 +50517,7 @@ function SafeParseTuple(obj, reviver) {
  *         Whether or not the object is `Promise`-like.
  */
 function isPromise(value) {
-  return value !== undefined && value !== null && typeof value.then === 'function';
+  return value !== undefined && typeof value.then === 'function';
 }
 
 /**
@@ -54632,7 +53831,7 @@ function parseContent(window, input) {
       return result;
     }
 
-    var m = input.match(/^([^<]*)(<[^>]*>?)?/);
+    var m = input.match(/^([^<]*)(<[^>]+>?)?/);
     // If there is some text before the next tag, return it, otherwise return
     // the tag.
     return consume(m[1] ? m[1] : m[2]);
@@ -56308,42 +55507,6 @@ var Tech = function (_Component) {
     return _this;
   }
 
-  /**
-   * A special function to trigger source set in a way that will allow player
-   * to re-trigger if the player or tech are not ready yet.
-   *
-   * @fires Tech#sourceset
-   * @param {string} src The source string at the time of the source changing.
-   */
-
-
-  Tech.prototype.triggerSourceset = function triggerSourceset(src) {
-    var _this2 = this;
-
-    if (!this.isReady_) {
-      // on initial ready we have to trigger source set
-      // 1ms after ready so that player can watch for it.
-      this.one('ready', function () {
-        return _this2.setTimeout(function () {
-          return _this2.triggerSourceset(src);
-        }, 1);
-      });
-    }
-
-    /**
-     * Fired when the source is set on the tech causing the media element
-     * to reload.
-     *
-     * @see {@link Player#event:sourceset}
-     * @event Tech#sourceset
-     * @type {EventTarget~Event}
-     */
-    this.trigger({
-      src: src,
-      type: 'sourceset'
-    });
-  };
-
   /* Fallbacks for unsupported event types
   ================================================================================ */
 
@@ -56576,19 +55739,19 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.clearTracks = function clearTracks(types) {
-    var _this3 = this;
+    var _this2 = this;
 
     types = [].concat(types);
     // clear out all tracks because we can't reuse them between techs
     types.forEach(function (type) {
-      var list = _this3[type + 'Tracks']() || [];
+      var list = _this2[type + 'Tracks']() || [];
       var i = list.length;
 
       while (i--) {
         var track = list[i];
 
         if (type === 'text') {
-          _this3.removeRemoteTextTrack(track);
+          _this2.removeRemoteTextTrack(track);
         }
         list.removeTrack(track);
       }
@@ -56693,7 +55856,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.initTrackListeners = function initTrackListeners() {
-    var _this4 = this;
+    var _this3 = this;
 
     /**
      * Triggered when tracks are added or removed on the Tech {@link AudioTrackList}
@@ -56718,15 +55881,15 @@ var Tech = function (_Component) {
     NORMAL.names.forEach(function (name) {
       var props = NORMAL[name];
       var trackListChanges = function trackListChanges() {
-        _this4.trigger(name + 'trackchange');
+        _this3.trigger(name + 'trackchange');
       };
 
-      var tracks = _this4[props.getterName]();
+      var tracks = _this3[props.getterName]();
 
       tracks.addEventListener('removetrack', trackListChanges);
       tracks.addEventListener('addtrack', trackListChanges);
 
-      _this4.on('dispose', function () {
+      _this3.on('dispose', function () {
         tracks.removeEventListener('removetrack', trackListChanges);
         tracks.removeEventListener('addtrack', trackListChanges);
       });
@@ -56742,7 +55905,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addWebVttScript_ = function addWebVttScript_() {
-    var _this5 = this;
+    var _this4 = this;
 
     if (window_1.WebVTT) {
       return;
@@ -56773,7 +55936,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this5.trigger('vttjsloaded');
+        _this4.trigger('vttjsloaded');
       };
       script.onerror = function () {
         /**
@@ -56782,7 +55945,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this5.trigger('vttjserror');
+        _this4.trigger('vttjserror');
       };
       this.on('dispose', function () {
         script.onload = null;
@@ -56804,7 +55967,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.emulateTextTracks = function emulateTextTracks() {
-    var _this6 = this;
+    var _this5 = this;
 
     var tracks = this.textTracks();
     var remoteTracks = this.remoteTextTracks();
@@ -56821,7 +55984,7 @@ var Tech = function (_Component) {
     this.addWebVttScript_();
 
     var updateDisplay = function updateDisplay() {
-      return _this6.trigger('texttrackchange');
+      return _this5.trigger('texttrackchange');
     };
 
     var textTracksChanges = function textTracksChanges() {
@@ -56936,7 +56099,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addRemoteTextTrack = function addRemoteTextTrack() {
-    var _this7 = this;
+    var _this6 = this;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var manualCleanup = arguments[1];
@@ -56956,7 +56119,7 @@ var Tech = function (_Component) {
     if (manualCleanup !== true) {
       // create the TextTrackList if it doesn't exist
       this.ready(function () {
-        return _this7.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
+        return _this6.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
       });
     }
 
@@ -57269,18 +56432,6 @@ Tech.prototype.featuresPlaybackRate = false;
 Tech.prototype.featuresProgressEvents = false;
 
 /**
- * Boolean indicating wether the `Tech` supports the `sourceset` event.
- *
- * A tech should set this to `true` and then use {@link Tech#triggerSourceset}
- * to trigger a {@link Tech#event:sourceset} at the earliest time after getting
- * a new source.
- *
- * @type {boolean}
- * @default
- */
-Tech.prototype.featuresSourceset = false;
-
-/**
  * Boolean indicating wether the `Tech` supports the `timeupdate` event. This is currently
  * not triggered by video-js-swf. This will be used to determine if
  * {@link Tech#manualTimeUpdates} should be called.
@@ -57418,7 +56569,7 @@ Tech.withSourceHandlers = function (_Tech) {
    * When using a source handler, prefer its implementation of
    * any function normally provided by the tech.
    */
-  var deferrable = ['seekable', 'seeking', 'duration'];
+  var deferrable = ['seekable', 'duration'];
 
   /**
    * A wrapper around {@link Tech#seekable} that will call a `SourceHandler`s seekable
@@ -57523,9 +56674,6 @@ Tech.registerTech('Tech', Tech);
 Tech.defaultTechOrder_ = [];
 
 var middlewares = {};
-var middlewareInstances = {};
-
-var TERMINATOR = {};
 
 function use(type, middleware) {
   middlewares[type] = middlewares[type] || [];
@@ -57546,39 +56694,12 @@ function setTech(middleware, tech) {
   });
 }
 
-/**
- * Calls a getter on the tech first, through each middleware
- * from right to left to the player.
- */
 function get$1(middleware, tech, method) {
   return middleware.reduceRight(middlewareIterator(method), tech[method]());
 }
 
-/**
- * Takes the argument given to the player and calls the setter method on each
- * middlware from left to right to the tech.
- */
 function set$1(middleware, tech, method, arg) {
   return tech[method](middleware.reduce(middlewareIterator(method), arg));
-}
-
-/**
- * Takes the argument given to the player and calls the `call` version of the method
- * on each middleware from left to right.
- * Then, call the passed in method on the tech and return the result unchanged
- * back to the player, through middleware, this time from right to left.
- */
-function mediate(middleware, tech, method) {
-  var arg = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-
-  var callMethod = 'call' + toTitleCase(method);
-  var middlewareValue = middleware.reduce(middlewareIterator(callMethod), arg);
-  var terminated = middlewareValue === TERMINATOR;
-  var returnValue = terminated ? null : tech[method](middlewareValue);
-
-  executeRight(middleware, method, returnValue, terminated);
-
-  return returnValue;
 }
 
 var allowedGetters = {
@@ -57586,82 +56707,21 @@ var allowedGetters = {
   currentTime: 1,
   duration: 1,
   seekable: 1,
-  played: 1,
-  paused: 1
+  played: 1
 };
 
 var allowedSetters = {
   setCurrentTime: 1
 };
 
-var allowedMediators = {
-  play: 1,
-  pause: 1
-};
-
 function middlewareIterator(method) {
   return function (value, mw) {
-    // if the previous middleware terminated, pass along the termination
-    if (value === TERMINATOR) {
-      return TERMINATOR;
-    }
-
     if (mw[method]) {
       return mw[method](value);
     }
 
     return value;
   };
-}
-
-function executeRight(mws, method, value, terminated) {
-  for (var i = mws.length - 1; i >= 0; i--) {
-    var mw = mws[i];
-
-    if (mw[method]) {
-      mw[method](terminated, value);
-    }
-  }
-}
-
-function clearCacheForPlayer(player) {
-  middlewareInstances[player.id()] = null;
-}
-
-/**
- * {
- *  [playerId]: [[mwFactory, mwInstance], ...]
- * }
- */
-function getOrCreateFactory(player, mwFactory) {
-  var mws = middlewareInstances[player.id()];
-  var mw = null;
-
-  if (mws === undefined || mws === null) {
-    mw = mwFactory(player);
-    middlewareInstances[player.id()] = [[mwFactory, mw]];
-    return mw;
-  }
-
-  for (var i = 0; i < mws.length; i++) {
-    var _mws$i = mws[i],
-        mwf = _mws$i[0],
-        mwi = _mws$i[1];
-
-
-    if (mwf !== mwFactory) {
-      continue;
-    }
-
-    mw = mwi;
-  }
-
-  if (mw === null) {
-    mw = mwFactory(player);
-    mws.push([mwFactory, mw]);
-  }
-
-  return mw;
 }
 
 function setSourceHelper() {
@@ -57682,7 +56742,7 @@ function setSourceHelper() {
     // if we have an mwFactory, call it with the player to get the mw,
     // then call the mw's setSource method
   } else if (mwFactory) {
-    var mw = getOrCreateFactory(player, mwFactory);
+    var mw = mwFactory(player);
 
     mw.setSource(assign({}, src), function (err, _src) {
 
@@ -57707,91 +56767,6 @@ function setSourceHelper() {
     setSourceHelper(src, middlewares['*'], next, player, acc, true);
   }
 }
-
-/**
- * Mimetypes
- *
- * @see http://hul.harvard.edu/ois/////systems/wax/wax-public-help/mimetypes.htm
- * @typedef Mimetypes~Kind
- * @enum
- */
-var MimetypesKind = {
-  opus: 'video/ogg',
-  ogv: 'video/ogg',
-  mp4: 'video/mp4',
-  mov: 'video/mp4',
-  m4v: 'video/mp4',
-  mkv: 'video/x-matroska',
-  mp3: 'audio/mpeg',
-  aac: 'audio/aac',
-  oga: 'audio/ogg',
-  m3u8: 'application/x-mpegURL'
-};
-
-/**
- * Get the mimetype of a given src url if possible
- *
- * @param {string} src
- *        The url to the src
- *
- * @return {string}
- *         return the mimetype if it was known or empty string otherwise
- */
-var getMimetype = function getMimetype() {
-  var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-  var ext = getFileExtension(src);
-  var mimetype = MimetypesKind[ext.toLowerCase()];
-
-  return mimetype || '';
-};
-
-/**
- * Find the mime type of a given source string if possible. Uses the player
- * source cache.
- *
- * @param {Player} player
- *        The player object
- *
- * @param {string} src
- *        The source string
- *
- * @return {string}
- *         The type that was found
- */
-var findMimetype = function findMimetype(player, src) {
-  if (!src) {
-    return '';
-  }
-
-  // 1. check for the type in the `source` cache
-  if (player.cache_.source.src === src && player.cache_.source.type) {
-    return player.cache_.source.type;
-  }
-
-  // 2. see if we have this source in our `currentSources` cache
-  var matchingSources = player.cache_.sources.filter(function (s) {
-    return s.src === src;
-  });
-
-  if (matchingSources.length) {
-    return matchingSources[0].type;
-  }
-
-  // 3. look for the src url in source elements and use the type there
-  var sources = player.$$('source');
-
-  for (var i = 0; i < sources.length; i++) {
-    var s = sources[i];
-
-    if (s.type && s.src && s.src === src) {
-      return s.type;
-    }
-  }
-
-  // 4. finally fallback to our list of mime types based on src url extension
-  return getMimetype(src);
-};
 
 /**
  * @module filter-source
@@ -57827,10 +56802,10 @@ var filterSource = function filterSource(src) {
     src = newsrc;
   } else if (typeof src === 'string' && src.trim()) {
     // convert string into object
-    src = [fixSource({ src: src })];
+    src = [{ src: src }];
   } else if (isObject(src) && typeof src.src === 'string' && src.src && src.src.trim()) {
     // src is already valid
-    src = [fixSource(src)];
+    src = [src];
   } else {
     // invalid source, turn it into an empty array
     src = [];
@@ -57838,24 +56813,6 @@ var filterSource = function filterSource(src) {
 
   return src;
 };
-
-/**
- * Checks src mimetype, adding it when possible
- *
- * @param {Tech~SourceObject} src
- *        The src object to check
- * @return {Tech~SourceObject}
- *        src Object with known type
- */
-function fixSource(src) {
-  var mimetype = getMimetype(src.src);
-
-  if (!src.type && mimetype) {
-    src.type = mimetype;
-  }
-
-  return src;
-}
 
 /**
  * @file loader.js
@@ -57992,7 +56949,10 @@ var ClickableComponent = function (_Component) {
 
     // Add ARIA attributes for clickable element which is not a native HTML button
     attributes = assign({
-      role: 'button'
+      'role': 'button',
+
+      // let the screen reader user know that the text of the element may change
+      'aria-live': 'polite'
     }, attributes);
 
     this.tabIndex_ = props.tabIndex;
@@ -58025,9 +56985,6 @@ var ClickableComponent = function (_Component) {
   ClickableComponent.prototype.createControlTextEl = function createControlTextEl(el) {
     this.controlTextEl_ = createEl('span', {
       className: 'vjs-control-text'
-    }, {
-      // let the screen reader user know that the text of the element may change
-      'aria-live': 'polite'
     });
 
     if (el) {
@@ -58632,6 +57589,7 @@ var TextTrackDisplay = function (_Component) {
       return;
     }
 
+    var overrides = this.player_.textTrackSettings.getValues();
     var cues = [];
 
     for (var _i = 0; _i < track.activeCues.length; _i++) {
@@ -58639,12 +57597,6 @@ var TextTrackDisplay = function (_Component) {
     }
 
     window_1.WebVTT.processCues(window_1, cues, this.el_);
-
-    if (!this.player_.textTrackSettings) {
-      return;
-    }
-
-    var overrides = this.player_.textTrackSettings.getValues();
 
     var i = cues.length;
 
@@ -58733,22 +57685,11 @@ var LoadingSpinner = function (_Component) {
    * @return {Element}
    *         The dom element that gets created.
    */
-  LoadingSpinner.prototype.createEl = function createEl$$1() {
-    var isAudio = this.player_.isAudio();
-    var playerType = this.localize(isAudio ? 'Audio Player' : 'Video Player');
-    var controlText = createEl('span', {
-      className: 'vjs-control-text',
-      innerHTML: this.localize('{1} is loading.', [playerType])
-    });
-
-    var el = _Component.prototype.createEl.call(this, 'div', {
+  LoadingSpinner.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-loading-spinner',
       dir: 'ltr'
     });
-
-    el.appendChild(controlText);
-
-    return el;
   };
 
   return LoadingSpinner;
@@ -58804,7 +57745,10 @@ var Button = function (_ClickableComponent) {
     attributes = assign({
 
       // Necessary since the default button type is "submit"
-      type: 'button'
+      'type': 'button',
+
+      // let the screen reader user know that the text of the button may change
+      'aria-live': 'polite'
     }, attributes);
 
     var el = Component.prototype.createEl.call(this, tag, props, attributes);
@@ -59229,23 +58173,25 @@ Component.registerComponent('PlayToggle', PlayToggle);
 
 /**
  * @file format-time.js
- * @module format-time
+ * @module Format-time
  */
 
 /**
-* Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
-* will force a number of leading zeros to cover the length of the guide.
-*
-* @param {number} seconds
-*        Number of seconds to be turned into a string
-*
-* @param {number} guide
-*        Number (in seconds) to model the string after
-*
-* @return {string}
-*         Time formatted as H:MM:SS or M:SS
-*/
-var defaultImplementation = function defaultImplementation(seconds, guide) {
+ * Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
+ * will force a number of leading zeros to cover the length of the guide.
+ *
+ * @param {number} seconds
+ *        Number of seconds to be turned into a string
+ *
+ * @param {number} guide
+ *        Number (in seconds) to model the string after
+ *
+ * @return {string}
+ *         Time formatted as H:MM:SS or M:SS
+ */
+function formatTime(seconds) {
+  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
+
   seconds = seconds < 0 ? 0 : seconds;
   var s = Math.floor(seconds % 60);
   var m = Math.floor(seconds / 60 % 60);
@@ -59271,33 +58217,7 @@ var defaultImplementation = function defaultImplementation(seconds, guide) {
   s = s < 10 ? '0' + s : s;
 
   return h + m + s;
-};
-
-var implementation = defaultImplementation;
-
-/**
- * Replaces the default formatTime implementation with a custom implementation.
- *
- * @param {Function} customImplementation
- *        A function which will be used in place of the default formatTime implementation.
- *        Will receive the current time in seconds and the guide (in seconds) as arguments.
- */
-function setFormatTime(customImplementation) {
-  implementation = customImplementation;
 }
-
-/**
- * Resets formatTime to the default implementation.
- */
-function resetFormatTime() {
-  implementation = defaultImplementation;
-}
-
-var formatTime = function (seconds) {
-  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
-
-  return implementation(seconds, guide);
-};
 
 /**
  * @file time-display.js
@@ -59341,16 +58261,18 @@ var TimeDisplay = function (_Component) {
   TimeDisplay.prototype.createEl = function createEl$$1(plainName) {
     var className = this.buildCSSClass();
     var el = _Component.prototype.createEl.call(this, 'div', {
-      className: className + ' vjs-time-control vjs-control',
-      innerHTML: '<span class="vjs-control-text">' + this.localize(this.labelText_) + '\xA0</span>'
+      className: className + ' vjs-time-control vjs-control'
     });
 
-    this.contentEl_ = createEl('span', {
+    this.contentEl_ = createEl('div', {
       className: className + '-display'
     }, {
       // tell screen readers not to automatically read the time as it changes
       'aria-live': 'off'
-    });
+    }, createEl('span', {
+      className: 'vjs-control-text',
+      textContent: this.localize(this.controlText_)
+    }));
 
     this.updateTextNode_();
     el.appendChild(this.contentEl_);
@@ -59381,7 +58303,7 @@ var TimeDisplay = function (_Component) {
       this.contentEl_.removeChild(this.contentEl_.firstChild);
     }
 
-    this.textNode_ = document_1.createTextNode(this.formattedTime_ || this.formatTime_(0));
+    this.textNode_ = document_1.createTextNode(this.formattedTime_ || '0:00');
     this.contentEl_.appendChild(this.textNode_);
   };
 
@@ -59441,23 +58363,13 @@ var TimeDisplay = function (_Component) {
 }(Component);
 
 /**
- * The text that is added to the `TimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-TimeDisplay.prototype.labelText_ = 'Time';
-
-/**
  * The text that should display over the `TimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 TimeDisplay.prototype.controlText_ = 'Time';
 
 Component.registerComponent('TimeDisplay', TimeDisplay);
@@ -59544,23 +58456,13 @@ var CurrentTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `CurrentTimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-CurrentTimeDisplay.prototype.labelText_ = 'Current Time';
-
-/**
  * The text that should display over the `CurrentTimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 CurrentTimeDisplay.prototype.controlText_ = 'Current Time';
 
 Component.registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
@@ -59641,24 +58543,14 @@ var DurationDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `DurationDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-DurationDisplay.prototype.labelText_ = 'Duration';
-
-/**
  * The text that should display over the `DurationDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
-DurationDisplay.prototype.controlText_ = 'Duration';
+
+
+DurationDisplay.prototype.controlText_ = 'Duration Time';
 
 Component.registerComponent('DurationDisplay', DurationDisplay);
 
@@ -59755,7 +58647,6 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 
 
   RemainingTimeDisplay.prototype.formatTime_ = function formatTime_(time) {
-    // TODO: The "-" should be decorative, and not announced by a screen reader
     return '-' + _TimeDisplay.prototype.formatTime_.call(this, time);
   };
 
@@ -59807,23 +58698,13 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `RemainingTimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-RemainingTimeDisplay.prototype.labelText_ = 'Remaining Time';
-
-/**
  * The text that should display over the `RemainingTimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 RemainingTimeDisplay.prototype.controlText_ = 'Remaining Time';
 
 Component.registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
@@ -59876,7 +58757,7 @@ var LiveDisplay = function (_Component) {
 
     this.contentEl_ = createEl('div', {
       className: 'vjs-live-display',
-      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '\xA0</span>' + this.localize('LIVE')
+      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '</span>' + this.localize('LIVE')
     }, {
       'aria-live': 'off'
     });
@@ -60730,45 +59611,32 @@ var SeekBar = function (_Slider) {
 
     var _this = possibleConstructorReturn(this, _Slider.call(this, player, options));
 
-    _this.setEventHandlers_();
-    return _this;
-  }
+    _this.update = throttle(bind(_this, _this.update), UPDATE_REFRESH_INTERVAL);
 
-  /**
-   * Sets the event handlers
-   *
-   * @private
-   */
-
-
-  SeekBar.prototype.setEventHandlers_ = function setEventHandlers_() {
-    var _this2 = this;
-
-    this.update = throttle(bind(this, this.update), UPDATE_REFRESH_INTERVAL);
-
-    this.on(this.player_, 'timeupdate', this.update);
-    this.on(this.player_, 'ended', this.handleEnded);
+    _this.on(player, 'timeupdate', _this.update);
+    _this.on(player, 'ended', _this.handleEnded);
 
     // when playing, let's ensure we smoothly update the play progress bar
     // via an interval
-    this.updateInterval = null;
+    _this.updateInterval = null;
 
-    this.on(this.player_, ['playing'], function () {
-      _this2.clearInterval(_this2.updateInterval);
+    _this.on(player, ['playing'], function () {
+      _this.clearInterval(_this.updateInterval);
 
-      _this2.updateInterval = _this2.setInterval(function () {
-        _this2.requestAnimationFrame(function () {
-          _this2.update();
+      _this.updateInterval = _this.setInterval(function () {
+        _this.requestAnimationFrame(function () {
+          _this.update();
         });
       }, UPDATE_REFRESH_INTERVAL);
     });
 
-    this.on(this.player_, ['ended', 'pause', 'waiting'], function () {
-      _this2.clearInterval(_this2.updateInterval);
+    _this.on(player, ['ended', 'pause', 'waiting'], function () {
+      _this.clearInterval(_this.updateInterval);
     });
 
-    this.on(this.player_, ['timeupdate', 'ended'], this.update);
-  };
+    _this.on(player, ['timeupdate', 'ended'], _this.update);
+    return _this;
+  }
 
   /**
    * Create the `Component`'s DOM element
@@ -60892,8 +59760,6 @@ var SeekBar = function (_Slider) {
       return;
     }
 
-    // Stop event propagation to prevent double fire in progress-control.js
-    event.stopPropagation();
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
@@ -60963,10 +59829,6 @@ var SeekBar = function (_Slider) {
   SeekBar.prototype.handleMouseUp = function handleMouseUp(event) {
     _Slider.prototype.handleMouseUp.call(this, event);
 
-    // Stop event propagation to prevent double fire in progress-control.js
-    if (event) {
-      event.stopPropagation();
-    }
     this.player_.scrubbing(false);
 
     /**
@@ -61133,25 +59995,22 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseMove = function handleMouseMove(event) {
     var seekBar = this.getChild('seekBar');
+    var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
+    var seekBarEl = seekBar.el();
+    var seekBarRect = getBoundingClientRect(seekBarEl);
+    var seekBarPoint = getPointerPosition(seekBarEl, event).x;
 
-    if (seekBar) {
-      var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
-      var seekBarEl = seekBar.el();
-      var seekBarRect = getBoundingClientRect(seekBarEl);
-      var seekBarPoint = getPointerPosition(seekBarEl, event).x;
+    // The default skin has a gap on either side of the `SeekBar`. This means
+    // that it's possible to trigger this behavior outside the boundaries of
+    // the `SeekBar`. This ensures we stay within it at all times.
+    if (seekBarPoint > 1) {
+      seekBarPoint = 1;
+    } else if (seekBarPoint < 0) {
+      seekBarPoint = 0;
+    }
 
-      // The default skin has a gap on either side of the `SeekBar`. This means
-      // that it's possible to trigger this behavior outside the boundaries of
-      // the `SeekBar`. This ensures we stay within it at all times.
-      if (seekBarPoint > 1) {
-        seekBarPoint = 1;
-      } else if (seekBarPoint < 0) {
-        seekBarPoint = 0;
-      }
-
-      if (mouseTimeDisplay) {
-        mouseTimeDisplay.update(seekBarRect, seekBarPoint);
-      }
+    if (mouseTimeDisplay) {
+      mouseTimeDisplay.update(seekBarRect, seekBarPoint);
     }
   };
 
@@ -61180,9 +60039,7 @@ var ProgressControl = function (_Component) {
   ProgressControl.prototype.handleMouseSeek = function handleMouseSeek(event) {
     var seekBar = this.getChild('seekBar');
 
-    if (seekBar) {
-      seekBar.handleMouseMove(event);
-    }
+    seekBar.handleMouseMove(event);
   };
 
   /**
@@ -61254,11 +60111,6 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseDown = function handleMouseDown(event) {
     var doc = this.el_.ownerDocument;
-    var seekBar = this.getChild('seekBar');
-
-    if (seekBar) {
-      seekBar.handleMouseDown(event);
-    }
 
     this.on(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.on(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -61279,11 +60131,6 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseUp = function handleMouseUp(event) {
     var doc = this.el_.ownerDocument;
-    var seekBar = this.getChild('seekBar');
-
-    if (seekBar) {
-      seekBar.handleMouseUp(event);
-    }
 
     this.off(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.off(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -62797,9 +61644,8 @@ var MenuItem = function (_ClickableComponent) {
     var _this = possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
 
     _this.selectable = options.selectable;
-    _this.isSelected_ = options.selected || false;
 
-    _this.selected(_this.isSelected_);
+    _this.selected(options.selected);
 
     if (_this.selectable) {
       // TODO: May need to be either menuitemcheckbox or menuitemradio,
@@ -62872,13 +61718,11 @@ var MenuItem = function (_ClickableComponent) {
         // aria-checked isn't fully supported by browsers/screen readers,
         // so indicate selected state to screen reader in the control text.
         this.controlText(', selected');
-        this.isSelected_ = true;
       } else {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
         this.controlText('');
-        this.isSelected_ = false;
       }
     }
   };
@@ -63031,13 +61875,7 @@ var TextTrackMenuItem = function (_MenuItem) {
 
 
   TextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
-    var shouldBeSelected = this.track.mode === 'showing';
-
-    // Prevent redundant selected() calls because they may cause
-    // screen readers to read the appended control text unnecessarily
-    if (shouldBeSelected !== this.isSelected_) {
-      this.selected(shouldBeSelected);
-    }
+    this.selected(this.track.mode === 'showing');
   };
 
   TextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -63129,22 +61967,18 @@ var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
 
   OffTextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
     var tracks = this.player().textTracks();
-    var shouldBeSelected = true;
+    var selected = true;
 
     for (var i = 0, l = tracks.length; i < l; i++) {
       var track = tracks[i];
 
       if (this.options_.kinds.indexOf(track.kind) > -1 && track.mode === 'showing') {
-        shouldBeSelected = false;
+        selected = false;
         break;
       }
     }
 
-    // Prevent redundant selected() calls because they may cause
-    // screen readers to read the appended control text unnecessarily
-    if (shouldBeSelected !== this.isSelected_) {
-      this.selected(shouldBeSelected);
-    }
+    this.selected(selected);
   };
 
   OffTextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -63862,7 +62696,7 @@ var CaptionsButton = function (_TextTrackButton) {
   CaptionsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.kind_ }));
 
       this.hideThreshold_ += 1;
@@ -63988,7 +62822,7 @@ var SubsCapsButton = function (_TextTrackButton) {
   SubsCapsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.label_ }));
 
       this.hideThreshold_ += 1;
@@ -64634,6 +63468,10 @@ var ControlBar = function (_Component) {
     return _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-control-bar',
       dir: 'ltr'
+    }, {
+      // The control bar is a group, but we don't aria-label it to avoid
+      //  over-announcing by JAWS
+      role: 'group'
     });
   };
 
@@ -65000,12 +63838,11 @@ var TextTrackSettings = function (_ModalDialog) {
 
     var config = selectConfigs[key];
     var id = config.id.replace('%s', this.id_);
-    var selectLabelledbyIds = [legendId, id].join(' ').trim();
 
-    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + selectLabelledbyIds + '">'].concat(config.options.map(function (o) {
-      var optionId = id + '-' + o[1].replace(/\W+/g, '');
+    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + '">'].concat(config.options.map(function (o) {
+      var optionId = id + '-' + o[1];
 
-      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + selectLabelledbyIds + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
+      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
     })).concat('</select>').join('');
   };
 
@@ -65086,7 +63923,7 @@ var TextTrackSettings = function (_ModalDialog) {
 
   TextTrackSettings.prototype.createElFont_ = function createElFont_() {
     return createEl('div', {
-      className: 'vjs-track-settings-font',
+      className: 'vjs-track-settings-font">',
       innerHTML: ['<fieldset class="vjs-font-percent vjs-track-setting">', this.createElSelect_('fontPercent', '', 'legend'), '</fieldset>', '<fieldset class="vjs-edge-style vjs-track-setting">', this.createElSelect_('edgeStyle', '', 'legend'), '</fieldset>', '<fieldset class="vjs-font-family vjs-track-setting">', this.createElSelect_('fontFamily', '', 'legend'), '</fieldset>'].join('')
     });
   };
@@ -65261,445 +64098,6 @@ var TextTrackSettings = function (_ModalDialog) {
 
 Component.registerComponent('TextTrackSettings', TextTrackSettings);
 
-/**
- * @file resize-manager.js
- */
-/**
- * A Resize Manager. It is in charge of triggering `playerresize` on the player in the right conditions.
- *
- * It'll either create an iframe and use a debounced resize handler on it or use the new {@link https://wicg.github.io/ResizeObserver/|ResizeObserver}.
- *
- * If the ResizeObserver is available natively, it will be used. A polyfill can be passed in as an option.
- * If a `playerresize` event is not needed, the ResizeManager component can be removed from the player, see the example below.
- * @example <caption>How to disable the resize manager</caption>
- * const player = videojs('#vid', {
- *   resizeManager: false
- * });
- *
- * @see {@link https://wicg.github.io/ResizeObserver/|ResizeObserver specification}
- *
- * @extends Component
- */
-
-var ResizeManager = function (_Component) {
-  inherits(ResizeManager, _Component);
-
-  /**
-   * Create the ResizeManager.
-   *
-   * @param {Object} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of ResizeManager options.
-   *
-   * @param {Object} [options.ResizeObserver]
-   *        A polyfill for ResizeObserver can be passed in here.
-   *        If this is set to null it will ignore the native ResizeObserver and fall back to the iframe fallback.
-   */
-  function ResizeManager(player, options) {
-    classCallCheck(this, ResizeManager);
-
-    var RESIZE_OBSERVER_AVAILABLE = options.ResizeObserver || window_1.ResizeObserver;
-
-    // if `null` was passed, we want to disable the ResizeObserver
-    if (options.ResizeObserver === null) {
-      RESIZE_OBSERVER_AVAILABLE = false;
-    }
-
-    // Only create an element when ResizeObserver isn't available
-    var options_ = mergeOptions({ createEl: !RESIZE_OBSERVER_AVAILABLE }, options);
-
-    var _this = possibleConstructorReturn(this, _Component.call(this, player, options_));
-
-    _this.ResizeObserver = options.ResizeObserver || window_1.ResizeObserver;
-    _this.loadListener_ = null;
-    _this.resizeObserver_ = null;
-    _this.debouncedHandler_ = debounce(function () {
-      _this.resizeHandler();
-    }, 100, false, player);
-
-    if (RESIZE_OBSERVER_AVAILABLE) {
-      _this.resizeObserver_ = new _this.ResizeObserver(_this.debouncedHandler_);
-      _this.resizeObserver_.observe(player.el());
-    } else {
-      _this.loadListener_ = function () {
-        if (_this.el_.contentWindow) {
-          on(_this.el_.contentWindow, 'resize', _this.debouncedHandler_);
-        }
-        _this.off('load', _this.loadListener_);
-      };
-
-      _this.on('load', _this.loadListener_);
-    }
-    return _this;
-  }
-
-  ResizeManager.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'iframe', {
-      className: 'vjs-resize-manager'
-    });
-  };
-
-  /**
-   * Called when a resize is triggered on the iframe or a resize is observed via the ResizeObserver
-   *
-   * @fires Player#playerresize
-   */
-
-
-  ResizeManager.prototype.resizeHandler = function resizeHandler() {
-    /**
-     * Called when the player size has changed
-     *
-     * @event Player#playerresize
-     * @type {EventTarget~Event}
-     */
-    this.player_.trigger('playerresize');
-  };
-
-  ResizeManager.prototype.dispose = function dispose() {
-    if (this.resizeObserver_) {
-      if (this.player_.el()) {
-        this.resizeObserver_.unobserve(this.player_.el());
-      }
-      this.resizeObserver_.disconnect();
-    }
-
-    if (this.el_ && this.el_.contentWindow) {
-      off(this.el_.contentWindow, 'resize', this.debouncedHandler_);
-    }
-
-    if (this.loadListener_) {
-      this.off('load', this.loadListener_);
-    }
-
-    this.ResizeObserver = null;
-    this.resizeObserver = null;
-    this.debouncedHandler_ = null;
-    this.loadListener_ = null;
-  };
-
-  return ResizeManager;
-}(Component);
-
-Component.registerComponent('ResizeManager', ResizeManager);
-
-/**
- * This function is used to fire a sourceset when there is something
- * similar to `mediaEl.load()` being called. It will try to find the source via
- * the `src` attribute and then the `<source>` elements. It will then fire `sourceset`
- * with the source that was found or empty string if we cannot know. If it cannot
- * find a source then `sourceset` will not be fired.
- *
- * @param {Html5} tech
- *        The tech object that sourceset was setup on
- *
- * @return {boolean}
- *         returns false if the sourceset was not fired and true otherwise.
- */
-var sourcesetLoad = function sourcesetLoad(tech) {
-  var el = tech.el();
-
-  // if `el.src` is set, that source will be loaded.
-  if (el.hasAttribute('src')) {
-    tech.triggerSourceset(el.src);
-    return true;
-  }
-
-  /**
-   * Since there isn't a src property on the media element, source elements will be used for
-   * implementing the source selection algorithm. This happens asynchronously and
-   * for most cases were there is more than one source we cannot tell what source will
-   * be loaded, without re-implementing the source selection algorithm. At this time we are not
-   * going to do that. There are three special cases that we do handle here though:
-   *
-   * 1. If there are no sources, do not fire `sourceset`.
-   * 2. If there is only one `<source>` with a `src` property/attribute that is our `src`
-   * 3. If there is more than one `<source>` but all of them have the same `src` url.
-   *    That will be our src.
-   */
-  var sources = tech.$$('source');
-  var srcUrls = [];
-  var src = '';
-
-  // if there are no sources, do not fire sourceset
-  if (!sources.length) {
-    return false;
-  }
-
-  // only count valid/non-duplicate source elements
-  for (var i = 0; i < sources.length; i++) {
-    var url = sources[i].src;
-
-    if (url && srcUrls.indexOf(url) === -1) {
-      srcUrls.push(url);
-    }
-  }
-
-  // there were no valid sources
-  if (!srcUrls.length) {
-    return false;
-  }
-
-  // there is only one valid source element url
-  // use that
-  if (srcUrls.length === 1) {
-    src = srcUrls[0];
-  }
-
-  tech.triggerSourceset(src);
-  return true;
-};
-
-/**
- * our implementation of an `innerHTML` descriptor for browsers
- * that do not have one.
- */
-var innerHTMLDescriptorPolyfill = {};
-
-if (!IS_IE8) {
-  innerHTMLDescriptorPolyfill = Object.defineProperty({}, 'innerHTML', {
-    get: function get() {
-      return this.cloneNode(true).innerHTML;
-    },
-    set: function set(v) {
-      // make a dummy node to use innerHTML on
-      var dummy = document_1.createElement(this.nodeName.toLowerCase());
-
-      // set innerHTML to the value provided
-      dummy.innerHTML = v;
-
-      // make a document fragment to hold the nodes from dummy
-      var docFrag = document_1.createDocumentFragment();
-
-      // copy all of the nodes created by the innerHTML on dummy
-      // to the document fragment
-      while (dummy.childNodes.length) {
-        docFrag.appendChild(dummy.childNodes[0]);
-      }
-
-      // remove content
-      this.innerText = '';
-
-      // now we add all of that html in one by appending the
-      // document fragment. This is how innerHTML does it.
-      window_1.Element.prototype.appendChild.call(this, docFrag);
-
-      // then return the result that innerHTML's setter would
-      return this.innerHTML;
-    }
-  });
-}
-/**
- * Get a property descriptor given a list of priorities and the
- * property to get.
- */
-var getDescriptor = function getDescriptor(priority, prop) {
-  var descriptor = {};
-
-  for (var i = 0; i < priority.length; i++) {
-    descriptor = Object.getOwnPropertyDescriptor(priority[i], prop);
-
-    if (descriptor && descriptor.set && descriptor.get) {
-      break;
-    }
-  }
-
-  descriptor.enumerable = true;
-  descriptor.configurable = true;
-
-  return descriptor;
-};
-
-var getInnerHTMLDescriptor = function getInnerHTMLDescriptor(tech) {
-  return getDescriptor([tech.el(), window_1.HTMLMediaElement.prototype, window_1.Element.prototype, innerHTMLDescriptorPolyfill], 'innerHTML');
-};
-
-/**
- * Patches browser internal functions so that we can tell syncronously
- * if a `<source>` was appended to the media element. For some reason this
- * causes a `sourceset` if the the media element is ready and has no source.
- * This happens when:
- * - The page has just loaded and the media element does not have a source.
- * - The media element was emptied of all sources, then `load()` was called.
- *
- * It does this by patching the following functions/properties when they are supported:
- *
- * - `append()` - can be used to add a `<source>` element to the media element
- * - `appendChild()` - can be used to add a `<source>` element to the media element
- * - `insertAdjacentHTML()` -  can be used to add a `<source>` element to the media element
- * - `innerHTML` -  can be used to add a `<source>` element to the media element
- *
- * @param {Html5} tech
- *        The tech object that sourceset is being setup on.
- */
-var firstSourceWatch = function firstSourceWatch(tech) {
-  var el = tech.el();
-
-  // make sure firstSourceWatch isn't setup twice.
-  if (el.resetSourceWatch_) {
-    return;
-  }
-
-  var old = {};
-  var innerDescriptor = getInnerHTMLDescriptor(tech);
-  var appendWrapper = function appendWrapper(appendFn) {
-    return function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      var retval = appendFn.apply(el, args);
-
-      sourcesetLoad(tech);
-
-      return retval;
-    };
-  };
-
-  ['append', 'appendChild', 'insertAdjacentHTML'].forEach(function (k) {
-    if (!el[k]) {
-      return;
-    }
-
-    // store the old function
-    old[k] = el[k];
-
-    // call the old function with a sourceset if a source
-    // was loaded
-    el[k] = appendWrapper(old[k]);
-  });
-
-  Object.defineProperty(el, 'innerHTML', mergeOptions(innerDescriptor, {
-    set: appendWrapper(innerDescriptor.set)
-  }));
-
-  el.resetSourceWatch_ = function () {
-    el.resetSourceWatch_ = null;
-    Object.keys(old).forEach(function (k) {
-      el[k] = old[k];
-    });
-
-    Object.defineProperty(el, 'innerHTML', innerDescriptor);
-  };
-
-  // on the first sourceset, we need to revert our changes
-  tech.one('sourceset', el.resetSourceWatch_);
-};
-
-/**
- * our implementation of a `src` descriptor for browsers
- * that do not have one.
- */
-
-var srcDescriptorPolyfill = {};
-
-if (!IS_IE8) {
-  srcDescriptorPolyfill = Object.defineProperty({}, 'src', {
-    get: function get() {
-      if (this.hasAttribute('src')) {
-        return getAbsoluteURL(window_1.Element.prototype.getAttribute.call(this, 'src'));
-      }
-
-      return '';
-    },
-    set: function set(v) {
-      window_1.Element.prototype.setAttribute.call(this, 'src', v);
-
-      return v;
-    }
-  });
-}
-
-var getSrcDescriptor = function getSrcDescriptor(tech) {
-  return getDescriptor([tech.el(), window_1.HTMLMediaElement.prototype, srcDescriptorPolyfill], 'src');
-};
-
-/**
- * setup `sourceset` handling on the `Html5` tech. This function
- * patches the following element properties/functions:
- *
- * - `src` - to determine when `src` is set
- * - `setAttribute()` - to determine when `src` is set
- * - `load()` - this re-triggers the source selection algorithm, and can
- *              cause a sourceset.
- *
- * If there is no source when we are adding `sourceset` support or during a `load()`
- * we also patch the functions listed in `firstSourceWatch`.
- *
- * @param {Html5} tech
- *        The tech to patch
- */
-var setupSourceset = function setupSourceset(tech) {
-  if (!tech.featuresSourceset) {
-    return;
-  }
-
-  var el = tech.el();
-
-  // make sure sourceset isn't setup twice.
-  if (el.resetSourceset_) {
-    return;
-  }
-
-  var srcDescriptor = getSrcDescriptor(tech);
-  var oldSetAttribute = el.setAttribute;
-  var oldLoad = el.load;
-
-  Object.defineProperty(el, 'src', mergeOptions(srcDescriptor, {
-    set: function set(v) {
-      var retval = srcDescriptor.set.call(el, v);
-
-      // we use the getter here to get the actual value set on src
-      tech.triggerSourceset(el.src);
-
-      return retval;
-    }
-  }));
-
-  el.setAttribute = function (n, v) {
-    var retval = oldSetAttribute.call(el, n, v);
-
-    if (/src/i.test(n)) {
-      tech.triggerSourceset(el.src);
-    }
-
-    return retval;
-  };
-
-  el.load = function () {
-    var retval = oldLoad.call(el);
-
-    // if load was called, but there was no source to fire
-    // sourceset on. We have to watch for a source append
-    // as that can trigger a `sourceset` when the media element
-    // has no source
-    if (!sourcesetLoad(tech)) {
-      tech.triggerSourceset('');
-      firstSourceWatch(tech);
-    }
-
-    return retval;
-  };
-
-  if (el.currentSrc) {
-    tech.triggerSourceset(el.currentSrc);
-  } else if (!sourcesetLoad(tech)) {
-    firstSourceWatch(tech);
-  }
-
-  el.resetSourceset_ = function () {
-    el.resetSourceset_ = null;
-    el.load = oldLoad;
-    el.setAttribute = oldSetAttribute;
-    Object.defineProperty(el, 'src', srcDescriptor);
-    if (el.resetSourceWatch_) {
-      el.resetSourceWatch_();
-    }
-  };
-};
-
 var _templateObject$2 = taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
 /**
@@ -65740,11 +64138,6 @@ var Html5 = function (_Tech) {
       _this.setSource(source);
     } else {
       _this.handleLateInit_(_this.el_);
-    }
-
-    // setup sourceset after late sourceset/init
-    if (options.enableSourceset) {
-      _this.setupSourcesetHandling_();
     }
 
     if (_this.el_.hasChildNodes()) {
@@ -65811,24 +64204,11 @@ var Html5 = function (_Tech) {
 
 
   Html5.prototype.dispose = function dispose() {
-    if (this.el_ && this.el_.resetSourceset_) {
-      this.el_.resetSourceset_();
-    }
     Html5.disposeMediaElement(this.el_);
     this.options_ = null;
 
     // tech will handle clearing of the emulated track list
     _Tech.prototype.dispose.call(this);
-  };
-
-  /**
-   * Modify the media element so that we can detect when
-   * the source is changed. Fires `sourceset` just after the source has changed
-   */
-
-
-  Html5.prototype.setupSourcesetHandling_ = function setupSourcesetHandling_() {
-    setupSourceset(this);
   };
 
   /**
@@ -66648,34 +65028,6 @@ Html5.canControlPlaybackRate = function () {
 };
 
 /**
- * Check if we can override a video/audio elements attributes, with
- * Object.defineProperty.
- *
- * @return {boolean}
- *         - True if builtin attributes can be overriden
- *         - False otherwise
- */
-Html5.canOverrideAttributes = function () {
-  if (IS_IE8) {
-    return false;
-  }
-  // if we cannot overwrite the src/innerHTML property, there is no support
-  // iOS 7 safari for instance cannot do this.
-  try {
-    var noop = function noop() {};
-
-    Object.defineProperty(document_1.createElement('video'), 'src', { get: noop, set: noop });
-    Object.defineProperty(document_1.createElement('audio'), 'src', { get: noop, set: noop });
-    Object.defineProperty(document_1.createElement('video'), 'innerHTML', { get: noop, set: noop });
-    Object.defineProperty(document_1.createElement('audio'), 'innerHTML', { get: noop, set: noop });
-  } catch (e) {
-    return false;
-  }
-
-  return true;
-};
-
-/**
  * Check to see if native `TextTrack`s are supported by this browser/device.
  *
  * @return {boolean}
@@ -66734,14 +65086,6 @@ Html5.prototype.featuresVolumeControl = Html5.canControlVolume();
  * @default {@link Html5.canControlPlaybackRate}
  */
 Html5.prototype.featuresPlaybackRate = Html5.canControlPlaybackRate();
-
-/**
- * Boolean indicating wether the `Tech` supports the `sourceset` event.
- *
- * @type {boolean}
- * @default
- */
-Html5.prototype.featuresSourceset = Html5.canOverrideAttributes();
 
 /**
  * Boolean indicating whether the `HTML5` tech currently supports the media element
@@ -66813,8 +65157,7 @@ var mp4RE = /^video\/mp4/i;
 Html5.patchCanPlayType = function () {
 
   // Android 4.0 and above can play HLS to some extent but it reports being unable to do so
-  // Firefox and Chrome report correctly
-  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX && !IS_CHROME) {
+  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX) {
     Html5.TEST_VID.constructor.prototype.canPlayType = function (type) {
       if (type && mpegurlRE.test(type)) {
         return 'maybe';
@@ -67702,6 +66045,22 @@ var TECH_EVENTS_RETRIGGER = [
 'timeupdate',
 
 /**
+ * Fires when the playing speed of the audio/video is changed
+ *
+ * @event Player#ratechange
+ * @type {event}
+ */
+/**
+ * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
+ *
+ * @private
+ * @method Player#handleTechRatechange_
+ * @fires Player#ratechange
+ * @listens Tech#ratechange
+ */
+'ratechange',
+
+/**
  * Fires when the video's intrinsic dimensions change
  *
  * @event Player#resize
@@ -67749,16 +66108,6 @@ var TECH_EVENTS_RETRIGGER = [
  */
 'texttrackchange'];
 
-// events to queue when playback rate is zero
-// this is a hash for the sole purpose of mapping non-camel-cased event names
-// to camel-cased function names
-var TECH_EVENTS_QUEUE = {
-  canplay: 'CanPlay',
-  canplaythrough: 'CanPlayThrough',
-  playing: 'Playing',
-  seeked: 'Seeked'
-};
-
 /**
  * An instance of the `Player` class is created when any of the Video.js setup methods
  * are used to initialize a video.
@@ -67789,7 +66138,7 @@ var Player = function (_Component) {
     classCallCheck(this, Player);
 
     // Make sure tag ID exists
-    tag.id = tag.id || options.id || 'vjs_video_' + newGUID();
+    tag.id = tag.id || 'vjs_video_' + newGUID();
 
     // Set Options
     // The options argument overrides options set in the video tag
@@ -67835,16 +66184,9 @@ var Player = function (_Component) {
 
     // Run base component initializing with new options
 
-    // Tracks when a tech changes the poster
+    // Turn off API access because we're loading a new tech that might load asynchronously
     var _this = possibleConstructorReturn(this, _Component.call(this, null, options, ready));
 
-    _this.isPosterFromTech_ = false;
-
-    // Holds callback info that gets queued when playback rate is zero
-    // and a seek is happening
-    _this.queuedCallbacks_ = [];
-
-    // Turn off API access because we're loading a new tech that might load asynchronously
     _this.isReady_ = false;
 
     // Init state hasStarted_
@@ -67908,9 +66250,6 @@ var Player = function (_Component) {
     _this.scrubbing_ = false;
 
     _this.el_ = _this.createEl();
-
-    // Set default value for lastPlaybackRate
-    _this.cache_.lastPlaybackRate = _this.defaultPlaybackRate();
 
     // Make this an evented object and use `el_` as its event bus.
     evented(_this, { eventBusKey: 'el_' });
@@ -67990,14 +66329,16 @@ var Player = function (_Component) {
     // like the control bar show themselves if needed
     _this.userActive(true);
     _this.reportUserActivity();
+    _this.listenForUserActivity_();
 
-    _this.one('play', _this.listenForUserActivity_);
     _this.on('fullscreenchange', _this.handleFullscreenChange_);
     _this.on('stageclick', _this.handleStageClick_);
 
     _this.changingSrc_ = false;
     _this.playWaitingForReady_ = false;
     _this.playOnLoadstart_ = null;
+
+    _this.forceAutoplayInChrome_();
     return _this;
   }
 
@@ -68040,8 +66381,6 @@ var Player = function (_Component) {
 
     if (this.tech_) {
       this.tech_.dispose();
-      this.isPosterFromTech_ = false;
-      this.poster_ = '';
     }
 
     if (this.playerElIngest_) {
@@ -68051,8 +66390,6 @@ var Player = function (_Component) {
     if (this.tag) {
       this.tag = null;
     }
-
-    clearCacheForPlayer(this);
 
     // the actual .el_ is removed here
     _Component.prototype.dispose.call(this);
@@ -68096,15 +66433,6 @@ var Player = function (_Component) {
       el.appendChild(tag);
 
       playerElIngest = this.playerElIngest_ = el;
-
-      // copy over properties from the video-js element
-      // ie8 doesn't support Object.keys nor hasOwnProperty
-      // on dom elements so we have to specify properties individually
-      ['autoplay', 'controls', 'crossOrigin', 'defaultMuted', 'defaultPlaybackRate', 'loop', 'muted', 'playbackRate', 'src', 'volume'].forEach(function (prop) {
-        if (typeof el[prop] !== 'undefined') {
-          tag[prop] = el[prop];
-        }
-      });
     }
 
     // set tabindex to -1 so we could focus on the player element
@@ -68204,13 +66532,16 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        The value to set the `Player`'s width to.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The current width of the `Player` when getting.
    */
 
 
-  Player.prototype.width = function width(value) {
-    return this.dimension('width', value);
+  Player.prototype.width = function width(value, skipListeners) {
+    return this.dimension('width', value, skipListeners);
   };
 
   /**
@@ -68220,17 +66551,22 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        The value to set the `Player`'s heigth to.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The current height of the `Player` when getting.
    */
 
 
-  Player.prototype.height = function height(value) {
-    return this.dimension('height', value);
+  Player.prototype.height = function height(value, skipListeners) {
+    return this.dimension('height', value, skipListeners);
   };
 
   /**
    * A getter/setter for the `Player`'s width & height.
+   *
+   * @fires Player#playerresize
    *
    * @param {string} dimension
    *        This string can be:
@@ -68240,12 +66576,15 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        Value for dimension specified in the first argument.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The dimension arguments value when getting (width/height).
    */
 
 
-  Player.prototype.dimension = function dimension(_dimension, value) {
+  Player.prototype.dimension = function dimension(_dimension, value, skipListeners) {
     var privDimension = _dimension + '_';
 
     if (value === undefined) {
@@ -68268,6 +66607,17 @@ var Player = function (_Component) {
 
     this[privDimension] = parsedVal;
     this.updateStyleEl_();
+
+    // skipListeners allows us to avoid triggering the resize event when setting both width and height
+    if (this.isReady_ && !skipListeners) {
+      /**
+       * Triggered when the player is resized.
+       *
+       * @event Player#playerresize
+       * @type {EventTarget~Event}
+       */
+      this.trigger('playerresize');
+    }
   };
 
   /**
@@ -68470,9 +66820,7 @@ var Player = function (_Component) {
       'poster': this.poster(),
       'language': this.language(),
       'playerElIngest': this.playerElIngest_ || false,
-      'vtt.js': this.options_['vtt.js'],
-      'canOverridePoster': !!this.options_.techCanOverridePoster,
-      'enableSourceset': this.options_.enableSourceset
+      'vtt.js': this.options_['vtt.js']
     };
 
     ALL.names.forEach(function (name$$1) {
@@ -68511,25 +66859,14 @@ var Player = function (_Component) {
     TECH_EVENTS_RETRIGGER.forEach(function (event) {
       _this2.on(_this2.tech_, event, _this2['handleTech' + toTitleCase(event) + '_']);
     });
-
-    Object.keys(TECH_EVENTS_QUEUE).forEach(function (event) {
-      _this2.on(_this2.tech_, event, function (eventObj) {
-        if (_this2.tech_.playbackRate() === 0 && _this2.tech_.seeking()) {
-          _this2.queuedCallbacks_.push({
-            callback: _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'].bind(_this2),
-            event: eventObj
-          });
-          return;
-        }
-        _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'](eventObj);
-      });
-    });
-
     this.on(this.tech_, 'loadstart', this.handleTechLoadStart_);
-    this.on(this.tech_, 'sourceset', this.handleTechSourceset_);
     this.on(this.tech_, 'waiting', this.handleTechWaiting_);
+    this.on(this.tech_, 'canplay', this.handleTechCanPlay_);
+    this.on(this.tech_, 'canplaythrough', this.handleTechCanPlayThrough_);
+    this.on(this.tech_, 'playing', this.handleTechPlaying_);
     this.on(this.tech_, 'ended', this.handleTechEnded_);
     this.on(this.tech_, 'seeking', this.handleTechSeeking_);
+    this.on(this.tech_, 'seeked', this.handleTechSeeked_);
     this.on(this.tech_, 'play', this.handleTechPlay_);
     this.on(this.tech_, 'firstplay', this.handleTechFirstPlay_);
     this.on(this.tech_, 'pause', this.handleTechPause_);
@@ -68539,7 +66876,6 @@ var Player = function (_Component) {
     this.on(this.tech_, 'loadedmetadata', this.updateStyleEl_);
     this.on(this.tech_, 'posterchange', this.handleTechPosterChange_);
     this.on(this.tech_, 'textdata', this.handleTechTextData_);
-    this.on(this.tech_, 'ratechange', this.handleTechRateChange_);
 
     this.usingNativeControls(this.techGet_('controls'));
 
@@ -68583,13 +66919,6 @@ var Player = function (_Component) {
     this.tech_.dispose();
 
     this.tech_ = false;
-
-    if (this.isPosterFromTech_) {
-      this.poster_ = '';
-      this.trigger('posterchange');
-    }
-
-    this.isPosterFromTech_ = false;
   };
 
   /**
@@ -68752,144 +67081,6 @@ var Player = function (_Component) {
   };
 
   /**
-   * Update the internal source caches so that we return the correct source from
-   * `src()`, `currentSource()`, and `currentSources()`.
-   *
-   * > Note: `currentSources` will not be updated if the source that is passed in exists
-   *         in the current `currentSources` cache.
-   *
-   *
-   * @param {Tech~SourceObject} srcObj
-   *        A string or object source to update our caches to.
-   */
-
-
-  Player.prototype.updateSourceCaches_ = function updateSourceCaches_() {
-    var srcObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-
-    var src = srcObj;
-    var type = '';
-
-    if (typeof src !== 'string') {
-      src = srcObj.src;
-      type = srcObj.type;
-    }
-    // make sure all the caches are set to default values
-    // to prevent null checking
-    this.cache_.source = this.cache_.source || {};
-    this.cache_.sources = this.cache_.sources || [];
-
-    // try to get the type of the src that was passed in
-    if (src && !type) {
-      type = findMimetype(this, src);
-    }
-
-    // update `currentSource` cache always
-    this.cache_.source = { src: src, type: type };
-
-    var matchingSources = this.cache_.sources.filter(function (s) {
-      return s.src && s.src === src;
-    });
-    var sourceElSources = [];
-    var sourceEls = this.$$('source');
-    var matchingSourceEls = [];
-
-    for (var i = 0; i < sourceEls.length; i++) {
-      var sourceObj = getAttributes(sourceEls[i]);
-
-      sourceElSources.push(sourceObj);
-
-      if (sourceObj.src && sourceObj.src === src) {
-        matchingSourceEls.push(sourceObj.src);
-      }
-    }
-
-    // if we have matching source els but not matching sources
-    // the current source cache is not up to date
-    if (matchingSourceEls.length && !matchingSources.length) {
-      this.cache_.sources = sourceElSources;
-      // if we don't have matching source or source els set the
-      // sources cache to the `currentSource` cache
-    } else if (!matchingSources.length) {
-      this.cache_.sources = [this.cache_.source];
-    }
-
-    // update the tech `src` cache
-    this.cache_.src = src;
-  };
-
-  /**
-   * *EXPERIMENTAL* Fired when the source is set or changed on the {@link Tech}
-   * causing the media element to reload.
-   *
-   * It will fire for the initial source and each subsequent source.
-   * This event is a custom event from Video.js and is triggered by the {@link Tech}.
-   *
-   * The event object for this event contains a `src` property that will contain the source
-   * that was available when the event was triggered. This is generally only necessary if Video.js
-   * is switching techs while the source was being changed.
-   *
-   * It is also fired when `load` is called on the player (or media element)
-   * because the {@link https://html.spec.whatwg.org/multipage/media.html#dom-media-load|specification for `load`}
-   * says that the resource selection algorithm needs to be aborted and restarted.
-   * In this case, it is very likely that the `src` property will be set to the
-   * empty string `""` to indicate we do not know what the source will be but
-   * that it is changing.
-   *
-   * *This event is currently still experimental and may change in minor releases.*
-   * __To use this, pass `enableSourceset` option to the player.__
-   *
-   * @event Player#sourceset
-   * @type {EventTarget~Event}
-   * @prop {string} src
-   *                The source url available when the `sourceset` was triggered.
-   *                It will be an empty string if we cannot know what the source is
-   *                but know that the source will change.
-   */
-  /**
-   * Retrigger the `sourceset` event that was triggered by the {@link Tech}.
-   *
-   * @fires Player#sourceset
-   * @listens Tech#sourceset
-   * @private
-   */
-
-
-  Player.prototype.handleTechSourceset_ = function handleTechSourceset_(event) {
-    var _this4 = this;
-
-    // only update the source cache when the source
-    // was not updated using the player api
-    if (!this.changingSrc_) {
-      // update the source to the intial source right away
-      // in some cases this will be empty string
-      this.updateSourceCaches_(event.src);
-
-      // if the `sourceset` `src` was an empty string
-      // wait for a `loadstart` to update the cache to `currentSrc`.
-      // If a sourceset happens before a `loadstart`, we reset the state
-      // as this function will be called again.
-      if (!event.src) {
-        var updateCache = function updateCache(e) {
-          if (e.type !== 'sourceset') {
-            _this4.updateSourceCaches_(_this4.techGet_('currentSrc'));
-          }
-
-          _this4.tech_.off(['sourceset', 'loadstart'], updateCache);
-        };
-
-        this.tech_.one(['sourceset', 'loadstart'], updateCache);
-      }
-    }
-
-    this.trigger({
-      src: event.src,
-      type: 'sourceset'
-    });
-  };
-
-  /**
    * Add/remove the vjs-has-started class
    *
    * @fires Player#firstplay
@@ -68951,36 +67142,6 @@ var Player = function (_Component) {
   };
 
   /**
-   * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
-   *
-   * If there were any events queued while the playback rate was zero, fire
-   * those events now.
-   *
-   * @private
-   * @method Player#handleTechRateChange_
-   * @fires Player#ratechange
-   * @listens Tech#ratechange
-   */
-
-
-  Player.prototype.handleTechRateChange_ = function handleTechRateChange_() {
-    if (this.tech_.playbackRate() > 0 && this.cache_.lastPlaybackRate === 0) {
-      this.queuedCallbacks_.forEach(function (queued) {
-        return queued.callback(queued.event);
-      });
-      this.queuedCallbacks_ = [];
-    }
-    this.cache_.lastPlaybackRate = this.tech_.playbackRate();
-    /**
-     * Fires when the playing speed of the audio/video is changed
-     *
-     * @event Player#ratechange
-     * @type {event}
-     */
-    this.trigger('ratechange');
-  };
-
-  /**
    * Retrigger the `waiting` event that was triggered by the {@link Tech}.
    *
    * @fires Player#waiting
@@ -68990,7 +67151,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechWaiting_ = function handleTechWaiting_() {
-    var _this5 = this;
+    var _this4 = this;
 
     this.addClass('vjs-waiting');
     /**
@@ -69001,7 +67162,7 @@ var Player = function (_Component) {
      */
     this.trigger('waiting');
     this.one('timeupdate', function () {
-      return _this5.removeClass('vjs-waiting');
+      return _this4.removeClass('vjs-waiting');
     });
   };
 
@@ -69411,8 +67572,6 @@ var Player = function (_Component) {
     this.ready(function () {
       if (method in allowedSetters) {
         return set$1(this.middleware_, this.tech_, method, arg);
-      } else if (method in allowedMediators) {
-        return mediate(this.middleware_, this.tech_, method, arg);
       }
 
       try {
@@ -69446,8 +67605,6 @@ var Player = function (_Component) {
 
     if (method in allowedGetters) {
       return get$1(this.middleware_, this.tech_, method);
-    } else if (method in allowedMediators) {
-      return mediate(this.middleware_, this.tech_, method);
     }
 
     // Flash likes to die and reload when you hide or reposition it.
@@ -69487,7 +67644,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.play = function play() {
-    var _this6 = this;
+    var _this5 = this;
 
     // If this is called while we have a play queued up on a loadstart, remove
     // that listener to avoid getting in a potentially bad state.
@@ -69507,8 +67664,8 @@ var Player = function (_Component) {
 
       this.playWaitingForReady_ = true;
       this.ready(function () {
-        _this6.playWaitingForReady_ = false;
-        silencePromise(_this6.play());
+        _this5.playWaitingForReady_ = false;
+        silencePromise(_this5.play());
       });
 
       // If the player/tech is ready and we have a source, we can attempt playback.
@@ -69524,8 +67681,8 @@ var Player = function (_Component) {
     } else {
 
       this.playOnLoadstart_ = function () {
-        _this6.playOnLoadstart_ = null;
-        silencePromise(_this6.play());
+        _this5.playOnLoadstart_ = null;
+        silencePromise(_this5.play());
       };
 
       this.one('loadstart', this.playOnLoadstart_);
@@ -70135,7 +68292,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.selectSource = function selectSource(sources) {
-    var _this7 = this;
+    var _this6 = this;
 
     // Get only the techs specified in `techOrder` that exist and are supported by the
     // current platform
@@ -70184,7 +68341,7 @@ var Player = function (_Component) {
       var techName = _ref2[0],
           tech = _ref2[1];
 
-      if (tech.canPlaySource(source, _this7.options_[techName.toLowerCase()])) {
+      if (tech.canPlaySource(source, _this6.options_[techName.toLowerCase()])) {
         return { source: source, tech: techName };
       }
     };
@@ -70220,7 +68377,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.src = function src(source) {
-    var _this8 = this;
+    var _this7 = this;
 
     // getter usage
     if (typeof source === 'undefined') {
@@ -70241,42 +68398,40 @@ var Player = function (_Component) {
     }
 
     // intial sources
+    this.cache_.sources = sources;
     this.changingSrc_ = true;
 
-    this.cache_.sources = sources;
-    this.updateSourceCaches_(sources[0]);
+    // intial source
+    this.cache_.source = sources[0];
 
     // middlewareSource is the source after it has been changed by middleware
     setSource(this, sources[0], function (middlewareSource, mws) {
-      _this8.middleware_ = mws;
+      _this7.middleware_ = mws;
 
-      // since sourceSet is async we have to update the cache again after we select a source since
-      // the source that is selected could be out of order from the cache update above this callback.
-      _this8.cache_.sources = sources;
-      _this8.updateSourceCaches_(middlewareSource);
-
-      var err = _this8.src_(middlewareSource);
+      var err = _this7.src_(middlewareSource);
 
       if (err) {
         if (sources.length > 1) {
-          return _this8.src(sources.slice(1));
+          return _this7.src(sources.slice(1));
         }
 
-        _this8.changingSrc_ = false;
-
         // We need to wrap this in a timeout to give folks a chance to add error event handlers
-        _this8.setTimeout(function () {
+        _this7.setTimeout(function () {
           this.error({ code: 4, message: this.localize(this.options_.notSupportedMessage) });
         }, 0);
 
         // we could not find an appropriate tech, but let's still notify the delegate that this is it
         // this needs a better comment about why this is needed
-        _this8.triggerReady();
+        _this7.triggerReady();
 
         return;
       }
 
-      setTech(mws, _this8.tech_);
+      _this7.changingSrc_ = false;
+      // video element listed source
+      _this7.cache_.src = middlewareSource.src;
+
+      setTech(mws, _this7.tech_);
     });
   };
 
@@ -70296,8 +68451,6 @@ var Player = function (_Component) {
 
 
   Player.prototype.src_ = function src_(source) {
-    var _this9 = this;
-
     var sourceTech = this.selectSource([source]);
 
     if (!sourceTech) {
@@ -70306,16 +68459,13 @@ var Player = function (_Component) {
 
     if (!titleCaseEquals(sourceTech.tech, this.techName_)) {
       this.changingSrc_ = true;
+
       // load this technology with the chosen source
       this.loadTech_(sourceTech.tech, sourceTech.source);
-      this.tech_.ready(function () {
-        _this9.changingSrc_ = false;
-      });
       return false;
     }
 
     // wait until the tech is ready to set the source
-    // and set it synchronously if possible (#2326)
     this.ready(function () {
 
       // The setSource tech method was added with source handlers
@@ -70328,7 +68478,11 @@ var Player = function (_Component) {
         this.techCall_('src', source.src);
       }
 
-      this.changingSrc_ = false;
+      if (this.options_.preload === 'auto') {
+        this.load();
+      }
+
+      // Set the source synchronously if possible (#2326)
     }, true);
 
     return false;
@@ -70450,9 +68604,29 @@ var Player = function (_Component) {
     if (value !== undefined) {
       this.techCall_('setAutoplay', value);
       this.options_.autoplay = value;
+      this.ready(this.forceAutoplayInChrome_);
       return;
     }
     return this.techGet_('autoplay', value);
+  };
+
+  /**
+   * chrome started pausing the video when moving in the DOM
+   * causing autoplay to not continue due to how Video.js functions.
+   * See #4720 for more info.
+   *
+   * @private
+   */
+
+
+  Player.prototype.forceAutoplayInChrome_ = function forceAutoplayInChrome_() {
+    if (this.paused() && (
+    // read from the video element or options
+    this.autoplay() || this.options_.autoplay) &&
+    // only target desktop chrome
+    IS_CHROME && !IS_ANDROID) {
+      this.play();
+    }
   };
 
   /**
@@ -70527,17 +68701,11 @@ var Player = function (_Component) {
       src = '';
     }
 
-    if (src === this.poster_) {
-      return;
-    }
-
     // update the internal poster variable
     this.poster_ = src;
 
     // update the tech's poster
     this.techCall_('setPoster', src);
-
-    this.isPosterFromTech_ = false;
 
     // alert components that the poster has been set
     /**
@@ -70564,16 +68732,11 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechPosterChange_ = function handleTechPosterChange_() {
-    if ((!this.poster_ || this.options_.techCanOverridePoster) && this.tech_ && this.tech_.poster) {
-      var newPoster = this.tech_.poster() || '';
+    if (!this.poster_ && this.tech_ && this.tech_.poster) {
+      this.poster_ = this.tech_.poster() || '';
 
-      if (newPoster !== this.poster_) {
-        this.poster_ = newPoster;
-        this.isPosterFromTech_ = true;
-
-        // Let components know the poster has changed
-        this.trigger('posterchange');
-      }
+      // Let components know the poster has changed
+      this.trigger('posterchange');
     }
   };
 
@@ -70923,14 +69086,12 @@ var Player = function (_Component) {
 
   Player.prototype.playbackRate = function playbackRate(rate) {
     if (rate !== undefined) {
-      // NOTE: this.cache_.lastPlaybackRate is set from the tech handler
-      // that is registered above
       this.techCall_('setPlaybackRate', rate);
       return;
     }
 
     if (this.tech_ && this.tech_.featuresPlaybackRate) {
-      return this.cache_.lastPlaybackRate || this.techGet_('playbackRate');
+      return this.techGet_('playbackRate');
     }
     return 1.0;
   };
@@ -71187,7 +69348,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.createModal = function createModal(content, options) {
-    var _this10 = this;
+    var _this8 = this;
 
     options = options || {};
     options.content = content || '';
@@ -71196,7 +69357,7 @@ var Player = function (_Component) {
 
     this.addChild(modal);
     modal.on('dispose', function () {
-      _this10.removeChild(modal);
+      _this8.removeChild(modal);
     });
 
     modal.open();
@@ -71393,10 +69554,6 @@ Player.prototype.options_ = {
   // Default message to show when a video cannot be played.
   notSupportedMessage: 'No compatible source was found for this media.'
 };
-
-if (!IS_IE8) {
-  Player.prototype.options_.children.push('resizeManager');
-}
 
 [
 /**
@@ -72189,19 +70346,6 @@ if (typeof HTMLVideoElement === 'undefined' && isReal()) {
 }
 
 /**
- * Normalize an `id` value by trimming off a leading `#`
- *
- * @param   {string} id
- *          A string, maybe with a leading `#`.
- *
- * @returns {string}
- *          The string, without any leading `#`.
- */
-var normalizeId = function normalizeId(id) {
-  return id.indexOf('#') === 0 ? id.slice(1) : id;
-};
-
-/**
  * Doubles as the main function for users to create a player instance and also
  * the main library object.
  * The `videojs` function can be used to initialize or retrieve a player.
@@ -72219,32 +70363,62 @@ var normalizeId = function normalizeId(id) {
  *         A player instance
  */
 function videojs(id, options, ready) {
-  var player = videojs.getPlayer(id);
+  var tag = void 0;
 
-  if (player) {
-    if (options) {
-      log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
+  // Allow for element or ID to be passed in
+  // String ID
+  if (typeof id === 'string') {
+    var players = videojs.getPlayers();
+
+    // Adjust for jQuery ID syntax
+    if (id.indexOf('#') === 0) {
+      id = id.slice(1);
     }
-    if (ready) {
-      player.ready(ready);
+
+    // If a player instance has already been created for this ID return it.
+    if (players[id]) {
+
+      // If options or ready function are passed, warn
+      if (options) {
+        log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
+      }
+
+      if (ready) {
+        players[id].ready(ready);
+      }
+
+      return players[id];
     }
-    return player;
+
+    // Otherwise get element for ID
+    tag = $('#' + id);
+
+    // ID is a media element
+  } else {
+    tag = id;
   }
 
-  var el = typeof id === 'string' ? $('#' + normalizeId(id)) : id;
-
-  if (!isEl(el)) {
+  // Check for a useable element
+  // re: nodeName, could be a box div also
+  if (!tag || !tag.nodeName) {
     throw new TypeError('The element or ID supplied is not valid. (videojs)');
   }
 
-  if (!document_1.body.contains(el)) {
+  // Element may have a player attr referring to an already created player instance.
+  // If so return that otherwise set up a new player below
+  if (tag.player || Player.players[tag.playerId]) {
+    return tag.player || Player.players[tag.playerId];
+  }
+
+  // Check if element is included in the DOM
+  if (isEl(tag) && !document_1.body.contains(tag)) {
     log$1.warn('The element supplied is not included in the DOM');
   }
 
   options = options || {};
 
   videojs.hooks('beforesetup').forEach(function (hookFunction) {
-    var opts = hookFunction(el, mergeOptions(options));
+    var opts = hookFunction(tag, mergeOptions(options));
 
     if (!isObject(opts) || Array.isArray(opts)) {
       log$1.error('please return an object in beforesetup hooks');
@@ -72254,11 +70428,9 @@ function videojs(id, options, ready) {
     options = mergeOptions(options, opts);
   });
 
-  // We get the current "Player" component here in case an integration has
-  // replaced it with a custom player.
   var PlayerComponent = Component.getComponent('Player');
-
-  player = new PlayerComponent(el, options, ready);
+  // If not, set up a new player
+  var player = new PlayerComponent(tag, options, ready);
 
   videojs.hooks('setup').forEach(function (hookFunction) {
     return hookFunction(player);
@@ -72398,71 +70570,6 @@ videojs.getPlayers = function () {
 };
 
 /**
- * Get a single player based on an ID or DOM element.
- *
- * This is useful if you want to check if an element or ID has an associated
- * Video.js player, but not create one if it doesn't.
- *
- * @param   {string|Element} id
- *          An HTML element - `<video>`, `<audio>`, or `<video-js>` -
- *          or a string matching the `id` of such an element.
- *
- * @returns {Player|undefined}
- *          A player instance or `undefined` if there is no player instance
- *          matching the argument.
- */
-videojs.getPlayer = function (id) {
-  var players = Player.players;
-  var tag = void 0;
-
-  if (typeof id === 'string') {
-    var nId = normalizeId(id);
-    var player = players[nId];
-
-    if (player) {
-      return player;
-    }
-
-    tag = $('#' + nId);
-  } else {
-    tag = id;
-  }
-
-  if (isEl(tag)) {
-    var _tag = tag,
-        _player = _tag.player,
-        playerId = _tag.playerId;
-
-    // Element may have a `player` property referring to an already created
-    // player instance. If so, return that.
-
-    if (_player || players[playerId]) {
-      return _player || players[playerId];
-    }
-  }
-};
-
-/**
- * Returns an array of all current players.
- *
- * @return {Array}
- *         An array of all players. The array will be in the order that
- *         `Object.keys` provides, which could potentially vary between
- *         JavaScript engines.
- *
- */
-videojs.getAllPlayers = function () {
-  return (
-
-    // Disposed players leave a key with a `null` value, so we need to make sure
-    // we filter those out.
-    Object.keys(Player.players).map(function (k) {
-      return Player.players[k];
-    }).filter(Boolean)
-  );
-};
-
-/**
  * Expose players object.
  *
  * @memberOf videojs
@@ -72517,38 +70624,7 @@ videojs.getTech = Tech.getTech;
  */
 videojs.registerTech = Tech.registerTech;
 
-/**
- * Register a middleware to a source type.
- *
- * @param {String} type A string representing a MIME type.
- * @param {function(player):object} middleware A middleware factory that takes a player.
- */
 videojs.use = use;
-
-/**
- * An object that can be returned by a middleware to signify
- * that the middleware is being terminated.
- *
- * @type {object}
- * @memberOf {videojs}
- * @property {object} middleware.TERMINATOR
- */
-// Object.defineProperty is not available in IE8
-if (!IS_IE8 && Object.defineProperty) {
-  Object.defineProperty(videojs, 'middleware', {
-    value: {},
-    writeable: false,
-    enumerable: true
-  });
-
-  Object.defineProperty(videojs.middleware, 'TERMINATOR', {
-    value: TERMINATOR,
-    writeable: false,
-    enumerable: true
-  });
-} else {
-  videojs.middleware = { TERMINATOR: TERMINATOR };
-}
 
 /**
  * A suite of browser and device tests from {@link browser}.
@@ -72718,32 +70794,9 @@ videojs.createTimeRange = videojs.createTimeRanges = createTimeRanges;
 videojs.formatTime = formatTime;
 
 /**
- * Replaces format-time with a custom implementation, to be used in place of the default.
- *
- * @borrows format-time:setFormatTime as videojs.setFormatTime
- *
- * @method setFormatTime
- *
- * @param {Function} customFn
- *        A custom format-time function which will be called with the current time and guide (in seconds) as arguments.
- *        Passed fn should return a string.
- */
-videojs.setFormatTime = setFormatTime;
-
-/**
- * Resets format-time to the default implementation.
- *
- * @borrows format-time:resetFormatTime as videojs.resetFormatTime
- *
- * @method resetFormatTime
- */
-videojs.resetFormatTime = resetFormatTime;
-
-/**
  * Resolve and parse the elements of a URL
  *
  * @borrows url:parseUrl as videojs.parseUrl
- *
  */
 videojs.parseUrl = parseUrl;
 
@@ -72989,7 +71042,7 @@ return videojs;
 
 /***/ }),
 
-/***/ 292:
+/***/ 285:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -73000,15 +71053,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function(root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(355)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(348)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(117), __webpack_require__(272)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(110), __webpack_require__(265)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(117), __webpack_require__(272));
+        module.exports = factory(__webpack_require__(110), __webpack_require__(265));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -73515,7 +71568,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 293:
+/***/ 286:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73645,7 +71698,7 @@ exports['default'] = BigPlayButton;
 
 /***/ }),
 
-/***/ 294:
+/***/ 287:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73750,7 +71803,7 @@ exports['default'] = CloseButton;
 
 /***/ }),
 
-/***/ 295:
+/***/ 288:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73758,7 +71811,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(260);
+var _trackButton = __webpack_require__(253);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -73766,7 +71819,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(296);
+var _audioTrackMenuItem = __webpack_require__(289);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -73877,7 +71930,7 @@ exports['default'] = AudioTrackButton;
 
 /***/ }),
 
-/***/ 296:
+/***/ 289:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73885,7 +71938,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -74004,7 +72057,7 @@ exports['default'] = AudioTrackMenuItem;
 
 /***/ }),
 
-/***/ 297:
+/***/ 290:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74016,41 +72069,41 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(300);
+__webpack_require__(293);
 
-__webpack_require__(318);
+__webpack_require__(311);
 
-__webpack_require__(319);
+__webpack_require__(312);
 
-__webpack_require__(321);
+__webpack_require__(314);
 
-__webpack_require__(320);
+__webpack_require__(313);
+
+__webpack_require__(292);
 
 __webpack_require__(299);
 
-__webpack_require__(306);
-
-__webpack_require__(298);
-
-__webpack_require__(322);
-
-__webpack_require__(324);
-
-__webpack_require__(259);
-
-__webpack_require__(313);
+__webpack_require__(291);
 
 __webpack_require__(315);
 
 __webpack_require__(317);
 
-__webpack_require__(312);
+__webpack_require__(252);
 
-__webpack_require__(295);
+__webpack_require__(306);
 
-__webpack_require__(301);
+__webpack_require__(308);
 
-__webpack_require__(309);
+__webpack_require__(310);
+
+__webpack_require__(305);
+
+__webpack_require__(288);
+
+__webpack_require__(294);
+
+__webpack_require__(302);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -74117,7 +72170,7 @@ exports['default'] = ControlBar;
 
 /***/ }),
 
-/***/ 298:
+/***/ 291:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74241,7 +72294,7 @@ exports['default'] = FullscreenToggle;
 
 /***/ }),
 
-/***/ 299:
+/***/ 292:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74351,7 +72404,7 @@ exports['default'] = LiveDisplay;
 
 /***/ }),
 
-/***/ 300:
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74491,7 +72544,7 @@ exports['default'] = PlayToggle;
 
 /***/ }),
 
-/***/ 301:
+/***/ 294:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74499,15 +72552,15 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(263);
+var _menuButton = __webpack_require__(256);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(264);
+var _menu = __webpack_require__(257);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(302);
+var _playbackRateMenuItem = __webpack_require__(295);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
@@ -74734,7 +72787,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 /***/ }),
 
-/***/ 302:
+/***/ 295:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74742,7 +72795,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -74849,7 +72902,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 /***/ }),
 
-/***/ 303:
+/***/ 296:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74979,7 +73032,7 @@ exports['default'] = LoadProgressBar;
 
 /***/ }),
 
-/***/ 304:
+/***/ 297:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74999,11 +73052,11 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(121);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -75181,7 +73234,7 @@ exports['default'] = MouseTimeDisplay;
 
 /***/ }),
 
-/***/ 305:
+/***/ 298:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75197,7 +73250,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -75290,7 +73343,7 @@ exports['default'] = PlayProgressBar;
 
 /***/ }),
 
-/***/ 306:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75302,9 +73355,9 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(307);
+__webpack_require__(300);
 
-__webpack_require__(304);
+__webpack_require__(297);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -75365,7 +73418,7 @@ exports['default'] = ProgressControl;
 
 /***/ }),
 
-/***/ 307:
+/***/ 300:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75373,7 +73426,7 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(267);
+var _slider = __webpack_require__(260);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -75385,19 +73438,19 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(121);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(303);
+__webpack_require__(296);
 
-__webpack_require__(305);
+__webpack_require__(298);
 
-__webpack_require__(308);
+__webpack_require__(301);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -75633,7 +73686,7 @@ exports['default'] = SeekBar;
 
 /***/ }),
 
-/***/ 308:
+/***/ 301:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75649,7 +73702,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -75740,7 +73793,7 @@ exports['default'] = TooltipProgressBar;
 
 /***/ }),
 
-/***/ 309:
+/***/ 302:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75748,7 +73801,7 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(310);
+var _spacer = __webpack_require__(303);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
@@ -75819,7 +73872,7 @@ exports['default'] = CustomControlSpacer;
 
 /***/ }),
 
-/***/ 310:
+/***/ 303:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75891,7 +73944,7 @@ exports['default'] = Spacer;
 
 /***/ }),
 
-/***/ 311:
+/***/ 304:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75899,7 +73952,7 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(123);
+var _textTrackMenuItem = __webpack_require__(116);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -75984,7 +74037,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 /***/ }),
 
-/***/ 312:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75992,7 +74045,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(103);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -76000,7 +74053,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(311);
+var _captionSettingsMenuItem = __webpack_require__(304);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -76103,7 +74156,7 @@ exports['default'] = CaptionsButton;
 
 /***/ }),
 
-/***/ 313:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76111,7 +74164,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(103);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -76119,7 +74172,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(314);
+var _chaptersTrackMenuItem = __webpack_require__(307);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
@@ -76351,7 +74404,7 @@ exports['default'] = ChaptersButton;
 
 /***/ }),
 
-/***/ 314:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76359,7 +74412,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(105);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -76467,7 +74520,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 /***/ }),
 
-/***/ 315:
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76475,7 +74528,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(103);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -76611,7 +74664,7 @@ exports['default'] = DescriptionsButton;
 
 /***/ }),
 
-/***/ 316:
+/***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76619,7 +74672,7 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(123);
+var _textTrackMenuItem = __webpack_require__(116);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -76710,7 +74763,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 /***/ }),
 
-/***/ 317:
+/***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76718,7 +74771,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(103);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -76805,7 +74858,7 @@ exports['default'] = SubtitlesButton;
 
 /***/ }),
 
-/***/ 318:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76821,7 +74874,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -76921,7 +74974,7 @@ exports['default'] = CurrentTimeDisplay;
 
 /***/ }),
 
-/***/ 319:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76937,7 +74990,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -77047,7 +75100,7 @@ exports['default'] = DurationDisplay;
 
 /***/ }),
 
-/***/ 320:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77063,7 +75116,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(60);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -77169,7 +75222,7 @@ exports['default'] = RemainingTimeDisplay;
 
 /***/ }),
 
-/***/ 321:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77229,7 +75282,7 @@ exports['default'] = TimeDivider;
 
 /***/ }),
 
-/***/ 322:
+/***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77241,7 +75294,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(261);
+__webpack_require__(254);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -77328,7 +75381,7 @@ exports['default'] = VolumeControl;
 
 /***/ }),
 
-/***/ 323:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77387,7 +75440,7 @@ exports['default'] = VolumeLevel;
 
 /***/ }),
 
-/***/ 324:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77403,19 +75456,19 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(331);
+var _popup = __webpack_require__(324);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(330);
+var _popupButton = __webpack_require__(323);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(259);
+var _muteToggle = __webpack_require__(252);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(261);
+var _volumeBar = __webpack_require__(254);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -77638,7 +75691,7 @@ exports['default'] = VolumeMenuButton;
 
 /***/ }),
 
-/***/ 325:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77650,11 +75703,11 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(265);
+var _modalDialog = __webpack_require__(258);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -77747,7 +75800,7 @@ exports['default'] = ErrorDisplay;
 
 /***/ }),
 
-/***/ 326:
+/***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77757,7 +75810,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -77855,7 +75908,7 @@ exports['default'] = extendFn;
 
 /***/ }),
 
-/***/ 327:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77918,7 +75971,7 @@ exports['default'] = FullscreenApi;
 
 /***/ }),
 
-/***/ 328:
+/***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77977,7 +76030,7 @@ exports['default'] = LoadingSpinner;
 
 /***/ }),
 
-/***/ 329:
+/***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77985,7 +76038,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(266);
+var _player = __webpack_require__(259);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -78011,7 +76064,7 @@ exports['default'] = plugin;
 
 /***/ }),
 
-/***/ 330:
+/***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78141,7 +76194,7 @@ exports['default'] = PopupButton;
 
 /***/ }),
 
-/***/ 331:
+/***/ 324:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78161,7 +76214,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -78247,7 +76300,7 @@ exports['default'] = Popup;
 
 /***/ }),
 
-/***/ 332:
+/***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78436,7 +76489,7 @@ exports['default'] = PosterImage;
 
 /***/ }),
 
-/***/ 333:
+/***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78449,7 +76502,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -78588,7 +76641,7 @@ exports.hasLoaded = hasLoaded;
 
 /***/ }),
 
-/***/ 334:
+/***/ 327:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78798,7 +76851,7 @@ exports['default'] = FlashRtmpDecorator;
 
 /***/ }),
 
-/***/ 335:
+/***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78814,13 +76867,13 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
 var _timeRanges = __webpack_require__(81);
 
-var _flashRtmp = __webpack_require__(334);
+var _flashRtmp = __webpack_require__(327);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
@@ -79986,7 +78039,7 @@ exports['default'] = Flash;
 
 /***/ }),
 
-/***/ 336:
+/***/ 329:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -80008,7 +78061,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(106);
 
 var Url = _interopRequireWildcard(_url);
 
@@ -80016,11 +78069,11 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(109);
+var _tsml = __webpack_require__(102);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -80038,7 +78091,7 @@ var _window2 = _interopRequireDefault(_window);
 
 var _obj = __webpack_require__(46);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -81935,7 +79988,7 @@ exports['default'] = Html5;
 
 /***/ }),
 
-/***/ 337:
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82031,7 +80084,7 @@ exports['default'] = MediaLoader;
 
 /***/ }),
 
-/***/ 338:
+/***/ 331:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82039,13 +80092,13 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(118);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(120);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -82168,7 +80221,7 @@ exports['default'] = AudioTrack;
 
 /***/ }),
 
-/***/ 339:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82324,7 +80377,7 @@ exports['default'] = HtmlTrackElementList;
 
 /***/ }),
 
-/***/ 340:
+/***/ 333:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82340,11 +80393,11 @@ var _document = __webpack_require__(40);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(104);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(117);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -82501,7 +80554,7 @@ exports['default'] = HTMLTrackElement;
 
 /***/ }),
 
-/***/ 341:
+/***/ 334:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82661,7 +80714,7 @@ exports['default'] = TextTrackCueList;
 
 /***/ }),
 
-/***/ 342:
+/***/ 335:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83019,7 +81072,7 @@ exports['default'] = TextTrackDisplay;
 
 /***/ }),
 
-/***/ 343:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83129,7 +81182,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 /***/ }),
 
-/***/ 344:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83137,7 +81190,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(119);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
@@ -83241,7 +81294,7 @@ exports['default'] = TextTrackList;
 
 /***/ }),
 
-/***/ 345:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83267,7 +81320,7 @@ var _obj = __webpack_require__(46);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -83850,7 +81903,7 @@ exports['default'] = TextTrackSettings;
 
 /***/ }),
 
-/***/ 346:
+/***/ 339:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83858,13 +81911,13 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(118);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(120);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -83986,7 +82039,7 @@ exports['default'] = VideoTrack;
 
 /***/ }),
 
-/***/ 347:
+/***/ 340:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -84010,12 +82063,12 @@ exports['default'] = VideoTrack;
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 
-var window = __webpack_require__(351);
+var window = __webpack_require__(344);
 
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(348),
-  VTTCue: __webpack_require__(349),
-  VTTRegion: __webpack_require__(350)
+  WebVTT: __webpack_require__(341),
+  VTTCue: __webpack_require__(342),
+  VTTRegion: __webpack_require__(343)
 };
 
 window.vttjs = vttjs;
@@ -84043,7 +82096,7 @@ if (!window.VTTCue) {
 
 /***/ }),
 
-/***/ 348:
+/***/ 341:
 /***/ (function(module, exports) {
 
 /**
@@ -85379,7 +83432,7 @@ module.exports = WebVTT;
 
 /***/ }),
 
-/***/ 349:
+/***/ 342:
 /***/ (function(module, exports) {
 
 /**
@@ -85691,7 +83744,7 @@ module.exports = VTTCue;
 
 /***/ }),
 
-/***/ 350:
+/***/ 343:
 /***/ (function(module, exports) {
 
 /**
@@ -85832,7 +83885,7 @@ module.exports = VTTRegion;
 
 /***/ }),
 
-/***/ 351:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -85853,7 +83906,7 @@ module.exports = win;
 
 /***/ }),
 
-/***/ 355:
+/***/ 348:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -85863,7 +83916,7 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 358:
+/***/ 351:
 /***/ (function(module, exports) {
 
 /* (ignored) */
@@ -85894,11 +83947,11 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -85906,7 +83959,7 @@ var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -87709,7 +85762,7 @@ exports['default'] = Component;
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(358);
+var minDoc = __webpack_require__(351);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -87744,13 +85797,13 @@ if (typeof document !== 'undefined') {
 
 /***/ }),
 
-/***/ 437:
+/***/ 430:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _angular = __webpack_require__(117);
+var _angular = __webpack_require__(110);
 
 var _angular2 = _interopRequireDefault(_angular);
 
@@ -87761,16 +85814,16 @@ var _jquery2 = _interopRequireDefault(_jquery);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // VideoJS
-__webpack_require__(287);
+__webpack_require__(280);
 
 // Angular VideoJS
-__webpack_require__(292);
+__webpack_require__(285);
 
 // dropzone
 // require('dropzone/dist/dropzone.js');
 
 // Angular Media Timeline
-__webpack_require__(281);
+__webpack_require__(274);
 
 'use strict';
 
@@ -88387,7 +86440,7 @@ function isPlain(value) {
 
 /***/ }),
 
-/***/ 48:
+/***/ 49:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88535,7 +86588,7 @@ exports['default'] = log;
 
 /***/ }),
 
-/***/ 59:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88591,7 +86644,7 @@ function mergeOptions() {
 
 /***/ }),
 
-/***/ 60:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88612,7 +86665,7 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -89085,7 +87138,7 @@ function one(elem, type, fn) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89145,10 +87198,10 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 724:
+/***/ 717:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(437);
+module.exports = __webpack_require__(430);
 
 
 /***/ }),
@@ -89257,7 +87310,7 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -89441,7 +87494,7 @@ var _dom = __webpack_require__(18);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(59);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -89449,7 +87502,7 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -89766,31 +87819,31 @@ var _component = __webpack_require__(4);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(340);
+var _htmlTrackElement = __webpack_require__(333);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(339);
+var _htmlTrackElementList = __webpack_require__(332);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(58);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(117);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(344);
+var _textTrackList = __webpack_require__(337);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(269);
+var _videoTrackList = __webpack_require__(262);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(268);
+var _audioTrackList = __webpack_require__(261);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
@@ -89798,15 +87851,15 @@ var _fn = __webpack_require__(15);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
 var _timeRanges = __webpack_require__(81);
 
-var _buffer = __webpack_require__(270);
+var _buffer = __webpack_require__(263);
 
-var _mediaError = __webpack_require__(262);
+var _mediaError = __webpack_require__(255);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -90409,7 +88462,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(347);
+      var vtt = __webpack_require__(340);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -91187,7 +89240,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(49);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -91330,4 +89383,4 @@ exports.createTimeRange = createTimeRanges;
 
 /***/ })
 
-},[724]);
+},[717]);

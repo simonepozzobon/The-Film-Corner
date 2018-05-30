@@ -36,6 +36,7 @@ class CreativeStudioController extends Controller
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
     $apps = App::where('app_category_id', '=', $app_category->id)->orderBy('order')->with('category')->get();
     $teacher = Auth::guard('teacher')->user();
+    $students_count = $teacher->students()->count();
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {
@@ -68,7 +69,7 @@ class CreativeStudioController extends Controller
       $filtered = $sessions->filter(function($session, $key) use ($app) {
         return $session->app_id == $app->id;
       })->all();
-      count($filtered) < 5 ? $app->available = true : $app->available = false;
+      count($filtered) < $students_count ? $app->available = true : $app->available = false;
     }
 
     $keywords = AppKeyword::all();

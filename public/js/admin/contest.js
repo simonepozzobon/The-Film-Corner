@@ -2147,7 +2147,7 @@ module.exports = {
             try {
                 oldLocale = globalLocale._abbr;
                 var aliasedRequire = require;
-                __webpack_require__(285)("./" + name);
+                __webpack_require__(278)("./" + name);
                 getSetGlobalLocale(oldLocale);
             } catch (e) {}
         }
@@ -5807,8 +5807,8 @@ module.exports = __webpack_require__(22);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(process, global, setImmediate) {/*!
- * Vue.js v2.5.16
- * (c) 2014-2018 Evan You
+ * Vue.js v2.5.13
+ * (c) 2014-2017 Evan You
  * Released under the MIT License.
  */
 
@@ -5989,15 +5989,9 @@ var hyphenate = cached(function (str) {
 });
 
 /**
- * Simple bind polyfill for environments that do not support it... e.g.
- * PhantomJS 1.x. Technically we don't need this anymore since native bind is
- * now more performant in most browsers, but removing it would be breaking for
- * code that was able to run in PhantomJS 1.x, so this must be kept for
- * backwards compatibility.
+ * Simple bind, faster than native
  */
-
-/* istanbul ignore next */
-function polyfillBind (fn, ctx) {
+function bind (fn, ctx) {
   function boundFn (a) {
     var l = arguments.length;
     return l
@@ -6006,18 +6000,10 @@ function polyfillBind (fn, ctx) {
         : fn.call(ctx, a)
       : fn.call(ctx)
   }
-
+  // record original fn length
   boundFn._length = fn.length;
   return boundFn
 }
-
-function nativeBind (fn, ctx) {
-  return fn.bind(ctx)
-}
-
-var bind = Function.prototype.bind
-  ? nativeBind
-  : polyfillBind;
 
 /**
  * Convert an Array-like object to a real Array.
@@ -6248,7 +6234,7 @@ var config = ({
    * Exposed for legacy reasons
    */
   _lifecycleHooks: LIFECYCLE_HOOKS
-})
+});
 
 /*  */
 
@@ -6292,6 +6278,7 @@ function parsePath (path) {
 
 /*  */
 
+
 // can we use __proto__?
 var hasProto = '__proto__' in {};
 
@@ -6330,7 +6317,7 @@ var _isServer;
 var isServerRendering = function () {
   if (_isServer === undefined) {
     /* istanbul ignore if */
-    if (!inBrowser && !inWeex && typeof global !== 'undefined') {
+    if (!inBrowser && typeof global !== 'undefined') {
       // detect presence of vue-server-renderer and avoid
       // Webpack shimming the process
       _isServer = global['process'].env.VUE_ENV === 'server';
@@ -6587,7 +6574,8 @@ function createTextVNode (val) {
 // used for static nodes and slot nodes because they may be reused across
 // multiple renders, cloning them avoids errors when DOM manipulations rely
 // on their elm reference.
-function cloneVNode (vnode) {
+function cloneVNode (vnode, deep) {
+  var componentOptions = vnode.componentOptions;
   var cloned = new VNode(
     vnode.tag,
     vnode.data,
@@ -6595,7 +6583,7 @@ function cloneVNode (vnode) {
     vnode.text,
     vnode.elm,
     vnode.context,
-    vnode.componentOptions,
+    componentOptions,
     vnode.asyncFactory
   );
   cloned.ns = vnode.ns;
@@ -6606,7 +6594,24 @@ function cloneVNode (vnode) {
   cloned.fnOptions = vnode.fnOptions;
   cloned.fnScopeId = vnode.fnScopeId;
   cloned.isCloned = true;
+  if (deep) {
+    if (vnode.children) {
+      cloned.children = cloneVNodes(vnode.children, true);
+    }
+    if (componentOptions && componentOptions.children) {
+      componentOptions.children = cloneVNodes(componentOptions.children, true);
+    }
+  }
   return cloned
+}
+
+function cloneVNodes (vnodes, deep) {
+  var len = vnodes.length;
+  var res = new Array(len);
+  for (var i = 0; i < len; i++) {
+    res[i] = cloneVNode(vnodes[i], deep);
+  }
+  return res
 }
 
 /*
@@ -6615,9 +6620,7 @@ function cloneVNode (vnode) {
  */
 
 var arrayProto = Array.prototype;
-var arrayMethods = Object.create(arrayProto);
-
-var methodsToPatch = [
+var arrayMethods = Object.create(arrayProto);[
   'push',
   'pop',
   'shift',
@@ -6625,12 +6628,7 @@ var methodsToPatch = [
   'splice',
   'sort',
   'reverse'
-];
-
-/**
- * Intercept mutating methods and emit events
- */
-methodsToPatch.forEach(function (method) {
+].forEach(function (method) {
   // cache original method
   var original = arrayProto[method];
   def(arrayMethods, method, function mutator () {
@@ -6661,20 +6659,20 @@ methodsToPatch.forEach(function (method) {
 var arrayKeys = Object.getOwnPropertyNames(arrayMethods);
 
 /**
- * In some cases we may want to disable observation inside a component's
- * update computation.
+ * By default, when a reactive property is set, the new value is
+ * also converted to become reactive. However when passing down props,
+ * we don't want to force conversion because the value may be a nested value
+ * under a frozen data structure. Converting it would defeat the optimization.
  */
-var shouldObserve = true;
-
-function toggleObserving (value) {
-  shouldObserve = value;
-}
+var observerState = {
+  shouldConvert: true
+};
 
 /**
- * Observer class that is attached to each observed
- * object. Once attached, the observer converts the target
+ * Observer class that are attached to each observed
+ * object. Once attached, the observer converts target
  * object's property keys into getter/setters that
- * collect dependencies and dispatch updates.
+ * collect dependencies and dispatches updates.
  */
 var Observer = function Observer (value) {
   this.value = value;
@@ -6700,7 +6698,7 @@ var Observer = function Observer (value) {
 Observer.prototype.walk = function walk (obj) {
   var keys = Object.keys(obj);
   for (var i = 0; i < keys.length; i++) {
-    defineReactive(obj, keys[i]);
+    defineReactive(obj, keys[i], obj[keys[i]]);
   }
 };
 
@@ -6750,7 +6748,7 @@ function observe (value, asRootData) {
   if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__;
   } else if (
-    shouldObserve &&
+    observerState.shouldConvert &&
     !isServerRendering() &&
     (Array.isArray(value) || isPlainObject(value)) &&
     Object.isExtensible(value) &&
@@ -6783,9 +6781,6 @@ function defineReactive (
 
   // cater for pre-defined getter/setters
   var getter = property && property.get;
-  if (!getter && arguments.length === 2) {
-    val = obj[key];
-  }
   var setter = property && property.set;
 
   var childOb = !shallow && observe(val);
@@ -6832,11 +6827,6 @@ function defineReactive (
  * already exist.
  */
 function set (target, key, val) {
-  if (process.env.NODE_ENV !== 'production' &&
-    (isUndef(target) || isPrimitive(target))
-  ) {
-    warn(("Cannot set reactive property on undefined, null, or primitive value: " + ((target))));
-  }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.length = Math.max(target.length, key);
     target.splice(key, 1, val);
@@ -6867,11 +6857,6 @@ function set (target, key, val) {
  * Delete a property and trigger change if necessary.
  */
 function del (target, key) {
-  if (process.env.NODE_ENV !== 'production' &&
-    (isUndef(target) || isPrimitive(target))
-  ) {
-    warn(("Cannot delete reactive property on undefined, null, or primitive value: " + ((target))));
-  }
   if (Array.isArray(target) && isValidArrayIndex(key)) {
     target.splice(key, 1);
     return
@@ -7338,18 +7323,12 @@ function validateProp (
   var prop = propOptions[key];
   var absent = !hasOwn(propsData, key);
   var value = propsData[key];
-  // boolean casting
-  var booleanIndex = getTypeIndex(Boolean, prop.type);
-  if (booleanIndex > -1) {
+  // handle boolean props
+  if (isType(Boolean, prop.type)) {
     if (absent && !hasOwn(prop, 'default')) {
       value = false;
-    } else if (value === '' || value === hyphenate(key)) {
-      // only cast empty string / same name to boolean if
-      // boolean has higher priority
-      var stringIndex = getTypeIndex(String, prop.type);
-      if (stringIndex < 0 || booleanIndex < stringIndex) {
-        value = true;
-      }
+    } else if (!isType(String, prop.type) && (value === '' || value === hyphenate(key))) {
+      value = true;
     }
   }
   // check default value
@@ -7357,10 +7336,10 @@ function validateProp (
     value = getPropDefaultValue(vm, prop, key);
     // since the default value is a fresh copy,
     // make sure to observe it.
-    var prevShouldObserve = shouldObserve;
-    toggleObserving(true);
+    var prevShouldConvert = observerState.shouldConvert;
+    observerState.shouldConvert = true;
     observe(value);
-    toggleObserving(prevShouldObserve);
+    observerState.shouldConvert = prevShouldConvert;
   }
   if (
     process.env.NODE_ENV !== 'production' &&
@@ -7493,20 +7472,17 @@ function getType (fn) {
   return match ? match[1] : ''
 }
 
-function isSameType (a, b) {
-  return getType(a) === getType(b)
-}
-
-function getTypeIndex (type, expectedTypes) {
-  if (!Array.isArray(expectedTypes)) {
-    return isSameType(expectedTypes, type) ? 0 : -1
+function isType (type, fn) {
+  if (!Array.isArray(fn)) {
+    return getType(fn) === getType(type)
   }
-  for (var i = 0, len = expectedTypes.length; i < len; i++) {
-    if (isSameType(expectedTypes[i], type)) {
-      return i
+  for (var i = 0, len = fn.length; i < len; i++) {
+    if (getType(fn[i]) === getType(type)) {
+      return true
     }
   }
-  return -1
+  /* istanbul ignore next */
+  return false
 }
 
 /*  */
@@ -7569,19 +7545,19 @@ function flushCallbacks () {
   }
 }
 
-// Here we have async deferring wrappers using both microtasks and (macro) tasks.
-// In < 2.4 we used microtasks everywhere, but there are some scenarios where
-// microtasks have too high a priority and fire in between supposedly
+// Here we have async deferring wrappers using both micro and macro tasks.
+// In < 2.4 we used micro tasks everywhere, but there are some scenarios where
+// micro tasks have too high a priority and fires in between supposedly
 // sequential events (e.g. #4521, #6690) or even between bubbling of the same
-// event (#6566). However, using (macro) tasks everywhere also has subtle problems
+// event (#6566). However, using macro tasks everywhere also has subtle problems
 // when state is changed right before repaint (e.g. #6813, out-in transitions).
-// Here we use microtask by default, but expose a way to force (macro) task when
+// Here we use micro task by default, but expose a way to force macro task when
 // needed (e.g. in event handlers attached by v-on).
 var microTimerFunc;
 var macroTimerFunc;
 var useMacroTask = false;
 
-// Determine (macro) task defer implementation.
+// Determine (macro) Task defer implementation.
 // Technically setImmediate should be the ideal choice, but it's only available
 // in IE. The only polyfill that consistently queues the callback after all DOM
 // events triggered in the same loop is by using MessageChannel.
@@ -7608,7 +7584,7 @@ if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
   };
 }
 
-// Determine microtask defer implementation.
+// Determine MicroTask defer implementation.
 /* istanbul ignore next, $flow-disable-line */
 if (typeof Promise !== 'undefined' && isNative(Promise)) {
   var p = Promise.resolve();
@@ -7628,7 +7604,7 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {
 
 /**
  * Wrap a function so that if any code inside triggers state change,
- * the changes are queued using a (macro) task instead of a microtask.
+ * the changes are queued using a Task instead of a MicroTask.
  */
 function withMacroTask (fn) {
   return fn._withTask || (fn._withTask = function () {
@@ -7717,7 +7693,8 @@ if (process.env.NODE_ENV !== 'production') {
   };
 
   var hasProxy =
-    typeof Proxy !== 'undefined' && isNative(Proxy);
+    typeof Proxy !== 'undefined' &&
+    Proxy.toString().match(/native code/);
 
   if (hasProxy) {
     var isBuiltInModifier = makeMap('stop,prevent,self,ctrl,shift,alt,meta,exact');
@@ -7785,7 +7762,7 @@ function traverse (val) {
 function _traverse (val, seen) {
   var i, keys;
   var isA = Array.isArray(val);
-  if ((!isA && !isObject(val)) || Object.isFrozen(val) || val instanceof VNode) {
+  if ((!isA && !isObject(val)) || Object.isFrozen(val)) {
     return
   }
   if (val.__ob__) {
@@ -8645,30 +8622,29 @@ function updateChildComponent (
   // update $attrs and $listeners hash
   // these are also reactive so they may trigger child update if the child
   // used them during render
-  vm.$attrs = parentVnode.data.attrs || emptyObject;
+  vm.$attrs = (parentVnode.data && parentVnode.data.attrs) || emptyObject;
   vm.$listeners = listeners || emptyObject;
 
   // update props
   if (propsData && vm.$options.props) {
-    toggleObserving(false);
+    observerState.shouldConvert = false;
     var props = vm._props;
     var propKeys = vm.$options._propKeys || [];
     for (var i = 0; i < propKeys.length; i++) {
       var key = propKeys[i];
-      var propOptions = vm.$options.props; // wtf flow?
-      props[key] = validateProp(key, propOptions, propsData, vm);
+      props[key] = validateProp(key, vm.$options.props, propsData, vm);
     }
-    toggleObserving(true);
+    observerState.shouldConvert = true;
     // keep a copy of raw propsData
     vm.$options.propsData = propsData;
   }
 
   // update listeners
-  listeners = listeners || emptyObject;
-  var oldListeners = vm.$options._parentListeners;
-  vm.$options._parentListeners = listeners;
-  updateComponentListeners(vm, listeners, oldListeners);
-
+  if (listeners) {
+    var oldListeners = vm.$options._parentListeners;
+    vm.$options._parentListeners = listeners;
+    updateComponentListeners(vm, listeners, oldListeners);
+  }
   // resolve slots + force update if has children
   if (hasChildren) {
     vm.$slots = resolveSlots(renderChildren, parentVnode.context);
@@ -8722,8 +8698,6 @@ function deactivateChildComponent (vm, direct) {
 }
 
 function callHook (vm, hook) {
-  // #7573 disable dep collection when invoking lifecycle hooks
-  pushTarget();
   var handlers = vm.$options[hook];
   if (handlers) {
     for (var i = 0, j = handlers.length; i < j; i++) {
@@ -8737,7 +8711,6 @@ function callHook (vm, hook) {
   if (vm._hasHookEvent) {
     vm.$emit('hook:' + hook);
   }
-  popTarget();
 }
 
 /*  */
@@ -8882,7 +8855,7 @@ function queueWatcher (watcher) {
 
 /*  */
 
-var uid$1 = 0;
+var uid$2 = 0;
 
 /**
  * A watcher parses an expression, collects dependencies,
@@ -8911,7 +8884,7 @@ var Watcher = function Watcher (
     this.deep = this.user = this.lazy = this.sync = false;
   }
   this.cb = cb;
-  this.id = ++uid$1; // uid for batching
+  this.id = ++uid$2; // uid for batching
   this.active = true;
   this.dirty = this.lazy; // for lazy watchers
   this.deps = [];
@@ -9136,9 +9109,7 @@ function initProps (vm, propsOptions) {
   var keys = vm.$options._propKeys = [];
   var isRoot = !vm.$parent;
   // root instance props should be converted
-  if (!isRoot) {
-    toggleObserving(false);
-  }
+  observerState.shouldConvert = isRoot;
   var loop = function ( key ) {
     keys.push(key);
     var value = validateProp(key, propsOptions, propsData, vm);
@@ -9175,7 +9146,7 @@ function initProps (vm, propsOptions) {
   };
 
   for (var key in propsOptions) loop( key );
-  toggleObserving(true);
+  observerState.shouldConvert = true;
 }
 
 function initData (vm) {
@@ -9221,15 +9192,11 @@ function initData (vm) {
 }
 
 function getData (data, vm) {
-  // #7573 disable dep collection when invoking data getters
-  pushTarget();
   try {
     return data.call(vm, vm)
   } catch (e) {
     handleError(e, vm, "data()");
     return {}
-  } finally {
-    popTarget();
   }
 }
 
@@ -9367,7 +9334,7 @@ function initWatch (vm, watch) {
 
 function createWatcher (
   vm,
-  expOrFn,
+  keyOrFn,
   handler,
   options
 ) {
@@ -9378,7 +9345,7 @@ function createWatcher (
   if (typeof handler === 'string') {
     handler = vm[handler];
   }
-  return vm.$watch(expOrFn, handler, options)
+  return vm.$watch(keyOrFn, handler, options)
 }
 
 function stateMixin (Vue) {
@@ -9442,7 +9409,7 @@ function initProvide (vm) {
 function initInjections (vm) {
   var result = resolveInject(vm.$options.inject, vm);
   if (result) {
-    toggleObserving(false);
+    observerState.shouldConvert = false;
     Object.keys(result).forEach(function (key) {
       /* istanbul ignore else */
       if (process.env.NODE_ENV !== 'production') {
@@ -9458,7 +9425,7 @@ function initInjections (vm) {
         defineReactive(vm, key, result[key]);
       }
     });
-    toggleObserving(true);
+    observerState.shouldConvert = true;
   }
 }
 
@@ -9478,7 +9445,7 @@ function resolveInject (inject, vm) {
       var provideKey = inject[key].from;
       var source = vm;
       while (source) {
-        if (source._provided && hasOwn(source._provided, provideKey)) {
+        if (source._provided && provideKey in source._provided) {
           result[key] = source._provided[provideKey];
           break
         }
@@ -9593,14 +9560,6 @@ function resolveFilter (id) {
 
 /*  */
 
-function isKeyNotMatch (expect, actual) {
-  if (Array.isArray(expect)) {
-    return expect.indexOf(actual) === -1
-  } else {
-    return expect !== actual
-  }
-}
-
 /**
  * Runtime helper for checking keyCodes from config.
  * exposed as Vue.prototype._k
@@ -9609,15 +9568,16 @@ function isKeyNotMatch (expect, actual) {
 function checkKeyCodes (
   eventKeyCode,
   key,
-  builtInKeyCode,
-  eventKeyName,
-  builtInKeyName
+  builtInAlias,
+  eventKeyName
 ) {
-  var mappedKeyCode = config.keyCodes[key] || builtInKeyCode;
-  if (builtInKeyName && eventKeyName && !config.keyCodes[key]) {
-    return isKeyNotMatch(builtInKeyName, eventKeyName)
-  } else if (mappedKeyCode) {
-    return isKeyNotMatch(mappedKeyCode, eventKeyCode)
+  var keyCodes = config.keyCodes[key] || builtInAlias;
+  if (keyCodes) {
+    if (Array.isArray(keyCodes)) {
+      return keyCodes.indexOf(eventKeyCode) === -1
+    } else {
+      return keyCodes !== eventKeyCode
+    }
   } else if (eventKeyName) {
     return hyphenate(eventKeyName) !== key
   }
@@ -9689,9 +9649,11 @@ function renderStatic (
   var cached = this._staticTrees || (this._staticTrees = []);
   var tree = cached[index];
   // if has already-rendered static tree and not inside v-for,
-  // we can reuse the same tree.
+  // we can reuse the same tree by doing a shallow clone.
   if (tree && !isInFor) {
-    return tree
+    return Array.isArray(tree)
+      ? cloneVNodes(tree)
+      : cloneVNode(tree)
   }
   // otherwise, render a fresh tree.
   tree = cached[index] = this.$options.staticRenderFns[index].call(
@@ -9789,24 +9751,6 @@ function FunctionalRenderContext (
   Ctor
 ) {
   var options = Ctor.options;
-  // ensure the createElement function in functional components
-  // gets a unique context - this is necessary for correct named slot check
-  var contextVm;
-  if (hasOwn(parent, '_uid')) {
-    contextVm = Object.create(parent);
-    // $flow-disable-line
-    contextVm._original = parent;
-  } else {
-    // the context vm passed in is a functional context as well.
-    // in this case we want to make sure we are able to get a hold to the
-    // real context instance.
-    contextVm = parent;
-    // $flow-disable-line
-    parent = parent._original;
-  }
-  var isCompiled = isTrue(options._compiled);
-  var needNormalization = !isCompiled;
-
   this.data = data;
   this.props = props;
   this.children = children;
@@ -9814,6 +9758,12 @@ function FunctionalRenderContext (
   this.listeners = data.on || emptyObject;
   this.injections = resolveInject(options.inject, parent);
   this.slots = function () { return resolveSlots(children, parent); };
+
+  // ensure the createElement function in functional components
+  // gets a unique context - this is necessary for correct named slot check
+  var contextVm = Object.create(parent);
+  var isCompiled = isTrue(options._compiled);
+  var needNormalization = !isCompiled;
 
   // support for compiled functional template
   if (isCompiled) {
@@ -9827,7 +9777,7 @@ function FunctionalRenderContext (
   if (options._scopeId) {
     this._c = function (a, b, c, d) {
       var vnode = createElement(contextVm, a, b, c, d, needNormalization);
-      if (vnode && !Array.isArray(vnode)) {
+      if (vnode) {
         vnode.fnScopeId = options._scopeId;
         vnode.fnContext = parent;
       }
@@ -9870,28 +9820,14 @@ function createFunctionalComponent (
   var vnode = options.render.call(null, renderContext._c, renderContext);
 
   if (vnode instanceof VNode) {
-    return cloneAndMarkFunctionalResult(vnode, data, renderContext.parent, options)
-  } else if (Array.isArray(vnode)) {
-    var vnodes = normalizeChildren(vnode) || [];
-    var res = new Array(vnodes.length);
-    for (var i = 0; i < vnodes.length; i++) {
-      res[i] = cloneAndMarkFunctionalResult(vnodes[i], data, renderContext.parent, options);
+    vnode.fnContext = contextVm;
+    vnode.fnOptions = options;
+    if (data.slot) {
+      (vnode.data || (vnode.data = {})).slot = data.slot;
     }
-    return res
   }
-}
 
-function cloneAndMarkFunctionalResult (vnode, data, contextVm, options) {
-  // #7817 clone node before setting fnContext, otherwise if the node is reused
-  // (e.g. it was from a cached normal slot) the fnContext causes named slots
-  // that should not be matched to match.
-  var clone = cloneVNode(vnode);
-  clone.fnContext = contextVm;
-  clone.fnOptions = options;
-  if (data.slot) {
-    (clone.data || (clone.data = {})).slot = data.slot;
-  }
-  return clone
+  return vnode
 }
 
 function mergeProps (to, from) {
@@ -9921,7 +9857,7 @@ function mergeProps (to, from) {
 
 /*  */
 
-// inline hooks to be invoked on component VNodes during patch
+// hooks to be invoked on component VNodes during patch
 var componentVNodeHooks = {
   init: function init (
     vnode,
@@ -9929,15 +9865,7 @@ var componentVNodeHooks = {
     parentElm,
     refElm
   ) {
-    if (
-      vnode.componentInstance &&
-      !vnode.componentInstance._isDestroyed &&
-      vnode.data.keepAlive
-    ) {
-      // kept-alive components, treat as a patch
-      var mountedNode = vnode; // work around flow
-      componentVNodeHooks.prepatch(mountedNode, mountedNode);
-    } else {
+    if (!vnode.componentInstance || vnode.componentInstance._isDestroyed) {
       var child = vnode.componentInstance = createComponentInstanceForVnode(
         vnode,
         activeInstance,
@@ -9945,6 +9873,10 @@ var componentVNodeHooks = {
         refElm
       );
       child.$mount(hydrating ? vnode.elm : undefined, hydrating);
+    } else if (vnode.data.keepAlive) {
+      // kept-alive components, treat as a patch
+      var mountedNode = vnode; // work around flow
+      componentVNodeHooks.prepatch(mountedNode, mountedNode);
     }
   },
 
@@ -10079,8 +10011,8 @@ function createComponent (
     }
   }
 
-  // install component management hooks onto the placeholder node
-  installComponentHooks(data);
+  // merge component management hooks onto the placeholder node
+  mergeHooks(data);
 
   // return a placeholder vnode
   var name = Ctor.options.name || tag;
@@ -10120,11 +10052,22 @@ function createComponentInstanceForVnode (
   return new vnode.componentOptions.Ctor(options)
 }
 
-function installComponentHooks (data) {
-  var hooks = data.hook || (data.hook = {});
+function mergeHooks (data) {
+  if (!data.hook) {
+    data.hook = {};
+  }
   for (var i = 0; i < hooksToMerge.length; i++) {
     var key = hooksToMerge[i];
-    hooks[key] = componentVNodeHooks[key];
+    var fromParent = data.hook[key];
+    var ours = componentVNodeHooks[key];
+    data.hook[key] = fromParent ? mergeHook$1(ours, fromParent) : ours;
+  }
+}
+
+function mergeHook$1 (one, two) {
+  return function (a, b, c, d) {
+    one(a, b, c, d);
+    two(a, b, c, d);
   }
 }
 
@@ -10241,11 +10184,8 @@ function _createElement (
     // direct component options / constructor
     vnode = createComponent(tag, data, context, children);
   }
-  if (Array.isArray(vnode)) {
-    return vnode
-  } else if (isDef(vnode)) {
-    if (isDef(ns)) { applyNS(vnode, ns); }
-    if (isDef(data)) { registerDeepBindings(data); }
+  if (isDef(vnode)) {
+    if (ns) { applyNS(vnode, ns); }
     return vnode
   } else {
     return createEmptyVNode()
@@ -10262,23 +10202,10 @@ function applyNS (vnode, ns, force) {
   if (isDef(vnode.children)) {
     for (var i = 0, l = vnode.children.length; i < l; i++) {
       var child = vnode.children[i];
-      if (isDef(child.tag) && (
-        isUndef(child.ns) || (isTrue(force) && child.tag !== 'svg'))) {
+      if (isDef(child.tag) && (isUndef(child.ns) || isTrue(force))) {
         applyNS(child, ns, force);
       }
     }
-  }
-}
-
-// ref #5318
-// necessary to ensure parent re-render when deep bindings like :style and
-// :class are used on slot nodes
-function registerDeepBindings (data) {
-  if (isObject(data.style)) {
-    traverse(data.style);
-  }
-  if (isObject(data.class)) {
-    traverse(data.class);
   }
 }
 
@@ -10333,17 +10260,20 @@ function renderMixin (Vue) {
     var render = ref.render;
     var _parentVnode = ref._parentVnode;
 
-    // reset _rendered flag on slots for duplicate slot check
-    if (process.env.NODE_ENV !== 'production') {
+    if (vm._isMounted) {
+      // if the parent didn't update, the slot nodes will be the ones from
+      // last render. They need to be cloned to ensure "freshness" for this render.
       for (var key in vm.$slots) {
-        // $flow-disable-line
-        vm.$slots[key]._rendered = false;
+        var slot = vm.$slots[key];
+        // _rendered is a flag added by renderSlot, but may not be present
+        // if the slot is passed from manually written render functions
+        if (slot._rendered || (slot[0] && slot[0].elm)) {
+          vm.$slots[key] = cloneVNodes(slot, true /* deep */);
+        }
       }
     }
 
-    if (_parentVnode) {
-      vm.$scopedSlots = _parentVnode.data.scopedSlots || emptyObject;
-    }
+    vm.$scopedSlots = (_parentVnode && _parentVnode.data.scopedSlots) || emptyObject;
 
     // set parent vnode. this allows render functions to have access
     // to the data on the placeholder node.
@@ -10391,13 +10321,13 @@ function renderMixin (Vue) {
 
 /*  */
 
-var uid$3 = 0;
+var uid$1 = 0;
 
 function initMixin (Vue) {
   Vue.prototype._init = function (options) {
     var vm = this;
     // a uid
-    vm._uid = uid$3++;
+    vm._uid = uid$1++;
 
     var startTag, endTag;
     /* istanbul ignore if */
@@ -10530,20 +10460,20 @@ function dedupe (latest, extended, sealed) {
   }
 }
 
-function Vue (options) {
+function Vue$3 (options) {
   if (process.env.NODE_ENV !== 'production' &&
-    !(this instanceof Vue)
+    !(this instanceof Vue$3)
   ) {
     warn('Vue is a constructor and should be called with the `new` keyword');
   }
   this._init(options);
 }
 
-initMixin(Vue);
-stateMixin(Vue);
-eventsMixin(Vue);
-lifecycleMixin(Vue);
-renderMixin(Vue);
+initMixin(Vue$3);
+stateMixin(Vue$3);
+eventsMixin(Vue$3);
+lifecycleMixin(Vue$3);
+renderMixin(Vue$3);
 
 /*  */
 
@@ -10772,15 +10702,13 @@ var KeepAlive = {
     }
   },
 
-  mounted: function mounted () {
-    var this$1 = this;
-
-    this.$watch('include', function (val) {
-      pruneCache(this$1, function (name) { return matches(val, name); });
-    });
-    this.$watch('exclude', function (val) {
-      pruneCache(this$1, function (name) { return !matches(val, name); });
-    });
+  watch: {
+    include: function include (val) {
+      pruneCache(this, function (name) { return matches(val, name); });
+    },
+    exclude: function exclude (val) {
+      pruneCache(this, function (name) { return !matches(val, name); });
+    }
   },
 
   render: function render () {
@@ -10828,11 +10756,11 @@ var KeepAlive = {
     }
     return vnode || (slot && slot[0])
   }
-}
+};
 
 var builtInComponents = {
   KeepAlive: KeepAlive
-}
+};
 
 /*  */
 
@@ -10880,25 +10808,20 @@ function initGlobalAPI (Vue) {
   initAssetRegisters(Vue);
 }
 
-initGlobalAPI(Vue);
+initGlobalAPI(Vue$3);
 
-Object.defineProperty(Vue.prototype, '$isServer', {
+Object.defineProperty(Vue$3.prototype, '$isServer', {
   get: isServerRendering
 });
 
-Object.defineProperty(Vue.prototype, '$ssrContext', {
+Object.defineProperty(Vue$3.prototype, '$ssrContext', {
   get: function get () {
     /* istanbul ignore next */
     return this.$vnode && this.$vnode.ssrContext
   }
 });
 
-// expose FunctionalRenderContext for ssr runtime helper installation
-Object.defineProperty(Vue, 'FunctionalRenderContext', {
-  value: FunctionalRenderContext
-});
-
-Vue.version = '2.5.16';
+Vue$3.version = '2.5.13';
 
 /*  */
 
@@ -11172,8 +11095,8 @@ function setTextContent (node, text) {
   node.textContent = text;
 }
 
-function setStyleScope (node, scopeId) {
-  node.setAttribute(scopeId, '');
+function setAttribute (node, key, val) {
+  node.setAttribute(key, val);
 }
 
 
@@ -11189,7 +11112,7 @@ var nodeOps = Object.freeze({
 	nextSibling: nextSibling,
 	tagName: tagName,
 	setTextContent: setTextContent,
-	setStyleScope: setStyleScope
+	setAttribute: setAttribute
 });
 
 /*  */
@@ -11207,11 +11130,11 @@ var ref = {
   destroy: function destroy (vnode) {
     registerRef(vnode, true);
   }
-}
+};
 
 function registerRef (vnode, isRemoval) {
   var key = vnode.data.ref;
-  if (!isDef(key)) { return }
+  if (!key) { return }
 
   var vm = vnode.context;
   var ref = vnode.componentInstance || vnode.elm;
@@ -11342,25 +11265,7 @@ function createPatchFunction (backend) {
   }
 
   var creatingElmInVPre = 0;
-
-  function createElm (
-    vnode,
-    insertedVnodeQueue,
-    parentElm,
-    refElm,
-    nested,
-    ownerArray,
-    index
-  ) {
-    if (isDef(vnode.elm) && isDef(ownerArray)) {
-      // This vnode was used in a previous render!
-      // now it's used as a new node, overwriting its elm would cause
-      // potential patch errors down the road when it's used as an insertion
-      // reference node. Instead, we clone the node on-demand before creating
-      // associated DOM element for it.
-      vnode = ownerArray[index] = cloneVNode(vnode);
-    }
-
+  function createElm (vnode, insertedVnodeQueue, parentElm, refElm, nested) {
     vnode.isRootInsert = !nested; // for transition enter check
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
@@ -11383,7 +11288,6 @@ function createPatchFunction (backend) {
           );
         }
       }
-
       vnode.elm = vnode.ns
         ? nodeOps.createElementNS(vnode.ns, tag)
         : nodeOps.createElement(tag, vnode);
@@ -11489,7 +11393,7 @@ function createPatchFunction (backend) {
         checkDuplicateKeys(children);
       }
       for (var i = 0; i < children.length; ++i) {
-        createElm(children[i], insertedVnodeQueue, vnode.elm, null, true, children, i);
+        createElm(children[i], insertedVnodeQueue, vnode.elm, null, true);
       }
     } else if (isPrimitive(vnode.text)) {
       nodeOps.appendChild(vnode.elm, nodeOps.createTextNode(String(vnode.text)));
@@ -11520,12 +11424,12 @@ function createPatchFunction (backend) {
   function setScope (vnode) {
     var i;
     if (isDef(i = vnode.fnScopeId)) {
-      nodeOps.setStyleScope(vnode.elm, i);
+      nodeOps.setAttribute(vnode.elm, i, '');
     } else {
       var ancestor = vnode;
       while (ancestor) {
         if (isDef(i = ancestor.context) && isDef(i = i.$options._scopeId)) {
-          nodeOps.setStyleScope(vnode.elm, i);
+          nodeOps.setAttribute(vnode.elm, i, '');
         }
         ancestor = ancestor.parent;
       }
@@ -11536,13 +11440,13 @@ function createPatchFunction (backend) {
       i !== vnode.fnContext &&
       isDef(i = i.$options._scopeId)
     ) {
-      nodeOps.setStyleScope(vnode.elm, i);
+      nodeOps.setAttribute(vnode.elm, i, '');
     }
   }
 
   function addVnodes (parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
     for (; startIdx <= endIdx; ++startIdx) {
-      createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx);
+      createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm);
     }
   }
 
@@ -11652,7 +11556,7 @@ function createPatchFunction (backend) {
           ? oldKeyToIdx[newStartVnode.key]
           : findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
         if (isUndef(idxInOld)) { // New element
-          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+          createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
         } else {
           vnodeToMove = oldCh[idxInOld];
           if (sameVnode(vnodeToMove, newStartVnode)) {
@@ -11661,7 +11565,7 @@ function createPatchFunction (backend) {
             canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
           } else {
             // same key but different element. treat as new element
-            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
+            createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm);
           }
         }
         newStartVnode = newCh[++newStartIdx];
@@ -11999,7 +11903,7 @@ var directives = {
   destroy: function unbindDirectives (vnode) {
     updateDirectives(vnode, emptyNode);
   }
-}
+};
 
 function updateDirectives (oldVnode, vnode) {
   if (oldVnode.data.directives || vnode.data.directives) {
@@ -12110,7 +12014,7 @@ function callHook$1 (dir, hook, vnode, oldVnode, isDestroy) {
 var baseModules = [
   ref,
   directives
-]
+];
 
 /*  */
 
@@ -12156,9 +12060,7 @@ function updateAttrs (oldVnode, vnode) {
 }
 
 function setAttr (el, key, value) {
-  if (el.tagName.indexOf('-') > -1) {
-    baseSetAttr(el, key, value);
-  } else if (isBooleanAttr(key)) {
+  if (isBooleanAttr(key)) {
     // set attribute for blank value
     // e.g. <option disabled>Select one</option>
     if (isFalsyAttrValue(value)) {
@@ -12180,39 +12082,35 @@ function setAttr (el, key, value) {
       el.setAttributeNS(xlinkNS, key, value);
     }
   } else {
-    baseSetAttr(el, key, value);
-  }
-}
-
-function baseSetAttr (el, key, value) {
-  if (isFalsyAttrValue(value)) {
-    el.removeAttribute(key);
-  } else {
-    // #7138: IE10 & 11 fires input event when setting placeholder on
-    // <textarea>... block the first input event and remove the blocker
-    // immediately.
-    /* istanbul ignore if */
-    if (
-      isIE && !isIE9 &&
-      el.tagName === 'TEXTAREA' &&
-      key === 'placeholder' && !el.__ieph
-    ) {
-      var blocker = function (e) {
-        e.stopImmediatePropagation();
-        el.removeEventListener('input', blocker);
-      };
-      el.addEventListener('input', blocker);
-      // $flow-disable-line
-      el.__ieph = true; /* IE placeholder patched */
+    if (isFalsyAttrValue(value)) {
+      el.removeAttribute(key);
+    } else {
+      // #7138: IE10 & 11 fires input event when setting placeholder on
+      // <textarea>... block the first input event and remove the blocker
+      // immediately.
+      /* istanbul ignore if */
+      if (
+        isIE && !isIE9 &&
+        el.tagName === 'TEXTAREA' &&
+        key === 'placeholder' && !el.__ieph
+      ) {
+        var blocker = function (e) {
+          e.stopImmediatePropagation();
+          el.removeEventListener('input', blocker);
+        };
+        el.addEventListener('input', blocker);
+        // $flow-disable-line
+        el.__ieph = true; /* IE placeholder patched */
+      }
+      el.setAttribute(key, value);
     }
-    el.setAttribute(key, value);
   }
 }
 
 var attrs = {
   create: updateAttrs,
   update: updateAttrs
-}
+};
 
 /*  */
 
@@ -12250,7 +12148,7 @@ function updateClass (oldVnode, vnode) {
 var klass = {
   create: updateClass,
   update: updateClass
-}
+};
 
 /*  */
 
@@ -12346,7 +12244,7 @@ function wrapFilter (exp, filter) {
   } else {
     var name = filter.slice(0, i);
     var args = filter.slice(i + 1);
-    return ("_f(\"" + name + "\")(" + exp + (args !== ')' ? ',' + args : args))
+    return ("_f(\"" + name + "\")(" + exp + "," + args)
   }
 }
 
@@ -12449,9 +12347,7 @@ function addHandler (
     events = el.events || (el.events = {});
   }
 
-  var newHandler = {
-    value: value.trim()
-  };
+  var newHandler = { value: value };
   if (modifiers !== emptyObject) {
     newHandler.modifiers = modifiers;
   }
@@ -12531,8 +12427,8 @@ function genComponentModel (
   if (trim) {
     valueExpression =
       "(typeof " + baseValueExpression + " === 'string'" +
-      "? " + baseValueExpression + ".trim()" +
-      ": " + baseValueExpression + ")";
+        "? " + baseValueExpression + ".trim()" +
+        ": " + baseValueExpression + ")";
   }
   if (number) {
     valueExpression = "_n(" + valueExpression + ")";
@@ -12586,9 +12482,6 @@ var expressionEndPos;
 
 
 function parseModel (val) {
-  // Fix https://github.com/vuejs/vue/pull/7730
-  // allow v-model="obj.val " (trailing whitespace)
-  val = val.trim();
   len = val.length;
 
   if (val.indexOf('[') < 0 || val.lastIndexOf(']') < len - 1) {
@@ -12749,8 +12642,8 @@ function genCheckboxModel (
     'if(Array.isArray($$a)){' +
       "var $$v=" + (number ? '_n(' + valueBinding + ')' : valueBinding) + "," +
           '$$i=_i($$a,$$v);' +
-      "if($$el.checked){$$i<0&&(" + (genAssignmentCode(value, '$$a.concat([$$v])')) + ")}" +
-      "else{$$i>-1&&(" + (genAssignmentCode(value, '$$a.slice(0,$$i).concat($$a.slice($$i+1))')) + ")}" +
+      "if($$el.checked){$$i<0&&(" + value + "=$$a.concat([$$v]))}" +
+      "else{$$i>-1&&(" + value + "=$$a.slice(0,$$i).concat($$a.slice($$i+1)))}" +
     "}else{" + (genAssignmentCode(value, '$$c')) + "}",
     null, true
   );
@@ -12793,11 +12686,9 @@ function genDefaultModel (
   var type = el.attrsMap.type;
 
   // warn if v-bind:value conflicts with v-model
-  // except for inputs with v-bind:type
   if (process.env.NODE_ENV !== 'production') {
     var value$1 = el.attrsMap['v-bind:value'] || el.attrsMap[':value'];
-    var typeBinding = el.attrsMap['v-bind:type'] || el.attrsMap[':type'];
-    if (value$1 && !typeBinding) {
+    if (value$1) {
       var binding = el.attrsMap['v-bind:value'] ? 'v-bind:value' : ':value';
       warn$1(
         binding + "=\"" + value$1 + "\" conflicts with v-model on the same element " +
@@ -12918,7 +12809,7 @@ function updateDOMListeners (oldVnode, vnode) {
 var events = {
   create: updateDOMListeners,
   update: updateDOMListeners
-}
+};
 
 /*  */
 
@@ -13012,7 +12903,7 @@ function isDirtyWithModifiers (elm, newVal) {
 var domProps = {
   create: updateDOMProps,
   update: updateDOMProps
-}
+};
 
 /*  */
 
@@ -13173,7 +13064,7 @@ function updateStyle (oldVnode, vnode) {
 var style = {
   create: updateStyle,
   update: updateStyle
-}
+};
 
 /*  */
 
@@ -13546,15 +13437,13 @@ function enter (vnode, toggleDisplay) {
     addTransitionClass(el, startClass);
     addTransitionClass(el, activeClass);
     nextFrame(function () {
+      addTransitionClass(el, toClass);
       removeTransitionClass(el, startClass);
-      if (!cb.cancelled) {
-        addTransitionClass(el, toClass);
-        if (!userWantsControl) {
-          if (isValidDuration(explicitEnterDuration)) {
-            setTimeout(cb, explicitEnterDuration);
-          } else {
-            whenTransitionEnds(el, type, cb);
-          }
+      if (!cb.cancelled && !userWantsControl) {
+        if (isValidDuration(explicitEnterDuration)) {
+          setTimeout(cb, explicitEnterDuration);
+        } else {
+          whenTransitionEnds(el, type, cb);
         }
       }
     });
@@ -13654,15 +13543,13 @@ function leave (vnode, rm) {
       addTransitionClass(el, leaveClass);
       addTransitionClass(el, leaveActiveClass);
       nextFrame(function () {
+        addTransitionClass(el, leaveToClass);
         removeTransitionClass(el, leaveClass);
-        if (!cb.cancelled) {
-          addTransitionClass(el, leaveToClass);
-          if (!userWantsControl) {
-            if (isValidDuration(explicitLeaveDuration)) {
-              setTimeout(cb, explicitLeaveDuration);
-            } else {
-              whenTransitionEnds(el, type, cb);
-            }
+        if (!cb.cancelled && !userWantsControl) {
+          if (isValidDuration(explicitLeaveDuration)) {
+            setTimeout(cb, explicitLeaveDuration);
+          } else {
+            whenTransitionEnds(el, type, cb);
           }
         }
       });
@@ -13735,7 +13622,7 @@ var transition = inBrowser ? {
       rm();
     }
   }
-} : {}
+} : {};
 
 var platformModules = [
   attrs,
@@ -13744,7 +13631,7 @@ var platformModules = [
   domProps,
   style,
   transition
-]
+];
 
 /*  */
 
@@ -13785,13 +13672,15 @@ var directive = {
     } else if (vnode.tag === 'textarea' || isTextInputType(el.type)) {
       el._vModifiers = binding.modifiers;
       if (!binding.modifiers.lazy) {
-        el.addEventListener('compositionstart', onCompositionStart);
-        el.addEventListener('compositionend', onCompositionEnd);
         // Safari < 10.2 & UIWebView doesn't fire compositionend when
         // switching focus before confirming composition choice
         // this also fixes the issue where some browsers e.g. iOS Chrome
         // fires "change" instead of "input" on autocomplete.
         el.addEventListener('change', onCompositionEnd);
+        if (!isAndroid) {
+          el.addEventListener('compositionstart', onCompositionStart);
+          el.addEventListener('compositionend', onCompositionEnd);
+        }
         /* istanbul ignore if */
         if (isIE9) {
           el.vmodel = true;
@@ -13925,7 +13814,7 @@ var show = {
     var oldValue = ref.oldValue;
 
     /* istanbul ignore if */
-    if (!value === !oldValue) { return }
+    if (value === oldValue) { return }
     vnode = locateNode(vnode);
     var transition$$1 = vnode.data && vnode.data.transition;
     if (transition$$1) {
@@ -13955,12 +13844,12 @@ var show = {
       el.style.display = el.__vOriginalDisplay;
     }
   }
-}
+};
 
 var platformDirectives = {
   model: directive,
   show: show
-}
+};
 
 /*  */
 
@@ -14149,7 +14038,7 @@ var Transition = {
 
     return rawChild
   }
-}
+};
 
 /*  */
 
@@ -14223,7 +14112,7 @@ var TransitionGroup = {
       this._vnode,
       this.kept,
       false, // hydrating
-      true // removeOnly (!important, avoids unnecessary moves)
+      true // removeOnly (!important avoids unnecessary moves)
     );
     this._vnode = this.kept;
   },
@@ -14290,7 +14179,7 @@ var TransitionGroup = {
       return (this._hasMove = info.hasTransform)
     }
   }
-}
+};
 
 function callPendingCbs (c) {
   /* istanbul ignore if */
@@ -14323,26 +14212,26 @@ function applyTranslation (c) {
 var platformComponents = {
   Transition: Transition,
   TransitionGroup: TransitionGroup
-}
+};
 
 /*  */
 
 // install platform specific utils
-Vue.config.mustUseProp = mustUseProp;
-Vue.config.isReservedTag = isReservedTag;
-Vue.config.isReservedAttr = isReservedAttr;
-Vue.config.getTagNamespace = getTagNamespace;
-Vue.config.isUnknownElement = isUnknownElement;
+Vue$3.config.mustUseProp = mustUseProp;
+Vue$3.config.isReservedTag = isReservedTag;
+Vue$3.config.isReservedAttr = isReservedAttr;
+Vue$3.config.getTagNamespace = getTagNamespace;
+Vue$3.config.isUnknownElement = isUnknownElement;
 
 // install platform runtime directives & components
-extend(Vue.options.directives, platformDirectives);
-extend(Vue.options.components, platformComponents);
+extend(Vue$3.options.directives, platformDirectives);
+extend(Vue$3.options.components, platformComponents);
 
 // install platform patch function
-Vue.prototype.__patch__ = inBrowser ? patch : noop;
+Vue$3.prototype.__patch__ = inBrowser ? patch : noop;
 
 // public mount method
-Vue.prototype.$mount = function (
+Vue$3.prototype.$mount = function (
   el,
   hydrating
 ) {
@@ -14352,35 +14241,28 @@ Vue.prototype.$mount = function (
 
 // devtools global hook
 /* istanbul ignore next */
-if (inBrowser) {
-  setTimeout(function () {
-    if (config.devtools) {
-      if (devtools) {
-        devtools.emit('init', Vue);
-      } else if (
-        process.env.NODE_ENV !== 'production' &&
-        process.env.NODE_ENV !== 'test' &&
-        isChrome
-      ) {
-        console[console.info ? 'info' : 'log'](
-          'Download the Vue Devtools extension for a better development experience:\n' +
-          'https://github.com/vuejs/vue-devtools'
-        );
-      }
-    }
-    if (process.env.NODE_ENV !== 'production' &&
-      process.env.NODE_ENV !== 'test' &&
-      config.productionTip !== false &&
-      typeof console !== 'undefined'
-    ) {
+Vue$3.nextTick(function () {
+  if (config.devtools) {
+    if (devtools) {
+      devtools.emit('init', Vue$3);
+    } else if (process.env.NODE_ENV !== 'production' && isChrome) {
       console[console.info ? 'info' : 'log'](
-        "You are running Vue in development mode.\n" +
-        "Make sure to turn on production mode when deploying for production.\n" +
-        "See more tips at https://vuejs.org/guide/deployment.html"
+        'Download the Vue Devtools extension for a better development experience:\n' +
+        'https://github.com/vuejs/vue-devtools'
       );
     }
-  }, 0);
-}
+  }
+  if (process.env.NODE_ENV !== 'production' &&
+    config.productionTip !== false &&
+    inBrowser && typeof console !== 'undefined'
+  ) {
+    console[console.info ? 'info' : 'log'](
+      "You are running Vue in development mode.\n" +
+      "Make sure to turn on production mode when deploying for production.\n" +
+      "See more tips at https://vuejs.org/guide/deployment.html"
+    );
+  }
+}, 0);
 
 /*  */
 
@@ -14470,7 +14352,7 @@ var klass$1 = {
   staticKeys: ['staticClass'],
   transformNode: transformNode,
   genData: genData
-}
+};
 
 /*  */
 
@@ -14514,7 +14396,7 @@ var style$1 = {
   staticKeys: ['staticStyle'],
   transformNode: transformNode$1,
   genData: genData$1
-}
+};
 
 /*  */
 
@@ -14526,7 +14408,7 @@ var he = {
     decoder.innerHTML = html;
     return decoder.textContent
   }
-}
+};
 
 /*  */
 
@@ -14572,8 +14454,7 @@ var startTagOpen = new RegExp(("^<" + qnameCapture));
 var startTagClose = /^\s*(\/?)>/;
 var endTag = new RegExp(("^<\\/" + qnameCapture + "[^>]*>"));
 var doctype = /^<!DOCTYPE [^>]+>/i;
-// #7298: escape - to avoid being pased as HTML comment when inlined in page
-var comment = /^<!\--/;
+var comment = /^<!--/;
 var conditionalComment = /^<!\[/;
 
 var IS_REGEX_CAPTURING_BROKEN = false;
@@ -14703,7 +14584,7 @@ function parseHTML (html, options) {
         endTagLength = endTag.length;
         if (!isPlainTextElement(stackedTag) && stackedTag !== 'noscript') {
           text = text
-            .replace(/<!\--([\s\S]*?)-->/g, '$1') // #7298
+            .replace(/<!--([\s\S]*?)-->/g, '$1')
             .replace(/<!\[CDATA\[([\s\S]*?)]]>/g, '$1');
         }
         if (shouldIgnoreFirstNewline(stackedTag, text)) {
@@ -14863,7 +14744,7 @@ function parseHTML (html, options) {
 
 var onRE = /^@|^v-on:/;
 var dirRE = /^v-|^@|^:/;
-var forAliasRE = /([^]*?)\s+(?:in|of)\s+([^]*)/;
+var forAliasRE = /(.*?)\s+(?:in|of)\s+(.*)/;
 var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
 var stripParensRE = /^\(|\)$/g;
 
@@ -15201,8 +15082,6 @@ function processFor (el) {
   }
 }
 
-
-
 function parseFor (exp) {
   var inMatch = exp.match(forAliasRE);
   if (!inMatch) { return }
@@ -15525,19 +15404,8 @@ function checkForAliasModel (el, value) {
 function preTransformNode (el, options) {
   if (el.tag === 'input') {
     var map = el.attrsMap;
-    if (!map['v-model']) {
-      return
-    }
-
-    var typeBinding;
-    if (map[':type'] || map['v-bind:type']) {
-      typeBinding = getBindingAttr(el, 'type');
-    }
-    if (!map.type && !typeBinding && map['v-bind']) {
-      typeBinding = "(" + (map['v-bind']) + ").type";
-    }
-
-    if (typeBinding) {
+    if (map['v-model'] && (map['v-bind:type'] || map[':type'])) {
+      var typeBinding = getBindingAttr(el, 'type');
       var ifCondition = getAndRemoveAttr(el, 'v-if', true);
       var ifConditionExtra = ifCondition ? ("&&(" + ifCondition + ")") : "";
       var hasElse = getAndRemoveAttr(el, 'v-else', true) != null;
@@ -15590,13 +15458,13 @@ function cloneASTElement (el) {
 
 var model$2 = {
   preTransformNode: preTransformNode
-}
+};
 
 var modules$1 = [
   klass$1,
   style$1,
   model$2
-]
+];
 
 /*  */
 
@@ -15618,7 +15486,7 @@ var directives$1 = {
   model: model,
   text: text,
   html: html
-}
+};
 
 /*  */
 
@@ -15764,10 +15632,10 @@ function isDirectChildOfTemplateFor (node) {
 
 /*  */
 
-var fnExpRE = /^([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
-var simplePathRE = /^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['[^']*?']|\["[^"]*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*$/;
+var fnExpRE = /^\s*([\w$_]+|\([^)]*?\))\s*=>|^function\s*\(/;
+var simplePathRE = /^\s*[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*|\['.*?']|\[".*?"]|\[\d+]|\[[A-Za-z_$][\w$]*])*\s*$/;
 
-// KeyboardEvent.keyCode aliases
+// keyCode aliases
 var keyCodes = {
   esc: 27,
   tab: 9,
@@ -15778,20 +15646,6 @@ var keyCodes = {
   right: 39,
   down: 40,
   'delete': [8, 46]
-};
-
-// KeyboardEvent.key aliases
-var keyNames = {
-  esc: 'Escape',
-  tab: 'Tab',
-  enter: 'Enter',
-  space: ' ',
-  // #7806: IE11 uses key names without `Arrow` prefix for arrow keys.
-  up: ['Up', 'ArrowUp'],
-  left: ['Left', 'ArrowLeft'],
-  right: ['Right', 'ArrowRight'],
-  down: ['Down', 'ArrowDown'],
-  'delete': ['Backspace', 'Delete']
 };
 
 // #4868: modifiers that prevent the execution of the listener
@@ -15876,9 +15730,9 @@ function genHandler (
       code += genModifierCode;
     }
     var handlerCode = isMethodPath
-      ? ("return " + (handler.value) + "($event)")
+      ? handler.value + '($event)'
       : isFunctionExpression
-        ? ("return (" + (handler.value) + ")($event)")
+        ? ("(" + (handler.value) + ")($event)")
         : handler.value;
     /* istanbul ignore if */
     return ("function($event){" + code + handlerCode + "}")
@@ -15894,15 +15748,12 @@ function genFilterCode (key) {
   if (keyVal) {
     return ("$event.keyCode!==" + keyVal)
   }
-  var keyCode = keyCodes[key];
-  var keyName = keyNames[key];
+  var code = keyCodes[key];
   return (
     "_k($event.keyCode," +
     (JSON.stringify(key)) + "," +
-    (JSON.stringify(keyCode)) + "," +
-    "$event.key," +
-    "" + (JSON.stringify(keyName)) +
-    ")"
+    (JSON.stringify(code)) + "," +
+    "$event.key)"
   )
 }
 
@@ -15929,7 +15780,7 @@ var baseDirectives = {
   on: on,
   bind: bind$1,
   cloak: noop
-}
+};
 
 /*  */
 
@@ -16680,8 +16531,8 @@ var idToTemplate = cached(function (id) {
   return el && el.innerHTML
 });
 
-var mount = Vue.prototype.$mount;
-Vue.prototype.$mount = function (
+var mount = Vue$3.prototype.$mount;
+Vue$3.prototype.$mount = function (
   el,
   hydrating
 ) {
@@ -16763,9 +16614,9 @@ function getOuterHTML (el) {
   }
 }
 
-Vue.compile = compileToFunctions;
+Vue$3.compile = compileToFunctions;
 
-module.exports = Vue;
+module.exports = Vue$3;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(2), __webpack_require__(20).setImmediate))
 
@@ -25950,7 +25801,8 @@ module.exports = function(module) {
 /* 44 */,
 /* 45 */,
 /* 46 */,
-/* 47 */
+/* 47 */,
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -25967,7 +25819,7 @@ module.exports = function(module) {
   var undefined;
 
   /** Used as the semantic version number. */
-  var VERSION = '4.17.10';
+  var VERSION = '4.17.5';
 
   /** Used as the size to enable large array optimizations. */
   var LARGE_ARRAY_SIZE = 200;
@@ -26391,14 +26243,6 @@ module.exports = function(module) {
   /** Used to access faster Node.js helpers. */
   var nodeUtil = (function() {
     try {
-      // Use `util.types` for Node.js 10+.
-      var types = freeModule && freeModule.require && freeModule.require('util').types;
-
-      if (types) {
-        return types;
-      }
-
-      // Legacy `process.binding('util')` for Node.js < 10.
       return freeProcess && freeProcess.binding && freeProcess.binding('util');
     } catch (e) {}
   }());
@@ -43063,7 +42907,6 @@ module.exports = function(module) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), __webpack_require__(42)(module)))
 
 /***/ }),
-/* 48 */,
 /* 49 */,
 /* 50 */,
 /* 51 */,
@@ -43137,14 +42980,7 @@ function isFunction (fn) {
 /* 99 */,
 /* 100 */,
 /* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */
+/* 102 */
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -43163,15 +42999,15 @@ module.exports = function tsml (sa) {
 }
 
 /***/ }),
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
 /* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var isFunction = __webpack_require__(77)
@@ -43223,7 +43059,7 @@ function forEachObject(object, iterator, context) {
 
 
 /***/ }),
-/* 119 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -43243,11 +43079,11 @@ module.exports = win;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 120 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(122)
-  , forEach = __webpack_require__(118)
+var trim = __webpack_require__(115)
+  , forEach = __webpack_require__(111)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -43279,7 +43115,7 @@ module.exports = function (headers) {
 }
 
 /***/ }),
-/* 121 */
+/* 114 */
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -43299,7 +43135,7 @@ function SafeParseTuple(obj, reviver) {
 
 
 /***/ }),
-/* 122 */
+/* 115 */
 /***/ (function(module, exports) {
 
 
@@ -43319,14 +43155,14 @@ exports.right = function(str){
 
 
 /***/ }),
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -43351,12 +43187,12 @@ function extend() {
 
 
 /***/ }),
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43433,7 +43269,7 @@ function extend() {
 
 
 /***/ }),
-/* 137 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43496,7 +43332,7 @@ function extend() {
 
 
 /***/ }),
-/* 138 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43559,7 +43395,7 @@ function extend() {
 
 
 /***/ }),
-/* 139 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43685,7 +43521,7 @@ function extend() {
 
 
 /***/ }),
-/* 140 */
+/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43748,7 +43584,7 @@ function extend() {
 
 
 /***/ }),
-/* 141 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43856,7 +43692,7 @@ function extend() {
 
 
 /***/ }),
-/* 142 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -43919,7 +43755,7 @@ function extend() {
 
 
 /***/ }),
-/* 143 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44058,7 +43894,7 @@ function extend() {
 
 
 /***/ }),
-/* 144 */
+/* 137 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44167,7 +44003,7 @@ function extend() {
 
 
 /***/ }),
-/* 145 */
+/* 138 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44303,7 +44139,7 @@ function extend() {
 
 
 /***/ }),
-/* 146 */
+/* 139 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44397,7 +44233,7 @@ function extend() {
 
 
 /***/ }),
-/* 147 */
+/* 140 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44459,7 +44295,7 @@ function extend() {
 
 
 /***/ }),
-/* 148 */
+/* 141 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44582,7 +44418,7 @@ function extend() {
 
 
 /***/ }),
-/* 149 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44705,7 +44541,7 @@ function extend() {
 
 
 /***/ }),
-/* 150 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44817,7 +44653,7 @@ function extend() {
 
 
 /***/ }),
-/* 151 */
+/* 144 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -44972,7 +44808,7 @@ function extend() {
 
 
 /***/ }),
-/* 152 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45064,7 +44900,7 @@ function extend() {
 
 
 /***/ }),
-/* 153 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45247,7 +45083,7 @@ function extend() {
 
 
 /***/ }),
-/* 154 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45314,7 +45150,7 @@ function extend() {
 
 
 /***/ }),
-/* 155 */
+/* 148 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45398,7 +45234,7 @@ function extend() {
 
 
 /***/ }),
-/* 156 */
+/* 149 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45462,7 +45298,7 @@ function extend() {
 
 
 /***/ }),
-/* 157 */
+/* 150 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45542,7 +45378,7 @@ function extend() {
 
 
 /***/ }),
-/* 158 */
+/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45622,7 +45458,7 @@ function extend() {
 
 
 /***/ }),
-/* 159 */
+/* 152 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45702,7 +45538,7 @@ function extend() {
 
 
 /***/ }),
-/* 160 */
+/* 153 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45805,7 +45641,7 @@ function extend() {
 
 
 /***/ }),
-/* 161 */
+/* 154 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45909,7 +45745,7 @@ function extend() {
 
 
 /***/ }),
-/* 162 */
+/* 155 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -45980,7 +45816,7 @@ function extend() {
 
 
 /***/ }),
-/* 163 */
+/* 156 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46047,7 +45883,7 @@ function extend() {
 
 
 /***/ }),
-/* 164 */
+/* 157 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46118,7 +45954,7 @@ function extend() {
 
 
 /***/ }),
-/* 165 */
+/* 158 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46189,7 +46025,7 @@ function extend() {
 
 
 /***/ }),
-/* 166 */
+/* 159 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46255,7 +46091,7 @@ function extend() {
 
 
 /***/ }),
-/* 167 */
+/* 160 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46326,7 +46162,7 @@ function extend() {
 
 
 /***/ }),
-/* 168 */
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46401,7 +46237,7 @@ function extend() {
 
 
 /***/ }),
-/* 169 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46497,7 +46333,7 @@ function extend() {
 
 
 /***/ }),
-/* 170 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46584,7 +46420,7 @@ function extend() {
 
 
 /***/ }),
-/* 171 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46680,7 +46516,7 @@ function extend() {
 
 
 /***/ }),
-/* 172 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46764,7 +46600,7 @@ function extend() {
 
 
 /***/ }),
-/* 173 */
+/* 166 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46834,7 +46670,7 @@ function extend() {
 
 
 /***/ }),
-/* 174 */
+/* 167 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -46944,7 +46780,7 @@ function extend() {
 
 
 /***/ }),
-/* 175 */
+/* 168 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47057,7 +46893,7 @@ function extend() {
 
 
 /***/ }),
-/* 176 */
+/* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47121,7 +46957,7 @@ function extend() {
 
 
 /***/ }),
-/* 177 */
+/* 170 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47199,7 +47035,7 @@ function extend() {
 
 
 /***/ }),
-/* 178 */
+/* 171 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47281,7 +47117,7 @@ function extend() {
 
 
 /***/ }),
-/* 179 */
+/* 172 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47368,7 +47204,7 @@ function extend() {
 
 
 /***/ }),
-/* 180 */
+/* 173 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47447,7 +47283,7 @@ function extend() {
 
 
 /***/ }),
-/* 181 */
+/* 174 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47527,7 +47363,7 @@ function extend() {
 
 
 /***/ }),
-/* 182 */
+/* 175 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47608,7 +47444,7 @@ function extend() {
 
 
 /***/ }),
-/* 183 */
+/* 176 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47735,7 +47571,7 @@ function extend() {
 
 
 /***/ }),
-/* 184 */
+/* 177 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47863,7 +47699,7 @@ function extend() {
 
 
 /***/ }),
-/* 185 */
+/* 178 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -47964,7 +47800,7 @@ function extend() {
 
 
 /***/ }),
-/* 186 */
+/* 179 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48092,7 +47928,7 @@ function extend() {
 
 
 /***/ }),
-/* 187 */
+/* 180 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48250,7 +48086,7 @@ function extend() {
 
 
 /***/ }),
-/* 188 */
+/* 181 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48364,7 +48200,7 @@ function extend() {
 
 
 /***/ }),
-/* 189 */
+/* 182 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48463,7 +48299,7 @@ function extend() {
 
 
 /***/ }),
-/* 190 */
+/* 183 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48549,7 +48385,7 @@ function extend() {
 
 
 /***/ }),
-/* 191 */
+/* 184 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48685,7 +48521,7 @@ function extend() {
 
 
 /***/ }),
-/* 192 */
+/* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48758,7 +48594,7 @@ function extend() {
 
 
 /***/ }),
-/* 193 */
+/* 186 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48854,7 +48690,7 @@ function extend() {
 
 
 /***/ }),
-/* 194 */
+/* 187 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -48940,7 +48776,7 @@ function extend() {
 
 
 /***/ }),
-/* 195 */
+/* 188 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49033,7 +48869,7 @@ function extend() {
 
 
 /***/ }),
-/* 196 */
+/* 189 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49124,7 +48960,7 @@ function extend() {
 
 
 /***/ }),
-/* 197 */
+/* 190 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49238,7 +49074,7 @@ function extend() {
 
 
 /***/ }),
-/* 198 */
+/* 191 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49368,7 +49204,7 @@ function extend() {
 
 
 /***/ }),
-/* 199 */
+/* 192 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49453,7 +49289,7 @@ function extend() {
 
 
 /***/ }),
-/* 200 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49544,7 +49380,7 @@ function extend() {
 
 
 /***/ }),
-/* 201 */
+/* 194 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49684,7 +49520,7 @@ function extend() {
 
 
 /***/ }),
-/* 202 */
+/* 195 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49758,7 +49594,7 @@ function extend() {
 
 
 /***/ }),
-/* 203 */
+/* 196 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49880,7 +49716,7 @@ function extend() {
 
 
 /***/ }),
-/* 204 */
+/* 197 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -49981,7 +49817,7 @@ function extend() {
 
 
 /***/ }),
-/* 205 */
+/* 198 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50097,7 +49933,7 @@ function extend() {
 
 
 /***/ }),
-/* 206 */
+/* 199 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50165,7 +50001,7 @@ function extend() {
 
 
 /***/ }),
-/* 207 */
+/* 200 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50259,7 +50095,7 @@ function extend() {
 
 
 /***/ }),
-/* 208 */
+/* 201 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50344,7 +50180,7 @@ function extend() {
 
 
 /***/ }),
-/* 209 */
+/* 202 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50452,7 +50288,7 @@ function extend() {
 
 
 /***/ }),
-/* 210 */
+/* 203 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50616,7 +50452,7 @@ function extend() {
 
 
 /***/ }),
-/* 211 */
+/* 204 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50702,7 +50538,7 @@ function extend() {
 
 
 /***/ }),
-/* 212 */
+/* 205 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50788,7 +50624,7 @@ function extend() {
 
 
 /***/ }),
-/* 213 */
+/* 206 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50852,7 +50688,7 @@ function extend() {
 
 
 /***/ }),
-/* 214 */
+/* 207 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -50949,7 +50785,7 @@ function extend() {
 
 
 /***/ }),
-/* 215 */
+/* 208 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51015,7 +50851,7 @@ function extend() {
 
 
 /***/ }),
-/* 216 */
+/* 209 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51142,7 +50978,7 @@ function extend() {
 
 
 /***/ }),
-/* 217 */
+/* 210 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51233,7 +51069,7 @@ function extend() {
 
 
 /***/ }),
-/* 218 */
+/* 211 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51324,7 +51160,7 @@ function extend() {
 
 
 /***/ }),
-/* 219 */
+/* 212 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51388,7 +51224,7 @@ function extend() {
 
 
 /***/ }),
-/* 220 */
+/* 213 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51516,7 +51352,7 @@ function extend() {
 
 
 /***/ }),
-/* 221 */
+/* 214 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51646,7 +51482,7 @@ function extend() {
 
 
 /***/ }),
-/* 222 */
+/* 215 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51711,7 +51547,7 @@ function extend() {
 
 
 /***/ }),
-/* 223 */
+/* 216 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51780,7 +51616,7 @@ function extend() {
 
 
 /***/ }),
-/* 224 */
+/* 217 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -51859,7 +51695,7 @@ function extend() {
 
 
 /***/ }),
-/* 225 */
+/* 218 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52045,7 +51881,7 @@ function extend() {
 
 
 /***/ }),
-/* 226 */
+/* 219 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52147,7 +51983,7 @@ function extend() {
 
 
 /***/ }),
-/* 227 */
+/* 220 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52211,7 +52047,7 @@ function extend() {
 
 
 /***/ }),
-/* 228 */
+/* 221 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52286,7 +52122,7 @@ function extend() {
 
 
 /***/ }),
-/* 229 */
+/* 222 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52446,7 +52282,7 @@ function extend() {
 
 
 /***/ }),
-/* 230 */
+/* 223 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52623,7 +52459,7 @@ function extend() {
 
 
 /***/ }),
-/* 231 */
+/* 224 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52695,7 +52531,7 @@ function extend() {
 
 
 /***/ }),
-/* 232 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52810,7 +52646,7 @@ function extend() {
 
 
 /***/ }),
-/* 233 */
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -52925,7 +52761,7 @@ function extend() {
 
 
 /***/ }),
-/* 234 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53017,7 +52853,7 @@ function extend() {
 
 
 /***/ }),
-/* 235 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53090,7 +52926,7 @@ function extend() {
 
 
 /***/ }),
-/* 236 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53153,7 +52989,7 @@ function extend() {
 
 
 /***/ }),
-/* 237 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53286,7 +53122,7 @@ function extend() {
 
 
 /***/ }),
-/* 238 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53379,7 +53215,7 @@ function extend() {
 
 
 /***/ }),
-/* 239 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53450,7 +53286,7 @@ function extend() {
 
 
 /***/ }),
-/* 240 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53570,7 +53406,7 @@ function extend() {
 
 
 /***/ }),
-/* 241 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53641,7 +53477,7 @@ function extend() {
 
 
 /***/ }),
-/* 242 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53707,7 +53543,7 @@ function extend() {
 
 
 /***/ }),
-/* 243 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -53833,7 +53669,7 @@ function extend() {
 
 
 /***/ }),
-/* 244 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -53931,7 +53767,7 @@ function extend() {
 
 
 /***/ }),
-/* 245 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54026,7 +53862,7 @@ function extend() {
 
 
 /***/ }),
-/* 246 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54088,7 +53924,7 @@ function extend() {
 
 
 /***/ }),
-/* 247 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54150,7 +53986,7 @@ function extend() {
 
 
 /***/ }),
-/* 248 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js language configuration
@@ -54273,7 +54109,7 @@ function extend() {
 
 
 /***/ }),
-/* 249 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54428,7 +54264,7 @@ function extend() {
 
 
 /***/ }),
-/* 250 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54530,7 +54366,7 @@ function extend() {
 
 
 /***/ }),
-/* 251 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54592,7 +54428,7 @@ function extend() {
 
 
 /***/ }),
-/* 252 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54654,7 +54490,7 @@ function extend() {
 
 
 /***/ }),
-/* 253 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54737,7 +54573,7 @@ function extend() {
 
 
 /***/ }),
-/* 254 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54809,7 +54645,7 @@ function extend() {
 
 
 /***/ }),
-/* 255 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54873,7 +54709,7 @@ function extend() {
 
 
 /***/ }),
-/* 256 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -54987,7 +54823,7 @@ function extend() {
 
 
 /***/ }),
-/* 257 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -55094,7 +54930,7 @@ function extend() {
 
 
 /***/ }),
-/* 258 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 //! moment.js locale configuration
@@ -55201,6 +55037,13 @@ function extend() {
 
 
 /***/ }),
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
 /* 259 */,
 /* 260 */,
 /* 261 */,
@@ -55219,19 +55062,12 @@ function extend() {
 /* 274 */,
 /* 275 */,
 /* 276 */,
-/* 277 */,
-/* 278 */,
-/* 279 */,
-/* 280 */,
-/* 281 */,
-/* 282 */,
-/* 283 */,
-/* 284 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(357);
+var minDoc = __webpack_require__(350);
 
 var doccy;
 
@@ -55250,256 +55086,256 @@ module.exports = doccy;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 285 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./af": 136,
-	"./af.js": 136,
-	"./ar": 143,
-	"./ar-dz": 137,
-	"./ar-dz.js": 137,
-	"./ar-kw": 138,
-	"./ar-kw.js": 138,
-	"./ar-ly": 139,
-	"./ar-ly.js": 139,
-	"./ar-ma": 140,
-	"./ar-ma.js": 140,
-	"./ar-sa": 141,
-	"./ar-sa.js": 141,
-	"./ar-tn": 142,
-	"./ar-tn.js": 142,
-	"./ar.js": 143,
-	"./az": 144,
-	"./az.js": 144,
-	"./be": 145,
-	"./be.js": 145,
-	"./bg": 146,
-	"./bg.js": 146,
-	"./bm": 147,
-	"./bm.js": 147,
-	"./bn": 148,
-	"./bn.js": 148,
-	"./bo": 149,
-	"./bo.js": 149,
-	"./br": 150,
-	"./br.js": 150,
-	"./bs": 151,
-	"./bs.js": 151,
-	"./ca": 152,
-	"./ca.js": 152,
-	"./cs": 153,
-	"./cs.js": 153,
-	"./cv": 154,
-	"./cv.js": 154,
-	"./cy": 155,
-	"./cy.js": 155,
-	"./da": 156,
-	"./da.js": 156,
-	"./de": 159,
-	"./de-at": 157,
-	"./de-at.js": 157,
-	"./de-ch": 158,
-	"./de-ch.js": 158,
-	"./de.js": 159,
-	"./dv": 160,
-	"./dv.js": 160,
-	"./el": 161,
-	"./el.js": 161,
-	"./en-au": 162,
-	"./en-au.js": 162,
-	"./en-ca": 163,
-	"./en-ca.js": 163,
-	"./en-gb": 164,
-	"./en-gb.js": 164,
-	"./en-ie": 165,
-	"./en-ie.js": 165,
-	"./en-il": 166,
-	"./en-il.js": 166,
-	"./en-nz": 167,
-	"./en-nz.js": 167,
-	"./eo": 168,
-	"./eo.js": 168,
-	"./es": 171,
-	"./es-do": 169,
-	"./es-do.js": 169,
-	"./es-us": 170,
-	"./es-us.js": 170,
-	"./es.js": 171,
-	"./et": 172,
-	"./et.js": 172,
-	"./eu": 173,
-	"./eu.js": 173,
-	"./fa": 174,
-	"./fa.js": 174,
-	"./fi": 175,
-	"./fi.js": 175,
-	"./fo": 176,
-	"./fo.js": 176,
-	"./fr": 179,
-	"./fr-ca": 177,
-	"./fr-ca.js": 177,
-	"./fr-ch": 178,
-	"./fr-ch.js": 178,
-	"./fr.js": 179,
-	"./fy": 180,
-	"./fy.js": 180,
-	"./gd": 181,
-	"./gd.js": 181,
-	"./gl": 182,
-	"./gl.js": 182,
-	"./gom-latn": 183,
-	"./gom-latn.js": 183,
-	"./gu": 184,
-	"./gu.js": 184,
-	"./he": 185,
-	"./he.js": 185,
-	"./hi": 186,
-	"./hi.js": 186,
-	"./hr": 187,
-	"./hr.js": 187,
-	"./hu": 188,
-	"./hu.js": 188,
-	"./hy-am": 189,
-	"./hy-am.js": 189,
-	"./id": 190,
-	"./id.js": 190,
-	"./is": 191,
-	"./is.js": 191,
-	"./it": 192,
-	"./it.js": 192,
-	"./ja": 193,
-	"./ja.js": 193,
-	"./jv": 194,
-	"./jv.js": 194,
-	"./ka": 195,
-	"./ka.js": 195,
-	"./kk": 196,
-	"./kk.js": 196,
-	"./km": 197,
-	"./km.js": 197,
-	"./kn": 198,
-	"./kn.js": 198,
-	"./ko": 199,
-	"./ko.js": 199,
-	"./ky": 200,
-	"./ky.js": 200,
-	"./lb": 201,
-	"./lb.js": 201,
-	"./lo": 202,
-	"./lo.js": 202,
-	"./lt": 203,
-	"./lt.js": 203,
-	"./lv": 204,
-	"./lv.js": 204,
-	"./me": 205,
-	"./me.js": 205,
-	"./mi": 206,
-	"./mi.js": 206,
-	"./mk": 207,
-	"./mk.js": 207,
-	"./ml": 208,
-	"./ml.js": 208,
-	"./mn": 209,
-	"./mn.js": 209,
-	"./mr": 210,
-	"./mr.js": 210,
-	"./ms": 212,
-	"./ms-my": 211,
-	"./ms-my.js": 211,
-	"./ms.js": 212,
-	"./mt": 213,
-	"./mt.js": 213,
-	"./my": 214,
-	"./my.js": 214,
-	"./nb": 215,
-	"./nb.js": 215,
-	"./ne": 216,
-	"./ne.js": 216,
-	"./nl": 218,
-	"./nl-be": 217,
-	"./nl-be.js": 217,
-	"./nl.js": 218,
-	"./nn": 219,
-	"./nn.js": 219,
-	"./pa-in": 220,
-	"./pa-in.js": 220,
-	"./pl": 221,
-	"./pl.js": 221,
-	"./pt": 223,
-	"./pt-br": 222,
-	"./pt-br.js": 222,
-	"./pt.js": 223,
-	"./ro": 224,
-	"./ro.js": 224,
-	"./ru": 225,
-	"./ru.js": 225,
-	"./sd": 226,
-	"./sd.js": 226,
-	"./se": 227,
-	"./se.js": 227,
-	"./si": 228,
-	"./si.js": 228,
-	"./sk": 229,
-	"./sk.js": 229,
-	"./sl": 230,
-	"./sl.js": 230,
-	"./sq": 231,
-	"./sq.js": 231,
-	"./sr": 233,
-	"./sr-cyrl": 232,
-	"./sr-cyrl.js": 232,
-	"./sr.js": 233,
-	"./ss": 234,
-	"./ss.js": 234,
-	"./sv": 235,
-	"./sv.js": 235,
-	"./sw": 236,
-	"./sw.js": 236,
-	"./ta": 237,
-	"./ta.js": 237,
-	"./te": 238,
-	"./te.js": 238,
-	"./tet": 239,
-	"./tet.js": 239,
-	"./tg": 240,
-	"./tg.js": 240,
-	"./th": 241,
-	"./th.js": 241,
-	"./tl-ph": 242,
-	"./tl-ph.js": 242,
-	"./tlh": 243,
-	"./tlh.js": 243,
-	"./tr": 244,
-	"./tr.js": 244,
-	"./tzl": 245,
-	"./tzl.js": 245,
-	"./tzm": 247,
-	"./tzm-latn": 246,
-	"./tzm-latn.js": 246,
-	"./tzm.js": 247,
-	"./ug-cn": 248,
-	"./ug-cn.js": 248,
-	"./uk": 249,
-	"./uk.js": 249,
-	"./ur": 250,
-	"./ur.js": 250,
-	"./uz": 252,
-	"./uz-latn": 251,
-	"./uz-latn.js": 251,
-	"./uz.js": 252,
-	"./vi": 253,
-	"./vi.js": 253,
-	"./x-pseudo": 254,
-	"./x-pseudo.js": 254,
-	"./yo": 255,
-	"./yo.js": 255,
-	"./zh-cn": 256,
-	"./zh-cn.js": 256,
-	"./zh-hk": 257,
-	"./zh-hk.js": 257,
-	"./zh-tw": 258,
-	"./zh-tw.js": 258
+	"./af": 129,
+	"./af.js": 129,
+	"./ar": 136,
+	"./ar-dz": 130,
+	"./ar-dz.js": 130,
+	"./ar-kw": 131,
+	"./ar-kw.js": 131,
+	"./ar-ly": 132,
+	"./ar-ly.js": 132,
+	"./ar-ma": 133,
+	"./ar-ma.js": 133,
+	"./ar-sa": 134,
+	"./ar-sa.js": 134,
+	"./ar-tn": 135,
+	"./ar-tn.js": 135,
+	"./ar.js": 136,
+	"./az": 137,
+	"./az.js": 137,
+	"./be": 138,
+	"./be.js": 138,
+	"./bg": 139,
+	"./bg.js": 139,
+	"./bm": 140,
+	"./bm.js": 140,
+	"./bn": 141,
+	"./bn.js": 141,
+	"./bo": 142,
+	"./bo.js": 142,
+	"./br": 143,
+	"./br.js": 143,
+	"./bs": 144,
+	"./bs.js": 144,
+	"./ca": 145,
+	"./ca.js": 145,
+	"./cs": 146,
+	"./cs.js": 146,
+	"./cv": 147,
+	"./cv.js": 147,
+	"./cy": 148,
+	"./cy.js": 148,
+	"./da": 149,
+	"./da.js": 149,
+	"./de": 152,
+	"./de-at": 150,
+	"./de-at.js": 150,
+	"./de-ch": 151,
+	"./de-ch.js": 151,
+	"./de.js": 152,
+	"./dv": 153,
+	"./dv.js": 153,
+	"./el": 154,
+	"./el.js": 154,
+	"./en-au": 155,
+	"./en-au.js": 155,
+	"./en-ca": 156,
+	"./en-ca.js": 156,
+	"./en-gb": 157,
+	"./en-gb.js": 157,
+	"./en-ie": 158,
+	"./en-ie.js": 158,
+	"./en-il": 159,
+	"./en-il.js": 159,
+	"./en-nz": 160,
+	"./en-nz.js": 160,
+	"./eo": 161,
+	"./eo.js": 161,
+	"./es": 164,
+	"./es-do": 162,
+	"./es-do.js": 162,
+	"./es-us": 163,
+	"./es-us.js": 163,
+	"./es.js": 164,
+	"./et": 165,
+	"./et.js": 165,
+	"./eu": 166,
+	"./eu.js": 166,
+	"./fa": 167,
+	"./fa.js": 167,
+	"./fi": 168,
+	"./fi.js": 168,
+	"./fo": 169,
+	"./fo.js": 169,
+	"./fr": 172,
+	"./fr-ca": 170,
+	"./fr-ca.js": 170,
+	"./fr-ch": 171,
+	"./fr-ch.js": 171,
+	"./fr.js": 172,
+	"./fy": 173,
+	"./fy.js": 173,
+	"./gd": 174,
+	"./gd.js": 174,
+	"./gl": 175,
+	"./gl.js": 175,
+	"./gom-latn": 176,
+	"./gom-latn.js": 176,
+	"./gu": 177,
+	"./gu.js": 177,
+	"./he": 178,
+	"./he.js": 178,
+	"./hi": 179,
+	"./hi.js": 179,
+	"./hr": 180,
+	"./hr.js": 180,
+	"./hu": 181,
+	"./hu.js": 181,
+	"./hy-am": 182,
+	"./hy-am.js": 182,
+	"./id": 183,
+	"./id.js": 183,
+	"./is": 184,
+	"./is.js": 184,
+	"./it": 185,
+	"./it.js": 185,
+	"./ja": 186,
+	"./ja.js": 186,
+	"./jv": 187,
+	"./jv.js": 187,
+	"./ka": 188,
+	"./ka.js": 188,
+	"./kk": 189,
+	"./kk.js": 189,
+	"./km": 190,
+	"./km.js": 190,
+	"./kn": 191,
+	"./kn.js": 191,
+	"./ko": 192,
+	"./ko.js": 192,
+	"./ky": 193,
+	"./ky.js": 193,
+	"./lb": 194,
+	"./lb.js": 194,
+	"./lo": 195,
+	"./lo.js": 195,
+	"./lt": 196,
+	"./lt.js": 196,
+	"./lv": 197,
+	"./lv.js": 197,
+	"./me": 198,
+	"./me.js": 198,
+	"./mi": 199,
+	"./mi.js": 199,
+	"./mk": 200,
+	"./mk.js": 200,
+	"./ml": 201,
+	"./ml.js": 201,
+	"./mn": 202,
+	"./mn.js": 202,
+	"./mr": 203,
+	"./mr.js": 203,
+	"./ms": 205,
+	"./ms-my": 204,
+	"./ms-my.js": 204,
+	"./ms.js": 205,
+	"./mt": 206,
+	"./mt.js": 206,
+	"./my": 207,
+	"./my.js": 207,
+	"./nb": 208,
+	"./nb.js": 208,
+	"./ne": 209,
+	"./ne.js": 209,
+	"./nl": 211,
+	"./nl-be": 210,
+	"./nl-be.js": 210,
+	"./nl.js": 211,
+	"./nn": 212,
+	"./nn.js": 212,
+	"./pa-in": 213,
+	"./pa-in.js": 213,
+	"./pl": 214,
+	"./pl.js": 214,
+	"./pt": 216,
+	"./pt-br": 215,
+	"./pt-br.js": 215,
+	"./pt.js": 216,
+	"./ro": 217,
+	"./ro.js": 217,
+	"./ru": 218,
+	"./ru.js": 218,
+	"./sd": 219,
+	"./sd.js": 219,
+	"./se": 220,
+	"./se.js": 220,
+	"./si": 221,
+	"./si.js": 221,
+	"./sk": 222,
+	"./sk.js": 222,
+	"./sl": 223,
+	"./sl.js": 223,
+	"./sq": 224,
+	"./sq.js": 224,
+	"./sr": 226,
+	"./sr-cyrl": 225,
+	"./sr-cyrl.js": 225,
+	"./sr.js": 226,
+	"./ss": 227,
+	"./ss.js": 227,
+	"./sv": 228,
+	"./sv.js": 228,
+	"./sw": 229,
+	"./sw.js": 229,
+	"./ta": 230,
+	"./ta.js": 230,
+	"./te": 231,
+	"./te.js": 231,
+	"./tet": 232,
+	"./tet.js": 232,
+	"./tg": 233,
+	"./tg.js": 233,
+	"./th": 234,
+	"./th.js": 234,
+	"./tl-ph": 235,
+	"./tl-ph.js": 235,
+	"./tlh": 236,
+	"./tlh.js": 236,
+	"./tr": 237,
+	"./tr.js": 237,
+	"./tzl": 238,
+	"./tzl.js": 238,
+	"./tzm": 240,
+	"./tzm-latn": 239,
+	"./tzm-latn.js": 239,
+	"./tzm.js": 240,
+	"./ug-cn": 241,
+	"./ug-cn.js": 241,
+	"./uk": 242,
+	"./uk.js": 242,
+	"./ur": 243,
+	"./ur.js": 243,
+	"./uz": 245,
+	"./uz-latn": 244,
+	"./uz-latn.js": 244,
+	"./uz.js": 245,
+	"./vi": 246,
+	"./vi.js": 246,
+	"./x-pseudo": 247,
+	"./x-pseudo.js": 247,
+	"./yo": 248,
+	"./yo.js": 248,
+	"./zh-cn": 249,
+	"./zh-cn.js": 249,
+	"./zh-hk": 250,
+	"./zh-hk.js": 250,
+	"./zh-tw": 251,
+	"./zh-tw.js": 251
 };
 function webpackContext(req) {
 	return __webpack_require__(webpackContextResolve(req));
@@ -55515,15 +55351,15 @@ webpackContext.keys = function webpackContextKeys() {
 };
 webpackContext.resolve = webpackContextResolve;
 module.exports = webpackContext;
-webpackContext.id = 285;
+webpackContext.id = 278;
 
 /***/ }),
-/* 286 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
  * @license
- * Video.js 6.10.1 <http://videojs.com/>
+ * Video.js 6.6.3 <http://videojs.com/>
  * Copyright Brightcove, Inc. <https://www.brightcove.com/>
  * Available under Apache License Version 2.0
  * <https://github.com/videojs/video.js/blob/master/LICENSE>
@@ -55535,14 +55371,14 @@ webpackContext.id = 285;
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var window = _interopDefault(__webpack_require__(119));
-var document = _interopDefault(__webpack_require__(284));
-var tsml = _interopDefault(__webpack_require__(109));
-var safeParseTuple = _interopDefault(__webpack_require__(121));
-var xhr = _interopDefault(__webpack_require__(356));
-var vtt = _interopDefault(__webpack_require__(288));
+var window = _interopDefault(__webpack_require__(112));
+var document = _interopDefault(__webpack_require__(277));
+var tsml = _interopDefault(__webpack_require__(102));
+var safeParseTuple = _interopDefault(__webpack_require__(114));
+var xhr = _interopDefault(__webpack_require__(349));
+var vtt = _interopDefault(__webpack_require__(281));
 
-var version = "6.10.1";
+var version = "6.6.3";
 
 /**
  * @file browser.js
@@ -56927,7 +56763,7 @@ function isSingleLeftClick(event) {
   // otherwise `mousedown` should be enough for a button
 
   if (event.button === undefined && event.buttons === undefined) {
-    // Why do we need `buttons` ?
+    // Why do we need `butttons` ?
     // Because, middle mouse sometimes have this:
     // e.button === 0 and e.buttons === 4
     // Furthermore, we want to prevent combination click, something like
@@ -57551,10 +57387,7 @@ function trigger(elem, event, hash) {
   // If an event name was passed as a string, creates an event out of it
   if (typeof event === 'string') {
     event = { type: event, target: elem };
-  } else if (!event.target) {
-    event.target = elem;
   }
-
   // Normalizes the event properties.
   event = fixEvent(event);
 
@@ -57637,8 +57470,8 @@ var videojs$2 = void 0;
  */
 var autoSetup = function autoSetup() {
 
-  // Protect against breakage in non-browser environments and check global autoSetup option.
-  if (!isReal() || videojs$2.options.autoSetup === false) {
+  // Protect against breakage in non-browser environments.
+  if (!isReal()) {
     return;
   }
 
@@ -57844,59 +57677,6 @@ var throttle = function throttle(fn, wait) {
   };
 
   return throttled;
-};
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked.
- *
- * Inspired by lodash and underscore implementations.
- *
- * @param  {Function} func
- *         The function to wrap with debounce behavior.
- *
- * @param  {number} wait
- *         The number of milliseconds to wait after the last invocation.
- *
- * @param  {boolean} [immediate]
- *         Whether or not to invoke the function immediately upon creation.
- *
- * @param  {Object} [context=window]
- *         The "context" in which the debounced function should debounce. For
- *         example, if this function should be tied to a Video.js player,
- *         the player can be passed here. Alternatively, defaults to the
- *         global `window` object.
- *
- * @return {Function}
- *         A debounced function.
- */
-var debounce = function debounce(func, wait, immediate) {
-  var context = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : window;
-
-  var timeout = void 0;
-
-  /* eslint-disable consistent-this */
-  return function () {
-    var self = this;
-    var args = arguments;
-
-    var _later = function later() {
-      timeout = null;
-      _later = null;
-      if (!immediate) {
-        func.apply(self, args);
-      }
-    };
-
-    if (!timeout && immediate) {
-      func.apply(self, args);
-    }
-
-    context.clearTimeout(timeout);
-    timeout = context.setTimeout(_later, wait);
-  };
-  /* eslint-enable consistent-this */
 };
 
 /**
@@ -58895,7 +58675,7 @@ var Component = function () {
    * Localize a string given the string in english.
    *
    * If tokens are provided, it'll try and run a simple token replacement on the provided string.
-   * The tokens it looks for look like `{1}` with the index being 1-indexed into the tokens array.
+   * The tokens it loooks for look like `{1}` with the index being 1-indexed into the tokens array.
    *
    * If a `defaultValue` is provided, it'll use that over `string`,
    * if a value isn't found in provided language files.
@@ -59332,7 +59112,7 @@ var Component = function () {
   Component.prototype.triggerReady = function triggerReady() {
     this.isReady_ = true;
 
-    // Ensure ready is triggered asynchronously
+    // Ensure ready is triggerd asynchronously
     this.setTimeout(function () {
       var readyQueue = this.readyQueue_;
 
@@ -60344,7 +60124,7 @@ Component.registerComponent('Component', Component);
  *           Returns the time offset at which a specified time range begins.
  *
  * @property {time-ranges:indexFunction} end
- *           Returns the time offset at which a specified time range ends.
+ *           Returns the time offset at which a specified time range begins.
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/TimeRanges
  */
@@ -60370,8 +60150,7 @@ function rangeCheck(fnName, index, maxIndex) {
 }
 
 /**
- * Get the time for the specified index at the start or end
- * of a TimeRange object.
+ * Check if any of the time ranges are over the maximum index.
  *
  * @param {string} fnName
  *        The function name to use for logging
@@ -60398,7 +60177,7 @@ function getRange(fnName, valueIndex, ranges, rangeIndex) {
 }
 
 /**
- * Create a time range object given ranges of time.
+ * Create a time range object givent ranges of time.
  *
  * @param {Array} [ranges]
  *        An array of time ranges.
@@ -60652,7 +60431,7 @@ for (var errNum = 0; errNum < MediaError.errorTypes.length; errNum++) {
  *         Whether or not the object is `Promise`-like.
  */
 function isPromise(value) {
-  return value !== undefined && value !== null && typeof value.then === 'function';
+  return value !== undefined && typeof value.then === 'function';
 }
 
 /**
@@ -63455,42 +63234,6 @@ var Tech = function (_Component) {
     return _this;
   }
 
-  /**
-   * A special function to trigger source set in a way that will allow player
-   * to re-trigger if the player or tech are not ready yet.
-   *
-   * @fires Tech#sourceset
-   * @param {string} src The source string at the time of the source changing.
-   */
-
-
-  Tech.prototype.triggerSourceset = function triggerSourceset(src) {
-    var _this2 = this;
-
-    if (!this.isReady_) {
-      // on initial ready we have to trigger source set
-      // 1ms after ready so that player can watch for it.
-      this.one('ready', function () {
-        return _this2.setTimeout(function () {
-          return _this2.triggerSourceset(src);
-        }, 1);
-      });
-    }
-
-    /**
-     * Fired when the source is set on the tech causing the media element
-     * to reload.
-     *
-     * @see {@link Player#event:sourceset}
-     * @event Tech#sourceset
-     * @type {EventTarget~Event}
-     */
-    this.trigger({
-      src: src,
-      type: 'sourceset'
-    });
-  };
-
   /* Fallbacks for unsupported event types
   ================================================================================ */
 
@@ -63723,19 +63466,19 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.clearTracks = function clearTracks(types) {
-    var _this3 = this;
+    var _this2 = this;
 
     types = [].concat(types);
     // clear out all tracks because we can't reuse them between techs
     types.forEach(function (type) {
-      var list = _this3[type + 'Tracks']() || [];
+      var list = _this2[type + 'Tracks']() || [];
       var i = list.length;
 
       while (i--) {
         var track = list[i];
 
         if (type === 'text') {
-          _this3.removeRemoteTextTrack(track);
+          _this2.removeRemoteTextTrack(track);
         }
         list.removeTrack(track);
       }
@@ -63840,7 +63583,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.initTrackListeners = function initTrackListeners() {
-    var _this4 = this;
+    var _this3 = this;
 
     /**
      * Triggered when tracks are added or removed on the Tech {@link AudioTrackList}
@@ -63865,15 +63608,15 @@ var Tech = function (_Component) {
     NORMAL.names.forEach(function (name) {
       var props = NORMAL[name];
       var trackListChanges = function trackListChanges() {
-        _this4.trigger(name + 'trackchange');
+        _this3.trigger(name + 'trackchange');
       };
 
-      var tracks = _this4[props.getterName]();
+      var tracks = _this3[props.getterName]();
 
       tracks.addEventListener('removetrack', trackListChanges);
       tracks.addEventListener('addtrack', trackListChanges);
 
-      _this4.on('dispose', function () {
+      _this3.on('dispose', function () {
         tracks.removeEventListener('removetrack', trackListChanges);
         tracks.removeEventListener('addtrack', trackListChanges);
       });
@@ -63889,7 +63632,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addWebVttScript_ = function addWebVttScript_() {
-    var _this5 = this;
+    var _this4 = this;
 
     if (window.WebVTT) {
       return;
@@ -63920,7 +63663,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this5.trigger('vttjsloaded');
+        _this4.trigger('vttjsloaded');
       };
       script.onerror = function () {
         /**
@@ -63929,7 +63672,7 @@ var Tech = function (_Component) {
          * @event Tech#vttjsloaded
          * @type {EventTarget~Event}
          */
-        _this5.trigger('vttjserror');
+        _this4.trigger('vttjserror');
       };
       this.on('dispose', function () {
         script.onload = null;
@@ -63951,7 +63694,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.emulateTextTracks = function emulateTextTracks() {
-    var _this6 = this;
+    var _this5 = this;
 
     var tracks = this.textTracks();
     var remoteTracks = this.remoteTextTracks();
@@ -63968,7 +63711,7 @@ var Tech = function (_Component) {
     this.addWebVttScript_();
 
     var updateDisplay = function updateDisplay() {
-      return _this6.trigger('texttrackchange');
+      return _this5.trigger('texttrackchange');
     };
 
     var textTracksChanges = function textTracksChanges() {
@@ -64083,7 +63826,7 @@ var Tech = function (_Component) {
 
 
   Tech.prototype.addRemoteTextTrack = function addRemoteTextTrack() {
-    var _this7 = this;
+    var _this6 = this;
 
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var manualCleanup = arguments[1];
@@ -64103,7 +63846,7 @@ var Tech = function (_Component) {
     if (manualCleanup !== true) {
       // create the TextTrackList if it doesn't exist
       this.ready(function () {
-        return _this7.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
+        return _this6.autoRemoteTextTracks_.addTrack(htmlTrackElement.track);
       });
     }
 
@@ -64416,18 +64159,6 @@ Tech.prototype.featuresPlaybackRate = false;
 Tech.prototype.featuresProgressEvents = false;
 
 /**
- * Boolean indicating wether the `Tech` supports the `sourceset` event.
- *
- * A tech should set this to `true` and then use {@link Tech#triggerSourceset}
- * to trigger a {@link Tech#event:sourceset} at the earliest time after getting
- * a new source.
- *
- * @type {boolean}
- * @default
- */
-Tech.prototype.featuresSourceset = false;
-
-/**
  * Boolean indicating wether the `Tech` supports the `timeupdate` event. This is currently
  * not triggered by video-js-swf. This will be used to determine if
  * {@link Tech#manualTimeUpdates} should be called.
@@ -64565,7 +64296,7 @@ Tech.withSourceHandlers = function (_Tech) {
    * When using a source handler, prefer its implementation of
    * any function normally provided by the tech.
    */
-  var deferrable = ['seekable', 'seeking', 'duration'];
+  var deferrable = ['seekable', 'duration'];
 
   /**
    * A wrapper around {@link Tech#seekable} that will call a `SourceHandler`s seekable
@@ -64670,9 +64401,6 @@ Tech.registerTech('Tech', Tech);
 Tech.defaultTechOrder_ = [];
 
 var middlewares = {};
-var middlewareInstances = {};
-
-var TERMINATOR = {};
 
 function use(type, middleware) {
   middlewares[type] = middlewares[type] || [];
@@ -64693,39 +64421,12 @@ function setTech(middleware, tech) {
   });
 }
 
-/**
- * Calls a getter on the tech first, through each middleware
- * from right to left to the player.
- */
 function get$1(middleware, tech, method) {
   return middleware.reduceRight(middlewareIterator(method), tech[method]());
 }
 
-/**
- * Takes the argument given to the player and calls the setter method on each
- * middlware from left to right to the tech.
- */
 function set$1(middleware, tech, method, arg) {
   return tech[method](middleware.reduce(middlewareIterator(method), arg));
-}
-
-/**
- * Takes the argument given to the player and calls the `call` version of the method
- * on each middleware from left to right.
- * Then, call the passed in method on the tech and return the result unchanged
- * back to the player, through middleware, this time from right to left.
- */
-function mediate(middleware, tech, method) {
-  var arg = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-
-  var callMethod = 'call' + toTitleCase(method);
-  var middlewareValue = middleware.reduce(middlewareIterator(callMethod), arg);
-  var terminated = middlewareValue === TERMINATOR;
-  var returnValue = terminated ? null : tech[method](middlewareValue);
-
-  executeRight(middleware, method, returnValue, terminated);
-
-  return returnValue;
 }
 
 var allowedGetters = {
@@ -64733,82 +64434,21 @@ var allowedGetters = {
   currentTime: 1,
   duration: 1,
   seekable: 1,
-  played: 1,
-  paused: 1
+  played: 1
 };
 
 var allowedSetters = {
   setCurrentTime: 1
 };
 
-var allowedMediators = {
-  play: 1,
-  pause: 1
-};
-
 function middlewareIterator(method) {
   return function (value, mw) {
-    // if the previous middleware terminated, pass along the termination
-    if (value === TERMINATOR) {
-      return TERMINATOR;
-    }
-
     if (mw[method]) {
       return mw[method](value);
     }
 
     return value;
   };
-}
-
-function executeRight(mws, method, value, terminated) {
-  for (var i = mws.length - 1; i >= 0; i--) {
-    var mw = mws[i];
-
-    if (mw[method]) {
-      mw[method](terminated, value);
-    }
-  }
-}
-
-function clearCacheForPlayer(player) {
-  middlewareInstances[player.id()] = null;
-}
-
-/**
- * {
- *  [playerId]: [[mwFactory, mwInstance], ...]
- * }
- */
-function getOrCreateFactory(player, mwFactory) {
-  var mws = middlewareInstances[player.id()];
-  var mw = null;
-
-  if (mws === undefined || mws === null) {
-    mw = mwFactory(player);
-    middlewareInstances[player.id()] = [[mwFactory, mw]];
-    return mw;
-  }
-
-  for (var i = 0; i < mws.length; i++) {
-    var _mws$i = mws[i],
-        mwf = _mws$i[0],
-        mwi = _mws$i[1];
-
-
-    if (mwf !== mwFactory) {
-      continue;
-    }
-
-    mw = mwi;
-  }
-
-  if (mw === null) {
-    mw = mwFactory(player);
-    mws.push([mwFactory, mw]);
-  }
-
-  return mw;
 }
 
 function setSourceHelper() {
@@ -64829,7 +64469,7 @@ function setSourceHelper() {
     // if we have an mwFactory, call it with the player to get the mw,
     // then call the mw's setSource method
   } else if (mwFactory) {
-    var mw = getOrCreateFactory(player, mwFactory);
+    var mw = mwFactory(player);
 
     mw.setSource(assign({}, src), function (err, _src) {
 
@@ -64854,91 +64494,6 @@ function setSourceHelper() {
     setSourceHelper(src, middlewares['*'], next, player, acc, true);
   }
 }
-
-/**
- * Mimetypes
- *
- * @see http://hul.harvard.edu/ois/////systems/wax/wax-public-help/mimetypes.htm
- * @typedef Mimetypes~Kind
- * @enum
- */
-var MimetypesKind = {
-  opus: 'video/ogg',
-  ogv: 'video/ogg',
-  mp4: 'video/mp4',
-  mov: 'video/mp4',
-  m4v: 'video/mp4',
-  mkv: 'video/x-matroska',
-  mp3: 'audio/mpeg',
-  aac: 'audio/aac',
-  oga: 'audio/ogg',
-  m3u8: 'application/x-mpegURL'
-};
-
-/**
- * Get the mimetype of a given src url if possible
- *
- * @param {string} src
- *        The url to the src
- *
- * @return {string}
- *         return the mimetype if it was known or empty string otherwise
- */
-var getMimetype = function getMimetype() {
-  var src = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-  var ext = getFileExtension(src);
-  var mimetype = MimetypesKind[ext.toLowerCase()];
-
-  return mimetype || '';
-};
-
-/**
- * Find the mime type of a given source string if possible. Uses the player
- * source cache.
- *
- * @param {Player} player
- *        The player object
- *
- * @param {string} src
- *        The source string
- *
- * @return {string}
- *         The type that was found
- */
-var findMimetype = function findMimetype(player, src) {
-  if (!src) {
-    return '';
-  }
-
-  // 1. check for the type in the `source` cache
-  if (player.cache_.source.src === src && player.cache_.source.type) {
-    return player.cache_.source.type;
-  }
-
-  // 2. see if we have this source in our `currentSources` cache
-  var matchingSources = player.cache_.sources.filter(function (s) {
-    return s.src === src;
-  });
-
-  if (matchingSources.length) {
-    return matchingSources[0].type;
-  }
-
-  // 3. look for the src url in source elements and use the type there
-  var sources = player.$$('source');
-
-  for (var i = 0; i < sources.length; i++) {
-    var s = sources[i];
-
-    if (s.type && s.src && s.src === src) {
-      return s.type;
-    }
-  }
-
-  // 4. finally fallback to our list of mime types based on src url extension
-  return getMimetype(src);
-};
 
 /**
  * @module filter-source
@@ -64974,10 +64529,10 @@ var filterSource = function filterSource(src) {
     src = newsrc;
   } else if (typeof src === 'string' && src.trim()) {
     // convert string into object
-    src = [fixSource({ src: src })];
+    src = [{ src: src }];
   } else if (isObject(src) && typeof src.src === 'string' && src.src && src.src.trim()) {
     // src is already valid
-    src = [fixSource(src)];
+    src = [src];
   } else {
     // invalid source, turn it into an empty array
     src = [];
@@ -64985,24 +64540,6 @@ var filterSource = function filterSource(src) {
 
   return src;
 };
-
-/**
- * Checks src mimetype, adding it when possible
- *
- * @param {Tech~SourceObject} src
- *        The src object to check
- * @return {Tech~SourceObject}
- *        src Object with known type
- */
-function fixSource(src) {
-  var mimetype = getMimetype(src.src);
-
-  if (!src.type && mimetype) {
-    src.type = mimetype;
-  }
-
-  return src;
-}
 
 /**
  * @file loader.js
@@ -65139,7 +64676,10 @@ var ClickableComponent = function (_Component) {
 
     // Add ARIA attributes for clickable element which is not a native HTML button
     attributes = assign({
-      role: 'button'
+      'role': 'button',
+
+      // let the screen reader user know that the text of the element may change
+      'aria-live': 'polite'
     }, attributes);
 
     this.tabIndex_ = props.tabIndex;
@@ -65172,9 +64712,6 @@ var ClickableComponent = function (_Component) {
   ClickableComponent.prototype.createControlTextEl = function createControlTextEl(el) {
     this.controlTextEl_ = createEl('span', {
       className: 'vjs-control-text'
-    }, {
-      // let the screen reader user know that the text of the element may change
-      'aria-live': 'polite'
     });
 
     if (el) {
@@ -65779,6 +65316,7 @@ var TextTrackDisplay = function (_Component) {
       return;
     }
 
+    var overrides = this.player_.textTrackSettings.getValues();
     var cues = [];
 
     for (var _i = 0; _i < track.activeCues.length; _i++) {
@@ -65786,12 +65324,6 @@ var TextTrackDisplay = function (_Component) {
     }
 
     window.WebVTT.processCues(window, cues, this.el_);
-
-    if (!this.player_.textTrackSettings) {
-      return;
-    }
-
-    var overrides = this.player_.textTrackSettings.getValues();
 
     var i = cues.length;
 
@@ -65880,22 +65412,11 @@ var LoadingSpinner = function (_Component) {
    * @return {Element}
    *         The dom element that gets created.
    */
-  LoadingSpinner.prototype.createEl = function createEl$$1() {
-    var isAudio = this.player_.isAudio();
-    var playerType = this.localize(isAudio ? 'Audio Player' : 'Video Player');
-    var controlText = createEl('span', {
-      className: 'vjs-control-text',
-      innerHTML: this.localize('{1} is loading.', [playerType])
-    });
-
-    var el = _Component.prototype.createEl.call(this, 'div', {
+  LoadingSpinner.prototype.createEl = function createEl() {
+    return _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-loading-spinner',
       dir: 'ltr'
     });
-
-    el.appendChild(controlText);
-
-    return el;
   };
 
   return LoadingSpinner;
@@ -65951,7 +65472,10 @@ var Button = function (_ClickableComponent) {
     attributes = assign({
 
       // Necessary since the default button type is "submit"
-      type: 'button'
+      'type': 'button',
+
+      // let the screen reader user know that the text of the button may change
+      'aria-live': 'polite'
     }, attributes);
 
     var el = Component.prototype.createEl.call(this, tag, props, attributes);
@@ -66376,23 +65900,25 @@ Component.registerComponent('PlayToggle', PlayToggle);
 
 /**
  * @file format-time.js
- * @module format-time
+ * @module Format-time
  */
 
 /**
-* Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
-* will force a number of leading zeros to cover the length of the guide.
-*
-* @param {number} seconds
-*        Number of seconds to be turned into a string
-*
-* @param {number} guide
-*        Number (in seconds) to model the string after
-*
-* @return {string}
-*         Time formatted as H:MM:SS or M:SS
-*/
-var defaultImplementation = function defaultImplementation(seconds, guide) {
+ * Format seconds as a time string, H:MM:SS or M:SS. Supplying a guide (in seconds)
+ * will force a number of leading zeros to cover the length of the guide.
+ *
+ * @param {number} seconds
+ *        Number of seconds to be turned into a string
+ *
+ * @param {number} guide
+ *        Number (in seconds) to model the string after
+ *
+ * @return {string}
+ *         Time formatted as H:MM:SS or M:SS
+ */
+function formatTime(seconds) {
+  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
+
   seconds = seconds < 0 ? 0 : seconds;
   var s = Math.floor(seconds % 60);
   var m = Math.floor(seconds / 60 % 60);
@@ -66418,33 +65944,7 @@ var defaultImplementation = function defaultImplementation(seconds, guide) {
   s = s < 10 ? '0' + s : s;
 
   return h + m + s;
-};
-
-var implementation = defaultImplementation;
-
-/**
- * Replaces the default formatTime implementation with a custom implementation.
- *
- * @param {Function} customImplementation
- *        A function which will be used in place of the default formatTime implementation.
- *        Will receive the current time in seconds and the guide (in seconds) as arguments.
- */
-function setFormatTime(customImplementation) {
-  implementation = customImplementation;
 }
-
-/**
- * Resets formatTime to the default implementation.
- */
-function resetFormatTime() {
-  implementation = defaultImplementation;
-}
-
-var formatTime = function (seconds) {
-  var guide = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : seconds;
-
-  return implementation(seconds, guide);
-};
 
 /**
  * @file time-display.js
@@ -66488,16 +65988,18 @@ var TimeDisplay = function (_Component) {
   TimeDisplay.prototype.createEl = function createEl$$1(plainName) {
     var className = this.buildCSSClass();
     var el = _Component.prototype.createEl.call(this, 'div', {
-      className: className + ' vjs-time-control vjs-control',
-      innerHTML: '<span class="vjs-control-text">' + this.localize(this.labelText_) + '\xA0</span>'
+      className: className + ' vjs-time-control vjs-control'
     });
 
-    this.contentEl_ = createEl('span', {
+    this.contentEl_ = createEl('div', {
       className: className + '-display'
     }, {
       // tell screen readers not to automatically read the time as it changes
       'aria-live': 'off'
-    });
+    }, createEl('span', {
+      className: 'vjs-control-text',
+      textContent: this.localize(this.controlText_)
+    }));
 
     this.updateTextNode_();
     el.appendChild(this.contentEl_);
@@ -66528,7 +66030,7 @@ var TimeDisplay = function (_Component) {
       this.contentEl_.removeChild(this.contentEl_.firstChild);
     }
 
-    this.textNode_ = document.createTextNode(this.formattedTime_ || this.formatTime_(0));
+    this.textNode_ = document.createTextNode(this.formattedTime_ || '0:00');
     this.contentEl_.appendChild(this.textNode_);
   };
 
@@ -66588,23 +66090,13 @@ var TimeDisplay = function (_Component) {
 }(Component);
 
 /**
- * The text that is added to the `TimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-TimeDisplay.prototype.labelText_ = 'Time';
-
-/**
  * The text that should display over the `TimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 TimeDisplay.prototype.controlText_ = 'Time';
 
 Component.registerComponent('TimeDisplay', TimeDisplay);
@@ -66691,23 +66183,13 @@ var CurrentTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `CurrentTimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-CurrentTimeDisplay.prototype.labelText_ = 'Current Time';
-
-/**
  * The text that should display over the `CurrentTimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 CurrentTimeDisplay.prototype.controlText_ = 'Current Time';
 
 Component.registerComponent('CurrentTimeDisplay', CurrentTimeDisplay);
@@ -66788,24 +66270,14 @@ var DurationDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `DurationDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-DurationDisplay.prototype.labelText_ = 'Duration';
-
-/**
  * The text that should display over the `DurationDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
-DurationDisplay.prototype.controlText_ = 'Duration';
+
+
+DurationDisplay.prototype.controlText_ = 'Duration Time';
 
 Component.registerComponent('DurationDisplay', DurationDisplay);
 
@@ -66902,7 +66374,6 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 
 
   RemainingTimeDisplay.prototype.formatTime_ = function formatTime_(time) {
-    // TODO: The "-" should be decorative, and not announced by a screen reader
     return '-' + _TimeDisplay.prototype.formatTime_.call(this, time);
   };
 
@@ -66954,23 +66425,13 @@ var RemainingTimeDisplay = function (_TimeDisplay) {
 }(TimeDisplay);
 
 /**
- * The text that is added to the `RemainingTimeDisplay` for screen reader users.
- *
- * @type {string}
- * @private
- */
-
-
-RemainingTimeDisplay.prototype.labelText_ = 'Remaining Time';
-
-/**
  * The text that should display over the `RemainingTimeDisplay`s controls. Added to for localization.
  *
  * @type {string}
  * @private
- *
- * @deprecated in v7; controlText_ is not used in non-active display Components
  */
+
+
 RemainingTimeDisplay.prototype.controlText_ = 'Remaining Time';
 
 Component.registerComponent('RemainingTimeDisplay', RemainingTimeDisplay);
@@ -67023,7 +66484,7 @@ var LiveDisplay = function (_Component) {
 
     this.contentEl_ = createEl('div', {
       className: 'vjs-live-display',
-      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '\xA0</span>' + this.localize('LIVE')
+      innerHTML: '<span class="vjs-control-text">' + this.localize('Stream Type') + '</span>' + this.localize('LIVE')
     }, {
       'aria-live': 'off'
     });
@@ -67877,45 +67338,32 @@ var SeekBar = function (_Slider) {
 
     var _this = possibleConstructorReturn(this, _Slider.call(this, player, options));
 
-    _this.setEventHandlers_();
-    return _this;
-  }
+    _this.update = throttle(bind(_this, _this.update), UPDATE_REFRESH_INTERVAL);
 
-  /**
-   * Sets the event handlers
-   *
-   * @private
-   */
-
-
-  SeekBar.prototype.setEventHandlers_ = function setEventHandlers_() {
-    var _this2 = this;
-
-    this.update = throttle(bind(this, this.update), UPDATE_REFRESH_INTERVAL);
-
-    this.on(this.player_, 'timeupdate', this.update);
-    this.on(this.player_, 'ended', this.handleEnded);
+    _this.on(player, 'timeupdate', _this.update);
+    _this.on(player, 'ended', _this.handleEnded);
 
     // when playing, let's ensure we smoothly update the play progress bar
     // via an interval
-    this.updateInterval = null;
+    _this.updateInterval = null;
 
-    this.on(this.player_, ['playing'], function () {
-      _this2.clearInterval(_this2.updateInterval);
+    _this.on(player, ['playing'], function () {
+      _this.clearInterval(_this.updateInterval);
 
-      _this2.updateInterval = _this2.setInterval(function () {
-        _this2.requestAnimationFrame(function () {
-          _this2.update();
+      _this.updateInterval = _this.setInterval(function () {
+        _this.requestAnimationFrame(function () {
+          _this.update();
         });
       }, UPDATE_REFRESH_INTERVAL);
     });
 
-    this.on(this.player_, ['ended', 'pause', 'waiting'], function () {
-      _this2.clearInterval(_this2.updateInterval);
+    _this.on(player, ['ended', 'pause', 'waiting'], function () {
+      _this.clearInterval(_this.updateInterval);
     });
 
-    this.on(this.player_, ['timeupdate', 'ended'], this.update);
-  };
+    _this.on(player, ['timeupdate', 'ended'], _this.update);
+    return _this;
+  }
 
   /**
    * Create the `Component`'s DOM element
@@ -68039,8 +67487,6 @@ var SeekBar = function (_Slider) {
       return;
     }
 
-    // Stop event propagation to prevent double fire in progress-control.js
-    event.stopPropagation();
     this.player_.scrubbing(true);
 
     this.videoWasPlaying = !this.player_.paused();
@@ -68110,10 +67556,6 @@ var SeekBar = function (_Slider) {
   SeekBar.prototype.handleMouseUp = function handleMouseUp(event) {
     _Slider.prototype.handleMouseUp.call(this, event);
 
-    // Stop event propagation to prevent double fire in progress-control.js
-    if (event) {
-      event.stopPropagation();
-    }
     this.player_.scrubbing(false);
 
     /**
@@ -68280,25 +67722,22 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseMove = function handleMouseMove(event) {
     var seekBar = this.getChild('seekBar');
+    var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
+    var seekBarEl = seekBar.el();
+    var seekBarRect = getBoundingClientRect(seekBarEl);
+    var seekBarPoint = getPointerPosition(seekBarEl, event).x;
 
-    if (seekBar) {
-      var mouseTimeDisplay = seekBar.getChild('mouseTimeDisplay');
-      var seekBarEl = seekBar.el();
-      var seekBarRect = getBoundingClientRect(seekBarEl);
-      var seekBarPoint = getPointerPosition(seekBarEl, event).x;
+    // The default skin has a gap on either side of the `SeekBar`. This means
+    // that it's possible to trigger this behavior outside the boundaries of
+    // the `SeekBar`. This ensures we stay within it at all times.
+    if (seekBarPoint > 1) {
+      seekBarPoint = 1;
+    } else if (seekBarPoint < 0) {
+      seekBarPoint = 0;
+    }
 
-      // The default skin has a gap on either side of the `SeekBar`. This means
-      // that it's possible to trigger this behavior outside the boundaries of
-      // the `SeekBar`. This ensures we stay within it at all times.
-      if (seekBarPoint > 1) {
-        seekBarPoint = 1;
-      } else if (seekBarPoint < 0) {
-        seekBarPoint = 0;
-      }
-
-      if (mouseTimeDisplay) {
-        mouseTimeDisplay.update(seekBarRect, seekBarPoint);
-      }
+    if (mouseTimeDisplay) {
+      mouseTimeDisplay.update(seekBarRect, seekBarPoint);
     }
   };
 
@@ -68327,9 +67766,7 @@ var ProgressControl = function (_Component) {
   ProgressControl.prototype.handleMouseSeek = function handleMouseSeek(event) {
     var seekBar = this.getChild('seekBar');
 
-    if (seekBar) {
-      seekBar.handleMouseMove(event);
-    }
+    seekBar.handleMouseMove(event);
   };
 
   /**
@@ -68401,11 +67838,6 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseDown = function handleMouseDown(event) {
     var doc = this.el_.ownerDocument;
-    var seekBar = this.getChild('seekBar');
-
-    if (seekBar) {
-      seekBar.handleMouseDown(event);
-    }
 
     this.on(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.on(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -68426,11 +67858,6 @@ var ProgressControl = function (_Component) {
 
   ProgressControl.prototype.handleMouseUp = function handleMouseUp(event) {
     var doc = this.el_.ownerDocument;
-    var seekBar = this.getChild('seekBar');
-
-    if (seekBar) {
-      seekBar.handleMouseUp(event);
-    }
 
     this.off(doc, 'mousemove', this.throttledHandleMouseSeek);
     this.off(doc, 'touchmove', this.throttledHandleMouseSeek);
@@ -69944,9 +69371,8 @@ var MenuItem = function (_ClickableComponent) {
     var _this = possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
 
     _this.selectable = options.selectable;
-    _this.isSelected_ = options.selected || false;
 
-    _this.selected(_this.isSelected_);
+    _this.selected(options.selected);
 
     if (_this.selectable) {
       // TODO: May need to be either menuitemcheckbox or menuitemradio,
@@ -70019,13 +69445,11 @@ var MenuItem = function (_ClickableComponent) {
         // aria-checked isn't fully supported by browsers/screen readers,
         // so indicate selected state to screen reader in the control text.
         this.controlText(', selected');
-        this.isSelected_ = true;
       } else {
         this.removeClass('vjs-selected');
         this.el_.setAttribute('aria-checked', 'false');
         // Indicate un-selected state to screen reader
         this.controlText('');
-        this.isSelected_ = false;
       }
     }
   };
@@ -70178,13 +69602,7 @@ var TextTrackMenuItem = function (_MenuItem) {
 
 
   TextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
-    var shouldBeSelected = this.track.mode === 'showing';
-
-    // Prevent redundant selected() calls because they may cause
-    // screen readers to read the appended control text unnecessarily
-    if (shouldBeSelected !== this.isSelected_) {
-      this.selected(shouldBeSelected);
-    }
+    this.selected(this.track.mode === 'showing');
   };
 
   TextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -70276,22 +69694,18 @@ var OffTextTrackMenuItem = function (_TextTrackMenuItem) {
 
   OffTextTrackMenuItem.prototype.handleTracksChange = function handleTracksChange(event) {
     var tracks = this.player().textTracks();
-    var shouldBeSelected = true;
+    var selected = true;
 
     for (var i = 0, l = tracks.length; i < l; i++) {
       var track = tracks[i];
 
       if (this.options_.kinds.indexOf(track.kind) > -1 && track.mode === 'showing') {
-        shouldBeSelected = false;
+        selected = false;
         break;
       }
     }
 
-    // Prevent redundant selected() calls because they may cause
-    // screen readers to read the appended control text unnecessarily
-    if (shouldBeSelected !== this.isSelected_) {
-      this.selected(shouldBeSelected);
-    }
+    this.selected(selected);
   };
 
   OffTextTrackMenuItem.prototype.handleSelectedLanguageChange = function handleSelectedLanguageChange(event) {
@@ -71009,7 +70423,7 @@ var CaptionsButton = function (_TextTrackButton) {
   CaptionsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.kind_ }));
 
       this.hideThreshold_ += 1;
@@ -71135,7 +70549,7 @@ var SubsCapsButton = function (_TextTrackButton) {
   SubsCapsButton.prototype.createItems = function createItems() {
     var items = [];
 
-    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks) && this.player().getChild('textTrackSettings')) {
+    if (!(this.player().tech_ && this.player().tech_.featuresNativeTextTracks)) {
       items.push(new CaptionSettingsMenuItem(this.player_, { kind: this.label_ }));
 
       this.hideThreshold_ += 1;
@@ -71781,6 +71195,10 @@ var ControlBar = function (_Component) {
     return _Component.prototype.createEl.call(this, 'div', {
       className: 'vjs-control-bar',
       dir: 'ltr'
+    }, {
+      // The control bar is a group, but we don't aria-label it to avoid
+      //  over-announcing by JAWS
+      role: 'group'
     });
   };
 
@@ -72147,12 +71565,11 @@ var TextTrackSettings = function (_ModalDialog) {
 
     var config = selectConfigs[key];
     var id = config.id.replace('%s', this.id_);
-    var selectLabelledbyIds = [legendId, id].join(' ').trim();
 
-    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + selectLabelledbyIds + '">'].concat(config.options.map(function (o) {
-      var optionId = id + '-' + o[1].replace(/\W+/g, '');
+    return ['<' + type + ' id="' + id + '" class="' + (type === 'label' ? 'vjs-label' : '') + '">', this.localize(config.label), '</' + type + '>', '<select aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + '">'].concat(config.options.map(function (o) {
+      var optionId = id + '-' + o[1];
 
-      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + selectLabelledbyIds + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
+      return ['<option id="' + optionId + '" value="' + o[0] + '" ', 'aria-labelledby="' + (legendId !== '' ? legendId + ' ' : '') + id + ' ' + optionId + '">', _this2.localize(o[1]), '</option>'].join('');
     })).concat('</select>').join('');
   };
 
@@ -72233,7 +71650,7 @@ var TextTrackSettings = function (_ModalDialog) {
 
   TextTrackSettings.prototype.createElFont_ = function createElFont_() {
     return createEl('div', {
-      className: 'vjs-track-settings-font',
+      className: 'vjs-track-settings-font">',
       innerHTML: ['<fieldset class="vjs-font-percent vjs-track-setting">', this.createElSelect_('fontPercent', '', 'legend'), '</fieldset>', '<fieldset class="vjs-edge-style vjs-track-setting">', this.createElSelect_('edgeStyle', '', 'legend'), '</fieldset>', '<fieldset class="vjs-font-family vjs-track-setting">', this.createElSelect_('fontFamily', '', 'legend'), '</fieldset>'].join('')
     });
   };
@@ -72408,445 +71825,6 @@ var TextTrackSettings = function (_ModalDialog) {
 
 Component.registerComponent('TextTrackSettings', TextTrackSettings);
 
-/**
- * @file resize-manager.js
- */
-/**
- * A Resize Manager. It is in charge of triggering `playerresize` on the player in the right conditions.
- *
- * It'll either create an iframe and use a debounced resize handler on it or use the new {@link https://wicg.github.io/ResizeObserver/|ResizeObserver}.
- *
- * If the ResizeObserver is available natively, it will be used. A polyfill can be passed in as an option.
- * If a `playerresize` event is not needed, the ResizeManager component can be removed from the player, see the example below.
- * @example <caption>How to disable the resize manager</caption>
- * const player = videojs('#vid', {
- *   resizeManager: false
- * });
- *
- * @see {@link https://wicg.github.io/ResizeObserver/|ResizeObserver specification}
- *
- * @extends Component
- */
-
-var ResizeManager = function (_Component) {
-  inherits(ResizeManager, _Component);
-
-  /**
-   * Create the ResizeManager.
-   *
-   * @param {Object} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of ResizeManager options.
-   *
-   * @param {Object} [options.ResizeObserver]
-   *        A polyfill for ResizeObserver can be passed in here.
-   *        If this is set to null it will ignore the native ResizeObserver and fall back to the iframe fallback.
-   */
-  function ResizeManager(player, options) {
-    classCallCheck(this, ResizeManager);
-
-    var RESIZE_OBSERVER_AVAILABLE = options.ResizeObserver || window.ResizeObserver;
-
-    // if `null` was passed, we want to disable the ResizeObserver
-    if (options.ResizeObserver === null) {
-      RESIZE_OBSERVER_AVAILABLE = false;
-    }
-
-    // Only create an element when ResizeObserver isn't available
-    var options_ = mergeOptions({ createEl: !RESIZE_OBSERVER_AVAILABLE }, options);
-
-    var _this = possibleConstructorReturn(this, _Component.call(this, player, options_));
-
-    _this.ResizeObserver = options.ResizeObserver || window.ResizeObserver;
-    _this.loadListener_ = null;
-    _this.resizeObserver_ = null;
-    _this.debouncedHandler_ = debounce(function () {
-      _this.resizeHandler();
-    }, 100, false, player);
-
-    if (RESIZE_OBSERVER_AVAILABLE) {
-      _this.resizeObserver_ = new _this.ResizeObserver(_this.debouncedHandler_);
-      _this.resizeObserver_.observe(player.el());
-    } else {
-      _this.loadListener_ = function () {
-        if (_this.el_.contentWindow) {
-          on(_this.el_.contentWindow, 'resize', _this.debouncedHandler_);
-        }
-        _this.off('load', _this.loadListener_);
-      };
-
-      _this.on('load', _this.loadListener_);
-    }
-    return _this;
-  }
-
-  ResizeManager.prototype.createEl = function createEl() {
-    return _Component.prototype.createEl.call(this, 'iframe', {
-      className: 'vjs-resize-manager'
-    });
-  };
-
-  /**
-   * Called when a resize is triggered on the iframe or a resize is observed via the ResizeObserver
-   *
-   * @fires Player#playerresize
-   */
-
-
-  ResizeManager.prototype.resizeHandler = function resizeHandler() {
-    /**
-     * Called when the player size has changed
-     *
-     * @event Player#playerresize
-     * @type {EventTarget~Event}
-     */
-    this.player_.trigger('playerresize');
-  };
-
-  ResizeManager.prototype.dispose = function dispose() {
-    if (this.resizeObserver_) {
-      if (this.player_.el()) {
-        this.resizeObserver_.unobserve(this.player_.el());
-      }
-      this.resizeObserver_.disconnect();
-    }
-
-    if (this.el_ && this.el_.contentWindow) {
-      off(this.el_.contentWindow, 'resize', this.debouncedHandler_);
-    }
-
-    if (this.loadListener_) {
-      this.off('load', this.loadListener_);
-    }
-
-    this.ResizeObserver = null;
-    this.resizeObserver = null;
-    this.debouncedHandler_ = null;
-    this.loadListener_ = null;
-  };
-
-  return ResizeManager;
-}(Component);
-
-Component.registerComponent('ResizeManager', ResizeManager);
-
-/**
- * This function is used to fire a sourceset when there is something
- * similar to `mediaEl.load()` being called. It will try to find the source via
- * the `src` attribute and then the `<source>` elements. It will then fire `sourceset`
- * with the source that was found or empty string if we cannot know. If it cannot
- * find a source then `sourceset` will not be fired.
- *
- * @param {Html5} tech
- *        The tech object that sourceset was setup on
- *
- * @return {boolean}
- *         returns false if the sourceset was not fired and true otherwise.
- */
-var sourcesetLoad = function sourcesetLoad(tech) {
-  var el = tech.el();
-
-  // if `el.src` is set, that source will be loaded.
-  if (el.hasAttribute('src')) {
-    tech.triggerSourceset(el.src);
-    return true;
-  }
-
-  /**
-   * Since there isn't a src property on the media element, source elements will be used for
-   * implementing the source selection algorithm. This happens asynchronously and
-   * for most cases were there is more than one source we cannot tell what source will
-   * be loaded, without re-implementing the source selection algorithm. At this time we are not
-   * going to do that. There are three special cases that we do handle here though:
-   *
-   * 1. If there are no sources, do not fire `sourceset`.
-   * 2. If there is only one `<source>` with a `src` property/attribute that is our `src`
-   * 3. If there is more than one `<source>` but all of them have the same `src` url.
-   *    That will be our src.
-   */
-  var sources = tech.$$('source');
-  var srcUrls = [];
-  var src = '';
-
-  // if there are no sources, do not fire sourceset
-  if (!sources.length) {
-    return false;
-  }
-
-  // only count valid/non-duplicate source elements
-  for (var i = 0; i < sources.length; i++) {
-    var url = sources[i].src;
-
-    if (url && srcUrls.indexOf(url) === -1) {
-      srcUrls.push(url);
-    }
-  }
-
-  // there were no valid sources
-  if (!srcUrls.length) {
-    return false;
-  }
-
-  // there is only one valid source element url
-  // use that
-  if (srcUrls.length === 1) {
-    src = srcUrls[0];
-  }
-
-  tech.triggerSourceset(src);
-  return true;
-};
-
-/**
- * our implementation of an `innerHTML` descriptor for browsers
- * that do not have one.
- */
-var innerHTMLDescriptorPolyfill = {};
-
-if (!IS_IE8) {
-  innerHTMLDescriptorPolyfill = Object.defineProperty({}, 'innerHTML', {
-    get: function get() {
-      return this.cloneNode(true).innerHTML;
-    },
-    set: function set(v) {
-      // make a dummy node to use innerHTML on
-      var dummy = document.createElement(this.nodeName.toLowerCase());
-
-      // set innerHTML to the value provided
-      dummy.innerHTML = v;
-
-      // make a document fragment to hold the nodes from dummy
-      var docFrag = document.createDocumentFragment();
-
-      // copy all of the nodes created by the innerHTML on dummy
-      // to the document fragment
-      while (dummy.childNodes.length) {
-        docFrag.appendChild(dummy.childNodes[0]);
-      }
-
-      // remove content
-      this.innerText = '';
-
-      // now we add all of that html in one by appending the
-      // document fragment. This is how innerHTML does it.
-      window.Element.prototype.appendChild.call(this, docFrag);
-
-      // then return the result that innerHTML's setter would
-      return this.innerHTML;
-    }
-  });
-}
-/**
- * Get a property descriptor given a list of priorities and the
- * property to get.
- */
-var getDescriptor = function getDescriptor(priority, prop) {
-  var descriptor = {};
-
-  for (var i = 0; i < priority.length; i++) {
-    descriptor = Object.getOwnPropertyDescriptor(priority[i], prop);
-
-    if (descriptor && descriptor.set && descriptor.get) {
-      break;
-    }
-  }
-
-  descriptor.enumerable = true;
-  descriptor.configurable = true;
-
-  return descriptor;
-};
-
-var getInnerHTMLDescriptor = function getInnerHTMLDescriptor(tech) {
-  return getDescriptor([tech.el(), window.HTMLMediaElement.prototype, window.Element.prototype, innerHTMLDescriptorPolyfill], 'innerHTML');
-};
-
-/**
- * Patches browser internal functions so that we can tell syncronously
- * if a `<source>` was appended to the media element. For some reason this
- * causes a `sourceset` if the the media element is ready and has no source.
- * This happens when:
- * - The page has just loaded and the media element does not have a source.
- * - The media element was emptied of all sources, then `load()` was called.
- *
- * It does this by patching the following functions/properties when they are supported:
- *
- * - `append()` - can be used to add a `<source>` element to the media element
- * - `appendChild()` - can be used to add a `<source>` element to the media element
- * - `insertAdjacentHTML()` -  can be used to add a `<source>` element to the media element
- * - `innerHTML` -  can be used to add a `<source>` element to the media element
- *
- * @param {Html5} tech
- *        The tech object that sourceset is being setup on.
- */
-var firstSourceWatch = function firstSourceWatch(tech) {
-  var el = tech.el();
-
-  // make sure firstSourceWatch isn't setup twice.
-  if (el.resetSourceWatch_) {
-    return;
-  }
-
-  var old = {};
-  var innerDescriptor = getInnerHTMLDescriptor(tech);
-  var appendWrapper = function appendWrapper(appendFn) {
-    return function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      var retval = appendFn.apply(el, args);
-
-      sourcesetLoad(tech);
-
-      return retval;
-    };
-  };
-
-  ['append', 'appendChild', 'insertAdjacentHTML'].forEach(function (k) {
-    if (!el[k]) {
-      return;
-    }
-
-    // store the old function
-    old[k] = el[k];
-
-    // call the old function with a sourceset if a source
-    // was loaded
-    el[k] = appendWrapper(old[k]);
-  });
-
-  Object.defineProperty(el, 'innerHTML', mergeOptions(innerDescriptor, {
-    set: appendWrapper(innerDescriptor.set)
-  }));
-
-  el.resetSourceWatch_ = function () {
-    el.resetSourceWatch_ = null;
-    Object.keys(old).forEach(function (k) {
-      el[k] = old[k];
-    });
-
-    Object.defineProperty(el, 'innerHTML', innerDescriptor);
-  };
-
-  // on the first sourceset, we need to revert our changes
-  tech.one('sourceset', el.resetSourceWatch_);
-};
-
-/**
- * our implementation of a `src` descriptor for browsers
- * that do not have one.
- */
-
-var srcDescriptorPolyfill = {};
-
-if (!IS_IE8) {
-  srcDescriptorPolyfill = Object.defineProperty({}, 'src', {
-    get: function get() {
-      if (this.hasAttribute('src')) {
-        return getAbsoluteURL(window.Element.prototype.getAttribute.call(this, 'src'));
-      }
-
-      return '';
-    },
-    set: function set(v) {
-      window.Element.prototype.setAttribute.call(this, 'src', v);
-
-      return v;
-    }
-  });
-}
-
-var getSrcDescriptor = function getSrcDescriptor(tech) {
-  return getDescriptor([tech.el(), window.HTMLMediaElement.prototype, srcDescriptorPolyfill], 'src');
-};
-
-/**
- * setup `sourceset` handling on the `Html5` tech. This function
- * patches the following element properties/functions:
- *
- * - `src` - to determine when `src` is set
- * - `setAttribute()` - to determine when `src` is set
- * - `load()` - this re-triggers the source selection algorithm, and can
- *              cause a sourceset.
- *
- * If there is no source when we are adding `sourceset` support or during a `load()`
- * we also patch the functions listed in `firstSourceWatch`.
- *
- * @param {Html5} tech
- *        The tech to patch
- */
-var setupSourceset = function setupSourceset(tech) {
-  if (!tech.featuresSourceset) {
-    return;
-  }
-
-  var el = tech.el();
-
-  // make sure sourceset isn't setup twice.
-  if (el.resetSourceset_) {
-    return;
-  }
-
-  var srcDescriptor = getSrcDescriptor(tech);
-  var oldSetAttribute = el.setAttribute;
-  var oldLoad = el.load;
-
-  Object.defineProperty(el, 'src', mergeOptions(srcDescriptor, {
-    set: function set(v) {
-      var retval = srcDescriptor.set.call(el, v);
-
-      // we use the getter here to get the actual value set on src
-      tech.triggerSourceset(el.src);
-
-      return retval;
-    }
-  }));
-
-  el.setAttribute = function (n, v) {
-    var retval = oldSetAttribute.call(el, n, v);
-
-    if (/src/i.test(n)) {
-      tech.triggerSourceset(el.src);
-    }
-
-    return retval;
-  };
-
-  el.load = function () {
-    var retval = oldLoad.call(el);
-
-    // if load was called, but there was no source to fire
-    // sourceset on. We have to watch for a source append
-    // as that can trigger a `sourceset` when the media element
-    // has no source
-    if (!sourcesetLoad(tech)) {
-      tech.triggerSourceset('');
-      firstSourceWatch(tech);
-    }
-
-    return retval;
-  };
-
-  if (el.currentSrc) {
-    tech.triggerSourceset(el.currentSrc);
-  } else if (!sourcesetLoad(tech)) {
-    firstSourceWatch(tech);
-  }
-
-  el.resetSourceset_ = function () {
-    el.resetSourceset_ = null;
-    el.load = oldLoad;
-    el.setAttribute = oldSetAttribute;
-    Object.defineProperty(el, 'src', srcDescriptor);
-    if (el.resetSourceWatch_) {
-      el.resetSourceWatch_();
-    }
-  };
-};
-
 var _templateObject$2 = taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
 /**
@@ -72887,11 +71865,6 @@ var Html5 = function (_Tech) {
       _this.setSource(source);
     } else {
       _this.handleLateInit_(_this.el_);
-    }
-
-    // setup sourceset after late sourceset/init
-    if (options.enableSourceset) {
-      _this.setupSourcesetHandling_();
     }
 
     if (_this.el_.hasChildNodes()) {
@@ -72958,24 +71931,11 @@ var Html5 = function (_Tech) {
 
 
   Html5.prototype.dispose = function dispose() {
-    if (this.el_ && this.el_.resetSourceset_) {
-      this.el_.resetSourceset_();
-    }
     Html5.disposeMediaElement(this.el_);
     this.options_ = null;
 
     // tech will handle clearing of the emulated track list
     _Tech.prototype.dispose.call(this);
-  };
-
-  /**
-   * Modify the media element so that we can detect when
-   * the source is changed. Fires `sourceset` just after the source has changed
-   */
-
-
-  Html5.prototype.setupSourcesetHandling_ = function setupSourcesetHandling_() {
-    setupSourceset(this);
   };
 
   /**
@@ -73795,34 +72755,6 @@ Html5.canControlPlaybackRate = function () {
 };
 
 /**
- * Check if we can override a video/audio elements attributes, with
- * Object.defineProperty.
- *
- * @return {boolean}
- *         - True if builtin attributes can be overriden
- *         - False otherwise
- */
-Html5.canOverrideAttributes = function () {
-  if (IS_IE8) {
-    return false;
-  }
-  // if we cannot overwrite the src/innerHTML property, there is no support
-  // iOS 7 safari for instance cannot do this.
-  try {
-    var noop = function noop() {};
-
-    Object.defineProperty(document.createElement('video'), 'src', { get: noop, set: noop });
-    Object.defineProperty(document.createElement('audio'), 'src', { get: noop, set: noop });
-    Object.defineProperty(document.createElement('video'), 'innerHTML', { get: noop, set: noop });
-    Object.defineProperty(document.createElement('audio'), 'innerHTML', { get: noop, set: noop });
-  } catch (e) {
-    return false;
-  }
-
-  return true;
-};
-
-/**
  * Check to see if native `TextTrack`s are supported by this browser/device.
  *
  * @return {boolean}
@@ -73881,14 +72813,6 @@ Html5.prototype.featuresVolumeControl = Html5.canControlVolume();
  * @default {@link Html5.canControlPlaybackRate}
  */
 Html5.prototype.featuresPlaybackRate = Html5.canControlPlaybackRate();
-
-/**
- * Boolean indicating wether the `Tech` supports the `sourceset` event.
- *
- * @type {boolean}
- * @default
- */
-Html5.prototype.featuresSourceset = Html5.canOverrideAttributes();
 
 /**
  * Boolean indicating whether the `HTML5` tech currently supports the media element
@@ -73960,8 +72884,7 @@ var mp4RE = /^video\/mp4/i;
 Html5.patchCanPlayType = function () {
 
   // Android 4.0 and above can play HLS to some extent but it reports being unable to do so
-  // Firefox and Chrome report correctly
-  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX && !IS_CHROME) {
+  if (ANDROID_VERSION >= 4.0 && !IS_FIREFOX) {
     Html5.TEST_VID.constructor.prototype.canPlayType = function (type) {
       if (type && mpegurlRE.test(type)) {
         return 'maybe';
@@ -74849,6 +73772,22 @@ var TECH_EVENTS_RETRIGGER = [
 'timeupdate',
 
 /**
+ * Fires when the playing speed of the audio/video is changed
+ *
+ * @event Player#ratechange
+ * @type {event}
+ */
+/**
+ * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
+ *
+ * @private
+ * @method Player#handleTechRatechange_
+ * @fires Player#ratechange
+ * @listens Tech#ratechange
+ */
+'ratechange',
+
+/**
  * Fires when the video's intrinsic dimensions change
  *
  * @event Player#resize
@@ -74896,16 +73835,6 @@ var TECH_EVENTS_RETRIGGER = [
  */
 'texttrackchange'];
 
-// events to queue when playback rate is zero
-// this is a hash for the sole purpose of mapping non-camel-cased event names
-// to camel-cased function names
-var TECH_EVENTS_QUEUE = {
-  canplay: 'CanPlay',
-  canplaythrough: 'CanPlayThrough',
-  playing: 'Playing',
-  seeked: 'Seeked'
-};
-
 /**
  * An instance of the `Player` class is created when any of the Video.js setup methods
  * are used to initialize a video.
@@ -74936,7 +73865,7 @@ var Player = function (_Component) {
     classCallCheck(this, Player);
 
     // Make sure tag ID exists
-    tag.id = tag.id || options.id || 'vjs_video_' + newGUID();
+    tag.id = tag.id || 'vjs_video_' + newGUID();
 
     // Set Options
     // The options argument overrides options set in the video tag
@@ -74982,16 +73911,9 @@ var Player = function (_Component) {
 
     // Run base component initializing with new options
 
-    // Tracks when a tech changes the poster
+    // Turn off API access because we're loading a new tech that might load asynchronously
     var _this = possibleConstructorReturn(this, _Component.call(this, null, options, ready));
 
-    _this.isPosterFromTech_ = false;
-
-    // Holds callback info that gets queued when playback rate is zero
-    // and a seek is happening
-    _this.queuedCallbacks_ = [];
-
-    // Turn off API access because we're loading a new tech that might load asynchronously
     _this.isReady_ = false;
 
     // Init state hasStarted_
@@ -75055,9 +73977,6 @@ var Player = function (_Component) {
     _this.scrubbing_ = false;
 
     _this.el_ = _this.createEl();
-
-    // Set default value for lastPlaybackRate
-    _this.cache_.lastPlaybackRate = _this.defaultPlaybackRate();
 
     // Make this an evented object and use `el_` as its event bus.
     evented(_this, { eventBusKey: 'el_' });
@@ -75137,14 +74056,16 @@ var Player = function (_Component) {
     // like the control bar show themselves if needed
     _this.userActive(true);
     _this.reportUserActivity();
+    _this.listenForUserActivity_();
 
-    _this.one('play', _this.listenForUserActivity_);
     _this.on('fullscreenchange', _this.handleFullscreenChange_);
     _this.on('stageclick', _this.handleStageClick_);
 
     _this.changingSrc_ = false;
     _this.playWaitingForReady_ = false;
     _this.playOnLoadstart_ = null;
+
+    _this.forceAutoplayInChrome_();
     return _this;
   }
 
@@ -75187,8 +74108,6 @@ var Player = function (_Component) {
 
     if (this.tech_) {
       this.tech_.dispose();
-      this.isPosterFromTech_ = false;
-      this.poster_ = '';
     }
 
     if (this.playerElIngest_) {
@@ -75198,8 +74117,6 @@ var Player = function (_Component) {
     if (this.tag) {
       this.tag = null;
     }
-
-    clearCacheForPlayer(this);
 
     // the actual .el_ is removed here
     _Component.prototype.dispose.call(this);
@@ -75243,15 +74160,6 @@ var Player = function (_Component) {
       el.appendChild(tag);
 
       playerElIngest = this.playerElIngest_ = el;
-
-      // copy over properties from the video-js element
-      // ie8 doesn't support Object.keys nor hasOwnProperty
-      // on dom elements so we have to specify properties individually
-      ['autoplay', 'controls', 'crossOrigin', 'defaultMuted', 'defaultPlaybackRate', 'loop', 'muted', 'playbackRate', 'src', 'volume'].forEach(function (prop) {
-        if (typeof el[prop] !== 'undefined') {
-          tag[prop] = el[prop];
-        }
-      });
     }
 
     // set tabindex to -1 so we could focus on the player element
@@ -75351,13 +74259,16 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        The value to set the `Player`'s width to.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The current width of the `Player` when getting.
    */
 
 
-  Player.prototype.width = function width(value) {
-    return this.dimension('width', value);
+  Player.prototype.width = function width(value, skipListeners) {
+    return this.dimension('width', value, skipListeners);
   };
 
   /**
@@ -75367,17 +74278,22 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        The value to set the `Player`'s heigth to.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The current height of the `Player` when getting.
    */
 
 
-  Player.prototype.height = function height(value) {
-    return this.dimension('height', value);
+  Player.prototype.height = function height(value, skipListeners) {
+    return this.dimension('height', value, skipListeners);
   };
 
   /**
    * A getter/setter for the `Player`'s width & height.
+   *
+   * @fires Player#playerresize
    *
    * @param {string} dimension
    *        This string can be:
@@ -75387,12 +74303,15 @@ var Player = function (_Component) {
    * @param {number} [value]
    *        Value for dimension specified in the first argument.
    *
+   * @param {boolean} [skipListeners]
+   *        Skip the playerresize event trigger
+   *
    * @return {number}
    *         The dimension arguments value when getting (width/height).
    */
 
 
-  Player.prototype.dimension = function dimension(_dimension, value) {
+  Player.prototype.dimension = function dimension(_dimension, value, skipListeners) {
     var privDimension = _dimension + '_';
 
     if (value === undefined) {
@@ -75415,6 +74334,17 @@ var Player = function (_Component) {
 
     this[privDimension] = parsedVal;
     this.updateStyleEl_();
+
+    // skipListeners allows us to avoid triggering the resize event when setting both width and height
+    if (this.isReady_ && !skipListeners) {
+      /**
+       * Triggered when the player is resized.
+       *
+       * @event Player#playerresize
+       * @type {EventTarget~Event}
+       */
+      this.trigger('playerresize');
+    }
   };
 
   /**
@@ -75617,9 +74547,7 @@ var Player = function (_Component) {
       'poster': this.poster(),
       'language': this.language(),
       'playerElIngest': this.playerElIngest_ || false,
-      'vtt.js': this.options_['vtt.js'],
-      'canOverridePoster': !!this.options_.techCanOverridePoster,
-      'enableSourceset': this.options_.enableSourceset
+      'vtt.js': this.options_['vtt.js']
     };
 
     ALL.names.forEach(function (name$$1) {
@@ -75658,25 +74586,14 @@ var Player = function (_Component) {
     TECH_EVENTS_RETRIGGER.forEach(function (event) {
       _this2.on(_this2.tech_, event, _this2['handleTech' + toTitleCase(event) + '_']);
     });
-
-    Object.keys(TECH_EVENTS_QUEUE).forEach(function (event) {
-      _this2.on(_this2.tech_, event, function (eventObj) {
-        if (_this2.tech_.playbackRate() === 0 && _this2.tech_.seeking()) {
-          _this2.queuedCallbacks_.push({
-            callback: _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'].bind(_this2),
-            event: eventObj
-          });
-          return;
-        }
-        _this2['handleTech' + TECH_EVENTS_QUEUE[event] + '_'](eventObj);
-      });
-    });
-
     this.on(this.tech_, 'loadstart', this.handleTechLoadStart_);
-    this.on(this.tech_, 'sourceset', this.handleTechSourceset_);
     this.on(this.tech_, 'waiting', this.handleTechWaiting_);
+    this.on(this.tech_, 'canplay', this.handleTechCanPlay_);
+    this.on(this.tech_, 'canplaythrough', this.handleTechCanPlayThrough_);
+    this.on(this.tech_, 'playing', this.handleTechPlaying_);
     this.on(this.tech_, 'ended', this.handleTechEnded_);
     this.on(this.tech_, 'seeking', this.handleTechSeeking_);
+    this.on(this.tech_, 'seeked', this.handleTechSeeked_);
     this.on(this.tech_, 'play', this.handleTechPlay_);
     this.on(this.tech_, 'firstplay', this.handleTechFirstPlay_);
     this.on(this.tech_, 'pause', this.handleTechPause_);
@@ -75686,7 +74603,6 @@ var Player = function (_Component) {
     this.on(this.tech_, 'loadedmetadata', this.updateStyleEl_);
     this.on(this.tech_, 'posterchange', this.handleTechPosterChange_);
     this.on(this.tech_, 'textdata', this.handleTechTextData_);
-    this.on(this.tech_, 'ratechange', this.handleTechRateChange_);
 
     this.usingNativeControls(this.techGet_('controls'));
 
@@ -75730,13 +74646,6 @@ var Player = function (_Component) {
     this.tech_.dispose();
 
     this.tech_ = false;
-
-    if (this.isPosterFromTech_) {
-      this.poster_ = '';
-      this.trigger('posterchange');
-    }
-
-    this.isPosterFromTech_ = false;
   };
 
   /**
@@ -75899,144 +74808,6 @@ var Player = function (_Component) {
   };
 
   /**
-   * Update the internal source caches so that we return the correct source from
-   * `src()`, `currentSource()`, and `currentSources()`.
-   *
-   * > Note: `currentSources` will not be updated if the source that is passed in exists
-   *         in the current `currentSources` cache.
-   *
-   *
-   * @param {Tech~SourceObject} srcObj
-   *        A string or object source to update our caches to.
-   */
-
-
-  Player.prototype.updateSourceCaches_ = function updateSourceCaches_() {
-    var srcObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-
-
-    var src = srcObj;
-    var type = '';
-
-    if (typeof src !== 'string') {
-      src = srcObj.src;
-      type = srcObj.type;
-    }
-    // make sure all the caches are set to default values
-    // to prevent null checking
-    this.cache_.source = this.cache_.source || {};
-    this.cache_.sources = this.cache_.sources || [];
-
-    // try to get the type of the src that was passed in
-    if (src && !type) {
-      type = findMimetype(this, src);
-    }
-
-    // update `currentSource` cache always
-    this.cache_.source = { src: src, type: type };
-
-    var matchingSources = this.cache_.sources.filter(function (s) {
-      return s.src && s.src === src;
-    });
-    var sourceElSources = [];
-    var sourceEls = this.$$('source');
-    var matchingSourceEls = [];
-
-    for (var i = 0; i < sourceEls.length; i++) {
-      var sourceObj = getAttributes(sourceEls[i]);
-
-      sourceElSources.push(sourceObj);
-
-      if (sourceObj.src && sourceObj.src === src) {
-        matchingSourceEls.push(sourceObj.src);
-      }
-    }
-
-    // if we have matching source els but not matching sources
-    // the current source cache is not up to date
-    if (matchingSourceEls.length && !matchingSources.length) {
-      this.cache_.sources = sourceElSources;
-      // if we don't have matching source or source els set the
-      // sources cache to the `currentSource` cache
-    } else if (!matchingSources.length) {
-      this.cache_.sources = [this.cache_.source];
-    }
-
-    // update the tech `src` cache
-    this.cache_.src = src;
-  };
-
-  /**
-   * *EXPERIMENTAL* Fired when the source is set or changed on the {@link Tech}
-   * causing the media element to reload.
-   *
-   * It will fire for the initial source and each subsequent source.
-   * This event is a custom event from Video.js and is triggered by the {@link Tech}.
-   *
-   * The event object for this event contains a `src` property that will contain the source
-   * that was available when the event was triggered. This is generally only necessary if Video.js
-   * is switching techs while the source was being changed.
-   *
-   * It is also fired when `load` is called on the player (or media element)
-   * because the {@link https://html.spec.whatwg.org/multipage/media.html#dom-media-load|specification for `load`}
-   * says that the resource selection algorithm needs to be aborted and restarted.
-   * In this case, it is very likely that the `src` property will be set to the
-   * empty string `""` to indicate we do not know what the source will be but
-   * that it is changing.
-   *
-   * *This event is currently still experimental and may change in minor releases.*
-   * __To use this, pass `enableSourceset` option to the player.__
-   *
-   * @event Player#sourceset
-   * @type {EventTarget~Event}
-   * @prop {string} src
-   *                The source url available when the `sourceset` was triggered.
-   *                It will be an empty string if we cannot know what the source is
-   *                but know that the source will change.
-   */
-  /**
-   * Retrigger the `sourceset` event that was triggered by the {@link Tech}.
-   *
-   * @fires Player#sourceset
-   * @listens Tech#sourceset
-   * @private
-   */
-
-
-  Player.prototype.handleTechSourceset_ = function handleTechSourceset_(event) {
-    var _this4 = this;
-
-    // only update the source cache when the source
-    // was not updated using the player api
-    if (!this.changingSrc_) {
-      // update the source to the intial source right away
-      // in some cases this will be empty string
-      this.updateSourceCaches_(event.src);
-
-      // if the `sourceset` `src` was an empty string
-      // wait for a `loadstart` to update the cache to `currentSrc`.
-      // If a sourceset happens before a `loadstart`, we reset the state
-      // as this function will be called again.
-      if (!event.src) {
-        var updateCache = function updateCache(e) {
-          if (e.type !== 'sourceset') {
-            _this4.updateSourceCaches_(_this4.techGet_('currentSrc'));
-          }
-
-          _this4.tech_.off(['sourceset', 'loadstart'], updateCache);
-        };
-
-        this.tech_.one(['sourceset', 'loadstart'], updateCache);
-      }
-    }
-
-    this.trigger({
-      src: event.src,
-      type: 'sourceset'
-    });
-  };
-
-  /**
    * Add/remove the vjs-has-started class
    *
    * @fires Player#firstplay
@@ -76098,36 +74869,6 @@ var Player = function (_Component) {
   };
 
   /**
-   * Retrigger the `ratechange` event that was triggered by the {@link Tech}.
-   *
-   * If there were any events queued while the playback rate was zero, fire
-   * those events now.
-   *
-   * @private
-   * @method Player#handleTechRateChange_
-   * @fires Player#ratechange
-   * @listens Tech#ratechange
-   */
-
-
-  Player.prototype.handleTechRateChange_ = function handleTechRateChange_() {
-    if (this.tech_.playbackRate() > 0 && this.cache_.lastPlaybackRate === 0) {
-      this.queuedCallbacks_.forEach(function (queued) {
-        return queued.callback(queued.event);
-      });
-      this.queuedCallbacks_ = [];
-    }
-    this.cache_.lastPlaybackRate = this.tech_.playbackRate();
-    /**
-     * Fires when the playing speed of the audio/video is changed
-     *
-     * @event Player#ratechange
-     * @type {event}
-     */
-    this.trigger('ratechange');
-  };
-
-  /**
    * Retrigger the `waiting` event that was triggered by the {@link Tech}.
    *
    * @fires Player#waiting
@@ -76137,7 +74878,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechWaiting_ = function handleTechWaiting_() {
-    var _this5 = this;
+    var _this4 = this;
 
     this.addClass('vjs-waiting');
     /**
@@ -76148,7 +74889,7 @@ var Player = function (_Component) {
      */
     this.trigger('waiting');
     this.one('timeupdate', function () {
-      return _this5.removeClass('vjs-waiting');
+      return _this4.removeClass('vjs-waiting');
     });
   };
 
@@ -76558,8 +75299,6 @@ var Player = function (_Component) {
     this.ready(function () {
       if (method in allowedSetters) {
         return set$1(this.middleware_, this.tech_, method, arg);
-      } else if (method in allowedMediators) {
-        return mediate(this.middleware_, this.tech_, method, arg);
       }
 
       try {
@@ -76593,8 +75332,6 @@ var Player = function (_Component) {
 
     if (method in allowedGetters) {
       return get$1(this.middleware_, this.tech_, method);
-    } else if (method in allowedMediators) {
-      return mediate(this.middleware_, this.tech_, method);
     }
 
     // Flash likes to die and reload when you hide or reposition it.
@@ -76634,7 +75371,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.play = function play() {
-    var _this6 = this;
+    var _this5 = this;
 
     // If this is called while we have a play queued up on a loadstart, remove
     // that listener to avoid getting in a potentially bad state.
@@ -76654,8 +75391,8 @@ var Player = function (_Component) {
 
       this.playWaitingForReady_ = true;
       this.ready(function () {
-        _this6.playWaitingForReady_ = false;
-        silencePromise(_this6.play());
+        _this5.playWaitingForReady_ = false;
+        silencePromise(_this5.play());
       });
 
       // If the player/tech is ready and we have a source, we can attempt playback.
@@ -76671,8 +75408,8 @@ var Player = function (_Component) {
     } else {
 
       this.playOnLoadstart_ = function () {
-        _this6.playOnLoadstart_ = null;
-        silencePromise(_this6.play());
+        _this5.playOnLoadstart_ = null;
+        silencePromise(_this5.play());
       };
 
       this.one('loadstart', this.playOnLoadstart_);
@@ -77282,7 +76019,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.selectSource = function selectSource(sources) {
-    var _this7 = this;
+    var _this6 = this;
 
     // Get only the techs specified in `techOrder` that exist and are supported by the
     // current platform
@@ -77331,7 +76068,7 @@ var Player = function (_Component) {
       var techName = _ref2[0],
           tech = _ref2[1];
 
-      if (tech.canPlaySource(source, _this7.options_[techName.toLowerCase()])) {
+      if (tech.canPlaySource(source, _this6.options_[techName.toLowerCase()])) {
         return { source: source, tech: techName };
       }
     };
@@ -77367,7 +76104,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.src = function src(source) {
-    var _this8 = this;
+    var _this7 = this;
 
     // getter usage
     if (typeof source === 'undefined') {
@@ -77388,42 +76125,40 @@ var Player = function (_Component) {
     }
 
     // intial sources
+    this.cache_.sources = sources;
     this.changingSrc_ = true;
 
-    this.cache_.sources = sources;
-    this.updateSourceCaches_(sources[0]);
+    // intial source
+    this.cache_.source = sources[0];
 
     // middlewareSource is the source after it has been changed by middleware
     setSource(this, sources[0], function (middlewareSource, mws) {
-      _this8.middleware_ = mws;
+      _this7.middleware_ = mws;
 
-      // since sourceSet is async we have to update the cache again after we select a source since
-      // the source that is selected could be out of order from the cache update above this callback.
-      _this8.cache_.sources = sources;
-      _this8.updateSourceCaches_(middlewareSource);
-
-      var err = _this8.src_(middlewareSource);
+      var err = _this7.src_(middlewareSource);
 
       if (err) {
         if (sources.length > 1) {
-          return _this8.src(sources.slice(1));
+          return _this7.src(sources.slice(1));
         }
 
-        _this8.changingSrc_ = false;
-
         // We need to wrap this in a timeout to give folks a chance to add error event handlers
-        _this8.setTimeout(function () {
+        _this7.setTimeout(function () {
           this.error({ code: 4, message: this.localize(this.options_.notSupportedMessage) });
         }, 0);
 
         // we could not find an appropriate tech, but let's still notify the delegate that this is it
         // this needs a better comment about why this is needed
-        _this8.triggerReady();
+        _this7.triggerReady();
 
         return;
       }
 
-      setTech(mws, _this8.tech_);
+      _this7.changingSrc_ = false;
+      // video element listed source
+      _this7.cache_.src = middlewareSource.src;
+
+      setTech(mws, _this7.tech_);
     });
   };
 
@@ -77443,8 +76178,6 @@ var Player = function (_Component) {
 
 
   Player.prototype.src_ = function src_(source) {
-    var _this9 = this;
-
     var sourceTech = this.selectSource([source]);
 
     if (!sourceTech) {
@@ -77453,16 +76186,13 @@ var Player = function (_Component) {
 
     if (!titleCaseEquals(sourceTech.tech, this.techName_)) {
       this.changingSrc_ = true;
+
       // load this technology with the chosen source
       this.loadTech_(sourceTech.tech, sourceTech.source);
-      this.tech_.ready(function () {
-        _this9.changingSrc_ = false;
-      });
       return false;
     }
 
     // wait until the tech is ready to set the source
-    // and set it synchronously if possible (#2326)
     this.ready(function () {
 
       // The setSource tech method was added with source handlers
@@ -77475,7 +76205,11 @@ var Player = function (_Component) {
         this.techCall_('src', source.src);
       }
 
-      this.changingSrc_ = false;
+      if (this.options_.preload === 'auto') {
+        this.load();
+      }
+
+      // Set the source synchronously if possible (#2326)
     }, true);
 
     return false;
@@ -77597,9 +76331,29 @@ var Player = function (_Component) {
     if (value !== undefined) {
       this.techCall_('setAutoplay', value);
       this.options_.autoplay = value;
+      this.ready(this.forceAutoplayInChrome_);
       return;
     }
     return this.techGet_('autoplay', value);
+  };
+
+  /**
+   * chrome started pausing the video when moving in the DOM
+   * causing autoplay to not continue due to how Video.js functions.
+   * See #4720 for more info.
+   *
+   * @private
+   */
+
+
+  Player.prototype.forceAutoplayInChrome_ = function forceAutoplayInChrome_() {
+    if (this.paused() && (
+    // read from the video element or options
+    this.autoplay() || this.options_.autoplay) &&
+    // only target desktop chrome
+    IS_CHROME && !IS_ANDROID) {
+      this.play();
+    }
   };
 
   /**
@@ -77674,17 +76428,11 @@ var Player = function (_Component) {
       src = '';
     }
 
-    if (src === this.poster_) {
-      return;
-    }
-
     // update the internal poster variable
     this.poster_ = src;
 
     // update the tech's poster
     this.techCall_('setPoster', src);
-
-    this.isPosterFromTech_ = false;
 
     // alert components that the poster has been set
     /**
@@ -77711,16 +76459,11 @@ var Player = function (_Component) {
 
 
   Player.prototype.handleTechPosterChange_ = function handleTechPosterChange_() {
-    if ((!this.poster_ || this.options_.techCanOverridePoster) && this.tech_ && this.tech_.poster) {
-      var newPoster = this.tech_.poster() || '';
+    if (!this.poster_ && this.tech_ && this.tech_.poster) {
+      this.poster_ = this.tech_.poster() || '';
 
-      if (newPoster !== this.poster_) {
-        this.poster_ = newPoster;
-        this.isPosterFromTech_ = true;
-
-        // Let components know the poster has changed
-        this.trigger('posterchange');
-      }
+      // Let components know the poster has changed
+      this.trigger('posterchange');
     }
   };
 
@@ -78070,14 +76813,12 @@ var Player = function (_Component) {
 
   Player.prototype.playbackRate = function playbackRate(rate) {
     if (rate !== undefined) {
-      // NOTE: this.cache_.lastPlaybackRate is set from the tech handler
-      // that is registered above
       this.techCall_('setPlaybackRate', rate);
       return;
     }
 
     if (this.tech_ && this.tech_.featuresPlaybackRate) {
-      return this.cache_.lastPlaybackRate || this.techGet_('playbackRate');
+      return this.techGet_('playbackRate');
     }
     return 1.0;
   };
@@ -78334,7 +77075,7 @@ var Player = function (_Component) {
 
 
   Player.prototype.createModal = function createModal(content, options) {
-    var _this10 = this;
+    var _this8 = this;
 
     options = options || {};
     options.content = content || '';
@@ -78343,7 +77084,7 @@ var Player = function (_Component) {
 
     this.addChild(modal);
     modal.on('dispose', function () {
-      _this10.removeChild(modal);
+      _this8.removeChild(modal);
     });
 
     modal.open();
@@ -78540,10 +77281,6 @@ Player.prototype.options_ = {
   // Default message to show when a video cannot be played.
   notSupportedMessage: 'No compatible source was found for this media.'
 };
-
-if (!IS_IE8) {
-  Player.prototype.options_.children.push('resizeManager');
-}
 
 [
 /**
@@ -79336,19 +78073,6 @@ if (typeof HTMLVideoElement === 'undefined' && isReal()) {
 }
 
 /**
- * Normalize an `id` value by trimming off a leading `#`
- *
- * @param   {string} id
- *          A string, maybe with a leading `#`.
- *
- * @returns {string}
- *          The string, without any leading `#`.
- */
-var normalizeId = function normalizeId(id) {
-  return id.indexOf('#') === 0 ? id.slice(1) : id;
-};
-
-/**
  * Doubles as the main function for users to create a player instance and also
  * the main library object.
  * The `videojs` function can be used to initialize or retrieve a player.
@@ -79366,32 +78090,62 @@ var normalizeId = function normalizeId(id) {
  *         A player instance
  */
 function videojs(id, options, ready) {
-  var player = videojs.getPlayer(id);
+  var tag = void 0;
 
-  if (player) {
-    if (options) {
-      log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
+  // Allow for element or ID to be passed in
+  // String ID
+  if (typeof id === 'string') {
+    var players = videojs.getPlayers();
+
+    // Adjust for jQuery ID syntax
+    if (id.indexOf('#') === 0) {
+      id = id.slice(1);
     }
-    if (ready) {
-      player.ready(ready);
+
+    // If a player instance has already been created for this ID return it.
+    if (players[id]) {
+
+      // If options or ready function are passed, warn
+      if (options) {
+        log$1.warn('Player "' + id + '" is already initialised. Options will not be applied.');
+      }
+
+      if (ready) {
+        players[id].ready(ready);
+      }
+
+      return players[id];
     }
-    return player;
+
+    // Otherwise get element for ID
+    tag = $('#' + id);
+
+    // ID is a media element
+  } else {
+    tag = id;
   }
 
-  var el = typeof id === 'string' ? $('#' + normalizeId(id)) : id;
-
-  if (!isEl(el)) {
+  // Check for a useable element
+  // re: nodeName, could be a box div also
+  if (!tag || !tag.nodeName) {
     throw new TypeError('The element or ID supplied is not valid. (videojs)');
   }
 
-  if (!document.body.contains(el)) {
+  // Element may have a player attr referring to an already created player instance.
+  // If so return that otherwise set up a new player below
+  if (tag.player || Player.players[tag.playerId]) {
+    return tag.player || Player.players[tag.playerId];
+  }
+
+  // Check if element is included in the DOM
+  if (isEl(tag) && !document.body.contains(tag)) {
     log$1.warn('The element supplied is not included in the DOM');
   }
 
   options = options || {};
 
   videojs.hooks('beforesetup').forEach(function (hookFunction) {
-    var opts = hookFunction(el, mergeOptions(options));
+    var opts = hookFunction(tag, mergeOptions(options));
 
     if (!isObject(opts) || Array.isArray(opts)) {
       log$1.error('please return an object in beforesetup hooks');
@@ -79401,11 +78155,9 @@ function videojs(id, options, ready) {
     options = mergeOptions(options, opts);
   });
 
-  // We get the current "Player" component here in case an integration has
-  // replaced it with a custom player.
   var PlayerComponent = Component.getComponent('Player');
-
-  player = new PlayerComponent(el, options, ready);
+  // If not, set up a new player
+  var player = new PlayerComponent(tag, options, ready);
 
   videojs.hooks('setup').forEach(function (hookFunction) {
     return hookFunction(player);
@@ -79545,71 +78297,6 @@ videojs.getPlayers = function () {
 };
 
 /**
- * Get a single player based on an ID or DOM element.
- *
- * This is useful if you want to check if an element or ID has an associated
- * Video.js player, but not create one if it doesn't.
- *
- * @param   {string|Element} id
- *          An HTML element - `<video>`, `<audio>`, or `<video-js>` -
- *          or a string matching the `id` of such an element.
- *
- * @returns {Player|undefined}
- *          A player instance or `undefined` if there is no player instance
- *          matching the argument.
- */
-videojs.getPlayer = function (id) {
-  var players = Player.players;
-  var tag = void 0;
-
-  if (typeof id === 'string') {
-    var nId = normalizeId(id);
-    var player = players[nId];
-
-    if (player) {
-      return player;
-    }
-
-    tag = $('#' + nId);
-  } else {
-    tag = id;
-  }
-
-  if (isEl(tag)) {
-    var _tag = tag,
-        _player = _tag.player,
-        playerId = _tag.playerId;
-
-    // Element may have a `player` property referring to an already created
-    // player instance. If so, return that.
-
-    if (_player || players[playerId]) {
-      return _player || players[playerId];
-    }
-  }
-};
-
-/**
- * Returns an array of all current players.
- *
- * @return {Array}
- *         An array of all players. The array will be in the order that
- *         `Object.keys` provides, which could potentially vary between
- *         JavaScript engines.
- *
- */
-videojs.getAllPlayers = function () {
-  return (
-
-    // Disposed players leave a key with a `null` value, so we need to make sure
-    // we filter those out.
-    Object.keys(Player.players).map(function (k) {
-      return Player.players[k];
-    }).filter(Boolean)
-  );
-};
-
-/**
  * Expose players object.
  *
  * @memberOf videojs
@@ -79664,38 +78351,7 @@ videojs.getTech = Tech.getTech;
  */
 videojs.registerTech = Tech.registerTech;
 
-/**
- * Register a middleware to a source type.
- *
- * @param {String} type A string representing a MIME type.
- * @param {function(player):object} middleware A middleware factory that takes a player.
- */
 videojs.use = use;
-
-/**
- * An object that can be returned by a middleware to signify
- * that the middleware is being terminated.
- *
- * @type {object}
- * @memberOf {videojs}
- * @property {object} middleware.TERMINATOR
- */
-// Object.defineProperty is not available in IE8
-if (!IS_IE8 && Object.defineProperty) {
-  Object.defineProperty(videojs, 'middleware', {
-    value: {},
-    writeable: false,
-    enumerable: true
-  });
-
-  Object.defineProperty(videojs.middleware, 'TERMINATOR', {
-    value: TERMINATOR,
-    writeable: false,
-    enumerable: true
-  });
-} else {
-  videojs.middleware = { TERMINATOR: TERMINATOR };
-}
 
 /**
  * A suite of browser and device tests from {@link browser}.
@@ -79865,32 +78521,9 @@ videojs.createTimeRange = videojs.createTimeRanges = createTimeRanges;
 videojs.formatTime = formatTime;
 
 /**
- * Replaces format-time with a custom implementation, to be used in place of the default.
- *
- * @borrows format-time:setFormatTime as videojs.setFormatTime
- *
- * @method setFormatTime
- *
- * @param {Function} customFn
- *        A custom format-time function which will be called with the current time and guide (in seconds) as arguments.
- *        Passed fn should return a string.
- */
-videojs.setFormatTime = setFormatTime;
-
-/**
- * Resets format-time to the default implementation.
- *
- * @borrows format-time:resetFormatTime as videojs.resetFormatTime
- *
- * @method resetFormatTime
- */
-videojs.resetFormatTime = resetFormatTime;
-
-/**
  * Resolve and parse the elements of a URL
  *
  * @borrows url:parseUrl as videojs.parseUrl
- *
  */
 videojs.parseUrl = parseUrl;
 
@@ -80132,8 +78765,8 @@ module.exports = videojs;
 
 
 /***/ }),
-/* 287 */,
-/* 288 */
+/* 280 */,
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -80157,12 +78790,12 @@ module.exports = videojs;
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 
-var window = __webpack_require__(119);
+var window = __webpack_require__(112);
 
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(289),
-  VTTCue: __webpack_require__(290),
-  VTTRegion: __webpack_require__(291)
+  WebVTT: __webpack_require__(282),
+  VTTCue: __webpack_require__(283),
+  VTTRegion: __webpack_require__(284)
 };
 
 window.vttjs = vttjs;
@@ -80189,7 +78822,7 @@ if (!window.VTTCue) {
 
 
 /***/ }),
-/* 289 */
+/* 282 */
 /***/ (function(module, exports) {
 
 /**
@@ -80493,7 +79126,7 @@ function parseContent(window, input) {
       return result;
     }
 
-    var m = input.match(/^([^<]*)(<[^>]*>?)?/);
+    var m = input.match(/^([^<]*)(<[^>]+>?)?/);
     // If there is some text before the next tag, return it, otherwise return
     // the tag.
     return consume(m[1] ? m[1] : m[2]);
@@ -81524,7 +80157,7 @@ module.exports = WebVTT;
 
 
 /***/ }),
-/* 290 */
+/* 283 */
 /***/ (function(module, exports) {
 
 /**
@@ -81835,7 +80468,7 @@ module.exports = VTTCue;
 
 
 /***/ }),
-/* 291 */
+/* 284 */
 /***/ (function(module, exports) {
 
 /**
@@ -81975,6 +80608,13 @@ module.exports = VTTRegion;
 
 
 /***/ }),
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
 /* 292 */,
 /* 293 */,
 /* 294 */,
@@ -82032,22 +80672,15 @@ module.exports = VTTRegion;
 /* 346 */,
 /* 347 */,
 /* 348 */,
-/* 349 */,
-/* 350 */,
-/* 351 */,
-/* 352 */,
-/* 353 */,
-/* 354 */,
-/* 355 */,
-/* 356 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var window = __webpack_require__(119)
+var window = __webpack_require__(112)
 var isFunction = __webpack_require__(77)
-var parseHeaders = __webpack_require__(120)
-var xtend = __webpack_require__(130)
+var parseHeaders = __webpack_require__(113)
+var xtend = __webpack_require__(123)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -82287,12 +80920,19 @@ function noop() {}
 
 
 /***/ }),
-/* 357 */
+/* 350 */
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
 /* 358 */,
 /* 359 */,
 /* 360 */,
@@ -82305,14 +80945,7 @@ function noop() {}
 /* 367 */,
 /* 368 */,
 /* 369 */,
-/* 370 */,
-/* 371 */,
-/* 372 */,
-/* 373 */,
-/* 374 */,
-/* 375 */,
-/* 376 */,
-/* 377 */
+/* 370 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82326,7 +80959,7 @@ var _moment = __webpack_require__(1);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _video = __webpack_require__(286);
+var _video = __webpack_require__(279);
 
 var _video2 = _interopRequireDefault(_video);
 
@@ -82448,7 +81081,7 @@ exports.default = {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
 
 /***/ }),
-/* 378 */
+/* 371 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82462,13 +81095,13 @@ var _axios = __webpack_require__(14);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _lodash = __webpack_require__(47);
+var _lodash = __webpack_require__(48);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
 var _gsap = __webpack_require__(17);
 
-var _SingleItem = __webpack_require__(543);
+var _SingleItem = __webpack_require__(536);
 
 var _SingleItem2 = _interopRequireDefault(_SingleItem);
 
@@ -82625,6 +81258,13 @@ exports.default = {
 };
 
 /***/ }),
+/* 372 */,
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */,
+/* 378 */,
 /* 379 */,
 /* 380 */,
 /* 381 */,
@@ -82664,14 +81304,7 @@ exports.default = {
 /* 415 */,
 /* 416 */,
 /* 417 */,
-/* 418 */,
-/* 419 */,
-/* 420 */,
-/* 421 */,
-/* 422 */,
-/* 423 */,
-/* 424 */,
-/* 425 */
+/* 418 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82685,7 +81318,7 @@ var _jquery = __webpack_require__(53);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
-var _list = __webpack_require__(544);
+var _list = __webpack_require__(537);
 
 var _list2 = _interopRequireDefault(_list);
 
@@ -82701,6 +81334,13 @@ var app = new _vue2.default({
 });
 
 /***/ }),
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
 /* 426 */,
 /* 427 */,
 /* 428 */,
@@ -82765,32 +81405,32 @@ var app = new _vue2.default({
 /* 487 */,
 /* 488 */,
 /* 489 */,
-/* 490 */,
-/* 491 */,
-/* 492 */,
-/* 493 */,
-/* 494 */,
-/* 495 */,
-/* 496 */,
-/* 497 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
 exports.push([module.i, "\n.panel > .reset-filters {\n  width: 100%;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  padding-bottom: 2rem;\n}\n.panel .list-items {\n  display: table;\n  width: 100%;\n}\n.panel .list-items > .filters {\n    display: table-row;\n}\n.panel .list-items > .filters > .filter {\n      display: table-cell;\n      padding-right: 2rem;\n      font-weight: bold;\n}\n.panel .list-items > .filters > .author > .input {\n      display: none;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n      -ms-flex-align: center;\n          align-items: center;\n}\n.panel .list-items > .filters > .author > .input > i {\n        padding-left: 1rem;\n        cursor: pointer;\n}\n.panel .list-items > .filters > .date > i, .panel .list-items > .filters > .date > span {\n      cursor: pointer;\n}\n", ""]);
 
 /***/ }),
-/* 498 */,
-/* 499 */,
-/* 500 */,
-/* 501 */,
-/* 502 */,
-/* 503 */
+/* 491 */,
+/* 492 */,
+/* 493 */,
+/* 494 */,
+/* 495 */,
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
 exports.push([module.i, "\n.single-item {\n  display: table-row;\n}\n.single-item > .info {\n    display: table-cell;\n    padding-bottom: 1rem;\n}\n.single-item > .info.thumb {\n      position: relative;\n      max-width: 64px;\n      padding-right: 2rem;\n}\n.single-item > .info.thumb > .play-btn {\n        position: absolute;\n        width: 100%;\n        height: 100%;\n}\n.single-item > .info.thumb > .play-btn > i {\n          position: absolute;\n          color: #ff636e;\n          left: calc(50% - 13px);\n          top: calc(50% - 8px);\n          transform: translate(-50%, -50%);\n          cursor: pointer;\n}\n", ""]);
 
 /***/ }),
+/* 497 */,
+/* 498 */,
+/* 499 */,
+/* 500 */,
+/* 501 */,
+/* 502 */,
+/* 503 */,
 /* 504 */,
 /* 505 */,
 /* 506 */,
@@ -82823,26 +81463,19 @@ exports.push([module.i, "\n.single-item {\n  display: table-row;\n}\n.single-ite
 /* 533 */,
 /* 534 */,
 /* 535 */,
-/* 536 */,
-/* 537 */,
-/* 538 */,
-/* 539 */,
-/* 540 */,
-/* 541 */,
-/* 542 */,
-/* 543 */
+/* 536 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue__ = __webpack_require__(377);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue__ = __webpack_require__(370);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_SingleItem_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7d28e068_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SingleItem_vue__ = __webpack_require__(631);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_7d28e068_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_SingleItem_vue__ = __webpack_require__(624);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(694)
+  __webpack_require__(687)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -82888,19 +81521,19 @@ if (false) {(function () {
 
 
 /***/ }),
-/* 544 */
+/* 537 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue__ = __webpack_require__(378);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue__ = __webpack_require__(371);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_list_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6b9ad0aa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_list_vue__ = __webpack_require__(625);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6b9ad0aa_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_list_vue__ = __webpack_require__(618);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(688)
+  __webpack_require__(681)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -82946,6 +81579,13 @@ if (false) {(function () {
 
 
 /***/ }),
+/* 538 */,
+/* 539 */,
+/* 540 */,
+/* 541 */,
+/* 542 */,
+/* 543 */,
+/* 544 */,
 /* 545 */,
 /* 546 */,
 /* 547 */,
@@ -83019,14 +81659,7 @@ if (false) {(function () {
 /* 615 */,
 /* 616 */,
 /* 617 */,
-/* 618 */,
-/* 619 */,
-/* 620 */,
-/* 621 */,
-/* 622 */,
-/* 623 */,
-/* 624 */,
-/* 625 */
+/* 618 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83093,11 +81726,11 @@ var render = function() {
                   keydown: function($event) {
                     if (
                       !("button" in $event) &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                      _vm._k($event.keyCode, "enter", 13, $event.key)
                     ) {
                       return null
                     }
-                    return _vm.hideAuthorFilt($event)
+                    _vm.hideAuthorFilt($event)
                   },
                   input: function($event) {
                     if ($event.target.composing) {
@@ -83191,12 +81824,12 @@ if (false) {
 }
 
 /***/ }),
-/* 626 */,
-/* 627 */,
-/* 628 */,
-/* 629 */,
-/* 630 */,
-/* 631 */
+/* 619 */,
+/* 620 */,
+/* 621 */,
+/* 622 */,
+/* 623 */,
+/* 624 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -83321,6 +81954,13 @@ if (false) {
 }
 
 /***/ }),
+/* 625 */,
+/* 626 */,
+/* 627 */,
+/* 628 */,
+/* 629 */,
+/* 630 */,
+/* 631 */,
 /* 632 */,
 /* 633 */,
 /* 634 */,
@@ -83370,20 +82010,13 @@ if (false) {
 /* 678 */,
 /* 679 */,
 /* 680 */,
-/* 681 */,
-/* 682 */,
-/* 683 */,
-/* 684 */,
-/* 685 */,
-/* 686 */,
-/* 687 */,
-/* 688 */
+/* 681 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(497);
+var content = __webpack_require__(490);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -83403,18 +82036,18 @@ if(false) {
 }
 
 /***/ }),
-/* 689 */,
-/* 690 */,
-/* 691 */,
-/* 692 */,
-/* 693 */,
-/* 694 */
+/* 682 */,
+/* 683 */,
+/* 684 */,
+/* 685 */,
+/* 686 */,
+/* 687 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(503);
+var content = __webpack_require__(496);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -83434,6 +82067,13 @@ if(false) {
 }
 
 /***/ }),
+/* 688 */,
+/* 689 */,
+/* 690 */,
+/* 691 */,
+/* 692 */,
+/* 693 */,
+/* 694 */,
 /* 695 */,
 /* 696 */,
 /* 697 */,
@@ -83445,18 +82085,11 @@ if(false) {
 /* 703 */,
 /* 704 */,
 /* 705 */,
-/* 706 */,
-/* 707 */,
-/* 708 */,
-/* 709 */,
-/* 710 */,
-/* 711 */,
-/* 712 */,
-/* 713 */
+/* 706 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(425);
+module.exports = __webpack_require__(418);
 
 
 /***/ })
-],[713]);
+],[706]);

@@ -1,22 +1,23 @@
 webpackJsonp([27],{
 
-/***/ 280:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
-var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.4 */
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*! tether 1.4.3 */
 
 (function(root, factory) {
   if (true) {
-    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+    !(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
-				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
   } else if (typeof exports === 'object') {
-    module.exports = factory();
+    module.exports = factory(require, exports, module);
   } else {
     root.Tether = factory();
   }
-}(this, function() {
+}(this, function(require, exports, module) {
 
 'use strict';
 
@@ -1823,7 +1824,7 @@ return Tether;
 
 /***/ }),
 
-/***/ 359:
+/***/ 352:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -1835,7 +1836,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 360:
+/***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery, Tether) {/*!
@@ -5374,7 +5375,7 @@ var Popover = function ($) {
 
 }();
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53), __webpack_require__(280)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53), __webpack_require__(273)))
 
 /***/ }),
 
@@ -15750,15 +15751,15 @@ return jQuery;
 
 /***/ }),
 
-/***/ 740:
+/***/ 733:
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(53);
-__webpack_require__(280);
-__webpack_require__(360);
-module.exports = __webpack_require__(359);
+__webpack_require__(273);
+__webpack_require__(353);
+module.exports = __webpack_require__(352);
 
 
 /***/ })
 
-},[740]);
+},[733]);
