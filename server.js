@@ -1,7 +1,24 @@
 #!/usr/bin/env nodejs
 // var _ = require('lodash')
 
-var server = require ('https').Server()
+const ssl = true
+
+var fs = require('fs')
+var express = require('express')
+var app = express()
+
+var options = {
+  key: fs.readFileSync('./file.pem'),
+  cert: fs.readFileSync('.file.crt')
+}
+
+var serverPort = 443
+
+if (ssl) {
+  var server = require('https').createServer(options, app)
+} else {
+  var server = require('http').Server()
+}
 var io = require ('socket.io')(server)
 
 io.set('origins', '*:*')
