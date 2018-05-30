@@ -32,6 +32,9 @@ class FilmSpecificController extends Controller
 
     $teacher = Auth::guard('teacher')->user();
     $students_count = $teacher->students()->count();
+
+    
+
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {

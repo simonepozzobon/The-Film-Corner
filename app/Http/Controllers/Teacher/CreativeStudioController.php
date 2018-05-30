@@ -35,8 +35,14 @@ class CreativeStudioController extends Controller
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
     $apps = App::where('app_category_id', '=', $app_category->id)->orderBy('order')->with('category')->get();
+
     $teacher = Auth::guard('teacher')->user();
     $students_count = $teacher->students()->count();
+
+    if ($students_count < 5) {
+      $students_count = 5;
+    }
+
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {
