@@ -18,7 +18,7 @@ import EventBus from '_js/EventBus'
 import axios from 'axios'
 import _ from 'lodash'
 var io = require('socket.io-client')
-var socket = io.connect('http://' + window.location.hostname + ':6001', {
+var socket = io.connect('https://' + window.location.hostname + ':6001', {
 	reconnect: true
 })
 

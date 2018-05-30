@@ -12833,10 +12833,10 @@ __webpack_require__(451);
 window.io = __webpack_require__(98);
 window.Echo = new _laravelEcho2.default({
   broadcaster: 'socket.io',
-  host: window.location.hostname + ':6001'
+  host: 'https://' + window.location.hostname + ':6001'
 });
 
-console.log('debug', window.location.hostname);
+console.log('debug ' + 'https://' + window.location.hostname + ':6001');
 
 /**
  * require bootstrap-fileinput

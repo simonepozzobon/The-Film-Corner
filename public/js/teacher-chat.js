@@ -591,7 +591,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var axios = __webpack_require__(14);
 var io = __webpack_require__(98);
-var socket = io.connect('http://' + window.location.hostname + ':6001', {
+var socket = io.connect('https://' + window.location.hostname + ':6001', {
 	reconnect: true
 });
 var _ = __webpack_require__(48);
