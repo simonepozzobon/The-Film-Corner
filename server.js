@@ -22,8 +22,8 @@ if (ssl) {
 }
 var io = require ('socket.io')(server)
 
-io.set('origins', '*:*')
-io.set('match origin protocol', true)
+// io.set('origins', '*:*')
+// io.set('match origin protocol', true)
 
 var Redis = require ('ioredis')
 var redis = new Redis()
