@@ -33,7 +33,9 @@ class FilmSpecificController extends Controller
     $teacher = Auth::guard('teacher')->user();
     $students_count = $teacher->students()->count();
 
-    
+    if ($students_count < 5) {
+      $students_count = 5;
+    }
 
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
@@ -69,6 +71,7 @@ class FilmSpecificController extends Controller
       count($filtered) < $students_count ? $app->available = true : $app->available = false;
     }
 
+    dump($students_count);
 
     return view('teacher.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
