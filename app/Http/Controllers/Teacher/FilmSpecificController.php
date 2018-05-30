@@ -71,8 +71,6 @@ class FilmSpecificController extends Controller
       count($filtered) < $students_count ? $app->available = true : $app->available = false;
     }
 
-    dump($students_count);
-
     return view('teacher.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
 
