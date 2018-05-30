@@ -12,7 +12,7 @@ var options = {
   cert: fs.readFileSync('/etc/letsencrypt/live/thefilmcorner.eu/fullchain.pem')
 }
 
-var serverPort = 443
+var serverPort = 6001
 
 if (ssl) {
   var server = require('https').createServer(options, app)
