@@ -8,8 +8,8 @@ var express = require('express')
 var app = express()
 
 var options = {
-  key: fs.readFileSync('./file.pem'),
-  cert: fs.readFileSync('.file.crt')
+  key: fs.readFileSync('/etc/letsencrypt/live/thefilmcorner.eu/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/thefilmcorner.eu/fullchain.pem')
 }
 
 var serverPort = 443
