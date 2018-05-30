@@ -16,6 +16,7 @@ var serverPort = 6001
 
 if (ssl) {
   var server = require('https').createServer(options, app)
+  console.log('running https')
 } else {
   var server = require('http').Server()
 }
