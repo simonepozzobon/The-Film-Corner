@@ -1,7 +1,7 @@
 #!/usr/bin/env nodejs
 // var _ = require('lodash')
 
-var server = require ('http').Server()
+var server = require ('https').Server()
 var io = require ('socket.io')(server)
 
 io.set('origins', '*:*')
