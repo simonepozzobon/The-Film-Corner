@@ -25,10 +25,12 @@ import Echo from 'laravel-echo'
 window.io = require('socket.io-client')
 window.Echo = new Echo({
   broadcaster: 'socket.io',
-  host: 'https://' + window.location.hostname + ':6001'
+  host: 'https://' + window.location.hostname + ':6001',
+  secure: true,
 })
 
 console.log('debug ' + 'https://' + window.location.hostname + ':6001')
+console.log('debug', window.Echo)
 
 /**
  * require bootstrap-fileinput

@@ -21672,7 +21672,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var io = __webpack_require__(98);
 var socket = io.connect('https://' + window.location.hostname + ':6001', {
-	reconnect: true
+	reconnect: true,
+	secure: true
 });
 
 exports.default = {

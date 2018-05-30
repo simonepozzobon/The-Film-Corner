@@ -19,7 +19,8 @@ import axios from 'axios'
 import _ from 'lodash'
 var io = require('socket.io-client')
 var socket = io.connect('https://' + window.location.hostname + ':6001', {
-	reconnect: true
+	reconnect: true,
+	secure: true,
 })
 
 export default {
