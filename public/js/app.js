@@ -12836,6 +12836,8 @@ window.Echo = new _laravelEcho2.default({
   host: window.location.hostname + ':6001'
 });
 
+console.log('debug', window.location.hostname);
+
 /**
  * require bootstrap-fileinput
  */
