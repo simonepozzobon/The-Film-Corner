@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ config('app.locale') }}">
   @include('layouts.main._head')
+  <style media="screen">
+    #international-conference .active > .nav-link{
+        color: rgba(37, 37, 37, 0.7);
+    }
+  </style>
   <body>
     @include('layouts.main._menu')
     <div class="container">

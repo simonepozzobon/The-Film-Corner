@@ -131,6 +131,9 @@
           <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
         </li>
         <li class="nav-item">
+          <a href="{{ url('/conference') }}" class="nav-link">Conference</a>
+        </li>
+        <li class="nav-item">
           <a href="{{ url('/filmography') }}" class="nav-link">Filmography</a>
         </li>
         <li class="nav-item dropdown">
