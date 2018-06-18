@@ -128,6 +128,9 @@
           <a href="{{ url('/schools') }}" class="nav-link">Schools</a>
         </li>
         <li class="nav-item">
+          <a href="{{ url('/conference') }}" class="nav-link">Conference</a>
+        </li>
+        <li class="nav-item">
           <a href="{{ url('/') }}#partners" class="nav-link">Partners</a>
         </li>
         <li class="nav-item">
