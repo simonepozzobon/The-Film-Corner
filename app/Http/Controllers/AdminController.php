@@ -12,6 +12,7 @@ use Spatie\Activitylog\Models\Activity;
 use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
 
 use Analytics;
+use App\AnalyticsUtility;
 use Spatie\Analytics\Period;
 
 class AdminController extends Controller
@@ -55,6 +56,7 @@ class AdminController extends Controller
 
         // Most Visited Page this week
         $mostVisitedPages = Analytics::fetchMostVisitedPages(Period::days(7));
+
         $mostVisitedPage = $mostVisitedPages->filter(function($page, $key) {
             return ($page['url'] != '/' && strpos($page['url'], 'admin') == false);
         })->first();
@@ -107,6 +109,9 @@ class AdminController extends Controller
         ]);
         $usersGender = $usersGender->rows;
 
+        $mostUsedAppList = AnalyticsUtility::get_most_used_app($period);
+        $mostUsedAppSorted = $mostUsedAppList->sortByDesc('count')->values();
+
         $stats = [
             'teacher_sessions' => $teacher_sessions,
             'student_sessions' => $student_sessions,
@@ -122,6 +127,7 @@ class AdminController extends Controller
             'users_gender' => $usersGender,
             'start_date' => $period->startDate->date,
             'end_date' => $period->endDate->date,
+            'most_used_apps' => $mostUsedAppSorted,
         ];
 
         return view('admin', compact('visited', 'stats'));

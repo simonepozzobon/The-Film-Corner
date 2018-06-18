@@ -68205,6 +68205,17 @@ exports.default = {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 /* 380 */
@@ -69015,6 +69026,34 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { attrs: { id: "stats" } }, [
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Classifica app più usate", color: "gray" } },
+              [
+                _c(
+                  "ol",
+                  _vm._l(this.statsObj.most_used_apps, function(app) {
+                    return _c("li", { key: app.id }, [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(app.name) +
+                          "\n                        "
+                      )
+                    ])
+                  })
+                )
+              ]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "row pb-3" }, [
         _c(
           "div",

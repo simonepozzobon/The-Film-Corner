@@ -10,6 +10,17 @@
         <div id="stats">
             <div class="row pb-3">
                 <div class="col-md-12">
+                    <app-box title="Classifica app più usate" color="gray">
+                        <ol>
+                            <li v-for="app in this.statsObj.most_used_apps" :key="app.id">
+                                {{ app.name }}
+                            </li>
+                        </ol>
+                    </app-box>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-12">
                     <geo-chart :geosOrdered="this.geosOrdered"/>
                 </div>
             </div>
