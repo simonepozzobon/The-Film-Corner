@@ -12,8 +12,9 @@
                 <div class="col-md-12">
                     <app-box title="Classifica app" color="gray">
                         <p>In ordine di utilizzo, dalla più usata a quella meno usata</p>
+                        <moon-loader :loading="this.appsChartLoader" color="#ff878f"></moon-loader>
                         <ol>
-                            <li v-for="app in this.statsObj.most_used_apps" :key="app.id">
+                            <li v-for="app in this.appsChart" :key="app.id">
                                 {{ app.name }}
                             </li>
                         </ol>
@@ -106,11 +107,12 @@
 
 <script>
 import _ from 'lodash'
-
+import axios from 'axios'
 import AppBox from '../components/AppBox.vue'
 import BrowserChart from './BrowserChart.vue'
 import EventBus from '_js/EventBus'
 import GeoChart from './GeoChart.vue'
+import MoonLoader from 'vue-spinner/src/MoonLoader.vue'
 import TrackingTime from './TrackingTime.vue'
 import UsersAge from './UsersAge.vue'
 
@@ -120,6 +122,7 @@ export default {
         AppBox,
         BrowserChart,
         GeoChart,
+        MoonLoader,
         TrackingTime,
         UsersAge,
     },
@@ -131,6 +134,8 @@ export default {
     },
     data: function() {
         return {
+            appsChart: [],
+            appsChartLoader: true,
             chart: {},
             chartEl: null,
             geoStats: 0,
@@ -166,11 +171,18 @@ export default {
                 body.appendChild(script)
             } )
         },
+        getAppCharts: function() {
+            axios.get('/api/v1/app-chart').then(response => {
+                this.appsChart = response.data
+                this.appsChartLoader = false
+            })
+        }
     },
     mounted: function() {
         this.chartEl = document.getElementById('geo-chart')
         this.loadScriptLib().then(() => {
             EventBus.$emit('google-charts-load', google)
+            this.getAppCharts()
         })
     }
 }

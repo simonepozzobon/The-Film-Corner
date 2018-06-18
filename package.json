@@ -57,6 +57,7 @@
     "vue": "^2.5.16",
     "vue-draggable-resizable": "^1.7.1",
     "vue-socket.io": "^2.1.1",
+    "vue-spinner": "^1.0.3",
     "vue-video-player": "^5.0.2",
     "vueify": "^9.4.1"
   }

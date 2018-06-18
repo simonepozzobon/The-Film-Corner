@@ -116,16 +116,16 @@ export default {
           formData.append('user_id', this.json_user.id);
           formData.append('user_type', this.user_type);
 
-          axios.post('/api/v1/destroy-comment', formData)
-          .then(function(response){
-              // console.log(response);
-              if (response.data.success) {
-                  vue.$parent.$emit('commentDelete', id);
-              }
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
+          // axios.post('/api/v1/destroy-comment', formData)
+          // .then(function(response){
+          //     // console.log(response);
+          //     if (response.data.success) {
+          //         vue.$parent.$emit('commentDelete', id);
+          //     }
+          // })
+          // .catch(function (error) {
+          //     console.log(error);
+          // });
       },
 
       // reply
