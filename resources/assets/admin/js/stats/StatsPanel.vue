@@ -10,7 +10,8 @@
         <div id="stats">
             <div class="row pb-3">
                 <div class="col-md-12">
-                    <app-box title="Classifica app più usate" color="gray">
+                    <app-box title="Classifica app" color="gray">
+                        <p>In ordine di utilizzo, dalla più usata a quella meno usata</p>
                         <ol>
                             <li v-for="app in this.statsObj.most_used_apps" :key="app.id">
                                 {{ app.name }}

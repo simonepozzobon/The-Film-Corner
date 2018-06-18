@@ -68216,6 +68216,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 /* 380 */
@@ -69033,8 +69034,14 @@ var render = function() {
           [
             _c(
               "app-box",
-              { attrs: { title: "Classifica app più usate", color: "gray" } },
+              { attrs: { title: "Classifica app", color: "gray" } },
               [
+                _c("p", [
+                  _vm._v(
+                    "In ordine di utilizzo, dalla più usata a quella meno usata"
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
                   "ol",
                   _vm._l(this.statsObj.most_used_apps, function(app) {
