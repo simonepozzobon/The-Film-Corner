@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Analytics;
 use Carbon\Carbon;
+use App\AnalyticsUtility;
 use Illuminate\Http\Request;
+use Spatie\Analytics\Period;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use PragmaRX\Tracker\Vendor\Laravel\Facade as Tracker;
-use Analytics;
-use App\AnalyticsUtility;
-use Spatie\Analytics\Period;
 
 class StatsController extends Controller
 {
@@ -35,5 +36,59 @@ class StatsController extends Controller
         $mostUsedAppSorted = $mostUsedAppList->sortByDesc('count')->values();
 
         return $mostUsedAppSorted;
+    }
+
+    public function get_page_views(Request $request) {
+        $now = Carbon::now();
+        $start = Carbon::parse('first day of September 2017');
+        $period = Period::create($start, $now);
+
+        $pageViews = AnalyticsUtility::get_page_views($period);
+        return $pageViews;
+    }
+
+    public function test() {
+        $now = Carbon::now();
+        $start = Carbon::parse('first day of September 2017');
+
+        $dateInMinutes = $start->diffInMinutes($now);
+        $sessions = Tracker::sessions($dateInMinutes);
+
+        $counts = 0;
+        $countsAdmin = 0;
+        $countsInside = 0;
+        $countsOutside = 0;
+
+        $adminPaths = ['admin'];
+        $insidePaths = ['teacher', 'student', 'guest'];
+
+        foreach ($sessions as $session) {
+            foreach ($session->log as $log) {
+                $path = $log->path->path;
+                if ($this->is_contained($path, $adminPaths)) {
+                    $countsAdmin ++;
+                } else if ($this->is_contained($path, $insidePaths)) {
+                    $countsInside ++;
+                } else {
+                    $countsOutside ++;
+                }
+                $counts ++;
+            }
+        }
+
+
+        dump('admin -> '.$countsAdmin);
+        dump('inside -> '.$countsInside);
+        dump('outside -> '.$countsOutside);
+        dd('globali -> '.$counts);
+    }
+
+    public function is_contained($path, $arr) {
+        foreach ($arr as $word) {
+            if (strpos($path, $word) !== false) {
+                return true;
+            }
+            return false;
+        }
     }
 }

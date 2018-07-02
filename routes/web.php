@@ -11,6 +11,8 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/test', 'Admin\StatsController@test');
+
 Route::get('/timeline', function(){
     return view('timeline');
 });

@@ -3,9 +3,10 @@
 namespace App;
 
 use App\App;
-use Illuminate\Database\Eloquent\Model;
 use Analytics;
 use Spatie\Analytics\Period;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
 class AnalyticsUtility extends Model
 {
@@ -36,5 +37,15 @@ class AnalyticsUtility extends Model
         }
 
         return $collection;
+    }
+
+    public static function get_page_views($period = null)
+    {
+        $pageViewsTot = Analytics::performQuery($period, 'ga:pageviews');
+        $pageViewsNoAdmin = Analytics::performQuery($period, 'ga:pageviews');
+
+        return [
+            'pageViews' => $pageViewsTot,
+        ];
     }
 }

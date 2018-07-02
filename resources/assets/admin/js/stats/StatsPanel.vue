@@ -130,6 +130,8 @@
                 <div class="col-md-6">
                     <app-box title="Visualizzazioni" color="gray">
                         <p>Visualizzazioni di pagina totali</p>
+                        <!-- <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader> -->
+                        <!-- <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.pageViews }}</h1> -->
                         <h1>{{ this.statsObj.page_views_60dd }}</h1>
                     </app-box>
                 </div>
@@ -192,6 +194,8 @@ export default {
             chart: {},
             chartEl: null,
             geoStats: 0,
+            pageViews: {},
+            pageViewsLoader: true,
         }
     },
     computed: {
@@ -229,13 +233,20 @@ export default {
                 this.appsChart = response.data
                 this.appsChartLoader = false
             })
-        }
+        },
+        getPageViews: function() {
+            axios.get('/api/v1/page-views-stats').then(response => {
+                this.pageViews = response.data
+                this.pageViewsLoader = false
+            })
+        },
     },
     mounted: function() {
         this.chartEl = document.getElementById('geo-chart')
         this.loadScriptLib().then(() => {
             EventBus.$emit('google-charts-load', google)
             this.getAppCharts()
+            // this.getPageViews()
         })
     }
 }

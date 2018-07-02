@@ -68328,7 +68328,9 @@ exports.default = {
             appsChartLoader: true,
             chart: {},
             chartEl: null,
-            geoStats: 0
+            geoStats: 0,
+            pageViews: {},
+            pageViewsLoader: true
         };
     },
     computed: {
@@ -68368,18 +68370,29 @@ exports.default = {
                 _this.appsChart = response.data;
                 _this.appsChartLoader = false;
             });
+        },
+        getPageViews: function getPageViews() {
+            var _this2 = this;
+
+            _axios2.default.get('/api/v1/page-views-stats').then(function (response) {
+                _this2.pageViews = response.data;
+                _this2.pageViewsLoader = false;
+            });
         }
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this3 = this;
 
         this.chartEl = document.getElementById('geo-chart');
         this.loadScriptLib().then(function () {
             _EventBus2.default.$emit('google-charts-load', google);
-            _this2.getAppCharts();
+            _this3.getAppCharts();
+            // this.getPageViews()
         });
     }
 }; //
+//
+//
 //
 //
 //

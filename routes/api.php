@@ -47,6 +47,7 @@ Route::prefix('v1')->group(function() {
     // Admin Contest
     Route::get('/get-contest', 'Admin\ContestController@get_video');
     Route::get('/app-chart', 'Admin\StatsController@get_app_chart');
+    Route::get('/page-views-stats', 'Admin\StatsController@get_page_views');
 });
 
 // General request
