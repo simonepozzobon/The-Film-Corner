@@ -9,7 +9,7 @@
         </div>
         <div id="stats">
             <div class="row pb-3">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <app-box title="Classifica app" color="gray">
                         <p>In ordine di utilizzo, dalla più usata a quella meno usata</p>
                         <moon-loader :loading="this.appsChartLoader" color="#ff878f"></moon-loader>
@@ -18,6 +18,59 @@
                                 {{ app.name }}
                             </li>
                         </ol>
+                    </app-box>
+                </div>
+                <div class="col-md-6">
+                    <div class="row pb-3">
+                        <div class="col-12">
+                            <app-box title="Iscritti alla conferenza" color="gray">
+                                <div class="d-flex justify-content-around">
+                                    <div>
+                                        <h1>{{ this.statsObj.conference_applications }}</h1>
+                                    </div>
+                                </div>
+                            </app-box>
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-12">
+                            <app-box title="Account Globali" color="gray">
+                                <div class="d-flex justify-content-around">
+                                    <div>
+                                        <h1>{{ this.statsObj.global_accounts }}</h1>
+                                    </div>
+                                </div>
+                            </app-box>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-4">
+                    <app-box title="N. Teacher" color="gray">
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <h1>{{ this.statsObj.teachers_count }}</h1>
+                            </div>
+                        </div>
+                    </app-box>
+                </div>
+                <div class="col-md-4">
+                    <app-box title="N. Studenti" color="gray">
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <h1>{{ this.statsObj.students_count }}</h1>
+                            </div>
+                        </div>
+                    </app-box>
+                </div>
+                <div class="col-md-4">
+                    <app-box title="N. Ospiti" color="gray">
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <h1>{{ this.statsObj.guests_count }}</h1>
+                            </div>
+                        </div>
                     </app-box>
                 </div>
             </div>
@@ -30,7 +83,7 @@
                 <div class="col-md-6">
                     <div class="row pb-3">
                         <div class="col-md-12">
-                            <app-box title="Pagina della settimana" color="blue">
+                            <app-box title="Pagina della settimana" color="gray">
                                 <p>Pagina più visitata della settimana</p>
                                 <h1 class="d-inline-block">{{ this.statsObj.most_visited_page.pageViews }}</h1><span> Visite</span>
                                 - <a :href="this.statsObj.most_visited_page.url" target="_blank">{{ this.statsObj.most_visited_page.pageTitle }}</a>
@@ -39,13 +92,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <app-box title="Insegnanti" color="green">
+                            <app-box title="Insegnanti" color="gray">
                                 <p>Numero di applicazioni svolte dagli insegnanti</p>
                                 <h1>{{ this.statsObj.teacher_sessions }}</h1>
                             </app-box>
                         </div>
                         <div class="col-md-6">
-                            <app-box title="Studenti" color="yellow">
+                            <app-box title="Studenti" color="gray">
                                 <p>Numero di applicazioni svolte dagli studenti</p>
                                 <h1>{{ this.statsObj.student_sessions }}</h1>
                             </app-box>
@@ -75,13 +128,13 @@
             </div>
             <div class="row pb-3">
                 <div class="col-md-6">
-                    <app-box title="Visualizzazioni" color="orange">
+                    <app-box title="Visualizzazioni" color="gray">
                         <p>Visualizzazioni di pagina totali</p>
                         <h1>{{ this.statsObj.page_views_60dd }}</h1>
                     </app-box>
                 </div>
                 <div class="col-md-6">
-                    <app-box title="Durata Media Utilizzo" color="blue">
+                    <app-box title="Durata Media Utilizzo" color="gray">
                         <p>Durata media delle sessioni</p>
                         <h1>{{ this.statsObj.session_time_avg }}</h1>
                     </app-box>

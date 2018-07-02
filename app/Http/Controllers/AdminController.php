@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use App\Guest;
+use App\Teacher;
+use App\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\ConferenceApplication;
 use App\AppsSessions\AppsSession;
 use App\AppsSessions\StudentAppSession;
 use Spatie\Activitylog\Models\Activity;
@@ -109,6 +113,21 @@ class AdminController extends Controller
         ]);
         $usersGender = $usersGender->rows;
 
+        // Students account
+        $students_count = Student::count();
+
+        // Teachers account
+        $teachers_count = Teacher::count();
+
+        // Guests account
+        $guests_count = Guest::count();
+
+        // Global accounts
+        $global_accounts = $guests_count + $teachers_count + $students_count;
+
+        // Conference Application
+        $conference_applications = ConferenceApplication::count();
+
         $stats = [
             'teacher_sessions' => $teacher_sessions,
             'student_sessions' => $student_sessions,
@@ -124,6 +143,11 @@ class AdminController extends Controller
             'users_gender' => $usersGender,
             'start_date' => $period->startDate->date,
             'end_date' => $period->endDate->date,
+            'students_count' => $students_count,
+            'teachers_count' => $teachers_count,
+            'guests_count' => $guests_count,
+            'global_accounts' => $global_accounts,
+            'conference_applications' => $conference_applications,
         ];
 
         return view('admin', compact('visited', 'stats'));
