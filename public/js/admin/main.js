@@ -68379,6 +68379,8 @@ exports.default = {
                 console.log(response.data);
                 _this2.pageViews = response.data;
                 _this2.pageViewsLoader = false;
+            }).catch(function (errors) {
+                console.log(errors);
             });
         }
     },

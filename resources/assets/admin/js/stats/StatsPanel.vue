@@ -263,6 +263,8 @@ export default {
                 console.log(response.data)
                 this.pageViews = response.data
                 this.pageViewsLoader = false
+            }).catch(errors => {
+                console.log(errors)
             })
         },
     },
