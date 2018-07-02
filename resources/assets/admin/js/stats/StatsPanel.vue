@@ -143,15 +143,22 @@
                 </div>
             </div>
             <div class="row pb-3">
-                <div class="col-md-6">
-                    <app-box title="Visualizzazioni Interne" color="gray">
+                <div class="col-md-4">
+                    <app-box title="Admin" color="gray">
+                        <p>Visualizzazioni di pagina solo del pannello admin</p>
+                        <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
+                        <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.admin }}</h1>
+                    </app-box>
+                </div>
+                <div class="col-md-4">
+                    <app-box title="Interne" color="gray">
                         <p>Visualizzazioni di pagina all'interno dell'area privata</p>
                         <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
                         <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.inside }}</h1>
                     </app-box>
                 </div>
-                <div class="col-md-6">
-                    <app-box title="Visualizzazioni Esterne" color="gray">
+                <div class="col-md-4">
+                    <app-box title="Esterne" color="gray">
                         <p>Visualizzazioni di pagina della parte pubblica</p>
                         <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
                         <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.outside }}</h1>
