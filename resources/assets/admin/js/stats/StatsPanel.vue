@@ -255,6 +255,7 @@ export default {
             axios.get('/api/v1/app-chart').then(response => {
                 this.appsChart = response.data
                 this.appsChartLoader = false
+                this.getPageViews()
             })
         },
         getPageViews: function() {
@@ -270,7 +271,6 @@ export default {
         this.loadScriptLib().then(() => {
             EventBus.$emit('google-charts-load', google)
             this.getAppCharts()
-            this.getPageViews()
         })
     }
 }
