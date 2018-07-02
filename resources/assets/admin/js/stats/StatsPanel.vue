@@ -130,15 +130,31 @@
                 <div class="col-md-6">
                     <app-box title="Visualizzazioni" color="gray">
                         <p>Visualizzazioni di pagina totali</p>
-                        <!-- <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader> -->
-                        <!-- <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.pageViews }}</h1> -->
-                        <h1>{{ this.statsObj.page_views_60dd }}</h1>
+                        <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
+                        <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.global }}</h1>
+                        <!-- <h1>{{ this.statsObj.page_views_60dd }}</h1> -->
                     </app-box>
                 </div>
                 <div class="col-md-6">
                     <app-box title="Durata Media Utilizzo" color="gray">
                         <p>Durata media delle sessioni</p>
                         <h1>{{ this.statsObj.session_time_avg }}</h1>
+                    </app-box>
+                </div>
+            </div>
+            <div class="row pb-3">
+                <div class="col-md-6">
+                    <app-box title="Visualizzazioni Interne" color="gray">
+                        <p>Visualizzazioni di pagina all'interno dell'area privata</p>
+                        <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
+                        <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.inside }}</h1>
+                    </app-box>
+                </div>
+                <div class="col-md-6">
+                    <app-box title="Visualizzazioni Esterne" color="gray">
+                        <p>Visualizzazioni di pagina della parte pubblica</p>
+                        <moon-loader :loading="this.pageViewsLoader" color="#ff878f"></moon-loader>
+                        <h1 v-if="!this.pageViewsLoader">{{ this.pageViews.outside }}</h1>
                     </app-box>
                 </div>
             </div>
@@ -236,6 +252,7 @@ export default {
         },
         getPageViews: function() {
             axios.get('/api/v1/page-views-stats').then(response => {
+                console.log(response.data)
                 this.pageViews = response.data
                 this.pageViewsLoader = false
             })
@@ -246,7 +263,7 @@ export default {
         this.loadScriptLib().then(() => {
             EventBus.$emit('google-charts-load', google)
             this.getAppCharts()
-            // this.getPageViews()
+            this.getPageViews()
         })
     }
 }

@@ -41,15 +41,6 @@ class StatsController extends Controller
     public function get_page_views(Request $request) {
         $now = Carbon::now();
         $start = Carbon::parse('first day of September 2017');
-        $period = Period::create($start, $now);
-
-        $pageViews = AnalyticsUtility::get_page_views($period);
-        return $pageViews;
-    }
-
-    public function test() {
-        $now = Carbon::now();
-        $start = Carbon::parse('first day of September 2017');
 
         $dateInMinutes = $start->diffInMinutes($now);
         $sessions = Tracker::sessions($dateInMinutes);
@@ -76,11 +67,12 @@ class StatsController extends Controller
             }
         }
 
-
-        dump('admin -> '.$countsAdmin);
-        dump('inside -> '.$countsInside);
-        dump('outside -> '.$countsOutside);
-        dd('globali -> '.$counts);
+        return [
+            'admin' => $countsAdmin,
+            'inside' => $countsInside,
+            'outside' => $countsOutside,
+            'global' => $counts,
+        ];
     }
 
     public function is_contained($path, $arr) {

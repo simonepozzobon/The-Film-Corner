@@ -68375,6 +68375,7 @@ exports.default = {
             var _this2 = this;
 
             _axios2.default.get('/api/v1/page-views-stats').then(function (response) {
+                console.log(response.data);
                 _this2.pageViews = response.data;
                 _this2.pageViewsLoader = false;
             });
@@ -68387,10 +68388,26 @@ exports.default = {
         this.loadScriptLib().then(function () {
             _EventBus2.default.$emit('google-charts-load', google);
             _this3.getAppCharts();
-            // this.getPageViews()
+            _this3.getPageViews();
         });
     }
 }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -69718,8 +69735,15 @@ var render = function() {
               [
                 _c("p", [_vm._v("Visualizzazioni di pagina totali")]),
                 _vm._v(" "),
-                _c("h1", [_vm._v(_vm._s(this.statsObj.page_views_60dd))])
-              ]
+                _c("moon-loader", {
+                  attrs: { loading: this.pageViewsLoader, color: "#ff878f" }
+                }),
+                _vm._v(" "),
+                !this.pageViewsLoader
+                  ? _c("h1", [_vm._v(_vm._s(this.pageViews.global))])
+                  : _vm._e()
+              ],
+              1
             )
           ],
           1
@@ -69737,6 +69761,62 @@ var render = function() {
                 _vm._v(" "),
                 _c("h1", [_vm._v(_vm._s(this.statsObj.session_time_avg))])
               ]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row pb-3" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Visualizzazioni Interne", color: "gray" } },
+              [
+                _c("p", [
+                  _vm._v(
+                    "Visualizzazioni di pagina all'interno dell'area privata"
+                  )
+                ]),
+                _vm._v(" "),
+                _c("moon-loader", {
+                  attrs: { loading: this.pageViewsLoader, color: "#ff878f" }
+                }),
+                _vm._v(" "),
+                !this.pageViewsLoader
+                  ? _c("h1", [_vm._v(_vm._s(this.pageViews.inside))])
+                  : _vm._e()
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "col-md-6" },
+          [
+            _c(
+              "app-box",
+              { attrs: { title: "Visualizzazioni Esterne", color: "gray" } },
+              [
+                _c("p", [
+                  _vm._v("Visualizzazioni di pagina della parte pubblica")
+                ]),
+                _vm._v(" "),
+                _c("moon-loader", {
+                  attrs: { loading: this.pageViewsLoader, color: "#ff878f" }
+                }),
+                _vm._v(" "),
+                !this.pageViewsLoader
+                  ? _c("h1", [_vm._v(_vm._s(this.pageViews.outside))])
+                  : _vm._e()
+              ],
+              1
             )
           ],
           1
