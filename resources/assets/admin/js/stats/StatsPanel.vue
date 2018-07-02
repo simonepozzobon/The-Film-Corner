@@ -258,7 +258,7 @@ export default {
             })
         },
         getPageViews: function() {
-            axios.get('/api/v1/page-views-stats').then(response => {
+            axios.get('/test').then(response => {
                 console.log(response.data)
                 this.pageViews = response.data
                 this.pageViewsLoader = false

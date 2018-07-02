@@ -68374,7 +68374,7 @@ exports.default = {
         getPageViews: function getPageViews() {
             var _this2 = this;
 
-            _axios2.default.get('/api/v1/page-views-stats').then(function (response) {
+            _axios2.default.get('/test').then(function (response) {
                 console.log(response.data);
                 _this2.pageViews = response.data;
                 _this2.pageViewsLoader = false;
