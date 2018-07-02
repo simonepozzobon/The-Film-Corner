@@ -53,6 +53,7 @@ class StatsController extends Controller
 
         $dateInMinutes = $start->diffInMinutes($now);
         $sessions = Tracker::sessions($dateInMinutes);
+        dd($sessions);
 
         $counts = 0;
         $countsAdmin = 0;
