@@ -38,7 +38,7 @@ class StatsController extends Controller
         return $mostUsedAppSorted;
     }
 
-    public function get_page_views(Request $request) {
+    public function get_page_views() {
         $now = Carbon::now();
         $start = Carbon::parse('first day of September 2017');
 
@@ -67,12 +67,12 @@ class StatsController extends Controller
             }
         }
 
-        return [
+        return response()->json([
             'admin' => $countsAdmin,
             'inside' => $countsInside,
             'outside' => $countsOutside,
             'global' => $counts,
-        ];
+        ]);
     }
 
     public function is_contained($path, $arr) {
