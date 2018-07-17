@@ -19476,65 +19476,81 @@ process.umask = function() { return 0; };
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _gsap = __webpack_require__(17);
 
 exports.default = {
-	name: 'Message',
-	data: function data() {
-		return {
-			message: ''
-		};
-	},
-	methods: {
-		showMessage: function showMessage() {
-			var vue = this;
-			var t1 = new _gsap.TimelineMax();
-			t1.to('#fullscreen-message', .4, {
-				opacity: 1,
-				display: 'inherit',
-				ease: _gsap.Power4.easeInOut
-			}).to('#display-message', .2, {
-				opacity: 1,
-				display: 'block',
-				ease: _gsap.Sine.easeInOut,
-				onComplete: function onComplete() {
-					setTimeout(vue.hideMessage, 2500);
-				}
-			});
-		},
-		hideMessage: function hideMessage() {
-			var t1 = new _gsap.TimelineMax();
-			t1.to('#display-message', .2, {
-				opacity: 0,
-				display: 'none',
-				ease: _gsap.Sine.easeInOut
-			}).to('#fullscreen-message', .2, {
-				opacity: 0,
-				display: 'none',
-				ease: _gsap.Power4.easeInOut
-			});
-		}
-	},
-	created: function created() {
-		var _this = this;
+    name: 'Message',
+    data: function data() {
+        return {
+            message: '',
+            timeout: true,
+            width: 0
+        };
+    },
+    methods: {
+        showMessage: function showMessage() {
+            var _this = this;
 
-		document.addEventListener('fullscreen-message', function (message) {
-			console.log('evento ricevuto', message.detail);
-			_this.message = message.detail;
-			_this.showMessage();
-		});
-	},
-	mounted: function mounted() {
-		//do something after mounting vue instance
+            var t1 = new _gsap.TimelineMax();
+            t1.to('#fullscreen-message', .4, {
+                opacity: 1,
+                display: 'inherit',
+                ease: _gsap.Power4.easeInOut
+            }).to('#display-message', .2, {
+                opacity: 1,
+                display: 'block',
+                ease: _gsap.Sine.easeInOut,
+                onComplete: function onComplete() {
+                    if (_this.timeout) {
+                        setTimeout(_this.hideMessage, 2500);
+                    }
+                }
+            });
+        },
+        hideMessage: function hideMessage() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to('#display-message', .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to('#fullscreen-message', .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Power4.easeInOut
+            });
+        },
+        getDimensions: function getDimensions() {
+            this.width = window.innerWidth;
+            if (this.width <= 992) {
+                this.message = 'Ooops the screen size is too small!<br> Resize the window or use a different device!';
+                this.timeout = false;
+                this.showMessage();
+            } else {
+                this.timeout = true;
+                this.hideMessage();
+            }
+        }
+    },
+    created: function created() {
+        var _this2 = this;
 
-		// this.showMessage()
+        document.addEventListener('fullscreen-message', function (message) {
+            console.log('evento ricevuto', message.detail);
+            _this2.message = message.detail;
+            _this2.showMessage();
+        });
+    },
+    mounted: function mounted() {
+        //do something after mounting vue instance
 
-	}
+        // this.showMessage()
+        this.getDimensions();
+        window.addEventListener('resize', this.getDimensions, false);
+    }
 }; //
-//
 //
 //
 //
@@ -19811,15 +19827,12 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "fullscreen-message" } }, [
-    _c(
-      "div",
-      {
-        ref: "message",
-        staticClass: "message text-success",
-        attrs: { id: "display-message" }
-      },
-      [_vm._v("\n\t\t" + _vm._s(this.message) + "\n\t")]
-    )
+    _c("div", {
+      ref: "message",
+      staticClass: "message text-success",
+      attrs: { id: "display-message" },
+      domProps: { innerHTML: _vm._s(this.message) }
+    })
   ])
 }
 var staticRenderFns = []

@@ -197,7 +197,7 @@ import NotificationsMenu from './NotificationsMenu.vue'
 import NotificationsDropdownMenu from './NotificationsDropdownMenu.vue'
 
 var io = require('socket.io-client')
-var socket = io.connect('https://' + window.location.hostname + ':6001', {
+var socket = io.connect(window.location.protocol + '//' + window.location.hostname + ':6001', {
     reconnect: true
 })
 import axios from 'axios'

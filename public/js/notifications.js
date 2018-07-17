@@ -22122,7 +22122,7 @@ var io = __webpack_require__(102); //
 //
 //
 
-var socket = io.connect('https://' + window.location.hostname + ':6001', {
+var socket = io.connect(window.location.protocol + '//' + window.location.hostname + ':6001', {
     reconnect: true
 });
 exports.default = {

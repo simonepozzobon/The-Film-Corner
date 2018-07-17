@@ -37,6 +37,7 @@
     "angular": "^1.7.0",
     "angular-media-timeline": "*",
     "any-resize-event": "^1.0.0",
+    "dotenv": "^6.0.0",
     "express": "^4.16.3",
     "fabric": "^2.3.0",
     "font-awesome": "^4.7.0",
