@@ -1,4 +1,4 @@
-webpackJsonp([26],{
+webpackJsonp([25],{
 
 /***/ 1:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -19098,7 +19098,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 416:
+/***/ 405:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19110,85 +19110,134 @@ Object.defineProperty(exports, "__esModule", {
 
 var _gsap = __webpack_require__(26);
 
+var _MorphSVGPlugin = __webpack_require__(539);
+
+var _MorphSVGPlugin2 = _interopRequireDefault(_MorphSVGPlugin);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
-    name: 'Message',
+    name: 'PreLoader',
     data: function data() {
         return {
-            message: '',
-            timeout: true,
-            width: 0
+            interval: null
         };
     },
     methods: {
-        showMessage: function showMessage() {
+        animateIn: function animateIn() {
+            var t1 = new TimelineMax();
+            t1.set(this.$refs.preloader, {
+                display: 'flex',
+                opacity: 1
+            });
+
+            var t2 = new TimelineMax({ repeat: -1 });
+            t2.to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path3
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path4
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path6
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path7
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path8
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path11
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path13
+            }).to(this.$refs.path1, 0.5, {
+                delay: 1,
+                morphSVG: this.$refs.path1
+            });
+
+            var t3 = new TimelineMax({ repeat: -1 });
+            t3.to(this.$refs.text, 1.5, {
+                color: '#ff636e'
+            }).to(this.$refs.text, 1.5, {
+                delay: 1,
+                color: 'rgb(232, 163, 96)'
+            }).to(this.$refs.text, 1.5, {
+                delay: 1,
+                color: 'rgb(233, 200, 69)'
+            }).to(this.$refs.text, 1.5, {
+                delay: 1,
+                color: 'rgb(183, 204, 94)'
+            }).to(this.$refs.text, 1.5, {
+                delay: 1,
+                color: 'rgb(149, 226, 218)'
+            }).to(this.$refs.text, 1.5, {
+                delay: 1,
+                color: 'rgb(255, 99, 110)'
+            });
+
+            var master = new TimelineMax();
+            master.add(t1);
+            master.add(t2, .5);
+            master.add(t3, .5);
+            master.play();
+        },
+        loading: function loading() {
             var _this = this;
 
-            var t1 = new _gsap.TimelineMax();
-            t1.to('#fullscreen-message', .4, {
-                opacity: 1,
-                display: 'inherit',
-                ease: _gsap.Power4.easeInOut
-            }).to('#display-message', .2, {
-                opacity: 1,
-                display: 'block',
-                ease: _gsap.Sine.easeInOut,
-                onComplete: function onComplete() {
-                    if (_this.timeout) {
-                        setTimeout(_this.hideMessage, 2500);
-                    }
+            // Animazione per il caricamento
+            this.animateIn();
+            this.interval = setInterval(function () {
+                if (document.readyState === 'complete') {
+                    clearInterval(_this.interval);
+                    _this.done();
                 }
-            });
+            }, 100);
         },
-        hideMessage: function hideMessage() {
-            var t1 = new _gsap.TimelineMax();
-            t1.to('#display-message', .2, {
-                opacity: 0,
+        done: function done() {
+            var t1 = new TimelineMax();
+            t1.to(this.$refs.preloader, 1, {
+                delay: 1,
                 display: 'none',
-                ease: _gsap.Sine.easeInOut
-            }).to('#fullscreen-message', .2, {
-                opacity: 0,
-                display: 'none',
-                ease: _gsap.Power4.easeInOut
+                opacity: 0
             });
-        },
-        getDimensions: function getDimensions() {
-            this.width = window.innerWidth;
-            if (this.width <= 992) {
-                this.message = 'Ooops the screen size is too small!<br> Resize the window or use a different device!';
-                this.timeout = false;
-                this.showMessage();
-            } else {
-                this.timeout = true;
-                this.hideMessage();
-            }
         }
     },
-    created: function created() {
-        var _this2 = this;
-
-        document.addEventListener('fullscreen-message', function (message) {
-            console.log('evento ricevuto', message.detail);
-            _this2.message = message.detail;
-            _this2.showMessage();
-        });
-    },
     mounted: function mounted() {
-        //do something after mounting vue instance
-
-        // this.showMessage()
-        this.getDimensions();
-        window.addEventListener('resize', this.getDimensions, false);
+        this.loading();
     }
-}; //
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
-/***/ 457:
+/***/ 450:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19198,16 +19247,16 @@ var _vue = __webpack_require__(24);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _Message = __webpack_require__(587);
+var _PreLoader = __webpack_require__(576);
 
-var _Message2 = _interopRequireDefault(_Message);
+var _PreLoader2 = _interopRequireDefault(_PreLoader);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-new _vue2.default({
-    el: '#fullscreen-messages',
+var loader = new _vue2.default({
+    el: '#preloader',
     components: {
-        Message: _Message2.default
+        PreLoader: _PreLoader2.default
     }
 });
 
@@ -19948,6 +19997,14 @@ const TweenMaxBase = TweenMax;
 
 /***/ }),
 
+/***/ 518:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)();
+exports.push([module.i, "\n#preloader-frame {\n  position: fixed;\n  width: 100%;\n  height: 100vh;\n  background-color: #fff;\n  z-index: 9998;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-pack: center;\n      justify-content: center;\n  -ms-flex-align: center;\n      align-items: center;\n  display: none;\n  opacity: 0;\n}\n#preloader-frame #loading #path-2,\n  #preloader-frame #loading #path-3,\n  #preloader-frame #loading #path-4,\n  #preloader-frame #loading #path-5,\n  #preloader-frame #loading #path-6,\n  #preloader-frame #loading #path-7,\n  #preloader-frame #loading #path-8,\n  #preloader-frame #loading #path-9,\n  #preloader-frame #loading #path-10,\n  #preloader-frame #loading #path-11,\n  #preloader-frame #loading #path-12,\n  #preloader-frame #loading #path-13,\n  #preloader-frame #loading #path-14 {\n    visibility: hidden;\n}\n", ""]);
+
+/***/ }),
+
 /***/ 52:
 /***/ (function(module, exports) {
 
@@ -19979,27 +20036,1029 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
-/***/ 530:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n#fullscreen-message[data-v-cdc4aa00] {\n  position: fixed;\n  top: 0;\n  left: 0;\n  right: 0;\n  bottom: 0;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  background-color: #f7f7f9;\n  display: none;\n  opacity: 0;\n  display: none;\n  opacity: 0;\n}\n#fullscreen-message > .message[data-v-cdc4aa00] {\n    font-family: \"Raleway\", sans-serif;\n    font-weight: 900;\n    text-transform: uppercase;\n    color: #252525;\n    font-size: 2.25rem;\n    line-height: 2.83rem;\n    position: absolute;\n    left: 50%;\n    top: 50%;\n    transform: translate(-50%, -50%);\n    display: none;\n    opacity: 0;\n}\n", ""]);
-
-/***/ }),
-
-/***/ 587:
+/***/ 539:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__ = __webpack_require__(416);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__);
-/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_cdc4aa00_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Message_vue__ = __webpack_require__(662);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_gsap_TweenLite_js__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MorphSVGPlugin", function() { return MorphSVGPlugin; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MorphSVGPlugin; });
+/*!
+ * VERSION: 0.8.11
+ * DATE: 2018-05-30
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2018, GreenSock. All rights reserved.
+ * MorphSVGPlugin is a Club GreenSock membership benefit; You must have a valid membership to use
+ * this code without violating the terms of use. Visit http://greensock.com/club/ to sign up or get more details.
+ * This work is subject to the software agreement that was issued with your membership.
+ * 
+ * @author: Jack Doyle, jack@greensock.com
+ */
+
+
+
+var _DEG2RAD = Math.PI / 180,
+		_RAD2DEG = 180 / Math.PI,
+		_svgPathExp = /[achlmqstvz]|(-?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
+		_numbersExp = /(?:(-|-=|\+=)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
+		_selectorExp = /(^[#\.][a-z]|[a-y][a-z])/gi,
+		_commands = /[achlmqstvz]/ig,
+		_scientific = /[\+\-]?\d*\.?\d+e[\+\-]?\d+/ig,
+		//_attrExp = /(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/gi, //finds all the attribute name/value pairs in an HTML element
+		//_outerTagExp = /^<([A-Za-z0-9_\-]+)((?:\s+[A-Za-z0-9_\-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/i, //takes the outerHTML and pulls out [0] - the first tag, [1] - the tag name, and [2] - the attribute name/value pairs (space-delimited)
+		//_wrappingQuotesExp = /^["']|["']$/g,
+		TweenLite = __WEBPACK_IMPORTED_MODULE_0_gsap_TweenLite_js__["j" /* _gsScope */]._gsDefine.globals.TweenLite,
+		//_nonNumbersExp = /(?:([\-+](?!(\d|=)))|[^\d\-+=e]|(e(?![\-+][\d])))+/ig,
+
+		_log = function(message) {
+			if (__WEBPACK_IMPORTED_MODULE_0_gsap_TweenLite_js__["j" /* _gsScope */].console) {
+				console.log(message);
+			}
+		},
+
+		// translates an arc into a normalized array of cubic beziers excluding the starting x/y. The circle the arc follows will be centered at 0,0 and have a radius of 1 (hence normalized). Each bezier covers no more than 90 degrees; the arc will be divided evenly into a maximum of four curves.
+		_normalizedArcToBeziers = function(angleStart, angleExtent) {
+			var segments = Math.ceil(Math.abs(angleExtent) / 90),
+				l = 0,
+				a = [],
+				angleIncrement, controlLength, angle, dx, dy, i;
+			angleStart *= _DEG2RAD;
+			angleExtent *= _DEG2RAD;
+			angleIncrement = angleExtent / segments;
+			controlLength = 4 / 3 * Math.sin(angleIncrement / 2) / (1 + Math.cos(angleIncrement / 2));
+			for (i = 0; i < segments; i++) {
+				angle = angleStart + i * angleIncrement;
+				dx = Math.cos(angle);
+				dy = Math.sin(angle);
+				a[l++] = dx - controlLength * dy;
+				a[l++] = dy + controlLength * dx;
+				angle += angleIncrement;
+				dx = Math.cos(angle);
+				dy = Math.sin(angle);
+				a[l++] = dx + controlLength * dy;
+				a[l++] = dy - controlLength * dx;
+				a[l++] = dx;
+				a[l++] = dy;
+			}
+			return a;
+		},
+
+		// translates SVG arc data into an array of cubic beziers
+		_arcToBeziers = function(lastX, lastY, rx, ry, angle, largeArcFlag, sweepFlag, x, y) {
+			if (lastX === x && lastY === y) {
+				return;
+			}
+			rx = Math.abs(rx);
+			ry = Math.abs(ry);
+			var angleRad = (angle % 360) * _DEG2RAD,
+				cosAngle = Math.cos(angleRad),
+				sinAngle = Math.sin(angleRad),
+				dx2 = (lastX - x) / 2,
+				dy2 = (lastY - y) / 2,
+				x1 = (cosAngle * dx2 + sinAngle * dy2),
+				y1 = (-sinAngle * dx2 + cosAngle * dy2),
+				rx_sq = rx * rx,
+				ry_sq = ry * ry,
+				x1_sq = x1 * x1,
+				y1_sq = y1 * y1,
+				radiiCheck = x1_sq / rx_sq + y1_sq / ry_sq;
+			if (radiiCheck > 1) {
+				rx = Math.sqrt(radiiCheck) * rx;
+				ry = Math.sqrt(radiiCheck) * ry;
+				rx_sq = rx * rx;
+				ry_sq = ry * ry;
+			}
+			var sign = (largeArcFlag === sweepFlag) ? -1 : 1,
+				sq = ((rx_sq * ry_sq) - (rx_sq * y1_sq) - (ry_sq * x1_sq)) / ((rx_sq * y1_sq) + (ry_sq * x1_sq));
+			if (sq < 0) {
+				sq = 0;
+			}
+			var coef = (sign * Math.sqrt(sq)),
+				cx1 = coef * ((rx * y1) / ry),
+				cy1 = coef * -((ry * x1) / rx),
+				sx2 = (lastX + x) / 2,
+				sy2 = (lastY + y) / 2,
+				cx = sx2 + (cosAngle * cx1 - sinAngle * cy1),
+				cy = sy2 + (sinAngle * cx1 + cosAngle * cy1),
+				ux = (x1 - cx1) / rx,
+				uy = (y1 - cy1) / ry,
+				vx = (-x1 - cx1) / rx,
+				vy = (-y1 - cy1) / ry,
+				n = Math.sqrt((ux * ux) + (uy * uy)),
+				p = ux;
+			sign = (uy < 0) ? -1 : 1;
+			var angleStart = (sign * Math.acos(p / n)) * _RAD2DEG;
+
+			n = Math.sqrt((ux * ux + uy * uy) * (vx * vx + vy * vy));
+			p = ux * vx + uy * vy;
+			sign = (ux * vy - uy * vx < 0) ? -1 : 1;
+			var angleExtent = (sign * Math.acos(p / n)) * _RAD2DEG;
+			if (!sweepFlag && angleExtent > 0) {
+				angleExtent -= 360;
+			} else if (sweepFlag && angleExtent < 0) {
+				angleExtent += 360;
+			}
+			angleExtent %= 360;
+			angleStart %= 360;
+
+			var bezierPoints = _normalizedArcToBeziers(angleStart, angleExtent),
+				a = cosAngle * rx,
+				b = sinAngle * rx,
+				c = sinAngle * -ry,
+				d = cosAngle * ry,
+				l = bezierPoints.length - 2,
+				i, px, py;
+			//translate all the bezier points according to the matrix...
+			for (i = 0; i < l; i +=  2) {
+				px = bezierPoints[i];
+				py = bezierPoints[i+1];
+				bezierPoints[i] = px * a + py * c + cx;
+				bezierPoints[i+1] = px * b + py * d + cy;
+			}
+			bezierPoints[bezierPoints.length-2] = x; //always set the end to exactly where it's supposed to be
+			bezierPoints[bezierPoints.length-1] = y;
+			return bezierPoints;
+		},
+
+		//Spits back an array of cubic Bezier segments that use absolute coordinates. Each segment starts with a "moveTo" command (x coordinate, then y) and then 2 control points (x, y, x, y), then anchor. The goal is to minimize memory and maximize speed.
+		_pathDataToBezier = function(d) {
+			var a = (d + "").replace(_scientific, function(m) { var n = +m; return (n < 0.0001 && n > -0.0001) ? 0 : n; }).match(_svgPathExp) || [], //some authoring programs spit out very small numbers in scientific notation like "1e-5", so make sure we round that down to 0 first.
+				path = [],
+				relativeX = 0,
+				relativeY = 0,
+				elements = a.length,
+				l = 2,
+				points = 0,
+				i, j, x, y, command, isRelative, segment, startX, startY, difX, difY, beziers, prevCommand;
+			if (!d || !isNaN(a[0]) || isNaN(a[1])) {
+				_log("ERROR: malformed path data: " + d);
+				return path;
+			}
+			for (i = 0; i < elements; i++) {
+				prevCommand = command;
+				if (isNaN(a[i])) {
+					command = a[i].toUpperCase();
+					isRelative = (command !== a[i]); //lower case means relative
+				} else { //commands like "C" can be strung together without any new command characters between.
+					i--;
+				}
+				x = +a[i+1];
+				y = +a[i+2];
+				if (isRelative) {
+					x += relativeX;
+					y += relativeY;
+				}
+				if (i === 0) {
+					startX = x;
+					startY = y;
+				}
+
+				// "M" (move)
+				if (command === "M") {
+					if (segment && segment.length < 8) { //if the path data was funky and just had a M with no actual drawing anywhere, skip it.
+						path.length-=1;
+						l = 0;
+					}
+					relativeX = startX = x;
+					relativeY = startY = y;
+					segment = [x, y];
+					points += l;
+					l = 2;
+					path.push(segment);
+					i += 2;
+					command = "L"; //an "M" with more than 2 values gets interpreted as "lineTo" commands ("L").
+
+				// "C" (cubic bezier)
+				} else if (command === "C") {
+					if (!segment) {
+						segment = [0, 0];
+					}
+					segment[l++] = x;
+					segment[l++] = y;
+					if (!isRelative) {
+						relativeX = relativeY = 0;
+					}
+					segment[l++] = relativeX + a[i + 3] * 1; //note: "*1" is just a fast/short way to cast the value as a Number. WAAAY faster in Chrome, slightly slower in Firefox.
+					segment[l++] = relativeY + a[i + 4] * 1;
+					segment[l++] = relativeX = relativeX + a[i + 5] * 1;
+					segment[l++] = relativeY = relativeY + a[i + 6] * 1;
+					//if (y === segment[l-1] && y === segment[l-3] && x === segment[l-2] && x === segment[l-4]) { //if all the values are the same, eliminate the waste.
+					//	segment.length = l = l-6;
+					//}
+					i += 6;
+
+				// "S" (continuation of cubic bezier)
+				} else if (command === "S") {
+					if (prevCommand === "C" || prevCommand === "S") {
+						difX = relativeX - segment[l - 4];
+						difY = relativeY - segment[l - 3];
+						segment[l++] = relativeX + difX;
+						segment[l++] = relativeY + difY;
+					} else {
+						segment[l++] = relativeX;
+						segment[l++] = relativeY;
+					}
+					segment[l++] = x;
+					segment[l++] = y;
+					if (!isRelative) {
+						relativeX = relativeY = 0;
+					}
+					segment[l++] = relativeX = relativeX + a[i + 3] * 1;
+					segment[l++] = relativeY = relativeY + a[i + 4] * 1;
+					//if (y === segment[l-1] && y === segment[l-3] && x === segment[l-2] && x === segment[l-4]) { //if all the values are the same, eliminate the waste.
+					//	segment.length = l = l-6;
+					//}
+					i += 4;
+
+				// "Q" (quadratic bezier)
+				} else if (command === "Q") {
+					difX = x - relativeX;
+					difY = y - relativeY;
+					segment[l++] = relativeX + difX * 2 / 3;
+					segment[l++] = relativeY + difY * 2 / 3;
+					if (!isRelative) {
+						relativeX = relativeY = 0;
+					}
+					relativeX = relativeX + a[i + 3] * 1;
+					relativeY = relativeY + a[i + 4] * 1;
+					difX = x - relativeX;
+					difY = y - relativeY;
+					segment[l++] = relativeX + difX * 2 / 3;
+					segment[l++] = relativeY + difY * 2 / 3;
+					segment[l++] = relativeX;
+					segment[l++] = relativeY;
+
+					i += 4;
+
+				// "T" (continuation of quadratic bezier)
+				} else if (command === "T") {
+					difX = relativeX - segment[l-4];
+					difY = relativeY - segment[l-3];
+					segment[l++] = relativeX + difX;
+					segment[l++] = relativeY + difY;
+					difX = (relativeX + difX * 1.5) - x;
+					difY = (relativeY + difY * 1.5) - y;
+					segment[l++] = x + difX * 2 / 3;
+					segment[l++] = y + difY * 2 / 3;
+					segment[l++] = relativeX = x;
+					segment[l++] = relativeY = y;
+
+					i += 2;
+
+				// "H" (horizontal line)
+				} else if (command === "H") {
+					y = relativeY;
+					//if (x !== relativeX) {
+						segment[l++] = relativeX + (x - relativeX) / 3;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = relativeX + (x - relativeX) * 2 / 3;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = relativeX = x;
+						segment[l++] = y;
+					//}
+					i += 1;
+
+				// "V" (horizontal line)
+				} else if (command === "V") {
+					y = x; //adjust values because the first (and only one) isn't x in this case, it's y.
+					x = relativeX;
+					if (isRelative) {
+						y += relativeY - relativeX;
+					}
+					//if (y !== relativeY) {
+						segment[l++] = x;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = x;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = x;
+						segment[l++] = relativeY = y;
+					//}
+					i += 1;
+
+				// "L" (line) or "Z" (close)
+				} else if (command === "L" || command === "Z") {
+					if (command === "Z") {
+						x = startX;
+						y = startY;
+						segment.closed = true;
+					}
+					if (command === "L" || Math.abs(relativeX - x) > 0.5 || Math.abs(relativeY - y) > 0.5) {
+						segment[l++] = relativeX + (x - relativeX) / 3;
+						segment[l++] = relativeY + (y - relativeY) / 3;
+						segment[l++] = relativeX + (x - relativeX) * 2 / 3;
+						segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+						segment[l++] = x;
+						segment[l++] = y;
+						if (command === "L") {
+							i += 2;
+						}
+					}
+					relativeX = x;
+					relativeY = y;
+
+				// "A" (arc)
+				} else if (command === "A") {
+					beziers = _arcToBeziers(relativeX, relativeY, a[i+1]*1, a[i+2]*1, a[i+3]*1, a[i+4]*1, a[i+5]*1, (isRelative ? relativeX : 0) + a[i+6]*1, (isRelative ? relativeY : 0) + a[i+7]*1);
+					if (beziers) {
+						for (j = 0; j < beziers.length; j++) {
+							segment[l++] = beziers[j];
+						}
+					}
+					relativeX = segment[l-2];
+					relativeY = segment[l-1];
+					i += 7;
+
+				} else {
+					_log("Error: malformed path data: " + d);
+				}
+			}
+			path.totalPoints = points + l;
+			return path;
+		},
+
+		//adds a certain number of Beziers while maintaining the path shape (so that the start/end values can have a matching quantity of points to animate). Only pass in ONE segment of the Bezier at a time. Format: [xAnchor, yAnchor, xControlPoint1, yControlPoint1, xControlPoint2, yControlPoint2, xAnchor, yAnchor, xControlPoint1, etc...]
+		_subdivideBezier = function(bezier, quantity) {
+			var tally = 0,
+				max = 0.999999,
+				l = bezier.length,
+				newPointsPerSegment = quantity / ((l - 2) / 6),
+				ax, ay, cp1x, cp1y, cp2x, cp2y, bx, by,
+				x1, y1, x2, y2, i, t;
+			for (i = 2; i < l; i += 6) {
+				tally += newPointsPerSegment;
+				while (tally > max) { //compare with 0.99999 instead of 1 in order to prevent rounding errors
+					ax = bezier[i-2];
+					ay = bezier[i-1];
+					cp1x = bezier[i];
+					cp1y = bezier[i+1];
+					cp2x = bezier[i+2];
+					cp2y = bezier[i+3];
+					bx = bezier[i+4];
+					by = bezier[i+5];
+					t = 1 / (Math.floor(tally) + 1); //progress along the bezier (value between 0 and 1)
+
+					x1 = ax + (cp1x - ax) * t;
+					x2 = cp1x + (cp2x - cp1x) * t;
+					x1 += (x2 - x1) * t;
+					x2 += ((cp2x + (bx - cp2x) * t) - x2) * t;
+
+					y1 = ay + (cp1y - ay) * t;
+					y2 = cp1y + (cp2y - cp1y) * t;
+					y1 += (y2 - y1) * t;
+					y2 += ((cp2y + (by - cp2y) * t) - y2) * t;
+
+					bezier.splice(i, 4,
+						ax + (cp1x - ax) * t,   //first control point
+						ay + (cp1y - ay) * t,
+						x1,                     //second control point
+						y1,
+						x1 + (x2 - x1) * t,     //new fabricated anchor on line
+						y1 + (y2 - y1) * t,
+						x2,                     //third control point
+						y2,
+						cp2x + (bx - cp2x) * t, //fourth control point
+						cp2y + (by - cp2y) * t
+					);
+					i += 6;
+					l += 6;
+					tally--;
+				}
+			}
+			return bezier;
+		},
+		_bezierToPathData = function(beziers) {
+			var data = "",
+				l = beziers.length,
+				rnd = 100,
+				sl, s, i, segment;
+			for (s = 0; s < l; s++) {
+				segment = beziers[s];
+				data += "M" + segment[0] + "," + segment[1] + " C";
+				sl = segment.length;
+				for (i = 2; i < sl; i++) {
+					data += (((segment[i++] * rnd) | 0) / rnd) + "," + (((segment[i++] * rnd) | 0) / rnd) + " " + (((segment[i++] * rnd) | 0) / rnd) + "," + (((segment[i++] * rnd) | 0) / rnd) + " " + (((segment[i++] * rnd) | 0) / rnd) + "," + (((segment[i] * rnd) | 0) / rnd) + " ";
+				}
+				if (segment.closed) {
+					data += "z";
+				}
+			}
+			return data;
+		},
+		_reverseBezier = function(bezier) {
+			var a = [],
+				i = bezier.length - 1,
+				l = 0;
+			while (--i > -1) {
+				a[l++] = bezier[i];
+				a[l++] = bezier[i+1];
+				i--;
+			}
+			for (i = 0; i < l; i++) {
+				bezier[i] = a[i];
+			}
+			bezier.reversed = bezier.reversed ? false : true;
+		},
+		_getAverageXY = function(bezier) {
+			var l = bezier.length,
+				x = 0,
+				y = 0,
+				i;
+			for (i = 0; i < l; i++) {
+				x += bezier[i++];
+				y += bezier[i];
+			}
+			return [x / (l / 2), y / (l / 2)];
+		},
+		_getSize = function(bezier) { //rough estimate of the bounding box (based solely on the anchors) of a single segment. sets "size", "centerX", and "centerY" properties on the bezier array itself, and returns the size (width * height)
+			var l = bezier.length,
+				xMax = bezier[0],
+				xMin = xMax,
+				yMax = bezier[1],
+				yMin = yMax,
+				x, y, i;
+			for (i = 6; i < l; i+=6) {
+				x = bezier[i];
+				y = bezier[i+1];
+				if (x > xMax) {
+					xMax = x;
+				} else if (x < xMin) {
+					xMin = x;
+				}
+				if (y > yMax) {
+					yMax = y;
+				} else if (y < yMin) {
+					yMin = y;
+				}
+			}
+			bezier.centerX = (xMax + xMin) / 2;
+			bezier.centerY = (yMax + yMin) / 2;
+			return (bezier.size = (xMax - xMin) * (yMax - yMin));
+		},
+		_getTotalSize = function(bezier) { //rough estimate of the bounding box of the entire list of Bezier segments (based solely on the anchors). sets "size", "centerX", and "centerY" properties on the bezier array itself, and returns the size (width * height)
+			var segment = bezier.length,
+				xMax = bezier[0][0],
+				xMin = xMax,
+				yMax = bezier[0][1],
+				yMin = yMax,
+				l, x, y, i, b;
+			while (--segment > -1) {
+				b = bezier[segment];
+				l = b.length;
+				for (i = 6; i < l; i+=6) {
+					x = b[i];
+					y = b[i+1];
+					if (x > xMax) {
+						xMax = x;
+					} else if (x < xMin) {
+						xMin = x;
+					}
+					if (y > yMax) {
+						yMax = y;
+					} else if (y < yMin) {
+						yMin = y;
+					}
+				}
+			}
+			bezier.centerX = (xMax + xMin) / 2;
+			bezier.centerY = (yMax + yMin) / 2;
+			return (bezier.size = (xMax - xMin) * (yMax - yMin));
+		},
+		_sortByComplexity = function(a, b) {
+			return b.length - a.length;
+		},
+		_sortBySize = function(a, b) {
+			var sizeA = a.size || _getSize(a),
+				sizeB = b.size || _getSize(b);
+			return (Math.abs(sizeB - sizeA) < (sizeA + sizeB) / 20) ? (b.centerX - a.centerX) || (b.centerY - a.centerY) : sizeB - sizeA; //if the size is within 10% of each other, prioritize position from left to right, then top to bottom.
+		},
+		_offsetBezier = function(bezier, shapeIndex) {
+			var a = bezier.slice(0),
+				l = bezier.length,
+				wrap = l - 2,
+				i, index;
+			shapeIndex = shapeIndex | 0;
+			for (i = 0; i < l; i++) {
+				index = (i + shapeIndex) % wrap;
+				bezier[i++] = a[index];
+				bezier[i] = a[index+1];
+			}
+		},
+		_getTotalMovement = function(sb, eb, shapeIndex, offsetX, offsetY) {
+			var l = sb.length,
+				d = 0,
+				wrap = l - 2,
+				index, i, x, y;
+			shapeIndex *= 6;
+			for (i = 0; i < l; i += 6) {
+				index = (i + shapeIndex) % wrap;
+				y = sb[index] - (eb[i] - offsetX);
+				x = sb[index+1] - (eb[i+1] - offsetY);
+				d += Math.sqrt(x * x + y * y);
+			}
+			return d;
+		},
+		_getClosestShapeIndex = function(sb, eb, checkReverse) { //finds the index in a closed cubic bezier array that's closest to the angle provided (angle measured from the center or average x/y).
+			var l = sb.length,
+				sCenter = _getAverageXY(sb), //when comparing distances, adjust the coordinates as if the shapes are centered with each other.
+				eCenter = _getAverageXY(eb),
+				offsetX = eCenter[0] - sCenter[0],
+				offsetY = eCenter[1] - sCenter[1],
+				min = _getTotalMovement(sb, eb, 0, offsetX, offsetY),
+				minIndex = 0,
+				copy, d, i;
+			for (i = 6; i < l; i += 6) {
+				d = _getTotalMovement(sb, eb, i / 6, offsetX, offsetY);
+				if (d < min) {
+					min = d;
+					minIndex = i;
+				}
+			}
+			if (checkReverse) {
+				copy = sb.slice(0);
+				_reverseBezier(copy);
+				for (i = 6; i < l; i += 6) {
+					d = _getTotalMovement(copy, eb, i / 6, offsetX, offsetY);
+					if (d < min) {
+						min = d;
+						minIndex = -i;
+					}
+				}
+			}
+			return minIndex / 6;
+		},
+		_getClosestAnchor = function(bezier, x, y) { //finds the x/y of the anchor that's closest to the provided x/y coordinate (returns an array, like [x, y]). The bezier should be the top-level type that contains an array for each segment.
+			var j = bezier.length,
+				closestDistance = 99999999999,
+				closestX = 0,
+				closestY = 0,
+				b, dx, dy, d, i, l;
+			while (--j > -1) {
+				b = bezier[j];
+				l = b.length;
+				for (i = 0; i < l; i += 6) {
+					dx = b[i] - x;
+					dy = b[i+1] - y;
+					d = Math.sqrt(dx * dx + dy * dy);
+					if (d < closestDistance) {
+						closestDistance = d;
+						closestX = b[i];
+						closestY = b[i+1];
+					}
+				}
+			}
+			return [closestX, closestY];
+		},
+		_getClosestSegment = function(bezier, pool, startIndex, sortRatio, offsetX, offsetY) { //matches the bezier to the closest one in a pool (array) of beziers, assuming they are in order of size and we shouldn't drop more than 20% of the size, otherwise prioritizing location (total distance to the center). Extracts the segment out of the pool array and returns it.
+			var l = pool.length,
+				index = 0,
+				minSize = Math.min(bezier.size || _getSize(bezier), pool[startIndex].size || _getSize(pool[startIndex])) * sortRatio, //limit things based on a percentage of the size of either the bezier or the next element in the array, whichever is smaller.
+				min = 999999999999,
+				cx = bezier.centerX + offsetX,
+				cy = bezier.centerY + offsetY,
+				size, i, dx, dy, d;
+			for (i = startIndex; i < l; i++) {
+				size = pool[i].size || _getSize(pool[i]);
+				if (size < minSize) {
+					break;
+				}
+				dx = pool[i].centerX - cx;
+				dy = pool[i].centerY - cy;
+				d = Math.sqrt(dx * dx + dy * dy);
+				if (d < min) {
+					index = i;
+					min = d;
+				}
+			}
+			d = pool[index];
+			pool.splice(index, 1);
+			return d;
+		},
+		_equalizeSegmentQuantity = function(start, end, shapeIndex, map) { //returns an array of shape indexes, 1 for each segment.
+			var dif = end.length - start.length,
+				longer = dif > 0 ? end : start,
+				shorter = dif > 0 ? start : end,
+				added = 0,
+				sortMethod = (map === "complexity") ? _sortByComplexity : _sortBySize,
+				sortRatio = (map === "position") ? 0 : (typeof(map) === "number") ? map : 0.8,
+				i = shorter.length,
+				shapeIndices = (typeof(shapeIndex) === "object" && shapeIndex.push) ? shapeIndex.slice(0) : [shapeIndex],
+				reverse = (shapeIndices[0] === "reverse" || shapeIndices[0] < 0),
+				log = (shapeIndex === "log"),
+				eb, sb, b, x, y, offsetX, offsetY;
+			if (!shorter[0]) {
+				return;
+			}
+			if (longer.length > 1) {
+				start.sort(sortMethod);
+				end.sort(sortMethod);
+				offsetX = longer.size || _getTotalSize(longer); //ensures centerX and centerY are defined (used below).
+				offsetX = shorter.size || _getTotalSize(shorter);
+				offsetX = longer.centerX - shorter.centerX;
+				offsetY = longer.centerY - shorter.centerY;
+				if (sortMethod === _sortBySize) {
+					for (i = 0; i < shorter.length; i++) {
+						longer.splice(i, 0, _getClosestSegment(shorter[i], longer, i, sortRatio, offsetX, offsetY));
+					}
+				}
+			}
+			if (dif) {
+				if (dif < 0) {
+					dif = -dif;
+				}
+				if (longer[0].length > shorter[0].length) { //since we use shorter[0] as the one to map the origination point of any brand new fabricated segments, do any subdividing first so that there are more points to choose from (if necessary)
+					_subdivideBezier(shorter[0], ((longer[0].length - shorter[0].length)/6) | 0);
+				}
+				i = shorter.length;
+				while (added < dif) {
+					x = longer[i].size || _getSize(longer[i]); //just to ensure centerX and centerY are calculated which we use on the next line.
+					b = _getClosestAnchor(shorter, longer[i].centerX, longer[i].centerY);
+					x = b[0];
+					y = b[1];
+					shorter[i++] = [x, y, x, y, x, y, x, y];
+					shorter.totalPoints += 8;
+					added++;
+				}
+			}
+			for (i = 0; i < start.length; i++) {
+				eb = end[i];
+				sb = start[i];
+				dif = eb.length - sb.length;
+				if (dif < 0) {
+					_subdivideBezier(eb, (-dif/6) | 0);
+				} else if (dif > 0) {
+					_subdivideBezier(sb, (dif/6) | 0);
+				}
+				if (reverse && !sb.reversed) {
+					_reverseBezier(sb);
+				}
+				shapeIndex = (shapeIndices[i] || shapeIndices[i] === 0) ? shapeIndices[i] : "auto";
+				if (shapeIndex) {
+					//if start shape is closed, find the closest point to the start/end, and re-organize the bezier points accordingly so that the shape morphs in a more intuitive way.
+					if (sb.closed || (Math.abs(sb[0] - sb[sb.length - 2]) < 0.5 && Math.abs(sb[1] - sb[sb.length - 1]) < 0.5)) {
+						if (shapeIndex === "auto" || shapeIndex === "log") {
+							shapeIndices[i] = shapeIndex = _getClosestShapeIndex(sb, eb, i === 0);
+							if (shapeIndex < 0) {
+								reverse = true;
+								_reverseBezier(sb);
+								shapeIndex = -shapeIndex;
+							}
+							_offsetBezier(sb, shapeIndex * 6);
+
+						} else if (shapeIndex !== "reverse") {
+							if (i && shapeIndex < 0) { //only happens if an array is passed as shapeIndex and a negative value is defined for an index beyond 0. Very rare, but helpful sometimes.
+								_reverseBezier(sb);
+							}
+							_offsetBezier(sb, (shapeIndex < 0 ? -shapeIndex : shapeIndex) * 6);
+						}
+					//otherwise, if it's not a closed shape, consider reversing it if that would make the overall travel less
+					} else if (!reverse && (shapeIndex === "auto" && (Math.abs(eb[0] - sb[0]) + Math.abs(eb[1] - sb[1]) + Math.abs(eb[eb.length - 2] - sb[sb.length - 2]) + Math.abs(eb[eb.length - 1] - sb[sb.length - 1]) > Math.abs(eb[0] - sb[sb.length - 2]) + Math.abs(eb[1] - sb[sb.length - 1]) + Math.abs(eb[eb.length - 2] - sb[0]) + Math.abs(eb[eb.length - 1] - sb[1])) || (shapeIndex % 2))) {
+						_reverseBezier(sb);
+						shapeIndices[i] = -1;
+						reverse = true;
+					} else if (shapeIndex === "auto") {
+						shapeIndices[i] = 0;
+					} else if (shapeIndex === "reverse") {
+						shapeIndices[i] = -1;
+					}
+					if (sb.closed !== eb.closed) { //if one is closed and one isn't, don't close either one otherwise the tweening will look weird (but remember, the beginning and final states will honor the actual values, so this only affects the inbetween state)
+						sb.closed = eb.closed = false;
+					}
+				}
+			}
+			if (log) {
+				_log("shapeIndex:[" + shapeIndices.join(",") + "]");
+			}
+			return shapeIndices;
+		},
+		_pathFilter = function(a, shapeIndex, map, precompile) {
+			var start = _pathDataToBezier(a[0]),
+				end = _pathDataToBezier(a[1]);
+			if (!_equalizeSegmentQuantity(start, end, (shapeIndex || shapeIndex === 0) ? shapeIndex : "auto", map)) {
+				return; //malformed path data or null target
+			}
+			a[0] = _bezierToPathData(start);
+			a[1] = _bezierToPathData(end);
+			if (precompile === "log" || precompile === true) {
+				_log('precompile:["' + a[0] + '","' + a[1] + '"]');
+			}
+		},
+		_buildPathFilter = function(shapeIndex, map, precompile) {
+			return (map || precompile || shapeIndex || shapeIndex === 0) ? function(a) {
+				_pathFilter(a, shapeIndex, map, precompile);
+			} : _pathFilter;
+		},
+		_offsetPoints = function(text, offset) {
+			if (!offset) {
+				return text;
+			}
+			var a = text.match(_numbersExp) || [],
+				l = a.length,
+				s = "",
+				inc, i, j;
+			if (offset === "reverse") {
+				i = l-1;
+				inc = -2;
+			} else {
+				i = (((parseInt(offset, 10) || 0) * 2 + 1) + l * 100) % l;
+				inc = 2;
+			}
+			for (j = 0; j < l; j += 2) {
+				s += a[i-1] + "," + a[i] + " ";
+				i = (i + inc) % l;
+			}
+			return s;
+		},
+		//adds a certain number of points while maintaining the polygon/polyline shape (so that the start/end values can have a matching quantity of points to animate). Returns the revised string.
+		_equalizePointQuantity = function(a, quantity) {
+			var tally = 0,
+				x = parseFloat(a[0]),
+				y = parseFloat(a[1]),
+				s = x + "," + y + " ",
+				max = 0.999999,
+				newPointsPerSegment, i, l, j, factor, nextX, nextY;
+			l = a.length;
+			newPointsPerSegment = quantity * 0.5 / (l * 0.5 - 1);
+			for (i = 0; i < l-2; i += 2) {
+				tally += newPointsPerSegment;
+				nextX = parseFloat(a[i+2]);
+				nextY = parseFloat(a[i+3]);
+				if (tally > max) { //compare with 0.99999 instead of 1 in order to prevent rounding errors
+					factor = 1 / (Math.floor(tally) + 1);
+					j = 1;
+					while (tally > max) {
+						s += (x + (nextX - x) * factor * j).toFixed(2) + "," + (y + (nextY - y) * factor * j).toFixed(2) + " ";
+						tally--;
+						j++;
+					}
+				}
+				s += nextX + "," + nextY + " ";
+				x = nextX;
+				y = nextY;
+			}
+			return s;
+		},
+		_pointsFilter = function(a) {
+			var startNums = a[0].match(_numbersExp) || [],
+				endNums = a[1].match(_numbersExp) || [],
+				dif = endNums.length - startNums.length;
+			if (dif > 0) {
+				a[0] = _equalizePointQuantity(startNums, dif);
+			} else {
+				a[1] = _equalizePointQuantity(endNums, -dif);
+			}
+		},
+		_buildPointsFilter = function(shapeIndex) {
+			return !isNaN(shapeIndex) ? function(a) {
+				_pointsFilter(a);
+				a[1] = _offsetPoints(a[1], parseInt(shapeIndex, 10));
+			} : _pointsFilter;
+		},
+		_createPath = function(e, ignore) {
+			var path = __WEBPACK_IMPORTED_MODULE_0_gsap_TweenLite_js__["j" /* _gsScope */].document.createElementNS("http://www.w3.org/2000/svg", "path"),
+				attr = Array.prototype.slice.call(e.attributes),
+				i = attr.length,
+				name;
+			ignore = "," + ignore + ",";
+			while (--i > -1) {
+				name = attr[i].nodeName.toLowerCase(); //in Microsoft Edge, if you don't set the attribute with a lowercase name, it doesn't render correctly! Super weird.
+				if (ignore.indexOf("," + name + ",") === -1) {
+					path.setAttributeNS(null, name, attr[i].nodeValue);
+				}
+			}
+			return path;
+		},
+		_convertToPath = function(e, swap) {
+			var type = e.tagName.toLowerCase(),
+				circ = 0.552284749831,
+				data, x, y, r, ry, path, rcirc, rycirc, points, w, h, x2, x3, x4, x5, x6, y2, y3, y4, y5, y6;
+			if (type === "path" || !e.getBBox) {
+				return e;
+			}
+			path = _createPath(e, "x,y,width,height,cx,cy,rx,ry,r,x1,x2,y1,y2,points");
+			if (type === "rect") {
+				r = +e.getAttribute("rx") || 0;
+				ry = +e.getAttribute("ry") || 0;
+				x = +e.getAttribute("x") || 0;
+				y = +e.getAttribute("y") || 0;
+				w = (+e.getAttribute("width") || 0) - r * 2;
+				h = (+e.getAttribute("height") || 0) - ry * 2;
+				if (r || ry) { //if there are rounded corners, render cubic beziers
+					x2 = x + r * (1 - circ);
+					x3 = x + r;
+					x4 = x3 + w;
+					x5 = x4 + r * circ;
+					x6 = x4 + r;
+					y2 = y + ry * (1 - circ);
+					y3 = y + ry;
+					y4 = y3 + h;
+					y5 = y4 + ry * circ;
+					y6 = y4 + ry;
+					data = "M" + x6 + "," + y3 + " V" + y4 + " C" + [x6, y5, x5, y6, x4, y6, x4 - (x4 - x3) / 3, y6, x3 + (x4 - x3) / 3, y6, x3, y6, x2, y6, x, y5, x, y4, x, y4 - (y4 - y3) / 3, x, y3 + (y4 - y3) / 3, x, y3, x, y2, x2, y, x3, y, x3 + (x4 - x3) / 3, y, x4 - (x4 - x3) / 3, y, x4, y, x5, y, x6, y2, x6, y3].join(",") + "z";
+				} else {
+					data = "M" + (x + w) + "," + y + " v" + h + " h" + (-w) + " v" + (-h) + " h" + w + "z";
+				}
+
+			} else if (type === "circle" || type === "ellipse") {
+				if (type === "circle") {
+					r = ry = +e.getAttribute("r") || 0;
+					rycirc = r * circ;
+				} else {
+					r = +e.getAttribute("rx") || 0;
+					ry = +e.getAttribute("ry") || 0;
+					rycirc = ry * circ;
+				}
+				x = +e.getAttribute("cx") || 0;
+				y = +e.getAttribute("cy") || 0;
+				rcirc = r * circ;
+				data = "M" + (x+r) + "," + y + " C" + [x+r, y + rycirc, x + rcirc, y + ry, x, y + ry, x - rcirc, y + ry, x - r, y + rycirc, x - r, y, x - r, y - rycirc, x - rcirc, y - ry, x, y - ry, x + rcirc, y - ry, x + r, y - rycirc, x + r, y].join(",") + "z";
+			} else if (type === "line") {
+				data = _bezierToPathData(_pathDataToBezier("M" + (e.getAttribute("x1") || 0) + "," + (e.getAttribute("y1") || 0) + " L" + (e.getAttribute("x2") || 0) + "," + (e.getAttribute("y2") || 0))); //previously, we just converted to "Mx,y Lx,y" but Safari has bugs that cause that not to render properly when using a stroke-dasharray that's not fully visible! Using a cubic bezier fixes that issue.
+			} else if (type === "polyline" || type === "polygon") {
+				points = (e.getAttribute("points") + "").match(_numbersExp) || [];
+				x = points.shift();
+				y = points.shift();
+				data = "M" + x + "," + y + " L" + points.join(",");
+				if (type === "polygon") {
+					data += "," + x + "," + y + "z";
+				}
+			}
+			path.setAttribute("d", data);
+			if (swap && e.parentNode) {
+				e.parentNode.insertBefore(path, e);
+				e.parentNode.removeChild(e);
+			}
+
+			return path;
+		},
+		_parseShape = function(shape, forcePath, target) {
+			var isString = typeof(shape) === "string",
+				e, type;
+			if (!isString || _selectorExp.test(shape) || (shape.match(_numbersExp) || []).length < 3) {
+				e = isString ? TweenLite.selector(shape) : (shape && shape[0]) ? shape : [shape]; //allow array-like objects like jQuery objects.
+				if (e && e[0]) {
+					e = e[0];
+					type = e.nodeName.toUpperCase();
+					if (forcePath && type !== "PATH") { //if we were passed an element (or selector text for an element) that isn't a path, convert it.
+						e = _convertToPath(e, false);
+						type = "PATH";
+					}
+					shape = e.getAttribute(type === "PATH" ? "d" : "points") || "";
+					if (e === target) { //if the shape matches the target element, the user wants to revert to the original which should have been stored in the data-original attribute
+						shape = e.getAttributeNS(null, "data-original") || shape;
+					}
+				} else {
+					_log("WARNING: invalid morph to: " + shape);
+					shape = false;
+				}
+			}
+			return shape;
+		},
+		_morphMessage = "Use MorphSVGPlugin.convertToPath(elementOrSelectorText) to convert to a path before morphing.",
+
+
+
+		MorphSVGPlugin = __WEBPACK_IMPORTED_MODULE_0_gsap_TweenLite_js__["j" /* _gsScope */]._gsDefine.plugin({
+			propName: "morphSVG",
+			API: 2,
+			global: true,
+			version: "0.8.11",
+
+			//called when the tween renders for the first time. This is where initial values should be recorded and any setup routines should run.
+			init: function(target, value, tween, index) {
+				var type, p, pt, shape, isPoly;
+				if (typeof(target.setAttribute) !== "function") {
+					return false;
+				}
+				if (typeof(value) === "function") {
+					value = value(index, target);
+				}
+				type = target.nodeName.toUpperCase();
+				isPoly = (type === "POLYLINE" || type === "POLYGON");
+				if (type !== "PATH" && !isPoly) {
+					_log("WARNING: cannot morph a <" + type + "> SVG element. " + _morphMessage);
+					return false;
+				}
+				p = (type === "PATH") ? "d" : "points";
+				if (typeof(value) === "string" || value.getBBox || value[0]) {
+					value = {shape:value};
+				}
+				shape = _parseShape(value.shape || value.d || value.points || "", (p === "d"), target);
+				if (isPoly && _commands.test(shape)) {
+					_log("WARNING: a <" + type + "> cannot accept path data. " + _morphMessage);
+					return false;
+				}
+				if (shape) {
+					this._target = target;
+					if (!target.getAttributeNS(null, "data-original")) {
+						target.setAttributeNS(null, "data-original", target.getAttribute(p)); //record the original state in a data-original attribute so that we can revert to it later.
+					}
+					pt = this._addTween(target, "setAttribute", target.getAttribute(p) + "", shape + "", "morphSVG", false, p, (typeof(value.precompile) === "object") ? function(a) {a[0] = value.precompile[0]; a[1] = value.precompile[1];} : (p === "d") ? _buildPathFilter(value.shapeIndex, value.map || MorphSVGPlugin.defaultMap, value.precompile) : _buildPointsFilter(value.shapeIndex));
+					if (pt) {
+						this._overwriteProps.push("morphSVG");
+						pt.end = shape;
+						pt.endProp = p;
+					}
+				}
+				return true;
+			},
+
+			set: function(ratio) {
+				var pt;
+				this._super.setRatio.call(this, ratio);
+				if (ratio === 1) {
+					pt = this._firstPT;
+					while (pt) {
+						if (pt.end) {
+							this._target.setAttribute(pt.endProp, pt.end); //make sure the end value is exactly as specified (in case we had to add fabricated points during the tween)
+						}
+						pt = pt._next;
+					}
+				}
+			}
+
+		});
+
+	MorphSVGPlugin.pathFilter = _pathFilter;
+	MorphSVGPlugin.pointsFilter = _pointsFilter;
+	MorphSVGPlugin.subdivideRawBezier = _subdivideBezier;
+	MorphSVGPlugin.defaultMap = "size";
+	MorphSVGPlugin.pathDataToRawBezier = function(data) {
+		return _pathDataToBezier(_parseShape(data, true));
+	};
+	MorphSVGPlugin.equalizeSegmentQuantity = _equalizeSegmentQuantity;
+
+	MorphSVGPlugin.convertToPath = function(targets, swap) {
+		if (typeof(targets) === "string") {
+			targets = TweenLite.selector(targets);
+		}
+		var a = (!targets || targets.length === 0) ? [] : (targets.length && targets[0] && targets[0].nodeType) ? Array.prototype.slice.call(targets, 0) : [targets],
+			i = a.length;
+		while (--i > -1) {
+			a[i] = _convertToPath(a[i], (swap !== false));
+		}
+		return a;
+	};
+
+	MorphSVGPlugin.pathDataToBezier = function(data, vars) { //converts SVG path data into an array of {x, y} objects that can be plugged directly into a bezier tween. You can optionally pass in a 2D matrix like [a, b, c, d, tx, ty] containing numbers that should transform each point.
+		var bezier = _pathDataToBezier(_parseShape(data, true))[0] || [],
+			prefix = 0,
+			a, i, l, matrix, offsetX, offsetY, bbox, e;
+		vars = vars || {};
+		e = vars.align || vars.relative;
+		matrix = vars.matrix || [1,0,0,1,0,0];
+		offsetX = vars.offsetX || 0;
+		offsetY = vars.offsetY || 0;
+		if (e === "relative" || e === true) {
+			offsetX -= bezier[0] * matrix[0] + bezier[1] * matrix[2];
+			offsetY -= bezier[0] * matrix[1] + bezier[1] * matrix[3];
+			prefix = "+=";
+		} else {
+			offsetX += matrix[4];
+			offsetY += matrix[5];
+			if (e) {
+				e = (typeof(e) === "string") ? TweenLite.selector(e) : (e && e[0]) ? e : [e]; //allow array-like objects like jQuery objects.
+				if (e && e[0]) {
+					bbox = e[0].getBBox() || {x:0, y:0};
+					offsetX -= bbox.x;
+					offsetY -= bbox.y;
+				}
+			}
+		}
+		a = [];
+		l = bezier.length;
+		if (matrix && matrix.join(",") !== "1,0,0,1,0,0") {
+			for (i = 0; i < l; i+=2) {
+				a.push({x:prefix + (bezier[i] * matrix[0] + bezier[i+1] * matrix[2] + offsetX), y:prefix + (bezier[i] * matrix[1] + bezier[i+1] * matrix[3] + offsetY)});
+			}
+		} else {
+			for (i = 0; i < l; i+=2) {
+				a.push({x:prefix + (bezier[i] + offsetX), y:prefix + (bezier[i+1] + offsetY)});
+			}
+		}
+		return a;
+	};
+
+
+
+
+
+/***/ }),
+
+/***/ 576:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue__ = __webpack_require__(405);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_77e76e0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PreLoader_vue__ = __webpack_require__(650);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(727)
+  __webpack_require__(715)
 }
 var normalizeComponent = __webpack_require__(7)
 /* script */
@@ -20012,18 +21071,18 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-cdc4aa00"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
-  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_Message_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_cdc4aa00_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_Message_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_PreLoader_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_77e76e0e_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_PreLoader_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/fullscreen/components/Message.vue"
+Component.options.__file = "resources/assets/js/app-loading/components/PreLoader.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -20032,9 +21091,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-cdc4aa00", Component.options)
+    hotAPI.createRecord("data-v-77e76e0e", Component.options)
   } else {
-    hotAPI.reload("data-v-cdc4aa00", Component.options)
+    hotAPI.reload("data-v-77e76e0e", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -20103,7 +21162,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 662:
+/***/ 650:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20111,13 +21170,181 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "fullscreen-message" } }, [
-    _c("div", {
-      ref: "message",
-      staticClass: "message text-success",
-      attrs: { id: "display-message" },
-      domProps: { innerHTML: _vm._s(this.message) }
-    })
+  return _c("div", { ref: "preloader", attrs: { id: "preloader-frame" } }, [
+    _c("h2", { ref: "text" }, [_vm._v("Loading")]),
+    _vm._v(" "),
+    _c(
+      "svg",
+      {
+        ref: "svg",
+        attrs: {
+          width: "128px",
+          height: "128px",
+          viewBox: "0 0 38 39",
+          version: "1.1",
+          xmlns: "http://www.w3.org/2000/svg",
+          "xmlns:xlink": "http://www.w3.org/1999/xlink"
+        }
+      },
+      [
+        _c(
+          "g",
+          {
+            attrs: {
+              id: "loading",
+              stroke: "none",
+              "stroke-width": "1",
+              fill: "none",
+              "fill-rule": "evenodd"
+            }
+          },
+          [
+            _c("path", {
+              ref: "path1",
+              attrs: {
+                d:
+                  "M21.915,7.725 C18.898,7.725 16.452,10.171 16.452,13.187 C16.452,16.204 18.898,18.65 21.915,18.65 C24.932,18.65 27.377,16.204 27.377,13.187 C27.377,10.171 24.932,7.725 21.915,7.725 Z M9.721,5 C5.951,5 2.895,8.056 2.895,11.825 C2.895,15.595 5.951,18.65 9.721,18.65 C13.49,18.65 16.545,15.595 16.545,11.825 C16.545,8.056 13.49,5 9.721,5 Z M31.544,28.457 L36.416,30.394 L36.416,20.868 L31.321,22.916 L31.544,28.457 Z M1,33.992 L31.321,33.992 L31.321,18.651 L1,18.651 L1,33.992 Z",
+                id: "path-1",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path2",
+              attrs: {
+                d:
+                  "M29.702,31.166 L24.995,34.256 L29.702,31.166 Z M23.747,36.991 C24.771,36.991 25.601,36.161 25.601,35.137 C25.601,34.113 24.771,33.283 23.747,33.283 C22.723,33.283 21.893,34.113 21.893,35.137 C21.893,36.161 22.723,36.991 23.747,36.991 Z M16.418,4.736 L11.711,7.826 L16.418,4.736 Z M6.082,32.711 C7.232,32.711 8.164,31.779 8.164,30.629 C8.164,29.479 7.232,28.547 6.082,28.547 C4.932,28.547 4,29.479 4,30.629 C4,31.779 4.932,32.711 6.082,32.711 Z M16.766,23.211 L7.492,29.641 L16.766,23.211 Z M17.667,2 C16.642,2 15.812,2.831 15.812,3.854 C15.812,4.879 16.642,5.709 17.667,5.709 C18.691,5.709 19.521,4.879 19.521,3.854 C19.521,2.831 18.691,2 17.667,2 Z M7.548,8.588 C7.548,9.738 8.48,10.67 9.629,10.67 C10.779,10.67 11.711,9.738 11.711,8.588 C11.711,7.439 10.779,6.507 9.629,6.507 C8.48,6.507 7.548,7.439 7.548,8.588 Z M17.048,19.272 L10.618,9.999 L17.048,19.272 Z M32.816,30.147 C32.816,29.124 31.986,28.293 30.962,28.293 C29.938,28.293 29.108,29.124 29.108,30.147 C29.108,31.171 29.938,32.001 30.962,32.001 C31.986,32.001 32.816,31.171 32.816,30.147 Z M21.447,23.541 L29.706,29.268 L21.447,23.541 Z M31.182,11.262 C30.159,11.262 29.328,12.092 29.328,13.116 C29.328,14.141 30.159,14.971 31.182,14.971 C32.207,14.971 33.037,14.141 33.037,13.116 C33.037,12.092 32.207,11.262 31.182,11.262 Z M21.668,19.723 L29.927,13.997 L21.668,19.723 Z M22.184,21.411 C22.184,23.093 20.821,24.457 19.138,24.457 C17.456,24.457 16.092,23.093 16.092,21.411 C16.092,19.728 17.456,18.364 19.138,18.364 C20.821,18.364 22.184,19.728 22.184,21.411 Z",
+                id: "path-2",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path3",
+              attrs: {
+                d:
+                  "M28.294,8.992 L31.352,2.237 L28.294,8.992 Z M23.545,10.314 L26.603,3.559 L23.545,10.314 Z M18.796,11.636 L21.854,4.881 L18.796,11.636 Z M14.047,12.957 L17.105,6.202 L14.047,12.957 Z M9.298,14.279 L12.356,7.524 L9.298,14.279 Z M4.549,15.601 L7.607,8.846 L4.549,15.601 Z M31.656,2 L3,10.158 L4.549,15.601 L33.205,7.443 L31.656,2 Z M29.254,22.277 L34.045,16.617 L29.254,22.277 Z M24.325,22.248 L29.115,16.589 L24.325,22.248 Z M19.396,22.219 L24.186,16.559 L19.396,22.219 Z M14.466,22.189 L19.257,16.531 L14.466,22.189 Z M9.537,22.16 L14.327,16.501 L9.537,22.16 Z M4.607,22.131 L9.398,16.472 L4.607,22.131 Z M4.607,22.131 L34.402,22.131 L34.402,16.472 L4.607,16.472 L4.607,22.131 Z M17.495,29.153 L21.269,29.153 L17.495,29.153 Z M7.758,29.153 L15.231,29.153 L7.758,29.153 Z M7.758,26.341 L21.269,26.341 L7.758,26.341 Z M34.402,36.587 L4.607,36.587 L4.607,25.752 L4.607,22.131 L34.402,22.131 L34.402,36.587 Z",
+                id: "path-3",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path4",
+              attrs: {
+                d:
+                  "M1,29.756 L36.846,29.756 L1,29.756 Z M6.208,24.918 L1,29.756 L1,32.724 L36.846,32.724 L36.846,29.756 L36.846,29.531 L31.637,24.693 L6.208,24.918 Z M5.548,25.64 L32.517,25.64 L32.517,7 L5.548,7 L5.548,25.64 Z M8.089,23.186 L29.964,23.186 L29.964,9.535 L8.089,9.535 L8.089,23.186 Z",
+                id: "path-4",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path6",
+              attrs: {
+                d:
+                  "M30.51,4.525 L30.51,2 L30.51,4.525 Z M7.883,4.525 L7.883,2 L7.883,4.525 Z M30.51,12.293 L30.51,19.329 L30.51,12.293 Z M7.883,37.614 L30.51,23.191 L30.51,22.66 L7.883,37.614 Z M6,22.999 L32.491,22.999 L32.491,19.33 L6,19.33 L6,22.999 Z M7.883,12.244 L7.883,19.93 L7.883,12.244 Z M7.883,22.66 L7.883,23.141 L30.51,37.565 L7.883,22.66 Z M6,12.268 L32.491,12.268 L32.491,4.778 L6,4.778 L6,12.268 Z",
+                id: "path-6",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path7",
+              attrs: {
+                d:
+                  "M9,37.614 L28.468,37.614 L9,37.614 Z M11.467,37.614 L26.001,37.614 L26.001,34.196 L11.467,34.196 L11.467,37.614 Z M14.406,34.196 L23.063,34.196 L23.063,31.505 L14.406,31.505 L14.406,34.196 Z M16.811,31.504 C16.811,31.504 17.097,30.379 17.097,29.847 C17.097,29.316 16.402,27.721 16.3,26.392 C16.197,25.063 16.494,23.837 16.494,23.837 L16.494,22.507 C16.494,22.507 15.912,21.444 15.912,19.522 C15.912,17.6 16.361,16.006 16.361,16.006 L16.238,14.861 C16.238,14.861 15.931,14.799 15.483,14.512 C15.032,14.226 14.971,13.593 14.868,13.081 C14.767,12.57 14.501,10.608 14.501,10.608 C14.501,10.608 14.255,10.239 14.255,9.156 C14.255,8.072 15.706,7.52 15.706,7.52 C15.706,7.52 16.934,6.866 17.181,6.702 C17.425,6.539 17.629,6.048 17.425,5.557 C17.22,5.067 17.323,3.656 17.323,2.859 C17.323,2.061 18.305,2 18.735,2 C19.163,2 20.145,2.061 20.145,2.859 C20.145,3.656 20.247,5.067 20.042,5.557 C19.838,6.048 20.042,6.539 20.287,6.702 C20.533,6.866 21.76,7.52 21.76,7.52 C21.76,7.52 23.213,8.072 23.213,9.156 C23.213,10.239 22.965,10.608 22.965,10.608 C22.965,10.608 22.701,12.57 22.598,13.081 C22.496,13.593 22.436,14.226 21.985,14.512 C21.536,14.799 21.228,14.861 21.228,14.861 L21.105,16.006 C21.105,16.006 21.555,17.6 21.555,19.522 C21.555,21.444 20.972,22.507 20.972,22.507 L20.972,23.837 C20.972,23.837 21.27,25.063 21.167,26.392 C21.064,27.721 20.37,29.316 20.37,29.847 C20.37,30.379 20.656,31.504 20.656,31.504 L16.811,31.504 Z",
+                id: "path-7",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path8",
+              attrs: {
+                d:
+                  "M6,37.555 L32.076,37.555 L32.076,34.113 L6,34.113 L6,37.555 Z M6,5.442 L32.076,5.442 L32.076,2 L6,2 L6,5.442 Z M28.473,34.113 C28.473,32.544 28.51,31.027 28.463,29.513 C28.414,27.939 27.727,26.637 26.504,25.654 C24.768,24.258 23.005,22.896 21.253,21.52 C20.514,20.94 19.776,20.361 19.033,19.777 C16.577,21.678 14.153,23.545 11.738,25.426 C10.312,26.537 9.579,27.998 9.59,29.82 C9.597,31.105 9.591,32.39 9.591,33.675 L9.591,34.113 L28.473,34.113 Z M28.486,5.442 L28.486,5.879 C28.486,7.164 28.48,8.449 28.487,9.735 C28.497,11.557 27.765,13.017 26.339,14.128 C23.924,16.009 21.499,17.877 19.044,19.777 C18.301,19.194 17.563,18.614 16.824,18.034 C15.072,16.658 13.309,15.297 11.573,13.901 C10.35,12.917 9.663,11.616 9.613,10.041 C9.567,8.527 9.603,7.01 9.603,5.442 L28.486,5.442 Z",
+                id: "path-8",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path9",
+              attrs: {
+                d:
+                  "M8.376,18.916 L4.947,18.916 L8.376,18.916 Z M32.884,18.916 L29.455,18.916 L32.884,18.916 Z M18.916,29.456 L18.916,32.885 L18.916,29.456 Z M18.916,4.947 L18.916,8.376 L18.916,4.947 Z M18.916,11.528 L18.916,18.916 L23.597,21.513 L18.916,11.528 Z M18.916,3.982 C10.668,3.982 3.981,10.668 3.981,18.916 C3.981,27.164 10.668,33.85 18.916,33.85 C27.164,33.85 33.85,27.164 33.85,18.916 C33.85,10.668 27.164,3.982 18.916,3.982 Z M36.832,18.916 C36.832,28.811 28.81,36.832 18.916,36.832 C9.021,36.832 1,28.811 1,18.916 C1,9.021 9.021,1 18.916,1 C28.81,1 36.832,9.021 36.832,18.916 Z",
+                id: "path-9",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path10",
+              attrs: {
+                d:
+                  "M8.51725,1 C2.49425,7.023 2.49425,16.789 8.51725,22.812 L8.51725,1 Z M11.20525,3.688 C6.66625,8.227 6.66625,15.585 11.20525,20.124 L11.20525,3.688 Z M13.90725,6.39 C10.86125,9.437 10.86125,14.375 13.90725,17.421 L13.90725,6.39 Z M28.41325,22.812 C34.43625,16.789 34.43625,7.023 28.41325,1 L28.41325,22.812 Z M25.72525,20.124 C30.26425,15.585 30.26425,8.227 25.72525,3.688 L25.72525,20.124 Z M23.02325,17.421 C26.07025,14.375 26.07025,9.437 23.02325,6.39 L23.02325,17.421 Z M18.46525,8.857 C16.78125,8.857 15.41625,10.222 15.41625,11.906 C15.41625,13.59 16.78125,14.955 18.46525,14.955 C20.14925,14.955 21.51425,13.59 21.51425,11.906 C21.51425,10.222 20.14925,8.857 18.46525,8.857 Z M13.54525,36.926 L23.38625,36.926 L13.54525,36.926 Z M19.81225,14.772 L19.81225,36.926 L17.17325,36.926 L17.17325,14.772 L19.81225,14.772 Z",
+                id: "path-10",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path11",
+              attrs: {
+                d:
+                  "M17.469,25.0214176 L17.469,37.4894176 L20.207,37.4894176 L20.207,25.0214176 L17.469,25.0214176 Z M11,17.7404176 C11.06,23.1614176 16.63,26.7324176 21.818,24.7004176 C24.845,23.5144176 26.687,20.8584176 26.694,17.6164176 L11,17.7404176 Z M13.945,11.7294176 C13.945,13.7154176 13.927,15.7014176 13.948,17.6884176 C13.986,21.2544176 17.459,23.6044176 20.694,22.2664176 C22.582,21.4864176 23.731,19.7394176 23.735,17.6064176 C23.741,13.8474176 23.739,11.2024176 23.734,7.44341762 C23.733,7.04241762 23.711,6.63841762 23.666,6.24041762 C23.367,3.58541762 20.774,1.62941762 18.138,2.05941762 C15.645,2.46641762 13.961,4.42641762 13.947,6.95941762 C13.936,8.91941762 13.945,9.76741762 13.945,11.7294176 Z M12.343,37.4894176 L18.838,37.4894176 L25.334,37.4894176 L12.343,37.4894176 Z",
+                id: "path-11",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path12",
+              attrs: {
+                d:
+                  "M17.946,7.236 L17.946,30.993 L17.946,7.236 Z M30.947,31.578 C37.851,24.674 37.851,13.48 30.947,6.576 L30.947,31.578 Z M27.866,28.497 C33.069,23.295 33.069,14.86 27.866,9.657 L27.866,28.497 Z M24.768,25.4 C28.26,21.907 28.26,16.246 24.768,12.755 L24.768,25.4 Z M21.006,6 L5.476,13.384 L5.476,24.77 L21.006,32.153 L21.006,6 Z M1,24.695 L5.476,24.695 L5.476,13.459 L1,13.459 L1,24.695 Z",
+                id: "path-12",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path13",
+              attrs: {
+                d:
+                  "M25.933,12.356 C25.933,14.21 27.436,15.712 29.289,15.712 C31.143,15.712 32.646,14.21 32.646,12.356 C32.646,10.502 31.143,9 29.289,9 C27.436,9 25.933,10.502 25.933,12.356 Z M26.973,25.385 L36.664,25.385 C36.664,21.204 33.275,17.814 29.094,17.814 C26.377,17.814 23.994,19.246 22.659,21.396 L26.973,25.385 Z M8.374,9 C6.52,9 5.018,10.502 5.018,12.356 C5.018,14.21 6.52,15.712 8.374,15.712 C10.228,15.712 11.73,14.21 11.73,12.356 C11.73,10.502 10.228,9 8.374,9 Z M15.005,21.396 C13.67,19.246 11.287,17.814 8.57,17.814 C4.389,17.814 1,21.204 1,25.385 L10.691,25.385 L15.005,21.396 Z M18.626,10.098 C16.403,10.098 14.601,11.9 14.601,14.124 C14.601,16.347 16.403,18.149 18.626,18.149 C20.849,18.149 22.651,16.347 22.651,14.124 C22.651,11.9 20.849,10.098 18.626,10.098 Z M27.939,29.488 L9.782,29.488 C9.782,24.474 13.847,20.409 18.861,20.409 C23.874,20.409 27.939,24.474 27.939,29.488 Z",
+                id: "path-13",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            }),
+            _vm._v(" "),
+            _c("path", {
+              ref: "path14",
+              attrs: {
+                d:
+                  "M14.958,6.4263487 L17.41,5.1273487 C18.05,4.7883487 18.293,3.9953487 17.955,3.3563487 L17.606,2.6973487 C17.267,2.0573487 16.474,1.8143487 15.834,2.1523487 L13.382,3.4513487 C12.743,3.7903487 12.499,4.5833487 12.838,5.2223487 L13.187,5.8813487 C13.525,6.5213487 14.318,6.7643487 14.958,6.4263487 Z M13.197,5.7933487 L7.581,8.7753487 L7.581,15.5513487 L13.197,5.7933487 Z M3,18.2973487 L34.916,18.2973487 L34.916,15.5513487 L3,15.5513487 L3,18.2973487 Z M34.048,24.2113487 L34.048,18.2973487 L3.867,18.2973487 L3.867,24.2113487 L34.048,24.2113487 Z M24.975,24.4893487 C24.975,25.7653487 26.008,26.7993487 27.283,26.7993487 C28.559,26.7993487 29.592,25.7653487 29.592,24.4893487 C29.592,23.2153487 28.559,22.1803487 27.283,22.1803487 C26.008,22.1803487 24.975,23.2153487 24.975,24.4893487 Z M25.216,34.5893487 L32.667,34.5893487 C32.667,31.3743487 30.062,28.7693487 26.847,28.7693487 C24.758,28.7693487 22.926,29.8693487 21.9,31.5233487 L25.216,34.5893487 Z M10.576,22.1493487 C9.301,22.1493487 8.268,23.1823487 8.268,24.4573487 C8.268,25.7333487 9.301,26.7663487 10.576,26.7663487 C11.852,26.7663487 12.885,25.7333487 12.885,24.4573487 C12.885,23.1823487 11.852,22.1493487 10.576,22.1493487 Z M16.016,31.5233487 C14.989,29.8693487 13.157,28.7693487 11.068,28.7693487 C7.854,28.7693487 5.249,31.3743487 5.249,34.5893487 L12.699,34.5893487 L16.016,31.5233487 Z M18.772,22.5803487 C17.063,22.5803487 15.678,23.9663487 15.678,25.6753487 C15.678,27.3843487 17.063,28.7693487 18.772,28.7693487 C20.481,28.7693487 21.867,27.3843487 21.867,25.6753487 C21.867,23.9663487 20.481,22.5803487 18.772,22.5803487 Z M25.959,37.7433487 L12,37.7433487 C12,33.8893487 15.125,30.7643487 18.98,30.7643487 C22.834,30.7643487 25.959,33.8893487 25.959,37.7433487 Z",
+                id: "path-14",
+                stroke: "#252525",
+                "stroke-width": "1.2"
+              }
+            })
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -20127,7 +21354,7 @@ var esExports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-cdc4aa00", esExports)
+    require("vue-hot-reload-api")      .rerender("data-v-77e76e0e", esExports)
   }
 }
 
@@ -20243,23 +21470,23 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 727:
+/***/ 715:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(530);
+var content = __webpack_require__(518);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(9)("7339cdff", content, false);
+var update = __webpack_require__(9)("6621c2f2", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cdc4aa00\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Message.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-cdc4aa00\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Message.vue");
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-77e76e0e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreLoader.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-77e76e0e\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PreLoader.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
@@ -20270,10 +21497,10 @@ if(false) {
 
 /***/ }),
 
-/***/ 753:
+/***/ 746:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(457);
+module.exports = __webpack_require__(450);
 
 
 /***/ }),
@@ -20500,4 +21727,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[753]);
+},[746]);

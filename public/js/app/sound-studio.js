@@ -1,652 +1,18 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
-/***/ 109:
-/***/ (function(module, exports) {
-
-function clean (s) {
-  return s.replace(/\n\r?\s*/g, '')
-}
-
-
-module.exports = function tsml (sa) {
-  var s = ''
-    , i = 0
-
-  for (; i < arguments.length; i++)
-    s += clean(sa[i]) + (arguments[i + 1] || '')
-
-  return s
-}
-
-/***/ }),
-
-/***/ 110:
+/***/ 103:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-
-var _trackButton = __webpack_require__(260);
-
-var _trackButton2 = _interopRequireDefault(_trackButton);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _textTrackMenuItem = __webpack_require__(123);
-
-var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
-
-var _offTextTrackMenuItem = __webpack_require__(316);
-
-var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file text-track-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The base class for buttons that toggle specific text track types (e.g. subtitles)
- *
- * @extends MenuButton
- */
-var TextTrackButton = function (_TrackButton) {
-  _inherits(TextTrackButton, _TrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options={}]
-   *        The key/value store of player options.
-   */
-  function TextTrackButton(player) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    _classCallCheck(this, TextTrackButton);
-
-    options.tracks = player.textTracks();
-
-    return _possibleConstructorReturn(this, _TrackButton.call(this, player, options));
-  }
-
-  /**
-   * Create a menu item for each text track
-   *
-   * @param {TextTrackMenuItem[]} [items=[]]
-   *        Existing array of items to use during creation
-   *
-   * @return {TextTrackMenuItem[]}
-   *         Array of menu items that were created
-   */
-
-
-  TextTrackButton.prototype.createItems = function createItems() {
-    var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-    // Add an OFF menu item to turn all tracks off
-    items.push(new _offTextTrackMenuItem2['default'](this.player_, { kind: this.kind_ }));
-    this.hideThreshold_ += 1;
-
-    var tracks = this.player_.textTracks();
-
-    if (!tracks) {
-      return items;
-    }
-
-    for (var i = 0; i < tracks.length; i++) {
-      var track = tracks[i];
-
-      // only add tracks that are of the appropriate kind and have a label
-      if (track.kind === this.kind_) {
-        items.push(new _textTrackMenuItem2['default'](this.player_, {
-          track: track,
-          // MenuItem is selectable
-          selectable: true
-        }));
-      }
-    }
-
-    return items;
-  };
-
-  return TextTrackButton;
-}(_trackButton2['default']);
-
-_component2['default'].registerComponent('TextTrackButton', TextTrackButton);
-exports['default'] = TextTrackButton;
-
-
-/***/ }),
-
-/***/ 111:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _events = __webpack_require__(60);
-
-var Events = _interopRequireWildcard(_events);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-/**
- * `EventTarget` is a class that can have the same API as the DOM `EventTarget`. It
- * adds shorthand functions that wrap around lengthy functions. For example:
- * the `on` function is a wrapper around `addEventListener`.
- *
- * @see [EventTarget Spec]{@link https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget}
- * @class EventTarget
- */
-var EventTarget = function EventTarget() {};
-
-/**
- * A Custom DOM event.
- *
- * @typedef {Object} EventTarget~Event
- * @see [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
- */
-
-/**
- * All event listeners should follow the following format.
- *
- * @callback EventTarget~EventListener
- * @this {EventTarget}
- *
- * @param {EventTarget~Event} event
- *        the event that triggered this function
- *
- * @param {Object} [hash]
- *        hash of data sent during the event
- */
-
-/**
- * An object containing event names as keys and booleans as values.
- *
- * > NOTE: If an event name is set to a true value here {@link EventTarget#trigger}
- *         will have extra functionality. See that function for more information.
- *
- * @property EventTarget.prototype.allowedEvents_
- * @private
- */
-/**
- * @file src/js/event-target.js
- */
-EventTarget.prototype.allowedEvents_ = {};
-
-/**
- * Adds an `event listener` to an instance of an `EventTarget`. An `event listener` is a
- * function that will get called when an event with a certain name gets triggered.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to call with `EventTarget`s
- */
-EventTarget.prototype.on = function (type, fn) {
-  // Remove the addEventListener alias before calling Events.on
-  // so we don't get into an infinite type loop
-  var ael = this.addEventListener;
-
-  this.addEventListener = function () {};
-  Events.on(this, type, fn);
-  this.addEventListener = ael;
-};
-
-/**
- * An alias of {@link EventTarget#on}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#on}
- */
-EventTarget.prototype.addEventListener = EventTarget.prototype.on;
-
-/**
- * Removes an `event listener` for a specific event from an instance of `EventTarget`.
- * This makes it so that the `event listener` will no longer get called when the
- * named event happens.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to remove.
- */
-EventTarget.prototype.off = function (type, fn) {
-  Events.off(this, type, fn);
-};
-
-/**
- * An alias of {@link EventTarget#off}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#off}
- */
-EventTarget.prototype.removeEventListener = EventTarget.prototype.off;
-
-/**
- * This function will add an `event listener` that gets triggered only once. After the
- * first trigger it will get removed. This is like adding an `event listener`
- * with {@link EventTarget#on} that calls {@link EventTarget#off} on itself.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to be called once for each event name.
- */
-EventTarget.prototype.one = function (type, fn) {
-  // Remove the addEventListener alialing Events.on
-  // so we don't get into an infinite type loop
-  var ael = this.addEventListener;
-
-  this.addEventListener = function () {};
-  Events.one(this, type, fn);
-  this.addEventListener = ael;
-};
-
-/**
- * This function causes an event to happen. This will then cause any `event listeners`
- * that are waiting for that event, to get called. If there are no `event listeners`
- * for an event then nothing will happen.
- *
- * If the name of the `Event` that is being triggered is in `EventTarget.allowedEvents_`.
- * Trigger will also call the `on` + `uppercaseEventName` function.
- *
- * Example:
- * 'click' is in `EventTarget.allowedEvents_`, so, trigger will attempt to call
- * `onClick` if it exists.
- *
- * @param {string|EventTarget~Event|Object} event
- *        The name of the event, an `Event`, or an object with a key of type set to
- *        an event name.
- */
-EventTarget.prototype.trigger = function (event) {
-  var type = event.type || event;
-
-  if (typeof event === 'string') {
-    event = { type: type };
-  }
-  event = Events.fixEvent(event);
-
-  if (this.allowedEvents_[type] && this['on' + type]) {
-    this['on' + type](event);
-  }
-
-  Events.trigger(this, event);
-};
-
-/**
- * An alias of {@link EventTarget#trigger}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#trigger}
- */
-EventTarget.prototype.dispatchEvent = EventTarget.prototype.trigger;
-
-exports['default'] = EventTarget;
-
-
-/***/ }),
-
-/***/ 112:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _clickableComponent = __webpack_require__(79);
-
-var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
-
-var _component = __webpack_require__(4);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _obj = __webpack_require__(46);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The component for a menu item. `<li>`
- *
- * @extends ClickableComponent
- */
-var MenuItem = function (_ClickableComponent) {
-  _inherits(MenuItem, _ClickableComponent);
-
-  /**
-   * Creates an instance of the this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options={}]
-   *        The key/value store of player options.
-   *
-   */
-  function MenuItem(player, options) {
-    _classCallCheck(this, MenuItem);
-
-    var _this = _possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
-
-    _this.selectable = options.selectable;
-
-    _this.selected(options.selected);
-
-    if (_this.selectable) {
-      // TODO: May need to be either menuitemcheckbox or menuitemradio,
-      //       and may need logical grouping of menu items.
-      _this.el_.setAttribute('role', 'menuitemcheckbox');
-    } else {
-      _this.el_.setAttribute('role', 'menuitem');
-    }
-    return _this;
-  }
-
-  /**
-   * Create the `MenuItem's DOM element
-   *
-   * @param {string} [type=li]
-   *        Element's node type, not actually used, always set to `li`.
-   *
-   * @param {Object} [props={}]
-   *        An object of properties that should be set on the element
-   *
-   * @param {Object} [attrs={}]
-   *        An object of attributes that should be set on the element
-   *
-   * @return {Element}
-   *         The element that gets created.
-   */
-
-
-  MenuItem.prototype.createEl = function createEl(type, props, attrs) {
-    // The control is textual, not just an icon
-    this.nonIconControl = true;
-
-    return _ClickableComponent.prototype.createEl.call(this, 'li', (0, _obj.assign)({
-      className: 'vjs-menu-item',
-      innerHTML: this.localize(this.options_.label),
-      tabIndex: -1
-    }, props), attrs);
-  };
-
-  /**
-   * Any click on a `MenuItem` puts int into the selected state.
-   * See {@link ClickableComponent#handleClick} for instances where this is called.
-   *
-   * @param {EventTarget~Event} event
-   *        The `keydown`, `tap`, or `click` event that caused this function to be
-   *        called.
-   *
-   * @listens tap
-   * @listens click
-   */
-
-
-  MenuItem.prototype.handleClick = function handleClick(event) {
-    this.selected(true);
-  };
-
-  /**
-   * Set the state for this menu item as selected or not.
-   *
-   * @param {boolean} selected
-   *        if the menu item is selected or not
-   */
-
-
-  MenuItem.prototype.selected = function selected(_selected) {
-    if (this.selectable) {
-      if (_selected) {
-        this.addClass('vjs-selected');
-        this.el_.setAttribute('aria-checked', 'true');
-        // aria-checked isn't fully supported by browsers/screen readers,
-        // so indicate selected state to screen reader in the control text.
-        this.controlText(', selected');
-      } else {
-        this.removeClass('vjs-selected');
-        this.el_.setAttribute('aria-checked', 'false');
-        // Indicate un-selected state to screen reader
-        this.controlText('');
-      }
-    }
-  };
-
-  return MenuItem;
-}(_clickableComponent2['default']);
-
-_component2['default'].registerComponent('MenuItem', MenuItem);
-exports['default'] = MenuItem;
-
-
-/***/ }),
-
-/***/ 113:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.isCrossOrigin = exports.getFileExtension = exports.getAbsoluteURL = exports.parseUrl = undefined;
-
-var _document = __webpack_require__(40);
-
-var _document2 = _interopRequireDefault(_document);
-
-var _window = __webpack_require__(41);
-
-var _window2 = _interopRequireDefault(_window);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-/**
- * @typedef {Object} url:URLObject
- *
- * @property {string} protocol
- *           The protocol of the url that was parsed.
- *
- * @property {string} hostname
- *           The hostname of the url that was parsed.
- *
- * @property {string} port
- *           The port of the url that was parsed.
- *
- * @property {string} pathname
- *           The pathname of the url that was parsed.
- *
- * @property {string} search
- *           The search query of the url that was parsed.
- *
- * @property {string} hash
- *           The hash of the url that was parsed.
- *
- * @property {string} host
- *           The host of the url that was parsed.
- */
-
-/**
- * Resolve and parse the elements of a URL.
- *
- * @param  {String} url
- *         The url to parse
- *
- * @return {url:URLObject}
- *         An object of url details
- */
-/**
- * @file url.js
- * @module url
- */
-var parseUrl = exports.parseUrl = function parseUrl(url) {
-  var props = ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host'];
-
-  // add the url to an anchor and let the browser parse the URL
-  var a = _document2['default'].createElement('a');
-
-  a.href = url;
-
-  // IE8 (and 9?) Fix
-  // ie8 doesn't parse the URL correctly until the anchor is actually
-  // added to the body, and an innerHTML is needed to trigger the parsing
-  var addToBody = a.host === '' && a.protocol !== 'file:';
-  var div = void 0;
-
-  if (addToBody) {
-    div = _document2['default'].createElement('div');
-    div.innerHTML = '<a href="' + url + '"></a>';
-    a = div.firstChild;
-    // prevent the div from affecting layout
-    div.setAttribute('style', 'display:none; position:absolute;');
-    _document2['default'].body.appendChild(div);
-  }
-
-  // Copy the specific URL properties to a new object
-  // This is also needed for IE8 because the anchor loses its
-  // properties when it's removed from the dom
-  var details = {};
-
-  for (var i = 0; i < props.length; i++) {
-    details[props[i]] = a[props[i]];
-  }
-
-  // IE9 adds the port to the host property unlike everyone else. If
-  // a port identifier is added for standard ports, strip it.
-  if (details.protocol === 'http:') {
-    details.host = details.host.replace(/:80$/, '');
-  }
-
-  if (details.protocol === 'https:') {
-    details.host = details.host.replace(/:443$/, '');
-  }
-
-  if (addToBody) {
-    _document2['default'].body.removeChild(div);
-  }
-
-  return details;
-};
-
-/**
- * Get absolute version of relative URL. Used to tell flash correct URL.
- *
- *
- * @param  {string} url
- *         URL to make absolute
- *
- * @return {string}
- *         Absolute URL
- *
- * @see http://stackoverflow.com/questions/470832/getting-an-absolute-url-from-a-relative-one-ie6-issue
- */
-var getAbsoluteURL = exports.getAbsoluteURL = function getAbsoluteURL(url) {
-  // Check if absolute URL
-  if (!url.match(/^https?:\/\//)) {
-    // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
-    var div = _document2['default'].createElement('div');
-
-    div.innerHTML = '<a href="' + url + '">x</a>';
-    url = div.firstChild.href;
-  }
-
-  return url;
-};
-
-/**
- * Returns the extension of the passed file name. It will return an empty string
- * if passed an invalid path.
- *
- * @param {string} path
- *        The fileName path like '/path/to/file.mp4'
- *
- * @returns {string}
- *          The extension in lower case or an empty string if no
- *          extension could be found.
- */
-var getFileExtension = exports.getFileExtension = function getFileExtension(path) {
-  if (typeof path === 'string') {
-    var splitPathRe = /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/i;
-    var pathParts = splitPathRe.exec(path);
-
-    if (pathParts) {
-      return pathParts.pop().toLowerCase();
-    }
-  }
-
-  return '';
-};
-
-/**
- * Returns whether the url passed is a cross domain request or not.
- *
- * @param {string} url
- *        The url to check.
- *
- * @return {boolean}
- *         Whether it is a cross domain request or not.
- */
-var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
-  var winLoc = _window2['default'].location;
-  var urlInfo = parseUrl(url);
-
-  // IE8 protocol relative urls will return ':' for protocol
-  var srcProtocol = urlInfo.protocol === ':' ? winLoc.protocol : urlInfo.protocol;
-
-  // Check if url is for another domain/origin
-  // IE8 doesn't know location.origin, so we won't rely on it here
-  var crossOrigin = srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
-
-  return crossOrigin;
-};
-
-
-/***/ }),
-
-/***/ 117:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(282);
+__webpack_require__(294);
 module.exports = angular;
 
 
 /***/ }),
 
-/***/ 118:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
-var isFunction = __webpack_require__(77)
+var isFunction = __webpack_require__(82)
 
 module.exports = forEach
 
@@ -696,11 +62,11 @@ function forEachObject(object, iterator, context) {
 
 /***/ }),
 
-/***/ 120:
+/***/ 124:
 /***/ (function(module, exports, __webpack_require__) {
 
-var trim = __webpack_require__(122)
-  , forEach = __webpack_require__(118)
+var trim = __webpack_require__(133)
+  , forEach = __webpack_require__(119)
   , isArray = function(arg) {
       return Object.prototype.toString.call(arg) === '[object Array]';
     }
@@ -733,7 +99,7 @@ module.exports = function (headers) {
 
 /***/ }),
 
-/***/ 121:
+/***/ 125:
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -754,7 +120,7 @@ function SafeParseTuple(obj, reviver) {
 
 /***/ }),
 
-/***/ 122:
+/***/ 133:
 /***/ (function(module, exports) {
 
 
@@ -775,7 +141,7 @@ exports.right = function(str){
 
 /***/ }),
 
-/***/ 123:
+/***/ 134:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -785,23 +151,23 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(98);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -952,7 +318,7 @@ exports['default'] = TextTrackMenuItem;
 
 /***/ }),
 
-/***/ 124:
+/***/ 135:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,39 +326,39 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(341);
+var _textTrackCueList = __webpack_require__(353);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(136);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(138);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(99);
 
-var _xhr = __webpack_require__(273);
+var _xhr = __webpack_require__(285);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -1409,7 +775,7 @@ exports['default'] = TextTrack;
 
 /***/ }),
 
-/***/ 125:
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1483,7 +849,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 /***/ }),
 
-/***/ 126:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1491,15 +857,15 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(97);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -1724,7 +1090,7 @@ exports['default'] = TrackList;
 
 /***/ }),
 
-/***/ 127:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1732,11 +1098,11 @@ exports['default'] = TrackList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -1744,7 +1110,7 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(97);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1874,7 +1240,7 @@ exports['default'] = Track;
 
 /***/ }),
 
-/***/ 128:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1883,7 +1249,7 @@ exports['default'] = Track;
 exports.__esModule = true;
 exports['default'] = computedStyle;
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
@@ -1924,7 +1290,7 @@ function computedStyle(el, prop) {
 
 /***/ }),
 
-/***/ 130:
+/***/ 141:
 /***/ (function(module, exports) {
 
 module.exports = extend
@@ -1950,7 +1316,7 @@ function extend() {
 
 /***/ }),
 
-/***/ 15:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2033,940 +1399,7 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 
 /***/ }),
 
-/***/ 18:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.$$ = exports.$ = undefined;
-
-var _templateObject = _taggedTemplateLiteralLoose(['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.'], ['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.']);
-
-exports.isReal = isReal;
-exports.isEl = isEl;
-exports.getEl = getEl;
-exports.createEl = createEl;
-exports.textContent = textContent;
-exports.insertElFirst = insertElFirst;
-exports.getElData = getElData;
-exports.hasElData = hasElData;
-exports.removeElData = removeElData;
-exports.hasElClass = hasElClass;
-exports.addElClass = addElClass;
-exports.removeElClass = removeElClass;
-exports.toggleElClass = toggleElClass;
-exports.setElAttributes = setElAttributes;
-exports.getElAttributes = getElAttributes;
-exports.getAttribute = getAttribute;
-exports.setAttribute = setAttribute;
-exports.removeAttribute = removeAttribute;
-exports.blockTextSelection = blockTextSelection;
-exports.unblockTextSelection = unblockTextSelection;
-exports.findElPosition = findElPosition;
-exports.getPointerPosition = getPointerPosition;
-exports.isTextNode = isTextNode;
-exports.emptyEl = emptyEl;
-exports.normalizeContent = normalizeContent;
-exports.appendContent = appendContent;
-exports.insertContent = insertContent;
-
-var _document = __webpack_require__(40);
-
-var _document2 = _interopRequireDefault(_document);
-
-var _window = __webpack_require__(41);
-
-var _window2 = _interopRequireDefault(_window);
-
-var _guid = __webpack_require__(75);
-
-var Guid = _interopRequireWildcard(_guid);
-
-var _log = __webpack_require__(48);
-
-var _log2 = _interopRequireDefault(_log);
-
-var _tsml = __webpack_require__(109);
-
-var _tsml2 = _interopRequireDefault(_tsml);
-
-var _obj = __webpack_require__(46);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _taggedTemplateLiteralLoose(strings, raw) { strings.raw = raw; return strings; } /**
-                                                                                           * @file dom.js
-                                                                                           * @module dom
-                                                                                           */
-
-
-/**
- * Detect if a value is a string with any non-whitespace characters.
- *
- * @param {string} str
- *        The string to check
- *
- * @return {boolean}
- *         - True if the string is non-blank
- *         - False otherwise
- *
- */
-function isNonBlankString(str) {
-  return typeof str === 'string' && /\S/.test(str);
-}
-
-/**
- * Throws an error if the passed string has whitespace. This is used by
- * class methods to be relatively consistent with the classList API.
- *
- * @param {string} str
- *         The string to check for whitespace.
- *
- * @throws {Error}
- *         Throws an error if there is whitespace in the string.
- *
- */
-function throwIfWhitespace(str) {
-  if (/\s/.test(str)) {
-    throw new Error('class has illegal whitespace characters');
-  }
-}
-
-/**
- * Produce a regular expression for matching a className within an elements className.
- *
- * @param {string} className
- *         The className to generate the RegExp for.
- *
- * @return {RegExp}
- *         The RegExp that will check for a specific `className` in an elements
- *         className.
- */
-function classRegExp(className) {
-  return new RegExp('(^|\\s)' + className + '($|\\s)');
-}
-
-/**
- * Whether the current DOM interface appears to be real.
- *
- * @return {Boolean}
- */
-function isReal() {
-  return (
-
-    // Both document and window will never be undefined thanks to `global`.
-    _document2['default'] === _window2['default'].document &&
-
-    // In IE < 9, DOM methods return "object" as their type, so all we can
-    // confidently check is that it exists.
-    typeof _document2['default'].createElement !== 'undefined'
-  );
-}
-
-/**
- * Determines, via duck typing, whether or not a value is a DOM element.
- *
- * @param {Mixed} value
- *        The thing to check
- *
- * @return {boolean}
- *         - True if it is a DOM element
- *         - False otherwise
- */
-function isEl(value) {
-  return (0, _obj.isObject)(value) && value.nodeType === 1;
-}
-
-/**
- * Creates functions to query the DOM using a given method.
- *
- * @param {string} method
- *         The method to create the query with.
- *
- * @return {Function}
- *         The query method
- */
-function createQuerier(method) {
-  return function (selector, context) {
-    if (!isNonBlankString(selector)) {
-      return _document2['default'][method](null);
-    }
-    if (isNonBlankString(context)) {
-      context = _document2['default'].querySelector(context);
-    }
-
-    var ctx = isEl(context) ? context : _document2['default'];
-
-    return ctx[method] && ctx[method](selector);
-  };
-}
-
-/**
- * Shorthand for document.getElementById()
- * Also allows for CSS (jQuery) ID syntax. But nothing other than IDs.
- *
- * @param {string} id
- *         The id of the element to get
- *
- * @return {Element|null}
- *         Element with supplied ID or null if there wasn't one.
- */
-function getEl(id) {
-  if (id.indexOf('#') === 0) {
-    id = id.slice(1);
-  }
-
-  return _document2['default'].getElementById(id);
-}
-
-/**
- * Creates an element and applies properties.
- *
- * @param {string} [tagName='div']
- *         Name of tag to be created.
- *
- * @param {Object} [properties={}]
- *         Element properties to be applied.
- *
- * @param {Object} [attributes={}]
- *         Element attributes to be applied.
- *
- * @param {String|Element|TextNode|Array|Function} [content]
- *         Contents for the element (see: {@link dom:normalizeContent})
- *
- * @return {Element}
- *         The element that was created.
- */
-function createEl() {
-  var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
-  var properties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var content = arguments[3];
-
-  var el = _document2['default'].createElement(tagName);
-
-  Object.getOwnPropertyNames(properties).forEach(function (propName) {
-    var val = properties[propName];
-
-    // See #2176
-    // We originally were accepting both properties and attributes in the
-    // same object, but that doesn't work so well.
-    if (propName.indexOf('aria-') !== -1 || propName === 'role' || propName === 'type') {
-      _log2['default'].warn((0, _tsml2['default'])(_templateObject, propName, val));
-      el.setAttribute(propName, val);
-
-      // Handle textContent since it's not supported everywhere and we have a
-      // method for it.
-    } else if (propName === 'textContent') {
-      textContent(el, val);
-    } else {
-      el[propName] = val;
-    }
-  });
-
-  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
-    el.setAttribute(attrName, attributes[attrName]);
-  });
-
-  if (content) {
-    appendContent(el, content);
-  }
-
-  return el;
-}
-
-/**
- * Injects text into an element, replacing any existing contents entirely.
- *
- * @param {Element} el
- *        The element to add text content into
- *
- * @param {string} text
- *        The text content to add.
- *
- * @return {Element}
- *         The element with added text content.
- */
-function textContent(el, text) {
-  if (typeof el.textContent === 'undefined') {
-    el.innerText = text;
-  } else {
-    el.textContent = text;
-  }
-  return el;
-}
-
-/**
- * Insert an element as the first child node of another
- *
- * @param {Element} child
- *        Element to insert
- *
- * @param {Element} parent
- *        Element to insert child into
- *
- */
-function insertElFirst(child, parent) {
-  if (parent.firstChild) {
-    parent.insertBefore(child, parent.firstChild);
-  } else {
-    parent.appendChild(child);
-  }
-}
-
-/**
- * Element Data Store. Allows for binding data to an element without putting it directly on the element.
- * Ex. Event listeners are stored here.
- * (also from jsninja.com, slightly modified and updated for closure compiler)
- *
- * @type {Object}
- * @private
- */
-var elData = {};
-
-/*
- * Unique attribute name to store an element's guid in
- *
- * @type {string}
- * @constant
- * @private
- */
-var elIdAttr = 'vdata' + new Date().getTime();
-
-/**
- * Returns the cache object where data for an element is stored
- *
- * @param {Element} el
- *        Element to store data for.
- *
- * @return {Object}
- *         The cache object for that el that was passed in.
- */
-function getElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    id = el[elIdAttr] = Guid.newGUID();
-  }
-
-  if (!elData[id]) {
-    elData[id] = {};
-  }
-
-  return elData[id];
-}
-
-/**
- * Returns whether or not an element has cached data
- *
- * @param {Element} el
- *        Check if this element has cached data.
- *
- * @return {boolean}
- *         - True if the DOM element has cached data.
- *         - False otherwise.
- */
-function hasElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    return false;
-  }
-
-  return !!Object.getOwnPropertyNames(elData[id]).length;
-}
-
-/**
- * Delete data for the element from the cache and the guid attr from getElementById
- *
- * @param {Element} el
- *        Remove cached data for this element.
- */
-function removeElData(el) {
-  var id = el[elIdAttr];
-
-  if (!id) {
-    return;
-  }
-
-  // Remove all stored data
-  delete elData[id];
-
-  // Remove the elIdAttr property from the DOM node
-  try {
-    delete el[elIdAttr];
-  } catch (e) {
-    if (el.removeAttribute) {
-      el.removeAttribute(elIdAttr);
-    } else {
-      // IE doesn't appear to support removeAttribute on the document element
-      el[elIdAttr] = null;
-    }
-  }
-}
-
-/**
- * Check if an element has a CSS class
- *
- * @param {Element} element
- *        Element to check
- *
- * @param {string} classToCheck
- *        Class name to check for
- *
- * @return {boolean}
- *         - True if the element had the class
- *         - False otherwise.
- *
- * @throws {Error}
- *         Throws an error if `classToCheck` has white space.
- */
-function hasElClass(element, classToCheck) {
-  throwIfWhitespace(classToCheck);
-  if (element.classList) {
-    return element.classList.contains(classToCheck);
-  }
-  return classRegExp(classToCheck).test(element.className);
-}
-
-/**
- * Add a CSS class name to an element
- *
- * @param {Element} element
- *        Element to add class name to.
- *
- * @param {string} classToAdd
- *        Class name to add.
- *
- * @return {Element}
- *         The dom element with the added class name.
- */
-function addElClass(element, classToAdd) {
-  if (element.classList) {
-    element.classList.add(classToAdd);
-
-    // Don't need to `throwIfWhitespace` here because `hasElClass` will do it
-    // in the case of classList not being supported.
-  } else if (!hasElClass(element, classToAdd)) {
-    element.className = (element.className + ' ' + classToAdd).trim();
-  }
-
-  return element;
-}
-
-/**
- * Remove a CSS class name from an element
- *
- * @param {Element} element
- *        Element to remove a class name from.
- *
- * @param {string} classToRemove
- *        Class name to remove
- *
- * @return {Element}
- *         The dom element with class name removed.
- */
-function removeElClass(element, classToRemove) {
-  if (element.classList) {
-    element.classList.remove(classToRemove);
-  } else {
-    throwIfWhitespace(classToRemove);
-    element.className = element.className.split(/\s+/).filter(function (c) {
-      return c !== classToRemove;
-    }).join(' ');
-  }
-
-  return element;
-}
-
-/**
- * The callback definition for toggleElClass.
- *
- * @callback Dom~PredicateCallback
- * @param {Element} element
- *        The DOM element of the Component.
- *
- * @param {string} classToToggle
- *        The `className` that wants to be toggled
- *
- * @return {boolean|undefined}
- *         - If true the `classToToggle` will get added to `element`.
- *         - If false the `classToToggle` will get removed from `element`.
- *         - If undefined this callback will be ignored
- */
-
-/**
- * Adds or removes a CSS class name on an element depending on an optional
- * condition or the presence/absence of the class name.
- *
- * @param {Element} element
- *        The element to toggle a class name on.
- *
- * @param {string} classToToggle
- *        The class that should be toggled
- *
- * @param {boolean|PredicateCallback} [predicate]
- *        See the return value for {@link Dom~PredicateCallback}
- *
- * @return {Element}
- *         The element with a class that has been toggled.
- */
-function toggleElClass(element, classToToggle, predicate) {
-
-  // This CANNOT use `classList` internally because IE does not support the
-  // second parameter to the `classList.toggle()` method! Which is fine because
-  // `classList` will be used by the add/remove functions.
-  var has = hasElClass(element, classToToggle);
-
-  if (typeof predicate === 'function') {
-    predicate = predicate(element, classToToggle);
-  }
-
-  if (typeof predicate !== 'boolean') {
-    predicate = !has;
-  }
-
-  // If the necessary class operation matches the current state of the
-  // element, no action is required.
-  if (predicate === has) {
-    return;
-  }
-
-  if (predicate) {
-    addElClass(element, classToToggle);
-  } else {
-    removeElClass(element, classToToggle);
-  }
-
-  return element;
-}
-
-/**
- * Apply attributes to an HTML element.
- *
- * @param {Element} el
- *        Element to add attributes to.
- *
- * @param {Object} [attributes]
- *        Attributes to be applied.
- */
-function setElAttributes(el, attributes) {
-  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
-    var attrValue = attributes[attrName];
-
-    if (attrValue === null || typeof attrValue === 'undefined' || attrValue === false) {
-      el.removeAttribute(attrName);
-    } else {
-      el.setAttribute(attrName, attrValue === true ? '' : attrValue);
-    }
-  });
-}
-
-/**
- * Get an element's attribute values, as defined on the HTML tag
- * Attributes are not the same as properties. They're defined on the tag
- * or with setAttribute (which shouldn't be used with HTML)
- * This will return true or false for boolean attributes.
- *
- * @param {Element} tag
- *        Element from which to get tag attributes.
- *
- * @return {Object}
- *         All attributes of the element.
- */
-function getElAttributes(tag) {
-  var obj = {};
-
-  // known boolean attributes
-  // we can check for matching boolean properties, but older browsers
-  // won't know about HTML5 boolean attributes that we still read from
-  var knownBooleans = ',' + 'autoplay,controls,playsinline,loop,muted,default,defaultMuted' + ',';
-
-  if (tag && tag.attributes && tag.attributes.length > 0) {
-    var attrs = tag.attributes;
-
-    for (var i = attrs.length - 1; i >= 0; i--) {
-      var attrName = attrs[i].name;
-      var attrVal = attrs[i].value;
-
-      // check for known booleans
-      // the matching element property will return a value for typeof
-      if (typeof tag[attrName] === 'boolean' || knownBooleans.indexOf(',' + attrName + ',') !== -1) {
-        // the value of an included boolean attribute is typically an empty
-        // string ('') which would equal false if we just check for a false value.
-        // we also don't want support bad code like autoplay='false'
-        attrVal = attrVal !== null ? true : false;
-      }
-
-      obj[attrName] = attrVal;
-    }
-  }
-
-  return obj;
-}
-
-/**
- * Get the value of an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to get the value of
- *
- * @return {string}
- *         value of the attribute
- */
-function getAttribute(el, attribute) {
-  return el.getAttribute(attribute);
-}
-
-/**
- * Set the value of an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to set
- *
- * @param {string} value
- *        Value to set the attribute to
- */
-function setAttribute(el, attribute, value) {
-  el.setAttribute(attribute, value);
-}
-
-/**
- * Remove an element's attribute
- *
- * @param {Element} el
- *        A DOM element
- *
- * @param {string} attribute
- *        Attribute to remove
- */
-function removeAttribute(el, attribute) {
-  el.removeAttribute(attribute);
-}
-
-/**
- * Attempt to block the ability to select text while dragging controls
- */
-function blockTextSelection() {
-  _document2['default'].body.focus();
-  _document2['default'].onselectstart = function () {
-    return false;
-  };
-}
-
-/**
- * Turn off text selection blocking
- */
-function unblockTextSelection() {
-  _document2['default'].onselectstart = function () {
-    return true;
-  };
-}
-
-/**
- * The postion of a DOM element on the page.
- *
- * @typedef {Object} Dom~Position
- *
- * @property {number} left
- *           Pixels to the left
- *
- * @property {number} top
- *           Pixels on top
- */
-
-/**
- * Offset Left.
- * getBoundingClientRect technique from
- * John Resig
- *
- * @see http://ejohn.org/blog/getboundingclientrect-is-awesome/
- *
- * @param {Element} el
- *        Element from which to get offset
- *
- * @return {Dom~Position}
- *         The position of the element that was passed in.
- */
-function findElPosition(el) {
-  var box = void 0;
-
-  if (el.getBoundingClientRect && el.parentNode) {
-    box = el.getBoundingClientRect();
-  }
-
-  if (!box) {
-    return {
-      left: 0,
-      top: 0
-    };
-  }
-
-  var docEl = _document2['default'].documentElement;
-  var body = _document2['default'].body;
-
-  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-  var scrollLeft = _window2['default'].pageXOffset || body.scrollLeft;
-  var left = box.left + scrollLeft - clientLeft;
-
-  var clientTop = docEl.clientTop || body.clientTop || 0;
-  var scrollTop = _window2['default'].pageYOffset || body.scrollTop;
-  var top = box.top + scrollTop - clientTop;
-
-  // Android sometimes returns slightly off decimal values, so need to round
-  return {
-    left: Math.round(left),
-    top: Math.round(top)
-  };
-}
-
-/**
- * x and y coordinates for a dom element or mouse pointer
- *
- * @typedef {Object} Dom~Coordinates
- *
- * @property {number} x
- *           x coordinate in pixels
- *
- * @property {number} y
- *           y coordinate in pixels
- */
-
-/**
- * Get pointer position in element
- * Returns an object with x and y coordinates.
- * The base on the coordinates are the bottom left of the element.
- *
- * @param {Element} el
- *        Element on which to get the pointer position on
- *
- * @param {EventTarget~Event} event
- *        Event object
- *
- * @return {Dom~Coordinates}
- *         A Coordinates object corresponding to the mouse position.
- *
- */
-function getPointerPosition(el, event) {
-  var position = {};
-  var box = findElPosition(el);
-  var boxW = el.offsetWidth;
-  var boxH = el.offsetHeight;
-
-  var boxY = box.top;
-  var boxX = box.left;
-  var pageY = event.pageY;
-  var pageX = event.pageX;
-
-  if (event.changedTouches) {
-    pageX = event.changedTouches[0].pageX;
-    pageY = event.changedTouches[0].pageY;
-  }
-
-  position.y = Math.max(0, Math.min(1, (boxY - pageY + boxH) / boxH));
-  position.x = Math.max(0, Math.min(1, (pageX - boxX) / boxW));
-
-  return position;
-}
-
-/**
- * Determines, via duck typing, whether or not a value is a text node.
- *
- * @param {Mixed} value
- *        Check if this value is a text node.
- *
- * @return {boolean}
- *         - True if it is a text node
- *         - False otherwise
- */
-function isTextNode(value) {
-  return (0, _obj.isObject)(value) && value.nodeType === 3;
-}
-
-/**
- * Empties the contents of an element.
- *
- * @param {Element} el
- *        The element to empty children from
- *
- * @return {Element}
- *         The element with no children
- */
-function emptyEl(el) {
-  while (el.firstChild) {
-    el.removeChild(el.firstChild);
-  }
-  return el;
-}
-
-/**
- * Normalizes content for eventual insertion into the DOM.
- *
- * This allows a wide range of content definition methods, but protects
- * from falling into the trap of simply writing to `innerHTML`, which is
- * an XSS concern.
- *
- * The content for an element can be passed in multiple types and
- * combinations, whose behavior is as follows:
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        - String: Normalized into a text node.
- *        - Element/TextNode: Passed through.
- *        - Array: A one-dimensional array of strings, elements, nodes, or functions
- *          (which return single strings, elements, or nodes).
- *        - Function: If the sole argument, is expected to produce a string, element,
- *          node, or array as defined above.
- *
- * @return {Array}
- *         All of the content that was passed in normalized.
- */
-function normalizeContent(content) {
-
-  // First, invoke content if it is a function. If it produces an array,
-  // that needs to happen before normalization.
-  if (typeof content === 'function') {
-    content = content();
-  }
-
-  // Next up, normalize to an array, so one or many items can be normalized,
-  // filtered, and returned.
-  return (Array.isArray(content) ? content : [content]).map(function (value) {
-
-    // First, invoke value if it is a function to produce a new value,
-    // which will be subsequently normalized to a Node of some kind.
-    if (typeof value === 'function') {
-      value = value();
-    }
-
-    if (isEl(value) || isTextNode(value)) {
-      return value;
-    }
-
-    if (typeof value === 'string' && /\S/.test(value)) {
-      return _document2['default'].createTextNode(value);
-    }
-  }).filter(function (value) {
-    return value;
-  });
-}
-
-/**
- * Normalizes and appends content to an element.
- *
- * @param {Element} el
- *        Element to append normalized content to.
- *
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        See the `content` argument of {@link dom:normalizeContent}
- *
- * @return {Element}
- *         The element with appended normalized content.
- */
-function appendContent(el, content) {
-  normalizeContent(content).forEach(function (node) {
-    return el.appendChild(node);
-  });
-  return el;
-}
-
-/**
- * Normalizes and inserts content into an element; this is identical to
- * `appendContent()`, except it empties the element first.
- *
- * @param {Element} el
- *        Element to insert normalized content into.
- *
- * @param {String|Element|TextNode|Array|Function} content
- *        See the `content` argument of {@link dom:normalizeContent}
- *
- * @return {Element}
- *         The element with inserted normalized content.
- *
- */
-function insertContent(el, content) {
-  return appendContent(emptyEl(el), content);
-}
-
-/**
- * Finds a single DOM element matching `selector` within the optional
- * `context` of another DOM element (defaulting to `document`).
- *
- * @param {string} selector
- *        A valid CSS selector, which will be passed to `querySelector`.
- *
- * @param {Element|String} [context=document]
- *        A DOM element within which to query. Can also be a selector
- *        string in which case the first matching element will be used
- *        as context. If missing (or no element matches selector), falls
- *        back to `document`.
- *
- * @return {Element|null}
- *         The element that was found or null.
- */
-var $ = exports.$ = createQuerier('querySelector');
-
-/**
- * Finds a all DOM elements matching `selector` within the optional
- * `context` of another DOM element (defaulting to `document`).
- *
- * @param {string} selector
- *           A valid CSS selector, which will be passed to `querySelectorAll`.
- *
- * @param {Element|String} [context=document]
- *           A DOM element within which to query. Can also be a selector
- *           string in which case the first matching element will be used
- *           as context. If missing (or no element matches selector), falls
- *           back to `document`.
- *
- * @return {NodeList}
- *         A element list of elements that were found. Will be empty if none were found.
- *
- */
-var $$ = exports.$$ = createQuerier('querySelectorAll');
-
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-
-/***/ 259:
+/***/ 271:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2974,15 +1407,15 @@ module.exports = g;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(78);
+var _button = __webpack_require__(89);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -3128,7 +1561,7 @@ exports['default'] = MuteToggle;
 
 /***/ }),
 
-/***/ 260:
+/***/ 272:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3136,15 +1569,15 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(263);
+var _menuButton = __webpack_require__(275);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -3214,7 +1647,7 @@ exports['default'] = TrackButton;
 
 /***/ }),
 
-/***/ 261:
+/***/ 273:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3222,19 +1655,19 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(267);
+var _slider = __webpack_require__(279);
 
 var _slider2 = _interopRequireDefault(_slider);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(323);
+__webpack_require__(335);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -3403,7 +1836,7 @@ exports['default'] = VolumeBar;
 
 /***/ }),
 
-/***/ 262:
+/***/ 274:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3411,7 +1844,7 @@ exports['default'] = VolumeBar;
 
 exports.__esModule = true;
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 /**
  * A Custom `MediaError` class which mimics the standard HTML5 `MediaError` class.
@@ -3622,7 +2055,7 @@ exports['default'] = MediaError;
 
 /***/ }),
 
-/***/ 263:
+/***/ 275:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3630,23 +2063,23 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(79);
+var _clickableComponent = __webpack_require__(90);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(264);
+var _menu = __webpack_require__(276);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -3982,7 +2415,7 @@ exports['default'] = MenuButton;
 
 /***/ }),
 
-/***/ 264:
+/***/ 276:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3990,19 +2423,19 @@ exports['default'] = MenuButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -4192,7 +2625,7 @@ exports['default'] = Menu;
 
 /***/ }),
 
-/***/ 265:
+/***/ 277:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4200,15 +2633,15 @@ exports['default'] = Menu;
 
 exports.__esModule = true;
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -4693,7 +3126,7 @@ exports['default'] = ModalDialog;
 
 /***/ }),
 
-/***/ 266:
+/***/ 278:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4701,27 +3134,27 @@ exports['default'] = ModalDialog;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -4729,11 +3162,11 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -4741,73 +3174,73 @@ var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(81);
+var _timeRanges = __webpack_require__(92);
 
-var _buffer = __webpack_require__(270);
+var _buffer = __webpack_require__(282);
 
-var _stylesheet = __webpack_require__(271);
+var _stylesheet = __webpack_require__(283);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(327);
+var _fullscreenApi = __webpack_require__(339);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(262);
+var _mediaError = __webpack_require__(274);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(121);
+var _tuple = __webpack_require__(125);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(343);
+var _textTrackListConverter = __webpack_require__(355);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(265);
+var _modalDialog = __webpack_require__(277);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(80);
+var _tech = __webpack_require__(91);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(268);
+var _audioTrackList = __webpack_require__(280);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(269);
+var _videoTrackList = __webpack_require__(281);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
+__webpack_require__(349);
+
+__webpack_require__(347);
+
+__webpack_require__(344);
+
+__webpack_require__(354);
+
+__webpack_require__(340);
+
+__webpack_require__(305);
+
+__webpack_require__(306);
+
+__webpack_require__(309);
+
 __webpack_require__(337);
 
-__webpack_require__(335);
+__webpack_require__(357);
 
-__webpack_require__(332);
-
-__webpack_require__(342);
-
-__webpack_require__(328);
-
-__webpack_require__(293);
-
-__webpack_require__(294);
-
-__webpack_require__(297);
-
-__webpack_require__(325);
-
-__webpack_require__(345);
-
-__webpack_require__(336);
+__webpack_require__(348);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -8386,7 +6819,7 @@ exports['default'] = Player;
 
 /***/ }),
 
-/***/ 267:
+/***/ 279:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8394,15 +6827,15 @@ exports['default'] = Player;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -8747,7 +7180,7 @@ exports['default'] = Slider;
 
 /***/ }),
 
-/***/ 268:
+/***/ 280:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8755,15 +7188,15 @@ exports['default'] = Slider;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(137);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -8936,7 +7369,7 @@ exports['default'] = AudioTrackList;
 
 /***/ }),
 
-/***/ 269:
+/***/ 281:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8944,15 +7377,15 @@ exports['default'] = AudioTrackList;
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(137);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -9137,7 +7570,7 @@ exports['default'] = VideoTrackList;
 
 /***/ }),
 
-/***/ 270:
+/***/ 282:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9146,7 +7579,7 @@ exports['default'] = VideoTrackList;
 exports.__esModule = true;
 exports.bufferedPercent = bufferedPercent;
 
-var _timeRanges = __webpack_require__(81);
+var _timeRanges = __webpack_require__(92);
 
 /**
  * Compute the percentage of the media that has been buffered.
@@ -9194,7 +7627,7 @@ function bufferedPercent(buffered, duration) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9203,7 +7636,7 @@ function bufferedPercent(buffered, duration) {
 exports.__esModule = true;
 exports.setTextContent = exports.createStyleElement = undefined;
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -9250,7 +7683,7 @@ var setTextContent = exports.setTextContent = function setTextContent(el, conten
 
 /***/ }),
 
-/***/ 272:
+/***/ 284:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9268,99 +7701,99 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 // Include the built-in techs
 
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _setup = __webpack_require__(333);
+var _setup = __webpack_require__(345);
 
 var setup = _interopRequireWildcard(_setup);
 
-var _stylesheet = __webpack_require__(271);
+var _stylesheet = __webpack_require__(283);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(97);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _player = __webpack_require__(266);
+var _player = __webpack_require__(278);
 
 var _player2 = _interopRequireDefault(_player);
 
-var _plugins = __webpack_require__(329);
+var _plugins = __webpack_require__(341);
 
 var _plugins2 = _interopRequireDefault(_plugins);
 
-var _mergeOptions2 = __webpack_require__(59);
+var _mergeOptions2 = __webpack_require__(67);
 
 var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(135);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _audioTrack = __webpack_require__(338);
+var _audioTrack = __webpack_require__(350);
 
 var _audioTrack2 = _interopRequireDefault(_audioTrack);
 
-var _videoTrack = __webpack_require__(346);
+var _videoTrack = __webpack_require__(358);
 
 var _videoTrack2 = _interopRequireDefault(_videoTrack);
 
-var _timeRanges = __webpack_require__(81);
+var _timeRanges = __webpack_require__(92);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(99);
 
 var Url = _interopRequireWildcard(_url);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(139);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-var _extend = __webpack_require__(326);
+var _extend = __webpack_require__(338);
 
 var _extend2 = _interopRequireDefault(_extend);
 
-var _xhr = __webpack_require__(273);
+var _xhr = __webpack_require__(285);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
-var _tech = __webpack_require__(80);
+var _tech = __webpack_require__(91);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -9980,15 +8413,15 @@ exports['default'] = videojs;
 
 /***/ }),
 
-/***/ 273:
+/***/ 285:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var window = __webpack_require__(41)
-var isFunction = __webpack_require__(77)
-var parseHeaders = __webpack_require__(120)
-var xtend = __webpack_require__(130)
+var window = __webpack_require__(53)
+var isFunction = __webpack_require__(82)
+var parseHeaders = __webpack_require__(124)
+var xtend = __webpack_require__(141)
 
 module.exports = createXHR
 createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
@@ -10223,7 +8656,912 @@ function noop() {}
 
 /***/ }),
 
-/***/ 281:
+/***/ 29:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.$$ = exports.$ = undefined;
+
+var _templateObject = _taggedTemplateLiteralLoose(['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.'], ['Setting attributes in the second argument of createEl()\n                has been deprecated. Use the third argument instead.\n                createEl(type, properties, attributes). Attempting to set ', ' to ', '.']);
+
+exports.isReal = isReal;
+exports.isEl = isEl;
+exports.getEl = getEl;
+exports.createEl = createEl;
+exports.textContent = textContent;
+exports.insertElFirst = insertElFirst;
+exports.getElData = getElData;
+exports.hasElData = hasElData;
+exports.removeElData = removeElData;
+exports.hasElClass = hasElClass;
+exports.addElClass = addElClass;
+exports.removeElClass = removeElClass;
+exports.toggleElClass = toggleElClass;
+exports.setElAttributes = setElAttributes;
+exports.getElAttributes = getElAttributes;
+exports.getAttribute = getAttribute;
+exports.setAttribute = setAttribute;
+exports.removeAttribute = removeAttribute;
+exports.blockTextSelection = blockTextSelection;
+exports.unblockTextSelection = unblockTextSelection;
+exports.findElPosition = findElPosition;
+exports.getPointerPosition = getPointerPosition;
+exports.isTextNode = isTextNode;
+exports.emptyEl = emptyEl;
+exports.normalizeContent = normalizeContent;
+exports.appendContent = appendContent;
+exports.insertContent = insertContent;
+
+var _document = __webpack_require__(51);
+
+var _document2 = _interopRequireDefault(_document);
+
+var _window = __webpack_require__(53);
+
+var _window2 = _interopRequireDefault(_window);
+
+var _guid = __webpack_require__(75);
+
+var Guid = _interopRequireWildcard(_guid);
+
+var _log = __webpack_require__(60);
+
+var _log2 = _interopRequireDefault(_log);
+
+var _tsml = __webpack_require__(95);
+
+var _tsml2 = _interopRequireDefault(_tsml);
+
+var _obj = __webpack_require__(56);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _taggedTemplateLiteralLoose(strings, raw) { strings.raw = raw; return strings; } /**
+                                                                                           * @file dom.js
+                                                                                           * @module dom
+                                                                                           */
+
+
+/**
+ * Detect if a value is a string with any non-whitespace characters.
+ *
+ * @param {string} str
+ *        The string to check
+ *
+ * @return {boolean}
+ *         - True if the string is non-blank
+ *         - False otherwise
+ *
+ */
+function isNonBlankString(str) {
+  return typeof str === 'string' && /\S/.test(str);
+}
+
+/**
+ * Throws an error if the passed string has whitespace. This is used by
+ * class methods to be relatively consistent with the classList API.
+ *
+ * @param {string} str
+ *         The string to check for whitespace.
+ *
+ * @throws {Error}
+ *         Throws an error if there is whitespace in the string.
+ *
+ */
+function throwIfWhitespace(str) {
+  if (/\s/.test(str)) {
+    throw new Error('class has illegal whitespace characters');
+  }
+}
+
+/**
+ * Produce a regular expression for matching a className within an elements className.
+ *
+ * @param {string} className
+ *         The className to generate the RegExp for.
+ *
+ * @return {RegExp}
+ *         The RegExp that will check for a specific `className` in an elements
+ *         className.
+ */
+function classRegExp(className) {
+  return new RegExp('(^|\\s)' + className + '($|\\s)');
+}
+
+/**
+ * Whether the current DOM interface appears to be real.
+ *
+ * @return {Boolean}
+ */
+function isReal() {
+  return (
+
+    // Both document and window will never be undefined thanks to `global`.
+    _document2['default'] === _window2['default'].document &&
+
+    // In IE < 9, DOM methods return "object" as their type, so all we can
+    // confidently check is that it exists.
+    typeof _document2['default'].createElement !== 'undefined'
+  );
+}
+
+/**
+ * Determines, via duck typing, whether or not a value is a DOM element.
+ *
+ * @param {Mixed} value
+ *        The thing to check
+ *
+ * @return {boolean}
+ *         - True if it is a DOM element
+ *         - False otherwise
+ */
+function isEl(value) {
+  return (0, _obj.isObject)(value) && value.nodeType === 1;
+}
+
+/**
+ * Creates functions to query the DOM using a given method.
+ *
+ * @param {string} method
+ *         The method to create the query with.
+ *
+ * @return {Function}
+ *         The query method
+ */
+function createQuerier(method) {
+  return function (selector, context) {
+    if (!isNonBlankString(selector)) {
+      return _document2['default'][method](null);
+    }
+    if (isNonBlankString(context)) {
+      context = _document2['default'].querySelector(context);
+    }
+
+    var ctx = isEl(context) ? context : _document2['default'];
+
+    return ctx[method] && ctx[method](selector);
+  };
+}
+
+/**
+ * Shorthand for document.getElementById()
+ * Also allows for CSS (jQuery) ID syntax. But nothing other than IDs.
+ *
+ * @param {string} id
+ *         The id of the element to get
+ *
+ * @return {Element|null}
+ *         Element with supplied ID or null if there wasn't one.
+ */
+function getEl(id) {
+  if (id.indexOf('#') === 0) {
+    id = id.slice(1);
+  }
+
+  return _document2['default'].getElementById(id);
+}
+
+/**
+ * Creates an element and applies properties.
+ *
+ * @param {string} [tagName='div']
+ *         Name of tag to be created.
+ *
+ * @param {Object} [properties={}]
+ *         Element properties to be applied.
+ *
+ * @param {Object} [attributes={}]
+ *         Element attributes to be applied.
+ *
+ * @param {String|Element|TextNode|Array|Function} [content]
+ *         Contents for the element (see: {@link dom:normalizeContent})
+ *
+ * @return {Element}
+ *         The element that was created.
+ */
+function createEl() {
+  var tagName = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'div';
+  var properties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+  var content = arguments[3];
+
+  var el = _document2['default'].createElement(tagName);
+
+  Object.getOwnPropertyNames(properties).forEach(function (propName) {
+    var val = properties[propName];
+
+    // See #2176
+    // We originally were accepting both properties and attributes in the
+    // same object, but that doesn't work so well.
+    if (propName.indexOf('aria-') !== -1 || propName === 'role' || propName === 'type') {
+      _log2['default'].warn((0, _tsml2['default'])(_templateObject, propName, val));
+      el.setAttribute(propName, val);
+
+      // Handle textContent since it's not supported everywhere and we have a
+      // method for it.
+    } else if (propName === 'textContent') {
+      textContent(el, val);
+    } else {
+      el[propName] = val;
+    }
+  });
+
+  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
+    el.setAttribute(attrName, attributes[attrName]);
+  });
+
+  if (content) {
+    appendContent(el, content);
+  }
+
+  return el;
+}
+
+/**
+ * Injects text into an element, replacing any existing contents entirely.
+ *
+ * @param {Element} el
+ *        The element to add text content into
+ *
+ * @param {string} text
+ *        The text content to add.
+ *
+ * @return {Element}
+ *         The element with added text content.
+ */
+function textContent(el, text) {
+  if (typeof el.textContent === 'undefined') {
+    el.innerText = text;
+  } else {
+    el.textContent = text;
+  }
+  return el;
+}
+
+/**
+ * Insert an element as the first child node of another
+ *
+ * @param {Element} child
+ *        Element to insert
+ *
+ * @param {Element} parent
+ *        Element to insert child into
+ *
+ */
+function insertElFirst(child, parent) {
+  if (parent.firstChild) {
+    parent.insertBefore(child, parent.firstChild);
+  } else {
+    parent.appendChild(child);
+  }
+}
+
+/**
+ * Element Data Store. Allows for binding data to an element without putting it directly on the element.
+ * Ex. Event listeners are stored here.
+ * (also from jsninja.com, slightly modified and updated for closure compiler)
+ *
+ * @type {Object}
+ * @private
+ */
+var elData = {};
+
+/*
+ * Unique attribute name to store an element's guid in
+ *
+ * @type {string}
+ * @constant
+ * @private
+ */
+var elIdAttr = 'vdata' + new Date().getTime();
+
+/**
+ * Returns the cache object where data for an element is stored
+ *
+ * @param {Element} el
+ *        Element to store data for.
+ *
+ * @return {Object}
+ *         The cache object for that el that was passed in.
+ */
+function getElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    id = el[elIdAttr] = Guid.newGUID();
+  }
+
+  if (!elData[id]) {
+    elData[id] = {};
+  }
+
+  return elData[id];
+}
+
+/**
+ * Returns whether or not an element has cached data
+ *
+ * @param {Element} el
+ *        Check if this element has cached data.
+ *
+ * @return {boolean}
+ *         - True if the DOM element has cached data.
+ *         - False otherwise.
+ */
+function hasElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    return false;
+  }
+
+  return !!Object.getOwnPropertyNames(elData[id]).length;
+}
+
+/**
+ * Delete data for the element from the cache and the guid attr from getElementById
+ *
+ * @param {Element} el
+ *        Remove cached data for this element.
+ */
+function removeElData(el) {
+  var id = el[elIdAttr];
+
+  if (!id) {
+    return;
+  }
+
+  // Remove all stored data
+  delete elData[id];
+
+  // Remove the elIdAttr property from the DOM node
+  try {
+    delete el[elIdAttr];
+  } catch (e) {
+    if (el.removeAttribute) {
+      el.removeAttribute(elIdAttr);
+    } else {
+      // IE doesn't appear to support removeAttribute on the document element
+      el[elIdAttr] = null;
+    }
+  }
+}
+
+/**
+ * Check if an element has a CSS class
+ *
+ * @param {Element} element
+ *        Element to check
+ *
+ * @param {string} classToCheck
+ *        Class name to check for
+ *
+ * @return {boolean}
+ *         - True if the element had the class
+ *         - False otherwise.
+ *
+ * @throws {Error}
+ *         Throws an error if `classToCheck` has white space.
+ */
+function hasElClass(element, classToCheck) {
+  throwIfWhitespace(classToCheck);
+  if (element.classList) {
+    return element.classList.contains(classToCheck);
+  }
+  return classRegExp(classToCheck).test(element.className);
+}
+
+/**
+ * Add a CSS class name to an element
+ *
+ * @param {Element} element
+ *        Element to add class name to.
+ *
+ * @param {string} classToAdd
+ *        Class name to add.
+ *
+ * @return {Element}
+ *         The dom element with the added class name.
+ */
+function addElClass(element, classToAdd) {
+  if (element.classList) {
+    element.classList.add(classToAdd);
+
+    // Don't need to `throwIfWhitespace` here because `hasElClass` will do it
+    // in the case of classList not being supported.
+  } else if (!hasElClass(element, classToAdd)) {
+    element.className = (element.className + ' ' + classToAdd).trim();
+  }
+
+  return element;
+}
+
+/**
+ * Remove a CSS class name from an element
+ *
+ * @param {Element} element
+ *        Element to remove a class name from.
+ *
+ * @param {string} classToRemove
+ *        Class name to remove
+ *
+ * @return {Element}
+ *         The dom element with class name removed.
+ */
+function removeElClass(element, classToRemove) {
+  if (element.classList) {
+    element.classList.remove(classToRemove);
+  } else {
+    throwIfWhitespace(classToRemove);
+    element.className = element.className.split(/\s+/).filter(function (c) {
+      return c !== classToRemove;
+    }).join(' ');
+  }
+
+  return element;
+}
+
+/**
+ * The callback definition for toggleElClass.
+ *
+ * @callback Dom~PredicateCallback
+ * @param {Element} element
+ *        The DOM element of the Component.
+ *
+ * @param {string} classToToggle
+ *        The `className` that wants to be toggled
+ *
+ * @return {boolean|undefined}
+ *         - If true the `classToToggle` will get added to `element`.
+ *         - If false the `classToToggle` will get removed from `element`.
+ *         - If undefined this callback will be ignored
+ */
+
+/**
+ * Adds or removes a CSS class name on an element depending on an optional
+ * condition or the presence/absence of the class name.
+ *
+ * @param {Element} element
+ *        The element to toggle a class name on.
+ *
+ * @param {string} classToToggle
+ *        The class that should be toggled
+ *
+ * @param {boolean|PredicateCallback} [predicate]
+ *        See the return value for {@link Dom~PredicateCallback}
+ *
+ * @return {Element}
+ *         The element with a class that has been toggled.
+ */
+function toggleElClass(element, classToToggle, predicate) {
+
+  // This CANNOT use `classList` internally because IE does not support the
+  // second parameter to the `classList.toggle()` method! Which is fine because
+  // `classList` will be used by the add/remove functions.
+  var has = hasElClass(element, classToToggle);
+
+  if (typeof predicate === 'function') {
+    predicate = predicate(element, classToToggle);
+  }
+
+  if (typeof predicate !== 'boolean') {
+    predicate = !has;
+  }
+
+  // If the necessary class operation matches the current state of the
+  // element, no action is required.
+  if (predicate === has) {
+    return;
+  }
+
+  if (predicate) {
+    addElClass(element, classToToggle);
+  } else {
+    removeElClass(element, classToToggle);
+  }
+
+  return element;
+}
+
+/**
+ * Apply attributes to an HTML element.
+ *
+ * @param {Element} el
+ *        Element to add attributes to.
+ *
+ * @param {Object} [attributes]
+ *        Attributes to be applied.
+ */
+function setElAttributes(el, attributes) {
+  Object.getOwnPropertyNames(attributes).forEach(function (attrName) {
+    var attrValue = attributes[attrName];
+
+    if (attrValue === null || typeof attrValue === 'undefined' || attrValue === false) {
+      el.removeAttribute(attrName);
+    } else {
+      el.setAttribute(attrName, attrValue === true ? '' : attrValue);
+    }
+  });
+}
+
+/**
+ * Get an element's attribute values, as defined on the HTML tag
+ * Attributes are not the same as properties. They're defined on the tag
+ * or with setAttribute (which shouldn't be used with HTML)
+ * This will return true or false for boolean attributes.
+ *
+ * @param {Element} tag
+ *        Element from which to get tag attributes.
+ *
+ * @return {Object}
+ *         All attributes of the element.
+ */
+function getElAttributes(tag) {
+  var obj = {};
+
+  // known boolean attributes
+  // we can check for matching boolean properties, but older browsers
+  // won't know about HTML5 boolean attributes that we still read from
+  var knownBooleans = ',' + 'autoplay,controls,playsinline,loop,muted,default,defaultMuted' + ',';
+
+  if (tag && tag.attributes && tag.attributes.length > 0) {
+    var attrs = tag.attributes;
+
+    for (var i = attrs.length - 1; i >= 0; i--) {
+      var attrName = attrs[i].name;
+      var attrVal = attrs[i].value;
+
+      // check for known booleans
+      // the matching element property will return a value for typeof
+      if (typeof tag[attrName] === 'boolean' || knownBooleans.indexOf(',' + attrName + ',') !== -1) {
+        // the value of an included boolean attribute is typically an empty
+        // string ('') which would equal false if we just check for a false value.
+        // we also don't want support bad code like autoplay='false'
+        attrVal = attrVal !== null ? true : false;
+      }
+
+      obj[attrName] = attrVal;
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Get the value of an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to get the value of
+ *
+ * @return {string}
+ *         value of the attribute
+ */
+function getAttribute(el, attribute) {
+  return el.getAttribute(attribute);
+}
+
+/**
+ * Set the value of an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to set
+ *
+ * @param {string} value
+ *        Value to set the attribute to
+ */
+function setAttribute(el, attribute, value) {
+  el.setAttribute(attribute, value);
+}
+
+/**
+ * Remove an element's attribute
+ *
+ * @param {Element} el
+ *        A DOM element
+ *
+ * @param {string} attribute
+ *        Attribute to remove
+ */
+function removeAttribute(el, attribute) {
+  el.removeAttribute(attribute);
+}
+
+/**
+ * Attempt to block the ability to select text while dragging controls
+ */
+function blockTextSelection() {
+  _document2['default'].body.focus();
+  _document2['default'].onselectstart = function () {
+    return false;
+  };
+}
+
+/**
+ * Turn off text selection blocking
+ */
+function unblockTextSelection() {
+  _document2['default'].onselectstart = function () {
+    return true;
+  };
+}
+
+/**
+ * The postion of a DOM element on the page.
+ *
+ * @typedef {Object} Dom~Position
+ *
+ * @property {number} left
+ *           Pixels to the left
+ *
+ * @property {number} top
+ *           Pixels on top
+ */
+
+/**
+ * Offset Left.
+ * getBoundingClientRect technique from
+ * John Resig
+ *
+ * @see http://ejohn.org/blog/getboundingclientrect-is-awesome/
+ *
+ * @param {Element} el
+ *        Element from which to get offset
+ *
+ * @return {Dom~Position}
+ *         The position of the element that was passed in.
+ */
+function findElPosition(el) {
+  var box = void 0;
+
+  if (el.getBoundingClientRect && el.parentNode) {
+    box = el.getBoundingClientRect();
+  }
+
+  if (!box) {
+    return {
+      left: 0,
+      top: 0
+    };
+  }
+
+  var docEl = _document2['default'].documentElement;
+  var body = _document2['default'].body;
+
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+  var scrollLeft = _window2['default'].pageXOffset || body.scrollLeft;
+  var left = box.left + scrollLeft - clientLeft;
+
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var scrollTop = _window2['default'].pageYOffset || body.scrollTop;
+  var top = box.top + scrollTop - clientTop;
+
+  // Android sometimes returns slightly off decimal values, so need to round
+  return {
+    left: Math.round(left),
+    top: Math.round(top)
+  };
+}
+
+/**
+ * x and y coordinates for a dom element or mouse pointer
+ *
+ * @typedef {Object} Dom~Coordinates
+ *
+ * @property {number} x
+ *           x coordinate in pixels
+ *
+ * @property {number} y
+ *           y coordinate in pixels
+ */
+
+/**
+ * Get pointer position in element
+ * Returns an object with x and y coordinates.
+ * The base on the coordinates are the bottom left of the element.
+ *
+ * @param {Element} el
+ *        Element on which to get the pointer position on
+ *
+ * @param {EventTarget~Event} event
+ *        Event object
+ *
+ * @return {Dom~Coordinates}
+ *         A Coordinates object corresponding to the mouse position.
+ *
+ */
+function getPointerPosition(el, event) {
+  var position = {};
+  var box = findElPosition(el);
+  var boxW = el.offsetWidth;
+  var boxH = el.offsetHeight;
+
+  var boxY = box.top;
+  var boxX = box.left;
+  var pageY = event.pageY;
+  var pageX = event.pageX;
+
+  if (event.changedTouches) {
+    pageX = event.changedTouches[0].pageX;
+    pageY = event.changedTouches[0].pageY;
+  }
+
+  position.y = Math.max(0, Math.min(1, (boxY - pageY + boxH) / boxH));
+  position.x = Math.max(0, Math.min(1, (pageX - boxX) / boxW));
+
+  return position;
+}
+
+/**
+ * Determines, via duck typing, whether or not a value is a text node.
+ *
+ * @param {Mixed} value
+ *        Check if this value is a text node.
+ *
+ * @return {boolean}
+ *         - True if it is a text node
+ *         - False otherwise
+ */
+function isTextNode(value) {
+  return (0, _obj.isObject)(value) && value.nodeType === 3;
+}
+
+/**
+ * Empties the contents of an element.
+ *
+ * @param {Element} el
+ *        The element to empty children from
+ *
+ * @return {Element}
+ *         The element with no children
+ */
+function emptyEl(el) {
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
+  return el;
+}
+
+/**
+ * Normalizes content for eventual insertion into the DOM.
+ *
+ * This allows a wide range of content definition methods, but protects
+ * from falling into the trap of simply writing to `innerHTML`, which is
+ * an XSS concern.
+ *
+ * The content for an element can be passed in multiple types and
+ * combinations, whose behavior is as follows:
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        - String: Normalized into a text node.
+ *        - Element/TextNode: Passed through.
+ *        - Array: A one-dimensional array of strings, elements, nodes, or functions
+ *          (which return single strings, elements, or nodes).
+ *        - Function: If the sole argument, is expected to produce a string, element,
+ *          node, or array as defined above.
+ *
+ * @return {Array}
+ *         All of the content that was passed in normalized.
+ */
+function normalizeContent(content) {
+
+  // First, invoke content if it is a function. If it produces an array,
+  // that needs to happen before normalization.
+  if (typeof content === 'function') {
+    content = content();
+  }
+
+  // Next up, normalize to an array, so one or many items can be normalized,
+  // filtered, and returned.
+  return (Array.isArray(content) ? content : [content]).map(function (value) {
+
+    // First, invoke value if it is a function to produce a new value,
+    // which will be subsequently normalized to a Node of some kind.
+    if (typeof value === 'function') {
+      value = value();
+    }
+
+    if (isEl(value) || isTextNode(value)) {
+      return value;
+    }
+
+    if (typeof value === 'string' && /\S/.test(value)) {
+      return _document2['default'].createTextNode(value);
+    }
+  }).filter(function (value) {
+    return value;
+  });
+}
+
+/**
+ * Normalizes and appends content to an element.
+ *
+ * @param {Element} el
+ *        Element to append normalized content to.
+ *
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        See the `content` argument of {@link dom:normalizeContent}
+ *
+ * @return {Element}
+ *         The element with appended normalized content.
+ */
+function appendContent(el, content) {
+  normalizeContent(content).forEach(function (node) {
+    return el.appendChild(node);
+  });
+  return el;
+}
+
+/**
+ * Normalizes and inserts content into an element; this is identical to
+ * `appendContent()`, except it empties the element first.
+ *
+ * @param {Element} el
+ *        Element to insert normalized content into.
+ *
+ * @param {String|Element|TextNode|Array|Function} content
+ *        See the `content` argument of {@link dom:normalizeContent}
+ *
+ * @return {Element}
+ *         The element with inserted normalized content.
+ *
+ */
+function insertContent(el, content) {
+  return appendContent(emptyEl(el), content);
+}
+
+/**
+ * Finds a single DOM element matching `selector` within the optional
+ * `context` of another DOM element (defaulting to `document`).
+ *
+ * @param {string} selector
+ *        A valid CSS selector, which will be passed to `querySelector`.
+ *
+ * @param {Element|String} [context=document]
+ *        A DOM element within which to query. Can also be a selector
+ *        string in which case the first matching element will be used
+ *        as context. If missing (or no element matches selector), falls
+ *        back to `document`.
+ *
+ * @return {Element|null}
+ *         The element that was found or null.
+ */
+var $ = exports.$ = createQuerier('querySelector');
+
+/**
+ * Finds a all DOM elements matching `selector` within the optional
+ * `context` of another DOM element (defaulting to `document`).
+ *
+ * @param {string} selector
+ *           A valid CSS selector, which will be passed to `querySelectorAll`.
+ *
+ * @param {Element|String} [context=document]
+ *           A DOM element within which to query. Can also be a selector
+ *           string in which case the first matching element will be used
+ *           as context. If missing (or no element matches selector), falls
+ *           back to `document`.
+ *
+ * @return {NodeList}
+ *         A element list of elements that were found. Will be empty if none were found.
+ *
+ */
+var $$ = exports.$$ = createQuerier('querySelectorAll');
+
+
+/***/ }),
+
+/***/ 293:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10997,7 +10335,7 @@ angular.module('mt.media-timeline', [])
 
 /***/ }),
 
-/***/ 282:
+/***/ 294:
 /***/ (function(module, exports) {
 
 /**
@@ -46106,7 +45444,7 @@ $provide.value("$locale", {
 
 /***/ }),
 
-/***/ 287:
+/***/ 299:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -72985,11 +72323,39 @@ return videojs;
 
 })));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
-/***/ 292:
+/***/ 3:
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+
+/***/ 304:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -73000,15 +72366,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function(root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(355)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(367)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(117), __webpack_require__(272)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(103), __webpack_require__(284)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(117), __webpack_require__(272));
+        module.exports = factory(__webpack_require__(103), __webpack_require__(284));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -73515,7 +72881,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 293:
+/***/ 305:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73523,11 +72889,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(78);
+var _button = __webpack_require__(89);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73645,7 +73011,7 @@ exports['default'] = BigPlayButton;
 
 /***/ }),
 
-/***/ 294:
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73653,11 +73019,11 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(78);
+var _button = __webpack_require__(89);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -73750,7 +73116,7 @@ exports['default'] = CloseButton;
 
 /***/ }),
 
-/***/ 295:
+/***/ 307:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73758,15 +73124,15 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(260);
+var _trackButton = __webpack_require__(272);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(296);
+var _audioTrackMenuItem = __webpack_require__(308);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -73877,7 +73243,7 @@ exports['default'] = AudioTrackButton;
 
 /***/ }),
 
-/***/ 296:
+/***/ 308:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73885,15 +73251,15 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(98);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -74004,7 +73370,7 @@ exports['default'] = AudioTrackMenuItem;
 
 /***/ }),
 
-/***/ 297:
+/***/ 309:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74012,45 +73378,45 @@ exports['default'] = AudioTrackMenuItem;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(300);
+__webpack_require__(312);
+
+__webpack_require__(330);
+
+__webpack_require__(331);
+
+__webpack_require__(333);
+
+__webpack_require__(332);
+
+__webpack_require__(311);
 
 __webpack_require__(318);
 
-__webpack_require__(319);
+__webpack_require__(310);
 
-__webpack_require__(321);
+__webpack_require__(334);
 
-__webpack_require__(320);
+__webpack_require__(336);
 
-__webpack_require__(299);
+__webpack_require__(271);
 
-__webpack_require__(306);
+__webpack_require__(325);
 
-__webpack_require__(298);
+__webpack_require__(327);
 
-__webpack_require__(322);
+__webpack_require__(329);
 
 __webpack_require__(324);
 
-__webpack_require__(259);
+__webpack_require__(307);
 
 __webpack_require__(313);
 
-__webpack_require__(315);
-
-__webpack_require__(317);
-
-__webpack_require__(312);
-
-__webpack_require__(295);
-
-__webpack_require__(301);
-
-__webpack_require__(309);
+__webpack_require__(321);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -74117,7 +73483,7 @@ exports['default'] = ControlBar;
 
 /***/ }),
 
-/***/ 298:
+/***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74125,11 +73491,11 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(78);
+var _button = __webpack_require__(89);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74241,7 +73607,7 @@ exports['default'] = FullscreenToggle;
 
 /***/ }),
 
-/***/ 299:
+/***/ 311:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74249,11 +73615,11 @@ exports['default'] = FullscreenToggle;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -74351,7 +73717,7 @@ exports['default'] = LiveDisplay;
 
 /***/ }),
 
-/***/ 300:
+/***/ 312:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74359,11 +73725,11 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(78);
+var _button = __webpack_require__(89);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74491,7 +73857,7 @@ exports['default'] = PlayToggle;
 
 /***/ }),
 
-/***/ 301:
+/***/ 313:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74499,23 +73865,23 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(263);
+var _menuButton = __webpack_require__(275);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(264);
+var _menu = __webpack_require__(276);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(302);
+var _playbackRateMenuItem = __webpack_require__(314);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -74734,7 +74100,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 /***/ }),
 
-/***/ 302:
+/***/ 314:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74742,11 +74108,11 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(98);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -74849,7 +74215,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 /***/ }),
 
-/***/ 303:
+/***/ 315:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74857,11 +74223,11 @@ exports['default'] = PlaybackRateMenuItem;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -74979,7 +74345,7 @@ exports['default'] = LoadProgressBar;
 
 /***/ }),
 
-/***/ 304:
+/***/ 316:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74987,23 +74353,23 @@ exports['default'] = LoadProgressBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(139);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -75181,7 +74547,7 @@ exports['default'] = MouseTimeDisplay;
 
 /***/ }),
 
-/***/ 305:
+/***/ 317:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75189,15 +74555,15 @@ exports['default'] = MouseTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -75290,7 +74656,7 @@ exports['default'] = PlayProgressBar;
 
 /***/ }),
 
-/***/ 306:
+/***/ 318:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75298,13 +74664,13 @@ exports['default'] = PlayProgressBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(307);
+__webpack_require__(319);
 
-__webpack_require__(304);
+__webpack_require__(316);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -75365,7 +74731,7 @@ exports['default'] = ProgressControl;
 
 /***/ }),
 
-/***/ 307:
+/***/ 319:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75373,31 +74739,31 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(267);
+var _slider = __webpack_require__(279);
 
 var _slider2 = _interopRequireDefault(_slider);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(128);
+var _computedStyle = __webpack_require__(139);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(303);
+__webpack_require__(315);
 
-__webpack_require__(305);
+__webpack_require__(317);
 
-__webpack_require__(308);
+__webpack_require__(320);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -75633,7 +74999,7 @@ exports['default'] = SeekBar;
 
 /***/ }),
 
-/***/ 308:
+/***/ 320:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75641,15 +75007,15 @@ exports['default'] = SeekBar;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -75740,7 +75106,7 @@ exports['default'] = TooltipProgressBar;
 
 /***/ }),
 
-/***/ 309:
+/***/ 321:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75748,11 +75114,11 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(310);
+var _spacer = __webpack_require__(322);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -75819,7 +75185,7 @@ exports['default'] = CustomControlSpacer;
 
 /***/ }),
 
-/***/ 310:
+/***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75827,7 +75193,7 @@ exports['default'] = CustomControlSpacer;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -75891,7 +75257,7 @@ exports['default'] = Spacer;
 
 /***/ }),
 
-/***/ 311:
+/***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75899,11 +75265,11 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(123);
+var _textTrackMenuItem = __webpack_require__(134);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -75984,7 +75350,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 /***/ }),
 
-/***/ 312:
+/***/ 324:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75992,15 +75358,15 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(96);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(311);
+var _captionSettingsMenuItem = __webpack_require__(323);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -76103,7 +75469,7 @@ exports['default'] = CaptionsButton;
 
 /***/ }),
 
-/***/ 313:
+/***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76111,15 +75477,15 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(96);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(314);
+var _chaptersTrackMenuItem = __webpack_require__(326);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
@@ -76351,7 +75717,7 @@ exports['default'] = ChaptersButton;
 
 /***/ }),
 
-/***/ 314:
+/***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76359,15 +75725,15 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(112);
+var _menuItem = __webpack_require__(98);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -76467,7 +75833,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 /***/ }),
 
-/***/ 315:
+/***/ 327:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76475,15 +75841,15 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(96);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -76611,7 +75977,7 @@ exports['default'] = DescriptionsButton;
 
 /***/ }),
 
-/***/ 316:
+/***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76619,11 +75985,11 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(123);
+var _textTrackMenuItem = __webpack_require__(134);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76710,7 +76076,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 /***/ }),
 
-/***/ 317:
+/***/ 329:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76718,11 +76084,11 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(110);
+var _textTrackButton = __webpack_require__(96);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -76805,7 +76171,7 @@ exports['default'] = SubtitlesButton;
 
 /***/ }),
 
-/***/ 318:
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76813,15 +76179,15 @@ exports['default'] = SubtitlesButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -76921,7 +76287,7 @@ exports['default'] = CurrentTimeDisplay;
 
 /***/ }),
 
-/***/ 319:
+/***/ 331:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76929,15 +76295,15 @@ exports['default'] = CurrentTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -77047,7 +76413,7 @@ exports['default'] = DurationDisplay;
 
 /***/ }),
 
-/***/ 320:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77055,15 +76421,15 @@ exports['default'] = DurationDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _formatTime = __webpack_require__(61);
+var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
@@ -77169,7 +76535,7 @@ exports['default'] = RemainingTimeDisplay;
 
 /***/ }),
 
-/***/ 321:
+/***/ 333:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77177,7 +76543,7 @@ exports['default'] = RemainingTimeDisplay;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77229,7 +76595,7 @@ exports['default'] = TimeDivider;
 
 /***/ }),
 
-/***/ 322:
+/***/ 334:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77237,11 +76603,11 @@ exports['default'] = TimeDivider;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(261);
+__webpack_require__(273);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -77328,7 +76694,7 @@ exports['default'] = VolumeControl;
 
 /***/ }),
 
-/***/ 323:
+/***/ 335:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77336,7 +76702,7 @@ exports['default'] = VolumeControl;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77387,7 +76753,7 @@ exports['default'] = VolumeLevel;
 
 /***/ }),
 
-/***/ 324:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77395,27 +76761,27 @@ exports['default'] = VolumeLevel;
 
 exports.__esModule = true;
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(331);
+var _popup = __webpack_require__(343);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(330);
+var _popupButton = __webpack_require__(342);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(259);
+var _muteToggle = __webpack_require__(271);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(261);
+var _volumeBar = __webpack_require__(273);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -77638,7 +77004,7 @@ exports['default'] = VolumeMenuButton;
 
 /***/ }),
 
-/***/ 325:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77646,15 +77012,15 @@ exports['default'] = VolumeMenuButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(265);
+var _modalDialog = __webpack_require__(277);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -77747,7 +77113,7 @@ exports['default'] = ErrorDisplay;
 
 /***/ }),
 
-/***/ 326:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77757,11 +77123,11 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -77855,7 +77221,7 @@ exports['default'] = extendFn;
 
 /***/ }),
 
-/***/ 327:
+/***/ 339:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77863,7 +77229,7 @@ exports['default'] = extendFn;
 
 exports.__esModule = true;
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -77918,7 +77284,7 @@ exports['default'] = FullscreenApi;
 
 /***/ }),
 
-/***/ 328:
+/***/ 340:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77926,7 +77292,7 @@ exports['default'] = FullscreenApi;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -77977,7 +77343,7 @@ exports['default'] = LoadingSpinner;
 
 /***/ }),
 
-/***/ 329:
+/***/ 341:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77985,7 +77351,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(266);
+var _player = __webpack_require__(278);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -78011,7 +77377,7 @@ exports['default'] = plugin;
 
 /***/ }),
 
-/***/ 330:
+/***/ 342:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78019,11 +77385,11 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(79);
+var _clickableComponent = __webpack_require__(90);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
@@ -78141,7 +77507,7 @@ exports['default'] = PopupButton;
 
 /***/ }),
 
-/***/ 331:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78149,19 +77515,19 @@ exports['default'] = PopupButton;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
@@ -78247,7 +77613,7 @@ exports['default'] = Popup;
 
 /***/ }),
 
-/***/ 332:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78255,23 +77621,23 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(79);
+var _clickableComponent = __webpack_require__(90);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -78436,7 +77802,7 @@ exports['default'] = PosterImage;
 
 /***/ }),
 
-/***/ 333:
+/***/ 345:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78445,19 +77811,19 @@ exports['default'] = PosterImage;
 exports.__esModule = true;
 exports.hasLoaded = exports.autoSetupTimeout = exports.autoSetup = undefined;
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
@@ -78588,7 +77954,7 @@ exports.hasLoaded = hasLoaded;
 
 /***/ }),
 
-/***/ 334:
+/***/ 346:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78798,7 +78164,7 @@ exports['default'] = FlashRtmpDecorator;
 
 /***/ }),
 
-/***/ 335:
+/***/ 347:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78806,33 +78172,33 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(80);
+var _tech = __webpack_require__(91);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(99);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(81);
+var _timeRanges = __webpack_require__(92);
 
-var _flashRtmp = __webpack_require__(334);
+var _flashRtmp = __webpack_require__(346);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -79986,7 +79352,7 @@ exports['default'] = Flash;
 
 /***/ }),
 
-/***/ 336:
+/***/ 348:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79996,49 +79362,49 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(80);
+var _tech = __webpack_require__(91);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(113);
+var _url = __webpack_require__(99);
 
 var Url = _interopRequireWildcard(_url);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(109);
+var _tsml = __webpack_require__(95);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -81935,7 +81301,7 @@ exports['default'] = Html5;
 
 /***/ }),
 
-/***/ 337:
+/***/ 349:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81943,11 +81309,11 @@ exports['default'] = Html5;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(80);
+var _tech = __webpack_require__(91);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -82031,7 +81397,7 @@ exports['default'] = MediaLoader;
 
 /***/ }),
 
-/***/ 338:
+/***/ 350:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82039,17 +81405,17 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(136);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(138);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -82168,7 +81534,7 @@ exports['default'] = AudioTrack;
 
 /***/ }),
 
-/***/ 339:
+/***/ 351:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82176,11 +81542,11 @@ exports['default'] = AudioTrack;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -82324,7 +81690,7 @@ exports['default'] = HtmlTrackElementList;
 
 /***/ }),
 
-/***/ 340:
+/***/ 352:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82332,19 +81698,19 @@ exports['default'] = HtmlTrackElementList;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(111);
+var _eventTarget = __webpack_require__(97);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(135);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -82501,7 +81867,7 @@ exports['default'] = HTMLTrackElement;
 
 /***/ }),
 
-/***/ 341:
+/***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82509,11 +81875,11 @@ exports['default'] = HTMLTrackElement;
 
 exports.__esModule = true;
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -82661,7 +82027,7 @@ exports['default'] = TextTrackCueList;
 
 /***/ }),
 
-/***/ 342:
+/***/ 354:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82669,15 +82035,15 @@ exports['default'] = TextTrackCueList;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
@@ -83019,7 +82385,7 @@ exports['default'] = TextTrackDisplay;
 
 /***/ }),
 
-/***/ 343:
+/***/ 355:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83129,7 +82495,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 /***/ }),
 
-/***/ 344:
+/***/ 356:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83137,19 +82503,19 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(126);
+var _trackList = __webpack_require__(137);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -83241,7 +82607,7 @@ exports['default'] = TextTrackList;
 
 /***/ }),
 
-/***/ 345:
+/***/ 357:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83249,25 +82615,25 @@ exports['default'] = TextTrackList;
 
 exports.__esModule = true;
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -83850,7 +83216,7 @@ exports['default'] = TextTrackSettings;
 
 /***/ }),
 
-/***/ 346:
+/***/ 358:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83858,17 +83224,17 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(125);
+var _trackEnums = __webpack_require__(136);
 
-var _track = __webpack_require__(127);
+var _track = __webpack_require__(138);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
@@ -83986,7 +83352,7 @@ exports['default'] = VideoTrack;
 
 /***/ }),
 
-/***/ 347:
+/***/ 359:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -84010,12 +83376,12 @@ exports['default'] = VideoTrack;
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 
-var window = __webpack_require__(351);
+var window = __webpack_require__(363);
 
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(348),
-  VTTCue: __webpack_require__(349),
-  VTTRegion: __webpack_require__(350)
+  WebVTT: __webpack_require__(360),
+  VTTCue: __webpack_require__(361),
+  VTTRegion: __webpack_require__(362)
 };
 
 window.vttjs = vttjs;
@@ -84043,7 +83409,7 @@ if (!window.VTTCue) {
 
 /***/ }),
 
-/***/ 348:
+/***/ 360:
 /***/ (function(module, exports) {
 
 /**
@@ -85379,7 +84745,7 @@ module.exports = WebVTT;
 
 /***/ }),
 
-/***/ 349:
+/***/ 361:
 /***/ (function(module, exports) {
 
 /**
@@ -85691,7 +85057,7 @@ module.exports = VTTCue;
 
 /***/ }),
 
-/***/ 350:
+/***/ 362:
 /***/ (function(module, exports) {
 
 /**
@@ -85832,7 +85198,7 @@ module.exports = VTTRegion;
 
 /***/ }),
 
-/***/ 351:
+/***/ 363:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -85849,11 +85215,11 @@ if (typeof window !== "undefined") {
 
 module.exports = win;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
-/***/ 355:
+/***/ 367:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -85863,14 +85229,408 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 358:
+/***/ 370:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 4:
+/***/ 453:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+var _angular = __webpack_require__(103);
+
+var _angular2 = _interopRequireDefault(_angular);
+
+var _jquery = __webpack_require__(61);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// VideoJS
+__webpack_require__(299);
+
+// Angular VideoJS
+__webpack_require__(304);
+
+// dropzone
+// require('dropzone/dist/dropzone.js');
+
+// Angular Media Timeline
+__webpack_require__(293);
+
+'use strict';
+
+// Define the service
+_angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
+
+  return {
+    send: function send(timelines, videoSrc, counter) {
+      var media = [];
+
+      for (var i = 0; i < timelines.length; i++) {
+        var edit = {
+          session: timelines[i].session,
+          file: videoSrc,
+          id: timelines[i].id,
+          media_url: timelines[i].media_url,
+          start: timelines[i].lines[0].events[0].start,
+          duration: timelines[i].lines[0].events[0].duration
+        };
+        media.push(edit);
+      }
+
+      // Ricompone la timelines
+      if (typeof session == 'undefined' && counter == 0) {
+        for (var i = 0; i < timelines.length; i++) {
+          var timeline = {
+            session: timelines[i].session,
+            file: videoSrc,
+            id: timelines[i].id,
+            name: timelines[i].name,
+            media_url: timelines[i].media_url,
+            data: { id: timelines[i].data.id },
+            lines: [{
+              events: [{
+                name: timelines[i].lines[0].events.name,
+                data: { id: timelines[i].lines[0].events[0].data.id },
+                start: timelines[i].lines[0].events[0].start,
+                duration: timelines[i].lines[0].events[0].duration
+              }]
+            }]
+          };
+          Timeline.addTimeline(timeline);
+        }
+      }
+
+      // console.log('---------');
+      // console.log('prima inviio');
+      // console.log(media);
+      // console.log('---------');
+
+      return $http({
+        method: 'POST',
+        url: '/api/v1/audio-edit', //url: "{{ route('categories.index') }}",
+        data: media
+      });
+    }
+  };
+}).factory('Timeline', function () {
+  var timelines = [];
+  var k = [];
+  return {
+
+    getTimelines: function getTimelines($scope) {
+
+      // Verifico se c'è un oggetto all'inizio
+      var lenght = null;
+      var start = false;
+      for (var i = 0; i < timelines.length; i++) {
+        if (timelines[i].lines[0].events[0].start == 0) {
+          start = true;
+        }
+        lenght = i + 1;
+      }
+
+      // prendo l'inizio
+      if (lenght > 0) {
+
+        var distance = timelines[0].lines[0].events[0].start;
+
+        for (var i = 0; i < timelines.length; i++) {
+          if (timelines[i].lines[0].events[0].start < distance) {
+            distance = timelines[i].lines[0].events[0].start;
+          }
+        }
+        $scope.$broadcast('startReset', distance);
+      }
+
+      return timelines;
+    },
+
+    addTimeline: function addTimeline(timeline) {
+      timelines.push(timeline);
+    },
+
+    // Convert ticks on seconds
+    tToS: function tToS(t) {
+      var s = t * 5 / 100;
+      return s;
+    }
+
+    // getCurrentPos: function () {
+    // }
+  };
+});
+
+// Define the controller
+_angular2.default.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
+  // models
+  $scope.videoData = {}; // Initialize the object
+
+  // get function from factory of the Audio service
+  // Audio.get().then(function(response) {
+  //     $scope.categories = response.data;
+  //   });
+});
+
+// Define the upload Controller
+_angular2.default.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
+  // models
+
+
+  $scope.uploadForm = function () {
+    // console.log('---------');
+    // console.log('Session token');
+    // console.log($('#token').val());
+    // console.log('---------');
+
+    // Preparo i dati da inviare sotto forma di form
+    var formData = new FormData();
+    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
+    formData.append('media', $('#media')[0].files[0]);
+    formData.append('session', $('#token').val());
+
+    // prendo il nome della cateogria e lo slug dell'applicazione
+    var app_category = $('#app_category').val();
+    var app_slug = $('#app_slug').val();
+
+    // effettuo l'invio ajax
+    $.ajax({
+      type: 'post',
+      url: '/teacher/creative-studio/' + app_category + '/' + app_slug + '/upload',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function success(response) {
+        console.log(response);
+        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
+
+        $compile(data)($scope);
+        $scope.$apply();
+      },
+      error: function error(errors) {
+        console.log(errors);
+      }
+    });
+
+    // console.log('invio dati');
+    // console.log($('#media')[0].files[0]);
+  };
+}]);
+
+// Define the video controller
+_angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
+
+  // Inizializzo la sessione
+  var init = $window.timelines;
+  var counter = 0;
+
+  if (typeof session == 'undefined' && typeof init != 'undefined') {
+    $scope.$on('vjsVideoReady', function (e, videoData) {
+      console.log('video player', videoData.player.src());
+      // salvo il player in video data
+      $scope.videoData = videoData;
+
+      // Rigenera Il video
+      Audio.send(init, $scope.videoData.player.src(), counter).then(function successCallback(response) {
+        $scope.mediaToggle = {
+          sources: [{
+            src: '/' + response.data,
+            type: 'video/mp4'
+          }]
+        };
+        counter = 1;
+      });
+    });
+  }
+
+  $scope.$on('timelineChanged', function (e, timeline) {
+    // console.log('-----');
+    // console.log('timelineChanged Event Before Send');
+    // console.log(timeline);
+    // console.log('-----');
+
+    var timelines = Timeline.getTimelines($scope);
+    Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
+      // console.log(timelines);
+      // console.log(response.data[2]);
+      // console.log('-------');
+      console.log('DEBUG');
+      console.log(response);
+      console.log('-------');
+      $scope.mediaToggle = {
+        sources: [{
+          src: '/' + response.data,
+          type: 'video/mp4'
+        }]
+      };
+    });
+  });
+
+  //listen for when the vjs-media object changes
+  $scope.$on('vjsVideoReady', function (e, videoData) {
+    console.log('video player', videoData.player.src());
+
+    // salvo il player in video data
+    $scope.videoData = videoData;
+
+    $scope.editorPlay = function () {
+      videoData.player.trigger('loadstart');
+      var media = Timeline.getTimelines($scope);
+      videoData.player.play();
+    };
+
+    $scope.editorPause = function () {
+      videoData.player.pause();
+    };
+
+    $scope.editorStop = function () {
+      videoData.player.pause();
+      videoData.player.currentTime(0);
+    };
+
+    $scope.editorRewind = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now - 2);
+    };
+
+    $scope.editorForward = function () {
+      videoData.player.pause();
+      var now = videoData.player.currentTime();
+      videoData.player.currentTime(now + 2);
+    };
+
+    videoData.player.on('timeupdate', function () {
+      var time = {
+        time: this.currentTime()
+      };
+      $scope.$broadcast('editorPlay', time);
+    });
+    //}
+  });
+}]);
+
+_angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
+  $scope.tick = 0;
+  $scope.disable = false;
+  $scope.timelines = Timeline.getTimelines($scope);
+
+  // this force start always from the first position
+  $scope.$on('startReset', function (e, distance) {
+    $scope.$apply(function () {
+      $scope.tick = distance;
+    });
+  });
+
+  $scope.$on('editorPlay', function (e, data) {
+    $scope.$apply(function () {
+      $scope.tick = data.time * 100 / 5;
+    });
+  });
+
+  $scope.onTickChange = function (tick) {
+    console.log(tick);
+  };
+
+  $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
+    // convert tick to s
+    var newStartTime = Timeline.tToS(newStartTick);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newStartTime: newStartTime,
+      newStartTick: newStartTick
+    };
+    Timeline.getTimelines($scope);
+    $scope.$emit('timelineChanged', data);
+  };
+
+  $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
+    // convert tick to s
+    var newDurationS = Timeline.tToS(newDuration);
+    var data = {
+      timelineData: timelineData,
+      eventData: eventData,
+      newDuration: newDuration,
+      newDurationS: newDurationS
+    };
+    $scope.$emit('timelineChanged', data);
+  };
+
+  $scope.changeTick = function (ticks) {
+    $scope.tick = ticks;
+  };
+});
+
+_angular2.default.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
+
+  // Aggiunge un elemento dalla libreria alla timeline
+  $scope.addElement = function (id, title, duration, url) {
+    // console.log(url);
+    var d = duration * 100 / 5;
+    if (typeof session == 'undefined') {
+      console.log('non trovata');
+      var token = $window.token;
+    } else {
+      var token = session.token;
+    }
+
+    var timeline = {
+      session: token,
+      file: $scope.videoData.player.src(),
+      id: new Date().getTime(),
+      name: title,
+      media_url: url,
+      data: { id: title + '-guid' },
+      lines: [{
+        events: [{
+          name: 'animation' + id,
+          data: { id: 'animation' + id + '-guid' },
+          start: 0,
+          duration: d
+        }]
+      }]
+    };
+    Timeline.addTimeline(timeline);
+    Timeline.getTimelines($scope);
+    $scope.$emit('timelineChanged', timeline);
+  };
+});
+
+_angular2.default.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
+  $scope.feedbackData = {};
+
+  $scope.setPositive = function () {
+    $scope.feedbackData.status = 'positive';
+  };
+
+  $scope.setNegative = function () {
+    $scope.feedbackData.status = 'negative';
+  };
+
+  $scope.sendFeedback = function () {
+    console.log($scope.feedbackData);
+    Feedback.send($scope.feedbackData);
+  };
+});
+
+// Define the Application
+var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)))
+
+/***/ }),
+
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -85878,15 +85638,15 @@ module.exports = __webpack_amd_options__;
 
 exports.__esModule = true;
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -85894,11 +85654,11 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -85906,7 +85666,7 @@ var _toTitleCase = __webpack_require__(76);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
@@ -87704,12 +87464,12 @@ exports['default'] = Component;
 
 /***/ }),
 
-/***/ 40:
+/***/ 51:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(358);
+var minDoc = __webpack_require__(370);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -87723,11 +87483,11 @@ if (typeof document !== 'undefined') {
     module.exports = doccy;
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
-/***/ 41:
+/***/ 53:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {if (typeof window !== "undefined") {
@@ -87740,405 +87500,11 @@ if (typeof document !== 'undefined') {
     module.exports = {};
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
-/***/ 439:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {
-
-var _angular = __webpack_require__(117);
-
-var _angular2 = _interopRequireDefault(_angular);
-
-var _jquery = __webpack_require__(53);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// VideoJS
-__webpack_require__(287);
-
-// Angular VideoJS
-__webpack_require__(292);
-
-// dropzone
-// require('dropzone/dist/dropzone.js');
-
-// Angular Media Timeline
-__webpack_require__(281);
-
-'use strict';
-
-// Define the service
-_angular2.default.module('appService', []).factory('Audio', function ($http, CSRF_TOKEN, Timeline) {
-
-  return {
-    send: function send(timelines, videoSrc, counter) {
-      var media = [];
-
-      for (var i = 0; i < timelines.length; i++) {
-        var edit = {
-          session: timelines[i].session,
-          file: videoSrc,
-          id: timelines[i].id,
-          media_url: timelines[i].media_url,
-          start: timelines[i].lines[0].events[0].start,
-          duration: timelines[i].lines[0].events[0].duration
-        };
-        media.push(edit);
-      }
-
-      // Ricompone la timelines
-      if (typeof session == 'undefined' && counter == 0) {
-        for (var i = 0; i < timelines.length; i++) {
-          var timeline = {
-            session: timelines[i].session,
-            file: videoSrc,
-            id: timelines[i].id,
-            name: timelines[i].name,
-            media_url: timelines[i].media_url,
-            data: { id: timelines[i].data.id },
-            lines: [{
-              events: [{
-                name: timelines[i].lines[0].events.name,
-                data: { id: timelines[i].lines[0].events[0].data.id },
-                start: timelines[i].lines[0].events[0].start,
-                duration: timelines[i].lines[0].events[0].duration
-              }]
-            }]
-          };
-          Timeline.addTimeline(timeline);
-        }
-      }
-
-      // console.log('---------');
-      // console.log('prima inviio');
-      // console.log(media);
-      // console.log('---------');
-
-      return $http({
-        method: 'POST',
-        url: '/api/v1/audio-edit', //url: "{{ route('categories.index') }}",
-        data: media
-      });
-    }
-  };
-}).factory('Timeline', function () {
-  var timelines = [];
-  var k = [];
-  return {
-
-    getTimelines: function getTimelines($scope) {
-
-      // Verifico se c'è un oggetto all'inizio
-      var lenght = null;
-      var start = false;
-      for (var i = 0; i < timelines.length; i++) {
-        if (timelines[i].lines[0].events[0].start == 0) {
-          start = true;
-        }
-        lenght = i + 1;
-      }
-
-      // prendo l'inizio
-      if (lenght > 0) {
-
-        var distance = timelines[0].lines[0].events[0].start;
-
-        for (var i = 0; i < timelines.length; i++) {
-          if (timelines[i].lines[0].events[0].start < distance) {
-            distance = timelines[i].lines[0].events[0].start;
-          }
-        }
-        $scope.$broadcast('startReset', distance);
-      }
-
-      return timelines;
-    },
-
-    addTimeline: function addTimeline(timeline) {
-      timelines.push(timeline);
-    },
-
-    // Convert ticks on seconds
-    tToS: function tToS(t) {
-      var s = t * 5 / 100;
-      return s;
-    }
-
-    // getCurrentPos: function () {
-    // }
-  };
-});
-
-// Define the controller
-_angular2.default.module('mainCtrl', []).controller('mainController', function ($scope, $http, Audio) {
-  // models
-  $scope.videoData = {}; // Initialize the object
-
-  // get function from factory of the Audio service
-  // Audio.get().then(function(response) {
-  //     $scope.categories = response.data;
-  //   });
-});
-
-// Define the upload Controller
-_angular2.default.module('uploadCtrl', []).controller('uploadController', ['$scope', '$window', '$compile', function ($scope, $window, $compile, $http, Audio) {
-  // models
-
-
-  $scope.uploadForm = function () {
-    // console.log('---------');
-    // console.log('Session token');
-    // console.log($('#token').val());
-    // console.log('---------');
-
-    // Preparo i dati da inviare sotto forma di form
-    var formData = new FormData();
-    formData.append('_token', $('meta[name="csrf-token"]').attr('content'));
-    formData.append('media', $('#media')[0].files[0]);
-    formData.append('session', $('#token').val());
-
-    // prendo il nome della cateogria e lo slug dell'applicazione
-    var app_category = $('#app_category').val();
-    var app_slug = $('#app_slug').val();
-
-    // effettuo l'invio ajax
-    $.ajax({
-      type: 'post',
-      url: '/teacher/creative-studio/' + app_category + '/' + app_slug + '/upload',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function success(response) {
-        console.log(response);
-        var data = $('<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>').appendTo('#uploads');
-
-        $compile(data)($scope);
-        $scope.$apply();
-      },
-      error: function error(errors) {
-        console.log(errors);
-      }
-    });
-
-    // console.log('invio dati');
-    // console.log($('#media')[0].files[0]);
-  };
-}]);
-
-// Define the video controller
-_angular2.default.module('videoCtrl', ['vjs.video']).controller('videoController', ['$scope', '$window', 'Timeline', 'Audio', function ($scope, $window, Timeline, Audio) {
-
-  // Inizializzo la sessione
-  var init = $window.timelines;
-  var counter = 0;
-
-  if (typeof session == 'undefined' && typeof init != 'undefined') {
-    $scope.$on('vjsVideoReady', function (e, videoData) {
-      console.log('video player', videoData.player.src());
-      // salvo il player in video data
-      $scope.videoData = videoData;
-
-      // Rigenera Il video
-      Audio.send(init, $scope.videoData.player.src(), counter).then(function successCallback(response) {
-        $scope.mediaToggle = {
-          sources: [{
-            src: '/' + response.data,
-            type: 'video/mp4'
-          }]
-        };
-        counter = 1;
-      });
-    });
-  }
-
-  $scope.$on('timelineChanged', function (e, timeline) {
-    // console.log('-----');
-    // console.log('timelineChanged Event Before Send');
-    // console.log(timeline);
-    // console.log('-----');
-
-    var timelines = Timeline.getTimelines($scope);
-    Audio.send(timelines, $scope.videoData.player.src()).then(function successCallback(response) {
-      // console.log(timelines);
-      // console.log(response.data[2]);
-      // console.log('-------');
-      console.log('DEBUG');
-      console.log(response);
-      console.log('-------');
-      $scope.mediaToggle = {
-        sources: [{
-          src: '/' + response.data,
-          type: 'video/mp4'
-        }]
-      };
-    });
-  });
-
-  //listen for when the vjs-media object changes
-  $scope.$on('vjsVideoReady', function (e, videoData) {
-    console.log('video player', videoData.player.src());
-
-    // salvo il player in video data
-    $scope.videoData = videoData;
-
-    $scope.editorPlay = function () {
-      videoData.player.trigger('loadstart');
-      var media = Timeline.getTimelines($scope);
-      videoData.player.play();
-    };
-
-    $scope.editorPause = function () {
-      videoData.player.pause();
-    };
-
-    $scope.editorStop = function () {
-      videoData.player.pause();
-      videoData.player.currentTime(0);
-    };
-
-    $scope.editorRewind = function () {
-      videoData.player.pause();
-      var now = videoData.player.currentTime();
-      videoData.player.currentTime(now - 2);
-    };
-
-    $scope.editorForward = function () {
-      videoData.player.pause();
-      var now = videoData.player.currentTime();
-      videoData.player.currentTime(now + 2);
-    };
-
-    videoData.player.on('timeupdate', function () {
-      var time = {
-        time: this.currentTime()
-      };
-      $scope.$broadcast('editorPlay', time);
-    });
-    //}
-  });
-}]);
-
-_angular2.default.module('mediaTimelineCtrl', ['mt.media-timeline']).controller('DemoMediaTimelineController', function ($scope, Timeline) {
-  $scope.tick = 0;
-  $scope.disable = false;
-  $scope.timelines = Timeline.getTimelines($scope);
-
-  // this force start always from the first position
-  $scope.$on('startReset', function (e, distance) {
-    $scope.$apply(function () {
-      $scope.tick = distance;
-    });
-  });
-
-  $scope.$on('editorPlay', function (e, data) {
-    $scope.$apply(function () {
-      $scope.tick = data.time * 100 / 5;
-    });
-  });
-
-  $scope.onTickChange = function (tick) {
-    console.log(tick);
-  };
-
-  $scope.onEventStartChange = function (timelineData, eventData, newStartTick) {
-    // convert tick to s
-    var newStartTime = Timeline.tToS(newStartTick);
-    var data = {
-      timelineData: timelineData,
-      eventData: eventData,
-      newStartTime: newStartTime,
-      newStartTick: newStartTick
-    };
-    Timeline.getTimelines($scope);
-    $scope.$emit('timelineChanged', data);
-  };
-
-  $scope.onEventDurationChange = function (timelineData, eventData, newDuration) {
-    // convert tick to s
-    var newDurationS = Timeline.tToS(newDuration);
-    var data = {
-      timelineData: timelineData,
-      eventData: eventData,
-      newDuration: newDuration,
-      newDurationS: newDurationS
-    };
-    $scope.$emit('timelineChanged', data);
-  };
-
-  $scope.changeTick = function (ticks) {
-    $scope.tick = ticks;
-  };
-});
-
-_angular2.default.module('toolCtrl', []).controller('toolController', function ($scope, $window, Timeline) {
-
-  // Aggiunge un elemento dalla libreria alla timeline
-  $scope.addElement = function (id, title, duration, url) {
-    // console.log(url);
-    var d = duration * 100 / 5;
-    if (typeof session == 'undefined') {
-      console.log('non trovata');
-      var token = $window.token;
-    } else {
-      var token = session.token;
-    }
-
-    var timeline = {
-      session: token,
-      file: $scope.videoData.player.src(),
-      id: new Date().getTime(),
-      name: title,
-      media_url: url,
-      data: { id: title + '-guid' },
-      lines: [{
-        events: [{
-          name: 'animation' + id,
-          data: { id: 'animation' + id + '-guid' },
-          start: 0,
-          duration: d
-        }]
-      }]
-    };
-    Timeline.addTimeline(timeline);
-    Timeline.getTimelines($scope);
-    $scope.$emit('timelineChanged', timeline);
-  };
-});
-
-_angular2.default.module('feedbackCtrl', []).controller('feedbackController', function ($scope, $http, Feedback) {
-  $scope.feedbackData = {};
-
-  $scope.setPositive = function () {
-    $scope.feedbackData.status = 'positive';
-  };
-
-  $scope.setNegative = function () {
-    $scope.feedbackData.status = 'negative';
-  };
-
-  $scope.sendFeedback = function () {
-    console.log($scope.feedbackData);
-    Feedback.send($scope.feedbackData);
-  };
-});
-
-// Define the Application
-var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'appService']).constant("CSRF_TOKEN", '{{ csrf_token() }}');
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(53)))
-
-/***/ }),
-
-/***/ 45:
+/***/ 55:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88147,11 +87513,11 @@ var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl'
 exports.__esModule = true;
 exports.BACKGROUND_SIZE_SUPPORTED = exports.TOUCH_ENABLED = exports.IS_ANY_SAFARI = exports.IS_SAFARI = exports.IE_VERSION = exports.IS_IE8 = exports.CHROME_VERSION = exports.IS_CHROME = exports.IS_EDGE = exports.IS_FIREFOX = exports.IS_NATIVE_ANDROID = exports.IS_OLD_ANDROID = exports.ANDROID_VERSION = exports.IS_ANDROID = exports.IOS_VERSION = exports.IS_IOS = exports.IS_IPOD = exports.IS_IPHONE = exports.IS_IPAD = undefined;
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
@@ -88251,7 +87617,7 @@ var BACKGROUND_SIZE_SUPPORTED = exports.BACKGROUND_SIZE_SUPPORTED = Dom.isReal()
 
 /***/ }),
 
-/***/ 46:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88411,7 +87777,7 @@ function isPlain(value) {
 
 /***/ }),
 
-/***/ 48:
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88420,13 +87786,13 @@ function isPlain(value) {
 exports.__esModule = true;
 exports.logByType = undefined;
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _browser = __webpack_require__(45);
+var _browser = __webpack_require__(55);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -88559,7 +87925,7 @@ exports['default'] = log;
 
 /***/ }),
 
-/***/ 59:
+/***/ 67:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88568,7 +87934,7 @@ exports['default'] = log;
 exports.__esModule = true;
 exports['default'] = mergeOptions;
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 /**
  * Deep-merge one or more options objects, recursively merging **only** plain
@@ -88615,7 +87981,7 @@ function mergeOptions() {
 
 /***/ }),
 
-/***/ 60:
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88628,7 +87994,7 @@ exports.off = off;
 exports.trigger = trigger;
 exports.one = one;
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
@@ -88636,15 +88002,15 @@ var _guid = __webpack_require__(75);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -89109,7 +88475,7 @@ function one(elem, type, fn) {
 
 /***/ }),
 
-/***/ 61:
+/***/ 69:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89169,10 +88535,10 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 730:
+/***/ 749:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(439);
+module.exports = __webpack_require__(453);
 
 
 /***/ }),
@@ -89243,7 +88609,7 @@ exports['default'] = toTitleCase;
 
 /***/ }),
 
-/***/ 77:
+/***/ 82:
 /***/ (function(module, exports) {
 
 module.exports = isFunction
@@ -89265,7 +88631,7 @@ function isFunction (fn) {
 
 /***/ }),
 
-/***/ 78:
+/***/ 89:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89273,19 +88639,19 @@ function isFunction (fn) {
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(79);
+var _clickableComponent = __webpack_require__(90);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -89449,7 +88815,7 @@ exports['default'] = Button;
 
 /***/ }),
 
-/***/ 79:
+/***/ 90:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89457,31 +88823,31 @@ exports['default'] = Button;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _dom = __webpack_require__(18);
+var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _events = __webpack_require__(60);
+var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -89778,7 +89144,7 @@ exports['default'] = ClickableComponent;
 
 /***/ }),
 
-/***/ 80:
+/***/ 91:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89786,63 +89152,63 @@ exports['default'] = ClickableComponent;
 
 exports.__esModule = true;
 
-var _component = __webpack_require__(4);
+var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(340);
+var _htmlTrackElement = __webpack_require__(352);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(339);
+var _htmlTrackElementList = __webpack_require__(351);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
-var _mergeOptions = __webpack_require__(59);
+var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(124);
+var _textTrack = __webpack_require__(135);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(344);
+var _textTrackList = __webpack_require__(356);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(269);
+var _videoTrackList = __webpack_require__(281);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(268);
+var _audioTrackList = __webpack_require__(280);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _fn = __webpack_require__(15);
+var _fn = __webpack_require__(25);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(81);
+var _timeRanges = __webpack_require__(92);
 
-var _buffer = __webpack_require__(270);
+var _buffer = __webpack_require__(282);
 
-var _mediaError = __webpack_require__(262);
+var _mediaError = __webpack_require__(274);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _window = __webpack_require__(41);
+var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(40);
+var _document = __webpack_require__(51);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _obj = __webpack_require__(46);
+var _obj = __webpack_require__(56);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -90433,7 +89799,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(347);
+      var vtt = __webpack_require__(359);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -91201,7 +90567,7 @@ exports['default'] = Tech;
 
 /***/ }),
 
-/***/ 81:
+/***/ 92:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91211,7 +90577,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(48);
+var _log = __webpack_require__(60);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -91352,6 +90718,640 @@ function createTimeRanges(start, end) {
 exports.createTimeRange = createTimeRanges;
 
 
+/***/ }),
+
+/***/ 95:
+/***/ (function(module, exports) {
+
+function clean (s) {
+  return s.replace(/\n\r?\s*/g, '')
+}
+
+
+module.exports = function tsml (sa) {
+  var s = ''
+    , i = 0
+
+  for (; i < arguments.length; i++)
+    s += clean(sa[i]) + (arguments[i + 1] || '')
+
+  return s
+}
+
+/***/ }),
+
+/***/ 96:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _trackButton = __webpack_require__(272);
+
+var _trackButton2 = _interopRequireDefault(_trackButton);
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _textTrackMenuItem = __webpack_require__(134);
+
+var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
+
+var _offTextTrackMenuItem = __webpack_require__(328);
+
+var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file text-track-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The base class for buttons that toggle specific text track types (e.g. subtitles)
+ *
+ * @extends MenuButton
+ */
+var TextTrackButton = function (_TrackButton) {
+  _inherits(TextTrackButton, _TrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options={}]
+   *        The key/value store of player options.
+   */
+  function TextTrackButton(player) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, TextTrackButton);
+
+    options.tracks = player.textTracks();
+
+    return _possibleConstructorReturn(this, _TrackButton.call(this, player, options));
+  }
+
+  /**
+   * Create a menu item for each text track
+   *
+   * @param {TextTrackMenuItem[]} [items=[]]
+   *        Existing array of items to use during creation
+   *
+   * @return {TextTrackMenuItem[]}
+   *         Array of menu items that were created
+   */
+
+
+  TextTrackButton.prototype.createItems = function createItems() {
+    var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    // Add an OFF menu item to turn all tracks off
+    items.push(new _offTextTrackMenuItem2['default'](this.player_, { kind: this.kind_ }));
+    this.hideThreshold_ += 1;
+
+    var tracks = this.player_.textTracks();
+
+    if (!tracks) {
+      return items;
+    }
+
+    for (var i = 0; i < tracks.length; i++) {
+      var track = tracks[i];
+
+      // only add tracks that are of the appropriate kind and have a label
+      if (track.kind === this.kind_) {
+        items.push(new _textTrackMenuItem2['default'](this.player_, {
+          track: track,
+          // MenuItem is selectable
+          selectable: true
+        }));
+      }
+    }
+
+    return items;
+  };
+
+  return TextTrackButton;
+}(_trackButton2['default']);
+
+_component2['default'].registerComponent('TextTrackButton', TextTrackButton);
+exports['default'] = TextTrackButton;
+
+
+/***/ }),
+
+/***/ 97:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _events = __webpack_require__(68);
+
+var Events = _interopRequireWildcard(_events);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+/**
+ * `EventTarget` is a class that can have the same API as the DOM `EventTarget`. It
+ * adds shorthand functions that wrap around lengthy functions. For example:
+ * the `on` function is a wrapper around `addEventListener`.
+ *
+ * @see [EventTarget Spec]{@link https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget}
+ * @class EventTarget
+ */
+var EventTarget = function EventTarget() {};
+
+/**
+ * A Custom DOM event.
+ *
+ * @typedef {Object} EventTarget~Event
+ * @see [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
+ */
+
+/**
+ * All event listeners should follow the following format.
+ *
+ * @callback EventTarget~EventListener
+ * @this {EventTarget}
+ *
+ * @param {EventTarget~Event} event
+ *        the event that triggered this function
+ *
+ * @param {Object} [hash]
+ *        hash of data sent during the event
+ */
+
+/**
+ * An object containing event names as keys and booleans as values.
+ *
+ * > NOTE: If an event name is set to a true value here {@link EventTarget#trigger}
+ *         will have extra functionality. See that function for more information.
+ *
+ * @property EventTarget.prototype.allowedEvents_
+ * @private
+ */
+/**
+ * @file src/js/event-target.js
+ */
+EventTarget.prototype.allowedEvents_ = {};
+
+/**
+ * Adds an `event listener` to an instance of an `EventTarget`. An `event listener` is a
+ * function that will get called when an event with a certain name gets triggered.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to call with `EventTarget`s
+ */
+EventTarget.prototype.on = function (type, fn) {
+  // Remove the addEventListener alias before calling Events.on
+  // so we don't get into an infinite type loop
+  var ael = this.addEventListener;
+
+  this.addEventListener = function () {};
+  Events.on(this, type, fn);
+  this.addEventListener = ael;
+};
+
+/**
+ * An alias of {@link EventTarget#on}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#on}
+ */
+EventTarget.prototype.addEventListener = EventTarget.prototype.on;
+
+/**
+ * Removes an `event listener` for a specific event from an instance of `EventTarget`.
+ * This makes it so that the `event listener` will no longer get called when the
+ * named event happens.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to remove.
+ */
+EventTarget.prototype.off = function (type, fn) {
+  Events.off(this, type, fn);
+};
+
+/**
+ * An alias of {@link EventTarget#off}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#off}
+ */
+EventTarget.prototype.removeEventListener = EventTarget.prototype.off;
+
+/**
+ * This function will add an `event listener` that gets triggered only once. After the
+ * first trigger it will get removed. This is like adding an `event listener`
+ * with {@link EventTarget#on} that calls {@link EventTarget#off} on itself.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to be called once for each event name.
+ */
+EventTarget.prototype.one = function (type, fn) {
+  // Remove the addEventListener alialing Events.on
+  // so we don't get into an infinite type loop
+  var ael = this.addEventListener;
+
+  this.addEventListener = function () {};
+  Events.one(this, type, fn);
+  this.addEventListener = ael;
+};
+
+/**
+ * This function causes an event to happen. This will then cause any `event listeners`
+ * that are waiting for that event, to get called. If there are no `event listeners`
+ * for an event then nothing will happen.
+ *
+ * If the name of the `Event` that is being triggered is in `EventTarget.allowedEvents_`.
+ * Trigger will also call the `on` + `uppercaseEventName` function.
+ *
+ * Example:
+ * 'click' is in `EventTarget.allowedEvents_`, so, trigger will attempt to call
+ * `onClick` if it exists.
+ *
+ * @param {string|EventTarget~Event|Object} event
+ *        The name of the event, an `Event`, or an object with a key of type set to
+ *        an event name.
+ */
+EventTarget.prototype.trigger = function (event) {
+  var type = event.type || event;
+
+  if (typeof event === 'string') {
+    event = { type: type };
+  }
+  event = Events.fixEvent(event);
+
+  if (this.allowedEvents_[type] && this['on' + type]) {
+    this['on' + type](event);
+  }
+
+  Events.trigger(this, event);
+};
+
+/**
+ * An alias of {@link EventTarget#trigger}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#trigger}
+ */
+EventTarget.prototype.dispatchEvent = EventTarget.prototype.trigger;
+
+exports['default'] = EventTarget;
+
+
+/***/ }),
+
+/***/ 98:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _clickableComponent = __webpack_require__(90);
+
+var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _obj = __webpack_require__(56);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The component for a menu item. `<li>`
+ *
+ * @extends ClickableComponent
+ */
+var MenuItem = function (_ClickableComponent) {
+  _inherits(MenuItem, _ClickableComponent);
+
+  /**
+   * Creates an instance of the this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options={}]
+   *        The key/value store of player options.
+   *
+   */
+  function MenuItem(player, options) {
+    _classCallCheck(this, MenuItem);
+
+    var _this = _possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
+
+    _this.selectable = options.selectable;
+
+    _this.selected(options.selected);
+
+    if (_this.selectable) {
+      // TODO: May need to be either menuitemcheckbox or menuitemradio,
+      //       and may need logical grouping of menu items.
+      _this.el_.setAttribute('role', 'menuitemcheckbox');
+    } else {
+      _this.el_.setAttribute('role', 'menuitem');
+    }
+    return _this;
+  }
+
+  /**
+   * Create the `MenuItem's DOM element
+   *
+   * @param {string} [type=li]
+   *        Element's node type, not actually used, always set to `li`.
+   *
+   * @param {Object} [props={}]
+   *        An object of properties that should be set on the element
+   *
+   * @param {Object} [attrs={}]
+   *        An object of attributes that should be set on the element
+   *
+   * @return {Element}
+   *         The element that gets created.
+   */
+
+
+  MenuItem.prototype.createEl = function createEl(type, props, attrs) {
+    // The control is textual, not just an icon
+    this.nonIconControl = true;
+
+    return _ClickableComponent.prototype.createEl.call(this, 'li', (0, _obj.assign)({
+      className: 'vjs-menu-item',
+      innerHTML: this.localize(this.options_.label),
+      tabIndex: -1
+    }, props), attrs);
+  };
+
+  /**
+   * Any click on a `MenuItem` puts int into the selected state.
+   * See {@link ClickableComponent#handleClick} for instances where this is called.
+   *
+   * @param {EventTarget~Event} event
+   *        The `keydown`, `tap`, or `click` event that caused this function to be
+   *        called.
+   *
+   * @listens tap
+   * @listens click
+   */
+
+
+  MenuItem.prototype.handleClick = function handleClick(event) {
+    this.selected(true);
+  };
+
+  /**
+   * Set the state for this menu item as selected or not.
+   *
+   * @param {boolean} selected
+   *        if the menu item is selected or not
+   */
+
+
+  MenuItem.prototype.selected = function selected(_selected) {
+    if (this.selectable) {
+      if (_selected) {
+        this.addClass('vjs-selected');
+        this.el_.setAttribute('aria-checked', 'true');
+        // aria-checked isn't fully supported by browsers/screen readers,
+        // so indicate selected state to screen reader in the control text.
+        this.controlText(', selected');
+      } else {
+        this.removeClass('vjs-selected');
+        this.el_.setAttribute('aria-checked', 'false');
+        // Indicate un-selected state to screen reader
+        this.controlText('');
+      }
+    }
+  };
+
+  return MenuItem;
+}(_clickableComponent2['default']);
+
+_component2['default'].registerComponent('MenuItem', MenuItem);
+exports['default'] = MenuItem;
+
+
+/***/ }),
+
+/***/ 99:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.isCrossOrigin = exports.getFileExtension = exports.getAbsoluteURL = exports.parseUrl = undefined;
+
+var _document = __webpack_require__(51);
+
+var _document2 = _interopRequireDefault(_document);
+
+var _window = __webpack_require__(53);
+
+var _window2 = _interopRequireDefault(_window);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+/**
+ * @typedef {Object} url:URLObject
+ *
+ * @property {string} protocol
+ *           The protocol of the url that was parsed.
+ *
+ * @property {string} hostname
+ *           The hostname of the url that was parsed.
+ *
+ * @property {string} port
+ *           The port of the url that was parsed.
+ *
+ * @property {string} pathname
+ *           The pathname of the url that was parsed.
+ *
+ * @property {string} search
+ *           The search query of the url that was parsed.
+ *
+ * @property {string} hash
+ *           The hash of the url that was parsed.
+ *
+ * @property {string} host
+ *           The host of the url that was parsed.
+ */
+
+/**
+ * Resolve and parse the elements of a URL.
+ *
+ * @param  {String} url
+ *         The url to parse
+ *
+ * @return {url:URLObject}
+ *         An object of url details
+ */
+/**
+ * @file url.js
+ * @module url
+ */
+var parseUrl = exports.parseUrl = function parseUrl(url) {
+  var props = ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host'];
+
+  // add the url to an anchor and let the browser parse the URL
+  var a = _document2['default'].createElement('a');
+
+  a.href = url;
+
+  // IE8 (and 9?) Fix
+  // ie8 doesn't parse the URL correctly until the anchor is actually
+  // added to the body, and an innerHTML is needed to trigger the parsing
+  var addToBody = a.host === '' && a.protocol !== 'file:';
+  var div = void 0;
+
+  if (addToBody) {
+    div = _document2['default'].createElement('div');
+    div.innerHTML = '<a href="' + url + '"></a>';
+    a = div.firstChild;
+    // prevent the div from affecting layout
+    div.setAttribute('style', 'display:none; position:absolute;');
+    _document2['default'].body.appendChild(div);
+  }
+
+  // Copy the specific URL properties to a new object
+  // This is also needed for IE8 because the anchor loses its
+  // properties when it's removed from the dom
+  var details = {};
+
+  for (var i = 0; i < props.length; i++) {
+    details[props[i]] = a[props[i]];
+  }
+
+  // IE9 adds the port to the host property unlike everyone else. If
+  // a port identifier is added for standard ports, strip it.
+  if (details.protocol === 'http:') {
+    details.host = details.host.replace(/:80$/, '');
+  }
+
+  if (details.protocol === 'https:') {
+    details.host = details.host.replace(/:443$/, '');
+  }
+
+  if (addToBody) {
+    _document2['default'].body.removeChild(div);
+  }
+
+  return details;
+};
+
+/**
+ * Get absolute version of relative URL. Used to tell flash correct URL.
+ *
+ *
+ * @param  {string} url
+ *         URL to make absolute
+ *
+ * @return {string}
+ *         Absolute URL
+ *
+ * @see http://stackoverflow.com/questions/470832/getting-an-absolute-url-from-a-relative-one-ie6-issue
+ */
+var getAbsoluteURL = exports.getAbsoluteURL = function getAbsoluteURL(url) {
+  // Check if absolute URL
+  if (!url.match(/^https?:\/\//)) {
+    // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
+    var div = _document2['default'].createElement('div');
+
+    div.innerHTML = '<a href="' + url + '">x</a>';
+    url = div.firstChild.href;
+  }
+
+  return url;
+};
+
+/**
+ * Returns the extension of the passed file name. It will return an empty string
+ * if passed an invalid path.
+ *
+ * @param {string} path
+ *        The fileName path like '/path/to/file.mp4'
+ *
+ * @returns {string}
+ *          The extension in lower case or an empty string if no
+ *          extension could be found.
+ */
+var getFileExtension = exports.getFileExtension = function getFileExtension(path) {
+  if (typeof path === 'string') {
+    var splitPathRe = /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/i;
+    var pathParts = splitPathRe.exec(path);
+
+    if (pathParts) {
+      return pathParts.pop().toLowerCase();
+    }
+  }
+
+  return '';
+};
+
+/**
+ * Returns whether the url passed is a cross domain request or not.
+ *
+ * @param {string} url
+ *        The url to check.
+ *
+ * @return {boolean}
+ *         Whether it is a cross domain request or not.
+ */
+var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
+  var winLoc = _window2['default'].location;
+  var urlInfo = parseUrl(url);
+
+  // IE8 protocol relative urls will return ':' for protocol
+  var srcProtocol = urlInfo.protocol === ':' ? winLoc.protocol : urlInfo.protocol;
+
+  // Check if url is for another domain/origin
+  // IE8 doesn't know location.origin, so we won't rely on it here
+  var crossOrigin = srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
+
+  return crossOrigin;
+};
+
+
 /***/ })
 
-},[730]);
+},[749]);

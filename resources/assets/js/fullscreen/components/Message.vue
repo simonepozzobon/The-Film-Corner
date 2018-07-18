@@ -56,7 +56,7 @@ export default {
                 this.timeout = true
                 this.hideMessage()
             }
-        }
+        },
     },
     created: function() {
         document.addEventListener('fullscreen-message', (message) => {

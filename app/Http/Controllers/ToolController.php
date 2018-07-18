@@ -2,18 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Audio;
 use App\App;
 use App\Media;
 use App\Video;
 use App\Partner;
-use App\PartnerTranslation;
-use App\MediaSubCategory;
 use App\Filmography;
-use App\FilmographyTranslation;
+use App\MediaCategory;
+use App\MediaSubCategory;
+use App\PartnerTranslation;
 use Illuminate\Http\Request;
+use App\FilmographyTranslation;
 
 class ToolController extends Controller
 {
+    public function put_audio_on_whats_going_on()
+    {
+        $category = MediaCategory::where('name', 'App')->first();
+        $audios = Audio::where('category_id', $category->id)->get();
+        $app = App::find(7);
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        // Remove old audio
+        echo 'Sto per rimuovere '.$audios->count().' file audio <br> ';
+        $app->audios()->where('category_id', '=', 2)->detach();
+        foreach ($app->audios()->get() as $audio) {
+            $app_category->audios()->detach($audio);
+            $pavilion->audios()->detach($audio);
+        }
+        echo '<hr><h2>Old audio library deleted!</h2><hr> <br> ';
+
+        foreach ($audios as $key => $audio) {
+            $app->audios()->save($audio);
+            $app_category->audios()->save($audio);
+            $pavilion->audios()->save($audio);
+            echo 'Audio salvato nella libreria -> '.$audio->src.' <br> ';
+        }
+
+    }
+
+
     public function flush_media()
     {
         $app = App::find(14);

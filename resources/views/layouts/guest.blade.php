@@ -24,6 +24,7 @@
     </div>
 
     @if ($type == 'app')
+      <div id="preloader"><pre-loader></pre-loader></div>
       <main>
         @yield('content')
       </main>

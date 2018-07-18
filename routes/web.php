@@ -185,6 +185,7 @@ Route::prefix('admin')->group(function () {
         // Route::get('/translate_partner', 'ToolController@translate_partner');
         Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
         Route::get('/soundstudio-video', 'ToolController@soundstudio_video_library');
+        Route::get('/put-audio-on-whats-going-on', 'ToolController@put_audio_on_whats_going_on');
     });
 
     Route::prefix('contest')->group(function() {
