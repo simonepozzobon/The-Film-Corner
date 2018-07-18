@@ -33,18 +33,20 @@ export default {
                 })
         },
         hideMessage: function() {
-            var t1 = new TimelineMax()
-            t1.to('#display-message', .2, {
-                    opacity: 0,
-                    display: 'none',
-                    ease: Sine.easeInOut,
-                })
-                .to('#fullscreen-message', .2, {
-                    opacity: 0,
-                    display: 'none',
-                    ease: Power4.easeInOut,
-                })
+            if (!this.timeout) {
+                var t1 = new TimelineMax()
+                t1.to('#display-message', .2, {
+                        opacity: 0,
+                        display: 'none',
+                        ease: Sine.easeInOut,
+                    })
+                    .to('#fullscreen-message', .2, {
+                        opacity: 0,
+                        display: 'none',
+                        ease: Power4.easeInOut,
+                    })
 
+            }
         },
         getDimensions: function() {
             this.width = window.innerWidth
