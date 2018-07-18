@@ -26,14 +26,15 @@ export default {
                     display: 'block',
                     ease: Sine.easeInOut,
                     onComplete: () => {
-                        if (this.timeout) {
+                        if (this.width > 992 && this.timeout) {
                             setTimeout(this.hideMessage, 2500)
                         }
                     }
                 })
         },
         hideMessage: function() {
-            if (!this.timeout) {
+            this.width = window.innerWidth
+            if (this.width > 992 && this.timeout) {
                 var t1 = new TimelineMax()
                 t1.to('#display-message', .2, {
                         opacity: 0,
