@@ -133,8 +133,8 @@
               var height = $image.prop('naturalHeight');
 
               var imgInstance = new fabric.Image($image[0], {
-                width  : height,
-                height : width,
+                width  : width,
+                height : height,
                 transparentCorners : false,
               })
               .setSrc($this.find('img').data('img-src'), function() {
@@ -142,10 +142,30 @@
                 $this.data('image-image-obj', imgInstance);
 
                 // constrain object to maximum canvas size
-                var _width = document.getElementById('container-canvas').offsetWidth - 30;
-                if (_width < imgInstance.getScaledWidth()) {
-                  imgInstance.scaleToWidth(_width);
+                var _container = document.getElementById('container-canvas');
+                var _width = _container.offsetWidth - 30;
+                var _height = _container.offsetHeight - 30;
+
+                var iWidth = imgInstance.getScaledWidth();
+                var iHeight = imgInstance.getScaledHeight();
+
+
+                if (iWidth > iHeight) {
+                  if (_width < imgInstance.getScaledWidth()) {
+                    imgInstance.scaleToWidth(_width);
+                    if (_height < imgInstance.getScaledHeight()) {
+                      imgInstance.scaleToHeight(_height);
+                    }
+                  }
+                } else {
+                  if (_height < imgInstance.getScaledHeight()) {
+                    imgInstance.scaleToHeight(_height);
+                  }
                 }
+
+                // if (_width < imgInstance.getScaledWidth()) {
+                //   imgInstance.scaleToWidth(_width);
+                // }
 
                 canvas.add(imgInstance).setActiveObject( imgInstance );
                 imgInstance.center();
