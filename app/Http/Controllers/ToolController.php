@@ -2,20 +2,78 @@
 
 namespace App\Http\Controllers;
 
-use App\Audio;
 use App\App;
+use App\Audio;
 use App\Media;
 use App\Video;
 use App\Partner;
+use App\AudioUtil;
 use App\Filmography;
 use App\MediaCategory;
 use App\MediaSubCategory;
 use App\PartnerTranslation;
 use Illuminate\Http\Request;
 use App\FilmographyTranslation;
+use Illuminate\Support\Facades\Storage;
 
 class ToolController extends Controller
 {
+
+    public function convert_library()
+    {
+        $category = MediaCategory::where('name', 'App')->first();
+        $app = App::find(7);
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        $audios = $app->audios()->where('category_id', 2)->get();
+        foreach ($audios as $key => $audio) {
+            $destFolder = 'apps/library/'.$pavilion->slug.'/'.$app_category->slug.'/'.$app->slug.'/audio/app/mp3/';
+
+            $src = storage_path('app/public/'.$audio->src);
+            $filename = basename($src);
+            $withoutExt = preg_replace('/\\.[^.\\s]{3,4}$/', '', $filename);
+
+            $checkFolder = $destFolder.$withoutExt.'.mp3';
+            echo 'controlla se esiste il file -> '.$checkFolder.'<br>';
+            $check = Audio::where('src', '=', $checkFolder)->first();
+            echo 'controllo -> <br>'.$check.'<br>';
+
+            if (!$check || $check == null) {
+                $mp3 = AudioUtil::convert_to_mp3($src, $withoutExt, $destFolder);
+
+                $a = new Audio();
+                $a->category_id = 2;
+                $a->title = $audio->title;
+                $a->src = $mp3;
+                $a->duration = $audio->duration;
+                $a->save();
+
+                $app->audios()->detach($audio);
+                $app_category->audios()->detach($audio);
+                $pavilion->audios()->detach($audio);
+
+                $app->audios()->save($a);
+                $app_category->audios()->save($a);
+                $pavilion->audios()->save($a);
+
+                dump([
+                    'destFolder' => $destFolder,
+                    'filename' => $filename,
+                    'src' => $audio->src,
+                    'mp3' => $mp3,
+                ]);
+                echo '<br><hr>';
+            } else {
+                echo '<b>questo file è già stato convertito!</b><br><hr>';
+            }
+
+
+        }
+
+        echo '<h2>completato!!!</h2>';
+    }
+
     public function put_audio_on_whats_going_on()
     {
         $category = MediaCategory::where('name', 'App')->first();
