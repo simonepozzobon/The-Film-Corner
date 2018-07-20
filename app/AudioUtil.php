@@ -22,6 +22,7 @@ class AudioUtil extends Model
         Storage::makeDirectory('public/'.$destFolder, 0777, true);
 
         $cli = FFMPEG_LIB.' -i "'.$filePath.'" -acodec libmp3lame "'.storage_path('app/public/'.$destFolder).$filename.'.mp3"';
+        dump($cli);
         exec($cli);
 
         return $path;
