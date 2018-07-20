@@ -2,7 +2,7 @@
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
   <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
     .ui-slider {
       background: #f4c490;
