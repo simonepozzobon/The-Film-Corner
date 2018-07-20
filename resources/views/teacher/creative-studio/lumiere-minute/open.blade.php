@@ -1,7 +1,7 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Frame Crop')
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   <div class="container-fluid">

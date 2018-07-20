@@ -1,6 +1,6 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   @include('components.apps.sidebar-menu', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
@@ -77,7 +77,7 @@
               <div class="col-md-6 offset-md-3">
                 <div class="embed-responsive embed-responsive-16by9">
                   <video id="video-left" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                      <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                      <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                   </video>
                 </div>
               </div>

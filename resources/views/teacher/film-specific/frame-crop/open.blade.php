@@ -146,7 +146,7 @@
     var PSV = new PhotoSphereViewer({
       panorama: '{{ $session->src }}',
       container: 'photosphere',
-      loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+      loading_img: '//photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
       navbar: 'zoom fullscreen',
       min_fov: 30, //max zoom
       max_fov: 80, //min zoom
