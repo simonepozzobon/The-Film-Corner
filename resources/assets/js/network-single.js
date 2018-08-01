@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import $ from 'jquery';
+import $ from 'jquery'
 
 import CommentNew from './components/CommentNew.vue'
 import CommentList from './components/CommentList.vue'

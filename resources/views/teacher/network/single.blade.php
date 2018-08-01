@@ -44,8 +44,7 @@
         <comment-list
             comments="{{ $comments }}"
             user_type="{{ get_class(Auth::guard('teacher')->user()) }}"
-            user="{{ Auth::guard('teacher')->user() }}"
-        ></comment-list>
+            user="{{ Auth::guard('teacher')->user() }}"></comment-list>
       </div>
     </div>
   </div>
