@@ -64,7 +64,7 @@ mix
     tether: ['Tether'],
   })
   .browserSync({
-    proxy: 'http://thefilmcorner.test/',
+    proxy: 'http://thefilmcorner.test:89/',
     browser: 'google chrome',
     port: 3006,
   })
