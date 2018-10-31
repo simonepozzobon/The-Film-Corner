@@ -54,6 +54,10 @@ Route::prefix('v1')->group(function() {
         Route::prefix('get')->group(function() {
             Route::get('teachers', 'Admin\CinemafController@get_teachers');
         });
+
+        Route::prefix('post')->group(function() {
+            Route::post('auth', 'Admin\CinemafController@auth');
+        });
     });
 });
 
