@@ -34,6 +34,33 @@
   <div class="container">
     <div class="row mt">
       <div class="col">
+        <div class="box orange">
+          <div class="box-header">
+            The Film Corner will be present at the 75th Venice International Film Festival!
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
+              </div>
+              <div class="col-md-8">
+                <p>
+                  On Sunday, September 2nd at 2 pm at the Italian Pavilion, the project upgrade The Film Corner Reloaded – A cultural approach will be presented at the festivalgoers.<br>
+                  In fact the platform will be implemented, with the aim of developing the new section dedicated to an interdisciplinary approach to film education.<br>
+                  Moreover, thanks to the partnership with MAF Media, The Film Corner will also become a video-on-demand web platform for schools, with many film titles, even premières. An innovative teaching tool that allow to break down costs, distances, time and ... piracy!<br>
+                  <br>
+                  Our speakers: Matteo Pavesi (Fondazione Cineteca Italiana Director), Silvia Pareti, Simone Moraldi (Fondazione Cineteca Italiana Special Project Manager) and Fabio Giarrusso (MAF Media - New Business Development).
+                  <br>
+                  For further information and participation requests write to <a href="mailto:ufficiostampa@cinetecamilano.it">ufficiostampa@cinetecamilano.it</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt">
+      <div class="col">
         <div class="box blue">
           <div class="box-header">
             {{ GeneralText::field('contest_news_title') }}

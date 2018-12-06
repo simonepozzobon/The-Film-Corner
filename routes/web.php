@@ -272,6 +272,10 @@ Route::prefix('teacher')->group(function() {
       Route::post('/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
       Route::post('/destroy', 'Teacher\NotificationController@destroy')->name('teacher.notifications.destroy');
     });
+
+    Route::prefix('streaming')->group(function() {
+      Route::get('/', 'Teacher\StreamingController@index')->name('streaming.index');
+    });
 });
 
 

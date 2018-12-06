@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=7.1.3",
+        "barryvdh/laravel-cors": "^0.11.2",
         "dimsav/laravel-translatable": "^9.0",
         "doctrine/dbal": "^2.5",
         "egeloen/google-map": "^2.0",
@@ -13,6 +14,7 @@
         "fideloper/proxy": "~4.0",
         "intervention/image": "^2.3",
         "laravel/framework": "5.6.*",
+        "laravel/passport": "^7.0",
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "maatwebsite/excel": "^2.1",

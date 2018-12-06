@@ -48,6 +48,17 @@ Route::prefix('v1')->group(function() {
     Route::get('/get-contest', 'Admin\ContestController@get_video');
     Route::get('/app-chart', 'Admin\StatsController@get_app_chart');
     Route::get('/page-views-stats', 'Admin\StatsController@get_page_views');
+
+    // Cinemaf
+    Route::prefix('cinemaf')->group(function() {
+        Route::prefix('get')->group(function() {
+            Route::get('teachers', 'Admin\CinemafController@get_teachers');
+        });
+
+        Route::prefix('post')->group(function() {
+            Route::post('auth', 'Admin\CinemafController@auth');
+        });
+    });
 });
 
 // General request

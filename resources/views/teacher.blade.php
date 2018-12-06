@@ -8,9 +8,17 @@
       .panels {
         cursor: pointer;
       }
+      #streaming-btn {
+        position: fixed;
+        top: 116px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 9999;
+      }
   </style>
 @endsection
 @section('content')
+  <a id="streaming-btn" href="{{ route('streaming.index') }}" class="btn btn-primary">STREAMING</a>
   <svg id="background" width="1921px" height="1080px" viewBox="0 0 1921 1080" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
       <g id="ground" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
           <rect fill="#D3EFE9" fill-rule="nonzero" x="0" y="0" width="1920" height="757.8"></rect>

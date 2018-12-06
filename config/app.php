@@ -182,6 +182,8 @@ return [
         // Google Analytics
         Spatie\Analytics\AnalyticsServiceProvider::class,
 
+        // CORS
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
@@ -259,7 +261,6 @@ return [
 
         // Google Analytics
         'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
-
 
     ],
 

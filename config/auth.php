@@ -44,6 +44,7 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            \Barryvdh\Cors\HandleCors::class,
         ],
 
         'admin' => [
