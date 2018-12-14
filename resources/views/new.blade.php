@@ -34,6 +34,37 @@
   <div class="container">
     <div class="row mt">
       <div class="col">
+        <div class="box green">
+          <div class="box-header">
+            #MyCornerContest
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ asset('img/icons/oscar.svg') }}" class="img-fluid w-100" >
+              </div>
+              <div class="col-md-8 pb-3">
+                <p class="py-3">
+                  We are pleased to announce that the short film “Serendipity”, directed by Beatrice Delli Paoli, Gaia De Tata, Jennifer Esposito, Valentina Fedelfio e Greta Fontana, students of the 4A class of IS Giovanni Falcone in Gallarate (Varese), is the winner of My Corner Contest, the international short film competition launched in April 2018, as part of the #TheFilmCorner project. Congratulations to the young directors!
+                </p>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <video id="my-video" class="video-js" controls preload="auto" width="640" height="264"
+                    poster="https://thefilmcorner.eu/storage/apps/mycorner-contest/make-your-own-film/88/5b19ac803e721-thumb.jpg" height="264" width="640" preload="auto" id="video-5b19a2f626b43" lang="it-it" role="region" aria-label="Video Player">
+                    <source src="https://thefilmcorner.eu/storage/apps/mycorner-contest/make-your-own-film/88/5b19ac803e721.mp4" type='video/mp4'>
+                    <p class="vjs-no-js">
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                    </p>
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt">
+      <div class="col">
         <div class="box orange">
           <div class="box-header">
             The Film Corner will be present at the 75th Venice International Film Festival!
@@ -304,6 +335,9 @@
 </main>
 @endsection
 @section('scripts')
+  <link href="https://vjs.zencdn.net/7.3.0/video-js.css" rel="stylesheet">
+  <script src="https://vjs.zencdn.net/7.3.0/video.js"></script>
+
   <script type="text/javascript">
     var h = $('#logo-img').height();
     setHeight(h);

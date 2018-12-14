@@ -20274,7 +20274,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _CommentSingle = __webpack_require__(579);
@@ -20284,38 +20284,67 @@ var _CommentSingle2 = _interopRequireDefault(_CommentSingle);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-  name: "",
-  props: ['comments', 'user', 'user_type'],
-  data: function data() {
-    return {
-      comments_list: ''
-    };
-  },
-  mounted: function mounted() {
-    var vue = this;
-    this.comments_list = JSON.parse(this.comments);
-    this.$parent.$on('newComment', function (comment) {
-      vue.addComment(comment);
-    });
-    this.$on('commentDelete', function (id) {
-      this.deleteComment(id);
-    });
-  },
-
-  methods: {
-    addComment: function addComment(comment) {
-      this.comments_list.push(comment);
+    name: 'CommentList',
+    components: {
+        CommentSingle: _CommentSingle2.default
     },
-    deleteComment: function deleteComment(id) {
-      this.comments_list = this.comments_list.filter(function (value) {
-        return value.id !== id;
-      });
+    props: {
+        'comments': {
+            type: String,
+            default: ''
+        },
+        'user': {
+            type: String,
+            default: ''
+        },
+        'user_type': {
+            type: String,
+            default: ''
+        }
+    },
+    data: function data() {
+        return {
+            comments_list: ''
+        };
+    },
+    computed: {
+        commentsArr: function commentsArr() {
+            return JSON.parse(this.comments);
+        },
+        userConv: function userConv() {
+            return JSON.parse(this.user);
+        },
+        userType: function userType() {
+            return this.user_type;
+        }
+    },
+    methods: {
+        addComment: function addComment(comment) {
+            this.comments_list.push(comment);
+        },
+        deleteComment: function deleteComment(id) {
+            this.comments_list = this.comments_list.filter(function (value) {
+                return value.id !== id;
+            });
+        }
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.comments_list = this.commentsArr;
+
+        this.$parent.$on('newComment', function (comment) {
+            _this.addComment(comment);
+        });
+
+        this.$on('commentDelete', function (id) {
+            _this.deleteComment(id);
+        });
     }
-  },
-  components: {
-    CommentSingle: _CommentSingle2.default
-  }
+
 }; //
+//
+//
 //
 //
 //
@@ -20333,7 +20362,7 @@ exports.default = {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _axios = __webpack_require__(16);
@@ -20371,150 +20400,104 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 exports.default = {
-  name: "new-comment",
-  props: ['csrf_field', 'user', 'user_type', 'commentable_type', 'commentable_id'],
-  data: function data() {
-    return {
-      comment: ''
-    };
-  },
-  mounted: function mounted() {
-    // Timelines
-    this.showForm = new _gsap.TimelineMax();
-    this.hideForm = new _gsap.TimelineMax();
-    this.sendForm = new _gsap.TimelineMax();
-    this.loading = new _gsap.TimelineMax();
-
-    // Elements
-    this.newCommentBtn = document.getElementById('new-comment-btn');
-    this.newCommentForm = document.getElementById('new-comment');
-    this.closeBtn = document.getElementById('close');
-    this.loadingEl = document.getElementById('loading');
-    this.square = document.getElementById('square');
-
-    // Styles setup
-    this.newCommentForm.style.display = 'none';
-  },
-
-  methods: {
-    // Actions
-    sendComment: function sendComment() {
-      var vue = this;
-
-      this.loader();
-
-      var formData = new FormData();
-      formData.append('_token', this.csrf_field);
-      formData.append('comment', this.comment);
-      formData.append('user', this.user);
-      formData.append('user_type', this.user_type);
-      formData.append('commentable_type', this.commentable_type);
-      formData.append('commentable_id', this.commentable_id);
-
-      _axios2.default.post('/api/v1/send-comment', formData).then(function (response) {
-        // console.log(response);
-        vue.$parent.$emit('newComment', response.data);
-        vue.loaderStop();
-        vue.comment = '';
-      }).catch(function (error) {
-        console.log(error);
-        vue.loaderStop();
-      });
+    name: "new-comment",
+    props: ['csrf_field', 'user', 'user_type', 'commentable_type', 'commentable_id'],
+    data: function data() {
+        return {
+            comment: '',
+            title: 'Join the discussion',
+            open: false
+        };
     },
+    methods: {
+        sendComment: function sendComment() {
+            var _this = this;
 
+            var formData = new FormData();
+            formData.append('_token', this.csrf_field);
+            formData.append('comment', this.comment);
+            formData.append('user', this.user);
+            formData.append('user_type', this.user_type);
+            formData.append('commentable_type', this.commentable_type);
+            formData.append('commentable_id', this.commentable_id);
 
-    // Animations
-    show: function show() {
-      var vue = this;
+            _axios2.default.post('/api/v1/send-comment', formData).then(function (response) {
+                // console.log(response);
+                _this.$parent.$emit('newComment', response.data);
+                _this.comment = '';
+                _this.close();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+        show: function show() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.showBtn, .4, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Power4.easeInOut
+            }).to(this.$refs.commentBtn, .2, {
+                opacity: 1,
+                display: 'block'
+            });
 
-      this.showForm.to(this.newCommentBtn, .4, {
-        opacity: 0,
-        height: 0,
-        ease: _gsap.Power4.easeInOut,
-        onComplete: function onComplete() {
-          vue.newCommentForm.style.display = 'inherit';
+            var t2 = new _gsap.TimelineMax();
+            t2.from(this.$refs.textarea, .5, {
+                position: 'relative',
+                height: 0
+            });
+
+            var t2_2 = new _gsap.TimelineMax();
+            t2_2.to(this.$refs.textarea, .5, {
+                opacity: 1,
+                display: 'block'
+            });
+
+            var t3 = new _gsap.TimelineMax();
+            t3.to(this.$refs.close, .2, {
+                opacity: 1,
+                display: 'block'
+            });
+
+            var master = new _gsap.TimelineMax();
+            master.add(t1, .1);
+            master.add(t2, .1);
+            master.add(t2_2, .1);
+            master.add(t3, .1);
+            master.play();
+        },
+        close: function close() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.commentBtn, .2, {
+                opacity: 0,
+                display: 'none'
+            }).to(this.$refs.showBtn, .4, {
+                opacity: 1,
+                display: 'block'
+            });
+
+            var t2 = new _gsap.TimelineMax();
+            t2.to(this.$refs.textarea, .4, {
+                opacity: 0,
+                display: 'none'
+            });
+
+            var t3 = new _gsap.TimelineMax();
+            t3.to(this.$refs.close, .2, {
+                opacity: 0,
+                display: 'none'
+            });
+
+            var master = new _gsap.TimelineMax();
+            master.add(t1);
+            master.add(t2);
+            master.add(t3);
+            master.play();
         }
-      }).fromTo(this.newCommentForm, .4, {
-        opacity: 0,
-        height: 0
-      }, {
-        opacity: 1,
-        height: '100%',
-        ease: _gsap.Power4.easeInOut
-      }).play();
-    },
-    close: function close() {
-      var vue = this;
-
-      this.hideForm.to(this.newCommentForm, .4, {
-        opacity: 0,
-        height: 0,
-        ease: _gsap.Power4.easeInOut,
-        onComplete: function onComplete() {
-          vue.newCommentForm.style.display = 'none';
-        }
-      }).to(this.newCommentBtn, .4, {
-        opacity: 1,
-        height: '100%',
-        ease: _gsap.Power4.easeInOut
-      });
-    },
-    loader: function loader() {
-      var vue = this;
-
-      this.sendForm.to(this.newCommentForm, .4, {
-        opacity: 0,
-        ease: _gsap.Power4.easeInOut,
-        onComplete: function onComplete() {
-          vue.loadingEl.style.display = 'inherit';
-        }
-      }).play();
-
-      this.loading.to(this.square, 1, {
-        rotation: 360,
-        borderRadius: '5%'
-      }).to(this.square, 1, {
-        rotation: -360,
-        borderRadius: '50%',
-        onComplete: function onComplete() {
-          vue.loading.restart();
-        }
-      }).play();
-    },
-    loaderStop: function loaderStop() {
-      var vue = this;
-
-      this.loading.pause();
-      _gsap.TweenMax.to(this.square, 1, {
-        rotation: 0,
-        borderRadius: '50%',
-        onComplete: function onComplete() {
-          vue.loadingEl.style.display = 'none';
-          var t1 = new _gsap.TimelineMax();
-          t1.to(vue.newCommentForm, .4, {
-            opacity: 0,
-            height: 0,
-            ease: _gsap.Power4.easeInOut
-          }).to(vue.newCommentBtn, .4, {
-            opacity: 1,
-            height: '100%',
-            ease: _gsap.Power4.easeInOut,
-            onComplete: function onComplete() {
-              vue.newCommentForm.style.display = 'none';
-            }
-          });
-        }
-      });
     }
-  }
 };
 
 /***/ }),
@@ -20550,53 +20533,74 @@ var _ReplyNew2 = _interopRequireDefault(_ReplyNew);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
-    name: "comment-single",
-    props: ['comment', 'user', 'user_type'],
+    name: 'CommentSingle',
+    components: {
+        RepliesList: _RepliesList2.default
+    },
+    props: {
+        'comment': {
+            type: Object,
+            default: function _default() {}
+        },
+        'user': {
+            type: Object,
+            default: ''
+        },
+        'user_type': {
+            type: String,
+            default: ''
+        }
+    },
     data: function data() {
         return {
             reply_msg: '',
-            color: '',
-            reply_color: ''
+            colors: ['green', 'yellow', 'orange', 'blue']
         };
     },
-    mounted: function mounted() {
-        this.colors = ['green', 'yellow', 'orange', 'blue'];
-        this.index = Math.floor(Math.random() * 3);
-        this.color = this.colors[this.index];
-        this.reply_color = this.colors[this.index + 1];
-    },
-
     computed: {
-        json_user: function json_user() {
-            return JSON.parse(this.user);
+        canDelete: function canDelete() {
+            if (this.user.id == this.comment.userable_id && this.user_type == this.comment.userable_type) {
+                return true;
+            }
+            return false;
+        },
+        color: function color() {
+            return this.colors[this.index];
+        },
+        index: function index() {
+            return Math.floor(Math.random() * 3);
+        },
+        reply_color: function reply_color() {
+            return this.colors[this.index + 1];
         }
     },
     methods: {
         confirmation: function confirmation() {
-            var vue = this;
+            var _this = this;
+
             var t1 = new _gsap.TimelineMax();
             t1.to(this.$refs.comment, .4, {
                 opacity: 0,
                 ease: _gsap.Power4.easeInOut,
                 onComplete: function onComplete() {
-                    vue.$refs.comment.style.display = 'none';
-                    vue.$refs.confirmation.style.display = 'inherit';
+                    _this.$refs.comment.style.display = 'none';
+                    _this.$refs.confirmation.style.display = 'inherit';
                 }
             }).to(this.$refs.confirmation, .4, {
                 opacity: 1,
-                ease: _gsap.Power4.easeInOut,
-                onComplete: function onComplete() {}
+                ease: _gsap.Power4.easeInOut
             });
         },
         undo: function undo() {
-            var vue = this;
+            var _this2 = this;
+
             var t1 = new _gsap.TimelineMax();
             t1.to(this.$refs.confirmation, .4, {
                 opacity: 1,
                 ease: _gsap.Power4.easeInOut,
                 onComplete: function onComplete() {
-                    vue.$refs.confirmation.style.display = 'none';
-                    vue.$refs.comment.style.display = 'inherit';
+                    _this2.$refs.confirmation.style.display = 'none';
+                    _this2.$refs.comment.style.display = 'inherit';
                 }
             }).to(this.$refs.comment, .4, {
                 opacity: 1,
@@ -20604,25 +20608,23 @@ exports.default = {
             });
         },
         destroy: function destroy(id) {
-            var vue = this;
+            var _this3 = this;
 
-            var formData = new FormData();
-            formData.append('id', id);
-            formData.append('user_id', this.json_user.id);
-            formData.append('user_type', this.user_type);
+            if (this.canDelete) {
+                var formData = new FormData();
+                formData.append('id', id);
+                formData.append('user_id', this.user.id);
+                formData.append('user_type', this.user_type);
 
-            // axios.post('/api/v1/destroy-comment', formData)
-            // .then(function(response){
-            //     // console.log(response);
-            //     if (response.data.success) {
-            //         vue.$parent.$emit('commentDelete', id);
-            //     }
-            // })
-            // .catch(function (error) {
-            //     console.log(error);
-            // });
+                _axios2.default.post('/api/v1/destroy-comment', formData).then(function (response) {
+                    if (response.data.success) {
+                        _this3.$parent.$emit('commentDelete', id);
+                    }
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
-
 
         // reply
         newReply: function newReply() {
@@ -20634,40 +20636,36 @@ exports.default = {
             });
         },
         closeReply: function closeReply() {
-            var vue = this;
             var t1 = new _gsap.TimelineMax();
             t1.to(this.$refs.newReply, .2, {
                 opacity: 0
             }).to(this.$refs.newReply, .2, {
                 height: 0,
-                onComplete: function onComplete() {
-                    vue.$refs.newReply.style.display = 'none';
-                }
+                display: 'none'
             });
         },
         sendReply: function sendReply() {
-            var vue = this;
+            var _this4 = this;
+
             var formData = new FormData();
             formData.append('comment', this.reply_msg);
-            formData.append('user', this.user);
+            formData.append('user', this.user.id);
             formData.append('user_type', this.user_type);
             formData.append('commentable_type', 'App\\Comment');
             formData.append('commentable_id', this.comment.id);
 
             _axios2.default.post('/api/v1/send-comment', formData).then(function (response) {
-                console.log(response);
-                vue.comment.replies.push(response.data);
-                vue.closeReply();
+                _this4.comment.replies.push(response.data);
+                _this4.closeReply();
             }).catch(function (error) {
                 console.log(error);
-                // vue.loaderStop();
             });
         }
     },
-    components: {
-        RepliesList: _RepliesList2.default
-    }
+    mounted: function mounted() {}
 }; //
+//
+//
 //
 //
 //
@@ -20873,8 +20871,11 @@ exports.default = {
         };
     },
     computed: {
-        json_user: function json_user() {
-            return JSON.parse(this.user);
+        canDelete: function canDelete() {
+            if (this.user.id == this.comment.userable_id && this.user_type == this.comment.userable_type) {
+                return true;
+            }
+            return false;
         }
     },
     mounted: function mounted() {
@@ -20903,7 +20904,7 @@ exports.default = {
 
             var formData = new FormData();
             formData.append('id', id);
-            formData.append('user_id', this.json_user.id);
+            formData.append('user_id', this.user.id);
             formData.append('user_type', this.user_type);
 
             axios.post('/api/v1/destroy-comment', formData).then(function (response) {
@@ -21349,7 +21350,7 @@ TweenMax._autoActivated = [__WEBPACK_IMPORTED_MODULE_6__TimelineLite_js__["a" /*
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n#new-comment .box-header[data-v-4463b7b8] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n}\n#new-comment .box-header > .icon[data-v-4463b7b8] {\n    cursor: pointer;\n}\n.loading[data-v-4463b7b8] {\n  position: relative;\n  display: none;\n}\n.square[data-v-4463b7b8] {\n  position: absolute;\n  left: 50%;\n  top: 50%;\n  transform: translate(-50%, -50%);\n  width: 4rem;\n  height: 4rem;\n  background: #e8a360;\n  border-radius: 50%;\n}\n", ""]);
+exports.push([module.i, "\n#comment-new .box-header {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n}\n#comment-new .box-header > .icon {\n    cursor: pointer;\n    display: none;\n    opacity: 0;\n}\n#comment-new .box-body {\n  display: none;\n  opacity: 0;\n  padding-bottom: 0;\n}\n#comment-new .box-btns .send-comment {\n  display: none;\n  opacity: 0;\n}\n", ""]);
 
 /***/ }),
 
@@ -39285,7 +39286,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue__ = __webpack_require__(407);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4463b7b8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_CommentNew_vue__ = __webpack_require__(628);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4463b7b8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_CommentNew_vue__ = __webpack_require__(628);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
@@ -39302,12 +39303,12 @@ var __vue_template_functional__ = false
 /* styles */
 var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = "data-v-4463b7b8"
+var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
   __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_CommentNew_vue___default.a,
-  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4463b7b8_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_CommentNew_vue__["a" /* default */],
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_4463b7b8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_CommentNew_vue__["a" /* default */],
   __vue_template_functional__,
   __vue_styles__,
   __vue_scopeId__,
@@ -39646,15 +39647,17 @@ var render = function() {
           _c("div", { staticClass: "box-header" }, [
             _c("div", { staticClass: "title" }, [
               _vm._v(
-                "\n              " +
+                "\n                        " +
                   _vm._s(_vm.reply.author.name) +
-                  "\n            "
+                  "\n                    "
               )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "time" }, [
               _vm._v(
-                "\n              " + _vm._s(_vm.reply.time) + "\n            "
+                "\n                        " +
+                  _vm._s(_vm.reply.time) +
+                  "\n                    "
               )
             ])
           ]),
@@ -39668,7 +39671,9 @@ var render = function() {
             },
             [
               _vm._v(
-                "\n              " + _vm._s(_vm.reply.comment) + "\n          "
+                "\n                    " +
+                  _vm._s(_vm.reply.comment) +
+                  "\n                "
               )
             ]
           ),
@@ -39757,47 +39762,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row mt", attrs: { id: "" } }, [
     _c("div", { staticClass: "col" }, [
-      _c("div", { staticClass: "box yellow" }, [
-        _c("div", { staticClass: "box-header" }, [
-          _vm._v("\n        Join the discussion!\n      ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "box-btns pt" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-yellow",
-              attrs: { id: "new-comment-btn", type: "button", name: "button" },
-              on: { click: _vm.show }
-            },
-            [
-              _c("i", { staticClass: "fa fa-comment-o" }),
-              _vm._v(" New Comment")
-            ]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "box mt blue", attrs: { id: "new-comment" } }, [
+      _c("div", { staticClass: "box yellow", attrs: { id: "comment-new" } }, [
         _c("div", { staticClass: "box-header" }, [
           _c("div", { staticClass: "title" }, [
-            _vm._v("\n          New comment\n        ")
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.title) +
+                "\n                "
+            )
           ]),
           _vm._v(" "),
           _c(
             "div",
-            {
-              staticClass: "icon",
-              attrs: { id: "close" },
-              on: { click: _vm.close }
-            },
+            { ref: "close", staticClass: "icon", on: { click: _vm.close } },
             [_c("i", { staticClass: "fa fa-times" })]
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-body" }, [
+        _c("div", { ref: "textarea", staticClass: "box-body" }, [
           _c("textarea", {
             directives: [
               {
@@ -39808,7 +39790,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { name: "comment" },
+            attrs: { name: "comment", rows: "4" },
             domProps: { value: _vm.comment },
             on: {
               input: function($event) {
@@ -39821,31 +39803,38 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "box-btns" }, [
+        _c("div", { staticClass: "box-btns pt" }, [
           _c(
             "button",
             {
-              staticClass: "btn btn-blue",
-              attrs: { type: "button", name: "button" },
+              ref: "showBtn",
+              staticClass: "btn btn-yellow new-comment",
+              on: { click: _vm.show }
+            },
+            [
+              _c("i", { staticClass: "fa fa-comment-o" }),
+              _vm._v(" New Comment\n                ")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              ref: "commentBtn",
+              staticClass: "btn btn-yellow send-comment",
               on: { click: _vm.sendComment }
             },
-            [_c("i", { staticClass: "fa fa-comment-o" }), _vm._v(" Send")]
+            [
+              _c("i", { staticClass: "fa fa-comment-o" }),
+              _vm._v(" Send\n                ")
+            ]
           )
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "loading", attrs: { id: "loading" } }, [
-      _c("div", { staticClass: "square", attrs: { id: "square" } })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -39869,20 +39858,16 @@ var render = function() {
   return _c(
     "div",
     { attrs: { id: "comment-list" } },
-    _vm._l(_vm.comments_list, function(comment) {
+    _vm._l(this.comments_list, function(comment, index) {
       return _c(
         "div",
-        {
-          key: comment.key,
-          staticClass: "comment row mt",
-          attrs: { id: "comment-" + comment.id }
-        },
+        { key: comment.key, staticClass: "comment row mt" },
         [
           _c("comment-single", {
             attrs: {
               comment: comment,
-              user: _vm.user,
-              user_type: _vm.user_type
+              user: _vm.userConv,
+              user_type: _vm.userType
             }
           })
         ],
@@ -39981,7 +39966,7 @@ var render = function() {
         _c("div", { staticClass: "box-header" }, [
           _c("div", { staticClass: "title" }, [
             _vm._v(
-              "\n              " +
+              "\n                " +
                 _vm._s(_vm.comment.author.name) +
                 "\n\n            "
             )
@@ -39989,15 +39974,13 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "time" }, [
             _vm._v(
-              "\n              " + _vm._s(_vm.comment.time) + "\n            "
+              "\n                " + _vm._s(_vm.comment.time) + "\n            "
             )
           ])
         ]),
         _vm._v(" "),
         _c("div", { ref: "comment", staticClass: "box-body" }, [
-          _vm._v(
-            "\n            " + _vm._s(_vm.comment.comment) + "\n          "
-          )
+          _vm._v("\n            " + _vm._s(_vm.comment.comment) + "\n        ")
         ]),
         _vm._v(" "),
         _c(
@@ -40011,24 +39994,30 @@ var render = function() {
             _c(
               "button",
               {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: this.canDelete,
+                    expression: "this.canDelete"
+                  }
+                ],
                 class: "btn btn-" + _vm.color,
-                attrs: { type: "button", name: "button" },
                 on: {
                   click: function($event) {
                     _vm.destroy(_vm.comment.id)
                   }
                 }
               },
-              [_c("i", { staticClass: "fa fa-trash-o" }), _vm._v(" Confirm")]
+              [
+                _c("i", { staticClass: "fa fa-trash-o" }),
+                _vm._v(" Confirm\n            ")
+              ]
             ),
             _vm._v(" "),
             _c(
               "button",
-              {
-                class: "btn btn-" + _vm.color,
-                attrs: { type: "button", name: "button" },
-                on: { click: _vm.undo }
-              },
+              { class: "btn btn-" + _vm.color, on: { click: _vm.undo } },
               [_c("i", { staticClass: "fa fa-undo" }), _vm._v(" Cancel")]
             )
           ]
@@ -40068,9 +40057,9 @@ var render = function() {
           _c("div", { staticClass: "box-header" }, [
             _c("div", { staticClass: "title" }, [
               _vm._v(
-                "\n            Reply to " +
+                "\n                Reply to " +
                   _vm._s(_vm.comment.author.name) +
-                  "\n          "
+                  "\n            "
               )
             ]),
             _vm._v(" "),
@@ -40184,13 +40173,13 @@ var content = __webpack_require__(496);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(9)("4112f93a", content, false);
+var update = __webpack_require__(9)("5ffca974", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4463b7b8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CommentNew.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4463b7b8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CommentNew.vue");
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4463b7b8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CommentNew.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-4463b7b8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/sass-loader/lib/loader.js!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CommentNew.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });
