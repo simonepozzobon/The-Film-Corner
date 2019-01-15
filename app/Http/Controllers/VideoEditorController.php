@@ -13,8 +13,13 @@ use App\AppsSessions\StudentAppSession;
 
 class VideoEditorController extends Controller
 {
+    public function updateEditor(Request $request) {
+        return [
+            'request' => $request->all()
+        ];
+    }
 
-    public function updateEditor(Request $request, Video $t)
+    public function _deprecated_updateEditor(Request $request, Video $t)
     {
         // inizializzo la sessione
         $Video = new Video;
