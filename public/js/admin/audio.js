@@ -31238,11 +31238,11 @@ var _axios = __webpack_require__(16);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _AudioFormUpload = __webpack_require__(551);
+var _AudioFormUpload = __webpack_require__(550);
 
 var _AudioFormUpload2 = _interopRequireDefault(_AudioFormUpload);
 
-var _AudioCrud = __webpack_require__(550);
+var _AudioCrud = __webpack_require__(549);
 
 var _AudioCrud2 = _interopRequireDefault(_AudioCrud);
 
@@ -32273,7 +32273,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 550:
+/***/ 549:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32281,11 +32281,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioCrud_vue__ = __webpack_require__(379);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioCrud_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioCrud_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioCrud_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioCrud_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1cf4984d_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_AudioCrud_vue__ = __webpack_require__(614);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1cf4984d_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_AudioCrud_vue__ = __webpack_require__(613);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(672)
+  __webpack_require__(671)
 }
 var normalizeComponent = __webpack_require__(7)
 /* script */
@@ -32332,7 +32332,7 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 551:
+/***/ 550:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -32340,11 +32340,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioFormUpload_vue__ = __webpack_require__(380);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioFormUpload_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioFormUpload_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioFormUpload_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_AudioFormUpload_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_042f6034_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_AudioFormUpload_vue__ = __webpack_require__(607);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_042f6034_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_AudioFormUpload_vue__ = __webpack_require__(606);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(670)
+  __webpack_require__(669)
 }
 var normalizeComponent = __webpack_require__(7)
 /* script */
@@ -49562,7 +49562,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 607:
+/***/ 606:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49901,7 +49901,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 614:
+/***/ 613:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49953,7 +49953,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 670:
+/***/ 669:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -49980,7 +49980,7 @@ if(false) {
 
 /***/ }),
 
-/***/ 672:
+/***/ 671:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -50117,7 +50117,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 734:
+/***/ 733:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(437);
@@ -62695,4 +62695,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[734]);
+},[733]);

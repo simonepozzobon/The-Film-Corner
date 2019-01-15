@@ -13046,7 +13046,7 @@ var _vue = __webpack_require__(24);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _WelcomeForm = __webpack_require__(585);
+var _WelcomeForm = __webpack_require__(584);
 
 var _WelcomeForm2 = _interopRequireDefault(_WelcomeForm);
 
@@ -30320,7 +30320,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 585:
+/***/ 584:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30328,11 +30328,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_WelcomeForm_vue__ = __webpack_require__(414);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_WelcomeForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_WelcomeForm_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_WelcomeForm_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_WelcomeForm_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2af29e32_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_WelcomeForm_vue__ = __webpack_require__(617);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_2af29e32_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_WelcomeForm_vue__ = __webpack_require__(616);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(685)
+  __webpack_require__(684)
 }
 var normalizeComponent = __webpack_require__(7)
 /* script */
@@ -30436,7 +30436,7 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 617:
+/***/ 616:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -30579,7 +30579,7 @@ if (false) {
 
 /***/ }),
 
-/***/ 685:
+/***/ 684:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -30716,7 +30716,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 752:
+/***/ 751:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(456);
@@ -31047,4 +31047,4 @@ function applyToTag (styleElement, obj) {
 
 /***/ })
 
-},[752]);
+},[751]);
