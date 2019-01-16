@@ -113,8 +113,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/variables';
-@import '~styles/mixins';
+@import '~styles/shared';
 
     .single-item {
         display: table-row;

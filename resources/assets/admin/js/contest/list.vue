@@ -155,8 +155,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~styles/variables';
-@import '~styles/mixins';
+@import '~styles/shared';
 
     .panel {
         > .reset-filters {

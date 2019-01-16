@@ -1,0 +1,123 @@
+
+.btn-green {
+  @include tfc-button-variant($tfc-green, $tfc-dark-green);
+}
+
+.btn-yellow {
+  @include tfc-button-variant($tfc-yellow, $tfc-dark-yellow);
+}
+
+.btn-blue {
+  @include tfc-button-variant($tfc-blue, $tfc-dark-blue);
+}
+
+.btn-orange {
+  @include tfc-button-variant($tfc-orange, $tfc-dark-orange);
+}
+
+.btn-gray {
+  @include tfc-button-variant($gray-lightest, $gray-lighter);
+}
+
+
+
+@if $enable-grid-classes {
+  .row {
+    @include make-row();
+  }
+
+  // Remove the negative margin from default .row, then the horizontal padding
+  // from all immediate children columns (to prevent runaway style inheritance).
+  .mt {
+    margin-top: $spacer;
+  }
+
+  .mb {
+    margin-bottom: $spacer;
+  }
+
+  .pt {
+    padding-top: $spacer;
+  }
+
+  .pb {
+    padding-bottom: $spacer;
+  }
+
+  .no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
+  }
+}
+
+//
+// Main Menu Responsive
+//
+
+#main-menu-container {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+#main-menu {
+  position: sticky;
+  top: 0;
+  height: 90px;
+  flex-direction: row;
+  background-color: $nav-gray;
+
+  > .navbar-brand {
+    flex-direction: column;
+  }
+
+  > ul {
+    > li {
+      > a {
+        line-height: 1.5rem;
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
+
+
+#main-menu {
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($breakpoint, $grid-breakpoints);
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    &#{$infix} {
+      @include media-breakpoint-down($breakpoint) {
+
+        > .navbar-collapse {
+          position: absolute;
+          flex-direction: row;
+          width: 100%;
+          top: 90%;
+          right: 0;
+          background-color: lighten($nav-gray, 25%);
+
+          > ul {
+            flex-direction: row;
+            align-items: center;
+
+            > li {
+              padding: 0;
+            }
+          }
+        }
+      }
+
+      @include media-breakpoint-up($next) {
+
+      }
+    }
+  }
+}

@@ -18,7 +18,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import '~styles/variables';
+  @import '~styles/shared';
 
   #empty-slot {
     width: $spacer * 2;
