@@ -60,10 +60,59 @@ class MediaLibraryController extends Controller
     }
 
     public function fix_offscreen() {
-        $app = App::where('id', 5)->first();
+        $app = App::find(5);
+        $category = 2; // General, App, Example => App
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
         $path = "apps/library/film-specific/editing/offscreen/video/app";
-        $storage_path = storage_path('app/public/'.$path);
-        $files = Storage::disk('local')->files($storage_path);
-        dd($files);
+        $files = Storage::disk('local')->files('/public/'.$path);
+
+        $thumb = '';
+        $src = '';
+        foreach ($files as $key => $file) {
+            $ext = pathinfo($file, PATHINFO_EXTENSION);
+            if ($ext == 'mp4') {
+                $filename = pathinfo($file, PATHINFO_FILENAME);
+                $src = $file;
+                $thumb = $path.'/'.$filename.'-thumb.jpg';
+
+                $video = new Video();
+                $video->category_id = 2;
+                $video->title = $filename;
+                $video->img = $thumb;
+                $video->src = $src;
+                $video->duration = 0;
+                $video->save();
+
+                $app->videos()->save($video);
+                $app_category->videos()->save($video);
+                $pavilion->videos()->save($video);
+
+                echo 'Video Salvato -> '.$video->title;
+            }
+        }
+    }
+
+    public function active_parallel_action_video_library() {
+        $app = App::find(11);
+        $category = 2; // General, App, Example => App
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        $app->videos()->detach();
+
+        // preparo la creazione della nuova
+        $media_origin = App::find(4); // sound Atmosphere, video muti
+        $videos = $media_origin->videos()->where('category_id', '=', 2)->get();
+
+        // Salvo i nuovi video
+        foreach ($videos as $key => $video) {
+            $app->videos()->save($video);
+            $app_category->videos()->save($video);
+            $pavilion->videos()->save($video);
+        }
+
+        echo 'Fatto!';
     }
 }
