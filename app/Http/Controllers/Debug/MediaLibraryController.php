@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Debug;
 
 use App\App;
+use App\Video;
 use App\MultiSubcategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class MediaLibraryController extends Controller
 {
@@ -55,5 +57,13 @@ class MediaLibraryController extends Controller
         }
 
         return $librariesIds;
+    }
+
+    public function fix_offscreen() {
+        $app = App::where('id', 5)->first();
+        $path = "apps/library/film-specific/editing/offscreen/video/app";
+        $storage_path = storage_path('app/public/'.$path);
+        $files = Storage::disk('local')->files($storage_path);
+        dd($files);
     }
 }

@@ -13,6 +13,7 @@ use App\Events\UserSignin;
 
 // Route::get('/test', 'Admin\StatsController@get_page_views');
 Route::get('/test', 'Debug\MediaLibraryController@media_library_fix');
+Route::get('/fix-offscreen', 'Debug\MediaLibraryController@fix_offscreen');
 
 Route::get('/timeline', function(){
     return view('timeline');
