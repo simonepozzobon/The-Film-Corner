@@ -14,6 +14,7 @@ use App\Events\UserSignin;
 // Route::get('/test', 'Admin\StatsController@get_page_views');
 Route::get('/test', 'Debug\MediaLibraryController@media_library_fix');
 Route::get('/fix-offscreen', 'Debug\MediaLibraryController@fix_offscreen');
+Route::get('/fix-active-offscreen', 'Debug\MediaLibraryController@fix_active_offscreen');
 Route::get('/fix-parallel-action', 'Debug\MediaLibraryController@active_parallel_action_video_library');
 
 Route::get('/timeline', function(){

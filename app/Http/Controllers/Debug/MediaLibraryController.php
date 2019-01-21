@@ -39,7 +39,6 @@ class MediaLibraryController extends Controller
                         }
                     }
                 }
-
                 dump('app title -> '.$app->title);
                 dump($librariesIds);
                 dump($medias);
@@ -104,6 +103,28 @@ class MediaLibraryController extends Controller
 
         // preparo la creazione della nuova
         $media_origin = App::find(4); // sound Atmosphere, video muti
+        $videos = $media_origin->videos()->where('category_id', '=', 2)->get();
+
+        // Salvo i nuovi video
+        foreach ($videos as $key => $video) {
+            $app->videos()->save($video);
+            $app_category->videos()->save($video);
+            $pavilion->videos()->save($video);
+        }
+
+        echo 'Fatto!';
+    }
+
+    public function fix_active_offscreen() {
+        $app = App::find(10);
+        $category = 2; // General, App, Example => App
+        $app_category = $app->category()->first();
+        $pavilion = $app_category->section()->first();
+
+        $app->videos()->detach();
+
+        // preparo la creazione della nuova
+        $media_origin = App::find(5);
         $videos = $media_origin->videos()->where('category_id', '=', 2)->get();
 
         // Salvo i nuovi video
