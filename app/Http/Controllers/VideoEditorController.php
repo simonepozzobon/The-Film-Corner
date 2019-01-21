@@ -14,8 +14,78 @@ use App\AppsSessions\StudentAppSession;
 class VideoEditorController extends Controller
 {
     public function updateEditor(Request $request) {
+        // inizializzo la sessione
+        $Video = new Video;
+
+        // definisco la library di FFMPEG
+        define('FFMPEG_LIB', '/usr/local/bin/ffmpeg');
+
+        // Prendo l'id della sessione
+        $session_id = $request->session;
+
+        // Preparo le cartelle per l'export
+        $paths = $this->scaffold_video($session_id);
+
+        // ridefinisco le paths
+        $storePath = $paths['store_path'];
+        $srcPath = $paths['srcPath'];
+        $tmpPath = $paths['tmpPath'];
+        $expPath = $paths['expPath'];
+
+        // decode timelines
+        $timelines = json_decode($request->timelines);
+
+        // sort timelines by start time
+        $timelines = collect($timelines)->sortBy('start')->all();
+
+        // Per ogni file nella timeline verifico se è già presente nel progetto e lo copio nella cartella src
+        foreach ($timelines as $key => $timeline) {
+          $mediaPath = urldecode($timeline->src);
+          $srcFilename = pathinfo($mediaPath, PATHINFO_FILENAME);
+          $srcPath = $storePath.'/src/'.$srcFilename;
+          // Se il file non è presente allora lo copio dalla libreria
+          if (!file_exists($srcPath)) {
+            // qui copio i file nella cartella src
+            Storage::copy('public/'.$mediaPath, 'public/video/sessions/'.$session_id.'/src/'.$srcFilename);
+          }
+        }
+
+        $dataLenght = $timelines->count();
+
         return [
-            'request' => $request->all()
+            'request' => $request->all(),
+            'timelines' => $timelines,
+            'type' => gettype($timelines),
+            'dataLenght' => $dataLenght,
+            // 'start' => $start
+        ];
+    }
+
+    public function scaffold_video($session_id) {
+        $storePath = storage_path('app/public/video/sessions/'.$session_id);
+        $srcPath = $storePath.'/src';
+        $tmpPath = $storePath.'/tmp';
+        $expPath = $storePath.'/exp';
+
+        // Se non esiste la cartella src la creo
+        if (!file_exists($srcPath)) {
+          $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/src', 0777, true);
+        }
+
+        // Se non esiste la cartella tmp la Creo
+        if (!file_exists($tmpPath)) {
+          $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/tmp', 0777, true);
+        }
+
+        if (!file_exists($expPath)) {
+          $mkdir = Storage::makeDirectory('public/video/sessions/'.$session_id.'/exp', 0777, true);
+        }
+
+        return [
+            'store_path' => $storePath,
+            'srcPath' => $srcPath,
+            'tmpPath' => $tmpPath,
+            'expPath' => $expPath,
         ];
     }
 

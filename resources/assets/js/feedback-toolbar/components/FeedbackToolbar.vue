@@ -4,7 +4,7 @@
       class="feedback-tooltip"
       ref="feedback_tooltip"
     >
-      Leave your ideas or you comments
+      Leave your ideas or your comments
     </div>
     <div
       class="feedback-bg"
