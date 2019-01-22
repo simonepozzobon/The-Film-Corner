@@ -1,4 +1,4 @@
-<nav id="main-menu" class="navbar navbar-toggleable-md navbar-light bg-faded fixed-top">
+<nav id="main-menu" class="navbar navbar-light bg-faded navbar-expand-lg fixed-top">
   {{-- Mobile --}}
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -116,8 +116,8 @@
   </div>
 
     {{-- Desktop --}}
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav justify-content-end">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a href="{{ url('/') }}" class="nav-link">Home</a>
         </li>

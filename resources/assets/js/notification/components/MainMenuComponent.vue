@@ -1,6 +1,6 @@
 <template>
 <div id="main-menu-component">
-    <nav id="main-menu" class="navbar navbar-toggleable-md navbar-light fixed-top">
+    <nav id="main-menu" class="navbar navbar-expand-lg navbar-light fixed-top">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menu-main" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"/>
       </button>
@@ -131,8 +131,8 @@
         </div>
 
         <!--  Desktop  -->
-        <div class="collapse navbar-collapse justify-content-end" id="menu-main">
-            <ul class="navbar-nav justify-content-around">
+        <div class="collapse navbar-collapse" id="menu-main">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Apps">
                     <a :href="'/'+type" class="nav-link">
                         <i class="fa fa-home" aria-hidden="true"/>

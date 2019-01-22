@@ -21,15 +21,23 @@ new Vue({
     data: function() {
         return {
             timelines: [],
-            showLoader: true,
+            showLoader: false,
+        }
+    },
+    watch: {
+        timelines: function(timelines) {
+            console.log('changed')
+            this.updateEditor()
         }
     },
     methods: {
         updateEditor: function() {
             this.showLoader = true
+            let session = window.$session
 
             let data = new FormData()
-            data.append('timelines', this.timelines)
+            data.append('session', session.token)
+            data.append('timelines', JSON.stringify(this.timelines))
             axios.post('/api/v1/video-edit', data).then(response => {
                 console.log(response)
                 this.showLoader = false

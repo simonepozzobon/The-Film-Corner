@@ -97,7 +97,7 @@
       @include media-breakpoint-down($breakpoint) {
 
         > .navbar-collapse {
-          position: absolute;
+          // position: absolute;
           flex-direction: row;
           width: 100%;
           top: 90%;
