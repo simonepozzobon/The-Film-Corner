@@ -48235,7 +48235,6 @@ var timeline = new _vue2.default({
             });
         },
         updateEditor: _.debounce(function (e) {
-            console.log('ciao', e, timeline.$refs);
             timeline.$refs.videoPreview.showLoader();
 
             timeline.reformatTimelines().then(function (cache) {

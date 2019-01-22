@@ -50,7 +50,6 @@ const timeline = new Vue({
             })
         },
         updateEditor: _.debounce(e => {
-            console.log('ciao', e, timeline.$refs)
             timeline.$refs.videoPreview.showLoader()
 
             timeline.reformatTimelines().then(cache => {
