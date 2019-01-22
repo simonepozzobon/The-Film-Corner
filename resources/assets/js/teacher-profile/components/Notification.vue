@@ -123,7 +123,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '~styles/variables';
+@import '~styles/shared';
 
 #notification {
     margin-bottom: $spacer * 3 / 4;

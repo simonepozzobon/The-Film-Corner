@@ -5,15 +5,14 @@
 
 // Font Awesome
 $fa-font-path: "../../../node_modules/font-awesome/fonts" !default;
-@import 'node_modules/font-awesome/scss/font-awesome.scss';
 // @import "node_modules/font-awesome/css/font-awesßome.css";
 
 // Variables
-@import "resources/assets/sass/_variables.scss";
 
 // Bootstrap
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "node_modules/bootstrap/scss/bootstrap.scss";
+@import "resources/assets/sass/app.scss";
+@import "resources/assets/sass/_variables.scss";
+@import 'node_modules/font-awesome/scss/font-awesome.scss';
 
 body {
   text-rendering: optimizeLegibility;

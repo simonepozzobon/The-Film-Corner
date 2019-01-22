@@ -19,8 +19,7 @@
             :w="track.duration"
             @dragging="onDrag"
             @resizing="onResize">
-            <div class="media-element">
-            </div>
+                <div class="media-element"></div>
         </vue-draggable-resizable>
     </div>
 </div>
@@ -107,8 +106,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '~styles/variables';
-@import '~styles/mixins';
+@import '~styles/shared';
 
 .timeline-track {
     height: $spacer * 1.5;

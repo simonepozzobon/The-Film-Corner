@@ -78,8 +78,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '~styles/variables';
-@import '~styles/mixins';
+@import '~styles/shared';
 
 #fullscreen-message {
     position: fixed;
@@ -103,7 +102,7 @@ export default {
         font-weight: 900;
         text-transform: uppercase;
         color: $black;
-        font-size: $font-size-h1;
+        font-size: $h1-font-size;
         line-height: 2.83rem;
         position: absolute;
         left: 50%;

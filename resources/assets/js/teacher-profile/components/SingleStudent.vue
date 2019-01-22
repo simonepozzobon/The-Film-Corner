@@ -80,7 +80,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import '~styles/variables';
+  @import '~styles/shared';
 
   #single-student {
     width: $spacer * 2;

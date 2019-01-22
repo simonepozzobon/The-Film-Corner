@@ -9,3 +9,49 @@
 @mixin custom-inner-shadow($color) {
   box-shadow: inset 0px 0px ($spacer * 2) rgba($color, .1);
 }
+
+//
+// Custom Variant for TFC
+//
+@mixin tfc-button-variant($color, $background) {
+  $active-background: $black;
+  $active-border: $black;
+
+  color: $black;
+  background-color: $background;
+  border-color: $background;
+  @include box-shadow($btn-box-shadow);
+
+  // Hover and focus styles are shared
+  @include hover {
+    color: $color;
+    background-color: $active-background;
+    border-color: $active-border;
+  }
+  &:focus,
+  &.focus {
+    // Avoid using mixin so we can pass custom focus shadow properly
+    @if $enable-shadows {
+      box-shadow: $btn-box-shadow, 0 0 0 2px rgba($background, .5);
+    } @else {
+      box-shadow: 0 0 0 2px rgba($background, .5);
+    }
+  }
+
+  // Disabled comes first so active can properly restyle
+  &.disabled,
+  &:disabled {
+    background-color: $background;
+    border-color: $background;
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $color;
+    background-color: $active-background;
+    background-image: none; // Remove the gradient for the pressed/active state
+    border-color: $active-border;
+    @include box-shadow($btn-active-box-shadow);
+  }
+}
