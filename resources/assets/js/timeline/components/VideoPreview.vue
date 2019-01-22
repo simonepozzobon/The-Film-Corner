@@ -39,19 +39,20 @@ export default {
     },
     watch: {
         '$root.showLoader': function(loader) {
-            if (loader) {
-                console.log('show loader')
-                this.showLoader()
-            } else {
-                console.log('hide loader')
-                this.hideLoader()
-            }
+            // if (loader) {
+            //     this.showLoader()
+            // } else {
+            //     this.hideLoader()
+            // }
         }
     },
     methods: {
         init: function() {
             let loader = this.$refs.loader,
-            player = this.$refs.videoPlayer.$el
+            player = this.$refs.videoPlayer.$el,
+            height = player.offsetHeight
+
+            loader.style.height = height + 'px'
 
             this.master = new TimelineMax({
                 paused: true,
@@ -60,7 +61,7 @@ export default {
 
             this.master.fromTo(loader, .6, {
                 autoAlpha: 1,
-                display: 'block',
+                display: 'flex',
             }, {
                 autoAlpha: 0,
                 display: 'none'
@@ -79,11 +80,44 @@ export default {
             console.log('player loaded')
         },
         showLoader: function() {
+            console.log('show loader')
             this.master.pause().progress(0).play()
         },
         hideLoader: function() {
-            this.master.pause().progress(1).reverse()
-        }
+            console.log('hide loader')
+            // this.master.pause().reverse()
+        },
+        changeSrc: function(src = null) {
+            return new Promise(resolve => {
+                this.playerOptions.sources[0].src = src
+                this.playerOptions.poster = ''
+                resolve()
+            })
+        },
+        play: function() {
+            this.$refs.videoPlayer.player.play()
+        },
+        pause: function() {
+            this.$refs.videoPlayer.player.pause()
+        },
+        stop: function() {
+            this.$refs.videoPlayer.player.pause()
+            this.$refs.videoPlayer.player.currentTime(0)
+        },
+        backward: function() {
+            this.$refs.videoPlayer.player.pause()
+            let position = this.$refs.videoPlayer.player.currentTime()
+            if (position >= 5) {
+                this.$refs.videoPlayer.player.currentTime(position - 5)
+            } else {
+                this.$refs.videoPlayer.player.currentTime(0)
+            }
+        },
+        forward: function() {
+            this.$refs.videoPlayer.player.pause()
+            let position = this.$refs.videoPlayer.player.currentTime()
+            console.log('da terminare')
+        },
     },
     mounted: function() {
         this.init()
@@ -94,6 +128,12 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
+#video-player {
+    #loader {
+        justify-content: center;
+        align-items: center;
+    }
+}
 .video-player-box {
     // display: none;
     // opacity: 0;

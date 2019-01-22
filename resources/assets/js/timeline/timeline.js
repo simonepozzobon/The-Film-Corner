@@ -22,6 +22,7 @@ new Vue({
         return {
             timelines: [],
             showLoader: false,
+            src: null,
         }
     },
     watch: {
@@ -32,7 +33,8 @@ new Vue({
     },
     methods: {
         updateEditor: function() {
-            this.showLoader = true
+            // this.showLoader = true
+            this.$refs.videoPreview.showLoader()
             let session = window.$session
 
             let data = new FormData()
@@ -40,7 +42,8 @@ new Vue({
             data.append('timelines', JSON.stringify(this.timelines))
             axios.post('/api/v1/video-edit', data).then(response => {
                 console.log(response)
-                this.showLoader = false
+                // this.showLoader = false
+                this.$refs.videoPreview.changeSrc(response.data.export)
             })
         },
         addTimeline: function(obj) {
@@ -53,7 +56,22 @@ new Vue({
                 img: obj.img
             }
             this.timelines.push(timeline)
-        }
+        },
+        play: function() {
+            this.$refs.videoPreview.play()
+        },
+        pause: function() {
+            this.$refs.videoPreview.pause()
+        },
+        stop: function() {
+            this.$refs.videoPreview.stop()
+        },
+        backward: function() {
+            this.$refs.videoPreview.backward()
+        },
+        forward: function() {
+            this.$refs.videoPreview.forward()
+        },
     },
     mounted: function() {
         this.$on('add-to-timeline', obj => {

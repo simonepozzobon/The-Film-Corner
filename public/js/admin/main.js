@@ -7026,6 +7026,62 @@ process.umask = function() { return 0; };
 /* 6 */
 /***/ (function(module, exports) {
 
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function() {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		var result = [];
+		for(var i = 0; i < this.length; i++) {
+			var item = this[i];
+			if(item[2]) {
+				result.push("@media " + item[2] + "{" + item[1] + "}");
+			} else {
+				result.push(item[1]);
+			}
+		}
+		return result.join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
 /* globals __VUE_SSR_CONTEXT__ */
 
 // IMPORTANT: Do NOT use ES2015 features in this file.
@@ -7132,7 +7188,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7232,7 +7288,7 @@ module.exports = defaults;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -7453,7 +7509,7 @@ function applyToTag (styleElement, obj) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8245,62 +8301,6 @@ const TimelineLite = __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__["j" /* _gsScope
 /* unused harmony export TimelineLite */
 
 
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function() {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		var result = [];
-		for(var i = 0; i < this.length; i++) {
-			var item = this[i];
-			if(item[2]) {
-				result.push("@media " + item[2] + "{" + item[1] + "}");
-			} else {
-				result.push(item[1]);
-			}
-		}
-		return result.join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
 
 
 /***/ }),
@@ -12776,7 +12776,7 @@ const RoundPropsPlugin = __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__["j" /* _gsS
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TimelineLite_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TimelineLite_js__ = __webpack_require__(10);
 /* unused harmony reexport TimelineLite */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TimelineMax; });
 /*!
@@ -24282,7 +24282,7 @@ module.exports = Vue;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TimelineLite_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TimelineLite_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TimelineMax_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__TweenMax_js__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CSSPlugin_js__ = __webpack_require__(19);
@@ -24651,7 +24651,7 @@ module.exports = function listToStyles (parentId, list) {
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(15);
 var Axios = __webpack_require__(33);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 
 /**
  * Create an instance of Axios
@@ -24771,7 +24771,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(34);
 var dispatchRequest = __webpack_require__(35);
@@ -24926,7 +24926,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -25520,7 +25520,7 @@ function isSlowBuffer (obj) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__AttrPlugin_js__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__RoundPropsPlugin_js__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__DirectionalRotationPlugin_js__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TimelineLite_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TimelineLite_js__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__TimelineMax_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__BezierPlugin_js__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__EasePack_js__ = __webpack_require__(21);
@@ -55817,7 +55817,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(739)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69229,7 +69229,7 @@ var app = new _vue2.default({
 /* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n#only-desktop {\n  display: block;\n  opacity: 1;\n  transition: all 0.2s ease-in-out;\n}\n#stats {\n  display: none;\n  opacity: 0;\n  transition: all 0.2s ease-in-out;\n}\n@media (min-width: 992px) {\n#only-desktop {\n    display: none;\n    opacity: 0;\n    transition: all 0.2s ease-in-out;\n}\n#stats {\n    display: block;\n    opacity: 1;\n    transition: all 0.2s ease-in-out;\n}\n}\n", ""]);
 
 /***/ }),
@@ -69245,7 +69245,7 @@ exports.push([module.i, "\n#only-desktop {\n  display: block;\n  opacity: 1;\n  
 /* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
@@ -69268,7 +69268,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n.v-spinner .v-moon1\n{\n    animation: v-moonStretchDelay 0.6s 0s infinite linear;\n    animation-fill-mode: forwards;\n    position: relative;\n}\n.v-spinner .v-moon2\n{\n    animation: v-moonStretchDelay 0.6s 0s infinite linear;\n    animation-fill-mode: forwards;\n    opacity: 0.8;\n    position: absolute;\n}\n.v-spinner .v-moon3\n{\n    opacity: 0.1;\n}\n@keyframes v-moonStretchDelay\n{\n100%\n    {\n        transform: rotate(360deg);\n}\n}\n", ""]);
 
 /***/ }),
@@ -69278,7 +69278,7 @@ exports.push([module.i, "\n.v-spinner .v-moon1\n{\n    animation: v-moonStretchD
 /* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "", ""]);
 
 /***/ }),
@@ -69290,7 +69290,7 @@ exports.push([module.i, "", ""]);
 /* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n#geo-list {\n  display: none;\n  opacity: 0;\n  transition: height 0.35s ease;\n}\n#geo-chart {\n  transition: height 0.35s ease;\n}\n#country-tools > .map, #country-tools > .listed {\n  cursor: pointer;\n  transition: all 0.2s ease-in-out;\n}\n#country-tools > .map:hover, #country-tools > .listed:hover {\n    color: rgba(37, 37, 37, 0.33);\n}\n#country-tools > .map.active, #country-tools > .listed.active {\n    color: #ff878f;\n    transition: all 0.2s ease-in-out;\n}\n", ""]);
 
 /***/ }),
@@ -69299,7 +69299,7 @@ exports.push([module.i, "\n#geo-list {\n  display: none;\n  opacity: 0;\n  trans
 /* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n#charts-container {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: distribute;\n      justify-content: space-around;\n}\n#charts-container > #users-age-chart,\n  #charts-container > #users-gender-chart {\n    min-height: 400px;\n    width: 50%;\n}\n", ""]);
 
 /***/ }),
@@ -69316,14 +69316,14 @@ exports.push([module.i, "\n#charts-container {\n  display: -ms-flexbox;\n  displ
 /* 530 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n#browser-list {\n  display: none;\n  opacity: 0;\n}\n#browser-tools > .pie, #browser-tools > .listed {\n  cursor: pointer;\n  transition: all 0.2s ease-in-out;\n}\n#browser-tools > .pie:hover, #browser-tools > .listed:hover {\n    color: rgba(37, 37, 37, 0.33);\n}\n#browser-tools > .pie.active, #browser-tools > .listed.active {\n    color: #ff878f;\n    transition: all 0.2s ease-in-out;\n}\n#browser-chart {\n  min-height: 400px;\n  width: 100%;\n}\n", ""]);
 
 /***/ }),
 /* 531 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(10)();
+exports = module.exports = __webpack_require__(6)();
 exports.push([module.i, "\n.box-header[data-v-b1ca3cbe] {\n  -ms-flex-align: center;\n      align-items: center;\n}\n.box-header .box-tools[data-v-b1ca3cbe] {\n    margin-left: auto;\n}\n.box-header .box-tools > .slot-tools[data-v-b1ca3cbe] {\n      display: -ms-flexbox;\n      display: flex;\n}\n", ""]);
 
 /***/ }),
@@ -69361,7 +69361,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(690)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69422,7 +69422,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(718)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69498,7 +69498,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(738)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69556,7 +69556,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(724)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69614,7 +69614,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(694)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69672,7 +69672,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(687)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -69730,7 +69730,7 @@ function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(727)
 }
-var normalizeComponent = __webpack_require__(6)
+var normalizeComponent = __webpack_require__(7)
 /* script */
 
 
@@ -70778,7 +70778,7 @@ var content = __webpack_require__(479);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("7427338b", content, false);
+var update = __webpack_require__(9)("7427338b", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70827,7 +70827,7 @@ var content = __webpack_require__(510);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("52f3590c", content, false);
+var update = __webpack_require__(9)("52f3590c", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70858,7 +70858,7 @@ var content = __webpack_require__(516);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("7a7631b2", content, false);
+var update = __webpack_require__(9)("7a7631b2", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70886,7 +70886,7 @@ var content = __webpack_require__(519);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("41a57681", content, false);
+var update = __webpack_require__(9)("41a57681", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70922,7 +70922,7 @@ var content = __webpack_require__(530);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("c5026dc6", content, false);
+var update = __webpack_require__(9)("c5026dc6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -70948,7 +70948,7 @@ var content = __webpack_require__(531);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("03aee5f6", content, false);
+var update = __webpack_require__(9)("03aee5f6", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags

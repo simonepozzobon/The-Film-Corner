@@ -19,9 +19,9 @@
   "/js/admin/footer.js": "/js/admin/footer.js",
   "/js/app/studio-home.js": "/js/app/studio-home.js",
   "/js/admin/keywords.js": "/js/admin/keywords.js",
+  "/js/feedback-toolbar.js": "/js/feedback-toolbar.js",
   "/js/network.js": "/js/network.js",
   "/js/upload.js": "/js/upload.js",
-  "/js/feedback-toolbar.js": "/js/feedback-toolbar.js",
   "/js/first-visit.js": "/js/first-visit.js",
   "/js/app.js": "/js/app.js",
   "/js/loader.js": "/js/loader.js",
@@ -30,11 +30,11 @@
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",
   "/css/app/2.1/dropzone.css": "/css/app/2.1/dropzone.css",
+  "/css/app.css": "/css/app.css",
+  "/css/admin/admin.css": "/css/admin/admin.css",
   "/js/vendor.js": "/js/vendor.js",
   "/js/city.js": "/js/city.js",
   "/js/conference/speakers.js": "/js/conference/speakers.js",
   "/js/manifest.js": "/js/manifest.js",
-  "/js/admin/admin.min.js": "/js/admin/admin.min.js",
-  "/css/admin/admin.css": "/css/admin/admin.css",
-  "/css/app.css": "/css/app.css"
+  "/js/admin/admin.min.js": "/js/admin/admin.min.js"
 }

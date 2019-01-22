@@ -17,7 +17,9 @@
                         {{ GeneralText::field('preview') }}
                     </div>
                     <div id="video-player" class="box-body">
-                        <video-preview></video-preview>
+                        <video-preview
+                            ref="videoPreview"
+                        ></video-preview>
                     </div>
                 </div>
             </div>

@@ -20,6 +20,9 @@
                             <i class="fa fa-forward" aria-hidden="true"></i>
                         </button>
                     </div>
+                    <button type="button" name="button" class="btn btn-secondary btn-orange" @click="updateEditor">
+                        Render
+                    </button>
                 </div>
             </div>
         </div>
@@ -30,11 +33,24 @@
 export default {
     name: 'ControlBar',
     methods: {
-        play: function() {},
-        pause: function() {},
-        stop: function() {},
-        backward: function() {},
-        forward: function() {},
+        play: function() {
+            this.$root.play()
+        },
+        pause: function() {
+            this.$root.pause()
+        },
+        stop: function() {
+            this.$root.stop()
+        },
+        backward: function() {
+            this.$root.backward()
+        },
+        forward: function() {
+            this.$root.forward()
+        },
+        updateEditor: function() {
+            this.$root.updateEditor()
+        }
     }
 }
 </script>

@@ -45,15 +45,7 @@ export default {
             tick: '10', //1s = Npx
             max_length: 5000 // in px
         },
-        tracks: [
-            // {
-            //     'id': 1,
-            //     'title': 'Titolo 1',
-            //     'duration': 100,
-            //     'start': 0,
-            //     'src': 'file'
-            // },
-        ]
+        tracks: []
     }),
     methods: {
         playheadStart: function() {
