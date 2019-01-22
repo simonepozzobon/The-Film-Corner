@@ -51005,7 +51005,7 @@ exports.default = {
         changeSrc: function changeSrc(src, poster) {
             this.playerOptions.sources[0].src = '/storage/' + src;
             this.playerOptions.poster = '/storage/' + poster;
-            $('#library-preview').modal('show');
+            $(this.$refs.modal).modal('show');
         }
     }
 };
@@ -51091,6 +51091,7 @@ var render = function() {
   return _c(
     "div",
     {
+      ref: "modal",
       staticClass: "modal fade",
       attrs: {
         id: "library-preview",

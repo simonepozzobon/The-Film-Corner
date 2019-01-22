@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="modal fade" id="library-preview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div ref="modal" class="modal fade" id="library-preview" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,7 +56,7 @@ export default {
         changeSrc: function(src, poster) {
             this.playerOptions.sources[0].src = '/storage/' + src
             this.playerOptions.poster = '/storage/' + poster
-            $('#library-preview').modal('show')
+            $(this.$refs.modal).modal('show')
         }
     }
 }
