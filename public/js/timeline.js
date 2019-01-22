@@ -47547,43 +47547,19 @@ var _TimelineTrack = __webpack_require__(614);
 
 var _TimelineTrack2 = _interopRequireDefault(_TimelineTrack);
 
+var _vueDraggableResizable = __webpack_require__(551);
+
+var _vueDraggableResizable2 = _interopRequireDefault(_vueDraggableResizable);
+
 var _gsap = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 exports.default = {
     name: 'Timeline',
     components: {
-        TimelineTrack: _TimelineTrack2.default
+        TimelineTrack: _TimelineTrack2.default,
+        VueDraggableResizable: _vueDraggableResizable2.default
     },
     watch: {
         '$root.timelines': function $rootTimelines(timelines) {
@@ -47596,7 +47572,9 @@ exports.default = {
                 tick: '10', //1s = Npx
                 max_length: 5000 // in px
             },
-            tracks: []
+            tracks: [],
+            playheadHeight: 300,
+            playheadPosition: 200
         };
     },
     methods: {
@@ -47611,26 +47589,19 @@ exports.default = {
             }
         },
         onResize: function onResize(obj) {
-            // obj = {
-            //     idx: this.idx,
-            //     start: x,
-            //     duration: width
-            // }
             var cache = this.$root.timelines[obj.idx];
             if (cache) {
-                var delta = parseInt();
                 cache.start = obj.start;
                 cache.duration = obj.duration;
-                console.log(cache.duration);
-                // this.$root.timelines.splice(obj.idx, 1, cache)
+                this.$root.timelines.splice(obj.idx, 1, cache);
             }
         },
         onDeleteTrack: function onDeleteTrack(track) {
-            var index = this.tracks.findIndex(function (singleTrack) {
+            var idx = this.tracks.findIndex(function (singleTrack) {
                 return singleTrack.id == track.id;
             });
-            if (index >= 0) {
-                this.$root.timelines.splice(index, 1);
+            if (idx >= 0) {
+                this.$root.timelines.splice(idx, 1);
             }
         },
         transitionBeforeEnter: function transitionBeforeEnter(el, done) {
@@ -47649,7 +47620,7 @@ exports.default = {
                 opacity: 1,
                 yPercent: 0,
                 delay: del,
-                ease: _gsap.Sine.easeOut,
+                ease: Sine.easeOut,
                 onComplete: done
             });
         },
@@ -47659,18 +47630,64 @@ exports.default = {
                 opacity: 0,
                 yPercent: 100,
                 position: 'relative',
-                ease: _gsap.Sine.easeOut
+                ease: Sine.easeOut
             }).to(el, .2, {
                 height: 0,
-                ease: _gsap.Sine.easeOut,
+                ease: Sine.easeOut,
                 onComplete: done
             });
         }
     },
     mounted: function mounted() {
+        var _this = this;
+
         this.playheadStart();
+        this.$root.$on('player-time-update', function (time) {
+            time = time * _this.$root.tick + 200;
+            _this.playheadPosition = parseInt(time);
+            _this.$refs.playhead.style.left = parseInt(time) + 'px';
+        });
     }
-};
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -47883,6 +47900,10 @@ exports.default = {
         }
     },
     methods: {
+        onPlayerTimeUpdate: function onPlayerTimeUpdate(player) {
+            var time = player.currentTime();
+            this.$root.$emit('player-time-update', time);
+        },
         init: function init() {
             var loader = this.$refs.loader,
                 player = this.$refs.videoPlayer.$el,
@@ -47917,7 +47938,8 @@ exports.default = {
         },
         showLoader: function showLoader() {
             console.log('show loader');
-            this.master.pause().progress(0).play();
+            this.master.pause().progress(0);
+            this.master.play(0);
         },
         hideLoader: function hideLoader() {
             console.log('hide loader');
@@ -47964,6 +47986,7 @@ exports.default = {
     }
 
 }; //
+//
 //
 //
 //
@@ -48343,7 +48366,7 @@ function isSlowBuffer (obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n#timeline[data-v-284ee8c4] {\n  position: relative;\n  background: #f7f7f9;\n  border-top: 1px solid rgba(37, 37, 37, 0.1);\n}\n#timeline.timeline-container[data-v-284ee8c4] {\n    padding: 0;\n}\n#timeline > .playhead[data-v-284ee8c4] {\n    position: absolute;\n    height: 100%;\n    border-right: 2px solid #FE595A;\n    top: 0;\n    left: 190px;\n}\n", ""]);
+exports.push([module.i, "\n#timeline[data-v-284ee8c4] {\n  position: relative;\n  background: #f7f7f9;\n  border-top: 1px solid rgba(37, 37, 37, 0.1);\n}\n#timeline.timeline-container[data-v-284ee8c4] {\n    padding: 0;\n}\n#timeline .playhead[data-v-284ee8c4] {\n    position: absolute;\n    border-right: 2px solid #FE595A;\n    height: 100%;\n    top: 0;\n    left: 200px;\n}\n", ""]);
 
 /***/ }),
 
@@ -49960,7 +49983,11 @@ var render = function() {
                 })
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "playhead", attrs: { id: "playhead" } })
+              _c("div", {
+                ref: "playhead",
+                staticClass: "playhead",
+                attrs: { id: "playhead" }
+              })
             ],
             1
           )
@@ -50363,7 +50390,12 @@ var render = function() {
       _c("video-player", {
         ref: "videoPlayer",
         staticClass: "video-player-box",
-        attrs: { options: _vm.playerOptions, playsinline: true }
+        attrs: { options: _vm.playerOptions, playsinline: true },
+        on: {
+          timeupdate: function($event) {
+            _vm.onPlayerTimeUpdate($event)
+          }
+        }
       })
     ],
     1

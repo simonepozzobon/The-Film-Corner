@@ -9,7 +9,8 @@
             class="video-player-box"
             ref="videoPlayer"
             :options="playerOptions"
-            :playsinline="true">
+            :playsinline="true"
+            @timeupdate="onPlayerTimeUpdate($event)">
         </video-player>
     </div>
 </template>
@@ -47,6 +48,10 @@ export default {
         }
     },
     methods: {
+        onPlayerTimeUpdate: function(player) {
+            let time = player.currentTime()
+            this.$root.$emit('player-time-update', time)
+        },
         init: function() {
             let loader = this.$refs.loader,
             player = this.$refs.videoPlayer.$el,
@@ -81,7 +86,8 @@ export default {
         },
         showLoader: function() {
             console.log('show loader')
-            this.master.pause().progress(0).play()
+            this.master.pause().progress(0)
+            this.master.play(0)
         },
         hideLoader: function() {
             console.log('hide loader')

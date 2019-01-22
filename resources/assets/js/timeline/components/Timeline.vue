@@ -19,7 +19,19 @@
                                 @on-drag="onDrag"
                                 @on-resize="onResize"/>
                         </transition-group>
-                        <div id="playhead" class="playhead"></div>
+                        <!-- <vue-draggable-resizable
+                            :parent="true"
+                            axis="x"
+                            :handles="['ml']"
+                            :x="this.playheadPosition"
+                            :w="1"
+                            :h="this.playheadHeight">
+                                <div class="">
+                                    {{ this.playheadPosition }}
+                                </div>
+                                <div ref="playhead" id="playhead" class="playhead"></div>
+                        </vue-draggable-resizable> -->
+                        <div ref="playhead" id="playhead" class="playhead"></div>
                     </div>
                 </div>
             </div>
@@ -28,15 +40,14 @@
 </template>
 <script>
 import TimelineTrack from './TimelineTrack.vue'
-import {
-    TimelineMax,
-    Sine
-} from 'gsap'
+import VueDraggableResizable from 'vue-draggable-resizable'
+import {TimelineMax} from 'gsap'
 
 export default {
     name: 'Timeline',
     components: {
-        TimelineTrack
+        TimelineTrack,
+        VueDraggableResizable
     },
     watch: {
         '$root.timelines': function(timelines) {
@@ -48,7 +59,9 @@ export default {
             tick: '10', //1s = Npx
             max_length: 5000 // in px
         },
-        tracks: []
+        tracks: [],
+        playheadHeight: 300,
+        playheadPosition: 200,
     }),
     methods: {
         playheadStart: function() {
@@ -62,26 +75,19 @@ export default {
             }
         },
         onResize: function(obj) {
-            // obj = {
-            //     idx: this.idx,
-            //     start: x,
-            //     duration: width
-            // }
             let cache = this.$root.timelines[obj.idx]
             if (cache) {
-                let delta = parseInt()
                 cache.start = obj.start
                 cache.duration = obj.duration
-                console.log(cache.duration)
-                // this.$root.timelines.splice(obj.idx, 1, cache)
+                this.$root.timelines.splice(obj.idx, 1, cache)
             }
         },
         onDeleteTrack: function(track) {
-            var index = this.tracks.findIndex((singleTrack) => {
+            var idx = this.tracks.findIndex((singleTrack) => {
                 return singleTrack.id == track.id
             })
-            if (index >= 0) {
-                this.$root.timelines.splice(index, 1)
+            if (idx >= 0) {
+                this.$root.timelines.splice(idx, 1)
             }
         },
         transitionBeforeEnter: function(el, done) {
@@ -121,6 +127,11 @@ export default {
     },
     mounted: function() {
         this.playheadStart()
+        this.$root.$on('player-time-update', time => {
+            time = (time * this.$root.tick) + 200
+            this.playheadPosition = parseInt(time)
+            this.$refs.playhead.style.left = parseInt(time) + 'px'
+        })
     },
 }
 </script>
@@ -136,12 +147,12 @@ export default {
         padding: 0;
     }
 
-    > .playhead {
+    .playhead {
         position: absolute;
-        height: 100%;
         border-right: 2px solid $red;
+        height: 100%;
         top: 0;
-        left: 190px;
+        left: 200px;
     }
 }
 </style>
