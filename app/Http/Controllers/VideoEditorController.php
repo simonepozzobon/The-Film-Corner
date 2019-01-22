@@ -76,12 +76,13 @@ class VideoEditorController extends Controller
                     $duration = $newDuration;
                 }
                 // Converto la durata in secondi
-                $duration = $Video->tToS($duration);
+                // $duration = $Video->tToS($duration);
             }
 
             // se la durata non è cambiata mantengo il file intatto
             if (!isset($duration)) {
-                $duration = $Video->tToS($timeline->duration);
+                // $duration = $Video->tToS($timeline->duration);
+                $duration = $timeline->duration;
             }
 
             //ffmpeg -ss [start] -i in.mp4 -t [duration] -c copy out.mp4
@@ -142,7 +143,7 @@ class VideoEditorController extends Controller
 
         return response([
             'app' => $session->app_id,
-            'export' => $exportPublicPath,
+            'export' => $exportPublicPath
         ]);
     }
 

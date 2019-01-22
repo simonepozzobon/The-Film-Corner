@@ -17,6 +17,7 @@
             :handles="['ml','mr']"
             :x="track.start"
             :w="track.duration"
+            :grid="[5,5]"
             @dragging="onDrag"
             @resizing="onResize">
                 <div class="media-element"></div>
@@ -41,6 +42,10 @@ export default {
         track: {
             type: Object,
             default: function() {},
+        },
+        idx: {
+            type: Number,
+            default: 0,
         }
     },
     data: () => ({
@@ -94,11 +99,23 @@ export default {
         onDrag: function(x, y) {
             this.position.x = x
             this.position.y = y
+            console.log('Drag', x)
+            this.$emit('on-drag', {
+                idx: this.idx,
+                start: x,
+            })
         },
         onResize: function(x, y, width) {
             this.length.x = x
             this.length.y = y
             this.length.w = width
+            console.log('Resize', x, width)
+
+            this.$emit('on-resize', {
+                idx: this.idx,
+                start: x,
+                duration: width
+            })
         },
     },
     mounted: function() {

@@ -10,11 +10,14 @@
                             @enter="transitionEnter"
                             @leave="transitionLeave">
                             <timeline-track
-                                v-for="(track, index) in tracks"
-                                :key="index"
+                                v-for="(track, idx) in tracks"
+                                :key="idx"
                                 :track="track"
-                                :data-index="index"
-                                @delete_track="onDeleteTrack" />
+                                :data-index="idx"
+                                :idx="idx"
+                                @delete_track="onDeleteTrack"
+                                @on-drag="onDrag"
+                                @on-resize="onResize"/>
                         </transition-group>
                         <div id="playhead" class="playhead"></div>
                     </div>
@@ -51,13 +54,34 @@ export default {
         playheadStart: function() {
             var playhead = document.getElementById('playhead')
         },
+        onDrag: function(obj) {
+            let cache = this.$root.timelines[obj.idx]
+            if (cache) {
+                cache.start = obj.start
+                this.$root.timelines.splice(obj.idx, 1, cache)
+            }
+        },
+        onResize: function(obj) {
+            // obj = {
+            //     idx: this.idx,
+            //     start: x,
+            //     duration: width
+            // }
+            let cache = this.$root.timelines[obj.idx]
+            if (cache) {
+                let delta = parseInt()
+                cache.start = obj.start
+                cache.duration = obj.duration
+                console.log(cache.duration)
+                // this.$root.timelines.splice(obj.idx, 1, cache)
+            }
+        },
         onDeleteTrack: function(track) {
             var index = this.tracks.findIndex((singleTrack) => {
                 return singleTrack.id == track.id
             })
             if (index >= 0) {
-                // this.tracks.splice(index, 1) // local
-                this.$root.timelines.splice(index, 1) // global
+                this.$root.timelines.splice(index, 1)
             }
         },
         transitionBeforeEnter: function(el, done) {

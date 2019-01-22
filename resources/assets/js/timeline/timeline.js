@@ -14,7 +14,10 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
-new Vue({
+import debounce from 'lodash/debounce'
+Vue.prototype.$debounce = _.debounce
+
+const timeline = new Vue({
     el: '#timeline',
     components: {
         ControlBar,
@@ -27,34 +30,49 @@ new Vue({
             timelines: [],
             showLoader: false,
             src: null,
+            tick: 10,
         }
     },
     watch: {
         timelines: function(timelines) {
-            console.log('changed')
             this.updateEditor()
         }
     },
     methods: {
-        updateEditor: function() {
-            // this.showLoader = true
-            this.$refs.videoPreview.showLoader()
-            let session = window.$session
-
-            let data = new FormData()
-            data.append('session', session.token)
-            data.append('timelines', JSON.stringify(this.timelines))
-            axios.post('/api/v1/video-edit', data).then(response => {
-                console.log(response)
-                // this.showLoader = false
-                this.$refs.videoPreview.changeSrc(response.data.export)
+        reformatTimelines: function() {
+            return new Promise(resolve => {
+                let cache = this.timelines.slice() // clone
+                for (var i = 0; i < cache.length; i++) {
+                    cache[i].start = cache[i].start / this.tick
+                    cache[i].duration = cache[i].duration / this.tick
+                }
+                resolve(cache)
             })
         },
+        updateEditor: _.debounce(e => {
+            console.log('ciao', e, timeline.$refs)
+            timeline.$refs.videoPreview.showLoader()
+
+            timeline.reformatTimelines().then(cache => {
+                console.log('prima di inviare', cache)
+                let session = window.$session
+                let data = new FormData()
+
+                data.append('session', session.token)
+                data.append('timelines', JSON.stringify(cache))
+
+                axios.post('/api/v1/video-edit', data).then(response => {
+                    console.log('render completato', response.data)
+                    timeline.$refs.videoPreview.changeSrc(response.data.export)
+                })
+            })
+
+        }, 500),
         addTimeline: function(obj) {
             let timeline = {
                 id: obj.id,
                 title: obj.title,
-                duration: obj.duration * 10,
+                duration: obj.duration * this.tick,
                 start: 0,
                 src: obj.src,
                 img: obj.img
