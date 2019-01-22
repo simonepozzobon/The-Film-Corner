@@ -47380,12 +47380,58 @@ var _LibraryItem = __webpack_require__(611);
 
 var _LibraryItem2 = _interopRequireDefault(_LibraryItem);
 
+var _UiModal = __webpack_require__(793);
+
+var _UiModal2 = _interopRequireDefault(_UiModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 exports.default = {
     name: 'Library',
     components: {
-        LibraryItem: _LibraryItem2.default
+        LibraryItem: _LibraryItem2.default,
+        UiModal: _UiModal2.default
     },
     props: {
         title: {
@@ -47412,42 +47458,13 @@ exports.default = {
     data: function data() {
         return {};
     },
+    methods: {
+        preview: function preview(src, poster) {
+            this.$refs.modal.changeSrc(src, poster);
+        }
+    },
     mounted: function mounted() {}
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -47460,6 +47477,11 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -47502,6 +47524,9 @@ exports.default = {
     methods: {
         addToTimeline: function addToTimeline() {
             this.$root.$emit('add-to-timeline', this.obj);
+        },
+        showPreview: function showPreview() {
+            this.$emit('preview', this.obj.src, this.obj.img);
         }
     }
 };
@@ -48067,7 +48092,7 @@ module.exports = function parseHeaders(headers) {
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 
 var _vue = __webpack_require__(24);
 
@@ -48100,6 +48125,10 @@ var _axios2 = _interopRequireDefault(_axios);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueVideoPlayer2.default);
+
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
 new _vue2.default({
     el: '#timeline',
@@ -48174,6 +48203,7 @@ new _vue2.default({
         });
     }
 });
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)))
 
 /***/ }),
 
@@ -49050,7 +49080,7 @@ module.exports = function(originalModule) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -50199,7 +50229,8 @@ var render = function() {
                     _vm._l(this.elementsParsed, function(item, i) {
                       return _c("library-item", {
                         key: i,
-                        attrs: { title: item.title, obj: item }
+                        attrs: { title: item.title, obj: item },
+                        on: { preview: _vm.preview }
                       })
                     })
                   )
@@ -50207,8 +50238,11 @@ var render = function() {
               ]
             )
           ]
-        )
-      ]
+        ),
+        _vm._v(" "),
+        _c("ui-modal", { ref: "modal", attrs: { title: "Preview" } })
+      ],
+      1
     )
   ])
 }
@@ -50301,8 +50335,10 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _vm._m(0),
+  return _c("div", { staticClass: "row align-items-center" }, [
+    _c("div", { staticClass: "col-md-2" }, [
+      _c("img", { attrs: { src: "/storage/" + this.obj.img, width: "57" } })
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-6" }, [
       _c("p", { staticClass: "p-2" }, [_vm._v(_vm._s(_vm.title))])
@@ -50310,7 +50346,24 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-md-4" }, [
       _c("div", { staticClass: "btn-group" }, [
-        _vm._m(1),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-secondary btn-yellow",
+            attrs: {
+              "data-toggle": "tooltip",
+              "data-placement": "top",
+              title: "Preview"
+            },
+            on: { click: _vm.showPreview }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-play",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
+        ),
         _vm._v(" "),
         _c(
           "button",
@@ -50334,33 +50387,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-2" }, [
-      _c("img", { attrs: { src: "", width: "57" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary btn-yellow",
-        attrs: {
-          "data-toggle": "tooltip",
-          "data-placement": "top",
-          title: "Add To Timeline"
-        }
-      },
-      [_c("i", { staticClass: "fa fa-play", attrs: { "aria-hidden": "true" } })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 var esExports = { render: render, staticRenderFns: staticRenderFns }
 /* harmony default export */ __webpack_exports__["a"] = (esExports);
@@ -50906,6 +50933,291 @@ if(false) {
 
 module.exports = __webpack_require__(469);
 
+
+/***/ }),
+
+/***/ 791:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+__webpack_require__(550);
+
+var _vueVideoPlayer = __webpack_require__(439);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+exports.default = {
+    name: 'UiModal',
+    props: {
+        title: {
+            type: String,
+            default: ''
+        }
+    },
+    data: function data() {
+        return {
+            playerOptions: {
+                aspectRatio: '16:9',
+                sources: [{
+                    type: 'video/mp4',
+                    src: '/img/test-app/oceans.mp4'
+                }],
+                poster: '/img/test-app/1.png'
+            }
+        };
+    },
+    methods: {
+        changeSrc: function changeSrc(src, poster) {
+            this.playerOptions.sources[0].src = '/storage/' + src;
+            this.playerOptions.poster = '/storage/' + poster;
+            $('#library-preview').modal('show');
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(61)))
+
+/***/ }),
+
+/***/ 792:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)();
+exports.push([module.i, "", ""]);
+
+/***/ }),
+
+/***/ 793:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue__ = __webpack_require__(791);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c5b06a8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UiModal_vue__ = __webpack_require__(794);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(795)
+}
+var normalizeComponent = __webpack_require__(7)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UiModal_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_1c5b06a8_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UiModal_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/timeline/components/UiModal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1c5b06a8", Component.options)
+  } else {
+    hotAPI.reload("data-v-1c5b06a8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 794:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "library-preview",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-labelledby": "exampleModalLabel",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "modal-dialog modal-dialog-centered",
+          attrs: { role: "document" }
+        },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _c("div", { staticClass: "modal-header" }, [
+              _c(
+                "h5",
+                {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.title) +
+                      "\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._m(0)
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "modal-body" },
+              [
+                _c("video-player", {
+                  ref: "videoPlayer",
+                  staticClass: "video-player-box",
+                  attrs: { options: _vm.playerOptions, playsinline: true }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-secondary",
+          attrs: { type: "button", "data-dismiss": "modal" }
+        },
+        [_vm._v("\n                    Close\n                ")]
+      )
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1c5b06a8", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 795:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(792);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(9)("542a15c4", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c5b06a8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UiModal.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-1c5b06a8\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UiModal.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 

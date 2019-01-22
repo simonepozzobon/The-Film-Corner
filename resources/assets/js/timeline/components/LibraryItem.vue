@@ -1,14 +1,19 @@
 <template lang="html">
-    <div class="row">
+    <div class="row align-items-center">
         <div class="col-md-2">
-            <img src="" width="57">
+            <img :src="'/storage/'+this.obj.img" width="57">
         </div>
         <div class="col-md-6">
             <p class="p-2">{{ title }}</p>
         </div>
         <div class="col-md-4">
             <div class="btn-group">
-                <button class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">
+                <button
+                    class="btn btn-secondary btn-yellow"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Preview"
+                    @click="showPreview">
                     <i class="fa fa-play" aria-hidden="true"></i>
                 </button>
                 <button
@@ -40,6 +45,9 @@ export default {
     methods: {
         addToTimeline: function() {
             this.$root.$emit('add-to-timeline', this.obj)
+        },
+        showPreview: function() {
+            this.$emit('preview', this.obj.src, this.obj.img)
         }
     }
 }

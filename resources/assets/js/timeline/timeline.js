@@ -10,6 +10,10 @@ Vue.use(VueVideoPlayer)
 
 import axios from 'axios'
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 new Vue({
     el: '#timeline',
     components: {

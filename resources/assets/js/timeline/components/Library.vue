@@ -24,22 +24,29 @@
                                 v-for="(item, i) in this.elementsParsed"
                                 :key="i"
                                 :title="item.title"
-                                :obj="item"/>
+                                :obj="item"
+                                @preview="preview"/>
                         </div>
                     </div>
                 </div>
             </div>
+            <ui-modal
+                ref="modal"
+                title="Preview"
+            />
         </div>
     </div>
 </template>
 
 <script>
 import LibraryItem from './LibraryItem.vue'
+import UiModal from './UiModal.vue'
 
 export default {
     name: 'Library',
     components: {
         LibraryItem,
+        UiModal,
     },
     props: {
         title: {
@@ -65,6 +72,11 @@ export default {
     },
     data: function() {
         return {
+        }
+    },
+    methods: {
+        preview: function(src, poster) {
+            this.$refs.modal.changeSrc(src, poster)            
         }
     },
     mounted: function() {
