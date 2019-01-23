@@ -190,7 +190,7 @@ Route::prefix('admin')->group(function () {
         Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
         Route::get('/soundstudio-video', 'ToolController@soundstudio_video_library');
         Route::get('/put-audio-on-whats-going-on', 'ToolController@put_audio_on_whats_going_on');
-        Route::get('/convert-to-mp3', 'ToolController@convert_library');
+        Route::get('/convert-to-mp3/{id}', 'ToolController@convert_library');
     });
 
     Route::prefix('contest')->group(function() {

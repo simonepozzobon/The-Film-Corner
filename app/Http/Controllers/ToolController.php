@@ -19,10 +19,10 @@ use Illuminate\Support\Facades\Storage;
 class ToolController extends Controller
 {
 
-    public function convert_library()
+    public function convert_library($id)
     {
         $category = MediaCategory::where('name', 'App')->first();
-        $app = App::find(7);
+        $app = App::find($id);
         $app_category = $app->category()->first();
         $pavilion = $app_category->section()->first();
 
