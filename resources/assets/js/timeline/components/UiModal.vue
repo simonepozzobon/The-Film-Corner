@@ -57,6 +57,11 @@ export default {
             this.playerOptions.sources[0].src = '/storage/' + src
             this.playerOptions.poster = '/storage/' + poster
             $(this.$refs.modal).modal('show')
+            $(this.$refs.modal).on('hide.bs.modal', () => {
+                this.$refs.videoPlayer.player.pause()
+                this.$refs.videoPlayer.player.currentTime(0)
+            })
+
         }
     }
 }

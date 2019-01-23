@@ -51171,9 +51171,15 @@ exports.default = {
     },
     methods: {
         changeSrc: function changeSrc(src, poster) {
+            var _this = this;
+
             this.playerOptions.sources[0].src = '/storage/' + src;
             this.playerOptions.poster = '/storage/' + poster;
             $(this.$refs.modal).modal('show');
+            $(this.$refs.modal).on('hide.bs.modal', function () {
+                _this.$refs.videoPlayer.player.pause();
+                _this.$refs.videoPlayer.player.currentTime(0);
+            });
         }
     }
 };
