@@ -18961,31 +18961,6 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 467:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _vue = __webpack_require__(24);
-
-var _vue2 = _interopRequireDefault(_vue);
-
-var _tfcChat = __webpack_require__(364);
-
-var _tfcChat2 = _interopRequireDefault(_tfcChat);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-new _vue2.default({
-  el: '#teacher-chat',
-  components: {
-    tfcChat: _tfcChat2.default
-  }
-});
-
-/***/ }),
-
 /***/ 47:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19018,6 +18993,31 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+
+/***/ 472:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _vue = __webpack_require__(24);
+
+var _vue2 = _interopRequireDefault(_vue);
+
+var _tfcChat = __webpack_require__(364);
+
+var _tfcChat2 = _interopRequireDefault(_tfcChat);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+new _vue2.default({
+  el: '#teacher-chat',
+  components: {
+    tfcChat: _tfcChat2.default
+  }
+});
 
 /***/ }),
 
@@ -38398,14 +38398,6 @@ function error(msg) {
 
 /***/ }),
 
-/***/ 776:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(467);
-
-
-/***/ }),
-
 /***/ 78:
 /***/ (function(module, exports) {
 
@@ -38494,6 +38486,14 @@ function polling (opts) {
 }
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+
+/***/ 793:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(472);
+
 
 /***/ }),
 
@@ -40382,4 +40382,4 @@ module.exports = yeast;
 
 /***/ })
 
-},[776]);
+},[793]);

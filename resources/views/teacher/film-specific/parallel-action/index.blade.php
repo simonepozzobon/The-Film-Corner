@@ -9,39 +9,42 @@
     </style>
 @endsection
 @section('content')
-    <div id="timeline" class="container-fluid">
-        <div class="row mt">
-            <div class="col-md-8">
-                <div class="box blue">
-                    <div class="box-header">
-                        {{ GeneralText::field('preview') }}
-                    </div>
-                    <div id="video-player" class="box-body">
-                        <video-preview
-                            ref="videoPreview"
-                        ></video-preview>
+    <div class="container-fluid">
+        @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher'])
+        <div id="timeline">
+            <div class="row mt">
+                <div class="col-md-8">
+                    <div class="box blue">
+                        <div class="box-header">
+                            {{ GeneralText::field('preview') }}
+                        </div>
+                        <div id="video-player" class="box-body">
+                            <video-preview
+                                ref="videoPreview"
+                            ></video-preview>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <library
+                        title="{{ GeneralText::field('library') }}"
+                        video-text="{{ GeneralText::field('video') }}"
+                        elements="{{ $elements }}"
+                    ></library>
+                </div>
             </div>
-            <div class="col-md-4">
-                <library
-                    title="{{ GeneralText::field('library') }}"
-                    video-text="{{ GeneralText::field('video') }}"
-                    elements="{{ $elements }}"
-                ></library>
-            </div>
-        </div>
-        <control-bar></control-bar>
-        <timeline></timeline>
-        <div class="row mt">
-            <div class="col">
-                <div class="box blue">
-                    <div class="box-header">
-                        {{ GeneralText::field('notes') }}
-                    </div>
-                    <div class="box-body">
-                        <div class="form-group">
-                            <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('parallel_action_desc') }}"></textarea>
+            <control-bar></control-bar>
+            <timeline></timeline>
+            <div class="row mt">
+                <div class="col">
+                    <div class="box blue">
+                        <div class="box-header">
+                            {{ GeneralText::field('notes') }}
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <textarea id="notes" name="notes" rows="8" class="form-control" placeholder="{{ GeneralText::field('parallel_action_desc') }}"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>

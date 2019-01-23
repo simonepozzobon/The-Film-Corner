@@ -18,7 +18,6 @@
             :handles="['ml','mr']"
             :x="track.start"
             :w="track.duration"
-            :max-width="parseInt(track.originalDuration)"
             @dragging="onDrag"
             @resizing="onResize">
                 <div class="media-element"></div>

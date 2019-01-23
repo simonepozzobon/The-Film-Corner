@@ -12792,7 +12792,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 454:
+/***/ 459:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12809,7 +12809,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 window.$ = window.jQuery = __webpack_require__(61);
 window.Tether = __webpack_require__(292);
-__webpack_require__(371);
+__webpack_require__(372);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -12817,7 +12817,7 @@ __webpack_require__(371);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(476);
+__webpack_require__(481);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -12922,7 +12922,35 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 476:
+/***/ 48:
+/***/ (function(module, exports) {
+
+/*!
+ * Determine if an object is a Buffer
+ *
+ * @author   Feross Aboukhadijeh <https://feross.org>
+ * @license  MIT
+ */
+
+// The _isBuffer check is for Safari 5-7 support, because it's missing
+// Object.prototype.constructor. Remove this eventually
+module.exports = function (obj) {
+  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
+}
+
+function isBuffer (obj) {
+  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
+}
+
+// For Node v0.10 support. Remove this eventually.
+function isSlowBuffer (obj) {
+  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
+}
+
+
+/***/ }),
+
+/***/ 481:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12939,7 +12967,7 @@ window.$ = window.jQuery = __webpack_require__(61);
 
 window.Tether = __webpack_require__(292);
 
-__webpack_require__(372);
+__webpack_require__(373);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12974,34 +13002,6 @@ window.axios.defaults.headers.common = {
 //     broadcaster: 'pusher',
 //     key: 'your-pusher-key'
 // });
-
-/***/ }),
-
-/***/ 48:
-/***/ (function(module, exports) {
-
-/*!
- * Determine if an object is a Buffer
- *
- * @author   Feross Aboukhadijeh <https://feross.org>
- * @license  MIT
- */
-
-// The _isBuffer check is for Safari 5-7 support, because it's missing
-// Object.prototype.constructor. Remove this eventually
-module.exports = function (obj) {
-  return obj != null && (isBuffer(obj) || isSlowBuffer(obj) || !!obj._isBuffer)
-}
-
-function isBuffer (obj) {
-  return !!obj.constructor && typeof obj.constructor.isBuffer === 'function' && obj.constructor.isBuffer(obj)
-}
-
-// For Node v0.10 support. Remove this eventually.
-function isSlowBuffer (obj) {
-  return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
-}
-
 
 /***/ }),
 
@@ -30148,10 +30148,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 763:
+/***/ 780:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(454);
+module.exports = __webpack_require__(459);
 
 
 /***/ }),
@@ -30257,4 +30257,4 @@ module.exports = defaults;
 
 /***/ })
 
-},[763]);
+},[780]);

@@ -64,33 +64,54 @@ const timeline = new Vue({
             timeline.reformatTimelines().then(cache => {
                 // console.log('prima di inviare', cache)
                 let session = window.$session
+                let app_id = session.app_id
                 let data = new FormData()
 
-                console.log('Prima di inviare', cache)
+                // salvo le timelines per poi abbinarle alla sessione
+                localStorage.setItem('app-' + app_id + '-timelines', JSON.stringify(timeline.timelines))
+
+                // console.log('Prima di inviare', cache)
                 data.append('session', session.token)
                 data.append('timelines', JSON.stringify(cache))
 
                 axios.post('/api/v1/video-edit', data).then(response => {
-                    console.log('render completato', response.data)
+                    // console.log('render completato', response.data)
                     timeline.$refs.videoPreview.changeSrc(response.data.export)
                     timeline.$refs.videoPreview.hideLoader()
+
+                    // salvo l'export per poi abbinarlo alla sessione
+                    localStorage.setItem('app-' + app_id + '-video', response.data.export)
+
                 })
             })
         }, 500),
-        addTimeline: function(obj) {
-            let timeline = {
-                id: obj.id,
-                uniqueid: '_' + Math.random().toString(36).substr(2, 9),
-                title: obj.title,
-                originalDuration: obj.duration * this.tick,
-                duration: obj.duration * this.tick,
-                start: 0,
-                src: obj.src,
-                img: obj.img,
-                hasCutStart: false,
-                hasCutEnd: false,
-                cutStart: 0,
-                cutEnd: 0,
+        addTimeline: function(obj, empty = false) {
+            let timeline
+            if (!empty) {
+                timeline = {
+                    id: obj.id,
+                    uniqueid: '_' + Math.random().toString(36).substr(2, 9),
+                    title: obj.title,
+                    originalDuration: obj.duration * this.tick,
+                    duration: obj.duration * this.tick,
+                    start: 0,
+                    src: obj.src,
+                    img: obj.img,
+                    hasCutStart: false,
+                    hasCutEnd: false,
+                    cutStart: 0,
+                    cutEnd: 0,
+                }
+            } else {
+                console.log('dentro', obj)
+                timeline = {
+                    ...obj,
+                    originalDuration: obj.originalDuration,
+                    duration: obj.duration,
+                    start: obj.start,
+                    cutStart: obj.cutStart,
+                    cutEnd: obj.cutEnd,
+                }
             }
             this.timelines.push(timeline)
         },
@@ -114,5 +135,12 @@ const timeline = new Vue({
         this.$on('add-to-timeline', obj => {
             this.addTimeline(obj)
         })
+
+        if (window.$session && window.$session.timelines) {
+            let timelines = JSON.parse(window.$session.timelines)
+            for (var i = 0; i < timelines.length; i++) {
+                this.addTimeline(timelines[i], true)
+            }
+        }
     }
 })

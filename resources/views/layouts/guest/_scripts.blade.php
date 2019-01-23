@@ -50,6 +50,7 @@
             $.cookie('tfc-sessions', jsonSession);
 
             localStorage.setItem('tfc-actual-session', jsonSession);
+            window.$session = session
 
             // Nuovo sistema per la sessione
             $('body').trigger('session-loaded', session);
@@ -162,8 +163,8 @@
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
             'notes'     : $('#notes').val(),
-            'video'     : localStorage.getItem('app-4-video'),
-            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-4-video'),
+            'timelines': localStorage.getItem('app-4-timelines')
           };
 
           console.log('--------');
@@ -296,8 +297,8 @@
             'token'     : token,
             'notes'     : $('#notes').val(),
             'title'     : $('input[name="title"]').val(),
-            'video'     : localStorage.getItem('app-11-video'),
-            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-11-video'),
+            'timelines': localStorage.getItem('app-11-timelines')
           };
 
           console.log('--------');
