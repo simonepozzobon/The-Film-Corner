@@ -31,6 +31,11 @@
                       title="{{ GeneralText::field('library') }}"
                       video-text="{{ GeneralText::field('video') }}"
                       elements="{{ $elements }}"
+                      :upload="true"
+                      app_id="{{ $app->id }}"
+                      upload_route="{{ route('guest.creative-studio.upload', [$app_category, $app->slug]) }}"
+                      csrf_field="{{ csrf_token() }}"
+
                   ></library>
               </div>
           </div>

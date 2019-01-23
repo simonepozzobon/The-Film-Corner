@@ -47391,54 +47391,18 @@ var _UiModal = __webpack_require__(629);
 
 var _UiModal2 = _interopRequireDefault(_UiModal);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _UploadForm = __webpack_require__(810);
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+var _UploadForm2 = _interopRequireDefault(_UploadForm);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = {
     name: 'Library',
     components: {
         LibraryItem: _LibraryItem2.default,
-        UiModal: _UiModal2.default
+        UiModal: _UiModal2.default,
+        UploadForm: _UploadForm2.default
     },
     props: {
         title: {
@@ -47452,6 +47416,22 @@ exports.default = {
         elements: {
             type: String,
             default: null
+        },
+        csrf_field: {
+            type: String,
+            default: null
+        },
+        upload_route: {
+            type: String,
+            default: null
+        },
+        app_id: {
+            type: String,
+            default: null
+        },
+        upload: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -47470,8 +47450,69 @@ exports.default = {
             this.$refs.modal.changeSrc(src, poster);
         }
     },
-    mounted: function mounted() {}
-};
+    mounted: function mounted() {
+        console.log('sdkjfhsdhfksj', window.$session);
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /***/ }),
 
@@ -49432,7 +49473,7 @@ module.exports = function(originalModule) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(6)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -51185,7 +51226,10 @@ var render = function() {
               [
                 _c(
                   "ul",
-                  { staticClass: "navbar-nav", attrs: { role: "tablist" } },
+                  {
+                    staticClass: "navbar-nav nav-tabs",
+                    attrs: { role: "tablist" }
+                  },
                   [
                     _c("li", { staticClass: "nav-item" }, [
                       _c(
@@ -51193,13 +51237,31 @@ var render = function() {
                         {
                           staticClass: "library-link nav-link active",
                           attrs: {
+                            id: "video-tab",
                             "data-toggle": "tab",
                             href: "#video-editor-library"
                           }
                         },
                         [_vm._v(_vm._s(_vm.videoText))]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    this.upload
+                      ? _c("li", { staticClass: "nav-item" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "library-link nav-link",
+                              attrs: {
+                                id: "upload-tab",
+                                "data-toggle": "tab",
+                                href: "#uploads"
+                              }
+                            },
+                            [_vm._v("Upload")]
+                          )
+                        ])
+                      : _vm._e()
                   ]
                 )
               ]
@@ -51209,13 +51271,20 @@ var render = function() {
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "library-container", attrs: { id: "libraries" } },
+          {
+            staticClass: "library-container tab-content",
+            attrs: { id: "libraries" }
+          },
           [
             _c(
               "div",
               {
-                staticClass: "assets active",
-                attrs: { id: "video-editor-library" }
+                staticClass: "assets tab-pane fade show active",
+                attrs: {
+                  id: "video-editor-library",
+                  role: "tabpanel",
+                  "aria-labelledby": "video-tab"
+                }
               },
               [
                 _c("div", { staticClass: "row scroller" }, [
@@ -51232,7 +51301,41 @@ var render = function() {
                   )
                 ])
               ]
-            )
+            ),
+            _vm._v(" "),
+            this.upload
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "assets tab-pane fade",
+                    attrs: {
+                      id: "uploads",
+                      role: "tabpanel",
+                      "aria-labelledby": "upload-tab"
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "row scroller" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col" },
+                        [
+                          _c("upload-form", {
+                            attrs: {
+                              csrf_field: _vm.csrf_field,
+                              app_id: _vm.app_id,
+                              route: _vm.upload_route
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm._m(1)
+                        ],
+                        1
+                      )
+                    ])
+                  ]
+                )
+              : _vm._e()
           ]
         ),
         _vm._v(" "),
@@ -51262,6 +51365,18 @@ var staticRenderFns = [
       },
       [_c("span", { staticClass: "navbar-toggler-icon" })]
     )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", {}, [
+      _c(
+        "table",
+        { staticClass: "table table-hover", attrs: { id: "upload-assets" } },
+        [_c("tbody")]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -52062,6 +52177,511 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
+
+/***/ }),
+
+/***/ 808:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _gsap = __webpack_require__(26);
+
+var _axios = __webpack_require__(16);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _jquery = __webpack_require__(61);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: 'UploadForm',
+    props: {
+        app_id: {
+            type: String,
+            default: null
+        },
+        color: {
+            type: String,
+            default: 'yellow'
+        },
+        csrf_field: {
+            type: String,
+            default: null
+        },
+        route: {
+            type: String,
+            default: null
+        },
+        has_title: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data: function data() {
+        return {
+            assets_list: null,
+            error_msg: null,
+            file: null,
+            percent: 0,
+            session_token: '',
+            title: '',
+            videos: []
+        };
+    },
+    computed: {},
+    methods: {
+        filesChange: function filesChange(name, files) {
+            this.file = files[0];
+            this.error_msg = null;
+        },
+        formatResponse: function formatResponse(response) {
+            var _this = this;
+
+            var vue = this;
+            return new Promise(function (resolve, reject) {
+                switch (true) {
+                    case parseInt(_this.app_id) == 10:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('tr');
+                        asset.setAttribute('id', 'video-' + response.video_id);
+                        asset.innerHTML = '<td><img src="' + response.img + '" width="57" class="img-fluid"></td>' + '<td>' + '<input id="video-id-src" type="hidden" name="" value="' + response.src + '">' + '<div class="btn-group">' +
+                        // '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
+                        '<button type="button" class="btn btn-blue" onclick="videoDelete(' + response.video_id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' + '</div>' + '</td>';
+                        _this.assets_list.appendChild(asset);
+
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
+                        _this.videos.push(video);
+                        localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 11:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
+
+                        var event = new CustomEvent('new-video-on-library', {
+                            'detail': asset
+                        });
+                        _this.assets_list.dispatchEvent(event); // send the event to angularjs
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 13:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('div');
+                        asset.className = 'asset col-md-3 col-sm-4 pb-3';
+                        asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
+                        _this.assets_list.appendChild(asset);
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 15:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('li');
+                        asset.className = 'col-md-3 asset';
+                        asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
+                        _this.assets_list.appendChild(asset);
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
+                        // contests
+                        _this.assets_list = document.getElementById('response');
+                        var asset = document.createElement('div');
+                        _this.$refs.input.style.display = 'none';
+                        _this.$refs.title.style.display = 'none';
+                        _this.$refs.loader.style.display = 'none';
+                        _this.error_msg = '';
+
+                        asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
+                        _this.assets_list.appendChild(asset);
+
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
+
+                        localStorage.setItem('app-' + _this.app_id + '-video', JSON.stringify(video));
+                        resolve('stop');
+                        break;
+                }
+                reject('I can\'t manage this response');
+            });
+        },
+        loaderHide: function loaderHide() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.loader, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
+                opacity: 1,
+                display: 'block',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.input, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        loaderShow: function loaderShow() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.input, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.loader, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        sendUpload: function sendUpload() {
+            this.session_token = document.getElementById('session-token').value;
+            if (!this.session_token || this.session_token == 'null') {
+                this.error_msg = 'This session is corrupted. Please, save and reload the application';
+                return false;
+            }
+
+            if (this.has_title == true) {
+                if (this.title == 'Untitled' || this.title == '') {
+                    this.error_msg = 'You must insert a title!';
+                    return false;
+                }
+            }
+
+            if (!this.file) {
+                this.error_msg = 'You must pick a file!';
+                return false;
+            }
+
+            // Reset the progress-bar
+            this.$refs.progress_bar.style.width = '0%';
+            this.percent = 0;
+
+            // show loader
+            this.loaderShow();
+
+            // Prepare the form
+            var vue = this;
+            var data = new FormData();
+            data.append('_token', this.csrf_field);
+            data.append('media', this.file);
+            data.append('session_token', this.session_token);
+            data.append('session', this.session_token);
+            if (this.has_title) {
+                data.append('directly-save', true);
+                data.append('title', this.title);
+            }
+
+            // Start the request
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function (e) {
+                var percent = Math.round(e.loaded / e.total * 100);
+                vue.$refs.progress_bar.style.width = percent + '%';
+                vue.percent = percent;
+            }, false);
+
+            request.addEventListener('load', function (e) {
+                if (parseInt(e.target.status) != 200) {
+                    // error
+                    vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
+                } else {
+                    // success
+                    var XMLresponse = JSON.parse(e.target.responseText);
+                    vue.formatResponse(XMLresponse).then(function (response) {
+                        console.log(response);
+                        if (response == 'done') {
+                            vue.loaderHide();
+                        }
+                    }).catch(function (error) {
+                        vue.error_msg = 'Oops the server can\'t manage the response';
+                    });
+                }
+            }, false);
+
+            request.open('post', this.route);
+            request.send(data);
+        }
+    },
+    mounted: function mounted() {
+        (0, _jquery2.default)(document).trigger('upload-module-loaded', null);
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
+/***/ 809:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(6)();
+exports.push([module.i, "\n#input-box {\n  display: -ms-flexbox;\n  display: flex;\n}\n#progress-bar {\n  margin-left: 32px;\n}\n#progress-bar > .progress-bar {\n    height: auto;\n}\n#loader {\n  display: none;\n  opacity: 0;\n  position: relative;\n}\n#loader > i {\n    position: absolute;\n    height: 16px;\n    width: inherit;\n    top: 25%;\n    transform: translateY(-50%);\n}\n#loader > #percent {\n    margin-left: 32px;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 810:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__ = __webpack_require__(808);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__);
+/* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6d506e82_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__ = __webpack_require__(811);
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(812)
+}
+var normalizeComponent = __webpack_require__(7)
+/* script */
+
+
+/* template */
+
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue___default.a,
+  __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_6d506e82_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__["a" /* default */],
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/timeline/components/UploadForm.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6d506e82", Component.options)
+  } else {
+    hotAPI.reload("data-v-6d506e82", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+/* harmony default export */ __webpack_exports__["default"] = (Component.exports);
+
+
+/***/ }),
+
+/***/ 811:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {}, [
+    this.has_title
+      ? _c(
+          "div",
+          { ref: "title", staticClass: "mb-3", attrs: { id: "title" } },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.title,
+                  expression: "title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.title = $event.target.value
+                }
+              }
+            })
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { ref: "input", staticClass: "mb-3", attrs: { id: "input-box" } },
+      [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { id: "media", type: "file", name: "media" },
+          on: {
+            change: function($event) {
+              _vm.filesChange($event.target.name, $event.target.files)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { id: "session-token", type: "hidden", value: "null" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            class: "ml-3 btn btn-" + _vm.color,
+            attrs: { id: "upload" },
+            on: { click: _vm.sendUpload }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-upload",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { ref: "loader", attrs: { id: "loader" } }, [
+      _c("i", { staticClass: "fa fa-refresh fa-spin" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "progress",
+          staticStyle: { width: "100%" },
+          attrs: { id: "progress-bar" }
+        },
+        [
+          _c("div", {
+            ref: "progress_bar",
+            staticClass: "progress-bar",
+            attrs: {
+              role: "progressbar",
+              "aria-valuenow": "25",
+              "aria-valuemin": "0",
+              "aria-valuemax": "100"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "percent" } }, [
+        _vm._v(_vm._s(this.percent) + "%")
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.error_msg
+      ? _c("div", { staticClass: "d-flex justify-content-around pb-4" }, [
+          _c("div", { staticClass: "error text-danger" }, [
+            _c("b", [_vm._v(_vm._s(this.error_msg))])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6d506e82", esExports)
+  }
+}
+
+/***/ }),
+
+/***/ 812:
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(809);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(9)("be7fe264", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6d506e82\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-6d506e82\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 

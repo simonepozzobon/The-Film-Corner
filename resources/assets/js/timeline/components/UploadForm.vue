@@ -122,7 +122,7 @@ export default {
                             '<img src="' + response.img + '" width="57">' +
                             '</td>' +
                             '<td class="align-middle">' + response.name + '</td>' +
-                            '<td class="align-middle" ng-controller="toolController">' +
+                            '<td class="align-middle">' +
                             '<div class="btn-group">' +
                             '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src +
                             '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' +
