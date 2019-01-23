@@ -186,8 +186,8 @@ export default {
             display: none;
             align-items: center;
             opacity: 0;
-            max-width: 100%;
             flex-wrap: wrap;
+            max-width: 100%;
 
             > i {
                 cursor: pointer;

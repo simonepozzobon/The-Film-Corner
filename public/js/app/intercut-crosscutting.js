@@ -1,105 +1,6 @@
-webpackJsonp([6],{
+webpackJsonp([7],{
 
-/***/ 104:
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(294);
-module.exports = angular;
-
-
-/***/ }),
-
-/***/ 120:
-/***/ (function(module, exports, __webpack_require__) {
-
-var isFunction = __webpack_require__(83)
-
-module.exports = forEach
-
-var toString = Object.prototype.toString
-var hasOwnProperty = Object.prototype.hasOwnProperty
-
-function forEach(list, iterator, context) {
-    if (!isFunction(iterator)) {
-        throw new TypeError('iterator must be a function')
-    }
-
-    if (arguments.length < 3) {
-        context = this
-    }
-    
-    if (toString.call(list) === '[object Array]')
-        forEachArray(list, iterator, context)
-    else if (typeof list === 'string')
-        forEachString(list, iterator, context)
-    else
-        forEachObject(list, iterator, context)
-}
-
-function forEachArray(array, iterator, context) {
-    for (var i = 0, len = array.length; i < len; i++) {
-        if (hasOwnProperty.call(array, i)) {
-            iterator.call(context, array[i], i, array)
-        }
-    }
-}
-
-function forEachString(string, iterator, context) {
-    for (var i = 0, len = string.length; i < len; i++) {
-        // no such thing as a sparse string.
-        iterator.call(context, string.charAt(i), i, string)
-    }
-}
-
-function forEachObject(object, iterator, context) {
-    for (var k in object) {
-        if (hasOwnProperty.call(object, k)) {
-            iterator.call(context, object[k], k, object)
-        }
-    }
-}
-
-
-/***/ }),
-
-/***/ 125:
-/***/ (function(module, exports, __webpack_require__) {
-
-var trim = __webpack_require__(134)
-  , forEach = __webpack_require__(120)
-  , isArray = function(arg) {
-      return Object.prototype.toString.call(arg) === '[object Array]';
-    }
-
-module.exports = function (headers) {
-  if (!headers)
-    return {}
-
-  var result = {}
-
-  forEach(
-      trim(headers).split('\n')
-    , function (row) {
-        var index = row.indexOf(':')
-          , key = trim(row.slice(0, index)).toLowerCase()
-          , value = trim(row.slice(index + 1))
-
-        if (typeof(result[key]) === 'undefined') {
-          result[key] = value
-        } else if (isArray(result[key])) {
-          result[key].push(value)
-        } else {
-          result[key] = [ result[key], value ]
-        }
-      }
-  )
-
-  return result
-}
-
-/***/ }),
-
-/***/ 126:
+/***/ 100:
 /***/ (function(module, exports) {
 
 module.exports = SafeParseTuple
@@ -120,7 +21,7 @@ function SafeParseTuple(obj, reviver) {
 
 /***/ }),
 
-/***/ 134:
+/***/ 101:
 /***/ (function(module, exports) {
 
 
@@ -141,7 +42,656 @@ exports.right = function(str){
 
 /***/ }),
 
-/***/ 135:
+/***/ 102:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _trackButton = __webpack_require__(283);
+
+var _trackButton2 = _interopRequireDefault(_trackButton);
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _textTrackMenuItem = __webpack_require__(136);
+
+var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
+
+var _offTextTrackMenuItem = __webpack_require__(347);
+
+var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file text-track-button.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The base class for buttons that toggle specific text track types (e.g. subtitles)
+ *
+ * @extends MenuButton
+ */
+var TextTrackButton = function (_TrackButton) {
+  _inherits(TextTrackButton, _TrackButton);
+
+  /**
+   * Creates an instance of this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options={}]
+   *        The key/value store of player options.
+   */
+  function TextTrackButton(player) {
+    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+    _classCallCheck(this, TextTrackButton);
+
+    options.tracks = player.textTracks();
+
+    return _possibleConstructorReturn(this, _TrackButton.call(this, player, options));
+  }
+
+  /**
+   * Create a menu item for each text track
+   *
+   * @param {TextTrackMenuItem[]} [items=[]]
+   *        Existing array of items to use during creation
+   *
+   * @return {TextTrackMenuItem[]}
+   *         Array of menu items that were created
+   */
+
+
+  TextTrackButton.prototype.createItems = function createItems() {
+    var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    // Add an OFF menu item to turn all tracks off
+    items.push(new _offTextTrackMenuItem2['default'](this.player_, { kind: this.kind_ }));
+    this.hideThreshold_ += 1;
+
+    var tracks = this.player_.textTracks();
+
+    if (!tracks) {
+      return items;
+    }
+
+    for (var i = 0; i < tracks.length; i++) {
+      var track = tracks[i];
+
+      // only add tracks that are of the appropriate kind and have a label
+      if (track.kind === this.kind_) {
+        items.push(new _textTrackMenuItem2['default'](this.player_, {
+          track: track,
+          // MenuItem is selectable
+          selectable: true
+        }));
+      }
+    }
+
+    return items;
+  };
+
+  return TextTrackButton;
+}(_trackButton2['default']);
+
+_component2['default'].registerComponent('TextTrackButton', TextTrackButton);
+exports['default'] = TextTrackButton;
+
+
+/***/ }),
+
+/***/ 103:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _events = __webpack_require__(68);
+
+var Events = _interopRequireWildcard(_events);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+/**
+ * `EventTarget` is a class that can have the same API as the DOM `EventTarget`. It
+ * adds shorthand functions that wrap around lengthy functions. For example:
+ * the `on` function is a wrapper around `addEventListener`.
+ *
+ * @see [EventTarget Spec]{@link https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget}
+ * @class EventTarget
+ */
+var EventTarget = function EventTarget() {};
+
+/**
+ * A Custom DOM event.
+ *
+ * @typedef {Object} EventTarget~Event
+ * @see [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
+ */
+
+/**
+ * All event listeners should follow the following format.
+ *
+ * @callback EventTarget~EventListener
+ * @this {EventTarget}
+ *
+ * @param {EventTarget~Event} event
+ *        the event that triggered this function
+ *
+ * @param {Object} [hash]
+ *        hash of data sent during the event
+ */
+
+/**
+ * An object containing event names as keys and booleans as values.
+ *
+ * > NOTE: If an event name is set to a true value here {@link EventTarget#trigger}
+ *         will have extra functionality. See that function for more information.
+ *
+ * @property EventTarget.prototype.allowedEvents_
+ * @private
+ */
+/**
+ * @file src/js/event-target.js
+ */
+EventTarget.prototype.allowedEvents_ = {};
+
+/**
+ * Adds an `event listener` to an instance of an `EventTarget`. An `event listener` is a
+ * function that will get called when an event with a certain name gets triggered.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to call with `EventTarget`s
+ */
+EventTarget.prototype.on = function (type, fn) {
+  // Remove the addEventListener alias before calling Events.on
+  // so we don't get into an infinite type loop
+  var ael = this.addEventListener;
+
+  this.addEventListener = function () {};
+  Events.on(this, type, fn);
+  this.addEventListener = ael;
+};
+
+/**
+ * An alias of {@link EventTarget#on}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#on}
+ */
+EventTarget.prototype.addEventListener = EventTarget.prototype.on;
+
+/**
+ * Removes an `event listener` for a specific event from an instance of `EventTarget`.
+ * This makes it so that the `event listener` will no longer get called when the
+ * named event happens.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to remove.
+ */
+EventTarget.prototype.off = function (type, fn) {
+  Events.off(this, type, fn);
+};
+
+/**
+ * An alias of {@link EventTarget#off}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#off}
+ */
+EventTarget.prototype.removeEventListener = EventTarget.prototype.off;
+
+/**
+ * This function will add an `event listener` that gets triggered only once. After the
+ * first trigger it will get removed. This is like adding an `event listener`
+ * with {@link EventTarget#on} that calls {@link EventTarget#off} on itself.
+ *
+ * @param {string|string[]} type
+ *        An event name or an array of event names.
+ *
+ * @param {EventTarget~EventListener} fn
+ *        The function to be called once for each event name.
+ */
+EventTarget.prototype.one = function (type, fn) {
+  // Remove the addEventListener alialing Events.on
+  // so we don't get into an infinite type loop
+  var ael = this.addEventListener;
+
+  this.addEventListener = function () {};
+  Events.one(this, type, fn);
+  this.addEventListener = ael;
+};
+
+/**
+ * This function causes an event to happen. This will then cause any `event listeners`
+ * that are waiting for that event, to get called. If there are no `event listeners`
+ * for an event then nothing will happen.
+ *
+ * If the name of the `Event` that is being triggered is in `EventTarget.allowedEvents_`.
+ * Trigger will also call the `on` + `uppercaseEventName` function.
+ *
+ * Example:
+ * 'click' is in `EventTarget.allowedEvents_`, so, trigger will attempt to call
+ * `onClick` if it exists.
+ *
+ * @param {string|EventTarget~Event|Object} event
+ *        The name of the event, an `Event`, or an object with a key of type set to
+ *        an event name.
+ */
+EventTarget.prototype.trigger = function (event) {
+  var type = event.type || event;
+
+  if (typeof event === 'string') {
+    event = { type: type };
+  }
+  event = Events.fixEvent(event);
+
+  if (this.allowedEvents_[type] && this['on' + type]) {
+    this['on' + type](event);
+  }
+
+  Events.trigger(this, event);
+};
+
+/**
+ * An alias of {@link EventTarget#trigger}. Allows `EventTarget` to mimic
+ * the standard DOM API.
+ *
+ * @function
+ * @see {@link EventTarget#trigger}
+ */
+EventTarget.prototype.dispatchEvent = EventTarget.prototype.trigger;
+
+exports['default'] = EventTarget;
+
+
+/***/ }),
+
+/***/ 104:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _clickableComponent = __webpack_require__(93);
+
+var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _obj = __webpack_require__(56);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file menu-item.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The component for a menu item. `<li>`
+ *
+ * @extends ClickableComponent
+ */
+var MenuItem = function (_ClickableComponent) {
+  _inherits(MenuItem, _ClickableComponent);
+
+  /**
+   * Creates an instance of the this class.
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options={}]
+   *        The key/value store of player options.
+   *
+   */
+  function MenuItem(player, options) {
+    _classCallCheck(this, MenuItem);
+
+    var _this = _possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
+
+    _this.selectable = options.selectable;
+
+    _this.selected(options.selected);
+
+    if (_this.selectable) {
+      // TODO: May need to be either menuitemcheckbox or menuitemradio,
+      //       and may need logical grouping of menu items.
+      _this.el_.setAttribute('role', 'menuitemcheckbox');
+    } else {
+      _this.el_.setAttribute('role', 'menuitem');
+    }
+    return _this;
+  }
+
+  /**
+   * Create the `MenuItem's DOM element
+   *
+   * @param {string} [type=li]
+   *        Element's node type, not actually used, always set to `li`.
+   *
+   * @param {Object} [props={}]
+   *        An object of properties that should be set on the element
+   *
+   * @param {Object} [attrs={}]
+   *        An object of attributes that should be set on the element
+   *
+   * @return {Element}
+   *         The element that gets created.
+   */
+
+
+  MenuItem.prototype.createEl = function createEl(type, props, attrs) {
+    // The control is textual, not just an icon
+    this.nonIconControl = true;
+
+    return _ClickableComponent.prototype.createEl.call(this, 'li', (0, _obj.assign)({
+      className: 'vjs-menu-item',
+      innerHTML: this.localize(this.options_.label),
+      tabIndex: -1
+    }, props), attrs);
+  };
+
+  /**
+   * Any click on a `MenuItem` puts int into the selected state.
+   * See {@link ClickableComponent#handleClick} for instances where this is called.
+   *
+   * @param {EventTarget~Event} event
+   *        The `keydown`, `tap`, or `click` event that caused this function to be
+   *        called.
+   *
+   * @listens tap
+   * @listens click
+   */
+
+
+  MenuItem.prototype.handleClick = function handleClick(event) {
+    this.selected(true);
+  };
+
+  /**
+   * Set the state for this menu item as selected or not.
+   *
+   * @param {boolean} selected
+   *        if the menu item is selected or not
+   */
+
+
+  MenuItem.prototype.selected = function selected(_selected) {
+    if (this.selectable) {
+      if (_selected) {
+        this.addClass('vjs-selected');
+        this.el_.setAttribute('aria-checked', 'true');
+        // aria-checked isn't fully supported by browsers/screen readers,
+        // so indicate selected state to screen reader in the control text.
+        this.controlText(', selected');
+      } else {
+        this.removeClass('vjs-selected');
+        this.el_.setAttribute('aria-checked', 'false');
+        // Indicate un-selected state to screen reader
+        this.controlText('');
+      }
+    }
+  };
+
+  return MenuItem;
+}(_clickableComponent2['default']);
+
+_component2['default'].registerComponent('MenuItem', MenuItem);
+exports['default'] = MenuItem;
+
+
+/***/ }),
+
+/***/ 105:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.isCrossOrigin = exports.getFileExtension = exports.getAbsoluteURL = exports.parseUrl = undefined;
+
+var _document = __webpack_require__(52);
+
+var _document2 = _interopRequireDefault(_document);
+
+var _window = __webpack_require__(53);
+
+var _window2 = _interopRequireDefault(_window);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+/**
+ * @typedef {Object} url:URLObject
+ *
+ * @property {string} protocol
+ *           The protocol of the url that was parsed.
+ *
+ * @property {string} hostname
+ *           The hostname of the url that was parsed.
+ *
+ * @property {string} port
+ *           The port of the url that was parsed.
+ *
+ * @property {string} pathname
+ *           The pathname of the url that was parsed.
+ *
+ * @property {string} search
+ *           The search query of the url that was parsed.
+ *
+ * @property {string} hash
+ *           The hash of the url that was parsed.
+ *
+ * @property {string} host
+ *           The host of the url that was parsed.
+ */
+
+/**
+ * Resolve and parse the elements of a URL.
+ *
+ * @param  {String} url
+ *         The url to parse
+ *
+ * @return {url:URLObject}
+ *         An object of url details
+ */
+/**
+ * @file url.js
+ * @module url
+ */
+var parseUrl = exports.parseUrl = function parseUrl(url) {
+  var props = ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host'];
+
+  // add the url to an anchor and let the browser parse the URL
+  var a = _document2['default'].createElement('a');
+
+  a.href = url;
+
+  // IE8 (and 9?) Fix
+  // ie8 doesn't parse the URL correctly until the anchor is actually
+  // added to the body, and an innerHTML is needed to trigger the parsing
+  var addToBody = a.host === '' && a.protocol !== 'file:';
+  var div = void 0;
+
+  if (addToBody) {
+    div = _document2['default'].createElement('div');
+    div.innerHTML = '<a href="' + url + '"></a>';
+    a = div.firstChild;
+    // prevent the div from affecting layout
+    div.setAttribute('style', 'display:none; position:absolute;');
+    _document2['default'].body.appendChild(div);
+  }
+
+  // Copy the specific URL properties to a new object
+  // This is also needed for IE8 because the anchor loses its
+  // properties when it's removed from the dom
+  var details = {};
+
+  for (var i = 0; i < props.length; i++) {
+    details[props[i]] = a[props[i]];
+  }
+
+  // IE9 adds the port to the host property unlike everyone else. If
+  // a port identifier is added for standard ports, strip it.
+  if (details.protocol === 'http:') {
+    details.host = details.host.replace(/:80$/, '');
+  }
+
+  if (details.protocol === 'https:') {
+    details.host = details.host.replace(/:443$/, '');
+  }
+
+  if (addToBody) {
+    _document2['default'].body.removeChild(div);
+  }
+
+  return details;
+};
+
+/**
+ * Get absolute version of relative URL. Used to tell flash correct URL.
+ *
+ *
+ * @param  {string} url
+ *         URL to make absolute
+ *
+ * @return {string}
+ *         Absolute URL
+ *
+ * @see http://stackoverflow.com/questions/470832/getting-an-absolute-url-from-a-relative-one-ie6-issue
+ */
+var getAbsoluteURL = exports.getAbsoluteURL = function getAbsoluteURL(url) {
+  // Check if absolute URL
+  if (!url.match(/^https?:\/\//)) {
+    // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
+    var div = _document2['default'].createElement('div');
+
+    div.innerHTML = '<a href="' + url + '">x</a>';
+    url = div.firstChild.href;
+  }
+
+  return url;
+};
+
+/**
+ * Returns the extension of the passed file name. It will return an empty string
+ * if passed an invalid path.
+ *
+ * @param {string} path
+ *        The fileName path like '/path/to/file.mp4'
+ *
+ * @returns {string}
+ *          The extension in lower case or an empty string if no
+ *          extension could be found.
+ */
+var getFileExtension = exports.getFileExtension = function getFileExtension(path) {
+  if (typeof path === 'string') {
+    var splitPathRe = /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/i;
+    var pathParts = splitPathRe.exec(path);
+
+    if (pathParts) {
+      return pathParts.pop().toLowerCase();
+    }
+  }
+
+  return '';
+};
+
+/**
+ * Returns whether the url passed is a cross domain request or not.
+ *
+ * @param {string} url
+ *        The url to check.
+ *
+ * @return {boolean}
+ *         Whether it is a cross domain request or not.
+ */
+var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
+  var winLoc = _window2['default'].location;
+  var urlInfo = parseUrl(url);
+
+  // IE8 protocol relative urls will return ':' for protocol
+  var srcProtocol = urlInfo.protocol === ':' ? winLoc.protocol : urlInfo.protocol;
+
+  // Check if url is for another domain/origin
+  // IE8 doesn't know location.origin, so we won't rely on it here
+  var crossOrigin = srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
+
+  return crossOrigin;
+};
+
+
+/***/ }),
+
+/***/ 106:
+/***/ (function(module, exports) {
+
+module.exports = extend
+
+var hasOwnProperty = Object.prototype.hasOwnProperty;
+
+function extend() {
+    var target = {}
+
+    for (var i = 0; i < arguments.length; i++) {
+        var source = arguments[i]
+
+        for (var key in source) {
+            if (hasOwnProperty.call(source, key)) {
+                target[key] = source[key]
+            }
+        }
+    }
+
+    return target
+}
+
+
+/***/ }),
+
+/***/ 110:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(307);
+module.exports = angular;
+
+
+/***/ }),
+
+/***/ 136:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -151,7 +701,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(104);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -159,7 +709,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -167,7 +717,7 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -318,7 +868,7 @@ exports['default'] = TextTrackMenuItem;
 
 /***/ }),
 
-/***/ 136:
+/***/ 137:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -326,17 +876,17 @@ exports['default'] = TextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackCueList = __webpack_require__(353);
+var _textTrackCueList = __webpack_require__(372);
 
 var _textTrackCueList2 = _interopRequireDefault(_textTrackCueList);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _trackEnums = __webpack_require__(137);
+var _trackEnums = __webpack_require__(138);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -344,13 +894,13 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _track = __webpack_require__(139);
+var _track = __webpack_require__(140);
 
 var _track2 = _interopRequireDefault(_track);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(105);
 
-var _xhr = __webpack_require__(285);
+var _xhr = __webpack_require__(296);
 
 var _xhr2 = _interopRequireDefault(_xhr);
 
@@ -775,7 +1325,7 @@ exports['default'] = TextTrack;
 
 /***/ }),
 
-/***/ 137:
+/***/ 138:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -849,7 +1399,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 /***/ }),
 
-/***/ 138:
+/***/ 139:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -857,7 +1407,7 @@ var TextTrackMode = exports.TextTrackMode = {
 
 exports.__esModule = true;
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(103);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -865,7 +1415,7 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -1090,7 +1640,7 @@ exports['default'] = TrackList;
 
 /***/ }),
 
-/***/ 139:
+/***/ 140:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1102,15 +1652,15 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(103);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
@@ -1240,7 +1790,7 @@ exports['default'] = Track;
 
 /***/ }),
 
-/***/ 140:
+/***/ 141:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1290,33 +1840,7 @@ function computedStyle(el, prop) {
 
 /***/ }),
 
-/***/ 141:
-/***/ (function(module, exports) {
-
-module.exports = extend
-
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-function extend() {
-    var target = {}
-
-    for (var i = 0; i < arguments.length; i++) {
-        var source = arguments[i]
-
-        for (var key in source) {
-            if (hasOwnProperty.call(source, key)) {
-                target[key] = source[key]
-            }
-        }
-    }
-
-    return target
-}
-
-
-/***/ }),
-
-/***/ 25:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1325,7 +1849,7 @@ function extend() {
 exports.__esModule = true;
 exports.throttle = exports.bind = undefined;
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 /**
  * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
@@ -1399,7 +1923,7 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 
 /***/ }),
 
-/***/ 271:
+/***/ 282:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1407,7 +1931,7 @@ var throttle = exports.throttle = function throttle(fn, wait) {
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(90);
+var _button = __webpack_require__(92);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -1561,7 +2085,7 @@ exports['default'] = MuteToggle;
 
 /***/ }),
 
-/***/ 272:
+/***/ 283:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1569,7 +2093,7 @@ exports['default'] = MuteToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(275);
+var _menuButton = __webpack_require__(286);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
@@ -1577,7 +2101,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -1647,7 +2171,7 @@ exports['default'] = TrackButton;
 
 /***/ }),
 
-/***/ 273:
+/***/ 284:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1655,7 +2179,7 @@ exports['default'] = TrackButton;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(279);
+var _slider = __webpack_require__(290);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -1663,11 +2187,11 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-__webpack_require__(335);
+__webpack_require__(354);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -1836,7 +2360,7 @@ exports['default'] = VolumeBar;
 
 /***/ }),
 
-/***/ 274:
+/***/ 285:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2055,7 +2579,7 @@ exports['default'] = MediaError;
 
 /***/ }),
 
-/***/ 275:
+/***/ 286:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2063,7 +2587,7 @@ exports['default'] = MediaError;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(91);
+var _clickableComponent = __webpack_require__(93);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -2071,7 +2595,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _menu = __webpack_require__(276);
+var _menu = __webpack_require__(287);
 
 var _menu2 = _interopRequireDefault(_menu);
 
@@ -2079,11 +2603,11 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -2415,7 +2939,7 @@ exports['default'] = MenuButton;
 
 /***/ }),
 
-/***/ 276:
+/***/ 287:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2431,7 +2955,7 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -2625,7 +3149,7 @@ exports['default'] = Menu;
 
 /***/ }),
 
-/***/ 277:
+/***/ 288:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2637,7 +3161,7 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -3126,7 +3650,7 @@ exports['default'] = ModalDialog;
 
 /***/ }),
 
-/***/ 278:
+/***/ 289:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3138,7 +3662,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -3154,11 +3678,11 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -3166,31 +3690,31 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
-var _timeRanges = __webpack_require__(93);
+var _timeRanges = __webpack_require__(95);
 
-var _buffer = __webpack_require__(282);
+var _buffer = __webpack_require__(293);
 
-var _stylesheet = __webpack_require__(283);
+var _stylesheet = __webpack_require__(294);
 
 var stylesheet = _interopRequireWildcard(_stylesheet);
 
-var _fullscreenApi = __webpack_require__(339);
+var _fullscreenApi = __webpack_require__(358);
 
 var _fullscreenApi2 = _interopRequireDefault(_fullscreenApi);
 
-var _mediaError = __webpack_require__(274);
+var _mediaError = __webpack_require__(285);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
-var _tuple = __webpack_require__(126);
+var _tuple = __webpack_require__(100);
 
 var _tuple2 = _interopRequireDefault(_tuple);
 
@@ -3200,47 +3724,47 @@ var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrackListConverter = __webpack_require__(355);
+var _textTrackListConverter = __webpack_require__(374);
 
 var _textTrackListConverter2 = _interopRequireDefault(_textTrackListConverter);
 
-var _modalDialog = __webpack_require__(277);
+var _modalDialog = __webpack_require__(288);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
-var _tech = __webpack_require__(92);
+var _tech = __webpack_require__(94);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _audioTrackList = __webpack_require__(280);
+var _audioTrackList = __webpack_require__(291);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _videoTrackList = __webpack_require__(281);
+var _videoTrackList = __webpack_require__(292);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-__webpack_require__(349);
+__webpack_require__(368);
 
-__webpack_require__(347);
+__webpack_require__(366);
 
-__webpack_require__(344);
+__webpack_require__(363);
 
-__webpack_require__(354);
+__webpack_require__(373);
 
-__webpack_require__(340);
+__webpack_require__(359);
 
-__webpack_require__(305);
+__webpack_require__(324);
 
-__webpack_require__(306);
+__webpack_require__(325);
 
-__webpack_require__(309);
+__webpack_require__(328);
 
-__webpack_require__(337);
+__webpack_require__(356);
 
-__webpack_require__(357);
+__webpack_require__(376);
 
-__webpack_require__(348);
+__webpack_require__(367);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -6819,1843 +7343,6 @@ exports['default'] = Player;
 
 /***/ }),
 
-/***/ 279:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _component = __webpack_require__(5);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _dom = __webpack_require__(29);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _obj = __webpack_require__(56);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file slider.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The base functionality for a slider. Can be vertical or horizontal.
- * For instance the volume bar or the seek bar on a video is a slider.
- *
- * @extends Component
- */
-var Slider = function (_Component) {
-  _inherits(Slider, _Component);
-
-  /**
-   * Create an instance of this class
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options]
-   *        The key/value store of player options.
-   */
-  function Slider(player, options) {
-    _classCallCheck(this, Slider);
-
-    // Set property names to bar to match with the child Slider class is looking for
-    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
-
-    _this.bar = _this.getChild(_this.options_.barName);
-
-    // Set a horizontal or vertical class on the slider depending on the slider type
-    _this.vertical(!!_this.options_.vertical);
-
-    _this.on('mousedown', _this.handleMouseDown);
-    _this.on('touchstart', _this.handleMouseDown);
-    _this.on('focus', _this.handleFocus);
-    _this.on('blur', _this.handleBlur);
-    _this.on('click', _this.handleClick);
-
-    _this.on(player, 'controlsvisible', _this.update);
-    _this.on(player, _this.playerEvent, _this.update);
-    return _this;
-  }
-
-  /**
-   * Create the `Button`s DOM element.
-   *
-   * @param {string} type
-   *        Type of element to create.
-   *
-   * @param {Object} [props={}]
-   *        List of properties in Object form.
-   *
-   * @param {Object} [attributes={}]
-   *        list of attributes in Object form.
-   *
-   * @return {Element}
-   *         The element that gets created.
-   */
-
-
-  Slider.prototype.createEl = function createEl(type) {
-    var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    // Add the slider element class to all sub classes
-    props.className = props.className + ' vjs-slider';
-    props = (0, _obj.assign)({
-      tabIndex: 0
-    }, props);
-
-    attributes = (0, _obj.assign)({
-      'role': 'slider',
-      'aria-valuenow': 0,
-      'aria-valuemin': 0,
-      'aria-valuemax': 100,
-      'tabIndex': 0
-    }, attributes);
-
-    return _Component.prototype.createEl.call(this, type, props, attributes);
-  };
-
-  /**
-   * Handle `mousedown` or `touchstart` events on the `Slider`.
-   *
-   * @param {EventTarget~Event} event
-   *        `mousedown` or `touchstart` event that triggered this function
-   *
-   * @listens mousedown
-   * @listens touchstart
-   * @fires Slider#slideractive
-   */
-
-
-  Slider.prototype.handleMouseDown = function handleMouseDown(event) {
-    var doc = this.bar.el_.ownerDocument;
-
-    event.preventDefault();
-    Dom.blockTextSelection();
-
-    this.addClass('vjs-sliding');
-    /**
-     * Triggered when the slider is in an active state
-     *
-     * @event Slider#slideractive
-     * @type {EventTarget~Event}
-     */
-    this.trigger('slideractive');
-
-    this.on(doc, 'mousemove', this.handleMouseMove);
-    this.on(doc, 'mouseup', this.handleMouseUp);
-    this.on(doc, 'touchmove', this.handleMouseMove);
-    this.on(doc, 'touchend', this.handleMouseUp);
-
-    this.handleMouseMove(event);
-  };
-
-  /**
-   * Handle the `mousemove`, `touchmove`, and `mousedown` events on this `Slider`.
-   * The `mousemove` and `touchmove` events will only only trigger this function during
-   * `mousedown` and `touchstart`. This is due to {@link Slider#handleMouseDown} and
-   * {@link Slider#handleMouseUp}.
-   *
-   * @param {EventTarget~Event} event
-   *        `mousedown`, `mousemove`, `touchstart`, or `touchmove` event that triggered
-   *        this function
-   *
-   * @listens mousemove
-   * @listens touchmove
-   */
-
-
-  Slider.prototype.handleMouseMove = function handleMouseMove(event) {};
-
-  /**
-   * Handle `mouseup` or `touchend` events on the `Slider`.
-   *
-   * @param {EventTarget~Event} event
-   *        `mouseup` or `touchend` event that triggered this function.
-   *
-   * @listens touchend
-   * @listens mouseup
-   * @fires Slider#sliderinactive
-   */
-
-
-  Slider.prototype.handleMouseUp = function handleMouseUp() {
-    var doc = this.bar.el_.ownerDocument;
-
-    Dom.unblockTextSelection();
-
-    this.removeClass('vjs-sliding');
-    /**
-     * Triggered when the slider is no longer in an active state.
-     *
-     * @event Slider#sliderinactive
-     * @type {EventTarget~Event}
-     */
-    this.trigger('sliderinactive');
-
-    this.off(doc, 'mousemove', this.handleMouseMove);
-    this.off(doc, 'mouseup', this.handleMouseUp);
-    this.off(doc, 'touchmove', this.handleMouseMove);
-    this.off(doc, 'touchend', this.handleMouseUp);
-
-    this.update();
-  };
-
-  /**
-   * Update the progress bar of the `Slider`.
-   */
-
-
-  Slider.prototype.update = function update() {
-    // In VolumeBar init we have a setTimeout for update that pops and update to the end of the
-    // execution stack. The player is destroyed before then update will cause an error
-    if (!this.el_) {
-      return;
-    }
-
-    // If scrubbing, we could use a cached value to make the handle keep up with the user's mouse.
-    // On HTML5 browsers scrubbing is really smooth, but some flash players are slow, so we might want to utilize this later.
-    // var progress =  (this.player_.scrubbing()) ? this.player_.getCache().currentTime / this.player_.duration() : this.player_.currentTime() / this.player_.duration();
-    var progress = this.getPercent();
-    var bar = this.bar;
-
-    // If there's no bar...
-    if (!bar) {
-      return;
-    }
-
-    // Protect against no duration and other division issues
-    if (typeof progress !== 'number' || progress !== progress || progress < 0 || progress === Infinity) {
-      progress = 0;
-    }
-
-    // Convert to a percentage for setting
-    var percentage = (progress * 100).toFixed(2) + '%';
-
-    // Set the new bar width or height
-    if (this.vertical()) {
-      bar.el().style.height = percentage;
-    } else {
-      bar.el().style.width = percentage;
-    }
-  };
-
-  /**
-   * Calculate distance for slider
-   *
-   * @param {EventTarget~Event} event
-   *        The event that caused this function to run.
-   *
-   * @return {number}
-   *         The current position of the Slider.
-   *         - postition.x for vertical `Slider`s
-   *         - postition.y for horizontal `Slider`s
-   */
-
-
-  Slider.prototype.calculateDistance = function calculateDistance(event) {
-    var position = Dom.getPointerPosition(this.el_, event);
-
-    if (this.vertical()) {
-      return position.y;
-    }
-    return position.x;
-  };
-
-  /**
-   * Handle a `focus` event on this `Slider`.
-   *
-   * @param {EventTarget~Event} event
-   *        The `focus` event that caused this function to run.
-   *
-   * @listens focus
-   */
-
-
-  Slider.prototype.handleFocus = function handleFocus() {
-    this.on(this.bar.el_.ownerDocument, 'keydown', this.handleKeyPress);
-  };
-
-  /**
-   * Handle a `keydown` event on the `Slider`. Watches for left, rigth, up, and down
-   * arrow keys. This function will only be called when the slider has focus. See
-   * {@link Slider#handleFocus} and {@link Slider#handleBlur}.
-   *
-   * @param {EventTarget~Event} event
-   *        the `keydown` event that caused this function to run.
-   *
-   * @listens keydown
-   */
-
-
-  Slider.prototype.handleKeyPress = function handleKeyPress(event) {
-    // Left and Down Arrows
-    if (event.which === 37 || event.which === 40) {
-      event.preventDefault();
-      this.stepBack();
-
-      // Up and Right Arrows
-    } else if (event.which === 38 || event.which === 39) {
-      event.preventDefault();
-      this.stepForward();
-    }
-  };
-
-  /**
-   * Handle a `blur` event on this `Slider`.
-   *
-   * @param {EventTarget~Event} event
-   *        The `blur` event that caused this function to run.
-   *
-   * @listens blur
-   */
-
-  Slider.prototype.handleBlur = function handleBlur() {
-    this.off(this.bar.el_.ownerDocument, 'keydown', this.handleKeyPress);
-  };
-
-  /**
-   * Listener for click events on slider, used to prevent clicks
-   *   from bubbling up to parent elements like button menus.
-   *
-   * @param {Object} event
-   *        Event that caused this object to run
-   */
-
-
-  Slider.prototype.handleClick = function handleClick(event) {
-    event.stopImmediatePropagation();
-    event.preventDefault();
-  };
-
-  /**
-   * Get/set if slider is horizontal for vertical
-   *
-   * @param {boolean} [bool]
-   *        - true if slider is vertical,
-   *        - false is horizontal
-   *
-   * @return {boolean|Slider}
-   *         - true if slider is vertical, and getting
-   *         - false is horizontal, and getting
-   *         - a reference to this object when setting
-   */
-
-
-  Slider.prototype.vertical = function vertical(bool) {
-    if (bool === undefined) {
-      return this.vertical_ || false;
-    }
-
-    this.vertical_ = !!bool;
-
-    if (this.vertical_) {
-      this.addClass('vjs-slider-vertical');
-    } else {
-      this.addClass('vjs-slider-horizontal');
-    }
-
-    return this;
-  };
-
-  return Slider;
-}(_component2['default']);
-
-_component2['default'].registerComponent('Slider', Slider);
-exports['default'] = Slider;
-
-
-/***/ }),
-
-/***/ 280:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _trackList = __webpack_require__(138);
-
-var _trackList2 = _interopRequireDefault(_trackList);
-
-var _browser = __webpack_require__(55);
-
-var browser = _interopRequireWildcard(_browser);
-
-var _document = __webpack_require__(51);
-
-var _document2 = _interopRequireDefault(_document);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file audio-track-list.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Anywhere we call this function we diverge from the spec
- * as we only support one enabled audiotrack at a time
- *
- * @param {AudioTrackList} list
- *        list to work on
- *
- * @param {AudioTrack} track
- *        The track to skip
- *
- * @private
- */
-var disableOthers = function disableOthers(list, track) {
-  for (var i = 0; i < list.length; i++) {
-    if (track.id === list[i].id) {
-      continue;
-    }
-    // another audio track is enabled, disable it
-    list[i].enabled = false;
-  }
-};
-
-/**
- * The current list of {@link AudioTrack} for a media file.
- *
- * @see [Spec]{@link https://html.spec.whatwg.org/multipage/embedded-content.html#audiotracklist}
- * @extends TrackList
- */
-
-var AudioTrackList = function (_TrackList) {
-  _inherits(AudioTrackList, _TrackList);
-
-  /**
-   * Create an instance of this class.
-   *
-   * @param {AudioTrack[]} [tracks=[]]
-   *        A list of `AudioTrack` to instantiate the list with.
-   */
-  function AudioTrackList() {
-    var _this, _ret;
-
-    var tracks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-    _classCallCheck(this, AudioTrackList);
-
-    var list = void 0;
-
-    // make sure only 1 track is enabled
-    // sorted from last index to first index
-    for (var i = tracks.length - 1; i >= 0; i--) {
-      if (tracks[i].enabled) {
-        disableOthers(tracks, tracks[i]);
-        break;
-      }
-    }
-
-    // IE8 forces us to implement inheritance ourselves
-    // as it does not support Object.defineProperty properly
-    if (browser.IS_IE8) {
-      list = _document2['default'].createElement('custom');
-      for (var prop in _trackList2['default'].prototype) {
-        if (prop !== 'constructor') {
-          list[prop] = _trackList2['default'].prototype[prop];
-        }
-      }
-      for (var _prop in AudioTrackList.prototype) {
-        if (_prop !== 'constructor') {
-          list[_prop] = AudioTrackList.prototype[_prop];
-        }
-      }
-    }
-
-    list = (_this = _possibleConstructorReturn(this, _TrackList.call(this, tracks, list)), _this);
-    list.changing_ = false;
-
-    return _ret = list, _possibleConstructorReturn(_this, _ret);
-  }
-
-  /**
-   * Add an {@link AudioTrack} to the `AudioTrackList`.
-   *
-   * @param {AudioTrack} track
-   *        The AudioTrack to add to the list
-   *
-   * @fires Track#addtrack
-   * @private
-   */
-
-
-  AudioTrackList.prototype.addTrack_ = function addTrack_(track) {
-    var _this2 = this;
-
-    if (track.enabled) {
-      disableOthers(this, track);
-    }
-
-    _TrackList.prototype.addTrack_.call(this, track);
-    // native tracks don't have this
-    if (!track.addEventListener) {
-      return;
-    }
-
-    /**
-     * @listens AudioTrack#enabledchange
-     * @fires TrackList#change
-     */
-    track.addEventListener('enabledchange', function () {
-      // when we are disabling other tracks (since we don't support
-      // more than one track at a time) we will set changing_
-      // to true so that we don't trigger additional change events
-      if (_this2.changing_) {
-        return;
-      }
-      _this2.changing_ = true;
-      disableOthers(_this2, track);
-      _this2.changing_ = false;
-      _this2.trigger('change');
-    });
-  };
-
-  /**
-   * Add an {@link AudioTrack} to the `AudioTrackList`.
-   *
-   * @param {AudioTrack} track
-   *        The AudioTrack to add to the list
-   *
-   * @fires Track#addtrack
-   */
-
-
-  AudioTrackList.prototype.addTrack = function addTrack(track) {
-    this.addTrack_(track);
-  };
-
-  /**
-   * Remove an {@link AudioTrack} from the `AudioTrackList`.
-   *
-   * @param {AudioTrack} track
-   *        The AudioTrack to remove from the list
-   *
-   * @fires Track#removetrack
-   */
-
-
-  AudioTrackList.prototype.removeTrack = function removeTrack(track) {
-    _TrackList.prototype.removeTrack_.call(this, track);
-  };
-
-  return AudioTrackList;
-}(_trackList2['default']);
-
-exports['default'] = AudioTrackList;
-
-
-/***/ }),
-
-/***/ 281:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _trackList = __webpack_require__(138);
-
-var _trackList2 = _interopRequireDefault(_trackList);
-
-var _browser = __webpack_require__(55);
-
-var browser = _interopRequireWildcard(_browser);
-
-var _document = __webpack_require__(51);
-
-var _document2 = _interopRequireDefault(_document);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file video-track-list.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * Un-select all other {@link VideoTrack}s that are selected.
- *
- * @param {VideoTrackList} list
- *        list to work on
- *
- * @param {VideoTrack} track
- *        The track to skip
- *
- * @private
- */
-var disableOthers = function disableOthers(list, track) {
-  for (var i = 0; i < list.length; i++) {
-    if (track.id === list[i].id) {
-      continue;
-    }
-    // another video track is enabled, disable it
-    list[i].selected = false;
-  }
-};
-
-/**
- * The current list of {@link VideoTrack} for a video.
- *
- * @see [Spec]{@link https://html.spec.whatwg.org/multipage/embedded-content.html#videotracklist}
- * @extends TrackList
- */
-
-var VideoTrackList = function (_TrackList) {
-  _inherits(VideoTrackList, _TrackList);
-
-  /**
-   * Create an instance of this class.
-   *
-   * @param {VideoTrack[]} [tracks=[]]
-   *        A list of `VideoTrack` to instantiate the list with.
-   */
-  function VideoTrackList() {
-    var _this, _ret;
-
-    var tracks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-    _classCallCheck(this, VideoTrackList);
-
-    var list = void 0;
-
-    // make sure only 1 track is enabled
-    // sorted from last index to first index
-    for (var i = tracks.length - 1; i >= 0; i--) {
-      if (tracks[i].selected) {
-        disableOthers(tracks, tracks[i]);
-        break;
-      }
-    }
-
-    // IE8 forces us to implement inheritance ourselves
-    // as it does not support Object.defineProperty properly
-    if (browser.IS_IE8) {
-      list = _document2['default'].createElement('custom');
-      for (var prop in _trackList2['default'].prototype) {
-        if (prop !== 'constructor') {
-          list[prop] = _trackList2['default'].prototype[prop];
-        }
-      }
-      for (var _prop in VideoTrackList.prototype) {
-        if (_prop !== 'constructor') {
-          list[_prop] = VideoTrackList.prototype[_prop];
-        }
-      }
-    }
-
-    list = (_this = _possibleConstructorReturn(this, _TrackList.call(this, tracks, list)), _this);
-    list.changing_ = false;
-
-    /**
-     * @member {number} VideoTrackList#selectedIndex
-     *         The current index of the selected {@link VideoTrack`}.
-     */
-    Object.defineProperty(list, 'selectedIndex', {
-      get: function get() {
-        for (var _i = 0; _i < this.length; _i++) {
-          if (this[_i].selected) {
-            return _i;
-          }
-        }
-        return -1;
-      },
-      set: function set() {}
-    });
-
-    return _ret = list, _possibleConstructorReturn(_this, _ret);
-  }
-
-  /**
-   * Add a {@link VideoTrack} to the `VideoTrackList`.
-   *
-   * @param {VideoTrack} track
-   *        The VideoTrack to add to the list
-   *
-   * @fires TrackList#addtrack
-   * @private
-   */
-
-
-  VideoTrackList.prototype.addTrack_ = function addTrack_(track) {
-    var _this2 = this;
-
-    if (track.selected) {
-      disableOthers(this, track);
-    }
-
-    _TrackList.prototype.addTrack_.call(this, track);
-    // native tracks don't have this
-    if (!track.addEventListener) {
-      return;
-    }
-
-    /**
-     * @listens VideoTrack#selectedchange
-     * @fires TrackList#change
-     */
-    track.addEventListener('selectedchange', function () {
-      if (_this2.changing_) {
-        return;
-      }
-      _this2.changing_ = true;
-      disableOthers(_this2, track);
-      _this2.changing_ = false;
-      _this2.trigger('change');
-    });
-  };
-
-  /**
-   * Add a {@link VideoTrack} to the `VideoTrackList`.
-   *
-   * @param {VideoTrack} track
-   *        The VideoTrack to add to the list
-   *
-   * @fires TrackList#addtrack
-   */
-
-
-  VideoTrackList.prototype.addTrack = function addTrack(track) {
-    this.addTrack_(track);
-  };
-
-  /**
-   * Remove a {@link VideoTrack} to the `VideoTrackList`.
-   *
-   * @param {VideoTrack} track
-   *        The VideoTrack to remove from the list.
-   *
-   * @fires TrackList#removetrack
-   */
-
-
-  VideoTrackList.prototype.removeTrack = function removeTrack(track) {
-    _TrackList.prototype.removeTrack_.call(this, track);
-  };
-
-  return VideoTrackList;
-}(_trackList2['default']);
-
-exports['default'] = VideoTrackList;
-
-
-/***/ }),
-
-/***/ 282:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.bufferedPercent = bufferedPercent;
-
-var _timeRanges = __webpack_require__(93);
-
-/**
- * Compute the percentage of the media that has been buffered.
- *
- * @param {TimeRange} buffered
- *        The current `TimeRange` object representing buffered time ranges
- *
- * @param {number} duration
- *        Total duration of the media
- *
- * @return {number}
- *         Percent buffered of the total duration in decimal form.
- */
-function bufferedPercent(buffered, duration) {
-  var bufferedDuration = 0;
-  var start = void 0;
-  var end = void 0;
-
-  if (!duration) {
-    return 0;
-  }
-
-  if (!buffered || !buffered.length) {
-    buffered = (0, _timeRanges.createTimeRange)(0, 0);
-  }
-
-  for (var i = 0; i < buffered.length; i++) {
-    start = buffered.start(i);
-    end = buffered.end(i);
-
-    // buffered end can be bigger than duration by a very small fraction
-    if (end > duration) {
-      end = duration;
-    }
-
-    bufferedDuration += end - start;
-  }
-
-  return bufferedDuration / duration;
-} /**
-   * @file buffer.js
-   * @module buffer
-   */
-
-
-/***/ }),
-
-/***/ 283:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-exports.setTextContent = exports.createStyleElement = undefined;
-
-var _document = __webpack_require__(51);
-
-var _document2 = _interopRequireDefault(_document);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-/**
- * Create a DOM syle element given a className for it.
- *
- * @param {string} className
- *        The className to add to the created style element.
- *
- * @return {Element}
- *         The element that was created.
- */
-var createStyleElement = exports.createStyleElement = function createStyleElement(className) {
-  var style = _document2['default'].createElement('style');
-
-  style.className = className;
-
-  return style;
-};
-
-/**
- * Add text to a DOM element.
- *
- * @param {Element} el
- *        The Element to add text content to.
- *
- * @param {string} content
- *        The text to add to the element.
- */
-/**
- * @file stylesheet.js
- * @module stylesheet
- */
-var setTextContent = exports.setTextContent = function setTextContent(el, content) {
-  if (el.styleSheet) {
-    el.styleSheet.cssText = content;
-  } else {
-    el.textContent = content;
-  }
-};
-
-
-/***/ }),
-
-/***/ 284:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
-
-exports.__esModule = true;
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
-                                                                                                                                                                                                                                                                               * @file video.js
-                                                                                                                                                                                                                                                                               * @module videojs
-                                                                                                                                                                                                                                                                               */
-
-/* global define */
-
-// Include the built-in techs
-
-
-var _window = __webpack_require__(53);
-
-var _window2 = _interopRequireDefault(_window);
-
-var _document = __webpack_require__(51);
-
-var _document2 = _interopRequireDefault(_document);
-
-var _browser = __webpack_require__(55);
-
-var browser = _interopRequireWildcard(_browser);
-
-var _dom = __webpack_require__(29);
-
-var Dom = _interopRequireWildcard(_dom);
-
-var _setup = __webpack_require__(345);
-
-var setup = _interopRequireWildcard(_setup);
-
-var _stylesheet = __webpack_require__(283);
-
-var stylesheet = _interopRequireWildcard(_stylesheet);
-
-var _component = __webpack_require__(5);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _eventTarget = __webpack_require__(97);
-
-var _eventTarget2 = _interopRequireDefault(_eventTarget);
-
-var _events = __webpack_require__(68);
-
-var Events = _interopRequireWildcard(_events);
-
-var _player = __webpack_require__(278);
-
-var _player2 = _interopRequireDefault(_player);
-
-var _plugins = __webpack_require__(341);
-
-var _plugins2 = _interopRequireDefault(_plugins);
-
-var _mergeOptions2 = __webpack_require__(67);
-
-var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
-
-var _fn = __webpack_require__(25);
-
-var Fn = _interopRequireWildcard(_fn);
-
-var _textTrack = __webpack_require__(136);
-
-var _textTrack2 = _interopRequireDefault(_textTrack);
-
-var _audioTrack = __webpack_require__(350);
-
-var _audioTrack2 = _interopRequireDefault(_audioTrack);
-
-var _videoTrack = __webpack_require__(358);
-
-var _videoTrack2 = _interopRequireDefault(_videoTrack);
-
-var _timeRanges = __webpack_require__(93);
-
-var _formatTime = __webpack_require__(69);
-
-var _formatTime2 = _interopRequireDefault(_formatTime);
-
-var _log = __webpack_require__(60);
-
-var _log2 = _interopRequireDefault(_log);
-
-var _url = __webpack_require__(99);
-
-var Url = _interopRequireWildcard(_url);
-
-var _obj = __webpack_require__(56);
-
-var _computedStyle = __webpack_require__(140);
-
-var _computedStyle2 = _interopRequireDefault(_computedStyle);
-
-var _extend = __webpack_require__(338);
-
-var _extend2 = _interopRequireDefault(_extend);
-
-var _xhr = __webpack_require__(285);
-
-var _xhr2 = _interopRequireDefault(_xhr);
-
-var _tech = __webpack_require__(92);
-
-var _tech2 = _interopRequireDefault(_tech);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-// HTML5 Element Shim for IE8
-if (typeof HTMLVideoElement === 'undefined' && Dom.isReal()) {
-  _document2['default'].createElement('video');
-  _document2['default'].createElement('audio');
-  _document2['default'].createElement('track');
-}
-
-/**
- * Doubles as the main function for users to create a player instance and also
- * the main library object.
- * The `videojs` function can be used to initialize or retrieve a player.
-  *
- * @param {string|Element} id
- *        Video element or video element ID
- *
- * @param {Object} [options]
- *        Optional options object for config/settings
- *
- * @param {Component~ReadyCallback} [ready]
- *        Optional ready callback
- *
- * @return {Player}
- *         A player instance
- *
- * @mixes videojs
- */
-function videojs(id, options, ready) {
-  var tag = void 0;
-
-  // Allow for element or ID to be passed in
-  // String ID
-  if (typeof id === 'string') {
-
-    // Adjust for jQuery ID syntax
-    if (id.indexOf('#') === 0) {
-      id = id.slice(1);
-    }
-
-    // If a player instance has already been created for this ID return it.
-    if (videojs.getPlayers()[id]) {
-
-      // If options or ready funtion are passed, warn
-      if (options) {
-        _log2['default'].warn('Player "' + id + '" is already initialised. Options will not be applied.');
-      }
-
-      if (ready) {
-        videojs.getPlayers()[id].ready(ready);
-      }
-
-      return videojs.getPlayers()[id];
-    }
-
-    // Otherwise get element for ID
-    tag = Dom.getEl(id);
-
-    // ID is a media element
-  } else {
-    tag = id;
-  }
-
-  // Check for a useable element
-  // re: nodeName, could be a box div also
-  if (!tag || !tag.nodeName) {
-    throw new TypeError('The element or ID supplied is not valid. (videojs)');
-  }
-
-  // Element may have a player attr referring to an already created player instance.
-  // If so return that otherwise set up a new player below
-  if (tag.player || _player2['default'].players[tag.playerId]) {
-    return tag.player || _player2['default'].players[tag.playerId];
-  }
-
-  options = options || {};
-
-  videojs.hooks('beforesetup').forEach(function (hookFunction) {
-    var opts = hookFunction(tag, (0, _mergeOptions3['default'])(options));
-
-    if (!(0, _obj.isObject)(opts) || Array.isArray(opts)) {
-      _log2['default'].error('please return an object in beforesetup hooks');
-      return;
-    }
-
-    options = (0, _mergeOptions3['default'])(options, opts);
-  });
-
-  var PlayerComponent = _component2['default'].getComponent('Player');
-  // If not, set up a new player
-  var player = new PlayerComponent(tag, options, ready);
-
-  videojs.hooks('setup').forEach(function (hookFunction) {
-    return hookFunction(player);
-  });
-
-  return player;
-}
-
-/**
- * An Object that contains lifecycle hooks as keys which point to an array
- * of functions that are run when a lifecycle is triggered
- */
-videojs.hooks_ = {};
-
-/**
- * Get a list of hooks for a specific lifecycle
- *
- * @param {string} type
- *        the lifecyle to get hooks from
- *
- * @param {Function} [fn]
- *        Optionally add a hook to the lifecycle that your are getting.
- *
- * @return {Array}
- *         an array of hooks, or an empty array if there are none.
- */
-videojs.hooks = function (type, fn) {
-  videojs.hooks_[type] = videojs.hooks_[type] || [];
-  if (fn) {
-    videojs.hooks_[type] = videojs.hooks_[type].concat(fn);
-  }
-  return videojs.hooks_[type];
-};
-
-/**
- * Add a function hook to a specific videojs lifecycle.
- *
- * @param {string} type
- *        the lifecycle to hook the function to.
- *
- * @param {Function|Function[]}
- *        The function or array of functions to attach.
- */
-videojs.hook = function (type, fn) {
-  videojs.hooks(type, fn);
-};
-
-/**
- * Remove a hook from a specific videojs lifecycle.
- *
- * @param {string} type
- *        the lifecycle that the function hooked to
- *
- * @param {Function} fn
- *        The hooked function to remove
- *
- * @return {boolean}
- *         The function that was removed or undef
- */
-videojs.removeHook = function (type, fn) {
-  var index = videojs.hooks(type).indexOf(fn);
-
-  if (index <= -1) {
-    return false;
-  }
-
-  videojs.hooks_[type] = videojs.hooks_[type].slice();
-  videojs.hooks_[type].splice(index, 1);
-
-  return true;
-};
-
-// Add default styles
-if (_window2['default'].VIDEOJS_NO_DYNAMIC_STYLE !== true && Dom.isReal()) {
-  var style = Dom.$('.vjs-styles-defaults');
-
-  if (!style) {
-    style = stylesheet.createStyleElement('vjs-styles-defaults');
-    var head = Dom.$('head');
-
-    if (head) {
-      head.insertBefore(style, head.firstChild);
-    }
-    stylesheet.setTextContent(style, '\n      .video-js {\n        width: 300px;\n        height: 150px;\n      }\n\n      .vjs-fluid {\n        padding-top: 56.25%\n      }\n    ');
-  }
-}
-
-// Run Auto-load players
-// You have to wait at least once in case this script is loaded after your
-// video in the DOM (weird behavior only with minified version)
-setup.autoSetupTimeout(1, videojs);
-
-/**
- * Current software version. Follows semver.
- *
- * @type {string}
- */
-videojs.VERSION = '5.20.5';
-
-/**
- * The global options object. These are the settings that take effect
- * if no overrides are specified when the player is created.
- *
- * @type {Object}
- */
-videojs.options = _player2['default'].prototype.options_;
-
-/**
- * Get an object with the currently created players, keyed by player ID
- *
- * @return {Object}
- *         The created players
- */
-videojs.getPlayers = function () {
-  return _player2['default'].players;
-};
-
-/**
- * Expose players object.
- *
- * @memberOf videojs
- * @property {Object} players
- */
-videojs.players = _player2['default'].players;
-
-/**
- * Get a component class object by name
- *
- * @borrows Component.getComponent as videojs.getComponent
- */
-videojs.getComponent = _component2['default'].getComponent;
-
-/**
- * Register a component so it can referred to by name. Used when adding to other
- * components, either through addChild `component.addChild('myComponent')` or through
- * default children options  `{ children: ['myComponent'] }`.
- *
- * > NOTE: You could also just initialize the component before adding.
- * `component.addChild(new MyComponent());`
- *
- * @param {string} name
- *        The class name of the component
- *
- * @param {Component} comp
- *        The component class
- *
- * @return {Component}
- *         The newly registered component
- */
-videojs.registerComponent = function (name, comp) {
-  if (_tech2['default'].isTech(comp)) {
-    _log2['default'].warn('The ' + name + ' tech was registered as a component. It should instead be registered using videojs.registerTech(name, tech)');
-  }
-
-  _component2['default'].registerComponent.call(_component2['default'], name, comp);
-};
-
-/**
- * Get a Tech class object by name
- *
- * @borrows Tech.getTech as videojs.getTech
- */
-videojs.getTech = _tech2['default'].getTech;
-
-/**
- * Register a Tech so it can referred to by name.
- * This is used in the tech order for the player.
- *
- * @borrows Tech.registerTech as videojs.registerTech
- */
-videojs.registerTech = _tech2['default'].registerTech;
-
-/**
- * A suite of browser and device tests from {@link browser}.
- *
- * @type {Object}
- * @private
- */
-videojs.browser = browser;
-
-/**
- * Whether or not the browser supports touch events. Included for backward
- * compatibility with 4.x, but deprecated. Use `videojs.browser.TOUCH_ENABLED`
- * instead going forward.
- *
- * @deprecated since version 5.0
- * @type {boolean}
- */
-videojs.TOUCH_ENABLED = browser.TOUCH_ENABLED;
-
-/**
- * Subclass an existing class
- * Mimics ES6 subclassing with the `extend` keyword
- *
- * @borrows extend:extendFn as videojs.extend
- */
-videojs.extend = _extend2['default'];
-
-/**
- * Merge two options objects recursively
- * Performs a deep merge like lodash.merge but **only merges plain objects**
- * (not arrays, elements, anything else)
- * Other values will be copied directly from the second object.
- *
- * @borrows merge-options:mergeOptions as videojs.mergeOptions
- */
-videojs.mergeOptions = _mergeOptions3['default'];
-
-/**
- * Change the context (this) of a function
- *
- * > NOTE: as of v5.0 we require an ES5 shim, so you should use the native
- * `function() {}.bind(newContext);` instead of this.
- *
- * @borrows fn:bind as videojs.bind
- */
-videojs.bind = Fn.bind;
-
-/**
- * Create a Video.js player plugin.
- * Plugins are only initialized when options for the plugin are included
- * in the player options, or the plugin function on the player instance is
- * called.
- *
- * @borrows plugin:plugin as videojs.plugin
- */
-videojs.plugin = _plugins2['default'];
-
-/**
- * Adding languages so that they're available to all players.
- * Example: `videojs.addLanguage('es', { 'Hello': 'Hola' });`
- *
- * @param {string} code
- *        The language code or dictionary property
- *
- * @param {Object} data
- *        The data values to be translated
- *
- * @return {Object}
- *         The resulting language dictionary object
- */
-videojs.addLanguage = function (code, data) {
-  var _mergeOptions;
-
-  code = ('' + code).toLowerCase();
-
-  videojs.options.languages = (0, _mergeOptions3['default'])(videojs.options.languages, (_mergeOptions = {}, _mergeOptions[code] = data, _mergeOptions));
-
-  return videojs.options.languages[code];
-};
-
-/**
- * Log messages
- *
- * @borrows log:log as videojs.log
- */
-videojs.log = _log2['default'];
-
-/**
- * Creates an emulated TimeRange object.
- *
- * @borrows time-ranges:createTimeRanges as videojs.createTimeRange
- */
-/**
- * @borrows time-ranges:createTimeRanges as videojs.createTimeRanges
- */
-videojs.createTimeRange = videojs.createTimeRanges = _timeRanges.createTimeRanges;
-
-/**
- * Format seconds as a time string, H:MM:SS or M:SS
- * Supplying a guide (in seconds) will force a number of leading zeros
- * to cover the length of the guide
- *
- * @borrows format-time:formatTime as videojs.formatTime
- */
-videojs.formatTime = _formatTime2['default'];
-
-/**
- * Resolve and parse the elements of a URL
- *
- * @borrows url:parseUrl as videojs.parseUrl
- */
-videojs.parseUrl = Url.parseUrl;
-
-/**
- * Returns whether the url passed is a cross domain request or not.
- *
- * @borrows url:isCrossOrigin as videojs.isCrossOrigin
- */
-videojs.isCrossOrigin = Url.isCrossOrigin;
-
-/**
- * Event target class.
- *
- * @borrows EventTarget as videojs.EventTarget
- */
-videojs.EventTarget = _eventTarget2['default'];
-
-/**
- * Add an event listener to element
- * It stores the handler function in a separate cache object
- * and adds a generic handler to the element's event,
- * along with a unique id (guid) to the element.
- *
- * @borrows events:on as videojs.on
- */
-videojs.on = Events.on;
-
-/**
- * Trigger a listener only once for an event
- *
- * @borrows events:one as videojs.one
- */
-videojs.one = Events.one;
-
-/**
- * Removes event listeners from an element
- *
- * @borrows events:off as videojs.off
- */
-videojs.off = Events.off;
-
-/**
- * Trigger an event for an element
- *
- * @borrows events:trigger as videojs.trigger
- */
-videojs.trigger = Events.trigger;
-
-/**
- * A cross-browser XMLHttpRequest wrapper. Here's a simple example:
- *
- * @param {Object} options
- *        settings for the request.
- *
- * @return {XMLHttpRequest|XDomainRequest}
- *         The request object.
- *
- * @see https://github.com/Raynos/xhr
- */
-videojs.xhr = _xhr2['default'];
-
-/**
- * TextTrack class
- *
- * @borrows TextTrack as videojs.TextTrack
- */
-videojs.TextTrack = _textTrack2['default'];
-
-/**
- * export the AudioTrack class so that source handlers can create
- * AudioTracks and then add them to the players AudioTrackList
- *
- * @borrows AudioTrack as videojs.AudioTrack
- */
-videojs.AudioTrack = _audioTrack2['default'];
-
-/**
- * export the VideoTrack class so that source handlers can create
- * VideoTracks and then add them to the players VideoTrackList
- *
- * @borrows VideoTrack as videojs.VideoTrack
- */
-videojs.VideoTrack = _videoTrack2['default'];
-
-/**
- * Determines, via duck typing, whether or not a value is a DOM element.
- *
- * @borrows dom:isEl as videojs.isEl
- */
-videojs.isEl = Dom.isEl;
-
-/**
- * Determines, via duck typing, whether or not a value is a text node.
- *
- * @borrows dom:isTextNode as videojs.isTextNode
- */
-videojs.isTextNode = Dom.isTextNode;
-
-/**
- * Creates an element and applies properties.
- *
- * @borrows dom:createEl as videojs.createEl
- */
-videojs.createEl = Dom.createEl;
-
-/**
- * Check if an element has a CSS class
- *
- * @borrows dom:hasElClass as videojs.hasClass
- */
-videojs.hasClass = Dom.hasElClass;
-
-/**
- * Add a CSS class name to an element
- *
- * @borrows dom:addElClass as videojs.addClass
- */
-videojs.addClass = Dom.addElClass;
-
-/**
- * Remove a CSS class name from an element
- *
- * @borrows dom:removeElClass as videojs.removeClass
- */
-videojs.removeClass = Dom.removeElClass;
-
-/**
- * Adds or removes a CSS class name on an element depending on an optional
- * condition or the presence/absence of the class name.
- *
- * @borrows dom:toggleElClass as videojs.toggleClass
- */
-videojs.toggleClass = Dom.toggleElClass;
-
-/**
- * Apply attributes to an HTML element.
- *
- * @borrows dom:setElAttributes as videojs.setAttribute
- */
-videojs.setAttributes = Dom.setElAttributes;
-
-/**
- * Get an element's attribute values, as defined on the HTML tag
- * Attributes are not the same as properties. They're defined on the tag
- * or with setAttribute (which shouldn't be used with HTML)
- * This will return true or false for boolean attributes.
- *
- * @borrows dom:getElAttributes as videojs.getAttributes
- */
-videojs.getAttributes = Dom.getElAttributes;
-
-/**
- * Empties the contents of an element.
- *
- * @borrows dom:emptyEl as videojs.emptyEl
- */
-videojs.emptyEl = Dom.emptyEl;
-
-/**
- * Normalizes and appends content to an element.
- *
- * The content for an element can be passed in multiple types and
- * combinations, whose behavior is as follows:
- *
- * - String
- *   Normalized into a text node.
- *
- * - Element, TextNode
- *   Passed through.
- *
- * - Array
- *   A one-dimensional array of strings, elements, nodes, or functions (which
- *   return single strings, elements, or nodes).
- *
- * - Function
- *   If the sole argument, is expected to produce a string, element,
- *   node, or array.
- *
- * @borrows dom:appendContents as videojs.appendContet
- */
-videojs.appendContent = Dom.appendContent;
-
-/**
- * Normalizes and inserts content into an element; this is identical to
- * `appendContent()`, except it empties the element first.
- *
- * The content for an element can be passed in multiple types and
- * combinations, whose behavior is as follows:
- *
- * - String
- *   Normalized into a text node.
- *
- * - Element, TextNode
- *   Passed through.
- *
- * - Array
- *   A one-dimensional array of strings, elements, nodes, or functions (which
- *   return single strings, elements, or nodes).
- *
- * - Function
- *   If the sole argument, is expected to produce a string, element,
- *   node, or array.
- *
- * @borrows dom:insertContent as videojs.insertContent
- */
-videojs.insertContent = Dom.insertContent;
-
-/**
- * A safe getComputedStyle with an IE8 fallback.
- *
- * This is because in Firefox, if the player is loaded in an iframe with `display:none`,
- * then `getComputedStyle` returns `null`, so, we do a null-check to make sure
- * that the player doesn't break in these cases.
- * See https://bugzilla.mozilla.org/show_bug.cgi?id=548397 for more details.
- *
- * @borrows computed-style:computedStyle as videojs.computedStyle
- */
-videojs.computedStyle = _computedStyle2['default'];
-
-/*
- * Custom Universal Module Definition (UMD)
- *
- * Video.js will never be a non-browser lib so we can simplify UMD a bunch and
- * still support requirejs and browserify. This also needs to be closure
- * compiler compatible, so string keys are used.
- */
-if (true) {
-  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
-    return videojs;
-  }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-  // checking that module is an object too because of umdjs/umd#35
-} else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && (typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object') {
-  module.exports = videojs;
-}
-
-exports['default'] = videojs;
-
-
-/***/ }),
-
-/***/ 285:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var window = __webpack_require__(53)
-var isFunction = __webpack_require__(83)
-var parseHeaders = __webpack_require__(125)
-var xtend = __webpack_require__(141)
-
-module.exports = createXHR
-createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
-createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window.XDomainRequest
-
-forEachArray(["get", "put", "post", "patch", "head", "delete"], function(method) {
-    createXHR[method === "delete" ? "del" : method] = function(uri, options, callback) {
-        options = initParams(uri, options, callback)
-        options.method = method.toUpperCase()
-        return _createXHR(options)
-    }
-})
-
-function forEachArray(array, iterator) {
-    for (var i = 0; i < array.length; i++) {
-        iterator(array[i])
-    }
-}
-
-function isEmpty(obj){
-    for(var i in obj){
-        if(obj.hasOwnProperty(i)) return false
-    }
-    return true
-}
-
-function initParams(uri, options, callback) {
-    var params = uri
-
-    if (isFunction(options)) {
-        callback = options
-        if (typeof uri === "string") {
-            params = {uri:uri}
-        }
-    } else {
-        params = xtend(options, {uri: uri})
-    }
-
-    params.callback = callback
-    return params
-}
-
-function createXHR(uri, options, callback) {
-    options = initParams(uri, options, callback)
-    return _createXHR(options)
-}
-
-function _createXHR(options) {
-    if(typeof options.callback === "undefined"){
-        throw new Error("callback argument missing")
-    }
-
-    var called = false
-    var callback = function cbOnce(err, response, body){
-        if(!called){
-            called = true
-            options.callback(err, response, body)
-        }
-    }
-
-    function readystatechange() {
-        if (xhr.readyState === 4) {
-            loadFunc()
-        }
-    }
-
-    function getBody() {
-        // Chrome with requestType=blob throws errors arround when even testing access to responseText
-        var body = undefined
-
-        if (xhr.response) {
-            body = xhr.response
-        } else {
-            body = xhr.responseText || getXml(xhr)
-        }
-
-        if (isJson) {
-            try {
-                body = JSON.parse(body)
-            } catch (e) {}
-        }
-
-        return body
-    }
-
-    var failureResponse = {
-                body: undefined,
-                headers: {},
-                statusCode: 0,
-                method: method,
-                url: uri,
-                rawRequest: xhr
-            }
-
-    function errorFunc(evt) {
-        clearTimeout(timeoutTimer)
-        if(!(evt instanceof Error)){
-            evt = new Error("" + (evt || "Unknown XMLHttpRequest Error") )
-        }
-        evt.statusCode = 0
-        return callback(evt, failureResponse)
-    }
-
-    // will load the data & process the response in a special response object
-    function loadFunc() {
-        if (aborted) return
-        var status
-        clearTimeout(timeoutTimer)
-        if(options.useXDR && xhr.status===undefined) {
-            //IE8 CORS GET successful response doesn't have a status field, but body is fine
-            status = 200
-        } else {
-            status = (xhr.status === 1223 ? 204 : xhr.status)
-        }
-        var response = failureResponse
-        var err = null
-
-        if (status !== 0){
-            response = {
-                body: getBody(),
-                statusCode: status,
-                method: method,
-                headers: {},
-                url: uri,
-                rawRequest: xhr
-            }
-            if(xhr.getAllResponseHeaders){ //remember xhr can in fact be XDR for CORS in IE
-                response.headers = parseHeaders(xhr.getAllResponseHeaders())
-            }
-        } else {
-            err = new Error("Internal XMLHttpRequest Error")
-        }
-        return callback(err, response, response.body)
-    }
-
-    var xhr = options.xhr || null
-
-    if (!xhr) {
-        if (options.cors || options.useXDR) {
-            xhr = new createXHR.XDomainRequest()
-        }else{
-            xhr = new createXHR.XMLHttpRequest()
-        }
-    }
-
-    var key
-    var aborted
-    var uri = xhr.url = options.uri || options.url
-    var method = xhr.method = options.method || "GET"
-    var body = options.body || options.data || null
-    var headers = xhr.headers = options.headers || {}
-    var sync = !!options.sync
-    var isJson = false
-    var timeoutTimer
-
-    if ("json" in options) {
-        isJson = true
-        headers["accept"] || headers["Accept"] || (headers["Accept"] = "application/json") //Don't override existing accept header declared by user
-        if (method !== "GET" && method !== "HEAD") {
-            headers["content-type"] || headers["Content-Type"] || (headers["Content-Type"] = "application/json") //Don't override existing accept header declared by user
-            body = JSON.stringify(options.json)
-        }
-    }
-
-    xhr.onreadystatechange = readystatechange
-    xhr.onload = loadFunc
-    xhr.onerror = errorFunc
-    // IE9 must have onprogress be set to a unique function.
-    xhr.onprogress = function () {
-        // IE must die
-    }
-    xhr.ontimeout = errorFunc
-    xhr.open(method, uri, !sync, options.username, options.password)
-    //has to be after open
-    if(!sync) {
-        xhr.withCredentials = !!options.withCredentials
-    }
-    // Cannot set timeout with sync request
-    // not setting timeout on the xhr object, because of old webkits etc. not handling that correctly
-    // both npm's request and jquery 1.x use this kind of timeout, so this is being consistent
-    if (!sync && options.timeout > 0 ) {
-        timeoutTimer = setTimeout(function(){
-            aborted=true//IE9 may still call readystatechange
-            xhr.abort("timeout")
-            var e = new Error("XMLHttpRequest timeout")
-            e.code = "ETIMEDOUT"
-            errorFunc(e)
-        }, options.timeout )
-    }
-
-    if (xhr.setRequestHeader) {
-        for(key in headers){
-            if(headers.hasOwnProperty(key)){
-                xhr.setRequestHeader(key, headers[key])
-            }
-        }
-    } else if (options.headers && !isEmpty(options.headers)) {
-        throw new Error("Headers cannot be set on an XDomainRequest object")
-    }
-
-    if ("responseType" in options) {
-        xhr.responseType = options.responseType
-    }
-
-    if ("beforeSend" in options &&
-        typeof options.beforeSend === "function"
-    ) {
-        options.beforeSend(xhr)
-    }
-
-    xhr.send(body)
-
-    return xhr
-
-
-}
-
-function getXml(xhr) {
-    if (xhr.responseType === "document") {
-        return xhr.responseXML
-    }
-    var firefoxBugTakenEffect = xhr.status === 204 && xhr.responseXML && xhr.responseXML.documentElement.nodeName === "parsererror"
-    if (xhr.responseType === "" && !firefoxBugTakenEffect) {
-        return xhr.responseXML
-    }
-
-    return null
-}
-
-function noop() {}
-
-
-/***/ }),
-
 /***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8695,7 +7382,7 @@ exports.normalizeContent = normalizeContent;
 exports.appendContent = appendContent;
 exports.insertContent = insertContent;
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -8703,15 +7390,15 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(95);
+var _tsml = __webpack_require__(91);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -9561,7 +8248,1844 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /***/ }),
 
+/***/ 290:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _dom = __webpack_require__(29);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _obj = __webpack_require__(56);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file slider.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * The base functionality for a slider. Can be vertical or horizontal.
+ * For instance the volume bar or the seek bar on a video is a slider.
+ *
+ * @extends Component
+ */
+var Slider = function (_Component) {
+  _inherits(Slider, _Component);
+
+  /**
+   * Create an instance of this class
+   *
+   * @param {Player} player
+   *        The `Player` that this class should be attached to.
+   *
+   * @param {Object} [options]
+   *        The key/value store of player options.
+   */
+  function Slider(player, options) {
+    _classCallCheck(this, Slider);
+
+    // Set property names to bar to match with the child Slider class is looking for
+    var _this = _possibleConstructorReturn(this, _Component.call(this, player, options));
+
+    _this.bar = _this.getChild(_this.options_.barName);
+
+    // Set a horizontal or vertical class on the slider depending on the slider type
+    _this.vertical(!!_this.options_.vertical);
+
+    _this.on('mousedown', _this.handleMouseDown);
+    _this.on('touchstart', _this.handleMouseDown);
+    _this.on('focus', _this.handleFocus);
+    _this.on('blur', _this.handleBlur);
+    _this.on('click', _this.handleClick);
+
+    _this.on(player, 'controlsvisible', _this.update);
+    _this.on(player, _this.playerEvent, _this.update);
+    return _this;
+  }
+
+  /**
+   * Create the `Button`s DOM element.
+   *
+   * @param {string} type
+   *        Type of element to create.
+   *
+   * @param {Object} [props={}]
+   *        List of properties in Object form.
+   *
+   * @param {Object} [attributes={}]
+   *        list of attributes in Object form.
+   *
+   * @return {Element}
+   *         The element that gets created.
+   */
+
+
+  Slider.prototype.createEl = function createEl(type) {
+    var props = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    var attributes = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    // Add the slider element class to all sub classes
+    props.className = props.className + ' vjs-slider';
+    props = (0, _obj.assign)({
+      tabIndex: 0
+    }, props);
+
+    attributes = (0, _obj.assign)({
+      'role': 'slider',
+      'aria-valuenow': 0,
+      'aria-valuemin': 0,
+      'aria-valuemax': 100,
+      'tabIndex': 0
+    }, attributes);
+
+    return _Component.prototype.createEl.call(this, type, props, attributes);
+  };
+
+  /**
+   * Handle `mousedown` or `touchstart` events on the `Slider`.
+   *
+   * @param {EventTarget~Event} event
+   *        `mousedown` or `touchstart` event that triggered this function
+   *
+   * @listens mousedown
+   * @listens touchstart
+   * @fires Slider#slideractive
+   */
+
+
+  Slider.prototype.handleMouseDown = function handleMouseDown(event) {
+    var doc = this.bar.el_.ownerDocument;
+
+    event.preventDefault();
+    Dom.blockTextSelection();
+
+    this.addClass('vjs-sliding');
+    /**
+     * Triggered when the slider is in an active state
+     *
+     * @event Slider#slideractive
+     * @type {EventTarget~Event}
+     */
+    this.trigger('slideractive');
+
+    this.on(doc, 'mousemove', this.handleMouseMove);
+    this.on(doc, 'mouseup', this.handleMouseUp);
+    this.on(doc, 'touchmove', this.handleMouseMove);
+    this.on(doc, 'touchend', this.handleMouseUp);
+
+    this.handleMouseMove(event);
+  };
+
+  /**
+   * Handle the `mousemove`, `touchmove`, and `mousedown` events on this `Slider`.
+   * The `mousemove` and `touchmove` events will only only trigger this function during
+   * `mousedown` and `touchstart`. This is due to {@link Slider#handleMouseDown} and
+   * {@link Slider#handleMouseUp}.
+   *
+   * @param {EventTarget~Event} event
+   *        `mousedown`, `mousemove`, `touchstart`, or `touchmove` event that triggered
+   *        this function
+   *
+   * @listens mousemove
+   * @listens touchmove
+   */
+
+
+  Slider.prototype.handleMouseMove = function handleMouseMove(event) {};
+
+  /**
+   * Handle `mouseup` or `touchend` events on the `Slider`.
+   *
+   * @param {EventTarget~Event} event
+   *        `mouseup` or `touchend` event that triggered this function.
+   *
+   * @listens touchend
+   * @listens mouseup
+   * @fires Slider#sliderinactive
+   */
+
+
+  Slider.prototype.handleMouseUp = function handleMouseUp() {
+    var doc = this.bar.el_.ownerDocument;
+
+    Dom.unblockTextSelection();
+
+    this.removeClass('vjs-sliding');
+    /**
+     * Triggered when the slider is no longer in an active state.
+     *
+     * @event Slider#sliderinactive
+     * @type {EventTarget~Event}
+     */
+    this.trigger('sliderinactive');
+
+    this.off(doc, 'mousemove', this.handleMouseMove);
+    this.off(doc, 'mouseup', this.handleMouseUp);
+    this.off(doc, 'touchmove', this.handleMouseMove);
+    this.off(doc, 'touchend', this.handleMouseUp);
+
+    this.update();
+  };
+
+  /**
+   * Update the progress bar of the `Slider`.
+   */
+
+
+  Slider.prototype.update = function update() {
+    // In VolumeBar init we have a setTimeout for update that pops and update to the end of the
+    // execution stack. The player is destroyed before then update will cause an error
+    if (!this.el_) {
+      return;
+    }
+
+    // If scrubbing, we could use a cached value to make the handle keep up with the user's mouse.
+    // On HTML5 browsers scrubbing is really smooth, but some flash players are slow, so we might want to utilize this later.
+    // var progress =  (this.player_.scrubbing()) ? this.player_.getCache().currentTime / this.player_.duration() : this.player_.currentTime() / this.player_.duration();
+    var progress = this.getPercent();
+    var bar = this.bar;
+
+    // If there's no bar...
+    if (!bar) {
+      return;
+    }
+
+    // Protect against no duration and other division issues
+    if (typeof progress !== 'number' || progress !== progress || progress < 0 || progress === Infinity) {
+      progress = 0;
+    }
+
+    // Convert to a percentage for setting
+    var percentage = (progress * 100).toFixed(2) + '%';
+
+    // Set the new bar width or height
+    if (this.vertical()) {
+      bar.el().style.height = percentage;
+    } else {
+      bar.el().style.width = percentage;
+    }
+  };
+
+  /**
+   * Calculate distance for slider
+   *
+   * @param {EventTarget~Event} event
+   *        The event that caused this function to run.
+   *
+   * @return {number}
+   *         The current position of the Slider.
+   *         - postition.x for vertical `Slider`s
+   *         - postition.y for horizontal `Slider`s
+   */
+
+
+  Slider.prototype.calculateDistance = function calculateDistance(event) {
+    var position = Dom.getPointerPosition(this.el_, event);
+
+    if (this.vertical()) {
+      return position.y;
+    }
+    return position.x;
+  };
+
+  /**
+   * Handle a `focus` event on this `Slider`.
+   *
+   * @param {EventTarget~Event} event
+   *        The `focus` event that caused this function to run.
+   *
+   * @listens focus
+   */
+
+
+  Slider.prototype.handleFocus = function handleFocus() {
+    this.on(this.bar.el_.ownerDocument, 'keydown', this.handleKeyPress);
+  };
+
+  /**
+   * Handle a `keydown` event on the `Slider`. Watches for left, rigth, up, and down
+   * arrow keys. This function will only be called when the slider has focus. See
+   * {@link Slider#handleFocus} and {@link Slider#handleBlur}.
+   *
+   * @param {EventTarget~Event} event
+   *        the `keydown` event that caused this function to run.
+   *
+   * @listens keydown
+   */
+
+
+  Slider.prototype.handleKeyPress = function handleKeyPress(event) {
+    // Left and Down Arrows
+    if (event.which === 37 || event.which === 40) {
+      event.preventDefault();
+      this.stepBack();
+
+      // Up and Right Arrows
+    } else if (event.which === 38 || event.which === 39) {
+      event.preventDefault();
+      this.stepForward();
+    }
+  };
+
+  /**
+   * Handle a `blur` event on this `Slider`.
+   *
+   * @param {EventTarget~Event} event
+   *        The `blur` event that caused this function to run.
+   *
+   * @listens blur
+   */
+
+  Slider.prototype.handleBlur = function handleBlur() {
+    this.off(this.bar.el_.ownerDocument, 'keydown', this.handleKeyPress);
+  };
+
+  /**
+   * Listener for click events on slider, used to prevent clicks
+   *   from bubbling up to parent elements like button menus.
+   *
+   * @param {Object} event
+   *        Event that caused this object to run
+   */
+
+
+  Slider.prototype.handleClick = function handleClick(event) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
+  };
+
+  /**
+   * Get/set if slider is horizontal for vertical
+   *
+   * @param {boolean} [bool]
+   *        - true if slider is vertical,
+   *        - false is horizontal
+   *
+   * @return {boolean|Slider}
+   *         - true if slider is vertical, and getting
+   *         - false is horizontal, and getting
+   *         - a reference to this object when setting
+   */
+
+
+  Slider.prototype.vertical = function vertical(bool) {
+    if (bool === undefined) {
+      return this.vertical_ || false;
+    }
+
+    this.vertical_ = !!bool;
+
+    if (this.vertical_) {
+      this.addClass('vjs-slider-vertical');
+    } else {
+      this.addClass('vjs-slider-horizontal');
+    }
+
+    return this;
+  };
+
+  return Slider;
+}(_component2['default']);
+
+_component2['default'].registerComponent('Slider', Slider);
+exports['default'] = Slider;
+
+
+/***/ }),
+
+/***/ 291:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _trackList = __webpack_require__(139);
+
+var _trackList2 = _interopRequireDefault(_trackList);
+
+var _browser = __webpack_require__(55);
+
+var browser = _interopRequireWildcard(_browser);
+
+var _document = __webpack_require__(52);
+
+var _document2 = _interopRequireDefault(_document);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file audio-track-list.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Anywhere we call this function we diverge from the spec
+ * as we only support one enabled audiotrack at a time
+ *
+ * @param {AudioTrackList} list
+ *        list to work on
+ *
+ * @param {AudioTrack} track
+ *        The track to skip
+ *
+ * @private
+ */
+var disableOthers = function disableOthers(list, track) {
+  for (var i = 0; i < list.length; i++) {
+    if (track.id === list[i].id) {
+      continue;
+    }
+    // another audio track is enabled, disable it
+    list[i].enabled = false;
+  }
+};
+
+/**
+ * The current list of {@link AudioTrack} for a media file.
+ *
+ * @see [Spec]{@link https://html.spec.whatwg.org/multipage/embedded-content.html#audiotracklist}
+ * @extends TrackList
+ */
+
+var AudioTrackList = function (_TrackList) {
+  _inherits(AudioTrackList, _TrackList);
+
+  /**
+   * Create an instance of this class.
+   *
+   * @param {AudioTrack[]} [tracks=[]]
+   *        A list of `AudioTrack` to instantiate the list with.
+   */
+  function AudioTrackList() {
+    var _this, _ret;
+
+    var tracks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    _classCallCheck(this, AudioTrackList);
+
+    var list = void 0;
+
+    // make sure only 1 track is enabled
+    // sorted from last index to first index
+    for (var i = tracks.length - 1; i >= 0; i--) {
+      if (tracks[i].enabled) {
+        disableOthers(tracks, tracks[i]);
+        break;
+      }
+    }
+
+    // IE8 forces us to implement inheritance ourselves
+    // as it does not support Object.defineProperty properly
+    if (browser.IS_IE8) {
+      list = _document2['default'].createElement('custom');
+      for (var prop in _trackList2['default'].prototype) {
+        if (prop !== 'constructor') {
+          list[prop] = _trackList2['default'].prototype[prop];
+        }
+      }
+      for (var _prop in AudioTrackList.prototype) {
+        if (_prop !== 'constructor') {
+          list[_prop] = AudioTrackList.prototype[_prop];
+        }
+      }
+    }
+
+    list = (_this = _possibleConstructorReturn(this, _TrackList.call(this, tracks, list)), _this);
+    list.changing_ = false;
+
+    return _ret = list, _possibleConstructorReturn(_this, _ret);
+  }
+
+  /**
+   * Add an {@link AudioTrack} to the `AudioTrackList`.
+   *
+   * @param {AudioTrack} track
+   *        The AudioTrack to add to the list
+   *
+   * @fires Track#addtrack
+   * @private
+   */
+
+
+  AudioTrackList.prototype.addTrack_ = function addTrack_(track) {
+    var _this2 = this;
+
+    if (track.enabled) {
+      disableOthers(this, track);
+    }
+
+    _TrackList.prototype.addTrack_.call(this, track);
+    // native tracks don't have this
+    if (!track.addEventListener) {
+      return;
+    }
+
+    /**
+     * @listens AudioTrack#enabledchange
+     * @fires TrackList#change
+     */
+    track.addEventListener('enabledchange', function () {
+      // when we are disabling other tracks (since we don't support
+      // more than one track at a time) we will set changing_
+      // to true so that we don't trigger additional change events
+      if (_this2.changing_) {
+        return;
+      }
+      _this2.changing_ = true;
+      disableOthers(_this2, track);
+      _this2.changing_ = false;
+      _this2.trigger('change');
+    });
+  };
+
+  /**
+   * Add an {@link AudioTrack} to the `AudioTrackList`.
+   *
+   * @param {AudioTrack} track
+   *        The AudioTrack to add to the list
+   *
+   * @fires Track#addtrack
+   */
+
+
+  AudioTrackList.prototype.addTrack = function addTrack(track) {
+    this.addTrack_(track);
+  };
+
+  /**
+   * Remove an {@link AudioTrack} from the `AudioTrackList`.
+   *
+   * @param {AudioTrack} track
+   *        The AudioTrack to remove from the list
+   *
+   * @fires Track#removetrack
+   */
+
+
+  AudioTrackList.prototype.removeTrack = function removeTrack(track) {
+    _TrackList.prototype.removeTrack_.call(this, track);
+  };
+
+  return AudioTrackList;
+}(_trackList2['default']);
+
+exports['default'] = AudioTrackList;
+
+
+/***/ }),
+
+/***/ 292:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _trackList = __webpack_require__(139);
+
+var _trackList2 = _interopRequireDefault(_trackList);
+
+var _browser = __webpack_require__(55);
+
+var browser = _interopRequireWildcard(_browser);
+
+var _document = __webpack_require__(52);
+
+var _document2 = _interopRequireDefault(_document);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file video-track-list.js
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+/**
+ * Un-select all other {@link VideoTrack}s that are selected.
+ *
+ * @param {VideoTrackList} list
+ *        list to work on
+ *
+ * @param {VideoTrack} track
+ *        The track to skip
+ *
+ * @private
+ */
+var disableOthers = function disableOthers(list, track) {
+  for (var i = 0; i < list.length; i++) {
+    if (track.id === list[i].id) {
+      continue;
+    }
+    // another video track is enabled, disable it
+    list[i].selected = false;
+  }
+};
+
+/**
+ * The current list of {@link VideoTrack} for a video.
+ *
+ * @see [Spec]{@link https://html.spec.whatwg.org/multipage/embedded-content.html#videotracklist}
+ * @extends TrackList
+ */
+
+var VideoTrackList = function (_TrackList) {
+  _inherits(VideoTrackList, _TrackList);
+
+  /**
+   * Create an instance of this class.
+   *
+   * @param {VideoTrack[]} [tracks=[]]
+   *        A list of `VideoTrack` to instantiate the list with.
+   */
+  function VideoTrackList() {
+    var _this, _ret;
+
+    var tracks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+    _classCallCheck(this, VideoTrackList);
+
+    var list = void 0;
+
+    // make sure only 1 track is enabled
+    // sorted from last index to first index
+    for (var i = tracks.length - 1; i >= 0; i--) {
+      if (tracks[i].selected) {
+        disableOthers(tracks, tracks[i]);
+        break;
+      }
+    }
+
+    // IE8 forces us to implement inheritance ourselves
+    // as it does not support Object.defineProperty properly
+    if (browser.IS_IE8) {
+      list = _document2['default'].createElement('custom');
+      for (var prop in _trackList2['default'].prototype) {
+        if (prop !== 'constructor') {
+          list[prop] = _trackList2['default'].prototype[prop];
+        }
+      }
+      for (var _prop in VideoTrackList.prototype) {
+        if (_prop !== 'constructor') {
+          list[_prop] = VideoTrackList.prototype[_prop];
+        }
+      }
+    }
+
+    list = (_this = _possibleConstructorReturn(this, _TrackList.call(this, tracks, list)), _this);
+    list.changing_ = false;
+
+    /**
+     * @member {number} VideoTrackList#selectedIndex
+     *         The current index of the selected {@link VideoTrack`}.
+     */
+    Object.defineProperty(list, 'selectedIndex', {
+      get: function get() {
+        for (var _i = 0; _i < this.length; _i++) {
+          if (this[_i].selected) {
+            return _i;
+          }
+        }
+        return -1;
+      },
+      set: function set() {}
+    });
+
+    return _ret = list, _possibleConstructorReturn(_this, _ret);
+  }
+
+  /**
+   * Add a {@link VideoTrack} to the `VideoTrackList`.
+   *
+   * @param {VideoTrack} track
+   *        The VideoTrack to add to the list
+   *
+   * @fires TrackList#addtrack
+   * @private
+   */
+
+
+  VideoTrackList.prototype.addTrack_ = function addTrack_(track) {
+    var _this2 = this;
+
+    if (track.selected) {
+      disableOthers(this, track);
+    }
+
+    _TrackList.prototype.addTrack_.call(this, track);
+    // native tracks don't have this
+    if (!track.addEventListener) {
+      return;
+    }
+
+    /**
+     * @listens VideoTrack#selectedchange
+     * @fires TrackList#change
+     */
+    track.addEventListener('selectedchange', function () {
+      if (_this2.changing_) {
+        return;
+      }
+      _this2.changing_ = true;
+      disableOthers(_this2, track);
+      _this2.changing_ = false;
+      _this2.trigger('change');
+    });
+  };
+
+  /**
+   * Add a {@link VideoTrack} to the `VideoTrackList`.
+   *
+   * @param {VideoTrack} track
+   *        The VideoTrack to add to the list
+   *
+   * @fires TrackList#addtrack
+   */
+
+
+  VideoTrackList.prototype.addTrack = function addTrack(track) {
+    this.addTrack_(track);
+  };
+
+  /**
+   * Remove a {@link VideoTrack} to the `VideoTrackList`.
+   *
+   * @param {VideoTrack} track
+   *        The VideoTrack to remove from the list.
+   *
+   * @fires TrackList#removetrack
+   */
+
+
+  VideoTrackList.prototype.removeTrack = function removeTrack(track) {
+    _TrackList.prototype.removeTrack_.call(this, track);
+  };
+
+  return VideoTrackList;
+}(_trackList2['default']);
+
+exports['default'] = VideoTrackList;
+
+
+/***/ }),
+
 /***/ 293:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.bufferedPercent = bufferedPercent;
+
+var _timeRanges = __webpack_require__(95);
+
+/**
+ * Compute the percentage of the media that has been buffered.
+ *
+ * @param {TimeRange} buffered
+ *        The current `TimeRange` object representing buffered time ranges
+ *
+ * @param {number} duration
+ *        Total duration of the media
+ *
+ * @return {number}
+ *         Percent buffered of the total duration in decimal form.
+ */
+function bufferedPercent(buffered, duration) {
+  var bufferedDuration = 0;
+  var start = void 0;
+  var end = void 0;
+
+  if (!duration) {
+    return 0;
+  }
+
+  if (!buffered || !buffered.length) {
+    buffered = (0, _timeRanges.createTimeRange)(0, 0);
+  }
+
+  for (var i = 0; i < buffered.length; i++) {
+    start = buffered.start(i);
+    end = buffered.end(i);
+
+    // buffered end can be bigger than duration by a very small fraction
+    if (end > duration) {
+      end = duration;
+    }
+
+    bufferedDuration += end - start;
+  }
+
+  return bufferedDuration / duration;
+} /**
+   * @file buffer.js
+   * @module buffer
+   */
+
+
+/***/ }),
+
+/***/ 294:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.setTextContent = exports.createStyleElement = undefined;
+
+var _document = __webpack_require__(52);
+
+var _document2 = _interopRequireDefault(_document);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+/**
+ * Create a DOM syle element given a className for it.
+ *
+ * @param {string} className
+ *        The className to add to the created style element.
+ *
+ * @return {Element}
+ *         The element that was created.
+ */
+var createStyleElement = exports.createStyleElement = function createStyleElement(className) {
+  var style = _document2['default'].createElement('style');
+
+  style.className = className;
+
+  return style;
+};
+
+/**
+ * Add text to a DOM element.
+ *
+ * @param {Element} el
+ *        The Element to add text content to.
+ *
+ * @param {string} content
+ *        The text to add to the element.
+ */
+/**
+ * @file stylesheet.js
+ * @module stylesheet
+ */
+var setTextContent = exports.setTextContent = function setTextContent(el, content) {
+  if (el.styleSheet) {
+    el.styleSheet.cssText = content;
+  } else {
+    el.textContent = content;
+  }
+};
+
+
+/***/ }),
+
+/***/ 295:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;
+
+exports.__esModule = true;
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; /**
+                                                                                                                                                                                                                                                                               * @file video.js
+                                                                                                                                                                                                                                                                               * @module videojs
+                                                                                                                                                                                                                                                                               */
+
+/* global define */
+
+// Include the built-in techs
+
+
+var _window = __webpack_require__(53);
+
+var _window2 = _interopRequireDefault(_window);
+
+var _document = __webpack_require__(52);
+
+var _document2 = _interopRequireDefault(_document);
+
+var _browser = __webpack_require__(55);
+
+var browser = _interopRequireWildcard(_browser);
+
+var _dom = __webpack_require__(29);
+
+var Dom = _interopRequireWildcard(_dom);
+
+var _setup = __webpack_require__(364);
+
+var setup = _interopRequireWildcard(_setup);
+
+var _stylesheet = __webpack_require__(294);
+
+var stylesheet = _interopRequireWildcard(_stylesheet);
+
+var _component = __webpack_require__(5);
+
+var _component2 = _interopRequireDefault(_component);
+
+var _eventTarget = __webpack_require__(103);
+
+var _eventTarget2 = _interopRequireDefault(_eventTarget);
+
+var _events = __webpack_require__(68);
+
+var Events = _interopRequireWildcard(_events);
+
+var _player = __webpack_require__(289);
+
+var _player2 = _interopRequireDefault(_player);
+
+var _plugins = __webpack_require__(360);
+
+var _plugins2 = _interopRequireDefault(_plugins);
+
+var _mergeOptions2 = __webpack_require__(67);
+
+var _mergeOptions3 = _interopRequireDefault(_mergeOptions2);
+
+var _fn = __webpack_require__(26);
+
+var Fn = _interopRequireWildcard(_fn);
+
+var _textTrack = __webpack_require__(137);
+
+var _textTrack2 = _interopRequireDefault(_textTrack);
+
+var _audioTrack = __webpack_require__(369);
+
+var _audioTrack2 = _interopRequireDefault(_audioTrack);
+
+var _videoTrack = __webpack_require__(377);
+
+var _videoTrack2 = _interopRequireDefault(_videoTrack);
+
+var _timeRanges = __webpack_require__(95);
+
+var _formatTime = __webpack_require__(69);
+
+var _formatTime2 = _interopRequireDefault(_formatTime);
+
+var _log = __webpack_require__(61);
+
+var _log2 = _interopRequireDefault(_log);
+
+var _url = __webpack_require__(105);
+
+var Url = _interopRequireWildcard(_url);
+
+var _obj = __webpack_require__(56);
+
+var _computedStyle = __webpack_require__(141);
+
+var _computedStyle2 = _interopRequireDefault(_computedStyle);
+
+var _extend = __webpack_require__(357);
+
+var _extend2 = _interopRequireDefault(_extend);
+
+var _xhr = __webpack_require__(296);
+
+var _xhr2 = _interopRequireDefault(_xhr);
+
+var _tech = __webpack_require__(94);
+
+var _tech2 = _interopRequireDefault(_tech);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+// HTML5 Element Shim for IE8
+if (typeof HTMLVideoElement === 'undefined' && Dom.isReal()) {
+  _document2['default'].createElement('video');
+  _document2['default'].createElement('audio');
+  _document2['default'].createElement('track');
+}
+
+/**
+ * Doubles as the main function for users to create a player instance and also
+ * the main library object.
+ * The `videojs` function can be used to initialize or retrieve a player.
+  *
+ * @param {string|Element} id
+ *        Video element or video element ID
+ *
+ * @param {Object} [options]
+ *        Optional options object for config/settings
+ *
+ * @param {Component~ReadyCallback} [ready]
+ *        Optional ready callback
+ *
+ * @return {Player}
+ *         A player instance
+ *
+ * @mixes videojs
+ */
+function videojs(id, options, ready) {
+  var tag = void 0;
+
+  // Allow for element or ID to be passed in
+  // String ID
+  if (typeof id === 'string') {
+
+    // Adjust for jQuery ID syntax
+    if (id.indexOf('#') === 0) {
+      id = id.slice(1);
+    }
+
+    // If a player instance has already been created for this ID return it.
+    if (videojs.getPlayers()[id]) {
+
+      // If options or ready funtion are passed, warn
+      if (options) {
+        _log2['default'].warn('Player "' + id + '" is already initialised. Options will not be applied.');
+      }
+
+      if (ready) {
+        videojs.getPlayers()[id].ready(ready);
+      }
+
+      return videojs.getPlayers()[id];
+    }
+
+    // Otherwise get element for ID
+    tag = Dom.getEl(id);
+
+    // ID is a media element
+  } else {
+    tag = id;
+  }
+
+  // Check for a useable element
+  // re: nodeName, could be a box div also
+  if (!tag || !tag.nodeName) {
+    throw new TypeError('The element or ID supplied is not valid. (videojs)');
+  }
+
+  // Element may have a player attr referring to an already created player instance.
+  // If so return that otherwise set up a new player below
+  if (tag.player || _player2['default'].players[tag.playerId]) {
+    return tag.player || _player2['default'].players[tag.playerId];
+  }
+
+  options = options || {};
+
+  videojs.hooks('beforesetup').forEach(function (hookFunction) {
+    var opts = hookFunction(tag, (0, _mergeOptions3['default'])(options));
+
+    if (!(0, _obj.isObject)(opts) || Array.isArray(opts)) {
+      _log2['default'].error('please return an object in beforesetup hooks');
+      return;
+    }
+
+    options = (0, _mergeOptions3['default'])(options, opts);
+  });
+
+  var PlayerComponent = _component2['default'].getComponent('Player');
+  // If not, set up a new player
+  var player = new PlayerComponent(tag, options, ready);
+
+  videojs.hooks('setup').forEach(function (hookFunction) {
+    return hookFunction(player);
+  });
+
+  return player;
+}
+
+/**
+ * An Object that contains lifecycle hooks as keys which point to an array
+ * of functions that are run when a lifecycle is triggered
+ */
+videojs.hooks_ = {};
+
+/**
+ * Get a list of hooks for a specific lifecycle
+ *
+ * @param {string} type
+ *        the lifecyle to get hooks from
+ *
+ * @param {Function} [fn]
+ *        Optionally add a hook to the lifecycle that your are getting.
+ *
+ * @return {Array}
+ *         an array of hooks, or an empty array if there are none.
+ */
+videojs.hooks = function (type, fn) {
+  videojs.hooks_[type] = videojs.hooks_[type] || [];
+  if (fn) {
+    videojs.hooks_[type] = videojs.hooks_[type].concat(fn);
+  }
+  return videojs.hooks_[type];
+};
+
+/**
+ * Add a function hook to a specific videojs lifecycle.
+ *
+ * @param {string} type
+ *        the lifecycle to hook the function to.
+ *
+ * @param {Function|Function[]}
+ *        The function or array of functions to attach.
+ */
+videojs.hook = function (type, fn) {
+  videojs.hooks(type, fn);
+};
+
+/**
+ * Remove a hook from a specific videojs lifecycle.
+ *
+ * @param {string} type
+ *        the lifecycle that the function hooked to
+ *
+ * @param {Function} fn
+ *        The hooked function to remove
+ *
+ * @return {boolean}
+ *         The function that was removed or undef
+ */
+videojs.removeHook = function (type, fn) {
+  var index = videojs.hooks(type).indexOf(fn);
+
+  if (index <= -1) {
+    return false;
+  }
+
+  videojs.hooks_[type] = videojs.hooks_[type].slice();
+  videojs.hooks_[type].splice(index, 1);
+
+  return true;
+};
+
+// Add default styles
+if (_window2['default'].VIDEOJS_NO_DYNAMIC_STYLE !== true && Dom.isReal()) {
+  var style = Dom.$('.vjs-styles-defaults');
+
+  if (!style) {
+    style = stylesheet.createStyleElement('vjs-styles-defaults');
+    var head = Dom.$('head');
+
+    if (head) {
+      head.insertBefore(style, head.firstChild);
+    }
+    stylesheet.setTextContent(style, '\n      .video-js {\n        width: 300px;\n        height: 150px;\n      }\n\n      .vjs-fluid {\n        padding-top: 56.25%\n      }\n    ');
+  }
+}
+
+// Run Auto-load players
+// You have to wait at least once in case this script is loaded after your
+// video in the DOM (weird behavior only with minified version)
+setup.autoSetupTimeout(1, videojs);
+
+/**
+ * Current software version. Follows semver.
+ *
+ * @type {string}
+ */
+videojs.VERSION = '5.20.5';
+
+/**
+ * The global options object. These are the settings that take effect
+ * if no overrides are specified when the player is created.
+ *
+ * @type {Object}
+ */
+videojs.options = _player2['default'].prototype.options_;
+
+/**
+ * Get an object with the currently created players, keyed by player ID
+ *
+ * @return {Object}
+ *         The created players
+ */
+videojs.getPlayers = function () {
+  return _player2['default'].players;
+};
+
+/**
+ * Expose players object.
+ *
+ * @memberOf videojs
+ * @property {Object} players
+ */
+videojs.players = _player2['default'].players;
+
+/**
+ * Get a component class object by name
+ *
+ * @borrows Component.getComponent as videojs.getComponent
+ */
+videojs.getComponent = _component2['default'].getComponent;
+
+/**
+ * Register a component so it can referred to by name. Used when adding to other
+ * components, either through addChild `component.addChild('myComponent')` or through
+ * default children options  `{ children: ['myComponent'] }`.
+ *
+ * > NOTE: You could also just initialize the component before adding.
+ * `component.addChild(new MyComponent());`
+ *
+ * @param {string} name
+ *        The class name of the component
+ *
+ * @param {Component} comp
+ *        The component class
+ *
+ * @return {Component}
+ *         The newly registered component
+ */
+videojs.registerComponent = function (name, comp) {
+  if (_tech2['default'].isTech(comp)) {
+    _log2['default'].warn('The ' + name + ' tech was registered as a component. It should instead be registered using videojs.registerTech(name, tech)');
+  }
+
+  _component2['default'].registerComponent.call(_component2['default'], name, comp);
+};
+
+/**
+ * Get a Tech class object by name
+ *
+ * @borrows Tech.getTech as videojs.getTech
+ */
+videojs.getTech = _tech2['default'].getTech;
+
+/**
+ * Register a Tech so it can referred to by name.
+ * This is used in the tech order for the player.
+ *
+ * @borrows Tech.registerTech as videojs.registerTech
+ */
+videojs.registerTech = _tech2['default'].registerTech;
+
+/**
+ * A suite of browser and device tests from {@link browser}.
+ *
+ * @type {Object}
+ * @private
+ */
+videojs.browser = browser;
+
+/**
+ * Whether or not the browser supports touch events. Included for backward
+ * compatibility with 4.x, but deprecated. Use `videojs.browser.TOUCH_ENABLED`
+ * instead going forward.
+ *
+ * @deprecated since version 5.0
+ * @type {boolean}
+ */
+videojs.TOUCH_ENABLED = browser.TOUCH_ENABLED;
+
+/**
+ * Subclass an existing class
+ * Mimics ES6 subclassing with the `extend` keyword
+ *
+ * @borrows extend:extendFn as videojs.extend
+ */
+videojs.extend = _extend2['default'];
+
+/**
+ * Merge two options objects recursively
+ * Performs a deep merge like lodash.merge but **only merges plain objects**
+ * (not arrays, elements, anything else)
+ * Other values will be copied directly from the second object.
+ *
+ * @borrows merge-options:mergeOptions as videojs.mergeOptions
+ */
+videojs.mergeOptions = _mergeOptions3['default'];
+
+/**
+ * Change the context (this) of a function
+ *
+ * > NOTE: as of v5.0 we require an ES5 shim, so you should use the native
+ * `function() {}.bind(newContext);` instead of this.
+ *
+ * @borrows fn:bind as videojs.bind
+ */
+videojs.bind = Fn.bind;
+
+/**
+ * Create a Video.js player plugin.
+ * Plugins are only initialized when options for the plugin are included
+ * in the player options, or the plugin function on the player instance is
+ * called.
+ *
+ * @borrows plugin:plugin as videojs.plugin
+ */
+videojs.plugin = _plugins2['default'];
+
+/**
+ * Adding languages so that they're available to all players.
+ * Example: `videojs.addLanguage('es', { 'Hello': 'Hola' });`
+ *
+ * @param {string} code
+ *        The language code or dictionary property
+ *
+ * @param {Object} data
+ *        The data values to be translated
+ *
+ * @return {Object}
+ *         The resulting language dictionary object
+ */
+videojs.addLanguage = function (code, data) {
+  var _mergeOptions;
+
+  code = ('' + code).toLowerCase();
+
+  videojs.options.languages = (0, _mergeOptions3['default'])(videojs.options.languages, (_mergeOptions = {}, _mergeOptions[code] = data, _mergeOptions));
+
+  return videojs.options.languages[code];
+};
+
+/**
+ * Log messages
+ *
+ * @borrows log:log as videojs.log
+ */
+videojs.log = _log2['default'];
+
+/**
+ * Creates an emulated TimeRange object.
+ *
+ * @borrows time-ranges:createTimeRanges as videojs.createTimeRange
+ */
+/**
+ * @borrows time-ranges:createTimeRanges as videojs.createTimeRanges
+ */
+videojs.createTimeRange = videojs.createTimeRanges = _timeRanges.createTimeRanges;
+
+/**
+ * Format seconds as a time string, H:MM:SS or M:SS
+ * Supplying a guide (in seconds) will force a number of leading zeros
+ * to cover the length of the guide
+ *
+ * @borrows format-time:formatTime as videojs.formatTime
+ */
+videojs.formatTime = _formatTime2['default'];
+
+/**
+ * Resolve and parse the elements of a URL
+ *
+ * @borrows url:parseUrl as videojs.parseUrl
+ */
+videojs.parseUrl = Url.parseUrl;
+
+/**
+ * Returns whether the url passed is a cross domain request or not.
+ *
+ * @borrows url:isCrossOrigin as videojs.isCrossOrigin
+ */
+videojs.isCrossOrigin = Url.isCrossOrigin;
+
+/**
+ * Event target class.
+ *
+ * @borrows EventTarget as videojs.EventTarget
+ */
+videojs.EventTarget = _eventTarget2['default'];
+
+/**
+ * Add an event listener to element
+ * It stores the handler function in a separate cache object
+ * and adds a generic handler to the element's event,
+ * along with a unique id (guid) to the element.
+ *
+ * @borrows events:on as videojs.on
+ */
+videojs.on = Events.on;
+
+/**
+ * Trigger a listener only once for an event
+ *
+ * @borrows events:one as videojs.one
+ */
+videojs.one = Events.one;
+
+/**
+ * Removes event listeners from an element
+ *
+ * @borrows events:off as videojs.off
+ */
+videojs.off = Events.off;
+
+/**
+ * Trigger an event for an element
+ *
+ * @borrows events:trigger as videojs.trigger
+ */
+videojs.trigger = Events.trigger;
+
+/**
+ * A cross-browser XMLHttpRequest wrapper. Here's a simple example:
+ *
+ * @param {Object} options
+ *        settings for the request.
+ *
+ * @return {XMLHttpRequest|XDomainRequest}
+ *         The request object.
+ *
+ * @see https://github.com/Raynos/xhr
+ */
+videojs.xhr = _xhr2['default'];
+
+/**
+ * TextTrack class
+ *
+ * @borrows TextTrack as videojs.TextTrack
+ */
+videojs.TextTrack = _textTrack2['default'];
+
+/**
+ * export the AudioTrack class so that source handlers can create
+ * AudioTracks and then add them to the players AudioTrackList
+ *
+ * @borrows AudioTrack as videojs.AudioTrack
+ */
+videojs.AudioTrack = _audioTrack2['default'];
+
+/**
+ * export the VideoTrack class so that source handlers can create
+ * VideoTracks and then add them to the players VideoTrackList
+ *
+ * @borrows VideoTrack as videojs.VideoTrack
+ */
+videojs.VideoTrack = _videoTrack2['default'];
+
+/**
+ * Determines, via duck typing, whether or not a value is a DOM element.
+ *
+ * @borrows dom:isEl as videojs.isEl
+ */
+videojs.isEl = Dom.isEl;
+
+/**
+ * Determines, via duck typing, whether or not a value is a text node.
+ *
+ * @borrows dom:isTextNode as videojs.isTextNode
+ */
+videojs.isTextNode = Dom.isTextNode;
+
+/**
+ * Creates an element and applies properties.
+ *
+ * @borrows dom:createEl as videojs.createEl
+ */
+videojs.createEl = Dom.createEl;
+
+/**
+ * Check if an element has a CSS class
+ *
+ * @borrows dom:hasElClass as videojs.hasClass
+ */
+videojs.hasClass = Dom.hasElClass;
+
+/**
+ * Add a CSS class name to an element
+ *
+ * @borrows dom:addElClass as videojs.addClass
+ */
+videojs.addClass = Dom.addElClass;
+
+/**
+ * Remove a CSS class name from an element
+ *
+ * @borrows dom:removeElClass as videojs.removeClass
+ */
+videojs.removeClass = Dom.removeElClass;
+
+/**
+ * Adds or removes a CSS class name on an element depending on an optional
+ * condition or the presence/absence of the class name.
+ *
+ * @borrows dom:toggleElClass as videojs.toggleClass
+ */
+videojs.toggleClass = Dom.toggleElClass;
+
+/**
+ * Apply attributes to an HTML element.
+ *
+ * @borrows dom:setElAttributes as videojs.setAttribute
+ */
+videojs.setAttributes = Dom.setElAttributes;
+
+/**
+ * Get an element's attribute values, as defined on the HTML tag
+ * Attributes are not the same as properties. They're defined on the tag
+ * or with setAttribute (which shouldn't be used with HTML)
+ * This will return true or false for boolean attributes.
+ *
+ * @borrows dom:getElAttributes as videojs.getAttributes
+ */
+videojs.getAttributes = Dom.getElAttributes;
+
+/**
+ * Empties the contents of an element.
+ *
+ * @borrows dom:emptyEl as videojs.emptyEl
+ */
+videojs.emptyEl = Dom.emptyEl;
+
+/**
+ * Normalizes and appends content to an element.
+ *
+ * The content for an element can be passed in multiple types and
+ * combinations, whose behavior is as follows:
+ *
+ * - String
+ *   Normalized into a text node.
+ *
+ * - Element, TextNode
+ *   Passed through.
+ *
+ * - Array
+ *   A one-dimensional array of strings, elements, nodes, or functions (which
+ *   return single strings, elements, or nodes).
+ *
+ * - Function
+ *   If the sole argument, is expected to produce a string, element,
+ *   node, or array.
+ *
+ * @borrows dom:appendContents as videojs.appendContet
+ */
+videojs.appendContent = Dom.appendContent;
+
+/**
+ * Normalizes and inserts content into an element; this is identical to
+ * `appendContent()`, except it empties the element first.
+ *
+ * The content for an element can be passed in multiple types and
+ * combinations, whose behavior is as follows:
+ *
+ * - String
+ *   Normalized into a text node.
+ *
+ * - Element, TextNode
+ *   Passed through.
+ *
+ * - Array
+ *   A one-dimensional array of strings, elements, nodes, or functions (which
+ *   return single strings, elements, or nodes).
+ *
+ * - Function
+ *   If the sole argument, is expected to produce a string, element,
+ *   node, or array.
+ *
+ * @borrows dom:insertContent as videojs.insertContent
+ */
+videojs.insertContent = Dom.insertContent;
+
+/**
+ * A safe getComputedStyle with an IE8 fallback.
+ *
+ * This is because in Firefox, if the player is loaded in an iframe with `display:none`,
+ * then `getComputedStyle` returns `null`, so, we do a null-check to make sure
+ * that the player doesn't break in these cases.
+ * See https://bugzilla.mozilla.org/show_bug.cgi?id=548397 for more details.
+ *
+ * @borrows computed-style:computedStyle as videojs.computedStyle
+ */
+videojs.computedStyle = _computedStyle2['default'];
+
+/*
+ * Custom Universal Module Definition (UMD)
+ *
+ * Video.js will never be a non-browser lib so we can simplify UMD a bunch and
+ * still support requirejs and browserify. This also needs to be closure
+ * compiler compatible, so string keys are used.
+ */
+if (true) {
+  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+    return videojs;
+  }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+  // checking that module is an object too because of umdjs/umd#35
+} else if ((typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && (typeof module === 'undefined' ? 'undefined' : _typeof(module)) === 'object') {
+  module.exports = videojs;
+}
+
+exports['default'] = videojs;
+
+
+/***/ }),
+
+/***/ 296:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var window = __webpack_require__(53)
+var isFunction = __webpack_require__(75)
+var parseHeaders = __webpack_require__(99)
+var xtend = __webpack_require__(106)
+
+module.exports = createXHR
+createXHR.XMLHttpRequest = window.XMLHttpRequest || noop
+createXHR.XDomainRequest = "withCredentials" in (new createXHR.XMLHttpRequest()) ? createXHR.XMLHttpRequest : window.XDomainRequest
+
+forEachArray(["get", "put", "post", "patch", "head", "delete"], function(method) {
+    createXHR[method === "delete" ? "del" : method] = function(uri, options, callback) {
+        options = initParams(uri, options, callback)
+        options.method = method.toUpperCase()
+        return _createXHR(options)
+    }
+})
+
+function forEachArray(array, iterator) {
+    for (var i = 0; i < array.length; i++) {
+        iterator(array[i])
+    }
+}
+
+function isEmpty(obj){
+    for(var i in obj){
+        if(obj.hasOwnProperty(i)) return false
+    }
+    return true
+}
+
+function initParams(uri, options, callback) {
+    var params = uri
+
+    if (isFunction(options)) {
+        callback = options
+        if (typeof uri === "string") {
+            params = {uri:uri}
+        }
+    } else {
+        params = xtend(options, {uri: uri})
+    }
+
+    params.callback = callback
+    return params
+}
+
+function createXHR(uri, options, callback) {
+    options = initParams(uri, options, callback)
+    return _createXHR(options)
+}
+
+function _createXHR(options) {
+    if(typeof options.callback === "undefined"){
+        throw new Error("callback argument missing")
+    }
+
+    var called = false
+    var callback = function cbOnce(err, response, body){
+        if(!called){
+            called = true
+            options.callback(err, response, body)
+        }
+    }
+
+    function readystatechange() {
+        if (xhr.readyState === 4) {
+            loadFunc()
+        }
+    }
+
+    function getBody() {
+        // Chrome with requestType=blob throws errors arround when even testing access to responseText
+        var body = undefined
+
+        if (xhr.response) {
+            body = xhr.response
+        } else {
+            body = xhr.responseText || getXml(xhr)
+        }
+
+        if (isJson) {
+            try {
+                body = JSON.parse(body)
+            } catch (e) {}
+        }
+
+        return body
+    }
+
+    var failureResponse = {
+                body: undefined,
+                headers: {},
+                statusCode: 0,
+                method: method,
+                url: uri,
+                rawRequest: xhr
+            }
+
+    function errorFunc(evt) {
+        clearTimeout(timeoutTimer)
+        if(!(evt instanceof Error)){
+            evt = new Error("" + (evt || "Unknown XMLHttpRequest Error") )
+        }
+        evt.statusCode = 0
+        return callback(evt, failureResponse)
+    }
+
+    // will load the data & process the response in a special response object
+    function loadFunc() {
+        if (aborted) return
+        var status
+        clearTimeout(timeoutTimer)
+        if(options.useXDR && xhr.status===undefined) {
+            //IE8 CORS GET successful response doesn't have a status field, but body is fine
+            status = 200
+        } else {
+            status = (xhr.status === 1223 ? 204 : xhr.status)
+        }
+        var response = failureResponse
+        var err = null
+
+        if (status !== 0){
+            response = {
+                body: getBody(),
+                statusCode: status,
+                method: method,
+                headers: {},
+                url: uri,
+                rawRequest: xhr
+            }
+            if(xhr.getAllResponseHeaders){ //remember xhr can in fact be XDR for CORS in IE
+                response.headers = parseHeaders(xhr.getAllResponseHeaders())
+            }
+        } else {
+            err = new Error("Internal XMLHttpRequest Error")
+        }
+        return callback(err, response, response.body)
+    }
+
+    var xhr = options.xhr || null
+
+    if (!xhr) {
+        if (options.cors || options.useXDR) {
+            xhr = new createXHR.XDomainRequest()
+        }else{
+            xhr = new createXHR.XMLHttpRequest()
+        }
+    }
+
+    var key
+    var aborted
+    var uri = xhr.url = options.uri || options.url
+    var method = xhr.method = options.method || "GET"
+    var body = options.body || options.data || null
+    var headers = xhr.headers = options.headers || {}
+    var sync = !!options.sync
+    var isJson = false
+    var timeoutTimer
+
+    if ("json" in options) {
+        isJson = true
+        headers["accept"] || headers["Accept"] || (headers["Accept"] = "application/json") //Don't override existing accept header declared by user
+        if (method !== "GET" && method !== "HEAD") {
+            headers["content-type"] || headers["Content-Type"] || (headers["Content-Type"] = "application/json") //Don't override existing accept header declared by user
+            body = JSON.stringify(options.json)
+        }
+    }
+
+    xhr.onreadystatechange = readystatechange
+    xhr.onload = loadFunc
+    xhr.onerror = errorFunc
+    // IE9 must have onprogress be set to a unique function.
+    xhr.onprogress = function () {
+        // IE must die
+    }
+    xhr.ontimeout = errorFunc
+    xhr.open(method, uri, !sync, options.username, options.password)
+    //has to be after open
+    if(!sync) {
+        xhr.withCredentials = !!options.withCredentials
+    }
+    // Cannot set timeout with sync request
+    // not setting timeout on the xhr object, because of old webkits etc. not handling that correctly
+    // both npm's request and jquery 1.x use this kind of timeout, so this is being consistent
+    if (!sync && options.timeout > 0 ) {
+        timeoutTimer = setTimeout(function(){
+            aborted=true//IE9 may still call readystatechange
+            xhr.abort("timeout")
+            var e = new Error("XMLHttpRequest timeout")
+            e.code = "ETIMEDOUT"
+            errorFunc(e)
+        }, options.timeout )
+    }
+
+    if (xhr.setRequestHeader) {
+        for(key in headers){
+            if(headers.hasOwnProperty(key)){
+                xhr.setRequestHeader(key, headers[key])
+            }
+        }
+    } else if (options.headers && !isEmpty(options.headers)) {
+        throw new Error("Headers cannot be set on an XDomainRequest object")
+    }
+
+    if ("responseType" in options) {
+        xhr.responseType = options.responseType
+    }
+
+    if ("beforeSend" in options &&
+        typeof options.beforeSend === "function"
+    ) {
+        options.beforeSend(xhr)
+    }
+
+    xhr.send(body)
+
+    return xhr
+
+
+}
+
+function getXml(xhr) {
+    if (xhr.responseType === "document") {
+        return xhr.responseXML
+    }
+    var firefoxBugTakenEffect = xhr.status === 204 && xhr.responseXML && xhr.responseXML.documentElement.nodeName === "parsererror"
+    if (xhr.responseType === "" && !firefoxBugTakenEffect) {
+        return xhr.responseXML
+    }
+
+    return null
+}
+
+function noop() {}
+
+
+/***/ }),
+
+/***/ 306:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10335,7 +10859,7 @@ angular.module('mt.media-timeline', [])
 
 /***/ }),
 
-/***/ 294:
+/***/ 307:
 /***/ (function(module, exports) {
 
 /**
@@ -45444,7 +45968,7 @@ $provide.value("$locale", {
 
 /***/ }),
 
-/***/ 299:
+/***/ 322:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -72327,7 +72851,7 @@ return videojs;
 
 /***/ }),
 
-/***/ 304:
+/***/ 323:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -72338,15 +72862,15 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
  */
 (function(root, factory) {
     //module loader detection derrived from http://tinyurl.com/hs2coz2
-    if (("function").match(/^(object|function)$/) && __webpack_require__(368)) {
+    if (("function").match(/^(object|function)$/) && __webpack_require__(387)) {
         //AMD type module loader detected
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(104), __webpack_require__(284)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(110), __webpack_require__(295)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
     } else if (typeof module === 'object' && module.exports) {
         //CommonJS type module loader detected
-        module.exports = factory(__webpack_require__(104), __webpack_require__(284));
+        module.exports = factory(__webpack_require__(110), __webpack_require__(295));
     } else {
         //we aren't using a module loader so angular and video.js
         //should exist globally
@@ -72853,7 +73377,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ }),
 
-/***/ 305:
+/***/ 324:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72861,7 +73385,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(90);
+var _button = __webpack_require__(92);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -72983,7 +73507,7 @@ exports['default'] = BigPlayButton;
 
 /***/ }),
 
-/***/ 306:
+/***/ 325:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -72991,7 +73515,7 @@ exports['default'] = BigPlayButton;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(90);
+var _button = __webpack_require__(92);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -73088,7 +73612,7 @@ exports['default'] = CloseButton;
 
 /***/ }),
 
-/***/ 307:
+/***/ 326:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73096,7 +73620,7 @@ exports['default'] = CloseButton;
 
 exports.__esModule = true;
 
-var _trackButton = __webpack_require__(272);
+var _trackButton = __webpack_require__(283);
 
 var _trackButton2 = _interopRequireDefault(_trackButton);
 
@@ -73104,7 +73628,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _audioTrackMenuItem = __webpack_require__(308);
+var _audioTrackMenuItem = __webpack_require__(327);
 
 var _audioTrackMenuItem2 = _interopRequireDefault(_audioTrackMenuItem);
 
@@ -73215,7 +73739,7 @@ exports['default'] = AudioTrackButton;
 
 /***/ }),
 
-/***/ 308:
+/***/ 327:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73223,7 +73747,7 @@ exports['default'] = AudioTrackButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(104);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -73231,7 +73755,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -73342,7 +73866,7 @@ exports['default'] = AudioTrackMenuItem;
 
 /***/ }),
 
-/***/ 309:
+/***/ 328:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73354,41 +73878,41 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(312);
+__webpack_require__(331);
+
+__webpack_require__(349);
+
+__webpack_require__(350);
+
+__webpack_require__(352);
+
+__webpack_require__(351);
 
 __webpack_require__(330);
 
-__webpack_require__(331);
-
-__webpack_require__(333);
-
-__webpack_require__(332);
-
-__webpack_require__(311);
-
-__webpack_require__(318);
-
-__webpack_require__(310);
-
-__webpack_require__(334);
-
-__webpack_require__(336);
-
-__webpack_require__(271);
-
-__webpack_require__(325);
-
-__webpack_require__(327);
+__webpack_require__(337);
 
 __webpack_require__(329);
 
-__webpack_require__(324);
+__webpack_require__(353);
 
-__webpack_require__(307);
+__webpack_require__(355);
 
-__webpack_require__(313);
+__webpack_require__(282);
 
-__webpack_require__(321);
+__webpack_require__(344);
+
+__webpack_require__(346);
+
+__webpack_require__(348);
+
+__webpack_require__(343);
+
+__webpack_require__(326);
+
+__webpack_require__(332);
+
+__webpack_require__(340);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -73455,7 +73979,7 @@ exports['default'] = ControlBar;
 
 /***/ }),
 
-/***/ 310:
+/***/ 329:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73463,7 +73987,7 @@ exports['default'] = ControlBar;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(90);
+var _button = __webpack_require__(92);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -73579,7 +74103,7 @@ exports['default'] = FullscreenToggle;
 
 /***/ }),
 
-/***/ 311:
+/***/ 330:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73689,7 +74213,7 @@ exports['default'] = LiveDisplay;
 
 /***/ }),
 
-/***/ 312:
+/***/ 331:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73697,7 +74221,7 @@ exports['default'] = LiveDisplay;
 
 exports.__esModule = true;
 
-var _button = __webpack_require__(90);
+var _button = __webpack_require__(92);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -73829,7 +74353,7 @@ exports['default'] = PlayToggle;
 
 /***/ }),
 
-/***/ 313:
+/***/ 332:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -73837,15 +74361,15 @@ exports['default'] = PlayToggle;
 
 exports.__esModule = true;
 
-var _menuButton = __webpack_require__(275);
+var _menuButton = __webpack_require__(286);
 
 var _menuButton2 = _interopRequireDefault(_menuButton);
 
-var _menu = __webpack_require__(276);
+var _menu = __webpack_require__(287);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _playbackRateMenuItem = __webpack_require__(314);
+var _playbackRateMenuItem = __webpack_require__(333);
 
 var _playbackRateMenuItem2 = _interopRequireDefault(_playbackRateMenuItem);
 
@@ -74072,7 +74596,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 /***/ }),
 
-/***/ 314:
+/***/ 333:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74080,7 +74604,7 @@ exports['default'] = PlaybackRateMenuButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(104);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -74187,7 +74711,7 @@ exports['default'] = PlaybackRateMenuItem;
 
 /***/ }),
 
-/***/ 315:
+/***/ 334:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74317,7 +74841,7 @@ exports['default'] = LoadProgressBar;
 
 /***/ }),
 
-/***/ 316:
+/***/ 335:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74333,7 +74857,7 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -74341,7 +74865,7 @@ var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(140);
+var _computedStyle = __webpack_require__(141);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
@@ -74519,7 +75043,7 @@ exports['default'] = MouseTimeDisplay;
 
 /***/ }),
 
-/***/ 317:
+/***/ 336:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74531,7 +75055,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -74628,7 +75152,7 @@ exports['default'] = PlayProgressBar;
 
 /***/ }),
 
-/***/ 318:
+/***/ 337:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74640,9 +75164,9 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(319);
+__webpack_require__(338);
 
-__webpack_require__(316);
+__webpack_require__(335);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -74703,7 +75227,7 @@ exports['default'] = ProgressControl;
 
 /***/ }),
 
-/***/ 319:
+/***/ 338:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74711,7 +75235,7 @@ exports['default'] = ProgressControl;
 
 exports.__esModule = true;
 
-var _slider = __webpack_require__(279);
+var _slider = __webpack_require__(290);
 
 var _slider2 = _interopRequireDefault(_slider);
 
@@ -74719,7 +75243,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -74727,15 +75251,15 @@ var _formatTime = __webpack_require__(69);
 
 var _formatTime2 = _interopRequireDefault(_formatTime);
 
-var _computedStyle = __webpack_require__(140);
+var _computedStyle = __webpack_require__(141);
 
 var _computedStyle2 = _interopRequireDefault(_computedStyle);
 
-__webpack_require__(315);
+__webpack_require__(334);
 
-__webpack_require__(317);
+__webpack_require__(336);
 
-__webpack_require__(320);
+__webpack_require__(339);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -74971,7 +75495,7 @@ exports['default'] = SeekBar;
 
 /***/ }),
 
-/***/ 320:
+/***/ 339:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -74983,7 +75507,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -75078,7 +75602,7 @@ exports['default'] = TooltipProgressBar;
 
 /***/ }),
 
-/***/ 321:
+/***/ 340:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75086,7 +75610,7 @@ exports['default'] = TooltipProgressBar;
 
 exports.__esModule = true;
 
-var _spacer = __webpack_require__(322);
+var _spacer = __webpack_require__(341);
 
 var _spacer2 = _interopRequireDefault(_spacer);
 
@@ -75157,7 +75681,7 @@ exports['default'] = CustomControlSpacer;
 
 /***/ }),
 
-/***/ 322:
+/***/ 341:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75229,7 +75753,7 @@ exports['default'] = Spacer;
 
 /***/ }),
 
-/***/ 323:
+/***/ 342:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75237,7 +75761,7 @@ exports['default'] = Spacer;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(135);
+var _textTrackMenuItem = __webpack_require__(136);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -75322,7 +75846,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 /***/ }),
 
-/***/ 324:
+/***/ 343:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75330,7 +75854,7 @@ exports['default'] = CaptionSettingsMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(102);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -75338,7 +75862,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _captionSettingsMenuItem = __webpack_require__(323);
+var _captionSettingsMenuItem = __webpack_require__(342);
 
 var _captionSettingsMenuItem2 = _interopRequireDefault(_captionSettingsMenuItem);
 
@@ -75441,7 +75965,7 @@ exports['default'] = CaptionsButton;
 
 /***/ }),
 
-/***/ 325:
+/***/ 344:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75449,7 +75973,7 @@ exports['default'] = CaptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(102);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -75457,11 +75981,11 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _chaptersTrackMenuItem = __webpack_require__(326);
+var _chaptersTrackMenuItem = __webpack_require__(345);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -75689,7 +76213,7 @@ exports['default'] = ChaptersButton;
 
 /***/ }),
 
-/***/ 326:
+/***/ 345:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75697,7 +76221,7 @@ exports['default'] = ChaptersButton;
 
 exports.__esModule = true;
 
-var _menuItem = __webpack_require__(98);
+var _menuItem = __webpack_require__(104);
 
 var _menuItem2 = _interopRequireDefault(_menuItem);
 
@@ -75705,7 +76229,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -75805,7 +76329,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 /***/ }),
 
-/***/ 327:
+/***/ 346:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75813,7 +76337,7 @@ exports['default'] = ChaptersTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(102);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -75821,7 +76345,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -75949,7 +76473,7 @@ exports['default'] = DescriptionsButton;
 
 /***/ }),
 
-/***/ 328:
+/***/ 347:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -75957,7 +76481,7 @@ exports['default'] = DescriptionsButton;
 
 exports.__esModule = true;
 
-var _textTrackMenuItem = __webpack_require__(135);
+var _textTrackMenuItem = __webpack_require__(136);
 
 var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
 
@@ -76048,7 +76572,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 /***/ }),
 
-/***/ 329:
+/***/ 348:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76056,7 +76580,7 @@ exports['default'] = OffTextTrackMenuItem;
 
 exports.__esModule = true;
 
-var _textTrackButton = __webpack_require__(96);
+var _textTrackButton = __webpack_require__(102);
 
 var _textTrackButton2 = _interopRequireDefault(_textTrackButton);
 
@@ -76143,7 +76667,7 @@ exports['default'] = SubtitlesButton;
 
 /***/ }),
 
-/***/ 330:
+/***/ 349:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76259,7 +76783,7 @@ exports['default'] = CurrentTimeDisplay;
 
 /***/ }),
 
-/***/ 331:
+/***/ 350:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76385,7 +76909,7 @@ exports['default'] = DurationDisplay;
 
 /***/ }),
 
-/***/ 332:
+/***/ 351:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76507,7 +77031,7 @@ exports['default'] = RemainingTimeDisplay;
 
 /***/ }),
 
-/***/ 333:
+/***/ 352:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76567,7 +77091,7 @@ exports['default'] = TimeDivider;
 
 /***/ }),
 
-/***/ 334:
+/***/ 353:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76579,7 +77103,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-__webpack_require__(273);
+__webpack_require__(284);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -76666,7 +77190,7 @@ exports['default'] = VolumeControl;
 
 /***/ }),
 
-/***/ 335:
+/***/ 354:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76725,7 +77249,7 @@ exports['default'] = VolumeLevel;
 
 /***/ }),
 
-/***/ 336:
+/***/ 355:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76733,7 +77257,7 @@ exports['default'] = VolumeLevel;
 
 exports.__esModule = true;
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -76741,19 +77265,19 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _popup = __webpack_require__(343);
+var _popup = __webpack_require__(362);
 
 var _popup2 = _interopRequireDefault(_popup);
 
-var _popupButton = __webpack_require__(342);
+var _popupButton = __webpack_require__(361);
 
 var _popupButton2 = _interopRequireDefault(_popupButton);
 
-var _muteToggle = __webpack_require__(271);
+var _muteToggle = __webpack_require__(282);
 
 var _muteToggle2 = _interopRequireDefault(_muteToggle);
 
-var _volumeBar = __webpack_require__(273);
+var _volumeBar = __webpack_require__(284);
 
 var _volumeBar2 = _interopRequireDefault(_volumeBar);
 
@@ -76976,7 +77500,7 @@ exports['default'] = VolumeMenuButton;
 
 /***/ }),
 
-/***/ 337:
+/***/ 356:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -76988,7 +77512,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _modalDialog = __webpack_require__(277);
+var _modalDialog = __webpack_require__(288);
 
 var _modalDialog2 = _interopRequireDefault(_modalDialog);
 
@@ -77085,7 +77609,7 @@ exports['default'] = ErrorDisplay;
 
 /***/ }),
 
-/***/ 338:
+/***/ 357:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77095,7 +77619,7 @@ exports.__esModule = true;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -77193,7 +77717,7 @@ exports['default'] = extendFn;
 
 /***/ }),
 
-/***/ 339:
+/***/ 358:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77201,7 +77725,7 @@ exports['default'] = extendFn;
 
 exports.__esModule = true;
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -77256,7 +77780,7 @@ exports['default'] = FullscreenApi;
 
 /***/ }),
 
-/***/ 340:
+/***/ 359:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77315,7 +77839,7 @@ exports['default'] = LoadingSpinner;
 
 /***/ }),
 
-/***/ 341:
+/***/ 360:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77323,7 +77847,7 @@ exports['default'] = LoadingSpinner;
 
 exports.__esModule = true;
 
-var _player = __webpack_require__(278);
+var _player = __webpack_require__(289);
 
 var _player2 = _interopRequireDefault(_player);
 
@@ -77349,7 +77873,7 @@ exports['default'] = plugin;
 
 /***/ }),
 
-/***/ 342:
+/***/ 361:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77357,7 +77881,7 @@ exports['default'] = plugin;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(91);
+var _clickableComponent = __webpack_require__(93);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -77479,7 +78003,7 @@ exports['default'] = PopupButton;
 
 /***/ }),
 
-/***/ 343:
+/***/ 362:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77495,7 +78019,7 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -77585,7 +78109,7 @@ exports['default'] = Popup;
 
 /***/ }),
 
-/***/ 344:
+/***/ 363:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77593,7 +78117,7 @@ exports['default'] = Popup;
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(91);
+var _clickableComponent = __webpack_require__(93);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -77601,7 +78125,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -77774,7 +78298,7 @@ exports['default'] = PosterImage;
 
 /***/ }),
 
-/***/ 345:
+/***/ 364:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -77791,7 +78315,7 @@ var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -77926,7 +78450,7 @@ exports.hasLoaded = hasLoaded;
 
 /***/ }),
 
-/***/ 346:
+/***/ 365:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78136,7 +78660,7 @@ exports['default'] = FlashRtmpDecorator;
 
 /***/ }),
 
-/***/ 347:
+/***/ 366:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -78144,7 +78668,7 @@ exports['default'] = FlashRtmpDecorator;
 
 exports.__esModule = true;
 
-var _tech = __webpack_require__(92);
+var _tech = __webpack_require__(94);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -78152,13 +78676,13 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(105);
 
 var Url = _interopRequireWildcard(_url);
 
-var _timeRanges = __webpack_require__(93);
+var _timeRanges = __webpack_require__(95);
 
-var _flashRtmp = __webpack_require__(346);
+var _flashRtmp = __webpack_require__(365);
 
 var _flashRtmp2 = _interopRequireDefault(_flashRtmp);
 
@@ -79324,7 +79848,7 @@ exports['default'] = Flash;
 
 /***/ }),
 
-/***/ 348:
+/***/ 367:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -79334,7 +79858,7 @@ exports.__esModule = true;
 
 var _templateObject = _taggedTemplateLiteralLoose(['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.'], ['Text Tracks are being loaded from another origin but the crossorigin attribute isn\'t used.\n            This may prevent text tracks from loading.']);
 
-var _tech = __webpack_require__(92);
+var _tech = __webpack_require__(94);
 
 var _tech2 = _interopRequireDefault(_tech);
 
@@ -79346,19 +79870,19 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _url = __webpack_require__(99);
+var _url = __webpack_require__(105);
 
 var Url = _interopRequireWildcard(_url);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(95);
+var _tsml = __webpack_require__(91);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -79366,7 +79890,7 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -79380,7 +79904,7 @@ var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -81273,7 +81797,7 @@ exports['default'] = Html5;
 
 /***/ }),
 
-/***/ 349:
+/***/ 368:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81285,11 +81809,11 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _tech = __webpack_require__(92);
+var _tech = __webpack_require__(94);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -81369,7 +81893,7 @@ exports['default'] = MediaLoader;
 
 /***/ }),
 
-/***/ 350:
+/***/ 369:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81377,9 +81901,9 @@ exports['default'] = MediaLoader;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(137);
+var _trackEnums = __webpack_require__(138);
 
-var _track = __webpack_require__(139);
+var _track = __webpack_require__(140);
 
 var _track2 = _interopRequireDefault(_track);
 
@@ -81506,7 +82030,7 @@ exports['default'] = AudioTrack;
 
 /***/ }),
 
-/***/ 351:
+/***/ 370:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81518,7 +82042,7 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -81662,7 +82186,7 @@ exports['default'] = HtmlTrackElementList;
 
 /***/ }),
 
-/***/ 352:
+/***/ 371:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81674,15 +82198,15 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _eventTarget = __webpack_require__(97);
+var _eventTarget = __webpack_require__(103);
 
 var _eventTarget2 = _interopRequireDefault(_eventTarget);
 
-var _textTrack = __webpack_require__(136);
+var _textTrack = __webpack_require__(137);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
@@ -81839,7 +82363,7 @@ exports['default'] = HTMLTrackElement;
 
 /***/ }),
 
-/***/ 353:
+/***/ 372:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -81851,7 +82375,7 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -81999,7 +82523,7 @@ exports['default'] = TextTrackCueList;
 
 /***/ }),
 
-/***/ 354:
+/***/ 373:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82011,7 +82535,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -82357,7 +82881,7 @@ exports['default'] = TextTrackDisplay;
 
 /***/ }),
 
-/***/ 355:
+/***/ 374:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82467,7 +82991,7 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 /***/ }),
 
-/***/ 356:
+/***/ 375:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82475,11 +82999,11 @@ exports['default'] = { textTracksToJson: textTracksToJson, jsonToTextTracks: jso
 
 exports.__esModule = true;
 
-var _trackList = __webpack_require__(138);
+var _trackList = __webpack_require__(139);
 
 var _trackList2 = _interopRequireDefault(_trackList);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -82487,7 +83011,7 @@ var _browser = __webpack_require__(55);
 
 var browser = _interopRequireWildcard(_browser);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -82579,7 +83103,7 @@ exports['default'] = TextTrackList;
 
 /***/ }),
 
-/***/ 357:
+/***/ 376:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -82597,7 +83121,7 @@ var _component2 = _interopRequireDefault(_component);
 
 var _dom = __webpack_require__(29);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
@@ -82605,7 +83129,7 @@ var _obj = __webpack_require__(56);
 
 var Obj = _interopRequireWildcard(_obj);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -83188,7 +83712,7 @@ exports['default'] = TextTrackSettings;
 
 /***/ }),
 
-/***/ 358:
+/***/ 377:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -83196,9 +83720,9 @@ exports['default'] = TextTrackSettings;
 
 exports.__esModule = true;
 
-var _trackEnums = __webpack_require__(137);
+var _trackEnums = __webpack_require__(138);
 
-var _track = __webpack_require__(139);
+var _track = __webpack_require__(140);
 
 var _track2 = _interopRequireDefault(_track);
 
@@ -83324,7 +83848,7 @@ exports['default'] = VideoTrack;
 
 /***/ }),
 
-/***/ 359:
+/***/ 378:
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -83348,12 +83872,12 @@ exports['default'] = VideoTrack;
 // forth between JSON. If we don't then it's not that big of a deal since we're
 // off browser.
 
-var window = __webpack_require__(363);
+var window = __webpack_require__(382);
 
 var vttjs = module.exports = {
-  WebVTT: __webpack_require__(360),
-  VTTCue: __webpack_require__(361),
-  VTTRegion: __webpack_require__(362)
+  WebVTT: __webpack_require__(379),
+  VTTCue: __webpack_require__(380),
+  VTTRegion: __webpack_require__(381)
 };
 
 window.vttjs = vttjs;
@@ -83381,7 +83905,7 @@ if (!window.VTTCue) {
 
 /***/ }),
 
-/***/ 360:
+/***/ 379:
 /***/ (function(module, exports) {
 
 /**
@@ -84717,7 +85241,7 @@ module.exports = WebVTT;
 
 /***/ }),
 
-/***/ 361:
+/***/ 380:
 /***/ (function(module, exports) {
 
 /**
@@ -85029,7 +85553,7 @@ module.exports = VTTCue;
 
 /***/ }),
 
-/***/ 362:
+/***/ 381:
 /***/ (function(module, exports) {
 
 /**
@@ -85170,7 +85694,7 @@ module.exports = VTTRegion;
 
 /***/ }),
 
-/***/ 363:
+/***/ 382:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var win;
@@ -85191,7 +85715,7 @@ module.exports = win;
 
 /***/ }),
 
-/***/ 368:
+/***/ 387:
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -85201,40 +85725,40 @@ module.exports = __webpack_amd_options__;
 
 /***/ }),
 
-/***/ 371:
+/***/ 388:
 /***/ (function(module, exports) {
 
 /* (ignored) */
 
 /***/ }),
 
-/***/ 460:
+/***/ 483:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _angular = __webpack_require__(104);
+var _angular = __webpack_require__(110);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _jquery = __webpack_require__(61);
+var _jquery = __webpack_require__(57);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // VideoJS
-__webpack_require__(299);
+__webpack_require__(322);
 
 // Angular VideoJS
-__webpack_require__(304);
+__webpack_require__(323);
 
 // dropzone
 // require('dropzone/dist/dropzone.js');
 
 // Angular Media Timeline
-__webpack_require__(293);
+__webpack_require__(306);
 
 'use strict';
 
@@ -85594,11 +86118,11 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -85606,11 +86130,11 @@ var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(77);
+var _toTitleCase = __webpack_require__(78);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -87412,12 +87936,12 @@ exports['default'] = Component;
 
 /***/ }),
 
-/***/ 51:
+/***/ 52:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
     typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(371);
+var minDoc = __webpack_require__(388);
 
 if (typeof document !== 'undefined') {
     module.exports = document;
@@ -87725,7 +88249,7 @@ function isPlain(value) {
 
 /***/ }),
 
-/***/ 60:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87946,11 +88470,11 @@ var _dom = __webpack_require__(29);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(76);
+var _guid = __webpack_require__(77);
 
 var Guid = _interopRequireWildcard(_guid);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -87958,7 +88482,7 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -88483,7 +89007,29 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 76:
+/***/ 75:
+/***/ (function(module, exports) {
+
+module.exports = isFunction
+
+var toString = Object.prototype.toString
+
+function isFunction (fn) {
+  var string = toString.call(fn)
+  return string === '[object Function]' ||
+    (typeof fn === 'function' && string !== '[object RegExp]') ||
+    (typeof window !== 'undefined' &&
+     // IE8 and below
+     (fn === window.setTimeout ||
+      fn === window.alert ||
+      fn === window.confirm ||
+      fn === window.prompt))
+};
+
+
+/***/ }),
+
+/***/ 77:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88515,7 +89061,7 @@ function newGUID() {
 
 /***/ }),
 
-/***/ 77:
+/***/ 78:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88549,37 +89095,35 @@ exports['default'] = toTitleCase;
 
 /***/ }),
 
-/***/ 781:
+/***/ 832:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(460);
+module.exports = __webpack_require__(483);
 
 
 /***/ }),
 
-/***/ 83:
+/***/ 91:
 /***/ (function(module, exports) {
 
-module.exports = isFunction
+function clean (s) {
+  return s.replace(/\n\r?\s*/g, '')
+}
 
-var toString = Object.prototype.toString
 
-function isFunction (fn) {
-  var string = toString.call(fn)
-  return string === '[object Function]' ||
-    (typeof fn === 'function' && string !== '[object RegExp]') ||
-    (typeof window !== 'undefined' &&
-     // IE8 and below
-     (fn === window.setTimeout ||
-      fn === window.alert ||
-      fn === window.confirm ||
-      fn === window.prompt))
-};
+module.exports = function tsml (sa) {
+  var s = ''
+    , i = 0
 
+  for (; i < arguments.length; i++)
+    s += clean(sa[i]) + (arguments[i + 1] || '')
+
+  return s
+}
 
 /***/ }),
 
-/***/ 90:
+/***/ 92:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88587,7 +89131,7 @@ function isFunction (fn) {
 
 exports.__esModule = true;
 
-var _clickableComponent = __webpack_require__(91);
+var _clickableComponent = __webpack_require__(93);
 
 var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
 
@@ -88595,7 +89139,7 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -88763,7 +89307,7 @@ exports['default'] = Button;
 
 /***/ }),
 
-/***/ 91:
+/***/ 93:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -88783,15 +89327,15 @@ var _events = __webpack_require__(68);
 
 var Events = _interopRequireWildcard(_events);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -89092,7 +89636,7 @@ exports['default'] = ClickableComponent;
 
 /***/ }),
 
-/***/ 92:
+/***/ 94:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89104,11 +89648,11 @@ var _component = __webpack_require__(5);
 
 var _component2 = _interopRequireDefault(_component);
 
-var _htmlTrackElement = __webpack_require__(352);
+var _htmlTrackElement = __webpack_require__(371);
 
 var _htmlTrackElement2 = _interopRequireDefault(_htmlTrackElement);
 
-var _htmlTrackElementList = __webpack_require__(351);
+var _htmlTrackElementList = __webpack_require__(370);
 
 var _htmlTrackElementList2 = _interopRequireDefault(_htmlTrackElementList);
 
@@ -89116,35 +89660,35 @@ var _mergeOptions = __webpack_require__(67);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _textTrack = __webpack_require__(136);
+var _textTrack = __webpack_require__(137);
 
 var _textTrack2 = _interopRequireDefault(_textTrack);
 
-var _textTrackList = __webpack_require__(356);
+var _textTrackList = __webpack_require__(375);
 
 var _textTrackList2 = _interopRequireDefault(_textTrackList);
 
-var _videoTrackList = __webpack_require__(281);
+var _videoTrackList = __webpack_require__(292);
 
 var _videoTrackList2 = _interopRequireDefault(_videoTrackList);
 
-var _audioTrackList = __webpack_require__(280);
+var _audioTrackList = __webpack_require__(291);
 
 var _audioTrackList2 = _interopRequireDefault(_audioTrackList);
 
-var _fn = __webpack_require__(25);
+var _fn = __webpack_require__(26);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _timeRanges = __webpack_require__(93);
+var _timeRanges = __webpack_require__(95);
 
-var _buffer = __webpack_require__(282);
+var _buffer = __webpack_require__(293);
 
-var _mediaError = __webpack_require__(274);
+var _mediaError = __webpack_require__(285);
 
 var _mediaError2 = _interopRequireDefault(_mediaError);
 
@@ -89152,7 +89696,7 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _document = __webpack_require__(51);
+var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
@@ -89747,7 +90291,7 @@ var Tech = function (_Component) {
     // signals that the Tech is ready at which point Tech.el_ is part of the DOM
     // before inserting the WebVTT script
     if (_document2['default'].body.contains(this.el())) {
-      var vtt = __webpack_require__(359);
+      var vtt = __webpack_require__(378);
 
       // load via require if available and vtt.js script location was not passed in
       // as an option. novtt builds will turn the above require call into an empty object
@@ -90515,7 +91059,7 @@ exports['default'] = Tech;
 
 /***/ }),
 
-/***/ 93:
+/***/ 95:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -90525,7 +91069,7 @@ exports.__esModule = true;
 exports.createTimeRange = undefined;
 exports.createTimeRanges = createTimeRanges;
 
-var _log = __webpack_require__(60);
+var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
@@ -90668,455 +91212,55 @@ exports.createTimeRange = createTimeRanges;
 
 /***/ }),
 
-/***/ 95:
-/***/ (function(module, exports) {
-
-function clean (s) {
-  return s.replace(/\n\r?\s*/g, '')
-}
-
-
-module.exports = function tsml (sa) {
-  var s = ''
-    , i = 0
-
-  for (; i < arguments.length; i++)
-    s += clean(sa[i]) + (arguments[i + 1] || '')
-
-  return s
-}
-
-/***/ }),
-
-/***/ 96:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _trackButton = __webpack_require__(272);
-
-var _trackButton2 = _interopRequireDefault(_trackButton);
-
-var _component = __webpack_require__(5);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _textTrackMenuItem = __webpack_require__(135);
-
-var _textTrackMenuItem2 = _interopRequireDefault(_textTrackMenuItem);
-
-var _offTextTrackMenuItem = __webpack_require__(328);
-
-var _offTextTrackMenuItem2 = _interopRequireDefault(_offTextTrackMenuItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file text-track-button.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The base class for buttons that toggle specific text track types (e.g. subtitles)
- *
- * @extends MenuButton
- */
-var TextTrackButton = function (_TrackButton) {
-  _inherits(TextTrackButton, _TrackButton);
-
-  /**
-   * Creates an instance of this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options={}]
-   *        The key/value store of player options.
-   */
-  function TextTrackButton(player) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-    _classCallCheck(this, TextTrackButton);
-
-    options.tracks = player.textTracks();
-
-    return _possibleConstructorReturn(this, _TrackButton.call(this, player, options));
-  }
-
-  /**
-   * Create a menu item for each text track
-   *
-   * @param {TextTrackMenuItem[]} [items=[]]
-   *        Existing array of items to use during creation
-   *
-   * @return {TextTrackMenuItem[]}
-   *         Array of menu items that were created
-   */
-
-
-  TextTrackButton.prototype.createItems = function createItems() {
-    var items = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-    // Add an OFF menu item to turn all tracks off
-    items.push(new _offTextTrackMenuItem2['default'](this.player_, { kind: this.kind_ }));
-    this.hideThreshold_ += 1;
-
-    var tracks = this.player_.textTracks();
-
-    if (!tracks) {
-      return items;
-    }
-
-    for (var i = 0; i < tracks.length; i++) {
-      var track = tracks[i];
-
-      // only add tracks that are of the appropriate kind and have a label
-      if (track.kind === this.kind_) {
-        items.push(new _textTrackMenuItem2['default'](this.player_, {
-          track: track,
-          // MenuItem is selectable
-          selectable: true
-        }));
-      }
-    }
-
-    return items;
-  };
-
-  return TextTrackButton;
-}(_trackButton2['default']);
-
-_component2['default'].registerComponent('TextTrackButton', TextTrackButton);
-exports['default'] = TextTrackButton;
-
-
-/***/ }),
-
-/***/ 97:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _events = __webpack_require__(68);
-
-var Events = _interopRequireWildcard(_events);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
-
-/**
- * `EventTarget` is a class that can have the same API as the DOM `EventTarget`. It
- * adds shorthand functions that wrap around lengthy functions. For example:
- * the `on` function is a wrapper around `addEventListener`.
- *
- * @see [EventTarget Spec]{@link https://www.w3.org/TR/DOM-Level-2-Events/events.html#Events-EventTarget}
- * @class EventTarget
- */
-var EventTarget = function EventTarget() {};
-
-/**
- * A Custom DOM event.
- *
- * @typedef {Object} EventTarget~Event
- * @see [Properties]{@link https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent}
- */
-
-/**
- * All event listeners should follow the following format.
- *
- * @callback EventTarget~EventListener
- * @this {EventTarget}
- *
- * @param {EventTarget~Event} event
- *        the event that triggered this function
- *
- * @param {Object} [hash]
- *        hash of data sent during the event
- */
-
-/**
- * An object containing event names as keys and booleans as values.
- *
- * > NOTE: If an event name is set to a true value here {@link EventTarget#trigger}
- *         will have extra functionality. See that function for more information.
- *
- * @property EventTarget.prototype.allowedEvents_
- * @private
- */
-/**
- * @file src/js/event-target.js
- */
-EventTarget.prototype.allowedEvents_ = {};
-
-/**
- * Adds an `event listener` to an instance of an `EventTarget`. An `event listener` is a
- * function that will get called when an event with a certain name gets triggered.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to call with `EventTarget`s
- */
-EventTarget.prototype.on = function (type, fn) {
-  // Remove the addEventListener alias before calling Events.on
-  // so we don't get into an infinite type loop
-  var ael = this.addEventListener;
-
-  this.addEventListener = function () {};
-  Events.on(this, type, fn);
-  this.addEventListener = ael;
-};
-
-/**
- * An alias of {@link EventTarget#on}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#on}
- */
-EventTarget.prototype.addEventListener = EventTarget.prototype.on;
-
-/**
- * Removes an `event listener` for a specific event from an instance of `EventTarget`.
- * This makes it so that the `event listener` will no longer get called when the
- * named event happens.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to remove.
- */
-EventTarget.prototype.off = function (type, fn) {
-  Events.off(this, type, fn);
-};
-
-/**
- * An alias of {@link EventTarget#off}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#off}
- */
-EventTarget.prototype.removeEventListener = EventTarget.prototype.off;
-
-/**
- * This function will add an `event listener` that gets triggered only once. After the
- * first trigger it will get removed. This is like adding an `event listener`
- * with {@link EventTarget#on} that calls {@link EventTarget#off} on itself.
- *
- * @param {string|string[]} type
- *        An event name or an array of event names.
- *
- * @param {EventTarget~EventListener} fn
- *        The function to be called once for each event name.
- */
-EventTarget.prototype.one = function (type, fn) {
-  // Remove the addEventListener alialing Events.on
-  // so we don't get into an infinite type loop
-  var ael = this.addEventListener;
-
-  this.addEventListener = function () {};
-  Events.one(this, type, fn);
-  this.addEventListener = ael;
-};
-
-/**
- * This function causes an event to happen. This will then cause any `event listeners`
- * that are waiting for that event, to get called. If there are no `event listeners`
- * for an event then nothing will happen.
- *
- * If the name of the `Event` that is being triggered is in `EventTarget.allowedEvents_`.
- * Trigger will also call the `on` + `uppercaseEventName` function.
- *
- * Example:
- * 'click' is in `EventTarget.allowedEvents_`, so, trigger will attempt to call
- * `onClick` if it exists.
- *
- * @param {string|EventTarget~Event|Object} event
- *        The name of the event, an `Event`, or an object with a key of type set to
- *        an event name.
- */
-EventTarget.prototype.trigger = function (event) {
-  var type = event.type || event;
-
-  if (typeof event === 'string') {
-    event = { type: type };
-  }
-  event = Events.fixEvent(event);
-
-  if (this.allowedEvents_[type] && this['on' + type]) {
-    this['on' + type](event);
-  }
-
-  Events.trigger(this, event);
-};
-
-/**
- * An alias of {@link EventTarget#trigger}. Allows `EventTarget` to mimic
- * the standard DOM API.
- *
- * @function
- * @see {@link EventTarget#trigger}
- */
-EventTarget.prototype.dispatchEvent = EventTarget.prototype.trigger;
-
-exports['default'] = EventTarget;
-
-
-/***/ }),
-
 /***/ 98:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
+var isFunction = __webpack_require__(75)
 
+module.exports = forEach
 
-exports.__esModule = true;
+var toString = Object.prototype.toString
+var hasOwnProperty = Object.prototype.hasOwnProperty
 
-var _clickableComponent = __webpack_require__(91);
-
-var _clickableComponent2 = _interopRequireDefault(_clickableComponent);
-
-var _component = __webpack_require__(5);
-
-var _component2 = _interopRequireDefault(_component);
-
-var _obj = __webpack_require__(56);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * @file menu-item.js
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-
-
-/**
- * The component for a menu item. `<li>`
- *
- * @extends ClickableComponent
- */
-var MenuItem = function (_ClickableComponent) {
-  _inherits(MenuItem, _ClickableComponent);
-
-  /**
-   * Creates an instance of the this class.
-   *
-   * @param {Player} player
-   *        The `Player` that this class should be attached to.
-   *
-   * @param {Object} [options={}]
-   *        The key/value store of player options.
-   *
-   */
-  function MenuItem(player, options) {
-    _classCallCheck(this, MenuItem);
-
-    var _this = _possibleConstructorReturn(this, _ClickableComponent.call(this, player, options));
-
-    _this.selectable = options.selectable;
-
-    _this.selected(options.selected);
-
-    if (_this.selectable) {
-      // TODO: May need to be either menuitemcheckbox or menuitemradio,
-      //       and may need logical grouping of menu items.
-      _this.el_.setAttribute('role', 'menuitemcheckbox');
-    } else {
-      _this.el_.setAttribute('role', 'menuitem');
+function forEach(list, iterator, context) {
+    if (!isFunction(iterator)) {
+        throw new TypeError('iterator must be a function')
     }
-    return _this;
-  }
 
-  /**
-   * Create the `MenuItem's DOM element
-   *
-   * @param {string} [type=li]
-   *        Element's node type, not actually used, always set to `li`.
-   *
-   * @param {Object} [props={}]
-   *        An object of properties that should be set on the element
-   *
-   * @param {Object} [attrs={}]
-   *        An object of attributes that should be set on the element
-   *
-   * @return {Element}
-   *         The element that gets created.
-   */
-
-
-  MenuItem.prototype.createEl = function createEl(type, props, attrs) {
-    // The control is textual, not just an icon
-    this.nonIconControl = true;
-
-    return _ClickableComponent.prototype.createEl.call(this, 'li', (0, _obj.assign)({
-      className: 'vjs-menu-item',
-      innerHTML: this.localize(this.options_.label),
-      tabIndex: -1
-    }, props), attrs);
-  };
-
-  /**
-   * Any click on a `MenuItem` puts int into the selected state.
-   * See {@link ClickableComponent#handleClick} for instances where this is called.
-   *
-   * @param {EventTarget~Event} event
-   *        The `keydown`, `tap`, or `click` event that caused this function to be
-   *        called.
-   *
-   * @listens tap
-   * @listens click
-   */
-
-
-  MenuItem.prototype.handleClick = function handleClick(event) {
-    this.selected(true);
-  };
-
-  /**
-   * Set the state for this menu item as selected or not.
-   *
-   * @param {boolean} selected
-   *        if the menu item is selected or not
-   */
-
-
-  MenuItem.prototype.selected = function selected(_selected) {
-    if (this.selectable) {
-      if (_selected) {
-        this.addClass('vjs-selected');
-        this.el_.setAttribute('aria-checked', 'true');
-        // aria-checked isn't fully supported by browsers/screen readers,
-        // so indicate selected state to screen reader in the control text.
-        this.controlText(', selected');
-      } else {
-        this.removeClass('vjs-selected');
-        this.el_.setAttribute('aria-checked', 'false');
-        // Indicate un-selected state to screen reader
-        this.controlText('');
-      }
+    if (arguments.length < 3) {
+        context = this
     }
-  };
+    
+    if (toString.call(list) === '[object Array]')
+        forEachArray(list, iterator, context)
+    else if (typeof list === 'string')
+        forEachString(list, iterator, context)
+    else
+        forEachObject(list, iterator, context)
+}
 
-  return MenuItem;
-}(_clickableComponent2['default']);
+function forEachArray(array, iterator, context) {
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (hasOwnProperty.call(array, i)) {
+            iterator.call(context, array[i], i, array)
+        }
+    }
+}
 
-_component2['default'].registerComponent('MenuItem', MenuItem);
-exports['default'] = MenuItem;
+function forEachString(string, iterator, context) {
+    for (var i = 0, len = string.length; i < len; i++) {
+        // no such thing as a sparse string.
+        iterator.call(context, string.charAt(i), i, string)
+    }
+}
+
+function forEachObject(object, iterator, context) {
+    for (var k in object) {
+        if (hasOwnProperty.call(object, k)) {
+            iterator.call(context, object[k], k, object)
+        }
+    }
+}
 
 
 /***/ }),
@@ -91124,182 +91268,38 @@ exports['default'] = MenuItem;
 /***/ 99:
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-exports.__esModule = true;
-exports.isCrossOrigin = exports.getFileExtension = exports.getAbsoluteURL = exports.parseUrl = undefined;
-
-var _document = __webpack_require__(51);
-
-var _document2 = _interopRequireDefault(_document);
-
-var _window = __webpack_require__(53);
-
-var _window2 = _interopRequireDefault(_window);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-/**
- * @typedef {Object} url:URLObject
- *
- * @property {string} protocol
- *           The protocol of the url that was parsed.
- *
- * @property {string} hostname
- *           The hostname of the url that was parsed.
- *
- * @property {string} port
- *           The port of the url that was parsed.
- *
- * @property {string} pathname
- *           The pathname of the url that was parsed.
- *
- * @property {string} search
- *           The search query of the url that was parsed.
- *
- * @property {string} hash
- *           The hash of the url that was parsed.
- *
- * @property {string} host
- *           The host of the url that was parsed.
- */
-
-/**
- * Resolve and parse the elements of a URL.
- *
- * @param  {String} url
- *         The url to parse
- *
- * @return {url:URLObject}
- *         An object of url details
- */
-/**
- * @file url.js
- * @module url
- */
-var parseUrl = exports.parseUrl = function parseUrl(url) {
-  var props = ['protocol', 'hostname', 'port', 'pathname', 'search', 'hash', 'host'];
-
-  // add the url to an anchor and let the browser parse the URL
-  var a = _document2['default'].createElement('a');
-
-  a.href = url;
-
-  // IE8 (and 9?) Fix
-  // ie8 doesn't parse the URL correctly until the anchor is actually
-  // added to the body, and an innerHTML is needed to trigger the parsing
-  var addToBody = a.host === '' && a.protocol !== 'file:';
-  var div = void 0;
-
-  if (addToBody) {
-    div = _document2['default'].createElement('div');
-    div.innerHTML = '<a href="' + url + '"></a>';
-    a = div.firstChild;
-    // prevent the div from affecting layout
-    div.setAttribute('style', 'display:none; position:absolute;');
-    _document2['default'].body.appendChild(div);
-  }
-
-  // Copy the specific URL properties to a new object
-  // This is also needed for IE8 because the anchor loses its
-  // properties when it's removed from the dom
-  var details = {};
-
-  for (var i = 0; i < props.length; i++) {
-    details[props[i]] = a[props[i]];
-  }
-
-  // IE9 adds the port to the host property unlike everyone else. If
-  // a port identifier is added for standard ports, strip it.
-  if (details.protocol === 'http:') {
-    details.host = details.host.replace(/:80$/, '');
-  }
-
-  if (details.protocol === 'https:') {
-    details.host = details.host.replace(/:443$/, '');
-  }
-
-  if (addToBody) {
-    _document2['default'].body.removeChild(div);
-  }
-
-  return details;
-};
-
-/**
- * Get absolute version of relative URL. Used to tell flash correct URL.
- *
- *
- * @param  {string} url
- *         URL to make absolute
- *
- * @return {string}
- *         Absolute URL
- *
- * @see http://stackoverflow.com/questions/470832/getting-an-absolute-url-from-a-relative-one-ie6-issue
- */
-var getAbsoluteURL = exports.getAbsoluteURL = function getAbsoluteURL(url) {
-  // Check if absolute URL
-  if (!url.match(/^https?:\/\//)) {
-    // Convert to absolute URL. Flash hosted off-site needs an absolute URL.
-    var div = _document2['default'].createElement('div');
-
-    div.innerHTML = '<a href="' + url + '">x</a>';
-    url = div.firstChild.href;
-  }
-
-  return url;
-};
-
-/**
- * Returns the extension of the passed file name. It will return an empty string
- * if passed an invalid path.
- *
- * @param {string} path
- *        The fileName path like '/path/to/file.mp4'
- *
- * @returns {string}
- *          The extension in lower case or an empty string if no
- *          extension could be found.
- */
-var getFileExtension = exports.getFileExtension = function getFileExtension(path) {
-  if (typeof path === 'string') {
-    var splitPathRe = /^(\/?)([\s\S]*?)((?:\.{1,2}|[^\/]+?)(\.([^\.\/\?]+)))(?:[\/]*|[\?].*)$/i;
-    var pathParts = splitPathRe.exec(path);
-
-    if (pathParts) {
-      return pathParts.pop().toLowerCase();
+var trim = __webpack_require__(101)
+  , forEach = __webpack_require__(98)
+  , isArray = function(arg) {
+      return Object.prototype.toString.call(arg) === '[object Array]';
     }
-  }
 
-  return '';
-};
+module.exports = function (headers) {
+  if (!headers)
+    return {}
 
-/**
- * Returns whether the url passed is a cross domain request or not.
- *
- * @param {string} url
- *        The url to check.
- *
- * @return {boolean}
- *         Whether it is a cross domain request or not.
- */
-var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
-  var winLoc = _window2['default'].location;
-  var urlInfo = parseUrl(url);
+  var result = {}
 
-  // IE8 protocol relative urls will return ':' for protocol
-  var srcProtocol = urlInfo.protocol === ':' ? winLoc.protocol : urlInfo.protocol;
+  forEach(
+      trim(headers).split('\n')
+    , function (row) {
+        var index = row.indexOf(':')
+          , key = trim(row.slice(0, index)).toLowerCase()
+          , value = trim(row.slice(index + 1))
 
-  // Check if url is for another domain/origin
-  // IE8 doesn't know location.origin, so we won't rely on it here
-  var crossOrigin = srcProtocol + urlInfo.host !== winLoc.protocol + winLoc.host;
+        if (typeof(result[key]) === 'undefined') {
+          result[key] = value
+        } else if (isArray(result[key])) {
+          result[key].push(value)
+        } else {
+          result[key] = [ result[key], value ]
+        }
+      }
+  )
 
-  return crossOrigin;
-};
-
+  return result
+}
 
 /***/ })
 
-},[781]);
+},[832]);

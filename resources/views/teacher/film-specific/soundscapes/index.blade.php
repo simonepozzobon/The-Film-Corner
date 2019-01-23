@@ -91,8 +91,15 @@
                           <div class="col-md-2 droppable">
                             <h3 class="text-center"><i class="fa fa-file-audio-o"></i></h3>
                           </div>
-                          <div class="col-md-10">
+                          <div class="col-md-8">
                             <p>{{ $audio->title }}</p>
+                          </div>
+                          <div class="col-md-2">
+                            <button
+                                class="btn btn-secondary btn-yellow"
+                                title="Preview">
+                                <i class="fa fa-play" aria-hidden="true"></i>
+                            </button>
                           </div>
                         </div>
                       @endforeach

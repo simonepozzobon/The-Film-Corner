@@ -1,4 +1,4 @@
-webpackJsonp([24],{
+webpackJsonp([25],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -592,7 +592,7 @@ module.exports = __webpack_require__(31);
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11832,7 +11832,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(15);
 var Axios = __webpack_require__(33);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 
 /**
  * Create an instance of Axios
@@ -11954,7 +11954,7 @@ module.exports = CancelToken;
 "use strict";
 
 
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(34);
 var dispatchRequest = __webpack_require__(35);
@@ -12111,7 +12111,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(38);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(8);
+var defaults = __webpack_require__(9);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -12792,56 +12792,6 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 459:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _jquery = __webpack_require__(61);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
- */
-window.$ = window.jQuery = __webpack_require__(61);
-window.Tether = __webpack_require__(292);
-__webpack_require__(372);
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
-__webpack_require__(481);
-
-/**
- * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
- */
-
-// import Echo from 'laravel-echo'
-// window.io = require('socket.io-client')
-// window.Echo = new Echo({
-//   broadcaster: 'socket.io',
-//   host: window.location.protocol + '//' + window.location.hostname + ':6001',
-//   secure: true,
-// })
-
-console.log('debug ' + window.location.protocol + '//' + window.location.hostname + ':6001');
-console.log('debug', window.Echo);
-
-/**
- * require bootstrap-fileinput
- */
-
-// require('bootstrap-fileinput')
-
-/***/ }),
-
 /***/ 46:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12950,24 +12900,74 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 481:
+/***/ 482:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-window._ = __webpack_require__(57);
+var _jquery = __webpack_require__(57);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
+ */
+window.$ = window.jQuery = __webpack_require__(57);
+window.Tether = __webpack_require__(305);
+__webpack_require__(389);
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+
+__webpack_require__(505);
+
+/**
+ * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
+ */
+
+// import Echo from 'laravel-echo'
+// window.io = require('socket.io-client')
+// window.Echo = new Echo({
+//   broadcaster: 'socket.io',
+//   host: window.location.protocol + '//' + window.location.hostname + ':6001',
+//   secure: true,
+// })
+
+console.log('debug ' + window.location.protocol + '//' + window.location.hostname + ':6001');
+console.log('debug', window.Echo);
+
+/**
+ * require bootstrap-fileinput
+ */
+
+// require('bootstrap-fileinput')
+
+/***/ }),
+
+/***/ 505:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+window._ = __webpack_require__(58);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-window.$ = window.jQuery = __webpack_require__(61);
+window.$ = window.jQuery = __webpack_require__(57);
 
-window.Tether = __webpack_require__(292);
+window.Tether = __webpack_require__(305);
 
-__webpack_require__(373);
+__webpack_require__(390);
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
@@ -12975,7 +12975,7 @@ __webpack_require__(373);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(24);
+window.Vue = __webpack_require__(25);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -13034,7 +13034,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 57:
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -30148,15 +30148,15 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 780:
+/***/ 831:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(459);
+module.exports = __webpack_require__(482);
 
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -30257,4 +30257,4 @@ module.exports = defaults;
 
 /***/ })
 
-},[780]);
+},[831]);
