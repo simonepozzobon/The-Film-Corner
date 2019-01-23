@@ -320,8 +320,8 @@
             'token': token,
             'title': $('input[name="title"]').val(),
             'notes': $('#notes').val(),
-            'video': $('[ng-controller="DemoMediaTimelineController"]').scope().videoData.player.src(),
-            'timelines': $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-12-video'),
+            'timelines': localStorage.getItem('app-12-timelines')
           };
 
           console.log('--------');

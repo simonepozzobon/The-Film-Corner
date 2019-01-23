@@ -1,10 +1,10 @@
 <template lang="html">
     <div class="row align-items-center">
         <div class="col-md-2">
-            <img :src="'/storage/'+this.obj.img" width="57">
+            <i class="fa fa-file-audio-o fa-2x" />
         </div>
         <div class="col-md-6">
-            <p class="p-2">{{ title }}</p>
+            <p class="pl-2 pr-2 mb-0">{{ title }}</p>
         </div>
         <div class="col-md-4">
             <div class="btn-group">

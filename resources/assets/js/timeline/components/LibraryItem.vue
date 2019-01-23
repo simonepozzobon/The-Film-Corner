@@ -4,7 +4,7 @@
             <img :src="'/storage/'+this.obj.img" width="57">
         </div>
         <div class="col-md-6">
-            <p class="p-2">{{ title }}</p>
+            <p class="pl-2 pr-2 mb-0">{{ title }}</p>
         </div>
         <div class="col-md-4">
             <div class="btn-group">
