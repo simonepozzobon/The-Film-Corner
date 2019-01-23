@@ -47674,6 +47674,35 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 var _TimelineElement = __webpack_require__(613);
 
 var _TimelineElement2 = _interopRequireDefault(_TimelineElement);
@@ -47765,6 +47794,17 @@ exports.default = {
         deleteTrack: function deleteTrack() {
             this.$emit('delete_track', this.track.uniqueid);
         },
+        duplicateTrack: function duplicateTrack() {
+            var obj = Object.assign({}, this.track);
+            obj = _extends({}, obj, {
+                originalDuration: obj.originalDuration / this.$root.tick,
+                duration: obj.duration / this.$root.tick,
+                start: obj.start / this.$root.tick,
+                cutStart: obj.cutStart / this.$root.tick,
+                cutEnd: obj.cutEnd / this.$root.tick
+            });
+            this.$root.$emit('add-to-timeline', obj);
+        },
         onDrag: function onDrag(x, y) {
             this.position.x = x;
             this.length.x = x;
@@ -47807,33 +47847,7 @@ exports.default = {
     beforeDestroy: function beforeDestroy() {
         // this.$refs.title.style.display = 'none'
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
 
 /***/ }),
 
@@ -50198,6 +50212,11 @@ var render = function() {
                 _vm.title = $event.target.value
               }
             }
+          }),
+          _vm._v(" "),
+          _c("i", {
+            staticClass: "fa fa-files-o",
+            on: { click: _vm.duplicateTrack }
           }),
           _vm._v(" "),
           _c("i", {

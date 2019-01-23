@@ -7,6 +7,7 @@
                 class="form-control"
                 v-model="title"
                 @keyup.enter="saveTitle">
+            <i class="fa fa-files-o" @click="duplicateTrack" />
             <i class="fa fa-trash-o" @click="deleteTrack" />
         </div>
     </div>
@@ -106,6 +107,18 @@ export default {
         },
         deleteTrack: function() {
             this.$emit('delete_track', this.track.uniqueid)
+        },
+        duplicateTrack: function() {
+            let obj = Object.assign({}, this.track)
+            obj = {
+                ...obj,
+                originalDuration: obj.originalDuration / this.$root.tick,
+                duration: obj.duration / this.$root.tick,
+                start: obj.start / this.$root.tick,
+                cutStart: obj.cutStart / this.$root.tick,
+                cutEnd: obj.cutEnd / this.$root.tick,
+            }
+            this.$root.$emit('add-to-timeline', obj)
         },
         onDrag: function(x, y) {
             this.position.x = x
