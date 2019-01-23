@@ -119,10 +119,10 @@ export default {
     mounted: function() {
         this.playheadStart()
         this.$root.$on('player-time-update', time => {
-            time = (time * this.$root.tick * 10) + 200
+            time = (time * this.$root.tick) + 200
             this.playheadPosition = parseInt(time)
-            console.log(this.playheadPosition, this.$root.tick)
             this.$refs.playhead.style.left = parseInt(time) + 'px'
+            // console.log(this.playheadPosition, this.$root.tick)
         })
     },
 }

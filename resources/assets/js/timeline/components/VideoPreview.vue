@@ -71,18 +71,70 @@ export default {
                 display: 'block',
             })
 
-            this.master.progress(1).progress(0)
             this.master.play()
             console.log('player loaded')
         },
         showLoader: function() {
             console.log('show loader')
-            this.master.pause().progress(0)
-            this.master.play(0)
+            let loader = this.$refs.loader,
+            player = this.$refs.videoPlayer.$el,
+            height = player.offsetHeight
+
+            loader.style.height = height + 'px'
+
+            let master = new TimelineMax({
+                paused: true,
+                reversed: true,
+            })
+
+            master.fromTo(player, .6, {
+                autoAlpha: 1,
+                display: 'block'
+            }, {
+                autoAlpha: 0,
+                display: 'none',
+            })
+
+            master.fromTo(loader, .6, {
+                autoAlpha: 0,
+                display: 'none'
+            }, {
+                autoAlpha: 1,
+                display: 'flex',
+            })
+
+            master.play()
         },
         hideLoader: function() {
             console.log('hide loader')
-            // this.master.pause().reverse()
+            let loader = this.$refs.loader,
+            player = this.$refs.videoPlayer.$el,
+            height = player.offsetHeight
+
+            loader.style.height = height + 'px'
+
+            let master = new TimelineMax({
+                paused: true,
+                reversed: true,
+            })
+
+            master.fromTo(loader, .6, {
+                autoAlpha: 1,
+                display: 'flex',
+            }, {
+                autoAlpha: 0,
+                display: 'none'
+            })
+
+            master.fromTo(player, .6, {
+                autoAlpha: 0,
+                display: 'none',
+            }, {
+                autoAlpha: 1,
+                display: 'block'
+            })
+
+            master.play()
         },
         changeSrc: function(src = null) {
             return new Promise(resolve => {

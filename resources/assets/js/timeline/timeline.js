@@ -73,6 +73,7 @@ const timeline = new Vue({
                 axios.post('/api/v1/video-edit', data).then(response => {
                     console.log('render completato', response.data)
                     timeline.$refs.videoPreview.changeSrc(response.data.export)
+                    timeline.$refs.videoPreview.hideLoader()
                 })
             })
         }, 500),

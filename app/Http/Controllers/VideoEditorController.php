@@ -33,11 +33,14 @@ class VideoEditorController extends Controller
         $tmpPath = $paths['tmpPath'];
         $expPath = $paths['expPath'];
 
+        $clis = collect();
+        $debugs = collect();
+
         // decode timelines
         $timelines = collect(json_decode($request->timelines));
 
         // copio i file originale nel progetto se necessario
-        $this->paste_original_to_project($timelines, $storePath, $session_id);
+        $check = $this->paste_original_to_project($timelines, $storePath, $session_id);
 
         // sort timelines by start time
         $timelines = $timelines->sortBy('start')->values();
@@ -67,8 +70,9 @@ class VideoEditorController extends Controller
                 $black_path = public_path('img/black.png');
                 $tmpFilename = $item->id;
                 $black_tmp_path = $storePath.'/tmp/'.$tmpFilename.'.mp4';
-                $cli = FFMPEG_LIB.' -loop 1 -i "'.$black_path.'" -t '.$item->duration.' "'.$black_tmp_path.'"';
+                $cli = FFMPEG_LIB.' -loop 1 -y -i "'.$black_path.'" -c:v libx264 -t '.$item->duration.' -pix_fmt yuv420p -vf scale=320:240 "'.$black_tmp_path.'"';
                 exec($cli);
+                $clis->push($cli);
                 $item->src = $black_tmp_path;
             } else {
                 $mediaPath = urldecode($item->src);
@@ -76,6 +80,7 @@ class VideoEditorController extends Controller
                 $tmpFilename = $item->id;
                 $srcPath = $storePath.'/src/'.$srcFilename;
                 $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
+
 
                 $duration = $item->duration;
 
@@ -98,7 +103,13 @@ class VideoEditorController extends Controller
                 }
 
                 //ffmpeg -ss [start] -i in.mp4 -t [duration] -c copy out.mp4
-                $cli = FFMPEG_LIB.' -y -ss '.$item->cutStart.' -i "'.$srcPath.'" -t 2 -c copy "'.$tmpPath.'"';
+                if ($item->cutStart > 0) {
+                    $cli = FFMPEG_LIB.' -y -ss '.$item->cutStart.' -i "'.$srcPath.'" -t '.$duration.' -c copy "'.$tmpPath.'"';
+                    $clis->push($cli);
+                } else {
+                    $cli = FFMPEG_LIB.' -y -i "'.$srcPath.'" -t '.$duration.' -c copy "'.$tmpPath.'"';
+                    $clis->push($cli);
+                }
                 exec($cli);
             }
         }
@@ -126,8 +137,10 @@ class VideoEditorController extends Controller
             $tmpPath = $storePath.'/tmp/'.$tmpFilename.'.mp4';
             $intermediatePath = $storePath.'/tmp/'.$tmpFilename.'.ts';
 
+            $debugs->push($item);
             $intermediateCli = FFMPEG_LIB.' -y -i "'.$tmpPath.'" -c copy -bsf:v h264_mp4toannexb -f mpegts '.$intermediatePath;
             exec($intermediateCli);
+            $clis->push($intermediateCli);
 
             if ($key != ($dataLenght - 1)) {
                 $cli .= $intermediatePath.'|';
@@ -144,6 +157,7 @@ class VideoEditorController extends Controller
         // $save->save();
 
         exec($cli);
+        $clis->push($cli);
 
         // Find the session relative to this video
         $session = AppsSession::where('token', '=', $session_id)->first();
@@ -156,7 +170,9 @@ class VideoEditorController extends Controller
 
         return response([
             'app' => $session->app_id,
-            'export' => $exportPublicPath
+            'export' => $exportPublicPath,
+            'clis' => $clis,
+            'debugs' => $debugs,
         ]);
     }
 

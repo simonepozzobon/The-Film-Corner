@@ -47671,10 +47671,10 @@ exports.default = {
 
         this.playheadStart();
         this.$root.$on('player-time-update', function (time) {
-            time = time * _this.$root.tick * 10 + 200;
+            time = time * _this.$root.tick + 200;
             _this.playheadPosition = parseInt(time);
-            console.log(_this.playheadPosition, _this.$root.tick);
             _this.$refs.playhead.style.left = parseInt(time) + 'px';
+            // console.log(this.playheadPosition, this.$root.tick)
         });
     }
 };
@@ -47934,18 +47934,70 @@ exports.default = {
                 display: 'block'
             });
 
-            this.master.progress(1).progress(0);
             this.master.play();
             console.log('player loaded');
         },
         showLoader: function showLoader() {
             console.log('show loader');
-            this.master.pause().progress(0);
-            this.master.play(0);
+            var loader = this.$refs.loader,
+                player = this.$refs.videoPlayer.$el,
+                height = player.offsetHeight;
+
+            loader.style.height = height + 'px';
+
+            var master = new _gsap.TimelineMax({
+                paused: true,
+                reversed: true
+            });
+
+            master.fromTo(player, .6, {
+                autoAlpha: 1,
+                display: 'block'
+            }, {
+                autoAlpha: 0,
+                display: 'none'
+            });
+
+            master.fromTo(loader, .6, {
+                autoAlpha: 0,
+                display: 'none'
+            }, {
+                autoAlpha: 1,
+                display: 'flex'
+            });
+
+            master.play();
         },
         hideLoader: function hideLoader() {
             console.log('hide loader');
-            // this.master.pause().reverse()
+            var loader = this.$refs.loader,
+                player = this.$refs.videoPlayer.$el,
+                height = player.offsetHeight;
+
+            loader.style.height = height + 'px';
+
+            var master = new _gsap.TimelineMax({
+                paused: true,
+                reversed: true
+            });
+
+            master.fromTo(loader, .6, {
+                autoAlpha: 1,
+                display: 'flex'
+            }, {
+                autoAlpha: 0,
+                display: 'none'
+            });
+
+            master.fromTo(player, .6, {
+                autoAlpha: 0,
+                display: 'none'
+            }, {
+                autoAlpha: 1,
+                display: 'block'
+            });
+
+            master.play();
         },
         changeSrc: function changeSrc() {
             var _this = this;
@@ -48261,6 +48313,7 @@ var timeline = new _vue2.default({
                 _axios2.default.post('/api/v1/video-edit', data).then(function (response) {
                     console.log('render completato', response.data);
                     timeline.$refs.videoPreview.changeSrc(response.data.export);
+                    timeline.$refs.videoPreview.hideLoader();
                 });
             });
         }, 500),
