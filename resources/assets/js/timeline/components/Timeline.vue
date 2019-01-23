@@ -19,18 +19,6 @@
                                 @on-drag="onDrag"
                                 @on-resize="onResize"/>
                         </transition-group>
-                        <!-- <vue-draggable-resizable
-                            :parent="true"
-                            axis="x"
-                            :handles="['ml']"
-                            :x="this.playheadPosition"
-                            :w="1"
-                            :h="this.playheadHeight">
-                                <div class="">
-                                    {{ this.playheadPosition }}
-                                </div>
-                                <div ref="playhead" id="playhead" class="playhead"></div>
-                        </vue-draggable-resizable> -->
                         <div ref="playhead" id="playhead" class="playhead"></div>
                     </div>
                 </div>
@@ -40,14 +28,14 @@
 </template>
 <script>
 import TimelineTrack from './TimelineTrack.vue'
-import VueDraggableResizable from 'vue-draggable-resizable'
+// import VueDraggableResizable from 'vue-draggable-resizable'
 import {TimelineMax} from 'gsap'
 
 export default {
     name: 'Timeline',
     components: {
         TimelineTrack,
-        VueDraggableResizable
+        // VueDraggableResizable
     },
     watch: {
         '$root.timelines': function(timelines) {
@@ -68,17 +56,20 @@ export default {
             var playhead = document.getElementById('playhead')
         },
         onDrag: function(obj) {
-            let cache = this.$root.timelines[obj.idx]
+            let cache = Object.assign({}, this.$root.timelines[obj.idx]) // clone
             if (cache) {
                 cache.start = obj.start
                 this.$root.timelines.splice(obj.idx, 1, cache)
             }
         },
         onResize: function(obj) {
-            let cache = this.$root.timelines[obj.idx]
+            // console.log(obj)
+            let cache = Object.assign({}, this.$root.timelines[obj.idx]) // clone
             if (cache) {
                 cache.start = obj.start
                 cache.duration = obj.duration
+                cache.cutStart = obj.cutStart
+                cache.cutEnd = obj.cutEnd
                 this.$root.timelines.splice(obj.idx, 1, cache)
             }
         },
@@ -128,8 +119,9 @@ export default {
     mounted: function() {
         this.playheadStart()
         this.$root.$on('player-time-update', time => {
-            time = (time * this.$root.tick) + 200
+            time = (time * this.$root.tick * 10) + 200
             this.playheadPosition = parseInt(time)
+            console.log(this.playheadPosition, this.$root.tick)
             this.$refs.playhead.style.left = parseInt(time) + 'px'
         })
     },

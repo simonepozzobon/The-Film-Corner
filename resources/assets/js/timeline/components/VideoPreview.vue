@@ -32,19 +32,10 @@ export default {
                 aspectRatio: '16:9',
                 sources: [{
                     type: 'video/mp4',
-                    src: '/img/test-app/oceans.mp4'
+                    src: ''
                 }],
                 poster: '/img/test-app/1.png',
             }
-        }
-    },
-    watch: {
-        '$root.showLoader': function(loader) {
-            // if (loader) {
-            //     this.showLoader()
-            // } else {
-            //     this.hideLoader()
-            // }
         }
     },
     methods: {

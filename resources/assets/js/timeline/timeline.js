@@ -43,20 +43,30 @@ const timeline = new Vue({
             return new Promise(resolve => {
                 let cache = this.timelines.slice() // clone
                 for (var i = 0; i < cache.length; i++) {
-                    cache[i].start = cache[i].start / this.tick
-                    cache[i].duration = cache[i].duration / this.tick
+                    cache[i] = {
+                        ...cache[i],
+                        id: i,
+                        originalDuration: cache[i].originalDuration / this.tick,
+                        duration: cache[i].duration / this.tick,
+                        start: cache[i].start / this.tick,
+                        cutStart: cache[i].cutStart / this.tick,
+                        cutEnd: cache[i].cutEnd / this.tick,
+                    }
                 }
+
                 resolve(cache)
             })
         },
         updateEditor: _.debounce(e => {
+            console.log('--------> updating')
             timeline.$refs.videoPreview.showLoader()
 
             timeline.reformatTimelines().then(cache => {
-                console.log('prima di inviare', cache)
+                // console.log('prima di inviare', cache)
                 let session = window.$session
                 let data = new FormData()
 
+                console.log('Prima di inviare', cache)
                 data.append('session', session.token)
                 data.append('timelines', JSON.stringify(cache))
 
@@ -65,16 +75,20 @@ const timeline = new Vue({
                     timeline.$refs.videoPreview.changeSrc(response.data.export)
                 })
             })
-
         }, 500),
         addTimeline: function(obj) {
             let timeline = {
                 id: obj.id,
                 title: obj.title,
+                originalDuration: obj.duration * this.tick,
                 duration: obj.duration * this.tick,
                 start: 0,
                 src: obj.src,
-                img: obj.img
+                img: obj.img,
+                hasCutStart: false,
+                hasCutEnd: false,
+                cutStart: 0,
+                cutEnd: 0,
             }
             this.timelines.push(timeline)
         },

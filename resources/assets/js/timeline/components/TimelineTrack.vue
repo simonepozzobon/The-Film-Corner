@@ -17,7 +17,7 @@
             :handles="['ml','mr']"
             :x="track.start"
             :w="track.duration"
-            :grid="[5,5]"
+            :max-width="parseInt(track.originalDuration)"
             @dragging="onDrag"
             @resizing="onResize">
                 <div class="media-element"></div>
@@ -58,11 +58,15 @@ export default {
             x: 0,
             y: 0,
         },
+        cut: {
+            start: 0,
+            end: 0,
+        },
         title: '',
     }),
     watch: {
         track: function(track) {
-            console.log(track)
+            // console.log(track)
         }
     },
     methods: {
@@ -98,24 +102,40 @@ export default {
         },
         onDrag: function(x, y) {
             this.position.x = x
+            this.length.x = x
             this.position.y = y
-            console.log('Drag', x)
+            // console.log('Drag', x)
             this.$emit('on-drag', {
                 idx: this.idx,
                 start: x,
             })
         },
         onResize: function(x, y, width) {
+            if (this.length.x != x && this.length.w != width) {
+                // taglia l'inizio
+                // console.log('taglia inizio')
+                let delta = x - this.length.x
+                this.cut.start = this.cut.start + delta
+            } else if (this.length.w != width) {
+                // taglia la fine
+                // console.log('taglia la fine')
+                let delta = width - this.length.w
+                this.cut.end = this.cut.end + delta
+            }
+
             this.length.x = x
             this.length.y = y
             this.length.w = width
-            console.log('Resize', x, width)
 
             this.$emit('on-resize', {
                 idx: this.idx,
                 start: x,
+                cutStart: this.cut.start,
+                cutEnd: this.cut.end,
                 duration: width
             })
+
+            // console.log('Resize', this.track.start, x, this.track.duration, width)
         },
     },
     mounted: function() {

@@ -47547,19 +47547,44 @@ var _TimelineTrack = __webpack_require__(614);
 
 var _TimelineTrack2 = _interopRequireDefault(_TimelineTrack);
 
-var _vueDraggableResizable = __webpack_require__(551);
-
-var _vueDraggableResizable2 = _interopRequireDefault(_vueDraggableResizable);
-
 var _gsap = __webpack_require__(26);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 exports.default = {
     name: 'Timeline',
     components: {
-        TimelineTrack: _TimelineTrack2.default,
-        VueDraggableResizable: _vueDraggableResizable2.default
+        TimelineTrack: _TimelineTrack2.default
+        // VueDraggableResizable
     },
     watch: {
         '$root.timelines': function $rootTimelines(timelines) {
@@ -47582,17 +47607,20 @@ exports.default = {
             var playhead = document.getElementById('playhead');
         },
         onDrag: function onDrag(obj) {
-            var cache = this.$root.timelines[obj.idx];
+            var cache = Object.assign({}, this.$root.timelines[obj.idx]); // clone
             if (cache) {
                 cache.start = obj.start;
                 this.$root.timelines.splice(obj.idx, 1, cache);
             }
         },
         onResize: function onResize(obj) {
-            var cache = this.$root.timelines[obj.idx];
+            // console.log(obj)
+            var cache = Object.assign({}, this.$root.timelines[obj.idx]); // clone
             if (cache) {
                 cache.start = obj.start;
                 cache.duration = obj.duration;
+                cache.cutStart = obj.cutStart;
+                cache.cutEnd = obj.cutEnd;
                 this.$root.timelines.splice(obj.idx, 1, cache);
             }
         },
@@ -47643,51 +47671,14 @@ exports.default = {
 
         this.playheadStart();
         this.$root.$on('player-time-update', function (time) {
-            time = time * _this.$root.tick + 200;
+            time = time * _this.$root.tick * 10 + 200;
             _this.playheadPosition = parseInt(time);
+            console.log(_this.playheadPosition, _this.$root.tick);
             _this.$refs.playhead.style.left = parseInt(time) + 'px';
         });
     }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+};
+// import VueDraggableResizable from 'vue-draggable-resizable'
 
 /***/ }),
 
@@ -47765,12 +47756,16 @@ exports.default = {
                 x: 0,
                 y: 0
             },
+            cut: {
+                start: 0,
+                end: 0
+            },
             title: ''
         };
     },
     watch: {
         track: function track(_track) {
-            console.log(_track);
+            // console.log(track)
         }
     },
     methods: {
@@ -47804,24 +47799,40 @@ exports.default = {
         },
         onDrag: function onDrag(x, y) {
             this.position.x = x;
+            this.length.x = x;
             this.position.y = y;
-            console.log('Drag', x);
+            // console.log('Drag', x)
             this.$emit('on-drag', {
                 idx: this.idx,
                 start: x
             });
         },
         onResize: function onResize(x, y, width) {
+            if (this.length.x != x && this.length.w != width) {
+                // taglia l'inizio
+                // console.log('taglia inizio')
+                var delta = x - this.length.x;
+                this.cut.start = this.cut.start + delta;
+            } else if (this.length.w != width) {
+                // taglia la fine
+                // console.log('taglia la fine')
+                var _delta = width - this.length.w;
+                this.cut.end = this.cut.end + _delta;
+            }
+
             this.length.x = x;
             this.length.y = y;
             this.length.w = width;
-            console.log('Resize', x, width);
 
             this.$emit('on-resize', {
                 idx: this.idx,
                 start: x,
+                cutStart: this.cut.start,
+                cutEnd: this.cut.end,
                 duration: width
             });
+
+            // console.log('Resize', this.track.start, x, this.track.duration, width)
         }
     },
     mounted: function mounted() {}
@@ -47884,20 +47895,11 @@ exports.default = {
                 aspectRatio: '16:9',
                 sources: [{
                     type: 'video/mp4',
-                    src: '/img/test-app/oceans.mp4'
+                    src: ''
                 }],
                 poster: '/img/test-app/1.png'
             }
         };
-    },
-    watch: {
-        '$root.showLoader': function $rootShowLoader(loader) {
-            // if (loader) {
-            //     this.showLoader()
-            // } else {
-            //     this.hideLoader()
-            // }
-        }
     },
     methods: {
         onPlayerTimeUpdate: function onPlayerTimeUpdate(player) {
@@ -48158,6 +48160,8 @@ module.exports = function parseHeaders(headers) {
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _vue = __webpack_require__(24);
 
 var _vue2 = _interopRequireDefault(_vue);
@@ -48228,20 +48232,29 @@ var timeline = new _vue2.default({
             return new Promise(function (resolve) {
                 var cache = _this.timelines.slice(); // clone
                 for (var i = 0; i < cache.length; i++) {
-                    cache[i].start = cache[i].start / _this.tick;
-                    cache[i].duration = cache[i].duration / _this.tick;
+                    cache[i] = _extends({}, cache[i], {
+                        id: i,
+                        originalDuration: cache[i].originalDuration / _this.tick,
+                        duration: cache[i].duration / _this.tick,
+                        start: cache[i].start / _this.tick,
+                        cutStart: cache[i].cutStart / _this.tick,
+                        cutEnd: cache[i].cutEnd / _this.tick
+                    });
                 }
+
                 resolve(cache);
             });
         },
         updateEditor: _.debounce(function (e) {
+            console.log('--------> updating');
             timeline.$refs.videoPreview.showLoader();
 
             timeline.reformatTimelines().then(function (cache) {
-                console.log('prima di inviare', cache);
+                // console.log('prima di inviare', cache)
                 var session = window.$session;
                 var data = new FormData();
 
+                console.log('Prima di inviare', cache);
                 data.append('session', session.token);
                 data.append('timelines', JSON.stringify(cache));
 
@@ -48255,10 +48268,15 @@ var timeline = new _vue2.default({
             var timeline = {
                 id: obj.id,
                 title: obj.title,
+                originalDuration: obj.duration * this.tick,
                 duration: obj.duration * this.tick,
                 start: 0,
                 src: obj.src,
-                img: obj.img
+                img: obj.img,
+                hasCutStart: false,
+                hasCutEnd: false,
+                cutStart: 0,
+                cutEnd: 0
             };
             this.timelines.push(timeline);
         },
@@ -50195,7 +50213,7 @@ var render = function() {
               handles: ["ml", "mr"],
               x: _vm.track.start,
               w: _vm.track.duration,
-              grid: [5, 5]
+              "max-width": parseInt(_vm.track.originalDuration)
             },
             on: { dragging: _vm.onDrag, resizing: _vm.onResize }
           },
