@@ -47572,13 +47572,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 exports.default = {
     name: 'Timeline',
@@ -47588,6 +47581,7 @@ exports.default = {
     },
     watch: {
         '$root.timelines': function $rootTimelines(timelines) {
+            this.tracks = [];
             this.tracks = timelines;
         }
     },
@@ -47603,9 +47597,6 @@ exports.default = {
         };
     },
     methods: {
-        playheadStart: function playheadStart() {
-            var playhead = document.getElementById('playhead');
-        },
         onDrag: function onDrag(obj) {
             var cache = Object.assign({}, this.$root.timelines[obj.idx]); // clone
             if (cache) {
@@ -47624,57 +47615,23 @@ exports.default = {
                 this.$root.timelines.splice(obj.idx, 1, cache);
             }
         },
-        onDeleteTrack: function onDeleteTrack(track) {
-            var idx = this.tracks.findIndex(function (singleTrack) {
-                return singleTrack.id == track.id;
+        onDeleteTrack: function onDeleteTrack(uniqueid) {
+            var idx = this.$root.timelines.findIndex(function (item) {
+                return item.uniqueid == uniqueid;
             });
+
             if (idx >= 0) {
                 this.$root.timelines.splice(idx, 1);
             }
-        },
-        transitionBeforeEnter: function transitionBeforeEnter(el, done) {
-            var t1 = new _gsap.TimelineMax();
-            t1.set(el, {
-                opacity: 0,
-                yPercent: 100,
-                position: 'relative',
-                onComplete: done
-            });
-        },
-        transitionEnter: function transitionEnter(el, done) {
-            var del = el.dataset.index * .33;
-            var t1 = new _gsap.TimelineMax();
-            t1.to(el, .5, {
-                opacity: 1,
-                yPercent: 0,
-                delay: del,
-                ease: Sine.easeOut,
-                onComplete: done
-            });
-        },
-        transitionLeave: function transitionLeave(el, done) {
-            var t1 = new _gsap.TimelineMax();
-            t1.to(el, .5, {
-                opacity: 0,
-                yPercent: 100,
-                position: 'relative',
-                ease: Sine.easeOut
-            }).to(el, .2, {
-                height: 0,
-                ease: Sine.easeOut,
-                onComplete: done
-            });
         }
     },
     mounted: function mounted() {
         var _this = this;
 
-        this.playheadStart();
         this.$root.$on('player-time-update', function (time) {
             time = time * _this.$root.tick + 200;
             _this.playheadPosition = parseInt(time);
             _this.$refs.playhead.style.left = parseInt(time) + 'px';
-            // console.log(this.playheadPosition, this.$root.tick)
         });
     }
 };
@@ -47783,19 +47740,30 @@ exports.default = {
             });
         },
         saveTitle: function saveTitle() {
-            var t1 = new _gsap.TimelineMax();
-            t1.to(this.$refs.tools, .2, {
-                opacity: 0,
-                display: 'none',
-                ease: _gsap.Power4.easeInOut
-            }).to(this.$refs.title, .2, {
-                opacity: 1,
-                display: 'block',
-                ease: _gsap.Power4.easeInOut
+            var _this = this;
+
+            var isDelete = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+            return new Promise(function (resolve) {
+                _this.$root.timelines[_this.idx].title = _this.title;
+                var t1 = new _gsap.TimelineMax();
+                t1.to(_this.$refs.tools, .2, {
+                    opacity: 0,
+                    display: 'none',
+                    ease: _gsap.Power4.easeInOut
+                }).to(_this.$refs.title, .2, {
+                    opacity: 1,
+                    display: 'block',
+                    ease: _gsap.Power4.easeInOut,
+                    onComplete: function onComplete() {
+                        console.log('completat');
+                        resolve();
+                    }
+                });
             });
         },
         deleteTrack: function deleteTrack() {
-            this.$emit('delete_track', this.track);
+            this.$emit('delete_track', this.track.uniqueid);
         },
         onDrag: function onDrag(x, y) {
             this.position.x = x;
@@ -47835,7 +47803,10 @@ exports.default = {
             // console.log('Resize', this.track.start, x, this.track.duration, width)
         }
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {},
+    beforeDestroy: function beforeDestroy() {
+        // this.$refs.title.style.display = 'none'
+    }
 }; //
 //
 //
@@ -48274,7 +48245,7 @@ var timeline = new _vue2.default({
     },
     watch: {
         timelines: function timelines(_timelines) {
-            this.updateEditor();
+            // this.updateEditor()
         }
     },
     methods: {
@@ -48320,6 +48291,7 @@ var timeline = new _vue2.default({
         addTimeline: function addTimeline(obj) {
             var timeline = {
                 id: obj.id,
+                uniqueid: '_' + Math.random().toString(36).substr(2, 9),
                 title: obj.title,
                 originalDuration: obj.duration * this.tick,
                 duration: obj.duration * this.tick,
@@ -50034,24 +50006,17 @@ var render = function() {
             "div",
             { staticClass: "timeline-container", attrs: { id: "timeline" } },
             [
-              _c(
-                "transition-group",
-                {
-                  attrs: { css: false, tag: "div" },
-                  on: { enter: _vm.transitionEnter, leave: _vm.transitionLeave }
-                },
-                _vm._l(_vm.tracks, function(track, idx) {
-                  return _c("timeline-track", {
-                    key: idx,
-                    attrs: { track: track, "data-index": idx, idx: idx },
-                    on: {
-                      delete_track: _vm.onDeleteTrack,
-                      "on-drag": _vm.onDrag,
-                      "on-resize": _vm.onResize
-                    }
-                  })
+              _vm._l(this.tracks, function(track, idx) {
+                return _c("timeline-track", {
+                  key: track.uniqueid,
+                  attrs: { track: track, idx: idx },
+                  on: {
+                    delete_track: _vm.onDeleteTrack,
+                    "on-drag": _vm.onDrag,
+                    "on-resize": _vm.onResize
+                  }
                 })
-              ),
+              }),
               _vm._v(" "),
               _c("div", {
                 ref: "playhead",
@@ -50059,7 +50024,7 @@ var render = function() {
                 attrs: { id: "playhead" }
               })
             ],
-            1
+            2
           )
         ])
       ])

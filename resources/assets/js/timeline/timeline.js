@@ -35,7 +35,7 @@ const timeline = new Vue({
     },
     watch: {
         timelines: function(timelines) {
-            this.updateEditor()
+            // this.updateEditor()
         }
     },
     methods: {
@@ -80,6 +80,7 @@ const timeline = new Vue({
         addTimeline: function(obj) {
             let timeline = {
                 id: obj.id,
+                uniqueid: '_' + Math.random().toString(36).substr(2, 9),
                 title: obj.title,
                 originalDuration: obj.duration * this.tick,
                 duration: obj.duration * this.tick,

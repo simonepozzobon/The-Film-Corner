@@ -4,21 +4,14 @@
             <div class="box green">
                 <div class="box-body">
                     <div id="timeline" class="timeline-container">
-                        <transition-group
-                            :css="false"
-                            tag="div"
-                            @enter="transitionEnter"
-                            @leave="transitionLeave">
-                            <timeline-track
-                                v-for="(track, idx) in tracks"
-                                :key="idx"
-                                :track="track"
-                                :data-index="idx"
-                                :idx="idx"
-                                @delete_track="onDeleteTrack"
-                                @on-drag="onDrag"
-                                @on-resize="onResize"/>
-                        </transition-group>
+                        <timeline-track
+                            v-for="(track, idx) in this.tracks"
+                            :key="track.uniqueid"
+                            :track="track"
+                            :idx="idx"
+                            @delete_track="onDeleteTrack"
+                            @on-drag="onDrag"
+                            @on-resize="onResize"/>
                         <div ref="playhead" id="playhead" class="playhead"></div>
                     </div>
                 </div>
@@ -39,6 +32,7 @@ export default {
     },
     watch: {
         '$root.timelines': function(timelines) {
+            this.tracks = []
             this.tracks = timelines
         }
     },
@@ -52,9 +46,6 @@ export default {
         playheadPosition: 200,
     }),
     methods: {
-        playheadStart: function() {
-            var playhead = document.getElementById('playhead')
-        },
         onDrag: function(obj) {
             let cache = Object.assign({}, this.$root.timelines[obj.idx]) // clone
             if (cache) {
@@ -73,56 +64,19 @@ export default {
                 this.$root.timelines.splice(obj.idx, 1, cache)
             }
         },
-        onDeleteTrack: function(track) {
-            var idx = this.tracks.findIndex((singleTrack) => {
-                return singleTrack.id == track.id
-            })
+        onDeleteTrack: function(uniqueid) {
+            let idx = this.$root.timelines.findIndex(item => item.uniqueid == uniqueid)
+
             if (idx >= 0) {
                 this.$root.timelines.splice(idx, 1)
             }
         },
-        transitionBeforeEnter: function(el, done) {
-            var t1 = new TimelineMax()
-            t1.set(el, {
-                opacity: 0,
-                yPercent: 100,
-                position: 'relative',
-                onComplete: done
-            })
-        },
-        transitionEnter: function(el, done) {
-            var del = el.dataset.index * .33
-            var t1 = new TimelineMax()
-            t1.to(el, .5, {
-                opacity: 1,
-                yPercent: 0,
-                delay: del,
-                ease: Sine.easeOut,
-                onComplete: done
-            })
-        },
-        transitionLeave: function(el, done) {
-            var t1 = new TimelineMax()
-            t1.to(el, .5, {
-                    opacity: 0,
-                    yPercent: 100,
-                    position: 'relative',
-                    ease: Sine.easeOut,
-                })
-                .to(el, .2, {
-                    height: 0,
-                    ease: Sine.easeOut,
-                    onComplete: done
-                })
-        },
     },
     mounted: function() {
-        this.playheadStart()
         this.$root.$on('player-time-update', time => {
             time = (time * this.$root.tick) + 200
             this.playheadPosition = parseInt(time)
             this.$refs.playhead.style.left = parseInt(time) + 'px'
-            // console.log(this.playheadPosition, this.$root.tick)
         })
     },
 }

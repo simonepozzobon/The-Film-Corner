@@ -84,21 +84,28 @@ export default {
                     ease: Power4.easeInOut
                 })
         },
-        saveTitle: function() {
-            var t1 = new TimelineMax()
-            t1.to(this.$refs.tools, .2, {
-                    opacity: 0,
-                    display: 'none',
-                    ease: Power4.easeInOut,
-                })
-                .to(this.$refs.title, .2, {
-                    opacity: 1,
-                    display: 'block',
-                    ease: Power4.easeInOut
-                })
+        saveTitle: function(isDelete = false) {
+            return new Promise(resolve => {
+                this.$root.timelines[this.idx].title = this.title
+                var t1 = new TimelineMax()
+                t1.to(this.$refs.tools, .2, {
+                        opacity: 0,
+                        display: 'none',
+                        ease: Power4.easeInOut,
+                    })
+                    .to(this.$refs.title, .2, {
+                        opacity: 1,
+                        display: 'block',
+                        ease: Power4.easeInOut,
+                        onComplete: () => {
+                            console.log('completat')
+                            resolve()
+                        }
+                    })
+            })
         },
         deleteTrack: function() {
-            this.$emit('delete_track', this.track)
+            this.$emit('delete_track', this.track.uniqueid)
         },
         onDrag: function(x, y) {
             this.position.x = x
@@ -139,6 +146,9 @@ export default {
         },
     },
     mounted: function() {
+    },
+    beforeDestroy: function() {
+        // this.$refs.title.style.display = 'none'
     }
 }
 </script>
