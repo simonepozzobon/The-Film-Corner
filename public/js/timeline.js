@@ -48245,7 +48245,7 @@ var timeline = new _vue2.default({
     },
     watch: {
         timelines: function timelines(_timelines) {
-            // this.updateEditor()
+            this.updateEditor();
         }
     },
     methods: {
@@ -50131,17 +50131,7 @@ var render = function() {
                 })
               ]
             )
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-secondary btn-orange",
-              attrs: { type: "button", name: "button" },
-              on: { click: _vm.updateEditor }
-            },
-            [_vm._v("\n                    Render\n                ")]
-          )
+          ])
         ])
       ])
     ])

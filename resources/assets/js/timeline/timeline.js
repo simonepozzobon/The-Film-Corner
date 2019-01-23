@@ -35,7 +35,7 @@ const timeline = new Vue({
     },
     watch: {
         timelines: function(timelines) {
-            // this.updateEditor()
+            this.updateEditor()
         }
     },
     methods: {

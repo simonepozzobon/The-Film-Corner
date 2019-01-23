@@ -20,9 +20,9 @@
                             <i class="fa fa-forward" aria-hidden="true"></i>
                         </button>
                     </div>
-                    <button type="button" name="button" class="btn btn-secondary btn-orange" @click="updateEditor">
+                    <!-- <button type="button" name="button" class="btn btn-secondary btn-orange" @click="updateEditor">
                         Render
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
