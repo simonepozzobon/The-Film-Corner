@@ -49577,7 +49577,7 @@ var timeline = new _vue2.default({
 
                 // console.log('Prima di inviare', cache)
                 data.append('session', session.token);
-                data.append('video_src', undefined.video_src);
+                data.append('video_src', timeline.video_src);
                 data.append('timelines', JSON.stringify(cache));
 
                 _axios2.default.post('/api/v1/audio-edit', data).then(function (response) {
