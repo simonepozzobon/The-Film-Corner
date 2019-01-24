@@ -5,13 +5,11 @@
         </div>
         <div id="video-library" class="box-body library">
             <nav class="navbar navbar-expand-sm navbar-library yellow">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a id="video-tab" class="library-link nav-link active" data-toggle="tab" href="#video-editor-library">{{ videoText }}</a>
+                <div class="w-100" id="navbarNav">
+                    <ul class="nav navbar-nav nav-tabs customs" role="tablist">
+                        <li class="nav-item" v-for="(library, i) in this.elementsParsed">
+                            <a :id="'library-'+library.name+'-tab'" class="library-link nav-link" data-toggle="tab" :href="'#video-'+library.id+'-library'" v-if="i == 0">{{ library.name }}</a>
+                            <a :id="'library-'+library.name+'-tab'" class="library-link nav-link" data-toggle="tab" :href="'#video-'+library.id+'-library'" v-else>{{ library.name }}</a>
                         </li>
                         <li class="nav-item" v-if="this.upload">
                             <a id="upload-tab" class="library-link nav-link" data-toggle="tab" href="#uploads">Upload</a>
@@ -20,18 +18,11 @@
                 </div>
             </nav>
             <div id="libraries" class="library-container tab-content">
-                <div id="video-editor-library" class="assets tab-pane fade show active" role="tabpanel" aria-labelledby="video-tab">
-                    <div class="row scroller">
-                        <div class="col">
-                            <library-item
-                                v-for="(item, i) in this.elementsParsed"
-                                :key="i"
-                                :title="item.title"
-                                :obj="item"
-                                @preview="preview"/>
-                        </div>
-                    </div>
-                </div>
+                <library-container
+                    v-for="(library, i) in this.elementsParsed"
+                    :library="library"
+                    :idx="i"
+                />
                 <div id="uploads" class="assets tab-pane fade" role="tabpanel" aria-labelledby="upload-tab" v-if="this.upload">
                     <div class="row scroller">
                         <div class="col">
@@ -59,14 +50,14 @@
 </template>
 
 <script>
-import LibraryItem from './LibraryItem.vue'
+import LibraryContainer from './LibraryContainer.vue'
 import UiModal from './UiModal.vue'
 import UploadForm from './UploadForm.vue'
 
 export default {
     name: 'Library',
     components: {
-        LibraryItem,
+        LibraryContainer,
         UiModal,
         UploadForm,
     },
@@ -122,5 +113,14 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="scss">
+.customs {
+    width: auto !important;
+    justify-content: space-between;
+
+    .nav-item {
+        flex-grow: 1;
+        width: inherit !important;
+    }
+}
 </style>
