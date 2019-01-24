@@ -19,6 +19,7 @@
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ mix('js/soundscapes.js') }}"></script>
     <script>
         var AppSession = new TfcSessions();
         var session = AppSession.initSession({{ $app->id }});
