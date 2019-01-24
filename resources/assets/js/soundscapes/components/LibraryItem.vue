@@ -36,7 +36,7 @@ export default {
     },
     methods: {
         addToTimeline: function() {
-            this.$root.imageSelected = this.obj.src
+            this.$root.imageSelected = '/storage/' + this.obj.src
         },
         showPreview: function() {
         }

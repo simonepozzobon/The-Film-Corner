@@ -40157,7 +40157,7 @@ exports.default = {
     },
     methods: {
         addToTimeline: function addToTimeline() {
-            this.$root.imageSelected = this.obj.src;
+            this.$root.imageSelected = '/storage/' + this.obj.src;
         },
         showPreview: function showPreview() {}
     }
@@ -43296,11 +43296,7 @@ var render = function() {
         _c("div", { attrs: { id: "player" } }, [
           _c("img", {
             staticClass: "img-fluid w-100",
-            attrs: {
-              id: "image",
-              src: "/storage/" + this.$root.imageSelected,
-              alt: ""
-            }
+            attrs: { id: "image", src: this.$root.imageSelected, alt: "" }
           }),
           _vm._v(" "),
           _c("div", { staticClass: "d-none", attrs: { id: "waveform-1" } }),
