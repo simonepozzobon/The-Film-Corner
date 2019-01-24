@@ -39,7 +39,7 @@ export default {
         }
     },
     watch: {
-        '$roow.window': function() {
+        '$root.window': function() {
             this.$root.playerHeight = this.$refs.container.offsetHeight
         }
     },

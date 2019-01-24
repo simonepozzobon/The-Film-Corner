@@ -49194,7 +49194,7 @@ exports.default = {
         };
     },
     watch: {
-        '$roow.window': function $roowWindow() {
+        '$root.window': function $rootWindow() {
             this.$root.playerHeight = this.$refs.container.offsetHeight;
         }
     },
