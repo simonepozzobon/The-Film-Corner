@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="row mb-2 align-items-center">
+    <div class="row mb-1 align-items-center">
         <div class="col-md-2">
             <img :src="'/storage/'+this.obj.thumb" width="57">
         </div>

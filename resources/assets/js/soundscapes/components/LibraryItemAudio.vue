@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="row mb-2 align-items-center">
+    <div class="row mb-1 align-items-center">
         <div class="col-md-2">
             <i class="fa fa-file-audio-o fa-2x" />
         </div>
