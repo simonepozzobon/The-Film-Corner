@@ -1767,7 +1767,7 @@ var _document = __webpack_require__(52);
 
 var _document2 = _interopRequireDefault(_document);
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -1960,7 +1960,7 @@ function computedStyle(el, prop) {
 exports.__esModule = true;
 exports.throttle = exports.bind = undefined;
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 /**
  * Bind (a.k.a proxy or Context). A simple method for changing the context of a function
@@ -2718,7 +2718,7 @@ var _fn = __webpack_require__(28);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -3793,7 +3793,7 @@ var _fn = __webpack_require__(28);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -3805,7 +3805,7 @@ var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -75191,7 +75191,7 @@ var _chaptersTrackMenuItem = __webpack_require__(345);
 
 var _chaptersTrackMenuItem2 = _interopRequireDefault(_chaptersTrackMenuItem);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -79088,7 +79088,7 @@ var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(78);
+var _tsml = __webpack_require__(79);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -79110,7 +79110,7 @@ var _mergeOptions = __webpack_require__(68);
 
 var _mergeOptions2 = _interopRequireDefault(_mergeOptions);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -81019,7 +81019,7 @@ var _tech = __webpack_require__(99);
 
 var _tech2 = _interopRequireDefault(_tech);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -84985,7 +84985,7 @@ var _window = __webpack_require__(53);
 
 var _window2 = _interopRequireDefault(_window);
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -84993,7 +84993,7 @@ var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _tsml = __webpack_require__(78);
+var _tsml = __webpack_require__(79);
 
 var _tsml2 = _interopRequireDefault(_tsml);
 
@@ -85843,7 +85843,7 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /***/ }),
 
-/***/ 497:
+/***/ 498:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -86796,7 +86796,7 @@ var _fn = __webpack_require__(28);
 
 var Fn = _interopRequireWildcard(_fn);
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -86808,7 +86808,7 @@ var _log = __webpack_require__(61);
 
 var _log2 = _interopRequireDefault(_log);
 
-var _toTitleCase = __webpack_require__(80);
+var _toTitleCase = __webpack_require__(81);
 
 var _toTitleCase2 = _interopRequireDefault(_toTitleCase);
 
@@ -88627,7 +88627,7 @@ var _dom = __webpack_require__(48);
 
 var Dom = _interopRequireWildcard(_dom);
 
-var _guid = __webpack_require__(79);
+var _guid = __webpack_require__(80);
 
 var Guid = _interopRequireWildcard(_guid);
 
@@ -89164,7 +89164,7 @@ exports['default'] = formatTime;
 
 /***/ }),
 
-/***/ 78:
+/***/ 79:
 /***/ (function(module, exports) {
 
 function clean (s) {
@@ -89184,7 +89184,7 @@ module.exports = function tsml (sa) {
 
 /***/ }),
 
-/***/ 79:
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89216,7 +89216,7 @@ function newGUID() {
 
 /***/ }),
 
-/***/ 80:
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -89340,10 +89340,10 @@ module.exports = function (headers) {
 
 /***/ }),
 
-/***/ 892:
+/***/ 898:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(497);
+module.exports = __webpack_require__(498);
 
 
 /***/ }),
@@ -91326,4 +91326,4 @@ exports['default'] = Tech;
 
 /***/ })
 
-},[892]);
+},[898]);

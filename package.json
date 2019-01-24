@@ -41,7 +41,7 @@
     "bootstrap": "^4.2.1",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
-    "fabric": "^2.3.0",
+    "fabric": "^2.6.0",
     "font-awesome": "^4.7.0",
     "google-charts": "^1.1.0",
     "gsap": "^2.0.1",

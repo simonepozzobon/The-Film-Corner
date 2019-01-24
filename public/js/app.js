@@ -592,7 +592,7 @@ module.exports = __webpack_require__(30);
 
 /***/ }),
 
-/***/ 25:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12900,7 +12900,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 495:
+/***/ 496:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12925,7 +12925,7 @@ __webpack_require__(389);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(519);
+__webpack_require__(521);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -12950,7 +12950,7 @@ console.log('debug', window.Echo);
 
 /***/ }),
 
-/***/ 519:
+/***/ 521:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12975,7 +12975,7 @@ __webpack_require__(390);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(25);
+window.Vue = __webpack_require__(24);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -30148,10 +30148,10 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 890:
+/***/ 896:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(495);
+module.exports = __webpack_require__(496);
 
 
 /***/ }),
@@ -30257,4 +30257,4 @@ module.exports = defaults;
 
 /***/ })
 
-},[890]);
+},[896]);

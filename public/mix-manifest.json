@@ -28,6 +28,7 @@
   "/js/app.js": "/js/app.js",
   "/js/loader.js": "/js/loader.js",
   "/js/message.js": "/js/message.js",
+  "/js/character-builder.js": "/js/character-builder.js",
   "/js/admin/admin.js": "/js/admin/admin.js",
   "/css/app/2.1/timeline-main.css": "/css/app/2.1/timeline-main.css",
   "/css/app/2.1/timeline.css": "/css/app/2.1/timeline.css",

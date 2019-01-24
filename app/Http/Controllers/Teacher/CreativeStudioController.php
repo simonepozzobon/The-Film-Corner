@@ -14,6 +14,7 @@ use App\AppCategory;
 use App\AudioLibrary;
 use App\VideoLibrary;
 use App\TeacherSession;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
@@ -122,7 +123,12 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         return view('teacher.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
@@ -247,7 +253,12 @@ class CreativeStudioController extends Controller
         break;
 
       case 'sound-studio':
-        $elements = $app->audios()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         $session = $session;
         $timelines = json_encode($session->timelines);
         return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'timelines', 'session', 'token'));
