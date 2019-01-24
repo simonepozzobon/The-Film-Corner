@@ -6,6 +6,7 @@ use App\App;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
+use App\MediaCouples;
 use App\VideoLibrary;
 use App\TeacherSession;
 use App\MultiSubcategory;
@@ -130,23 +131,16 @@ class FilmSpecificController extends Controller
 
       case 'types-of-images':
 
-        $images = $app->medias()->get();
-
-        $images = collect($images->pluck('landscape')->all());
-
-        $flatten = $images->transform(function($image, $key) {
-            return Storage::disk('local')->url($image);
+        $media_couples = MediaCouples::with('left', 'right')->get();
+        $media_couples = $media_couples->transform(function($item, $key) {
+          $item->left = Storage::disk('local')->url($item->left->landscape);
+          $item->right = Storage::disk('local')->url($item->right->landscape);
+          return $item;
         });
 
-        $left = $flatten->random();
-        $right = $flatten->random();
-        while ($left <= $right) {
-          $right = $flatten->random();
-        }
+        $random = $media_couples->random();
 
-        $library = json_encode($images->toArray());
-
-        return view('teacher.film-specific.types-of-images.index', compact('app', 'app_category', 'library', 'left', 'right'));
+        return view('teacher.film-specific.types-of-images.index', compact('app', 'app_category', 'media_couples', 'random'));
         break;
 
       // case 'frame-counter':
@@ -339,17 +333,16 @@ class FilmSpecificController extends Controller
         break;
 
       case 'types-of-images':
-        $images = $app->medias()->get();
-
-        $images = collect($images->pluck('landscape')->all());
-
-        $flatten = $images->transform(function($image, $key) {
-            return Storage::disk('local')->url($image);
+        $media_couples = MediaCouples::with('left', 'right')->get();
+        $media_couples = $media_couples->transform(function($item, $key) {
+          $item->left = Storage::disk('local')->url($item->left->landscape);
+          $item->right = Storage::disk('local')->url($item->right->landscape);
+          return $item;
         });
 
-        $library = json_encode($images->toArray());
+        $random = $media_couples->random();
 
-        return view('teacher.film-specific.types-of-images.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
+        return view('teacher.film-specific.types-of-images.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'media_couples'));
         break;
 
       // case 'frame-counter':
