@@ -6,9 +6,6 @@
             </div>
             <div id="video-library" class="box-body library">
                 <nav class="navbar navbar-expand-sm navbar-library yellow">
-                    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="nav navbar-nav nav-tabs" role="tablist">
                             <li class="nav-item w-50">

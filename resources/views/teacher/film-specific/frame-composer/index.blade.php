@@ -50,7 +50,7 @@
               </nav>
               <div id="libraries" class="library-container tab-content">
                 @foreach ($app->mediaCategory()->get() as $key => $library)
-                  <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane fade {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
+                  <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane fade {{ $key == 0 ? 'active show' : '' }}" role="tabpanel">
                     <div class="row scroller">
                       @foreach ($library->media_on_sub_category() as $key => $media)
                         <div class="asset col-md-3 col-sm-4 pb-3">
