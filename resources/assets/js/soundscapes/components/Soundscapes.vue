@@ -3,7 +3,6 @@
         <div class="row mt">
             <preview
                 :title="preview_text"
-
                 ref="preview"
             />
             <library
@@ -66,7 +65,19 @@ export default {
         random_image: {
             type: String,
             default: '',
-        }
+        },
+        open: {
+            type: Boolean,
+            default: false,
+        },
+        src: {
+            type: String,
+            default: null
+        },
+        vols: {
+            type: String,
+            default: null
+        },
     },
     data: function() {
         return {
@@ -88,6 +99,9 @@ export default {
         }
     },
     mounted: function() {
+        if (this.open) {
+            this.$root.srcs = JSON.parse(this.src)
+        }
         this.$root.imageSelected = this.random_image
     }
 }

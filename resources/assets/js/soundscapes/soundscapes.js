@@ -43,6 +43,21 @@ const soundscapes = new Vue({
             }
 
             this.players = players
+            if (this.srcs.length > 0) {
+                for (var i = 0; i < this.srcs.length; i++) {
+                    console.log(this.srcs.length)
+                    if (this.srcs[i]) {
+                        this.players[i].player.load('/storage/'+this.srcs[i])
+                        let duration = this.players[i].player.getDuration()
+                        this.players[i].player.addRegion({
+                            start: 0,
+                            end: duration,
+                            loop: true,
+                            color: 'hsla(100, 100%, 30%, 0.1)'
+                        })
+                    }
+                }
+            }
         },
         saveLocal: function() {
             let vol = []
@@ -50,9 +65,13 @@ const soundscapes = new Vue({
 
             for (var i = 0; i < this.players.length; i++) {
                 vol.push(this.players[i].vol)
-                src.push(this.players[i].src)
+                if (this.players[i].src) {
+                    src.push(this.players[i].src.src)
+                } else {
+                    src.push(null)
+                }
             }
-            
+
             localStorage.setItem('app-9-vol', JSON.stringify(vol));
             localStorage.setItem('app-9-audio', JSON.stringify(src));
             localStorage.setItem('app-9-img', this.imageSelected);
