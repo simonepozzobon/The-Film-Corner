@@ -34,7 +34,6 @@
                         app_id="{{ $app->id }}"
                         upload_route="{{ route('teacher.creative-studio.upload', [$app_category, $app->slug]) }}"
                         csrf_field="{{ csrf_token() }}"
-
                     ></library>
                 </div>
             </div>
@@ -60,37 +59,37 @@
 @section('scripts')
   <script src="{{ asset('plugins/any-resize-event.min.js') }}"></script>
   <script type="text/javascript">
-    var AppSession = new TfcSessions();
-    AppSession.initSession({{ $app->id }});
+      var AppSession = new TfcSessions();
+      AppSession.initSession({{ $app->id }});
 
-    resizeLibrary();
-    video_player = document.getElementById('video-player');
-    video_player.addEventListener('onresize', resizeLibrary);
+      // resizeLibrary();
+      // video_player = document.getElementById('video-player');
+      // video_player.addEventListener('onresize', resizeLibrary);
 
 
-    $('body').on('session-loaded', function(e, session){
-      console.log('sessione caricata '+session.token);
-      $('#token').val(session.token);
-      $('#session-token').attr('value', session.token)
-      $(document).on('upload-module-loaded', function(event) {
-        $('#session-token').attr('value', session.token)
-      })
-    });
+      $('body').on('session-loaded', function(e, session){
+          console.log('sessione caricata '+session.token);
+          $('#token').val(session.token);
+          $('#session-token').attr('value', session.token)
+          $(document).on('upload-module-loaded', function(event) {
+              $('#session-token').attr('value', session.token)
+          })
+      });
 
-    function resizeLibrary()
-    {
-        var video_player = document.getElementById('video-player').offsetHeight - 106;
-        $('#libraries').height(video_player);
-
-        var libraryEl = document.getElementById('libraries');
-
-        // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
-        var event = document.createEvent('HTMLEvents');
-        event.initEvent('library-resized', true, true);
-
-        // target can be any Element or other EventTarget.
-        libraryEl.dispatchEvent(event);
-    }
+      // function resizeLibrary()
+      // {
+      //     var video_player = document.getElementById('video-player').offsetHeight - 106;
+      //     $('#libraries').height(video_player);
+      //
+      //     var libraryEl = document.getElementById('libraries');
+      //
+      //     // creo l'evento personalizzato che verrà triggerato dalla funzione libraryResize
+      //     var event = document.createEvent('HTMLEvents');
+      //     event.initEvent('library-resized', true, true);
+      //
+      //     // target can be any Element or other EventTarget.
+      //     libraryEl.dispatchEvent(event);
+      // }
   </script>
   <script src="{{ mix('js/timeline.js') }}"></script>
   <script src="{{ mix('js/upload.js') }}"></script>

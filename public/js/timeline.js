@@ -48321,6 +48321,12 @@ exports.default = {
             default: false
         }
     },
+    watch: {
+        '$root.playerHeight': function $rootPlayerHeight(h) {
+            console.log('hhhhh', h);
+            this.$refs.library.style.height = h + 'px';
+        }
+    },
     computed: {
         elementsParsed: function elementsParsed() {
             if (this.elements) {
@@ -49186,6 +49192,11 @@ exports.default = {
                 poster: '/img/test-app/1.png'
             }
         };
+    },
+    watch: {
+        '$roow.window': function $roowWindow() {
+            this.$root.playerHeight = this.$refs.container.offsetHeight;
+        }
     },
     methods: {
         onPlayerTimeUpdate: function onPlayerTimeUpdate(player) {
@@ -50230,7 +50241,12 @@ var timeline = new _vue2.default({
             timelines: [],
             showLoader: false,
             src: null,
-            tick: 10
+            tick: 10,
+            playerHeight: 0,
+            window: {
+                w: 0,
+                h: 0
+            }
         };
     },
     watch: {
@@ -50239,6 +50255,12 @@ var timeline = new _vue2.default({
         }
     },
     methods: {
+        getSize: function getSize() {
+            this.window = {
+                w: window.innerWidth,
+                h: window.innerHeight
+            };
+        },
         reformatTimelines: function reformatTimelines() {
             var _this = this;
 
@@ -50337,6 +50359,11 @@ var timeline = new _vue2.default({
 
         this.$on('add-to-timeline', function (obj) {
             _this2.addTimeline(obj);
+        });
+
+        this.getSize();
+        window.addEventListener('resize', function () {
+            _this2.getSize();
         });
 
         if (window.$session && window.$session.timelines) {
@@ -50513,7 +50540,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -51969,6 +51996,7 @@ var render = function() {
         _c(
           "div",
           {
+            ref: "library",
             staticClass: "library-container tab-content",
             attrs: { id: "libraries" }
           },
@@ -52078,7 +52106,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "video-player" } },
+    { ref: "container", attrs: { id: "video-player" } },
     [
       _c("div", { ref: "loader", attrs: { id: "loader" } }, [_vm._m(0)]),
       _vm._v(" "),

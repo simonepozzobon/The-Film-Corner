@@ -19,7 +19,7 @@
                     </ul>
                 </div>
             </nav>
-            <div id="libraries" class="library-container tab-content">
+            <div id="libraries" class="library-container tab-content" ref="library">
                 <div id="video-editor-library" class="assets tab-pane fade show active" role="tabpanel" aria-labelledby="video-tab">
                     <div class="row scroller">
                         <div class="col">
@@ -98,6 +98,12 @@ export default {
         upload: {
             type: Boolean,
             default: false
+        }
+    },
+    watch: {
+        '$root.playerHeight': function(h) {
+            console.log('hhhhh',h)
+            this.$refs.library.style.height = h + 'px'
         }
     },
     computed: {

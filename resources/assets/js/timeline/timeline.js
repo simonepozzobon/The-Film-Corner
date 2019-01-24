@@ -31,6 +31,11 @@ const timeline = new Vue({
             showLoader: false,
             src: null,
             tick: 10,
+            playerHeight: 0,
+            window: {
+                w: 0,
+                h: 0,
+            }
         }
     },
     watch: {
@@ -39,6 +44,12 @@ const timeline = new Vue({
         }
     },
     methods: {
+        getSize: function() {
+            this.window = {
+                w: window.innerWidth,
+                h: window.innerHeight,
+            }
+        },
         reformatTimelines: function() {
             return new Promise(resolve => {
                 let cache = this.timelines.slice() // clone
@@ -134,6 +145,11 @@ const timeline = new Vue({
     mounted: function() {
         this.$on('add-to-timeline', obj => {
             this.addTimeline(obj)
+        })
+
+        this.getSize()
+        window.addEventListener('resize', () => {
+            this.getSize()
         })
 
         if (window.$session && window.$session.timelines) {

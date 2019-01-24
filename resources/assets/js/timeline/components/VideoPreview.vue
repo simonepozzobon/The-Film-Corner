@@ -1,5 +1,5 @@
 <template>
-    <div id="video-player">
+    <div id="video-player" ref="container">
         <div id="loader" ref="loader">
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -36,6 +36,11 @@ export default {
                 }],
                 poster: '/img/test-app/1.png',
             }
+        }
+    },
+    watch: {
+        '$roow.window': function() {
+            this.$root.playerHeight = this.$refs.container.offsetHeight
         }
     },
     methods: {
