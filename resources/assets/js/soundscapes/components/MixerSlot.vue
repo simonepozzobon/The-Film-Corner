@@ -58,6 +58,7 @@ export default {
         },
         removeItem: function() {
             this.$root.removeItem(this.idx)
+            this.isDisable = true
         }
     },
     mounted: function() {

@@ -115,6 +115,7 @@ const soundscapes = new Vue({
                 let src = this.players[idx].src.src
 
                 this.players[idx].player.load('/storage/'+src)
+                this.players[idx].player.setMute(false)
                 let duration = this.players[idx].player.getDuration()
                 this.players[idx].player.addRegion({
                     start: 0,
@@ -127,9 +128,12 @@ const soundscapes = new Vue({
         removeItem: function(idx = null) {
             if (idx >= 0) {
                 this.stop()
-                this.players[idx].player.destroy()
-                this.players[idx].src = false
-                this.flushPlayers()
+                // this.players[idx].player.destroy()
+                this.players[idx].src = null
+                this.players[idx].player.setMute(true)
+                this.$root.$emit('item-available', idx)
+                // this.flushPlayers()
+                
             }
         },
         flushPlayers: function() {

@@ -40336,6 +40336,7 @@ exports.default = {
         },
         removeItem: function removeItem() {
             this.$root.removeItem(this.idx);
+            this.isDisable = true;
         }
     },
     mounted: function mounted() {
@@ -41960,6 +41961,7 @@ var soundscapes = new _vue2.default({
                 var src = this.players[idx].src.src;
 
                 this.players[idx].player.load('/storage/' + src);
+                this.players[idx].player.setMute(false);
                 var duration = this.players[idx].player.getDuration();
                 this.players[idx].player.addRegion({
                     start: 0,
@@ -41974,9 +41976,11 @@ var soundscapes = new _vue2.default({
 
             if (idx >= 0) {
                 this.stop();
-                this.players[idx].player.destroy();
-                this.players[idx].src = false;
-                this.flushPlayers();
+                // this.players[idx].player.destroy()
+                this.players[idx].src = null;
+                this.players[idx].player.setMute(true);
+                this.$root.$emit('item-available', idx);
+                // this.flushPlayers()
             }
         },
         flushPlayers: function flushPlayers() {
@@ -42062,7 +42066,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
