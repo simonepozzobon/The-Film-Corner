@@ -29,7 +29,9 @@
     "mojs-player": "^0.43.16",
     "tether": "^1.4.4",
     "vue-loader": "^13.7.1",
+    "vue-slider-component": "^2.8.6",
     "vue-template-compiler": "^2.5.16",
+    "wavesurfer.js": "^2.1.3",
     "webpack-dev-server": "^2.11.2"
   },
   "dependencies": {

@@ -118,7 +118,6 @@ export default {
         }
     },
     mounted: function() {
-        console.log('sdkjfhsdhfksj', window.$session)
     }
 }
 </script>
