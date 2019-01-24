@@ -6,7 +6,7 @@
             </div>
             <div class="box-body" ref="player">
                 <div id="player" class="">
-                <img id="image" :src="this.$root.imageSelected" alt="" class="img-fluid w-100">
+                <img id="image" :src="'/storage/'+this.$root.imageSelected" alt="" class="img-fluid w-100">
                     <div id="waveform-1" class="d-none"></div>
                     <div id="waveform-2" class="d-none"></div>
                     <div id="waveform-3" class="d-none"></div>
