@@ -51906,57 +51906,63 @@ var render = function() {
           "nav",
           { staticClass: "navbar navbar-expand-sm navbar-library yellow" },
           [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse navbar-collapse",
-                attrs: { id: "navbarNav" }
-              },
-              [
-                _c(
-                  "ul",
-                  {
-                    staticClass: "navbar-nav nav-tabs",
-                    attrs: { role: "tablist" }
-                  },
-                  [
-                    _c("li", { staticClass: "nav-item" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "library-link nav-link active",
-                          attrs: {
-                            id: "video-tab",
-                            "data-toggle": "tab",
-                            href: "#video-editor-library"
-                          }
-                        },
-                        [_vm._v(_vm._s(_vm.videoText))]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    this.upload
-                      ? _c("li", { staticClass: "nav-item" }, [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "library-link nav-link",
-                              attrs: {
-                                id: "upload-tab",
-                                "data-toggle": "tab",
-                                href: "#uploads"
-                              }
-                            },
-                            [_vm._v("Upload")]
-                          )
-                        ])
-                      : _vm._e()
-                  ]
-                )
-              ]
-            )
+            _c("div", { staticClass: "w-100", attrs: { id: "navbarNav" } }, [
+              _c(
+                "ul",
+                {
+                  staticClass: "nav navbar-nav nav-tabs",
+                  attrs: { role: "tablist" }
+                },
+                [
+                  this.upload
+                    ? _c("li", { staticClass: "nav-item w-50" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "library-link nav-link active",
+                            attrs: {
+                              id: "video-tab",
+                              "data-toggle": "tab",
+                              href: "#video-editor-library"
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.videoText))]
+                        )
+                      ])
+                    : _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "library-link nav-link active",
+                            attrs: {
+                              id: "video-tab",
+                              "data-toggle": "tab",
+                              href: "#video-editor-library"
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.videoText))]
+                        )
+                      ]),
+                  _vm._v(" "),
+                  this.upload
+                    ? _c("li", { staticClass: "nav-item w-50" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "library-link nav-link",
+                            attrs: {
+                              id: "upload-tab",
+                              "data-toggle": "tab",
+                              href: "#uploads"
+                            }
+                          },
+                          [_vm._v("Upload")]
+                        )
+                      ])
+                    : _vm._e()
+                ]
+              )
+            ])
           ]
         ),
         _vm._v(" "),
@@ -52019,7 +52025,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _vm._m(1)
+                          _vm._m(0)
                         ],
                         1
                       )
@@ -52037,26 +52043,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "navbar-toggler navbar-toggler-right",
-        attrs: {
-          type: "button",
-          "data-toggle": "collapse",
-          "data-target": "#navbarNav",
-          "aria-controls": "navbarNav",
-          "aria-expanded": "false",
-          "aria-label": "Toggle navigation"
-        }
-      },
-      [_c("span", { staticClass: "navbar-toggler-icon" })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
