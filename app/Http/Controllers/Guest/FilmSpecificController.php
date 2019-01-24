@@ -8,6 +8,7 @@ use App\AppKeyword;
 use App\AppCategory;
 use App\VideoLibrary;
 use App\MultiSubcategory;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
@@ -154,7 +155,11 @@ class FilmSpecificController extends Controller
 
       // case 'parallel-action':
       case 'parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
         return view('guest.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
@@ -352,7 +357,11 @@ class FilmSpecificController extends Controller
       **/
 
       case 'parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
         $timelines = json_encode($session->timelines);
         return view('guest.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'timelines', 'app_session', 'token', 'is_student'));
         break;
