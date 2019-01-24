@@ -59,7 +59,7 @@
   <script type="text/javascript">
     var AppSession = new TfcSessions();
     AppSession.initSession({{ $app->id }});
-    
+
     var string = '',
         images = {!! $media_couples !!};
         lenght = images.length;
@@ -71,8 +71,8 @@
           left_id = images[idx].left.id,
           right_id = images[idx].right.id;
           console.log(images[idx].left, images[idx].right)
-      $('#img-left').attr('src', images[idx].left.src);
-      $('#img-right').attr('src', images[idx].right.src);
+      $('#img-left').attr('src', '/storage/'+images[idx].left.src);
+      $('#img-right').attr('src', '/storage/'+images[idx].right.src);
     });
   </script>
 @endsection
