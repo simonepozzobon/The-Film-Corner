@@ -51838,7 +51838,7 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-6" }, [
-      _c("p", { staticClass: "pl-2 pr-2 mb-0" }, [_vm._v(_vm._s(_vm.title))])
+      _c("p", { staticClass: "p-2 mb-0" }, [_vm._v(_vm._s(_vm.title))])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-md-4" }, [
