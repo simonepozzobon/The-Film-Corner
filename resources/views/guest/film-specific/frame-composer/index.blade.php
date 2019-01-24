@@ -38,13 +38,10 @@
             </div>
             <div class="box-body library">
               <nav class="navbar navbar-expand-sm navbar-library yellow">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav" role="tablist">
+                <div class="w-100" id="navbarNav">
+                  <ul class="nav navbar-nav nav-tabs" role="tablist">
                     @foreach ($app->mediaCategory()->get() as $key => $library)
-                      <li class="nav-item">
+                      <li class="nav-item" style="width: 33%">
                         <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                       </li>
                     @endforeach
