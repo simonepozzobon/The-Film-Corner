@@ -148,7 +148,7 @@ class FilmSpecificController extends Controller
 
       // case 'parallel-action':
       case 'parallel-action':
-        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $libraries = MediaSubCategory::where('app_id', 4)->get();
         $elements = $libraries->transform(function($library, $key) {
           $library->videos = $library->videos()->get();
           return $library;
@@ -344,7 +344,7 @@ class FilmSpecificController extends Controller
       **/
 
       case 'parallel-action':
-        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $libraries = MediaSubCategory::where('app_id', 4)->get();
         $elements = $libraries->transform(function($library, $key) {
           $library->videos = $library->videos()->get();
           return $library;
