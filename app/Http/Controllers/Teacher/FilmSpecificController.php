@@ -117,10 +117,10 @@ class FilmSpecificController extends Controller
         // debug
         // $libraries = $app->mediaCategory()->get();
         // foreach ($libraries as $key => $library) {
-        //   dd($library->media_on_sub_category());
+        //   dump($library->media_on_sub_category());
         // }
-        //
-        // dd();
+        // dd('end');
+
 
         return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
         break;

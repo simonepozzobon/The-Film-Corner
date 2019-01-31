@@ -8,6 +8,7 @@ use App\Utility;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCategory;
+use App\MultiSubcategory;
 use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -59,6 +60,12 @@ class MediaController extends Controller
           if ($r->sub_category != null) {
             $sub_category = MediaSubCategory::find($r->sub_category);
             $sub_category->medias()->save($media);
+
+            $item = new MultiSubcategory();
+            $item->media_subcategory_id = $sub_category->id;
+            $item->mediable_id = $media->id;
+            $item->mediable_type = 'App\\Media';
+            $item->save();
           }
 
           $media->img = Storage::disk('local')->url($media->thumb);
