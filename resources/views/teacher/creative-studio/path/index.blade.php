@@ -41,7 +41,7 @@
                 </div>
                 <div class="btns">
                   @if ($app->available == 1)
-                    <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
+                    <a href="{{ route('teacher.creative-studio.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" data-toggle="tooltip" data-placement="top" title="{{ GeneralText::field('new') }}">
                       <i class="fa fa-file-o" aria-hidden="true"></i>
                     </a>
                   @else
@@ -67,7 +67,7 @@
                        </div>
                      </div>
                   @endif
-                  <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
+                  <a href="#" onclick="openSessions({{ Auth::guard('teacher')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" data-toggle="tooltip" data-placement="top" title="{{ GeneralText::field('open') }}">
                     <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                   </a>
                 </div>
