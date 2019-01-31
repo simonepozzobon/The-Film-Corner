@@ -13,7 +13,7 @@
         top: 116px;
         left: 50%;
         transform: translateX(-50%);
-        z-index: 9999;
+        z-index: 700;
       }
   </style>
 @endsection
