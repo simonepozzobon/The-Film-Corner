@@ -20,6 +20,7 @@
             <div id="libraries" class="library-container tab-content" ref="library">
                 <library-container
                     v-for="(library, i) in this.elementsParsed"
+                    :key="i"
                     :library="library"
                     :idx="i"
                 />

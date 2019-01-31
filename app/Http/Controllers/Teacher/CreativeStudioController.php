@@ -162,7 +162,13 @@ class CreativeStudioController extends Controller
             return $img->category_id == 2;
         });
         $images->all();
-        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category', 'images'));
+
+        $libraries = $app->mediaCategory()->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->medias = $library->medias()->get();
+          return $library;
+        });
+        return view('teacher.creative-studio.character-builder.index', compact('app', 'app_category', 'images', 'elements'));
         break;
 
       case 'storytelling':

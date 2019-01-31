@@ -1,10 +1,35 @@
 <template lang="html">
-
+    <div class="col-md-8">
+        <div class="box blue">
+            <div class="box-header">
+                {{ character_text }}
+            </div>
+            <div id="canvas-wrapper" class="box-body" style="min-height: 30rem" ref="container">
+                <div id="container-canvas">
+                    <canvas class="image-editor" id="image-editor" ref="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
 export default {
-    name: 'Preview'
+    name: 'Preview',
+    props: {
+        character_text: {
+            type: String,
+            default: ''
+        }
+    },
+    watch: {
+        '$root.window': function(value) {
+            this.$root.previewHeight = this.$refs.container.offsetHeight
+            this.$root.previewWidth = this.$refs.container.offsetWidth - 64
+        }
+    },
+    mounted: function() {
+    }
 }
 </script>
 
