@@ -40322,13 +40322,13 @@ exports.default = {
                 this.isDisable = true;
             }
         },
-        volume: function volume(vol) {
-            this.setVolume(vol);
+        volume: function volume(_volume) {
+            this.setVolume(_volume);
         }
     },
     methods: {
         setVolume: function setVolume() {
-            var vol = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+            var vol = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 50;
 
             this.$root.players[this.idx].player.setVolume(vol / 100);
             this.$root.players[this.idx].volume = vol;

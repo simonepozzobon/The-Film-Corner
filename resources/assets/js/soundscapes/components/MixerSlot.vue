@@ -47,12 +47,12 @@ export default {
                 this.isDisable = true
             }
         },
-        volume: function(vol) {
-            this.setVolume(vol)
+        volume: function(volume) {
+            this.setVolume(volume)
         }
     },
     methods: {
-        setVolume: function(vol = 0) {
+        setVolume: function(vol = 50) {
             this.$root.players[this.idx].player.setVolume(vol / 100)
             this.$root.players[this.idx].volume = vol
             this.$root.saveLocal()
