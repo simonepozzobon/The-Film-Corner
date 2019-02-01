@@ -49244,7 +49244,7 @@ exports.default = {
                     type: 'video/mp4',
                     src: this.video_src
                 }],
-                poster: '/img/test-app/1.png'
+                poster: '/video/empty-session.png'
             }
         };
     },

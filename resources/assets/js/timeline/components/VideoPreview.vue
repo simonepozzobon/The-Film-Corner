@@ -32,9 +32,9 @@ export default {
                 aspectRatio: '16:9',
                 sources: [{
                     type: 'video/mp4',
-                    src: ''
+                    src: '/video/empty-session.mp4'
                 }],
-                poster: '/img/test-app/1.png',
+                poster: '/video/empty-session.png',
             }
         }
     },
