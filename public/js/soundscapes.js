@@ -40320,6 +40320,7 @@ exports.default = {
         '$root.players': function $rootPlayers(item) {
             if (!item[this.idx].src) {
                 this.isDisable = true;
+                this.$refs.slider.refresh();
             }
         },
         volume: function volume(_volume) {
@@ -40333,6 +40334,7 @@ exports.default = {
             this.$root.players[this.idx].player.setVolume(vol / 100);
             this.$root.players[this.idx].volume = vol;
             this.$root.saveLocal();
+            this.$refs.slider.refresh();
         },
         removeItem: function removeItem() {
             this.$root.removeItem(this.idx);
@@ -40350,6 +40352,7 @@ exports.default = {
         });
     }
 }; //
+//
 //
 //
 //
@@ -42067,7 +42070,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -43521,11 +43524,12 @@ var render = function() {
     },
     [
       _c("vue-slider", {
+        ref: "slider",
         attrs: {
+          direction: "vertical",
           value: 50,
           width: 4,
           height: 100,
-          direction: "vertical",
           disabled: _vm.isDisable
         },
         model: {

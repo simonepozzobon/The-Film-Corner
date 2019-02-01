@@ -1,11 +1,12 @@
 <template lang="html">
     <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
         <vue-slider
+            ref="slider"
+            direction="vertical"
             v-model="volume"
             :value="50"
             :width="4"
             :height="100"
-            direction="vertical"
             :disabled="isDisable"
         />
 
@@ -45,17 +46,19 @@ export default {
         '$root.players': function(item) {
             if (!item[this.idx].src) {
                 this.isDisable = true
+                this.$refs.slider.refresh()
             }
         },
         volume: function(volume) {
             this.setVolume(volume)
-        }
+        },
     },
     methods: {
         setVolume: function(vol = 50) {
             this.$root.players[this.idx].player.setVolume(vol / 100)
             this.$root.players[this.idx].volume = vol
             this.$root.saveLocal()
+            this.$refs.slider.refresh()
         },
         removeItem: function() {
             this.$root.removeItem(this.idx)
