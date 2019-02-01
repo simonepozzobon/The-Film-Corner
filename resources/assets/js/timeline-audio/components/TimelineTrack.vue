@@ -7,8 +7,6 @@
                 class="form-control"
                 v-model="title"
                 @keyup.enter="saveTitle">
-            <i class="fa fa-files-o" @click="duplicateTrack" />
-            <i class="fa fa-trash-o" @click="deleteTrack" />
         </div>
     </div>
     <div id="media" class="timeline-element col-md-10">
@@ -22,6 +20,10 @@
             @resizing="onResize">
                 <div class="media-element"></div>
         </vue-draggable-resizable>
+        <div class="toolbar">
+            <i class="fa fa-files-o left-tool" @click="duplicateTrack" data-toggle="tooltip" data-placement="bottom" title="Duplicate"/>
+            <i class="fa fa-trash-o right-tool" @click="deleteTrack" data-toggle="tooltip" data-placement="bottom" title="Delete"/>
+        </div>
     </div>
 </div>
 </template>
@@ -204,8 +206,21 @@ export default {
                 background-color: $tfc-yellow;
                 border: 2px solid $tfc-dark-yellow;
                 @include border-radius($border-radius);
-
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
+        }
+    }
+
+    .toolbar {
+        position: absolute;
+        right: $spacer / 2;
+        top: 50%;
+        transform: translateY(-50%);
+
+        .left-tool {
+            margin-right: $spacer / 2;
         }
     }
 }
