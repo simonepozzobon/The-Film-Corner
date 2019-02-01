@@ -40312,7 +40312,7 @@ exports.default = {
     },
     data: function data() {
         return {
-            volume: 0,
+            volume: 50,
             isDisable: true
         };
     },

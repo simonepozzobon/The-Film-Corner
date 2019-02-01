@@ -36,7 +36,7 @@ export default {
     },
     data: function() {
         return {
-            volume: 0,
+            volume: 50,
             isDisable: true,
         }
     },
