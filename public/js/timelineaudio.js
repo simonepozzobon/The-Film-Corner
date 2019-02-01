@@ -48407,7 +48407,7 @@ exports.default = {
     },
     methods: {
         preview: function preview(src, poster) {
-            this.$emit('preview', src, img);
+            this.$emit('preview', src, poster);
         }
     }
 }; //
