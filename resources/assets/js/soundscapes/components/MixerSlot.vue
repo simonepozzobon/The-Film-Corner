@@ -2,6 +2,7 @@
     <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
         <vue-slider
             v-model="volume"
+            :value="50"
             :width="4"
             :height="100"
             direction="vertical"
