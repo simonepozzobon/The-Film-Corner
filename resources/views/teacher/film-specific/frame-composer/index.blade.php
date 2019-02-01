@@ -147,18 +147,18 @@
                 var iHeight = imgInstance.getScaledHeight();
 
 
-                if (iWidth > iHeight) {
-                  if (_width < imgInstance.getScaledWidth()) {
-                    imgInstance.scaleToWidth(_width);
-                    if (_height < imgInstance.getScaledHeight()) {
-                      imgInstance.scaleToHeight(_height);
-                    }
-                  }
-                } else {
-                  if (_height < imgInstance.getScaledHeight()) {
-                    imgInstance.scaleToHeight(_height);
-                  }
-                }
+                // if (iWidth > iHeight) {
+                //   if (_width < imgInstance.getScaledWidth()) {
+                //     imgInstance.scaleToWidth(_width);
+                //     if (_height < imgInstance.getScaledHeight()) {
+                //       imgInstance.scaleToHeight(_height);
+                //     }
+                //   }
+                // } else {
+                //   if (_height < imgInstance.getScaledHeight()) {
+                //     imgInstance.scaleToHeight(_height);
+                //   }
+                // }
 
                 canvas.add(imgInstance).setActiveObject( imgInstance );
                 imgInstance.center();
@@ -235,7 +235,7 @@
     {
         var sizeWidth = document.getElementById('container-canvas').offsetWidth;
         var sizeHeight = document.getElementById('canvas-wrapper').offsetHeight;
-        canvas.setWidth(sizeWidth).setHeight(sizeHeight);
+        // canvas.setWidth(sizeWidth).setHeight(sizeHeight);
 
         //SAVE JSON DATA
         json_data = JSON.stringify(canvas.toDatalessJSON());
