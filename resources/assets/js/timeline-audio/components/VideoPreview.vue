@@ -40,7 +40,7 @@ export default {
                     type: 'video/mp4',
                     src: this.video_src,
                 }],
-                poster: '/video/empty-session.png',
+                // poster: '/video/empty-session.png',
             }
         }
     },
