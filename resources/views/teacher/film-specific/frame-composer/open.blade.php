@@ -163,6 +163,8 @@
 
                 canvas.add(imgInstance).setActiveObject( imgInstance );
                 imgInstance.center();
+                imgInstance.perPixelTargetFind = true
+                canvas.renderAll();
                 saveCanvas(canvas);
               });
             } else {

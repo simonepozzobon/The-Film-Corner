@@ -227,6 +227,7 @@
 
       // Save image to local storage
       localStorage.setItem('app-1-image', canvas.toDataURL('png'));
+      canvas.renderAll();
       return json_data;
     }
 
@@ -243,7 +244,7 @@
         canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
             canvas.renderAll();
         });
-
+        canvas.renderAll();
         return canvas;
     }
 
@@ -318,6 +319,7 @@
     function observe(eventName, canvas)
     {
       canvas.on(eventName, function(){
+        canvas.renderAll();
         saveCanvas(canvas)
       });
     }
