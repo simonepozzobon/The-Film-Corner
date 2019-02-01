@@ -48362,6 +48362,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 
@@ -51713,7 +51714,8 @@ var render = function() {
             _vm._l(this.elementsParsed, function(library, i) {
               return _c("library-container", {
                 key: i,
-                attrs: { library: library, idx: i }
+                attrs: { library: library, idx: i },
+                on: { preview: _vm.preview }
               })
             }),
             _vm._v(" "),

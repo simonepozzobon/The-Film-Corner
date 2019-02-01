@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         preview: function(src, poster) {
-            this.$emit('preview', src, img)
+            this.$emit('preview', src, poster)
         }
     }
 }

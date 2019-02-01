@@ -48397,6 +48397,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 
@@ -48441,7 +48442,7 @@ exports.default = {
     },
     methods: {
         preview: function preview(src, poster) {
-            this.$emit('preview', src, img);
+            this.$emit('preview', src, poster);
         }
     }
 }; //
@@ -52210,7 +52211,8 @@ var render = function() {
             _vm._l(this.elementsParsed, function(library, i) {
               return _c("library-container", {
                 key: i,
-                attrs: { library: library, idx: i }
+                attrs: { library: library, idx: i },
+                on: { preview: _vm.preview }
               })
             }),
             _vm._v(" "),

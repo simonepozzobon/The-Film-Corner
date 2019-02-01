@@ -23,6 +23,7 @@
                     :key="i"
                     :library="library"
                     :idx="i"
+                    @preview="preview"
                 />
                 <div id="uploads" class="assets tab-pane fade" role="tabpanel" aria-labelledby="upload-tab" v-if="this.upload">
                     <div class="row scroller">
