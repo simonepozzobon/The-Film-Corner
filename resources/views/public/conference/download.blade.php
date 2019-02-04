@@ -29,10 +29,12 @@
                 <td class="align-middle">Invitation</td>
                 <td class="align-middle">
                   <div class="btn-group">
-                    <a href="{{ asset('downloads/conference/The_Film_Corner_-_International_Conference_Invitation.pdf') }}" target="_blank" class="btn btn-primary">
+                    {{-- <a href="{{ asset('downloads/conference/The_Film_Corner_-_International_Conference_Invitation.pdf') }}" target="_blank" class="btn btn-primary disabled"> --}}
+                    <a href="#" target="_blank" class="btn btn-primary disabled">
                       <i class="fa fa-download" aria-hidden="true"></i> Download
                     </a>
-                    <a href="{{ route('conference.application') }}" class="btn btn-info">
+                    {{-- <a href="{{ route('conference.application') }}" class="btn btn-info"> --}}
+                    <a href="#" class="btn btn-info disabled">
                       <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Online Application
                     </a>
                   </div>

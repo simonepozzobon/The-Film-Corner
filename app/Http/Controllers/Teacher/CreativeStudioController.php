@@ -14,6 +14,7 @@ use App\AppCategory;
 use App\AudioLibrary;
 use App\VideoLibrary;
 use App\TeacherSession;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,14 @@ class CreativeStudioController extends Controller
   {
     $app_category = AppCategory::where('slug', '=', $category)->with('section')->with('keywords')->first();
     $apps = App::where('app_category_id', '=', $app_category->id)->orderBy('order')->with('category')->get();
+
     $teacher = Auth::guard('teacher')->user();
+    $students_count = $teacher->students()->count();
+
+    if ($students_count < 5) {
+      $students_count = 5;
+    }
+
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {
@@ -68,7 +76,7 @@ class CreativeStudioController extends Controller
       $filtered = $sessions->filter(function($session, $key) use ($app) {
         return $session->app_id == $app->id;
       })->all();
-      count($filtered) < 5 ? $app->available = true : $app->available = false;
+      count($filtered) < $students_count ? $app->available = true : $app->available = false;
     }
 
     $keywords = AppKeyword::all();
@@ -115,12 +123,21 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         return view('teacher.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
-        $elements = $app->audios()->get();
+        $libraries = MediaSubCategory::where('app_id', 12)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->audios = $library->audios()->get();
+          return $library;
+        });
         $videos = $app->videos()->get();
         $videos = collect($videos->pluck('src')->all());
 
@@ -240,7 +257,12 @@ class CreativeStudioController extends Controller
         break;
 
       case 'sound-studio':
-        $elements = $app->audios()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         $session = $session;
         $timelines = json_encode($session->timelines);
         return view('teacher.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'timelines', 'session', 'token'));
@@ -357,6 +379,19 @@ class CreativeStudioController extends Controller
       $app_session->videos()->save($video);
       $teacher->videos()->save($video);
 
+      // se è un contest devo anche salvare la sessione
+      if ($app->id == 16 || $app->id == 17) {
+        $data = [
+          'video' => [
+            'img' => Storage::disk('local')->url($videoStore['img']),
+            'video' => $videoStore['src']
+          ]
+        ];
+        $app_session->is_empty = 0;
+        $app_session->title = $request['title'];
+        $app_session->content = json_encode($data);
+        $app_session->save();
+      }
 
       $data = [
         'name' => $title,

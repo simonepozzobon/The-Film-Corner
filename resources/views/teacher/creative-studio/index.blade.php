@@ -135,19 +135,18 @@
               <polygon id="Fill-109" class="panels" onclick="onPage('mycorner-contest')" fill="#9BE2DA" points="766.2158 626.3165 117.8888 580.6475 22.1328 500.7735 128.1408 435.1115 776.4678 480.7805"></polygon>
           </g>
           <g id="texts" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(232.000000, 92.000000)" font-family="Raleway" font-weight="bold">
-              <text id="CREATIVE-STUDIO" font-size="64" fill="#FFFFFF">
-                  <tspan x="0" y="47">CREATIVE STUDIO</tspan>
+              <text id="CREATIVE-STUDIO" font-size="64" fill="#FFFFFF" style="text-transform: uppercase" transform="translate(300, 0)">
+                  <tspan x="0" y="47" text-anchor="middle">{{ $section->name }}</tspan>
               </text>
-              <text id="WARM-UP" class="texts" transform="translate(1212.698600, 189.703733) rotate(-2.380000) translate(-1212.698600, -189.703733) " font-size="56.1994" fill="#FFFFFF" onclick="onPage('warm-up')">
-                  <tspan x="1065.6986" y="205.703733">WARM UP</tspan>
+              <text id="WARM-UP" class="texts" transform="translate(150, 40) rotate(-2.380000)" font-size="56.1994" fill="#FFFFFF" onclick="onPage('warm-up')" style="text-transform: uppercase">
+                  <tspan x="1065.6986" y="205.703733" text-anchor="middle">{{ $section->appCategories->where('id', 5)->first()->name }}</tspan>
               </text>
-              <text id="STORY-TELLING" class="texts" transform="translate(1204.137600, 380.796774) rotate(-1.210000) translate(-1204.137600, -380.796774) " font-size="55.1243" fill="#FFFFFF" onclick="onPage('story-telling')">
-                  <tspan x="974.1376" y="396.296774">STORY TELLING</tspan>
+              <text id="STORY-TELLING" class="texts" transform="translate(1181, 0) rotate(-1.210000)" font-size="55.1243" fill="#FFFFFF" onclick="onPage('story-telling')" style="text-transform: uppercase">
+                  <tspan x="0" y="396.296774" text-anchor="middle">{{ $section->appCategories->where('id', 6)->first()->name }}</tspan>
               </text>
-              <text id="MY-CORNER-CONTEST" class="texts" transform="translate(1235.710900, 629.524578) rotate(3.660000) translate(-1235.710900, -629.524578) " font-size="50.4479" fill="#FFFFFF" onclick="onPage('mycorner-contest')">
-                  <tspan x="941.2109" y="644.024578">MY CORNER CONTEST</tspan>
+              <text id="MY-CORNER-CONTEST" class="texts" transform="translate(1281, 0) rotate(3.660000)" font-size="50.4479" fill="#FFFFFF" onclick="onPage('mycorner-contest')" style="text-transform: uppercase">
+                  <tspan x="0" y="644.024578" text-anchor="middle">{{ $section->appCategories->where('id', 7)->first()->name }}</tspan>
               </text>
-
           </g>
       </g>
   </svg>
@@ -155,7 +154,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="saveModalLabel">Info - Creative Studio</h5>
+          <h5 class="modal-title" id="saveModalLabel">Info - {{ $section->name }}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <i class="fa fa-times" aria-hidden="true"></i>
           </button>

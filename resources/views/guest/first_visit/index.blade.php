@@ -2,7 +2,7 @@
 @section('title', 'Welcome')
 @section('content')
   <div id="app" class="container">
-    @include('components.apps.heading_simple', ['title' => 'Welcome'])
+    @include('components.apps.heading_simple', ['title' => GeneralText::field('welcome')])
     <div class="row mt">
       <div class="col">
         @php
@@ -16,6 +16,11 @@
         <welcome-form
           user="{{ Auth::guard('guest')->user() }}"
           user_type="{{ get_class(Auth::guard('guest')->user()) }}"
+          short_introduction="{{ GeneralText::field('short_indtroduction') }}"
+          first_word="{{ GeneralText::field('first_word') }}"
+          second_word="{{ GeneralText::field('second_word') }}"
+          third_word="{{ GeneralText::field('third_word') }}"
+          your_answer="{{ GeneralText::field('your_answer') }}"
           form="{{ $form }}"
           texts="{{ $texts }}"
         />
@@ -25,13 +30,13 @@
       <div class="col">
         <div class="box orange">
           <div class="box-header">
-            Get Started
+            {{ GeneralText::field('get_started') }}
           </div>
           <div class="box-body">
             {!! GeneralText::field('welcome_get_started') !!}
           </div>
           <div class="box-btns">
-            <a href="{{ route('guest') }}" class="btn btn-lg btn-orange"><i class="fa fa-hand-o-right"></i> Start</a>
+            <a href="{{ route('guest') }}" class="btn btn-lg btn-orange"><i class="fa fa-hand-o-right"></i> {{ GeneralText::field('start') }}</a>
           </div>
         </div>
       </div>

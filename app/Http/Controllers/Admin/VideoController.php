@@ -43,7 +43,7 @@ class VideoController extends Controller
                 // Cerco se ci sono sottolibrerie collegate a questo video per poi
                 // ricostruire i percorsi dello stesso
                 if ($video->mediaSubCategories()->count() > 0) {
-                    dd($video->mediaSubCategories()->get());
+                    // dd($video->mediaSubCategories()->get());
                 }
             } else {
                 $paths = collect();

@@ -41,7 +41,7 @@
                 </div>
                 <div class="btns">
                   @if ($app->available == 1)
-                    <a href="{{ route('guest.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
+                    <a href="{{ route('guest.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" data-toggle="tooltip" data-placement="top" title="{{ GeneralText::field('new') }}">
                       <i class="fa fa-file-o" aria-hidden="true"></i>
                     </a>
                   @else

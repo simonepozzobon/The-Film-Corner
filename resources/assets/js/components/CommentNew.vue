@@ -1,218 +1,160 @@
 <template>
-  <div id="" class="row mt">
-    <div class="col">
-      <div class="box yellow">
-        <div class="box-header">
-          Join the discussion!
+    <div id="" class="row mt">
+        <div class="col">
+            <div id="comment-new" class="box yellow">
+                <div class="box-header">
+                    <div class="title">
+                        {{ title }}
+                    </div>
+                    <div class="icon" @click="close" ref="close">
+                        <i class="fa fa-times"></i>
+                    </div>
+                </div>
+                <div class="box-body" ref="textarea">
+                    <textarea v-model="comment" name="comment" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="box-btns pt">
+                    <button @click="show" class="btn btn-yellow new-comment" ref="showBtn">
+                        <i class="fa fa-comment-o"></i> New Comment
+                    </button>
+                    <button @click="sendComment" class="btn btn-yellow send-comment" ref="commentBtn">
+                        <i class="fa fa-comment-o"></i> Send
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="box-btns pt">
-          <div id="loading" class="loading">
-            <div id="square" class="square"></div>
-          </div>
-          <button id="new-comment-btn" @click="show" type="button" name="button" class="btn btn-yellow"><i class="fa fa-comment-o"></i> New Comment</button>
-        </div>
-      </div>
-      <div id="new-comment" class="box mt blue">
-        <div class="box-header">
-          <div class="title">
-            New comment
-          </div>
-          <div id="close" class="icon" @click="close">
-            <i class="fa fa-times"></i>
-          </div>
-        </div>
-        <div class="box-body">
-          <textarea v-model="comment" name="comment" class="form-control"></textarea>
-        </div>
-        <div class="box-btns">
-          <button @click="sendComment" type="button" name="button" class="btn btn-blue"><i class="fa fa-comment-o"></i> Send</button>
-        </div>
-      </div>
     </div>
-  </div>
 </template>
 <script>
-import axios from 'axios'
 
-import {TweenMax, Power4, TimelineMax} from "gsap"
+import axios from 'axios'
+import { TweenMax, Power4, TimelineMax } from 'gsap'
 
 export default {
-  name: "new-comment",
-  props: ['csrf_field', 'user', 'user_type', 'commentable_type', 'commentable_id'],
-  data: () => ({
-    comment: ''
-  }),
-  mounted() {
-    // Timelines
-    this.showForm = new TimelineMax();
-    this.hideForm = new TimelineMax();
-    this.sendForm = new TimelineMax();
-    this.loading = new TimelineMax();
-
-    // Elements
-    this.newCommentBtn = document.getElementById('new-comment-btn');
-    this.newCommentForm = document.getElementById('new-comment');
-    this.closeBtn = document.getElementById('close');
-    this.loadingEl = document.getElementById('loading');
-    this.square = document.getElementById('square');
-
-    // Styles setup
-    this.newCommentForm.style.display = 'none';
-  },
-  methods: {
-    // Actions
-    sendComment()
-    {
-      var vue = this;
-
-      this.loader();
-
-      var formData = new FormData();
-      formData.append('_token', this.csrf_field);
-      formData.append('comment', this.comment);
-      formData.append('user', this.user);
-      formData.append('user_type', this.user_type);
-      formData.append('commentable_type', this.commentable_type);
-      formData.append('commentable_id', this.commentable_id);
-
-      axios.post('/api/v1/send-comment', formData)
-      .then(function(response){
-        // console.log(response);
-        vue.$parent.$emit('newComment', response.data);
-        vue.loaderStop();
-        vue.comment = '';
-      })
-      .catch(function (error) {
-        console.log(error);
-        vue.loaderStop();
-      });
+    name: "new-comment",
+    props: ['csrf_field', 'user', 'user_type', 'commentable_type', 'commentable_id'],
+    data: function() {
+        return {
+            comment: '',
+            title: 'Join the discussion',
+            open: false,
+        }
     },
+    methods: {
+        sendComment: function() {
+            var formData = new FormData();
+            formData.append('_token', this.csrf_field);
+            formData.append('comment', this.comment);
+            formData.append('user', this.user);
+            formData.append('user_type', this.user_type);
+            formData.append('commentable_type', this.commentable_type);
+            formData.append('commentable_id', this.commentable_id);
 
-    // Animations
-    show()
-    {
-        var vue = this;
+            axios.post('/api/v1/send-comment', formData).then(response => {
+                    // console.log(response);
+                    this.$parent.$emit('newComment', response.data);
+                    this.comment = '';
+                    this.close()
+                }).catch(error => {
+                    console.log(error);
+                });
+        },
+        show: function() {
+            var t1 = new TimelineMax()
+            t1.to(this.$refs.showBtn, .4, {
+                    opacity: 0,
+                    display: 'none',
+                    ease: Power4.easeInOut,
+                })
+                .to(this.$refs.commentBtn, .2, {
+                    opacity: 1,
+                    display: 'block'
+                })
 
-        this.showForm
-        .to(this.newCommentBtn, .4, {
-          opacity: 0,
-          height: 0,
-          ease: Power4.easeInOut,
-          onComplete: function () {
-            vue.newCommentForm.style.display = 'inherit';
-          }
-        })
-        .fromTo(this.newCommentForm, .4, {
-            opacity: 0,
-            height: 0
-          }, {
-            opacity: 1,
-            height: '100%',
-            ease: Power4.easeInOut
-        }).play();
-    },
-    close()
-    {
-        var vue = this;
+            var t2 = new TimelineMax()
+            t2.from(this.$refs.textarea, .5, {
+                position: 'relative',
+                height: 0,
+            })
 
-        this.hideForm
-        .to(this.newCommentForm, .4, {
-          opacity: 0,
-          height: 0,
-          ease: Power4.easeInOut,
-          onComplete: function () {
-            vue.newCommentForm.style.display = 'none';
-          }
-        })
-        .to(this.newCommentBtn, .4, {
-          opacity: 1,
-          height: '100%',
-          ease: Power4.easeInOut,
-        })
-    },
-    loader()
-    {
-        var vue = this;
-
-        this.sendForm
-        .to(this.newCommentForm, .4, {
-            opacity: 0,
-            ease: Power4.easeInOut,
-            onComplete: function () {
-                vue.loadingEl.style.display = 'inherit';
-            }
-        }).play();
-
-        this.loading
-        .to(this.square, 1, {
-            rotation: 360,
-            borderRadius: '5%'
-        })
-        .to(this.square, 1, {
-            rotation: -360,
-            borderRadius: '50%',
-            onComplete: function () {
-                vue.loading.restart();
-            }
-        }).play();
-    },
-    loaderStop()
-    {
-      var vue = this;
-
-      this.loading.pause();
-      TweenMax.to(this.square, 1, {
-          rotation: 0,
-          borderRadius: '50%',
-          onComplete: function () {
-              vue.loadingEl.style.display = 'none';
-              var t1 = new TimelineMax();
-              t1.to(vue.newCommentForm, .4, {
-                  opacity: 0,
-                  height: 0,
-                  ease: Power4.easeInOut,
-              })
-              .to(vue.newCommentBtn, .4, {
+            var t2_2 = new TimelineMax()
+            t2_2.to(this.$refs.textarea, .5, {
                 opacity: 1,
-                height: '100%',
-                ease: Power4.easeInOut,
-                onComplete: function () {
-                  vue.newCommentForm.style.display = 'none';
-                }
-              });
-          }
-      });
-    }
-  }
+                display: 'block',
+            })
+
+            var t3 = new TimelineMax()
+            t3.to(this.$refs.close, .2, {
+                opacity: 1,
+                display: 'block'
+            })
+
+            var master = new TimelineMax()
+            master.add(t1, .1)
+            master.add(t2, .1)
+            master.add(t2_2, .1)
+            master.add(t3, .1)
+            master.play()
+        },
+        close: function() {
+            var t1 = new TimelineMax()
+            t1.to(this.$refs.commentBtn, .2, {
+                    opacity: 0,
+                    display: 'none'
+                })
+                .to(this.$refs.showBtn, .4, {
+                    opacity: 1,
+                    display: 'block',
+                })
+
+
+            var t2 = new TimelineMax()
+            t2.to(this.$refs.textarea, .4, {
+                opacity: 0,
+                display: 'none',
+            })
+
+            var t3 = new TimelineMax()
+            t3.to(this.$refs.close, .2, {
+                opacity: 0,
+                display: 'none'
+            })
+
+            var master = new TimelineMax()
+            master.add(t1)
+            master.add(t2)
+            master.add(t3)
+            master.play()
+
+        },
+    },
 }
 </script>
-<style lang="scss" scoped>
-
-  #new-comment {
+<style lang="scss">
+#comment-new {
     .box-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
 
-      > .icon {
-        cursor: pointer;
-      }
+        > .icon {
+            cursor: pointer;
+            display: none;
+            opacity: 0;
+        }
     }
-  }
 
-  .loading {
-    position: relative;
-    display: none;
-  }
+    .box-body {
+        display: none;
+        opacity: 0;
+        padding-bottom: 0;
+    }
 
-  .square {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 4rem;
-    height: 4rem;
-    background: #e8a360;
-    border-radius: 50%;
-  }
+    .box-btns {
+        .send-comment {
+            display: none;
+            opacity: 0;
+        }
+    }
+}
 </style>

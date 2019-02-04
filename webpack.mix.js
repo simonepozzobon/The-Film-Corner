@@ -27,11 +27,17 @@ mix
   .js('resources/assets/admin/js/captions/captions.js', 'public/js/admin/')
   .js('resources/assets/admin/js/teachers/teachers.js', 'public/js/admin/')
   .js('resources/assets/admin/js/guests/guests.js', 'public/js/admin/')
+  .js('resources/assets/admin/js/contest.js', 'public/js/admin/')
+
 
   .js('resources/assets/js/home-mojs.js', 'public/js/city.js')
   .js('resources/assets/js/app/intercut-crosscutting.js', 'public/js/app/intercut-crosscutting.js')
   .js('resources/assets/js/app/sound-studio.js', 'public/js/app/sound-studio.js')
   .js('resources/assets/js/timeline/timeline.js', 'public/js')
+  .js('resources/assets/js/timeline-audio/timelineaudio.js', 'public/js')
+  .js('resources/assets/js/soundscapes/soundscapes.js', 'public/js')
+  .js('resources/assets/js/character-builder/character-builder.js', 'public/js')
+  .js('resources/assets/js/app-loading/loader.js', 'public/js/loader.js')
 
   .js('resources/assets/js/socket-test', 'public/js')
   .js('resources/assets/js/teacher-chat', 'public/js')
@@ -62,7 +68,7 @@ mix
     tether: ['Tether'],
   })
   .browserSync({
-    proxy: 'http://thefilmcorner.test/',
+    proxy: 'http://thefilmcorner.test:89/',
     browser: 'google chrome',
     port: 3006,
   })

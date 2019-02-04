@@ -10,9 +10,10 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
+    |
     */
 
-    'name' => 'The Film Corner',
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://www.simonepozzobon.dev'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -109,23 +110,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Logging Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-
-    'log' => env('APP_LOG', 'single'),
-
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Autoloaded Service Providers
     |--------------------------------------------------------------------------
     |
@@ -164,11 +148,9 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
-
         /*
          * Package Service Providers...
          */
-        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,9 +160,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
-        // Laravel Collective
-        //Collective\Html\HtmlServiceProvider::class,
 
         //Image Intervention
         Intervention\Image\ImageServiceProvider::class,
@@ -200,10 +179,11 @@ return [
         // Translatable
         Dimsav\Translatable\TranslatableServiceProvider::class,
 
-        // Debug
-        // Lanin\Laravel\ApiDebugger\ServiceProvider::class,
-        // 'Barryvdh\Debugbar\ServiceProvider',
+        // Google Analytics
+        Spatie\Analytics\AnalyticsServiceProvider::class,
 
+        // CORS
+        Barryvdh\Cors\ServiceProvider::class,
     ],
 
     /*
@@ -235,7 +215,6 @@ return [
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
-        'Input' => Illuminate\Support\Facades\Input::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -243,8 +222,7 @@ return [
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        // 'Redis' => Illuminate\Support\Facades\Redis::class,
-        'LRedis' => Illuminate\Support\Facades\Redis::class,
+        'Redis' => Illuminate\Support\Facades\Redis::class,
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
@@ -255,9 +233,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        // Laravel Collective
-        //'Form' => Collective\Html\FormFacade::class,
-        //'Html' => Collective\Html\HtmlFacade::class,
+        // Restored from the older version
+        'Input' => Illuminate\Support\Facades\Input::class,
 
         // HTML Purifier
         'Purifier' => Mews\Purifier\Facades\Purifier::class,
@@ -274,16 +251,17 @@ return [
         // Tracker
         'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
 
-        // Debug
-        // 'Debugbar' => 'Barryvdh\Debugbar\Facade',
-        // 'Debugger' => Lanin\Laravel\ApiDebugger\Facade::class,
-
         // Custom classes
         'Utility' => 'App\Utility',
         'GeneralText' => 'App\GeneralText',
         'SharedSession' => 'App\SharedSession',
         'Filmography' => 'App\Filmography',
         'Credit' => 'App\Credit',
+
+
+        // Google Analytics
+        'Analytics' => Spatie\Analytics\AnalyticsFacade::class,
+
     ],
 
 ];

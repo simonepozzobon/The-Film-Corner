@@ -12,28 +12,12 @@
 @endsection
 @section('content')
 <main id="app">
-  @if (!isset($visited))
+  {{-- @if (!isset($visited))
     <alert-tutorial title="Attenzione!!!" color="yellow" element="libraries-menu" position="bottom">
       <h4 class="text-center">Il pannello per caricare i video è stato spostato in alto a destra</h4>
     </alert-tutorial>
-  @endif
-  <div class="row">
-    <div class="col-md-4">
-      <app-box title="Utenti Online" color="blue">
-        <h1>{{ $users->count() }}</h1>
-      </app-box>
-    </div>
-    <div class="col-md-4">
-      <app-box title="Sessioni" color="blue">
-        <h1>{{ $sessions->count() }}</h1>
-      </app-box>
-    </div>
-    <div class="col-md-4">
-      <app-box title="Visualizzazioni" color="blue">
-        <h1>{{ $page_views_tot }}</h1>
-      </app-box>
-    </div>
-  </div>
+  @endif --}}
+  <stats-panel stats="{{ json_encode($stats) }}"></stats-panel>
 </main>
 @endsection
 @section('scripts')

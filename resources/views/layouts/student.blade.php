@@ -16,10 +16,14 @@
     @include('layouts.student._head')
   </head>
   <body>
-
     @include('layouts.student._menu')
 
+    <div id="fullscreen-messages">
+      <message></message>
+    </div>
+
     @if ($type == 'app')
+      <div id="preloader"><pre-loader></pre-loader></div>
       <main>
         @yield('content')
       </main>
@@ -34,5 +38,6 @@
     @endphp
     @include('layouts.student._footer', ['footer' => $footer])
     @include('layouts.student._scripts', ['type' => $type])
+    <script src="{{ mix('js/message.js') }}"></script>
   </body>
 </html>

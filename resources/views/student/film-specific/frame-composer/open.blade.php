@@ -38,14 +38,11 @@
               {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
-              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
-                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav" role="tablist">
+              <nav class="navbar navbar-expand-sm navbar-library yellow">
+                <div class="w-100" id="navbarNav">
+                  <ul class="nav navbar-nav nav-tabs" role="tablist">
                     @foreach ($app->mediaCategory()->get() as $key => $library)
-                      <li class="nav-item">
+                      <li class="nav-item" style="width: 33%">
                         <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                       </li>
                     @endforeach
@@ -143,9 +140,25 @@
                 $this.data('image-image-obj', imgInstance);
 
                 // constrain object to maximum canvas size
-                var _width = document.getElementById('container-canvas').offsetWidth - 30;
-                if (_width < imgInstance.getScaledWidth()) {
-                  imgInstance.scaleToWidth(_width);
+                var _container = document.getElementById('container-canvas');
+                var _width = _container.offsetWidth - 30;
+                var _height = _container.offsetHeight - 30;
+
+                var iWidth = imgInstance.getScaledWidth();
+                var iHeight = imgInstance.getScaledHeight();
+
+
+                if (iWidth > iHeight) {
+                  if (_width < imgInstance.getScaledWidth()) {
+                    imgInstance.scaleToWidth(_width);
+                    if (_height < imgInstance.getScaledHeight()) {
+                      imgInstance.scaleToHeight(_height);
+                    }
+                  }
+                } else {
+                  if (_height < imgInstance.getScaledHeight()) {
+                    imgInstance.scaleToHeight(_height);
+                  }
                 }
 
                 canvas.add(imgInstance).setActiveObject( imgInstance );

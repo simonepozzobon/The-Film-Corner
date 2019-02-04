@@ -11,6 +11,12 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
+// Route::get('/test', 'Admin\StatsController@get_page_views');
+Route::get('/test', 'Debug\MediaLibraryController@media_library_fix');
+Route::get('/fix-offscreen', 'Debug\MediaLibraryController@fix_offscreen');
+Route::get('/fix-active-offscreen', 'Debug\MediaLibraryController@fix_active_offscreen');
+Route::get('/fix-parallel-action', 'Debug\MediaLibraryController@active_parallel_action_video_library');
+
 Route::get('/timeline', function(){
     return view('timeline');
 });
@@ -177,10 +183,18 @@ Route::prefix('admin')->group(function () {
 
 
     Route::prefix('tools')->group(function(){
-        Route::get('/flush-media', 'ToolController@flush_media');
-        Route::get('/soundstudio', 'ToolController@soundstudio_library');
-        Route::get('/translate_filmography', 'ToolController@translate_filmography');
-        Route::get('/translate_partner', 'ToolController@translate_partner');
+        // Route::get('/flush-media', 'ToolController@flush_media');
+        // Route::get('/soundstudio', 'ToolController@soundstudio_library');
+        // Route::get('/translate_filmography', 'ToolController@translate_filmography');
+        // Route::get('/translate_partner', 'ToolController@translate_partner');
+        Route::get('/flush-sound-atmosphere-library', 'ToolController@remove_video_from_sound_atmosphere');
+        Route::get('/soundstudio-video', 'ToolController@soundstudio_video_library');
+        Route::get('/put-audio-on-whats-going-on', 'ToolController@put_audio_on_whats_going_on');
+        Route::get('/convert-to-mp3/{id}', 'ToolController@convert_library');
+    });
+
+    Route::prefix('contest')->group(function() {
+        Route::get('/', 'Admin\ContestController@index')->name('admin.contest.index');
     });
 });
 
@@ -247,6 +261,7 @@ Route::prefix('teacher')->group(function() {
       Route::post('/new', 'Teacher\SessionController@newSession')->name('new.session');
       Route::post('/update', 'Teacher\SessionController@updateSession')->name('update.session');
       Route::post('/share-approved', 'Teacher\SessionController@shareApproved')->name('teacher.session.share_approved');
+      Route::post('/shared-destroy', 'Teacher\SessionController@destroyShared')->name('teacher.session.shared_destroy');
       Route::post('/share', 'Teacher\SessionController@shareSession')->name('teacher.session.share');
       Route::post('/delete', 'Teacher\SessionController@destroy')->name('teacher.session.delete');
       Route::post('/approve', 'Teacher\SessionController@approveSession')->name('teacher.session.approve');
@@ -260,6 +275,10 @@ Route::prefix('teacher')->group(function() {
       Route::get('/get', 'Teacher\NotificationController@getNotifications')->name('teacher.notifications.getnew');
       Route::post('/delete', 'Teacher\NotificationController@delete')->name('teacher.notifications.delete');
       Route::post('/destroy', 'Teacher\NotificationController@destroy')->name('teacher.notifications.destroy');
+    });
+
+    Route::prefix('streaming')->group(function() {
+      Route::get('/', 'Teacher\StreamingController@index')->name('streaming.index');
     });
 });
 

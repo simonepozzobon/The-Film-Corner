@@ -41,7 +41,7 @@
                 </div>
                 <div class="btns">
                   @if ($app->available == 1)
-                    <a href="{{ route('student.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" >
+                    <a href="{{ route('student.film-specific.app', [$app_category->slug, $app->slug]) }}" class="btn btn-{{ $app->colors }}" data-toggle="tooltip" data-placement="top" title="{{ GeneralText::field('new') }}">
                       <i class="fa fa-file-o" aria-hidden="true"></i>
                     </a>
                   @else
@@ -67,7 +67,7 @@
                        </div>
                      </div>
                   @endif
-                  <a href="#" onclick="openSessions({{ Auth::guard('student')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" >
+                  <a href="#" onclick="openSessions({{ Auth::guard('student')->Id() }}, {{ $app->id }}, '{{ $app->colors }}')" class="btn btn-{{ $app->colors }}" data-toggle="tooltip" data-placement="top" title="{{ GeneralText::field('open') }}">
                     <i class="fa fa-folder-open-o" aria-hidden="true"></i>
                   </a>
                 </div>
@@ -245,7 +245,7 @@
         },
         success: function (response) {
           console.log('share response ',response);
-          if (response.status == 'too_many_shared') {
+          if (response.status == 'too_many_shared' || response.status == 'already_shared') {
             $('#sessionModal').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
@@ -276,6 +276,9 @@
             data += '</div>';
             $('#modalSession').html(data);
             $('#sessionModal').modal('show');
+          } else {
+            var message = new CustomEvent('fullscreen-message', {detail: 'Shared!'})
+            document.dispatchEvent(message)
           }
         },
         error: function (xhr, status) {

@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function() {
     Route::post('chat-notification', 'Api\ChatController@message');
     Route::post('chat-history', 'Api\ChatController@history');
     Route::post('chat-typing', 'Api\ChatController@typing');
+    Route::post('remove-notifications', 'Api\ChatController@removeNotifications');
 
     // Video Editor
     Route::post('/video-edit', 'VideoEditorController@updateEditor');
@@ -43,6 +44,21 @@ Route::prefix('v1')->group(function() {
     // Feedbacks
     Route::post('/send-feedback', 'Api\GeneralController@save_feedback');
 
+    // Admin Contest
+    Route::get('/get-contest', 'Admin\ContestController@get_video');
+    Route::get('/app-chart', 'Admin\StatsController@get_app_chart');
+    Route::get('/page-views-stats', 'Admin\StatsController@get_page_views');
+
+    // Cinemaf
+    Route::prefix('cinemaf')->group(function() {
+        Route::prefix('get')->group(function() {
+            Route::get('teachers', 'Admin\CinemafController@get_teachers');
+        });
+
+        Route::prefix('post')->group(function() {
+            Route::post('auth', 'Admin\CinemafController@auth');
+        });
+    });
 });
 
 // General request

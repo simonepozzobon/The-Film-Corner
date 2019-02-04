@@ -328,7 +328,8 @@ class SessionController extends Controller
         // determino la lungezza del video in base alla lunghezza massima delle sorgenti
         $duration = $audioSrcs->max('duration');
         $audioSrcs = $audioSrcs->transform(function($audio, $key) use($duration) {
-          $audio['repeat'] = $duration / $audio['duration'];
+          // $audio['repeat'] = $duration / $audio['duration'];
+          $audio['repeat'] = 1; // just for debug
           return $audio;
         });
 
@@ -670,6 +671,13 @@ class SessionController extends Controller
       'status' => 'success',
       'session' => $shared,
     ], 200);
+  }
+
+  public function destroyShared(Request $request)
+  {
+      $session = SharedSession::find($request->id);
+      $session->delete();
+      return 'success';
   }
 
   public function destroy(Request $request)

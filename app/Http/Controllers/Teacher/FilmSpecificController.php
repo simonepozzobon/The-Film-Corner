@@ -6,9 +6,11 @@ use App\App;
 use App\AppSection;
 use App\AppKeyword;
 use App\AppCategory;
+use App\MediaCouples;
 use App\VideoLibrary;
 use App\TeacherSession;
 use App\MultiSubcategory;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\AppsSession;
 use App\Http\Controllers\Controller;
@@ -31,6 +33,12 @@ class FilmSpecificController extends Controller
     $apps = App::where('app_category_id', '=', $app_category->id)->orderBy('order')->with('category')->get();
 
     $teacher = Auth::guard('teacher')->user();
+    $students_count = $teacher->students()->count();
+
+    if ($students_count < 5) {
+      $students_count = 5;
+    }
+
     $activities = Activity::where('description', '=', 'visited')->causedBy($teacher)->forSubject($app_category)->get();
 
     if ($activities->count() == 0) {
@@ -62,9 +70,8 @@ class FilmSpecificController extends Controller
       $filtered = $sessions->filter(function($session, $key) use ($app) {
         return $session->app_id == $app->id;
       })->all();
-      count($filtered) < 5 ? $app->available = true : $app->available = false;
+      count($filtered) < $students_count ? $app->available = true : $app->available = false;
     }
-
 
     return view('teacher.film-specific.path.index', compact('apps', 'app_category', 'visited'));
   }
@@ -110,10 +117,10 @@ class FilmSpecificController extends Controller
         // debug
         // $libraries = $app->mediaCategory()->get();
         // foreach ($libraries as $key => $library) {
-        //   dd($library->media_on_sub_category());
+        //   dump($library->media_on_sub_category());
         // }
-        //
-        // dd();
+        // dd('end');
+
 
         return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
         break;
@@ -124,23 +131,16 @@ class FilmSpecificController extends Controller
 
       case 'types-of-images':
 
-        $images = $app->medias()->get();
-
-        $images = collect($images->pluck('landscape')->all());
-
-        $flatten = $images->transform(function($image, $key) {
-            return Storage::disk('local')->url($image);
+        $media_couples = MediaCouples::with('left', 'right')->get();
+        $media_couples = $media_couples->transform(function($item, $key) {
+          $item->left = Storage::disk('local')->url($item->left->landscape);
+          $item->right = Storage::disk('local')->url($item->right->landscape);
+          return $item;
         });
 
-        $left = $flatten->random();
-        $right = $flatten->random();
-        while ($left <= $right) {
-          $right = $flatten->random();
-        }
+        $random = $media_couples->random();
 
-        $library = json_encode($images->toArray());
-
-        return view('teacher.film-specific.types-of-images.index', compact('app', 'app_category', 'library', 'left', 'right'));
+        return view('teacher.film-specific.types-of-images.index', compact('app', 'app_category', 'media_couples', 'random'));
         break;
 
       // case 'frame-counter':
@@ -155,7 +155,11 @@ class FilmSpecificController extends Controller
 
       // case 'parallel-action':
       case 'parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 4)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
         return view('teacher.film-specific.parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
@@ -329,17 +333,16 @@ class FilmSpecificController extends Controller
         break;
 
       case 'types-of-images':
-        $images = $app->medias()->get();
-
-        $images = collect($images->pluck('landscape')->all());
-
-        $flatten = $images->transform(function($image, $key) {
-            return Storage::disk('local')->url($image);
+        $media_couples = MediaCouples::with('left', 'right')->get();
+        $media_couples = $media_couples->transform(function($item, $key) {
+          $item->left = Storage::disk('local')->url($item->left->landscape);
+          $item->right = Storage::disk('local')->url($item->right->landscape);
+          return $item;
         });
 
-        $library = json_encode($images->toArray());
+        $random = $media_couples->random();
 
-        return view('teacher.film-specific.types-of-images.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'library'));
+        return view('teacher.film-specific.types-of-images.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'media_couples'));
         break;
 
       // case 'frame-counter':
@@ -353,7 +356,11 @@ class FilmSpecificController extends Controller
       **/
 
       case 'parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 4)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
         $timelines = json_encode($session->timelines);
         return view('teacher.film-specific.parallel-action.open', compact('app', 'app_category', 'elements', 'session', 'timelines', 'app_session', 'token', 'is_student'));
         break;

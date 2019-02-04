@@ -1,8 +1,8 @@
 @extends('layouts.student', ['type' => 'app'])
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <style media="screen">
     .ui-slider {
       background: #e6e6e6;
@@ -111,7 +111,7 @@
                     <div class="container-fluid frame bg-faded p-4">
                       <div class="embed-responsive embed-responsive-16by9">
                         <video id="video" class="embed-responsive-item video-js" controls preload="auto" width="640" height="264">
-                            <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+                            <source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
                         </video>
                       </div>
                       <div class="rowpt-4">

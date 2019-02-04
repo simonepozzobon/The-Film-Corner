@@ -10,12 +10,12 @@ return [
     /*
      * Enable cache?
      */
-    'cache_enabled' => false,
+    'cache_enabled' => true,
 
     /*
      * Deffer booting for middleware use
      */
-    'use_middleware' => true,
+    'use_middleware' => false,
 
     /*
      * Robots should be tracked?
@@ -56,7 +56,7 @@ return [
      *     '172.17.0.0/255.255.0.0'
      */
     'do_not_track_ips' => [
-        //'127.0.0.0/24', /// range 127.0.0.1 - 127.0.0.255
+        '127.0.0.0/24', /// range 127.0.0.1 - 127.0.0.255
     ],
 
     /*
@@ -76,7 +76,7 @@ return [
      *    - Error log
      *    - URL queries (including values)
      */
-    'log_enabled' => true,
+    'log_enabled' => false,
 
     /*
      * Log artisan commands?
@@ -186,7 +186,7 @@ return [
     /*
      * Do you wish to log the user agent?
      */
-    'log_user_agents' => true,
+    'log_user_agents' => false,
 
     /*
      * Do you wish to log your users?
@@ -196,7 +196,7 @@ return [
     /*
      * Do you wish to log devices?
      */
-    'log_devices' => true,
+    'log_devices' => false,
 
     /*
      * Do you wish to log languages?
@@ -226,29 +226,29 @@ return [
     /*
      * Log errors and exceptions?
      */
-    'log_exceptions' => true,
+    'log_exceptions' => false,
 
     /*
      * A cookie may be created on your visitor device, so you can have information
      * on everything made using that device on your site.	 *
      */
-    'store_cookie_tracker' => true,
+    'store_cookie_tracker' => false,
 
     /*
      * If you are storing cookies, you better change it to a name you of your own.
      */
-    'tracker_cookie_name' => 'tfc_analytics',
+    'tracker_cookie_name' => 'please_change_this_cookie_name',
 
     /*
      * Internal tracker session name.
      */
-    'tracker_session_name' => 'tfc_analytics_session',
+    'tracker_session_name' => 'tracker_session',
 
     /*
      * ** IMPORTANT **
      *   Change the user model to your own.
      */
-    'user_model' => 'App\Admin',
+    'user_model' => 'PragmaRX\Tracker\Vendor\Laravel\Models\User',
 
     /*
      * You can use your own model for every single table Tracker has.
@@ -311,7 +311,7 @@ return [
 
     'authenticated_check_method' => 'check', // to Auth::check()
 
-    'authenticated_user_method' => 'admin', // to Auth::user()
+    'authenticated_user_method' => 'user', // to Auth::user()
 
     'authenticated_user_id_column' => 'id', // to Auth::user()->id
 

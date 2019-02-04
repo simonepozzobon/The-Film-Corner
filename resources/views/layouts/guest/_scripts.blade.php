@@ -1,11 +1,18 @@
 <script src="{{ mix('js/manifest.js') }}"></script>
 <script src="{{ mix('js/vendor.js') }}"></script>
 <script src="{{ mix('js/app.js') }}"></script>
+@if ($type == 'app')
+    <script src="{{ mix('js/loader.js') }}"></script>
+@endif
 <script src="{{ mix('js/notifications.js') }}"></script>
 <script src="{{ mix('js/feedback-toolbar.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-
+<script type="text/javascript">
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 
 {{-- Sessione --}}
 @if ($type == 'app')
@@ -40,8 +47,15 @@
             };
 
             sessions.push(session);
+
+            var jsonSession = JSON.stringify(sessions)
+
             // Vecchio sistema con i cookies
-            $.cookie('tfc-sessions', JSON.stringify(sessions));
+            $.cookie('tfc-sessions', jsonSession);
+
+            localStorage.setItem('tfc-actual-session', jsonSession);
+            window.$session = session
+
             // Nuovo sistema per la sessione
             $('body').trigger('session-loaded', session);
             localStorage.setItem('tfc-sessions', JSON.stringify(sessions));
@@ -153,8 +167,8 @@
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
             'notes'     : $('#notes').val(),
-            'video'     : localStorage.getItem('app-4-video'),
-            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-4-video'),
+            'timelines': localStorage.getItem('app-4-timelines')
           };
 
           console.log('--------');
@@ -287,8 +301,8 @@
             'token'     : token,
             'notes'     : $('#notes').val(),
             'title'     : $('input[name="title"]').val(),
-            'video'     : localStorage.getItem('app-11-video'),
-            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-11-video'),
+            'timelines': localStorage.getItem('app-11-timelines')
           };
 
           console.log('--------');
@@ -304,8 +318,8 @@
             'token'     : token,
             'title'     : $('input[name="title"]').val(),
             'notes'     : $('#notes').val(),
-            'video'     : $('[ng-controller="DemoMediaTimelineController"]').scope().videoData.player.src(),
-            'timelines' : $('[ng-controller="DemoMediaTimelineController"]').scope().timelines
+            'video': localStorage.getItem('app-12-video'),
+            'timelines': localStorage.getItem('app-12-timelines')
           };
 
           console.log('--------');
@@ -354,6 +368,8 @@
             'slot_2'  : $('#slot-2-in').val(),
             'slot_3'  : $('#slot-3-in').val(),
             'slot_4'  : $('#slot-4-in').val(),
+            'slot_5': $('#slot-5-in').val(),
+            'slot_6': $('#slot-6-in').val(),
           };
 
           console.log('--------');
@@ -478,8 +494,13 @@
         };
 
         sessions.push(session);
+        var jsonSession = JSON.stringify(sessions)
+
         // Vecchio sistema con i cookies
-        $.cookie('tfc-sessions', JSON.stringify(sessions));
+        $.cookie('tfc-sessions', jsonSession);
+
+        localStorage.setItem('tfc-actual-session', jsonSession);
+
         console.log('session loaded');
     }
   };

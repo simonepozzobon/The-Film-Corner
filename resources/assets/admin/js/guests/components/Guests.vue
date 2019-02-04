@@ -59,7 +59,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '~styles/variables';
+@import '~styles/shared';
 
   #guests {
     table.table {

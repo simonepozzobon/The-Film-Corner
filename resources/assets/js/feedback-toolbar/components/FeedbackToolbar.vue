@@ -4,7 +4,7 @@
       class="feedback-tooltip"
       ref="feedback_tooltip"
     >
-      Leave your ideas or you comments
+      Leave your ideas or your comments
     </div>
     <div
       class="feedback-bg"
@@ -299,7 +299,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-  @import '~styles/variables';
+  @import '~styles/shared';
 
   #feedback-toolbar {
     position: relative;
@@ -357,7 +357,7 @@ export default {
 
         > .text {
           font-family: $font-family-serif;
-          font-size: $font-size-h3;
+          font-size: $h3-font-size;
           font-weight: $headings-font-weight;
           text-transform: uppercase;
           color: $black;
@@ -365,7 +365,7 @@ export default {
         }
 
         > .icon {
-          font-size: $font-size-h3;
+          font-size: $h3-font-size;
           color: $black;
         }
       }

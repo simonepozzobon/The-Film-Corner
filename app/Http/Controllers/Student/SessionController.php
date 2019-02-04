@@ -602,6 +602,13 @@ class SessionController extends Controller
     $teacher = $student->teacher;
 
     $currently_shared = $session->count_currently_shared_sessions($student->id);
+    $status = $session->check_if_already_shared($student->id, $request['token']);
+
+    if ($status >= 1) {
+      return response()->json([
+        'status' => 'already_shared'
+      ]);
+    }
 
     if ($currently_shared > 2) {
       return response()->json([
@@ -633,6 +640,7 @@ class SessionController extends Controller
 
     // Salvo la sessione come condivisa
     $session->teacher_shared = 1;
+    $session->teacher_approved = 0;
     $session->save();
 
     // Se tutto va a buon fine, creo la risposta con esito positivo

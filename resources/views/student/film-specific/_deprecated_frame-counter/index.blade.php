@@ -1,6 +1,6 @@
 @extends('layouts.student', ['type' => 'app'])
 @section('stylesheets')
-  <link rel="stylesheet" href="http://vjs.zencdn.net/5.8.8/video-js.css" >
+  <link rel="stylesheet" href="//vjs.zencdn.net/5.8.8/video-js.css" >
   <link rel="stylesheet" href="{{ asset('plugins/videojs-markers/videojs.markers.css') }}">
 @endsection
 @section('content')

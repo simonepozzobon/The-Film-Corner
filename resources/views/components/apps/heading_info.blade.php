@@ -7,16 +7,31 @@
   } else {
     $guest = false;
   }
+
+  // Default Options
+  if (!isset($options)) {
+    $options = [
+      'save' => true,
+      'close-warning' => true
+    ];
+  }
 @endphp
   <div class="row mt">
     <div class="col">
       <div class="title-wrapper bg-faded">
         <div class="icons-left">
-          <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('close_app') }}">
-            <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-window-close text-danger"></i></a>
-          </div>
+          @if ($options['close-warning'])
+            <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('close_app') }}">
+              <a href="#" data-toggle="modal" data-target="#close"><i class="fa fa-window-close text-danger"></i></a>
+            </div>
+          @else
+            <div id="close-btn" class="icon exit" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('close_app') }}">
+              <a href="{{ url('/') }}/{{ $type }}/{{ $app->category->section->slug }}/{{ $app->category->slug }}"><i class="fa fa-window-close text-danger"></i></a>
+            </div>
+          @endif
+
           @if ($student == false)
-            @if (!$guest)
+            @if (!$guest && $options['save'])
               <div id="save-btn" class="icon save" data-toggle="tooltip" data-html="true" title="{{ GeneralText::field('save_this_session') }}">
                 <a href="#" data-toggle="modal" data-target="#saveSession"><i class="fa fa-floppy-o text-primary"></i></a>
               </div>

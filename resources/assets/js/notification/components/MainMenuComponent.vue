@@ -1,22 +1,11 @@
 <template>
-  <div id="main-menu-component">
-    <nav
-      id="main-menu"
-      class="navbar navbar-toggleable-md navbar-light fixed-top"
-    >
-      <button
-        class="navbar-toggler navbar-toggler-right"
-        type="button"
-        data-toggle="collapse"
-        data-target="#menu-main"
-        aria-controls="menu-main"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+<div id="main-menu-component">
+    <nav id="main-menu" class="navbar navbar-expand-lg navbar-light fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menu-main" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"/>
       </button>
-      <div class="navbar-brand">
-        <a href="/">
+        <div class="navbar-brand">
+            <a href="/">
           <svg
             id="main-logo"
             width="102px"
@@ -47,9 +36,9 @@
             </g>
           </svg>
         </a>
-      </div>
-      <div class="navbar-brand">
-        <a href="#">
+        </div>
+        <div class="navbar-brand">
+            <a href="#">
           <svg
             width="77px"
             height="26px"
@@ -139,71 +128,68 @@
             </g>
           </svg>
         </a>
-      </div>
+        </div>
 
-      <!--  Desktop  -->
-      <div class="collapse navbar-collapse justify-content-end" id="menu-main">
-        <ul class="navbar-nav justify-content-around">
-          <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Apps">
-            <a :href="'/'+type" class="nav-link">
-              <i class="fa fa-home" aria-hidden="true"/>
-            </a>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Network">
-            <a :href="'/'+type+'/network'" class="nav-link">
-              <i class="fa fa-users" aria-hidden="true"/>
-            </a>
-          </li>
-          <li class="nav-item" v-if="type == 'teacher'">
-            <a :href="'/'+type+'/settings'" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
-              <i class="fa fa-user" aria-hidden="true"/>
-            </a>
-          </li>
-          <li class="nav-item" v-else-if="type == 'guest'">
-            <a :href="'/'+type+'/settings'" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
-              <i class="fa fa-user" aria-hidden="true"/>
-            </a>
-          </li>
-          <li id="notifications-menu" class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Notifications">
-            <notifications-menu :notifications="notifs"/>
-          </li>
-          <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Change Language">
-            <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fa fa-cog" aria-hidden="true"/>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item markasread" href="/set-locale/en">
-                English
-              </a>
-              <a class="dropdown-item markasread" href="/set-locale/fr">
-                Francais
-              </a>
-              <a class="dropdown-item markasread" href="/set-locale/it">
-                Italiano
-              </a>
-              <a class="dropdown-item markasread" href="/set-locale/sr">
-                српски
-              </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item markasread" :href="'/'+type+'/logout'">
-                Logout
-              </a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a href="/downloads/user-guide/TFC_Users_Guide_EN.pdf" target="_blank" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="User Guide">
-              <i class="fa fa-book" aria-hidden="true"/>
-            </a>
-          </li>
-        </ul>
-        <notifications-dropdown-menu :notifications="notifs"/>
-        <notifications
-          :user="userParsed"
-          :user_type="user_type"
-        />
-      </div>
+        <!--  Desktop  -->
+        <div class="collapse navbar-collapse" id="menu-main">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Apps">
+                    <a :href="'/'+type" class="nav-link">
+                        <i class="fa fa-home" aria-hidden="true"/>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Network">
+                    <a :href="'/'+type+'/network'" class="nav-link">
+                        <i class="fa fa-users" aria-hidden="true"/>
+                    </a>
+                </li>
+                <li class="nav-item" v-if="type == 'teacher'">
+                    <a :href="'/'+type+'/settings'" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
+                        <i class="fa fa-user" aria-hidden="true"/>
+                    </a>
+                </li>
+                <li class="nav-item" v-else-if="type == 'guest'">
+                    <a :href="'/'+type+'/settings'" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Student settings">
+                        <i class="fa fa-user" aria-hidden="true"/>
+                    </a>
+                </li>
+                <li id="notifications-menu" class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Notifications">
+                    <notifications-menu :notifications="notifs" />
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="bottom" data-html="true" title="Change Language">
+                    <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cog" aria-hidden="true"/>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item markasread" href="/set-locale/en">
+                            English
+                        </a>
+                        <a class="dropdown-item markasread" href="/set-locale/fr">
+                            Francais
+                        </a>
+                        <a class="dropdown-item markasread" href="/set-locale/it">
+                            Italiano
+                        </a>
+                        <a class="dropdown-item markasread" href="/set-locale/sr">
+                            Srpski
+                        </a>
+                        <div class="dropdown-divider"></div>
+                            <a class="dropdown-item markasread" :href="'/'+type+'/logout'">
+                                Logout
+                            </a>
+                        </div>
+                </li>
+                <li class="nav-item">
+                    <a :href="guideLink" target="_blank" class="nav-link" data-toggle="tooltip" data-placement="bottom" data-html="true" title="User Guide">
+                        <i class="fa fa-book" aria-hidden="true"/>
+                    </a>
+                </li>
+            </ul>
+            <notifications-dropdown-menu :notifications="notifs" />
+            <notifications :user="userParsed" :user_type="user_type" />
+        </div>
     </nav>
-  </div>
+</div>
 </template>
 <script>
 import Notifications from './Notifications.vue'
@@ -211,93 +197,128 @@ import NotificationsMenu from './NotificationsMenu.vue'
 import NotificationsDropdownMenu from './NotificationsDropdownMenu.vue'
 
 var io = require('socket.io-client')
-var socket = io.connect('http://'+ window.location.hostname +':6001', {reconnect: true})
+var socket = io.connect(window.location.protocol + '//' + window.location.hostname + ':6001', {
+    reconnect: true
+})
 import axios from 'axios'
 
 export default {
-  name: 'MainMenuComponent',
-  props: {
-    user: {
-      default: '',
-      type: String
+    name: 'MainMenuComponent',
+    props: {
+        locale: {
+            type: String,
+            default: 'en',
+        },
+        user: {
+            default: '',
+            type: String
+        },
+        user_type: {
+            default: '',
+            type: String
+        },
+        notifications: {
+            default: '',
+            type: String
+        }
     },
-    user_type: {
-      default: '',
-      type: String
+    computed: {
+        type: function() {
+            if (this.user_type == 'App\\Student') {
+                return 'student'
+            } else if (this.user_type == 'App\\Teacher') {
+                return 'teacher'
+            } else {
+                return 'guest'
+            }
+        },
+        userParsed: function() {
+            return JSON.parse(this.user)
+        },
+        notifsParsed: function() {
+            return JSON.parse(this.notifications)
+        },
+        guideLink: function() {
+            if (this.locale == 'fr') {
+                return '/downloads/user-guide/TFC_Users_Guide_FR.pdf'
+            } else if (this.locale == 'it') {
+                return '/downloads/user-guide/TFC_Users_Guide_ITA.pdf'
+            } else if (this.locale == 'sr') {
+                return '/downloads/user-guide/TFC_Users_Guide_EN.pdf'
+            }
+            return '/downloads/user-guide/TFC_Users_Guide_EN.pdf'
+        },
+        chatOpen: function() {
+            if ($('#chat').hasClass('show') && this.chatExists) {
+                return true
+            }
+            return false
+        }
     },
-    notifications: {
-      default: '',
-      type: String
-    }
-  },
-  computed: {
-    type: function()
-    {
-      if (this.user_type == 'App\\Student') {
-        return 'student'
-      } else if (this.user_type == 'App\\Teacher') {
-        return 'teacher'
-      } else {
-        return 'guest'
-      }
-    },
-    userParsed: function()
-    {
-      return JSON.parse(this.user)
-    },
-    notifsParsed: function()
-    {
-      return JSON.parse(this.notifications)
-    }
-  },
-  data: () => ({
-    notifs: []
-  }),
-  created() {
-    var vue = this
+    data: () => ({
+        notifs: [],
+        chatExists: false,
+    }),
+    created() {
+        var vue = this
 
-    this.notifs = this.notifsParsed
+        this.notifs = this.notifsParsed
 
-    this.$root.$on('mark-as-read', notification => {
-      this.markAsRead(notification)
-    })
-
-    socket.on('notification:newSharedSession:'+this.userParsed.id+':'+this.user_type, (data) => {
-      vue.pushNotification(data, 'sent you a new notification.')
-    })
-
-    socket.on('notification:sessionApproved:'+this.userParsed.id+':'+this.user_type, (data) => {
-      vue.pushNotification(data, 'approved your work.')
-    })
-  },
-  methods: {
-    markAsRead: function(notification)
-    {
-      var vue = this
-      axios.get('/'+this.type+'/notifications/markasread/'+notification.id)
-        .then(() => {
-          vue.notifs = vue.notifs.filter((element) => {
-            return element.id != notification.id
-          })
+        this.$root.$on('mark-as-read', notification => {
+            this.markAsRead(notification)
         })
-    },
-    pushNotification: function(notification, msg)
-    {
-      this.notifs.unshift(notification)
 
-      var content = {
-        notification: notification,
-        message: msg
-      }
+        socket.on('notification:newSharedSession:' + this.userParsed.id + ':' + this.user_type, (data) => {
+            vue.pushNotification(data, 'sent you a new notification.')
+        })
 
-      this.$root.$emit('new-notification', content)
+        socket.on('notification:sessionApproved:' + this.userParsed.id + ':' + this.user_type, (data) => {
+            vue.pushNotification(data, 'approved your work.')
+        })
+
+        socket.on('notification:chatMessage:' + this.userParsed.id + ':' + this.user_type, (data) => {
+            console.log('chat', data)
+            if (!this.chatOpen) {
+                vue.pushNotification(data, 'sent you a new message.')
+            }
+        })
+
+        socket.on('chat:newMessage:' + this.userParsed.id + ':' + this.user_type, data => {
+            console.log('chat notification', data)
+        })
+
+        socket.on('connect', function(){
+          if (document.getElementById('chat')) {
+              this.chatExists = true
+          }
+      }.bind(this))
     },
-  },
-  components: {
-    Notifications,
-    NotificationsMenu,
-    NotificationsDropdownMenu
-  }
+    methods: {
+        markAsRead: function(notification) {
+            var vue = this
+            axios.get('/' + this.type + '/notifications/markasread/' + notification.id)
+                .then(() => {
+                    vue.notifs = vue.notifs.filter((element) => {
+                        return element.id != notification.id
+                    })
+                })
+        },
+        pushNotification: function(notification, msg) {
+            this.notifs.unshift(notification)
+
+            var content = {
+                notification: notification,
+                message: msg
+            }
+
+            this.$root.$emit('new-notification', content)
+        },
+    },
+    components: {
+        Notifications,
+        NotificationsMenu,
+        NotificationsDropdownMenu
+    }
 }
 </script>
 <style lang="scss" scoped>

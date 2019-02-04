@@ -199,10 +199,10 @@ class Utility extends Model
   public function formatNetworkContent($share)
   {
     $item = collect();
-    $item->id = $share->id;
-    $item->title = $share->title;
-    $item->app_name = $share->app->title;
-    $item->app_category = $share->app->category->name;
+    $item->id = isset($share->id) ? $share->id : 0;
+    $item->title = isset($share->title) ? $share->title : 'no title';
+    $item->app_name = isset($share->app->title) ? $share->app->title : 'no title';
+    $item->app_category = isset($share->app->category->name) ? $share->app->category->name : 'no name';
     $item->token = $share->token;
     switch ($share->app_id) {
       // Film Specific - Framing - App 1 - Frame Composer
@@ -252,7 +252,7 @@ class Utility extends Model
         $obj = json_decode($share->content);
 
         $item->media_type = 'image';
-        $item->featured_media = $obj->imgL;
+        $item->featured_media = $obj->videoL;
         $item->notes = $obj->notes;
         break;
 
@@ -517,6 +517,17 @@ class Utility extends Model
   public static function translable_columns($table)
   {
 
+  }
+
+  /*
+   *
+   * Force encoding in UTF-8
+   *
+  */
+
+  public static function force_utf_encoding($string)
+  {
+      return utf8_encode($string);
   }
 
 }

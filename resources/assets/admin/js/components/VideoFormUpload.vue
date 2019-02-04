@@ -335,7 +335,7 @@
 
               axios.post('/api/apps/video', formData, config)
               .then(function(response){
-                console.log(response);
+                console.log('risposta', response);
                 vue.title = '';
                 vue.video = '';
                 vue.category = '';

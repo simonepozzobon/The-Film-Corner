@@ -345,6 +345,7 @@ angular.module('toolCtrl', [])
           }]
         }]
       }
+
       Timeline.addTimeline(timeline)
       Timeline.getTimelines($scope)
       $scope.$emit('timelineChanged', timeline)

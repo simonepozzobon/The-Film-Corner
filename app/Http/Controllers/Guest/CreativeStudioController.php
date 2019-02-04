@@ -13,6 +13,7 @@ use App\AppKeyword;
 use App\AppCategory;
 use App\AudioLibrary;
 use App\VideoLibrary;
+use App\MediaSubCategory;
 use Illuminate\Http\Request;
 use App\AppsSessions\GuestAppSession;
 use App\Http\Controllers\Controller;
@@ -114,12 +115,21 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         return view('guest.creative-studio.active-parallel-action.index', compact('app', 'app_category', 'elements'));
         break;
 
       case 'sound-studio':
-        $elements = $app->audios()->get();
+        $libraries = MediaSubCategory::where('app_id', 12)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->audios = $library->audios()->get();
+          return $library;
+        });
         $videos = $app->videos()->get();
         $videos = collect($videos->pluck('src')->all());
 
@@ -232,14 +242,23 @@ class CreativeStudioController extends Controller
         break;
 
       case 'active-parallel-action':
-        $elements = $app->videos()->get();
+        $libraries = MediaSubCategory::where('app_id', 10)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->videos = $library->videos()->get();
+          return $library;
+        });
+        // $elements = $app->videos()->get();
         $session = $session;
         $timelines = json_encode($session->timelines);
         return view('guest.creative-studio.active-parallel-action.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'session', 'timelines', 'token'));
         break;
 
       case 'sound-studio':
-        $elements = $app->audios()->get();
+        $libraries = MediaSubCategory::where('app_id', 12)->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->audios = $library->audios()->get();
+          return $library;
+        });
         $session = $session;
         $timelines = json_encode($session->timelines);
         return view('guest.creative-studio.sound-studio.open', compact('app', 'app_category', 'app_session', 'is_student', 'elements', 'timelines', 'session', 'token'));

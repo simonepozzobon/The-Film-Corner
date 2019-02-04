@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use App\Comment;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,11 +12,11 @@ class CommentController extends Controller
 {
     public function sendComment(Request $request)
     {
-        $user = json_decode($request->user);
+        $user = Auth::user();
 
         $comment = new Comment();
         $comment->comment = $request->comment;
-        $comment->userable_id = $user->id;
+        $comment->userable_id = $request->user;
         $comment->userable_type = $request->user_type;
         $comment->commentable_id = $request->commentable_id;
         $comment->commentable_type = $request->commentable_type;

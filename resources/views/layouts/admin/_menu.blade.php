@@ -1,4 +1,4 @@
-<nav id="main-menu" class="navbar navbar-toggleable-md navbar-light fixed-top">
+<nav id="main-menu" class="navbar navbar-expand-lg navbar-light fixed-top">
   {{-- Mobile --}}
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menu-main" aria-controls="menu-main" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -34,6 +34,9 @@
   @if (Auth::guard('admin')->user())
     <div class="collapse navbar-collapse justify-content-end" id="menu-main">
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="{{ route('admin.contest.index') }}" class="nav-link">Contest</a>
+        </li>
         <li class="nav-item">
           <a href="#" id="dropdownMenuLink" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Libraries

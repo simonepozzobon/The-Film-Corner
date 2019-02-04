@@ -1,7 +1,7 @@
 @extends('layouts.guest', ['type' => 'app'])
 @section('title', $app->title)
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   <div class="container-fluid">
@@ -64,22 +64,19 @@
   <script type="text/javascript">
     var AppSession = new TfcSessions();
 
-    var string = '{{ $library }}',
-        images = JSON.parse(string.replace(/&quot;/g,'"'));
-        lenght = Object.keys(images).length;
-        console.log(lenght);
+    var string = '',
+        images = {!! $media_couples !!};
+        lenght = images.length;
+        console.log('quante immagini', lenght);
 
     $('#reload').on('click', function() {
       // Reload Pictures
-      var left_id = Math.floor(Math.random() * lenght),
-          right_id = Math.floor(Math.random() * lenght);
-
-      while (left_id == right_id) {
-        right_id = Math.floor(Math.random() * lenght);
-      }
-
-      $('#img-left').attr('src', images[left_id]);
-      $('#img-right').attr('src', images[right_id]);
+      var idx = Math.floor(Math.random() * lenght),
+          left_id = images[idx].left.id,
+          right_id = images[idx].right.id;
+          console.log(images[idx].left, images[idx].right)
+          $('#img-left').attr('src', '/storage/'+images[idx].left.src);
+          $('#img-right').attr('src', '/storage/'+images[idx].right.src);
     });
   </script>
 @endsection

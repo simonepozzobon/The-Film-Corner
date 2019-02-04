@@ -36,18 +36,15 @@
             {{ GeneralText::field('library') }}
           </div>
           <div class="box-body library">
-            <nav class="navbar navbar-toggleable-sm navbar-library yellow">
-              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+            <nav class="navbar navbar-expand-sm navbar-library yellow">
               <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav" role="tablist">
+                <ul class="nav navbar-nav nav-tabs" role="tablist">
                   @foreach ($app->mediaCategory()->get() as $key => $library)
-                    <li class="nav-item">
-                      <a class="library-link nav-link {{ $key == 0 ? 'active' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
+                    <li class="nav-item w-25">
+                      <a class="library-link nav-link {{ $key == 0 ? 'active ' : '' }}" data-toggle="tab" href="#{{ Utility::slugify($library->name) }}">{{ $library->name }}</a>
                     </li>
                   @endforeach
-                  <li class="nav-item">
+                  <li class="nav-item w-100">
                     <a class="library-link nav-link" data-toggle="tab" href="#uploads">{{ GeneralText::field('uploads') }}</a>
                   </li>
                 </ul>
@@ -55,7 +52,7 @@
             </nav>
             <div id="libraries" class="library-container tab-content">
               @foreach ($app->mediaCategory()->get() as $key => $library)
-                <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane {{ $key == 0 ? 'active' : '' }}" role="tabpanel">
+                <div id="{{ Utility::slugify($library->name) }}" class="assets wrapper tab-pane {{ $key == 0 ? 'active show' : '' }}" role="tabpanel">
                   <div class="row scroller">
                     @foreach ($library->medias()->get() as $key => $media)
                       <div class="asset col-md-3 col-sm-4 pb-3">
@@ -66,7 +63,7 @@
                   </div>
                 </div>
               @endforeach
-              <div id="uploads" class="assets wrapper tab-pane" role="tabpanel">
+              <div id="uploads" class="assets wrapper tab-pane fade" role="tabpanel">
                 <div class="row scroller">
                   <div class="col">
                     <upload-form
@@ -172,9 +169,25 @@
                 $this.data('image-image-obj', imgInstance);
 
                 // constrain object to maximum canvas size
-                var _width = document.getElementById('container-canvas').offsetWidth - 30;
-                if (_width < imgInstance.getScaledWidth()) {
-                  imgInstance.scaleToWidth(_width);
+                var _container = document.getElementById('container-canvas');
+                var _width = _container.offsetWidth - 30;
+                var _height = _container.offsetHeight - 30;
+
+                var iWidth = imgInstance.getScaledWidth();
+                var iHeight = imgInstance.getScaledHeight();
+
+
+                if (iWidth > iHeight) {
+                  if (_width < imgInstance.getScaledWidth()) {
+                    imgInstance.scaleToWidth(_width);
+                    if (_height < imgInstance.getScaledHeight()) {
+                      imgInstance.scaleToHeight(_height);
+                    }
+                  }
+                } else {
+                  if (_height < imgInstance.getScaledHeight()) {
+                    imgInstance.scaleToHeight(_height);
+                  }
                 }
 
                 canvas.add(imgInstance).setActiveObject( imgInstance );

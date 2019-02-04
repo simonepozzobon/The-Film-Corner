@@ -34,7 +34,7 @@
               {{ GeneralText::field('library') }}
             </div>
             <div class="box-body">
-              <nav class="navbar navbar-toggleable-sm navbar-light">
+              <nav class="navbar navbar-expand-sm navbar-light">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
@@ -120,7 +120,7 @@
     var PSV = new PhotoSphereViewer({
       panorama: '{{ asset('img/helpers/null-image.png') }}',
       container: 'photosphere',
-      loading_img: 'http://photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
+      loading_img: '//photo-sphere-viewer.js.org/assets/photosphere-logo.gif',
       navbar: 'zoom fullscreen',
       min_fov: 30, //max zoom
       max_fov: 80, //min zoom

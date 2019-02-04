@@ -1,12 +1,12 @@
-webpackJsonp([28],{
+webpackJsonp([33],{
 
-/***/ 233:
+/***/ 503:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _scrollreveal = __webpack_require__(366);
+var _scrollreveal = __webpack_require__(621);
 
 var _scrollreveal2 = _interopRequireDefault(_scrollreveal);
 
@@ -24,7 +24,7 @@ sr.reveal('.load, .load > img', {
 
 /***/ }),
 
-/***/ 366:
+/***/ 621:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
@@ -45,7 +45,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
 /**
  * ScrollReveal
  * ------------
- * Version : 3.3.6
+ * Version : 3.4.0
  * Website : scrollrevealjs.org
  * Repo    : github.com/jlmakes/scrollreveal.js
  * Author  : Julian Lloyd (@jlmakes)
@@ -64,7 +64,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
     }
 
     sr = this // Save reference to instance.
-    sr.version = '3.3.6'
+    sr.version = '3.4.0'
     sr.tools = new Tools() // *required utilities
 
     if (sr.isSupported()) {
@@ -337,6 +337,8 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
       return [target]
     } else if (sr.tools.isNodeList(target)) {
       return Array.prototype.slice.call(target)
+    } else if (Array.isArray(target)) {
+      return target.filter(sr.tools.isNode)
     }
     return []
   }
@@ -892,12 +894,12 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/////    /////    /////    /////
 
 /***/ }),
 
-/***/ 550:
+/***/ 920:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(233);
+module.exports = __webpack_require__(503);
 
 
 /***/ })
 
-},[550]);
+},[920]);

@@ -1,11 +1,17 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('title', 'Make Your Own Film')
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   <div class="container-fluid">
-    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher', 'student' => $is_student])
+    @php
+      $options = [
+        'save' => false,
+        'close-warning' => false,
+      ];
+    @endphp
+    @include('components.apps.heading_info', ['app' => $app, 'type' => 'teacher', 'student' => $is_student,  'options' => $options])
     <div id="app">
       <div class="row mt">
         <div class="col">

@@ -3,6 +3,7 @@
     notifications="{{ Auth::guard('guest')->user()->unreadNotifications()->get() }}"
     user="{{ Auth::guard('guest')->user() }}"
     user_type="{{ get_class(Auth::guard('guest')->user()) }}"
+    locale="{{ App::getLocale() }}"
   />
 </div>
 <div id="feedback-toolbar" style="position: fixed; bottom: 0; left: 0; z-index: 1030">

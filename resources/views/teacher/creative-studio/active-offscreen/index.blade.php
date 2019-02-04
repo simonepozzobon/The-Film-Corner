@@ -1,7 +1,7 @@
 @extends('layouts.teacher', ['type' => 'app'])
 @section('title', $app->title)
 @section('stylesheets')
-  <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+  <link href="//vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
 @endsection
 @section('content')
   <div class="container-fluid">
@@ -28,7 +28,7 @@
               {{ GeneralText::field('library') }}
             </div>
             <div class="box-body library">
-              <nav class="navbar navbar-toggleable-sm navbar-library yellow">
+              <nav class="navbar navbar-expand-sm navbar-library yellow">
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>

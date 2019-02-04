@@ -44,6 +44,7 @@ return [
         'api' => [
             'driver' => 'token',
             'provider' => 'users',
+            \Barryvdh\Cors\HandleCors::class,
         ],
 
         'admin' => [
@@ -110,22 +111,21 @@ return [
             'model' => App\User::class,
         ],
         'admins' => [
-          'driver' => 'eloquent',
-          'model' => App\Admin::class,
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
         ],
         'teachers' => [
-          'driver' => 'eloquent',
-          'model' => App\Teacher::class,
+            'driver' => 'eloquent',
+            'model' => App\Teacher::class,
         ],
         'students' => [
-          'driver' => 'eloquent',
-          'model' => App\Student::class,
+            'driver' => 'eloquent',
+            'model' => App\Student::class,
         ],
         'guests' => [
-          'driver' => 'eloquent',
-          'model' => App\Guest::class,
+            'driver' => 'eloquent',
+            'model' => App\Guest::class,
         ],
-
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

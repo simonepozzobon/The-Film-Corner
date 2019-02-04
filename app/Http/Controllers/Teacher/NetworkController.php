@@ -36,7 +36,7 @@ class NetworkController extends Controller
 
             // Likes
             $likes = $share->likes()->get();
-            $check = $likes->contains(function($like, $key) use ($user) {
+            $check = $likes->contains(function ($like, $key) use ($user) {
                 return $like->userable_type == get_class($user) && $like->userable_id == $user->id;
             });
             $item->likes = $likes->count();
@@ -52,7 +52,6 @@ class NetworkController extends Controller
             $item->comments = $comments->count() + $replies;
 
             $items->push($item);
-
         }
 
         return view('teacher.network.index', compact('items'));
@@ -70,22 +69,23 @@ class NetworkController extends Controller
 
         $comments = $shared->comments()->get();
         foreach ($comments as $key => $comment) {
-          $dt = new Carbon($comment->created_at);
-          $comment->time = $dt->diffForHumans();
-          $comment->author = $comment->userable()->first();
-          $replies = collect();
-          // $replies = [];
-          foreach ($comment->comments()->get() as $key => $reply) {
-              $dtR = new Carbon($reply->created_at);
-              $reply->time = $dtR->diffForHumans();
-              $reply->author = $reply->userable()->first();
-              // array_push($replies, $reply);
-              $replies->push($reply);
-          }
-          $comment->replies = $replies;
+            $dt = new Carbon($comment->created_at);
+            $comment->time = $dt->diffForHumans();
+            $comment->author = $comment->userable()->first();
+            $replies = collect();
+            // $replies = [];
+            foreach ($comment->comments()->get() as $key => $reply) {
+                $dtR = new Carbon($reply->created_at);
+                $reply->time = $dtR->diffForHumans();
+                $reply->author = $reply->userable()->first();
+                // array_push($replies, $reply);
+                $replies->push($reply);
+            }
+            $comment->replies = $replies;
         }
+
+        $comments = json_encode($comments, JSON_UNESCAPED_UNICODE);
 
         return view('teacher.network.single', compact('item', 'shared', 'comments'));
     }
-
 }

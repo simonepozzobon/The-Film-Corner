@@ -22,9 +22,15 @@ class AudioController extends Controller
 
         foreach ($audios as $key => $audio) {
             $app = $audio->apps()->first();
-            $category = $app->category()->first();
-            $pavilion = $category->section()->first();
-            $audio->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+            if ($app) {
+                $category = $app->category()->first();
+                $pavilion = $category->section()->first();
+                $audio->path = $pavilion->name.' > '.$category->name.' > '.$app->title;
+            } else {
+                $category = null;
+                $pavilion = null;
+                $audio->path = 'error';
+            }
         }
 
         return view('admin.audio.index', compact('categories', 'sections', 'app_categories', 'apps', 'audios'));
