@@ -1,4 +1,4 @@
-webpackJsonp([23],{
+webpackJsonp([24],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -7,7 +7,7 @@ webpackJsonp([23],{
 
 
 var bind = __webpack_require__(15);
-var isBuffer = __webpack_require__(47);
+var isBuffer = __webpack_require__(46);
 
 /*global toString:true*/
 
@@ -3124,12 +3124,12 @@ const TimelineLite = __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__["j" /* _gsScope
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(36);
-var buildURL = __webpack_require__(39);
-var parseHeaders = __webpack_require__(45);
-var isURLSameOrigin = __webpack_require__(43);
+var settle = __webpack_require__(35);
+var buildURL = __webpack_require__(38);
+var parseHeaders = __webpack_require__(44);
+var isURLSameOrigin = __webpack_require__(42);
 var createError = __webpack_require__(14);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(37);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -3226,7 +3226,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(41);
+      var cookies = __webpack_require__(40);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -3352,7 +3352,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(35);
+var enhanceError = __webpack_require__(34);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -3394,7 +3394,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(29);
 
 /***/ }),
 
@@ -19437,7 +19437,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ 29:
+/***/ 28:
 /***/ (function(module, exports) {
 
 /**
@@ -19471,7 +19471,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 30:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19479,7 +19479,7 @@ module.exports = function listToStyles (parentId, list) {
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(15);
-var Axios = __webpack_require__(32);
+var Axios = __webpack_require__(31);
 var defaults = __webpack_require__(9);
 
 /**
@@ -19514,14 +19514,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(31);
+axios.CancelToken = __webpack_require__(30);
 axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(46);
+axios.spread = __webpack_require__(45);
 
 module.exports = axios;
 
@@ -19531,7 +19531,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 31:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19596,7 +19596,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 32:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19604,10 +19604,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(9);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(33);
-var dispatchRequest = __webpack_require__(34);
-var isAbsoluteURL = __webpack_require__(42);
-var combineURLs = __webpack_require__(40);
+var InterceptorManager = __webpack_require__(32);
+var dispatchRequest = __webpack_require__(33);
+var isAbsoluteURL = __webpack_require__(41);
+var combineURLs = __webpack_require__(39);
 
 /**
  * Create a new instance of Axios
@@ -19690,7 +19690,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 33:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19750,14 +19750,14 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 34:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(37);
+var transformData = __webpack_require__(36);
 var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(9);
 
@@ -19837,7 +19837,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19866,7 +19866,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 36:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19900,7 +19900,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19928,7 +19928,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 38:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19972,7 +19972,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 39:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20043,6 +20043,28 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   }
 
   return url;
+};
+
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
 };
 
 
@@ -20245,28 +20267,6 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
-
-
-/***/ }),
-
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var utils = __webpack_require__(0);
 
 module.exports = (
@@ -20322,7 +20322,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 42:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20344,7 +20344,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20420,7 +20420,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 44:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20440,7 +20440,52 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 441:
+/***/ 44:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Parse headers into an object
+ *
+ * ```
+ * Date: Wed, 27 Aug 2014 08:58:49 GMT
+ * Content-Type: application/json
+ * Connection: keep-alive
+ * Transfer-Encoding: chunked
+ * ```
+ *
+ * @param {String} headers Headers needing to be parsed
+ * @returns {Object} Headers parsed into an object
+ */
+module.exports = function parseHeaders(headers) {
+  var parsed = {};
+  var key;
+  var val;
+  var i;
+
+  if (!headers) { return parsed; }
+
+  utils.forEach(headers.split('\n'), function parser(line) {
+    i = line.indexOf(':');
+    key = utils.trim(line.substr(0, i)).toLowerCase();
+    val = utils.trim(line.substr(i + 1));
+
+    if (key) {
+      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+    }
+  });
+
+  return parsed;
+};
+
+
+/***/ }),
+
+/***/ 446:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20456,7 +20501,7 @@ var _axios = __webpack_require__(16);
 
 var _axios2 = _interopRequireDefault(_axios);
 
-var _scrollmonitor = __webpack_require__(632);
+var _scrollmonitor = __webpack_require__(653);
 
 var _scrollmonitor2 = _interopRequireDefault(_scrollmonitor);
 
@@ -20744,51 +20789,6 @@ exports.default = {
 "use strict";
 
 
-var utils = __webpack_require__(0);
-
-/**
- * Parse headers into an object
- *
- * ```
- * Date: Wed, 27 Aug 2014 08:58:49 GMT
- * Content-Type: application/json
- * Connection: keep-alive
- * Transfer-Encoding: chunked
- * ```
- *
- * @param {String} headers Headers needing to be parsed
- * @returns {Object} Headers parsed into an object
- */
-module.exports = function parseHeaders(headers) {
-  var parsed = {};
-  var key;
-  var val;
-  var i;
-
-  if (!headers) { return parsed; }
-
-  utils.forEach(headers.split('\n'), function parser(line) {
-    i = line.indexOf(':');
-    key = utils.trim(line.substr(0, i)).toLowerCase();
-    val = utils.trim(line.substr(i + 1));
-
-    if (key) {
-      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-    }
-  });
-
-  return parsed;
-};
-
-
-/***/ }),
-
-/***/ 46:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 /**
  * Syntactic sugar for invoking a function and expanding an array for arguments.
  *
@@ -20818,7 +20818,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 47:
+/***/ 46:
 /***/ (function(module, exports) {
 
 /*!
@@ -21669,13 +21669,13 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
-/***/ 510:
+/***/ 523:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _FeedbackToolbar = __webpack_require__(683);
+var _FeedbackToolbar = __webpack_require__(704);
 
 var _FeedbackToolbar2 = _interopRequireDefault(_FeedbackToolbar);
 
@@ -21691,14 +21691,6 @@ new _vue2.default({
     FeedbackToolbar: _FeedbackToolbar2.default
   }
 });
-
-/***/ }),
-
-/***/ 597:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-tooltip[data-v-741be5b7] {\n    position: relative;\n    bottom: -3rem;\n    left: 6rem;\n    width: 100%;\n    text-transform: uppercase;\n    font-family: \"Raleway\", sans-serif;\n    font-weight: 900;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 500;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -ms-flex-direction: column;\n          flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n          background-color: #95e2da;\n          color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7]:hover {\n            color: #bdede7;\n            background-color: #252525;\n}\n", ""]);
 
 /***/ }),
 
@@ -21812,7 +21804,15 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 632:
+/***/ 618:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#feedback-toolbar[data-v-741be5b7] {\n  position: relative;\n}\n#feedback-toolbar > .feedback-tooltip[data-v-741be5b7] {\n    position: relative;\n    bottom: -3rem;\n    left: 6rem;\n    width: 100%;\n    text-transform: uppercase;\n    font-family: \"Raleway\", sans-serif;\n    font-weight: 900;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-bg[data-v-741be5b7] {\n    position: relative;\n    margin-bottom: 1rem;\n    margin-left: 1rem;\n    width: 4rem;\n    height: 4rem;\n    background-color: #95e2da;\n}\n#feedback-toolbar > .feedback-bg > .feedback-content[data-v-741be5b7] {\n      position: absolute;\n      top: 50%;\n      left: 50%;\n      transform: translate(-50%, -50%);\n}\n#feedback-toolbar > .feedback-dialog[data-v-741be5b7] {\n    position: absolute;\n    bottom: 0;\n    left: 1rem;\n    -ms-flex-direction: column;\n        flex-direction: column;\n    background-color: #bdede7;\n    z-index: 1031;\n    display: none;\n    opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title[data-v-741be5b7] {\n      display: -ms-flexbox;\n      display: flex;\n      -ms-flex-pack: justify;\n          justify-content: space-between;\n      -ms-flex-align: center;\n          align-items: center;\n      background-color: #95e2da;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .text[data-v-741be5b7] {\n        font-family: \"Raleway\", sans-serif;\n        font-size: 1.75rem;\n        font-weight: 500;\n        text-transform: uppercase;\n        color: #252525;\n        margin-right: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-title > .icon[data-v-741be5b7] {\n        font-size: 1.75rem;\n        color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content[data-v-741be5b7] {\n      -ms-flex-direction: column;\n          flex-direction: column;\n      padding: 2rem;\n      display: none;\n      opacity: 0;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation[data-v-741be5b7] {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n        padding-bottom: 2rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .valutation > button[data-v-741be5b7] {\n          min-width: 8rem;\n          color: #fff;\n          margin-left: 1rem;\n          margin-right: 1rem;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns[data-v-741be5b7] {\n        display: -ms-flexbox;\n        display: flex;\n        -ms-flex-pack: center;\n            justify-content: center;\n        -ms-flex-align: center;\n            align-items: center;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7] {\n          min-width: 8rem;\n          background-color: #95e2da;\n          color: #252525;\n}\n#feedback-toolbar > .feedback-dialog > .dialog-content > .btns > button[data-v-741be5b7]:hover {\n            color: #bdede7;\n            background-color: #252525;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 653:
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(t,e){ true?module.exports=e():"function"==typeof define&&define.amd?define("scrollMonitor",[],e):"object"==typeof exports?exports.scrollMonitor=e():t.scrollMonitor=e()}(this,function(){return function(t){function e(o){if(i[o])return i[o].exports;var s=i[o]={exports:{},id:o,loaded:!1};return t[o].call(s.exports,s,s.exports,e),s.loaded=!0,s.exports}var i={};return e.m=t,e.c=i,e.p="",e(0)}([function(t,e,i){"use strict";var o=i(1),s=o.isInBrowser,n=i(2),r=new n(s?document.body:null);r.setStateFromDOM(null),r.listenToDOM(),s&&(window.scrollMonitor=r),t.exports=r},function(t,e){"use strict";e.VISIBILITYCHANGE="visibilityChange",e.ENTERVIEWPORT="enterViewport",e.FULLYENTERVIEWPORT="fullyEnterViewport",e.EXITVIEWPORT="exitViewport",e.PARTIALLYEXITVIEWPORT="partiallyExitViewport",e.LOCATIONCHANGE="locationChange",e.STATECHANGE="stateChange",e.eventTypes=[e.VISIBILITYCHANGE,e.ENTERVIEWPORT,e.FULLYENTERVIEWPORT,e.EXITVIEWPORT,e.PARTIALLYEXITVIEWPORT,e.LOCATIONCHANGE,e.STATECHANGE],e.isOnServer="undefined"==typeof window,e.isInBrowser=!e.isOnServer,e.defaultOffsets={top:0,bottom:0}},function(t,e,i){"use strict";function o(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}function s(t){return c?0:t===document.body?window.innerHeight||document.documentElement.clientHeight:t.clientHeight}function n(t){return c?0:t===document.body?Math.max(document.body.scrollHeight,document.documentElement.scrollHeight,document.body.offsetHeight,document.documentElement.offsetHeight,document.documentElement.clientHeight):t.scrollHeight}function r(t){return c?0:t===document.body?window.pageYOffset||document.documentElement&&document.documentElement.scrollTop||document.body.scrollTop:t.scrollTop}var h=i(1),c=h.isOnServer,a=h.isInBrowser,l=h.eventTypes,p=i(3),u=!1;if(a)try{var w=Object.defineProperty({},"passive",{get:function(){u=!0}});window.addEventListener("test",null,w)}catch(t){}var d=!!u&&{capture:!1,passive:!0},f=function(){function t(e,i){function h(){if(a.viewportTop=r(e),a.viewportBottom=a.viewportTop+a.viewportHeight,a.documentHeight=n(e),a.documentHeight!==p){for(u=a.watchers.length;u--;)a.watchers[u].recalculateLocation();p=a.documentHeight}}function c(){for(w=a.watchers.length;w--;)a.watchers[w].update();for(w=a.watchers.length;w--;)a.watchers[w].triggerCallbacks()}o(this,t);var a=this;this.item=e,this.watchers=[],this.viewportTop=null,this.viewportBottom=null,this.documentHeight=n(e),this.viewportHeight=s(e),this.DOMListener=function(){t.prototype.DOMListener.apply(a,arguments)},this.eventTypes=l,i&&(this.containerWatcher=i.create(e));var p,u,w;this.update=function(){h(),c()},this.recalculateLocations=function(){this.documentHeight=0,this.update()}}return t.prototype.listenToDOM=function(){a&&(window.addEventListener?(this.item===document.body?window.addEventListener("scroll",this.DOMListener,d):this.item.addEventListener("scroll",this.DOMListener,d),window.addEventListener("resize",this.DOMListener)):(this.item===document.body?window.attachEvent("onscroll",this.DOMListener):this.item.attachEvent("onscroll",this.DOMListener),window.attachEvent("onresize",this.DOMListener)),this.destroy=function(){window.addEventListener?(this.item===document.body?(window.removeEventListener("scroll",this.DOMListener,d),this.containerWatcher.destroy()):this.item.removeEventListener("scroll",this.DOMListener,d),window.removeEventListener("resize",this.DOMListener)):(this.item===document.body?(window.detachEvent("onscroll",this.DOMListener),this.containerWatcher.destroy()):this.item.detachEvent("onscroll",this.DOMListener),window.detachEvent("onresize",this.DOMListener))})},t.prototype.destroy=function(){},t.prototype.DOMListener=function(t){this.setStateFromDOM(t)},t.prototype.setStateFromDOM=function(t){var e=r(this.item),i=s(this.item),o=n(this.item);this.setState(e,i,o,t)},t.prototype.setState=function(t,e,i,o){var s=e!==this.viewportHeight||i!==this.contentHeight;if(this.latestEvent=o,this.viewportTop=t,this.viewportHeight=e,this.viewportBottom=t+e,this.contentHeight=i,s)for(var n=this.watchers.length;n--;)this.watchers[n].recalculateLocation();this.updateAndTriggerWatchers(o)},t.prototype.updateAndTriggerWatchers=function(t){for(var e=this.watchers.length;e--;)this.watchers[e].update();for(e=this.watchers.length;e--;)this.watchers[e].triggerCallbacks(t)},t.prototype.createCustomContainer=function(){return new t},t.prototype.createContainer=function(e){"string"==typeof e?e=document.querySelector(e):e&&e.length>0&&(e=e[0]);var i=new t(e,this);return i.setStateFromDOM(),i.listenToDOM(),i},t.prototype.create=function(t,e){"string"==typeof t?t=document.querySelector(t):t&&t.length>0&&(t=t[0]);var i=new p(this,t,e);return this.watchers.push(i),i},t.prototype.beget=function(t,e){return this.create(t,e)},t}();t.exports=f},function(t,e,i){"use strict";function o(t,e,i){function o(t,e){if(0!==t.length)for(E=t.length;E--;)y=t[E],y.callback.call(s,e,s),y.isOne&&t.splice(E,1)}var s=this;this.watchItem=e,this.container=t,i?i===+i?this.offsets={top:i,bottom:i}:this.offsets={top:i.top||w.top,bottom:i.bottom||w.bottom}:this.offsets=w,this.callbacks={};for(var d=0,f=u.length;d<f;d++)s.callbacks[u[d]]=[];this.locked=!1;var m,v,b,I,E,y;this.triggerCallbacks=function(t){switch(this.isInViewport&&!m&&o(this.callbacks[r],t),this.isFullyInViewport&&!v&&o(this.callbacks[h],t),this.isAboveViewport!==b&&this.isBelowViewport!==I&&(o(this.callbacks[n],t),v||this.isFullyInViewport||(o(this.callbacks[h],t),o(this.callbacks[a],t)),m||this.isInViewport||(o(this.callbacks[r],t),o(this.callbacks[c],t))),!this.isFullyInViewport&&v&&o(this.callbacks[a],t),!this.isInViewport&&m&&o(this.callbacks[c],t),this.isInViewport!==m&&o(this.callbacks[n],t),!0){case m!==this.isInViewport:case v!==this.isFullyInViewport:case b!==this.isAboveViewport:case I!==this.isBelowViewport:o(this.callbacks[p],t)}m=this.isInViewport,v=this.isFullyInViewport,b=this.isAboveViewport,I=this.isBelowViewport},this.recalculateLocation=function(){if(!this.locked){var t=this.top,e=this.bottom;if(this.watchItem.nodeName){var i=this.watchItem.style.display;"none"===i&&(this.watchItem.style.display="");for(var s=0,n=this.container;n.containerWatcher;)s+=n.containerWatcher.top-n.containerWatcher.container.viewportTop,n=n.containerWatcher.container;var r=this.watchItem.getBoundingClientRect();this.top=r.top+this.container.viewportTop-s,this.bottom=r.bottom+this.container.viewportTop-s,"none"===i&&(this.watchItem.style.display=i)}else this.watchItem===+this.watchItem?this.watchItem>0?this.top=this.bottom=this.watchItem:this.top=this.bottom=this.container.documentHeight-this.watchItem:(this.top=this.watchItem.top,this.bottom=this.watchItem.bottom);this.top-=this.offsets.top,this.bottom+=this.offsets.bottom,this.height=this.bottom-this.top,void 0===t&&void 0===e||this.top===t&&this.bottom===e||o(this.callbacks[l],null)}},this.recalculateLocation(),this.update(),m=this.isInViewport,v=this.isFullyInViewport,b=this.isAboveViewport,I=this.isBelowViewport}var s=i(1),n=s.VISIBILITYCHANGE,r=s.ENTERVIEWPORT,h=s.FULLYENTERVIEWPORT,c=s.EXITVIEWPORT,a=s.PARTIALLYEXITVIEWPORT,l=s.LOCATIONCHANGE,p=s.STATECHANGE,u=s.eventTypes,w=s.defaultOffsets;o.prototype={on:function(t,e,i){switch(!0){case t===n&&!this.isInViewport&&this.isAboveViewport:case t===r&&this.isInViewport:case t===h&&this.isFullyInViewport:case t===c&&this.isAboveViewport&&!this.isInViewport:case t===a&&this.isInViewport&&this.isAboveViewport:if(e.call(this,this.container.latestEvent,this),i)return}if(!this.callbacks[t])throw new Error("Tried to add a scroll monitor listener of type "+t+". Your options are: "+u.join(", "));this.callbacks[t].push({callback:e,isOne:i||!1})},off:function(t,e){if(!this.callbacks[t])throw new Error("Tried to remove a scroll monitor listener of type "+t+". Your options are: "+u.join(", "));for(var i,o=0;i=this.callbacks[t][o];o++)if(i.callback===e){this.callbacks[t].splice(o,1);break}},one:function(t,e){this.on(t,e,!0)},recalculateSize:function(){this.height=this.watchItem.offsetHeight+this.offsets.top+this.offsets.bottom,this.bottom=this.top+this.height},update:function(){this.isAboveViewport=this.top<this.container.viewportTop,this.isBelowViewport=this.bottom>this.container.viewportBottom,this.isInViewport=this.top<this.container.viewportBottom&&this.bottom>this.container.viewportTop,this.isFullyInViewport=this.top>=this.container.viewportTop&&this.bottom<=this.container.viewportBottom||this.isAboveViewport&&this.isBelowViewport},destroy:function(){var t=this.container.watchers.indexOf(this),e=this;this.container.watchers.splice(t,1);for(var i=0,o=u.length;i<o;i++)e.callbacks[u[i]].length=0},lock:function(){this.locked=!0},unlock:function(){this.locked=!1}};for(var d=function(t){return function(e,i){this.on.call(this,t,e,i)}},f=0,m=u.length;f<m;f++){var v=u[f];o.prototype[v]=d(v)}t.exports=o}])});
@@ -21820,19 +21820,19 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 683:
+/***/ 704:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__ = __webpack_require__(441);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__ = __webpack_require__(446);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_FeedbackToolbar_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FeedbackToolbar_vue__ = __webpack_require__(797);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_741be5b7_hasScoped_true_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_FeedbackToolbar_vue__ = __webpack_require__(833);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(901)
+  __webpack_require__(945)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -21879,123 +21879,6 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 797:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { attrs: { id: "feedback-toolbar" } }, [
-    _c("div", { ref: "feedback_tooltip", staticClass: "feedback-tooltip" }, [
-      _vm._v("\n    Leave your ideas or your comments\n  ")
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "feedback-bg",
-        attrs: {
-          "data-toggle": "tooltip",
-          "data-placement": "right",
-          "data-html": "true",
-          title: "Leave a feedback"
-        },
-        on: {
-          mouseenter: _vm.mouseEnter,
-          mouseleave: _vm.mouseLeave,
-          click: _vm.toggleDialog
-        }
-      },
-      [_vm._m(0)]
-    ),
-    _vm._v(" "),
-    _c("div", { ref: "feedback_dialog", staticClass: "feedback-dialog" }, [
-      _c("div", { ref: "dialog_title", staticClass: "dialog-title" }, [
-        _c("div", { staticClass: "text" }, [
-          _vm._v("\n        Leave a Feedback to The Film Corner\n      ")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "icon", on: { click: _vm.toggleDialog } }, [
-          _c("i", { staticClass: "fa fa-times" })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { ref: "dialog_content", staticClass: "dialog-content" }, [
-        _c("div", { staticClass: "valutation" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-danger", on: { click: _vm.setNegative } },
-            [_c("i", { staticClass: "fa fa-thumbs-down" })]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-success", on: { click: _vm.setPositive } },
-            [_c("i", { staticClass: "fa fa-thumbs-up" })]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "comment" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.comment,
-                  expression: "comment"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { placeholder: "Your comment or idea..." },
-              domProps: { value: _vm.comment },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.comment = $event.target.value
-                }
-              }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "btns" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-custom", on: { click: _vm.sendFeedback } },
-            [_c("i", { staticClass: "fa fa-paper-plane" })]
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "feedback-content" }, [
-      _c("i", { staticClass: "fa fa-envelope-o" })
-    ])
-  }
-]
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-741be5b7", esExports)
-  }
-}
-
-/***/ }),
-
 /***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22015,7 +21898,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(29)
+var listToStyles = __webpack_require__(28)
 
 /*
 type StyleObject = {
@@ -22218,6 +22101,123 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
+/***/ 833:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { attrs: { id: "feedback-toolbar" } }, [
+    _c("div", { ref: "feedback_tooltip", staticClass: "feedback-tooltip" }, [
+      _vm._v("\n    Leave your ideas or your comments\n  ")
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "feedback-bg",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "right",
+          "data-html": "true",
+          title: "Leave a feedback"
+        },
+        on: {
+          mouseenter: _vm.mouseEnter,
+          mouseleave: _vm.mouseLeave,
+          click: _vm.toggleDialog
+        }
+      },
+      [_vm._m(0)]
+    ),
+    _vm._v(" "),
+    _c("div", { ref: "feedback_dialog", staticClass: "feedback-dialog" }, [
+      _c("div", { ref: "dialog_title", staticClass: "dialog-title" }, [
+        _c("div", { staticClass: "text" }, [
+          _vm._v("\n        Leave a Feedback to The Film Corner\n      ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "icon", on: { click: _vm.toggleDialog } }, [
+          _c("i", { staticClass: "fa fa-times" })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { ref: "dialog_content", staticClass: "dialog-content" }, [
+        _c("div", { staticClass: "valutation" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-danger", on: { click: _vm.setNegative } },
+            [_c("i", { staticClass: "fa fa-thumbs-down" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            { staticClass: "btn btn-success", on: { click: _vm.setPositive } },
+            [_c("i", { staticClass: "fa fa-thumbs-up" })]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "comment" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.comment,
+                  expression: "comment"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Your comment or idea..." },
+              domProps: { value: _vm.comment },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.comment = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "btns" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-custom", on: { click: _vm.sendFeedback } },
+            [_c("i", { staticClass: "fa fa-paper-plane" })]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "feedback-content" }, [
+      _c("i", { staticClass: "fa fa-envelope-o" })
+    ])
+  }
+]
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-741be5b7", esExports)
+  }
+}
+
+/***/ }),
+
 /***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22225,7 +22225,7 @@ function applyToTag (styleElement, obj) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(44);
+var normalizeHeaderName = __webpack_require__(43);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -22319,13 +22319,13 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 901:
+/***/ 945:
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(597);
+var content = __webpack_require__(618);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -22346,12 +22346,12 @@ if(false) {
 
 /***/ }),
 
-/***/ 951:
+/***/ 992:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(510);
+module.exports = __webpack_require__(523);
 
 
 /***/ })
 
-},[951]);
+},[992]);

@@ -114,15 +114,12 @@ class FilmSpecificController extends Controller
         });
         $images->all();
 
-        // debug
-        // $libraries = $app->mediaCategory()->get();
-        // foreach ($libraries as $key => $library) {
-        //   dump($library->media_on_sub_category());
-        // }
-        // dd('end');
-
-
-        return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category', 'images'));
+        $libraries = $app->mediaCategory()->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->medias = $library->medias()->get();
+          return $library;
+        });
+        return view('teacher.film-specific.frame-composer.index', compact('app', 'app_category', 'images', 'elements'));
         break;
 
       case 'frame-crop':
@@ -322,10 +319,18 @@ class FilmSpecificController extends Controller
       case 'frame-composer':
         $images = $app->medias()->get();
         $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
             return $img->category_id == 2;
         });
         $images->all();
-        return view('teacher.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'images'));
+
+        $libraries = $app->mediaCategory()->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->medias = $library->medias()->get();
+          return $library;
+        });
+        $session->json_data = htmlspecialchars_decode($session->json_data);
+        return view('teacher.film-specific.frame-composer.open', compact('app', 'app_category', 'session', 'app_session', 'is_student', 'images', 'elements'));
         break;
 
       case 'frame-crop':

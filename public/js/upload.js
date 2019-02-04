@@ -1,4 +1,4 @@
-webpackJsonp([25],{
+webpackJsonp([26],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -7,7 +7,7 @@ webpackJsonp([25],{
 
 
 var bind = __webpack_require__(15);
-var isBuffer = __webpack_require__(47);
+var isBuffer = __webpack_require__(46);
 
 /*global toString:true*/
 
@@ -3117,6 +3117,14 @@ const TimelineLite = __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__["j" /* _gsScope
 
 /***/ }),
 
+/***/ 1007:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(538);
+
+
+/***/ }),
+
 /***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3124,12 +3132,12 @@ const TimelineLite = __WEBPACK_IMPORTED_MODULE_0__TweenLite_js__["j" /* _gsScope
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(36);
-var buildURL = __webpack_require__(39);
-var parseHeaders = __webpack_require__(45);
-var isURLSameOrigin = __webpack_require__(43);
+var settle = __webpack_require__(35);
+var buildURL = __webpack_require__(38);
+var parseHeaders = __webpack_require__(44);
+var isURLSameOrigin = __webpack_require__(42);
 var createError = __webpack_require__(14);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(38);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(37);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -3226,7 +3234,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(41);
+      var cookies = __webpack_require__(40);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -3352,7 +3360,7 @@ module.exports = function isCancel(value) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(35);
+var enhanceError = __webpack_require__(34);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -3394,7 +3402,7 @@ module.exports = function bind(fn, thisArg) {
 /***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(30);
+module.exports = __webpack_require__(29);
 
 /***/ }),
 
@@ -19437,7 +19445,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ 29:
+/***/ 28:
 /***/ (function(module, exports) {
 
 /**
@@ -19471,7 +19479,7 @@ module.exports = function listToStyles (parentId, list) {
 
 /***/ }),
 
-/***/ 30:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19479,7 +19487,7 @@ module.exports = function listToStyles (parentId, list) {
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(15);
-var Axios = __webpack_require__(32);
+var Axios = __webpack_require__(31);
 var defaults = __webpack_require__(9);
 
 /**
@@ -19514,14 +19522,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(12);
-axios.CancelToken = __webpack_require__(31);
+axios.CancelToken = __webpack_require__(30);
 axios.isCancel = __webpack_require__(13);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(46);
+axios.spread = __webpack_require__(45);
 
 module.exports = axios;
 
@@ -19531,7 +19539,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 31:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19596,7 +19604,7 @@ module.exports = CancelToken;
 
 /***/ }),
 
-/***/ 32:
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19604,10 +19612,10 @@ module.exports = CancelToken;
 
 var defaults = __webpack_require__(9);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(33);
-var dispatchRequest = __webpack_require__(34);
-var isAbsoluteURL = __webpack_require__(42);
-var combineURLs = __webpack_require__(40);
+var InterceptorManager = __webpack_require__(32);
+var dispatchRequest = __webpack_require__(33);
+var isAbsoluteURL = __webpack_require__(41);
+var combineURLs = __webpack_require__(39);
 
 /**
  * Create a new instance of Axios
@@ -19690,7 +19698,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 33:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19750,14 +19758,14 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 34:
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(37);
+var transformData = __webpack_require__(36);
 var isCancel = __webpack_require__(13);
 var defaults = __webpack_require__(9);
 
@@ -19837,7 +19845,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19866,7 +19874,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 36:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19900,7 +19908,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19928,7 +19936,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 38:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19972,7 +19980,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 39:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20043,6 +20051,28 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   }
 
   return url;
+};
+
+
+/***/ }),
+
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
 };
 
 
@@ -20245,28 +20275,6 @@ process.umask = function() { return 0; };
 "use strict";
 
 
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
-
-
-/***/ }),
-
-/***/ 41:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var utils = __webpack_require__(0);
 
 module.exports = (
@@ -20322,7 +20330,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 42:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20344,7 +20352,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 43:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20420,7 +20428,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 44:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20440,7 +20448,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 45:
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20485,7 +20493,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 46:
+/***/ 45:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20520,7 +20528,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 47:
+/***/ 46:
 /***/ (function(module, exports) {
 
 /*!
@@ -20545,292 +20553,6 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-
-/***/ }),
-
-/***/ 488:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _gsap = __webpack_require__(24);
-
-var _axios = __webpack_require__(16);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-var _jquery = __webpack_require__(56);
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = {
-    name: 'UploadForm',
-    props: {
-        app_id: {
-            type: String,
-            default: null
-        },
-        color: {
-            type: String,
-            default: 'yellow'
-        },
-        csrf_field: {
-            type: String,
-            default: null
-        },
-        route: {
-            type: String,
-            default: null
-        },
-        has_title: {
-            type: Boolean,
-            default: false
-        }
-    },
-    data: function data() {
-        return {
-            assets_list: null,
-            error_msg: null,
-            file: null,
-            percent: 0,
-            session_token: '',
-            title: '',
-            videos: []
-        };
-    },
-    computed: {},
-    methods: {
-        filesChange: function filesChange(name, files) {
-            this.file = files[0];
-            this.error_msg = null;
-        },
-        formatResponse: function formatResponse(response) {
-            var _this = this;
-
-            var vue = this;
-            return new Promise(function (resolve, reject) {
-                switch (true) {
-                    case parseInt(_this.app_id) == 10:
-                        _this.assets_list = document.getElementById('upload-assets');
-                        var asset = document.createElement('tr');
-                        asset.setAttribute('id', 'video-' + response.video_id);
-                        asset.innerHTML = '<td><img src="' + response.img + '" width="57" class="img-fluid"></td>' + '<td>' + '<input id="video-id-src" type="hidden" name="" value="' + response.src + '">' + '<div class="btn-group">' +
-                        // '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
-                        '<button type="button" class="btn btn-blue" onclick="videoDelete(' + response.video_id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' + '</div>' + '</td>';
-                        _this.assets_list.appendChild(asset);
-
-                        var video = {
-                            'img': response.img,
-                            'video': response.src
-                        };
-                        _this.videos.push(video);
-                        localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
-
-                        resolve('done');
-                        break;
-
-                    case parseInt(_this.app_id) == 11:
-                        _this.assets_list = document.getElementById('upload-assets');
-                        var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
-
-                        var event = new CustomEvent('new-video-on-library', {
-                            'detail': asset
-                        });
-                        _this.assets_list.dispatchEvent(event); // send the event to angularjs
-
-                        resolve('done');
-                        break;
-
-                    case parseInt(_this.app_id) == 13:
-                        _this.assets_list = document.getElementById('upload-assets');
-                        var asset = document.createElement('div');
-                        asset.className = 'asset col-md-3 col-sm-4 pb-3';
-                        asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
-                        _this.assets_list.appendChild(asset);
-
-                        resolve('done');
-                        break;
-
-                    case parseInt(_this.app_id) == 15:
-                        _this.assets_list = document.getElementById('upload-assets');
-                        var asset = document.createElement('li');
-                        asset.className = 'col-md-3 asset';
-                        asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
-                        _this.assets_list.appendChild(asset);
-                        resolve('done');
-                        break;
-
-                    case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
-                        // contests
-                        _this.assets_list = document.getElementById('response');
-                        var asset = document.createElement('div');
-                        _this.$refs.input.style.display = 'none';
-                        _this.$refs.title.style.display = 'none';
-                        _this.$refs.loader.style.display = 'none';
-                        _this.error_msg = '';
-
-                        asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
-                        _this.assets_list.appendChild(asset);
-
-                        var video = {
-                            'img': response.img,
-                            'video': response.src
-                        };
-
-                        localStorage.setItem('app-' + _this.app_id + '-video', JSON.stringify(video));
-                        resolve('stop');
-                        break;
-                }
-                reject('I can\'t manage this response');
-            });
-        },
-        loaderHide: function loaderHide() {
-            var t1 = new _gsap.TimelineMax();
-            t1.to(this.$refs.loader, .2, {
-                opacity: 0,
-                display: 'none',
-                ease: _gsap.Sine.easeInOut
-            }).to(this.$refs.title, .2, {
-                opacity: 1,
-                display: 'block',
-                ease: _gsap.Sine.easeInOut
-            }).to(this.$refs.input, .2, {
-                opacity: 1,
-                display: 'flex',
-                ease: _gsap.Sine.easeInOut
-            });
-        },
-        loaderShow: function loaderShow() {
-            var t1 = new _gsap.TimelineMax();
-            t1.to(this.$refs.input, .2, {
-                opacity: 0,
-                display: 'none',
-                ease: _gsap.Sine.easeInOut
-            }).to(this.$refs.title, .2, {
-                opacity: 0,
-                display: 'none',
-                ease: _gsap.Sine.easeInOut
-            }).to(this.$refs.loader, .2, {
-                opacity: 1,
-                display: 'flex',
-                ease: _gsap.Sine.easeInOut
-            });
-        },
-        sendUpload: function sendUpload() {
-            this.session_token = document.getElementById('session-token').value;
-            if (!this.session_token || this.session_token == 'null') {
-                this.error_msg = 'This session is corrupted. Please, save and reload the application';
-                return false;
-            }
-
-            if (this.has_title == true) {
-                if (this.title == 'Untitled' || this.title == '') {
-                    this.error_msg = 'You must insert a title!';
-                    return false;
-                }
-            }
-
-            if (!this.file) {
-                this.error_msg = 'You must pick a file!';
-                return false;
-            }
-
-            // Reset the progress-bar
-            this.$refs.progress_bar.style.width = '0%';
-            this.percent = 0;
-
-            // show loader
-            this.loaderShow();
-
-            // Prepare the form
-            var vue = this;
-            var data = new FormData();
-            data.append('_token', this.csrf_field);
-            data.append('media', this.file);
-            data.append('session_token', this.session_token);
-            data.append('session', this.session_token);
-            if (this.has_title) {
-                data.append('directly-save', true);
-                data.append('title', this.title);
-            }
-
-            // Start the request
-            var request = new XMLHttpRequest();
-            request.upload.addEventListener('progress', function (e) {
-                var percent = Math.round(e.loaded / e.total * 100);
-                vue.$refs.progress_bar.style.width = percent + '%';
-                vue.percent = percent;
-            }, false);
-
-            request.addEventListener('load', function (e) {
-                if (parseInt(e.target.status) != 200) {
-                    // error
-                    vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
-                } else {
-                    // success
-                    var XMLresponse = JSON.parse(e.target.responseText);
-                    vue.formatResponse(XMLresponse).then(function (response) {
-                        console.log(response);
-                        if (response == 'done') {
-                            vue.loaderHide();
-                        }
-                    }).catch(function (error) {
-                        vue.error_msg = 'Oops the server can\'t manage the response';
-                    });
-                }
-            }, false);
-
-            request.open('post', this.route);
-            request.send(data);
-        }
-    },
-    mounted: function mounted() {
-        (0, _jquery2.default)(document).trigger('upload-module-loaded', null);
-    }
-}; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /***/ }),
 
@@ -21626,6 +21348,292 @@ const TweenMaxBase = TweenMax;
 
 /***/ }),
 
+/***/ 501:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _gsap = __webpack_require__(24);
+
+var _axios = __webpack_require__(16);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _jquery = __webpack_require__(57);
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = {
+    name: 'UploadForm',
+    props: {
+        app_id: {
+            type: String,
+            default: null
+        },
+        color: {
+            type: String,
+            default: 'yellow'
+        },
+        csrf_field: {
+            type: String,
+            default: null
+        },
+        route: {
+            type: String,
+            default: null
+        },
+        has_title: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data: function data() {
+        return {
+            assets_list: null,
+            error_msg: null,
+            file: null,
+            percent: 0,
+            session_token: '',
+            title: '',
+            videos: []
+        };
+    },
+    computed: {},
+    methods: {
+        filesChange: function filesChange(name, files) {
+            this.file = files[0];
+            this.error_msg = null;
+        },
+        formatResponse: function formatResponse(response) {
+            var _this = this;
+
+            var vue = this;
+            return new Promise(function (resolve, reject) {
+                switch (true) {
+                    case parseInt(_this.app_id) == 10:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('tr');
+                        asset.setAttribute('id', 'video-' + response.video_id);
+                        asset.innerHTML = '<td><img src="' + response.img + '" width="57" class="img-fluid"></td>' + '<td>' + '<input id="video-id-src" type="hidden" name="" value="' + response.src + '">' + '<div class="btn-group">' +
+                        // '<button type="button" class="btn btn-blue" onclick="videoPlay(\''+response.src+'\')"><i class="fa fa-play" aria-hidden="true"></i></button>'+
+                        '<button type="button" class="btn btn-blue" onclick="videoDelete(' + response.video_id + ')"><i class="fa fa-trash-o" aria-hidden="true"></i></button>' + '</div>' + '</td>';
+                        _this.assets_list.appendChild(asset);
+
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
+                        _this.videos.push(video);
+                        localStorage.setItem('app-10-video-uploaded', JSON.stringify(_this.videos));
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 11:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = '<tr>' + '<td class="align-middle">' + '<img src="' + response.img + '" width="57">' + '</td>' + '<td class="align-middle">' + response.name + '</td>' + '<td class="align-middle" ng-controller="toolController">' + '<div class="btn-group">' + '<button ng-click="addElement(\'' + response.video_id + '\',\'' + response.name + '\', \'' + response.duration + '\', \'' + response.src + '\')" class="btn btn-secondary btn-yellow" data-toggle="tooltip" data-placement="top" title="Add To Timeline">' + '<i class="fa fa-plus" aria-hidden="true"></i>' + '</button>' + '</div>' + '</td>' + '</tr>';
+
+                        var event = new CustomEvent('new-video-on-library', {
+                            'detail': asset
+                        });
+                        _this.assets_list.dispatchEvent(event); // send the event to angularjs
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 13:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('div');
+                        asset.className = 'asset col-md-3 col-sm-4 pb-3';
+                        asset.innerHTML = '<img src="' + response.img + '" alt="image asset" class="img-fluid" data-img-src="' + response.img + '"/>' + '<a href="" class="abs-btn btn btn-sm btn-danger d-none"><i class="fa fa-times"></i></a>';
+                        _this.assets_list.appendChild(asset);
+
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 15:
+                        _this.assets_list = document.getElementById('upload-assets');
+                        var asset = document.createElement('li');
+                        asset.className = 'col-md-3 asset';
+                        asset.innerHTML = '<img src="' + response.img + '" class="img-fluid w-100">';
+                        _this.assets_list.appendChild(asset);
+                        resolve('done');
+                        break;
+
+                    case parseInt(_this.app_id) == 16 || parseInt(_this.app_id) == 17:
+                        // contests
+                        _this.assets_list = document.getElementById('response');
+                        var asset = document.createElement('div');
+                        _this.$refs.input.style.display = 'none';
+                        _this.$refs.title.style.display = 'none';
+                        _this.$refs.loader.style.display = 'none';
+                        _this.error_msg = '';
+
+                        asset.innerHTML = '<h3 class="text-center pb-4 text-success">Your video has been sent!</h3>' + '<h6 class="text-center pb-4 text-success">One last step, give it a title and save it!</h6>';
+                        _this.assets_list.appendChild(asset);
+
+                        var video = {
+                            'img': response.img,
+                            'video': response.src
+                        };
+
+                        localStorage.setItem('app-' + _this.app_id + '-video', JSON.stringify(video));
+                        resolve('stop');
+                        break;
+                }
+                reject('I can\'t manage this response');
+            });
+        },
+        loaderHide: function loaderHide() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.loader, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
+                opacity: 1,
+                display: 'block',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.input, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        loaderShow: function loaderShow() {
+            var t1 = new _gsap.TimelineMax();
+            t1.to(this.$refs.input, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.title, .2, {
+                opacity: 0,
+                display: 'none',
+                ease: _gsap.Sine.easeInOut
+            }).to(this.$refs.loader, .2, {
+                opacity: 1,
+                display: 'flex',
+                ease: _gsap.Sine.easeInOut
+            });
+        },
+        sendUpload: function sendUpload() {
+            this.session_token = document.getElementById('session-token').value;
+            if (!this.session_token || this.session_token == 'null') {
+                this.error_msg = 'This session is corrupted. Please, save and reload the application';
+                return false;
+            }
+
+            if (this.has_title == true) {
+                if (this.title == 'Untitled' || this.title == '') {
+                    this.error_msg = 'You must insert a title!';
+                    return false;
+                }
+            }
+
+            if (!this.file) {
+                this.error_msg = 'You must pick a file!';
+                return false;
+            }
+
+            // Reset the progress-bar
+            this.$refs.progress_bar.style.width = '0%';
+            this.percent = 0;
+
+            // show loader
+            this.loaderShow();
+
+            // Prepare the form
+            var vue = this;
+            var data = new FormData();
+            data.append('_token', this.csrf_field);
+            data.append('media', this.file);
+            data.append('session_token', this.session_token);
+            data.append('session', this.session_token);
+            if (this.has_title) {
+                data.append('directly-save', true);
+                data.append('title', this.title);
+            }
+
+            // Start the request
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function (e) {
+                var percent = Math.round(e.loaded / e.total * 100);
+                vue.$refs.progress_bar.style.width = percent + '%';
+                vue.percent = percent;
+            }, false);
+
+            request.addEventListener('load', function (e) {
+                if (parseInt(e.target.status) != 200) {
+                    // error
+                    vue.error_msg = 'Oops something went wrong, plase save the session and reload the page';
+                } else {
+                    // success
+                    var XMLresponse = JSON.parse(e.target.responseText);
+                    vue.formatResponse(XMLresponse).then(function (response) {
+                        console.log(response);
+                        if (response == 'done') {
+                            vue.loaderHide();
+                        }
+                    }).catch(function (error) {
+                        vue.error_msg = 'Oops the server can\'t manage the response';
+                    });
+                }
+            }, false);
+
+            request.open('post', this.route);
+            request.send(data);
+        }
+    },
+    mounted: function mounted() {
+        (0, _jquery2.default)(document).trigger('upload-module-loaded', null);
+    }
+}; //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/***/ }),
+
 /***/ 51:
 /***/ (function(module, exports) {
 
@@ -21657,7 +21665,7 @@ module.exports = function(originalModule) {
 
 /***/ }),
 
-/***/ 524:
+/***/ 538:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -21667,7 +21675,7 @@ var _vue = __webpack_require__(25);
 
 var _vue2 = _interopRequireDefault(_vue);
 
-var _UploadForm = __webpack_require__(730);
+var _UploadForm = __webpack_require__(759);
 
 var _UploadForm2 = _interopRequireDefault(_UploadForm);
 
@@ -21679,14 +21687,6 @@ new _vue2.default({
         UploadForm: _UploadForm2.default
     }
 });
-
-/***/ }),
-
-/***/ 589:
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n#input-box {\n  display: -ms-flexbox;\n  display: flex;\n}\n#progress-bar {\n  margin-left: 32px;\n}\n#progress-bar > .progress-bar {\n    height: auto;\n}\n#loader {\n  display: none;\n  opacity: 0;\n  position: relative;\n}\n#loader > i {\n    position: absolute;\n    height: 16px;\n    width: inherit;\n    top: 25%;\n    transform: translateY(-50%);\n}\n#loader > #percent {\n    margin-left: 32px;\n}\n", ""]);
 
 /***/ }),
 
@@ -21800,19 +21800,27 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ 730:
+/***/ 608:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)();
+exports.push([module.i, "\n#input-box {\n  display: -ms-flexbox;\n  display: flex;\n}\n#progress-bar {\n  margin-left: 32px;\n}\n#progress-bar > .progress-bar {\n    height: auto;\n}\n#loader {\n  display: none;\n  opacity: 0;\n  position: relative;\n}\n#loader > i {\n    position: absolute;\n    height: 16px;\n    width: inherit;\n    top: 25%;\n    transform: translateY(-50%);\n}\n#loader > #percent {\n    margin-left: 32px;\n}\n", ""]);
+
+/***/ }),
+
+/***/ 759:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__ = __webpack_require__(488);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__ = __webpack_require__(501);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__);
 /* harmony namespace reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__) if(["default","default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return __WEBPACK_IMPORTED_MODULE_0__babel_loader_cacheDirectory_node_modules_vue_loader_lib_selector_type_script_index_0_UploadForm_vue__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_650736c2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__ = __webpack_require__(789);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__node_modules_vue_loader_lib_template_compiler_index_id_data_v_650736c2_hasScoped_false_buble_transforms_node_modules_vue_loader_lib_selector_type_template_index_0_UploadForm_vue__ = __webpack_require__(823);
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(893)
+  __webpack_require__(937)
 }
 var normalizeComponent = __webpack_require__(6)
 /* script */
@@ -21859,131 +21867,6 @@ if (false) {(function () {
 
 /***/ }),
 
-/***/ 789:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", {}, [
-    this.has_title
-      ? _c(
-          "div",
-          { ref: "title", staticClass: "mb-3", attrs: { id: "title" } },
-          [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.title,
-                  expression: "title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Title" },
-              domProps: { value: _vm.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.title = $event.target.value
-                }
-              }
-            })
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      { ref: "input", staticClass: "mb-3", attrs: { id: "input-box" } },
-      [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { id: "media", type: "file", name: "media" },
-          on: {
-            change: function($event) {
-              _vm.filesChange($event.target.name, $event.target.files)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          attrs: { id: "session-token", type: "hidden", value: "null" }
-        }),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            class: "ml-3 btn btn-" + _vm.color,
-            attrs: { id: "upload" },
-            on: { click: _vm.sendUpload }
-          },
-          [
-            _c("i", {
-              staticClass: "fa fa-upload",
-              attrs: { "aria-hidden": "true" }
-            })
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { ref: "loader", attrs: { id: "loader" } }, [
-      _c("i", { staticClass: "fa fa-refresh fa-spin" }),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "progress",
-          staticStyle: { width: "100%" },
-          attrs: { id: "progress-bar" }
-        },
-        [
-          _c("div", {
-            ref: "progress_bar",
-            staticClass: "progress-bar",
-            attrs: {
-              role: "progressbar",
-              "aria-valuenow": "25",
-              "aria-valuemin": "0",
-              "aria-valuemax": "100"
-            }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { attrs: { id: "percent" } }, [
-        _vm._v(_vm._s(this.percent) + "%")
-      ])
-    ]),
-    _vm._v(" "),
-    _vm.error_msg
-      ? _c("div", { staticClass: "d-flex justify-content-around pb-4" }, [
-          _c("div", { staticClass: "error text-danger" }, [
-            _c("b", [_vm._v(_vm._s(this.error_msg))])
-          ])
-        ])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-var esExports = { render: render, staticRenderFns: staticRenderFns }
-/* harmony default export */ __webpack_exports__["a"] = (esExports);
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-650736c2", esExports)
-  }
-}
-
-/***/ }),
-
 /***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22003,7 +21886,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(29)
+var listToStyles = __webpack_require__(28)
 
 /*
 type StyleObject = {
@@ -22206,29 +22089,127 @@ function applyToTag (styleElement, obj) {
 
 /***/ }),
 
-/***/ 893:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 823:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(589);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(8)("cbd20218", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-650736c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-650736c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
+"use strict";
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", {}, [
+    this.has_title
+      ? _c(
+          "div",
+          { ref: "title", staticClass: "mb-3", attrs: { id: "title" } },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.title,
+                  expression: "title"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.title = $event.target.value
+                }
+              }
+            })
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      { ref: "input", staticClass: "mb-3", attrs: { id: "input-box" } },
+      [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { id: "media", type: "file", name: "media" },
+          on: {
+            change: function($event) {
+              _vm.filesChange($event.target.name, $event.target.files)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { id: "session-token", type: "hidden", value: "null" }
+        }),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            class: "ml-3 btn btn-" + _vm.color,
+            attrs: { id: "upload" },
+            on: { click: _vm.sendUpload }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-upload",
+              attrs: { "aria-hidden": "true" }
+            })
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { ref: "loader", attrs: { id: "loader" } }, [
+      _c("i", { staticClass: "fa fa-refresh fa-spin" }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "progress",
+          staticStyle: { width: "100%" },
+          attrs: { id: "progress-bar" }
+        },
+        [
+          _c("div", {
+            ref: "progress_bar",
+            staticClass: "progress-bar",
+            attrs: {
+              role: "progressbar",
+              "aria-valuenow": "25",
+              "aria-valuemin": "0",
+              "aria-valuemax": "100"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { attrs: { id: "percent" } }, [
+        _vm._v(_vm._s(this.percent) + "%")
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.error_msg
+      ? _c("div", { staticClass: "d-flex justify-content-around pb-4" }, [
+          _c("div", { staticClass: "error text-danger" }, [
+            _c("b", [_vm._v(_vm._s(this.error_msg))])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+var esExports = { render: render, staticRenderFns: staticRenderFns }
+/* harmony default export */ __webpack_exports__["a"] = (esExports);
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-650736c2", esExports)
+  }
 }
 
 /***/ }),
@@ -22240,7 +22221,7 @@ if(false) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(44);
+var normalizeHeaderName = __webpack_require__(43);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -22334,12 +22315,31 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 965:
+/***/ 937:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(524);
+// style-loader: Adds some css to the DOM by adding a <style> tag
 
+// load the styles
+var content = __webpack_require__(608);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(8)("cbd20218", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-650736c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-650736c2\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./UploadForm.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 
-},[965]);
+},[1007]);

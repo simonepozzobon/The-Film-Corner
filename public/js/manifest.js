@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		34: 0
+/******/ 		35: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/admin/main","1":"/js/admin/contest","2":"/js/teacher-profile","3":"/js/timeline","4":"/js/timelineaudio","5":"/js/notifications","6":"/js/soundscapes","7":"/js/app/sound-studio","8":"/js/app/intercut-crosscutting","9":"/js/character-builder","10":"/js/socket-test","11":"/js/teacher-chat","12":"/js/network-single","13":"/js/admin/video","14":"/js/admin/image","15":"/js/admin/audio","16":"/js/admin/translate","17":"/js/admin/teachers","18":"/js/admin/guests","19":"/js/admin/captions","20":"/js/admin/footer","21":"/js/app/studio-home","22":"/js/admin/keywords","23":"/js/feedback-toolbar","24":"/js/network","25":"/js/upload","26":"/js/first-visit","27":"/js/app","28":"/js/loader","29":"/js/message","30":"/js/admin/admin","31":"/js/vendor","32":"/js/city","33":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/admin/main","1":"/js/admin/contest","2":"/js/teacher-profile","3":"/js/timeline","4":"/js/timelineaudio","5":"/js/notifications","6":"/js/soundscapes","7":"/js/app/sound-studio","8":"/js/app/intercut-crosscutting","9":"/js/frame-composer","10":"/js/character-builder","11":"/js/socket-test","12":"/js/teacher-chat","13":"/js/network-single","14":"/js/admin/video","15":"/js/admin/image","16":"/js/admin/audio","17":"/js/admin/translate","18":"/js/admin/teachers","19":"/js/admin/guests","20":"/js/admin/captions","21":"/js/admin/footer","22":"/js/app/studio-home","23":"/js/admin/keywords","24":"/js/feedback-toolbar","25":"/js/network","26":"/js/upload","27":"/js/first-visit","28":"/js/app","29":"/js/loader","30":"/js/message","31":"/js/admin/admin","32":"/js/vendor","33":"/js/city","34":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {

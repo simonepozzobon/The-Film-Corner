@@ -8,6 +8,7 @@
   "/js/soundscapes.js": "/js/soundscapes.js",
   "/js/app/sound-studio.js": "/js/app/sound-studio.js",
   "/js/app/intercut-crosscutting.js": "/js/app/intercut-crosscutting.js",
+  "/js/frame-composer.js": "/js/frame-composer.js",
   "/js/character-builder.js": "/js/character-builder.js",
   "/js/socket-test.js": "/js/socket-test.js",
   "/js/teacher-chat.js": "/js/teacher-chat.js",

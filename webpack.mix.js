@@ -37,6 +37,7 @@ mix
   .js('resources/assets/js/timeline-audio/timelineaudio.js', 'public/js')
   .js('resources/assets/js/soundscapes/soundscapes.js', 'public/js')
   .js('resources/assets/js/character-builder/character-builder.js', 'public/js')
+  .js('resources/assets/js/frame-composer/frame-composer.js', 'public/js')
   .js('resources/assets/js/app-loading/loader.js', 'public/js/loader.js')
 
   .js('resources/assets/js/socket-test', 'public/js')
