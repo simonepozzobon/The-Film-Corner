@@ -182,7 +182,11 @@ const character = new Vue({
                             console.log(scaleFactor)
 
                             if (objHeight > height) {
-                                scaleFactor = (height * scaleFactor) / objHeight
+                                if (scaleFactor > 1) {
+                                    scaleFactor = height / objHeight
+                                } else {
+                                    scaleFactor = (height * scaleFactor) / objHeight
+                                }
                                 console.log(scaleFactor)
                                 if (scaleFactor < 1) {
                                     obj.set({
@@ -203,6 +207,7 @@ const character = new Vue({
 
                         // force center
                         obj.viewportCenter()
+
                     } else if (idx == 0) {
                         let items = this.landscape.getObjects()
                         for (let i = 0; i < items.length; i++) {
