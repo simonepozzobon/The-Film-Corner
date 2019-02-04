@@ -24471,7 +24471,7 @@ module.exports = function(originalModule) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n.customs {\n  width: auto !important;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n}\n.customs .nav-item {\n    -ms-flex-positive: 1;\n        flex-grow: 1;\n    width: inherit !important;\n}\n", ""]);
+exports.push([module.i, "\n.customs {\n  width: auto !important;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n}\n.customs .nav-item {\n    -ms-flex-positive: 1;\n        flex-grow: 1;\n    width: inherit !important;\n}\n#libraries {\n  height: calc(100% - 64px);\n}\n", ""]);
 
 /***/ }),
 

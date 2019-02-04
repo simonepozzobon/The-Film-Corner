@@ -119,4 +119,8 @@ export default {
         width: inherit !important;
     }
 }
+
+#libraries {
+    height: calc(100% - 64px);
+}
 </style>
