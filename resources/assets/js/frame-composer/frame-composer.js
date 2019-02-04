@@ -185,22 +185,12 @@ const character = new Vue({
 
                         obj.setCoords()
                         this.objs.push(obj)
-
-                        // force center
-                        // objWidth = obj.getScaledWidth()
-                        // objHeight = obj.getScaledHeight()
-                        // let left = (this.canvasWidth / 2) - (objWidth / 2)
-                        // let top = (this.canvasHeight / 2) - (objHeight / 2)
-                        // console.log(objWidth, objHeight, left, top)
-                        //
-                        // obj.set({
-                        //     left: left,
-                        //     top: top
-                        // })
-                        // obj.setCoords()
-
                         this.addListener(obj)
                         this.canvas.add(obj)
+
+                        console.log(obj.getScaledWidth(), obj.getScaledHeight())
+
+                        // force center
                         obj.viewportCenter()
                     } else if (idx == 0) {
                         let items = this.landscape.getObjects()
