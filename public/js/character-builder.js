@@ -24257,9 +24257,10 @@ var character = new _vue2.default({
                 return library.id == libraryIdx;
             });
 
+            // rimuove gli oggetti già inseriti nel gruppo
             var objs = this.groups[idx].getObjects();
             for (var i = 0; i < objs.length; i++) {
-                this.canvas.remove(objs[i]);
+                this.groups[idx].remove(objs[i]);
             }
 
             if (idx > -1) {

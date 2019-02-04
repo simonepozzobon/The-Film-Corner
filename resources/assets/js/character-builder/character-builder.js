@@ -66,9 +66,10 @@ const character = new Vue({
             // trovo a quale libreria appartiene l'oggetto che sto aggiungendo
             let idx = this.libraries.findIndex(library => library.id == libraryIdx)
 
+            // rimuove gli oggetti già inseriti nel gruppo
             let objs = this.groups[idx].getObjects()
             for (var i = 0; i < objs.length; i++) {
-                this.canvas.remove(objs[i])
+                this.groups[idx].remove(objs[i])
             }
 
 
