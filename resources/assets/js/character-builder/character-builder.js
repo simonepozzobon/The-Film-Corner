@@ -18,9 +18,10 @@ const character = new Vue({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: true,
+            selectable: false,
             session: null,
             initialized: false,
+            gutter: 20,
         }
     },
     watch: {
@@ -170,7 +171,7 @@ const character = new Vue({
                         // this.groups[idx].centerH()
                     } else {
                         // calcolo l'altezza del singolo elemento considerando la scala
-                        let height = this.canvasHeight / (this.groups.length - 1)
+                        let height = (this.canvasHeight / (this.groups.length - 1))
                         scaleFactor = scaleFactor / (this.groups.length - 1)
 
 

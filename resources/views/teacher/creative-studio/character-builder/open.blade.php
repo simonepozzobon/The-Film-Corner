@@ -37,28 +37,6 @@
 
         var token = '{{ $app_session->token }}'
         $('#session-token').attr('value', token)
-
-        function init(canvas)
-        {
-            json_data = $('#loadCanvas').val();
-            $.cookie('tfc-canvas', JSON.stringify(json_data));
-
-            //LOAD JSON DATA on canvas
-            canvas.loadFromJSON(JSON.parse(json_data), function(obj) {
-                canvas.renderAll();
-                canvas.forEachObject(function(obj) {
-                    console.log(obj);
-                    var src = cleanUrl(obj),
-                        el = $('[data-img-src="'+src+'"]'),
-                        asset = el.parent();
-
-                    asset.children('a').removeClass('d-none');
-                    asset.data('image-image-obj', obj);
-                })
-            });
-
-            return json_data;
-        }
     </script>
     <script src="{{ mix('js/character-builder.js') }}"></script>
 @endsection

@@ -24232,9 +24232,10 @@ var character = new _vue2.default({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: true,
+            selectable: false,
             session: null,
-            initialized: false
+            initialized: false,
+            gutter: 20
         };
     },
     watch: {
