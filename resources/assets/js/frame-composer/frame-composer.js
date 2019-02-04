@@ -167,19 +167,25 @@ const character = new Vue({
                         let objHeight = obj.getScaledHeight()
                         let scaleFactor = this.canvasWidth / objWidth
 
-                        if (objWidth > width) {
-                            obj.set({
-                                scaleX: scaleFactor,
-                                scaleY: scaleFactor,
-                            })
+                        if (objWidth > width || objHeight > height) {
+                            if (objWidth > width) {
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor,
+                                    })
+                                }
+                            }
 
                             objHeight = obj.getScaledHeight()
                             if (objHeight > height) {
-                                scaleFactor = (this.canvasHeight * scaleFactor) / objHeight
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor,
-                                })
+                                scaleFactor = (height * scaleFactor) / objHeight
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor,
+                                    })
+                                }
                             }
                         }
 
@@ -187,8 +193,6 @@ const character = new Vue({
                         this.objs.push(obj)
                         this.addListener(obj)
                         this.canvas.add(obj)
-
-                        console.log(obj.getScaledWidth(), obj.getScaledHeight())
 
                         // force center
                         obj.viewportCenter()

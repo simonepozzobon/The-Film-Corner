@@ -51745,19 +51745,25 @@ var character = new _vue2.default({
                         var objHeight = obj.getScaledHeight();
                         var scaleFactor = _this2.canvasWidth / objWidth;
 
-                        if (objWidth > width) {
-                            obj.set({
-                                scaleX: scaleFactor,
-                                scaleY: scaleFactor
-                            });
+                        if (objWidth > width || objHeight > height) {
+                            if (objWidth > width) {
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor
+                                    });
+                                }
+                            }
 
                             objHeight = obj.getScaledHeight();
                             if (objHeight > height) {
-                                scaleFactor = _this2.canvasHeight * scaleFactor / objHeight;
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor
-                                });
+                                scaleFactor = height * scaleFactor / objHeight;
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor
+                                    });
+                                }
                             }
                         }
 
@@ -51765,8 +51771,6 @@ var character = new _vue2.default({
                         _this2.objs.push(obj);
                         _this2.addListener(obj);
                         _this2.canvas.add(obj);
-
-                        console.log(obj.getScaledWidth(), obj.getScaledHeight());
 
                         // force center
                         obj.viewportCenter();
