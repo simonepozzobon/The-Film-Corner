@@ -24215,7 +24215,7 @@ var character = new _vue2.default({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: true
+            selectable: false
         };
     },
     watch: {

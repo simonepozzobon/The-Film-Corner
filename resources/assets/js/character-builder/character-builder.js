@@ -18,7 +18,7 @@ const character = new Vue({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: true,
+            selectable: false,
         }
     },
     watch: {
