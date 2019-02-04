@@ -230,7 +230,6 @@ const character = new Vue({
 
                         if (height < this.canvasHeight) {
                             scaleFactor = this.canvasHeight / height
-
                             this.landscape.set({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor,
@@ -239,8 +238,8 @@ const character = new Vue({
 
                         // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
                         width = this.landscape.getScaledWidth()
-                        if (width < this.canvas.getWidth()) {
-                            scaleFactor = this.canvas.getWidth() / width
+                        if (width < this.canvasWidth) {
+                            scaleFactor = (this.canvasWidth * scaleFactor) / width
                             this.landscape.set({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor,
@@ -248,10 +247,10 @@ const character = new Vue({
                         }
 
                         // centra lo sfondo
-                        this.landscape.centerH()
                         this.landscape.set({
                             left: 0,
                         })
+                        this.landscape.viewportCenter()
                         this.landscape.setCoords()
                     }
                 }
