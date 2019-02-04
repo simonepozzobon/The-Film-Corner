@@ -75,7 +75,8 @@ const character = new Vue({
         },
         init: function() {
             this.canvas = new fabric.Canvas('image-editor', {
-                backgroundColor: '#f3f3f3'
+                backgroundColor: '#f3f3f3',
+                centeredScaling: true,
             })
             this.canvas.setWidth(this.canvasWidth)
             this.canvas.setHeight(this.canvasHeight)
@@ -163,6 +164,7 @@ const character = new Vue({
                         let width = this.canvas.getWidth()
                         let height = this.canvas.getHeight()
                         let objWidth = obj.getScaledWidth()
+                        let objHeight = obj.getScaledHeight()
                         let scaleFactor = this.canvasWidth / objWidth
 
                         if (objWidth > width) {
@@ -171,7 +173,7 @@ const character = new Vue({
                                 scaleY: scaleFactor,
                             })
 
-                            let objHeight = obj.getScaledHeight()
+                            objHeight = obj.getScaledHeight()
                             if (objHeight > height) {
                                 scaleFactor = (this.canvasHeight * scaleFactor) / objHeight
                                 obj.set({
@@ -183,9 +185,23 @@ const character = new Vue({
 
                         obj.setCoords()
                         this.objs.push(obj)
-                        obj.center()
+
+                        // force center
+                        // objWidth = obj.getScaledWidth()
+                        // objHeight = obj.getScaledHeight()
+                        // let left = (this.canvasWidth / 2) - (objWidth / 2)
+                        // let top = (this.canvasHeight / 2) - (objHeight / 2)
+                        // console.log(objWidth, objHeight, left, top)
+                        //
+                        // obj.set({
+                        //     left: left,
+                        //     top: top
+                        // })
+                        // obj.setCoords()
+
                         this.addListener(obj)
                         this.canvas.add(obj)
+                        obj.viewportCenter()
                     } else if (idx == 0) {
                         let items = this.landscape.getObjects()
                         for (let i = 0; i < items.length; i++) {

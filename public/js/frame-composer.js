@@ -51644,7 +51644,8 @@ var character = new _vue2.default({
         },
         init: function init() {
             this.canvas = new _fabric.fabric.Canvas('image-editor', {
-                backgroundColor: '#f3f3f3'
+                backgroundColor: '#f3f3f3',
+                centeredScaling: true
             });
             this.canvas.setWidth(this.canvasWidth);
             this.canvas.setHeight(this.canvasHeight);
@@ -51741,6 +51742,7 @@ var character = new _vue2.default({
                         var width = _this2.canvas.getWidth();
                         var height = _this2.canvas.getHeight();
                         var objWidth = obj.getScaledWidth();
+                        var objHeight = obj.getScaledHeight();
                         var scaleFactor = _this2.canvasWidth / objWidth;
 
                         if (objWidth > width) {
@@ -51749,7 +51751,7 @@ var character = new _vue2.default({
                                 scaleY: scaleFactor
                             });
 
-                            var objHeight = obj.getScaledHeight();
+                            objHeight = obj.getScaledHeight();
                             if (objHeight > height) {
                                 scaleFactor = _this2.canvasHeight * scaleFactor / objHeight;
                                 obj.set({
@@ -51761,9 +51763,23 @@ var character = new _vue2.default({
 
                         obj.setCoords();
                         _this2.objs.push(obj);
-                        obj.center();
+
+                        // force center
+                        // objWidth = obj.getScaledWidth()
+                        // objHeight = obj.getScaledHeight()
+                        // let left = (this.canvasWidth / 2) - (objWidth / 2)
+                        // let top = (this.canvasHeight / 2) - (objHeight / 2)
+                        // console.log(objWidth, objHeight, left, top)
+                        //
+                        // obj.set({
+                        //     left: left,
+                        //     top: top
+                        // })
+                        // obj.setCoords()
+
                         _this2.addListener(obj);
                         _this2.canvas.add(obj);
+                        obj.viewportCenter();
                     } else if (idx == 0) {
                         var items = _this2.landscape.getObjects();
                         for (var i = 0; i < items.length; i++) {
