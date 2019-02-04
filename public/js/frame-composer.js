@@ -51756,8 +51756,12 @@ var character = new _vue2.default({
                             }
 
                             objHeight = obj.getScaledHeight();
+                            console.log(objHeight);
+                            console.log(scaleFactor);
+
                             if (objHeight > height) {
                                 scaleFactor = height * scaleFactor / objHeight;
+                                console.log(scaleFactor);
                                 if (scaleFactor < 1) {
                                     obj.set({
                                         scaleX: scaleFactor,
@@ -51771,6 +51775,9 @@ var character = new _vue2.default({
                         _this2.objs.push(obj);
                         _this2.addListener(obj);
                         _this2.canvas.add(obj);
+
+                        console.log(width, height);
+                        console.log(obj.getScaledWidth(), obj.getScaledHeight());
 
                         // force center
                         obj.viewportCenter();

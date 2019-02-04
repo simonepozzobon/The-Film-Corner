@@ -178,8 +178,12 @@ const character = new Vue({
                             }
 
                             objHeight = obj.getScaledHeight()
+                            console.log(objHeight)
+                            console.log(scaleFactor)
+
                             if (objHeight > height) {
                                 scaleFactor = (height * scaleFactor) / objHeight
+                                console.log(scaleFactor)
                                 if (scaleFactor < 1) {
                                     obj.set({
                                         scaleX: scaleFactor,
@@ -193,6 +197,9 @@ const character = new Vue({
                         this.objs.push(obj)
                         this.addListener(obj)
                         this.canvas.add(obj)
+
+                        console.log(width, height)
+                        console.log(obj.getScaledWidth(), obj.getScaledHeight())
 
                         // force center
                         obj.viewportCenter()
