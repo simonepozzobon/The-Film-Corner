@@ -5,7 +5,7 @@ import FrameComposer from './components/FrameComposer.vue'
 fabric.Object.prototype.toObject = (function (toObject) {
     return function (propertiesToInclude) {
         propertiesToInclude = (propertiesToInclude || []).concat(
-          ['originalObj','libraryIdx']
+          ['originalObj','libraryIdx', 'uuid']
         );
         return toObject.apply(this, [propertiesToInclude]);
     };
@@ -50,6 +50,13 @@ const character = new Vue({
             }
             return color;
         },
+        uniqid: function() {
+            var ts=String(new Date().getTime()), i = 0, out = ''
+            for(i=0;i<ts.length;i+=2) {
+                out+=Number(ts.substr(i, 2)).toString(36)
+            }
+            return ('d'+out)
+        },
         loadFromJSON: function() {
             for (let i = 0; i < this.session.objects.length; i++) {
                 let objs = this.session.objects[i]
@@ -89,6 +96,7 @@ const character = new Vue({
             this.canvas.add(this.landscape)
 
             this.addListeners()
+            this.selectionListeners()
 
             if (this.session) {
                 this.loadFromJSON()
@@ -106,6 +114,18 @@ const character = new Vue({
                     this.saveCanvas()
                 })
             }
+        },
+        selectionListeners: function() {
+            let events = ['selection:created', 'selection:updated']
+            for (let j = 0; j < events.length; j++) {
+                this.canvas.on(events[j], (el) => {
+                    this.$emit('canvas-select', el.selected)
+                })
+            }
+
+            this.canvas.on('selection:cleared', (el) => {
+                this.$emit('canvas-deselect', el.deselected)
+            })
         },
         setCanvasSize: function(width) {
             if (this.canvas) {
@@ -146,12 +166,14 @@ const character = new Vue({
                     this.canvas.add(obj)
                 } else {
                     // new Object
+                    let uuid = this.uniqid()
                     obj.set({
                         selectable: this.selectable,
                         centeredScaling: true,
                         originX: 'center',
                         originalObj: item,
-                        libraryIdx: idx
+                        libraryIdx: idx,
+                        uuid: uuid,
                     })
 
                     // se non si tratta di uno sfondo
@@ -178,8 +200,6 @@ const character = new Vue({
                             }
 
                             objHeight = obj.getScaledHeight()
-                            console.log(objHeight)
-                            console.log(scaleFactor)
 
                             if (objHeight > height) {
                                 if (scaleFactor > 1) {
@@ -187,7 +207,6 @@ const character = new Vue({
                                 } else {
                                     scaleFactor = (height * scaleFactor) / objHeight
                                 }
-                                console.log(scaleFactor)
                                 if (scaleFactor < 1) {
                                     obj.set({
                                         scaleX: scaleFactor,
@@ -201,9 +220,6 @@ const character = new Vue({
                         this.objs.push(obj)
                         this.addListener(obj)
                         this.canvas.add(obj)
-
-                        console.log(width, height)
-                        console.log(obj.getScaledWidth(), obj.getScaledHeight())
 
                         // force center
                         obj.viewportCenter()

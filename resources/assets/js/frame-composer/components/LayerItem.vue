@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="layer-item">
+    <div class="layer-item" :class="isActive">
         <div>
             {{ idx }}
         </div>
@@ -46,16 +46,41 @@ export default {
             return this.obj.toJSON()
         }
     },
+    data: function() {
+        return {
+            isActive: '',
+        }
+    },
     methods: {
         selectItem: function() {
             this.$root.canvas.setActiveObject(this.$root.objs[this.idx])
             this.$root.canvas.renderAll()
         },
         deleteTrack: function() {
+            this.$root.canvas.discardActiveObject()
             this.$root.canvas.remove(this.$root.objs[this.idx])
+            this.isActive = null
             this.$root.canvas.renderAll()
             this.$root.objs.splice(this.idx, 1)
         }
+    },
+    mounted: function() {
+        this.$root.$on('canvas-select', els => {
+            let check = els.findIndex(el => el.uuid == this.parsedObj.uuid)
+            if (check > -1) {
+                this.isActive = 'selected'
+            } else {
+                this.isActive = null
+            }
+        })
+
+
+        this.$root.$on('canvas-deselect', els => {
+            let check = els.findIndex(el => el.uuid == this.parsedObj.uuid)
+            if (check > -1) {
+                this.isActive = null
+            }
+        })
     }
 }
 </script>
@@ -73,6 +98,14 @@ export default {
 
     &:hover {
         background-color: rgba($black, .2);
+    }
+
+    &.selected {
+        background-color: rgba($tfc-dark-orange, .3);
+
+        &:hover {
+            background-color: rgba($tfc-dark-orange, .8);
+        }
     }
 }
 </style>

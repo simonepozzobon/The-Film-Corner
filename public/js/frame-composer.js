@@ -3146,16 +3146,46 @@ exports.default = {
             return this.obj.toJSON();
         }
     },
+    data: function data() {
+        return {
+            isActive: ''
+        };
+    },
     methods: {
         selectItem: function selectItem() {
             this.$root.canvas.setActiveObject(this.$root.objs[this.idx]);
             this.$root.canvas.renderAll();
         },
         deleteTrack: function deleteTrack() {
+            this.$root.canvas.discardActiveObject();
             this.$root.canvas.remove(this.$root.objs[this.idx]);
+            this.isActive = null;
             this.$root.canvas.renderAll();
             this.$root.objs.splice(this.idx, 1);
         }
+    },
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$root.$on('canvas-select', function (els) {
+            var check = els.findIndex(function (el) {
+                return el.uuid == _this.parsedObj.uuid;
+            });
+            if (check > -1) {
+                _this.isActive = 'selected';
+            } else {
+                _this.isActive = null;
+            }
+        });
+
+        this.$root.$on('canvas-deselect', function (els) {
+            var check = els.findIndex(function (el) {
+                return el.uuid == _this.parsedObj.uuid;
+            });
+            if (check > -1) {
+                _this.isActive = null;
+            }
+        });
     }
 }; //
 //
@@ -3252,7 +3282,7 @@ if (false) {(function () {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n.layer-item {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  -ms-flex-align: center;\n      align-items: center;\n  margin-bottom: 0.5rem;\n  padding: 0.5rem;\n  cursor: pointer;\n}\n.layer-item:hover {\n    background-color: rgba(37, 37, 37, 0.2);\n}\n", ""]);
+exports.push([module.i, "\n.layer-item {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-pack: justify;\n      justify-content: space-between;\n  -ms-flex-align: center;\n      align-items: center;\n  margin-bottom: 0.5rem;\n  padding: 0.5rem;\n  cursor: pointer;\n}\n.layer-item:hover {\n    background-color: rgba(37, 37, 37, 0.2);\n}\n.layer-item.selected {\n    background-color: rgba(232, 163, 96, 0.3);\n}\n.layer-item.selected:hover {\n      background-color: rgba(232, 163, 96, 0.8);\n}\n", ""]);
 
 /***/ }),
 
@@ -3264,7 +3294,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "layer-item" }, [
+  return _c("div", { staticClass: "layer-item", class: _vm.isActive }, [
     _c("div", [_vm._v("\n        " + _vm._s(_vm.idx) + "\n    ")]),
     _vm._v(" "),
     _c("div", { staticClass: "layer-title" }, [
@@ -51576,7 +51606,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _fabric.fabric.Object.prototype.toObject = function (toObject) {
     return function (propertiesToInclude) {
-        propertiesToInclude = (propertiesToInclude || []).concat(['originalObj', 'libraryIdx']);
+        propertiesToInclude = (propertiesToInclude || []).concat(['originalObj', 'libraryIdx', 'uuid']);
         return toObject.apply(this, [propertiesToInclude]);
     };
 }(_fabric.fabric.Object.prototype.toObject);
@@ -51619,6 +51649,15 @@ var character = new _vue2.default({
             }
             return color;
         },
+        uniqid: function uniqid() {
+            var ts = String(new Date().getTime()),
+                i = 0,
+                out = '';
+            for (i = 0; i < ts.length; i += 2) {
+                out += Number(ts.substr(i, 2)).toString(36);
+            }
+            return 'd' + out;
+        },
         loadFromJSON: function loadFromJSON() {
             for (var i = 0; i < this.session.objects.length; i++) {
                 var objs = this.session.objects[i];
@@ -51658,6 +51697,7 @@ var character = new _vue2.default({
             this.canvas.add(this.landscape);
 
             this.addListeners();
+            this.selectionListeners();
 
             if (this.session) {
                 this.loadFromJSON();
@@ -51678,6 +51718,20 @@ var character = new _vue2.default({
                 });
             }
         },
+        selectionListeners: function selectionListeners() {
+            var _this2 = this;
+
+            var events = ['selection:created', 'selection:updated'];
+            for (var j = 0; j < events.length; j++) {
+                this.canvas.on(events[j], function (el) {
+                    _this2.$emit('canvas-select', el.selected);
+                });
+            }
+
+            this.canvas.on('selection:cleared', function (el) {
+                _this2.$emit('canvas-deselect', el.deselected);
+            });
+        },
         setCanvasSize: function setCanvasSize(width) {
             if (this.canvas) {
                 var scaleFactor = width / this.canvasWidth;
@@ -51691,7 +51745,7 @@ var character = new _vue2.default({
             }
         },
         addToCanvas: function addToCanvas(item, libraryIdx) {
-            var _this2 = this;
+            var _this3 = this;
 
             var isID = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
             var isImage = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
@@ -51719,17 +51773,19 @@ var character = new _vue2.default({
                 if (isImage) {
                     // Object from session JSON
                     obj.set(item);
-                    _this2.objs.push(obj);
-                    _this2.addListener(obj);
-                    _this2.canvas.add(obj);
+                    _this3.objs.push(obj);
+                    _this3.addListener(obj);
+                    _this3.canvas.add(obj);
                 } else {
                     // new Object
+                    var uuid = _this3.uniqid();
                     obj.set({
-                        selectable: _this2.selectable,
+                        selectable: _this3.selectable,
                         centeredScaling: true,
                         originX: 'center',
                         originalObj: item,
-                        libraryIdx: idx
+                        libraryIdx: idx,
+                        uuid: uuid
                     });
 
                     // se non si tratta di uno sfondo
@@ -51739,11 +51795,11 @@ var character = new _vue2.default({
                             originY: 'center'
                         });
 
-                        var width = _this2.canvas.getWidth();
-                        var height = _this2.canvas.getHeight();
+                        var width = _this3.canvas.getWidth();
+                        var height = _this3.canvas.getHeight();
                         var objWidth = obj.getScaledWidth();
                         var objHeight = obj.getScaledHeight();
-                        var scaleFactor = _this2.canvasWidth / objWidth;
+                        var scaleFactor = _this3.canvasWidth / objWidth;
 
                         if (objWidth > width || objHeight > height) {
                             if (objWidth > width) {
@@ -51756,8 +51812,6 @@ var character = new _vue2.default({
                             }
 
                             objHeight = obj.getScaledHeight();
-                            console.log(objHeight);
-                            console.log(scaleFactor);
 
                             if (objHeight > height) {
                                 if (scaleFactor > 1) {
@@ -51765,7 +51819,6 @@ var character = new _vue2.default({
                                 } else {
                                     scaleFactor = height * scaleFactor / objHeight;
                                 }
-                                console.log(scaleFactor);
                                 if (scaleFactor < 1) {
                                     obj.set({
                                         scaleX: scaleFactor,
@@ -51776,26 +51829,23 @@ var character = new _vue2.default({
                         }
 
                         obj.setCoords();
-                        _this2.objs.push(obj);
-                        _this2.addListener(obj);
-                        _this2.canvas.add(obj);
-
-                        console.log(width, height);
-                        console.log(obj.getScaledWidth(), obj.getScaledHeight());
+                        _this3.objs.push(obj);
+                        _this3.addListener(obj);
+                        _this3.canvas.add(obj);
 
                         // force center
                         obj.viewportCenter();
                     } else if (idx == 0) {
-                        var items = _this2.landscape.getObjects();
+                        var items = _this3.landscape.getObjects();
                         for (var i = 0; i < items.length; i++) {
-                            _this2.landscape.removeWithUpdate(items[i]);
+                            _this3.landscape.removeWithUpdate(items[i]);
                         }
 
-                        _this2.landscape.addWithUpdate(obj);
-                        var _width = _this2.landscape.getScaledWidth();
-                        var _scaleFactor = _this2.canvasWidth / _width;
-                        if (_width > _this2.canvasWidth) {
-                            _this2.landscape.set({
+                        _this3.landscape.addWithUpdate(obj);
+                        var _width = _this3.landscape.getScaledWidth();
+                        var _scaleFactor = _this3.canvasWidth / _width;
+                        if (_width > _this3.canvasWidth) {
+                            _this3.landscape.set({
                                 scaleX: _scaleFactor,
                                 scaleY: _scaleFactor
                             });
@@ -51803,32 +51853,32 @@ var character = new _vue2.default({
 
                         // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
                         // per coprire tutto lo spazio
-                        var _height = _this2.landscape.getScaledHeight();
+                        var _height = _this3.landscape.getScaledHeight();
 
-                        if (_height < _this2.canvasHeight) {
-                            _scaleFactor = _this2.canvasHeight / _height;
-                            _this2.landscape.set({
+                        if (_height < _this3.canvasHeight) {
+                            _scaleFactor = _this3.canvasHeight / _height;
+                            _this3.landscape.set({
                                 scaleX: _scaleFactor,
                                 scaleY: _scaleFactor
                             });
                         }
 
                         // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
-                        _width = _this2.landscape.getScaledWidth();
-                        if (_width < _this2.canvasWidth) {
-                            _scaleFactor = _this2.canvasWidth * _scaleFactor / _width;
-                            _this2.landscape.set({
+                        _width = _this3.landscape.getScaledWidth();
+                        if (_width < _this3.canvasWidth) {
+                            _scaleFactor = _this3.canvasWidth * _scaleFactor / _width;
+                            _this3.landscape.set({
                                 scaleX: _scaleFactor,
                                 scaleY: _scaleFactor
                             });
                         }
 
                         // centra lo sfondo
-                        _this2.landscape.set({
+                        _this3.landscape.set({
                             left: 0
                         });
-                        _this2.landscape.viewportCenter();
-                        _this2.landscape.setCoords();
+                        _this3.landscape.viewportCenter();
+                        _this3.landscape.setCoords();
                     }
                 }
             });
@@ -51854,17 +51904,17 @@ var character = new _vue2.default({
         }
     },
     mounted: function mounted() {
-        var _this3 = this;
+        var _this4 = this;
 
         this.getSize();
         this.init();
 
         window.addEventListener('resize', function () {
-            _this3.getSize();
+            _this4.getSize();
         });
 
         this.$on('add-to-canvas', function (obj, libraryIdx) {
-            _this3.addToCanvas(obj, libraryIdx);
+            _this4.addToCanvas(obj, libraryIdx);
         });
     }
 });
