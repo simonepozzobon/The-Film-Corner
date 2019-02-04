@@ -22662,8 +22662,8 @@ exports.default = {
         }
     },
     watch: {
-        '$root.previewWidth': function $rootPreviewWidth(h) {
-            this.$refs.container.style.height = h + 64 + 'px';
+        '$root.previewHeight': function $rootPreviewHeight(h) {
+            this.$refs.container.style.height = h + 'px';
         }
     },
     computed: {},
@@ -22724,9 +22724,7 @@ exports.default = {
             this.$emit('preview', src, img);
         }
     },
-    mounted: function mounted() {
-        console.log('libreria', this.library.id);
-    }
+    mounted: function mounted() {}
 }; //
 //
 //
@@ -22956,11 +22954,23 @@ exports.default = {
     },
     watch: {
         '$root.window': function $rootWindow(value) {
+            this.getSize();
+        }
+    },
+    methods: {
+        getSize: function getSize() {
             this.$root.previewHeight = this.$refs.container.offsetHeight;
             this.$root.previewWidth = this.$refs.container.offsetWidth - 64;
         }
     },
-    mounted: function mounted() {}
+    mounted: function mounted() {
+        var _this = this;
+
+        this.$root.$on('trigger-resize', function () {
+            console.log('triggered');
+            _this.getSize();
+        });
+    }
 };
 
 /***/ }),
@@ -24204,8 +24214,8 @@ var character = new _vue2.default({
             libraries: null,
             groups: [],
             canvasWidth: 1000,
-            canvasHeight: 1000,
-            selectable: false
+            canvasHeight: 562,
+            selectable: true
         };
     },
     watch: {
@@ -24214,6 +24224,14 @@ var character = new _vue2.default({
         }
     },
     methods: {
+        randomColor: function randomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        },
         getSize: function getSize() {
             this.window = {
                 h: window.innerHeight,
@@ -24226,6 +24244,7 @@ var character = new _vue2.default({
             });
             this.canvas.setWidth(this.canvasWidth);
             this.canvas.setHeight(this.canvasHeight);
+            this.$emit('trigger-resize');
 
             // creo i gruppi per le varie librerie
             for (var i = 0; i < this.libraries.length; i++) {
@@ -24239,9 +24258,9 @@ var character = new _vue2.default({
         },
         setCanvasSize: function setCanvasSize(width) {
             if (this.canvas) {
-                var scaleFactor = width / 1000;
-                this.canvas.setWidth(width);
-                this.canvas.setHeight(width);
+                var scaleFactor = width / this.canvasWidth;
+                this.canvas.setWidth(this.canvasWidth * scaleFactor);
+                this.canvas.setHeight(this.canvasHeight * scaleFactor);
 
                 // set zoom for resizing
                 this.canvas.setZoom(scaleFactor);
@@ -24269,7 +24288,8 @@ var character = new _vue2.default({
                     // Aggiungo l'immagine al gruppo
                     obj.set({
                         selectable: _this.selectable,
-                        centeredScaling: true
+                        centeredScaling: true,
+                        originX: 'center'
                     });
                     _this.groups[idx].addWithUpdate(obj);
 
@@ -24285,10 +24305,34 @@ var character = new _vue2.default({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor
                             });
+
+                            width = _this.groups[idx].getScaledWidth();
+                            var canvasW = _this.canvas.getWidth();
                         }
+
+                        // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
+                        // per coprire tutto lo spazio
+                        var height = _this.groups[idx].getScaledHeight();
+                        if (height < _this.canvasHeight) {
+                            scaleFactor = _this.canvasHeight / height;
+
+                            _this.groups[idx].set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor
+                            });
+                        }
+
+                        // centra lo sfondo
+                        _this.groups[idx].centerH();
+                        _this.groups[idx].set({
+                            left: 0
+                        });
+                        _this.groups[idx].setCoords();
+
+                        // this.groups[idx].centerH()
                     } else {
                         // calcolo l'altezza del singolo elemento considerando la scala
-                        var height = _this.canvasHeight / (_this.groups.length - 1);
+                        var _height = _this.canvasHeight / (_this.groups.length - 1);
                         scaleFactor = scaleFactor / (_this.groups.length - 1);
 
                         _this.groups[idx].set({
@@ -24297,9 +24341,19 @@ var character = new _vue2.default({
                             scaleY: scaleFactor
                         });
 
+                        var objHeight = obj.getScaledHeight() * scaleFactor;
+
+                        if (_height < objHeight) {
+                            var objScale = _height / objHeight;
+                            obj.set({
+                                scaleX: objScale,
+                                scaleY: objScale
+                            });
+                        }
+
                         // calcolo la sua posizione sempre in base alla scala
                         var _width = _this.groups[idx].getScaledWidth();
-                        var top = height * idx - height;
+                        var top = _height * idx - _height;
                         var left = _this.canvasWidth / 2 - _width / 2;
 
                         _this.groups[idx].set({
@@ -24392,7 +24446,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -24763,7 +24817,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -54521,17 +54575,6 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("control-bar", {
-        attrs: {
-          deselect_all: _vm.deselect_all_text,
-          move_back: _vm.move_back_text,
-          move_backward: _vm.move_backward_text,
-          move_forward: _vm.move_forward_text,
-          move_to_front: _vm.move_to_front_text,
-          remove: _vm.remove_text
-        }
-      }),
-      _vm._v(" "),
       _c("notes", {
         attrs: {
           notes: _vm.notes_text,
@@ -54693,7 +54736,6 @@ var render = function() {
         {
           ref: "container",
           staticClass: "box-body",
-          staticStyle: { "min-height": "30rem" },
           attrs: { id: "canvas-wrapper" }
         },
         [

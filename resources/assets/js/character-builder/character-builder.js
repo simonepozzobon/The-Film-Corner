@@ -17,8 +17,8 @@ const character = new Vue({
             libraries: null,
             groups: [],
             canvasWidth: 1000,
-            canvasHeight: 1000,
-            selectable: false,
+            canvasHeight: 562,
+            selectable: true,
         }
     },
     watch: {
@@ -27,6 +27,14 @@ const character = new Vue({
         }
     },
     methods: {
+        randomColor: function() {
+            let letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        },
         getSize: function() {
             this.window = {
                 h: window.innerHeight,
@@ -39,12 +47,13 @@ const character = new Vue({
             })
             this.canvas.setWidth(this.canvasWidth)
             this.canvas.setHeight(this.canvasHeight)
+            this.$emit('trigger-resize')
 
             // creo i gruppi per le varie librerie
-            for (var i = 0; i < this.libraries.length; i++) {
+            for (let i = 0; i < this.libraries.length; i++) {
                 let group = new fabric.Group()
                 group.set({
-                    selectable: this.selectable
+                    selectable: this.selectable,
                 })
                 this.canvas.add(group)
                 this.groups.push(group)
@@ -52,9 +61,9 @@ const character = new Vue({
         },
         setCanvasSize: function(width) {
             if (this.canvas) {
-                let scaleFactor = width / 1000
-                this.canvas.setWidth(width)
-                this.canvas.setHeight(width)
+                let scaleFactor = width / this.canvasWidth
+                this.canvas.setWidth(this.canvasWidth * scaleFactor)
+                this.canvas.setHeight(this.canvasHeight * scaleFactor)
 
                 // set zoom for resizing
                 this.canvas.setZoom(scaleFactor)
@@ -68,10 +77,9 @@ const character = new Vue({
 
             // rimuove gli oggetti già inseriti nel gruppo
             let objs = this.groups[idx].getObjects()
-            for (var i = 0; i < objs.length; i++) {
+            for (let i = 0; i < objs.length; i++) {
                 this.groups[idx].remove(objs[i])
             }
-
 
             if (idx > -1) {
                 // creo l'istanza dell'immagine
@@ -80,6 +88,7 @@ const character = new Vue({
                     obj.set({
                         selectable: this.selectable,
                         centeredScaling: true,
+                        originX: 'center',
                     })
                     this.groups[idx].addWithUpdate(obj)
 
@@ -95,17 +104,53 @@ const character = new Vue({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor,
                             })
+
+                            width = this.groups[idx].getScaledWidth()
+                            let canvasW = this.canvas.getWidth()
                         }
+
+                        // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
+                        // per coprire tutto lo spazio
+                        let height = this.groups[idx].getScaledHeight()
+                        if (height < this.canvasHeight) {
+                            scaleFactor = this.canvasHeight / height
+
+                            this.groups[idx].set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor,
+                            })
+                        }
+
+                        // centra lo sfondo
+                        this.groups[idx].centerH()
+                        this.groups[idx].set({
+                            left: 0,
+                        })
+                        this.groups[idx].setCoords()
+
+                        // this.groups[idx].centerH()
                     } else {
                         // calcolo l'altezza del singolo elemento considerando la scala
                         let height = this.canvasHeight / (this.groups.length - 1)
                         scaleFactor = scaleFactor / (this.groups.length - 1)
+
 
                         this.groups[idx].set({
                             centeredScaling: true,
                             scaleX: scaleFactor,
                             scaleY: scaleFactor,
                         })
+
+                        let objHeight = obj.getScaledHeight() * scaleFactor
+
+                        if (height < objHeight) {
+                            let objScale = height / objHeight
+                            obj.set({
+                                scaleX: objScale,
+                                scaleY: objScale,
+                            })
+                        }
+
 
                         // calcolo la sua posizione sempre in base alla scala
                         let width = this.groups[idx].getScaledWidth()

@@ -4,7 +4,7 @@
             <div class="box-header">
                 {{ character_text }}
             </div>
-            <div id="canvas-wrapper" class="box-body" style="min-height: 30rem" ref="container">
+            <div id="canvas-wrapper" class="box-body" ref="container">
                 <div id="container-canvas">
                     <canvas class="image-editor" id="image-editor" ref="canvas"></canvas>
                 </div>
@@ -24,11 +24,20 @@ export default {
     },
     watch: {
         '$root.window': function(value) {
+            this.getSize()
+        }
+    },
+    methods: {
+        getSize: function() {
             this.$root.previewHeight = this.$refs.container.offsetHeight
             this.$root.previewWidth = this.$refs.container.offsetWidth - 64
         }
     },
     mounted: function() {
+        this.$root.$on('trigger-resize', () => {
+            console.log('triggered')
+            this.getSize()
+        })
     }
 }
 </script>

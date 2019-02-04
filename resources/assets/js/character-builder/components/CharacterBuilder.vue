@@ -9,14 +9,14 @@
                 :libraries="librariesParsed"
             />
         </div>
-        <control-bar
+        <!-- <control-bar
             :deselect_all="deselect_all_text"
             :move_back="move_back_text"
             :move_backward="move_backward_text"
             :move_forward="move_forward_text"
             :move_to_front="move_to_front_text"
             :remove="remove_text"
-        />
+        /> -->
         <notes
             :notes="notes_text"
             :character_builder_desc="character_builder_desc"

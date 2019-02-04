@@ -89,8 +89,8 @@ export default {
         }
     },
     watch: {
-        '$root.previewWidth': function(h) {
-            this.$refs.container.style.height = h + 64 + 'px'
+        '$root.previewHeight': function(h) {
+            this.$refs.container.style.height = h + 'px'
         }
     },
     computed: {

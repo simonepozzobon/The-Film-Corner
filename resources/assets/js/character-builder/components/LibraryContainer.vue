@@ -45,7 +45,6 @@ export default {
         }
     },
     mounted: function() {
-        console.log('libreria', this.library.id)
     }
 }
 </script>
