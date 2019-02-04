@@ -6,7 +6,7 @@
                 {{ notes }}
                 </div>
                 <div class="box-body">
-                <textarea id="notes" name="notes" rows="8" class="form-control" :placeholder="character_builder_desc"></textarea>
+                    <textarea id="notes" name="notes" rows="8" class="form-control" :placeholder="character_builder_desc"></textarea>
                 </div>
             </div>
         </div>
