@@ -22789,6 +22789,7 @@ exports.default = {
     },
     methods: {
         addToCanvas: function addToCanvas() {
+            console.log('/storage/' + this.obj.src);
             this.$root.$emit('add-to-canvas', '/storage/' + this.obj.src);
         },
         showPreview: function showPreview() {}

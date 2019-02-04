@@ -36,6 +36,7 @@ export default {
     },
     methods: {
         addToCanvas: function() {
+            console.log('/storage/' + this.obj.src)
             this.$root.$emit('add-to-canvas', '/storage/' + this.obj.src)
         },
         showPreview: function() {
