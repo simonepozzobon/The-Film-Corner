@@ -48362,6 +48362,7 @@ exports.default = {
 //
 //
 //
+//
 
 /***/ }),
 
@@ -48434,7 +48435,7 @@ exports.default = {
     },
     methods: {
         preview: function preview(src, poster) {
-            this.$emit('preview', src, img);
+            this.$emit('preview', src, poster);
         }
     }
 }; //
@@ -48662,6 +48663,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; //
+//
+//
 //
 //
 //
@@ -49242,8 +49245,8 @@ exports.default = {
                 sources: [{
                     type: 'video/mp4',
                     src: this.video_src
-                }],
-                poster: '/img/test-app/1.png'
+                }]
+                // poster: '/video/empty-session.png',
             }
         };
     },
@@ -50441,7 +50444,7 @@ exports.push([module.i, "\n.customs {\n  width: auto !important;\n  -ms-flex-pac
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n.timeline-track[data-v-25c4da14] {\n  height: 3rem;\n  display: -ms-flexbox;\n  display: flex;\n  border-bottom: 1px solid rgba(37, 37, 37, 0.1);\n}\n.timeline-track > .title[data-v-25c4da14] {\n    width: 200px;\n    padding: 0.5rem 1rem;\n    font-weight: 700;\n    text-transform: uppercase;\n    line-height: 2;\n    border-right: 1px solid rgba(37, 37, 37, 0.05);\n    background-color: rgba(37, 37, 37, 0.05);\n    cursor: text;\n}\n.timeline-track > .title > .tools[data-v-25c4da14] {\n      display: none;\n      -ms-flex-align: center;\n          align-items: center;\n      opacity: 0;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      max-width: 100%;\n}\n.timeline-track > .title > .tools > i[data-v-25c4da14] {\n        cursor: pointer;\n        padding-left: 1rem;\n}\n.timeline-track > .timeline-element > .draggable > .media-element[data-v-25c4da14] {\n    height: 100%;\n    background-color: #f5db5e;\n    border: 2px solid #e9c845;\n    border-radius: 0.25rem;\n}\n", ""]);
+exports.push([module.i, "\n.timeline-track[data-v-25c4da14] {\n  height: 3rem;\n  display: -ms-flexbox;\n  display: flex;\n  border-bottom: 1px solid rgba(37, 37, 37, 0.1);\n}\n.timeline-track > .title[data-v-25c4da14] {\n    width: 200px;\n    padding: 0.5rem 1rem;\n    font-weight: 700;\n    text-transform: uppercase;\n    line-height: 2;\n    border-right: 1px solid rgba(37, 37, 37, 0.05);\n    background-color: rgba(37, 37, 37, 0.05);\n    cursor: text;\n}\n.timeline-track > .title > .tools[data-v-25c4da14] {\n      display: none;\n      -ms-flex-align: center;\n          align-items: center;\n      opacity: 0;\n      -ms-flex-wrap: wrap;\n          flex-wrap: wrap;\n      max-width: 100%;\n}\n.timeline-track > .title > .tools > i[data-v-25c4da14] {\n        cursor: pointer;\n        padding-left: 1rem;\n}\n.timeline-track > .timeline-element > .draggable > .media-element[data-v-25c4da14] {\n    height: 100%;\n    background-color: #f5db5e;\n    border: 2px solid #e9c845;\n    border-radius: 0.25rem;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-pack: center;\n        justify-content: center;\n    -ms-flex-align: center;\n        align-items: center;\n}\n.timeline-track .toolbar[data-v-25c4da14] {\n    position: absolute;\n    right: 1rem;\n    top: 50%;\n    transform: translateY(-50%);\n}\n.timeline-track .toolbar .left-tool[data-v-25c4da14] {\n      margin-right: 1rem;\n}\n", ""]);
 
 /***/ }),
 
@@ -51734,7 +51737,8 @@ var render = function() {
             _vm._l(this.elementsParsed, function(library, i) {
               return _c("library-container", {
                 key: i,
-                attrs: { library: library, idx: i }
+                attrs: { library: library, idx: i },
+                on: { preview: _vm.preview }
               })
             }),
             _vm._v(" "),
@@ -51855,16 +51859,6 @@ var render = function() {
                 _vm.title = $event.target.value
               }
             }
-          }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fa fa-files-o",
-            on: { click: _vm.duplicateTrack }
-          }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fa fa-trash-o",
-            on: { click: _vm.deleteTrack }
           })
         ])
       ]
@@ -51887,7 +51881,29 @@ var render = function() {
             on: { dragging: _vm.onDrag, resizing: _vm.onResize }
           },
           [_c("div", { staticClass: "media-element" })]
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "toolbar" }, [
+          _c("i", {
+            staticClass: "fa fa-files-o left-tool",
+            attrs: {
+              "data-toggle": "tooltip",
+              "data-placement": "bottom",
+              title: "Duplicate"
+            },
+            on: { click: _vm.duplicateTrack }
+          }),
+          _vm._v(" "),
+          _c("i", {
+            staticClass: "fa fa-trash-o right-tool",
+            attrs: {
+              "data-toggle": "tooltip",
+              "data-placement": "bottom",
+              title: "Delete"
+            },
+            on: { click: _vm.deleteTrack }
+          })
+        ])
       ],
       1
     )
