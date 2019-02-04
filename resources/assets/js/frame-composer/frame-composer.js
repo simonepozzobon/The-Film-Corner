@@ -138,9 +138,7 @@ const character = new Vue({
             // crea l'istanza di FabricJs
             let image = new fabric.Image.fromURL(url, (obj, opts) => {
                 if (isImage) {
-                    // console.log('e quiiiiiii')
                     // Object from session JSON
-                    console.log(item)
                     obj.set(item)
                     this.objs.push(obj)
                     this.addListener(obj)

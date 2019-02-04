@@ -51716,9 +51716,7 @@ var character = new _vue2.default({
             // crea l'istanza di FabricJs
             var image = new _fabric.fabric.Image.fromURL(url, function (obj, opts) {
                 if (isImage) {
-                    // console.log('e quiiiiiii')
                     // Object from session JSON
-                    console.log(item);
                     obj.set(item);
                     _this2.objs.push(obj);
                     _this2.addListener(obj);
