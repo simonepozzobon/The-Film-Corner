@@ -237,6 +237,16 @@ const character = new Vue({
                             })
                         }
 
+                        // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
+                        width = this.landscape.getScaledWidth()
+                        if (width < this.canvasWidth) {
+                            scaleFactor = this.canvasWidth / width
+                            this.landscape.set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor,
+                            })
+                        }
+
                         // centra lo sfondo
                         this.landscape.centerH()
                         this.landscape.set({
