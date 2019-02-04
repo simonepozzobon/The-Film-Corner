@@ -1,4 +1,4 @@
-webpackJsonp([26],{
+webpackJsonp([27],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -592,7 +592,7 @@ module.exports = __webpack_require__(30);
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12900,13 +12900,13 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 499:
+/***/ 505:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _jquery = __webpack_require__(57);
+var _jquery = __webpack_require__(56);
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
@@ -12915,7 +12915,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 /**
  * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
-window.$ = window.jQuery = __webpack_require__(57);
+window.$ = window.jQuery = __webpack_require__(56);
 window.Tether = __webpack_require__(308);
 __webpack_require__(389);
 
@@ -12925,7 +12925,7 @@ __webpack_require__(389);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(524);
+__webpack_require__(530);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -12950,20 +12950,20 @@ console.log('debug', window.Echo);
 
 /***/ }),
 
-/***/ 524:
+/***/ 530:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-window._ = __webpack_require__(58);
+window._ = __webpack_require__(59);
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
-window.$ = window.jQuery = __webpack_require__(57);
+window.$ = window.jQuery = __webpack_require__(56);
 
 window.Tether = __webpack_require__(308);
 
@@ -12975,7 +12975,7 @@ __webpack_require__(390);
  * and simple, leaving you to focus on building your next great project.
  */
 
-window.Vue = __webpack_require__(24);
+window.Vue = __webpack_require__(25);
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
@@ -13034,7 +13034,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -30249,12 +30249,12 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 916:
+/***/ 946:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(499);
+module.exports = __webpack_require__(505);
 
 
 /***/ })
 
-},[916]);
+},[946]);

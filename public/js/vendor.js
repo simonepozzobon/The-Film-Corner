@@ -1872,7 +1872,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(619), __webpack_require__(57)) :
+   true ? factory(exports, __webpack_require__(631), __webpack_require__(56)) :
   typeof define === 'function' && define.amd ? define(['exports', 'popper.js', 'jquery'], factory) :
   (factory((global.bootstrap = {}),global.Popper,global.jQuery));
 }(this, (function (exports,Popper,$) { 'use strict';
@@ -6119,7 +6119,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ 57:
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -16491,7 +16491,7 @@ return jQuery;
 
 /***/ }),
 
-/***/ 619:
+/***/ 631:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19073,10 +19073,10 @@ Popper.Defaults = Defaults;
 
 /***/ }),
 
-/***/ 936:
+/***/ 966:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(57);
+__webpack_require__(56);
 __webpack_require__(308);
 __webpack_require__(390);
 module.exports = __webpack_require__(389);
@@ -19084,4 +19084,4 @@ module.exports = __webpack_require__(389);
 
 /***/ })
 
-},[936]);
+},[966]);

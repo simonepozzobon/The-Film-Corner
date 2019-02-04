@@ -1,6 +1,10 @@
 <title>The Film Corner - @yield('title')</title>
 
-<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+@if (Request::secure())
+  <script src="https://{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+@else
+  <script src="http://{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+@endif
 
 {{-- Main Stylesheet --}}
 <link rel="stylesheet" href="{{ mix('css/app.css') }}">

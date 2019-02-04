@@ -1,4 +1,4 @@
-webpackJsonp([10],{
+webpackJsonp([11],{
 
 /***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
@@ -2981,7 +2981,7 @@ module.exports = __webpack_require__(121);
  * @api public
  *
  */
-module.exports.parser = __webpack_require__(60);
+module.exports.parser = __webpack_require__(61);
 
 
 /***/ }),
@@ -2994,10 +2994,10 @@ module.exports.parser = __webpack_require__(60);
  */
 
 var transports = __webpack_require__(83);
-var Emitter = __webpack_require__(59);
+var Emitter = __webpack_require__(60);
 var debug = __webpack_require__(65)('engine.io-client:socket');
 var index = __webpack_require__(87);
-var parser = __webpack_require__(60);
+var parser = __webpack_require__(61);
 var parseuri = __webpack_require__(89);
 var parseqs = __webpack_require__(66);
 
@@ -3134,7 +3134,7 @@ Socket.protocol = parser.protocol; // this is an int
 Socket.Socket = Socket;
 Socket.Transport = __webpack_require__(72);
 Socket.transports = __webpack_require__(83);
-Socket.parser = __webpack_require__(60);
+Socket.parser = __webpack_require__(61);
 
 /**
  * Creates transport of the given type.
@@ -3985,7 +3985,7 @@ JSONPPolling.prototype.doWrite = function (data, fn) {
 
 var XMLHttpRequest = __webpack_require__(73);
 var Polling = __webpack_require__(84);
-var Emitter = __webpack_require__(59);
+var Emitter = __webpack_require__(60);
 var inherit = __webpack_require__(64);
 var debug = __webpack_require__(65)('engine.io-client:polling-xhr');
 
@@ -4404,7 +4404,7 @@ function unloadHandler () {
  */
 
 var Transport = __webpack_require__(72);
-var parser = __webpack_require__(60);
+var parser = __webpack_require__(61);
 var parseqs = __webpack_require__(66);
 var inherit = __webpack_require__(64);
 var yeast = __webpack_require__(102);
@@ -6372,8 +6372,8 @@ var io = __webpack_require__(131);
 var socket = io.connect('https://' + window.location.hostname + ':6001', {
 	reconnect: true
 });
-var _ = __webpack_require__(58);
-var $ = __webpack_require__(57);
+var _ = __webpack_require__(59);
+var $ = __webpack_require__(56);
 
 exports.default = {
 	name: 'TfcChat',
@@ -6551,7 +6551,7 @@ module.exports = __webpack_require__(30);
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -19157,13 +19157,13 @@ module.exports = function() {
 
 /***/ }),
 
-/***/ 514:
+/***/ 520:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _vue = __webpack_require__(24);
+var _vue = __webpack_require__(25);
 
 var _vue2 = _interopRequireDefault(_vue);
 
@@ -19211,7 +19211,7 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -36325,7 +36325,117 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ 59:
+/***/ 6:
+/***/ (function(module, exports) {
+
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file.
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+module.exports = function normalizeComponent (
+  rawScriptExports,
+  compiledTemplate,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier /* server only */
+) {
+  var esModule
+  var scriptExports = rawScriptExports = rawScriptExports || {}
+
+  // ES6 modules interop
+  var type = typeof rawScriptExports.default
+  if (type === 'object' || type === 'function') {
+    esModule = rawScriptExports
+    scriptExports = rawScriptExports.default
+  }
+
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (compiledTemplate) {
+    options.render = compiledTemplate.render
+    options.staticRenderFns = compiledTemplate.staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = injectStyles
+  }
+
+  if (hook) {
+    var functional = options.functional
+    var existing = functional
+      ? options.render
+      : options.beforeCreate
+
+    if (!functional) {
+      // inject component registration as beforeCreate hook
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    } else {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return existing(h, context)
+      }
+    }
+  }
+
+  return {
+    esModule: esModule,
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 
@@ -36495,117 +36605,7 @@ Emitter.prototype.hasListeners = function(event){
 
 /***/ }),
 
-/***/ 6:
-/***/ (function(module, exports) {
-
-/* globals __VUE_SSR_CONTEXT__ */
-
-// IMPORTANT: Do NOT use ES2015 features in this file.
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
-
-module.exports = function normalizeComponent (
-  rawScriptExports,
-  compiledTemplate,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier /* server only */
-) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
-
-  // ES6 modules interop
-  var type = typeof rawScriptExports.default
-  if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
-    scriptExports = rawScriptExports.default
-  }
-
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
-
-  // render functions
-  if (compiledTemplate) {
-    options.render = compiledTemplate.render
-    options.staticRenderFns = compiledTemplate.staticRenderFns
-    options._compiled = true
-  }
-
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
-
-  // scopedId
-  if (scopeId) {
-    options._scopeId = scopeId
-  }
-
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = injectStyles
-  }
-
-  if (hook) {
-    var functional = options.functional
-    var existing = functional
-      ? options.render
-      : options.beforeCreate
-
-    if (!functional) {
-      // inject component registration as beforeCreate hook
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    } else {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return existing(h, context)
-      }
-    }
-  }
-
-  return {
-    esModule: esModule,
-    exports: scriptExports,
-    options: options
-  }
-}
-
-
-/***/ }),
-
-/***/ 60:
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {/**
@@ -37689,8 +37689,8 @@ function localstorage() {
  * Module dependencies.
  */
 
-var parser = __webpack_require__(60);
-var Emitter = __webpack_require__(59);
+var parser = __webpack_require__(61);
+var Emitter = __webpack_require__(60);
 
 /**
  * Module exports.
@@ -38059,7 +38059,7 @@ function plural(ms, n, name) {
  */
 
 var debug = __webpack_require__(135)('socket.io-parser');
-var Emitter = __webpack_require__(59);
+var Emitter = __webpack_require__(60);
 var binary = __webpack_require__(134);
 var isArray = __webpack_require__(95);
 var isBuf = __webpack_require__(94);
@@ -38796,7 +38796,7 @@ function polling (opts) {
 
 var Transport = __webpack_require__(72);
 var parseqs = __webpack_require__(66);
-var parser = __webpack_require__(60);
+var parser = __webpack_require__(61);
 var inherit = __webpack_require__(64);
 var yeast = __webpack_require__(102);
 var debug = __webpack_require__(65)('engine.io-client:polling');
@@ -39284,7 +39284,7 @@ module.exports = defaults;
 
 var eio = __webpack_require__(120);
 var Socket = __webpack_require__(93);
-var Emitter = __webpack_require__(59);
+var Emitter = __webpack_require__(60);
 var parser = __webpack_require__(76);
 var on = __webpack_require__(92);
 var bind = __webpack_require__(82);
@@ -39894,7 +39894,7 @@ function on (obj, ev, fn) {
  */
 
 var parser = __webpack_require__(76);
-var Emitter = __webpack_require__(59);
+var Emitter = __webpack_require__(60);
 var toArray = __webpack_require__(138);
 var on = __webpack_require__(92);
 var bind = __webpack_require__(82);
@@ -40330,14 +40330,6 @@ Socket.prototype.binary = function (binary) {
 
 /***/ }),
 
-/***/ 931:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(514);
-
-
-/***/ }),
-
 /***/ 94:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40380,6 +40372,14 @@ module.exports = Array.isArray || function (arr) {
 };
 
 
+/***/ }),
+
+/***/ 961:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(520);
+
+
 /***/ })
 
-},[931]);
+},[961]);

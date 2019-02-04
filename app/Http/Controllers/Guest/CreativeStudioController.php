@@ -154,7 +154,13 @@ class CreativeStudioController extends Controller
             return $img->category_id == 2;
         });
         $images->all();
-        return view('guest.creative-studio.character-builder.index', compact('app', 'app_category', 'images'));
+
+        $libraries = $app->mediaCategory()->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->medias = $library->medias()->get();
+          return $library;
+        });
+        return view('guest.creative-studio.character-builder.index', compact('app', 'app_category', 'images', 'elements'));
         break;
 
       case 'storytelling':
@@ -274,11 +280,18 @@ class CreativeStudioController extends Controller
       case 'character-builder':
         $images = $app->medias()->get();
         $images = $images->filter(function ($img, $key) {
+            // $img->library = $img->library()->get();
             return $img->category_id == 2;
         });
         $images->all();
+
+        $libraries = $app->mediaCategory()->get();
+        $elements = $libraries->transform(function($library, $key) {
+          $library->medias = $library->medias()->get();
+          return $library;
+        });
         $session->json_data = htmlspecialchars_decode($session->json_data);
-        return view('guest.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'images'));
+        return view('guest.creative-studio.character-builder.open', compact('app', 'app_category', 'app_session', 'is_student', 'session', 'images', 'elements'));
         break;
 
       case 'storytelling':
