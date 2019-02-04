@@ -22723,8 +22723,12 @@ exports.default = {
         preview: function preview(src, poster) {
             this.$emit('preview', src, img);
         }
+    },
+    mounted: function mounted() {
+        console.log('libreria', this.library.id);
     }
 }; //
+//
 //
 //
 //
@@ -22785,12 +22789,15 @@ exports.default = {
         obj: {
             type: Object,
             default: function _default() {}
+        },
+        libraryIdx: {
+            type: Number,
+            default: 0
         }
     },
     methods: {
         addToCanvas: function addToCanvas() {
-            console.log('/storage/' + this.obj.src);
-            this.$root.$emit('add-to-canvas', '/storage/' + this.obj.src);
+            this.$root.$emit('add-to-canvas', '/storage/' + this.obj.src, this.libraryIdx);
         },
         showPreview: function showPreview() {}
     }
@@ -24194,7 +24201,11 @@ var character = new _vue2.default({
             window: { w: 0, h: 0 },
             previewWidth: 0,
             previewHeight: 0,
-            libraries: null
+            libraries: null,
+            groups: [],
+            canvasWidth: 1000,
+            canvasHeight: 1000,
+            selectable: false
         };
     },
     watch: {
@@ -24213,26 +24224,108 @@ var character = new _vue2.default({
             this.canvas = new _fabric.fabric.Canvas('image-editor', {
                 backgroundColor: '#f3f3f3'
             });
-            this.canvas.setWidth(1000);
-            this.canvas.setHeight(1000);
+            this.canvas.setWidth(this.canvasWidth);
+            this.canvas.setHeight(this.canvasHeight);
+
+            // creo i gruppi per le varie librerie
+            for (var i = 0; i < this.libraries.length; i++) {
+                var group = new _fabric.fabric.Group();
+                group.set({
+                    selectable: this.selectable
+                });
+                this.canvas.add(group);
+                this.groups.push(group);
+            }
         },
         setCanvasSize: function setCanvasSize(width) {
             if (this.canvas) {
                 var scaleFactor = width / 1000;
                 this.canvas.setWidth(width);
                 this.canvas.setHeight(width);
+
+                // set zoom for resizing
+                this.canvas.setZoom(scaleFactor);
+                this.canvas.calcOffset();
                 this.canvas.renderAll();
+            }
+        },
+        addToCanvas: function addToCanvas(src, libraryIdx) {
+            var _this = this;
+
+            // trovo a quale libreria appartiene l'oggetto che sto aggiungendo
+            var idx = this.libraries.findIndex(function (library) {
+                return library.id == libraryIdx;
+            });
+
+            var objs = this.groups[idx].getObjects();
+            for (var i = 0; i < objs.length; i++) {
+                this.canvas.remove(objs[i]);
+            }
+
+            if (idx > -1) {
+                // creo l'istanza dell'immagine
+                var image = new _fabric.fabric.Image.fromURL(src, function (obj, opts) {
+                    // Aggiungo l'immagine al gruppo
+                    obj.set({
+                        selectable: _this.selectable,
+                        centeredScaling: true
+                    });
+                    _this.groups[idx].addWithUpdate(obj);
+
+                    // calcolo il fattore di scala
+                    var width = _this.groups[idx].getScaledWidth();
+                    var scaleFactor = _this.canvasWidth / width;
+
+                    // se è la prima libreria (landscape)
+                    if (idx == 0) {
+                        // scalo il gruppo per farlo stare interno al canvas
+                        if (width > _this.canvasWidth) {
+                            _this.groups[idx].set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor
+                            });
+                        }
+                    } else {
+                        // calcolo l'altezza del singolo elemento considerando la scala
+                        var height = _this.canvasHeight / (_this.groups.length - 1);
+                        scaleFactor = scaleFactor / (_this.groups.length - 1);
+
+                        _this.groups[idx].set({
+                            centeredScaling: true,
+                            scaleX: scaleFactor,
+                            scaleY: scaleFactor
+                        });
+
+                        // calcolo la sua posizione sempre in base alla scala
+                        var _width = _this.groups[idx].getScaledWidth();
+                        var top = height * idx - height;
+                        var left = _this.canvasWidth / 2 - _width / 2;
+
+                        _this.groups[idx].set({
+                            top: top,
+                            left: left
+                        });
+                        _this.groups[idx].setCoords();
+                    }
+
+                    _this.canvas.calcOffset();
+                    _this.canvas.renderAll();
+                });
             }
         }
     },
     mounted: function mounted() {
-        var _this = this;
+        var _this2 = this;
 
         this.getSize();
         this.init();
 
         window.addEventListener('resize', function () {
-            _this.getSize();
+            _this2.getSize();
+        });
+
+        this.$on('add-to-canvas', function (src, libraryIdx) {
+            _this2.addToCanvas(src, libraryIdx);
         });
     }
 });
@@ -24669,7 +24762,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -55099,7 +55192,11 @@ var render = function() {
           _vm._l(_vm.library.medias, function(item, j) {
             return _c("library-item", {
               key: j,
-              attrs: { title: item.title, obj: item },
+              attrs: {
+                title: item.title,
+                obj: item,
+                "library-idx": _vm.library.id
+              },
               on: { preview: _vm.preview }
             })
           })

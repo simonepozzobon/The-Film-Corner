@@ -7,6 +7,7 @@
                     :key="j"
                     :title="item.title"
                     :obj="item"
+                    :library-idx="library.id"
                     @preview="preview"/>
             </div>
         </div>
@@ -42,6 +43,9 @@ export default {
         preview: function(src, poster) {
             this.$emit('preview', src, img)
         }
+    },
+    mounted: function() {
+        console.log('libreria', this.library.id)
     }
 }
 </script>
