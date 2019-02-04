@@ -19,12 +19,14 @@ const character = new Vue({
             canvasWidth: 1000,
             canvasHeight: 562,
             selectable: false,
+            session: null,
+            initialized: false,
         }
     },
     watch: {
         previewWidth: function(width) {
             this.setCanvasSize(width)
-        }
+        },
     },
     methods: {
         randomColor: function() {
@@ -34,6 +36,15 @@ const character = new Vue({
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+        },
+        loadFromJSON: function() {
+            for (let i = 0; i < this.session.objects.length; i++) {
+                let objs = this.session.objects[i].objects
+                for (let j = 0; j < objs.length; j++) {
+                    this.addToCanvas(objs[j].src, i)
+                }
+            }
+            this.initialized = true
         },
         getSize: function() {
             this.window = {
@@ -58,6 +69,10 @@ const character = new Vue({
                 this.canvas.add(group)
                 this.groups.push(group)
             }
+
+            if (this.session) {
+                this.loadFromJSON()
+            }
         },
         setCanvasSize: function(width) {
             if (this.canvas) {
@@ -74,14 +89,16 @@ const character = new Vue({
         addToCanvas: function(src, libraryIdx) {
             // trovo a quale libreria appartiene l'oggetto che sto aggiungendo
             let idx = this.libraries.findIndex(library => library.id == libraryIdx)
-
-            // rimuove gli oggetti già inseriti nel gruppo
-            let objs = this.groups[idx].getObjects()
-            for (let i = 0; i < objs.length; i++) {
-                this.groups[idx].remove(objs[i])
+            if (this.session && !this.initialized) {
+                idx = libraryIdx
             }
-
             if (idx > -1) {
+                // rimuove gli oggetti già inseriti nel gruppo
+                let objs = this.groups[idx].getObjects()
+                for (let i = 0; i < objs.length; i++) {
+                    this.groups[idx].remove(objs[i])
+                }
+
                 // creo l'istanza dell'immagine
                 let image = new fabric.Image.fromURL(src, (obj, opts) => {
                     // Aggiungo l'immagine al gruppo
@@ -168,6 +185,21 @@ const character = new Vue({
                     this.canvas.renderAll()
                 })
             }
+            this.canvas.calcOffset()
+            this.canvas.renderAll()
+
+            this.$nextTick(() => {
+                this.saveCanvas()
+            })
+        },
+        saveCanvas: function() {
+            console.log('salva canvas')
+            // Save canvas to JSON for future edit
+            let json_data = JSON.stringify(this.canvas.toDatalessJSON())
+            localStorage.setItem('app-13-json', json_data)
+
+            // Save image to local storage
+            localStorage.setItem('app-13-image', this.canvas.toDataURL('png'))
         }
     },
     mounted: function() {

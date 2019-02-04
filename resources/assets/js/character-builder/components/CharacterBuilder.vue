@@ -82,6 +82,14 @@ export default {
         character_builder_desc: {
             type: String,
             default: '',
+        },
+        open: {
+            type: Boolean,
+            default: false,
+        },
+        session: {
+            type: String,
+            default: ''
         }
     },
     computed: {
@@ -92,9 +100,18 @@ export default {
                 return parsed
             }
             return []
+        },
+    },
+    methods: {
+        init: function() {
+            if (this.open) {
+                let session = JSON.parse(this.session)
+                this.$root.session = session
+            }
         }
     },
     mounted: function() {
+        this.init()
     }
 }
 </script>

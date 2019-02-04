@@ -20,6 +20,7 @@
                 character_builder_desc="{{ GeneralText::field('character_builder_desc') }}"
             >
             </character-builder>
+            <input id="session-token" type="text" value="" hidden>
         </div>
     </div>
 @endsection
@@ -31,18 +32,6 @@
         $('body').on('session-loaded', function(e, session) {
             $('#session-token').attr('value', session.token)
         });
-
-        function saveCanvas(canvas)
-        {
-            // Save canvas to JSON for future edit
-            json_data = JSON.stringify(canvas.toDatalessJSON());
-            localStorage.setItem('app-13-json', JSON.stringify(json_data));
-            // $.cookie('tfc-canvas', JSON.stringify(json_data));
-
-            // Save image to local storage
-            localStorage.setItem('app-13-image', canvas.toDataURL('png'));
-            return json_data;
-        }
     </script>
     <script src="{{ mix('js/character-builder.js') }}"></script>
 @endsection

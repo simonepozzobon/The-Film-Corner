@@ -35,7 +35,6 @@ export default {
     },
     mounted: function() {
         this.$root.$on('trigger-resize', () => {
-            console.log('triggered')
             this.getSize()
         })
     }

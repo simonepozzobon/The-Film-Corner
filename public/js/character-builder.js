@@ -22476,6 +22476,14 @@ exports.default = {
         character_builder_desc: {
             type: String,
             default: ''
+        },
+        open: {
+            type: Boolean,
+            default: false
+        },
+        session: {
+            type: String,
+            default: ''
         }
     },
     computed: {
@@ -22488,7 +22496,17 @@ exports.default = {
             return [];
         }
     },
-    mounted: function mounted() {}
+    methods: {
+        init: function init() {
+            if (this.open) {
+                var session = JSON.parse(this.session);
+                this.$root.session = session;
+            }
+        }
+    },
+    mounted: function mounted() {
+        this.init();
+    }
 };
 
 /***/ }),
@@ -22967,7 +22985,6 @@ exports.default = {
         var _this = this;
 
         this.$root.$on('trigger-resize', function () {
-            console.log('triggered');
             _this.getSize();
         });
     }
@@ -24215,7 +24232,9 @@ var character = new _vue2.default({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: false
+            selectable: false,
+            session: null,
+            initialized: false
         };
     },
     watch: {
@@ -24231,6 +24250,15 @@ var character = new _vue2.default({
                 color += letters[Math.floor(Math.random() * 16)];
             }
             return color;
+        },
+        loadFromJSON: function loadFromJSON() {
+            for (var i = 0; i < this.session.objects.length; i++) {
+                var objs = this.session.objects[i].objects;
+                for (var j = 0; j < objs.length; j++) {
+                    this.addToCanvas(objs[j].src, i);
+                }
+            }
+            this.initialized = true;
         },
         getSize: function getSize() {
             this.window = {
@@ -24255,6 +24283,10 @@ var character = new _vue2.default({
                 this.canvas.add(group);
                 this.groups.push(group);
             }
+
+            if (this.session) {
+                this.loadFromJSON();
+            }
         },
         setCanvasSize: function setCanvasSize(width) {
             if (this.canvas) {
@@ -24275,14 +24307,16 @@ var character = new _vue2.default({
             var idx = this.libraries.findIndex(function (library) {
                 return library.id == libraryIdx;
             });
-
-            // rimuove gli oggetti già inseriti nel gruppo
-            var objs = this.groups[idx].getObjects();
-            for (var i = 0; i < objs.length; i++) {
-                this.groups[idx].remove(objs[i]);
+            if (this.session && !this.initialized) {
+                idx = libraryIdx;
             }
-
             if (idx > -1) {
+                // rimuove gli oggetti già inseriti nel gruppo
+                var objs = this.groups[idx].getObjects();
+                for (var i = 0; i < objs.length; i++) {
+                    this.groups[idx].remove(objs[i]);
+                }
+
                 // creo l'istanza dell'immagine
                 var image = new _fabric.fabric.Image.fromURL(src, function (obj, opts) {
                     // Aggiungo l'immagine al gruppo
@@ -24367,6 +24401,21 @@ var character = new _vue2.default({
                     _this.canvas.renderAll();
                 });
             }
+            this.canvas.calcOffset();
+            this.canvas.renderAll();
+
+            this.$nextTick(function () {
+                _this.saveCanvas();
+            });
+        },
+        saveCanvas: function saveCanvas() {
+            console.log('salva canvas');
+            // Save canvas to JSON for future edit
+            var json_data = JSON.stringify(this.canvas.toDatalessJSON());
+            localStorage.setItem('app-13-json', json_data);
+
+            // Save image to local storage
+            localStorage.setItem('app-13-image', this.canvas.toDataURL('png'));
         }
     },
     mounted: function mounted() {
@@ -24430,7 +24479,7 @@ exports.push([module.i, "\n.customs {\n  width: auto !important;\n  -ms-flex-pac
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
@@ -24446,7 +24495,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 /***/ }),
 
