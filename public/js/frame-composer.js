@@ -51816,8 +51816,8 @@ var character = new _vue2.default({
 
                         // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
                         _width = _this2.landscape.getScaledWidth();
-                        if (_width < _this2.canvasWidth) {
-                            _scaleFactor = _this2.canvasWidth / _width;
+                        if (_width < _this2.canvas.getWidth()) {
+                            _scaleFactor = _this2.canvas.getWidth() / _width;
                             _this2.landscape.set({
                                 scaleX: _scaleFactor,
                                 scaleY: _scaleFactor
