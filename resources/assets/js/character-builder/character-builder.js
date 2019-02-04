@@ -18,7 +18,7 @@ const character = new Vue({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: false,
+            selectable: true,
             session: null,
             initialized: false,
         }
@@ -41,7 +41,7 @@ const character = new Vue({
             for (let i = 0; i < this.session.objects.length; i++) {
                 let objs = this.session.objects[i].objects
                 for (let j = 0; j < objs.length; j++) {
-                    this.addToCanvas(objs[j].src, i)
+                    this.addToCanvas(objs[j].src, i, true)
                 }
             }
             this.initialized = true
@@ -66,12 +66,32 @@ const character = new Vue({
                 group.set({
                     selectable: this.selectable,
                 })
-                this.canvas.add(group)
                 this.groups.push(group)
+                this.canvas.add(this.groups[i])
             }
+            this.addListeners()
 
             if (this.session) {
                 this.loadFromJSON()
+            } else {
+                let landscapes = this.libraries[0].medias
+                let idx = Math.floor(Math.random() * landscapes.length)
+                this.addToCanvas('/storage/' + landscapes[idx].src, 0, true)
+            }
+        },
+        addListeners: function() {
+            for (var i = 0; i < this.groups.length; i++) {
+                this.addListener(this.groups[i])
+            }
+        },
+        addListener: function(obj) {
+            // let events = [ 'object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling' ]
+            let events = [ 'object:added', 'object:removed', 'object:modified' ]
+            for (let j = 0; j < events.length; j++) {
+                obj.on(events[j], () => {
+                    console.log('triggered ', events[j])
+                    this.saveCanvas()
+                })
             }
         },
         setCanvasSize: function(width) {
@@ -86,17 +106,19 @@ const character = new Vue({
                 this.canvas.renderAll()
             }
         },
-        addToCanvas: function(src, libraryIdx) {
+        addToCanvas: function(src, libraryIdx, isID = false) {
             // trovo a quale libreria appartiene l'oggetto che sto aggiungendo
-            let idx = this.libraries.findIndex(library => library.id == libraryIdx)
-            if (this.session && !this.initialized) {
+            let idx = -1
+            if (isID) {
                 idx = libraryIdx
+            } else {
+                idx = this.libraries.findIndex(library => library.id == libraryIdx)
             }
             if (idx > -1) {
                 // rimuove gli oggetti già inseriti nel gruppo
                 let objs = this.groups[idx].getObjects()
                 for (let i = 0; i < objs.length; i++) {
-                    this.groups[idx].remove(objs[i])
+                    this.groups[idx].removeWithUpdate(objs[i])
                 }
 
                 // creo l'istanza dell'immagine
@@ -183,23 +205,29 @@ const character = new Vue({
 
                     this.canvas.calcOffset()
                     this.canvas.renderAll()
+                    this.saveCanvas()
                 })
             }
             this.canvas.calcOffset()
             this.canvas.renderAll()
-
-            this.$nextTick(() => {
-                this.saveCanvas()
-            })
         },
         saveCanvas: function() {
-            console.log('salva canvas')
             // Save canvas to JSON for future edit
             let json_data = JSON.stringify(this.canvas.toDatalessJSON())
             localStorage.setItem('app-13-json', json_data)
+            // this.debugSave(json_data)
 
             // Save image to local storage
             localStorage.setItem('app-13-image', this.canvas.toDataURL('png'))
+        },
+        debugSave: function(data) {
+            data = JSON.parse(data)
+            for (let i = 0; i < data.objects.length; i++) {
+                let objs = data.objects[i].objects
+                for (let j = 0; j < objs.length; j++) {
+                    console.log(objs[j].src)
+                }
+            }
         }
     },
     mounted: function() {

@@ -24232,7 +24232,7 @@ var character = new _vue2.default({
             groups: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            selectable: false,
+            selectable: true,
             session: null,
             initialized: false
         };
@@ -24255,7 +24255,7 @@ var character = new _vue2.default({
             for (var i = 0; i < this.session.objects.length; i++) {
                 var objs = this.session.objects[i].objects;
                 for (var j = 0; j < objs.length; j++) {
-                    this.addToCanvas(objs[j].src, i);
+                    this.addToCanvas(objs[j].src, i, true);
                 }
             }
             this.initialized = true;
@@ -24280,12 +24280,39 @@ var character = new _vue2.default({
                 group.set({
                     selectable: this.selectable
                 });
-                this.canvas.add(group);
                 this.groups.push(group);
+                this.canvas.add(this.groups[i]);
             }
+            this.addListeners();
 
             if (this.session) {
                 this.loadFromJSON();
+            } else {
+                var landscapes = this.libraries[0].medias;
+                var idx = Math.floor(Math.random() * landscapes.length);
+                this.addToCanvas('/storage/' + landscapes[idx].src, 0, true);
+            }
+        },
+        addListeners: function addListeners() {
+            for (var i = 0; i < this.groups.length; i++) {
+                this.addListener(this.groups[i]);
+            }
+        },
+        addListener: function addListener(obj) {
+            var _this = this;
+
+            // let events = [ 'object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling' ]
+            var events = ['object:added', 'object:removed', 'object:modified'];
+
+            var _loop = function _loop(j) {
+                obj.on(events[j], function () {
+                    console.log('triggered ', events[j]);
+                    _this.saveCanvas();
+                });
+            };
+
+            for (var j = 0; j < events.length; j++) {
+                _loop(j);
             }
         },
         setCanvasSize: function setCanvasSize(width) {
@@ -24301,75 +24328,79 @@ var character = new _vue2.default({
             }
         },
         addToCanvas: function addToCanvas(src, libraryIdx) {
-            var _this = this;
+            var _this2 = this;
+
+            var isID = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
             // trovo a quale libreria appartiene l'oggetto che sto aggiungendo
-            var idx = this.libraries.findIndex(function (library) {
-                return library.id == libraryIdx;
-            });
-            if (this.session && !this.initialized) {
+            var idx = -1;
+            if (isID) {
                 idx = libraryIdx;
+            } else {
+                idx = this.libraries.findIndex(function (library) {
+                    return library.id == libraryIdx;
+                });
             }
             if (idx > -1) {
                 // rimuove gli oggetti già inseriti nel gruppo
                 var objs = this.groups[idx].getObjects();
                 for (var i = 0; i < objs.length; i++) {
-                    this.groups[idx].remove(objs[i]);
+                    this.groups[idx].removeWithUpdate(objs[i]);
                 }
 
                 // creo l'istanza dell'immagine
                 var image = new _fabric.fabric.Image.fromURL(src, function (obj, opts) {
                     // Aggiungo l'immagine al gruppo
                     obj.set({
-                        selectable: _this.selectable,
+                        selectable: _this2.selectable,
                         centeredScaling: true,
                         originX: 'center'
                     });
-                    _this.groups[idx].addWithUpdate(obj);
+                    _this2.groups[idx].addWithUpdate(obj);
 
                     // calcolo il fattore di scala
-                    var width = _this.groups[idx].getScaledWidth();
-                    var scaleFactor = _this.canvasWidth / width;
+                    var width = _this2.groups[idx].getScaledWidth();
+                    var scaleFactor = _this2.canvasWidth / width;
 
                     // se è la prima libreria (landscape)
                     if (idx == 0) {
                         // scalo il gruppo per farlo stare interno al canvas
-                        if (width > _this.canvasWidth) {
-                            _this.groups[idx].set({
+                        if (width > _this2.canvasWidth) {
+                            _this2.groups[idx].set({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor
                             });
 
-                            width = _this.groups[idx].getScaledWidth();
-                            var canvasW = _this.canvas.getWidth();
+                            width = _this2.groups[idx].getScaledWidth();
+                            var canvasW = _this2.canvas.getWidth();
                         }
 
                         // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
                         // per coprire tutto lo spazio
-                        var height = _this.groups[idx].getScaledHeight();
-                        if (height < _this.canvasHeight) {
-                            scaleFactor = _this.canvasHeight / height;
+                        var height = _this2.groups[idx].getScaledHeight();
+                        if (height < _this2.canvasHeight) {
+                            scaleFactor = _this2.canvasHeight / height;
 
-                            _this.groups[idx].set({
+                            _this2.groups[idx].set({
                                 scaleX: scaleFactor,
                                 scaleY: scaleFactor
                             });
                         }
 
                         // centra lo sfondo
-                        _this.groups[idx].centerH();
-                        _this.groups[idx].set({
+                        _this2.groups[idx].centerH();
+                        _this2.groups[idx].set({
                             left: 0
                         });
-                        _this.groups[idx].setCoords();
+                        _this2.groups[idx].setCoords();
 
                         // this.groups[idx].centerH()
                     } else {
                         // calcolo l'altezza del singolo elemento considerando la scala
-                        var _height = _this.canvasHeight / (_this.groups.length - 1);
-                        scaleFactor = scaleFactor / (_this.groups.length - 1);
+                        var _height = _this2.canvasHeight / (_this2.groups.length - 1);
+                        scaleFactor = scaleFactor / (_this2.groups.length - 1);
 
-                        _this.groups[idx].set({
+                        _this2.groups[idx].set({
                             centeredScaling: true,
                             scaleX: scaleFactor,
                             scaleY: scaleFactor
@@ -24386,50 +24417,56 @@ var character = new _vue2.default({
                         }
 
                         // calcolo la sua posizione sempre in base alla scala
-                        var _width = _this.groups[idx].getScaledWidth();
+                        var _width = _this2.groups[idx].getScaledWidth();
                         var top = _height * idx - _height;
-                        var left = _this.canvasWidth / 2 - _width / 2;
+                        var left = _this2.canvasWidth / 2 - _width / 2;
 
-                        _this.groups[idx].set({
+                        _this2.groups[idx].set({
                             top: top,
                             left: left
                         });
-                        _this.groups[idx].setCoords();
+                        _this2.groups[idx].setCoords();
                     }
 
-                    _this.canvas.calcOffset();
-                    _this.canvas.renderAll();
+                    _this2.canvas.calcOffset();
+                    _this2.canvas.renderAll();
+                    _this2.saveCanvas();
                 });
             }
             this.canvas.calcOffset();
             this.canvas.renderAll();
-
-            this.$nextTick(function () {
-                _this.saveCanvas();
-            });
         },
         saveCanvas: function saveCanvas() {
-            console.log('salva canvas');
             // Save canvas to JSON for future edit
             var json_data = JSON.stringify(this.canvas.toDatalessJSON());
             localStorage.setItem('app-13-json', json_data);
+            // this.debugSave(json_data)
 
             // Save image to local storage
             localStorage.setItem('app-13-image', this.canvas.toDataURL('png'));
+        },
+        debugSave: function debugSave(data) {
+            data = JSON.parse(data);
+            for (var i = 0; i < data.objects.length; i++) {
+                var objs = data.objects[i].objects;
+                for (var j = 0; j < objs.length; j++) {
+                    console.log(objs[j].src);
+                }
+            }
         }
     },
     mounted: function mounted() {
-        var _this2 = this;
+        var _this3 = this;
 
         this.getSize();
         this.init();
 
         window.addEventListener('resize', function () {
-            _this2.getSize();
+            _this3.getSize();
         });
 
         this.$on('add-to-canvas', function (src, libraryIdx) {
-            _this2.addToCanvas(src, libraryIdx);
+            _this3.addToCanvas(src, libraryIdx);
         });
     }
 });
