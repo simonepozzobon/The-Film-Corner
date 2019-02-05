@@ -12900,7 +12900,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 518:
+/***/ 519:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12916,7 +12916,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
 window.$ = window.jQuery = __webpack_require__(57);
-window.Tether = __webpack_require__(308);
+window.Tether = __webpack_require__(309);
 __webpack_require__(394);
 
 /**
@@ -12925,7 +12925,7 @@ __webpack_require__(394);
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__(544);
+__webpack_require__(545);
 
 /**
  * Laravel Echo per le notifiche e gli eventi in real time. Con il client di socket io altrimenti genera il bug.
@@ -12950,7 +12950,7 @@ console.log('debug', window.Echo);
 
 /***/ }),
 
-/***/ 544:
+/***/ 545:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12965,7 +12965,7 @@ window._ = __webpack_require__(59);
  */
 window.$ = window.jQuery = __webpack_require__(57);
 
-window.Tether = __webpack_require__(308);
+window.Tether = __webpack_require__(309);
 
 __webpack_require__(395);
 
@@ -30249,12 +30249,12 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 987:
+/***/ 992:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(518);
+module.exports = __webpack_require__(519);
 
 
 /***/ })
 
-},[987]);
+},[992]);

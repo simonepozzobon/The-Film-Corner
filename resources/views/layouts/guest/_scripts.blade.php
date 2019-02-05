@@ -84,8 +84,13 @@
 
         // Film Specific - Framing - App 1 - Frame Composer
         case 1:
-          var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          // var json_data = $.parseJSON($.cookie('tfc-canvas'));
+          var json_data = {};
           var rendered = null;
+
+          if (localStorage.getItem('app-1-json')) {
+            json_data = localStorage.getItem('app-1-json')
+          }
 
           if (localStorage.getItem('app-1-image')) {
             rendered = localStorage.getItem('app-1-image');

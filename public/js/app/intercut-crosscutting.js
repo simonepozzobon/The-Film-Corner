@@ -2753,7 +2753,7 @@ var isCrossOrigin = exports.isCrossOrigin = function isCrossOrigin(url) {
 /***/ 115:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(310);
+__webpack_require__(311);
 module.exports = angular;
 
 
@@ -11165,7 +11165,7 @@ function noop() {}
 
 /***/ }),
 
-/***/ 309:
+/***/ 310:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11939,7 +11939,7 @@ angular.module('mt.media-timeline', [])
 
 /***/ }),
 
-/***/ 310:
+/***/ 311:
 /***/ (function(module, exports) {
 
 /**
@@ -87800,7 +87800,30 @@ var $$ = exports.$$ = createQuerier('querySelectorAll');
 
 /***/ }),
 
-/***/ 519:
+/***/ 52:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
+    typeof window !== 'undefined' ? window : {}
+var minDoc = __webpack_require__(393);
+
+if (typeof document !== 'undefined') {
+    module.exports = document;
+} else {
+    var doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
+
+    if (!doccy) {
+        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
+    }
+
+    module.exports = doccy;
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ }),
+
+/***/ 520:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -87826,7 +87849,7 @@ __webpack_require__(324);
 // require('dropzone/dist/dropzone.js');
 
 // Angular Media Timeline
-__webpack_require__(309);
+__webpack_require__(310);
 
 'use strict';
 
@@ -88167,29 +88190,6 @@ _angular2.default.module('feedbackCtrl', []).controller('feedbackController', fu
 
 // Define the Application
 var App = _angular2.default.module('App', ['mainCtrl', 'videoCtrl', 'uploadCtrl', 'mediaTimelineCtrl', 'toolCtrl', 'feedbackCtrl', 'appService']).constant('CSRF_TOKEN', '{{ csrf_token() }}');
-
-/***/ }),
-
-/***/ 52:
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(global) {var topLevel = typeof global !== 'undefined' ? global :
-    typeof window !== 'undefined' ? window : {}
-var minDoc = __webpack_require__(393);
-
-if (typeof document !== 'undefined') {
-    module.exports = document;
-} else {
-    var doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'];
-
-    if (!doccy) {
-        doccy = topLevel['__GLOBAL_DOCUMENT_CACHE@4'] = minDoc;
-    }
-
-    module.exports = doccy;
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
 
@@ -91294,12 +91294,12 @@ function SafeParseTuple(obj, reviver) {
 
 /***/ }),
 
-/***/ 988:
+/***/ 993:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(519);
+module.exports = __webpack_require__(520);
 
 
 /***/ })
 
-},[988]);
+},[993]);
