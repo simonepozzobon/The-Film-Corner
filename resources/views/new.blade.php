@@ -34,6 +34,54 @@
   <div class="container">
     <div class="row mt">
       <div class="col">
+        <div class="box yellow">
+          <div class="box-header">
+            THE SECOND EDITION OF THE FILM CORNER HAS STARTED!
+          </div>
+          <div class="box-body">
+            <div class="row">
+              <div class="col-md-4">
+                <img src="{{ asset('img/icons/ciak.svg') }}" class="img-fluid w-100" >
+              </div>
+              <div class="col-md-8 pb-3">
+                <p class="py-3">
+                  Good news for our teachers, students and followers: The Film Corner project has received a second
+                  grant by the European Commission in order to keep on researching around film education!<br><br>
+                  “The Film Corner Reloaded – A cultural approach” stems from “The Film Corner. Online and
+                  offline activities for film literacy” already financed by the European Commission in the frame of
+                  the Creative Europe Programme. The project is managed by Fondazione Cineteca Italiana (Italy) in
+                  partnership with Jugslovenska Kinoteka (Serbia), The Film Space (UK), The Nerve Centre
+                  (Northern Ireland), University of Milano-Bicocca (Italy) and with two brand new partners that
+                  joined us for this second edition: The Georgian National Film Centre (Georgia) and Kino Otok
+                  (Slovenia).<br><br>
+                  The project has officially started in december 2018 and it will finish in december 2020. During
+                  those 2 years, a third section of the platform will be developed, it will be dedicated to an
+                  interdisciplinary and cross-curricular approach to film education centered on the main topic of film
+                  and its relationships with other topics. This new section will join the already existing sections of the
+                  platform: “Film Specific” and the “Creative Studio”.
+                  <br><br>
+                </p>
+                <h4>APPLY FOR THE NEXT INTERNATIONAL TESTING PROGRAM OF THE FILM CORNER
+                PLATFORM!</h4>
+                <p>
+                  Through The Film Corner project our purpose is not only to create a useful interactive didactical
+                  resource; we would also like to share this platform with teachers and schools in other countries.<br><br>
+                  That’s why only for this edition of the project we have a special proposal addressed to teachers:
+                  you can participate in the testing phase with your school!<br><br>
+                  Follow the instructions in the card below and get to know The Film corner platform!<br><br>
+                </p>
+                <img src="/img/CARD_5_TFC_2019-1.jpg" alt="" class="img-fluid">
+                <div class="d-flex justify-content-center mt">
+                  <a href="https://cinetecamilano.it/the-film-corner?utm_source=test&utm_medium=news" target="_blank" class="btn btn-yellow">Application Form</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt">
+      <div class="col">
         <div class="box green">
           <div class="box-header">
             #MyCornerContest
