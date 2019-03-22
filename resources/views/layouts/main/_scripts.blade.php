@@ -1,10 +1,10 @@
-<script src="{{ mix('js/manifest.js') }}"></script>
-<script src="{{ mix('js/vendor.js') }}"></script>
-<script src="{{ mix('js/app.js') }}"></script>
+{{-- <script src="{{ mix('js/manifest.js') }}"></script> --}}
+{{-- <script src="{{ mix('js/vendor.js') }}"></script> --}}
+{{-- <script src="{{ mix('js/app.js') }}"></script> --}}
 
 @yield('scripts')
  {{-- SEND FEEDBACK --}}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   var url = "";
 
   // send function
@@ -41,6 +41,6 @@
         }
     })
 
-  });
+  }); --}}
 
 </script>

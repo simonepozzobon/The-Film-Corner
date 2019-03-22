@@ -32,7 +32,7 @@
 /******/
 /******/ 	// objects to store loaded and loading chunks
 /******/ 	var installedChunks = {
-/******/ 		35: 0
+/******/ 		3: 0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -87,7 +87,7 @@
 /******/ 		if (__webpack_require__.nc) {
 /******/ 			script.setAttribute("nonce", __webpack_require__.nc);
 /******/ 		}
-/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/admin/main","1":"/js/admin/contest","2":"/js/teacher-profile","3":"/js/timeline","4":"/js/timelineaudio","5":"/js/notifications","6":"/js/soundscapes","7":"/js/app/sound-studio","8":"/js/app/intercut-crosscutting","9":"/js/frame-composer","10":"/js/character-builder","11":"/js/socket-test","12":"/js/teacher-chat","13":"/js/network-single","14":"/js/admin/video","15":"/js/admin/image","16":"/js/admin/audio","17":"/js/admin/translate","18":"/js/admin/teachers","19":"/js/admin/guests","20":"/js/admin/captions","21":"/js/admin/footer","22":"/js/app/studio-home","23":"/js/admin/keywords","24":"/js/feedback-toolbar","25":"/js/network","26":"/js/upload","27":"/js/first-visit","28":"/js/app","29":"/js/loader","30":"/js/message","31":"/js/admin/admin","32":"/js/vendor","33":"/js/city","34":"/js/conference/speakers"}[chunkId]||chunkId) + ".js";
+/******/ 		script.src = __webpack_require__.p + "js/" + ({"0":"/js/home","1":"/js/app","2":"/js/vendor"}[chunkId]||chunkId) + ".js";
 /******/ 		var timeout = setTimeout(onScriptComplete, 120000);
 /******/ 		script.onerror = script.onload = onScriptComplete;
 /******/ 		function onScriptComplete() {
