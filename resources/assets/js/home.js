@@ -1,9 +1,21 @@
 require('./bootstrap')
 
 import Vue from 'vue'
+import VueRouter from 'vue-router'
+import routes from './home/routes'
+
+Vue.use(VueRouter)
+
+const router = new VueRouter({
+    mode: 'history',
+    dir: __dirname,
+    routes: routes,
+})
 
 import MainTemplate from './home/containers/MainTemplate.vue'
+
 const home = new Vue({
+    router,
     components: {
         MainTemplate,
     },
@@ -11,6 +23,7 @@ const home = new Vue({
         return {
             window: { w: 0, h: 0 },
             isMobile: null,
+            conferenceMenu: null,
         }
     },
     methods: {
@@ -33,10 +46,9 @@ const home = new Vue({
     },
     mounted: function() {
         this.getSize()
-        console.log('ciao');
-
         window.addEventListener('resize', () => {
             this.getSize()
         })
-    }
+    },
+    // render: h => h(home)
 }).$mount('#home')

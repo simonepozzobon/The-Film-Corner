@@ -6,9 +6,9 @@
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
-    <main id="home">
+    <div id="home">
         <main-template></main-template>
-    </main>
+    </div>
 @endsection
 @section('scripts')
     <script src="{{ mix('js/home.js') }}"></script>
