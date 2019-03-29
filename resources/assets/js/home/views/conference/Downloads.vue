@@ -7,7 +7,7 @@
                     font-size="h1"
                     :is-main="true"
                     :uppercase="false"
-                    title="Conference"
+                    title="International Conference"
                     color="white"/>
                 <ui-special-text color="white" align="center">
                     Downloads & Press
@@ -15,24 +15,102 @@
             </ui-container>
         </ui-hero-banner>
         <ui-container class="py-5" :contain="true">
-            <ui-paragraph>
-                The Film Corner International Conference is open to the public and addressed to professionals and trainers of film education, media education, information and communication technology as well as gaming professionals. The conference will take place during the 9th edition of Piccolo Grande Cinema Festival in Milan, a film festival dedicated to young audiences organised by Fondazione Cineteca Italiana. The main issues of the conference are:
-            </ui-paragraph>
+            <ui-title title="Downloads"/>
+            <ui-row>
+                <ui-block
+                    :size="8"
+                    :has-container="false"
+                    align="start">
+                    General Statement
+                </ui-block>
+                <ui-block
+                    :size="4"
+                    align="start"
+                    direction="row">
+                    <ui-button
+                        color="primary">
+                        Download
+                    </ui-button>
+                </ui-block>
+            </ui-row>
+            <ui-row>
+                <ui-block
+                    :size="8"
+                    :has-container="false"
+                    align="start">
+                    Invitation
+                </ui-block>
+                <ui-block
+                    :size="4"
+                    align="start"
+                    direction="row">
+                    <ui-button
+                        color="primary"
+                        class="mr-2">
+                        Download
+                    </ui-button>
+                    <ui-button
+                        color="info"
+                        :disable="true">
+                        Apply
+                    </ui-button>
+                </ui-block>
+            </ui-row>
+        </ui-container>
+        <ui-container class="pb-5" :contain="true">
+            <ui-title title="Press"/>
+            <ui-row>
+                <ui-block
+                    :size="8"
+                    :has-container="false"
+                    align="start">
+                    International Conference - ENG
+                </ui-block>
+                <ui-block
+                    :size="4"
+                    align="start"
+                    direction="row">
+                    <ui-button
+                        color="primary">
+                        Download
+                    </ui-button>
+                </ui-block>
+            </ui-row>
+            <ui-row>
+                <ui-block
+                    :size="8"
+                    :has-container="false"
+                    align="start">
+                    International Conference - ITA
+                </ui-block>
+                <ui-block
+                    :size="4"
+                    align="start"
+                    direction="row">
+                    <ui-button
+                        color="primary">
+                        Download
+                    </ui-button>
+                </ui-block>
+            </ui-row>
         </ui-container>
     </ui-container>
 </template>
 
 <script>
-import { UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiSpecialText, UiTitle } from '../../ui'
+import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
 
 export default {
     name: 'ConferenceContact',
     components: {
+        UiBlock,
+        UiButton,
         UiContainer,
         UiHeroBanner,
         UiList,
         UiListItem,
         UiParagraph,
+        UiRow,
         UiSpecialText,
         UiTitle,
     },

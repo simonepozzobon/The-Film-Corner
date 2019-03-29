@@ -1,5 +1,5 @@
 <template lang="html">
-    <nav class="conference-nav navbar navbar-dark bg-dark navbar-expand-lg fixed-top">
+    <nav class="conference-nav navbar navbar-dark bg-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav ml-auto">
             <li class="conference-nav__item nav-item">
                 <a href="#" @click="goTo($event, 'conference')" class="nav-link conference-nav__link">General Info</a>
@@ -8,7 +8,7 @@
                 <a href="#" @click="goTo($event, 'conf-about')" class="nav-link conference-nav__link">About</a>
             </li>
             <li class="conference-nav__item nav-item">
-                <a href="#" class="nav-link conference-nav__link">Schedule Draft</a>
+                <a href="#" @click="goTo($event, 'conf-schedule-draft')" class="nav-link conference-nav__link">Schedule Draft</a>
             </li>
             <li class="conference-nav__item nav-item">
                 <a href="#" class="nav-link conference-nav__link">Accomodation</a>
@@ -33,7 +33,37 @@ export default {
         goTo: function(event, name) {
             event.preventDefault()
             this.$router.push({name: name})
+        },
+        show: function() {
+            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+                y: -100,
+                autoAlpha: 0,
+            }, {
+                y: 0,
+                autoAlpha: 1,
+                onComplete: () => {
+                    master.kill()
+                }
+            })
+        },
+        hide: function() {
+            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+                y: 0,
+                autoAlpha: 1,
+            }, {
+                y: -100,
+                autoAlpha: 0,
+                onComplete: () => {
+                    master.kill()
+                }
+            })
         }
+    },
+    mounted: function() {
+        this.show()
+    },
+    beforeDestroy: function() {
+        this.hide()
     }
 }
 </script>

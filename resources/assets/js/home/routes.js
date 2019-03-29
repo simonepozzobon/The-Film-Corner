@@ -1,23 +1,21 @@
 const routes = [
     {
         path: '/',
-        component: {
-            render (c) { return c('router-view') }
-        },
+        component: require('./containers/MainContainer.vue').default,
         children: [
             {
                 path: '',
-                component: require('./views/Home.vue').default,
+                component: require('./views/home/Home.vue').default,
                 children: [
                     {
                         path: '',
                         name: 'home',
-                        component: require('./components/HomePanel.vue').default,
+                        component: require('./views/home/HomePanel.vue').default,
                     },
                     {
                         path: 'login',
                         name: 'login',
-                        component: require('./components/LoginPanel.vue').default,
+                        component: require('./views/home/LoginPanel.vue').default,
                     }
                 ],
             },
@@ -38,35 +36,32 @@ const routes = [
             },
             {
                 path: 'conference',
-                component: require('./views/conference/Dummy.vue').default,
+                component: require('./views/conference/ConferenceContainer.vue').default,
                 children: [
                     {
                         path: '',
                         name: 'conference',
-                        components: {
-                            conference: require('./views/conference/Home.vue').default
-                        },
+                        component: require('./views/conference/Home.vue').default,
                     },
                     {
                         path: 'about',
                         name: 'conf-about',
-                        components: {
-                            conference: require('./views/conference/About.vue').default
-                        },
+                        component: require('./views/conference/About.vue').default,
+                    },
+                    {
+                        path: 'schedule-draft',
+                        name: 'conf-schedule-draft',
+                        component: require('./views/conference/ScheduleDraft.vue').default,
                     },
                     {
                         path: 'downloads',
                         name: 'conf-downloads',
-                        components: {
-                            conference: require('./views/conference/Downloads.vue').default
-                        },
+                        component: require('./views/conference/Downloads.vue').default,
                     },
                     {
                         path: 'contact',
                         name: 'conf-contact',
-                        components: {
-                            conference: require('./views/conference/Contact.vue').default
-                        },
+                        component: require('./views/conference/Contact.vue').default,
                     },
                 ]
             },

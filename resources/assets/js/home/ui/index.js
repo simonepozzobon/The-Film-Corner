@@ -12,6 +12,7 @@ import UiListItem from './UiListItem.vue'
 import UiParagraph from './UiParagraph.vue'
 import UiRow from './UiRow.vue'
 import UiSpecialText from './UiSpecialText.vue'
+import UiTeam from './UiTeam.vue'
 import UiTitle from './UiTitle.vue'
 
 export {
@@ -29,5 +30,6 @@ export {
     UiParagraph,
     UiRow,
     UiSpecialText,
+    UiTeam,
     UiTitle,
 }

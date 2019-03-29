@@ -5,7 +5,8 @@
             :class="[
                 colorClass,
                 blockClass,
-            ]">
+            ]"
+            :disabled="disable">
             <slot></slot>
         </button>
     </div>
@@ -20,6 +21,10 @@ export default {
             default: null,
         },
         block: {
+            type: Boolean,
+            default: false,
+        },
+        disable: {
             type: Boolean,
             default: false,
         }

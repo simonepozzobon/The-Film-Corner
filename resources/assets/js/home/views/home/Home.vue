@@ -1,18 +1,24 @@
 <template lang="html">
     <ui-container>
         <ui-container>
-            <ui-hero-banner image="./img/grafica/bg.jpg">
+            <ui-hero-banner
+                image="./img/grafica/bg.jpg">
                 <transition
                     mode="out-in"
-                    @enter="panelEnter"
-                    @leave="panelLeave">
+                    @enter="enter"
+                    @leave="leave">
                     <router-view></router-view>
                 </transition>
             </ui-hero-banner>
-            <ui-title title="The Project" :is-main="true"/>
+
+            <ui-title
+                title="The Project"
+                :is-main="true"/>
+
             <ui-paragraph align="center">
                 THE FILM CORNER. Online and offline activities for Film Literacy” project is aimed to the design, release and testing of an online digital virtual user- centered platform for Film Literacy, taking advantage of the opportunities offered by web 2.0 and crossmedia innovative approach in the digital era in order to raise the average film literacy level of EU young audiences. The general aim of the project is to contribute to draw an easy-going model for Film Literacy that could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience...
             </ui-paragraph>
+
             <ui-link url="#">Leggi tutto</ui-link>
         </ui-container>
         <news></news>
@@ -20,8 +26,8 @@
 </template>
 
 <script>
-import News from '../components/News.vue'
-import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../ui'
+import News from '../../components/News.vue'
+import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
 import { TimelineMax } from 'gsap'
 export default {
     name: 'Home',
@@ -39,7 +45,7 @@ export default {
         UiRow,
     },
     methods: {
-        panelLeave: function(el, done) {
+        leave: function(el, done) {
             let master = new TimelineMax({
                 paused: true
             })
@@ -61,8 +67,7 @@ export default {
             })
             master.play()
         },
-        panelEnter: function(el, done) {
-            console.log(el, 'enter');
+        enter: function(el, done) {
             let master = new TimelineMax({
                 paused: true
             })

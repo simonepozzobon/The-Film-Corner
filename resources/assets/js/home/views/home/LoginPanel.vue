@@ -26,12 +26,12 @@
         </ui-container>
         <login-form
             ref="login"
-            @go-back="goBack"/>
+            />
     </ui-container>
 </template>
 
 <script>
-import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../ui'
+import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
 import LoginForm from './LoginForm.vue'
 
 export default {
@@ -106,7 +106,7 @@ export default {
             this.toggle()
         },
         goToHome: function() {
-            this.$router.push({ name: 'home-header' })
+            this.$router.push({ name: 'home' })
         }
     },
     mounted: function() {

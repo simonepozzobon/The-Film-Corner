@@ -9,6 +9,8 @@
                 fontSizeClass,
                 colorClass,
                 uppercaseClass,
+                paddingClass,
+                marginClass,
             ]">
                 {{ title }}
         </component>
@@ -47,6 +49,14 @@ export default {
             type: String,
             default: null,
         },
+        hasPadding: {
+            type: Boolean,
+            default: true,
+        },
+        hasMargin: {
+            type: Boolean,
+            default: true,
+        }
     },
     computed: {
         alignClass: function() {
@@ -72,6 +82,16 @@ export default {
                 return 'ui-title--text-normal'
             }
         },
+        paddingClass: function() {
+            if (!this.hasPadding) {
+                return 'ui-title--no-padding'
+            }
+        },
+        marginClass: function() {
+            if (!this.hasMargin) {
+                return 'ui-title--no-margin'
+            }
+        }
     }
 }
 </script>
@@ -86,26 +106,34 @@ export default {
     text-transform: uppercase;
     font-weight: $font-weight-bold;
 
-    &#{$self}--ismain {
+    &--ismain {
         text-align: center;
         margin-bottom: $spacer * 2;
         padding-top: $spacer * 3;
     }
 
-    &#{$self}--align-center {
+    &--align-center {
         text-align: center;
     }
 
-    &#{$self}--text-normal {
+    &--text-normal {
         letter-spacing: 2px;
         text-transform: none;
     }
 
-    &#{$self}--h1 { font-size: $h1-font-size; }
-    &#{$self}--h2 { font-size: $h2-font-size; }
-    &#{$self}--h3 { font-size: $h3-font-size; }
-    &#{$self}--h4 { font-size: $h4-font-size; }
-    &#{$self}--h5 { font-size: $h5-font-size; }
-    &#{$self}--h6 { font-size: $h6-font-size; }
+    &--no-padding {
+        padding-top: 0;
+    }
+
+    &--no-margin {
+        margin-bottom: 0;
+    }
+
+    &--h1 { font-size: $h1-font-size; }
+    &--h2 { font-size: $h2-font-size; }
+    &--h3 { font-size: $h3-font-size; }
+    &--h4 { font-size: $h4-font-size; }
+    &--h5 { font-size: $h5-font-size; }
+    &--h6 { font-size: $h6-font-size; }
 }
 </style>

@@ -4,6 +4,7 @@
         :class="[
             colorClass,
             alignClass,
+            paddingClass,
         ]">
         <slot></slot>
     </div>
@@ -25,6 +26,10 @@ export default {
                 type: String,
                 default: null,
             },
+            hasPadding: {
+                type: Boolean,
+                default: true
+            }
         },
         computed: {
             colorClass: function() {
@@ -37,6 +42,11 @@ export default {
                     return 'ui-special-text--align-center'
                 }
             },
+            paddingClass: function() {
+                if (!this.hasPadding) {
+                    return 'ui-special-text--no-padding'
+                }
+            }
         },
         mounted: function() {
         }
@@ -53,8 +63,13 @@ export default {
     padding-top: $spacer * 1;
     padding-bottom: $spacer * 3;
 
-    &#{$self}--align-center {
+    &--align-center {
         text-align: center;
+    }
+
+    &--no-padding {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 </style>

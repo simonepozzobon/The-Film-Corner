@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { UiBlock, UiButton, UiContainer, UiFormGroup, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../ui'
+import { UiBlock, UiButton, UiContainer, UiFormGroup, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
 import { TimelineMax } from 'gsap'
 
 export default {

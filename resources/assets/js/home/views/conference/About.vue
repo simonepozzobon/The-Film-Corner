@@ -7,7 +7,7 @@
                     font-size="h1"
                     :is-main="true"
                     :uppercase="false"
-                    title="Conference"
+                    title="International Conference"
                     color="white"/>
                 <ui-special-text color="white" align="center">
                     About the conference
@@ -15,10 +15,10 @@
             </ui-container>
         </ui-hero-banner>
         <ui-container class="py-5" :contain="true">
-            <ui-paragraph>
+            <ui-paragraph :has-padding="false">
                 The Film Corner International Conference is open to the public and addressed to professionals and trainers of film education, media education, information and communication technology as well as gaming professionals. The conference will take place during the 9th edition of Piccolo Grande Cinema Festival in Milan, a film festival dedicated to young audiences organised by Fondazione Cineteca Italiana. The main issues of the conference are:
             </ui-paragraph>
-            <ui-paragraph>
+            <ui-paragraph :has-padding="false">
                 <ui-list>
                     <ui-list-item>
                         Launch of The Film Corner platform: the first version of The Film Corner interactive online platform for film education will be launched at the conference.
@@ -35,11 +35,25 @@
                 </ui-list>
             </ui-paragraph>
         </ui-container>
+        <ui-container class="pb-5" :contain="true">
+            <ui-title
+                title="Speakers"
+                font-size="h1"
+                class="pb-4"/>
+            <ui-team
+                v-for="(speaker, i, key) in this.speakers"
+                :key="speaker.id"
+                :name="speaker.name"
+                :img="speaker.img">
+                {{ speaker.description }}
+            </ui-team>
+        </ui-container>
     </ui-container>
 </template>
 
 <script>
-import { UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiSpecialText, UiTitle } from '../../ui'
+import speakers from '../../dummies/conferenceSpeakers'
+import { UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiSpecialText, UiTeam, UiTitle } from '../../ui'
 
 export default {
     name: 'ConferenceContact',
@@ -50,10 +64,12 @@ export default {
         UiListItem,
         UiParagraph,
         UiSpecialText,
+        UiTeam,
         UiTitle,
     },
     data: function() {
         return {
+            speakers: speakers,
         }
     }
 }
