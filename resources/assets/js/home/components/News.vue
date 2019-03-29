@@ -13,10 +13,10 @@
                         font-size="h5"
                         :title="item.title"
                         align="center"/>
-                    <ui-paragraph align="center">
-                        {{ item.content }}
+                    <ui-paragraph align="center" :has-padding="false">
+                        {{ item.shortContent }}
                     </ui-paragraph>
-                    <ui-link align="center">{{ item.linkText }}</ui-link>
+                    <ui-link @click.native="goTo($event, item.link, item.id)" align="center">{{ item.linkText }}</ui-link>
                 </ui-block>
             </ui-row>
         </ui-container>
@@ -41,6 +41,17 @@ export default {
     data: function() {
         return {
             news: News,
+        }
+    },
+    methods: {
+        goTo: function(event, name, id) {
+            event.preventDefault()
+            this.$router.push({
+                name: 'news-single',
+                params: {
+                    slug: name,
+                }
+            })
         }
     }
 }

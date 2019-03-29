@@ -50,7 +50,9 @@ export default {
                 return 'ui-container--align-left'
             }
 
-            return null
+            if (this.align == 'around') {
+                return 'ui-container--around'
+            }
         },
         directionClass: function() {
             if (this.direction == 'row') {
@@ -90,16 +92,21 @@ export default {
     $self: &;
     display: flex;
 
-    &#{$self}--align-center {
+    &--align-center {
         justify-content: center;
         align-items: center;
     }
 
-    &#{$self}--column {
+    &--around {
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    &--column {
         flex-direction: column;
     }
 
-    &#{$self}--full-width {
+    &--full-width {
         width: 100%;
     }
 }

@@ -54,6 +54,11 @@ const routes = [
                         component: require('./views/conference/ScheduleDraft.vue').default,
                     },
                     {
+                        path: 'accomodation',
+                        name: 'conf-accomodation',
+                        component: require('./views/conference/Accomodation.vue').default,
+                    },
+                    {
                         path: 'downloads',
                         name: 'conf-downloads',
                         component: require('./views/conference/Downloads.vue').default,
@@ -65,6 +70,11 @@ const routes = [
                     },
                 ]
             },
+            {
+                path: 'news/:slug',
+                name: 'news-single',
+                component: require('./views/News.vue').default,
+            }
         ],
     },
 

@@ -11,7 +11,7 @@
                 <a href="#" @click="goTo($event, 'conf-schedule-draft')" class="nav-link conference-nav__link">Schedule Draft</a>
             </li>
             <li class="conference-nav__item nav-item">
-                <a href="#" class="nav-link conference-nav__link">Accomodation</a>
+                <a href="#" @click="goTo($event, 'conf-accomodation')" class="nav-link conference-nav__link">Accomodation</a>
             </li>
             <li class="conference-nav__item nav-item">
                 <a href="#" @click="goTo($event, 'conf-downloads')" class="nav-link conference-nav__link">Download & Press</a>

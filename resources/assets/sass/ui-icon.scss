@@ -1,0 +1,20 @@
+
+.ui-icon {
+    $self: &;
+
+    &--cyan &__path {
+        fill: $cyan;
+    }
+
+    &--white &__path {
+        fill: $white;
+    }
+
+    &--pointer {
+        cursor: pointer;
+    }
+
+    &--hoverable {
+        cursor: pointer;
+    }
+}
