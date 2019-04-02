@@ -1,5 +1,6 @@
 import UiHeroBanner from './UiHeroBanner.vue'
 import UiBlock from './UiBlock.vue'
+import UiBurger from './UiBurger.vue'
 import UiButton from './UiButton.vue'
 import UiContainer from './UiContainer.vue'
 import UiFormGroup from './UiFormGroup.vue'
@@ -9,6 +10,7 @@ import UiInput from './UiInput.vue'
 import UiLink from './UiLink.vue'
 import UiList from './UiList.vue'
 import UiListItem from './UiListItem.vue'
+import UiMenuItem from './UiMenuItem.vue'
 import UiParagraph from './UiParagraph.vue'
 import UiRow from './UiRow.vue'
 import UiSpecialText from './UiSpecialText.vue'
@@ -18,6 +20,7 @@ import UiTitle from './UiTitle.vue'
 export {
     UiHeroBanner,
     UiBlock,
+    UiBurger,
     UiButton,
     UiContainer,
     UiFormGroup,
@@ -27,6 +30,7 @@ export {
     UiLink,
     UiList,
     UiListItem,
+    UiMenuItem,
     UiParagraph,
     UiRow,
     UiSpecialText,

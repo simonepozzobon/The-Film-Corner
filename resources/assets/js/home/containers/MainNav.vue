@@ -1,71 +1,124 @@
 <template lang="html">
-    <nav class="main-menu navbar navbar-light bg-faded navbar-expand-lg fixed-top">
-        <div class="main-menu__brand navbar-brand">
-            <logo width="126px" class="main-menu__logo"/>
-            <logo-europa width="77px" class="main-menu__logo"/>
-        </div>
-        <ul class="navbar-nav ml-auto">
-            <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'home')" class="main-menu__link nav-link">Home</a>
-            </li>
-            <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'project')" class="main-menu__link nav-link">The Project</a>
-            </li>
-            <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'schools')" class="main-menu__link nav-link">Schools</a>
-            </li>
-            <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'conference')" class="main-menu__link nav-link">Conference</a>
-            </li>
-            <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
-            </li>
-            <li class="main-menu__item nav-item dropdown">
-                <a class="main-menu__link nav-link dropdown-toggle" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Login
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
-                    <a class="dropdown-item" href="#">Teacher Login</a>
-                    <a class="dropdown-item" href="#">Student Login</a>
-                    <a class="dropdown-item" href="#">Guest Login</a>
-                </div>
-            </li>
-            <li class="main-menu__item nav-item dropdown">
-                <a href="#" id="languageDropdown" class="main-menu__link nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Language
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
-                    <a class="dropdown-item" href="/set-locale/en">
-                        English
+    <div>
+        <nav class="main-menu navbar navbar-light bg-faded navbar-expand-lg fixed-top">
+            <div class="main-menu__brand navbar-brand">
+                <logo width="126px" class="main-menu__logo"/>
+                <logo-europa width="77px" class="main-menu__logo"/>
+            </div>
+            <ul class="navbar-nav ml-auto" ref="navbar">
+                <li class="main-menu__item nav-item">
+                    <a href="#" @click="goTo($event, 'home')" class="main-menu__link nav-link">Home</a>
+                </li>
+                <li class="main-menu__item nav-item">
+                    <a href="#" @click="goTo($event, 'project')" class="main-menu__link nav-link">The Project</a>
+                </li>
+                <li class="main-menu__item nav-item">
+                    <a href="#" @click="goTo($event, 'schools')" class="main-menu__link nav-link">Schools</a>
+                </li>
+                <li class="main-menu__item nav-item">
+                    <a href="#" @click="goTo($event, 'conference')" class="main-menu__link nav-link">Conference</a>
+                </li>
+                <li class="main-menu__item nav-item">
+                    <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
+                </li>
+                <li class="main-menu__item nav-item dropdown disabled" >
+                    <a class="main-menu__link nav-link dropdown-toggle disabled" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Login
                     </a>
-                    <a class="dropdown-item" href="/set-locale/fr">
-                        Francais
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
+                        <a class="dropdown-item" href="#">Teacher Login</a>
+                        <a class="dropdown-item" href="#">Student Login</a>
+                        <a class="dropdown-item" href="#">Guest Login</a>
+                    </div>
+                </li>
+                <li class="main-menu__item nav-item dropdown disabled" >
+                    <a href="#" id="languageDropdown" class="main-menu__link nav-link dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Language
                     </a>
-                    <a class="dropdown-item" href="/set-locale/it">
-                        Italiano
-                    </a>
-                    <a class="dropdown-item" href="/set-locale/sr">
-                        српски
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </nav>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
+                        <a class="dropdown-item" href="/set-locale/en">
+                            English
+                        </a>
+                        <a class="dropdown-item" href="/set-locale/fr">
+                            Francais
+                        </a>
+                        <a class="dropdown-item" href="/set-locale/it">
+                            Italiano
+                        </a>
+                        <a class="dropdown-item" href="/set-locale/sr">
+                            српски
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <ui-burger
+                ref="burger"
+                @ready="timelineReady('burger')"
+                @main-click="toggle"/>
+        </nav>
+        <menu-overlay
+            ref="overlay"
+            @ready="timelineReady('overlay')"
+            @main-click="toggle"/>
+    </div>
 </template>
 
 <script>
+import { UiBurger } from '../ui'
 import { Logo, LogoEuropa } from '../icons'
+import MenuOverlay from './MenuOverlay.vue'
+
 export default {
     name: 'MainNav',
     components: {
         Logo,
-        LogoEuropa
+        LogoEuropa,
+        UiBurger,
+        MenuOverlay,
+    },
+    watch: {
+        '$root.window': function() {
+            this.setMenu()
+        }
+    },
+    data: function() {
+        return {
+            ready: {
+                burger: false,
+                overlay: false,
+            },
+        }
     },
     methods: {
+        setMenu: function() {
+            if (this.$root.window.w <= 992) {
+                this.$refs.navbar.style.display = 'none'
+                this.$refs.burger.$el.style.display = 'flex'
+            } else {
+                this.$refs.navbar.style.display = 'flex'
+                this.$refs.burger.$el.style.display = 'none'
+            }
+        },
+        timelineReady: function(key) {
+            this.ready[key] = true
+        },
         goTo: function(event, name) {
             event.preventDefault()
             this.$router.push({ name: name })
-        }
+        },
+        toggle: function() {
+            let burger = this.$refs.burger
+            let overlay = this.$refs.overlay
+
+            // se l'overlay è aperto
+            if (this.ready.burger && this.ready.overlay) {
+                this.$refs.burger.toggle()
+                this.$refs.overlay.toggle()
+            }
+        },
+    },
+    mounted: function() {
+        this.setMenu()
     }
 }
 </script>

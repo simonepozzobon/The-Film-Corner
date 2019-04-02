@@ -1,5 +1,7 @@
 <template lang="html">
-    <div class="ui-hero-banner" ref="bg">
+    <div class="ui-hero-banner"
+        :class="fullHeightClass"
+        ref="bg">
         <img :src="image" alt="" class="ui-hero-banner__bg" ref="image">
         <div class="ui-hero-banner__container">
             <div class="ui-hero-banner__content">
@@ -16,6 +18,10 @@ export default {
         image: {
             type: String,
             default: null
+        },
+        fullHeight: {
+            type: Boolean,
+            default: false,
         }
     },
     watch: {
@@ -28,6 +34,13 @@ export default {
             }
         }
     },
+    computed: {
+        fullHeightClass: function() {
+            if (this.fullHeight) {
+                return 'ui-hero-banner--full-height'
+            }
+        }
+    },
     mounted: function() {
     }
 }
@@ -37,6 +50,7 @@ export default {
 @import '~styles/shared';
 
 .ui-hero-banner {
+    $self: &;
     min-width: 100vw;
     height: 100%;
     background-size: cover;
@@ -58,13 +72,29 @@ export default {
     }
 
     &__content {
-        padding-top: $spacer * 2;
-        padding-bottom: $spacer * 2;
+        padding: $spacer * 2;
     }
 
+    &--full-height {
+        max-height: 40vh;
+        min-height: 200px;
+        overflow: hidden;
+    }
 
     @include media-breakpoint-up('sm'){
         position: relative;
+
+        &--full-height {
+            max-height: 40vh;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        &#{$self}--full-height & {
+            &__bg {
+                transform: translateY(-50%);
+            }
+        }
 
         &__bg {
             display: block;
@@ -79,8 +109,7 @@ export default {
         }
 
         &__content {
-            padding-top: $spacer * 2;
-            padding-bottom: $spacer * 2;
+            padding: $spacer * 2;
         }
     }
 }

@@ -1,8 +1,6 @@
 <template lang="html">
     <div class="ui-image"
-        :class="[
-            fullWidthClass,
-        ]"
+        :class="[ fullWidthClass, fullHeightClass ]"
         :title="alt">
         <img :src="src" :alt="alt" class="ui-image__content"/>
     </div>
@@ -27,12 +25,21 @@ export default {
         fullWidth: {
             type: Boolean,
             default: false,
+        },
+        fullHeight: {
+            type: Boolean,
+            default: false,
         }
     },
     computed: {
         fullWidthClass: function() {
             if (this.fullWidth) {
                 return 'ui-image--full-width'
+            }
+        },
+        fullHeightClass: function() {
+            if (this.fullHeight) {
+                return 'ui-image--full-height'
             }
         }
     }

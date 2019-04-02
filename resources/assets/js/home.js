@@ -3,6 +3,7 @@ require('./bootstrap')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './home/routes'
+import * as Sentry from '@sentry/browser'
 
 Vue.use(VueRouter)
 
@@ -11,6 +12,18 @@ const router = new VueRouter({
     dir: __dirname,
     routes: routes,
 })
+
+if (process.env == 'production') {
+    Sentry.init({
+        dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
+        integrations: [
+            new Sentry.Integrations.Vue({
+                Vue,
+                attachProps: true
+            })
+        ]
+    })
+}
 
 import MainTemplate from './home/containers/MainTemplate.vue'
 
@@ -42,6 +55,12 @@ const home = new Vue({
             this.window = view
 
             return this.window
+        },
+        goToAndScroll: function(name, target) {
+            if (this.$route.name != target) {
+                this.$router.push({name: target})
+                return false
+            }
         }
     },
     mounted: function() {

@@ -7,7 +7,7 @@
                     :key="item.id"
                     :size="4"
                     class="tfc-news__item">
-                    <ui-image :src="item.img"/>
+                    <ui-image :src="item.img" />
                     <ui-title
                         tag="h2"
                         font-size="h5"

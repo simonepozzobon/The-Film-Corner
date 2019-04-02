@@ -1,5 +1,6 @@
 <template lang="html">
-    <div class="ui-hero-image">
+    <div
+        class="ui-hero-image">
         <img :src="image" alt="" class="ui-hero-image__image">
     </div>
 </template>
@@ -11,7 +12,13 @@ export default {
         image: {
             type: String,
             default: null,
+        },
+        fullHeight: {
+            type: Boolean,
+            default: false,
         }
+    },
+    computed: {
     }
 }
 </script>

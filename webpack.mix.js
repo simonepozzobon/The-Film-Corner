@@ -69,14 +69,6 @@ mix
         jquery: ['$', 'jQuery', 'jquery'],
         tether: ['Tether'],
     })
-    .browserSync({
-        proxy: 'http://thefilmcorner.test',
-        ui: false,
-        host: 'thefilmcorner.test',
-        open: 'external',
-        browser: 'google chrome',
-        // port: 6004,
-    })
     .webpackConfig({
         resolve:{
             alias: {
@@ -84,4 +76,9 @@ mix
                 '_js': path.resolve(__dirname, 'resources/assets/js')
             }
         }
+    })
+    .browserSync({
+        proxy: 'http://thefilmcorner.test',
+        port: 3019,
+        browser: 'google chrome',
     })

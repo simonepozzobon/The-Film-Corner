@@ -1,6 +1,8 @@
 <template lang="html">
     <ui-container>
-        <ui-hero-banner :image="this.item.img">
+        <ui-hero-banner
+            :image="this.item.img"
+            :full-height="true">
             <ui-container :full-width="true">
                 <ui-title
                     tag="h1"
@@ -49,7 +51,6 @@ export default {
     },
     data: function() {
         return {
-
             item: {
                 img: null,
                 title: null,
