@@ -105,8 +105,7 @@ export default {
             this.master.reverse()
         },
         goBack: function() {
-            this.hide()
-            this.$emit('go-back')
+            this.$router.push({name: 'home'})
         },
         attemptLogin: function() {
             // login
