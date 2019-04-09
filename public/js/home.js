@@ -82374,13 +82374,6 @@ exports.default = {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 /***/ }),
 /* 345 */
@@ -82475,38 +82468,16 @@ var render = function() {
                     { attrs: { size: 4, color: "green" } },
                     [
                       _c("ui-title", {
-                        attrs: { title: "Welcome", color: "white", size: "h4" }
+                        attrs: {
+                          title: "Cultural Approach",
+                          color: "white",
+                          size: "h4"
+                        }
                       }),
                       _vm._v(" "),
                       _c("ul", { staticClass: "block-menu" }, [
                         _c("li", { staticClass: "block-menu__menu-head" }, [
-                          _vm._v("Inquadratura")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-item" }, [
-                          _vm._v("Confronta le immagini")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-item" }, [
-                          _vm._v("Componi l’inquadratura")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-item" }, [
-                          _vm._v("Ritaglia l’inquadratura")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-div" }),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-head" }, [
-                          _vm._v("Montaggio")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-item" }, [
-                          _vm._v("Montaggio parallelo")
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "block-menu__menu-item" }, [
-                          _vm._v("Fuoricampo")
+                          _vm._v("Coming Soon")
                         ])
                       ])
                     ],

@@ -4,16 +4,9 @@
             <ui-container :full-width="true">
                 <ui-row>
                     <ui-block :size="4" color="green">
-                        <ui-title title="Welcome" color="white" size="h4"/>
+                        <ui-title title="Cultural Approach" color="white" size="h4"/>
                         <ul class="block-menu">
-                            <li class="block-menu__menu-head">Inquadratura</li>
-                            <li class="block-menu__menu-item">Confronta le immagini</li>
-                            <li class="block-menu__menu-item">Componi l’inquadratura</li>
-                            <li class="block-menu__menu-item">Ritaglia l’inquadratura</li>
-                            <li class="block-menu__menu-div"></li>
-                            <li class="block-menu__menu-head">Montaggio</li>
-                            <li class="block-menu__menu-item">Montaggio parallelo</li>
-                            <li class="block-menu__menu-item">Fuoricampo</li>
+                            <li class="block-menu__menu-head">Coming Soon</li>
                         </ul>
                     </ui-block>
                     <ui-block :size="4" color="red">
