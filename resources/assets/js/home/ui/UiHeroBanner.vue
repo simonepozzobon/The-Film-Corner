@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="ui-hero-banner"
-        :class="fullHeightClass"
+        :class="[fullHeightClass, fullWidthClass]"
         ref="bg">
         <img :src="image" alt="" class="ui-hero-banner__bg" ref="image">
         <div class="ui-hero-banner__container">
@@ -22,11 +22,14 @@ export default {
         fullHeight: {
             type: Boolean,
             default: false,
-        }
+        },
+        fullWidth: {
+            type: Boolean,
+            default: false,
+        },
     },
     watch: {
         '$root.isMobile': function(value) {
-            console.log(value);
             if (value) {
                 this.$refs.bg.style.backgroundImage = 'url('+ this.image +')'
             } else {
@@ -39,7 +42,12 @@ export default {
             if (this.fullHeight) {
                 return 'ui-hero-banner--full-height'
             }
-        }
+        },
+        fullWidthClass: function() {
+            if (this.fullWidth) {
+                return 'ui-hero-banner--full-width'
+            }
+        },
     },
     mounted: function() {
     }
@@ -90,10 +98,8 @@ export default {
             overflow: hidden;
         }
 
-        &#{$self}--full-height & {
-            &__bg {
-                transform: translateY(-50%);
-            }
+        &#{$self}--full-height &__bg {
+            transform: translateY(-50%);
         }
 
         &__bg {
@@ -110,6 +116,10 @@ export default {
 
         &__content {
             padding: $spacer * 2;
+        }
+
+        &#{$self}--full-width &__content {
+            width: 100%;
         }
     }
 }

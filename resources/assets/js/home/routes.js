@@ -71,6 +71,17 @@ const routes = [
                 ]
             },
             {
+                path: 'apps',
+                component: require('./views/apps/AppsContainer.vue').default,
+                children: [
+                    {
+                        path: '',
+                        name: 'apps-home',
+                        component: require('./views/apps/Home.vue').default,
+                    }
+                ],
+            },
+            {
                 path: 'news/:slug',
                 name: 'news-single',
                 component: require('./views/News.vue').default,

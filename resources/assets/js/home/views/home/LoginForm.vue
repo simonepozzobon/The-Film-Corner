@@ -1,33 +1,37 @@
 <template lang="html">
-    <ui-container
+    <ui-row
         direction="column"
         min-width="400px"
+        align="center"
         ref="container">
         <ui-block
-            :size="9"
+            size="auto"
             :has-container="false"
             class="login-form__container">
             <ui-title
-                title="Teacher Login"
+                title="Login"
                 color="white"
                 :uppercase="false"
                 align="center"
                 class="login-form__title"/>
 
             <ui-form-group
-                name="Email Address"
+                name="Email"
                 type="email"
-                class="login-form__input"/>
+                class="login-form__input"
+                @changed="changed"/>
 
             <ui-form-group
                 name="Password"
                 type="password"
-                class="login-form__input"/>
+                class="login-form__input"
+                @changed="changed"/>
 
             <ui-button
                 color="white"
                 :block="true"
-                class="login-form__submit">
+                class="login-form__submit"
+                @click.native="attemptLogin">
                 Login
             </ui-button>
 
@@ -39,10 +43,11 @@
                 Back
             </ui-button>
         </ui-block>
-    </ui-container>
+    </ui-row>
 </template>
 
 <script>
+import axios from 'axios'
 import { UiBlock, UiButton, UiContainer, UiFormGroup, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
 import { TimelineMax } from 'gsap'
 
@@ -64,6 +69,10 @@ export default {
     data: function() {
         return {
             master: null,
+            obj: {
+                email: null,
+                password: null,
+            }
         }
     },
     methods: {
@@ -88,7 +97,6 @@ export default {
             }, 0)
 
             this.master.progress(1).progress(0)
-            this.hide()
         },
         show: function() {
             this.master.play()
@@ -99,6 +107,27 @@ export default {
         goBack: function() {
             this.hide()
             this.$emit('go-back')
+        },
+        attemptLogin: function() {
+            // login
+            let data = new FormData()
+
+            data.append('email', this.obj.email)
+            data.append('password', this.obj.password)
+
+            axios.post('/api/v2/login', data).then(response => {
+                if (response.data.status) {
+                    this.$root.user = {
+                        id: 1,
+                        name: 'Simone',
+                        email: 'info@simonepozzobon.com',
+                    }
+                    this.$root.goTo('apps-home')
+                }
+            })
+        },
+        changed: function(v, name) {
+            this.obj[name] = v
         }
     },
     mounted: function() {

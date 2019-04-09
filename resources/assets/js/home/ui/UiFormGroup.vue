@@ -5,7 +5,10 @@
             class="ui-form-group__label">
             {{ name }}
         </label>
-        <ui-input :name="nameToLowerCase" :type="type"/>
+        <ui-input
+            :name="nameToLowerCase"
+            :type="type"
+            @changed="changed"/>
     </div>
 </template>
 
@@ -39,6 +42,11 @@ export default {
             .replace(/-+$/, '')
         }
     },
+    methods: {
+        changed: function(v, name) {
+            this.$emit('changed', v, name)
+        }
+    }
 }
 </script>
 

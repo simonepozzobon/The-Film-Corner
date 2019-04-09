@@ -13,17 +13,17 @@ const router = new VueRouter({
     routes: routes,
 })
 
-if (process.env == 'production') {
-    Sentry.init({
-        dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
-        integrations: [
-            new Sentry.Integrations.Vue({
-                Vue,
-                attachProps: true
-            })
-        ]
-    })
-}
+// if (process.env == 'production') {
+//     Sentry.init({
+//         dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
+//         integrations: [
+//             new Sentry.Integrations.Vue({
+//                 Vue,
+//                 attachProps: true
+//             })
+//         ]
+//     })
+// }
 
 import MainTemplate from './home/containers/MainTemplate.vue'
 
@@ -37,6 +37,7 @@ const home = new Vue({
             window: { w: 0, h: 0 },
             isMobile: null,
             conferenceMenu: null,
+            user: null,
         }
     },
     methods: {
@@ -55,6 +56,11 @@ const home = new Vue({
             this.window = view
 
             return this.window
+        },
+        goTo: function(name) {
+            if (this.$route.name != name) {
+                this.$router.push({name: name})
+            }
         },
         goToAndScroll: function(name, target) {
             if (this.$route.name != target) {

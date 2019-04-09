@@ -19,7 +19,7 @@
             <ui-paragraph align="center">
                 THE FILM CORNER. Online and offline activities for Film Literacy” project is aimed to the design, release and testing of an online digital virtual user- centered platform for Film Literacy, taking advantage of the opportunities offered by web 2.0 and crossmedia innovative approach in the digital era in order to raise the average film literacy level of EU young audiences. The general aim of the project is to contribute to draw an easy-going model for Film Literacy that could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience...
             </ui-paragraph>
-            <ui-link @click.native="goTo($event, 'project')" align="center">Leggi tutto</ui-link>
+            <ui-link @click.native="goTo($event, 'project')" align="center">Read more</ui-link>
             <news></news>
         </ui-container>
     </ui-container>

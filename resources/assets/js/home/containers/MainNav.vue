@@ -21,15 +21,10 @@
                 <li class="main-menu__item nav-item">
                     <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
                 </li>
-                <li class="main-menu__item nav-item dropdown disabled" >
-                    <a class="main-menu__link nav-link dropdown-toggle disabled" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Login
+                <li class="main-menu__item nav-item disabled" >
+                    <a class="main-menu__link nav-link disabled" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ this.loginTxt }}
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="loginDropdown">
-                        <a class="dropdown-item" href="#">Teacher Login</a>
-                        <a class="dropdown-item" href="#">Student Login</a>
-                        <a class="dropdown-item" href="#">Guest Login</a>
-                    </div>
                 </li>
                 <li class="main-menu__item nav-item dropdown disabled" >
                     <a href="#" id="languageDropdown" class="main-menu__link nav-link dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,6 +44,11 @@
                             српски
                         </a>
                     </div>
+                </li>
+                <li class="main-menu__item nav-item user-profile" v-if="$root.user">
+                    <a href="#" class="main-menu__link nav-link user-profile__avatar">
+                        SP
+                    </a>
                 </li>
             </ul>
             <ui-burger
@@ -79,10 +79,18 @@ export default {
     watch: {
         '$root.window': function() {
             this.setMenu()
+        },
+        '$root.user': function(user) {
+            if (user) {
+                this.loginTxt = 'Logout'
+            } else {
+                this.loginTxt = 'Login'
+            }
         }
     },
     data: function() {
         return {
+            loginTxt: 'Login',
             ready: {
                 burger: false,
                 overlay: false,
@@ -137,6 +145,23 @@ export default {
         text-transform: uppercase;
         font-weight: $font-weight-bold;
         font-size: $font-size-sm;
+    }
+}
+
+.user-profile {
+    position: relative;
+    width: $spacer * 2;
+    height: $spacer * 2;
+    background-color: $gray-600;
+    @include border-radius(50%);
+
+    &__avatar {
+        line-height: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: $white !important;
     }
 }
 </style>

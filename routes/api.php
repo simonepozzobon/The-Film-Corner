@@ -76,3 +76,8 @@ Route::delete('apps/audio/{id}', 'Admin\Apps\AudioController@deleteAudio');
 // Images
 Route::post('apps/image', 'Admin\Apps\MediaController@uploadMedia');
 Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');
+
+
+Route::prefix('v2')->group(function() {
+    Route::post('login', 'Api\AuthController@attempt_login');
+});

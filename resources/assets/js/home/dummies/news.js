@@ -2,7 +2,7 @@ const News = [
     {
         id: 0,
         title: 'THE SECOND EDITION OF THE FILM CORNER HAS STARTED!',
-        img: '/img/grafica/cornercontest.jpg',
+        img: '/img/grafica/filmography.jpg',
         content: 'Good news for our teachers, students and followers: The Film Corner project has received a second grant by the European Commission in order to keep on researching around film education!<br><br>“The Film Corner Reloaded – A cultural approach” stems from “The Film Corner. Online and offline activities for film literacy” already financed by the European Commission in the frame of the Creative Europe Programme. The project is managed by Fondazione Cineteca Italiana (Italy) in partnership with Jugslovenska Kinoteka (Serbia), The Film Space (UK), The Nerve Centre (Northern Ireland), University of Milano-Bicocca (Italy) and with two brand new partners that joined us for this second edition: The Georgian National Film Centre (Georgia) and Kino Otok (Slovenia).<br><br>The project has officially started in december 2018 and it will finish in december 2020. During those 2 years, a third section of the platform will be developed, it will be dedicated to an interdisciplinary and cross-curricular approach to film education centered on the main topic of film and its relationships with other topics. This new section will join the already existing sections of the platform: “Film Specific” and the “Creative Studio”<br><br><br><h2 class="h3">APPLY FOR THE NEXT INTERNATIONAL TESTING PROGRAM OF THE FILM CORNER PLATFORM!</h2>Through The Film Corner project our purpose is not only to create a useful interactive didactical resource; we would also like to share this platform with teachers and schools in other countries.<br><br>That’s why only for this edition of the project we have a special proposal addressed to teachers: you can participate in the testing phase with your school!<br><br>Follow the instructions in the card below and get to know The Film corner platform!<br><br><br><img src="/img/grafica/tfc-2.jpg" class="img-fluid"/><br><br><br><p align="center"><a href="https://cinetecamilano.it/the-film-corner?utm_source=test&utm_medium=news" target="_blank" class="btn btn-primary">Application Form</a></p>',
         shortContent: 'Good news for our teachers, students and followers: The Film Corner project has received a second grant by the European Commission in order to keep on researching around film education!...',
         linkText: 'Read more',
@@ -31,7 +31,7 @@ const News = [
         title: 'MY CORNER CONTEST BEGINS NOW!',
         content: 'We have explored the precise meanings of cinematographic language in Studio 1, tested the creative sphere of audiovisual production in Studio 2 and it is now time to put into practice what we learned and try to shoot a real short film.<br>Read below the rules of partecipation to enter the contest:<br>Good luck and.. have fun!',
         shortContent: 'We have explored the precise meanings of cinematographic language in Studio 1, tested the creative sphere of audiovisual...',
-        img: '/img/grafica/filmography.jpg',
+        img: '/img/grafica/cornercontest.jpg',
         linkText: 'Sign In',
         link: 'my-corner-contest-begin',
     },

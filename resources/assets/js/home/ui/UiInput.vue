@@ -23,6 +23,11 @@ export default {
         return {
             value: null,
         }
+    },
+    watch: {
+        value: function(v) {
+            this.$emit('changed', v, this.name)
+        }
     }
 }
 </script>
