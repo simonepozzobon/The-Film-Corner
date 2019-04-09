@@ -2,14 +2,19 @@
     <ui-container>
         <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
             <ui-container :full-width="true">
+                <ui-row align="center">
+                    <ui-block :size="4">
+                        <ui-title title="Welcome" color="white"></ui-title>
+                    </ui-block>
+                </ui-row>
                 <ui-row>
-                    <ui-block :size="4" color="green">
+                    <ui-block :size="4" color="green" :radius="true" :transparent="true">
                         <ui-title title="Cultural Approach" color="white" size="h4"/>
                         <ul class="block-menu">
                             <li class="block-menu__menu-head">Coming Soon</li>
                         </ul>
                     </ui-block>
-                    <ui-block :size="4" color="red">
+                    <ui-block :size="4" color="red" :radius="true" :transparent="true">
                         <ui-title title="Film Specific" color="white" size="h4"/>
                         <ul class="block-menu">
                             <li class="block-menu__menu-head">Inquadratura</li>
@@ -26,7 +31,7 @@
                             <li class="block-menu__menu-item">Effetti sonori</li>
                         </ul>
                     </ui-block>
-                    <ui-block :size="4" color="yellow">
+                    <ui-block :size="4" color="yellow" :radius="true" :transparent="true">
                         <ui-title title="Creative Studio" color="white" size="h4"/>
                         <ul class="block-menu">
                             <li class="block-menu__menu-head">Riscaldamento</li>
@@ -50,12 +55,13 @@
 </template>
 
 <script>
-import { UiBlock, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
+import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
 
 export default {
     name: 'ConferenceHome',
     components: {
         UiBlock,
+        UiButton,
         UiContainer,
         UiHeroBanner,
         UiList,

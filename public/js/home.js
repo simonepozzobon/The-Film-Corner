@@ -58623,6 +58623,14 @@ exports.default = {
         direction: {
             type: String,
             default: null
+        },
+        transparent: {
+            type: Boolean,
+            default: false
+        },
+        radius: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -58633,7 +58641,9 @@ exports.default = {
             return 'col-md-' + this.size;
         },
         colorClass: function colorClass() {
-            if (this.color) {
+            if (this.color && this.transparent) {
+                return 'ui-block--transparent-' + this.color;
+            } else if (this.color) {
                 return 'bg-' + this.color;
             }
         },
@@ -58646,7 +58656,18 @@ exports.default = {
             if (this.direction == 'row') {
                 return 'ui-block--flex-row';
             }
+        },
+        radiusClass: function radiusClass() {
+            if (this.radius) {
+                return 'ui-block--radius';
+            }
+        },
+        transparentClass: function transparentClass() {
+            if (this.transparent) {
+                return 'ui-block--transparent';
+            }
         }
+
     }
 };
 
@@ -71206,7 +71227,7 @@ exports.push([module.i, "", ""]);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)();
-exports.push([module.i, "\n.ui-block__container[data-v-b6ef48a8] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: center;\n      justify-content: center;\n}\n.ui-block--align-start .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-align: start;\n      align-items: flex-start;\n}\n.ui-block--flex-row .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.ui-block--flex-row.ui-block--align-start .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n", ""]);
+exports.push([module.i, "\n.ui-block__container[data-v-b6ef48a8] {\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-align: center;\n      align-items: center;\n  -ms-flex-pack: center;\n      justify-content: center;\n}\n.ui-block--radius[data-v-b6ef48a8] {\n  border-radius: 5px;\n}\n.ui-block--radius .ui-block__container[data-v-b6ef48a8] {\n  border-radius: 5px;\n}\n.ui-block--align-start .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-align: start;\n      align-items: flex-start;\n}\n.ui-block--flex-row .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-direction: row;\n      flex-direction: row;\n  -ms-flex-align: center;\n      align-items: center;\n}\n.ui-block--flex-row.ui-block--align-start .ui-block__container[data-v-b6ef48a8] {\n  -ms-flex-pack: start;\n      justify-content: flex-start;\n}\n.ui-block--transparent-red[data-v-b6ef48a8] {\n  background-color: rgba(254, 89, 90, 0.8);\n}\n.ui-block--transparent-yellow[data-v-b6ef48a8] {\n  background-color: rgba(250, 218, 40, 0.8);\n}\n.ui-block--transparent-green[data-v-b6ef48a8] {\n  background-color: rgba(72, 192, 184, 0.8);\n}\n", ""]);
 
 /***/ }),
 /* 188 */
@@ -77807,7 +77828,13 @@ var render = function() {
         {
           ref: "block",
           staticClass: "ui-block",
-          class: [_vm.sizeClass, _vm.alignClass, _vm.directionClass]
+          class: [
+            _vm.sizeClass,
+            _vm.alignClass,
+            _vm.directionClass,
+            _vm.radiusClass,
+            _vm.transparentClass
+          ]
         },
         [
           _c(
@@ -77831,7 +77858,9 @@ var render = function() {
             _vm.sizeClass,
             _vm.colorClass,
             _vm.alignClass,
-            _vm.directionClass
+            _vm.directionClass,
+            _vm.radiusClass,
+            _vm.transparentClass
           ]
         },
         [_vm._t("default")],
@@ -82310,6 +82339,7 @@ exports.default = {
     name: 'ConferenceHome',
     components: {
         UiBlock: _ui.UiBlock,
+        UiButton: _ui.UiButton,
         UiContainer: _ui.UiContainer,
         UiHeroBanner: _ui.UiHeroBanner,
         UiList: _ui.UiList,
@@ -82324,6 +82354,11 @@ exports.default = {
     },
     mounted: function mounted() {}
 }; //
+//
+//
+//
+//
+//
 //
 //
 //
@@ -82462,10 +82497,35 @@ var render = function() {
             [
               _c(
                 "ui-row",
+                { attrs: { align: "center" } },
                 [
                   _c(
                     "ui-block",
-                    { attrs: { size: 4, color: "green" } },
+                    { attrs: { size: 4 } },
+                    [
+                      _c("ui-title", {
+                        attrs: { title: "Welcome", color: "white" }
+                      })
+                    ],
+                    1
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "ui-row",
+                [
+                  _c(
+                    "ui-block",
+                    {
+                      attrs: {
+                        size: 4,
+                        color: "green",
+                        radius: true,
+                        transparent: true
+                      }
+                    },
                     [
                       _c("ui-title", {
                         attrs: {
@@ -82486,7 +82546,14 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "ui-block",
-                    { attrs: { size: 4, color: "red" } },
+                    {
+                      attrs: {
+                        size: 4,
+                        color: "red",
+                        radius: true,
+                        transparent: true
+                      }
+                    },
                     [
                       _c("ui-title", {
                         attrs: {
@@ -82547,7 +82614,14 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "ui-block",
-                    { attrs: { size: 4, color: "yellow" } },
+                    {
+                      attrs: {
+                        size: 4,
+                        color: "yellow",
+                        radius: true,
+                        transparent: true
+                      }
+                    },
                     [
                       _c("ui-title", {
                         attrs: {

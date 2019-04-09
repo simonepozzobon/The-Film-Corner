@@ -1,7 +1,7 @@
 <template lang="html">
     <div
         class="ui-block"
-        :class="[sizeClass, alignClass, directionClass]"
+        :class="[sizeClass, alignClass, directionClass, radiusClass, transparentClass]"
         ref="block"
         v-if="hasContainer">
 
@@ -16,7 +16,7 @@
 
     <div
         class="ui-block"
-        :class="[sizeClass, colorClass, alignClass, directionClass]"
+        :class="[sizeClass, colorClass, alignClass, directionClass, radiusClass, transparentClass]"
         ref="block"
         v-else>
             <slot></slot>
@@ -46,6 +46,14 @@ export default {
         direction: {
             type: String,
             default: null,
+        },
+        transparent: {
+            type: Boolean,
+            default: false,
+        },
+        radius: {
+            type: Boolean,
+            default: false,
         }
     },
     computed: {
@@ -56,7 +64,9 @@ export default {
             return 'col-md-' + this.size
         },
         colorClass: function() {
-            if (this.color) {
+            if (this.color && this.transparent) {
+                return 'ui-block--transparent-'+this.color
+            } else if (this.color) {
                 return 'bg-' + this.color
             }
         },
@@ -69,7 +79,18 @@ export default {
             if (this.direction == 'row') {
                 return 'ui-block--flex-row'
             }
-        }
+        },
+        radiusClass: function() {
+            if (this.radius) {
+                return 'ui-block--radius'
+            }
+        },
+        transparentClass: function() {
+            if (this.transparent) {
+                return 'ui-block--transparent'
+            }
+        },
+
     }
 }
 </script>
@@ -87,6 +108,14 @@ export default {
         justify-content: center;
     }
 
+    &--radius {
+        @include border-radius(5px);
+    }
+
+    &--radius &__container {
+        @include border-radius(5px);
+    }
+
     &--align-start &__container {
         align-items: flex-start;
     }
@@ -98,6 +127,18 @@ export default {
 
     &--flex-row#{&}--align-start &__container {
         justify-content: flex-start;
+    }
+
+    &--transparent-red {
+        background-color: rgba($red, .8);
+    }
+
+    &--transparent-yellow {
+        background-color: rgba($yellow, .8);
+    }
+
+    &--transparent-green {
+        background-color: rgba($green, .8);
     }
 }
 
