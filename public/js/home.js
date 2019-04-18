@@ -82272,6 +82272,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "apps-container" },
     [
       _c("apps-nav"),
       _vm._v(" "),

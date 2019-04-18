@@ -1,5 +1,5 @@
 <template lang="html">
-    <div>
+    <div class="apps-container">
         <apps-nav />
         <transition
             @enter="enter"
