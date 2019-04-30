@@ -1,53 +1,60 @@
 <template lang="html">
     <ui-container>
         <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
-            <ui-container :full-width="true">
+            <ui-container :full-width="true" v-if="this.studio">
                 <ui-row align="center">
                     <ui-block :size="4">
-                        <ui-title title="Welcome" color="white"></ui-title>
+                        <ui-title
+                            :title="this.studio.name"
+                            :uppercase="false"
+                            tag="h1"
+                            font-size="h1"
+                            align="center"
+                            color="white"/>
                     </ui-block>
                 </ui-row>
                 <ui-row>
                     <ui-block
-                        v-for="studio in this.studios"
-                        :key="studio.id"
+                        v-for="cat in this.studio.categories"
+                        :key="cat.id"
                         :size="4"
-                        :color="studio.color_class"
+                        :color="cat.color_class"
                         :radius="true"
                         :transparent="true"
                         :full-height="true">
                         <ui-title
-                            :title="studio.name"
+                            :title="cat.name"
                             color="white"
                             size="h4"
-                            @click.native="goToPavilion($event, studio.slug)"/>
+                            align="center"
+                            @click.native="goToCat(cat.slug)"/>
                         <ul
                             class="block-menu"
-                            v-for="cat in studio.categories">
+                            >
                             <li
                                 class="block-menu__menu-head"
-                                @click="goToCat(cat.slug)">
-                                {{cat.name}}
-                            </li>
-                            <li
-                                class="block-menu__menu-item"
                                 v-for="app in cat.apps"
                                 @click="goToApp(app.slug)">
-                                {{ app.title }}
+                                {{app.title}}
                             </li>
                         </ul>
                     </ui-block>
                 </ui-row>
             </ui-container>
         </ui-hero-banner>
+        <ui-container :contain="true" v-if="this.studio">
+            <ui-paragraph
+                class="pt-5"
+                align="justify"
+                v-html="studio.description" />
+        </ui-container>
     </ui-container>
 </template>
 
 <script>
 import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
-
 export default {
-    name: 'AppsHome',
+    name: 'StudioSingle',
     components: {
         UiBlock,
         UiButton,
@@ -62,31 +69,30 @@ export default {
     },
     data: function() {
         return {
-            studios: null,
+            slug: null,
+            studio: null,
         }
     },
     methods: {
-        getStudios: function() {
-            this.$http.get('/api/v2/get-studios').then(response => {
-                this.studios = response.data.studios
-                // console.log(this.studios[1]);
+        getData: function() {
+            let slug = this.$route.params.pavilion
+            this.$http.get('/api/v2/get-studio/' + slug).then(response => {
+                if (response.data.success) {
+                    this.studio = response.data.studio
+                    // console.dir(this.studio);
+                }
             })
         },
-        goToPavilion: function(event, slug) {
-            event.preventDefault()
-            this.$root.goToWithParams('pavilion-home', { pavilion: slug })
-        },
         goToCat: function(slug) {
+            // console.log(slug);
             this.$root.goToWithParams('cat-home', { cat: slug })
         },
         goToApp: function(slug) {
-
+            console.log(slug);
         }
     },
     created: function() {
-        this.getStudios()
-    },
-    mounted: function() {
+        this.getData()
     }
 }
 </script>

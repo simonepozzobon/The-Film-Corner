@@ -78,7 +78,7 @@ mix
         }
     })
     .browserSync({
-        proxy: 'http://thefilmcorner.test',
+        proxy: 'http://tfc.test',
         port: 3019,
         browser: 'google chrome',
     })

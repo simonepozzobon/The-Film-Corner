@@ -79,5 +79,13 @@ Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');
 
 
 Route::prefix('v2')->group(function() {
+    Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
     Route::post('login', 'Api\AuthController@attempt_login');
+    Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
+
+    Route::group(['middleware' => ['auth:api']], function() {
+        Route::get('get-studios', 'Api\SectionController@get_studios');
+        Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
+        Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
+    });
 });

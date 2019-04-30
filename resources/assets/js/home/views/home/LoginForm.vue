@@ -115,12 +115,10 @@ export default {
             data.append('password', this.obj.password)
 
             axios.post('/api/v2/login', data).then(response => {
-                if (response.data.status) {
-                    this.$root.user = {
-                        id: 1,
-                        name: 'Simone',
-                        email: 'info@simonepozzobon.com',
-                    }
+                if (response.data.success) {
+                    this.$root.user = response.data.user
+                    this.$root.token = response.data.token
+                    this.$root.login()
                     this.$root.goTo('apps-home')
                 }
             })

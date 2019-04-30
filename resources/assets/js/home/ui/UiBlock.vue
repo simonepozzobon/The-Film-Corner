@@ -1,7 +1,14 @@
 <template lang="html">
     <div
         class="ui-block"
-        :class="[sizeClass, alignClass, directionClass, radiusClass, transparentClass]"
+        :class="[
+                sizeClass,
+                alignClass,
+                directionClass,
+                radiusClass,
+                transparentClass,
+                fullHeightClass,
+            ]"
         ref="block"
         v-if="hasContainer">
 
@@ -9,7 +16,6 @@
             class="ui-block__container"
             :class="colorClass"
             ref="container">
-
             <slot></slot>
         </div>
     </div>
@@ -54,7 +60,11 @@ export default {
         radius: {
             type: Boolean,
             default: false,
-        }
+        },
+        fullHeight: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         sizeClass: function() {
@@ -90,7 +100,11 @@ export default {
                 return 'ui-block--transparent'
             }
         },
-
+        fullHeightClass: function() {
+            if (this.fullHeight) {
+                return 'ui-block--full-height'
+            }
+        },
     }
 }
 </script>
@@ -139,6 +153,11 @@ export default {
 
     &--transparent-green {
         background-color: rgba($green, .8);
+    }
+
+    &--full-height &__container {
+        height: 100%;
+        justify-content: flex-start;
     }
 }
 

@@ -78,7 +78,20 @@ const routes = [
                         path: '',
                         name: 'apps-home',
                         component: require('./views/apps/Home.vue').default,
-                    }
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'pavilion/:pavilion',
+                        name: 'pavilion-home',
+                        component: require('./views/apps/StudioSingle.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'path/:cat',
+                        name: 'cat-home',
+                        component: require('./views/apps/CatSingle.vue').default,
+                        meta: { requiresAuth: true },
+                    },
                 ],
             },
             {

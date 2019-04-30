@@ -1,5 +1,8 @@
 <template lang="html">
-    <div class="ui-button">
+    <div
+        class="ui-button"
+        v-if="hasContainer"
+        :class="[displayClass]">
         <button
             class="btn ui-button__content"
             :class="[
@@ -10,6 +13,18 @@
             <slot></slot>
         </button>
     </div>
+    <button
+        v-else
+        class="btn ui-button"
+        :class="[
+            colorClass,
+            blockClass,
+            displayClass,
+            noContainerClass,
+        ]"
+        :disabled="disable">
+        <slot></slot>
+    </button>
 </template>
 
 <script>
@@ -27,6 +42,14 @@ export default {
         disable: {
             type: Boolean,
             default: false,
+        },
+        display: {
+            type: String,
+            default: null,
+        },
+        hasContainer: {
+            type: Boolean,
+            default: true,
         }
     },
     computed: {
@@ -40,6 +63,16 @@ export default {
                 return 'btn-block'
             }
         },
+        displayClass: function() {
+            if (this.display) {
+                return 'ui-button--'+this.display
+            }
+        },
+        noContainerClass: function() {
+            if (!this.hasContainer) {
+                return 'ui-button--no-container'
+            }
+        }
     }
 }
 </script>
@@ -55,6 +88,17 @@ export default {
         font-size: $font-size-base * 0.75;
         font-weight: 600;
         letter-spacing: 3px;
+    }
+
+    &--no-container {
+        text-transform: uppercase;
+        font-size: $font-size-base * 0.75;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+
+    &--inline-block {
+        display: inline-block;
     }
 }
 </style>

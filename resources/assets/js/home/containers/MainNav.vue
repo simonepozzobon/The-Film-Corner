@@ -21,8 +21,8 @@
                 <li class="main-menu__item nav-item">
                     <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
                 </li>
-                <li class="main-menu__item nav-item disabled" >
-                    <a class="main-menu__link nav-link disabled" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <li class="main-menu__item nav-item">
+                    <a @click="logInOrOut" class="main-menu__link nav-link" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ this.loginTxt }}
                     </a>
                 </li>
@@ -60,6 +60,7 @@
             ref="overlay"
             @ready="timelineReady('overlay')"
             @main-click="toggle"/>
+        <apps-nav v-if="$root.user"/>
     </div>
 </template>
 
@@ -67,10 +68,12 @@
 import { UiBurger } from '../ui'
 import { Logo, LogoEuropa } from '../icons'
 import MenuOverlay from './MenuOverlay.vue'
+import AppsNav from './AppsNav.vue'
 
 export default {
     name: 'MainNav',
     components: {
+        AppsNav,
         Logo,
         LogoEuropa,
         UiBurger,
@@ -81,11 +84,7 @@ export default {
             this.setMenu()
         },
         '$root.user': function(user) {
-            if (user) {
-                this.loginTxt = 'Logout'
-            } else {
-                this.loginTxt = 'Login'
-            }
+            this.setLoginTxt()
         }
     },
     data: function() {
@@ -106,6 +105,14 @@ export default {
                 this.$refs.navbar.style.display = 'flex'
                 this.$refs.burger.$el.style.display = 'none'
             }
+            this.setLoginTxt()
+        },
+        setLoginTxt: function() {
+            if (this.$root.user) {
+                this.loginTxt = 'Logout'
+            } else {
+                this.loginTxt = 'Login'
+            }
         },
         timelineReady: function(key) {
             this.ready[key] = true
@@ -124,6 +131,19 @@ export default {
                 this.$refs.overlay.toggle()
             }
         },
+        logInOrOut: function() {
+            if (this.$root.user) {
+                // logout
+                this.$http.get('/api/v2/logout').then(response => {
+                    if (response.data.success) {
+                        this.$root.logout()
+                    }
+                })
+            } else {
+                // login
+                this.$root.goTo('login')
+            }
+        }
     },
     mounted: function() {
         this.setMenu()

@@ -39,6 +39,8 @@ export default {
         alignClass: function() {
             if (this.align == 'center') {
                 return 'ui-paragraph--align-center'
+            } else if (this.align == 'justify') {
+                return 'ui-paragraph--align-justify'
             }
             return null
         },
@@ -87,6 +89,10 @@ export default {
 
     &#{$self}--size-small {
         font-size: $font-size-sm;
+    }
+
+    &--align-justify {
+        text-align: justify;
     }
 }
 </style>
