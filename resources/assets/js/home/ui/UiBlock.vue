@@ -3,7 +3,7 @@
         class="ui-block"
         :class="[
                 sizeClass,
-                alignClass,
+                alignClass, justifyClass,
                 directionClass,
                 radiusClass,
                 transparentClass,
@@ -22,7 +22,7 @@
 
     <div
         class="ui-block"
-        :class="[sizeClass, colorClass, alignClass, directionClass, radiusClass, transparentClass]"
+        :class="[sizeClass, colorClass, alignClass, justifyClass, directionClass, radiusClass, transparentClass]"
         ref="block"
         v-else>
             <slot></slot>
@@ -49,6 +49,10 @@ export default {
             type: String,
             default: null,
         },
+        justify: {
+            type: String,
+            default: null,
+        },
         direction: {
             type: String,
             default: null,
@@ -60,6 +64,10 @@ export default {
         radius: {
             type: Boolean,
             default: false,
+        },
+        radiusSize: {
+            type: String,
+            default: null,
         },
         fullHeight: {
             type: Boolean,
@@ -83,6 +91,21 @@ export default {
         alignClass: function() {
             if (this.align == 'start') {
                 return 'ui-block--align-start'
+            } else if (this.align == 'between') {
+                return 'ui-block--align-between'
+            } else if (this.align == 'end') {
+                return 'ui-block--align-end'
+            }
+        },
+        justifyClass: function() {
+            if (this.justify == 'start') {
+                return 'ui-block--justify-start'
+            } else if (this.justify == 'between') {
+                return 'ui-block--justify-between'
+            } else if (this.justify == 'center') {
+                return 'ui-block--justify-center'
+            } else if (this.justify == 'end') {
+                return 'ui-block--justify-end'
             }
         },
         directionClass: function() {
@@ -91,8 +114,14 @@ export default {
             }
         },
         radiusClass: function() {
-            if (this.radius) {
+            if (this.radius && !this.radiusSize) {
                 return 'ui-block--radius'
+            } else if (this.radius && this.radiusSize) {
+                return 'ui-block--radius-'+this.radiusSize
+            }
+        },
+        radiusSizeClass: function() {
+            if (this.radiusSize) {
             }
         },
         transparentClass: function() {
@@ -126,13 +155,26 @@ export default {
         @include border-radius(5px);
     }
 
+    &--radius-md {
+        @include border-radius(16px);
+    }
+
     &--radius &__container {
         @include border-radius(5px);
+    }
+
+    &--radius-md &__container {
+        @include border-radius(16px);
     }
 
     &--align-start &__container {
         align-items: flex-start;
     }
+
+    &--align-end &__container {
+        align-items: flex-end;
+    }
+
 
     &--flex-row &__container {
         flex-direction: row;
@@ -141,6 +183,18 @@ export default {
 
     &--flex-row#{&}--align-start &__container {
         justify-content: flex-start;
+    }
+
+    &--flex-row#{&}--align-end &__container {
+        justify-content: flex-end;
+    }
+
+    &--flex-row#{&}--justify-end &__container {
+        align-items: flex-end;
+    }
+
+    &--flex-row#{&}--justify-center &__container {
+        align-items: center;
     }
 
     &--transparent-red {

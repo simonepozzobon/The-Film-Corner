@@ -52,4 +52,20 @@ class SectionController extends Controller
             ];
         }
     }
+
+    public function get_app($slug) {
+        $app = App::where('slug', $slug)->with('category.section')->first();
+        if ($app) {
+            return [
+                'success' => true,
+                'app' => $app,
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 404,
+                'slug' => $slug,
+            ];
+        }
+    }
 }

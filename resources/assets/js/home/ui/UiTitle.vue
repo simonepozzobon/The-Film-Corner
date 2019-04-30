@@ -1,5 +1,5 @@
 <template lang="html">
-    <div>
+    <div v-if="hasContainer">
         <component
             :is="tag"
             class="ui-title"
@@ -11,10 +11,27 @@
                 uppercaseClass,
                 paddingClass,
                 marginClass,
+                displayClass,
             ]">
                 {{ title }}
         </component>
     </div>
+    <component
+        v-else
+        :is="tag"
+        class="ui-title"
+        :class="[
+            mainClass,
+            alignClass,
+            fontSizeClass,
+            colorClass,
+            uppercaseClass,
+            paddingClass,
+            marginClass,
+            displayClass,
+        ]">
+            {{ title }}
+    </component>
 </template>
 
 <script>
@@ -56,7 +73,15 @@ export default {
         hasMargin: {
             type: Boolean,
             default: true,
-        }
+        },
+        display: {
+            type: String,
+            default: null,
+        },
+        hasContainer: {
+            type: Boolean,
+            default: true,
+        },
     },
     computed: {
         alignClass: function() {
@@ -90,6 +115,11 @@ export default {
         marginClass: function() {
             if (!this.hasMargin) {
                 return 'ui-title--no-margin'
+            }
+        },
+        displayClass: function() {
+            if (this.display) {
+                return 'ui-title--'+this.display
             }
         }
     }
@@ -135,5 +165,9 @@ export default {
     &--h4 { font-size: $h4-font-size; }
     &--h5 { font-size: $h5-font-size; }
     &--h6 { font-size: $h6-font-size; }
+
+    &--inline-block {
+        display: inline-block;
+    }
 }
 </style>

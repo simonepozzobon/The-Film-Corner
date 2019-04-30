@@ -92,6 +92,12 @@ const routes = [
                         component: require('./views/apps/CatSingle.vue').default,
                         meta: { requiresAuth: true },
                     },
+                    {
+                        path: 'app/:app',
+                        name: 'app-home',
+                        component: require('./views/apps/AppSingle.vue').default,
+                        meta: { requiresAuth: true },
+                    },
                 ],
             },
             {

@@ -2,12 +2,26 @@
     <ui-container>
         <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
             <ui-container :full-width="true">
-                <ui-row align="center">
-                    <ui-block :size="4">
-                        <ui-title title="Welcome" color="white"></ui-title>
-                    </ui-block>
+                <ui-row
+                    align="center"
+                    ver-align="center">
+                    <ui-title
+                        :title="title"
+                        color="white"
+                        font-size="h1"
+                        align="center"
+                        :uppercase="false"
+                        display="inline-block"
+                        :has-container="false"/>
+                    <ui-special-text
+                        :has-padding="false"
+                        color="white"
+                        display="inline-block"
+                        class="pl-2"
+                        text="What do you want to do today?" />
                 </ui-row>
-                <ui-row>
+                <ui-row
+                    justify="center">
                     <ui-block
                         v-for="studio in this.studios"
                         :key="studio.id"
@@ -63,14 +77,25 @@ export default {
     data: function() {
         return {
             studios: null,
+            title: 'Welcome',
+        }
+    },
+    watch: {
+        '$root.user': function(user) {
+            this.setWelcome()
         }
     },
     methods: {
         getStudios: function() {
             this.$http.get('/api/v2/get-studios').then(response => {
                 this.studios = response.data.studios
-                // console.log(this.studios[1]);
+                // console.dir(this.studios[1].categories[0].apps[0].slug);
+                // console.dir(this.studios);
             })
+        },
+        setWelcome: function() {
+            // console.log(this.$root.user);
+            this.title = 'Welcome ' + this.$root.user.name
         },
         goToPavilion: function(event, slug) {
             event.preventDefault()
@@ -80,13 +105,14 @@ export default {
             this.$root.goToWithParams('cat-home', { cat: slug })
         },
         goToApp: function(slug) {
-
+            this.$root.goToWithParams('app-home', { app: slug })
         }
     },
     created: function() {
         this.getStudios()
     },
     mounted: function() {
+        this.$nextTick(this.setWelcome)
     }
 }
 </script>

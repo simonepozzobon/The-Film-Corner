@@ -13,7 +13,8 @@
                             color="white"/>
                     </ui-block>
                 </ui-row>
-                <ui-row>
+                <ui-row
+                    justify="center">
                     <ui-block
                         v-for="app in this.cat.apps"
                         :key="app.id"
@@ -21,7 +22,8 @@
                         :color="cat.color_class"
                         :radius="true"
                         :transparent="true"
-                        :full-height="true">
+                        :full-height="true"
+                        align="center">
                         <ui-title
                             :title="app.title"
                             color="white"
@@ -82,11 +84,8 @@ export default {
                 }
             })
         },
-        goToCat: function(slug) {
-            console.log(slug);
-        },
         goToApp: function(slug) {
-            console.log(slug);
+            this.$root.goToWithParams('app-home', { app: slug })
         }
     },
     created: function() {

@@ -2,7 +2,7 @@
     <div
         class="row ui-row"
         ref="row"
-        :class="alignClass">
+        :class="[alignClass, justifyClass, verAlignClass]">
         <slot></slot>
     </div>
 </template>
@@ -18,12 +18,30 @@ export default {
         align:{
             type: String,
             default: null,
-        }
+        },
+        justify:{
+            type: String,
+            default: null,
+        },
+        verAlign:{
+            type: String,
+            default: null,
+        },
     },
     computed: {
         alignClass: function() {
             if (this.align == 'center') {
                 return 'ui-row--center'
+            }
+        },
+        justifyClass: function() {
+            if (this.justify == 'center') {
+                return 'ui-row--justify-center'
+            }
+        },
+        verAlignClass: function() {
+            if (this.verAlign == 'center') {
+                return 'ui-row--v-center'
             }
         }
     },
@@ -41,7 +59,15 @@ export default {
 .ui-row {
     $self: &;
 
-    &#{$self}--center {
+    &--center {
+        justify-content: center;
+    }
+
+    &--v-center {
+        align-items: center;
+    }
+
+    &--justify-center {
         justify-content: center;
     }
 }

@@ -1,8 +1,10 @@
 import UiHeroBanner from './UiHeroBanner.vue'
 import UiBlock from './UiBlock.vue'
+import UiBreadcrumbs from './UiBreadcrumbs.vue'
 import UiBurger from './UiBurger.vue'
 import UiButton from './UiButton.vue'
 import UiContainer from './UiContainer.vue'
+import UiFolderCorner from './UiFolderCorner.vue'
 import UiFormGroup from './UiFormGroup.vue'
 import UiHeroImage from './UiHeroImage.vue'
 import UiImage from './UiImage.vue'
@@ -20,9 +22,11 @@ import UiTitle from './UiTitle.vue'
 export {
     UiHeroBanner,
     UiBlock,
+    UiBreadcrumbs,
     UiBurger,
     UiButton,
     UiContainer,
+    UiFolderCorner,
     UiFormGroup,
     UiHeroImage,
     UiInput,

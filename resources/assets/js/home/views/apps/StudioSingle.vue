@@ -13,7 +13,8 @@
                             color="white"/>
                     </ui-block>
                 </ui-row>
-                <ui-row>
+                <ui-row
+                    justify="center">
                     <ui-block
                         v-for="cat in this.studio.categories"
                         :key="cat.id"
@@ -32,7 +33,7 @@
                             class="block-menu"
                             >
                             <li
-                                class="block-menu__menu-head"
+                                class="block-menu__menu-item"
                                 v-for="app in cat.apps"
                                 @click="goToApp(app.slug)">
                                 {{app.title}}
@@ -88,7 +89,8 @@ export default {
             this.$root.goToWithParams('cat-home', { cat: slug })
         },
         goToApp: function(slug) {
-            console.log(slug);
+            // console.log(slug);
+            this.$root.goToWithParams('app-home', { app: slug })
         }
     },
     created: function() {

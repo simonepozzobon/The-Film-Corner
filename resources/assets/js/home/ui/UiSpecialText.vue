@@ -5,7 +5,9 @@
             colorClass,
             alignClass,
             paddingClass,
+            displayClass,
         ]">
+        {{ text }}
         <slot></slot>
     </div>
 </template>
@@ -29,7 +31,15 @@ export default {
             hasPadding: {
                 type: Boolean,
                 default: true
-            }
+            },
+            text: {
+                type: String,
+                default: null,
+            },
+            display: {
+                type: String,
+                default: null,
+            },
         },
         computed: {
             colorClass: function() {
@@ -45,6 +55,11 @@ export default {
             paddingClass: function() {
                 if (!this.hasPadding) {
                     return 'ui-special-text--no-padding'
+                }
+            },
+            displayClass: function() {
+                if (this.display) {
+                    return 'ui-special-text--'+this.display
                 }
             }
         },
@@ -70,6 +85,10 @@ export default {
     &--no-padding {
         padding-top: 0;
         padding-bottom: 0;
+    }
+
+    &--inline-block {
+        display: inline-block;
     }
 }
 </style>
