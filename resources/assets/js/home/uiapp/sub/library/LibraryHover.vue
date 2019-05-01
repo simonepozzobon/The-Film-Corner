@@ -49,10 +49,14 @@ export default {
             }
         },
         play: function() {
-            this.master.play()
+            if (this.master) {
+                this.master.play()
+            }
         },
         reverse: function() {
-            this.master.reverse()
+            if (this.master) {
+                this.master.reverse()
+            }
         }
     },
     mounted: function() {

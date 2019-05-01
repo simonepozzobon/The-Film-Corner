@@ -13,12 +13,8 @@
                 @selected="selected"/>
         </template>
         <template>
-            <ui-app-layers
-                ref="layers"
-                :layers="objs"
-                @select-layer="selectLayer"
-                @delete-layer="deleteLayer"/>
             <ui-app-note
+                class="mt-4"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -29,7 +25,6 @@ import {fabric} from 'fabric'
 import AppTemplate from './AppTemplate.vue'
 import SizeUtility from '../../Sizes'
 import {
-    UiAppLayers,
     UiAppLibrary,
     UiAppNote,
     UiAppPreview,
@@ -41,7 +36,6 @@ export default {
     name: 'CharacterBuilder',
     components: {
         AppTemplate,
-        UiAppLayers,
         UiAppLibrary,
         UiAppNote,
         UiAppPreview,
@@ -179,35 +173,6 @@ export default {
                 })
             }
         },
-        selectionListeners: function() {
-            let events = ['selection:created', 'selection:updated']
-            for (let j = 0; j < events.length; j++) {
-                this.canvas.on(events[j], (el) => {
-                    this.toggleActiveLayer(el, true)
-                })
-            }
-
-            this.canvas.on('selection:cleared', (el) => {
-                this.toggleActiveLayer(el, false)
-            })
-        },
-        toggleActiveLayer: function(el, hasToActive = true) {
-            let layers = this.$refs.layers.$refs.layer
-            let objs = hasToActive ? el.selected : el.deselected
-            for (let i = 0; i < objs.length; i++) {
-                let obj = objs[i].toJSON()
-                let layer = layers.filter(layer => layer.uuid == obj.uuid)[0]
-                let layerInverse = layers.filter(layer => layer.uuid != obj.uuid)
-                if (hasToActive) {
-                    layer.setActive()
-                    layerInverse.forEach(asset => {
-                        asset.unsetActive()
-                    })
-                } else {
-                    layer.unsetActive()
-                }
-            }
-        },
         saveCanvas: function() {
             // Save canvas to JSON for future edit
             let json_data = JSON.stringify(this.canvas.toDatalessJSON())
@@ -320,17 +285,6 @@ export default {
         },
         selected: function(index, libraryID) {
             this.addToCanvas(index, libraryID)
-        },
-        selectLayer: function(idx) {
-            this.canvas.setActiveObject(this.objs[idx])
-            this.canvas.renderAll()
-        },
-        deleteLayer: function(idx) {
-            this.canvas.discardActiveObject()
-            this.canvas.remove(this.objs[idx])
-            this.isActive = null
-            this.canvas.renderAll()
-            this.objs.splice(idx, 1)
         },
         setNotes: function(notes) {
             this.notes = notes

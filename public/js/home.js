@@ -61214,10 +61214,14 @@ exports.default = {
             }
         },
         play: function play() {
-            this.master.play();
+            if (this.master) {
+                this.master.play();
+            }
         },
         reverse: function reverse() {
-            this.master.reverse();
+            if (this.master) {
+                this.master.reverse();
+            }
         }
     },
     mounted: function mounted() {
@@ -122231,10 +122235,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 //
 //
 //
-//
-//
-//
-//
 
 __webpack_require__(442);
 
@@ -122242,7 +122242,6 @@ exports.default = {
     name: 'CharacterBuilder',
     components: {
         AppTemplate: _AppTemplate2.default,
-        UiAppLayers: _uiapp.UiAppLayers,
         UiAppLibrary: _uiapp.UiAppLibrary,
         UiAppNote: _uiapp.UiAppNote,
         UiAppPreview: _uiapp.UiAppPreview
@@ -122382,48 +122381,6 @@ exports.default = {
                 });
             }
         },
-        selectionListeners: function selectionListeners() {
-            var _this3 = this;
-
-            var events = ['selection:created', 'selection:updated'];
-            for (var j = 0; j < events.length; j++) {
-                this.canvas.on(events[j], function (el) {
-                    _this3.toggleActiveLayer(el, true);
-                });
-            }
-
-            this.canvas.on('selection:cleared', function (el) {
-                _this3.toggleActiveLayer(el, false);
-            });
-        },
-        toggleActiveLayer: function toggleActiveLayer(el) {
-            var hasToActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-            var layers = this.$refs.layers.$refs.layer;
-            var objs = hasToActive ? el.selected : el.deselected;
-
-            var _loop = function _loop(i) {
-                var obj = objs[i].toJSON();
-                var layer = layers.filter(function (layer) {
-                    return layer.uuid == obj.uuid;
-                })[0];
-                var layerInverse = layers.filter(function (layer) {
-                    return layer.uuid != obj.uuid;
-                });
-                if (hasToActive) {
-                    layer.setActive();
-                    layerInverse.forEach(function (asset) {
-                        asset.unsetActive();
-                    });
-                } else {
-                    layer.unsetActive();
-                }
-            };
-
-            for (var i = 0; i < objs.length; i++) {
-                _loop(i);
-            }
-        },
         saveCanvas: function saveCanvas() {
             // Save canvas to JSON for future edit
             var json_data = JSON.stringify(this.canvas.toDatalessJSON());
@@ -122434,7 +122391,7 @@ exports.default = {
         },
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
         addToCanvas: function addToCanvas(index, libraryID) {
-            var _this4 = this;
+            var _this3 = this;
 
             var library = this.assets.library.filter(function (library) {
                 return library.id == libraryID;
@@ -122458,55 +122415,55 @@ exports.default = {
             var image = new _fabric.fabric.Image.fromURL(url, function (obj, opts) {
                 // Aggiungo l'immagine al gruppo
                 obj.set({
-                    selectable: _this4.selectable,
+                    selectable: _this3.selectable,
                     centeredScaling: true,
                     originX: 'center'
                 });
-                _this4.groups[idx].addWithUpdate(obj);
+                _this3.groups[idx].addWithUpdate(obj);
 
                 // calcolo il fattore di scala
-                var width = _this4.groups[idx].getScaledWidth();
-                var scaleFactor = _this4.canvasWidth / width;
+                var width = _this3.groups[idx].getScaledWidth();
+                var scaleFactor = _this3.canvasWidth / width;
 
                 // se è la prima libreria (landscape)
                 if (idx == 0) {
                     // scalo il gruppo per farlo stare interno al canvas
-                    if (width > _this4.canvasWidth) {
-                        _this4.groups[idx].set({
+                    if (width > _this3.canvasWidth) {
+                        _this3.groups[idx].set({
                             scaleX: scaleFactor,
                             scaleY: scaleFactor
                         });
 
-                        width = _this4.groups[idx].getScaledWidth();
-                        var canvasW = _this4.canvas.getWidth();
+                        width = _this3.groups[idx].getScaledWidth();
+                        var canvasW = _this3.canvas.getWidth();
                     }
 
                     // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
                     // per coprire tutto lo spazio
-                    var height = _this4.groups[idx].getScaledHeight();
-                    if (height < _this4.canvasHeight) {
-                        scaleFactor = _this4.canvasHeight / height;
+                    var height = _this3.groups[idx].getScaledHeight();
+                    if (height < _this3.canvasHeight) {
+                        scaleFactor = _this3.canvasHeight / height;
 
-                        _this4.groups[idx].set({
+                        _this3.groups[idx].set({
                             scaleX: scaleFactor,
                             scaleY: scaleFactor
                         });
                     }
 
                     // centra lo sfondo
-                    _this4.groups[idx].centerH();
-                    _this4.groups[idx].set({
+                    _this3.groups[idx].centerH();
+                    _this3.groups[idx].set({
                         left: 0
                     });
-                    _this4.groups[idx].setCoords();
+                    _this3.groups[idx].setCoords();
 
                     // this.groups[idx].centerH()
                 } else {
                     // calcolo l'altezza del singolo elemento considerando la scala
-                    var _height = _this4.canvasHeight / (_this4.groups.length - 1);
-                    scaleFactor = scaleFactor / (_this4.groups.length - 1);
+                    var _height = _this3.canvasHeight / (_this3.groups.length - 1);
+                    scaleFactor = scaleFactor / (_this3.groups.length - 1);
 
-                    _this4.groups[idx].set({
+                    _this3.groups[idx].set({
                         centeredScaling: true,
                         scaleX: scaleFactor,
                         scaleY: scaleFactor
@@ -122523,35 +122480,24 @@ exports.default = {
                     }
 
                     // calcolo la sua posizione sempre in base alla scala
-                    var _width = _this4.groups[idx].getScaledWidth();
+                    var _width = _this3.groups[idx].getScaledWidth();
                     var top = _height * idx - _height;
-                    var left = _this4.canvasWidth / 2 - _width / 2;
+                    var left = _this3.canvasWidth / 2 - _width / 2;
 
-                    _this4.groups[idx].set({
+                    _this3.groups[idx].set({
                         top: top,
                         left: left
                     });
-                    _this4.groups[idx].setCoords();
+                    _this3.groups[idx].setCoords();
                 }
 
-                _this4.canvas.calcOffset();
-                _this4.canvas.renderAll();
-                _this4.saveCanvas();
+                _this3.canvas.calcOffset();
+                _this3.canvas.renderAll();
+                _this3.saveCanvas();
             });
         },
         selected: function selected(index, libraryID) {
             this.addToCanvas(index, libraryID);
-        },
-        selectLayer: function selectLayer(idx) {
-            this.canvas.setActiveObject(this.objs[idx]);
-            this.canvas.renderAll();
-        },
-        deleteLayer: function deleteLayer(idx) {
-            this.canvas.discardActiveObject();
-            this.canvas.remove(this.objs[idx]);
-            this.isActive = null;
-            this.canvas.renderAll();
-            this.objs.splice(idx, 1);
         },
         setNotes: function setNotes(notes) {
             this.notes = notes;
@@ -122676,16 +122622,10 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       [
-        _c("ui-app-layers", {
-          ref: "layers",
-          attrs: { layers: _vm.objs },
-          on: {
-            "select-layer": _vm.selectLayer,
-            "delete-layer": _vm.deleteLayer
-          }
-        }),
-        _vm._v(" "),
-        _c("ui-app-note", { on: { changed: _vm.setNotes } })
+        _c("ui-app-note", {
+          staticClass: "mt-4",
+          on: { changed: _vm.setNotes }
+        })
       ]
     ],
     2
