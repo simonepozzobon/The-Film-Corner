@@ -17,6 +17,9 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #252525 !default;
 
+$light-gray: #666666 !default;
+$dark-gray: #333333 !default;
+
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $grays: map-merge(
@@ -29,7 +32,9 @@ $grays: map-merge(
     "600": $gray-600,
     "700": $gray-700,
     "800": $gray-800,
-    "900": $gray-900
+    "900": $gray-900,
+    "light-gray": $light-gray,
+    "dark-gray": $dark-gray,
   ),
   $grays
 );
@@ -81,6 +86,8 @@ $colors: map-merge(
   ),
   $colors
 );
+
+$colors: map-merge($grays, $colors);
 
 $colors: map-merge(
   (

@@ -7,6 +7,7 @@
                     direction="row"
                     align="end"
                     justify="end">
+
                     <ui-breadcrumbs
                         :app="app.title"
                         :appPath="app.slug"
@@ -15,7 +16,11 @@
                         :pavilion="app.category.section.name"
                         :pavilionPath="app.category.section.slug"
                         />
-                    <ui-folder-corner @closed="closed"/>
+
+                    <ui-folder-corner
+                        @closed="closed"
+                        :has-times="true"/>
+
                 </ui-block>
             </ui-row>
             <ui-row
@@ -37,7 +42,8 @@
                     <div class="pb-4">
                         <ui-button
                             color="dark"
-                            display="inline-block">
+                            display="inline-block"
+                            @click.native="startApp">
                             Inizia nuovo progetto
                         </ui-button>
                         <ui-button
@@ -46,7 +52,6 @@
                             Apri un progetto esistente
                         </ui-button>
                     </div>
-
                 </ui-block>
             </ui-row>
         </ui-container>
@@ -104,6 +109,10 @@ export default {
         closed: function() {
             console.log('closed');
             this.$root.goToWithParams('cat-home', { cat: this.app.category.slug })
+        },
+        startApp: function() {
+            console.log('qui', this.app.slug);
+            this.$root.goTo(this.app.slug)
         }
     },
     created: function() {

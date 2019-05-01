@@ -1,6 +1,7 @@
 <template lang="html">
     <div>
         <!-- <apps-nav /> -->
+        gianni
         <transition
             @enter="enter"
             @leave="leave">
@@ -10,12 +11,12 @@
 </template>
 
 <script>
-// import AppsNav from '../../containers/AppsNav.vue'
+// import LoggedNav from '../../containers/LoggedNav.vue'
 import { TweenMax } from 'gsap'
 export default {
     name: 'AppsContainer',
     components: {
-        // AppsNav,
+        // LoggedNav,
     },
     methods: {
         enter: function(el, done) {

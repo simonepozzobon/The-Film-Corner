@@ -1,17 +1,17 @@
 <template lang="html">
-    <nav class="apps-nav navbar navbar-dark bg-dark navbar-expand-lg fixed-top" ref="menu">
-        <ul class="navbar-nav ml-auto">
-            <li class="apps-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link apps-nav__link">Apps</a>
+    <nav class="logged-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
+        <ul class="navbar-nav ml-auto logged-nav__nav">
+            <li class="logged-nav__item nav-item">
+                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link logged-nav__link">Apps</a>
             </li>
-            <li class="apps-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-network')" class="nav-link apps-nav__link">Network</a>
+            <li class="logged-nav__item nav-item">
+                <a href="#" @click="goTo($event, 'apps-network')" class="nav-link logged-nav__link">Network</a>
             </li>
-            <li class="apps-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-students')" class="nav-link apps-nav__link">Students</a>
+            <li class="logged-nav__item nav-item">
+                <a href="#" @click="goTo($event, 'apps-students')" class="nav-link logged-nav__link">Students</a>
             </li>
-            <li class="apps-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-help')" class="nav-link apps-nav__link">Help</a>
+            <li class="logged-nav__item nav-item">
+                <a href="#" @click="goTo($event, 'apps-help')" class="nav-link logged-nav__link">Help</a>
             </li>
         </ul>
     </nav>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    name: 'ConferenceNav',
+    name: 'LoggedNav',
     methods: {
         goTo: function(event, name) {
             event.preventDefault()
@@ -62,15 +62,21 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.apps-nav {
+.logged-nav {
     top: 60px;
+    height: 48px;
     z-index: $zindex-fixed - 1;
+    background-color: $light-gray;
+
+    &__nav {
+        margin-right: $spacer * 2;
+    }
 
     &__link {
         text-transform: uppercase;
         font-size: $font-size-sm;
-        font-weight: $font-weight-base;
-        color: $white;
+        font-weight: $font-weight-bold;
+        color: $white !important;
     }
 }
 </style>

@@ -1,6 +1,7 @@
 <template lang="html">
     <div v-if="hasContainer">
         <component
+            ref="title"
             :is="tag"
             class="ui-title"
             :class="[
@@ -18,6 +19,7 @@
     </div>
     <component
         v-else
+        ref="title"
         :is="tag"
         class="ui-title"
         :class="[

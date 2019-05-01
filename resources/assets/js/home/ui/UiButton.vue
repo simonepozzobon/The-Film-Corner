@@ -2,7 +2,11 @@
     <div
         class="ui-button"
         v-if="hasContainer"
-        :class="[displayClass]">
+        :class="[
+            displayClass,
+            alignSelfClass,
+            marginClass,
+        ]">
         <button
             class="btn ui-button__content"
             :class="[
@@ -21,6 +25,8 @@
             blockClass,
             displayClass,
             noContainerClass,
+            alignSelfClass,
+            marginClass,
         ]"
         :disabled="disable">
         <slot></slot>
@@ -50,6 +56,14 @@ export default {
         hasContainer: {
             type: Boolean,
             default: true,
+        },
+        alignSelf: {
+            type: String,
+            default: null,
+        },
+        hasMargin: {
+            type: Boolean,
+            default: true,
         }
     },
     computed: {
@@ -72,8 +86,18 @@ export default {
             if (!this.hasContainer) {
                 return 'ui-button--no-container'
             }
-        }
-    }
+        },
+        alignSelfClass: function() {
+            if (this.alignSelf == 'start') {
+                return 'ui-button--align-self-start'
+            }
+        },
+        marginClass: function() {
+            if (!this.hasMargin ) {
+                return 'ui-button--no-margin'
+            }
+        },
+    },
 }
 </script>
 
@@ -99,6 +123,14 @@ export default {
 
     &--inline-block {
         display: inline-block;
+    }
+
+    &--align-self-start {
+        align-self: flex-start;
+    }
+
+    &--no-margin {
+        margin-bottom: 0;
     }
 }
 </style>

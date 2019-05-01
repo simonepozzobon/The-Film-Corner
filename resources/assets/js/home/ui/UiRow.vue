@@ -2,7 +2,12 @@
     <div
         class="row ui-row"
         ref="row"
-        :class="[alignClass, justifyClass, verAlignClass]">
+        :class="[
+            alignClass,
+            justifyClass,
+            verAlignClass,
+            noGuttersClass,
+        ]">
         <slot></slot>
     </div>
 </template>
@@ -15,18 +20,22 @@ export default {
             type: String,
             default: null,
         },
-        align:{
+        align: {
             type: String,
             default: null,
         },
-        justify:{
+        justify: {
             type: String,
             default: null,
         },
-        verAlign:{
+        verAlign: {
             type: String,
             default: null,
         },
+        noGutters: {
+            type: Boolean,
+            default: false,
+        }
     },
     computed: {
         alignClass: function() {
@@ -42,6 +51,11 @@ export default {
         verAlignClass: function() {
             if (this.verAlign == 'center') {
                 return 'ui-row--v-center'
+            }
+        },
+        noGuttersClass: function() {
+            if (this.noGutters) {
+                return 'no-gutters'
             }
         }
     },

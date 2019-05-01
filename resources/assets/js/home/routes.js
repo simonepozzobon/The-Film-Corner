@@ -81,7 +81,7 @@ const routes = [
                         meta: { requiresAuth: true },
                     },
                     {
-                        path: 'pavilion/:pavilion',
+                        path: 'studio/:pavilion',
                         name: 'pavilion-home',
                         component: require('./views/apps/StudioSingle.vue').default,
                         meta: { requiresAuth: true },
@@ -93,9 +93,15 @@ const routes = [
                         meta: { requiresAuth: true },
                     },
                     {
-                        path: 'app/:app',
+                        path: 'dashboard/:app',
                         name: 'app-home',
                         component: require('./views/apps/AppSingle.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'frame-composer',
+                        name: 'frame-composer',
+                        component: require('./views/apps/FrameComposer.vue').default,
                         meta: { requiresAuth: true },
                     },
                 ],

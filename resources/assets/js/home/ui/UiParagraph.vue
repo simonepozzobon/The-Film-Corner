@@ -1,7 +1,13 @@
 <template lang="html">
     <div
         class="ui-paragraph"
-        :class="[sizeClass, alignClass, noPaddingClass, padding]">
+        :class="[
+            sizeClass,
+            alignClass,
+            noPaddingClass,
+            padding,
+            fullWidthClass,
+        ]">
         <p
             class="ui-paragraph__content"
             :class="[colorClass]">
@@ -33,6 +39,10 @@ export default {
         size: {
             type: String,
             default: null,
+        },
+        fullWidth: {
+            type: Boolean,
+            default: false,
         }
     },
     computed: {
@@ -58,7 +68,12 @@ export default {
             if (this.size) {
                 return 'ui-paragraph--size-' + this.size
             }
-        }
+        },
+        fullWidthClass: function() {
+            if (this.fullWidth) {
+                return 'ui-paragraph--full-width'
+            }
+        },
     }
 }
 </script>
@@ -78,21 +93,25 @@ export default {
         margin: 0;
     }
 
-    &#{$self}--align-center {
+    &--align-center {
         text-align: center;
     }
 
-    &#{$self}--no-padding {
+    &--no-padding {
         padding-left: 0;
         padding-right: 0;
     }
 
-    &#{$self}--size-small {
+    &--size-small {
         font-size: $font-size-sm;
     }
 
     &--align-justify {
         text-align: justify;
+    }
+
+    &--full-width {
+        width: 100%;
     }
 }
 </style>

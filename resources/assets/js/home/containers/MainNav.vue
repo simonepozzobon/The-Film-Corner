@@ -60,20 +60,23 @@
             ref="overlay"
             @ready="timelineReady('overlay')"
             @main-click="toggle"/>
-        <apps-nav v-if="$root.user"/>
+        <logged-nav v-if="$root.user"/>
+        <app-nav v-if="$root.user && $root.isApp"/>
     </div>
 </template>
 
 <script>
-import { UiBurger } from '../ui'
+import AppNav from './AppNav.vue'
 import { Logo, LogoEuropa } from '../icons'
+import LoggedNav from './LoggedNav.vue'
 import MenuOverlay from './MenuOverlay.vue'
-import AppsNav from './AppsNav.vue'
+import { UiBurger } from '../ui'
 
 export default {
     name: 'MainNav',
     components: {
-        AppsNav,
+        AppNav,
+        LoggedNav,
         Logo,
         LogoEuropa,
         UiBurger,

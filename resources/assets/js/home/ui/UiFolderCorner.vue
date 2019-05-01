@@ -8,6 +8,7 @@
                 d="M54.89,0s-20,0-28.55,18.08L1.82,70S-6.73,88,13.27,88H321.05s20,0,20-20V20s0-20-20-20Z"/>
         </svg>
         <svg
+            v-if="hasTimes"
             class="ui-folder-corner__times"
             @click="$emit('closed')"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.35 23.35">
@@ -19,6 +20,12 @@
 <script>
 export default {
     name: 'UiFolderCorner',
+    props: {
+        hasTimes: {
+            type: Boolean,
+            default: false,
+        }
+    }
 }
 </script>
 

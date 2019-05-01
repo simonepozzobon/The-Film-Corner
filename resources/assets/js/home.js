@@ -119,6 +119,7 @@ const home = new Vue({
             conferenceMenu: null,
             user: null,
             token: null,
+            isApp: null,
         }
     },
     methods: {
