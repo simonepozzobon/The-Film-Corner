@@ -83,7 +83,8 @@ export default {
 
     &__preview {
         position: relative;
-        width: 39%;
+        max-width: 39%;
+        flex: 0 0 39%;
         cursor: pointer;
     }
 
@@ -114,6 +115,7 @@ export default {
 
     &__title {
         margin-left: $spacer;
+        flex-basis: 61%;
         max-width: 61%;
     }
 }

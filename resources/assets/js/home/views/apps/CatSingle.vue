@@ -35,8 +35,8 @@
                             Short Description
                         </ui-paragraph>
                         <div>
-                            <ui-button color="white" display="inline-block" :has-container="false">Read More</ui-button>
-                            <ui-button color="white" display="inline-block" :has-container="false">New</ui-button>
+                            <ui-button color="white" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
+                            <ui-button color="white" display="inline-block" :has-container="false" @click.native="startApp(app.slug)">New</ui-button>
                             <ui-button color="white" display="inline-block" :has-container="false">Open</ui-button>
                         </div>
                     </ui-block>
@@ -83,6 +83,9 @@ export default {
                     // console.dir(this.cat);
                 }
             })
+        },
+        startApp: function(slug) {
+            this.$root.goTo(slug)
         },
         goToApp: function(slug) {
             this.$root.goToWithParams('app-home', { app: slug })

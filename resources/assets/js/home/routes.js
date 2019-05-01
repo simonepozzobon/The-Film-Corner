@@ -117,6 +117,12 @@ const routes = [
                         meta: { requiresAuth: true },
                     },
                     {
+                        path: 'parallel-action',
+                        name: 'parallel-action',
+                        component: require('./views/apps/ParallelAction.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
                         path: 'offscreen',
                         name: 'offscreen',
                         component: require('./views/apps/Offscreen.vue').default,

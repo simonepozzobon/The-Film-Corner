@@ -111,7 +111,6 @@ export default {
             this.$root.goToWithParams('cat-home', { cat: this.app.category.slug })
         },
         startApp: function() {
-            console.log('qui', this.app.slug);
             this.$root.goTo(this.app.slug)
         }
     },

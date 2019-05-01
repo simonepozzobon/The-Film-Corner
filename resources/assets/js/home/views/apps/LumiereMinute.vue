@@ -21,6 +21,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
+import { SharedData, SharedMethods } from './Shared'
 
 export default {
     name: 'LumiereMinute',
@@ -32,24 +33,10 @@ export default {
     },
     data: function() {
         return {
-            app: null,
-            assets: null,
-            size: { w: 0, h: 0 },
-            notes: null,
+            ...SharedData,
         }
     },
     methods: {
-        getData: function() {
-            let slug = this.$route.name
-            this.$http.get('/api/v2/load-assets/' + slug).then(response => {
-                console.dir(response.data);
-                if (response.data.success) {
-                    this.app = response.data.app
-                    this.assets = response.data.assets
-                    this.$nextTick(this.init)
-                }
-            })
-        },
         selected: function() {
 
         },
@@ -58,6 +45,7 @@ export default {
         }
     },
     created: function() {
+        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },

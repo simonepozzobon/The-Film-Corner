@@ -44,6 +44,11 @@ export default {
             default: 4,
         }
     },
+    watch: {
+        'app': function(app) {
+            // console.log(app);
+        }
+    },
     created: function() {
         this.$root.isApp = true
     },

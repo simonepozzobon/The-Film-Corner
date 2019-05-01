@@ -29,6 +29,7 @@ import {
     UiAppNote,
     UiAppPreview,
 } from '../../uiapp'
+import { SharedData, SharedMethods } from './Shared'
 
 require('gsap/ScrollToPlugin')
 
@@ -42,15 +43,12 @@ export default {
     },
     data: function() {
         return {
-            app: null,
-            assets: null,
+            ...SharedData,
             canvas: null,
-            size: { w: 0, h: 0 },
             landscape: null,
             objs: [],
             canvasWidth: 1000,
             canvasHeight: 562,
-            notes: null,
             groups: [],
             landscapeLibraryId: 6,
         }
@@ -63,25 +61,6 @@ export default {
         }
     },
     methods: {
-        uniqid: function() {
-            var ts=String(new Date().getTime()), i = 0, out = ''
-            for(i=0;i<ts.length;i+=2) {
-                out+=Number(ts.substr(i, 2)).toString(36)
-            }
-            return ('d'+out)
-        },
-        getData: function() {
-            let slug = this.$route.name
-            this.$http.get('/api/v2/load-assets/' + slug).then(response => {
-                console.dir(response.data);
-                if (response.data.success) {
-                    this.app = response.data.app
-                    this.assets = response.data.assets
-                    // console.dir(this.app);
-                    this.$nextTick(this.init)
-                }
-            })
-        },
         init: function() {
             let size = this.getCanvasSize(true)
 
@@ -291,6 +270,9 @@ export default {
         }
     },
     created: function() {
+        this.uinqid = SharedMethods.uinqid.bind(this)
+        this.getData = SharedMethods.getData.bind(this)
+
         this.$root.isApp = true
         this.getData()
     },

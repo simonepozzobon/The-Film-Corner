@@ -1,6 +1,8 @@
 
 .ui-icon {
-    $self: &;
+    &__path {
+        transition: $transition-base;
+    }
 
     &--cyan &__path {
         fill: $cyan;
@@ -17,4 +19,12 @@
     &--hoverable {
         cursor: pointer;
     }
+
+    &--hover-darker:hover & {
+        &__path {
+            fill: rgba($white, .6);
+            transition: $transition-base;
+        }
+    }
+
 }

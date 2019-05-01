@@ -84,6 +84,7 @@ Route::prefix('v2')->group(function() {
     Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
 
     Route::group(['middleware' => ['auth:api']], function() {
+        Route::get('new-session/{$slug}', 'Api\SessionController@new_session');
         Route::get('get-studios', 'Api\SectionController@get_studios');
         Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
         Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
