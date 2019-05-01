@@ -49,7 +49,6 @@ export default {
         },
     },
     mounted: function() {
-        console.log(this.layers);
     }
 }
 </script>

@@ -4,7 +4,7 @@
         <div class="ui-app-library__libraries" v-if="hasSubLibraries">
             <select class="form-control ui-app-library__select" v-model="currentLibrary">
                 <option
-                    v-for="library in liraries"
+                    v-for="library in libraries"
                     :key="library.id"
                     :value="library.id">
                     {{ library.name }}
@@ -57,7 +57,7 @@ export default {
     },
     data: function() {
         return {
-            liraries: [],
+            libraries: [],
             currentLibrary: 0,
             assets: [],
             animationsController: [],
@@ -66,7 +66,7 @@ export default {
     },
     watch: {
         'currentLibrary': function(id) {
-            let selected = this.liraries.filter(library => library.id == id)[0]
+            let selected = this.libraries.filter(library => library.id == id)[0]
             if (selected) {
                 this.assets = selected.medias
             }
@@ -80,13 +80,14 @@ export default {
     methods: {
         init: function() {
             if (this.hasSubLibraries) {
-                this.liraries = this.items
-                if (this.liraries.length > 0) {
-                    this.assets = this.liraries[0].medias
-                    this.currentLibrary = this.liraries[0].id
+                this.libraries = this.items
+                if (this.libraries.length > 0) {
+                    this.assets = this.libraries[0].medias
+                    this.currentLibrary = this.libraries[0].id
                 }
             } else {
                 this.assets = this.items
+                console.log(this.assets);
             }
         },
         selected: function(index) {

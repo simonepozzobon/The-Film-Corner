@@ -104,6 +104,73 @@ const routes = [
                         component: require('./views/apps/FrameComposer.vue').default,
                         meta: { requiresAuth: true },
                     },
+                    {
+                        path: 'frame-crop',
+                        name: 'frame-crop',
+                        component: require('./views/apps/FrameCrop.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'types-of-images',
+                        name: 'types-of-images',
+                        component: require('./views/apps/TypesOfImages.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'offscreen',
+                        name: 'offscreen',
+                        component: require('./views/apps/Offscreen.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'whats-going-on',
+                        name: 'whats-going-on',
+                        component: require('./views/apps/WhatsGoingOn.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'soundscapes',
+                        name: 'soundscapes',
+                        component: require('./views/apps/Soundscapes.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'active-offscreen',
+                        name: 'active-offscreen',
+                        component: require('./views/apps/ActiveOffscreen.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'active-parallel-action',
+                        name: 'active-parallel-action',
+                        component: require('./views/apps/ActiveParallelAction.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'sound-studio',
+                        name: 'sound-studio',
+                        component: require('./views/apps/SoundStudio.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'character-builder',
+                        name: 'character-builder',
+                        component: require('./views/apps/CharacterBuilder.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'lumiere-minute',
+                        name: 'lumiere-minute',
+                        component: require('./views/apps/LumiereMinute.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'make-your-own-film',
+                        name: 'make-your-own-film',
+                        component: require('./views/apps/MakeYourOwnFilm.vue').default,
+                        meta: { requiresAuth: true },
+                    },
+
                 ],
             },
             {

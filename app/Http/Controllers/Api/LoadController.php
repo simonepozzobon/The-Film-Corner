@@ -27,6 +27,12 @@ class LoadController extends Controller
                     break;
 
                 case 'frame-crop':
+                    $images = $app->mediaCategory()->with('medias')->get();
+                    $assets = [
+                        'type' => 'images',
+                        'hasSubLibraries' => false,
+                        'library' => $images,
+                    ];
                     break;
                 case 'types-of-images':
                     break;
@@ -53,6 +59,12 @@ class LoadController extends Controller
                 case 'sound-studio':
                     break;
                 case 'character-builder':
+                    $images = $app->mediaCategory()->with('medias')->get();
+                    $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => true,
+                    'library' => $images,
+                    ];
                     break;
                 case 'storytelling':
                     break;

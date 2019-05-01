@@ -38,7 +38,7 @@ import {
 require('gsap/ScrollToPlugin')
 
 export default {
-    name: 'FrameComposer',
+    name: 'CharacterBuilder',
     components: {
         AppTemplate,
         UiAppLayers,
@@ -57,6 +57,8 @@ export default {
             canvasWidth: 1000,
             canvasHeight: 562,
             notes: null,
+            groups: [],
+            landscapeLibraryId: 6,
         }
     },
     watch: {
@@ -113,15 +115,23 @@ export default {
             this.canvas.setWidth(this.canvasWidth)
             this.canvas.setHeight(this.canvasHeight)
 
-            this.landscape = new fabric.Group()
-            this.landscape.set({
-                selectable: false
-            })
-            this.canvas.add(this.landscape)
+            // genero un gruppo per ogni lireria
+            for (let i = 0; i < this.assets.library.length; i++) {
+                let group = new fabric.Group()
+                group.set({
+                    selectable: false,
+                })
+
+                this.groups.push(group)
+                this.canvas.add(this.groups[i])
+            }
 
             this.addListeners()
-            this.selectionListeners()
 
+            // carica uno sfondo random
+            let landscapes = this.assets.library[0].medias
+            let idx = Math.floor(Math.random() * landscapes.length)
+            this.addToCanvas(landscapes[idx].id, this.landscapeLibraryId)
             // DEbug
             // this.$nextTick(() => {
             //     TweenLite.to(window, .2, {
@@ -156,11 +166,12 @@ export default {
             this.canvas.renderAll()
         },
         addListeners: function() {
-            this.addListener(this.landscape)
-            this.addListener(this.canvas)
+            for (var i = 0; i < this.groups.length; i++) {
+                this.addListener(this.groups[i])
+            }
         },
         addListener: function(obj) {
-            let events = [ 'object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling', 'object:moving' ]
+            let events = [ 'object:added', 'object:removed', 'object:modified' ]
             for (let j = 0; j < events.length; j++) {
                 obj.on(events[j], () => {
                     // console.log('triggered ', events[j])
@@ -211,117 +222,101 @@ export default {
             let asset = library.medias.filter(asset => asset.id == index)[0]
             let url = '/storage/' + asset.src
 
+            let idx = this.assets.library.findIndex(library => library.id == libraryID)
+            if (idx > -1) {
+                let objs = this.groups[idx].getObjects()
+                for (let i = 0; i < objs.length; i++) {
+                    this.groups[idx].removeWithUpdate(objs[i])
+                }
+            }
+
 
             // crea l'istanza di FabricJs
             let image = new fabric.Image.fromURL(url, (obj, opts) => {
-                // new Object
-                let uuid = this.uniqid()
-
+                // Aggiungo l'immagine al gruppo
                 obj.set({
-                    selectable: true,
+                    selectable: this.selectable,
                     centeredScaling: true,
                     originX: 'center',
-                    originalObj: asset,
-                    libraryIdx: libraryID,
-                    uuid: uuid,
-                    idx: index,
                 })
+                this.groups[idx].addWithUpdate(obj)
 
-                // se si tratta di un elemento e non di uno sfondo
-                if (libraryID != 1) {
-                    obj.set({
-                        originY: 'center',
-                    })
+                // calcolo il fattore di scala
+                let width = this.groups[idx].getScaledWidth()
+                let scaleFactor = this.canvasWidth / width
 
-                    let width = this.canvas.getWidth()
-                    let height = this.canvas.getHeight()
-                    let objWidth = obj.getScaledWidth()
-                    let objHeight = obj.getScaledHeight()
-                    let scaleFactor = this.canvasWidth / objWidth
-
-                    if (objWidth > width || objHeight > height) {
-                        if (objWidth > width) {
-                            if (scaleFactor < 1) {
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor,
-                                })
-                            }
-                        }
-
-                        objHeight = obj.getScaledHeight()
-
-                        if (objHeight > height) {
-                            if (scaleFactor > 1) {
-                                scaleFactor = height / objHeight
-                            } else {
-                                scaleFactor = (height * scaleFactor) / objHeight
-                            }
-                            if (scaleFactor < 1) {
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor,
-                                })
-                            }
-                        }
-                    }
-
-                    obj.setCoords()
-                    this.objs.push(obj)
-                    this.addListener(obj)
-                    this.canvas.add(obj)
-
-                    // force center
-                    obj.viewportCenter()
-                } else {
-                    let items = this.landscape.getObjects()
-                    for (let i = 0; i < items.length; i++) {
-                        this.landscape.removeWithUpdate(items[i])
-                    }
-
-                    this.landscape.addWithUpdate(obj)
-                    let width = this.landscape.getScaledWidth()
-                    let scaleFactor = this.canvasWidth / width
+                // se è la prima libreria (landscape)
+                if (idx == 0)  {
+                    // scalo il gruppo per farlo stare interno al canvas
                     if (width > this.canvasWidth) {
-                        this.landscape.set({
+                        this.groups[idx].set({
                             scaleX: scaleFactor,
                             scaleY: scaleFactor,
                         })
+
+                        width = this.groups[idx].getScaledWidth()
+                        let canvasW = this.canvas.getWidth()
                     }
 
                     // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
                     // per coprire tutto lo spazio
-                    let height = this.landscape.getScaledHeight()
-
+                    let height = this.groups[idx].getScaledHeight()
                     if (height < this.canvasHeight) {
                         scaleFactor = this.canvasHeight / height
-                        this.landscape.set({
-                            scaleX: scaleFactor,
-                            scaleY: scaleFactor,
-                        })
-                    }
 
-                    // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
-                    width = this.landscape.getScaledWidth()
-                    if (width < this.canvasWidth) {
-                        scaleFactor = (this.canvasWidth * scaleFactor) / width
-                        this.landscape.set({
+                        this.groups[idx].set({
                             scaleX: scaleFactor,
                             scaleY: scaleFactor,
                         })
                     }
 
                     // centra lo sfondo
-                    this.landscape.set({
+                    this.groups[idx].centerH()
+                    this.groups[idx].set({
                         left: 0,
                     })
-                    this.landscape.viewportCenter()
-                    this.landscape.setCoords()
-                }
+                    this.groups[idx].setCoords()
+
+                    // this.groups[idx].centerH()
+                    } else {
+                        // calcolo l'altezza del singolo elemento considerando la scala
+                        let height = (this.canvasHeight / (this.groups.length - 1))
+                        scaleFactor = scaleFactor / (this.groups.length - 1)
+
+
+                        this.groups[idx].set({
+                            centeredScaling: true,
+                            scaleX: scaleFactor,
+                            scaleY: scaleFactor,
+                        })
+
+                        let objHeight = obj.getScaledHeight() * scaleFactor
+
+                        if (height < objHeight) {
+                            let objScale = height / objHeight
+                            obj.set({
+                                scaleX: objScale,
+                                scaleY: objScale,
+                            })
+                        }
+
+
+                        // calcolo la sua posizione sempre in base alla scala
+                        let width = this.groups[idx].getScaledWidth()
+                        let top = (height * idx) - height
+                        let left = (this.canvasWidth / 2) - (width / 2)
+
+                        this.groups[idx].set({
+                            top: top,
+                            left: left,
+                        })
+                        this.groups[idx].setCoords()
+                    }
+
+                this.canvas.calcOffset()
+                this.canvas.renderAll()
+                this.saveCanvas()
             })
-            this.canvas.calcOffset()
-            this.canvas.renderAll()
-            // this.saveCanvas()
         },
         selected: function(index, libraryID) {
             this.addToCanvas(index, libraryID)
