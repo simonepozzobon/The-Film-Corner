@@ -7,10 +7,12 @@ use App\App;
 use App\Session;
 use App\AppSection;
 use App\AppCategory;
+use App\MediaCouples;
 use App\MediaSubCategory;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class LoadController extends Controller
 {
@@ -58,6 +60,20 @@ class LoadController extends Controller
                     break;
 
                 case 'types-of-images':
+                    $media_couples = MediaCouples::with('left', 'right')->get();
+                    $media_couples = $media_couples->transform(function($item, $key) {
+                        $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
+                        $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
+                        return $item;
+                    });
+                    $random = $media_couples->random();
+
+                    $assets = [
+                        'type' => 'images',
+                        'hasSubLibraries' => false,
+                        'library' => $media_couples,
+                        'random' => $random,
+                    ];
                     break;
 
                 case 'parallel-action':

@@ -1,14 +1,33 @@
 <template lang="html">
     <app-template :app="app" :left="6" :right="6">
         <template slot="left">
-
+            <ui-app-image
+                v-if="media"
+                title="first image"
+                :src="media.leftSrc"/>
         </template>
         <template slot="right">
-
+            <ui-app-image
+                v-if="media"
+                title="second image"
+                :src="media.rightSrc"
+                border-direction="right"/>
         </template>
         <template>
-            Contenuto
+            <ui-app-block
+                class="mt-4"
+                :has-title="false"
+                color="dark">
+                <ui-button
+                    color="white"
+                    :has-margin="false"
+                    align="center"
+                    @click.native="randomize">
+                    Change Images
+                </ui-button>
+            </ui-app-block>
             <ui-app-note
+                class="mt-4"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -16,23 +35,38 @@
 
 <script>
 import AppTemplate from './AppTemplate.vue'
-import { UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
+import { UiAppBlock, UiAppFolder, UiAppImage, UiAppLibrary, UiAppNote } from '../../uiapp'
 import { SharedData, SharedMethods } from './Shared'
+import { UiBlock, UiButton, UiTitle, UiRow } from '../../ui'
 
 export default {
     name: 'TypesOfImages',
     components: {
         AppTemplate,
+        UiAppBlock,
         UiAppFolder,
+        UiAppImage,
         UiAppLibrary,
         UiAppNote,
+        UiBlock,
+        UiButton,
+        UiTitle,
+        UiRow,
     },
     data: function() {
         return {
             ...SharedData,
+            media: null,
         }
     },
     methods: {
+        init: function() {
+            this.media = this.assets.random
+        },
+        randomize: function() {
+            let idx = Math.round(Math.random() * this.assets.library.length)
+            this.media = this.assets.library[idx]
+        },
         selected: function() {
 
         },
