@@ -1,3 +1,4 @@
+import UiAppAudioPreview from './UiAppAudioPreview.vue'
 import UiAppBlock from './UiAppBlock.vue'
 import UiAppFolder from './UiAppFolder.vue'
 import UiAppGiroscope from './UiAppGiroscope.vue'
@@ -11,6 +12,7 @@ import UiAppVideoControls from './UiAppVideoControls.vue'
 import UiAppVideoPreview from './UiAppVideoPreview.vue'
 
 export {
+    UiAppAudioPreview,
     UiAppBlock,
     UiAppFolder,
     UiAppGiroscope,

@@ -26,7 +26,7 @@ import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppVideoPreview 
 import { SharedData, SharedMethods } from './Shared'
 
 export default {
-    name: 'ParallelAction',
+    name: 'Offscreen',
     components: {
         AppTemplate,
         UiAppFolder,
@@ -41,11 +41,6 @@ export default {
             media: {
                 videoSrc: '/video/empty-session.mp4'
             },
-        }
-    },
-    watch: {
-        'timelines': function(timelines) {
-            this.$nextTick(this.updateEditor)
         }
     },
     methods: {

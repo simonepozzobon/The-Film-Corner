@@ -1,7 +1,9 @@
 <template lang="html">
     <app-template :app="app">
         <template slot="left">
-
+            <ui-app-audio-preview
+                ref="preview"
+                :src="media.audioSrc"/>
         </template>
         <template slot="right" v-if="this.assets">
             <ui-app-library
@@ -11,8 +13,8 @@
                 @selected="selected"/>
         </template>
         <template>
-            Contenuto
             <ui-app-note
+                class="mt-4"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -20,7 +22,7 @@
 
 <script>
 import AppTemplate from './AppTemplate.vue'
-import { UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
+import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppAudioPreview } from '../../uiapp'
 import { SharedData, SharedMethods } from './Shared'
 
 export default {
@@ -30,22 +32,37 @@ export default {
         UiAppFolder,
         UiAppLibrary,
         UiAppNote,
+        UiAppTimeline,
+        UiAppAudioPreview,
     },
     data: function() {
         return {
             ...SharedData,
+            media: {
+                audioSrc: null
+            },
         }
     },
     methods: {
-        selected: function() {
-
+        init: function() {
+            let idx = Math.round(Math.random() * this.assets.library.length)
+            this.media = this.assets.library[idx]
+            console.log('fsdgfsgfdg',this.media);
+        },
+        selected: function(id) {
+            let player = this.$refs.preview.player
+            player.pause()
+            this.media = this.assets.library.filter(asset => asset.id == id)[0]
         },
         setNotes: function(notes) {
             this.notes = notes
         }
     },
     created: function() {
+        this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
+        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
+
         this.$root.isApp = true
         this.getData()
     },

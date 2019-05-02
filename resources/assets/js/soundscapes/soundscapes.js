@@ -133,7 +133,7 @@ const soundscapes = new Vue({
                 this.players[idx].player.setMute(true)
                 this.$root.$emit('item-available', idx)
                 // this.flushPlayers()
-                
+
             }
         },
         flushPlayers: function() {

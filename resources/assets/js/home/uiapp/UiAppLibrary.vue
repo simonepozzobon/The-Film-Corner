@@ -146,6 +146,7 @@ export default {
             } else {
                 this.assets = this.items
             }
+            console.log('sfgfd',this.assets);
         },
         setAssets: function(id) {
             let selected = this.libraries.filter(library => library.id == id)[0]

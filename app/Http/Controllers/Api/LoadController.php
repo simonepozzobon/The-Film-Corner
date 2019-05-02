@@ -99,10 +99,10 @@ class LoadController extends Controller
                     break;
 
                 case 'whats-going-on':
-                    $audios = $app->videos()->get();
+                    $audios = $app->audios()->get();
                     $audios = $audios->transform(function($audio, $key) {
                         $audio->audioSrc = Storage::disk('local')->url($audio->src);
-                        return $video;
+                        return $audio;
                     });
                     $assets = [
                         'type' => 'audios',
