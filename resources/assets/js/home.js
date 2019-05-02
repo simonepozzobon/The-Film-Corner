@@ -35,6 +35,7 @@ function IsJsonString(str) {
 }
 
 router.beforeEach((to, from, next) => {
+    console.log(from);
     if (to.matched.some(record => record.meta.requiresAuth)) {
         const app = router.app
         let user = app.user

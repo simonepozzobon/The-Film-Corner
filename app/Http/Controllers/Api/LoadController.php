@@ -119,4 +119,19 @@ class LoadController extends Controller
             ];
         }
     }
+
+    public function delete_session($token) {
+        $session = Session::where('token', $token)->first();
+        if ($session) {
+            $session->delete();
+            return [
+                'success' => true,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'error' => 404,
+        ];
+    }
 }

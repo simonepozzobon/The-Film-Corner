@@ -90,5 +90,6 @@ Route::prefix('v2')->group(function() {
         Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
         Route::get('get-app/{slug}', 'Api\SectionController@get_app');
         Route::get('load-assets/{slug}', 'Api\LoadController@load_assets');
+        Route::delete('session/{token}', 'Api\LoadController@delete_session');
     });
 });

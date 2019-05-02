@@ -69,7 +69,6 @@ export default {
             for (var i = 0; i < o.length; i++) {
                 this.addTimeline(o[i][0], o[i][1])
             }
-            this.$nextTick(this.deleteEmptySession)
         },
         addTimeline: function(id, libraryID) {
             let timeline
@@ -122,11 +121,11 @@ export default {
         },
         updateEditor: function() {
             if (this.isFree) {
-                this.isFree = false
+                // this.isFree = false
                 let data = new FormData()
                 data.append('timelines', JSON.stringify(this.timelines))
                 // this.$http.post('/api/v2/')
-                console.log('updating');
+                // console.log('updating');
             } else {
                 this.cache = this.timelines
             }
@@ -146,7 +145,6 @@ export default {
     mounted: function() {
     },
     beforeDestroy: function() {
-        this.deleteEmptySession()
         this.$root.isApp = false
     }
 }
