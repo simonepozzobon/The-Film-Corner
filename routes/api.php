@@ -94,5 +94,7 @@ Route::prefix('v2')->group(function() {
 
         Route::post('render-video', 'Api\VideoEditorController@update_editor');
         Route::post('render-audio', 'Api\AudioEditorController@update_editor');
+
+        Route::put('contest-upload', 'Api\LoadController@contest_upload');
     });
 });

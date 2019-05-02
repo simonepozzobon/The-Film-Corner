@@ -17,7 +17,13 @@ const SharedMethods = {
     getData: function() {
         // pulisce la sessione se non è stata salvata
         window.addEventListener('beforeunload', () => {
-            this.deleteEmptySession()
+            try {
+                this.deleteEmptySession()
+            } catch (e) {
+
+            } finally {
+
+            }
         })
 
         let slug = this.$route.name

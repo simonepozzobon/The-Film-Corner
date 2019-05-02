@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\App;
+use App\Utility;
 use App\Session;
 use App\AppSection;
 use App\AppCategory;
@@ -156,12 +157,23 @@ class LoadController extends Controller
                     break;
 
                 case 'storytelling':
+                    $images = $app->mediaCategory()->with('medias')->get();
+                    $assets = [
+                        'type' => 'images',
+                        'hasSubLibraries' => true,
+                        'library' => $images,
+                    ];
                     break;
+
                 case 'storyboard':
                     break;
+
+
                 case 'lumiere-minute':
+                    // fatta
                     break;
                 case 'make-your-own-film':
+                    // fatta
                     break;
             }
             return [
@@ -192,5 +204,29 @@ class LoadController extends Controller
             'success' => false,
             'error' => 404,
         ];
+    }
+
+    public function contest_upload(Request $request) {
+
+        $utility = new Utility;
+        $file = $request->file('media');
+        $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $ext = $file->getClientOriginalExtension();
+
+        $app_slug = $request->slug;
+        $category_slug = $request->slug;
+        $user = Auth::user();
+
+        $filename = uniqid();
+
+        $videoStore = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+
+        return response([
+            'name' => $title,
+            'duration' => $videoStore['duration'],
+            // 'video_id' => $video->id,
+            'img' => Storage::disk('local')->url($videoStore['img']),
+            'src' => $videoStore['src']
+        ]);
     }
 }

@@ -176,6 +176,12 @@ const routes = [
                         component: require('./views/apps/MakeYourOwnFilm.vue').default,
                         meta: { requiresAuth: true },
                     },
+                    {
+                        path: 'storytelling',
+                        name: 'storytelling',
+                        component: require('./views/apps/Storytelling.vue').default,
+                        meta: { requiresAuth: true },
+                    },
 
                 ],
             },
