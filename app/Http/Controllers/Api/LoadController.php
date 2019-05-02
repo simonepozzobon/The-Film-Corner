@@ -110,16 +110,23 @@ class LoadController extends Controller
                         'library' => $audios,
                     ];
                     break;
-                case 'sound-atmospheres':
-                    break;
+
                 case 'soundscapes':
                     break;
-                case 'stop-and-go':
-                    break;
-                case 'character-analysis':
-                    break;
+
                 case 'active-offscreen':
+                    $videos = $app->videos()->get();
+                    $videos = $videos->transform(function($video, $key) {
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
+                    });
+                    $assets = [
+                        'type' => 'videos',
+                        'hasSubLibraries' => false,
+                        'library' => $videos,
+                    ];
                     break;
+
                 case 'active-parallel-action':
                     $videos = MediaSubCategory::where('app_id', 10)->with('videos')->get();
                     $assets = [
@@ -147,6 +154,7 @@ class LoadController extends Controller
                         'library' => $images,
                     ];
                     break;
+
                 case 'storytelling':
                     break;
                 case 'storyboard':
