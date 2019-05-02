@@ -1,7 +1,9 @@
 <template lang="html">
     <app-template :app="app">
         <template slot="left">
+            <ui-app-image title="Your Scene">
 
+            </ui-app-image>
         </template>
         <template slot="right" v-if="this.assets">
             <ui-app-library
@@ -11,8 +13,8 @@
                 @selected="selected"/>
         </template>
         <template>
-            Contenuto
             <ui-app-note
+                class="mt-4"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -20,7 +22,7 @@
 
 <script>
 import AppTemplate from './AppTemplate.vue'
-import { UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
+import { UiAppFolder, UiAppImage, UiAppLibrary, UiAppNote } from '../../uiapp'
 import { SharedData, SharedMethods } from './Shared'
 
 export default {
@@ -28,6 +30,7 @@ export default {
     components: {
         AppTemplate,
         UiAppFolder,
+        UiAppImage,
         UiAppLibrary,
         UiAppNote,
     },

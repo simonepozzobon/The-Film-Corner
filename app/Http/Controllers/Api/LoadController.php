@@ -113,6 +113,28 @@ class LoadController extends Controller
                     break;
 
                 case 'soundscapes':
+                    $images = $app->medias()->get();
+                    $audios = $app->audios()->get();
+                    $libraries = collect([
+                        [
+                            'id' => 1,
+                            'name' => 'Audio',
+                            'type' => 'audios',
+                            'audios' => $audios,
+                        ],
+                        [
+                            'id' => 2,
+                            'name' => 'Images',
+                            'type' => 'images',
+                            'medias' => $images,
+                        ]
+                    ]);
+
+                    $assets = [
+                        'type' => 'mix',
+                        'hasSubLibraries' => true,
+                        'library' => $libraries,
+                    ];
                     break;
 
                 case 'active-offscreen':
@@ -136,6 +158,7 @@ class LoadController extends Controller
                         'library' => $videos,
                     ];
                     break;
+
                 case 'sound-studio':
                     $audios = MediaSubCategory::where('app_id', 12)->with('audios')->get();
                     $video = $app->videos()->inRandomOrder()->first();
@@ -147,6 +170,7 @@ class LoadController extends Controller
                         'video' => $src
                     ];
                     break;
+
                 case 'character-builder':
                     $images = $app->mediaCategory()->with('medias')->get();
                     $assets = [
@@ -164,10 +188,6 @@ class LoadController extends Controller
                         'library' => $images,
                     ];
                     break;
-
-                case 'storyboard':
-                    break;
-
 
                 case 'lumiere-minute':
                     // fatta

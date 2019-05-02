@@ -124,6 +124,7 @@ export default {
             assets: [],
             animationsController: [],
             animationsCache: [],
+            mediaType: null,
         }
     },
     watch: {
@@ -137,6 +138,7 @@ export default {
         },
     },
     methods: {
+        beforeInit: function() {},
         init: function() {
             if (this.hasSubLibraries) {
                 this.libraries = this.items
