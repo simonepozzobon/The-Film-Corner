@@ -164,7 +164,7 @@ export default {
         }
     },
     created: function() {
-        this.uinqid = SharedMethods.uinqid.bind(this)
+        this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
         this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
 
