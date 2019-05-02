@@ -84,11 +84,31 @@ class LoadController extends Controller
                         'library' => $videos,
                     ];
                     break;
+
                 case 'offscreen':
+                    $videos = $app->videos()->get();
+                    $videos = $videos->transform(function($video, $key) {
+                        $video->videoSrc = Storage::disk('local')->url($video->src);
+                        return $video;
+                    });
+                    $assets = [
+                        'type' => 'videos',
+                        'hasSubLibraries' => false,
+                        'library' => $videos,
+                    ];
                     break;
-                case 'attractions':
-                    break;
+
                 case 'whats-going-on':
+                    $audios = $app->videos()->get();
+                    $audios = $audios->transform(function($audio, $key) {
+                        $audio->audioSrc = Storage::disk('local')->url($audio->src);
+                        return $video;
+                    });
+                    $assets = [
+                        'type' => 'audios',
+                        'hasSubLibraries' => false,
+                        'library' => $audios,
+                    ];
                     break;
                 case 'sound-atmospheres':
                     break;
