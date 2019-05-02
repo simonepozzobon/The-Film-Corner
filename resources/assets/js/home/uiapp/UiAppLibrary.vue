@@ -47,6 +47,24 @@
         <div
             ref="assets"
             class="ui-app-library__assets"
+            v-else-if="type == 'audios'">
+            <transition-group
+                tag="div"
+                @enter="assetEnter"
+                @leave="assetLeave">
+                <library-item-audio
+                    v-for="(asset, i) in assets"
+                    :key="asset.id"
+                    :delay="i"
+                    :index="asset.id"
+                    :title="asset.title"
+                    @selected="selected"/>
+            </transition-group>
+        </div>
+
+        <div
+            ref="assets"
+            class="ui-app-library__assets"
             v-else>
             <transition-group
                 tag="div"
@@ -67,6 +85,7 @@
 
 <script>
 import LibraryItem from './sub/library/LibraryItem.vue'
+import LibraryItemAudio from './sub/library/LibraryItemAudio.vue'
 import LibraryItemVideo from './sub/library/LibraryItemVideo.vue'
 import SizeUtility from '../Sizes'
 import { UiTitle } from '../ui'
@@ -75,6 +94,7 @@ export default {
     name: 'UiAppLibrary',
     components: {
         LibraryItem,
+        LibraryItemAudio,
         LibraryItemVideo,
         UiTitle,
     },
@@ -133,6 +153,9 @@ export default {
                 switch (this.type) {
                     case 'videos':
                         this.assets = selected.videos
+                        break;
+                    case 'audios':
+                        this.assets = selected.audios
                         break;
                     default:
                         this.assets = selected.medias

@@ -93,6 +93,15 @@ class LoadController extends Controller
                     ];
                     break;
                 case 'sound-studio':
+                    $audios = MediaSubCategory::where('app_id', 12)->with('audios')->get();
+                    $video = $app->videos()->inRandomOrder()->first();
+                    $src = $video->src;
+                    $assets = [
+                        'type' => 'audios',
+                        'hasSubLibraries' => true,
+                        'library' => $audios,
+                        'video' => $src
+                    ];
                     break;
                 case 'character-builder':
                     $images = $app->mediaCategory()->with('medias')->get();

@@ -139,7 +139,7 @@ export default {
                 let data = new FormData()
                 data.append('token', this.session.token)
                 data.append('timelines', JSON.stringify(this.timelines))
-                this.$http.post('/api/v2/update-editor', data).then(response => {
+                this.$http.post('/api/v2/render-video', data).then(response => {
                     // se c'è qualcosa nella cache
                     this.isFree = true
                     if (this.cache) {

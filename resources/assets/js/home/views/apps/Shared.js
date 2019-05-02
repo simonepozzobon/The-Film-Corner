@@ -15,22 +15,24 @@ const SharedMethods = {
         return ('d'+out)
     },
     getData: function() {
-
         // pulisce la sessione se non è stata salvata
         window.addEventListener('beforeunload', () => {
             this.deleteEmptySession()
         })
 
         let slug = this.$route.name
+
         this.$http.get('/api/v2/load-assets/' + slug).then(response => {
             console.dir(response.data);
             if (response.data.success) {
                 this.app = response.data.app
                 this.assets = response.data.assets
                 this.session = response.data.session
+
                 this.$nextTick(this.init)
             }
         })
+
     },
     deleteEmptySession: function() {
         // verificare se è vuota

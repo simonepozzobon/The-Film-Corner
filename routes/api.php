@@ -92,6 +92,7 @@ Route::prefix('v2')->group(function() {
         Route::get('load-assets/{slug}', 'Api\LoadController@load_assets');
         Route::delete('session/{token}', 'Api\LoadController@delete_session');
 
-        Route::post('update-editor', 'Api\VideoEditorController@update_editor');
+        Route::post('render-video', 'Api\VideoEditorController@update_editor');
+        Route::post('render-audio', 'Api\AudioEditorController@update_editor');
     });
 });
