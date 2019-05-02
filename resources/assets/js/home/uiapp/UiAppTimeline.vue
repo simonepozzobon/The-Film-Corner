@@ -3,16 +3,18 @@
         <ui-block :size="12">
             <div class="ui-app-timeline">
                 <ui-title :title="title" color="white" :has-padding="false"/>
-                <timeline-track
-                    v-for="(track, idx) in timelines"
-                    :key="track.uniqueid"
-                    :track="track"
-                    :idx="idx"
-                    @delete-track="onDeleteTrack"
-                    @duplicate-track="onDuplicate"
-                    @on-drag="onDrag"
-                    @on-resize="onResize"/>
-                <div ref="playhead" id="playhead" class="playhead"></div>
+                <div class="ui-app-timeline__container">
+                    <timeline-track
+                        v-for="(track, idx) in timelines"
+                        :key="track.uniqueid"
+                        :track="track"
+                        :idx="idx"
+                        @delete-track="onDeleteTrack"
+                        @duplicate-track="onDuplicate"
+                        @on-drag="onDrag"
+                        @on-resize="onResize"/>
+                    <div ref="playhead" class="ui-app-timeline__playhead"></div>
+                </div>
             </div>
         </ui-block>
     </ui-row>
@@ -42,6 +44,14 @@ export default {
             type: Array,
             default: function() {},
         },
+        playheadPosition: {
+            type: Number,
+            default: 171,
+        },
+        playheadHeight: {
+            type: Number,
+            default: 300,
+        },
     },
     data: function() {
         return {
@@ -50,11 +60,19 @@ export default {
                 max_length: 5000 // in px
             },
             tracks: [],
-            playheadHeight: 300,
-            playheadPosition: 200,
+        }
+    },
+    watch: {
+        playheadPosition: function(x) {
+            this.movePlayhead()
         }
     },
     methods: {
+        movePlayhead: function() {
+            TweenLite.set(this.$refs.playhead, {
+                left: this.playheadPosition
+            })
+        },
         onDrag: function(obj) {
             this.$emit('on-drag', obj)
         },
@@ -77,11 +95,6 @@ export default {
                 }
             })
         })
-        // this.$root.$on('player-time-update', time => {
-        //     time = (time * this.$root.tick) + 200
-        //     this.playheadPosition = parseInt(time)
-        //     this.$refs.playhead.style.left = parseInt(time) + 'px'
-        // })
     },
 }
 </script>
@@ -90,11 +103,24 @@ export default {
 @import '~styles/shared';
 
 .ui-app-timeline {
+    // position: relative;
     width: 100%;
     height: 100%;
     background-color: $dark-gray;
     @include border-radius($custom-border-radius);
     @include app-block-padding;
+
+    &__container {
+        position: relative;
+    }
+
+    &__playhead {
+        position: absolute;
+        border-right: 2px solid #ff0000;
+        height: 100%;
+        top: 0;
+        left: 171px;
+    }
 }
 
 </style>

@@ -1,7 +1,10 @@
 <template lang="html">
     <app-template :app="app">
         <template slot="left">
-            <ui-app-video-preview />
+            <ui-app-video-preview
+                ref="preview"
+                :src="currentExport"
+                @on-update-player="onUpdatePlayer"/>
         </template>
         <template slot="right" v-if="this.assets">
             <ui-app-library
@@ -13,6 +16,8 @@
         <template>
             <ui-app-timeline
                 :timelines="timelines"
+                :playhead-position="playheadPosition"
+                :playhead-height="playheadHeight"
                 @delete-track="onDeleteTrack"
                 @duplicate-track="onDuplicate"
                 @on-drag="onDrag"
@@ -46,6 +51,10 @@ export default {
             tick: 10,
             isFree: true,
             cache: null,
+            currentExport: null,
+            playheadHeight: 300,
+            playheadStart: 171,
+            playheadPosition: 171,
         }
     },
     watch: {
@@ -56,19 +65,19 @@ export default {
     methods: {
         init: function() {
             // 204, 19
-            let o = [
-                [204, 19],
-                [178, 18],
-                [178, 18],
-                [178, 18],
-                [179, 18],
-                [186, 18],
-                [186, 18],
-                [186, 18],
-            ]
-            for (var i = 0; i < o.length; i++) {
-                this.addTimeline(o[i][0], o[i][1])
-            }
+            // let o = [
+            //     [204, 19],
+            //     [178, 18],
+            //     [178, 18],
+            //     [178, 18],
+            //     [179, 18],
+            //     [186, 18],
+            //     [186, 18],
+            //     [186, 18],
+            // ]
+            // for (var i = 0; i < o.length; i++) {
+            //     this.addTimeline(o[i][0], o[i][1])
+            // }
         },
         addTimeline: function(id, libraryID) {
             let timeline
@@ -119,14 +128,34 @@ export default {
             this.timelines[obj.idx]['cutEnd'] = obj.cutEnd
             this.timelines = this.timelines.slice()
         },
+        onUpdatePlayer: function(time) {
+            this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
+        },
         updateEditor: function() {
             if (this.isFree) {
-                // this.isFree = false
+                this.isFree = false
+                this.$refs.preview.showLoader()
+                console.log('updating');
                 let data = new FormData()
+                data.append('token', this.session.token)
                 data.append('timelines', JSON.stringify(this.timelines))
-                // this.$http.post('/api/v2/')
-                // console.log('updating');
+                this.$http.post('/api/v2/update-editor', data).then(response => {
+                    // se c'è qualcosa nella cache
+                    this.isFree = true
+                    if (this.cache) {
+                        this.cache = null
+                        this.updateEditor()
+                    } else {
+                        this.$refs.preview.hideLoader()
+                        // carico l'export solo quando è finita la coda
+                        this.$nextTick(() => {
+                            this.currentExport = response.data.export
+                        })
+                        console.log('complete');
+                    }
+                })
             } else {
+                // console.log('cache');
                 this.cache = this.timelines
             }
         },

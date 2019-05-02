@@ -14,7 +14,6 @@
             <div
                 class="timeline-track__input tools"
                 ref="tools">
-
                 <input
                     class="form-control"
                     v-model="title"

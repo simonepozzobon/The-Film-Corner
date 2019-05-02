@@ -85,6 +85,12 @@ class LoadController extends Controller
                 case 'active-offscreen':
                     break;
                 case 'active-parallel-action':
+                    $videos = MediaSubCategory::where('app_id', 10)->with('videos')->get();
+                    $assets = [
+                        'type' => 'videos',
+                        'hasSubLibraries' => true,
+                        'library' => $videos,
+                    ];
                     break;
                 case 'sound-studio':
                     break;
