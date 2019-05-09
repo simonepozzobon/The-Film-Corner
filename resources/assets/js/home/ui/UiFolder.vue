@@ -16,6 +16,7 @@
                     class="ui-folder__breadcrumbs"/>
                 <ui-folder-corner
                     :has-times="hasTimes"
+                    :color="color"
                     class="ui-folder__corner"/>
             </ui-block>
         </ui-row>
@@ -23,7 +24,7 @@
             justify="center">
             <ui-block
                 size="auto"
-                color="green"
+                :color="color"
                 :radius="true"
                 radius-size="md">
                 <ui-title
@@ -70,6 +71,10 @@ export default {
         UiTitle,
     },
     props: {
+        color: {
+            type: String,
+            default: 'green'
+        },
         title: {
             type: String,
             default: 'Title'

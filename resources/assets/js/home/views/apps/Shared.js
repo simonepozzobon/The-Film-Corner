@@ -4,6 +4,13 @@ const SharedData = {
     session: null,
     notes: null,
     size: { w: 0, h: 0 },
+    color: 'green',
+}
+
+const SharedWatch = {
+    'app': function(app) {
+        this.color = app.category.section.color_class
+    }
 }
 
 const SharedMethods = {
@@ -51,4 +58,5 @@ const SharedMethods = {
 export {
     SharedData,
     SharedMethods,
+    SharedWatch,
 }

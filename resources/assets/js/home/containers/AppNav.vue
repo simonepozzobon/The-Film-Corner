@@ -5,16 +5,13 @@
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Close</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Save Project</a>
+                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Save Session</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Open Existent Project</a>
+                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Open Existing Session</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Examples</a>
-            </li>
-            <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Help</a>
+                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Reset Session</a>
             </li>
             <li class="app-nav__item nav-item">
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Print</a>

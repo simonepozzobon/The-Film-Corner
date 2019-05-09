@@ -19,6 +19,7 @@
 
                     <ui-folder-corner
                         @closed="closed"
+                        :color="app.category.color_class"
                         :has-times="true"/>
 
                 </ui-block>
@@ -27,7 +28,7 @@
                 justify="center">
                 <ui-block
                     size="auto"
-                    color="green"
+                    :color="app.category.color_class"
                     :radius="true"
                     radius-size="md">
                     <ui-title
@@ -44,12 +45,12 @@
                             color="dark"
                             display="inline-block"
                             @click.native="startApp">
-                            Inizia nuovo progetto
+                            Start a new session
                         </ui-button>
                         <ui-button
                             color="dark"
                             display="inline-block">
-                            Apri un progetto esistente
+                            Open existing session
                         </ui-button>
                     </div>
                 </ui-block>
@@ -102,6 +103,7 @@ export default {
             this.$http.get('/api/v2/get-app/' + slug).then(response => {
                 if (response.data.success) {
                     this.app = response.data.app
+                    console.log('app');
                     console.dir(this.app);
                 }
             })

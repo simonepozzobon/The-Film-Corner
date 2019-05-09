@@ -1,6 +1,6 @@
 <template lang="html">
     <ui-container>
-        <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
+        <ui-hero-banner :image="this.image" :full-width="true">
             <ui-container :full-width="true" v-if="this.cat">
                 <ui-row align="center">
                     <ui-block :size="4">
@@ -21,28 +21,34 @@
                         :size="4"
                         :color="cat.color_class"
                         :radius="true"
-                        :transparent="true"
+                        :transparent="false"
                         :full-height="true"
                         align="center">
                         <ui-title
                             :title="app.title"
-                            color="white"
+                            color="black"
                             size="h4"
                             align="center"
                             @click.native="goToApp(app.slug)"/>
 
-                        <ui-paragraph>
-                            Short Description
+                        <ui-paragraph align="center">
+                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         </ui-paragraph>
                         <div>
-                            <ui-button color="white" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
-                            <ui-button color="white" display="inline-block" :has-container="false" @click.native="startApp(app.slug)">New</ui-button>
-                            <ui-button color="white" display="inline-block" :has-container="false">Open</ui-button>
+                            <ui-button color="black" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
+                            <ui-button color="black" display="inline-block" :has-container="false" @click.native="startApp(app.slug)">New</ui-button>
+                            <ui-button color="black" display="inline-block" :has-container="false">Open</ui-button>
                         </div>
                     </ui-block>
                 </ui-row>
             </ui-container>
         </ui-hero-banner>
+        <div class="bg-lightest-gray">
+            <ui-container :contain="true" bg-color="lightest-gray" v-if="keywords">
+                <ui-title title="Glossary" align="center"/>
+                <ui-accordion-cols :keywords="keywords"/>
+            </ui-container>
+        </div>
         <ui-container :contain="true" v-if="this.cat">
             <ui-paragraph
                 class="pt-5"
@@ -53,10 +59,11 @@
 </template>
 
 <script>
-import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
+import { UiAccordionCols, UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
 export default {
     name: 'CatSingle',
     components: {
+        UiAccordionCols,
         UiBlock,
         UiButton,
         UiContainer,
@@ -72,6 +79,8 @@ export default {
         return {
             slug: null,
             cat: null,
+            keywords: null,
+            image: '/img/grafica/bg.jpg',
         }
     },
     methods: {
@@ -80,7 +89,11 @@ export default {
             this.$http.get('/api/v2/get-cat/' + slug).then(response => {
                 if (response.data.success) {
                     this.cat = response.data.pavilion
-                    // console.dir(this.cat);
+                    this.keywords = this.cat.keywords
+                    console.dir(this.keywords);
+                    if (this.cat.img) {
+                        this.image = this.cat.img
+                    }
                 }
             })
         },

@@ -10,11 +10,13 @@
                 :hasSubLibraries="assets.hasSubLibraries"
                 :type="assets.type"
                 :items="assets.library"
+                :color="color"
                 @selected="selected"/>
         </template>
         <template>
             <ui-app-note
                 class="mt-4"
+                :color="color"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -23,7 +25,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppVideoPreview } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 
 export default {
     name: 'Offscreen',
@@ -42,6 +44,9 @@ export default {
                 videoSrc: '/video/empty-session.mp4'
             },
         }
+    },
+    watch: {
+        ...SharedWatch,
     },
     methods: {
         init: function() {

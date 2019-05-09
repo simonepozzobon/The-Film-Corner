@@ -11,6 +11,7 @@
                 :hasSubLibraries="assets.hasSubLibraries"
                 :type="assets.type"
                 :items="assets.library"
+                :color="color"
                 @selected="addTimeline"/>
         </template>
         <template>
@@ -24,6 +25,7 @@
                 @on-resize="onResize"/>
             <ui-app-note
                 class="mt-4"
+                :color="color"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -32,7 +34,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppVideoPreview } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 
 export default {
     name: 'ActiveParallelAction',
@@ -60,7 +62,8 @@ export default {
     watch: {
         'timelines': function(timelines) {
             this.$nextTick(this.updateEditor)
-        }
+        },
+        ...SharedWatch,
     },
     methods: {
         init: function() {

@@ -28,6 +28,7 @@
             </ui-app-block>
             <ui-app-note
                 class="mt-4"
+                :color="color"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -36,7 +37,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppBlock, UiAppFolder, UiAppImage, UiAppLibrary, UiAppNote } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 import { UiBlock, UiButton, UiTitle, UiRow } from '../../ui'
 
 export default {
@@ -58,6 +59,9 @@ export default {
             ...SharedData,
             media: null,
         }
+    },
+    watch: {
+        ...SharedWatch,
     },
     methods: {
         init: function() {

@@ -1,7 +1,6 @@
 <template lang="html">
     <div>
         <!-- <apps-nav /> -->
-        gianni
         <transition
             @enter="enter"
             @leave="leave">

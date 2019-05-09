@@ -13,8 +13,6 @@
                 @selected="selected"/>
         </template>
         <template>
-            <ui-app-note
-                @changed="setNotes"/>
         </template>
     </app-template>
 </template>

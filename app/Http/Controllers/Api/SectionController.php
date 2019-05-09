@@ -38,7 +38,7 @@ class SectionController extends Controller
     }
 
     public function get_cat($slug) {
-        $pavilion = AppCategory::where('slug', $slug)->with('apps')->first();
+        $pavilion = AppCategory::where('slug', $slug)->with('apps', 'keywords')->first();
         if ($pavilion) {
             return [
                 'success' => true,

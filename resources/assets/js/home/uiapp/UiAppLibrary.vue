@@ -1,7 +1,8 @@
 <template lang="html">
     <div
         ref="container"
-        class="ui-app-library">
+        class="ui-app-library"
+        :class="colorClass">
         <div
             ref="head"
             class="ui-app-library__head">
@@ -11,10 +12,11 @@
                 :has-padding="false"/>
             <div
                 ref="select"
-                class="ui-app-library__libraries"
+                class="ui-app-library__libraries row no-gutters"
                 v-if="hasSubLibraries">
+                <label class="col-4">Select From</label>
                 <select
-                    class="form-control ui-app-library__select"
+                    class="form-control ui-app-library__select col-8"
                     v-model="currentLibrary">
                     <option
                         v-for="library in libraries"
@@ -28,7 +30,7 @@
         <div
             ref="assets"
             class="ui-app-library__assets"
-            v-if="type == 'videos'">
+            v-if="mediaType == 'videos'">
             <transition-group
                 tag="div"
                 @enter="assetEnter"
@@ -47,7 +49,7 @@
         <div
             ref="assets"
             class="ui-app-library__assets"
-            v-else-if="type == 'audios'">
+            v-else-if="mediaType == 'audios'">
             <transition-group
                 tag="div"
                 @enter="assetEnter"
@@ -115,6 +117,10 @@ export default {
             type: Array,
             default: function() {},
         },
+        color: {
+            type: String,
+            default: 'green'
+        }
     },
     data: function() {
         return {
@@ -130,6 +136,11 @@ export default {
     watch: {
         'currentLibrary': function(id) {
             this.setAssets(id)
+        },
+    },
+    computed: {
+        colorClass: function() {
+            return 'ui-app-library--' + this.color
         },
     },
     filters: {
@@ -244,7 +255,11 @@ export default {
         }
     },
     created: function() {
-        this.init()
+        if (this.type != 'mix') {
+
+        }
+        this.mediaType = this.type
+        this.$nextTick(this.init)
     },
     mounted: function() {
         this.setLibraryHeight()
@@ -256,7 +271,6 @@ export default {
 @import '~styles/shared';
 
 .ui-app-library {
-    background-color: $green;
     width: 100%;
     min-height: 100%;
     padding: $spacer;
@@ -273,6 +287,18 @@ export default {
         visibility: hidden;
         overflow-y: scroll;
         overflow-x: hidden;
+    }
+
+    &--green {
+        background-color: $green;
+    }
+
+    &--yellow {
+        background-color: $yellow;
+    }
+
+    &--red {
+        background-color: $red;
     }
 }
 </style>

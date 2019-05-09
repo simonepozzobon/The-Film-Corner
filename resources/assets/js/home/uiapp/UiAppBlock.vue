@@ -68,7 +68,6 @@ export default {
 .ui-app-block {
     width: 100%;
     height: 100%;
-    background-color: $green;
     @include border-radius($custom-border-radius);
     @include app-block-padding;
 
@@ -78,6 +77,18 @@ export default {
 
     &--dark {
         background-color: $dark-gray;
+    }
+
+    &--green {
+        background-color: $green;
+    }
+
+    &--yellow {
+        background-color: $yellow;
+    }
+
+    &--red {
+        background-color: $red;
     }
 }
 </style>

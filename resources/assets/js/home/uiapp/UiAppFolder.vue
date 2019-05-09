@@ -6,7 +6,8 @@
         :cat="app.category.name"
         :catPath="app.category.slug"
         :pavilion="app.category.section.name"
-        :pavilionPath="app.category.section.slug">
+        :pavilionPath="app.category.section.slug"
+        :color="app.category.section.color_class">
         <ui-paragraph v-html="app.description" />
         <ui-paragraph :full-width="true">
             <ui-button

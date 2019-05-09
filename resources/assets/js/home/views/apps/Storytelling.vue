@@ -3,7 +3,7 @@
         <template>
             <ui-app-block
                 :has-title="false"
-                color="green">
+                :color="color">
                 <ui-row>
                     <ui-block :size="2" v-if="srcs.src1">
                         <ui-image :src="srcs.src1"/>
@@ -39,6 +39,7 @@
             </ui-app-block>
             <ui-app-note
                 class="mt-4"
+                :color="color"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -47,7 +48,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppBlock, UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 import { UiBlock, UiButton, UiImage, UiTitle, UiRow } from '../../ui'
 
 export default {
@@ -76,6 +77,9 @@ export default {
                 src6: null,
             }
         }
+    },
+    watch: {
+        ...SharedWatch,
     },
     methods: {
         init: function() {

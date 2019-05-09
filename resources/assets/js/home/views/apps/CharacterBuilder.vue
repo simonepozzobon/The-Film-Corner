@@ -10,11 +10,13 @@
                 :hasSubLibraries="assets.hasSubLibraries"
                 :type="assets.type"
                 :items="assets.library"
+                :color="color"
                 @selected="selected"/>
         </template>
         <template>
             <ui-app-note
                 class="mt-4"
+                :color="color"
                 @changed="setNotes"/>
         </template>
     </app-template>
@@ -29,7 +31,7 @@ import {
     UiAppNote,
     UiAppPreview,
 } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 
 require('gsap/ScrollToPlugin')
 
@@ -58,7 +60,8 @@ export default {
             if (this.canvas) {
                 this.resizeCanvas(size.wClean)
             }
-        }
+        },
+        ...SharedWatch,
     },
     methods: {
         init: function() {

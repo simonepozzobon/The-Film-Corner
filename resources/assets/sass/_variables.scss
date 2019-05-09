@@ -17,6 +17,7 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #252525 !default;
 
+$lightest-gray: rgb(217, 217, 217) !default;
 $light-gray: #666666 !default;
 $dark-gray: #333333 !default;
 
@@ -33,6 +34,7 @@ $grays: map-merge(
     "700": $gray-700,
     "800": $gray-800,
     "900": $gray-900,
+    "lightest-gray": $lightest-gray,
     "light-gray": $light-gray,
     "dark-gray": $dark-gray,
   ),
@@ -44,10 +46,10 @@ $blue:    #4597DE !default;
 $indigo:  #6610f2 !default;
 $purple:  #613d7c !default;
 $pink:    #ff5b77 !default;
-$red:     #FE595A !default;
+$red:     #f18b8b !default;
 $orange:  #FD9B43 !default;
-$yellow:  #FADA28 !default;
-$green:   #48C0B8 !default;
+$yellow:  #f9e264 !default;
+$green:   #7ec9c7 !default;
 $teal:    #5bc0de !default;
 $cyan:    #17a2b8 !default;
 

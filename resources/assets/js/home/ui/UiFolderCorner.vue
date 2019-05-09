@@ -1,5 +1,7 @@
 <template lang="html">
-    <div class="ui-folder-corner">
+    <div
+        class="ui-folder-corner"
+        :class="[colorClass]">
         <svg
             class="ui-folder-corner__svg"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.05 88.03">
@@ -12,7 +14,9 @@
             class="ui-folder-corner__times"
             @click="$emit('closed')"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.35 23.35">
-            <path class="ui-folder-corner__cross" d="M22.49.86.86,22.48M.58.58,22.77,22.77"/>
+            <path
+                class="ui-folder-corner__cross"
+                d="M22.49.86.86,22.48M.58.58,22.77,22.77"/>
         </svg>
     </div>
 </template>
@@ -24,6 +28,15 @@ export default {
         hasTimes: {
             type: Boolean,
             default: false,
+        },
+        color: {
+            type: String,
+            default: 'green',
+        }
+    },
+    computed: {
+        colorClass: function() {
+            return 'ui-folder-corner--' + this.color
         }
     }
 }
@@ -59,6 +72,16 @@ export default {
         fill: none;
         stroke: #1d1d1b;
         stroke-width: 1.6269999742507935px;
+    }
+
+    &--green &__path {
+        fill: $green;
+    }
+    &--yellow &__path {
+        fill: $yellow;
+    }
+    &--red &__path {
+        fill: $red;
     }
 }
 </style>

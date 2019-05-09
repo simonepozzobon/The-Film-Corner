@@ -19,6 +19,7 @@
                 @select-layer="selectLayer"
                 @delete-layer="deleteLayer"/>
             <ui-app-note
+                class="mt-4"
                 @changed="setNotes"/>
         </template>
     </app-template>

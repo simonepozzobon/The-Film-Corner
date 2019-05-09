@@ -1,7 +1,7 @@
 <template lang="html">
     <ui-row :no-gutters="true">
         <ui-block :size="12">
-            <div class="ui-app-note">
+            <div class="ui-app-note" :class="colorClass">
                 <ui-title :title="title" :has-padding="false"/>
                 <div class="ui-app-note__field">
                     <textarea
@@ -31,6 +31,10 @@ export default {
             type: String,
             default: 'Notes',
         },
+        color: {
+            type: String,
+            default: 'green'
+        }
     },
     data: function() {
         return {
@@ -42,6 +46,11 @@ export default {
             this.$emit('changed', notes)
         }
     },
+    computed: {
+        colorClass: function() {
+            return 'ui-app-note--' + this.color
+        }
+    }
 
 }
 </script>
@@ -52,12 +61,23 @@ export default {
 .ui-app-note {
     width: 100%;
     height: 100%;
-    background-color: $green;
     @include border-radius($custom-border-radius);
     @include app-block-padding;
 
     &__text {
         @include border-radius(10px);
+    }
+
+    &--green {
+        background-color: $green;
+    }
+
+    &--yellow {
+        background-color: $yellow;
+    }
+
+    &--red {
+        background-color: $red;
     }
 }
 </style>

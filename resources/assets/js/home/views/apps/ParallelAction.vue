@@ -11,6 +11,7 @@
                 :hasSubLibraries="assets.hasSubLibraries"
                 :type="assets.type"
                 :items="assets.library"
+                :color="color"
                 @selected="addTimeline"/>
         </template>
         <template>
@@ -18,6 +19,7 @@
                 :timelines="timelines"
                 :playhead-position="playheadPosition"
                 :playhead-height="playheadHeight"
+                :color="color"
                 @delete-track="onDeleteTrack"
                 @duplicate-track="onDuplicate"
                 @on-drag="onDrag"
@@ -32,7 +34,7 @@
 <script>
 import AppTemplate from './AppTemplate.vue'
 import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppVideoPreview } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
 
 export default {
     name: 'ParallelAction',
@@ -60,7 +62,8 @@ export default {
     watch: {
         'timelines': function(timelines) {
             this.$nextTick(this.updateEditor)
-        }
+        },
+        ...SharedWatch,
     },
     methods: {
         init: function() {

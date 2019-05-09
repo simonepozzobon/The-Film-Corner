@@ -28,12 +28,13 @@
                         :size="4"
                         :color="studio.color_class"
                         :radius="true"
-                        :transparent="true"
+                        :transparent="false"
                         :full-height="true">
                         <ui-title
                             :title="studio.name"
                             color="white"
                             size="h4"
+                            :hoverable="true"
                             @click.native="goToPavilion($event, studio.slug)"/>
                         <ul
                             class="block-menu"

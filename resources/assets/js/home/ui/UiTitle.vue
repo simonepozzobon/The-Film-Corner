@@ -13,6 +13,7 @@
                 paddingClass,
                 marginClass,
                 displayClass,
+                hoverableClass,
             ]">
                 {{ title }}
         </component>
@@ -31,6 +32,7 @@
             paddingClass,
             marginClass,
             displayClass,
+            hoverableClass,
         ]">
             {{ title }}
     </component>
@@ -84,6 +86,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        hoverable: {
+            type: Boolean,
+            default: false,
+        }
     },
     computed: {
         alignClass: function() {
@@ -123,6 +129,11 @@ export default {
             if (this.display) {
                 return 'ui-title--'+this.display
             }
+        },
+        hoverableClass: function() {
+            if (this.hoverable) {
+                return 'ui-title--hoverable'
+            }
         }
     }
 }
@@ -142,6 +153,14 @@ export default {
         text-align: center;
         margin-bottom: $spacer * 2;
         padding-top: $spacer * 3;
+    }
+
+    &--hoverable:hover {
+        text-decoration: underline;
+    }
+
+    &--hoverable {
+        cursor: pointer;
     }
 
     &--align-center {
