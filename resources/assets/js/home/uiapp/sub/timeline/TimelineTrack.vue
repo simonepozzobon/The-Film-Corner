@@ -1,7 +1,10 @@
 <template>
     <div
         class="timeline-track"
-        :class="colorClass"
+        :class="[
+            colorClass,
+            blobColorClass,
+        ]"
         ref="container">
         <div
             class="timeline-track__head"
@@ -68,6 +71,10 @@ export default {
         idx: {
             type: Number,
             default: 0,
+        },
+        color: {
+            type: String,
+            default: 'green'
         }
     },
     data: () => ({
@@ -92,6 +99,9 @@ export default {
             if (odd) {
                 return 'timeline-track--light'
             }
+        },
+        blobColorClass: function() {
+            return 'timeline-track--' + this.color
         }
     },
     watch: {
@@ -261,6 +271,18 @@ export default {
         cursor: pointer;
         color: rgba($white, .6);
         margin-right: $spacer / 2;
+    }
+
+    &--green &__media-element {
+        background-color: $green;
+    }
+
+    &--yellow &__media-element {
+        background-color: $yellow;
+    }
+
+    &--red &__media-element {
+        background-color: $red;
     }
 }
 </style>

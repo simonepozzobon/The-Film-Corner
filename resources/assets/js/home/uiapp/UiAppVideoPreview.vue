@@ -7,7 +7,7 @@
             ref="title"/>
 
         <div class="ui-app-video-preview__loader" ref="loader">
-            <div class="spinner-border text-green" role="status">
+            <div class="spinner-border" :class="loaderColorClass" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
@@ -47,6 +47,10 @@ export default {
             type: String,
             default: '/video/empty-session.mp4',
         },
+        color: {
+            type: String,
+            default: 'green'
+        }
     },
     data: function() {
         return {
@@ -73,6 +77,9 @@ export default {
     computed: {
         player: function() {
             return this.$refs.player.player
+        },
+        loaderColorClass: function() {
+            return 'text-' + this.color
         }
     },
     methods: {

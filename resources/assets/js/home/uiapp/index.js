@@ -1,5 +1,7 @@
 import UiAppAudioPreview from './UiAppAudioPreview.vue'
 import UiAppBlock from './UiAppBlock.vue'
+import UiAppCropControls from './UiAppCropControls.vue'
+import UiAppCroppedFrames from './UiAppCroppedFrames.vue'
 import UiAppFolder from './UiAppFolder.vue'
 import UiAppGiroscope from './UiAppGiroscope.vue'
 import UiAppImage from './UiAppImage.vue'
@@ -14,6 +16,8 @@ import UiAppVideoPreview from './UiAppVideoPreview.vue'
 export {
     UiAppAudioPreview,
     UiAppBlock,
+    UiAppCropControls,
+    UiAppCroppedFrames,
     UiAppFolder,
     UiAppGiroscope,
     UiAppImage,

@@ -13,7 +13,9 @@
                 colorClass,
                 blockClass,
             ]"
-            :disabled="disable">
+            :disabled="disable"
+            @click.prevent="clicked">
+            {{ title }}
             <slot></slot>
         </button>
     </div>
@@ -28,7 +30,9 @@
             alignSelfClass,
             marginClass,
         ]"
-        :disabled="disable">
+        :disabled="disable"
+        @click.prevent="clicked">
+        {{ title }}
         <slot></slot>
     </button>
 </template>
@@ -64,7 +68,12 @@ export default {
         hasMargin: {
             type: Boolean,
             default: true,
-        }
+        },
+        title: {
+            type: String,
+            default: null,
+        },
+        eventParams: [String, Object, Array, Number],
     },
     computed: {
         colorClass: function() {
@@ -98,6 +107,14 @@ export default {
             }
         },
     },
+    methods: {
+        clicked: function() {
+            if (!this.disable) {
+                this.$emit('click', this.eventParams)
+            }
+        }
+    },
+
 }
 </script>
 

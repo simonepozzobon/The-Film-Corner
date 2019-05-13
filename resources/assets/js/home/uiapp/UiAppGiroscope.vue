@@ -5,17 +5,37 @@
             color="white"
             :has-padding="false"
             ref="title"/>
-        <canvas class="ui-app-giroscope__canvas" id="image-editor" ref="canvas"></canvas>
+        <div class="ui-app-giroscope__canvas" id="panorama" ref="content"></div>
     </div>
 </template>
 
 <script>
+import 'pannellum/src/css/pannellum.css'
 import { UiTitle } from '../ui'
 
 export default {
     name: 'UiAppGiroscope',
     components: {
         UiTitle,
+    },
+    props: {
+        color: {
+            type: String,
+            default: 'green'
+        }
+    },
+    data: function() {
+        return {
+            viewer: null,
+        }
+    },
+    methods: {
+        init: function() {
+            this.$emit('loaded')
+        }
+    },
+    mounted: function() {
+        this.$nextTick(this.init)
     }
 }
 </script>
@@ -33,7 +53,8 @@ export default {
 
     &__canvas {
         width: 100%;
-        height: 100%;
+        height: 80%;
+        min-height: 480px;
     }
 }
 </style>

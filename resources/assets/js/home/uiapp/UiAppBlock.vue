@@ -54,9 +54,7 @@ export default {
     },
     computed: {
         colorClass: function() {
-            if (this.color != 'green') {
-                return 'ui-app-block--' + this.color
-            }
+            return 'ui-app-block--' + this.color
         }
     }
 }

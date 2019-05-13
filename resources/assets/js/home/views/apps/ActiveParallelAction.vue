@@ -4,6 +4,7 @@
             <ui-app-video-preview
                 ref="preview"
                 :src="currentExport"
+                :color="color"
                 @on-update-player="onUpdatePlayer"/>
         </template>
         <template slot="right" v-if="this.assets">
@@ -19,6 +20,7 @@
                 :timelines="timelines"
                 :playhead-position="playheadPosition"
                 :playhead-height="playheadHeight"
+                :color="color"
                 @delete-track="onDeleteTrack"
                 @duplicate-track="onDuplicate"
                 @on-drag="onDrag"

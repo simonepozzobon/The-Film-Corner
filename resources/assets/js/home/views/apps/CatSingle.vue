@@ -44,7 +44,7 @@
             </ui-container>
         </ui-hero-banner>
         <div class="bg-lightest-gray">
-            <ui-container :contain="true" bg-color="lightest-gray" v-if="keywords">
+            <ui-container :contain="true" bg-color="lightest-gray" v-if="keywords && keywords.length > 0">
                 <ui-title title="Glossary" align="center"/>
                 <ui-accordion-cols :keywords="keywords"/>
             </ui-container>

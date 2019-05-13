@@ -3,10 +3,6 @@ import $ from 'jquery'
 /**
  * Activate Jquery globally and add Tether for Bootstrap js e importo anche any-resize-event
  */
-window.$ = window.jQuery = require('jquery')
-window.Tether = require('tether')
-require('any-resize-event')
-
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -29,8 +25,8 @@ require('./bootstrap')
 //   secure: true,
 // })
 
-console.log('debug ' + window.location.protocol + '//' + window.location.hostname + ':6001')
-console.log('debug', window.Echo)
+// console.log('debug ' + window.location.protocol + '//' + window.location.hostname + ':6001')
+// console.log('debug', window.Echo)
 
 /**
  * require bootstrap-fileinput

@@ -9,6 +9,7 @@
                         :key="track.uniqueid"
                         :track="track"
                         :idx="idx"
+                        :color="color"
                         @delete-track="onDeleteTrack"
                         @duplicate-track="onDuplicate"
                         @on-drag="onDrag"
@@ -52,6 +53,10 @@ export default {
             type: Number,
             default: 300,
         },
+        color: {
+            type: String,
+            default: 'green'
+        }
     },
     data: function() {
         return {

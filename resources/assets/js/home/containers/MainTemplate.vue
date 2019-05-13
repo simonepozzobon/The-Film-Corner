@@ -1,5 +1,5 @@
 <template lang="html">
-    <main class="main">
+    <main class="main" :class="paddingClass">
         <main-nav></main-nav>
         <div class="main__content">
             <router-view></router-view>
@@ -16,7 +16,24 @@ export default {
     components: {
         MainNav,
     },
+    data: function() {
+        return {
+            paddingClass: null,
+        }
+    },
+    watch: {
+        '$root.space': function(value) {
+            this.setPadding()
+        }
+    },
     methods: {
+        setPadding: function() {
+            if (!this.$root.space) {
+                this.paddingClass = 'main--no-padding'
+            } else {
+                this.paddingClass = null
+            }
+        }
         // conferenceMenuEnter: function(el, done) {
         //     TweenMax.fromTo(el, .5, {
         //         y: -100,
@@ -41,6 +58,9 @@ export default {
         //         }
         //     })
         // }
+    },
+    mounted: function() {
+        this.setPadding()
     }
 }
 </script>
@@ -50,6 +70,10 @@ export default {
 .main {
     &__content {
         padding-top: 60px;
+    }
+
+    &--no-padding {
+        padding-bottom: 0;
     }
 }
 </style>

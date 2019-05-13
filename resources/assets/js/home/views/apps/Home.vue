@@ -28,7 +28,7 @@
                         :size="4"
                         :color="studio.color_class"
                         :radius="true"
-                        :transparent="false"
+                        :transparent="true"
                         :full-height="true">
                         <ui-title
                             :title="studio.name"
@@ -110,6 +110,7 @@ export default {
         }
     },
     created: function() {
+        this.$root.space = true
         this.getStudios()
     },
     mounted: function() {

@@ -21,6 +21,9 @@ const SharedMethods = {
         }
         return ('d'+out)
     },
+    uniqidSimple: function() {
+        return '_' + Math.random().toString(36).substr(2, 9)
+    },
     getData: function() {
         // pulisce la sessione se non è stata salvata
         window.addEventListener('beforeunload', () => {

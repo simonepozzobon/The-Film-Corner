@@ -1,6 +1,6 @@
 <template lang="html">
     <ui-container>
-        <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
+        <ui-hero-banner :image="image" :full-width="true">
             <ui-container :full-width="true" v-if="this.studio">
                 <ui-row align="center">
                     <ui-block :size="4">
@@ -21,13 +21,13 @@
                         :size="4"
                         :color="cat.color_class"
                         :radius="true"
-                        :transparent="true"
+                        :transparent="false"
                         :full-height="true">
                         <ui-title
                             :title="cat.name"
-                            color="white"
                             size="h4"
                             align="center"
+                            :hoverable="true"
                             @click.native="goToCat(cat.slug)"/>
                         <ul
                             class="block-menu"
@@ -72,6 +72,7 @@ export default {
         return {
             slug: null,
             studio: null,
+            image: '/img/grafica/bg.jpg',
         }
     },
     methods: {
@@ -80,7 +81,10 @@ export default {
             this.$http.get('/api/v2/get-studio/' + slug).then(response => {
                 if (response.data.success) {
                     this.studio = response.data.studio
-                    // console.dir(this.studio);
+                    console.dir(this.studio);
+                    if (this.studio.img) {
+                        this.image = this.studio.img
+                    }
                 }
             })
         },
@@ -106,7 +110,7 @@ export default {
     text-align: center;
     list-style-type: none;
     padding-inline-start: 0;
-    color: $white;
+    color: $black;
     font-size: $font-size-base;
 
     &__menu-item {

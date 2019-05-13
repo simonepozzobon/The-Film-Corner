@@ -104,7 +104,7 @@ export default {
         bottom: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba($dark-gray, .3);
+        background-color: rgba($black, .3);
         z-index: 1;
     }
 

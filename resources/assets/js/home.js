@@ -120,6 +120,7 @@ const home = new Vue({
             user: null,
             token: null,
             isApp: null,
+            space: true,
         }
     },
     methods: {

@@ -37,7 +37,7 @@ export default {
                 })
 
                 this.master.fromTo(this.$refs.path, .6, {
-                    fill: '#000000'
+                    fill: '#7ec9c7'
                 }, {
                     fill: '#ffffff'
                 })
