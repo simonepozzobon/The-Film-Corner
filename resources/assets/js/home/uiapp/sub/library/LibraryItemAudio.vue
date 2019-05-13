@@ -13,7 +13,7 @@
                 ref="hover"
                 @ready="initialized"/>
             <div class="ui-library-item__overlay"></div>
-            <img src="/img/test-app/1.png" alt="" class="ui-library-item__img" ref="image">
+            <img :src="figure" alt="" class="ui-library-item__img" ref="image">
         </div>
         <div class="ui-library-item__title">
             {{ title }}
@@ -48,28 +48,52 @@ export default {
     },
     data: function() {
         return {
-            ready: false
+            ready: 0,
+            figure: null,
+        }
+    },
+    watch: {
+        ready: function(count) {
+            if (count == 2) {
+                this.$emit('ready')
+            }
         }
     },
     methods: {
+        setListener: function() {
+            let img = new Image()
+            img.addEventListener('load', () => {
+                this.figure = this.img
+                this.$nextTick(() => {
+                    this.ready++
+                })
+            })
+            img.src = this.img
+        },
         initialized: function() {
-            this.ready = true
+            this.ready++
         },
         mouseEnter: function() {
-            if (this.ready) {
-                this.$refs.hover.play()
-            }
+            this.$nextTick(() => {
+                if (this.ready && this.$refs.hover) {
+                    this.$refs.hover.play()
+                }
+            })
+
         },
         mouseLeave: function() {
-            if (this.ready) {
-                this.$refs.hover.reverse()
-            }
+            this.$nextTick(() => {
+                if (this.ready && this.$refs.hover) {
+                    this.$refs.hover.reverse()
+                }
+            })
         },
         selected: function() {
             this.$emit('selected', this.index)
         },
     },
     mounted: function() {
+        this.setListener()
     }
 }
 </script>
