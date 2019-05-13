@@ -42,7 +42,8 @@
                     :index="asset.id"
                     :title="asset.title"
                     :img="asset.img | fixImgPath"
-                    @selected="selected"/>
+                    @selected="selected"
+                    @ready="ready"/>
             </transition-group>
         </div>
 
@@ -60,7 +61,8 @@
                     :delay="i"
                     :index="asset.id"
                     :title="asset.title"
-                    @selected="selected"/>
+                    @selected="selected"
+                    @ready="ready"/>
             </transition-group>
         </div>
 
@@ -79,7 +81,8 @@
                     :index="asset.id"
                     :title="asset.title"
                     :img="asset.landscape | fixImgPath"
-                    @selected="selected"/>
+                    @selected="selected"
+                    @ready="ready"/>
             </transition-group>
         </div>
     </div>
@@ -131,12 +134,18 @@ export default {
             animationsController: [],
             animationsCache: [],
             mediaType: null,
+            counter: 0,
         }
     },
     watch: {
         'currentLibrary': function(id) {
             this.setAssets(id)
         },
+        counter: function(count) {
+            if (count == 0) {
+                this.setLibraryHeight()
+            }
+        }
     },
     computed: {
         colorClass: function() {
@@ -164,19 +173,24 @@ export default {
             let selected = this.libraries.filter(library => library.id == id)[0]
             let type = this.type != 'mix' ? this.type : selected.type
             this.mediaType = type
+            this.counter = 0
 
             if (selected) {
                 switch (type) {
                     case 'videos':
+                        this.counter = selected.videos.length
                         this.assets = selected.videos
                         break;
                     case 'audios':
+                        this.counter = selected.audios.length
                         this.assets = selected.audios
                         break;
                     default:
+                        this.counter = selected.medias.length
                         this.assets = selected.medias
                 }
             }
+            this.counter = this.assets.length
         },
         selected: function(index) {
             if (this.hasSubLibraries) {
@@ -254,6 +268,9 @@ export default {
                     this.libraryHeight = height
                 }
             })
+        },
+        ready: function() {
+            this.counter--
         }
     },
     created: function() {
