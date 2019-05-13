@@ -162,8 +162,11 @@ export default {
         },
         setAssets: function(id) {
             let selected = this.libraries.filter(library => library.id == id)[0]
+            let type = this.type != 'mix' ? this.type : selected.type
+            this.mediaType = type
+
             if (selected) {
-                switch (this.type) {
+                switch (type) {
                     case 'videos':
                         this.assets = selected.videos
                         break;
@@ -254,14 +257,11 @@ export default {
         }
     },
     created: function() {
-        if (this.type != 'mix') {
-
-        }
         this.mediaType = this.type
-        this.$nextTick(this.init)
+        this.init()
     },
     mounted: function() {
-        this.setLibraryHeight()
+        this.$nextTick(this.setLibraryHeight)
     }
 }
 </script>

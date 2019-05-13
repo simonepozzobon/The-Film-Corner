@@ -7,8 +7,10 @@ import UiAppGiroscope from './UiAppGiroscope.vue'
 import UiAppImage from './UiAppImage.vue'
 import UiAppLayers from './UiAppLayers.vue'
 import UiAppLibrary from './UiAppLibrary.vue'
+import UiAppMixer from './UiAppMixer.vue'
 import UiAppNote from './UiAppNote.vue'
 import UiAppPreview from './UiAppPreview.vue'
+import UiAppSoundscapesPreview from './UiAppSoundscapesPreview.vue'
 import UiAppTimeline from './UiAppTimeline.vue'
 import UiAppVideoControls from './UiAppVideoControls.vue'
 import UiAppVideoPreview from './UiAppVideoPreview.vue'
@@ -23,8 +25,10 @@ export {
     UiAppImage,
     UiAppLayers,
     UiAppLibrary,
+    UiAppMixer,
     UiAppNote,
     UiAppPreview,
+    UiAppSoundscapesPreview,
     UiAppTimeline,
     UiAppVideoControls,
     UiAppVideoPreview,

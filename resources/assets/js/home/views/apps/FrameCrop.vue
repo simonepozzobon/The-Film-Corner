@@ -4,8 +4,7 @@
             <ui-app-giroscope
                 ref="preview"
                 title="Character"
-                :color="color"
-                @loaded="loaded"/>
+                :color="color"/>
         </template>
         <template slot="right" v-if="this.assets">
             <ui-app-library
@@ -35,8 +34,6 @@ import SizeUtility from '../../Sizes'
 import { UiAppBlock, UiAppCropControls, UiAppCroppedFrames, UiAppFolder, UiAppGiroscope, UiAppLibrary, UiAppNote } from '../../uiapp'
 import { UiButton } from '../../ui'
 import { SharedData, SharedMethods, SharedWatch } from './Shared'
-import { TweenMax } from 'gsap'
-require('gsap/ScrollToPlugin')
 
 export default {
     name: 'FrameCrop',
@@ -71,14 +68,6 @@ export default {
         }
     },
     methods: {
-        loaded: function() {
-            TweenMax.to(window, .2, {
-                scrollTo: {
-                    y: this.$refs.preview.$el,
-                    autoKill: false,
-                }
-            })
-        },
         selected: function() {
 
         },

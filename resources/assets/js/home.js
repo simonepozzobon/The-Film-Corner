@@ -6,6 +6,9 @@ import routes from './home/routes'
 import Cookie from './home/Cookies'
 import axios from 'axios'
 import * as Sentry from '@sentry/browser'
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue)
+
 
 Vue.use(VueRouter)
 Vue.prototype.$cookie = Cookie

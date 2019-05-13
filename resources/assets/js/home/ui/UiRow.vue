@@ -44,8 +44,13 @@ export default {
             }
         },
         justifyClass: function() {
-            if (this.justify == 'center') {
-                return 'ui-row--justify-center'
+            switch (this.justify) {
+                case 'center':
+                    return 'ui-row--justify-center'
+                case 'space-around':
+                    return 'ui-row--justify-space-around'
+                default:
+                    return null
             }
         },
         verAlignClass: function() {
@@ -71,7 +76,6 @@ export default {
 @import '~styles/shared';
 
 .ui-row {
-    $self: &;
 
     &--center {
         justify-content: center;
@@ -83,6 +87,10 @@ export default {
 
     &--justify-center {
         justify-content: center;
+    }
+
+    &--justify-space-around {
+        justify-content: space-around;
     }
 }
 
