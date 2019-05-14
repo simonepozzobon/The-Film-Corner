@@ -6,6 +6,7 @@
         :class="[
             colorClass,
             hoverableClass,
+            shadowClass,
         ]"
         viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -35,7 +36,11 @@ export default {
         hoverColor: {
             type: String,
             default: 'primary',
-        }
+        },
+        hasShadows: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         colorClass: function() {
@@ -47,6 +52,11 @@ export default {
             if (this.hoverable) {
                 return 'ui-icon--hoverable ui-icon--hover-' + this.hoverColor
             }
+        },
+        shadowClass: function() {
+            if (this.hasShadows) {
+                return 'ui-icon--has-shadows'
+            }
         }
     }
 }
@@ -55,5 +65,4 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 @import '~styles/ui-icon';
-
 </style>

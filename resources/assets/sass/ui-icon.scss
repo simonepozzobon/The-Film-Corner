@@ -27,4 +27,7 @@
         }
     }
 
+    &--has-shadows {
+        filter: drop-shadow( 0 0 16px rgba($black, .6));
+    }
 }

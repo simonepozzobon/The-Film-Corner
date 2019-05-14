@@ -15,6 +15,14 @@
                 ref="overlay">
             </div>
 
+            <play
+                v-if="hasPlayButton"
+                ref="play"
+                class="net-item__play-icon"
+                color="white"
+                width="48px"
+                :has-shadows="true"/>
+
             <img
                 ref="image"
                 :src="preview"
@@ -47,13 +55,16 @@
 
 <script>
 import { UiBlock, UiTitle } from '../ui'
+import { Play } from '../icons'
 import NetInteractions from './NetInteractions.vue'
+
 export default {
     name: 'NetItem',
     components: {
+        NetInteractions,
+        Play,
         UiBlock,
         UiTitle,
-        NetInteractions,
     },
     props: {
         idx: {
@@ -110,6 +121,7 @@ export default {
         return {
             master: null,
             preview: null,
+            hasPlayButton: true,
         }
     },
     watch: {
@@ -130,6 +142,15 @@ export default {
     },
     methods: {
         init: function() {
+            if (this.previewType == 'audio' || this.previewType == 'video') {
+                this.hasPlayButton = true
+            } else {
+                this.hasPlayButton = false
+            }
+            this.$nextTick(this.initAnim)
+
+        },
+        initAnim: function() {
             let el = this.$refs.overlay
 
             this.master = new TimelineMax({
@@ -143,10 +164,22 @@ export default {
             }, {
                 autoAlpha: 1,
                 ease: Power4.easeInOut,
-            })
+            }, 0)
+
+            if (this.hasPlayButton) {
+                console.log('tui');
+                let play = this.$refs.play.$el
+
+                this.master.fromTo(play, .3, {
+                    autoAlpha: 0,
+                    ease: Power4.easeInOut,
+                }, {
+                    autoAlpha: 1,
+                    ease: Power4.easeInOut,
+                }, 0)
+            }
 
             this.master.progress(1).progress(0)
-            console.log(this.previewType);
         },
         setImage: function() {
             this.$refs.image.onerror = () => {
@@ -205,6 +238,14 @@ export default {
         bottom: 0;
         right: 0;
         z-index: 1;
+    }
+
+    &__play-icon {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
     }
 
     &__details {
