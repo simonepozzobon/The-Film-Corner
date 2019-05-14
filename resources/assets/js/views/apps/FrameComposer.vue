@@ -101,16 +101,6 @@ export default {
 
             this.addListeners()
             this.selectionListeners()
-
-            // DEbug
-            // this.$nextTick(() => {
-            //     TweenLite.to(window, .2, {
-            //         scrollTo: {
-            //             y: '.ui-app-preview'
-            //         }
-            //     })
-            //     this.addToCanvas(13, 2)
-            // })
         },
         getCanvasSize: function(hasReturn) {
             let el = this.$refs.preview.$el

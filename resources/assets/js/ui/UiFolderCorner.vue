@@ -12,7 +12,7 @@
         <svg
             v-if="hasTimes"
             class="ui-folder-corner__times"
-            @click="$emit('closed')"
+            @click.prevent="clicked"
             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.35 23.35">
             <path
                 class="ui-folder-corner__cross"
@@ -38,7 +38,12 @@ export default {
         colorClass: function() {
             return 'ui-folder-corner--' + this.color
         }
-    }
+    },
+    methods: {
+        clicked: function() {
+            this.$emit('click')
+        },
+    },
 }
 </script>
 

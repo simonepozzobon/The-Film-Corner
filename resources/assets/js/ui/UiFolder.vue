@@ -17,7 +17,8 @@
                 <ui-folder-corner
                     :has-times="hasTimes"
                     :color="color"
-                    class="ui-folder__corner"/>
+                    class="ui-folder__corner"
+                    @click="clicked"/>
             </ui-block>
         </ui-row>
         <ui-row
@@ -113,7 +114,12 @@ export default {
             type: Boolean,
             default: false,
         }
-    }
+    },
+    methods: {
+        clicked: function() {
+            this.$emit('click')
+        },
+    },
 }
 </script>
 
