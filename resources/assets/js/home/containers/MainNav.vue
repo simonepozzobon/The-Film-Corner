@@ -62,11 +62,13 @@
             @main-click="toggle"/>
         <logged-nav v-if="$root.user"/>
         <app-nav v-if="$root.user && $root.isApp"/>
+        <network-nav v-if="$root.user && $root.isNetwork"/>
     </div>
 </template>
 
 <script>
 import AppNav from './AppNav.vue'
+import NetworkNav from './NetworkNav.vue'
 import { Logo, LogoEuropa } from '../icons'
 import LoggedNav from './LoggedNav.vue'
 import MenuOverlay from './MenuOverlay.vue'
@@ -81,6 +83,7 @@ export default {
         LogoEuropa,
         UiBurger,
         MenuOverlay,
+        NetworkNav
     },
     watch: {
         '$root.window': function() {

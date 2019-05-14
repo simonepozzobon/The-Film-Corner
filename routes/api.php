@@ -96,5 +96,8 @@ Route::prefix('v2')->group(function() {
         Route::post('render-audio', 'Api\AudioEditorController@update_editor');
 
         Route::put('contest-upload', 'Api\LoadController@contest_upload');
+
+        Route::get('get-network', 'Api\SectionController@get_network');
+        Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
     });
 });

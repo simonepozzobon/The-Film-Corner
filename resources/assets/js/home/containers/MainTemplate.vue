@@ -60,7 +60,7 @@ export default {
         // }
     },
     mounted: function() {
-        this.setPadding()
+        this.$nextTick(this.setPadding)
     }
 }
 </script>

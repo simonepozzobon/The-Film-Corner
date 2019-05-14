@@ -45,12 +45,12 @@ export default {
             })
         }
     },
-    mounted: function() {
-        this.$root.conferenceMenu = true
-    },
-    beforeDestroy: function() {
-        this.$root.conferenceMenu = false
-    }
+    // mounted: function() {
+    //     this.$root.conferenceMenu = true
+    // },
+    // beforeDestroy: function() {
+    //     this.$root.conferenceMenu = false
+    // }
 }
 </script>
 

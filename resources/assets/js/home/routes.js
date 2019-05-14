@@ -1,194 +1,260 @@
+import MainContainer from './containers/MainContainer.vue'
+import ConferenceContainer from './views/conference/ConferenceContainer.vue'
+import AppsContainer from './views/apps/AppsContainer.vue'
+import NetworkContainer from './views/network/NetworkContainer.vue'
+
+// Public
+import Home from './views/home/Home.vue'
+import HomePanel from './views/home/HomePanel.vue'
+import LoginPanel from './views/home/LoginPanel.vue'
+import About from './views/About.vue'
+import Schools from './views/Schools.vue'
+import Filmography from './views/Filmography.vue'
+import News from './views/News.vue'
+
+// Conference
+import ConferenceHome from './views/conference/ConferenceHome.vue'
+import ConferenceAbout from './views/conference/ConferenceAbout.vue'
+import ScheduleDraft from './views/conference/ScheduleDraft.vue'
+import Accomodation from './views/conference/Accomodation.vue'
+import Downloads from './views/conference/Downloads.vue'
+import Contact from './views/conference/Contact.vue'
+
+// Applicazioni
+import AppsHome from './views/apps/AppsHome.vue'
+import StudioSingle from './views/apps/StudioSingle.vue'
+import CatSingle from './views/apps/CatSingle.vue'
+import AppSingle from './views/apps/AppSingle.vue'
+
+// Applicazioni Singole
+import FrameComposer from './views/apps/FrameComposer.vue'
+import FrameCrop from './views/apps/FrameCrop.vue'
+import TypesOfImages from './views/apps/TypesOfImages.vue'
+import ParallelAction from './views/apps/ParallelAction.vue'
+import Offscreen from './views/apps/Offscreen.vue'
+import WhatsGoingOn from './views/apps/WhatsGoingOn.vue'
+import Soundscapes from './views/apps/Soundscapes.vue'
+import ActiveOffscreen from './views/apps/ActiveOffscreen.vue'
+import ActiveParallelAction from './views/apps/ActiveParallelAction.vue'
+import SoundStudio from './views/apps/SoundStudio.vue'
+import CharacterBuilder from './views/apps/CharacterBuilder.vue'
+import LumiereMinute from './views/apps/LumiereMinute.vue'
+import MakeYourOwnFilm from './views/apps/MakeYourOwnFilm.vue'
+import Storytelling from './views/apps/Storytelling.vue'
+
+// Network
+import NetworkHome from './views/network/NetworkHome.vue'
+import NetworkSingle from './views/network/NetworkSingle.vue'
+
 const routes = [
     {
         path: '/',
-        component: require('./containers/MainContainer.vue').default,
+        component: MainContainer,
         children: [
             {
                 path: '',
-                component: require('./views/home/Home.vue').default,
+                component: Home,
                 children: [
                     {
                         path: '',
                         name: 'home',
-                        component: require('./views/home/HomePanel.vue').default,
+                        component: HomePanel,
                     },
                     {
                         path: 'login',
                         name: 'login',
-                        component: require('./views/home/LoginPanel.vue').default,
+                        component: LoginPanel,
                     }
                 ],
             },
             {
                 path: 'the-project',
                 name: 'project',
-                component: require('./views/About.vue').default,
+                component: About,
             },
             {
                 path: 'schools',
                 name: 'schools',
-                component: require('./views/Schools.vue').default,
+                component: Schools,
             },
             {
                 path: 'filmography',
                 name: 'filmography',
-                component: require('./views/Filmography.vue').default,
+                component: Filmography,
             },
             {
                 path: 'conference',
-                component: require('./views/conference/ConferenceContainer.vue').default,
+                component: ConferenceContainer,
                 children: [
                     {
                         path: '',
                         name: 'conference',
-                        component: require('./views/conference/Home.vue').default,
+                        component: ConferenceHome,
                     },
                     {
                         path: 'about',
                         name: 'conf-about',
-                        component: require('./views/conference/About.vue').default,
+                        component: ConferenceAbout,
                     },
                     {
                         path: 'schedule-draft',
                         name: 'conf-schedule-draft',
-                        component: require('./views/conference/ScheduleDraft.vue').default,
+                        component: ScheduleDraft,
                     },
                     {
                         path: 'accomodation',
                         name: 'conf-accomodation',
-                        component: require('./views/conference/Accomodation.vue').default,
+                        component: Accomodation,
                     },
                     {
                         path: 'downloads',
                         name: 'conf-downloads',
-                        component: require('./views/conference/Downloads.vue').default,
+                        component: Downloads,
                     },
                     {
                         path: 'contact',
                         name: 'conf-contact',
-                        component: require('./views/conference/Contact.vue').default,
+                        component: Contact,
                     },
                 ]
             },
             {
                 path: 'apps',
-                component: require('./views/apps/AppsContainer.vue').default,
+                component: AppsContainer,
                 children: [
                     {
                         path: '',
                         name: 'apps-home',
-                        component: require('./views/apps/Home.vue').default,
+                        component: AppsHome,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'studio/:pavilion',
                         name: 'pavilion-home',
-                        component: require('./views/apps/StudioSingle.vue').default,
+                        component: StudioSingle,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'path/:cat',
                         name: 'cat-home',
-                        component: require('./views/apps/CatSingle.vue').default,
+                        component: CatSingle,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'dashboard/:app',
                         name: 'app-home',
-                        component: require('./views/apps/AppSingle.vue').default,
+                        component: AppSingle,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'frame-composer',
                         name: 'frame-composer',
-                        component: require('./views/apps/FrameComposer.vue').default,
+                        component: FrameComposer,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'frame-crop',
                         name: 'frame-crop',
-                        component: require('./views/apps/FrameCrop.vue').default,
+                        component: FrameCrop,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'types-of-images',
                         name: 'types-of-images',
-                        component: require('./views/apps/TypesOfImages.vue').default,
+                        component: TypesOfImages,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'parallel-action',
                         name: 'parallel-action',
-                        component: require('./views/apps/ParallelAction.vue').default,
+                        component: ParallelAction,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'offscreen',
                         name: 'offscreen',
-                        component: require('./views/apps/Offscreen.vue').default,
+                        component: Offscreen,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'whats-going-on',
                         name: 'whats-going-on',
-                        component: require('./views/apps/WhatsGoingOn.vue').default,
+                        component: WhatsGoingOn,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'soundscapes',
                         name: 'soundscapes',
-                        component: require('./views/apps/Soundscapes.vue').default,
+                        component: Soundscapes,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'active-offscreen',
                         name: 'active-offscreen',
-                        component: require('./views/apps/ActiveOffscreen.vue').default,
+                        component: ActiveOffscreen,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'active-parallel-action',
                         name: 'active-parallel-action',
-                        component: require('./views/apps/ActiveParallelAction.vue').default,
+                        component: ActiveParallelAction,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'sound-studio',
                         name: 'sound-studio',
-                        component: require('./views/apps/SoundStudio.vue').default,
+                        component: SoundStudio,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'character-builder',
                         name: 'character-builder',
-                        component: require('./views/apps/CharacterBuilder.vue').default,
+                        component: CharacterBuilder,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'lumiere-minute',
                         name: 'lumiere-minute',
-                        component: require('./views/apps/LumiereMinute.vue').default,
+                        component: LumiereMinute,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'make-your-own-film',
                         name: 'make-your-own-film',
-                        component: require('./views/apps/MakeYourOwnFilm.vue').default,
+                        component: MakeYourOwnFilm,
                         meta: { requiresAuth: true },
                     },
                     {
                         path: 'storytelling',
                         name: 'storytelling',
-                        component: require('./views/apps/Storytelling.vue').default,
+                        component: Storytelling,
                         meta: { requiresAuth: true },
                     },
 
                 ],
             },
             {
+                path: 'network',
+                component: NetworkContainer,
+                children: [
+                    {
+                        path: '',
+                        name: 'network-home',
+                        component: NetworkHome,
+                        meta: { requiresAuth: true },
+                    },
+                    {
+                        path: 'single/:id',
+                        name: 'network-single',
+                        component: NetworkSingle,
+                        meta: { requiresAuth: true },
+                    }
+                ],
+            },
+            {
                 path: 'news/:slug',
                 name: 'news-single',
-                component: require('./views/News.vue').default,
+                component: News,
             }
         ],
     },

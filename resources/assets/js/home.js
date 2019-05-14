@@ -123,6 +123,7 @@ const home = new Vue({
             user: null,
             token: null,
             isApp: null,
+            isNetwork: null,
             space: true,
         }
     },
@@ -155,7 +156,6 @@ const home = new Vue({
             }
         },
         goToWithParams: function(name, params) {
-            // console.log(name, params);
             if (this.$route.name != name) {
                 this.$router.push({name: name, params: params})
             }

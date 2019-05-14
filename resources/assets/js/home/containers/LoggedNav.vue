@@ -5,7 +5,7 @@
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link logged-nav__link">Apps</a>
             </li>
             <li class="logged-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-network')" class="nav-link logged-nav__link">Network</a>
+                <a href="#" @click="goTo($event, 'network-home')" class="nav-link logged-nav__link">Network</a>
             </li>
             <li class="logged-nav__item nav-item">
                 <a href="#" @click="goTo($event, 'apps-students')" class="nav-link logged-nav__link">Students</a>
