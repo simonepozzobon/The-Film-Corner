@@ -12,7 +12,9 @@
                 :app-name="item.app.title"
                 :comments="item.comments.length"
                 :likes="item.likes.length"
-                :views="item.views"/>
+                :views="item.views"
+                :preview-type="item.content.media_type"
+                :preview-src="item.content.thumb"/>
         </ui-row>
     </ui-container>
 </template>
@@ -38,8 +40,17 @@ export default {
             this.$http.get('/api/v2/get-network').then(response => {
                 if (response.data.success) {
                     this.items = response.data.items
+                    // this.$nextTick(this.debug)
                 }
             })
+        },
+        debug: function() {
+            console.log('qui', this.items);
+            for (var key in this.items) {
+                if (this.items.hasOwnProperty(key)) {
+                    console.log(key, this.items[key].content.media_type, this.items[key].content.thumb);
+                }
+            }
         }
     },
     created: function() {

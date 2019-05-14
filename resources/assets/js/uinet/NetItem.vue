@@ -3,12 +3,23 @@
         class="net-item"
         :class="colorClass"
         :size="4"
-        :full-height="true">
+        :full-height="true"
+        @mouseover.native="showHover"
+        @mouseleave.native="hideHover">
         <div
             class="net-item__preview"
             @click="$root.goToWithParams('network-single', {id: idx})">
-            <div class="net-item__overlay"></div>
-            <img :src="previewSrc" :alt="title" class="net-item__image">
+
+            <div
+                class="net-item__overlay"
+                ref="overlay">
+            </div>
+
+            <img
+                ref="image"
+                :src="preview"
+                :alt="title"
+                class="net-item__image" />
         </div>
         <div class="net-item__details">
             <ui-title
@@ -60,7 +71,7 @@ export default {
         },
         previewSrc: {
             type: String,
-            default: '/img/test-app/1.png'
+            default: null
         },
         title: {
             type: String,
@@ -95,6 +106,17 @@ export default {
             default: 0,
         }
     },
+    data: function() {
+        return {
+            master: null,
+            preview: null,
+        }
+    },
+    watch: {
+        previewSrc: function(src) {
+            this.setImage()
+        },
+    },
     computed: {
         titleColor: function() {
             if (this.color == 'yellow') {
@@ -105,7 +127,54 @@ export default {
         colorClass: function() {
             return 'net-item--' + this.color
         }
-    }
+    },
+    methods: {
+        init: function() {
+            let el = this.$refs.overlay
+
+            this.master = new TimelineMax({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.master.fromTo(el, .3, {
+                autoAlpha: 0,
+                ease: Power4.easeInOut,
+            }, {
+                autoAlpha: 1,
+                ease: Power4.easeInOut,
+            })
+
+            this.master.progress(1).progress(0)
+            console.log(this.previewType);
+        },
+        setImage: function() {
+            this.$refs.image.onerror = () => {
+                this.preview = '/img/test-app/1.png'
+            }
+
+            if (this.previewSrc == 'undefined' || !this.previewSrc) {
+                this.preview = '/img/test-app/1.png'
+            } else {
+                this.preview = this.previewSrc
+            }
+        },
+        showHover: function() {
+            if (this.master)
+                this.master.play()
+        },
+        hideHover: function() {
+            if (this.master)
+                this.master.reverse()
+        },
+    },
+    created: function() {
+
+    },
+    mounted: function() {
+        this.init()
+        this.setImage()
+    },
 }
 </script>
 

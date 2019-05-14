@@ -76,6 +76,7 @@ class SectionController extends Controller
         $items = SharedSession::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments', 'likes')->get();
 
         $sessions = $items->filter(function($item, $key) {
+            $item->content = $this->format_network_content($item);
             $item->views = Activity::where('description', '=', 'network_views')->forSubject($item)->count();
             return $item->app;
         })->all();
@@ -255,7 +256,7 @@ class SectionController extends Controller
             case '17':
                 $obj = json_decode($share->content);
                 $item['media_type'] = 'video';
-                $item['thumb'] = Storage::disk('local')->url($obj->video->img);
+                $item['thumb'] = $obj->video->img;
                 $item['featured_media'] = Storage::disk('local')->url($obj->video->video);
                 $item['notes'] = '';
                 break;
