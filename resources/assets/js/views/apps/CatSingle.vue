@@ -31,8 +31,7 @@
                             align="center"
                             @click.native="goToApp(app.slug)"/>
 
-                        <ui-paragraph align="center">
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        <ui-paragraph align="center" v-html="shortDescription(app.description)">
                         </ui-paragraph>
                         <div>
                             <ui-button color="black" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
@@ -59,6 +58,7 @@
 </template>
 
 <script>
+const clipper = require('text-clipper')
 import { UiAccordionCols, UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
 export default {
     name: 'CatSingle',
@@ -90,7 +90,6 @@ export default {
                 if (response.data.success) {
                     this.cat = response.data.pavilion
                     this.keywords = this.cat.keywords
-                    console.dir(this.keywords);
                     if (this.cat.img) {
                         this.image = this.cat.img
                     }
@@ -102,6 +101,10 @@ export default {
         },
         goToApp: function(slug) {
             this.$root.goToWithParams('app-home', { app: slug })
+        },
+        shortDescription: function(value) {
+            let short = clipper(value, 150, { html: true })
+            return short
         }
     },
     created: function() {
