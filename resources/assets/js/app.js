@@ -109,6 +109,7 @@ router.beforeEach((to, from, next) => {
 // }
 
 import MainTemplate from './containers/MainTemplate.vue'
+import SessionParams from './SessionParams'
 
 const home = new Vue({
     router,
@@ -125,6 +126,12 @@ const home = new Vue({
             isApp: null,
             isNetwork: null,
             space: true,
+            session: null,
+        }
+    },
+    watch: {
+        session: function(session) {
+            this.checkSession(session.app_id)
         }
     },
     methods: {
@@ -143,6 +150,28 @@ const home = new Vue({
             this.window = view
 
             return this.window
+        },
+        checkSession: function(app_id) {
+            let params = SessionParams
+            for (let key in params) {
+                if (params.hasOwnProperty(key) && key == app_id) {
+                    this.fixSession(params[key])
+                }
+            }
+        },
+        fixSession: function(params) {
+            let content = this.session.content
+            if (content.length || content.length == 0) {
+                // https://stackoverflow.com/questions/4215737/convert-array-to-object
+                content = this.session.content.reduce((obj, cur, i) => ({ ...obj, [i]: cur }), {});
+            }
+            for (let i = 0; i < params.length; i++) {
+                if (!content.hasOwnProperty(params[i])) {
+                    content[params[i]] = null
+                }
+            }
+
+            this.session.content = content
         },
         goTo: function(name) {
             if (this.$route.name != name) {

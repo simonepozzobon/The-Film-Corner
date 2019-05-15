@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use Auth;
 use App\App;
 use App\AppSection;
 use App\AppCategory;
@@ -57,11 +58,20 @@ class SectionController extends Controller
     }
 
     public function get_app($slug) {
+        $user = Auth::user();
         $app = App::where('slug', $slug)->with('category.section')->first();
+
+        $sessions = $user->sessions()->where([
+            ['app_id', $app->id],
+            ['is_empty', '!=', 1],
+            ])->get();
+
         if ($app) {
             return [
                 'success' => true,
                 'app' => $app,
+                'user' => $user,
+                'sessions' => $sessions,
             ];
         } else {
             return [

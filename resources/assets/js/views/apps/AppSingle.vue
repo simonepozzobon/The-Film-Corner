@@ -56,15 +56,43 @@
                 </ui-block>
             </ui-row>
         </ui-container>
+        <ui-container
+            :contain="true"
+            v-if="this.app"
+            class="app-container__sessions">
+            <ui-row
+                justify="center">
+                <ui-block-head
+                    class="app-container__list"
+                    :size="12"
+                    title="Open Existing Session"
+                    :color="app.category.color_class"
+                    :radius="true"
+                    radius-size="md">
+                    <ui-app-session
+                        v-for="(session, i) in sessions"
+                        :key="session.id"
+                        :counter="i"
+                        :idx="session.id"
+                        :title="session.title"
+                        :token="session.token"
+                        @open-session="openSession"
+                        @delete-session="deleteSession"/>
+                </ui-block-head>
+            </ui-row>
+        </ui-container>
     </ui-container>
 </template>
 
 <script>
-import { UiBlock, UiBreadcrumbs, UiButton, UiContainer, UiFolderCorner, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
+import { UiAppSession } from '../../uiapp'
+import { UiBlock, UiBlockHead, UiBreadcrumbs, UiButton, UiContainer, UiFolderCorner, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
 export default {
     name: 'AppSingle',
     components: {
+        UiAppSession,
         UiBlock,
+        UiBlockHead,
         UiBreadcrumbs,
         UiButton,
         UiContainer,
@@ -81,6 +109,7 @@ export default {
         return {
             slug: null,
             app: null,
+            sessions: [],
         }
     },
     computed: {
@@ -103,17 +132,29 @@ export default {
             this.$http.get('/api/v2/get-app/' + slug).then(response => {
                 if (response.data.success) {
                     this.app = response.data.app
-                    console.log('app');
-                    console.dir(this.app);
+                    this.sessions = response.data.sessions
                 }
             })
         },
         closed: function() {
-            console.log('closed');
             this.$root.goToWithParams('cat-home', { cat: this.app.category.slug })
         },
         startApp: function() {
             this.$root.goTo(this.app.slug)
+        },
+        deleteSession: function(idx) {
+            let url = '/api/v2/session/' + idx + '/false'
+            this.$http.delete(url).then(response => {
+                if (response.data.success) {
+                    this.sessions = this.sessions.filter(session => session.token != idx)
+                }
+            })
+        },
+        openSession: function(idx) {
+            let session = this.sessions.filter(session => session.token == idx)[0]
+            session.content = JSON.parse(session.content)
+            this.$root.session = session
+            this.$nextTick(this.startApp)
         }
     },
     created: function() {
@@ -127,5 +168,9 @@ export default {
 
 .app-container {
     margin-top: $spacer * 5;
+
+    &__sessions {
+        margin-top: $spacer * 1.618;
+    }
 }
 </style>

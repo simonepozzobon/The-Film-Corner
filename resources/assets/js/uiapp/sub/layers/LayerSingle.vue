@@ -86,7 +86,7 @@ export default {
     },
     mounted: function() {
         this.setUuid()
-        console.log(this.obj);
+        // console.log(this.obj);
     }
 }
 </script>

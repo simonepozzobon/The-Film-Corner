@@ -10,6 +10,9 @@ const SharedData = {
 const SharedWatch = {
     'app': function(app) {
         this.color = app.category.section.color_class
+    },
+    'session': function(session) {
+        this.$root.session = session
     }
 }
 
@@ -37,13 +40,22 @@ const SharedMethods = {
         })
 
         let slug = this.$route.name
+        // let url = '/api/v2/load-assets/' + slug
+        let url = '/api/v2/load-assets/' + slug + '/5cdbbdc2d297c'
 
-        this.$http.get('/api/v2/load-assets/' + slug).then(response => {
+        if (this.$root.session) {
+            url = '/api/v2/load-assets/' + slug + '/' + this.$root.session.token
+        }
+
+        this.$http.get(url).then(response => {
             console.dir(response.data);
             if (response.data.success) {
                 this.app = response.data.app
                 this.assets = response.data.assets
-                this.session = response.data.session
+                let session = response.data.session
+                session.content = JSON.parse(session.content)
+
+                this.session = session
 
                 this.$nextTick(this.init)
             }
@@ -52,8 +64,9 @@ const SharedMethods = {
     },
     deleteEmptySession: function() {
         // verificare se è vuota
+        this.$root.session = null
         if (Boolean(this.session.is_empty)) {
-            this.$http.delete('/api/v2/session/' + this.session.token)
+            this.$http.delete('/api/v2/session/' + this.session.token + '/true')
         }
     },
 }

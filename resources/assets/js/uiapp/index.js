@@ -10,6 +10,7 @@ import UiAppLibrary from './UiAppLibrary.vue'
 import UiAppMixer from './UiAppMixer.vue'
 import UiAppNote from './UiAppNote.vue'
 import UiAppPreview from './UiAppPreview.vue'
+import UiAppSession from './UiAppSession.vue'
 import UiAppSoundscapesPreview from './UiAppSoundscapesPreview.vue'
 import UiAppTimeline from './UiAppTimeline.vue'
 import UiAppVideoControls from './UiAppVideoControls.vue'
@@ -28,6 +29,7 @@ export {
     UiAppMixer,
     UiAppNote,
     UiAppPreview,
+    UiAppSession,
     UiAppSoundscapesPreview,
     UiAppTimeline,
     UiAppVideoControls,

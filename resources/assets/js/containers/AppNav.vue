@@ -5,7 +5,7 @@
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Close</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click.prevent="saveSession" class="nav-link app-nav__link">Save Session</a>
+                <a href="#" @click.prevent="addTitle" class="nav-link app-nav__link">Save Session</a>
             </li>
             <li class="app-nav__item nav-item">
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Open Existing Session</a>
@@ -17,12 +17,46 @@
                 <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Print</a>
             </li>
         </ul>
+        <b-modal
+            ref="saveSession"
+            title="Save your session">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    v-model="title"/>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoTitle"/>
+                <ui-button
+                    color="primary"
+                    title="Save"
+                    :has-margin="false"
+                    @click="saveSession"/>
+            </template>
+        </b-modal>
     </nav>
 </template>
 
 <script>
+import { UiButton } from '../ui'
+
 export default {
     name: 'AppNav',
+    components: {
+        UiButton,
+    },
+    data: function() {
+        return {
+            title: null,
+        }
+    },
     methods: {
         goTo: function(event, name) {
             event.preventDefault()
@@ -52,8 +86,26 @@ export default {
                 }
             })
         },
+        undoTitle: function() {
+            this.$refs.saveSession.hide()
+        },
+        addTitle: function() {
+            this.$refs.saveSession.show()
+        },
         saveSession: function() {
-            alert('save')
+            let session = this.$root.session
+
+            if (this.title) {
+                session.title = this.title
+            }
+
+            console.log(session);
+            this.$http.post('/api/v2/session', session).then(response => {
+                console.log(response.data);
+                if (response.data.success) {
+                    this.undoTitle()
+                }
+            })
         }
     },
     mounted: function() {

@@ -32,11 +32,14 @@ class LoadController extends Controller
                 $session->save();
                 $session->refresh();
             } else {
-                return [
-                    'success' => false,
-                    'error' => 'session error',
-                    'slug' => $slug,
-                ];
+                $session = Session::where('token', $token)->first();
+                //
+                // return [
+                //     'success' => false,
+                //     'error' => 'session error',
+                //     'slug' => $slug,
+                //     'token' => $token,
+                // ];
             }
 
             $assets = [];
@@ -196,6 +199,7 @@ class LoadController extends Controller
                     // fatta
                     break;
             }
+
             return [
                 'success' => true,
                 'app' => $app,
@@ -211,8 +215,44 @@ class LoadController extends Controller
         }
     }
 
-    public function delete_session($token) {
-        $session = Session::where('token', $token)->first();
+    public function save_session(Request $request) {
+        $session = Session::find($request->id);
+
+        foreach ($session->getAttributes() as $key => $value) {
+            switch ($key) {
+                case 'content':
+                    $session->content = json_encode($request->content);
+                    break;
+
+                default:
+                    $session->{$key} = $request{$key};
+                    break;
+            }
+        }
+
+        $session->is_empty = 0;
+        $session->save();
+
+        return [
+            'success' => true,
+            'request' => $request->all(),
+            'session' => $session,
+        ];
+    }
+
+    public function delete_session($token, $clean) {
+        $params = [
+            ['token', '=', $token],
+        ];
+
+        if ($clean == 'true') {
+            $params = [
+                ['token', '=', $token],
+                ['is_empty', '=', 1],
+            ];
+        }
+
+        $session = Session::where($params)->first();
         if ($session) {
             $session->delete();
             return [

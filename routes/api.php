@@ -41,8 +41,9 @@ Route::prefix('v2')->group(function() {
         Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
         Route::get('get-app/{slug}', 'Api\SectionController@get_app');
 
-        Route::get('load-assets/{slug}', 'Api\LoadController@load_assets');
-        Route::delete('session/{token}', 'Api\LoadController@delete_session');
+        Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
+        Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
+        Route::post('session', 'Api\LoadController@save_session');
 
         Route::post('render-video', 'Api\VideoEditorController@update_editor');
         Route::post('render-audio', 'Api\AudioEditorController@update_editor');

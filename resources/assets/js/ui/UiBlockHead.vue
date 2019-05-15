@@ -210,6 +210,24 @@ export default {
         }
     }
 
+    &--green & {
+        &__head {
+            background-color: lighten($green, 25);
+        }
+    }
+
+    &--yellow & {
+        &__head {
+            background-color: lighten($yellow, 25);
+        }
+    }
+
+    &--red & {
+        &__head {
+            background-color: lighten($red, 25);
+        }
+    }
+
     &--radius & {
         @include border-radius(5px);
 

@@ -35,8 +35,8 @@ import {
     UiAppNote,
     UiAppPreview,
 } from '../../uiapp'
-import { SharedData, SharedMethods } from './Shared'
-
+import { SharedData, SharedMethods, SharedWatch } from './Shared'
+import _ from 'lodash'
 require('gsap/ScrollToPlugin')
 
 export default {
@@ -63,7 +63,8 @@ export default {
             if (this.canvas) {
                 this.resizeCanvas(size.wClean)
             }
-        }
+        },
+        ...SharedWatch,
     },
     methods: {
         init: function() {
@@ -84,6 +85,7 @@ export default {
             })(fabric.Object.prototype.toObject)
 
 
+
             this.canvas = new fabric.Canvas(canvas, {
                 backgroundColor: '#f3f3f3',
                 centeredScaling: true,
@@ -101,6 +103,29 @@ export default {
 
             this.addListeners()
             this.selectionListeners()
+
+            if (this.$root.session.content.canvas) {
+                this.$nextTick(this.loadFromJSON)
+            }
+        },
+        loadFromJSON: function() {
+            let canvasParsed = JSON.parse(this.$root.session.content.canvas)
+            let objects = canvasParsed.objects
+
+            for (let i = 0; i < objects.length; i++) {
+                let objs = objects[i]
+                if (objs.type == 'group') {
+                    // è uno sfondo
+                    for (let j = 0; j < objs.objects.length; j++) {
+                        let obj = objs.objects[j]
+                        this.addToCanvas(obj.idx, obj.libraryIdx)
+                    }
+                } else {
+                    // è un'immagine
+                    let obj = objs
+                    this.addToCanvas(obj.idx, obj.libraryIdx)
+                }
+            }
         },
         getCanvasSize: function(hasReturn) {
             let el = this.$refs.preview.$el
@@ -133,8 +158,7 @@ export default {
             let events = [ 'object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling', 'object:moving' ]
             for (let j = 0; j < events.length; j++) {
                 obj.on(events[j], () => {
-                    // console.log('triggered ', events[j])
-                    this.saveCanvas()
+                    this.$nextTick(this.saveCanvas)
                 })
             }
         },
@@ -167,20 +191,32 @@ export default {
                 }
             }
         },
-        saveCanvas: function() {
+        saveCanvas: _.debounce(function() {
             // Save canvas to JSON for future edit
-            let json_data = JSON.stringify(this.canvas.toDatalessJSON())
-            // localStorage.setItem('app-1-json', json_data)
+            let content = this.$root.session.content
+            let json_canvas = JSON.stringify(this.canvas.toDatalessJSON())
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && key == 'canvas') {
+                    content.canvas = json_canvas
+                } else if (content.hasOwnProperty(key) && key == 'rendered') {
+                    content.rendered = this.canvas.toDataURL('png')
+                }
+            }
 
-            // Save image to local storage
-            // localStorage.setItem('app-1-image', this.canvas.toDataURL('png'))
+            this.$root.session = {
+                ...this.$root.session,
+                content: content,
+            }
+        }, 500),
+        setValue: function(value) {
+
         },
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
         addToCanvas: function(index, libraryID) {
             let library = this.assets.library.filter(library => library.id == libraryID)[0]
             let asset = library.medias.filter(asset => asset.id == index)[0]
             let url = '/storage/' + asset.src
-
+            // console.log(url);
 
             // crea l'istanza di FabricJs
             let image = new fabric.Image.fromURL(url, (obj, opts) => {
@@ -243,6 +279,8 @@ export default {
 
                     // force center
                     obj.viewportCenter()
+                    this.canvas.calcOffset()
+                    this.canvas.renderAll()
                 } else {
                     let items = this.landscape.getObjects()
                     for (let i = 0; i < items.length; i++) {
@@ -287,11 +325,13 @@ export default {
                     })
                     this.landscape.viewportCenter()
                     this.landscape.setCoords()
+                    this.canvas.calcOffset()
+                    this.canvas.renderAll()
                 }
             })
             this.canvas.calcOffset()
             this.canvas.renderAll()
-            // this.saveCanvas()
+            this.saveCanvas()
         },
         selected: function(index, libraryID) {
             this.addToCanvas(index, libraryID)
@@ -315,6 +355,7 @@ export default {
         this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
+        // this.$root.session =
         this.getData()
     },
     mounted: function() {
