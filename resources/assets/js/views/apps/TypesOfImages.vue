@@ -66,17 +66,40 @@ export default {
     methods: {
         init: function() {
             this.media = this.assets.random
+            this.saveContent()
         },
         randomize: function() {
             let idx = Math.round(Math.random() * this.assets.library.length)
             this.media = this.assets.library[idx]
+            this.saveContent()
         },
         selected: function() {
 
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                images: [
+                    this.media.leftSrc,
+                    this.media.rightSrc,
+                ],
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.getData = SharedMethods.getData.bind(this)

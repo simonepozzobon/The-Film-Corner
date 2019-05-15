@@ -97,10 +97,28 @@ export default {
 
             this.$http.post('/api/v2/contest-upload', data, config).then(response => {
                 console.log(response.data);
+                this.saveContent()
             }).catch(err => {
                 console.log(err);
             })
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                'video': 'no-video',
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500),
     },
     created: function() {
         this.getData = SharedMethods.getData.bind(this)

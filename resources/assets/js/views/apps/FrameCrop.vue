@@ -119,19 +119,41 @@ export default {
                 text: null,
             }
             this.frames.push(frame)
+            this.saveContent()
         },
         updateFrame: function(value, uuid) {
             let idx = this.frames.findIndex(frame => frame.id == uuid)
             if (idx > -1) {
                 this.frames[idx].text = value
             }
+            this.saveContent()
         },
         deleteFrame: function(id) {
             this.frames = this.frames.filter(frame => frame.id != id)
+            this.saveContent()
         },
         deleteAll: function() {
             this.frames = []
+            this.saveContent()
         },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                frames: JSON.stringify(this.frames),
+                src: '/img/test-app/360.jpg',
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.getData = SharedMethods.getData.bind(this)

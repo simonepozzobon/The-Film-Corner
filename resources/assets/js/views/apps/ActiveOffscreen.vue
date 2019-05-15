@@ -61,7 +61,28 @@ export default {
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                'main_video': this.media.videoSrc,
+                'videos': [],
+                notes: 'no notes'
+            }
+
+            console.log(newContent);
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500),
     },
     created: function() {
         this.uniqid = SharedMethods.uniqid.bind(this)

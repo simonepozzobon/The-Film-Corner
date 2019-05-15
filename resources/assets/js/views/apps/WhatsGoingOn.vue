@@ -52,16 +52,35 @@ export default {
         init: function() {
             let idx = Math.round(Math.random() * this.assets.library.length)
             this.media = this.assets.library[idx]
-            console.log('fsdgfsgfdg',this.media);
+            this.saveContent()
         },
         selected: function(id) {
             let player = this.$refs.preview.player
             player.pause()
             this.media = this.assets.library.filter(asset => asset.id == id)[0]
+            this.saveContent()
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                audio: this.media.audioSrc,
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.uniqid = SharedMethods.uniqid.bind(this)

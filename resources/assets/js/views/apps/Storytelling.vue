@@ -91,6 +91,7 @@ export default {
                 let key = 'src' + (i + 1)
                 this.srcs[key] = '/storage/' + this.randomizeSingle(libraries[i].medias).src
             }
+            this.saveContent()
         },
         randomizeSingle: function(library) {
             let idx = Math.floor(Math.random() * library.length)
@@ -98,7 +99,30 @@ export default {
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                'slot_1': this.srcs.src1,
+                'slot_2': this.srcs.src2,
+                'slot_3': this.srcs.src3,
+                'slot_4': this.srcs.src4,
+                'slot_5': this.srcs.src5,
+                'slot_6': this.srcs.src6,
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500),
     },
     created: function() {
         this.getData = SharedMethods.getData.bind(this)

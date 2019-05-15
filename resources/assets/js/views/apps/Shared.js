@@ -40,8 +40,7 @@ const SharedMethods = {
         })
 
         let slug = this.$route.name
-        // let url = '/api/v2/load-assets/' + slug
-        let url = '/api/v2/load-assets/' + slug + '/5cdbbdc2d297c'
+        let url = '/api/v2/load-assets/' + slug
 
         if (this.$root.session) {
             url = '/api/v2/load-assets/' + slug + '/' + this.$root.session.token

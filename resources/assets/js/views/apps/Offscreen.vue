@@ -53,15 +53,36 @@ export default {
             let idx = Math.round(Math.random() * this.assets.library.length)
             this.media = this.assets.library[idx]
             // console.log();
+            this.saveContent()
         },
         selected: function(id) {
             let player = this.$refs.preview.player
             player.pause()
             this.media = this.assets.library.filter(asset => asset.id == id)[0]
+            this.saveContent()
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+            this.saveContent()
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                video: this.media.videoSrc,
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.uniqid = SharedMethods.uniqid.bind(this)

@@ -137,12 +137,14 @@ export default {
                         color: 'hsla(100, 100%, 30%, 0.1)',
                     })
                     this.current = null
+                    this.saveContent()
                 })
             }
         },
         volumeChanged: function(volume, idx) {
             this.players[idx].vol = volume
             this.players[idx].player.setVolume(volume / 100)
+            this.saveContent()
         },
         removeTrack: function(idx) {
             this.$refs.preview.stop()
@@ -150,6 +152,7 @@ export default {
             this.$nextTick(() => {
                 this.players[idx].vol = 0
                 this.players[idx].obj = null
+                this.saveContent()
             })
         },
         setNotes: function(notes) {
@@ -157,7 +160,29 @@ export default {
         },
         ready: function() {
             this.$nextTick(this.$refs.library.setLibraryHeight)
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                'audio-src': this.players.map(player => (player.obj && player.obj.hasOwnProperty('src')) ? player.obj.src : null),
+                'audio-vol': this.players.map(player => player.vol),
+                image: this.image,
+                notes: 'no notes'
+            }
+
+            console.log(newContent);
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500),
     },
     created: function() {
         this.getData = SharedMethods.getData.bind(this)

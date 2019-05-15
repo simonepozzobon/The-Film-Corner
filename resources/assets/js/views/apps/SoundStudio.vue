@@ -153,12 +153,14 @@ export default {
                     this.isFree = true
                     if (this.cache) {
                         this.cache = null
+                        this.saveContent()
                         this.updateEditor()
                     } else {
                         this.$refs.preview.hideLoader()
                         // carico l'export solo quando è finita la coda
                         this.$nextTick(() => {
                             this.currentExport = response.data.export
+                            this.saveContent()
                         })
                         console.log('complete');
                     }
@@ -170,7 +172,26 @@ export default {
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                video: this.currentExport,
+                timelines: this.timelines,
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.uniqid = SharedMethods.uniqid.bind(this)

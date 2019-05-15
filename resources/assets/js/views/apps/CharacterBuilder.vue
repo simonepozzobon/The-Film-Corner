@@ -151,17 +151,9 @@ export default {
             for (let j = 0; j < events.length; j++) {
                 obj.on(events[j], () => {
                     // console.log('triggered ', events[j])
-                    this.saveCanvas()
+                    this.saveContent()
                 })
             }
-        },
-        saveCanvas: function() {
-            // Save canvas to JSON for future edit
-            let json_data = JSON.stringify(this.canvas.toDatalessJSON())
-            // localStorage.setItem('app-1-json', json_data)
-
-            // Save image to local storage
-            // localStorage.setItem('app-1-image', this.canvas.toDataURL('png'))
         },
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
         addToCanvas: function(index, libraryID) {
@@ -262,7 +254,7 @@ export default {
 
                 this.canvas.calcOffset()
                 this.canvas.renderAll()
-                this.saveCanvas()
+                this.saveContent()
             })
         },
         selected: function(index, libraryID) {
@@ -270,7 +262,27 @@ export default {
         },
         setNotes: function(notes) {
             this.notes = notes
-        }
+            this.saveContent()
+        },
+        saveContent: _.debounce(function() {
+            let content = this.$root.session.content
+            let newContent = {
+                canvas: JSON.stringify(this.canvas.toDatalessJSON()),
+                rendered: this.canvas.toDataURL('png'),
+                notes: 'no notes'
+            }
+
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                    content[key] = newContent[key]
+                }
+            }
+
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
+        }, 500)
     },
     created: function() {
         this.uniqid = SharedMethods.uniqid.bind(this)
