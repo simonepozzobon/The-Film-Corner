@@ -36,7 +36,13 @@
                             size="h4"
                             :hoverable="true"
                             @click.native="goToPavilion($event, studio.slug)"/>
+                        <p
+                            v-if="studio.slug == 'cultural-approach'"
+                            class="text-white">
+                            Work in progress...
+                        </p>
                         <ul
+                            v-else
                             class="block-menu"
                             v-for="cat in studio.categories">
                             <li
@@ -51,6 +57,7 @@
                                 {{ app.title }}
                             </li>
                         </ul>
+
                     </ui-block>
                 </ui-row>
             </ui-container>
