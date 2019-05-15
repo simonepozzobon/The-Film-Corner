@@ -42,7 +42,7 @@ class User extends Authenticatable
 
     // https://laracasts.com/discuss/channels/laravel/user-to-user-relationship
     public function students() {
-        return $this->belongsToMany(User::class, 'student_teacher', 'user_id', 'student_id');
+        return $this->belongsToMany(User::class, 'student_user', 'user_id', 'student_id');
     }
 
     public function add_student(User $user) {
