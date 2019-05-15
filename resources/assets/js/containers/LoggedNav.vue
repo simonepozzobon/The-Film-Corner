@@ -11,7 +11,7 @@
                 <a href="#" @click.prevent="goTo('teacher-profile')" class="nav-link logged-nav__link">Students</a>
             </li>
             <li class="logged-nav__item nav-item">
-                <a href="#" @click.prevent="goTo('apps-help')" class="nav-link logged-nav__link">Help</a>
+                <a href="#" @click.prevent="goTo('apps-help')" class="nav-link logged-nav__link disabled" disabled>Help</a>
             </li>
         </ul>
     </nav>
