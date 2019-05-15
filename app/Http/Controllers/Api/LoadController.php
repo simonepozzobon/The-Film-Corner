@@ -31,8 +31,9 @@ class LoadController extends Controller
                 $session->content = json_encode([]);
                 $session->save();
                 $session->refresh();
+                $session->app = $session->app;
             } else {
-                $session = Session::where('token', $token)->first();
+                $session = Session::where('token', $token)->with('app')->first();
                 //
                 // return [
                 //     'success' => false,

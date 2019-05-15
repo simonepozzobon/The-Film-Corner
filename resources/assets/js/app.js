@@ -173,9 +173,11 @@ const home = new Vue({
 
             this.session.content = content
         },
-        goTo: function(name) {
-            if (this.$route.name != name) {
-                this.$router.push({name: name})
+        goTo: function(name, bypass = false) {
+            if (this.$route.name != name && !bypass) {
+                this.$router.push({ name: name })
+            } else {
+                this.$router.go(this.$route.path)
             }
         },
         goToAndScroll: function(name, target) {

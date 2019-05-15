@@ -8,13 +8,13 @@
                 <a href="#" @click.prevent="addTitle" class="nav-link app-nav__link">Save Session</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Open Existing Session</a>
+                <a href="#" @click.prevent="openSession" class="nav-link app-nav__link">Open Existing Session</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Reset Session</a>
+                <a href="#" @click.prevent="resetSession" class="nav-link app-nav__link">Reset Session</a>
             </li>
             <li class="app-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Print</a>
+                <a href="#" @click.prevent="printPage" class="nav-link app-nav__link">Print</a>
             </li>
         </ul>
         <b-modal
@@ -39,6 +39,48 @@
                     title="Save"
                     :has-margin="false"
                     @click="saveSession"/>
+            </template>
+        </b-modal>
+        <b-modal
+            ref="reset"
+            title="Reset Session">
+            <div>
+                <p class="text-center">
+                    Are you sure?
+                </p>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoReset"/>
+                <ui-button
+                    color="danger"
+                    title="Reset"
+                    :has-margin="false"
+                    @click="doReset"/>
+            </template>
+        </b-modal>
+        <b-modal
+            ref="open"
+            title="Leave this session">
+            <div>
+                <p class="text-center">
+                    Are you sure?
+                </p>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoOpen"/>
+                <ui-button
+                    color="danger"
+                    title="Leave"
+                    :has-margin="false"
+                    @click="doOpen"/>
             </template>
         </b-modal>
     </nav>
@@ -106,6 +148,27 @@ export default {
                     this.undoTitle()
                 }
             })
+        },
+        undoReset: function() {
+            this.$refs.reset.hide()
+        },
+        doReset: function() {
+            this.$root.goTo(this.$root.session.app.slug, true)
+        },
+        resetSession: function() {
+            this.$refs.reset.show()
+        },
+        undoOpen: function() {
+            this.$refs.open.hide()
+        },
+        doOpen: function() {
+            this.$root.goToWithParams('app-home', { app: this.$root.session.app.slug })
+        },
+        openSession: function() {
+            this.$refs.open.show()
+        },
+        printPage: function() {
+            window.print()
         }
     },
     mounted: function() {
