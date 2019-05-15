@@ -41,6 +41,30 @@
                         </ul>
                     </ui-block>
                 </ui-row>
+                <ui-row
+                    justify-content="center">
+                    <ui-block
+                        :size="12"
+                        align="center">
+                        <svg
+                            class="arrow"
+                            width="64"
+                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 22.29 22.29">
+                            <defs>
+                                <clipPath id="a">
+                                    <rect x="4.76" y="0.5" width="12.77" height="21.29" style="fill: none"/>
+                                </clipPath>
+                            </defs>
+                            <g style="clip-path: url(#a)">
+                                <polyline
+                                    class="arrow__path"
+                                    points="5.82 20.73 15.41 11.14 5.82 1.56"/>
+                            </g>
+                        </svg>
+                    </ui-block>
+                </ui-row>
             </ui-container>
         </ui-hero-banner>
         <ui-container :contain="true" v-if="this.studio">
@@ -131,6 +155,18 @@ export default {
         &:hover {
             text-decoration: underline;
         }
+    }
+}
+
+
+.arrow {
+    margin-top: $spacer * 1.618;
+    transform: rotate(90deg);
+
+    &__path {
+        fill: none;
+        stroke: $white;
+        stroke-width: 3px
     }
 }
 </style>
