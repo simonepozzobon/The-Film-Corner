@@ -186,7 +186,7 @@ export default {
         saveStudent: function() {
             if (this.checkForm()) {
                 this.$http.post('/api/v2/profile/student/save', this.student).then(response => {
-                    // console.log(response.data);
+                    console.log(response.data);
                     if (response.data.success) {
                         this.students.push(response.data.user)
                         this.$nextTick(() => {
