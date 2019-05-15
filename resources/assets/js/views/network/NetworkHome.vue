@@ -2,7 +2,7 @@
     <ui-container class="network-container" :contain="true">
         <ui-row>
             <net-item
-                v-for="item in items"
+                v-for="item in this.sorted"
                 :key="item.id"
                 :idx="item.id"
                 :title="item.title"
@@ -40,17 +40,23 @@ export default {
             this.$http.get('/api/v2/get-network').then(response => {
                 if (response.data.success) {
                     this.items = response.data.items
+                    this.sorted = this.items
                     // this.$nextTick(this.debug)
                 }
             })
         },
+        sortByDate: function() {
+            this.sorted = Object.keys(this.items).map(key => this.items[key]).sort((a,b) => {
+                return new Date(b.created_at) - new Date(a.created_at)
+            })
+        },
+        sortByLikes: function() {
+            this.sorted = Object.keys(this.items).map(key => this.items[key]).sort((a,b) => {
+                return new Date(b.likes.length) - new Date(a.likes.length)
+            })
+        },
         debug: function() {
-            console.log('qui', this.items);
-            for (var key in this.items) {
-                if (this.items.hasOwnProperty(key)) {
-                    console.log(key, this.items[key].content.media_type, this.items[key].content.thumb);
-                }
-            }
+            this.sortByLikes()
         }
     },
     created: function() {
@@ -59,6 +65,12 @@ export default {
         this.$root.isNetwork = true
     },
     mounted: function() {
+        this.$root.$on('sort-by-date', () => {
+            this.sortByDate()
+        })
+        this.$root.$on('sort-by-likes', () => {
+            this.sortByLikes()
+        })
     },
     beforeDestroy: function() {
         this.$root.space = false

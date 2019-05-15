@@ -76,6 +76,10 @@ export default {
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         color: $white !important;
+
+        &.disabled {
+            color: rgba($white, .6) !important;
+        }
     }
 }
 </style>

@@ -2,13 +2,13 @@
     <nav class="network-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav network-nav__nav">
             <li class="network-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link network-nav__link">Most Recent</a>
+                <a href="#" @click.prevent="sortByDate" class="nav-link network-nav__link">Most Recent</a>
             </li>
             <li class="network-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link network-nav__link">Most Liked</a>
+                <a href="#" @click.prevent="sortByLikes" class="nav-link network-nav__link">Most Liked</a>
             </li>
             <li class="network-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link network-nav__link">Filter By App</a>
+                <a href="#" @click.prevent="filterByApp" class="nav-link network-nav__link disabled" disabled>Filter By App</a>
             </li>
         </ul>
     </nav>
@@ -45,10 +45,16 @@ export default {
                     master.kill()
                 }
             })
-        }
+        },
+        sortByDate: function() {
+            this.$root.$emit('sort-by-date')
+        },
+        sortByLikes: function() {
+            this.$root.$emit('sort-by-likes')
+        },
+        filterByApp: function() {},
     },
     mounted: function() {
-        console.log('mounted');
         this.show()
     },
     beforeDestroy: function() {
@@ -66,12 +72,10 @@ export default {
     height: 48px;
     z-index: $zindex-fixed - 2;
     background-color: $dark-gray;
-    justify-content: center;
 
     &__nav {
-        max-width: map-get($container-max-widths, xl);
-        width: 100%;
-        justify-content: flex-end;
+        margin-left: auto;
+        margin-right: $spacer * 2;
     }
 
     &__link {
@@ -79,6 +83,10 @@ export default {
         font-size: $font-size-sm;
         font-weight: $font-weight-bold;
         color: $white !important;
+
+        &.disabled {
+            color: rgba($white, .6) !important;
+        }
     }
 }
 </style>
