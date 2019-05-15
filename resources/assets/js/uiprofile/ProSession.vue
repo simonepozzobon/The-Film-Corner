@@ -33,10 +33,11 @@
                         <i class="fa fa-comment"></i>
                     </div>
                 </div>
-                <div class="pro-session__icon">
+                <div class="pro-session__icon"
+                    @click.prevent="deleteNetwork">
                     <div class="pro-session__value">
                     </div>
-                    <div class="pro-session__figure-invert">
+                    <div class="pro-session__trash">
                         <i class="fa fa-trash"></i>
                     </div>
                 </div>
@@ -121,7 +122,10 @@ export default {
             if (this.master) {
                 this.master.reverse()
             }
-        }
+        },
+        deleteNetwork: function() {
+            this.$emit('delete-network', this.idx)
+        },
     },
     mounted: function() {
         this.init()
@@ -179,10 +183,11 @@ export default {
         line-height: 1;
     }
 
-    &__figure-invert {
+    &__trash {
         font-size: $h4-font-size;
         color: $black;
         line-height: 1;
+        cursor: pointer;
     }
 
     &--light {

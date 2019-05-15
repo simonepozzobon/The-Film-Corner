@@ -1,5 +1,10 @@
 <template lang="html">
-    <div class="ui-form-group">
+    <div
+        class="ui-form-group"
+        :class="[
+            alignClass,
+            colorClass,
+            ]">
         <label
             :for="nameToLowerCase"
             class="ui-form-group__label">
@@ -8,6 +13,7 @@
         <ui-input
             :name="nameToLowerCase"
             :type="type"
+            :default-value="defaultValue"
             @changed="changed"/>
     </div>
 </template>
@@ -30,6 +36,18 @@ export default {
         type: {
             type: String,
             default: 'text'
+        },
+        align: {
+            type: String,
+            default: null,
+        },
+        color: {
+            type: String,
+            default: null,
+        },
+        defaultValue: {
+            type: String,
+            default: null,
         }
     },
     computed: {
@@ -40,6 +58,16 @@ export default {
             .replace(/\-\-+/g, '-')         // Replace multiple - with single -
             .replace(/^-+/, '')             // Trim - from start of text
             .replace(/-+$/, '')
+        },
+        alignClass: function() {
+            if (this.align == 'left') {
+                return 'ui-form-group--align-left'
+            }
+        },
+        colorClass: function() {
+            if (this.color) {
+                return 'ui-form-group--' + this.color
+            }
         }
     },
     methods: {
@@ -63,6 +91,14 @@ export default {
         text-align: center;
         font-size: $font-size-base * 1.15;
         font-weight: 200;
+    }
+
+    &--black &__label {
+        color: $black;
+    }
+
+    &--align-left &__label {
+        text-align: left;
     }
 }
 </style>

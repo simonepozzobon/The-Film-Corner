@@ -54,6 +54,13 @@ Route::prefix('v2')->group(function() {
 
         Route::prefix('profile')->group(function() {
             Route::get('/', 'Api\ProfileController@get_profile');
+            Route::delete('/network/{id}', 'Api\ProfileController@destroy_network');
+            Route::delete('/activity/{id}', 'Api\ProfileController@destroy_activity');
+
+            Route::prefix('student')->group(function() {
+                Route::post('save', 'Api\ProfileController@save_student');
+                Route::post('edit', 'Api\ProfileController@update_student');
+            });
         });
     });
 });

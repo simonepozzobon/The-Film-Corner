@@ -28,7 +28,8 @@
                 <ui-button
                     color="black"
                     :has-margin="false"
-                    title="delete"/>
+                    title="delete"
+                    @click="deleteActivity"/>
             </div>
         </div>
     </div>
@@ -88,7 +89,6 @@ export default {
 
             if (this.isOdd) {
                 let white = getComputedStyle(document.documentElement).getPropertyValue('--white')
-                console.log(white);
                 rgbaObj = Utility.hexToRgbA(white)
                 transparent = 'rgba(' + rgbaObj.r + ',' + rgbaObj.g + ',' + rgbaObj.a + ', .28)'
             }
@@ -115,7 +115,10 @@ export default {
             if (this.master) {
                 this.master.reverse()
             }
-        }
+        },
+        deleteActivity: function() {
+            this.$emit('delete-activity', this.idx)
+        },
     },
     mounted: function() {
         this.init()

@@ -1,5 +1,6 @@
 <template lang="html">
-    <div class="pro-student">
+    <div class="pro-student"
+        @click="edit">
         <div class="pro-student__badge">
             <div class="pro-student__initials">
                 {{ initials }}
@@ -18,6 +19,10 @@
 export default {
     name: 'ProStudent',
     props: {
+        idx: {
+            type: Number,
+            default: 0,
+        },
         name: {
             type: String,
             default: null,
@@ -36,6 +41,11 @@ export default {
             return this.name.substring(0, 2)
         },
     },
+    methods: {
+        edit: function() {
+            this.$emit('edit', this.idx)
+        }
+    },
 }
 </script>
 
@@ -50,6 +60,20 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: $spacer * 1.618;
+    transition: $transition-base;
+    cursor: pointer;
+
+    &:hover & {
+        &__name,
+        &__surname {
+            text-decoration: underline;
+        }
+
+        &__badge {
+            background-color: rgba($black, .7);
+            transition: $transition-base;
+        }
+    }
 
     &__name,
     &__surname {
@@ -62,6 +86,7 @@ export default {
         height: $spacer * 3 * 1.618;
         background-color: $black;
         @include border-radius(50%);
+        transition: $transition-base;
         // position: absolute;
     }
 

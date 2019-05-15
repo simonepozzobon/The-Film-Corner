@@ -17,6 +17,10 @@ export default {
         type: {
             type: String,
             default: 'text'
+        },
+        defaultValue: {
+            type: String,
+            default: null,
         }
     },
     data: function() {
@@ -27,6 +31,11 @@ export default {
     watch: {
         value: function(v) {
             this.$emit('changed', v, this.name)
+        }
+    },
+    created: function() {
+        if (this.defaultValue) {
+            this.value = this.defaultValue
         }
     }
 }
