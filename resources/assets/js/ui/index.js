@@ -1,5 +1,6 @@
 import UiAccordionCols from './UiAccordionCols.vue'
 import UiBlock from './UiBlock.vue'
+import UiBlockHead from './UiBlockHead.vue'
 import UiBreadcrumbs from './UiBreadcrumbs.vue'
 import UiBurger from './UiBurger.vue'
 import UiButton from './UiButton.vue'
@@ -24,6 +25,7 @@ import UiTitle from './UiTitle.vue'
 export {
     UiAccordionCols,
     UiBlock,
+    UiBlockHead,
     UiBreadcrumbs,
     UiBurger,
     UiButton,

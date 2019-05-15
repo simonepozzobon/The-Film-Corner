@@ -17,6 +17,53 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Video
+Route::post('apps/video', 'Admin\Apps\VideoController@uploadVideo');
+Route::delete('apps/video/{id}', 'Admin\Apps\VideoController@deleteVideo');
+
+// Audio
+Route::post('apps/audio', 'Admin\Apps\AudioController@uploadAudio');
+Route::delete('apps/audio/{id}', 'Admin\Apps\AudioController@deleteAudio');
+
+// Images
+Route::post('apps/image', 'Admin\Apps\MediaController@uploadMedia');
+Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');
+
+
+Route::prefix('v2')->group(function() {
+    Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
+    Route::post('login', 'Api\AuthController@attempt_login');
+    Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
+
+    Route::group(['middleware' => ['auth:api']], function() {
+        Route::get('get-studios', 'Api\SectionController@get_studios');
+        Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
+        Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
+        Route::get('get-app/{slug}', 'Api\SectionController@get_app');
+
+        Route::get('load-assets/{slug}', 'Api\LoadController@load_assets');
+        Route::delete('session/{token}', 'Api\LoadController@delete_session');
+
+        Route::post('render-video', 'Api\VideoEditorController@update_editor');
+        Route::post('render-audio', 'Api\AudioEditorController@update_editor');
+
+        Route::put('contest-upload', 'Api\LoadController@contest_upload');
+
+        Route::get('get-network', 'Api\SectionController@get_network');
+        Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
+
+        Route::prefix('profile')->group(function() {
+            Route::get('/', 'Api\ProfileController@get_profile');
+        });
+    });
+});
+
+
+// General request
+// Route::get('apps/relations/media-sub-categories/{id}', 'Admin\Apps\GeneralController@getSubCategories');
+// Route::get('apps/relations/{type}/{id}', 'Admin\Apps\GeneralController@getRelations');
+
+
 // Route::prefix('v1')->group(function() {
 //     // Likes
 //     Route::post('add-like', 'Api\LikeController@addLike');
@@ -60,44 +107,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //         });
 //     });
 // });
-
-// General request
-Route::get('apps/relations/media-sub-categories/{id}', 'Admin\Apps\GeneralController@getSubCategories');
-Route::get('apps/relations/{type}/{id}', 'Admin\Apps\GeneralController@getRelations');
-
-// Video
-Route::post('apps/video', 'Admin\Apps\VideoController@uploadVideo');
-Route::delete('apps/video/{id}', 'Admin\Apps\VideoController@deleteVideo');
-
-// Audio
-Route::post('apps/audio', 'Admin\Apps\AudioController@uploadAudio');
-Route::delete('apps/audio/{id}', 'Admin\Apps\AudioController@deleteAudio');
-
-// Images
-Route::post('apps/image', 'Admin\Apps\MediaController@uploadMedia');
-Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');
-
-
-Route::prefix('v2')->group(function() {
-    Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
-    Route::post('login', 'Api\AuthController@attempt_login');
-    Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
-
-    Route::group(['middleware' => ['auth:api']], function() {
-        Route::get('get-studios', 'Api\SectionController@get_studios');
-        Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
-        Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
-        Route::get('get-app/{slug}', 'Api\SectionController@get_app');
-
-        Route::get('load-assets/{slug}', 'Api\LoadController@load_assets');
-        Route::delete('session/{token}', 'Api\LoadController@delete_session');
-
-        Route::post('render-video', 'Api\VideoEditorController@update_editor');
-        Route::post('render-audio', 'Api\AudioEditorController@update_editor');
-
-        Route::put('contest-upload', 'Api\LoadController@contest_upload');
-
-        Route::get('get-network', 'Api\SectionController@get_network');
-        Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
-    });
-});

@@ -1,6 +1,5 @@
 <template lang="html">
     <div>
-        <!-- <apps-nav /> -->
         <transition
             @enter="enter"
             @leave="leave">
@@ -10,12 +9,10 @@
 </template>
 
 <script>
-// import LoggedNav from '../../containers/LoggedNav.vue'
 import { TweenMax } from 'gsap'
 export default {
-    name: 'AppsContainer',
+    name: 'NetworkContainer',
     components: {
-        // LoggedNav,
     },
     methods: {
         enter: function(el, done) {

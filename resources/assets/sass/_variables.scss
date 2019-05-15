@@ -47,7 +47,8 @@ $indigo:  #6610f2 !default;
 $purple:  #613d7c !default;
 $pink:    #ff5b77 !default;
 $red:     #f18b8b !default;
-$orange:  #FD9B43 !default;
+// $orange:  #FD9B43 !default;
+$orange:  #EAA461 !default;
 $yellow:  #f9e264 !default;
 $green:   #7ec9c7 !default;
 $teal:    #5bc0de !default;
@@ -107,6 +108,8 @@ $colors: map-merge(
     "tfc-dark-red":        $tfc-dark-red,
     "tfc-green-var":       $tfc-green-var,
     "tfc-dark-green-var":  $tfc-dark-green-var,
+    "black":               $black,
+    "white":               $white,
   ),
   $colors
 );

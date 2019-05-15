@@ -46,6 +46,10 @@ import Storytelling from './views/apps/Storytelling.vue'
 import NetworkHome from './views/network/NetworkHome.vue'
 import NetworkSingle from './views/network/NetworkSingle.vue'
 
+// Profile
+import ProfileContainer from './views/profile/ProfileContainer.vue'
+import ProfileTeacher from './views/profile/ProfileTeacher.vue'
+
 const routes = [
     {
         path: '/',
@@ -249,6 +253,18 @@ const routes = [
                         component: NetworkSingle,
                         meta: { requiresAuth: true },
                     }
+                ],
+            },
+            {
+                path: 'profile',
+                component: ProfileContainer,
+                children: [
+                    {
+                        path: '',
+                        name: 'teacher-profile',
+                        component: ProfileTeacher,
+                        meta: { requiresAuth: true },
+                    },
                 ],
             },
             {

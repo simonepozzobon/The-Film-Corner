@@ -35,4 +35,21 @@ class User extends Authenticatable
     public function sessions() {
         return $this->hasMany(Session::class);
     }
+
+    public function networks() {
+        return $this->hasMany(Network::class);
+    }
+
+    // https://laracasts.com/discuss/channels/laravel/user-to-user-relationship
+    public function students() {
+        return $this->belongsToMany(User::class, 'student_teacher', 'user_id', 'student_id');
+    }
+
+    public function add_student(User $user) {
+        $this->students()->attach($user->id);
+    }
+
+    public function remove_student(User $user) {
+        $this->students()->detach($user->id);
+    }
 }

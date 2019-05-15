@@ -167,9 +167,7 @@ export default {
             }, 0)
 
             if (this.hasPlayButton) {
-                console.log('tui');
                 let play = this.$refs.play.$el
-
                 this.master.fromTo(play, .3, {
                     autoAlpha: 0,
                     ease: Power4.easeInOut,

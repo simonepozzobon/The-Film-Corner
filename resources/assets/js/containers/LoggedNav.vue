@@ -2,16 +2,16 @@
     <nav class="logged-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav ml-auto logged-nav__nav">
             <li class="logged-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link logged-nav__link">Apps</a>
+                <a href="#" @click.prevent="goTo('apps-home')" class="nav-link logged-nav__link">Apps</a>
             </li>
             <li class="logged-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'network-home')" class="nav-link logged-nav__link">Network</a>
+                <a href="#" @click.prevent="goTo('network-home')" class="nav-link logged-nav__link">Network</a>
             </li>
             <li class="logged-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-students')" class="nav-link logged-nav__link">Students</a>
+                <a href="#" @click.prevent="goTo('teacher-profile')" class="nav-link logged-nav__link">Students</a>
             </li>
             <li class="logged-nav__item nav-item">
-                <a href="#" @click="goTo($event, 'apps-help')" class="nav-link logged-nav__link">Help</a>
+                <a href="#" @click.prevent="goTo('apps-help')" class="nav-link logged-nav__link">Help</a>
             </li>
         </ul>
     </nav>
@@ -21,8 +21,7 @@
 export default {
     name: 'LoggedNav',
     methods: {
-        goTo: function(event, name) {
-            event.preventDefault()
+        goTo: function(name) {
             this.$router.push({name: name})
         },
         show: function() {

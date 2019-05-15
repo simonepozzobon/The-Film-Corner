@@ -16,6 +16,10 @@ class App extends Model
         return $this->hasMany(Session::class);
     }
 
+    public function network() {
+        return $this->hasMany(Network::class);
+    }
+
     public function category() {
       return $this->belongsTo('App\AppCategory', 'app_category_id', 'id');
     }
