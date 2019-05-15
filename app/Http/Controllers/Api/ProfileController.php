@@ -82,7 +82,7 @@ class ProfileController extends Controller
             $user = new User();
             $columns = Schema::getColumnListing($user->getTable());
             foreach ($columns as $key => $column) {
-                if ($value == 'password') {
+                if ($column == 'password') {
                     $user->password = Hash::make($request->password);
                 } else if (isset($request->{$column})) {
                     $user->{$column} = $request->{$column};
@@ -121,7 +121,7 @@ class ProfileController extends Controller
             }
 
             $user->save();
-            
+
             return [
                 'success' => true,
                 'user' => $user,
