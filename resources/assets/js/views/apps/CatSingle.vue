@@ -37,7 +37,7 @@
                         <div>
                             <ui-button color="black" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
                             <ui-button color="black" display="inline-block" :has-container="false" @click.native="startApp(app.slug)">New</ui-button>
-                            <ui-button color="black" display="inline-block" :has-container="false">Open</ui-button>
+                            <ui-button color="black" display="inline-block" :has-container="false" :disable="true">Open</ui-button>
                         </div>
                     </ui-block>
                 </ui-row>
