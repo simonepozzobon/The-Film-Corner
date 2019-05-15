@@ -289,6 +289,7 @@ export default {
 .ui-app-library {
     width: 100%;
     min-height: 100%;
+    min-height: 450px;
     padding: $spacer;
     @include border-right-radius(24px);
     @include app-block-padding;
