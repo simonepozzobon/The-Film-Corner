@@ -44,7 +44,7 @@
                 <img src="{{ asset('img/icons/time.svg') }}" class="img-fluid w-100" >
               </div>
               <div class="col-md-8 pb-3">
-                <p class="py-3">
+                <p class="pt-3">
                   “The Film Corner Reloaded – A cultural approach” stems from “The Film Corner. Online and offline activities for film literacy” already financed by the European Commission in the frame of the Creative Europe Programme. The project is managed by Fondazione Cineteca Italiana (Italy) in partnership with Jugslovenska Kinoteka (Serbia), The Film Space (UK), The Nerve Centre (Northern Ireland), University of Milano-Bicocca (Italy) and with two brand new partners that joined us for this second edition: The Georgian National Film Centre (Georgia) and Kino Otok (Slovenia).
                   <br><br>
                 </p>
