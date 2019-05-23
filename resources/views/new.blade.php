@@ -11,5 +11,5 @@
     </div>
 @endsection
 @section('scripts')
-    <script src="{{ mix('js/home.js') }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 @endsection

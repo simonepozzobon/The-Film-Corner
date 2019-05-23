@@ -97,7 +97,7 @@ class AudioEditorController extends Controller
             foreach ($timelines as $key => $item) {
                 $audioPath = urldecode($item->src);
                 $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
-                $tmpFilename = $audio->id;
+                $tmpFilename = $item->id;
                 $offsettedPath = $storePath.'/tmp/offset-'.$tmpFilename.'-'.$key.'.wav';
                 $cli .= $offsettedPath.' ';
             }

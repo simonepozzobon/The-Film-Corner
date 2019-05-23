@@ -3,28 +3,87 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use App\Student;
+use App\User;
+use App\Network;
+use App\SharedSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Schema;
 
 class TestController extends Controller
 {
-    public function test(Request $request)
-    {
+    public function test() {
+        $user = User::find(1);
+        $networks = $user->networks;
+        dd($networks);
+    }
 
-      $data = [
-        'event' => 'newMessage',
-        'from_id' => $request->from_id,
-        'from_type' => $request->from_type,
-        'to_id' => $request->to_id,
-        'to_type' => $request->to_type,
-        'data' => [
-          'message' => $request->message
-        ]
-      ];
+    public function convert_shared_sessions_to_networs() {
+        $sessions = SharedSession::all();
 
-      Redis::publish('chat', json_encode($data));
+        foreach ($sessions as $key => $session) {
+            $n = new Network();
+            $columns = Schema::getColumnListing($n->getTable());
+            foreach ($columns as $key => $value) {
+                if ($value == 'user_id') {
+                    $type = $session->userable_type;
+                    $role_id = 1;
+                    if ($type == 'App\\Teacher') {
+                        $role_id = 2;
+                    }
 
-      return response()->json($data, 200);
+                    $user = User::where([
+                        ['role_id', '=', $role_id],
+                        ['old_id', '=', $session->userable_id],
+                    ])->first();
+
+                    if ($user) {
+                        $n->user_id = $user->id;
+                    } else {
+                        $n->user_id = 1;
+                    }
+                } else {
+                    $n->{$value} = $session->{$value};
+                }
+            }
+            $n->save();
+            dump($n->title);
+        }
+
+    }
+
+    public function convert_student_to_teacher() {
+        $students = Student::all();
+
+        foreach ($students as $key => $student) {
+            $check = User::where('email', $student->email)->first();
+            if ($check) {
+                var_dump('stessa mail', $student->email);
+            } else {
+                $old_teacher = $student->teacher;
+                $new_teacher = User::where('old_id', $old_teacher->id)->first();
+
+                if ($new_teacher) {
+                    $user = new User();
+                    $user->role_id = 2;
+                    $user->name = $student->name;
+                    $user->email = $student->email;
+                    $user->password = $student->password;
+                    $user->remember_token = $student->remember_token;
+                    $user->old_id = $student->id;
+                    $user->save();
+
+                    $new_teacher->add_student($user);
+                    dump('studente aggiunto');
+                    dump($new_teacher->email);
+                    dump($user->email);
+                } else {
+                    dd('nuovo insegnante non trovato');
+                }
+            }
+        }
+        dd($students);
     }
 }

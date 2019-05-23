@@ -1,0 +1,207 @@
+<template lang="html">
+    <nav class="app-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
+        <ul class="navbar-nav app-nav__nav">
+            <li class="app-nav__item nav-item">
+                <a href="#" @click="goTo($event, 'apps-home')" class="nav-link app-nav__link">Close</a>
+            </li>
+            <li class="app-nav__item nav-item">
+                <a href="#" @click.prevent="addTitle" class="nav-link app-nav__link">Save Session</a>
+            </li>
+            <li class="app-nav__item nav-item">
+                <a href="#" @click.prevent="openSession" class="nav-link app-nav__link">Open Existing Session</a>
+            </li>
+            <li class="app-nav__item nav-item">
+                <a href="#" @click.prevent="resetSession" class="nav-link app-nav__link">Reset Session</a>
+            </li>
+            <li class="app-nav__item nav-item">
+                <a href="#" @click.prevent="printPage" class="nav-link app-nav__link">Print</a>
+            </li>
+        </ul>
+        <b-modal
+            ref="saveSession"
+            title="Save your session">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input
+                    type="text"
+                    name="title"
+                    class="form-control"
+                    v-model="title"/>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoTitle"/>
+                <ui-button
+                    color="primary"
+                    title="Save"
+                    :has-margin="false"
+                    @click="saveSession"/>
+            </template>
+        </b-modal>
+        <b-modal
+            ref="reset"
+            title="Reset Session">
+            <div>
+                <p class="text-center">
+                    Are you sure?
+                </p>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoReset"/>
+                <ui-button
+                    color="danger"
+                    title="Reset"
+                    :has-margin="false"
+                    @click="doReset"/>
+            </template>
+        </b-modal>
+        <b-modal
+            ref="open"
+            title="Leave this session">
+            <div>
+                <p class="text-center">
+                    Are you sure?
+                </p>
+            </div>
+            <template slot="modal-footer">
+                <ui-button
+                    color="secondary"
+                    title="Cancel"
+                    :has-margin="false"
+                    @click="undoOpen"/>
+                <ui-button
+                    color="danger"
+                    title="Leave"
+                    :has-margin="false"
+                    @click="doOpen"/>
+            </template>
+        </b-modal>
+    </nav>
+</template>
+
+<script>
+import { UiButton } from '../ui'
+
+export default {
+    name: 'AppNav',
+    components: {
+        UiButton,
+    },
+    data: function() {
+        return {
+            title: null,
+        }
+    },
+    methods: {
+        goTo: function(event, name) {
+            event.preventDefault()
+            this.$router.push({name: name})
+        },
+        show: function() {
+            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+                y: -150,
+                autoAlpha: 0,
+            }, {
+                y: 0,
+                autoAlpha: 1,
+                onComplete: () => {
+                    master.kill()
+                }
+            })
+        },
+        hide: function() {
+            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+                y: 0,
+                autoAlpha: 1,
+            }, {
+                y: -150,
+                autoAlpha: 0,
+                onComplete: () => {
+                    master.kill()
+                }
+            })
+        },
+        undoTitle: function() {
+            this.$refs.saveSession.hide()
+        },
+        addTitle: function() {
+            this.$refs.saveSession.show()
+        },
+        saveSession: function() {
+            let session = this.$root.session
+
+            if (this.title) {
+                session.title = this.title
+            }
+
+            console.log(session);
+            this.$http.post('/api/v2/session', session).then(response => {
+                console.log(response.data);
+                if (response.data.success) {
+                    this.undoTitle()
+                }
+            })
+        },
+        undoReset: function() {
+            this.$refs.reset.hide()
+        },
+        doReset: function() {
+            this.$root.goTo(this.$root.session.app.slug, true)
+        },
+        resetSession: function() {
+            this.$refs.reset.show()
+        },
+        undoOpen: function() {
+            this.$refs.open.hide()
+        },
+        doOpen: function() {
+            this.$root.goToWithParams('app-home', { app: this.$root.session.app.slug })
+        },
+        openSession: function() {
+            this.$refs.open.show()
+        },
+        printPage: function() {
+            window.print()
+        }
+    },
+    mounted: function() {
+        this.show()
+    },
+    beforeDestroy: function() {
+        this.hide()
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+@import '~styles/shared';
+
+
+.app-nav {
+    top: 107px;
+    height: 48px;
+    z-index: $zindex-fixed - 2;
+    background-color: $dark-gray;
+    justify-content: center;
+
+    &__nav {
+        max-width: map-get($container-max-widths, xl);
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    &__link {
+        text-transform: uppercase;
+        font-size: $font-size-sm;
+        font-weight: $font-weight-bold;
+        color: $white !important;
+    }
+}
+</style>

@@ -13,7 +13,11 @@ class AppSection extends Model
 
     public function appCategories()
     {
-      return $this->hasMany('App\AppCategory');
+      return $this->hasMany('App\AppCategory', 'id', 'app_section_id');
+    }
+
+    public function categories() {
+        return $this->hasMany('App\AppCategory', 'app_section_id', 'id');
     }
 
     public function videos()

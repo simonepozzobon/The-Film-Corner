@@ -11,6 +11,7 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
+Route::get('/test', 'Api\TestController@test');
 Route::get('{any}', 'FrontendController@home_page')->where('any', '.*')->name('home.page');
 
 // Route::get('/test', 'Admin\StatsController@get_page_views');

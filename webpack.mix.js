@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix')
+let mix = require('laravel-mix')
 
 
 /*
@@ -13,6 +13,26 @@ const { mix } = require('laravel-mix')
  */
 //
 mix
+    .js('resources/assets/js/app.js', 'public/js')
+    .sass('resources/assets/sass/app.scss', 'public/css')
+    .sass('resources/assets/admin/sass/app.scss', 'public/css/admin/admin.css')
+    .autoload({
+        jquery: ['$', 'jQuery', 'jquery'],
+        tether: ['Tether'],
+    })
+    .webpackConfig({
+        resolve:{
+            alias: {
+                'styles': path.resolve(__dirname, 'resources/assets/sass'),
+                '_js': path.resolve(__dirname, 'resources/assets/js')
+            }
+        }
+    })
+    .browserSync({
+        proxy: 'http://tfc.test',
+        port: 3019,
+        browser: 'google chrome',
+    })
     // .js([
     //   'resources/assets/admin/js/plugins/image-picker.js',
     //   'resources/assets/admin/js/custom.js'
@@ -60,25 +80,3 @@ mix
     // .sass('resources/assets/sass/app/2.1/angular-media-timeline.scss', 'public/css/app/2.1/timeline-main.css')
     // .less('resources/assets/sass/app/2.1/timeline.less', 'public/css/app/2.1/timeline.css')
     // .sass('resources/assets/sass/app/2.1/dropzone.scss', 'public/css/app/2.1/dropzone.css')
-    .js('resources/assets/js/home.js', 'public/js')
-    .js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css')
-    .sass('resources/assets/admin/sass/app.scss', 'public/css/admin/admin.css')
-    // .extract(['jquery', 'tether', 'bootstrap', 'any-resize-event'])
-    .autoload({
-        jquery: ['$', 'jQuery', 'jquery'],
-        tether: ['Tether'],
-    })
-    .webpackConfig({
-        resolve:{
-            alias: {
-                'styles': path.resolve(__dirname, 'resources/assets/sass'),
-                '_js': path.resolve(__dirname, 'resources/assets/js')
-            }
-        }
-    })
-    .browserSync({
-        proxy: 'http://thefilmcorner.test',
-        port: 3019,
-        browser: 'google chrome',
-    })

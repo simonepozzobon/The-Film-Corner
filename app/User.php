@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -27,8 +28,28 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function role()
-    {
-      return $this->belongsTo('App\UserRole');
+    public function role() {
+      return $this->belongsTo(Role::class);
+    }
+
+    public function sessions() {
+        return $this->hasMany(Session::class);
+    }
+
+    public function networks() {
+        return $this->hasMany(Network::class);
+    }
+
+    // https://laracasts.com/discuss/channels/laravel/user-to-user-relationship
+    public function students() {
+        return $this->belongsToMany(User::class, 'student_user', 'user_id', 'student_id');
+    }
+
+    public function add_student(User $user) {
+        $this->students()->attach($user->id);
+    }
+
+    public function remove_student(User $user) {
+        $this->students()->detach($user->id);
     }
 }
