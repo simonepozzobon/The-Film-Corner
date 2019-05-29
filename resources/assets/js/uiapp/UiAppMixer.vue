@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-app-block
         ref="block"
         color="dark"

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <transition
         @enter="enter"
         @leave="leave">

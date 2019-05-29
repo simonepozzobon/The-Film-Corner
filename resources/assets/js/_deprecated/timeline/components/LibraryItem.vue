@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="row align-items-center">
         <div class="col-md-2">
             <img :src="'/storage/'+this.obj.img" width="57">

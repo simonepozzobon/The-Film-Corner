@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="net-preview">
         <div class="net-preview__content">
             <img

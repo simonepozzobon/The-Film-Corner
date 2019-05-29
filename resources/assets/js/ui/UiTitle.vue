@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div v-if="hasContainer">
         <component
             ref="title"
@@ -16,6 +16,7 @@
                 hoverableClass,
             ]">
                 {{ title }}
+                <slot></slot>
         </component>
     </div>
     <component
@@ -35,6 +36,7 @@
             hoverableClass,
         ]">
             {{ title }}
+            <slot></slot>
     </component>
 </template>
 

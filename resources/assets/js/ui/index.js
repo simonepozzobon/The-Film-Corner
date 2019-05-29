@@ -17,6 +17,7 @@ import UiList from './UiList.vue'
 import UiListItem from './UiListItem.vue'
 import UiMenuItem from './UiMenuItem.vue'
 import UiParagraph from './UiParagraph.vue'
+import UiRoadmap from './UiRoadmap.vue'
 import UiRow from './UiRow.vue'
 import UiSpecialText from './UiSpecialText.vue'
 import UiTeam from './UiTeam.vue'
@@ -42,6 +43,7 @@ export {
     UiListItem,
     UiMenuItem,
     UiParagraph,
+    UiRoadmap,
     UiRow,
     UiSpecialText,
     UiTeam,

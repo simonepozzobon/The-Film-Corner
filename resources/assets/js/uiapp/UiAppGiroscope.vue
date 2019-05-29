@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="ui-app-giroscope">
         <ui-title
             title="Scene"

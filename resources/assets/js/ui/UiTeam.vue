@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container class="mb-4">
         <ui-row>
             <ui-block :size="4">

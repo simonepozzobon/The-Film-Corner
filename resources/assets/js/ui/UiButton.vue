@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div
         class="ui-button"
         v-if="hasContainer"
@@ -73,6 +73,10 @@ export default {
             type: String,
             default: null,
         },
+        fontColor: {
+            type: String,
+            default: null,
+        },
         eventParams: [String, Object, Array, Number],
     },
     computed: {
@@ -104,6 +108,11 @@ export default {
         marginClass: function() {
             if (!this.hasMargin ) {
                 return 'ui-button--no-margin'
+            }
+        },
+        fontColorClass: function() {
+            if (this.fontColor) {
+                return 'text-' + this.fontColor
             }
         },
     },

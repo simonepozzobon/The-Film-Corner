@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
 	<div class="">
         <div id="title" v-if="this.has_title" class="mb-3" ref="title">
             <input type="text" v-model="title" class="form-control" placeholder="Title">

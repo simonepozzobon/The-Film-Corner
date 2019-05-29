@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="box yellow">
         <div class="box-header">
             {{ title }}

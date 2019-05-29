@@ -17679,11 +17679,6 @@ footer.no-margin-top {
   margin-right: auto;
 }
 
-body > .container,
-main {
-  padding-bottom: calc(90px + 32px);
-}
-
 .filter-wrapper {
   display: inline-block;
   position: relative;

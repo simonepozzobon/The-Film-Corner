@@ -4,7 +4,10 @@
     "dev": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "hot": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "node node_modules/cross-env/dist/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "format": "npm run format:prettier && npm run format:html",
+    "format:prettier": "node_modules/.bin/prettier --config .prettierrc \"resources/**/*.{ts,css,less,js}\" --write",
+    "format:html": "node bin/glob-ls.js 'src/**/*.html' 'build/**/*.html.ejs' | xargs node_modules/.bin/html-beautify -r"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -19,11 +22,13 @@
     "cross-env": "^5.2.0",
     "fabric": "^2.7.0",
     "jquery": "^3.3.1",
+    "js-beautify": "^1.10.0",
     "jsdom": "^13.2.0",
     "laravel-mix": "^4.0.15",
     "lodash": "^4.17.11",
     "node-sass": "^4.12.0",
     "popper.js": "^1.15.0",
+    "prettier": "^1.17.1",
     "resolve-url-loader": "2.3.1",
     "sass": "^1.20.1",
     "sass-loader": "7.*",

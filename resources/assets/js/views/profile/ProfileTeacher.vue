@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container class="teacher-profile" :contain="true">
         <ui-row
             :no-gutters="false">

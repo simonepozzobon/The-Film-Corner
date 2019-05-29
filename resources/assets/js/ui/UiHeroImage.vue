@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div
         class="ui-hero-image">
         <img :src="image" alt="" class="ui-hero-image__image">

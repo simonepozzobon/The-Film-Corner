@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <app-template :app="app">
         <template>
             <ui-app-block

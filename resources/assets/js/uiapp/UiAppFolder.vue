@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-folder
         class="ui-app-folder"
         ref="folder"

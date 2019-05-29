@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="row mt">
         <div class="col-12">
             <div class="box orange">

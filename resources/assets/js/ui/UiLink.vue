@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <a
         :href="url"
         :target="target"

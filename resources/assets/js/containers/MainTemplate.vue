@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <main class="main" :class="paddingClass">
         <main-nav></main-nav>
         <div class="main__content">

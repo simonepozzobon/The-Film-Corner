@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container
         :contain="true"
         class="net-content"

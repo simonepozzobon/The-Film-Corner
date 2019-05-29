@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <svg
         ref="icon"
         width="16"

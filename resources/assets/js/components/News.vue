@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="tfc-news">
         <ui-container class="tfc-news__container">
             <ui-row>

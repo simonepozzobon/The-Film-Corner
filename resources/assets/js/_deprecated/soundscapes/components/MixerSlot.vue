@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
         <vue-slider
             ref="slider"

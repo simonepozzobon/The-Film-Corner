@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container :contain="true" class="ui-folder">
         <ui-row class="ui-folder__head">
             <ui-block

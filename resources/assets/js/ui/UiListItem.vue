@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <li class="ui-list-item">
         <slot></slot>
     </li>

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="row mb-1 align-items-center">
         <div class="col-md-2">
             <i class="fa fa-file-audio-o fa-2x" />

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="menu-overlay" ref="container">
         <div class="menu-overlay__content" ref="content">
             <ui-menu-item

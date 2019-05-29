@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <nav class="network-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav network-nav__nav">
             <li class="network-nav__item nav-item">

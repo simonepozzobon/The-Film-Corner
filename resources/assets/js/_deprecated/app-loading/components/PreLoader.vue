@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div id="preloader-frame" ref="preloader">
         <h2 ref="text">Loading</h2>
         <svg ref="svg" width="128px" height="128px" viewBox="0 0 38 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">

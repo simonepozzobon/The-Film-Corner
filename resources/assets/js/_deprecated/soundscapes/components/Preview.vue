@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="col-md-8">
         <div class="box blue">
             <div class="box-header">

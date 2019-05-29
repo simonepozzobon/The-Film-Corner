@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container class="app-container">
         <ui-container :contain="true" v-if="this.app">
             <ui-row>

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="selector-btn"
         :class="isAvailable"
         @click="select">

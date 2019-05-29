@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container :full-width="true">
         <ui-title
             tag="h1"

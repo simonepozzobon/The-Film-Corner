@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container>
         <ui-hero-banner image="/img/grafica/bg.jpg" :full-width="true">
             <ui-container :full-width="true">
@@ -36,27 +36,37 @@
                             size="h4"
                             :hoverable="true"
                             @click.native="goToPavilion($event, studio.slug)"/>
-                        <p
-                            v-if="studio.slug == 'cultural-approach'"
-                            class="text-white">
-                            Work in progress...
-                        </p>
-                        <ul
-                            v-else
-                            class="block-menu"
-                            v-for="cat in studio.categories">
-                            <li
-                                class="block-menu__menu-head"
-                                @click="goToCat(cat.slug)">
-                                {{cat.name}}
-                            </li>
-                            <li
-                                class="block-menu__menu-item"
-                                v-for="app in cat.apps"
-                                @click="goToApp(app.slug)">
-                                {{ app.title }}
-                            </li>
-                        </ul>
+
+                        <div
+                            v-if="studio.slug == 'cultural-approach'">
+                            <ul
+                                class="block-menu">
+                                <li
+                                    class="block-menu__menu-head"
+                                    @click="goToPropaganda(studio.slug)">
+                                    Propagandapp
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div
+                            v-else>
+                            <ul
+                                class="block-menu"
+                                v-for="cat in studio.categories">
+                                <li
+                                    class="block-menu__menu-head"
+                                    @click="goToCat(cat.slug)">
+                                    {{cat.name}}
+                                </li>
+                                <li
+                                    class="block-menu__menu-item"
+                                    v-for="app in cat.apps"
+                                    @click="goToApp(app.slug)">
+                                    {{ app.title }}
+                                </li>
+                            </ul>
+                        </div>
 
                     </ui-block>
                 </ui-row>
@@ -114,6 +124,9 @@ export default {
         },
         goToApp: function(slug) {
             this.$root.goToWithParams('app-home', { app: slug })
+        },
+        goToPropaganda: function(slug) {
+            this.$root.goTo('propaganda-intro')
         }
     },
     created: function() {

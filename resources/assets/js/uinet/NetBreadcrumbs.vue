@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="net-breadcrumbs">
         <div class="net-breadcrumbs__studio">
             <a

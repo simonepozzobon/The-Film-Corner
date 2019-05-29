@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container>
         <ui-hero-banner image="./img/grafica/bg.jpg">
             Pagina

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div>
         <nav class="main-menu navbar navbar-light bg-faded navbar-expand-lg fixed-top">
             <div class="main-menu__brand navbar-brand">

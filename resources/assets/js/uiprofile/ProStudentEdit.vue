@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="pro-student-form">
         <ui-form-group
             name="Name"

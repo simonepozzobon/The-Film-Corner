@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <app-template :app="app" :left="6" :right="6">
         <template slot="left">
             <ui-app-image

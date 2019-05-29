@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="mixer-channel">
         <vue-slider
             ref="slider"

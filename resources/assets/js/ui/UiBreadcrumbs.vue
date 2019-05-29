@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="ui-breadcrumbs">
         <div class="ui-breadcrumbs__studio">
             <a

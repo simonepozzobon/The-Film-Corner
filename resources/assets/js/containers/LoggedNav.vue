@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <nav class="logged-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav ml-auto logged-nav__nav">
             <li class="logged-nav__item nav-item">

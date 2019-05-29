@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container>
         <ui-container>
             <ui-hero-banner

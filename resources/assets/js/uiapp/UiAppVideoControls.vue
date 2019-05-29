@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="ui-app-video-controls">
         <div class="ui-app-video-controls__container">
             <div class="ui-app-video-controls__control">

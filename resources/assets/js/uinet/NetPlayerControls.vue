@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="net-players-controls">
         <div class="net-players-controls__container">
             <div class="net-players-controls__control">

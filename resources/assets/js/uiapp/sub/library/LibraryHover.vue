@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <svg
         :width="size"
         :height="size"

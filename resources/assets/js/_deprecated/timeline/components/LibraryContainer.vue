@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div :id="'video-'+library.id+'-library'" class="assets tab-pane fade" :class="isActive" role="tabpanel" aria-labelledby="video-tab">
         <div class="row scroller">
             <div class="col">

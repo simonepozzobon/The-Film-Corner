@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div
         :id="randomID"
         class="ui-accordion-single"

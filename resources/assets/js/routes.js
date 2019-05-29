@@ -42,6 +42,11 @@ import LumiereMinute from './views/apps/LumiereMinute.vue'
 import MakeYourOwnFilm from './views/apps/MakeYourOwnFilm.vue'
 import Storytelling from './views/apps/Storytelling.vue'
 
+// Propagandapp
+import PropagandaContainer from './views/apps/propagandapp/PropagandaContainer.vue'
+import PropagandaIntro from './views/apps/propagandapp/PropagandaIntro.vue'
+import PropagandaHome from './views/apps/propagandapp/PropagandaHome.vue'
+
 // Network
 import NetworkHome from './views/network/NetworkHome.vue'
 import NetworkSingle from './views/network/NetworkSingle.vue'
@@ -234,7 +239,24 @@ const routes = [
                         component: Storytelling,
                         meta: { requiresAuth: true },
                     },
-
+                    {
+                        path: 'propagandapp',
+                        component: PropagandaContainer,
+                        children: [
+                            {
+                                path: '',
+                                name: 'propaganda-intro',
+                                component: PropagandaIntro,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'intro',
+                                name: 'propaganda-home',
+                                component: PropagandaHome,
+                                meta: { requiresAuth: true },
+                            },
+                        ],
+                    },
                 ],
             },
             {

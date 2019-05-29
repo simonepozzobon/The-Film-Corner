@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ul
         class="ui-list"
         :class="startClass">

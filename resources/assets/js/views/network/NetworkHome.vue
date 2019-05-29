@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container class="network-container" :contain="true">
         <ui-row>
             <net-item

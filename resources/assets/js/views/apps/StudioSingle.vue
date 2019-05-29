@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container>
         <ui-hero-banner :image="image" :full-width="true">
             <ui-container :full-width="true" v-if="this.studio">

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-container class="app-container" :contain="true" v-if="this.app">
         <ui-app-folder :app="app" />
         <ui-container class="pt-4" :contain="true">

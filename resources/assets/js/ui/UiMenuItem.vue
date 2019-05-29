@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="menu-item" ref="item">
         <a
             :href="url"

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-row
         direction="column"
         min-width="400px"

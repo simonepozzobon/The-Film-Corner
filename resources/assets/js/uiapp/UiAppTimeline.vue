@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-row :no-gutters="true" ref="container">
         <ui-block :size="12">
             <div class="ui-app-timeline">

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-app-block
         color="green"
         :title="idx | formatFrameTitle"

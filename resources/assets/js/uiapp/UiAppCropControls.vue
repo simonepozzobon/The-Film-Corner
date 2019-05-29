@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-app-block
         :has-title="false"
         color="dark"

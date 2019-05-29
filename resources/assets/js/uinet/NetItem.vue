@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-block
         class="net-item"
         :class="colorClass"

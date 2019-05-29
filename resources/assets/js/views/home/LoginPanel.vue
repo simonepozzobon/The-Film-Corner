@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <login-form
         ref="login"/>
 </template>

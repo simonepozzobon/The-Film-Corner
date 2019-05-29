@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="pro-student"
         @click="edit">
         <div class="pro-student__badge">

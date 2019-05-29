@@ -3,7 +3,6 @@
     The Film Corner
 @endsection
 @section('stylesheets')
-    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 @endsection
 @section('content')
     <div id="home">

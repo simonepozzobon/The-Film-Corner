@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div
         class="ui-paragraph"
         :class="[
@@ -104,6 +104,10 @@ export default {
 
     &--size-small {
         font-size: $font-size-sm;
+    }
+
+    &--size-lg {
+        font-size: $font-size-lg;
     }
 
     &--align-justify {

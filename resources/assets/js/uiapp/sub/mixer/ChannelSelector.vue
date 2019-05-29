@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <b-modal
         ref="modal"
         title="Select Channel"

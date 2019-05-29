@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <div class="ui-hero-banner"
         :class="[fullHeightClass, fullWidthClass]"
         ref="bg">

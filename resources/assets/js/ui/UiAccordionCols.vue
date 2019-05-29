@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
     <ui-row class="pb-4 ui-accordion-cols">
         <div class="col-md-6">
             <ui-accordion-single
