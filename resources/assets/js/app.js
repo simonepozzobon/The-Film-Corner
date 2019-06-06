@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/browser'
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
+Vue.config.productionTip = false
 
 Vue.use(VueRouter)
 Vue.prototype.$cookie = Cookie

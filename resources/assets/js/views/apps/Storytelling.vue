@@ -1,56 +1,92 @@
 <template>
-    <app-template :app="app">
-        <template>
-            <ui-app-block
-                :has-title="false"
-                :color="color">
-                <ui-row>
-                    <ui-block :size="2" v-if="srcs.src1">
-                        <ui-image :src="srcs.src1"/>
-                    </ui-block>
-                    <ui-block :size="2" v-if="srcs.src2">
-                        <ui-image :src="srcs.src2"/>
-                    </ui-block>
-                    <ui-block :size="2" v-if="srcs.src3">
-                        <ui-image :src="srcs.src3"/>
-                    </ui-block>
-                    <ui-block :size="2" v-if="srcs.src4">
-                        <ui-image :src="srcs.src4"/>
-                    </ui-block>
-                    <ui-block :size="2" v-if="srcs.src5">
-                        <ui-image :src="srcs.src5"/>
-                    </ui-block>
-                    <ui-block :size="2" v-if="srcs.src6">
-                        <ui-image :src="srcs.src6"/>
-                    </ui-block>
-                </ui-row>
-            </ui-app-block>
-            <ui-app-block
-                class="mt-4"
-                :has-title="false"
-                color="dark">
-                <ui-button
-                    color="white"
-                    :has-margin="false"
-                    align="center"
-                    @click.native="randomize">
-                    Reload
-                </ui-button>
-            </ui-app-block>
-            <ui-app-note
-                class="mt-4"
-                :color="color"
-                @changed="setNotes"/>
-        </template>
-    </app-template>
+<app-template :app="app">
+    <template>
+        <ui-app-block
+            :has-title="false"
+            :color="color"
+        >
+            <ui-row>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src1"
+                >
+                    <ui-image :src="srcs.src1" />
+                </ui-block>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src2"
+                >
+                    <ui-image :src="srcs.src2" />
+                </ui-block>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src3"
+                >
+                    <ui-image :src="srcs.src3" />
+                </ui-block>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src4"
+                >
+                    <ui-image :src="srcs.src4" />
+                </ui-block>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src5"
+                >
+                    <ui-image :src="srcs.src5" />
+                </ui-block>
+                <ui-block
+                    :size="2"
+                    v-if="srcs.src6"
+                >
+                    <ui-image :src="srcs.src6" />
+                </ui-block>
+            </ui-row>
+        </ui-app-block>
+        <ui-app-block
+            class="mt-4"
+            :has-title="false"
+            color="dark"
+        >
+            <ui-button
+                color="white"
+                :has-margin="false"
+                align="center"
+                @click.native="randomize"
+            >
+                Reload
+            </ui-button>
+        </ui-app-block>
+        <ui-app-note
+            class="mt-4"
+            :color="color"
+            @changed="setNotes"
+        />
+    </template>
+</app-template>
 </template>
 
 <script>
 import AppTemplate from './AppTemplate.vue'
-import { UiAppBlock, UiAppFolder, UiAppLibrary, UiAppNote } from '../../uiapp'
-import { SharedData, SharedMethods, SharedWatch } from './Shared'
-import { UiBlock, UiButton, UiImage, UiTitle, UiRow } from '../../ui'
-
+import {
+    UiAppBlock,
+    UiAppFolder,
+    UiAppLibrary,
+    UiAppNote
+} from '../../uiapp'
+import {
+    SharedData,
+    SharedMethods,
+    SharedWatch
+} from './Shared'
+import {
+    UiBlock,
+    UiButton,
+    UiImage,
+    UiTitle,
+    UiRow
+} from '../../ui'
 export default {
     name: 'Storytelling',
     components: {
@@ -65,7 +101,7 @@ export default {
         UiTitle,
         UiRow,
     },
-    data: function() {
+    data: function () {
         return {
             ...SharedData,
             srcs: {
@@ -82,25 +118,27 @@ export default {
         ...SharedWatch,
     },
     methods: {
-        init: function() {
+        init: function () {
             this.randomize()
         },
-        randomize: function() {
+        randomize: function () {
             let libraries = this.assets.library
             for (let i = 0; i < libraries.length; i++) {
                 let key = 'src' + (i + 1)
-                this.srcs[key] = '/storage/' + this.randomizeSingle(libraries[i].medias).src
+                this.srcs[key] = '/storage/' + this.randomizeSingle(
+                        libraries[i].medias)
+                    .src
             }
             this.saveContent()
         },
-        randomizeSingle: function(library) {
+        randomizeSingle: function (library) {
             let idx = Math.floor(Math.random() * library.length)
             return library[idx]
         },
-        setNotes: function(notes) {
+        setNotes: function (notes) {
             this.notes = notes
         },
-        saveContent: _.debounce(function() {
+        saveContent: _.debounce(function () {
             let content = this.$root.session.content
             let newContent = {
                 'slot_1': this.srcs.src1,
@@ -111,27 +149,25 @@ export default {
                 'slot_6': this.srcs.src6,
                 notes: 'no notes'
             }
-
             for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
+                        key)) {
                     content[key] = newContent[key]
                 }
             }
-
             this.$root.session = {
                 ...this.$root.session,
                 content: content
             }
         }, 500),
     },
-    created: function() {
+    created: function () {
         this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },
-    mounted: function() {
-    },
-    beforeDestroy: function() {
+    mounted: function () {},
+    beforeDestroy: function () {
         this.$root.isApp = false
     }
 }

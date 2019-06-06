@@ -1,28 +1,32 @@
 <template>
-    <ui-row :no-gutters="true">
-        <ui-block :size="size">
-            <div
-                class="ui-app-block"
-                :class="[
-                    colorClass
-                ]">
+<ui-row :no-gutters="true">
+    <ui-block :size="size">
+        <div
+            class="ui-app-block"
+            :class="[colorClass]"
+        >
 
-                <ui-title
-                    v-if="hasTitle"
-                    :title="title"
-                    :has-padding="false"
-                    :color="titleColor"/>
+            <ui-title
+                v-if="hasTitle"
+                :title="title"
+                :has-padding="false"
+                :color="titleColor"
+            />
 
-                <div class="ui-app-block__field">
-                    <slot></slot>
-                </div>
+            <div class="ui-app-block__field">
+                <slot></slot>
             </div>
-        </ui-block>
-    </ui-row>
+        </div>
+    </ui-block>
+</ui-row>
 </template>
 
 <script>
-import { UiBlock, UiTitle, UiRow } from '../ui'
+import {
+    UiBlock,
+    UiTitle,
+    UiRow
+} from '../ui'
 export default {
     name: 'UiAppBlock',
     components: {
@@ -53,7 +57,7 @@ export default {
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'ui-app-block--' + this.color
         }
     }
