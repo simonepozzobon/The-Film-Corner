@@ -148,6 +148,7 @@ export default {
                 this.srcs.people = url
                 break;
             }
+            this.saveContent()
         },
         setNotes: function (notes) {
             this.notes = notes
@@ -175,6 +176,7 @@ export default {
                 ...this.$root.session,
                 content: content
             }
+            console.log(this.$root.session);
         }, 500)
     },
     created: function () {

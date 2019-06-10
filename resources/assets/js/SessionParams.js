@@ -11,7 +11,7 @@ const SessionParams = {
     10: ['main_video', 'videos'],
     11: ['notes', 'video', 'timelines'],
     12: ['notes', 'video', 'timelines'],
-    13: ['notes', 'rendered', 'canvas'],
+    13: ['notes', 'canvas'],
     14: ['notes', 'slot_1', 'slot_2', 'slot_3', 'slot_4', 'slot_5', 'slot_6'],
     15: ['notes', 'stories'],
     16: ['video'],
