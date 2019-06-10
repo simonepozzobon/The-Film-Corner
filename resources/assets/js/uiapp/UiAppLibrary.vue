@@ -255,16 +255,15 @@ export default {
         },
         setLibraryHeight: function (h = false) {
             let container, el, title, assets, titleSize, headSize,
-                containerH, height
+                containerSize, containerH, height
             container = this.$refs.container
             el = this.$refs.head
             title = this.$refs.title.$refs.title
             assets = this.$refs.assets
             titleSize = SizeUtility.get(title)
             headSize = SizeUtility.get(el)
-            containerH = SizeUtility.get(container)
-                .hClean
-            console.log('inside library', containerH);
+            containerSize = SizeUtility.get(container)
+            containerH = containerSize.hClean
             if (h && h > containerH) {
                 containerH = h
             }

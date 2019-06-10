@@ -154,30 +154,27 @@ export default {
             this.saveContent()
         },
         loaded: function () {
-            console.log('loaded');
             let rowTop = SizeUtility.get(this.$refs.rowTop.$el)
             let rowBottom = SizeUtility.get(this.$refs.rowBottom.$el)
             let height = rowTop.hClean + rowBottom.hClean + 48
-            console.log('out', height);
             this.$refs.library.setLibraryHeight(height)
         },
         saveContent: _.debounce(function () {
-            // let content = this.$root.session.content
-            // let newContent = {
-            //     canvas: JSON.stringify(this.canvas.toDatalessJSON()),
-            //     rendered: this.canvas.toDataURL('png'),
-            //     notes: 'no notes'
-            // }
-            // for (let key in content) {
-            //     if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
-            //             key)) {
-            //         content[key] = newContent[key]
-            //     }
-            // }
-            // this.$root.session = {
-            //     ...this.$root.session,
-            //     content: content
-            // }
+            let content = this.$root.session.content
+            let newContent = {
+                canvas: JSON.stringify(this.srcs),
+                notes: this.notes
+            }
+            for (let key in content) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
+                        key)) {
+                    content[key] = newContent[key]
+                }
+            }
+            this.$root.session = {
+                ...this.$root.session,
+                content: content
+            }
         }, 500)
     },
     created: function () {
