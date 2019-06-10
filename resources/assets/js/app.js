@@ -128,11 +128,17 @@ const home = new Vue({
             isNetwork: null,
             space: true,
             session: null,
+            progress: 0,
+            objectsToLoad: 0,
+            objectsLoaded: 0,
         }
     },
     watch: {
         session: function(session) {
             this.checkSession(session.app_id)
+        },
+        objectsLoaded: function(count) {
+            this.progress = count * 100 / this.objectsToLoad
         }
     },
     methods: {
