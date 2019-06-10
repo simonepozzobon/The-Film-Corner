@@ -1,8 +1,11 @@
 <template>
-<ui-row :no-gutters="true">
+<ui-row
+    :no-gutters="true"
+    class="ui-app-block"
+>
     <ui-block :size="size">
         <div
-            class="ui-app-block"
+            class="ui-app-block__block"
             :class="[colorClass]"
         >
 
@@ -70,8 +73,13 @@ export default {
 .ui-app-block {
     width: 100%;
     height: 100%;
-    @include border-radius($custom-border-radius);
-    @include app-block-padding;
+
+    &__block {
+        width: 100%;
+        height: 100%;
+        @include border-radius($custom-border-radius);
+        @include app-block-padding;
+    }
 
     &__text {
         @include border-radius(10px);
