@@ -23,6 +23,7 @@
         <ui-app-note
             class="mt-4"
             :color="color"
+            :initial="this.notes"
             @changed="setNotes"
         />
     </template>
