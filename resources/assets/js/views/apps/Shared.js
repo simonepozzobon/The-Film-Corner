@@ -1,6 +1,10 @@
 const SharedData = {
     app: null,
-    assets: null,
+    assets: {
+        hasSubLibraries: false,
+        items: [],
+        type: 'images'
+    },
     session: null,
     notes: null,
     size: { w: 0, h: 0 },
@@ -72,15 +76,19 @@ const SharedMethods = {
         })
     },
     debug: function(slug, token) {
-        this.$http.get('/api/v2/get-app/' + slug)
+        console.log('debug');
+        let url = '/api/v2/get-app/' + slug
+        this.$http.get(url)
             .then(response => {
-                if (response.data.success) {
+                if (response.data.success && response.data.sessions.length > 0) {
                     let session = response.data.sessions.find(session => session.token === token)
-                    session.content = JSON.parse(session.content)
-                    this.$root.session = session
-                    this.$nextTick(() => {
-                        this.init()
-                    })
+                    if (session) {
+                        session.content = JSON.parse(session.content)
+                        this.session = session
+                        this.$nextTick(() => {
+                            this.init()
+                        })
+                    }
                 }
             })
     }

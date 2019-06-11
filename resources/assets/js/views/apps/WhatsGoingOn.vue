@@ -4,12 +4,11 @@
         <ui-app-audio-preview
             ref="preview"
             :src="media.audioSrc"
+            :no-region="true"
+            @ready="ready"
         />
     </template>
-    <template
-        slot="right"
-        v-if="this.assets"
-    >
+    <template slot="right">
         <ui-app-library
             ref="library"
             :hasSubLibraries="assets.hasSubLibraries"
@@ -60,22 +59,41 @@ export default {
             media: {
                 audioSrc: null
             },
+            isLoading: false,
         }
     },
     watch: {
         ...SharedWatch,
     },
     methods: {
+        ready: function () {
+            if (this.isLoading) {
+                this.$root.objectsLoaded++
+            }
+        },
         init: function () {
-            let idx = Math.round(Math.random() * this.assets.library.length)
-            this.media = this.assets.library[idx]
-            this.saveContent()
+            let session = this.$root.session
+            if (session && session.app_id === 7) {
+                let content = session.content
+                if (content.hasOwnProperty('audio') && content.audio) {
+                    this.isLoading = true
+                    this.$root.isOpen = true
+                    this.$root.objectsToLoad = 1
+                    this.media = {
+                        audioSrc: content.audio
+                    }
+                }
+            }
+            if (!this.isLoading) {
+                let idx = Math.round(Math.random() * this.assets.library.length)
+                this.media = this.assets.library[idx]
+                this.saveContent()
+            }
         },
         selected: function (id) {
             let player = this.$refs.preview.player
             player.pause()
-            this.media = this.assets.library.filter(asset => asset.id == id)[
-                0]
+            this.media = this.assets.library.find(asset => asset.id == id)
             this.saveContent()
         },
         setNotes: function (notes) {
@@ -102,14 +120,14 @@ export default {
     created: function () {
         this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
-        this.debug = SharedMethods.debug.bind(this)
+        // this.debug = SharedMethods.debug.bind(this)
         this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(
             this)
         this.$root.isApp = true
         this.getData()
     },
     mounted: function () {
-        this.debug('whats-going-on', "5cffb846bcf86")
+        // this.debug('whats-going-on', '5cffb846bcf86')
     },
     beforeDestroy: function () {
         this.$root.isApp = false

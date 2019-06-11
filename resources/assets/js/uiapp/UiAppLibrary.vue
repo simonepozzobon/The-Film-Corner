@@ -134,7 +134,9 @@ export default {
         },
         items: {
             type: Array,
-            default: function () {},
+            default: function () {
+                return []
+            },
         },
         color: {
             type: String,
