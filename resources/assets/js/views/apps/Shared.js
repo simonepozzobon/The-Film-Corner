@@ -52,7 +52,7 @@ const SharedMethods = {
 
         if (token) {
             url = '/api/v2/load-assets/' + slug + '/' + token
-            console.log(url);
+            // console.log(url);
         }
 
         this.$http.get(url).then(response => {

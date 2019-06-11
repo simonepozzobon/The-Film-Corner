@@ -89,7 +89,7 @@ export default {
             if (session && session.content && session.app_id === 10) {
                 let content = session.content
                 this.notes = content.notes
-                console.log(content);
+                // console.log(content);
                 if (content && content.main_video) {
                     this.isLoading = true
                     this.$root.isOpen = true

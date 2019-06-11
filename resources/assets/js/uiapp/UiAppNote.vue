@@ -29,7 +29,8 @@ import {
     UiBlock,
     UiTitle,
     UiRow
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'UiAppNote',
     components: {
@@ -66,7 +67,8 @@ export default {
             return 'ui-app-note--' + this.color
         }
     },
-    created: function () {
+    mounted: function () {
+        console.log(this.initial);
         if (this.initial) {
             this.notes = this.initial
         }
