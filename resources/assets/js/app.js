@@ -7,8 +7,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
 
-// import * as Sentry from '@sentry/browser'
-// import * as Integrations from '@sentry/integrations'
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue)
@@ -23,11 +23,11 @@ axios.defaults.headers.common = {
 }
 
 Vue.prototype.$http = axios
-//
-// Sentry.init({
-//     dsn: 'https://8515771f52e147579d65db549346dbaf@sentry.io/1478715',
-//     integrations: [new Integrations.Vue({Vue, attachProps: true})],
-// })
+
+Sentry.init({
+    dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
+    integrations: [new Integrations.Vue({Vue, attachProps: true})],
+});
 
 
 const router = new VueRouter({
