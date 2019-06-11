@@ -40,9 +40,11 @@ export default {
     },
     watch: {
         '$root.objectsLoaded': function (count) {
-            this.value = count * 100 / (this.$root.objectsToLoad - 1)
+            let percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
+            this.value = percent
         },
         value: function (value) {
+            // console.log('counter', value);
             if (value >= 100) {
                 this.destroyLoader()
             }
@@ -82,7 +84,7 @@ export default {
                 delay: 1,
                 autoAlpha: 0,
                 onComplete: () => {
-                    console.log('completo', this.$refs.menu);
+                    // console.log('completo', this.$refs.menu);
                 }
             })
         }

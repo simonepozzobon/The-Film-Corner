@@ -1,33 +1,40 @@
 <template>
-    <div class="ui-app-soundscapes-preview">
-        <ui-title
-            title="Preview"
-            color="white"
-            :has-padding="false"
-            ref="title"/>
+<div class="ui-app-soundscapes-preview">
+    <ui-title
+        title="Preview"
+        color="white"
+        :has-padding="false"
+        ref="title"
+    />
 
-        <img
-            :src="image"
-            ref="image"
-            class="ui-app-soundscapes-preview__image" />
+    <ui-image
+        :src="image"
+        :full-width="true"
+        @loaded="$emit('ready')"
+    />
 
-        <ui-app-video-controls
-            @play="play"
-            @pause="pause"
-            @stop="stop"
-            @backward="backward"
-            @forward="forward"/>
-    </div>
+    <ui-app-video-controls
+        class="ui-app-soundscapes-preview__controls"
+        @play="play"
+        @pause="pause"
+        @stop="stop"
+        @backward="backward"
+        @forward="forward"
+    />
+</div>
 </template>
 
 <script>
 import UiAppVideoControls from './UiAppVideoControls.vue'
-import { UiTitle } from '../ui'
-
+import {
+    UiImage,
+    UiTitle
+} from '../ui'
 export default {
     name: 'UiAppSoundscapesPreview',
     components: {
         UiAppVideoControls,
+        UiImage,
         UiTitle,
     },
     props: {
@@ -41,10 +48,10 @@ export default {
         },
         players: {
             type: Array,
-            default: function() {}
+            default: function () {}
         }
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             image: null,
@@ -55,29 +62,28 @@ export default {
         }
     },
     watch: {
-        src: function(src) {
+        src: function (src) {
             this.loadSrc()
         }
     },
-    computed: {
-    },
+    computed: {},
     methods: {
-        changeSrc: function(src = null) {
+        changeSrc: function (src = null) {
             return new Promise((resolve, reject) => {
                 resolve()
             })
         },
-        play: function() {
+        play: function () {
             for (let i = 0; i < this.players.length; i++) {
                 this.players[i].player.play()
             }
         },
-        pause: function() {
+        pause: function () {
             for (let i = 0; i < this.players.length; i++) {
                 this.players[i].player.pause()
             }
         },
-        stop: function() {
+        stop: function () {
             for (let i = 0; i < this.players.length; i++) {
                 if (this.players[i].player.isPlaying()) {
                     this.players[i].player.pause()
@@ -85,17 +91,17 @@ export default {
                 }
             }
         },
-        backward: function() {
+        backward: function () {
             for (let i = 0; i < this.players.length; i++) {
                 this.players[i].player.skipBackward(5)
             }
         },
-        forward: function() {
+        forward: function () {
             for (let i = 0; i < this.players.length; i++) {
                 this.players[i].player.skipForward(5)
             }
         },
-        loadSrc: function() {
+        loadSrc: function () {
             let img = new Image()
             img.addEventListener('load', () => {
                 this.image = this.src
@@ -103,26 +109,26 @@ export default {
                     this.ready.image = true
                 })
             })
-
             img.src = this.src
         },
-        checkReady: function(readyCounter) {
+        checkReady: function (readyCounter) {
             let ready = true
             for (let key in readyCounter) {
                 if (readyCounter.hasOwnProperty(key) && !readyCounter[key]) {
                     ready = false
                 }
             }
-
             if (ready) {
                 this.$emit('ready')
             }
         },
     },
-    created: function() {
-        this.$watch('ready', this.checkReady, { deep: true })
+    created: function () {
+        this.$watch('ready', this.checkReady, {
+            deep: true
+        })
     },
-    mounted: function() {
+    mounted: function () {
         this.loadSrc()
         this.$nextTick(() => {
             this.ready.component = true
@@ -139,18 +145,21 @@ export default {
     height: 100%;
     background-color: $dark-gray;
     @include border-left-radius(24px);
-    padding-left: $app-padding-x;
-    padding-right: $app-padding-x;
-    padding-top: $app-padding-x;
-    padding-bottom: 0;
+    padding: $app-padding-x $app-padding-x 0;
     overflow: hidden;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
 
     &__image {
         max-width: 100%;
         max-height: 100%;
         width: 100%;
         height: auto;
+    }
+
+    &__controls {
+        margin-top: auto;
     }
 }
 </style>

@@ -31,7 +31,7 @@ const SharedMethods = {
     uniqidSimple: function() {
         return '_' + Math.random().toString(36).substr(2, 9)
     },
-    getData: function() {
+    getData: function(token = null) {
         // pulisce la sessione se non è stata salvata
         window.addEventListener('beforeunload', () => {
             try {
@@ -48,6 +48,10 @@ const SharedMethods = {
 
         if (this.$root.session) {
             url = '/api/v2/load-assets/' + slug + '/' + this.$root.session.token
+        }
+
+        if (token) {
+            url = '/api/v2/load-assets/' + slug + '/' + token
         }
 
         this.$http.get(url).then(response => {

@@ -147,6 +147,7 @@ const home = new Vue({
             this.checkSession(session.app_id)
         },
         objectsToLoad: function(value) {
+            // console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         }
     },
