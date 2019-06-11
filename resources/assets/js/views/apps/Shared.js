@@ -71,6 +71,17 @@ const SharedMethods = {
             this.$root.session = null
         })
     },
+    debug: function(slug, token) {
+        this.$http.get('/api/v2/get-app/' + slug)
+            .then(response => {
+                if (response.data.success) {
+                    let session = response.data.sessions.find(session => session.token === token)
+                    session.content = JSON.parse(session.content)
+                    this.$root.session = session
+                    this.init()
+                }
+            })
+    }
 }
 
 export {

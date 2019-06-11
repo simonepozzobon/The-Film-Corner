@@ -106,19 +106,6 @@ export default {
                 return this.size
             }
         },
-        debug: function () {
-            this.$http.get('/api/v2/get-app/frame-crop')
-                .then(response => {
-                    if (response.data.success) {
-                        let session = response.data.sessions.find(
-                            session => session.token ===
-                            '5cff8844f2e0f')
-                        session.content = JSON.parse(session.content)
-                        this.$root.session = session
-                        this.init()
-                    }
-                })
-        },
         init: function () {
             // load app
             if (this.$root.session && this.$root.session.app_id) {
