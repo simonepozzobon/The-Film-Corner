@@ -243,7 +243,7 @@ export default {
         this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
 
         this.$root.isApp = true
-        this.getData("5d00210ec95ee")
+        this.getData()
     },
     mounted: function () {},
     beforeDestroy: function () {
