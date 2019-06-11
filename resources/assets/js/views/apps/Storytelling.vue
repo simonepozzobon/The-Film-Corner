@@ -136,19 +136,30 @@ export default {
                 let slots = Object.assign({}, session.content)
                 delete slots.notes
 
-                this.session = session
-                this.isLoading = true
-                this.$root.isOpen = true
-                this.$root.objectsToLoad = 6
-
+                let count = 0
                 Object.keys(slots).forEach(key => {
                     if (slots[key]) {
-                        this.srcs[key] = slots[key]
+                        count++
                     }
-                    else {
-                        this.ready()
-                    }
+
                 })
+                if (slots && count > 0) {
+                    this.session = session
+                    this.isLoading = true
+                    this.$root.isOpen = true
+                    this.$root.objectsToLoad = 6
+
+                    Object.keys(slots).forEach(key => {
+                        if (slots[key]) {
+                            this.srcs[key] = slots[key]
+                        }
+                        else {
+                            let libraries = this.assets.library
+                            let id = Number(key.replace('slot_', '')) - 1
+                            this.srcs[key] = '/storage/' + this.randomizeSingle(libraries[id].medias).src
+                        }
+                    })
+                }
             }
 
             if (!this.isLoading) {
