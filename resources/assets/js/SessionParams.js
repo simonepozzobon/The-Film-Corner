@@ -8,7 +8,7 @@ const SessionParams = {
     7: ['notes', 'audio'],
     8: ['notes', 'audio', 'video'],
     9: ['notes', 'audio-src', 'audio-vol', 'image'],
-    10: ['main_video', 'videos'],
+    10: ['notes', 'main_video', 'videos'],
     11: ['notes', 'video', 'timelines'],
     12: ['notes', 'video', 'timelines'],
     13: ['notes', 'canvas'],

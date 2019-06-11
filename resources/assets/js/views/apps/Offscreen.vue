@@ -39,12 +39,14 @@ import {
     UiAppNote,
     UiAppTimeline,
     UiAppVideoPreview
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     SharedData,
     SharedMethods,
     SharedWatch
-} from './Shared'
+}
+from './Shared'
 import SizeUtility from '../../Sizes'
 export default {
     name: 'Offscreen',
@@ -106,8 +108,7 @@ export default {
         selected: function (id) {
             let player = this.$refs.preview.player
             player.pause()
-            this.media = this.assets.library.filter(asset => asset.id == id)[
-                0]
+            this.media = this.assets.library.filter(asset => asset.id == id)[0]
             this.saveContent()
         },
         setNotes: function (notes) {
@@ -121,8 +122,7 @@ export default {
                 notes: this.notes
             }
             for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
-                        key)) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
                     content[key] = newContent[key]
                 }
             }

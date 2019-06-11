@@ -154,6 +154,7 @@ export default {
                         }
 
                         this.image = image
+                        this.notes = content['notes']
                     })
                 }
             }
