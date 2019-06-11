@@ -41,7 +41,15 @@ export default {
     watch: {
         '$root.objectsLoaded': function (count) {
             let percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
-            this.value = percent
+            if (percent > 100) {
+                this.value = 100
+            }
+            else if (percent < 0) {
+                this.value = 0
+            }
+            else {
+                this.value = percent
+            }
         },
         value: function (value) {
             // console.log('counter', value);

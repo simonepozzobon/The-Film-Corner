@@ -34,10 +34,12 @@ import {
     UiButton,
     UiContainer,
     UiRow
-} from '../../ui'
+}
+from '../../ui'
 import {
     UiAppFolder
-} from '../../uiapp'
+}
+from '../../uiapp'
 export default {
     name: 'AppTemplate',
     components: {
@@ -71,7 +73,7 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
-        this.$root.session = null
+        // this.$root.session = null
         this.$root.isOpen = false
     }
 }
