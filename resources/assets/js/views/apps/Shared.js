@@ -78,7 +78,9 @@ const SharedMethods = {
                     let session = response.data.sessions.find(session => session.token === token)
                     session.content = JSON.parse(session.content)
                     this.$root.session = session
-                    this.init()
+                    this.$nextTick(() => {
+                        this.init()
+                    })
                 }
             })
     }

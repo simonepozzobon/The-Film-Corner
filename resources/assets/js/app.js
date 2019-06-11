@@ -145,6 +145,9 @@ const home = new Vue({
         session: function(session) {
             this.checkSession(session.app_id)
         },
+        objectsToLoad: function(value) {
+            this.objectsLoaded = 0
+        }
     },
     methods: {
         getSize: function() {
