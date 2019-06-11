@@ -71,6 +71,7 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
+        this.$root.isOpen = false
     }
 }
 </script>

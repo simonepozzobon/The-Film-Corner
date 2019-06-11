@@ -127,6 +127,7 @@ export default {
                 idx)[0]
             session.content = JSON.parse(session.content)
             this.$root.session = session
+            this.$root.isOpen = true
             this.$nextTick(() => {
                 this.$emit('open-session')
             })

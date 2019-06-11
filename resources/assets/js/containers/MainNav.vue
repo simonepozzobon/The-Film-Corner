@@ -80,7 +80,8 @@
     <logged-nav v-if="$root.user" />
     <app-nav v-if="$root.user && $root.isApp" />
     <network-nav v-if="$root.user && $root.isNetwork" />
-    <loader-nav v-if="$root.user && $root.isApp" />
+    <loader-nav v-if="$root.user && $root.isApp && $root.isOpen" />
+    <toasts />
 </div>
 </template>
 
@@ -94,6 +95,7 @@ import {
 import LoggedNav from './LoggedNav.vue'
 import MenuOverlay from './MenuOverlay.vue'
 import NetworkNav from './NetworkNav.vue'
+import Toasts from './Toasts.vue'
 import {
     UiBurger
 } from '../ui'
@@ -107,7 +109,8 @@ export default {
         LogoEuropa,
         UiBurger,
         MenuOverlay,
-        NetworkNav
+        NetworkNav,
+        Toasts
     },
     watch: {
         '$root.window': function () {
@@ -165,11 +168,12 @@ export default {
         logInOrOut: function () {
             if (this.$root.user) {
                 // logout
-                this.$http.get('/api/v2/logout').then(response => {
-                    if (response.data.success) {
-                        this.$root.logout()
-                    }
-                })
+                this.$http.get('/api/v2/logout')
+                    .then(response => {
+                        if (response.data.success) {
+                            this.$root.logout()
+                        }
+                    })
             } else {
                 // login
                 this.$root.goTo('login')

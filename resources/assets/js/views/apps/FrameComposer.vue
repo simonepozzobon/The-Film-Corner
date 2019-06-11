@@ -88,11 +88,12 @@ export default {
             fabric.Object.prototype.toObject = (function (toObject) {
                 return function (propertiesToInclude) {
                     propertiesToInclude = (propertiesToInclude ||
-                        []).concat(
-                        ['originalObj', 'libraryIdx',
-                            'uuid', 'idx'
-                        ]
-                    );
+                            [])
+                        .concat(
+                            ['originalObj', 'libraryIdx',
+                                'uuid', 'idx'
+                            ]
+                        );
                     return toObject.apply(this, [
                         propertiesToInclude
                     ]);
@@ -109,10 +110,13 @@ export default {
                 selectable: false
             })
             this.canvas.add(this.landscape)
-            this.addListeners()
-            this.selectionListeners()
             if (this.$root.session.content.canvas) {
+                this.addListeners(true)
+                this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)
+            } else {
+                this.addListeners()
+                this.selectionListeners()
             }
         },
         loadFromJSON: function () {
@@ -125,12 +129,12 @@ export default {
                     // è uno sfondo
                     for (let j = 0; j < objs.objects.length; j++) {
                         let obj = objs.objects[j]
-                        this.addToCanvas(obj.idx, obj.libraryIdx)
+                        this.addToCanvas(obj.idx, obj.libraryIdx, true)
                     }
                 } else {
                     // è un'immagine
                     let obj = objs
-                    this.addToCanvas(obj.idx, obj.libraryIdx)
+                    this.addToCanvas(obj.idx, obj.libraryIdx, true)
                 }
             }
         },
@@ -154,18 +158,20 @@ export default {
             this.canvas.calcOffset()
             this.canvas.renderAll()
         },
-        addListeners: function () {
-            this.addListener(this.landscape)
-            this.addListener(this.canvas)
+        addListeners: function (fromOpen = false) {
+            this.addListener(this.landscape, fromOpen)
+            this.addListener(this.canvas, fromOpen)
         },
-        addListener: function (obj) {
+        addListener: function (obj, fromOpen = false) {
             let events = ['object:added', 'object:removed',
                 'object:modified', 'object:rotating', 'object:scaling',
                 'object:moving'
             ]
             for (let j = 0; j < events.length; j++) {
                 obj.on(events[j], () => {
-                    this.$nextTick(this.saveCanvas)
+                    this.$nextTick(() => {
+                        this.saveCanvas(events[j], fromOpen)
+                    })
                 })
             }
         },
@@ -199,7 +205,11 @@ export default {
                 }
             }
         },
-        saveCanvas: _.debounce(function () {
+        saveCanvas: function (event = false, fromOpen = false) {
+            // console.log('salva', event, fromOpen);
+            if (event === 'object:added' && fromOpen === true) {
+                this.$root.objectsLoaded++
+            }
             // Save canvas to JSON for future edit
             let content = this.$root.session.content
             let json_canvas = JSON.stringify(this.canvas.toDatalessJSON())
@@ -215,10 +225,10 @@ export default {
                 ...this.$root.session,
                 content: content,
             }
-        }, 500),
+        },
         setValue: function (value) {},
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
-        addToCanvas: function (index, libraryID) {
+        addToCanvas: function (index, libraryID, fromOpen = false) {
             let library = this.assets.library.filter(library => library.id ==
                 libraryID)[0]
             let asset = library.medias.filter(asset => asset.id == index)[0]
@@ -274,7 +284,8 @@ export default {
                     }
                     obj.setCoords()
                     this.objs.push(obj)
-                    this.addListener(obj)
+                    // console.log('aggiungi listener', fromOpen);
+                    this.addListener(obj, fromOpen)
                     this.canvas.add(obj)
                     // force center
                     obj.viewportCenter()
@@ -326,7 +337,7 @@ export default {
             })
             this.canvas.calcOffset()
             this.canvas.renderAll()
-            this.saveCanvas()
+            this.saveCanvas(false, fromOpen)
         },
         selected: function (index, libraryID) {
             this.addToCanvas(index, libraryID)

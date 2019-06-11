@@ -47,7 +47,8 @@ const SharedMethods = {
         }
 
         this.$http.get(url).then(response => {
-            console.dir(response.data);
+            console.log('caricata')
+            // console.dir(response.data);
             if (response.data.success) {
                 this.app = response.data.app
                 this.assets = response.data.assets
@@ -63,10 +64,12 @@ const SharedMethods = {
     },
     deleteEmptySession: function() {
         // verificare se è vuota
-        this.$root.session = null
         if (Boolean(this.session.is_empty)) {
             this.$http.delete('/api/v2/session/' + this.session.token + '/true')
         }
+        this.$nextTick(() => {
+            this.$root.session = null
+        })
     },
 }
 
