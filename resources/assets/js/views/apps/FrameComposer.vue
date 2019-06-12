@@ -35,7 +35,8 @@
 <script>
 import {
     fabric
-} from 'fabric'
+}
+from 'fabric'
 import AppTemplate from './AppTemplate.vue'
 import SizeUtility from '../../Sizes'
 import {
@@ -43,12 +44,14 @@ import {
     UiAppLibrary,
     UiAppNote,
     UiAppPreview,
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     SharedData,
     SharedMethods,
     SharedWatch
-} from './Shared'
+}
+from './Shared'
 import _ from 'lodash'
 require('gsap/ScrollToPlugin')
 export default {
@@ -87,8 +90,7 @@ export default {
             // aggiunge delle proprietà custom all'oggetto di fabricJS
             fabric.Object.prototype.toObject = (function (toObject) {
                 return function (propertiesToInclude) {
-                    propertiesToInclude = (propertiesToInclude ||
-                            [])
+                    propertiesToInclude = (propertiesToInclude || [])
                         .concat(
                             ['originalObj', 'libraryIdx',
                                 'uuid', 'idx'
@@ -114,7 +116,8 @@ export default {
                 this.addListeners(true)
                 this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)
-            } else {
+            }
+            else {
                 this.addListeners()
                 this.selectionListeners()
             }
@@ -131,7 +134,8 @@ export default {
                         let obj = objs.objects[j]
                         this.addToCanvas(obj.idx, obj.libraryIdx, true)
                     }
-                } else {
+                }
+                else {
                     // è un'immagine
                     let obj = objs
                     this.addToCanvas(obj.idx, obj.libraryIdx, true)
@@ -200,7 +204,8 @@ export default {
                     layerInverse.forEach(asset => {
                         asset.unsetActive()
                     })
-                } else {
+                }
+                else {
                     layer.unsetActive()
                 }
             }
@@ -216,7 +221,8 @@ export default {
             for (let key in content) {
                 if (content.hasOwnProperty(key) && key == 'canvas') {
                     content.canvas = json_canvas
-                } else if (content.hasOwnProperty(key) && key ==
+                }
+                else if (content.hasOwnProperty(key) && key ==
                     'rendered') {
                     content.rendered = this.canvas.toDataURL('png')
                 }
@@ -270,7 +276,8 @@ export default {
                         if (objHeight > height) {
                             if (scaleFactor > 1) {
                                 scaleFactor = height / objHeight
-                            } else {
+                            }
+                            else {
                                 scaleFactor = (height * scaleFactor) /
                                     objHeight
                             }
@@ -291,7 +298,8 @@ export default {
                     obj.viewportCenter()
                     this.canvas.calcOffset()
                     this.canvas.renderAll()
-                } else {
+                }
+                else {
                     let items = this.landscape.getObjects()
                     for (let i = 0; i < items.length; i++) {
                         this.landscape.removeWithUpdate(items[i])
@@ -355,6 +363,7 @@ export default {
         },
         setNotes: function (notes) {
             this.notes = notes
+            this.saveCanvas()
         }
     },
     created: function () {
