@@ -27,6 +27,7 @@
         <ui-app-note
             class="mt-4"
             @changed="setNotes"
+            :initial="notes"
         />
     </template>
 </app-template>
@@ -101,17 +102,21 @@ export default {
                     ]);
                 };
             })(fabric.Object.prototype.toObject)
+
             this.canvas = new fabric.Canvas(canvas, {
                 backgroundColor: '#f3f3f3',
                 centeredScaling: true,
             })
+
             this.canvas.setWidth(this.canvasWidth)
             this.canvas.setHeight(this.canvasHeight)
             this.landscape = new fabric.Group()
             this.landscape.set({
                 selectable: false
             })
+
             this.canvas.add(this.landscape)
+
             if (this.$root.session.content.canvas) {
                 this.addListeners(true)
                 this.selectionListeners()
@@ -121,11 +126,17 @@ export default {
                 this.addListeners()
                 this.selectionListeners()
             }
+
         },
         loadFromJSON: function () {
-            let canvasParsed = JSON.parse(this.$root.session.content.canvas)
+            let content = this.$root.session.content
+            let canvasParsed = JSON.parse(content.canvas)
             let objects = canvasParsed.objects
+
+            this.$root.isOpen = true
             this.$root.objectsToLoad = objects.length
+
+            this.notes = content.notes
             for (let i = 0; i < objects.length; i++) {
                 let objs = objects[i]
                 if (objs.type == 'group') {
@@ -215,21 +226,31 @@ export default {
             if (event === 'object:added' && fromOpen === true) {
                 this.$root.objectsLoaded++
             }
-            // Save canvas to JSON for future edit
+
             let content = this.$root.session.content
+            let newContent = {
+                canvas: '',
+                rendered: null,
+                notes: this.notes
+            }
+
+            // Save canvas to JSON for future edit
             let json_canvas = JSON.stringify(this.canvas.toDatalessJSON())
+
             for (let key in content) {
                 if (content.hasOwnProperty(key) && key == 'canvas') {
-                    content.canvas = json_canvas
+                    newContent.canvas = json_canvas
                 }
-                else if (content.hasOwnProperty(key) && key ==
-                    'rendered') {
-                    content.rendered = this.canvas.toDataURL('png')
+                else if (content.hasOwnProperty(key) && key == 'rendered') {
+                    newContent.rendered = this.canvas.toDataURL('png')
                 }
             }
+
+            console.log(newContent);
+
             this.$root.session = {
                 ...this.$root.session,
-                content: content,
+                content: newContent,
             }
         },
         setValue: function (value) {},
@@ -371,7 +392,7 @@ export default {
         this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         // this.$root.session =
-        this.getData()
+        this.getData('5d00cdc759443')
     },
     mounted: function () {},
     beforeDestroy: function () {
