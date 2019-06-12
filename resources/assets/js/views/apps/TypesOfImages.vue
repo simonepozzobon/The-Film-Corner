@@ -40,6 +40,7 @@
             class="mt-4"
             :color="color"
             @changed="setNotes"
+            :initial="notes"
         />
     </template>
 </app-template>
@@ -53,18 +54,21 @@ import {
     UiAppImage,
     UiAppLibrary,
     UiAppNote
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     SharedData,
     SharedMethods,
     SharedWatch
-} from './Shared'
+}
+from './Shared'
 import {
     UiBlock,
     UiButton,
     UiTitle,
     UiRow
-} from '../../ui'
+}
+from '../../ui'
 export default {
     name: 'TypesOfImages',
     components: {
@@ -94,16 +98,19 @@ export default {
             let images
             let session = this.$root.session
             if (session && session.app_id === 3) {
-                if (session.content && session.content.hasOwnProperty(
-                        'images') && session.content.images) {
+                if (session.content && session.content.hasOwnProperty('images') && session.content.images) {
+
                     this.$root.isOpen = true
                     this.isLoading = true
                     this.$root.objectsToLoad = session.content.images.length
+
                     images = session.content.images
                     this.media = {
                         leftSrc: images[0],
                         rightSrc: images[1]
                     }
+
+                    this.notes = session.content.notes
                 }
             }
             if (this.assets && !this.isLoading) {
@@ -119,6 +126,7 @@ export default {
         selected: function () {},
         setNotes: function (notes) {
             this.notes = notes
+            this.saveContent()
         },
         loaded: function () {
             if (this.isLoading) {
@@ -132,11 +140,10 @@ export default {
                     this.media.leftSrc,
                     this.media.rightSrc,
                 ],
-                notes: 'no notes'
+                notes: this.notes
             }
             for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
-                        key)) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
                     content[key] = newContent[key]
                 }
             }

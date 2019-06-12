@@ -37,12 +37,14 @@ import {
     UiAppNote,
     UiAppTimeline,
     UiAppAudioPreview
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     SharedData,
     SharedMethods,
     SharedWatch
-} from './Shared'
+}
+from './Shared'
 export default {
     name: 'WhatsGoingOn',
     components: {
@@ -75,6 +77,7 @@ export default {
             let session = this.$root.session
             if (session && session.app_id === 7) {
                 let content = session.content
+                this.notes = content.notes
                 if (content.hasOwnProperty('audio') && content.audio) {
                     this.isLoading = true
                     this.$root.isOpen = true
@@ -98,6 +101,7 @@ export default {
         },
         setNotes: function (notes) {
             this.notes = notes
+            this.saveContent()
         },
         saveContent: _.debounce(function () {
             let content = this.$root.session.content
@@ -121,8 +125,7 @@ export default {
         this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
         // this.debug = SharedMethods.debug.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(
-            this)
+        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
         this.$root.isApp = true
         this.getData()
     },

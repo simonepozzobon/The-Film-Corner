@@ -48,15 +48,18 @@ import {
     UiAppGiroscope,
     UiAppLibrary,
     UiAppNote
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     UiButton
-} from '../../ui'
+}
+from '../../ui'
 import {
     SharedData,
     SharedMethods,
     SharedWatch
-} from './Shared'
+}
+from './Shared'
 export default {
     name: 'FrameCrop',
     components: {
@@ -85,7 +88,8 @@ export default {
         'frames': function (frames) {
             if (frames.length > 0) {
                 this.clearAll = true
-            } else {
+            }
+            else {
                 this.clearAll = false
             }
         }
@@ -137,8 +141,7 @@ export default {
                     })
                     .on('load', () => {
                         this.renderer = this.viewer.getRenderer()
-                        let height = SizeUtility.get(this.$refs.preview
-                            .$el)
+                        let height = SizeUtility.get(this.$refs.preview.$el)
                         this.$refs.library.setLibraryHeight(height.hClean)
                         // this.$nextTick(this.cropFrame)
                     })
@@ -186,8 +189,7 @@ export default {
                 src: '/img/test-app/360.jpg',
             }
             for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(
-                        key)) {
+                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
                     content[key] = newContent[key]
                 }
             }

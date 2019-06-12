@@ -64,6 +64,7 @@
             class="mt-4"
             :color="color"
             @changed="setNotes"
+            :initial="notes"
         />
     </template>
 </app-template>

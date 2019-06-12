@@ -91,7 +91,6 @@ export default {
             image: null,
             current: null,
             isLoading: false,
-            jumbo: 0,
         }
     },
     watch: {
@@ -230,6 +229,7 @@ export default {
         },
         setNotes: function (notes) {
             this.notes = notes
+            this.saveContent()
         },
         ready: function () {
             this.$nextTick(() => {

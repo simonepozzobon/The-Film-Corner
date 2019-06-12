@@ -46,7 +46,7 @@ const SharedMethods = {
         let slug = this.$route.name
         let url = '/api/v2/load-assets/' + slug
 
-        if (this.$root.session) {
+        if (this.$root.session && this.$root.session.token) {
             url = '/api/v2/load-assets/' + slug + '/' + this.$root.session.token
         }
 
@@ -55,6 +55,8 @@ const SharedMethods = {
             // console.log(url);
         }
 
+        console.log('url per il caricamento', url);
+
         this.$http.get(url).then(response => {
             console.log('caricata')
             // console.dir(response.data);
@@ -62,7 +64,8 @@ const SharedMethods = {
                 this.app = response.data.app
                 this.assets = response.data.assets
                 let session = response.data.session
-                session.content = JSON.parse(session.content)
+                console.log(session);
+                session.content = session.content ? JSON.parse(session.content) : {}
 
                 this.session = session
 

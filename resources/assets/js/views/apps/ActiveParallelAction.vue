@@ -223,7 +223,7 @@ export default {
                 notes: this.notes
             }
 
-            console.log(newContent, content);
+            // console.log(newContent, content);
 
             for (let key in content) {
                 if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {

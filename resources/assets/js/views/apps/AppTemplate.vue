@@ -73,7 +73,12 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
-        // this.$root.session = null
+        this.$root.session = {
+            app: null,
+            app_id: 0,
+            content: {},
+            token: null
+        }
         this.$root.isOpen = false
     }
 }

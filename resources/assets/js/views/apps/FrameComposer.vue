@@ -91,12 +91,7 @@ export default {
             // aggiunge delle proprietà custom all'oggetto di fabricJS
             fabric.Object.prototype.toObject = (function (toObject) {
                 return function (propertiesToInclude) {
-                    propertiesToInclude = (propertiesToInclude || [])
-                        .concat(
-                            ['originalObj', 'libraryIdx',
-                                'uuid', 'idx'
-                            ]
-                        );
+                    propertiesToInclude = (propertiesToInclude || []).concat(['originalObj', 'libraryIdx', 'uuid', 'idx']);
                     return toObject.apply(this, [
                         propertiesToInclude
                     ]);
@@ -246,7 +241,7 @@ export default {
                 }
             }
 
-            console.log(newContent);
+            // console.log(newContent);
 
             this.$root.session = {
                 ...this.$root.session,
@@ -392,7 +387,7 @@ export default {
         this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         // this.$root.session =
-        this.getData('5d00cdc759443')
+        this.getData()
     },
     mounted: function () {},
     beforeDestroy: function () {
