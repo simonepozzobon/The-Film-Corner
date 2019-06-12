@@ -141,7 +141,6 @@ export default {
                     if (slots[key]) {
                         count++
                     }
-
                 })
                 if (slots && count > 0) {
                     this.session = session

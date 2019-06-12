@@ -54,11 +54,18 @@ export default {
     },
     data: function () {
         return {
-            notes: null
+            notes: null,
+            initialized: false,
         }
     },
     watch: {
-        'notes': function (notes) {
+        initial: function (notes) {
+            if (!this.initialized) {
+                this.notes = notes
+                this.initialized = true
+            }
+        },
+        notes: function (notes) {
             this.$emit('changed', notes)
         }
     },
