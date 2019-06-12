@@ -144,7 +144,8 @@ export default {
                 else {
                     // è un'immagine
                     let obj = objs
-                    this.addToCanvas(obj.idx, obj.libraryIdx, true)
+                    console.log(obj);
+                    this.addToCanvas(obj.idx, obj.libraryIdx, true, obj)
                 }
             }
         },
@@ -201,10 +202,8 @@ export default {
             let objs = hasToActive ? el.selected : el.deselected
             for (let i = 0; i < objs.length; i++) {
                 let obj = objs[i].toJSON()
-                let layer = layers.filter(layer => layer.uuid == obj.uuid)[
-                    0]
-                let layerInverse = layers.filter(layer => layer.uuid != obj
-                    .uuid)
+                let layer = layers.filter(layer => layer.uuid == obj.uuid)[0]
+                let layerInverse = layers.filter(layer => layer.uuid != obj.uuid)
                 if (hasToActive) {
                     layer.setActive()
                     layerInverse.forEach(asset => {
@@ -250,7 +249,7 @@ export default {
         },
         setValue: function (value) {},
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
-        addToCanvas: function (index, libraryID, fromOpen = false) {
+        addToCanvas: function (index, libraryID, fromOpen = false, savedObj = null) {
             let library = this.assets.library.filter(library => library.id ==
                 libraryID)[0]
             let asset = library.medias.filter(asset => asset.id == index)[0]
@@ -260,104 +259,126 @@ export default {
             let image = new fabric.Image.fromURL(url, (obj, opts) => {
                 // new Object
                 let uuid = this.uniqid()
-                obj.set({
-                    selectable: true,
-                    centeredScaling: true,
-                    originX: 'center',
-                    originalObj: asset,
-                    libraryIdx: libraryID,
-                    uuid: uuid,
-                    idx: index,
-                })
-                // se si tratta di un elemento e non di uno sfondo
-                if (libraryID != 1) {
+
+                if (fromOpen && savedObj) {
+                    console.log('from open', fromOpen);
                     obj.set({
-                        originY: 'center',
+                        selectable: true,
+                        centeredScaling: true,
+                        originX: 'center',
+                        ...savedObj,
                     })
-                    let width = this.canvas.getWidth()
-                    let height = this.canvas.getHeight()
-                    let objWidth = obj.getScaledWidth()
-                    let objHeight = obj.getScaledHeight()
-                    let scaleFactor = this.canvasWidth / objWidth
-                    if (objWidth > width || objHeight > height) {
-                        if (objWidth > width) {
-                            if (scaleFactor < 1) {
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor,
-                                })
-                            }
-                        }
-                        objHeight = obj.getScaledHeight()
-                        if (objHeight > height) {
-                            if (scaleFactor > 1) {
-                                scaleFactor = height / objHeight
-                            }
-                            else {
-                                scaleFactor = (height * scaleFactor) /
-                                    objHeight
-                            }
-                            if (scaleFactor < 1) {
-                                obj.set({
-                                    scaleX: scaleFactor,
-                                    scaleY: scaleFactor,
-                                })
-                            }
-                        }
-                    }
+
                     obj.setCoords()
                     this.objs.push(obj)
                     // console.log('aggiungi listener', fromOpen);
                     this.addListener(obj, fromOpen)
                     this.canvas.add(obj)
-                    // force center
-                    obj.viewportCenter()
-                    this.canvas.calcOffset()
                     this.canvas.renderAll()
                 }
                 else {
-                    let items = this.landscape.getObjects()
-                    for (let i = 0; i < items.length; i++) {
-                        this.landscape.removeWithUpdate(items[i])
-                    }
-                    this.landscape.addWithUpdate(obj)
-                    let width = this.landscape.getScaledWidth()
-                    let scaleFactor = this.canvasWidth / width
-                    if (width > this.canvasWidth) {
-                        this.landscape.set({
-                            scaleX: scaleFactor,
-                            scaleY: scaleFactor,
-                        })
-                    }
-                    // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
-                    // per coprire tutto lo spazio
-                    let height = this.landscape.getScaledHeight()
-                    if (height < this.canvasHeight) {
-                        scaleFactor = this.canvasHeight / height
-                        this.landscape.set({
-                            scaleX: scaleFactor,
-                            scaleY: scaleFactor,
-                        })
-                    }
-                    // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
-                    width = this.landscape.getScaledWidth()
-                    if (width < this.canvasWidth) {
-                        scaleFactor = (this.canvasWidth *
-                            scaleFactor) / width
-                        this.landscape.set({
-                            scaleX: scaleFactor,
-                            scaleY: scaleFactor,
-                        })
-                    }
-                    // centra lo sfondo
-                    this.landscape.set({
-                        left: 0,
+                    obj.set({
+                        selectable: true,
+                        centeredScaling: true,
+                        originX: 'center',
+                        originalObj: asset,
+                        libraryIdx: libraryID,
+                        uuid: uuid,
+                        idx: index,
                     })
-                    this.landscape.viewportCenter()
-                    this.landscape.setCoords()
-                    this.canvas.calcOffset()
-                    this.canvas.renderAll()
+
+                    // se si tratta di un elemento e non di uno sfondo
+                    if (libraryID != 1) {
+                        obj.set({
+                            originY: 'center',
+                        })
+                        let width = this.canvas.getWidth()
+                        let height = this.canvas.getHeight()
+                        let objWidth = obj.getScaledWidth()
+                        let objHeight = obj.getScaledHeight()
+                        let scaleFactor = this.canvasWidth / objWidth
+                        if (objWidth > width || objHeight > height) {
+                            if (objWidth > width) {
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor,
+                                    })
+                                }
+                            }
+                            objHeight = obj.getScaledHeight()
+                            if (objHeight > height) {
+                                if (scaleFactor > 1) {
+                                    scaleFactor = height / objHeight
+                                }
+                                else {
+                                    scaleFactor = (height * scaleFactor) /
+                                        objHeight
+                                }
+                                if (scaleFactor < 1) {
+                                    obj.set({
+                                        scaleX: scaleFactor,
+                                        scaleY: scaleFactor,
+                                    })
+                                }
+                            }
+                        }
+                        obj.setCoords()
+                        this.objs.push(obj)
+                        // console.log('aggiungi listener', fromOpen);
+                        this.addListener(obj, fromOpen)
+                        this.canvas.add(obj)
+                        // force center
+                        obj.viewportCenter()
+                        this.canvas.calcOffset()
+                        this.canvas.renderAll()
+                    }
+                    else {
+                        let items = this.landscape.getObjects()
+                        for (let i = 0; i < items.length; i++) {
+                            this.landscape.removeWithUpdate(items[i])
+                        }
+                        this.landscape.addWithUpdate(obj)
+                        let width = this.landscape.getScaledWidth()
+                        let scaleFactor = this.canvasWidth / width
+                        if (width > this.canvasWidth) {
+                            this.landscape.set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor,
+                            })
+                        }
+                        // se il canvas non viene riempito anche in altezza ridimensiona lo sfondo
+                        // per coprire tutto lo spazio
+                        let height = this.landscape.getScaledHeight()
+                        if (height < this.canvasHeight) {
+                            scaleFactor = this.canvasHeight / height
+                            this.landscape.set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor,
+                            })
+                        }
+                        // se il canvas non riempi la schermata in orizzontale ricalcola le dimensioni
+                        width = this.landscape.getScaledWidth()
+                        if (width < this.canvasWidth) {
+                            scaleFactor = (this.canvasWidth *
+                                scaleFactor) / width
+                            this.landscape.set({
+                                scaleX: scaleFactor,
+                                scaleY: scaleFactor,
+                            })
+                        }
+                        // centra lo sfondo
+                        this.landscape.set({
+                            left: 0,
+                        })
+                        this.landscape.viewportCenter()
+                        this.landscape.setCoords()
+                        this.canvas.calcOffset()
+                        this.canvas.renderAll()
+                    }
                 }
+
+
             })
             this.canvas.calcOffset()
             this.canvas.renderAll()
