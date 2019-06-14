@@ -1,5 +1,5 @@
 let mix = require('laravel-mix')
-
+require('laravel-mix-polyfill')
 
 /*
  |--------------------------------------------------------------------------
@@ -28,6 +28,12 @@ mix
                 '_js': path.resolve(__dirname, 'resources/assets/js')
             }
         }
+    })
+    .polyfill({
+        enabled: true,
+        useBuiltIns: 'usage',
+        targets: 'last 2 version, not dead',
+        debug: true
     })
     .browserSync({
         proxy: 'http://thefilmcorner.test',

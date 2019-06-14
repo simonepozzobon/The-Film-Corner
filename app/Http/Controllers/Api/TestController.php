@@ -54,7 +54,27 @@ class TestController extends Controller
 
     }
 
-    public function convert_student_to_teacher() {
+    public function convert_teacher_to_user() {
+        $teachers = Teacher::all();
+
+        foreach ($teachers as $key => $teacher) {
+            $user = new User();
+            $user->role_id = 1;
+            $user->old_id = $teacher->id;
+            $user->name = $teacher->name;
+            $user->email = $teacher->email;
+            $user->password = $teacher->password;
+            $user->remember_token = $teacher->remember_token;
+            $user->created_at = $teacher->created_at;
+            $user->updated_at = $teacher->updated_at;
+            $user->save();
+            dump('Insegnante convertito -> ' . $user->email);
+        }
+
+        dd('completato');
+    }
+
+    public function convert_student_to_user() {
         $students = Student::all();
 
         foreach ($students as $key => $student) {
