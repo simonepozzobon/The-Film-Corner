@@ -1,24 +1,36 @@
 <template>
-    <ui-row :no-gutters="true">
-        <ui-block :size="12">
-            <div class="ui-app-note" :class="colorClass">
-                <ui-title :title="title" :has-padding="false"/>
-                <div class="ui-app-note__field">
-                    <textarea
-                        name="name"
-                        rows="8"
-                        cols="80"
-                        class="form-control ui-app-note__text"
-                        v-model="notes">
+<ui-row :no-gutters="true">
+    <ui-block :size="12">
+        <div
+            class="ui-app-note"
+            :class="colorClass"
+        >
+            <ui-title
+                :title="title"
+                :has-padding="false"
+            />
+            <div class="ui-app-note__field">
+                <textarea
+                    name="name"
+                    rows="8"
+                    cols="80"
+                    class="form-control ui-app-note__text"
+                    v-model="notes"
+                >
                     </textarea>
-                </div>
             </div>
-        </ui-block>
-    </ui-row>
+        </div>
+    </ui-block>
+</ui-row>
 </template>
 
 <script>
-import { UiBlock, UiTitle, UiRow } from '../ui'
+import {
+    UiBlock,
+    UiTitle,
+    UiRow
+}
+from '../ui'
 export default {
     name: 'UiAppNote',
     components: {
@@ -34,24 +46,40 @@ export default {
         color: {
             type: String,
             default: 'green'
-        }
+        },
+        initial: {
+            type: String,
+            default: null,
+        },
     },
-    data: function() {
+    data: function () {
         return {
-            notes: null
+            notes: null,
+            initialized: false,
         }
     },
     watch: {
-        'notes': function(notes) {
+        initial: function (notes) {
+            if (!this.initialized) {
+                this.notes = notes
+                this.initialized = true
+            }
+        },
+        notes: function (notes) {
             this.$emit('changed', notes)
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'ui-app-note--' + this.color
         }
-    }
-
+    },
+    mounted: function () {
+        console.log(this.initial);
+        if (this.initial) {
+            this.notes = this.initial
+        }
+    },
 }
 </script>
 

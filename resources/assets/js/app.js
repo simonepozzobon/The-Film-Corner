@@ -1,16 +1,21 @@
 require('./bootstrap')
 
+import axios from 'axios'
+import BootstrapVue from 'bootstrap-vue'
+import Cookie from './Cookies'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import Cookie from './Cookies'
-import axios from 'axios'
+
 import * as Sentry from '@sentry/browser'
-import BootstrapVue from 'bootstrap-vue'
+import * as Integrations from '@sentry/integrations'
+
+Vue.config.productionTip = false
+
 Vue.use(BootstrapVue)
-
-
+Vue.use(BootstrapVue)
 Vue.use(VueRouter)
+
 Vue.prototype.$cookie = Cookie
 
 axios.defaults.headers.common = {
@@ -20,6 +25,10 @@ axios.defaults.headers.common = {
 
 Vue.prototype.$http = axios
 
+// Sentry.init({
+//     dsn: 'https://43543bff49ce47debc45b09194a4dda8@sentry.io/1426776',
+//     integrations: [new Integrations.Vue({Vue, attachProps: true})],
+// })
 
 
 const router = new VueRouter({
@@ -124,14 +133,22 @@ const home = new Vue({
             user: null,
             token: null,
             isApp: null,
+            isOpen: null,
             isNetwork: null,
             space: true,
             session: null,
+            progress: 0,
+            objectsToLoad: 0,
+            objectsLoaded: 0,
         }
     },
     watch: {
         session: function(session) {
             this.checkSession(session.app_id)
+        },
+        objectsToLoad: function(value) {
+            // console.log('oggetti da caricare', value);
+            this.objectsLoaded = 0
         }
     },
     methods: {

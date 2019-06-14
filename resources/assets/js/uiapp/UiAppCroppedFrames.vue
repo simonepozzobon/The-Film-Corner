@@ -1,21 +1,23 @@
 <template>
-    <div>
-        <transition-group>
-            <single-frame
-                v-for="(frame, i) in frames"
-                :key="frame.id"
-                :idx="i"
-                :uuid="frame.id"
-                :img="frame.img"
-                @changed="changed"
-                @delete-frame="deleteFrame"/>
-        </transition-group>
-    </div>
+<div>
+    <transition-group>
+        <single-frame
+            v-for="(frame, i) in frames"
+            :key="frame.id"
+            :idx="i"
+            :text="frame.text"
+            :uuid="frame.id"
+            :img="frame.img"
+            @changed="changed"
+            @delete-frame="deleteFrame"
+            @loaded="$emit('loaded')"
+        />
+    </transition-group>
+</div>
 </template>
 
 <script>
 import SingleFrame from './sub/cropped/SingleFrame.vue'
-
 export default {
     name: 'UiAppCroppedFrames',
     components: {
@@ -24,19 +26,19 @@ export default {
     props: {
         frames: {
             type: Array,
-            default: function() {}
+            default: function () {}
         }
     },
     methods: {
-        deleteFrame: function(id) {
+        deleteFrame: function (id) {
             this.$emit('delete-frame', id)
         },
-        changed: function(value, uuid) {
+        changed: function (value, uuid) {
             this.$emit('changed', value, uuid)
         }
     },
     filters: {
-        formatFrameTitle: function(idx) {
+        formatFrameTitle: function (idx) {
             return 'Frame ' + (idx + 1)
         }
     }
@@ -45,5 +47,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
-
 </style>

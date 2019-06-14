@@ -1,31 +1,36 @@
 <template>
-    <div class="mixer-channel">
-        <vue-slider
-            ref="slider"
-            direction="btt"
-            v-model="volume"
-            :height="100"
-            :width="8"
-            :dotSize="18"
-            :value="0"
-            :disabled="isDisable"
+<div class="mixer-channel">
+    <vue-slider
+        ref="slider"
+        direction="btt"
+        v-model="volume"
+        :height="100"
+        :width="8"
+        :dotSize="18"
+        :value="0"
+        :disabled="isDisable"
+    />
+    <div
+        v-if="!isDisable"
+        class="mixer-channel__delete"
+    >
+        <ui-button
+            title="Clear"
+            color="white"
+            :has-container="false"
+            :has-margin="false"
+            @click="removeTrack"
         />
-        <div
-            v-if="!isDisable"
-            class="mixer-channel__delete">
-            <ui-button
-                title="Clear"
-                color="white"
-                :has-container="false"
-                :has-margin="false"
-                @click="removeTrack"/>
-        </div>
     </div>
+</div>
 </template>
 
 <script>
 import VueSlider from 'vue-slider-component/dist-css/vue-slider-component.umd'
-import { UiButton } from '../../../ui'
+import {
+    UiButton
+}
+from '../../../ui'
 export default {
     name: 'MixerCannel',
     components: {
@@ -41,30 +46,35 @@ export default {
             type: Number,
             default: 0,
         },
-        src: [Object, String]
+        src: [Object, String],
+        vol: [Number, String],
     },
-    data: function() {
+    data: function () {
         return {
             volume: 0,
             isDisable: true,
         }
     },
     watch: {
-        src: function(src) {
+        src: function (src) {
             if (src && src != null) {
                 this.isDisable = false
-            } else {
+            }
+            else {
                 this.isDisable = true
             }
         },
-        volume: function(volume) {
+        vol: function (vol) {
+            this.volume = vol
+        },
+        volume: function (volume) {
             if (this.src) {
                 this.$emit('volume', volume, this.idx)
             }
         },
     },
     methods: {
-        removeTrack: function() {
+        removeTrack: function () {
             this.volume = 0
             this.$nextTick(() => {
                 this.$emit('remove-track', this.idx)
@@ -85,7 +95,6 @@ $bgColor: $light-gray;
 @import 'vue-slider-component/lib/styles/mark.scss';
 @import 'vue-slider-component/lib/styles/slider.scss';
 @import 'vue-slider-component/lib/theme/default.scss';
-
 
 .mixer-channel {
     &__delete {

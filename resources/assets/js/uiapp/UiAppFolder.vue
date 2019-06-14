@@ -1,43 +1,42 @@
 <template>
-    <ui-folder
-        class="ui-app-folder"
-        ref="folder"
-        :title="app.title"
-        :app="app.title"
-        :appPath="app.slug"
-        :cat="app.category.name"
-        :catPath="app.category.slug"
-        :pavilion="app.category.section.name"
-        :pavilionPath="app.category.section.slug"
-        :color="app.category.section.color_class"
-        :has-times="isOpen"
-        @click="toggleFolder">
+<ui-folder class="ui-app-folder"
+    ref="folder"
+    :title="app.title"
+    :app="app.title"
+    :appPath="app.slug"
+    :cat="app.category.name"
+    :catPath="app.category.slug"
+    :pavilion="app.category.section.name"
+    :pavilionPath="app.category.section.slug"
+    :color="app.category.section.color_class"
+    :has-times="isOpen"
+    @click="toggleFolder">
 
-        <div class="ui-app-folder__description">
-            <p
-                ref="description"
-                class="ui-app-folder__content"
-                v-html="description">
-            </p>
-        </div>
+    <div class="ui-app-folder__description">
+        <p ref="description"
+            class="ui-app-folder__content"
+            v-html="description">
+        </p>
+    </div>
 
-        <ui-paragraph
-            :full-width="true">
-            <ui-button
-                color="dark"
-                align-self="start"
-                :has-container="false"
-                @click="toggleFolder">
-                {{ button }}
-            </ui-button>
-        </ui-paragraph>
-    </ui-folder>
+    <ui-paragraph :full-width="true">
+        <ui-button color="dark"
+            align-self="start"
+            :has-container="false"
+            @click="toggleFolder">
+            {{ button }}
+        </ui-button>
+    </ui-paragraph>
+</ui-folder>
 </template>
 
 <script>
 const clipper = require('text-clipper')
-import { UiButton, UiFolder, UiParagraph } from '../ui'
-
+import {
+    UiButton,
+    UiFolder,
+    UiParagraph
+} from '../ui'
 export default {
     name: 'UiAppFolder',
     components: {
@@ -48,11 +47,11 @@ export default {
     props: {
         app: {
             type: Object,
-            default: function() {},
+            default: function () {},
             required: true
         }
     },
-    data: function() {
+    data: function () {
         return {
             isOpen: true,
             description: null,
@@ -60,41 +59,41 @@ export default {
         }
     },
     watch: {
-        app: function(app) {
+        app: function (app) {
             this.setDescription()
         },
     },
     methods: {
-        setDescription: function() {
+        setDescription: function () {
             if (this.app.description) {
                 this.close()
             }
         },
-        toggleFolder: function() {
+        toggleFolder: function () {
             if (this.isOpen) {
                 this.close()
-            }
-            else {
+            } else {
                 this.open()
             }
         },
-        open: function() {
+        open: function () {
             this.button = 'Close'
             this.isOpen = true
             this.$nextTick(() => {
                 this.description = this.app.description
             })
         },
-        close: function() {
+        close: function () {
             this.button = 'Read More'
             this.isOpen = false
-            this.description = clipper(this.app.description, 150, { html: true })
+            this.description = clipper(this.app.description, 150, {
+                html: true
+            })
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.$nextTick(this.setDescription)
     },
-
 }
 </script>
 
@@ -115,5 +114,4 @@ export default {
         margin: 0;
     }
 }
-
 </style>

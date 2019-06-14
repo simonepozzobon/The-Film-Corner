@@ -1,36 +1,53 @@
 <template>
-    <ui-app-block
-        color="green"
-        :title="idx | formatFrameTitle"
-        class="mt-4">
-        <div class="frame-crop">
-            <div class="frame-crop__frame">
-                <img :src="img" alt="" class="frame-crop__image"/>
-            </div>
-            <div class="frame-crop__form">
-                <div class="form-group">
-                    <textarea name="notes" rows="4" cols="80" class="form-control" v-model="value"></textarea>
-                </div>
-                <ui-button
-                    title="Delete Frame"
-                    align="center"
-                    :has-margin="false"
-                    color="dark"
-                    @click="deleteFrame"/>
-            </div>
+<ui-app-block
+    color="green"
+    :title="idx | formatFrameTitle"
+    class="mt-4"
+>
+    <div class="frame-crop">
+        <div
+            class="frame-crop__frame"
+            ref="imageContainer"
+        >
+            <ui-image
+                :src="img"
+                @loaded="$emit('loaded')"
+            />
         </div>
-    </ui-app-block>
+        <div class="frame-crop__form">
+            <div class="form-group">
+                <textarea
+                    name="notes"
+                    rows="4"
+                    cols="80"
+                    class="form-control"
+                    v-model="value"
+                ></textarea>
+            </div>
+            <ui-button
+                title="Delete Frame"
+                align="center"
+                :has-margin="false"
+                color="dark"
+                @click="deleteFrame"
+            />
+        </div>
+    </div>
+</ui-app-block>
 </template>
 
 <script>
 import UiAppBlock from '../../UiAppBlock.vue'
-import { UiButton } from '../../../ui'
-
+import {
+    UiButton,
+    UiImage
+} from '../../../ui'
 export default {
     name: 'SingleFrame',
     components: {
         UiAppBlock,
         UiButton,
+        UiImage,
     },
     props: {
         idx: {
@@ -42,33 +59,61 @@ export default {
             default: null,
             required: true,
         },
+        text: {
+            type: String,
+            default: null,
+        },
         uuid: {
             type: String,
             default: null,
             required: true,
         },
     },
-    data: function() {
+    data: function () {
         return {
             value: null,
+            ready: false,
         }
     },
     watch: {
-        'value': function(value) {
+        'value': function (value) {
             this.$nextTick(() => {
                 this.$emit('changed', value, this.uuid)
             })
         }
     },
     methods: {
-        deleteFrame: function() {
+        deleteFrame: function () {
             this.$nextTick(() => {
                 this.$emit('delete-frame', this.uuid)
             })
+        },
+        loadImage: function () {
+            if (this.img) {
+                let img = new Image()
+                img.addEventListener('load', () => {
+                    if (!this.ready) {
+                        this.appendToDOM(img)
+                    }
+                })
+                img.src = this.src
+                img.alt = this.alt
+                img.classList.add('img-fluid', 'ui-image__content')
+                if (img.complete) {
+                    this.$nextTick(() => {
+                        this.appendToDOM(img)
+                    })
+                }
+            }
+        }
+    },
+    created: function () {
+        if (this.text) {
+            this.value = this.text
         }
     },
     filters: {
-        formatFrameTitle: function(idx) {
+        formatFrameTitle: function (idx) {
             return 'Frame ' + (idx + 1)
         }
     }
@@ -77,7 +122,6 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
-
 
 .frame-crop {
     display: flex;

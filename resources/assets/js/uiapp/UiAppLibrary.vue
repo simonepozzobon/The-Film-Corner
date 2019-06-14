@@ -1,91 +1,106 @@
 <template>
+<div
+    ref="container"
+    class="ui-app-library"
+    :class="colorClass"
+>
     <div
-        ref="container"
-        class="ui-app-library"
-        :class="colorClass">
+        ref="head"
+        class="ui-app-library__head"
+    >
+        <ui-title
+            ref="title"
+            :title="title"
+            :has-padding="false"
+        />
         <div
-            ref="head"
-            class="ui-app-library__head">
-            <ui-title
-                ref="title"
-                :title="title"
-                :has-padding="false"/>
-            <div
-                ref="select"
-                class="ui-app-library__libraries row no-gutters"
-                v-if="hasSubLibraries">
-                <label class="col-4">Select From</label>
-                <select
-                    class="form-control ui-app-library__select col-8"
-                    v-model="currentLibrary">
-                    <option
-                        v-for="library in libraries"
-                        :key="library.id"
-                        :value="library.id">
-                        {{ library.name }}
-                    </option>
-                </select>
-            </div>
-        </div>
-        <div
-            ref="assets"
-            class="ui-app-library__assets"
-            v-if="mediaType == 'videos'">
-            <transition-group
-                tag="div"
-                @enter="assetEnter"
-                @leave="assetLeave">
-                <library-item-video
-                    v-for="(asset, i) in assets"
-                    :key="asset.id"
-                    :delay="i"
-                    :index="asset.id"
-                    :title="asset.title"
-                    :img="asset.img | fixImgPath"
-                    @selected="selected"
-                    @ready="ready"/>
-            </transition-group>
-        </div>
-
-        <div
-            ref="assets"
-            class="ui-app-library__assets"
-            v-else-if="mediaType == 'audios'">
-            <transition-group
-                tag="div"
-                @enter="assetEnter"
-                @leave="assetLeave">
-                <library-item-audio
-                    v-for="(asset, i) in assets"
-                    :key="asset.id"
-                    :delay="i"
-                    :index="asset.id"
-                    :title="asset.title"
-                    @selected="selected"
-                    @ready="ready"/>
-            </transition-group>
-        </div>
-
-        <div
-            ref="assets"
-            class="ui-app-library__assets"
-            v-else>
-            <transition-group
-                tag="div"
-                @enter="assetEnter"
-                @leave="assetLeave">
-                <library-item
-                    v-for="(asset, i) in assets"
-                    :key="asset.id"
-                    :delay="i"
-                    :index="asset.id"
-                    :title="asset.title"
-                    :img="asset.landscape | fixImgPath"
-                    @selected="selected"
-                    @ready="ready"/>
-            </transition-group>
+            ref="select"
+            class="ui-app-library__libraries row no-gutters"
+            v-if="hasSubLibraries"
+        >
+            <label class="col-4">Select From</label>
+            <select
+                class="form-control ui-app-library__select col-8"
+                v-model="currentLibrary"
+            >
+                <option
+                    v-for="library in libraries"
+                    :key="library.id"
+                    :value="library.id"
+                >
+                    {{ library.name }}
+                </option>
+            </select>
         </div>
     </div>
+    <div
+        ref="assets"
+        class="ui-app-library__assets"
+        v-if="mediaType == 'videos'"
+    >
+        <transition-group
+            tag="div"
+            @enter="assetEnter"
+            @leave="assetLeave"
+        >
+            <library-item-video
+                v-for="(asset, i) in assets"
+                :key="asset.id"
+                :delay="i"
+                :index="asset.id"
+                :title="asset.title"
+                :img="asset.img | fixImgPath"
+                @selected="selected"
+                @ready="ready"
+            />
+        </transition-group>
+    </div>
+
+    <div
+        ref="assets"
+        class="ui-app-library__assets"
+        v-else-if="mediaType == 'audios'"
+    >
+        <transition-group
+            tag="div"
+            @enter="assetEnter"
+            @leave="assetLeave"
+        >
+            <library-item-audio
+                v-for="(asset, i) in assets"
+                :key="asset.id"
+                :delay="i"
+                :index="asset.id"
+                :title="asset.title"
+                @selected="selected"
+                @ready="ready"
+            />
+        </transition-group>
+    </div>
+
+    <div
+        ref="assets"
+        class="ui-app-library__assets"
+        v-else
+    >
+        <transition-group
+            tag="div"
+            @enter="assetEnter"
+            @leave="assetLeave"
+        >
+            <library-item
+                v-for="(asset, i) in assets"
+                :key="asset.id"
+                :delay="i"
+                :index="asset.id"
+                :title="asset.title"
+                :img="asset.landscape | fixImgPath"
+                @selected="selected"
+                @ready="ready"
+            />
+        </transition-group>
+    </div>
+</div>
 </template>
 
 <script>
@@ -93,8 +108,9 @@ import LibraryItem from './sub/library/LibraryItem.vue'
 import LibraryItemAudio from './sub/library/LibraryItemAudio.vue'
 import LibraryItemVideo from './sub/library/LibraryItemVideo.vue'
 import SizeUtility from '../Sizes'
-import { UiTitle } from '../ui'
-
+import {
+    UiTitle
+} from '../ui'
 export default {
     name: 'UiAppLibrary',
     components: {
@@ -118,14 +134,16 @@ export default {
         },
         items: {
             type: Array,
-            default: function() {},
+            default: function () {
+                return []
+            },
         },
         color: {
             type: String,
             default: 'green'
         }
     },
-    data: function() {
+    data: function () {
         return {
             libraryHeight: 0,
             libraries: [],
@@ -138,28 +156,28 @@ export default {
         }
     },
     watch: {
-        'currentLibrary': function(id) {
+        'currentLibrary': function (id) {
             this.setAssets(id)
         },
-        counter: function(count) {
+        counter: function (count) {
             if (count == 0) {
                 this.setLibraryHeight()
             }
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'ui-app-library--' + this.color
         },
     },
     filters: {
-        fixImgPath: function(path) {
+        fixImgPath: function (path) {
             return '/storage/' + path
         },
     },
     methods: {
-        beforeInit: function() {},
-        init: function() {
+        beforeInit: function () {},
+        init: function () {
             if (this.hasSubLibraries) {
                 this.libraries = this.items
                 if (this.libraries.length > 0) {
@@ -169,37 +187,37 @@ export default {
                 this.assets = this.items
             }
         },
-        setAssets: function(id) {
-            let selected = this.libraries.filter(library => library.id == id)[0]
+        setAssets: function (id) {
+            let selected = this.libraries.filter(library => library.id ==
+                id)[0]
             let type = this.type != 'mix' ? this.type : selected.type
             this.mediaType = type
             this.counter = 0
-
             if (selected) {
                 switch (type) {
-                    case 'videos':
-                        this.counter = selected.videos.length
-                        this.assets = selected.videos
-                        break;
-                    case 'audios':
-                        this.counter = selected.audios.length
-                        this.assets = selected.audios
-                        break;
-                    default:
-                        this.counter = selected.medias.length
-                        this.assets = selected.medias
+                case 'videos':
+                    this.counter = selected.videos.length
+                    this.assets = selected.videos
+                    break;
+                case 'audios':
+                    this.counter = selected.audios.length
+                    this.assets = selected.audios
+                    break;
+                default:
+                    this.counter = selected.medias.length
+                    this.assets = selected.medias
                 }
             }
             this.counter = this.assets.length
         },
-        selected: function(index) {
+        selected: function (index) {
             if (this.hasSubLibraries) {
                 this.$emit('selected', index, this.currentLibrary)
             } else {
                 this.$emit('selected', index)
             }
         },
-        assetEnter: function(el, done) {
+        assetEnter: function (el, done) {
             let delay = el.dataset.delay * 0.1
             let master = TweenMax.fromTo(el, .3, {
                 autoAlpha: 0,
@@ -218,7 +236,7 @@ export default {
                 }
             })
         },
-        assetLeave: function(el, done) {
+        assetLeave: function (el, done) {
             let delay = el.dataset.delay * 0.1
             let master = TweenMax.fromTo(el, .3, {
                 autoAlpha: 1,
@@ -237,27 +255,27 @@ export default {
                 }
             })
         },
-        setLibraryHeight: function() {
-            let container = this.$refs.container
-            let el = this.$refs.head
-            let title = this.$refs.title.$refs.title
-            let assets = this.$refs.assets
-
-            let titleSize = SizeUtility.get(title)
-            let headSize = SizeUtility.get(el)
-            let containerH = SizeUtility.get(container).hClean
-
-            let height = containerH - titleSize.h - titleSize.marginY
-
+        setLibraryHeight: function (h = false) {
+            let container, el, title, assets, titleSize, headSize,
+                containerSize, containerH, height
+            container = this.$refs.container
+            el = this.$refs.head
+            title = this.$refs.title.$refs.title
+            assets = this.$refs.assets
+            titleSize = SizeUtility.get(title)
+            headSize = SizeUtility.get(el)
+            containerSize = SizeUtility.get(container)
+            containerH = containerSize.hClean
+            if (h && h > containerH) {
+                containerH = h
+            }
+            height = containerH - titleSize.h - titleSize.marginY
             if (this.hasSubLibraries) {
                 let select = this.$refs.select
                 let selectSize = SizeUtility.get(select)
                 height = height - selectSize.h - selectSize.marginY
-
             }
-
             height = Math.round(height)
-
             TweenMax.fromTo(assets, .4, {
                 height: this.libraryHeight,
                 autoAlpha: 0,
@@ -268,16 +286,17 @@ export default {
                     this.libraryHeight = height
                 }
             })
+            // console.log(container);
         },
-        ready: function() {
+        ready: function () {
             this.counter--
         }
     },
-    created: function() {
+    created: function () {
         this.mediaType = this.type
         this.init()
     },
-    mounted: function() {
+    mounted: function () {
         this.$nextTick(this.setLibraryHeight)
     }
 }

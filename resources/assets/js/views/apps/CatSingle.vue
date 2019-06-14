@@ -1,89 +1,146 @@
 <template>
-    <ui-container>
-        <ui-hero-banner :image="this.image" :full-width="true">
-            <ui-container :full-width="true" v-if="this.cat">
-                <ui-row align="center">
-                    <ui-block :size="4">
-                        <ui-title
-                            :title="this.cat.name"
-                            :uppercase="false"
-                            tag="h1"
-                            font-size="h1"
-                            align="center"
-                            color="white"/>
-                    </ui-block>
-                </ui-row>
-                <ui-row
-                    justify="center">
-                    <ui-block
-                        v-for="app in this.cat.apps"
-                        :key="app.id"
-                        :size="4"
-                        :color="cat.color_class"
-                        :radius="true"
-                        :transparent="false"
-                        :full-height="true"
-                        align="center">
-                        <ui-title
-                            :title="app.title"
-                            color="black"
-                            size="h4"
-                            align="center"
-                            @click.native="goToApp(app.slug)"/>
+<ui-container>
+    <ui-hero-banner
+        :image="this.image"
+        :full-width="true"
+    >
+        <ui-container
+            :full-width="true"
+            v-if="this.cat"
+        >
+            <ui-row align="center">
+                <ui-block :size="4">
+                    <ui-title
+                        :title="this.cat.name"
+                        :uppercase="false"
+                        tag="h1"
+                        font-size="h1"
+                        align="center"
+                        color="white"
+                    />
+                </ui-block>
+            </ui-row>
+            <ui-row justify="center">
+                <ui-block
+                    v-for="app in this.cat.apps"
+                    :key="app.id"
+                    :size="4"
+                    :color="cat.color_class"
+                    :radius="true"
+                    :transparent="false"
+                    :full-height="true"
+                    align="center"
+                >
+                    <ui-title
+                        :title="app.title"
+                        color="black"
+                        size="h4"
+                        align="center"
+                        @click.native="goToApp(app.slug)"
+                    />
 
-                        <ui-paragraph align="center" v-html="shortDescription(app.description)">
-                        </ui-paragraph>
-                        <div>
-                            <ui-button color="black" display="inline-block" :has-container="false" @click.native="goToApp(app.slug)">Read More</ui-button>
-                            <ui-button color="black" display="inline-block" :has-container="false" @click.native="startApp(app.slug)">New</ui-button>
-                            <ui-button color="black" display="inline-block" :has-container="false" :disable="true">Open</ui-button>
-                        </div>
-                    </ui-block>
-                </ui-row>
-                <ui-row
-                    justify-content="center">
-                    <ui-block
-                        :size="12"
-                        align="center">
-                        <svg
-                            class="arrow"
-                            width="64"
-                            xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink"
-                            viewBox="0 0 22.29 22.29">
-                            <defs>
-                                <clipPath id="a">
-                                    <rect x="4.76" y="0.5" width="12.77" height="21.29" style="fill: none"/>
-                                </clipPath>
-                            </defs>
-                            <g style="clip-path: url(#a)">
-                                <polyline
-                                    class="arrow__path"
-                                    points="5.82 20.73 15.41 11.14 5.82 1.56"/>
-                            </g>
-                        </svg>
-                    </ui-block>
-                </ui-row>
-            </ui-container>
-        </ui-hero-banner>
-        <div class="bg-lightest-gray">
-            <ui-container :contain="true" bg-color="lightest-gray" v-if="keywords && keywords.length > 0">
-                <ui-title title="Glossary" align="center"/>
-                <ui-accordion-cols :keywords="keywords"/>
-            </ui-container>
-        </div>
-        <ui-container :contain="true" v-if="this.cat">
-            <ui-paragraph
-                class="pt-5"
-                align="justify"
-                v-html="cat.description" />
+                    <ui-paragraph
+                        align="center"
+                        v-html="shortDescription(app.description)"
+                    >
+                    </ui-paragraph>
+                    <div>
+                        <ui-button
+                            color="black"
+                            display="inline-block"
+                            :has-container="false"
+                            @click.native="goToApp(app.slug)"
+                        >Read More</ui-button>
+                        <ui-button
+                            color="black"
+                            display="inline-block"
+                            :has-container="false"
+                            @click.native="startApp(app.slug)"
+                        >New</ui-button>
+                        <ui-button
+                            color="black"
+                            display="inline-block"
+                            :has-container="false"
+                            :disable="true"
+                        >Open</ui-button>
+                    </div>
+                </ui-block>
+            </ui-row>
+            <ui-row justify-content="center">
+                <ui-block
+                    :size="12"
+                    align="center"
+                >
+                    <svg
+                        class="arrow"
+                        width="64"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        viewBox="0 0 22.29 22.29"
+                    >
+                        <defs>
+                            <clipPath id="a">
+                                <rect
+                                    x="4.76"
+                                    y="0.5"
+                                    width="12.77"
+                                    height="21.29"
+                                    style="fill: none"
+                                />
+                            </clipPath>
+                        </defs>
+                        <g style="clip-path: url(#a)">
+                            <polyline
+                                class="arrow__path"
+                                points="5.82 20.73 15.41 11.14 5.82 1.56"
+                            />
+                        </g>
+                    </svg>
+                </ui-block>
+            </ui-row>
         </ui-container>
+    </ui-hero-banner>
+    <div class="bg-lightest-gray">
+        <ui-container
+            :contain="true"
+            bg-color="lightest-gray"
+            v-if="keywords && keywords.length > 0"
+        >
+            <ui-title
+                title="Glossary"
+                align="center"
+            />
+            <ui-accordion-cols :keywords="keywords" />
+        </ui-container>
+    </div>
+    <ui-container
+        :contain="true"
+        v-if="this.cat"
+    >
+        <ui-paragraph
+            class="pt-5"
+            align="justify"
+            v-html="cat.description"
+        />
     </ui-container>
+</ui-container>
 </template>
 
 <script>
 const clipper = require('text-clipper')
-import { UiAccordionCols, UiBlock, UiButton, UiContainer, UiHeroBanner, UiList, UiListItem, UiParagraph, UiRow, UiSpecialText, UiTitle } from '../../ui'
+import {
+    UiAccordionCols,
+    UiBlock,
+    UiButton,
+    UiContainer,
+    UiHeroBanner,
+    UiList,
+    UiListItem,
+    UiParagraph,
+    UiRow,
+    UiSpecialText,
+    UiTitle
+} from '../../ui'
 export default {
     name: 'CatSingle',
     components: {
@@ -99,7 +156,7 @@ export default {
         UiSpecialText,
         UiTitle,
     },
-    data: function() {
+    data: function () {
         return {
             slug: null,
             cat: null,
@@ -108,30 +165,35 @@ export default {
         }
     },
     methods: {
-        getData: function() {
+        getData: function () {
             let slug = this.$route.params.cat
-            this.$http.get('/api/v2/get-cat/' + slug).then(response => {
-                if (response.data.success) {
-                    this.cat = response.data.pavilion
-                    this.keywords = this.cat.keywords
-                    if (this.cat.img) {
-                        this.image = this.cat.img
+            this.$http.get('/api/v2/get-cat/' + slug)
+                .then(response => {
+                    if (response.data.success) {
+                        this.cat = response.data.pavilion
+                        this.keywords = this.cat.keywords
+                        if (this.cat.img) {
+                            this.image = this.cat.img
+                        }
                     }
-                }
-            })
+                })
         },
-        startApp: function(slug) {
+        startApp: function (slug) {
             this.$root.goTo(slug)
         },
-        goToApp: function(slug) {
-            this.$root.goToWithParams('app-home', { app: slug })
+        goToApp: function (slug) {
+            this.$root.goToWithParams('app-home', {
+                app: slug
+            })
         },
-        shortDescription: function(value) {
-            let short = clipper(value, 150, { html: true })
+        shortDescription: function (value) {
+            let short = clipper(value, 150, {
+                html: true
+            })
             return short
         }
     },
-    created: function() {
+    created: function () {
         this.getData()
     }
 }
@@ -160,8 +222,8 @@ export default {
         cursor: pointer;
     }
 
-    &__menu-item,
-    &__menu-head {
+    &__menu-head,
+    &__menu-item {
         &:hover {
             text-decoration: underline;
         }
@@ -175,7 +237,7 @@ export default {
     &__path {
         fill: none;
         stroke: $white;
-        stroke-width: 3px
+        stroke-width: 3px;
     }
 }
 </style>

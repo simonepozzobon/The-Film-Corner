@@ -1,26 +1,32 @@
 <template>
-    <ui-app-block
-        ref="block"
-        color="dark"
-        align="center"
-        :has-title="false">
-        <div class="mixer-channels">
-            <mixer-channel
-                v-for="(player, i) in players"
-                :key="i"
-                :color="color"
-                :idx="i"
-                :src="player.obj"
-                @volume="volumeChanged"
-                @remove-track="removeTrack"/>
-        </div>
-    </ui-app-block>
+<ui-app-block
+    ref="block"
+    color="dark"
+    align="center"
+    :has-title="false"
+>
+    <div class="mixer-channels">
+        <mixer-channel
+            v-for="(player, i) in players"
+            :key="i"
+            :color="color"
+            :idx="i"
+            :src="player.obj"
+            :vol="player.vol"
+            @volume="volumeChanged"
+            @remove-track="removeTrack"
+        />
+    </div>
+</ui-app-block>
 </template>
 
 <script>
 import UiAppBlock from './UiAppBlock.vue'
 import MixerChannel from './sub/mixer/MixerChannel.vue'
-import { TweenMax } from 'gsap'
+import {
+    TweenMax
+}
+from 'gsap'
 require('gsap/ScrollToPlugin')
 
 export default {
@@ -37,7 +43,7 @@ export default {
         players: [Array, Number]
     },
     methods: {
-        loaded: function() {
+        loaded: function () {
             TweenMax.to(window, .2, {
                 scrollTo: {
                     y: this.$refs.block.$el,
@@ -45,14 +51,14 @@ export default {
                 }
             })
         },
-        volumeChanged: function(volume, idx) {
+        volumeChanged: function (volume, idx) {
             this.$emit('volume', volume, idx)
         },
-        removeTrack: function(idx) {
+        removeTrack: function (idx) {
             this.$emit('remove-track', idx)
         }
     },
-    mounted: function() {
+    mounted: function () {
         // this.loaded()
     }
 }

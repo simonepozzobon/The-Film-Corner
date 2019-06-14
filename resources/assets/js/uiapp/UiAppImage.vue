@@ -1,25 +1,33 @@
 <template>
-    <div
-        class="ui-app-image"
-        :class="[
+<div
+    class="ui-app-image"
+    :class="[
             colorClass,
             borderDirectionClass,
-        ]">
-        <ui-title
-            :title="title"
-            :color="titleColor"
-            :has-padding="false"
-            ref="title"/>
-        <img :src="src" alt="" class="ui-app-image__image" />
-    </div>
+        ]"
+>
+    <ui-title
+        :title="title"
+        :color="titleColor"
+        :has-padding="false"
+        ref="title"
+    />
+    <ui-image
+        :src="src"
+        @loaded="$emit('loaded')"
+    />
+</div>
 </template>
 
 <script>
-import { UiTitle } from '../ui'
-
+import {
+    UiImage,
+    UiTitle
+} from '../ui'
 export default {
     name: 'UiAppImage',
     components: {
+        UiImage,
         UiTitle,
     },
     props: {
@@ -49,12 +57,12 @@ export default {
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             if (this.color != 'dark-gray') {
                 return 'ui-app-image--' + this.color
             }
         },
-        borderDirectionClass: function() {
+        borderDirectionClass: function () {
             if (this.borderDirection == 'right') {
                 return 'ui-app-image--border-right'
             } else {

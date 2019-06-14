@@ -1,6 +1,10 @@
 const SharedData = {
     app: null,
-    assets: null,
+    assets: {
+        hasSubLibraries: false,
+        items: [],
+        type: 'images'
+    },
     session: null,
     notes: null,
     size: { w: 0, h: 0 },
@@ -27,7 +31,7 @@ const SharedMethods = {
     uniqidSimple: function() {
         return '_' + Math.random().toString(36).substr(2, 9)
     },
-    getData: function() {
+    getData: function(token = null) {
         // pulisce la sessione se non è stata salvata
         window.addEventListener('beforeunload', () => {
             try {
@@ -42,17 +46,26 @@ const SharedMethods = {
         let slug = this.$route.name
         let url = '/api/v2/load-assets/' + slug
 
-        if (this.$root.session) {
+        if (this.$root.session && this.$root.session.token) {
             url = '/api/v2/load-assets/' + slug + '/' + this.$root.session.token
         }
 
+        if (token) {
+            url = '/api/v2/load-assets/' + slug + '/' + token
+            // console.log(url);
+        }
+
+        console.log('url per il caricamento', url);
+
         this.$http.get(url).then(response => {
-            console.dir(response.data);
+            console.log('caricata')
+            // console.dir(response.data);
             if (response.data.success) {
                 this.app = response.data.app
                 this.assets = response.data.assets
                 let session = response.data.session
-                session.content = JSON.parse(session.content)
+                console.log(session);
+                session.content = session.content ? JSON.parse(session.content) : {}
 
                 this.session = session
 
@@ -63,11 +76,30 @@ const SharedMethods = {
     },
     deleteEmptySession: function() {
         // verificare se è vuota
-        this.$root.session = null
         if (Boolean(this.session.is_empty)) {
             this.$http.delete('/api/v2/session/' + this.session.token + '/true')
         }
+        this.$nextTick(() => {
+            this.$root.session = null
+        })
     },
+    debug: function(slug, token) {
+        console.log('debug');
+        let url = '/api/v2/get-app/' + slug
+        this.$http.get(url)
+            .then(response => {
+                if (response.data.success && response.data.sessions.length > 0) {
+                    let session = response.data.sessions.find(session => session.token === token)
+                    if (session) {
+                        session.content = JSON.parse(session.content)
+                        this.session = session
+                        this.$nextTick(() => {
+                            this.init()
+                        })
+                    }
+                }
+            })
+    }
 }
 
 export {

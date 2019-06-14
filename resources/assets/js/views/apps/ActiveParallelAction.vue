@@ -1,42 +1,65 @@
 <template>
-    <app-template :app="app">
-        <template slot="left">
-            <ui-app-video-preview
-                ref="preview"
-                :src="currentExport"
-                :color="color"
-                @on-update-player="onUpdatePlayer"/>
-        </template>
-        <template slot="right" v-if="this.assets">
-            <ui-app-library
-                :hasSubLibraries="assets.hasSubLibraries"
-                :type="assets.type"
-                :items="assets.library"
-                :color="color"
-                @selected="addTimeline"/>
-        </template>
-        <template>
-            <ui-app-timeline
-                :timelines="timelines"
-                :playhead-position="playheadPosition"
-                :playhead-height="playheadHeight"
-                :color="color"
-                @delete-track="onDeleteTrack"
-                @duplicate-track="onDuplicate"
-                @on-drag="onDrag"
-                @on-resize="onResize"/>
-            <ui-app-note
-                class="mt-4"
-                :color="color"
-                @changed="setNotes"/>
-        </template>
-    </app-template>
+<app-template :app="app">
+    <template slot="left">
+        <ui-app-video-preview
+            ref="preview"
+            :src="currentExport"
+            :color="color"
+            @on-update-player="onUpdatePlayer"
+            @ready="ready"
+        />
+    </template>
+    <template
+        slot="right"
+        v-if="this.assets"
+    >
+        <ui-app-library
+            ref="library"
+            :hasSubLibraries="assets.hasSubLibraries"
+            :type="assets.type"
+            :items="assets.library"
+            :color="color"
+            @selected="addTimeline"
+        />
+    </template>
+    <template>
+        <ui-app-timeline
+            :timelines="timelines"
+            :playhead-position="playheadPosition"
+            :playhead-height="playheadHeight"
+            :color="color"
+            @delete-track="onDeleteTrack"
+            @duplicate-track="onDuplicate"
+            @on-drag="onDrag"
+            @on-resize="onResize"
+        />
+        <ui-app-note
+            class="mt-4"
+            :color="color"
+            @changed="setNotes"
+            :initial="this.notes"
+        />
+    </template>
+</app-template>
 </template>
 
 <script>
 import AppTemplate from './AppTemplate.vue'
-import { UiAppFolder, UiAppLibrary, UiAppNote, UiAppTimeline, UiAppVideoPreview } from '../../uiapp'
-import { SharedData, SharedMethods, SharedWatch } from './Shared'
+import {
+    UiAppFolder,
+    UiAppLibrary,
+    UiAppNote,
+    UiAppTimeline,
+    UiAppVideoPreview
+}
+from '../../uiapp'
+import SizeUtility from '../../Sizes'
+import {
+    SharedData,
+    SharedMethods,
+    SharedWatch
+}
+from './Shared'
 
 export default {
     name: 'ActiveParallelAction',
@@ -48,7 +71,7 @@ export default {
         UiAppTimeline,
         UiAppVideoPreview,
     },
-    data: function() {
+    data: function () {
         return {
             ...SharedData,
             timelines: [],
@@ -59,32 +82,50 @@ export default {
             playheadHeight: 300,
             playheadStart: 171,
             playheadPosition: 171,
+            isLoading: false,
         }
     },
     watch: {
-        'timelines': function(timelines) {
+        'timelines': function (timelines) {
             this.$nextTick(this.updateEditor)
         },
         ...SharedWatch,
     },
     methods: {
-        init: function() {
-            // // 204, 19
-            // let o = [
-            //     [204, 19],
-            //     [178, 18],
-            //     [178, 18],
-            //     [178, 18],
-            //     [179, 18],
-            //     [186, 18],
-            //     [186, 18],
-            //     [186, 18],
-            // ]
-            // for (var i = 0; i < o.length; i++) {
-            //     this.addTimeline(o[i][0], o[i][1])
-            // }
+        ready: function () {
+            this.$nextTick(() => {
+                let title = this.$refs.preview.$refs.title.$el
+                let titleH = SizeUtility.get(title)
+                let containerH = SizeUtility.get(this.$refs.preview.$el)
+                let height = containerH.hClean - titleH.hClean + 2
+                this.$refs.library.setLibraryHeight(height)
+                if (this.isLoading) {
+                    this.$root.objectsLoaded++
+                }
+            })
         },
-        addTimeline: function(id, libraryID) {
+        init: function () {
+            let session = this.$root.session
+            if (session && session.app_id === 11) {
+                let timelines = session.content.timelines
+                this.notes = session.content.notes
+                if (session.content.video) {
+                    this.currentExport = session.content.video
+                }
+                if (timelines && timelines.length > 0) {
+                    this.session = session
+                    this.isLoading = true
+                    this.$root.isOpen = true
+                    this.$root.objectsToLoad = 1
+                    for (let i = 0; i < timelines.length; i++) {
+                        this.$nextTick(() => {
+                            this.timelines.push(timelines[i])
+                        })
+                    }
+                }
+            }
+        },
+        addTimeline: function (id, libraryID) {
             let timeline
             let library = this.assets.library.filter(library => library.id == libraryID)[0]
             if (library) {
@@ -109,10 +150,10 @@ export default {
 
             this.timelines.push(timeline)
         },
-        onDeleteTrack: function(uniqueid) {
+        onDeleteTrack: function (uniqueid) {
             this.timelines = this.timelines.filter(timeline => timeline.uniqueid != uniqueid)
         },
-        onDuplicate: function(uniqueid) {
+        onDuplicate: function (uniqueid) {
             let obj = this.timelines.filter(timeline => timeline.uniqueid == uniqueid)[0]
             if (obj) {
                 obj = {
@@ -122,24 +163,26 @@ export default {
                 this.timelines.push(obj)
             }
         },
-        onDrag: function(obj) {
+        onDrag: function (obj) {
             this.timelines[obj.idx]['start'] = obj.start
             this.timelines = this.timelines.slice()
         },
-        onResize: function(obj) {
+        onResize: function (obj) {
             this.timelines[obj.idx]['start'] = obj.start
             this.timelines[obj.idx]['duration'] = obj.duration
             this.timelines[obj.idx]['cutStart'] = obj.cutStart
             this.timelines[obj.idx]['cutEnd'] = obj.cutEnd
             this.timelines = this.timelines.slice()
         },
-        onUpdatePlayer: function(time) {
+        onUpdatePlayer: function (time) {
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
-        updateEditor: function() {
+        updateEditor: function () {
             if (this.isFree) {
                 this.isFree = false
-                this.$refs.preview.showLoader()
+                if (this.$refs.preview) {
+                    this.$refs.preview.showLoader()
+                }
                 console.log('updating');
                 let data = new FormData()
                 data.append('token', this.session.token)
@@ -151,7 +194,8 @@ export default {
                         this.cache = null
                         this.saveContent()
                         this.updateEditor()
-                    } else {
+                    }
+                    else {
                         this.$refs.preview.hideLoader()
                         // carico l'export solo quando è finita la coda
                         this.$nextTick(() => {
@@ -161,21 +205,25 @@ export default {
                         console.log('complete');
                     }
                 })
-            } else {
+            }
+            else {
                 // console.log('cache');
                 this.cache = this.timelines
             }
         },
-        setNotes: function(notes) {
+        setNotes: function (notes) {
             this.notes = notes
+            this.saveContent()
         },
-        saveContent: _.debounce(function() {
+        saveContent: _.debounce(function () {
             let content = this.$root.session.content
             let newContent = {
                 video: this.currentExport,
                 timelines: this.timelines,
-                notes: 'no notes'
+                notes: this.notes
             }
+
+            // console.log(newContent, content);
 
             for (let key in content) {
                 if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
@@ -189,7 +237,7 @@ export default {
             }
         }, 500)
     },
-    created: function() {
+    created: function () {
         this.uniqid = SharedMethods.uniqid.bind(this)
         this.getData = SharedMethods.getData.bind(this)
         this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
@@ -197,9 +245,8 @@ export default {
         this.$root.isApp = true
         this.getData()
     },
-    mounted: function() {
-    },
-    beforeDestroy: function() {
+    mounted: function () {},
+    beforeDestroy: function () {
         this.$root.isApp = false
     }
 }

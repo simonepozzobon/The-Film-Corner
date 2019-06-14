@@ -1,28 +1,35 @@
 <template>
-    <ui-row :no-gutters="true">
-        <ui-block :size="size">
-            <div
-                class="ui-app-block"
-                :class="[
-                    colorClass
-                ]">
+<ui-row
+    :no-gutters="true"
+    class="ui-app-block"
+>
+    <ui-block :size="size">
+        <div
+            class="ui-app-block__block"
+            :class="[colorClass]"
+        >
 
-                <ui-title
-                    v-if="hasTitle"
-                    :title="title"
-                    :has-padding="false"
-                    :color="titleColor"/>
+            <ui-title
+                v-if="hasTitle"
+                :title="title"
+                :has-padding="false"
+                :color="titleColor"
+            />
 
-                <div class="ui-app-block__field">
-                    <slot></slot>
-                </div>
+            <div class="ui-app-block__field">
+                <slot></slot>
             </div>
-        </ui-block>
-    </ui-row>
+        </div>
+    </ui-block>
+</ui-row>
 </template>
 
 <script>
-import { UiBlock, UiTitle, UiRow } from '../ui'
+import {
+    UiBlock,
+    UiTitle,
+    UiRow
+} from '../ui'
 export default {
     name: 'UiAppBlock',
     components: {
@@ -53,7 +60,7 @@ export default {
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'ui-app-block--' + this.color
         }
     }
@@ -66,8 +73,13 @@ export default {
 .ui-app-block {
     width: 100%;
     height: 100%;
-    @include border-radius($custom-border-radius);
-    @include app-block-padding;
+
+    &__block {
+        width: 100%;
+        height: 100%;
+        @include border-radius($custom-border-radius);
+        @include app-block-padding;
+    }
 
     &__text {
         @include border-radius(10px);
