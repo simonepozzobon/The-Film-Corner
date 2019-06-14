@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(AppTableSeeder::class);
         // $this->call(AppLanguages::class);
         // $this->call(TeachersTableSeeder::class);
-        $this->call(MediaCategoriesTableSeeder::class);
+        // $this->call(MediaCategoriesTableSeeder::class);
+        $this->call(PartnerTableSeeder::class);
     }
 }

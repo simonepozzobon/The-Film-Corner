@@ -55,3 +55,10 @@
     @include box-shadow($btn-active-box-shadow);
   }
 }
+
+@mixin app-block-padding($app-padding-x: 1.618rem) {
+    padding-left: $app-padding-x;
+    padding-right: $app-padding-x;
+    padding-top: $app-padding-x;
+    padding-bottom: $app-padding-x;
+}

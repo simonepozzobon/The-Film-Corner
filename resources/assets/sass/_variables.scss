@@ -17,6 +17,10 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #252525 !default;
 
+$lightest-gray: rgb(217, 217, 217) !default;
+$light-gray: #666666 !default;
+$dark-gray: #333333 !default;
+
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $grays: map-merge(
@@ -29,7 +33,10 @@ $grays: map-merge(
     "600": $gray-600,
     "700": $gray-700,
     "800": $gray-800,
-    "900": $gray-900
+    "900": $gray-900,
+    "lightest-gray": $lightest-gray,
+    "light-gray": $light-gray,
+    "dark-gray": $dark-gray,
   ),
   $grays
 );
@@ -39,10 +46,11 @@ $blue:    #4597DE !default;
 $indigo:  #6610f2 !default;
 $purple:  #613d7c !default;
 $pink:    #ff5b77 !default;
-$red:     #FE595A !default;
-$orange:  #FD9B43 !default;
-$yellow:  #FADA28 !default;
-$green:   #48C0B8 !default;
+$red:     #f18b8b !default;
+// $orange:  #FD9B43 !default;
+$orange:  #EAA461 !default;
+$yellow:  #f9e264 !default;
+$green:   #7ec9c7 !default;
 $teal:    #5bc0de !default;
 $cyan:    #17a2b8 !default;
 
@@ -61,6 +69,9 @@ $tfc-dark-red:        rgb(255, 99, 110);
 $tfc-green-var:       rgb(189, 237, 231);
 $tfc-dark-green-var:  rgb(149, 226, 218);
 
+$green-light:    #E1F1F1 !default;
+$green-var:        #B7BE58 !default;
+
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $colors: map-merge(
@@ -73,6 +84,7 @@ $colors: map-merge(
     "orange":     $orange,
     "yellow":     $yellow,
     "green":      $green,
+    "green-var":  $green-var,
     "teal":       $teal,
     "cyan":       $cyan,
     "white":      $white,
@@ -81,6 +93,8 @@ $colors: map-merge(
   ),
   $colors
 );
+
+$colors: map-merge($grays, $colors);
 
 $colors: map-merge(
   (
@@ -96,6 +110,8 @@ $colors: map-merge(
     "tfc-dark-red":        $tfc-dark-red,
     "tfc-green-var":       $tfc-green-var,
     "tfc-dark-green-var":  $tfc-dark-green-var,
+    "black":               $black,
+    "white":               $white,
   ),
   $colors
 );
@@ -176,7 +192,7 @@ $enable-validation-icons:                     true !default;
 // variables. Mostly focused on spacing.
 // You can add more entries to the $spacers map, should you need more variation.
 
-$spacer: 2rem !default;
+$spacer: 1rem !default;
 $spacers: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $spacers: map-merge(

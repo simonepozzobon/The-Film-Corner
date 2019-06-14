@@ -8,8 +8,7 @@ class UserPermission extends Model
 {
     protected $table = 'permissions';
 
-    public function roles()
-    {
-      return $this->belongsToMany('App\UserRole');
+    public function roles() {
+        return $this->belongsToMany('App\UserRole');
     }
 }

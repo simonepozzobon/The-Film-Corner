@@ -12,33 +12,35 @@ class App extends Model
     protected $table = 'apps';
     protected $fillable = ['slug'];
 
-    public function category()
-    {
+    public function sessions() {
+        return $this->hasMany(Session::class);
+    }
+
+    public function network() {
+        return $this->hasMany(Network::class);
+    }
+
+    public function category() {
       return $this->belongsTo('App\AppCategory', 'app_category_id', 'id');
     }
 
-    public function videos()
-    {
+    public function videos() {
       return $this->morphToMany('App\Video', 'videoable');
     }
 
-    public function audios()
-    {
+    public function audios() {
       return $this->morphToMany('App\Audio', 'audioable');
     }
 
-    public function medias()
-    {
+    public function medias() {
       return $this->morphToMany('App\Media', 'mediaable');
     }
 
-    public function mediaCategory()
-    {
+    public function mediaCategory() {
       return $this->hasMany('App\MediaSubCategory');
     }
 
-    public function examples()
-    {
+    public function examples() {
       $videos = $this->morphToMany('App\Video', 'videoable')->where('category_id', 3)->get();
       $images = $this->morphToMany('App\Media', 'mediaable')->where('category_id', 3)->get();
       $audios = $this->morphToMany('App\Audio', 'audioable')->where('category_id', 3)->get();
