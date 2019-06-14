@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use App\Teacher;
 use App\Student;
 use App\User;
 use App\Network;
