@@ -70,6 +70,7 @@ $tfc-green-var:       rgb(189, 237, 231);
 $tfc-dark-green-var:  rgb(149, 226, 218);
 
 $green-light:    #E1F1F1 !default;
+$green-var:        #B7BE58 !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -83,6 +84,7 @@ $colors: map-merge(
     "orange":     $orange,
     "yellow":     $yellow,
     "green":      $green,
+    "green-var":  $green-var,
     "teal":       $teal,
     "cyan":       $cyan,
     "white":      $white,

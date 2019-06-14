@@ -1,13 +1,14 @@
 <template>
 <div
-  class="roadmap"
-  ref="sliderController"
+    class="roadmap"
+    ref="sliderController"
 >
     <div class="roadmap__line">
         <ui-roadmap-dot
-          v-for="(stage, index) in stagesArr"
-          :key="index"
-          @click="goTo(index)"
+            v-for="(channel, index) in channels"
+            :key="index"
+            :point="channel"
+            @click="selectChannel"
         />
     </div>
 </div>
@@ -20,9 +21,9 @@ export default {
     components: {
         UiRoadmapDot
     },
-    data: function () {
+    data: function() {
         return {
-            stagesArr: [ {
+            channels: [{
                 period: '1917',
                 color: 'red',
                 label: 'Russian Revolution',
@@ -32,7 +33,7 @@ export default {
                 label: 'Fascism and Nazism',
             }, {
                 period: '1939-1945',
-                color: 'green',
+                color: 'green-var',
                 label: 'Second World War',
             }, {
                 period: '1946-1990',
@@ -42,7 +43,9 @@ export default {
         }
     },
     methods: {
-        goTo: function () {},
+        selectChannel: function(channel) {
+            this.$emit('select-channel', channel)
+        },
     },
 }
 </script>
@@ -53,29 +56,20 @@ export default {
 .roadmap {
     display: flex;
     width: 100%;
+    justify-content: center;
     align-items: center;
+    margin-top: 20%;
+    margin-bottom: 15%;
 
     &__line {
         position: relative;
-        width: 100%;
+        width: 90%;
         height: $spacer * 2;
         background-image: url("/svg/line-roadmap.svg");
         background-repeat: repeat-x;
         display: flex;
         align-items: center;
-        justify-content: space-around;
-    }
-
-    &__dot {
-        position: relative;
-        width: $spacer;
-        height: $spacer;
-        @include border-radius($spacer);
-        background-color: $light;
-        border: 2px solid $black;
-        cursor: pointer;
-        transition: $transition-base;
+        justify-content: center;
     }
 }
 </style>
-x
