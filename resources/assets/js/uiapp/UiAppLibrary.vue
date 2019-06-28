@@ -81,6 +81,35 @@
     <div
         ref="assets"
         class="ui-app-library__assets"
+        v-else-if="mediaType == 'uploads'"
+    >
+        <upload-form
+            :app-id="appId"
+            accept="video/*"
+            @uploaded="addToLibrary"
+        />
+
+        <transition-group
+            tag="div"
+            @enter="assetEnter"
+            @leave="assetLeave"
+        >
+            <library-item-video
+                v-for="(asset, i) in assets"
+                :key="asset.id"
+                :delay="i"
+                :index="asset.id"
+                :title="asset.title"
+                :img="asset.img | fixImgPath"
+                @selected="selected"
+                @ready="ready"
+            />
+        </transition-group>
+    </div>
+
+    <div
+        ref="assets"
+        class="ui-app-library__assets"
         v-else
     >
         <transition-group
@@ -108,15 +137,18 @@ import LibraryItem from './sub/library/LibraryItem.vue'
 import LibraryItemAudio from './sub/library/LibraryItemAudio.vue'
 import LibraryItemVideo from './sub/library/LibraryItemVideo.vue'
 import SizeUtility from '../Sizes'
+import UploadForm from './sub/library/UploadForm.vue'
 import {
     UiTitle
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'UiAppLibrary',
     components: {
         LibraryItem,
         LibraryItemAudio,
         LibraryItemVideo,
+        UploadForm,
         UiTitle,
     },
     props: {
@@ -141,7 +173,15 @@ export default {
         color: {
             type: String,
             default: 'green'
-        }
+        },
+        hasUpload: {
+            type: Boolean,
+            default: false,
+        },
+        appId: {
+            type: Number,
+            default: 0,
+        },
     },
     data: function () {
         return {
@@ -183,25 +223,30 @@ export default {
                 if (this.libraries.length > 0) {
                     this.currentLibrary = this.libraries[0].id
                 }
-            } else {
+            }
+            else {
                 this.assets = this.items
             }
         },
         setAssets: function (id) {
-            let selected = this.libraries.filter(library => library.id ==
-                id)[0]
+            let selected = this.libraries.filter(library => library.id == id)[0]
             let type = this.type != 'mix' ? this.type : selected.type
             this.mediaType = type
             this.counter = 0
             if (selected) {
                 switch (type) {
                 case 'videos':
+                    console.log(selected);
                     this.counter = selected.videos.length
                     this.assets = selected.videos
                     break;
                 case 'audios':
                     this.counter = selected.audios.length
                     this.assets = selected.audios
+                    break;
+                case 'uploads':
+                    console.log(this.counter);
+                    this.assets = selected.videos
                     break;
                 default:
                     this.counter = selected.medias.length
@@ -213,7 +258,8 @@ export default {
         selected: function (index) {
             if (this.hasSubLibraries) {
                 this.$emit('selected', index, this.currentLibrary)
-            } else {
+            }
+            else {
                 this.$emit('selected', index)
             }
         },
@@ -290,6 +336,19 @@ export default {
         },
         ready: function () {
             this.counter--
+        },
+        addToLibrary: function (file) {
+            console.log(file);
+            let newUpload = {
+                id: this.assets.length,
+                title: file.title,
+                img: file.img,
+                duration: file.duration,
+                videoSrc: file.src,
+                src: file.src.replace('/storage/', '')
+            }
+            this.assets.push(newUpload)
+            this.$emit('uploaded', newUpload)
         }
     },
     created: function () {

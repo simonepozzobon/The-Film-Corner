@@ -55,16 +55,16 @@ const SharedMethods = {
             // console.log(url);
         }
 
-        console.log('url per il caricamento', url);
+        // console.log('url per il caricamento', url);
 
         this.$http.get(url).then(response => {
-            console.log('caricata')
+            // console.log('caricata')
             // console.dir(response.data);
             if (response.data.success) {
                 this.app = response.data.app
                 this.assets = response.data.assets
                 let session = response.data.session
-                console.log(session);
+                // console.log(session);
                 session.content = session.content ? JSON.parse(session.content) : {}
 
                 this.session = session

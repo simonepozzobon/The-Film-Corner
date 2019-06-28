@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
 
         if ((user && token)) {
             // Procedi
-            console.log('procedi');
+            // console.log('procedi');
             next()
         } else if (typeof user == 'undefined' || typeof token == 'undefined') {
             let app = router.app
@@ -77,7 +77,7 @@ router.beforeEach((to, from, next) => {
                         app.$cookie.set('tfc-token', JSON.stringify(app.token))
                         app.$http.defaults.headers.common.Authorization = `${app.token.token_type} ${app.token.access_token}`
 
-                        console.log('procedi dopo riautenticazione');
+                        // console.log('procedi dopo riautenticazione');
                         next()
                     } else {
                         app.$cookie.destroy('tfc-logged')
@@ -85,22 +85,22 @@ router.beforeEach((to, from, next) => {
                         app.$cookie.destroy('tfc-token')
                         delete app.$http.defaults.headers.common.Authorization
 
-                        console.log('autenticazione cookies non riuscita');
+                        // console.log('autenticazione cookies non riuscita');
                         router.push({name: 'login'})
                     }
                 })
             } else {
-                console.log('user e headers non ci sono nei cookies ->headers', user, auth);
+                // console.log('user e headers non ci sono nei cookies ->headers', user, auth);
                 router.push({name: 'login'})
                 return false
             }
         } else {
-            console.log('user e token non esistono');
+            // console.log('user e token non esistono');
             router.push({name: 'login'})
             return false
         }
     } else {
-        console.log('nessuna autorizzazione');
+        // console.log('nessuna autorizzazione');
         next()
     }
 })
