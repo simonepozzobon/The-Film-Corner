@@ -1,28 +1,36 @@
 <template>
-    <div
-        class="ui-button"
-        v-if="hasContainer"
-        :class="[
+<div
+    class="ui-button"
+    v-if="hasContainer"
+    :class="[
             displayClass,
             alignSelfClass,
             marginClass,
-        ]">
-        <button
-            class="btn ui-button__content"
-            :class="[
+        ]"
+>
+    <button
+        class="btn ui-button__content"
+        :class="[
                 colorClass,
                 blockClass,
             ]"
-            :disabled="disable"
-            @click.prevent="clicked">
-            {{ title }}
-            <slot></slot>
-        </button>
-    </div>
-    <button
-        v-else
-        class="btn ui-button"
-        :class="[
+        :disabled="disable"
+        @click.prevent="clicked"
+    >
+        {{ title }}
+        <slot></slot>
+        <span
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+            v-if="hasSpinner"
+        ></span>
+    </button>
+</div>
+<button
+    v-else
+    class="btn ui-button"
+    :class="[
             colorClass,
             blockClass,
             displayClass,
@@ -30,11 +38,18 @@
             alignSelfClass,
             marginClass,
         ]"
-        :disabled="disable"
-        @click.prevent="clicked">
-        {{ title }}
-        <slot></slot>
-    </button>
+    :disabled="disable"
+    @click.prevent="clicked"
+>
+    {{ title }}
+    <slot></slot>
+    <span
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+        v-if="hasSpinner"
+    ></span>
+</button>
 </template>
 
 <script>
@@ -77,47 +92,51 @@ export default {
             type: String,
             default: null,
         },
+        hasSpinner: {
+            type: Boolean,
+            default: false,
+        },
         eventParams: [String, Object, Array, Number],
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             if (this.color) {
-                return 'btn-'+this.color
+                return 'btn-' + this.color
             }
         },
-        blockClass: function() {
+        blockClass: function () {
             if (this.block) {
                 return 'btn-block'
             }
         },
-        displayClass: function() {
+        displayClass: function () {
             if (this.display) {
-                return 'ui-button--'+this.display
+                return 'ui-button--' + this.display
             }
         },
-        noContainerClass: function() {
+        noContainerClass: function () {
             if (!this.hasContainer) {
                 return 'ui-button--no-container'
             }
         },
-        alignSelfClass: function() {
+        alignSelfClass: function () {
             if (this.alignSelf == 'start') {
                 return 'ui-button--align-self-start'
             }
         },
-        marginClass: function() {
-            if (!this.hasMargin ) {
+        marginClass: function () {
+            if (!this.hasMargin) {
                 return 'ui-button--no-margin'
             }
         },
-        fontColorClass: function() {
+        fontColorClass: function () {
             if (this.fontColor) {
                 return 'text-' + this.fontColor
             }
         },
     },
     methods: {
-        clicked: function() {
+        clicked: function () {
             if (!this.disable) {
                 this.$emit('click', this.eventParams)
             }
