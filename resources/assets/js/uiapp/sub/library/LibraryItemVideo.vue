@@ -1,24 +1,32 @@
 <template>
+<div
+    class="ui-library-item"
+    :data-delay="delay"
+    :data-index="index"
+>
     <div
-        class="ui-library-item"
-        :data-delay="delay"
-        :data-index="index">
-        <div
-            class="ui-library-item__preview"
-            @mouseover="mouseEnter"
-            @mouseleave="mouseLeave"
-            @click="selected">
-            <library-hover
-                class="ui-library-item__cross"
-                ref="hover"
-                @ready="initialized"/>
-            <div class="ui-library-item__overlay"></div>
-            <img :src="img" alt="" class="ui-library-item__img" ref="image">
-        </div>
-        <div class="ui-library-item__title">
-            {{ title }}
-        </div>
+        class="ui-library-item__preview"
+        @mouseover="mouseEnter"
+        @mouseleave="mouseLeave"
+        @click="selected"
+    >
+        <library-hover
+            class="ui-library-item__cross"
+            ref="hover"
+            @ready="initialized"
+        />
+        <div class="ui-library-item__overlay"></div>
+        <img
+            :src="img"
+            alt=""
+            class="ui-library-item__img"
+            ref="image"
+        />
     </div>
+    <div class="ui-library-item__title">
+        {{ title }}
+    </div>
+</div>
 </template>
 
 <script>
@@ -46,21 +54,21 @@ export default {
             default: 0,
         },
     },
-    data: function() {
+    data: function () {
         return {
             ready: 0,
             figure: null,
         }
     },
     watch: {
-        ready: function(count) {
+        ready: function (count) {
             if (count == 2) {
                 this.$emit('ready')
             }
         }
     },
     methods: {
-        setListener: function() {
+        setListener: function () {
             let img = new Image()
             img.addEventListener('load', () => {
                 this.figure = this.img
@@ -70,10 +78,10 @@ export default {
             })
             img.src = this.img
         },
-        initialized: function() {
+        initialized: function () {
             this.ready++
         },
-        mouseEnter: function() {
+        mouseEnter: function () {
             this.$nextTick(() => {
                 if (this.ready && this.$refs.hover) {
                     this.$refs.hover.play()
@@ -81,18 +89,18 @@ export default {
             })
 
         },
-        mouseLeave: function() {
+        mouseLeave: function () {
             this.$nextTick(() => {
                 if (this.ready && this.$refs.hover) {
                     this.$refs.hover.reverse()
                 }
             })
         },
-        selected: function() {
+        selected: function () {
             this.$emit('selected', this.index)
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.setListener()
     }
 }

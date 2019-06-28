@@ -17,14 +17,21 @@ use Illuminate\Support\Facades\Storage;
 
 class LoadController extends Controller
 {
-    public function load_assets($slug, $token = false) {
+    public function test()
+    {
+        $result = $this->load_assets('active-parallel-action', false);
+        dd($result);
+    }
+
+    public function load_assets($slug, $token = false)
+    {
         $app = App::where('slug', $slug)->with('category.section')->first();
 
         if ($app) {
             // se non c'è nessun token, creo una nuova sessione
             if (!$token || $token == false) {
                 $session = new Session();
-                $session->user_id = Auth::user()->id;
+                $session->user_id = Auth::user() ? Auth::user()->id : 1;
                 $session->app_id = $app->id;
                 $session->title = 'empty';
                 $session->token = uniqid();
@@ -46,80 +53,87 @@ class LoadController extends Controller
             $assets = [];
             switch ($app->slug) {
 
-                case 'frame-composer':
-                    $images = $app->mediaCategory()->with('medias')->get();
-                    $assets = [
-                        'type' => 'images',
-                        'hasSubLibraries' => true,
-                        'library' => $images,
-                    ];
-                    break;
+            case 'frame-composer':
+                $images = $app->mediaCategory()->with('medias')->get();
+                $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => true,
+                    'library' => $images,
+                ];
+                break;
 
-                case 'frame-crop':
-                    $images = $app->mediaCategory()->with('medias')->get();
-                    $assets = [
-                        'type' => 'images',
-                        'hasSubLibraries' => false,
-                        'library' => $images,
-                    ];
-                    break;
+            case 'frame-crop':
+                $images = $app->mediaCategory()->with('medias')->get();
+                $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => false,
+                    'library' => $images,
+                ];
+                break;
 
-                case 'types-of-images':
-                    $media_couples = MediaCouples::with('left', 'right')->get();
-                    $media_couples = $media_couples->transform(function($item, $key) {
-                        $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
-                        $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
-                        return $item;
-                    });
-                    $random = $media_couples->random();
+            case 'types-of-images':
+                $media_couples = MediaCouples::with('left', 'right')->get();
+                $media_couples = $media_couples->transform(
+                    function ($item, $key) {
+                            $item->leftSrc = Storage::disk('local')->url($item->left->landscape);
+                            $item->rightSrc = Storage::disk('local')->url($item->right->landscape);
+                            return $item;
+                    }
+                );
+                $random = $media_couples->random();
 
-                    $assets = [
-                        'type' => 'images',
-                        'hasSubLibraries' => false,
-                        'library' => $media_couples,
-                        'random' => $random,
-                    ];
-                    break;
+                $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => false,
+                    'library' => $media_couples,
+                    'random' => $random,
+                ];
+                break;
 
-                case 'parallel-action':
-                    $videos = MediaSubCategory::where('app_id', 4)->with('videos')->get();
-                    $assets = [
-                        'type' => 'videos',
-                        'hasSubLibraries' => true,
-                        'library' => $videos,
-                    ];
-                    break;
+            case 'parallel-action':
+                $videos = MediaSubCategory::where('app_id', 4)->with('videos')->get();
+                $assets = [
+                    'type' => 'videos',
+                    'hasSubLibraries' => true,
+                    'library' => $videos,
+                ];
+                break;
 
-                case 'offscreen':
-                    $videos = $app->videos()->get();
-                    $videos = $videos->transform(function($video, $key) {
-                        $video->videoSrc = Storage::disk('local')->url($video->src);
-                        return $video;
-                    });
-                    $assets = [
-                        'type' => 'videos',
-                        'hasSubLibraries' => false,
-                        'library' => $videos,
-                    ];
-                    break;
+            case 'offscreen':
+                $videos = $app->videos()->get();
+                $videos = $videos->transform(
+                    function ($video, $key) {
+                            $video->videoSrc = Storage::disk('local')->url($video->src);
+                            return $video;
+                    }
+                );
+                $assets = [
+                    'type' => 'videos',
+                    'hasSubLibraries' => false,
+                    'library' => $videos,
+                ];
+                break;
 
-                case 'whats-going-on':
-                    $audios = $app->audios()->get();
-                    $audios = $audios->transform(function($audio, $key) {
-                        $audio->audioSrc = Storage::disk('local')->url($audio->src);
-                        return $audio;
-                    });
-                    $assets = [
-                        'type' => 'audios',
-                        'hasSubLibraries' => false,
-                        'library' => $audios,
-                    ];
-                    break;
+            case 'whats-going-on':
+                $audios = $app->audios()->get();
+                $audios = $audios->transform(
+                    function ($audio, $key) {
+                            $audio->audioSrc = Storage::disk('local')->url($audio->src);
+                            return $audio;
+                    }
+                );
+                $assets = [
+                    'type' => 'audios',
+                    'hasSubLibraries' => false,
+                    'library' => $audios,
+                ];
+                break;
 
-                case 'soundscapes':
-                    $images = $app->medias()->get();
-                    $audios = $app->audios()->get();
-                    $libraries = collect([
+            case 'soundscapes':
+                $images = $app->medias()->get();
+                $audios = $app->audios()->get();
+                $libraries = collect(
+                    [
                         [
                             'id' => 1,
                             'name' => 'Audio',
@@ -132,73 +146,112 @@ class LoadController extends Controller
                             'type' => 'images',
                             'medias' => $images,
                         ]
-                    ]);
+                    ]
+                );
 
-                    $assets = [
-                        'type' => 'mix',
-                        'hasSubLibraries' => true,
-                        'library' => $libraries,
-                    ];
-                    break;
+                $assets = [
+                    'type' => 'mix',
+                    'hasSubLibraries' => true,
+                    'library' => $libraries,
+                ];
+                break;
 
-                case 'active-offscreen':
-                    $videos = $app->videos()->get();
-                    $videos = $videos->transform(function($video, $key) {
-                        $video->videoSrc = Storage::disk('local')->url($video->src);
-                        return $video;
-                    });
-                    $assets = [
-                        'type' => 'videos',
-                        'hasSubLibraries' => false,
-                        'library' => $videos,
-                    ];
-                    break;
+            case 'active-offscreen':
+                $videos = $app->videos()->get();
+                $videos = $videos->transform(
+                    function ($video, $key) {
+                            $video->videoSrc = Storage::disk('local')->url($video->src);
+                            return $video;
+                    }
+                );
 
-                case 'active-parallel-action':
-                    $videos = MediaSubCategory::where('app_id', 10)->with('videos')->get();
-                    $assets = [
-                        'type' => 'videos',
-                        'hasSubLibraries' => true,
-                        'library' => $videos,
-                    ];
-                    break;
+                $libraries = collect(
+                    [
+                        [
+                            'id' => 1,
+                            'name' => 'Video',
+                            'type' => 'videos',
+                            'videos' => $videos,
+                        ],
+                        [
+                            'id' => 2,
+                            'name' => 'Upload',
+                            'type' => 'uploads',
+                            'videos' => [],
+                        ]
+                    ]
+                );
 
-                case 'sound-studio':
-                    $audios = MediaSubCategory::where('app_id', 12)->with('audios')->get();
-                    $video = $app->videos()->inRandomOrder()->first();
-                    $src = $video->src;
-                    $assets = [
-                        'type' => 'audios',
-                        'hasSubLibraries' => true,
-                        'library' => $audios,
-                        'video' => $src
-                    ];
-                    break;
+                $assets = [
+                    'type' => 'mix',
+                    'hasSubLibraries' => true,
+                    'library' => $libraries,
+                ];
+                break;
 
-                case 'character-builder':
-                    $images = $app->mediaCategory()->with('medias')->get();
-                    $assets = [
-                        'type' => 'images',
-                        'hasSubLibraries' => true,
-                        'library' => $images,
-                    ];
-                    break;
+            case 'active-parallel-action':
+                $videos = MediaSubCategory::where('app_id', 10)->with('videos')->get();
+                $videos = $videos->transform(
+                    function ($library, $key) {
+                        $library->type = 'videos';
+                        return $library;
+                    }
+                );
+                $uploads = collect(
+                    [
+                        [
+                            'id' => 99,
+                            'name' => 'Upload',
+                            'type' => 'uploads',
+                            'videos' => [],
+                        ]
+                    ]
+                );
+                $libraries = $videos->concat($uploads);
 
-                case 'storytelling':
-                    $images = $app->mediaCategory()->with('medias')->get();
-                    $assets = [
-                        'type' => 'images',
-                        'hasSubLibraries' => true,
-                        'library' => $images,
-                    ];
-                    break;
+                $assets = [
+                    'type' => 'mix',
+                    'hasSubLibraries' => true,
+                    'library' => $libraries,
+                ];
+                break;
 
-                case 'lumiere-minute':
-                    // fatta
-                    break;
-                case 'make-your-own-film':
-                    // fatta
-                    break;
+            case 'sound-studio':
+                $audios = MediaSubCategory::where('app_id', 12)->with('audios')->get();
+                $video = $app->videos()->inRandomOrder()->first();
+                $src = $video->src;
+                $assets = [
+                    'type' => 'audios',
+                    'hasSubLibraries' => true,
+                    'library' => $audios,
+                    'video' => $src
+                ];
+                break;
+
+            case 'character-builder':
+                $images = $app->mediaCategory()->with('medias')->get();
+                $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => true,
+                    'library' => $images,
+                ];
+                break;
+
+            case 'storytelling':
+                $images = $app->mediaCategory()->with('medias')->get();
+                $assets = [
+                    'type' => 'images',
+                    'hasSubLibraries' => true,
+                    'library' => $images,
+                ];
+                break;
+
+            case 'lumiere-minute':
+                // fatta
+                break;
+            case 'make-your-own-film':
+                // fatta
+                break;
             }
 
             return [
@@ -216,18 +269,19 @@ class LoadController extends Controller
         }
     }
 
-    public function save_session(Request $request) {
+    public function save_session(Request $request)
+    {
         $session = Session::find($request->id);
 
         foreach ($session->getAttributes() as $key => $value) {
             switch ($key) {
-                case 'content':
-                    $session->content = json_encode($request->content);
-                    break;
+            case 'content':
+                $session->content = json_encode($request->content);
+                break;
 
-                default:
-                    $session->{$key} = $request{$key};
-                    break;
+            default:
+                $session->{$key} = $request{$key};
+                break;
             }
         }
 
@@ -241,7 +295,8 @@ class LoadController extends Controller
         ];
     }
 
-    public function delete_session($token, $clean) {
+    public function delete_session($token, $clean)
+    {
         $params = [
             ['token', '=', $token],
         ];
@@ -267,7 +322,8 @@ class LoadController extends Controller
         ];
     }
 
-    public function contest_upload(Request $request) {
+    public function contest_upload(Request $request)
+    {
 
         $utility = new Utility;
         $file = $request->file('media');
@@ -282,12 +338,45 @@ class LoadController extends Controller
 
         $videoStore = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
 
-        return response([
-            'name' => $title,
-            'duration' => $videoStore['duration'],
-            // 'video_id' => $video->id,
-            'img' => Storage::disk('local')->url($videoStore['img']),
-            'src' => $videoStore['src']
-        ]);
+        return response(
+            [
+                'name' => $title,
+                'duration' => $videoStore['duration'],
+                // 'video_id' => $video->id,
+                'img' => Storage::disk('local')->url($videoStore['img']),
+                'src' => $videoStore['src']
+            ]
+        );
+    }
+
+    public function upload_asset(Request $request)
+    {
+        $file = $request->file('file');
+        $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $filename = uniqid();
+        $ext = $file->getClientOriginalExtension();
+
+        $app = App::where('id', $request->app_id)->with('category')->first();
+
+        $app_slug = $app->slug;
+        $category_slug = $app->category->slug;
+        $user = Auth::user();
+
+        // return [
+        //     'filename' => $filename,
+        //     'ext' => $ext,
+        //     'app_path' => 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/',
+        // ];
+
+        $utility = new Utility();
+        $video_store = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+
+        return [
+            'success' => true,
+            'title' => $title,
+            'img' => $video_store['img'],
+            'duration' => $video_store['duration'],
+            'src' => Storage::disk('local')->url($video_store['src']),
+        ];
     }
 }

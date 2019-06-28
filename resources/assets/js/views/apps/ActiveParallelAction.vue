@@ -15,11 +15,13 @@
     >
         <ui-app-library
             ref="library"
-            :hasSubLibraries="assets.hasSubLibraries"
+            :app-id="11"
+            :has-sub-libraries="assets.hasSubLibraries"
             :type="assets.type"
             :items="assets.library"
             :color="color"
             @selected="addTimeline"
+            @uploaded="uploaded"
         />
     </template>
     <template>
@@ -124,6 +126,8 @@ export default {
                     }
                 }
             }
+
+            console.log(this.assets);
         },
         addTimeline: function (id, libraryID) {
             let timeline
@@ -145,6 +149,8 @@ export default {
                         cutStart: 0,
                         cutEnd: 0,
                     }
+
+                    console.log(timeline);
                 }
             }
 
@@ -235,7 +241,10 @@ export default {
                 ...this.$root.session,
                 content: content
             }
-        }, 500)
+        }, 500),
+        uploaded: function (asset) {
+            console.log(this.assets, asset);
+        },
     },
     created: function () {
         this.uniqid = SharedMethods.uniqid.bind(this)

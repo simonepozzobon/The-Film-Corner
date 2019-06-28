@@ -13,9 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get(
+    '/user', function (Request $request) {
+        return $request->user();
+    }
+);
 
 // Video
 Route::post('apps/video', 'Admin\Apps\VideoController@uploadVideo');
@@ -30,41 +32,50 @@ Route::post('apps/image', 'Admin\Apps\MediaController@uploadMedia');
 Route::delete('apps/image/{id}', 'Admin\Apps\MediaController@deleteMedia');
 
 
-Route::prefix('v2')->group(function() {
-    Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
-    Route::post('login', 'Api\AuthController@attempt_login');
-    Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
+Route::prefix('v2')->group(
+    function () {
+        Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
+        Route::post('login', 'Api\AuthController@attempt_login');
+        Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
 
-    Route::group(['middleware' => ['auth:api']], function() {
-        Route::get('get-studios', 'Api\SectionController@get_studios');
-        Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
-        Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
-        Route::get('get-app/{slug}', 'Api\SectionController@get_app');
+        Route::group(
+            ['middleware' => ['auth:api']], function () {
+                Route::get('get-studios', 'Api\SectionController@get_studios');
+                Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
+                Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
+                Route::get('get-app/{slug}', 'Api\SectionController@get_app');
 
-        Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
-        Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
-        Route::post('session', 'Api\LoadController@save_session');
+                Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
+                Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
+                Route::post('session', 'Api\LoadController@save_session');
 
-        Route::post('render-video', 'Api\VideoEditorController@update_editor');
-        Route::post('render-audio', 'Api\AudioEditorController@update_editor');
+                Route::post('render-video', 'Api\VideoEditorController@update_editor');
+                Route::post('render-audio', 'Api\AudioEditorController@update_editor');
 
-        Route::put('contest-upload', 'Api\LoadController@contest_upload');
+                Route::put('contest-upload', 'Api\LoadController@contest_upload');
+                Route::post('asset-upload', 'Api\LoadController@upload_asset');
 
-        Route::get('get-network', 'Api\SectionController@get_network');
-        Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
+                Route::get('get-network', 'Api\SectionController@get_network');
+                Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
 
-        Route::prefix('profile')->group(function() {
-            Route::get('/', 'Api\ProfileController@get_profile');
-            Route::delete('/network/{id}', 'Api\ProfileController@destroy_network');
-            Route::delete('/activity/{id}', 'Api\ProfileController@destroy_activity');
+                Route::prefix('profile')->group(
+                    function () {
+                        Route::get('/', 'Api\ProfileController@get_profile');
+                        Route::delete('/network/{id}', 'Api\ProfileController@destroy_network');
+                        Route::delete('/activity/{id}', 'Api\ProfileController@destroy_activity');
 
-            Route::prefix('student')->group(function() {
-                Route::post('save', 'Api\ProfileController@save_student');
-                Route::post('edit', 'Api\ProfileController@update_student');
-            });
-        });
-    });
-});
+                        Route::prefix('student')->group(
+                            function () {
+                                Route::post('save', 'Api\ProfileController@save_student');
+                                Route::post('edit', 'Api\ProfileController@update_student');
+                            }
+                        );
+                    }
+                );
+            }
+        );
+    }
+);
 
 
 // General request

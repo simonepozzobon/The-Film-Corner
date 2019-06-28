@@ -13,11 +13,13 @@
     >
         <ui-app-library
             ref="library"
-            :hasSubLibraries="assets.hasSubLibraries"
+            :app-id="10"
+            :has-sub-libraries="assets.hasSubLibraries"
             :type="assets.type"
             :items="assets.library"
             :color="color"
             @selected="selected"
+            @uploaded="uploaded"
         />
     </template>
     <template>
@@ -94,23 +96,47 @@ export default {
                     this.isLoading = true
                     this.$root.isOpen = true
                     this.$root.objectsToLoad = 1
-                    this.media = {
-                        videoSrc: content.main_video
+                    if (content.main_video) {
+                        this.media = {
+                            videoSrc: content.main_video
+                        }
+                    }
+                    else {
+                        this.media = {
+                            videoSrc: '/video/empty-session.mp4'
+                        }
                     }
                 }
             }
+
             if (!this.isLoading) {
+                console.log('siamo qui');
                 let idx = Math.round(Math.random() * this.assets.library.length)
                 this.media = this.assets.library[idx]
             }
             // console.log();
+
             this.saveContent()
+
+            // upload
+            console.log(this.assets);
         },
-        selected: function (id) {
+        selected: function (id, libraryID) {
             let player = this.$refs.preview.player
             player.pause()
-            this.media = this.assets.library.filter(asset => asset.id == id)[0]
-            this.saveContent()
+            let library = this.assets.library.find(library => library.id == libraryID)
+            console.log('selected', id, libraryID);
+            console.log('libreria', library);
+            if (library) {
+                let media = library.videos.find(asset => asset.id == id)
+                if (media) {
+                    console.log('media', media);
+                    this.media = media
+                    this.saveContent()
+                }
+            }
+            // this.media = this.assets.library.filter(asset => asset.id == id)[0]
+            // this.saveContent()
         },
         setNotes: function (notes) {
             this.notes = notes
@@ -118,6 +144,7 @@ export default {
         },
         saveContent: _.debounce(function () {
             let content = this.$root.session.content
+
             let newContent = {
                 main_video: this.media.videoSrc,
                 videos: [],
@@ -137,6 +164,9 @@ export default {
                 content: content
             }
         }, 500),
+        uploaded: function (asset) {
+            console.log(this.assets, asset);
+        },
     },
     created: function () {
         this.uniqid = SharedMethods.uniqid.bind(this)
