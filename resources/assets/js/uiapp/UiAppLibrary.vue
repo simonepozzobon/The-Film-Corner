@@ -236,7 +236,7 @@ export default {
             if (selected) {
                 switch (type) {
                 case 'videos':
-                    console.log(selected);
+                    // console.log(selected);
                     this.counter = selected.videos.length
                     this.assets = selected.videos
                     break;
@@ -245,7 +245,7 @@ export default {
                     this.assets = selected.audios
                     break;
                 case 'uploads':
-                    console.log(this.counter);
+                    // console.log(this.counter);
                     this.assets = selected.videos
                     break;
                 default:
@@ -338,7 +338,6 @@ export default {
             this.counter--
         },
         addToLibrary: function (file) {
-            console.log(file);
             let newUpload = {
                 id: this.assets.length,
                 title: file.title,

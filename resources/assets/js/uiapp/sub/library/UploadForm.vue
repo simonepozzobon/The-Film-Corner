@@ -5,10 +5,14 @@
         :accept="accept"
         @update="updateFile"
     />
+
+
     <ui-button
         :has-container="false"
         title="Upload"
         color="dark"
+        :has-spinner="isLoading"
+        :disable="isLoading"
         @click="uploadFile"
     />
 </div>
@@ -40,6 +44,7 @@ export default {
     data: function () {
         return {
             file: null,
+            isLoading: false,
         }
     },
     methods: {
@@ -47,13 +52,17 @@ export default {
             this.file = file
         },
         uploadFile: function () {
-            console.log('cliccato');
+            this.isLoading = true
+
             let data = new FormData()
             data.append('file', this.file)
             data.append('app_id', this.appId)
 
             this.$http.post('/api/v2/asset-upload', data).then(response => {
                 this.$emit('uploaded', response.data)
+                this.$nextTick(() => {
+                    this.isLoading = false
+                })
             })
         }
     },
