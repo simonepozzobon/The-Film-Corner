@@ -74,6 +74,14 @@ Route::prefix('v2')->group(
                 );
             }
         );
+
+        Route::prefix('admin')->group(function() {
+            Route::prefix('users')->group(function() {
+                Route::get('/', 'Api\Admin\UserController@get_users');
+                Route::delete('{id}', 'Api\Admin\UserController@destroy');
+                Route::post('save', 'Api\Admin\UserController@save_user');
+            });
+        });
     }
 );
 

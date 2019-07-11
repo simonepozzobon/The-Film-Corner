@@ -6,6 +6,7 @@
             displayClass,
             alignSelfClass,
             marginClass,
+            customSizeClass,
         ]"
 >
     <button
@@ -13,6 +14,7 @@
         :class="[
                 colorClass,
                 blockClass,
+                sizeClass,
             ]"
         :disabled="disable"
         @click.prevent="clicked"
@@ -37,6 +39,8 @@
             noContainerClass,
             alignSelfClass,
             marginClass,
+            sizeClass,
+            customSizeClass,
         ]"
     :disabled="disable"
     @click.prevent="clicked"
@@ -96,12 +100,24 @@ export default {
             type: Boolean,
             default: false,
         },
+        theme: {
+            type: String,
+            default: null,
+        },
+        size: {
+            type: String,
+            default: null
+        },
         eventParams: [String, Object, Array, Number],
+
     },
     computed: {
         colorClass: function () {
-            if (this.color) {
+            if (this.color && !this.theme) {
                 return 'btn-' + this.color
+            }
+            else if (this.color && this.theme === 'outline') {
+                return 'btn-outline' + this.color
             }
         },
         blockClass: function () {
@@ -134,6 +150,16 @@ export default {
                 return 'text-' + this.fontColor
             }
         },
+        sizeClass: function () {
+            if (this.size) {
+                return 'btn-' + this.size
+            }
+        },
+        customSizeClass: function () {
+            if (this.size) {
+                return 'ui-button--' + this.size
+            }
+        }
     },
     methods: {
         clicked: function () {
@@ -162,6 +188,13 @@ export default {
     &--no-container {
         text-transform: uppercase;
         font-size: $font-size-base * 0.75;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+
+    &--sm {
+        text-transform: uppercase;
+        font-size: $font-size-base * 0.55;
         font-weight: 600;
         letter-spacing: 3px;
     }
