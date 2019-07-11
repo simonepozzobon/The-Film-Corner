@@ -1,5 +1,8 @@
 <template>
-<div class="admin-container">
+<div
+    class="admin-container"
+    :class="paddingClass"
+>
     <div class="admin-container__content">
         <slot></slot>
     </div>
@@ -9,6 +12,19 @@
 <script>
 export default {
     name: 'Container',
+    props: {
+        padding: {
+            type: String,
+            default: null,
+        },
+    },
+    computed: {
+        paddingClass: function () {
+            if (this.padding) {
+                return 'admin-container--padding-' + this.padding
+            }
+        }
+    },
 }
 </script>
 
@@ -23,6 +39,10 @@ export default {
         @include custom-box-shadow($black);
         margin-bottom: $spacer * 1.618;
         z-index: 2;
+    }
+
+    &--padding-sm &__content {
+        padding: $spacer;
     }
 }
 </style>

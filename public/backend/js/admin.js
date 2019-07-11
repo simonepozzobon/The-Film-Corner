@@ -1727,8 +1727,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Container'
+  name: 'Container',
+  props: {
+    padding: {
+      type: String,
+      "default": null
+    }
+  },
+  computed: {
+    paddingClass: function paddingClass() {
+      if (this.padding) {
+        return 'admin-container--padding-' + this.padding;
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -4146,6 +4162,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _adminui__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../adminui */ "./resources/assets/js/admin/adminui/index.js");
 /* harmony import */ var _ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../ui */ "./resources/assets/js/ui/index.js");
 /* harmony import */ var _components_CreateUser_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/CreateUser.vue */ "./resources/assets/js/admin/components/CreateUser.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -36267,7 +36300,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.admin-container__content[data-v-75ee2c1a] {\n  background-color: #f8f9fa;\n  padding: 2rem;\n  border-radius: 0.25rem;\n  box-shadow: 4px 8px 32px 0 rgba(37, 37, 37, 0.1), 8px 16px 64px 0 rgba(37, 37, 37, 0.05);\n  margin-bottom: 1.618rem;\n  z-index: 2;\n}\n", ""]);
+exports.push([module.i, "\n.admin-container__content[data-v-75ee2c1a] {\n  background-color: #f8f9fa;\n  padding: 2rem;\n  border-radius: 0.25rem;\n  box-shadow: 4px 8px 32px 0 rgba(37, 37, 37, 0.1), 8px 16px 64px 0 rgba(37, 37, 37, 0.05);\n  margin-bottom: 1.618rem;\n  z-index: 2;\n}\n.admin-container--padding-sm .admin-container__content[data-v-75ee2c1a] {\n  padding: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -36381,7 +36414,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.admin-users__center[data-v-d40a25f6] {\n  display: flex;\n  justify-content: center;\n}\n.admin-users__topbar[data-v-d40a25f6] {\n  display: flex;\n  justify-content: space-between;\n}\n.admin-users__search[data-v-d40a25f6] {\n  max-width: 200px;\n}\n", ""]);
+exports.push([module.i, "\n.admin-users__center[data-v-d40a25f6] {\n  display: flex;\n  justify-content: center;\n}\n.admin-users__per-page[data-v-d40a25f6] {\n  margin-left: auto;\n  margin-right: 1rem;\n  display: flex;\n  align-items: center;\n}\n.admin-users__per-page label[data-v-d40a25f6] {\n    flex-grow: 1;\n    margin-right: 0.5rem;\n    margin-bottom: 0;\n    font-size: 0.875rem;\n    color: #6c757d;\n}\n.admin-users__per-page .form-control[data-v-d40a25f6] {\n    width: auto;\n}\n.admin-users__topbar[data-v-d40a25f6] {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}\n.admin-users__search[data-v-d40a25f6] {\n  max-width: 200px;\n}\n", ""]);
 
 // exports
 
@@ -61862,14 +61895,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "admin-container" }, [
-    _c(
-      "div",
-      { staticClass: "admin-container__content" },
-      [_vm._t("default")],
-      2
-    )
-  ])
+  return _c(
+    "div",
+    { staticClass: "admin-container", class: _vm.paddingClass },
+    [
+      _c(
+        "div",
+        { staticClass: "admin-container__content" },
+        [_vm._t("default")],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62267,7 +62304,7 @@ var render = function() {
     "div",
     { staticClass: "admin-users" },
     [
-      _c("container", [
+      _c("container", { attrs: { padding: "sm" } }, [
         _c("div", { staticClass: "admin-users__topbar" }, [
           _c(
             "div",
@@ -62285,6 +62322,54 @@ var render = function() {
             ],
             1
           ),
+          _vm._v(" "),
+          _c("div", { staticClass: "admin-users__per-page" }, [
+            _c("label", { attrs: { for: "perpage" } }, [
+              _vm._v("\n                    Per pagina\n                ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.perPage,
+                    expression: "perPage"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { name: "perpage" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.perPage = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "5" } }, [_vm._v("5")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "10" } }, [_vm._v("10")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "25" } }, [_vm._v("25")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "50" } }, [_vm._v("50")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "100" } }, [_vm._v("100")])
+              ]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "admin-users__search" }, [
             _c("input", {
@@ -62394,7 +62479,11 @@ var render = function() {
             [
               _c("b-pagination", {
                 staticClass: "my-0",
-                attrs: { "total-rows": _vm.totalRows, "per-page": _vm.perPage },
+                attrs: {
+                  "total-rows": _vm.totalRows,
+                  "per-page": _vm.perPage,
+                  align: "center"
+                },
                 model: {
                   value: _vm.currentPage,
                   callback: function($$v) {

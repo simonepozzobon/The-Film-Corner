@@ -1,6 +1,6 @@
 <template>
 <div class="admin-users">
-    <container>
+    <container padding="sm">
         <div class="admin-users__topbar">
             <div class="admin-users__create">
                 <ui-button
@@ -10,6 +10,22 @@
                     :has-margin="false"
                     @click="showPanel"
                 />
+            </div>
+            <div class="admin-users__per-page">
+                <label for="perpage">
+                    Per pagina
+                </label>
+                <select
+                    name="perpage"
+                    v-model="perPage"
+                    class="form-control"
+                >
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
             </div>
             <div class="admin-users__search">
                 <input
@@ -74,6 +90,7 @@
                 v-model="currentPage"
                 :total-rows="totalRows"
                 :per-page="perPage"
+                align="center"
                 class="my-0"
             />
         </div>
@@ -210,9 +227,29 @@ export default {
         justify-content: center;
     }
 
+    &__per-page {
+        margin-left: auto;
+        margin-right: $spacer;
+        display: flex;
+        align-items: center;
+
+        label {
+            flex-grow: 1;
+            margin-right: $spacer / 2;
+            margin-bottom: 0;
+            font-size: $font-size-sm;
+            color: $text-muted;
+        }
+
+        .form-control {
+            width: auto;
+        }
+    }
+
     &__topbar {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     &__search {
