@@ -3761,6 +3761,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3769,7 +3772,27 @@ __webpack_require__.r(__webpack_exports__);
     MainSidebar: _MainSidebar_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     TopBar: _TopBar_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  mounted: function mounted() {}
+  data: function data() {
+    return {
+      randomColorClass: null
+    };
+  },
+  watch: {
+    '$route': function $route() {
+      this.randomColor();
+    }
+  },
+  computed: {},
+  methods: {
+    randomColor: function randomColor() {
+      var colors = ['blue', 'red', 'green', 'orange', 'purple'];
+      var idx = Math.floor(Math.random() * colors.length) + 0;
+      this.randomColorClass = 'admin-template--' + colors[idx];
+    }
+  },
+  mounted: function mounted() {
+    this.randomColor();
+  }
 });
 
 /***/ }),
@@ -36761,7 +36784,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\n.admin-template__container[data-v-3e3b89fc] {\n  display: flex;\n}\n.admin-template__content[data-v-3e3b89fc] {\n  padding: 6rem 2rem 2rem;\n  width: 100%;\n  background-image: linear-gradient(145deg, #ddecf9, #f2f8fd);\n  background-repeat: repeat-x;\n}\n", ""]);
+exports.push([module.i, "\n.admin-template__container[data-v-3e3b89fc] {\n  display: flex;\n}\n.admin-template__content[data-v-3e3b89fc] {\n  padding: 6rem 2rem 2rem;\n  width: 100%;\n}\n.admin-template--blue .admin-template__content[data-v-3e3b89fc] {\n  background-image: linear-gradient(145deg, #ddecf9, #f2f8fd);\n  background-repeat: repeat-x;\n}\n.admin-template--red .admin-template__content[data-v-3e3b89fc] {\n  background-image: linear-gradient(145deg, #fce6e6, #fffdfd);\n  background-repeat: repeat-x;\n}\n.admin-template--green .admin-template__content[data-v-3e3b89fc] {\n  background-image: linear-gradient(145deg, #d8efee, #fcfefe);\n  background-repeat: repeat-x;\n}\n.admin-template--orange .admin-template__content[data-v-3e3b89fc] {\n  background-image: linear-gradient(145deg, #f9e5d2, white);\n  background-repeat: repeat-x;\n}\n.admin-template--purple .admin-template__content[data-v-3e3b89fc] {\n  background-image: linear-gradient(145deg, #eae1f0, #f6f2f9);\n  background-repeat: repeat-x;\n}\n", ""]);
 
 // exports
 
@@ -61649,7 +61672,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "admin-template" },
+    { staticClass: "admin-template", class: _vm.randomColorClass },
     [
       _c("top-bar"),
       _vm._v(" "),
