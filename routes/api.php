@@ -81,6 +81,11 @@ Route::prefix('v2')->group(
                 Route::delete('{id}', 'Api\Admin\UserController@destroy');
                 Route::post('save', 'Api\Admin\UserController@save_user');
             });
+
+            Route::prefix('apps')->group(function() {
+                Route::get('/', 'Api\Admin\AppsController@get_apps');
+                Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
+            });
         });
     }
 );

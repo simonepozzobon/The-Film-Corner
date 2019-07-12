@@ -5,7 +5,11 @@
         url="home"
     />
     <sidebar-item
-        title="Apps"
+        title="Applicazioni"
+        url="apps"
+    />
+    <sidebar-item
+        title="Traduzioni"
         url="home"
     />
     <sidebar-item
