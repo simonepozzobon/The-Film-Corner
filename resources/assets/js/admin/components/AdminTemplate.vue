@@ -35,7 +35,7 @@ export default {
     &__content {
         padding: ($spacer * 6) ($spacer * 2) ($spacer * 2);
         width: 100%;
-        @include gradient-directional($red, $green, 145deg);
+        @include gradient-directional(lighten($blue, 35), lighten($blue, 40), 145deg);
     }
 }
 </style>

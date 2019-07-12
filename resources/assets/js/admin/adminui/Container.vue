@@ -36,7 +36,7 @@ export default {
         background-color: $gray-100;
         padding: $spacer * 2;
         @include border-radius($border-radius);
-        @include custom-box-shadow($black);
+        @include custom-box-shadow(lighten($black, 25));
         margin-bottom: $spacer * 1.618;
         z-index: 2;
     }

@@ -7,7 +7,7 @@
 }
 
 @mixin custom-inner-shadow($color) {
-  box-shadow: inset 0px 0px ($spacer * 2) rgba($color, .1);
+  box-shadow: inset 0px 0px ($spacer / 2) rgba($color, .33);
 }
 
 //

@@ -5,12 +5,16 @@
         url="home"
     />
     <sidebar-item
+        title="News"
+        url="home"
+    />
+    <sidebar-item
         title="Applicazioni"
         url="apps"
     />
     <sidebar-item
         title="Traduzioni"
-        url="home"
+        url="translate"
     />
     <sidebar-item
         title="Utenti"
@@ -37,8 +41,8 @@ export default {
     height: 100%;
     width: 200px;
     padding: ($spacer * 5) $spacer $spacer;
-    @include custom-box-shadow($black);
     z-index: 2;
-    @include gradient-directional($gray-300, $gray-200, 145deg);
+    @include custom-box-shadow(lighten($black, 25));
+    @include gradient-directional($gray-100, lighten($gray-200, 10), 145deg);
 }
 </style>

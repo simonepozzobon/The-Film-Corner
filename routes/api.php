@@ -86,6 +86,11 @@ Route::prefix('v2')->group(
                 Route::get('/', 'Api\Admin\AppsController@get_apps');
                 Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
             });
+
+            Route::prefix('translate')->group(function() {
+                Route::get('/', 'Admin\TranslateController@get_languages');
+                Route::post('elements', 'Admin\TranslateController@get_elements');
+            });
         });
     }
 );

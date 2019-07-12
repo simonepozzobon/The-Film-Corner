@@ -40,12 +40,12 @@ export default {
     position: fixed;
     height: $spacer * 4;
     width: 100%;
-    background-color: $gray-300;
+    background-color: $gray-100;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: $spacer / 2;
-    @include custom-box-shadow($black);
+    padding: ($spacer / 2) $spacer;
+    // @include custom-box-shadow(lighten($black, 25));
     z-index: $zindex-fixed;
 
     &__logo {
