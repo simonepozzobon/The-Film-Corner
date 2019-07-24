@@ -19,28 +19,42 @@
             <ui-row
                 :full-width="true"
                 ver-align="center"
+                align="center"
             >
                 <ui-special-text
                     :has-padding="false"
                     display="inline-block"
                     class="mr-3"
-                    text="search the clips and didactical content through the timeline below or through the advanced"
+                    text="search the clips and didactical content through the timeline below or through the"
                 />
 
                 <ui-button
-                    title="search engine"
+                    title="Advanced search engine"
                     color="red"
                     :has-container="false"
                     :has-margin="false"
                 />
             </ui-row>
 
-            <ui-roadmap />
+            <ui-roadmap
+                :channels="channels"
+                @select-channel="selectChannel"
+            />
+
+            <ui-row
+                align="center"
+                :full-width="true"
+            >
+                <ui-button
+                    title="Go to the creative challenges"
+                    color="yellow"
+                    :has-container="false"
+                    :has-margin="false"
+                />
+            </ui-row>
         </ui-row>
     </ui-hero-banner>
-    <ui-container>
-        Contenuto
-    </ui-container>
+    <ui-app-channel-results />
 </ui-container>
 </template>
 
@@ -57,10 +71,18 @@ import {
     UiSpecialText,
     UiTitle,
     UiRow,
-} from '../../../ui'
+}
+from '../../../ui'
+
+import {
+    UiAppChannelResults
+}
+from '../../../uiapp'
+
 export default {
     name: 'PropagandaHome',
     components: {
+        UiAppChannelResults,
         UiBlock,
         UiButton,
         UiContainer,
@@ -73,25 +95,47 @@ export default {
         UiTitle,
         UiRow,
     },
-    data: function() {
+    data: function () {
         return {
-            title: 'Welcome'
+            title: 'Welcome',
+            channels: [{
+                period: '1917',
+                color: 'red',
+                label: 'Russian Revolution',
+            }, {
+                period: '1922-1945',
+                color: 'orange',
+                label: 'Fascism and Nazism',
+            }, {
+                period: '1939-1945',
+                color: 'green-var',
+                label: 'Second World War',
+                isActive: true,
+            }, {
+                period: '1946-1990',
+                color: 'teal',
+                label: 'Cold war',
+            }],
         }
     },
     watch: {
-        '$root.user': function(user) {
+        '$root.user': function (user) {
             this.setWelcome()
         }
     },
     methods: {
-        setWelcome: function() {
+        setWelcome: function () {
             this.title = 'Welcome ' + this.$root.user.name
             console.log(this.title);
         },
-        enter: function() {},
-        leave: function() {}
+        enter: function () {},
+        leave: function () {},
+        selectChannel: function (channel) {
+
+        }
+
     },
-    mounted: function() {
+    mounted: function () {
         this.$nextTick(this.setWelcome)
     },
 }

@@ -3,6 +3,7 @@
     class="roadmap-dot"
     :class="[
         colorClass,
+        isActiveClass,
     ]"
     @click="clicked"
 >
@@ -25,20 +26,30 @@ export default {
     props: {
         point: {
             type: Object,
-            default: function() {
+            default: function () {
                 return {}
             },
         },
+        isActive: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             if (this.point.color) {
                 return 'roadmap-dot--' + this.point.color
             }
-        }
+        },
+        isActiveClass: function () {
+            if (this.isActive) {
+                return 'roadmap-dot--is-active'
+            }
+            return null
+        },
     },
     methods: {
-        clicked: function() {
+        clicked: function () {
             this.$emit('click', this.point)
         }
     },
@@ -105,6 +116,7 @@ $size-hover: $spacer * 4 !default;
         transition: $transition-base;
     }
 
+    &--is-active &,
     &:hover & {
         &__circle {
             width: $size-hover;

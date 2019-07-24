@@ -8,6 +8,7 @@
             v-for="(channel, index) in channels"
             :key="index"
             :point="channel"
+            :is-active="channel.isActive"
             @click="selectChannel"
         />
     </div>
@@ -21,29 +22,16 @@ export default {
     components: {
         UiRoadmapDot
     },
-    data: function() {
-        return {
-            channels: [{
-                period: '1917',
-                color: 'red',
-                label: 'Russian Revolution',
-            }, {
-                period: '1922-1945',
-                color: 'orange',
-                label: 'Fascism and Nazism',
-            }, {
-                period: '1939-1945',
-                color: 'green-var',
-                label: 'Second World War',
-            }, {
-                period: '1946-1990',
-                color: 'teal',
-                label: 'Cold war',
-            }, ],
-        }
+    props: {
+        channels: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
     },
     methods: {
-        selectChannel: function(channel) {
+        selectChannel: function (channel) {
             this.$emit('select-channel', channel)
         },
     },
