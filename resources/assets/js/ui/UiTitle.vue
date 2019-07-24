@@ -1,10 +1,10 @@
 <template>
-    <div v-if="hasContainer">
-        <component
-            ref="title"
-            :is="tag"
-            class="ui-title"
-            :class="[
+<div v-if="hasContainer">
+    <component
+        ref="title"
+        :is="tag"
+        class="ui-title"
+        :class="[
                 mainClass,
                 alignClass,
                 fontSizeClass,
@@ -14,17 +14,19 @@
                 marginClass,
                 displayClass,
                 hoverableClass,
-            ]">
-                {{ title }}
-                <slot></slot>
-        </component>
-    </div>
-    <component
-        v-else
-        ref="title"
-        :is="tag"
-        class="ui-title"
-        :class="[
+                xPaddingClass,
+            ]"
+    >
+        {{ title }}
+        <slot></slot>
+    </component>
+</div>
+<component
+    v-else
+    ref="title"
+    :is="tag"
+    class="ui-title"
+    :class="[
             mainClass,
             alignClass,
             fontSizeClass,
@@ -34,10 +36,12 @@
             marginClass,
             displayClass,
             hoverableClass,
-        ]">
-            {{ title }}
-            <slot></slot>
-    </component>
+            xPaddingClass,
+        ]"
+>
+    {{ title }}
+    <slot></slot>
+</component>
 </template>
 
 <script>
@@ -91,52 +95,58 @@ export default {
         hoverable: {
             type: Boolean,
             default: false,
-        }
+        },
+        xPadding: [String, Boolean],
     },
     computed: {
-        alignClass: function() {
+        alignClass: function () {
             if (this.align == 'center') {
                 return 'ui-title--align-center'
             }
         },
-        mainClass: function() {
+        mainClass: function () {
             if (this.isMain) {
                 return 'ui-title--ismain'
             }
         },
-        fontSizeClass: function() {
+        fontSizeClass: function () {
             return 'ui-title--' + this.fontSize
         },
-        colorClass: function() {
+        colorClass: function () {
             if (this.color) {
                 return 'text-' + this.color
             }
         },
-        uppercaseClass: function() {
+        uppercaseClass: function () {
             if (!this.uppercase) {
                 return 'ui-title--text-normal'
             }
         },
-        paddingClass: function() {
+        paddingClass: function () {
             if (!this.hasPadding) {
                 return 'ui-title--no-padding'
             }
         },
-        marginClass: function() {
+        marginClass: function () {
             if (!this.hasMargin) {
                 return 'ui-title--no-margin'
             }
         },
-        displayClass: function() {
+        displayClass: function () {
             if (this.display) {
-                return 'ui-title--'+this.display
+                return 'ui-title--' + this.display
             }
         },
-        hoverableClass: function() {
+        hoverableClass: function () {
             if (this.hoverable) {
                 return 'ui-title--hoverable'
             }
-        }
+        },
+        xPaddingClass: function () {
+            if (this.xPadding === true || this.xPadding === 'true') {
+                return 'ui-title--x-padding'
+            }
+        },
     }
 }
 </script>
@@ -178,16 +188,33 @@ export default {
         padding-top: 0;
     }
 
+    &--x-padding {
+        padding-left: $spacer;
+        padding-right: $spacer;
+    }
+
     &--no-margin {
         margin-bottom: 0;
     }
 
-    &--h1 { font-size: $h1-font-size; }
-    &--h2 { font-size: $h2-font-size; }
-    &--h3 { font-size: $h3-font-size; }
-    &--h4 { font-size: $h4-font-size; }
-    &--h5 { font-size: $h5-font-size; }
-    &--h6 { font-size: $h6-font-size; }
+    &--h1 {
+        font-size: $h1-font-size;
+    }
+    &--h2 {
+        font-size: $h2-font-size;
+    }
+    &--h3 {
+        font-size: $h3-font-size;
+    }
+    &--h4 {
+        font-size: $h4-font-size;
+    }
+    &--h5 {
+        font-size: $h5-font-size;
+    }
+    &--h6 {
+        font-size: $h6-font-size;
+    }
 
     &--inline-block {
         display: inline-block;

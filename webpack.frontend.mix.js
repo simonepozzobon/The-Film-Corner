@@ -28,12 +28,12 @@ mix
             }
         }
     })
-    .polyfill({
-        enabled: true,
-        useBuiltIns: 'usage',
-        targets: 'last 2 version, not dead',
-        debug: true
-    })
+    // .polyfill({
+    //     enabled: true,
+    //     useBuiltIns: 'usage',
+    //     targets: 'last 2 version, not dead',
+    //     debug: true
+    // })
     .browserSync({
         proxy: 'http://tfc.test',
         port: 3020,
