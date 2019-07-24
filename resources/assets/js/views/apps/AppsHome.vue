@@ -61,6 +61,14 @@
                                 Go to the challenges
                             </li>
                         </ul>
+                        <ul class="block-menu block-menu--var">
+                            <li class="block-menu__menu-head">
+                                Art<b>app</b>
+                            </li>
+                            <li class="block-menu__menu-item">
+                                Go to the challenges
+                            </li>
+                        </ul>
                     </div>
 
                     <div v-else>
