@@ -47,12 +47,18 @@
                     />
 
                     <div v-if="studio.slug == 'cultural-approach'">
-                        <ul class="block-menu">
+                        <ul class="block-menu block-menu--var">
                             <li
                                 class="block-menu__menu-head"
                                 @click="goToPropaganda(studio.slug)"
                             >
-                                Propagandapp
+                                Propagand<b>app</b>
+                            </li>
+                            <li
+                                class="block-menu__menu-item"
+                                @click="goToPropaganda(studio.slug)"
+                            >
+                                Go to the challenges
                             </li>
                         </ul>
                     </div>
@@ -193,6 +199,12 @@ export default {
     &__menu-item {
         &:hover {
             text-decoration: underline;
+        }
+    }
+
+    &--var & {
+        &__menu-head {
+            font-weight: 600;
         }
     }
 }
