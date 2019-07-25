@@ -4,6 +4,7 @@
         v-if="hasChildren"
         :title="title"
         :items="childrens"
+        @open-sub="openSub"
     />
     <a
         v-else
@@ -26,6 +27,10 @@ export default {
         SubDropdown,
     },
     props: {
+        idx: {
+            type: Number,
+            default: 0,
+        },
         title: {
             type: String,
             default: 'titolo',
@@ -43,7 +48,11 @@ export default {
     },
     methods: {
         openDepth: function () {
-
+            this.$emit('open-modal', this.idx, null)
+        },
+        openSub: function (id) {
+            console.log('dentro', this.idx, id);
+            this.$emit('open-modal', this.idx, id)
         }
     },
 }

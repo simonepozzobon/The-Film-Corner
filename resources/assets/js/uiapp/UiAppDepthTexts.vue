@@ -10,9 +10,11 @@
         <sub-single
             v-for="sub in subs"
             :key="sub.id"
+            :idx="sub.id"
             :title="sub.title"
             :has-children="sub.hasChildren"
             :childrens="sub.childrens"
+            @open-modal="openModal"
         />
     </div>
     <div class="ua-depth__bottom">
@@ -24,11 +26,6 @@
 </template>
 
 <script>
-import {
-    subsTexts
-}
-from '../dummies/PropagandAppContent'
-
 import SubSingle from './sub/propaganda/SubSingle.vue'
 
 import {
@@ -44,9 +41,20 @@ export default {
         UiButton,
         UiTitle,
     },
+    props: {
+        subs: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
+    },
     data: function () {
-        return {
-            subs: subsTexts
+        return {}
+    },
+    methods: {
+        openModal: function (idx, subId = null) {
+            this.$emit('open-modal', idx, subId)
         }
     },
 }

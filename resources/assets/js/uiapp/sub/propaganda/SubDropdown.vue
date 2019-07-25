@@ -31,6 +31,7 @@
                 v-for="item in items"
                 :key="item.id"
                 class="sub-item__link"
+                @click.prevent="openSub(item.id)"
             >
                 {{ item.title }}
             </a>
@@ -165,6 +166,9 @@ export default {
             }
 
             return this.openMenu()
+        },
+        openSub: function (id) {
+            this.$emit('open-sub', id)
         }
     },
     mounted: function () {

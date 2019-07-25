@@ -14,7 +14,10 @@
                         :size="4"
                         :has-container="false"
                     >
-                        <ui-app-depth-texts />
+                        <ui-app-depth-texts
+                            :subs="content.subs"
+                            @open-modal="openModal"
+                        />
                     </ui-block>
                     <ui-block
                         class="prop-single-tags"
@@ -47,6 +50,10 @@
             </div>
         </div>
     </div>
+    <modal-panel
+        ref="modal"
+        :modal="modal"
+    />
 </ui-container>
 </template>
 
@@ -55,8 +62,9 @@ import {
     movies
 }
 from '../../../dummies/PropagandAppContent'
-import Utility from '../../../Utilities'
 
+import Utility from '../../../Utilities'
+import ModalPanel from '../../../uiapp/sub/propaganda/ModalPanel.vue'
 import {
     UiBlock,
     UiButton,
@@ -81,6 +89,7 @@ from '../../../uiapp'
 export default {
     name: 'PropagandaSingle',
     components: {
+        ModalPanel,
         UiAppDepthTexts,
         UiAppPropagandaPlayer,
         UiBlock,
@@ -99,6 +108,7 @@ export default {
         return {
             title: null,
             content: null,
+            modal: null
         }
     },
     watch: {},
@@ -112,14 +122,28 @@ export default {
         },
         debug: function () {
             // this.selectChannel(this.channels[2])
+            this.openModal(5, 1)
         },
         enter: function () {},
         leave: function () {},
-        performSearch: function (query) {
-            // perform search request
-            console.log(query);
-        },
+        openModal: function (idx, subId = null) {
+            console.log(idx, subId);
+            let content = this.content.subs.find(content => content.id == idx)
+            if (subId && content.hasChildren) {
+                let childrens = content.childrens
+                let sub = childrens.find(children => children.id == subId)
+                this.modal = Object.assign({}, sub)
+            }
+            else {
+                this.modal = Object.assign({}, content)
+            }
 
+            console.log(this.modal);
+
+            this.$nextTick(() => {
+                this.$refs.modal.show()
+            })
+        }
     },
     created: function () {
         this.getData()
