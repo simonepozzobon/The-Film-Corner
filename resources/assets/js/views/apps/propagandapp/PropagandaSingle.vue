@@ -8,7 +8,10 @@
                         :size="8"
                         :has-container="false"
                     >
-                        <ui-app-propaganda-player :title="content.title" />
+                        <ui-app-propaganda-player
+                            :title="content.title"
+                            :src="content.video"
+                        />
                     </ui-block>
                     <ui-block
                         :size="4"
@@ -118,7 +121,7 @@ export default {
             let id = this.$route.params.id
             // perform api call
             this.content = movies.find(movie => movie.id == id)
-            this.debug()
+            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])

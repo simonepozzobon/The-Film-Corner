@@ -140,6 +140,7 @@ const movies = [
         attributes: generalAttributes,
         image: images[0],
         subs: subsTexts,
+        video: '/video/dottor-churkill.mp4',
     }, {
         id: 2,
         title: 'Lo squadrone bianco',
@@ -153,6 +154,7 @@ const movies = [
         attributes: generalAttributes,
         image: images[2],
         subs: subsTexts,
+        video: '/video/dottor-churkill.mp4',
     }, {
         id: 3,
         title: 'Camicia nera',
@@ -166,6 +168,7 @@ const movies = [
         attributes: generalAttributes,
         image: images[1],
         subs: subsTexts,
+        video: '/video/dottor-churkill.mp4',
     }, {
         id: 4,
         title: 'Vecchia guardia',
@@ -179,6 +182,7 @@ const movies = [
         attributes: generalAttributes,
         image: images[0],
         subs: subsTexts,
+        video: '/video/dottor-churkill.mp4',
     }
 ]
 

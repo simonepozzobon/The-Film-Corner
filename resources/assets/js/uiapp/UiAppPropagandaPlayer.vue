@@ -31,12 +31,17 @@
                 ref="player"
                 :options="playerOptions"
                 :playsinline="true"
-                @timeupdate="onPlayerTimeUpdate($event)"
                 @ready="$emit('ready')"
             />
         </div>
         <div class="ua-prop-player__controls">
-            <controls />
+            <controls
+                @play="play"
+                @pause="pause"
+                @stop="stop"
+                @backward="backward"
+                @forward="forward"
+            />
         </div>
     </div>
 </div>
@@ -67,6 +72,10 @@ export default {
             type: String,
             default: 'titolo',
         },
+        src: {
+            type: String,
+            default: null,
+        },
     },
     data: function () {
         return {
@@ -81,6 +90,51 @@ export default {
                 poster: '/video/empty-session.png',
             }
         }
+    },
+    watch: {
+        src: function (src) {
+            this.changeSrc()
+        },
+    },
+    computed: {
+        player: function () {
+            return this.$refs.player.player
+        },
+    },
+    methods: {
+        changeSrc: function () {
+            if (this.src) {
+                delete this.playerOptions.poster
+                this.playerOptions.sources[0].src = this.src
+            }
+        },
+        play: function () {
+            this.player.play()
+        },
+        pause: function () {
+            this.player.pause()
+        },
+        stop: function () {
+            this.player.pause()
+            this.player.currentTime(0)
+        },
+        backward: function () {
+            this.player.pause()
+            let position = this.player.currentTime()
+            if (position >= 5) {
+                this.player.currentTime(position - 5)
+            }
+            else {
+                this.player.currentTime(0)
+            }
+        },
+        forward: function () {
+            this.player.pause()
+            let position = this.player.currentTime()
+        },
+    },
+    created: function () {
+        this.changeSrc()
     },
 }
 </script>

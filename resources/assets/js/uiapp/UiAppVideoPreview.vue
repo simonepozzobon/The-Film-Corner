@@ -168,8 +168,7 @@ export default {
                         height: size.h,
                         autoAlpha: 1,
                     }, 0)
-                    master.progress(1)
-                        .progress(0)
+                    master.progress(1).progress(0)
                     master.eventCallback('onStart', () => {
                         this.loaderVisible = true
                     })
@@ -207,8 +206,7 @@ export default {
                         height: 0,
                         autoAlpha: 0,
                     }, 0)
-                    master.progress(1)
-                        .progress(0)
+                    master.progress(1).progress(0)
                     master.eventCallback('onComplete', () => {
                         this.loaderVisible = false
                         this.$nextTick(() => {
