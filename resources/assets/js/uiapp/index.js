@@ -11,6 +11,7 @@ import UiAppLibrary from './UiAppLibrary.vue'
 import UiAppMixer from './UiAppMixer.vue'
 import UiAppNote from './UiAppNote.vue'
 import UiAppPreview from './UiAppPreview.vue'
+import UiAppSearchForm from './UiAppSearchForm.vue'
 import UiAppSession from './UiAppSession.vue'
 import UiAppSessionManager from './UiAppSessionManager.vue'
 import UiAppSoundscapesPreview from './UiAppSoundscapesPreview.vue'
@@ -32,6 +33,7 @@ export {
     UiAppMixer,
     UiAppNote,
     UiAppPreview,
+    UiAppSearchForm,
     UiAppSession,
     UiAppSessionManager,
     UiAppSoundscapesPreview,

@@ -33,6 +33,7 @@
                     color="red"
                     :has-container="false"
                     :has-margin="false"
+                    @click="$root.goTo('propaganda-search')"
                 />
             </ui-row>
 
