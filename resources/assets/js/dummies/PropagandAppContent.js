@@ -126,6 +126,27 @@ const tags = [
     }
 ]
 
+const exercises = [
+    {
+        id: 1,
+        title: 'Compare the clips',
+        slug: 'compare-the-clips',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+    {
+        id: 2,
+        title: 'Frame Crop',
+        slug: 'frame-crop',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+    {
+        id: 3,
+        title: 'Check the sound',
+        slug: 'check-the-sound',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+]
+
 const movies = [
     {
         id: 1,
@@ -141,6 +162,7 @@ const movies = [
         image: images[0],
         subs: subsTexts,
         video: '/video/dottor-churkill.mp4',
+        exercises: exercises,
     }, {
         id: 2,
         title: 'Lo squadrone bianco',
@@ -155,6 +177,7 @@ const movies = [
         image: images[2],
         subs: subsTexts,
         video: '/video/dottor-churkill.mp4',
+        exercises: exercises,
     }, {
         id: 3,
         title: 'Camicia nera',
@@ -169,6 +192,7 @@ const movies = [
         image: images[1],
         subs: subsTexts,
         video: '/video/dottor-churkill.mp4',
+        exercises: exercises,
     }, {
         id: 4,
         title: 'Vecchia guardia',
@@ -183,6 +207,7 @@ const movies = [
         image: images[0],
         subs: subsTexts,
         video: '/video/dottor-churkill.mp4',
+        exercises: exercises,
     }
 ]
 

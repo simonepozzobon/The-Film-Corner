@@ -44,10 +44,15 @@ import Storytelling from './views/apps/Storytelling.vue'
 
 // Propagandapp
 import PropagandaContainer from './views/apps/propagandapp/PropagandaContainer.vue'
+import PropagandaExercise from './views/apps/propagandapp/PropagandaExercise.vue'
 import PropagandaIntro from './views/apps/propagandapp/PropagandaIntro.vue'
 import PropagandaHome from './views/apps/propagandapp/PropagandaHome.vue'
 import PropagandaSearch from './views/apps/propagandapp/PropagandaSearch.vue'
 import PropagandaSingle from './views/apps/propagandapp/PropagandaSingle.vue'
+
+import PropagandaCheckSound from './views/apps/propagandapp/exercises/PropagandaCheckSound.vue'
+import PropagandaCompareClips from './views/apps/propagandapp/exercises/PropagandaCompareClips.vue'
+import PropagandaFrameCrop from './views/apps/propagandapp/exercises/PropagandaFrameCrop.vue'
 
 // Network
 import NetworkHome from './views/network/NetworkHome.vue'
@@ -268,6 +273,33 @@ const routes = [
                                 name: 'propaganda-single',
                                 component: PropagandaSingle,
                                 meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'single/:id/:slug',
+                                component: PropagandaContainer,
+                                children: [
+                                    {
+                                        path: '',
+                                        name: 'propaganda-exercise',
+                                        component: PropagandaExercise,
+                                        meta: { requiresAuth: true },
+                                    },
+                                    {
+                                        path: 'compare-clips',
+                                        name: 'propaganda-compare-clips',
+                                        component: PropagandaCompareClips,
+                                    },
+                                    {
+                                        path: 'frame-crop',
+                                        name: 'propaganda-frame-crop',
+                                        component: PropagandaFrameCrop,
+                                    },
+                                    {
+                                        path: 'check-sound',
+                                        name: 'propaganda-check-sound',
+                                        component: PropagandaCheckSound,
+                                    },
+                                ]
                             },
                         ],
                     },

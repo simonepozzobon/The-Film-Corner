@@ -1,19 +1,22 @@
 <template>
-    <div
-        class="ui-paragraph"
-        :class="[
+<div
+    class="ui-paragraph"
+    :class="[
             sizeClass,
             alignClass,
             noPaddingClass,
             padding,
             fullWidthClass,
-        ]">
-        <p
-            class="ui-paragraph__content"
-            :class="[colorClass]">
-            <slot></slot>
-        </p>
-    </div>
+            colorClass,
+        ]"
+>
+    <p
+        class="ui-paragraph__content"
+        :class="[colorClass]"
+    >
+        <slot></slot>
+    </p>
+</div>
 </template>
 
 <script>
@@ -46,35 +49,36 @@ export default {
         }
     },
     computed: {
-        alignClass: function() {
+        alignClass: function () {
             if (this.align == 'center') {
                 return 'ui-paragraph--align-center'
-            } else if (this.align == 'justify') {
+            }
+            else if (this.align == 'justify') {
                 return 'ui-paragraph--align-justify'
             }
             return null
         },
-        noPaddingClass: function() {
+        noPaddingClass: function () {
             if (!this.hasPadding) {
                 return 'ui-paragraph--no-padding'
             }
         },
-        colorClass: function() {
+        colorClass: function () {
             if (this.color) {
                 return 'text-' + this.color
             }
         },
-        sizeClass: function() {
+        sizeClass: function () {
             if (this.size) {
                 return 'ui-paragraph--size-' + this.size
             }
         },
-        fullWidthClass: function() {
+        fullWidthClass: function () {
             if (this.fullWidth) {
                 return 'ui-paragraph--full-width'
             }
         },
-    }
+    },
 }
 </script>
 

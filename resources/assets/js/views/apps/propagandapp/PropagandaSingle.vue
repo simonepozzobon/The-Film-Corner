@@ -42,11 +42,15 @@
                         :has-container="false"
                     >
                         <ui-button
-                            color="yellow"
-                            title="Go to exercises"
+                            v-for="exercise in content.exercises"
+                            :key="exercise.id"
+                            :title="exercise.title"
+                            class="prop-single-exercise"
                             display="inline-block"
+                            color="yellow"
                             :has-container="false"
                             :has-margin="false"
+                            @click="goToExercise(exercise.slug)"
                         />
                     </ui-block>
                 </ui-row>
@@ -130,7 +134,6 @@ export default {
         enter: function () {},
         leave: function () {},
         openModal: function (idx, subId = null) {
-            console.log(idx, subId);
             let content = this.content.subs.find(content => content.id == idx)
             if (subId && content.hasChildren) {
                 let childrens = content.childrens
@@ -141,10 +144,15 @@ export default {
                 this.modal = Object.assign({}, content)
             }
 
-            console.log(this.modal);
 
             this.$nextTick(() => {
                 this.$refs.modal.show()
+            })
+        },
+        goToExercise: function (slug) {
+            this.$root.goToWithParams('propaganda-exercise', {
+                id: this.$route.params.id,
+                slug: slug
             })
         }
     },
@@ -180,5 +188,9 @@ export default {
 .prop-single-tags {
     margin-top: $spacer;
     margin-bottom: $spacer;
+}
+
+.prop-single-exercise {
+    margin-right: $spacer;
 }
 </style>

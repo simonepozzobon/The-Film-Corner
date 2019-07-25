@@ -12,6 +12,7 @@ import UiAppLibrary from './UiAppLibrary.vue'
 import UiAppMixer from './UiAppMixer.vue'
 import UiAppNote from './UiAppNote.vue'
 import UiAppPreview from './UiAppPreview.vue'
+import UiAppPropagandaBreadcrumbs from './UiAppPropagandaBreadcrumbs.vue'
 import UiAppPropagandaPlayer from './UiAppPropagandaPlayer.vue'
 import UiAppSearchForm from './UiAppSearchForm.vue'
 import UiAppSession from './UiAppSession.vue'
@@ -36,6 +37,7 @@ export {
     UiAppMixer,
     UiAppNote,
     UiAppPreview,
+    UiAppPropagandaBreadcrumbs,
     UiAppPropagandaPlayer,
     UiAppSearchForm,
     UiAppSession,

@@ -1,24 +1,31 @@
 <template>
-    <div
-        class="ui-folder-corner"
-        :class="[colorClass]">
-        <svg
-            class="ui-folder-corner__svg"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.05 88.03">
-            <path
-                class="ui-folder-corner__path"
-                d="M54.89,0s-20,0-28.55,18.08L1.82,70S-6.73,88,13.27,88H321.05s20,0,20-20V20s0-20-20-20Z"/>
-        </svg>
-        <svg
-            v-if="hasTimes"
-            class="ui-folder-corner__times"
-            @click.prevent="clicked"
-            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.35 23.35">
-            <path
-                class="ui-folder-corner__cross"
-                d="M22.49.86.86,22.48M.58.58,22.77,22.77"/>
-        </svg>
-    </div>
+<div
+    class="ui-folder-corner"
+    :class="[colorClass]"
+>
+    <svg
+        class="ui-folder-corner__svg"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 341.05 88.03"
+    >
+        <path
+            class="ui-folder-corner__path"
+            d="M54.89,0s-20,0-28.55,18.08L1.82,70S-6.73,88,13.27,88H321.05s20,0,20-20V20s0-20-20-20Z"
+        />
+    </svg>
+    <svg
+        v-if="hasTimes"
+        class="ui-folder-corner__times"
+        @click.prevent="clicked"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 23.35 23.35"
+    >
+        <path
+            class="ui-folder-corner__cross"
+            d="M22.49.86.86,22.48M.58.58,22.77,22.77"
+        />
+    </svg>
+</div>
 </template>
 
 <script>
@@ -35,12 +42,12 @@ export default {
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'ui-folder-corner--' + this.color
         }
     },
     methods: {
-        clicked: function() {
+        clicked: function () {
             this.$emit('click')
         },
     },
@@ -55,8 +62,7 @@ export default {
     position: relative;
     transform: translateY(60%);
 
-    &__svg {
-    }
+    &__svg {}
 
     &__path {
         fill: $green;
@@ -70,7 +76,7 @@ export default {
         right: $spacer;
         z-index: 1;
         cursor: pointer;
-        transform: translateY(-50%)
+        transform: translateY(-50%);
     }
 
     &__cross {
@@ -87,6 +93,17 @@ export default {
     }
     &--red &__path {
         fill: $red;
+    }
+
+    &--dark-gray & {
+
+        &__path {
+            fill: $dark-gray;
+        }
+
+        &__cross {
+            stroke: $light;
+        }
     }
 }
 </style>
