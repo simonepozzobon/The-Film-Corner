@@ -8,6 +8,7 @@
     ]"
     :title="alt"
     ref="container"
+    @click.prevent="$emit('click')"
 >
     <!-- <img
         :src="src"

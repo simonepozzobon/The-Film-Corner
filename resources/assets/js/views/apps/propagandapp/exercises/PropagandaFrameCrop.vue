@@ -6,7 +6,7 @@
 >
     <template slot="preview">
         <div class="prop-frame-crop">
-            <div class="prop-fram-crop__preview">
+            <div class="prop-frame-crop__preview">
                 <ui-app-propaganda-player
                     ref="player"
                     class="prop-frame-crop__player"

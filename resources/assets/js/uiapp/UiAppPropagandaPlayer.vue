@@ -139,6 +139,7 @@ export default {
             if (this.src) {
                 delete this.playerOptions.poster
                 this.playerOptions.sources[0].src = this.src
+                console.log('dentro cambia', this.src);
             }
         },
         play: function () {

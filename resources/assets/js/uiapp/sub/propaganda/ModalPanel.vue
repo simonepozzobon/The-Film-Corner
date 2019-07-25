@@ -110,9 +110,7 @@ export default {
     },
     data: function () {
         return {
-            swiperOption: {
-
-            }
+            swiperOption: {}
         }
     },
     methods: {
