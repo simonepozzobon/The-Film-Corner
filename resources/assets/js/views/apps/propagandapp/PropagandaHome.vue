@@ -135,7 +135,7 @@ export default {
             this.debug()
         },
         debug: function () {
-            this.selectChannel(this.channels[2])
+            // this.selectChannel(this.channels[2])
         },
         setWelcome: function () {
             this.title = 'Welcome ' + Utility.capitalize(this.$root.user.name)
