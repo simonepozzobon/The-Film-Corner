@@ -118,9 +118,7 @@ from '../../../uiapp'
 export default {
     name: 'PropagandaExercise',
     components: {
-        UiAppDepthTexts,
         UiAppPropagandaBreadcrumbs,
-        UiAppPropagandaPlayer,
         UiBlock,
         UiBreadcrumbs,
         UiButton,
@@ -140,7 +138,6 @@ export default {
             clip: null,
             title: null,
             content: null,
-            app: null,
             open: false,
             description: null,
             buttonText: 'Open existing session',
@@ -155,10 +152,10 @@ export default {
     methods: {
         getData: function () {
             let id = this.$route.params.id
-            let slug = this.$route.params.slug
+            let exerciseId = this.$route.params.exerciseId
             // perform api call
             this.clip = movies.find(movie => movie.id == id)
-            this.content = this.clip.exercises.find(exercise => exercise.slug == slug)
+            this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
 
             this.debug()
         },
@@ -169,7 +166,9 @@ export default {
         enter: function () {},
         leave: function () {},
         startApp: function () {
-
+            console.log(this.content.slug);
+            let slug = 'propaganda-' + this.content.slug
+            this.$root.goTo(slug)
         },
         togglePanel: function () {
             if (this.open) {

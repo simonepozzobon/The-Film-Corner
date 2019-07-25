@@ -50,7 +50,7 @@
                             color="yellow"
                             :has-container="false"
                             :has-margin="false"
-                            @click="goToExercise(exercise.slug)"
+                            @click="goToExercise(exercise.id)"
                         />
                     </ui-block>
                 </ui-row>
@@ -149,10 +149,10 @@ export default {
                 this.$refs.modal.show()
             })
         },
-        goToExercise: function (slug) {
+        goToExercise: function (id) {
             this.$root.goToWithParams('propaganda-exercise', {
                 id: this.$route.params.id,
-                slug: slug
+                exerciseId: id
             })
         }
     },

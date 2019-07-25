@@ -275,7 +275,7 @@ const routes = [
                                 meta: { requiresAuth: true },
                             },
                             {
-                                path: 'single/:id/:slug',
+                                path: 'single/:id/exercise-:exerciseId',
                                 component: PropagandaContainer,
                                 children: [
                                     {

@@ -1,5 +1,11 @@
 <template>
-<div class="ua-prop-player">
+<div
+    class="ua-prop-player"
+    :class="[
+        topAlignClass,
+        colorClass,
+    ]"
+>
     <div class="ua-prop-player__container">
         <div class="ua-prop-player__top">
             <div class="ua-prop-player__title">
@@ -7,12 +13,16 @@
                     :title="title"
                     tag="h2"
                     font-size="h4"
+                    :align="titleAlign"
                     :has-container="false"
                     :has-margin="false"
                     :has-padding="false"
                 />
             </div>
-            <div class="ua-prop-player__age">
+            <div
+                class="ua-prop-player__age"
+                v-if="hasAge"
+            >
                 <ui-title
                     title="14-18 anni"
                     tag="h3"
@@ -36,6 +46,7 @@
         </div>
         <div class="ua-prop-player__controls">
             <controls
+                :color="color"
                 @play="play"
                 @pause="pause"
                 @stop="stop"
@@ -76,6 +87,18 @@ export default {
             type: String,
             default: null,
         },
+        titleAlign: {
+            type: String,
+            default: null,
+        },
+        hasAge: {
+            type: Boolean,
+            default: true,
+        },
+        color: {
+            type: String,
+            default: null,
+        },
     },
     data: function () {
         return {
@@ -100,6 +123,16 @@ export default {
         player: function () {
             return this.$refs.player.player
         },
+        topAlignClass: function () {
+            if (this.titleAlign == 'center') {
+                return 'ua-prop-player--top-center'
+            }
+        },
+        colorClass: function () {
+            if (this.color) {
+                return 'ua-prop-player--' + this.color
+            }
+        }
     },
     methods: {
         changeSrc: function () {
@@ -169,6 +202,14 @@ export default {
     &__age {
         padding: $app-padding-x * 1.1;
         background-color: $red;
+    }
+
+    &--top-center &__top {
+        justify-content: center;
+    }
+
+    &--dark-gray {
+        background-color: $dark-gray;
     }
 }
 </style>

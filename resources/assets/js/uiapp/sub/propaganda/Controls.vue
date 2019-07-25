@@ -1,5 +1,8 @@
 <template>
-<div class="ua-prop-controls">
+<div
+    class="ua-prop-controls"
+    :class="colorClass"
+>
     <div class="ua-prop-controls__container">
         <div class="ua-prop-controls__control">
             <play
@@ -57,12 +60,25 @@ from '../../../icons'
 
 export default {
     name: 'Controls',
+    props: {
+        color: {
+            type: String,
+            default: null,
+        },
+    },
     components: {
         Backward,
         Forward,
         Pause,
         Play,
         Stop,
+    },
+    computed: {
+        colorClass: function () {
+            if (this.color) {
+                return 'ua-prop-controls--' + this.color
+            }
+        },
     },
     methods: {
         play: function () {
@@ -108,6 +124,10 @@ export default {
     &__control {
         margin-left: $spacer;
         margin-right: $spacer;
+    }
+
+    &--dark-gray {
+        background-color: $dark-gray;
     }
 }
 </style>
