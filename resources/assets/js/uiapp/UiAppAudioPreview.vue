@@ -1,5 +1,5 @@
 <template>
-<div class="ui-app-audio-preview">
+<div class="ua-audio-preview">
     <ui-title
         title="Preview"
         color="white"
@@ -8,7 +8,7 @@
     />
 
     <div
-        class="ui-app-audio-preview__loader"
+        class="ua-audio-preview__loader"
         ref="loader"
     >
         <div
@@ -24,11 +24,11 @@
 
     <div
         ref="player"
-        class="ui-app-audio-preview__player"
+        class="ua-audio-preview__player"
     ></div>
 
     <ui-app-video-controls
-        class="ui-app-audio-preview__controls"
+        class="ua-audio-preview__controls"
         @play="play"
         @pause="pause"
         @stop="stop"
@@ -42,11 +42,13 @@
 import UiAppVideoControls from './UiAppVideoControls.vue'
 import {
     UiTitle
-} from '../ui'
+}
+from '../ui'
 import 'video.js/dist/video-js.css'
 import {
     videoPlayer
-} from 'vue-video-player'
+}
+from 'vue-video-player'
 import SizeUtility from '../Sizes'
 import WaveSurfer from 'wavesurfer.js'
 import RegionsPlugin from 'wavesurfer.js/src/plugin/regions.js'
@@ -77,7 +79,8 @@ export default {
         'src': function (src) {
             if (this.player) {
                 this.changeSrc(src)
-            } else {
+            }
+            else {
                 this.init()
             }
         }
@@ -93,7 +96,8 @@ export default {
                 this.player = WaveSurfer.create({
                     container: this.$refs.player,
                 })
-            } else {
+            }
+            else {
                 this.player = WaveSurfer.create({
                     container: this.$refs.player,
                     plugins: [RegionsPlugin.create({})]
@@ -118,7 +122,8 @@ export default {
                         })
                     }
                     resolve()
-                } else {
+                }
+                else {
                     reject()
                 }
             })
@@ -149,7 +154,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-audio-preview {
+.ua-audio-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

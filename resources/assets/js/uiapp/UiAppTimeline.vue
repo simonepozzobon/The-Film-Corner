@@ -1,9 +1,9 @@
 <template>
     <ui-row :no-gutters="true" ref="container">
         <ui-block :size="12">
-            <div class="ui-app-timeline">
+            <div class="ua-timeline">
                 <ui-title :title="title" color="white" :has-padding="false"/>
-                <div class="ui-app-timeline__container">
+                <div class="ua-timeline__container">
                     <timeline-track
                         v-for="(track, idx) in timelines"
                         :key="track.uniqueid"
@@ -14,7 +14,7 @@
                         @duplicate-track="onDuplicate"
                         @on-drag="onDrag"
                         @on-resize="onResize"/>
-                    <div ref="playhead" class="ui-app-timeline__playhead"></div>
+                    <div ref="playhead" class="ua-timeline__playhead"></div>
                 </div>
             </div>
         </ui-block>
@@ -95,7 +95,7 @@ export default {
         this.$nextTick(() => {
             TweenLite.to(window, .2, {
                 scrollTo: {
-                    y: '.ui-app-timeline',
+                    y: '.ua-timeline',
                     offsetY: 200,
                 }
             })
@@ -107,7 +107,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-timeline {
+.ua-timeline {
     // position: relative;
     width: 100%;
     height: 100%;

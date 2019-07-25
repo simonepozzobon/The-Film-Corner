@@ -1,12 +1,12 @@
 <template>
 <div
     ref="container"
-    class="ui-app-library"
+    class="ua-library"
     :class="colorClass"
 >
     <div
         ref="head"
-        class="ui-app-library__head"
+        class="ua-library__head"
     >
         <ui-title
             ref="title"
@@ -15,12 +15,12 @@
         />
         <div
             ref="select"
-            class="ui-app-library__libraries row no-gutters"
+            class="ua-library__libraries row no-gutters"
             v-if="hasSubLibraries"
         >
             <label class="col-4">Select From</label>
             <select
-                class="form-control ui-app-library__select col-8"
+                class="form-control ua-library__select col-8"
                 v-model="currentLibrary"
             >
                 <option
@@ -35,7 +35,7 @@
     </div>
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-if="mediaType == 'videos'"
     >
         <transition-group
@@ -58,7 +58,7 @@
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else-if="mediaType == 'audios'"
     >
         <transition-group
@@ -80,7 +80,7 @@
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else-if="mediaType == 'uploads'"
     >
         <upload-form
@@ -109,7 +109,7 @@
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else
     >
         <transition-group
@@ -207,7 +207,7 @@ export default {
     },
     computed: {
         colorClass: function () {
-            return 'ui-app-library--' + this.color
+            return 'ua-library--' + this.color
         },
     },
     filters: {
@@ -363,7 +363,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-library {
+.ua-library {
     width: 100%;
     min-height: 100%;
     min-height: 450px;

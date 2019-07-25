@@ -1,5 +1,5 @@
 <template>
-<div class="ui-app-soundscapes-preview">
+<div class="ua-soundscapes-preview">
     <ui-title
         title="Preview"
         color="white"
@@ -14,7 +14,7 @@
     />
 
     <ui-app-video-controls
-        class="ui-app-soundscapes-preview__controls"
+        class="ua-soundscapes-preview__controls"
         @play="play"
         @pause="pause"
         @stop="stop"
@@ -140,7 +140,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-soundscapes-preview {
+.ua-soundscapes-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

@@ -1,35 +1,35 @@
 <template>
-    <div class="ui-app-video-controls">
-        <div class="ui-app-video-controls__container">
-            <div class="ui-app-video-controls__control">
+    <div class="ua-video-controls">
+        <div class="ua-video-controls__container">
+            <div class="ua-video-controls__control">
                 <play
                     @click.native="play"
                     color="white"
                     :hoverable="true"
                     hover-color="darker"/>
             </div>
-            <div class="ui-app-video-controls__control">
+            <div class="ua-video-controls__control">
                 <pause
                     @click.native="pause"
                     color="white"
                     :hoverable="true"
                     hover-color="darker"/>
             </div>
-            <div class="ui-app-video-controls__control">
+            <div class="ua-video-controls__control">
                 <stop
                     @click.native="stop"
                     color="white"
                     :hoverable="true"
                     hover-color="darker"/>
             </div>
-            <div class="ui-app-video-controls__control">
+            <div class="ua-video-controls__control">
                 <backward
                     @click.native="backward"
                     color="white"
                     :hoverable="true"
                     hover-color="darker"/>
             </div>
-            <div class="ui-app-video-controls__control">
+            <div class="ua-video-controls__control">
                 <forward
                     @click.native="forward"
                     color="white"
@@ -75,7 +75,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-video-controls {
+.ua-video-controls {
     background-color: $light-gray;
     z-index: 0;
     display: flex;

@@ -1,5 +1,5 @@
 <template>
-<div class="ui-app-video-preview">
+<div class="ua-video-preview">
     <ui-title
         title="Preview"
         color="white"
@@ -8,7 +8,7 @@
     />
 
     <div
-        class="ui-app-video-preview__loader"
+        class="ua-video-preview__loader"
         ref="loader"
     >
         <div
@@ -21,7 +21,7 @@
     </div>
 
     <video-player
-        class="video-player-box ui-app-video-preview__player"
+        class="video-player-box ua-video-preview__player"
         ref="player"
         :options="playerOptions"
         :playsinline="true"
@@ -43,11 +43,13 @@
 import UiAppVideoControls from './UiAppVideoControls.vue'
 import {
     UiTitle
-} from '../ui'
+}
+from '../ui'
 import 'video.js/dist/video-js.css'
 import {
     videoPlayer
-} from 'vue-video-player'
+}
+from 'vue-video-player'
 import SizeUtility from '../Sizes'
 export default {
     name: 'UiAppVideoPreview',
@@ -103,7 +105,8 @@ export default {
                     this.playerOptions.sources[0]['src'] = src
                     this.playerOptions.poster = ''
                     this.$nextTick(resolve)
-                } else {
+                }
+                else {
                     reject()
                 }
             })
@@ -127,7 +130,8 @@ export default {
             let position = this.player.currentTime()
             if (position >= 5) {
                 this.player.currentTime(position - 5)
-            } else {
+            }
+            else {
                 this.player.currentTime(0)
             }
         },
@@ -223,7 +227,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-video-preview {
+.ua-video-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

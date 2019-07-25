@@ -1,6 +1,6 @@
 <template>
 <div
-    class="ui-app-image"
+    class="ua-image"
     :class="[
             colorClass,
             borderDirectionClass,
@@ -59,14 +59,14 @@ export default {
     computed: {
         colorClass: function () {
             if (this.color != 'dark-gray') {
-                return 'ui-app-image--' + this.color
+                return 'ua-image--' + this.color
             }
         },
         borderDirectionClass: function () {
             if (this.borderDirection == 'right') {
-                return 'ui-app-image--border-right'
+                return 'ua-image--border-right'
             } else {
-                return 'ui-app-image--border-left'
+                return 'ua-image--border-left'
             }
         }
     }
@@ -76,7 +76,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-image {
+.ua-image {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

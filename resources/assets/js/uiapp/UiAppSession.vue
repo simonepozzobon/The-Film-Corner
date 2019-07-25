@@ -1,17 +1,17 @@
 <template>
     <div
         ref="container"
-        class="ui-app-session"
+        class="ua-session"
         :class="[
             colorClass,
         ]"
         @mouseover="showHover"
         @mouseleave="hideHover">
-        <div class="ui-app-session__container">
-            <div class="ui-app-session__name">
+        <div class="ua-session__container">
+            <div class="ua-session__name">
                 {{ title }}
             </div>
-            <div class="ui-app-session__delete">
+            <div class="ua-session__delete">
                 <ui-button
                     color="black"
                     :has-container="false"
@@ -70,7 +70,7 @@ export default {
             let odd = Boolean((this.counter) % 2)
 
             if (odd) {
-                return 'ui-app-session--light'
+                return 'ua-session--light'
             }
         },
         isOdd: function() {
@@ -130,7 +130,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-session {
+.ua-session {
     width: 100%;
     padding-top:  $spacer * 1.618 / 2;
     padding-bottom: $spacer * 1.618 / 2;

@@ -54,11 +54,17 @@
             </ui-row>
         </ui-row>
     </ui-hero-banner>
-    <ui-app-channel-results />
+    <ui-app-channel-results
+        :contents="results"
+        :title="currentChannelTitle"
+    />
 </ui-container>
 </template>
 
 <script>
+import Channels from '../../../dummies/PropagandAppContent'
+import Utility from '../../../Utilities'
+
 import {
     UiBlock,
     UiButton,
@@ -98,42 +104,61 @@ export default {
     data: function () {
         return {
             title: 'Welcome',
-            channels: [{
-                period: '1917',
-                color: 'red',
-                label: 'Russian Revolution',
-            }, {
-                period: '1922-1945',
-                color: 'orange',
-                label: 'Fascism and Nazism',
-            }, {
-                period: '1939-1945',
-                color: 'green-var',
-                label: 'Second World War',
-                isActive: true,
-            }, {
-                period: '1946-1990',
-                color: 'teal',
-                label: 'Cold war',
-            }],
+            channels: [],
+            currentChannel: null,
+            results: [],
         }
     },
     watch: {
         '$root.user': function (user) {
             this.setWelcome()
-        }
+        },
+        currentChannel: function (channel) {
+            this.results = channel.contents
+        },
+    },
+    computed: {
+        currentChannelTitle: function () {
+            if (this.currentChannel && this.currentChannel.hasOwnProperty('label')) {
+                return this.currentChannel.label
+            }
+
+            return null
+        },
     },
     methods: {
+        getData: function () {
+            // perform api call
+            this.channels = Channels
+            this.debug()
+        },
+        debug: function () {
+            this.selectChannel(this.channels[2])
+        },
         setWelcome: function () {
-            this.title = 'Welcome ' + this.$root.user.name
-            console.log(this.title);
+            this.title = 'Welcome ' + Utility.capitalize(this.$root.user.name)
+            // console.log(this.title);
         },
         enter: function () {},
         leave: function () {},
-        selectChannel: function (channel) {
+        selectChannel: function (selected) {
+            this.channels = this.channels.map(channel => {
 
+                delete channel.isActive
+
+                if (channel.id == selected.id) {
+                    channel.isActive = true
+                }
+
+                return channel
+            })
+
+            this.currentChannel = selected
         }
 
+    },
+    created: function () {
+        this.getData()
     },
     mounted: function () {
         this.$nextTick(this.setWelcome)

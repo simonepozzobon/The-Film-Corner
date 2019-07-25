@@ -2,19 +2,19 @@
 <ui-row :no-gutters="true">
     <ui-block :size="12">
         <div
-            class="ui-app-note"
+            class="ua-note"
             :class="colorClass"
         >
             <ui-title
                 :title="title"
                 :has-padding="false"
             />
-            <div class="ui-app-note__field">
+            <div class="ua-note__field">
                 <textarea
                     name="name"
                     rows="8"
                     cols="80"
-                    class="form-control ui-app-note__text"
+                    class="form-control ua-note__text"
                     v-model="notes"
                 >
                     </textarea>
@@ -71,7 +71,7 @@ export default {
     },
     computed: {
         colorClass: function () {
-            return 'ui-app-note--' + this.color
+            return 'ua-note--' + this.color
         }
     },
     mounted: function () {
@@ -86,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-note {
+.ua-note {
     width: 100%;
     height: 100%;
     @include border-radius($custom-border-radius);

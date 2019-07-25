@@ -1,5 +1,5 @@
 <template>
-<ui-folder class="ui-app-folder"
+<ui-folder class="ua-folder"
     ref="folder"
     :title="app.title"
     :app="app.title"
@@ -12,9 +12,9 @@
     :has-times="isOpen"
     @click="toggleFolder">
 
-    <div class="ui-app-folder__description">
+    <div class="ua-folder__description">
         <p ref="description"
-            class="ui-app-folder__content"
+            class="ua-folder__content"
             v-html="description">
         </p>
     </div>
@@ -100,7 +100,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-folder {
+.ua-folder {
 
     &__description {
         padding-left: $spacer * 4;

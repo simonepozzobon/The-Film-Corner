@@ -1,11 +1,11 @@
 <template>
-    <div class="ui-app-preview">
+    <div class="ua-preview">
         <ui-title
             title="Preview"
             color="white"
             :has-padding="false"
             ref="title"/>
-        <canvas class="ui-app-preview__canvas" id="image-editor" ref="canvas"></canvas>
+        <canvas class="ua-preview__canvas" id="image-editor" ref="canvas"></canvas>
     </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-preview {
+.ua-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;
