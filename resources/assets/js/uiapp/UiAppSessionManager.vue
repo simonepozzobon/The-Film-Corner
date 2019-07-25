@@ -49,7 +49,8 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'UiAppSessionManager',
     components: {
@@ -103,14 +104,15 @@ export default {
         open: function (status) {
             if (status) {
                 this.play()
-            } else {
+            }
+            else {
                 this.reverse()
             }
         },
     },
     methods: {
         setDefault: function () {
-            this.colorClass = this.app.category.color_class
+            this.colorClass = this.app.category.color_class ? this.app.category.color_class : 'gray-dark'
         },
         deleteSession: function (idx) {
             let url = '/api/v2/session/' + idx + '/false'
@@ -123,8 +125,7 @@ export default {
                 })
         },
         openSession: function (idx) {
-            let session = this.sessions.filter(session => session.token ==
-                idx)[0]
+            let session = this.sessions.filter(session => session.token == idx)[0]
             session.content = JSON.parse(session.content)
             this.$root.session = session
             this.$root.isOpen = true

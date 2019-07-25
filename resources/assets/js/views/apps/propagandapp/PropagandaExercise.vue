@@ -70,12 +70,12 @@
                             </ui-block>
                         </ui-row>
                     </ui-container>
-                    <!-- <ui-app-session-manager
-                        :app="this.app"
+                    <ui-app-session-manager
+                        :app="content"
                         :open="open"
                         :app-sessions="sessions"
                         @open-session="startApp"
-                    /> -->
+                    />
                 </ui-container>
             </div>
         </div>
@@ -112,6 +112,7 @@ import {
     UiAppDepthTexts,
     UiAppPropagandaBreadcrumbs,
     UiAppPropagandaPlayer,
+    UiAppSessionManager
 }
 from '../../../uiapp'
 
@@ -119,6 +120,7 @@ export default {
     name: 'PropagandaExercise',
     components: {
         UiAppPropagandaBreadcrumbs,
+        UiAppSessionManager,
         UiBlock,
         UiBreadcrumbs,
         UiButton,
@@ -141,6 +143,7 @@ export default {
             open: false,
             description: null,
             buttonText: 'Open existing session',
+            sessions: []
         }
     },
     watch: {

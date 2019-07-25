@@ -26,7 +26,7 @@
                                 color="yellow"
                                 align="center"
                                 :block="true"
-                                @click="$root.goTo('propaganda-role-playing')"
+                                @click="$root.goTo('propaganda-film')"
                             />
                         </div>
                     </ui-block>

@@ -101,8 +101,14 @@ export default {
             this.compare = Object.assign({}, clip)
         },
     },
+    created: function () {
+        this.$root.isApp = true
+    },
     mounted: function () {
         this.getData()
+    },
+    beforeDestroy: function () {
+        this.$root.isApp = false
     },
 }
 </script>

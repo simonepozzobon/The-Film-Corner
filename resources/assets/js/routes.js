@@ -54,10 +54,13 @@ import PropagandaCheckSound from './views/apps/propagandapp/exercises/Propaganda
 import PropagandaCompareClips from './views/apps/propagandapp/exercises/PropagandaCompareClips.vue'
 import PropagandaFrameCrop from './views/apps/propagandapp/exercises/PropagandaFrameCrop.vue'
 
-import ChallengesHome from './views/apps/propagandapp/challenges/ChallengesHome.vue'
-import ChallengesSingle from './views/apps/propagandapp/challenges/ChallengesSingle.vue'
-import ChallengesRolePlaying from './views/apps/propagandapp/challenges/ChallengesRolePlaying.vue'
 import ChallengesAffiches from './views/apps/propagandapp/challenges/ChallengesAffiches.vue'
+import ChallengesFilm from './views/apps/propagandapp/challenges/ChallengesFilm.vue'
+import ChallengesFilmApp from './views/apps/propagandapp/challenges/ChallengesFilmApp.vue'
+import ChallengesHome from './views/apps/propagandapp/challenges/ChallengesHome.vue'
+import ChallengesInterviews from './views/apps/propagandapp/challenges/ChallengesInterviews.vue'
+import ChallengesInterviewsDb from './views/apps/propagandapp/challenges/ChallengesInterviewsDb.vue'
+import ChallengesRolePlaying from './views/apps/propagandapp/challenges/ChallengesRolePlaying.vue'
 
 
 // Network
@@ -317,6 +320,18 @@ const routes = [
                                 meta: { requiresAuth: true },
                             },
                             {
+                                path: 'challenges/propaganda-film',
+                                name: 'propaganda-film',
+                                component: ChallengesFilm,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/propaganda-film/app',
+                                name: 'propaganda-film-app',
+                                component: ChallengesFilmApp,
+                                meta: { requiresAuth: true },
+                            },
+                            {
                                 path: 'challenges/role-playing',
                                 name: 'propaganda-role-playing',
                                 component: ChallengesRolePlaying,
@@ -325,7 +340,13 @@ const routes = [
                             {
                                 path: 'challenges/your-interview',
                                 name: 'propaganda-interview',
-                                component: ChallengesRolePlaying,
+                                component: ChallengesInterviews,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-interview-db',
+                                name: 'propaganda-interviews-db',
+                                component: ChallengesInterviewsDb,
                                 meta: { requiresAuth: true },
                             },
                             {

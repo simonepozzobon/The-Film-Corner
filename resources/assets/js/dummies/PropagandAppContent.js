@@ -1,3 +1,16 @@
+const compareImages = [
+    {
+        id: 1,
+        thumb: '/img/grafica/propaganda/condottieri.jpg'
+    }, {
+        id: 2,
+        thumb: '/img/grafica/propaganda/camicia-nera.jpg'
+    }, {
+        id: 3,
+        thumb: '/img/grafica/propaganda/lo-squadrone-bianco.jpg'
+    }
+]
+
 const challenges = [
     {
         id: 1,
@@ -22,6 +35,13 @@ const challenges = [
     {
         id: 4,
         title: 'Make Your Own Affiches',
+        slug: 'your-affiches',
+        disableSessions: true,
+        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+    },
+    {
+        id: 5,
+        title: 'Interviews Database',
         slug: 'your-affiches',
         disableSessions: true,
         description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -138,6 +158,9 @@ const images = [
     }, {
         id: 3,
         thumb: '/img/grafica/propaganda/lo-squadrone-bianco.jpg'
+    }, {
+        id: 4,
+        thumb: '/img/grafica/propaganda/dummies/5.png'
     }
 ]
 
@@ -196,7 +219,7 @@ const exercises = [
 const movies = [
     {
         id: 1,
-        title: 'Condottieri',
+        title: 'Dr. Churkill',
         title_original: null,
         year: '1937',
         director: 'Luis Trenker',
@@ -205,7 +228,7 @@ const movies = [
         description: '',
         tags: tags,
         attributes: generalAttributes,
-        image: images[0],
+        image: images[3],
         subs: subsTexts,
         video: '/video/dottor-churkill.mp4',
         exercises: exercises,

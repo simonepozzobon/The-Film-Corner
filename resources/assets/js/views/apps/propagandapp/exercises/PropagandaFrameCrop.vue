@@ -129,9 +129,15 @@ export default {
             this.frames = this.frames.filter(frame => frame.id != id)
         },
     },
+    created: function () {
+        this.$root.isApp = true
+    },
     mounted: function () {
         this.getData()
     },
+    beforeDestroy: function () {
+        this.$root.isApp = false
+    }
 }
 </script>
 
