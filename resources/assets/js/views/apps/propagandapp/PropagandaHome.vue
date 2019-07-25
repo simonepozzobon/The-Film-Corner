@@ -51,6 +51,7 @@
                     color="yellow"
                     :has-container="false"
                     :has-margin="false"
+                    @click="goToChallenges"
                 />
             </ui-row>
         </ui-row>
@@ -155,6 +156,9 @@ export default {
             })
 
             this.currentChannel = selected
+        },
+        goToChallenges: function () {
+            this.$root.goTo('propaganda-challenges')
         }
 
     },

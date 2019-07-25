@@ -11,6 +11,7 @@ import UiFormGroup from './UiFormGroup.vue'
 import UiHeroBanner from './UiHeroBanner.vue'
 import UiHeroImage from './UiHeroImage.vue'
 import UiImage from './UiImage.vue'
+import UiImageSlider from './UiImageSlider.vue'
 import UiInput from './UiInput.vue'
 import UiLink from './UiLink.vue'
 import UiList from './UiList.vue'
@@ -38,6 +39,7 @@ export {
     UiHeroImage,
     UiInput,
     UiImage,
+    UiImageSlider,
     UiLink,
     UiList,
     UiListItem,

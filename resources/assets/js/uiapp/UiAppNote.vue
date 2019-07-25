@@ -1,6 +1,9 @@
 <template>
-<ui-row :no-gutters="true">
-    <ui-block :size="12">
+<ui-row
+    :no-gutters="true"
+    :full-width="fullWidth"
+>
+    <ui-block :size="sizeValue">
         <div
             class="ua-note"
             :class="colorClass"
@@ -51,6 +54,11 @@ export default {
             type: String,
             default: null,
         },
+        fullWidth: {
+            type: Boolean,
+            default: false,
+        },
+        size: [Number, String],
     },
     data: function () {
         return {
@@ -72,6 +80,13 @@ export default {
     computed: {
         colorClass: function () {
             return 'ua-note--' + this.color
+        },
+        sizeValue: function () {
+            if (this.size) {
+                return this.size
+            }
+
+            return 12
         }
     },
     mounted: function () {

@@ -144,16 +144,20 @@ export default {
         },
         play: function () {
             this.player.play()
+            this.$emit('play')
         },
         pause: function () {
             this.player.pause()
+            this.$emit('pause')
         },
         stop: function () {
             this.player.pause()
             this.player.currentTime(0)
+            this.$emit('stop')
         },
         backward: function () {
             this.player.pause()
+            this.$emit('backward')
             let position = this.player.currentTime()
             if (position >= 5) {
                 this.player.currentTime(position - 5)
@@ -164,6 +168,7 @@ export default {
         },
         forward: function () {
             this.player.pause()
+            this.$emit('forward')
             let position = this.player.currentTime()
         },
     },

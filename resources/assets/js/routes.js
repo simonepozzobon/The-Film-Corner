@@ -54,6 +54,12 @@ import PropagandaCheckSound from './views/apps/propagandapp/exercises/Propaganda
 import PropagandaCompareClips from './views/apps/propagandapp/exercises/PropagandaCompareClips.vue'
 import PropagandaFrameCrop from './views/apps/propagandapp/exercises/PropagandaFrameCrop.vue'
 
+import ChallengesHome from './views/apps/propagandapp/challenges/ChallengesHome.vue'
+import ChallengesSingle from './views/apps/propagandapp/challenges/ChallengesSingle.vue'
+import ChallengesRolePlaying from './views/apps/propagandapp/challenges/ChallengesRolePlaying.vue'
+import ChallengesAffiches from './views/apps/propagandapp/challenges/ChallengesAffiches.vue'
+
+
 // Network
 import NetworkHome from './views/network/NetworkHome.vue'
 import NetworkSingle from './views/network/NetworkSingle.vue'
@@ -288,18 +294,45 @@ const routes = [
                                         path: 'compare-clips',
                                         name: 'propaganda-compare-clips',
                                         component: PropagandaCompareClips,
+                                        meta: { requiresAuth: true },
                                     },
                                     {
                                         path: 'frame-crop',
                                         name: 'propaganda-frame-crop',
                                         component: PropagandaFrameCrop,
+                                        meta: { requiresAuth: true },
                                     },
                                     {
                                         path: 'check-sound',
                                         name: 'propaganda-check-sound',
                                         component: PropagandaCheckSound,
+                                        meta: { requiresAuth: true },
                                     },
                                 ]
+                            },
+                            {
+                                path: 'challenges',
+                                name: 'propaganda-challenges',
+                                component: ChallengesHome,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/role-playing',
+                                name: 'propaganda-role-playing',
+                                component: ChallengesRolePlaying,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-interview',
+                                name: 'propaganda-interview',
+                                component: ChallengesRolePlaying,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'challenges/your-affiches',
+                                name: 'propaganda-your-affiches',
+                                component: ChallengesAffiches,
+                                meta: { requiresAuth: true },
                             },
                         ],
                     },

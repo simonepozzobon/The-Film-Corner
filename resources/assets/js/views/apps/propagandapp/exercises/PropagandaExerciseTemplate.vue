@@ -30,7 +30,10 @@
                     class="prop-back__app-container"
                 >
                     <ui-row>
-                        <ui-block size="auto">
+                        <ui-block
+                            size="auto"
+                            :has-container="false"
+                        >
                             <slot></slot>
                         </ui-block>
                     </ui-row>
