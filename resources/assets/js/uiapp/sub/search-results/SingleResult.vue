@@ -1,11 +1,20 @@
 <template>
 <div class="ua-single-res">
     <div class="ua-single-res__container">
-        <div class="ua-single-res__thumb">
-            <ui-image
-                :src="content.image.thumb"
-                :alt="content.title"
-            />
+        <div
+            class="ua-single-res__thumb"
+            @click="openResult"
+        >
+            <div class="ua-single-res__thumb-container">
+                <ui-image
+                    :src="content.image.thumb"
+                    :alt="content.title"
+                    :has-margin="false"
+                />
+                <div class="overlay">
+                    <single-hover />
+                </div>
+            </div>
         </div>
         <div class="ua-single-res__details">
             <div class="ua-single-res__title">
@@ -59,7 +68,6 @@
                     <span v-else>
                         {{ tag.title }}
                     </span>
-
                 </div>
             </div>
         </div>
@@ -74,9 +82,12 @@ import {
 }
 from '../../../ui'
 
+import SingleHover from './SingleHover.vue'
+
 export default {
     name: 'SingleResult',
     components: {
+        SingleHover,
         UiImage,
         UiTitle,
     },
@@ -87,6 +98,11 @@ export default {
                 return {}
             },
         },
+    },
+    methods: {
+        openResult: function () {
+            this.$emit('open-result', this.content)
+        }
     },
 }
 </script>
@@ -106,6 +122,29 @@ export default {
         max-width: 40%;
     }
 
+    &__thumb-container {
+        position: relative;
+        @include border-radius($spacer / 2.8);
+        overflow: hidden;
+        max-height: 100%;
+        cursor: pointer;
+
+        .overlay {
+            position: absolute;
+            background-color: rgba($black, 0.3);
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: $transition-base;
+            z-index: 1;
+        }
+    }
+
     &__details {
         flex: 60% 1 1;
         max-width: 60%;
@@ -119,6 +158,12 @@ export default {
     }
 
     &:hover & {
+        &__thumb-container {
+            .overlay {
+                opacity: 1;
+                transition: $transition-base;
+            }
         }
+    }
 }
 </style>

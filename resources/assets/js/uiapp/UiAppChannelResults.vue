@@ -12,7 +12,10 @@
                 :key="content.id"
                 :size="6"
             >
-                <single-result :content="content" />
+                <single-result
+                    :content="content"
+                    @open-result="openResult"
+                />
             </ui-block>
         </ui-row>
     </ui-container>
@@ -51,7 +54,14 @@ export default {
             default: null,
         },
     },
-
+    methods: {
+        openResult: function (content) {
+            console.log(content);
+            this.$root.goToWithParams('propaganda-single', {
+                id: content.id
+            })
+        },
+    },
 }
 </script>
 

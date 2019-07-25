@@ -1,3 +1,44 @@
+const subsTexts = [
+    {
+        id: 1,
+        title: 'Technical informations'
+    }, {
+        id: 2,
+        title: 'Abstract/description'
+    }, {
+        id: 3,
+        title: 'Historical context'
+    }, {
+        id: 4,
+        title: 'Food for thoughts'
+    }, {
+        id: 5,
+        title: 'Paratexts',
+        hasChildren: true,
+        childrens: [
+            {
+                id: 1,
+                title: 'Pics',
+            }, {
+                id: 2,
+                title: 'Paintings'
+            }, {
+                id: 3,
+                title: 'Books'
+            }, {
+                id: 4,
+                title: 'Articles'
+            }, {
+                id: 5,
+                title: 'Posters'
+            }, {
+                id: 6,
+                title: 'Music'
+            },
+        ]
+    }
+]
+
 const images = [
     {
         id: 1,
@@ -123,3 +164,8 @@ const channels = [
 ]
 
 export default channels
+
+export {
+    movies,
+    subsTexts
+}

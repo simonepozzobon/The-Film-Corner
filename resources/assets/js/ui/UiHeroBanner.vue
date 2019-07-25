@@ -1,14 +1,21 @@
 <template>
-    <div class="ui-hero-banner"
-        :class="[fullHeightClass, fullWidthClass]"
-        ref="bg">
-        <img :src="image" alt="" class="ui-hero-banner__bg" ref="image">
-        <div class="ui-hero-banner__container">
-            <div class="ui-hero-banner__content">
-                <slot></slot>
-            </div>
+<div
+    class="ui-hero-banner"
+    :class="[fullHeightClass, fullWidthClass]"
+    ref="bg"
+>
+    <img
+        :src="image"
+        alt=""
+        class="ui-hero-banner__bg"
+        ref="image"
+    >
+    <div class="ui-hero-banner__container">
+        <div class="ui-hero-banner__content">
+            <slot></slot>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -29,28 +36,28 @@ export default {
         },
     },
     watch: {
-        '$root.isMobile': function(value) {
+        '$root.isMobile': function (value) {
             if (value) {
-                this.$refs.bg.style.backgroundImage = 'url('+ this.image +')'
-            } else {
+                this.$refs.bg.style.backgroundImage = 'url(' + this.image + ')'
+            }
+            else {
                 this.$refs.bg.style.backgroundImage = null
             }
         }
     },
     computed: {
-        fullHeightClass: function() {
+        fullHeightClass: function () {
             if (this.fullHeight) {
                 return 'ui-hero-banner--full-height'
             }
         },
-        fullWidthClass: function() {
+        fullWidthClass: function () {
             if (this.fullWidth) {
                 return 'ui-hero-banner--full-width'
             }
         },
     },
-    mounted: function() {
-    }
+    mounted: function () {}
 }
 </script>
 
@@ -69,7 +76,6 @@ export default {
         display: none;
     }
 
-
     &__container {
         width: 100%;
         height: 100%;
@@ -86,16 +92,16 @@ export default {
     &--full-height {
         max-height: 40vh;
         min-height: 200px;
-        overflow: hidden;
+        // overflow: hidden;
     }
 
-    @include media-breakpoint-up('sm'){
+    @include media-breakpoint-up('sm') {
         position: relative;
 
         &--full-height {
             max-height: 40vh;
             min-height: 400px;
-            overflow: hidden;
+            // overflow: hidden;
         }
 
         &#{$self}--full-height &__bg {

@@ -47,6 +47,7 @@ import PropagandaContainer from './views/apps/propagandapp/PropagandaContainer.v
 import PropagandaIntro from './views/apps/propagandapp/PropagandaIntro.vue'
 import PropagandaHome from './views/apps/propagandapp/PropagandaHome.vue'
 import PropagandaSearch from './views/apps/propagandapp/PropagandaSearch.vue'
+import PropagandaSingle from './views/apps/propagandapp/PropagandaSingle.vue'
 
 // Network
 import NetworkHome from './views/network/NetworkHome.vue'
@@ -260,6 +261,12 @@ const routes = [
                                 path: 'search',
                                 name: 'propaganda-search',
                                 component: PropagandaSearch,
+                                meta: { requiresAuth: true },
+                            },
+                            {
+                                path: 'single/:id',
+                                name: 'propaganda-single',
+                                component: PropagandaSingle,
                                 meta: { requiresAuth: true },
                             },
                         ],

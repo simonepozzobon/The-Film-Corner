@@ -3,6 +3,7 @@ import UiAppBlock from './UiAppBlock.vue'
 import UiAppChannelResults from './UiAppChannelResults.vue'
 import UiAppCropControls from './UiAppCropControls.vue'
 import UiAppCroppedFrames from './UiAppCroppedFrames.vue'
+import UiAppDepthTexts from './UiAppDepthTexts.vue'
 import UiAppFolder from './UiAppFolder.vue'
 import UiAppGiroscope from './UiAppGiroscope.vue'
 import UiAppImage from './UiAppImage.vue'
@@ -11,6 +12,7 @@ import UiAppLibrary from './UiAppLibrary.vue'
 import UiAppMixer from './UiAppMixer.vue'
 import UiAppNote from './UiAppNote.vue'
 import UiAppPreview from './UiAppPreview.vue'
+import UiAppPropagandaPlayer from './UiAppPropagandaPlayer.vue'
 import UiAppSearchForm from './UiAppSearchForm.vue'
 import UiAppSession from './UiAppSession.vue'
 import UiAppSessionManager from './UiAppSessionManager.vue'
@@ -25,6 +27,7 @@ export {
     UiAppChannelResults,
     UiAppCropControls,
     UiAppCroppedFrames,
+    UiAppDepthTexts,
     UiAppFolder,
     UiAppGiroscope,
     UiAppImage,
@@ -33,6 +36,7 @@ export {
     UiAppMixer,
     UiAppNote,
     UiAppPreview,
+    UiAppPropagandaPlayer,
     UiAppSearchForm,
     UiAppSession,
     UiAppSessionManager,
