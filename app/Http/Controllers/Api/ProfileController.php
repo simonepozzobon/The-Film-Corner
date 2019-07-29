@@ -30,10 +30,10 @@ class ProfileController extends Controller
             $students = $user->students;
             $user->students = $students;
 
-            $networks = $user->networks()->with('app', 'user')->get();
+            $networks = $user->networks()->with('app', 'user', 'comments', 'likes')->get();
 
             foreach ($students as $key => $student) {
-                $student_net = $student->networks()->with('app', 'user')->get();
+                $student_net = $student->networks()->with('app', 'user', 'comments', 'likes')->get();
                 $networks = $networks->concat($student_net);
             }
 

@@ -20,7 +20,7 @@
         <div class="pro-session__tools">
             <div class="pro-session__icon">
                 <div class="pro-session__value">
-                    1
+                    {{ likes.length }}
                 </div>
                 <div class="pro-session__figure">
                     <i class="fa fa-heart"></i>
@@ -28,7 +28,7 @@
             </div>
             <div class="pro-session__icon">
                 <div class="pro-session__value">
-                    1
+                    {{ comments.length }}
                 </div>
                 <div class="pro-session__figure">
                     <i class="fa fa-comment"></i>
@@ -78,6 +78,18 @@ export default {
         surname: {
             type: String,
             default: 'no-surname',
+        },
+        comments: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
+        likes: {
+            type: Array,
+            default: function () {
+                return []
+            },
         },
         network: {
             type: Object,

@@ -36,6 +36,8 @@
                     :app="network.app.title"
                     :name="network.user.name"
                     :surname="network.user.surname"
+                    :comments="network.comments"
+                    :likes="network.likes"
                     :network="network"
                     @delete-network="deleteNetwork"
                 />
