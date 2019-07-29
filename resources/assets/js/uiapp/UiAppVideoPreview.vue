@@ -26,7 +26,7 @@
         :options="playerOptions"
         :playsinline="true"
         @timeupdate="onPlayerTimeUpdate($event)"
-        @ready="$emit('ready')"
+        @ready="ready"
     />
 
     <ui-app-video-controls
@@ -79,7 +79,8 @@ export default {
                     src: '/video/empty-session.mp4'
                 }],
                 poster: '/video/empty-session.png',
-            }
+            },
+            playerHeight: 0,
         }
     },
     watch: {
@@ -144,10 +145,15 @@ export default {
                 let el = this.$refs.player.$el
                 let loader = this.$refs.loader
                 if (el && loader) {
+                    this.loaderVisible = true
+
                     let size = SizeUtility.get(el)
+                    this.playerHeight = Math.round(size.h)
+
                     TweenMax.set([el, loader], {
                         clearProps: "all"
                     })
+
                     let master = new TimelineMax({
                         paused: true,
                         autoRemoveChildren: true
@@ -169,9 +175,6 @@ export default {
                         autoAlpha: 1,
                     }, 0)
                     master.progress(1).progress(0)
-                    master.eventCallback('onStart', () => {
-                        this.loaderVisible = true
-                    })
                     master.eventCallback('onComplete', () => {
                         this.$nextTick(() => {
                             master.kill()
@@ -182,41 +185,64 @@ export default {
             }
         },
         hideLoader: function () {
-            if (this.loaderVisible) {
-                let el = this.$refs.player.$el
-                let loader = this.$refs.loader
-                if (el && loader) {
-                    let size = SizeUtility.get(loader)
-                    let master = new TimelineMax({
-                        paused: true
-                    })
-                    master.fromTo(el, .3, {
-                        transformOrigin: '50% 0%',
-                        height: 0,
-                        autoAlpha: 0,
-                    }, {
-                        transformOrigin: '50% 0%',
-                        height: size.h,
-                        autoAlpha: 1,
-                    }, 0)
-                    master.fromTo(loader, .3, {
-                        height: size.h,
-                        autoAlpha: 1,
-                    }, {
-                        height: 0,
-                        autoAlpha: 0,
-                    }, 0)
-                    master.progress(1).progress(0)
-                    master.eventCallback('onComplete', () => {
-                        this.loaderVisible = false
-                        this.$nextTick(() => {
-                            master.kill()
+            return new Promise(resolve => {
+                if (this.loaderVisible) {
+                    let el = this.$refs.player.$el
+                    let loader = this.$refs.loader
+                    if (el && loader) {
+                        let size = SizeUtility.get(loader)
+                        let originalHeight = this.playerHeight
+                        // console.log('player', size.h, this.playerHeight);
+
+                        let master = new TimelineMax({
+                            paused: true
                         })
-                    })
-                    master.play()
+
+                        master.fromTo(el, .3, {
+                            transformOrigin: '50% 0%',
+                            height: 0,
+                            autoAlpha: 0,
+                        }, {
+                            transformOrigin: '50% 0%',
+                            height: originalHeight,
+                            autoAlpha: 1,
+                        }, 0)
+
+                        master.fromTo(loader, .3, {
+                            height: originalHeight,
+                            autoAlpha: 1,
+                        }, {
+                            height: 0,
+                            autoAlpha: 0,
+                        }, 0)
+
+                        master.progress(1).progress(0)
+                        master.eventCallback('onComplete', () => {
+                            this.loaderVisible = false
+                            this.$nextTick(() => {
+                                master.kill()
+                                resolve()
+                            })
+                        })
+                        master.play()
+                    }
                 }
-            }
+                else {
+                    resolve()
+                }
+            })
         },
+        ready: function () {
+            if (this.loaderVisible) {
+                // console.log('triggered');
+                this.hideLoader().then(() => {
+                    this.$emit('ready')
+                })
+            }
+            else {
+                this.$emit('ready')
+            }
+        }
     },
     mounted: function () {}
 }

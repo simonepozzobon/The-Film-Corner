@@ -154,7 +154,7 @@ export default {
             // perform api call
             this.content = challenges.find(challenge => challenge.id == id)
 
-            this.debug()
+            // this.debug()
         },
         debug: function () {
             console.log(this.content);

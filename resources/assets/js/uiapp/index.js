@@ -20,6 +20,7 @@ import UiAppSession from './UiAppSession.vue'
 import UiAppSessionManager from './UiAppSessionManager.vue'
 import UiAppSoundscapesPreview from './UiAppSoundscapesPreview.vue'
 import UiAppTimeline from './UiAppTimeline.vue'
+import UiAppTimelineMixed from './UiAppTimelineMixed.vue'
 import UiAppVideoControls from './UiAppVideoControls.vue'
 import UiAppVideoPreview from './UiAppVideoPreview.vue'
 
@@ -46,6 +47,7 @@ export {
     UiAppSessionManager,
     UiAppSoundscapesPreview,
     UiAppTimeline,
+    UiAppTimelineMixed,
     UiAppVideoControls,
     UiAppVideoPreview,
 }

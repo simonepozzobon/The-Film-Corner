@@ -364,29 +364,48 @@ class LoadController extends Controller
         $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $filename = uniqid();
         $ext = $file->getClientOriginalExtension();
-
         $app = App::where('id', $request->app_id)->with('category')->first();
-
         $app_slug = $app->slug;
         $category_slug = $app->category->slug;
         $user = Auth::user();
-
-        // return [
-        //     'filename' => $filename,
-        //     'ext' => $ext,
-        //     'app_path' => 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/',
-        // ];
-
         $utility = new Utility();
-        $video_store = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
 
-        return [
-            'success' => true,
-            'title' => $title,
-            'img' => $video_store['img'],
-            'duration' => $video_store['duration'],
-            'src' => Storage::disk('local')->url($video_store['src']),
-        ];
+        $format = $this->check_format($ext);
+
+        if ($format == 'video') {
+            $video_store = $utility->storeVideo($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+            return [
+                'success' => true,
+                'type' => 'video',
+                'title' => $title,
+                'img' => $video_store['img'],
+                'duration' => $video_store['duration'],
+                'src' => Storage::disk('local')->url($video_store['src']),
+            ];
+        } else if ($format == 'audio') {
+            $audio_store = $utility->storeAudio($file, $filename, $ext, 'apps/'.$category_slug.'/'.$app_slug.'/'.$user->id.'/');
+            return [
+                'success' => true,
+                'type' => 'audio',
+                'title' => $title,
+                'duration' => $audio_store['duration'],
+                'src' => Storage::disk('local')->url($audio_store['src']),
+            ];
+        }
+    }
+
+    public function check_format($ext)
+    {
+        $video = ['mp4', 'avi','mov','mpeg','3gp','m4v','mkv','flv','FLV','MP4','MKV','MOV','AVI','MPEG','MPEG'];
+        $audio = ['wav','mp3','WAV','MP3','aiff'];
+
+        if (in_array($ext, $video)) {
+            return 'video';
+        } else if (in_array($ext, $audio)) {
+            return 'audio';
+        } else {
+            return false;
+        }
     }
 
     public function share_to_teacher(Request $request)

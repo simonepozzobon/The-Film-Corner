@@ -52,7 +52,7 @@
                     class="mt-4"
                     :contain="true"
                 >
-                    <ui-row>
+                    <ui-row :no-gutters="true">
                         <ui-block :size="8">
                             <ui-app-video-preview
                                 ref="preview"
@@ -62,10 +62,14 @@
                                 @ready="ready"
                             />
                         </ui-block>
-                        <ui-block :size="4">
+                        <ui-block
+                            :size="4"
+                            v-if="libraryLoaded"
+                        >
                             <ui-app-library
                                 ref="library"
-                                :app-id="11"
+                                :app-id="18"
+                                accept="video/*, audio/*"
                                 :has-sub-libraries="assets.hasSubLibraries"
                                 :type="assets.type"
                                 :items="assets.library"
@@ -75,7 +79,7 @@
                             />
                         </ui-block>
                     </ui-row>
-                    <ui-app-timeline
+                    <ui-app-timeline-mixed
                         :timelines="timelines"
                         :playhead-position="playheadPosition"
                         :playhead-height="playheadHeight"
@@ -89,6 +93,7 @@
                     <ui-app-note
                         class="mt-4"
                         @changed="setNotes"
+                        color="yellow"
                         :initial="this.notes"
                     />
                 </ui-container>
@@ -110,7 +115,7 @@ import {
     UiAppFolder,
     UiAppLibrary,
     UiAppNote,
-    UiAppTimeline,
+    UiAppTimelineMixed,
     UiAppVideoPreview,
     UiAppChallengesBreadcrumbs,
 }
@@ -150,7 +155,7 @@ export default {
         UiAppLibrary,
         UiAppChallengesBreadcrumbs,
         UiAppNote,
-        UiAppTimeline,
+        UiAppTimelineMixed,
         UiAppVideoPreview,
         UiBlock,
         UiBreadcrumbs,
@@ -183,6 +188,7 @@ export default {
             description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
             content: null,
             open: false,
+            libraryLoaded: false,
         }
     },
     watch: {
@@ -232,7 +238,10 @@ export default {
 
                     this.session = session
 
-                    this.$nextTick(this.init)
+                    this.$nextTick(() => {
+                        this.init()
+                        this.libraryLoaded = true
+                    })
                 }
             })
 
@@ -243,7 +252,12 @@ export default {
                 let titleH = SizeUtility.get(title)
                 let containerH = SizeUtility.get(this.$refs.preview.$el)
                 let height = containerH.hClean - titleH.hClean + 2
-                this.$refs.library.setLibraryHeight(height)
+                // console.log('ready', containerH.hClean, height);
+
+                if (this.$refs.library) {
+                    // console.log('fuori', height);
+                    this.$refs.library.setLibraryHeight(height)
+                }
                 if (this.isLoading) {
                     this.$root.objectsLoaded++
                 }
@@ -270,14 +284,18 @@ export default {
                 }
             }
 
-            console.log(this.assets);
+            // console.log(this.assets);
         },
         addTimeline: function (id, libraryID) {
+            // console.log(id, libraryID);
             let timeline
-            let library = this.assets.library.filter(library => library.id == libraryID)[0]
+            let library = this.assets.library.find(library => library.id == libraryID)
+
             if (library) {
-                let video = library.videos.filter(video => video.id == id)[0]
+                // console.log('libreria', library);
+                let video = library.videos.find(video => video.id == id)
                 if (video) {
+                    // console.log('video', video);
                     timeline = {
                         id: video.id,
                         uniqueid: '_' + Math.random().toString(36).substr(2, 9),
@@ -291,9 +309,11 @@ export default {
                         hasCutEnd: false,
                         cutStart: 0,
                         cutEnd: 0,
+                        type: video.hasOwnProperty('type') ? video.type : 'video',
+                        color: video.hasOwnProperty('type') && video.type == 'audio' ? 'green' : 'yellow'
                     }
 
-                    console.log(timeline);
+                    // console.log(timeline);
                 }
             }
 
@@ -327,18 +347,23 @@ export default {
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
         updateEditor: function () {
+            // console.log('free', this.isFree);
             if (this.isFree) {
                 this.isFree = false
+
                 if (this.$refs.preview) {
                     this.$refs.preview.showLoader()
                 }
-                console.log('updating');
+                // console.log('updating');
                 let data = new FormData()
                 data.append('token', this.session.token)
                 data.append('timelines', JSON.stringify(this.timelines))
-                this.$http.post('/api/v2/render-video', data).then(response => {
+
+                this.$http.post('/api/v2/render-mixed', data).then(response => {
+                    console.log(response.data);
                     // se c'è qualcosa nella cache
                     this.isFree = true
+                    // console.log('cache', this.cache);
                     if (this.cache) {
                         this.cache = null
                         this.saveContent()
@@ -351,12 +376,12 @@ export default {
                             this.currentExport = response.data.export
                             this.saveContent()
                         })
-                        console.log('complete');
+                        // console.log('complete');
                     }
                 })
             }
             else {
-                // console.log('cache');
+                // console.log('caching');
                 this.cache = this.timelines
             }
         },
@@ -386,10 +411,11 @@ export default {
             }
         }, 500),
         uploaded: function (asset) {
-            console.log(this.assets, asset);
+            // console.log(this.assets, asset);
         },
     },
     created: function () {
+        this.$root.isApp = true
         this.content = challenges.find(challenge => challenge.id == 1)
         this.uniqid = SharedMethods.uniqid.bind(this)
         this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
@@ -397,6 +423,9 @@ export default {
         this.getData()
     },
     mounted: function () {},
+    beforeDestroy: function () {
+        this.$root.isApp = false
+    }
 }
 </script>
 

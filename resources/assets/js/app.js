@@ -182,7 +182,7 @@ const home = new Vue({
         },
         fixSession: function(params) {
             let content = this.session.content
-            console.log(content);
+            // console.log(content);
             if (content.length || content.length == 0) {
                 // https://stackoverflow.com/questions/4215737/convert-array-to-object
                 content = this.session.content.reduce((obj, cur, i) => ({ ...obj, [i]: cur }), {});

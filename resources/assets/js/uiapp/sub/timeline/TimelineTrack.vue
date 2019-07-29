@@ -142,18 +142,18 @@ export default {
 
         },
         editTitle: function () {
-            this.title = this.track.title
-            var t1 = new TimelineMax()
-            t1.to(this.$refs.title, .2, {
-                    opacity: 0,
-                    display: 'none',
-                    ease: Power4.easeInOut,
-                })
-                .to(this.$refs.tools, .2, {
-                    opacity: 1,
-                    display: 'flex',
-                    ease: Power4.easeInOut
-                })
+            // this.title = this.track.title
+            // var t1 = new TimelineMax()
+            // t1.to(this.$refs.title, .2, {
+            //         opacity: 0,
+            //         display: 'none',
+            //         ease: Power4.easeInOut,
+            //     })
+            //     .to(this.$refs.tools, .2, {
+            //         opacity: 1,
+            //         display: 'flex',
+            //         ease: Power4.easeInOut
+            //     })
         },
         saveTitle: function (isDelete = false) {
             return new Promise(resolve => {

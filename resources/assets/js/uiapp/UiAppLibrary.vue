@@ -85,7 +85,7 @@
     >
         <upload-form
             :app-id="appId"
-            accept="video/*"
+            :accept="accept"
             @uploaded="addToLibrary"
         />
 
@@ -94,16 +94,29 @@
             @enter="assetEnter"
             @leave="assetLeave"
         >
-            <library-item-video
+            <div
                 v-for="(asset, i) in assets"
                 :key="asset.id"
-                :delay="i"
-                :index="asset.id"
-                :title="asset.title"
-                :img="asset.img | fixImgPath"
-                @selected="selected"
-                @ready="ready"
-            />
+            >
+                <library-item-audio
+                    v-if="asset.type == 'audio'"
+                    :delay="i"
+                    :index="asset.id"
+                    :title="asset.title"
+                    @selected="selected"
+                    @ready="ready"
+                />
+                <library-item-video
+                    v-else
+                    :delay="i"
+                    :index="asset.id"
+                    :title="asset.title"
+                    :img="asset.img | fixImgPath"
+                    @selected="selected"
+                    @ready="ready"
+                />
+            </div>
+
         </transition-group>
     </div>
 
@@ -182,6 +195,10 @@ export default {
             type: Number,
             default: 0,
         },
+        accept: {
+            type: String,
+            default: 'video/*',
+        },
     },
     data: function () {
         return {
@@ -218,6 +235,7 @@ export default {
     methods: {
         beforeInit: function () {},
         init: function () {
+            // console.log('initialized', this.items);
             if (this.hasSubLibraries) {
                 this.libraries = this.items
                 if (this.libraries.length > 0) {
@@ -303,7 +321,8 @@ export default {
         },
         setLibraryHeight: function (h = false) {
             let container, el, title, assets, titleSize, headSize,
-                containerSize, containerH, height
+                containerSize, containerH, height, select, selectSize
+
             container = this.$refs.container
             el = this.$refs.head
             title = this.$refs.title.$refs.title
@@ -312,34 +331,48 @@ export default {
             headSize = SizeUtility.get(el)
             containerSize = SizeUtility.get(container)
             containerH = containerSize.hClean
+
             if (h && h > containerH) {
                 containerH = h
             }
+
             height = containerH - titleSize.h - titleSize.marginY
+
             if (this.hasSubLibraries) {
-                let select = this.$refs.select
-                let selectSize = SizeUtility.get(select)
+                select = this.$refs.select
+                selectSize = SizeUtility.get(select)
                 height = height - selectSize.h - selectSize.marginY
             }
+
+            let startHeight = this.libraryHeight
             height = Math.round(height)
-            TweenMax.fromTo(assets, .4, {
-                height: this.libraryHeight,
-                autoAlpha: 0,
-            }, {
-                height: height,
-                autoAlpha: 1,
-                onStart: () => {
-                    this.libraryHeight = height
-                }
-            })
+            // console.log('dentro', startHeight, height, h);
+
+            if (startHeight != height) {
+                this.libraryHeight = height
+
+                TweenMax.fromTo(assets, .4, {
+                    height: startHeight,
+                    autoAlpha: 0,
+                }, {
+                    height: height,
+                    autoAlpha: 1,
+                    onComplete: () => {
+                        // console.log('dentro completp', this.libraryHeight, height);
+                        // this.libraryHeight = height
+                    }
+                })
+            }
             // console.log(container);
         },
         ready: function () {
             this.counter--
         },
         addToLibrary: function (file) {
+            // console.log('uplaod', file);
             let newUpload = {
                 id: this.assets.length,
+                type: file.hasOwnProperty('type') ? file.type : 'video',
                 title: file.title,
                 img: file.img,
                 duration: file.duration,

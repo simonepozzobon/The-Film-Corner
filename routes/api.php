@@ -53,6 +53,7 @@ Route::prefix('v2')->group(
 
                 Route::post('render-video', 'Api\VideoEditorController@update_editor');
                 Route::post('render-audio', 'Api\AudioEditorController@update_editor');
+                Route::post('render-mixed', 'Api\MixedEditorController@update_editor');
 
                 Route::put('contest-upload', 'Api\LoadController@contest_upload');
                 Route::post('asset-upload', 'Api\LoadController@upload_asset');

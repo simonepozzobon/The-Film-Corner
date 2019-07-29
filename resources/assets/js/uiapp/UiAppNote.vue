@@ -90,7 +90,7 @@ export default {
         }
     },
     mounted: function () {
-        console.log(this.initial);
+        // console.log(this.initial);
         if (this.initial) {
             this.notes = this.initial
         }
