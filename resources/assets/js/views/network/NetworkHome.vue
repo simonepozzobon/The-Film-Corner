@@ -55,16 +55,18 @@ export default {
                 if (response.data.success) {
                     this.items = filtered
                     this.sorted = filtered
-                    // this.$nextTick(this.debug)
+                    this.$nextTick(this.debug)
                 }
             })
         },
         sortByDate: function () {
+            console.log('sorting by date');
             this.sorted = Object.keys(this.items).map(key => this.items[key]).sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at)
             })
         },
         sortByLikes: function () {
+            console.log('sorting by likes');
             this.sorted = Object.keys(this.items).map(key => this.items[key]).sort((a, b) => {
                 return new Date(b.likes.length) - new Date(a.likes.length)
             })
