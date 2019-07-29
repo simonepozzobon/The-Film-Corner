@@ -1,49 +1,52 @@
 <template>
-    <div
-        ref="container"
-        class="pro-session"
-        :class="[
+<div
+    ref="container"
+    class="pro-session"
+    :class="[
             colorClass,
         ]"
-        @mouseover="showHover"
-        @mouseleave="hideHover">
-        <div class="pro-session__container">
-            <div class="pro-session__details">
-                <div class="pro-session__title">
-                    {{ title }}
+    @mouseover="showHover"
+    @mouseleave="hideHover"
+>
+    <div class="pro-session__container">
+        <div class="pro-session__details">
+            <div class="pro-session__title">
+                {{ title }}
+            </div>
+            <div class="pro-session__info">
+                {{ app }} Made by {{ fullName }}
+            </div>
+        </div>
+        <div class="pro-session__tools">
+            <div class="pro-session__icon">
+                <div class="pro-session__value">
+                    1
                 </div>
-                <div class="pro-session__info">
-                    {{ app }} Made by Francesco Galanti
+                <div class="pro-session__figure">
+                    <i class="fa fa-heart"></i>
                 </div>
             </div>
-            <div class="pro-session__tools">
-                <div class="pro-session__icon">
-                    <div class="pro-session__value">
-                        1
-                    </div>
-                    <div class="pro-session__figure">
-                        <i class="fa fa-heart"></i>
-                    </div>
+            <div class="pro-session__icon">
+                <div class="pro-session__value">
+                    1
                 </div>
-                <div class="pro-session__icon">
-                    <div class="pro-session__value">
-                        1
-                    </div>
-                    <div class="pro-session__figure">
-                        <i class="fa fa-comment"></i>
-                    </div>
+                <div class="pro-session__figure">
+                    <i class="fa fa-comment"></i>
                 </div>
-                <div class="pro-session__icon"
-                    @click.prevent="deleteNetwork">
-                    <div class="pro-session__value">
-                    </div>
-                    <div class="pro-session__trash">
-                        <i class="fa fa-trash"></i>
-                    </div>
+            </div>
+            <div
+                class="pro-session__icon"
+                @click.prevent="deleteNetwork"
+            >
+                <div class="pro-session__value">
+                </div>
+                <div class="pro-session__trash">
+                    <i class="fa fa-trash"></i>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -68,26 +71,51 @@ export default {
             type: String,
             default: 'app',
         },
+        name: {
+            type: String,
+            default: 'no-name',
+        },
+        surname: {
+            type: String,
+            default: 'no-surname',
+        },
+        network: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
-    data: function() {
+    data: function () {
         return {
             selected: false,
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             let odd = Boolean((this.counter) % 2)
 
             if (odd) {
                 return 'pro-session--light'
             }
         },
-        isOdd: function() {
+        isOdd: function () {
             return Boolean((this.counter) % 2)
+        },
+        fullName: function () {
+            if (this.name) {
+                if (this.surname) {
+                    return this.name + ' ' + this.surname
+                }
+
+                return this.name
+            }
+
+            return 'no-name'
         },
     },
     methods: {
-        init: function() {
+        init: function () {
             let el = this.$refs.container
             let gray = getComputedStyle(document.documentElement).getPropertyValue('--gray-dark')
             let rgbaObj = Utility.hexToRgbA(gray)
@@ -113,22 +141,23 @@ export default {
 
             this.master.progress(1).progress(0)
         },
-        showHover: function() {
+        showHover: function () {
             if (this.master) {
                 this.master.play()
             }
         },
-        hideHover: function() {
+        hideHover: function () {
             if (this.master) {
                 this.master.reverse()
             }
         },
-        deleteNetwork: function() {
+        deleteNetwork: function () {
             this.$emit('delete-network', this.idx)
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
+        console.log(this.network);
     },
 }
 </script>
@@ -138,10 +167,7 @@ export default {
 
 .pro-session {
     width: 100%;
-    padding-top:  $spacer * 1.618 / 2;
-    padding-bottom: $spacer * 1.618 / 2;
-    padding-left:  $spacer * 1.618;
-    padding-right:  $spacer * 1.618;
+    padding: $spacer * 1.618 / 2 $spacer * 1.618;
 
     &__container {
         display: flex;
@@ -176,7 +202,6 @@ export default {
         padding-right: $spacer / 1.618;
     }
 
-
     &__figure {
         font-size: $h4-font-size;
         color: $white;
@@ -191,7 +216,7 @@ export default {
     }
 
     &--light {
-        background-color: rgba($white, .28)
+        background-color: rgba($white, .28);
     }
 }
 </style>

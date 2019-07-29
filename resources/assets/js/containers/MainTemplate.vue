@@ -1,36 +1,46 @@
 <template>
-    <main class="main" :class="paddingClass">
-        <main-nav></main-nav>
-        <div class="main__content">
-            <router-view></router-view>
-        </div>
-    </main>
+<main
+    class="main"
+    :class="paddingClass"
+>
+    <main-nav></main-nav>
+    <full-screen-message />
+    <div class="main__content">
+        <router-view></router-view>
+    </div>
+</main>
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import {
+    TweenMax
+}
+from 'gsap'
+import FullScreenMessage from './FullScreenMessage.vue'
 import MainNav from './MainNav.vue'
 
 export default {
     name: 'MainTemplate',
     components: {
+        FullScreenMessage,
         MainNav,
     },
-    data: function() {
+    data: function () {
         return {
             paddingClass: null,
         }
     },
     watch: {
-        '$root.space': function(value) {
+        '$root.space': function (value) {
             this.setPadding()
         }
     },
     methods: {
-        setPadding: function() {
+        setPadding: function () {
             if (!this.$root.space) {
                 this.paddingClass = 'main--no-padding'
-            } else {
+            }
+            else {
                 this.paddingClass = null
             }
         }
@@ -59,7 +69,7 @@ export default {
         //     })
         // }
     },
-    mounted: function() {
+    mounted: function () {
         this.$nextTick(this.setPadding)
     }
 }

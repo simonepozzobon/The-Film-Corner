@@ -80,6 +80,7 @@ export default {
             token: null
         }
         this.$root.isOpen = false
+        this.$root.isTeacherCheck = false
     }
 }
 </script>
@@ -89,6 +90,7 @@ export default {
 
 .app-container {
     margin-top: $spacer * 5;
+    padding-bottom: $spacer * 2.5;
 
     &__row {
         width: 100%;

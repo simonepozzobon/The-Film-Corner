@@ -22,7 +22,10 @@
                 Network
             </a>
         </li>
-        <li class="logged-nav__item nav-item">
+        <li
+            v-if="isTeacher"
+            class="logged-nav__item nav-item"
+        >
             <a
                 href="#"
                 @click.prevent="goTo('teacher-profile')"
@@ -48,6 +51,17 @@
 <script>
 export default {
     name: 'LoggedNav',
+    data: function () {
+        return {}
+    },
+    computed: {
+        isTeacher: function () {
+            if (this.$root.user && this.$root.user.role_id == 1) {
+                return true
+            }
+            return false
+        },
+    },
     methods: {
         goTo: function (name) {
             this.$router.push({

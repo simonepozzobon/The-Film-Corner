@@ -81,8 +81,7 @@ export default {
                 //     master.kill()
                 // }
             }, .2)
-            master.progress(1)
-                .progress(0)
+            master.progress(1).progress(0)
             master.play()
         },
         destroyLoader: function () {
@@ -108,9 +107,9 @@ export default {
 
 .loader-nav {
     position: fixed;
-    top: 155px;
+    top: 154px;
     width: 100%;
-    height: calc(100vh - 155px);
+    height: calc(100vh - 154px);
     z-index: $zindex-fixed - 3;
     display: flex;
     align-items: center;

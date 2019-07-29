@@ -46,8 +46,10 @@ Route::prefix('v2')->group(
                 Route::get('get-app/{slug}', 'Api\SectionController@get_app');
 
                 Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
-                Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
                 Route::post('session', 'Api\LoadController@save_session');
+                Route::post('session/share-to-teacher', 'Api\LoadController@share_to_teacher');
+                Route::post('session/share-to-network', 'Api\LoadController@share_to_network');
+                Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
 
                 Route::post('render-video', 'Api\VideoEditorController@update_editor');
                 Route::post('render-audio', 'Api\AudioEditorController@update_editor');
@@ -57,6 +59,7 @@ Route::prefix('v2')->group(
 
                 Route::get('get-network', 'Api\SectionController@get_network');
                 Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
+                Route::get('like-network/{id}', 'Api\SectionController@add_network_like');
 
                 Route::prefix('profile')->group(
                     function () {

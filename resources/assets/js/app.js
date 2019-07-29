@@ -134,12 +134,16 @@ const home = new Vue({
             token: null,
             isApp: null,
             isOpen: null,
+            isTeacherCheck: null,
             isNetwork: null,
             space: true,
             session: null,
             progress: 0,
             objectsToLoad: 0,
             objectsLoaded: 0,
+            fullMessage: null,
+            fullMessageMaster: null,
+            notificationId: null,
         }
     },
     watch: {
@@ -178,6 +182,7 @@ const home = new Vue({
         },
         fixSession: function(params) {
             let content = this.session.content
+            console.log(content);
             if (content.length || content.length == 0) {
                 // https://stackoverflow.com/questions/4215737/convert-array-to-object
                 content = this.session.content.reduce((obj, cur, i) => ({ ...obj, [i]: cur }), {});
@@ -244,7 +249,15 @@ const home = new Vue({
 
             delete this.$http.defaults.headers.common.Authorization
             this.goTo('login')
-        }
+        },
+        showMessage: function() {
+            return new Promise(resolve => {
+                this.fullMessageMaster.eventCallback('onComplete', () => {
+                    resolve()
+                })
+                this.fullMessageMaster.progress(0).play()
+            })
+        },
     },
     created: function() {
         this.init()

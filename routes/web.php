@@ -11,7 +11,9 @@ use App\Events\UserSignin;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/test', 'Api\Admin\UserController@test');
+// Route::get('/test', 'Api\LoadController@test');
+Route::get('/test', 'Api\ProfileController@test');
+// Route::get('/test', 'Api\SectionController@test');
 
 Route::get('/convert-teachers', 'Api\TestController@convert_teacher_to_user');
 Route::get('/convert-students', 'Api\TestController@convert_student_to_user');

@@ -1,26 +1,39 @@
 <template>
-    <div
-        class="net-actions"
-        :class="colorClass">
-        <div class="net-actions__action">
-            <span class="net-actions__count">
-                {{ views }}
-            </span>
-            <i class="fa fa-eye net-actions__icon" aria-hidden="true" />
-        </div>
-        <div class="net-actions__action">
-            <span class="net-actions__count">
-                {{ likes }}
-            </span>
-            <i class="fa fa-heart net-actions__icon" aria-hidden="true"/>
-        </div>
-        <div class="net-actions__action">
-            <span class="net-actions__count">
-                {{ comments }}
-            </span>
-            <i class="fa fa-comment net-actions__icon" aria-hidden="true" />
-        </div>
+<div
+    class="net-actions"
+    :class="colorClass"
+>
+    <div class="net-actions__action">
+        <span class="net-actions__count">
+            {{ views }}
+        </span>
+        <i
+            class="fa fa-eye net-actions__icon"
+            aria-hidden="true"
+        />
     </div>
+    <div
+        class="net-actions__action"
+        @click.prevent="addLike"
+    >
+        <span class="net-actions__count">
+            {{ likes }}
+        </span>
+        <i
+            class="fa fa-heart net-actions__icon"
+            aria-hidden="true"
+        />
+    </div>
+    <div class="net-actions__action">
+        <span class="net-actions__count">
+            {{ comments }}
+        </span>
+        <i
+            class="fa fa-comment net-actions__icon"
+            aria-hidden="true"
+        />
+    </div>
+</div>
 </template>
 
 <script>
@@ -42,13 +55,27 @@ export default {
         color: {
             type: String,
             default: 'white'
-        }
+        },
+        itemId: {
+            type: Number,
+            default: 0,
+        },
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             return 'net-actions--' + this.color
         }
-    }
+    },
+    methods: {
+        addLike: function () {
+            let url = '/api/v2/like-network/' + this.itemId
+            this.$http.get(url).then(response => {
+                if (response.data.success) {
+                    this.$emit('update:likes', response.data.likes)
+                }
+            })
+        },
+    },
 }
 </script>
 
@@ -59,10 +86,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    padding-top: $spacer * 1.618;
-    padding-left: $spacer * 1.618;
-    padding-right: $spacer * 1.618;
-    padding-bottom: $spacer;
+    padding: $spacer * 1.618 $spacer * 1.618 $spacer;
     font-size: $font-size-lg;
 
     &__action {

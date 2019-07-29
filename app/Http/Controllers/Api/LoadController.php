@@ -6,10 +6,14 @@ use Auth;
 use App\App;
 use App\Utility;
 use App\Session;
+use App\Network;
 use App\AppSection;
 use App\AppCategory;
 use App\MediaCouples;
 use App\MediaSubCategory;
+
+use App\Notifications\SharedSession;
+
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +23,12 @@ class LoadController extends Controller
 {
     public function test()
     {
-        $result = $this->load_assets('active-parallel-action', false);
+        $request = new Request();
+        $request->replace([
+            'token' => '5d3e0f4057d6c'
+        ]);
+
+        $result = $this->share_to_network($request);
         dd($result);
     }
 
@@ -379,4 +388,85 @@ class LoadController extends Controller
             'src' => Storage::disk('local')->url($video_store['src']),
         ];
     }
+
+    public function share_to_teacher(Request $request)
+    {
+        $session = Session::where('token', $request->token)->first();
+
+        if ($session) {
+            if ($session->teacher_shared == 0) {
+                $session->teacher_shared = 1;
+                $session->save();
+
+                $student = $session->user;
+
+                // trova l'insegnante
+                $teacher = $student->teacher->first();
+                $teacher->notify(new SharedSession($session, $student));
+
+                return [
+                    'success' => true,
+                    'session' => $session
+                ];
+            }
+
+            return [
+                'success' => false,
+                'error' => 'Session already shared'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Session not found'
+            ];
+        }
+    }
+
+    public function share_to_network(Request $request)
+    {
+        $session = Session::where('token', $request->token)->first();
+        $notification = Auth::user()->notifications()->where('id', $request->notification_id)->first();
+
+        if ($notification) {
+            $notification->delete();
+        }
+
+        if ($session) {
+            if ($session->is_shared == 0) {
+                $session->teacher_approved = 1;
+                $session->is_shared = 1;
+                $session->save();
+
+                $user = Auth::user();
+
+                $content = $session->format_for_share();
+                $data = [
+                    'app_id' => $session->app->id,
+                    'user_id' => $session->user->id,
+                    'title' => $session->title,
+                    'token' => $request->token,
+                    'content' => collect($content),
+                ];
+
+                $network = Network::create($data);
+
+                return [
+                    'success' => true,
+                    'session' => $session,
+                    'network' => $network,
+                ];
+            }
+
+            return [
+                'success' => false,
+                'error' => 'Session already shared'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'error' => 'Session not found'
+            ];
+        }
+    }
+
 }

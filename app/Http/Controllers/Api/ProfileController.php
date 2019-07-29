@@ -12,26 +12,34 @@ use Illuminate\Support\Facades\Schema;
 
 class ProfileController extends Controller
 {
-    public function get_profile(Request $request) {
-        $user = Auth::user();
+    public function test()
+    {
+        // $user = User::find(349);
+        $request = new Request();
+        // $notifications = $user->notifications()->get();
+        // $test = $this->get_notifications($notifications);
+        $test = $this->get_profile($request);
+        dd($test);
+    }
+
+    public function get_profile(Request $request)
+    {
+        // $user = Auth::user();
+        $user = User::find(349);
         if ($user->role_id == 1) {
-            $user->students = $user->students;
-            $user->networks = $user->networks()->with('app')->get();
+            $students = $user->students;
+            $user->students = $students;
+
+            $networks = $user->networks()->with('app', 'user')->get();
+
+            foreach ($students as $key => $student) {
+                $student_net = $student->networks()->with('app', 'user')->get();
+                $networks = $networks->concat($student_net);
+            }
 
             $notifications = $user->notifications()->get();
-            $activities = array();
-            if ($notifications->count() > 0) {
-                foreach ($notifications as $key => $notification) {
-                    $token = $notification->data['session']['token'];
-                    $activity = Network::where('token', '=', $token)->with('app', 'user')->first();
-                    if ($activity) {
-                        $activity->notification = $notification;
-                        array_push($activities, $activity);
-                    }
-
-                }
-            }
-            $user->activities = $activities;
+            $user->activities = $this->get_notifications($notifications);
+            $user->networks = $networks;
 
             return [
                 'success' => true,
@@ -45,7 +53,8 @@ class ProfileController extends Controller
         ];
     }
 
-    public function destroy_network($id) {
+    public function destroy_network($id)
+    {
         $network = Network::find($id);
         if ($network) {
             $network->delete();
@@ -60,7 +69,31 @@ class ProfileController extends Controller
         }
     }
 
-    public function destroy_activity($id) {
+    public function get_notifications($notifications)
+    {
+        $activities = array();
+
+        if ($notifications->count() > 0) {
+            foreach ($notifications as $key => $notification) {
+                // dd($notification->data);
+                $is_shared = $notification->data['session']['is_shared'];
+                if ($is_shared == 0) {
+                    array_push($activities, $notification);
+                } else {
+                    $token = $notification->data['session']['token'];
+                    $activity = Network::where('token', '=', $token)->with('app', 'user')->first();
+                    if ($activity) {
+                        $activity->notification = $notification;
+                        array_push($activities, $activity);
+                    }
+                }
+            }
+        }
+        return $activities;
+    }
+
+    public function destroy_activity($id)
+    {
         $notification = Auth::user()->notifications()->where('id', $id)->first();
         if ($notification) {
             $notification->delete();
@@ -75,7 +108,8 @@ class ProfileController extends Controller
         }
     }
 
-    public function save_student(Request $request) {
+    public function save_student(Request $request)
+    {
         $teacher = Auth::user();
         $check = User::where('email', $request->email)->first();
         if (!$check) {
@@ -108,7 +142,8 @@ class ProfileController extends Controller
         }
     }
 
-    public function update_student(Request $request) {
+    public function update_student(Request $request)
+    {
         $user = User::where('email', $request->email)->first();
         if ($user) {
             $columns = Schema::getColumnListing($user->getTable());

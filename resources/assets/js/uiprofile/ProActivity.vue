@@ -1,42 +1,60 @@
 <template>
-    <div
-        ref="container"
-        class="pro-activity"
-        :class="[
+<div
+    ref="container"
+    class="pro-activity"
+    :class="[
             colorClass,
         ]"
-        @mouseover="showHover"
-        @mouseleave="hideHover">
-        <div class="pro-activity__container">
-            <div class="pro-activity__icon">
-                <div class="pro-activity__figure">
-                    <i class="fa fa-exclamation"></i>
-                </div>
-            </div>
-            <div class="pro-activity__icon">
-                <div class="pro-activity__figure">
-                    <i class="fa fa-eye"></i>
-                </div>
-            </div>
-            <div class="pro-activity__name">
-                {{ name }}&nbsp;
-            </div>
-            <div class="pro-activity__app">
-                - {{ app }}
-            </div>
-            <div class="pro-activity__delete">
-                <ui-button
-                    color="black"
-                    :has-margin="false"
-                    title="delete"
-                    @click="deleteActivity"/>
+    @mouseover="showHover"
+    @mouseleave="hideHover"
+>
+    <div class="pro-activity__container">
+        <div class="pro-activity__icon">
+            <div class="pro-activity__figure">
+                <i class="fa fa-exclamation"></i>
             </div>
         </div>
+        <div class="pro-activity__icon">
+            <div class="pro-activity__figure">
+                <i class="fa fa-eye"></i>
+            </div>
+        </div>
+        <div class="pro-activity__name">
+            {{ name }}&nbsp;
+        </div>
+        <div class="pro-activity__app">
+            - {{ app }}
+        </div>
+        <div class="pro-activity__app">
+            - {{ senderName }}
+        </div>
+        <div class="pro-activity__delete">
+            <ui-button
+                title="open"
+                color="black"
+                size="sm"
+                :has-margin="false"
+                display="inline-block"
+                @click="openSession"
+            />
+            <ui-button
+                title="delete"
+                color="black"
+                size="sm"
+                :has-margin="false"
+                display="inline-block"
+                @click="deleteActivity"
+            />
+        </div>
     </div>
+</div>
 </template>
 
 <script>
-import { UiButton } from '../ui'
+import {
+    UiButton
+}
+from '../ui'
 import Utility from '../Utilities'
 
 export default {
@@ -46,41 +64,71 @@ export default {
     },
     props: {
         idx: {
-            type: Number,
-            default: 0,
+            type: String,
+            default: 'no-idx',
         },
         counter: {
             type: Number,
             default: 0,
         },
-        name: {
-            type: String,
-            default: 'name',
-        },
-        app: {
-            type: String,
-            default: 'app',
+        // name: {
+        //     type: String,
+        //     default: 'name',
+        // },
+        // app: {
+        //     type: String,
+        //     default: 'app',
+        // },
+        activity: {
+            type: Object,
+            default: function () {
+                return {}
+            },
         },
     },
-    data: function() {
+    data: function () {
         return {
             selected: false,
         }
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             let odd = Boolean((this.counter) % 2)
 
             if (odd) {
                 return 'pro-activity--light'
             }
         },
-        isOdd: function() {
+        isOdd: function () {
             return Boolean((this.counter) % 2)
+        },
+        name: function () {
+            if (this.activity.data && this.activity.data.session) {
+                if (this.activity.data.session.title) {
+                    return this.activity.data.session.title
+                }
+            }
+            return 'no title'
+        },
+        app: function () {
+            if (this.activity.data && this.activity.data.session) {
+                if (this.activity.data.session.app.title) {
+                    return this.activity.data.session.app.title
+                }
+            }
+            return 'no name'
+        },
+        senderName: function () {
+            if (this.activity.data && this.activity.data.sender) {
+                if (this.activity.data.sender.name) {
+                    return this.activity.data.sender.name
+                }
+            }
+            return null
         },
     },
     methods: {
-        init: function() {
+        init: function () {
             let el = this.$refs.container
             let gray = getComputedStyle(document.documentElement).getPropertyValue('--gray-dark')
             let rgbaObj = Utility.hexToRgbA(gray)
@@ -106,22 +154,39 @@ export default {
 
             this.master.progress(1).progress(0)
         },
-        showHover: function() {
+        showHover: function () {
             if (this.master) {
                 this.master.play()
             }
         },
-        hideHover: function() {
+        hideHover: function () {
             if (this.master) {
                 this.master.reverse()
             }
         },
-        deleteActivity: function() {
-            this.$emit('delete-activity', this.idx)
+        deleteActivity: function () {
+            this.$emit('delete-activity', this.activity.id)
+        },
+        openSession: function () {
+            let session = this.activity.data.session
+            session.content = JSON.parse(session.content)
+
+            let appSlug = this.activity.data.session.app.slug
+
+            this.$root.session = session
+            this.$root.isOpen = true
+            this.$root.isTeacherCheck = true
+            this.$root.notificationId = this.activity.id
+
+            console.log(session, this.activity);
+
+            this.$root.goTo(appSlug)
         },
     },
-    mounted: function() {
-        this.init()
+    mounted: function () {
+        this.$nextTick(() => {
+            this.init()
+        })
     },
 }
 </script>
@@ -131,10 +196,7 @@ export default {
 
 .pro-activity {
     width: 100%;
-    padding-top:  $spacer * 1.618 / 2;
-    padding-bottom: $spacer * 1.618 / 2;
-    padding-left:  $spacer * 1.618;
-    padding-right:  $spacer * 1.618;
+    padding: $spacer * 1.618 / 2 $spacer * 1.618;
 
     &__container {
         display: flex;
@@ -159,7 +221,7 @@ export default {
     &__icon {
         display: flex;
         align-items: center;
-        padding-right: $spacer * 1.618;
+        padding-right: $spacer * 1.618 / 2;
     }
 
     &__delete {
@@ -167,13 +229,13 @@ export default {
     }
 
     &__figure {
-        font-size: $h4-font-size;
+        font-size: $h6-font-size;
         color: $black;
         line-height: 1;
     }
 
     &--light {
-        background-color: rgba($white, .28)
+        background-color: rgba($white, .28);
     }
 }
 </style>

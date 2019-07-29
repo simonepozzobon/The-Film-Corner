@@ -24,8 +24,10 @@
                     :idx="session.id"
                     :title="session.title"
                     :token="session.token"
+                    :is-shared="session.teacher_shared"
                     @open-session="openSession"
                     @delete-session="deleteSession"
+                    @share-session="shareSession"
                 />
             </transition-group>
         </ui-block-head>
@@ -131,6 +133,17 @@ export default {
             this.$root.isOpen = true
             this.$nextTick(() => {
                 this.$emit('open-session')
+            })
+        },
+        shareSession: function (token) {
+            console.log(token);
+
+            let data = new FormData()
+            data.append('token', token)
+            this.$root.fullMessage = 'Shared with your teacher'
+
+            this.$http.post('/api/v2/session/share-to-teacher', data).then(response => {
+                this.$root.showMessage()
             })
         },
         init: function () {

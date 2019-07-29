@@ -84,7 +84,8 @@ const clipper = require('text-clipper')
 import {
     UiAppSession,
     UiAppSessionManager,
-} from '../../uiapp'
+}
+from '../../uiapp'
 import {
     UiBlock,
     UiBlockHead,
@@ -99,7 +100,8 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-} from '../../ui'
+}
+from '../../ui'
 export default {
     name: 'AppSingle',
     components: {
@@ -161,8 +163,15 @@ export default {
                     if (response.data.success) {
                         this.app = response.data.app
                         this.sessions = response.data.sessions
+
+                        this.debug()
                     }
                 })
+        },
+        debug: function () {
+            this.$nextTick(() => {
+                this.togglePanel()
+            })
         },
         startApp: function () {
             this.$root.goTo(this.app.slug)
@@ -173,7 +182,8 @@ export default {
                 this.isOpenClass = null
                 this.description = this.app.description
                 this.buttonText = 'Open existing session'
-            } else {
+            }
+            else {
                 this.open = true
                 this.isOpenClass = 'app-container--is-open'
                 this.description = clipper(this.app.description, 150, {

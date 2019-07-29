@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\App;
+use App\Like;
+use App\User;
+use App\Network;
 use App\AppSection;
 use App\AppCategory;
 use App\SharedSession;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Activitylog\Models\Activity;
@@ -14,7 +18,31 @@ use Illuminate\Support\Facades\Storage;
 
 class SectionController extends Controller
 {
-    public function get_studios() {
+    public function test()
+    {
+        // $result = $this->get_network();
+        // $result = $this->get_network_single(46);
+        $result = $this->add_network_like(47);
+        dd($result);
+    }
+
+    public function add_network_like($id)
+    {
+        $user = Auth::user();
+        $session = Network::find($id);
+        $session->likes()->create([
+            'userable_id' => $user->id,
+            'userable_type' => 'App\User'
+        ]);
+
+        return [
+            'success' => true,
+            'likes' => $session->likes()->count(),
+        ];
+    }
+
+    public function get_studios()
+    {
         $studios = AppSection::with('categories.apps')->orderBy('order')->get();
         $studios = $studios->filter(function($studio, $key){
             return $studio->active == 1;
@@ -26,7 +54,8 @@ class SectionController extends Controller
         ];
     }
 
-    public function get_studio($slug) {
+    public function get_studio($slug)
+    {
         $studio = AppSection::where('slug', $slug)->with('categories.apps')->first();
         if ($studio && $studio->active == 1) {
             return [
@@ -41,7 +70,8 @@ class SectionController extends Controller
         }
     }
 
-    public function get_cat($slug) {
+    public function get_cat($slug)
+    {
         $pavilion = AppCategory::where('slug', $slug)->with('apps', 'keywords')->first();
         if ($pavilion) {
             return [
@@ -57,7 +87,8 @@ class SectionController extends Controller
         }
     }
 
-    public function get_app($slug) {
+    public function get_app($slug)
+    {
         $user = Auth::user();
         $app = App::where('slug', $slug)->with('category.section')->first();
 
@@ -82,13 +113,21 @@ class SectionController extends Controller
         }
     }
 
-    public function get_network() {
-        $items = SharedSession::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments', 'likes')->get();
+    public function get_network()
+    {
+        // $items = SharedSession::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments', 'likes')->get();
+        $items = Network::orderBy('created_at', 'desc')->with('app', 'app.category', 'comments', 'likes')->get();
 
-        $sessions = $items->filter(function($item, $key) {
+        // rimuove le sessioni delle app non più esistenti
+        $filtered = $items->filter(function($item, $key) {
+            return $item->app != null;
+        });
+
+        // formatta le sessioni
+        $sessions = $filtered->transform(function($item, $key) {
             $item->content = $this->format_network_content($item);
             $item->views = Activity::where('description', '=', 'network_views')->forSubject($item)->count();
-            return $item->app;
+            return $item;
         })->all();
 
         return [
@@ -97,14 +136,20 @@ class SectionController extends Controller
         ];
     }
 
-    public function get_network_single($id) {
-        $item = SharedSession::with('app', 'app.category', 'comments', 'likes')->find($id);
+    public function get_network_single($id)
+    {
+        $user = Auth::user() ? Auth::user() : User::find(env('DUMMY_USER', 1));
+
+        $item = Network::with('app', 'app.category', 'comments', 'likes')->find($id);
 
         $item->content = $this->format_network_content($item);
-        $item->views = Activity::where('description', '=', 'visit')->forSubject($item)->count();
+        $item->views = Activity::where('description', '=', 'network_views')->forSubject($item)->count();
 
         // increase view count
-        // activity()->causedBy(Auth::guard('teacher')->user())->performedOn($shared)->withProperties('visited', true)->log('network_views');
+        activity()
+            ->causedBy($user)
+            ->performedOn($item)
+            ->log('network_views');
 
         if ($item) {
             return [
@@ -120,7 +165,8 @@ class SectionController extends Controller
         ];
     }
 
-    public function format_network_content($share) {
+    public function format_network_content($share)
+    {
         $item = array();
 
         switch ($share->app_id) {
@@ -273,5 +319,5 @@ class SectionController extends Controller
         }
 
         return $item;
-  }
+    }
 }
