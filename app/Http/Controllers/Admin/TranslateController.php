@@ -41,56 +41,58 @@ class TranslateController extends Controller
     public function get_elements(Request $r)
     {
         switch ($r->type) {
-            case 'apps':
-                $items = App::all();
-                break;
+        case 'apps':
+            $items = App::all();
+            break;
 
-            case 'app_keywords':
-                $items = AppKeyword::all();
-                break;
+        case 'app_keywords':
+            $items = AppKeyword::all();
+            break;
 
-            case 'app_sections':
-                $items = AppSection::all();
-                break;
+        case 'app_sections':
+            $items = AppSection::all();
+            break;
 
-            case 'app_categories':
-                $items = AppCategory::all();
-                break;
+        case 'app_categories':
+            $items = AppCategory::all();
+            break;
 
-            case 'general_texts':
-                $items = GeneralText::all();
-                break;
+        case 'general_texts':
+            $items = GeneralText::all();
+            break;
 
-            case 'captions':
-                $items = Caption::all();
-                break;
+        case 'captions':
+            $items = Caption::all();
+            break;
 
-            case 'filmographies':
-                $items = Filmography::all();
-                break;
+        case 'filmographies':
+            $items = Filmography::all();
+            break;
 
-            case 'partners':
-                $items = Partner::all();
-                break;
+        case 'partners':
+            $items = Partner::all();
+            break;
         }
 
         $locales = Language::all();
 
-        $items = $items->transform(function($item, $key) use ($locales) {
-            $item->model = get_class($item).'Translation';
-            $item->original_model = get_class($item);
-            $item->table = $item->getTable();
+        $items = $items->transform(
+            function ($item, $key) use ($locales) {
+                $item->model = get_class($item).'Translation';
+                $item->original_model = get_class($item);
+                $item->table = $item->getTable();
 
-            $translated = [];
-            foreach ($locales as $key => $locale) {
-                if ($item->hasTranslation($locale->short)) {
-                    array_push($translated, $locale);
+                $translated = [];
+                foreach ($locales as $key => $locale) {
+                    if ($item->hasTranslation($locale->short)) {
+                        array_push($translated, $locale);
+                    }
                 }
-            }
-            $item->translated = $translated;
+                $item->translated = $translated;
 
-            return $item;
-        });
+                return $item;
+            }
+        );
 
         return response()->json($items, 200);
     }
@@ -100,6 +102,7 @@ class TranslateController extends Controller
         // Prendo il modello e la tabella
         $model = 'App\\'.$r->type;
         $model_check = new $model();
+
         $table = $model_check::get_db_table();
 
         // Dalla tabella recupero il nome della seconda colonna che corrisponde all'id dell'elemento da tradurre
@@ -110,22 +113,17 @@ class TranslateController extends Controller
         $translations = json_decode($r->translations);
         $new_translations = [];
 
-        $test = [];
 
         foreach ($translations as $locale => $languages) {
 
             // verifico se esiste già
-            $t = $model::where([
-                [$column_id, '=', $r->item_id],
-                ['locale', '=', $locale]
-            ])->first();
-            array_push($test, get_class($t));
-
-            // Se non esiste allora ne creo uno nuovo
-            if ($t == null) {
-                $t = new $model();
-                array_push($test, 'nuovo');
-            }
+            $t = $model::firstOrNew(
+                [
+                    [$column_id, '=', $r->item_id],
+                    ['locale', '=', $locale]
+                ]
+            );
+            // array_push($test, $t);
 
 
             // salvo l'id nel model
@@ -134,17 +132,9 @@ class TranslateController extends Controller
 
             foreach ($languages as $field => $translation) {
                     $t->{$field} = $translation;
-                    array_push($test, [
-                        $locale,
-                        $field,
-                        $translation
-                    ]);
             }
 
             $t->save();
-            array_push($test, 'salva');
-            array_push($test, $t);
-
             array_push($new_translations, $t);
         }
 
@@ -152,9 +142,6 @@ class TranslateController extends Controller
         return [
             'sucess' => true,
             'translations' => $new_translations,
-            'schema' => $columns,
-            'test' => $test,
-            'table' => $table,
         ];
     }
 

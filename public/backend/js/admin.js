@@ -93030,8 +93030,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/esse/thefilmcorner/resources/assets/js/admin/admin.js */"./resources/assets/js/admin/admin.js");
-module.exports = __webpack_require__(/*! /Users/esse/thefilmcorner/resources/assets/admin/sass/app.scss */"./resources/assets/admin/sass/app.scss");
+__webpack_require__(/*! /Users/esse/The-Film-Corner/resources/assets/js/admin/admin.js */"./resources/assets/js/admin/admin.js");
+module.exports = __webpack_require__(/*! /Users/esse/The-Film-Corner/resources/assets/admin/sass/app.scss */"./resources/assets/admin/sass/app.scss");
 
 
 /***/ })
