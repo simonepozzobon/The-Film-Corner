@@ -4285,13 +4285,7 @@ __webpack_require__.r(__webpack_exports__);
       counter: 0,
       master: null,
       isOpen: false,
-      form: {
-        name: null,
-        surname: null,
-        email: null,
-        password: null,
-        role_id: null
-      },
+      form: {},
       isDisable: false
     };
   },
@@ -4351,13 +4345,15 @@ __webpack_require__.r(__webpack_exports__);
       this.$http.post('/api/v2/admin/translate/save', data).then(function (response) {
         // console.log(response.data);
         _this.isDisable = false;
+        _this.form = null;
         setTimeout(function () {
           if (response.data.success) {
             _this.$emit('saved', response.data.translations);
-
-            _this.hide();
           }
         }, 500);
+      })["catch"](function (err) {
+        _this.isDisable = false;
+        _this.form = null;
       });
     },
     formatData: function formatData(object) {
@@ -4384,15 +4380,20 @@ __webpack_require__.r(__webpack_exports__);
             }
           }
         }
-      } // console.log(dataObject);
-
+      }
 
       data.append('type', this.type);
 
       if (this.current && this.current.hasOwnProperty('id')) {
-        console.log(this.current);
+        // console.log(this.current);
+        console.log(dataObject, this.type, this.current.id);
         data.append('item_id', this.current.id);
-      }
+      } // else {
+      //     // this.$nextTick(() => {
+      //     //     this.save()
+      //     // })
+      // }
+
 
       data.append('translations', JSON.stringify(dataObject));
       return data;
@@ -5140,6 +5141,7 @@ __webpack_require__.r(__webpack_exports__);
       currentPage: 1,
       totalRows: 1,
       languages: [],
+      translated: [],
       items: [],
       fields: [],
       options: [],
@@ -5153,31 +5155,37 @@ __webpack_require__.r(__webpack_exports__);
       this.totalRows = _items.length;
     },
     translation: function translation(_translation) {
-      this.getTranslation(_translation);
+      var _this = this;
+
+      this.resetPanel();
+      this.$nextTick(function () {
+        _this.getTranslations(_translation);
+      });
     }
   },
   methods: {
     debug: function debug() {
-      var _this = this;
+      var _this2 = this;
 
       setTimeout(function () {
-        var item = _this.items[0];
+        var item = _this2.items[0];
 
-        _this.translate(item);
+        _this2.translate(item);
       }, 500);
     },
     init: function init() {
       this.translation = 'apps';
     },
     getLanguages: function getLanguages() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$http.get('/api/v2/admin/translate').then(function (response) {
-        _this2.languages = response.data;
+        _this3.languages = response.data;
+        _this3.translated = response.data;
       });
     },
-    getTranslation: function getTranslation(translation) {
-      var _this3 = this;
+    getTranslations: function getTranslations(translation) {
+      var _this4 = this;
 
       var data = new FormData();
       data.append('type', translation);
@@ -5185,10 +5193,13 @@ __webpack_require__.r(__webpack_exports__);
         var options = _translate_fields__WEBPACK_IMPORTED_MODULE_4__["default"].find(function (field) {
           return field.value == translation;
         });
-        _this3.items = response.data;
-        _this3.fields = options.fields;
-        _this3.options = options.options;
-        _this3.model = options.model; // this.$nextTick(() => this.debug())
+        _this4.items = response.data;
+        _this4.fields = options.fields;
+        _this4.options = options.options;
+        _this4.model = options.model;
+
+        _this4.$refs.panel.hide(); // this.$nextTick(() => this.debug())
+
       });
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -5203,17 +5214,16 @@ __webpack_require__.r(__webpack_exports__);
         var option = this.options[i];
         var optionKey = option.title;
         var languages = this.getSingleLocale(optionKey, item);
-        this.languages = Object.assign([], languages);
+        this.translated = Object.assign([], languages);
       }
 
-      this.current = item; // this.$set(this.languages, this.languages)
-
+      this.current = item;
       this.$refs.panel.show();
     },
     getSingleLocale: function getSingleLocale() {
       var key = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
       var item = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var languages = Object.assign([], this.languages);
+      var languages = Object.assign([], this.translated);
 
       var _loop = function _loop(i) {
         var language = Object.assign({}, languages[i]);
@@ -5248,16 +5258,46 @@ __webpack_require__.r(__webpack_exports__);
     getFields: function getFields() {
       var initial = {};
     },
-    saved: function saved(item) {}
+    saved: function saved(item) {
+      var _this5 = this;
+
+      // console.log(this.current.id);
+      // temporaneo
+      this.resetPanel(false, false).then(function () {
+        _this5.getTranslations(_this5.translation);
+      });
+    },
+    resetPanel: function resetPanel() {
+      var _this6 = this;
+
+      var resetOptions = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      var resetModel = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+      return new Promise(function (resolve, reject) {
+        if (resetModel) {
+          _this6.model = null;
+        }
+
+        if (resetOptions) {
+          _this6.options = [];
+        }
+
+        _this6.current = null;
+        _this6.translated = Object.assign([], _this6.languages);
+
+        _this6.$nextTick(function () {
+          resolve();
+        });
+      });
+    }
   },
   created: function created() {
     this.getLanguages();
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this7 = this;
 
     this.$nextTick(function () {
-      _this4.init();
+      _this7.init();
     });
   }
 });
@@ -71924,7 +71964,7 @@ var render = function() {
         ref: "panel",
         attrs: {
           options: _vm.options,
-          languages: _vm.languages,
+          languages: _vm.translated,
           type: _vm.model,
           current: _vm.current
         },

@@ -44,7 +44,7 @@
     <translate-create
         ref="panel"
         :options="options"
-        :languages="languages"
+        :languages="translated"
         :type="model"
         :current="current"
         @saved="saved"
@@ -137,6 +137,7 @@ export default {
             currentPage: 1,
             totalRows: 1,
             languages: [],
+            translated: [],
             items: [],
             fields: [],
             options: [],
@@ -150,7 +151,10 @@ export default {
             this.totalRows = items.length
         },
         translation: function (translation) {
-            this.getTranslation(translation)
+            this.resetPanel()
+            this.$nextTick(() => {
+                this.getTranslations(translation)
+            })
         }
     },
     methods: {
@@ -166,9 +170,10 @@ export default {
         getLanguages: function () {
             this.$http.get('/api/v2/admin/translate').then(response => {
                 this.languages = response.data
+                this.translated = response.data
             })
         },
-        getTranslation: function (translation) {
+        getTranslations: function (translation) {
             let data = new FormData()
             data.append('type', translation)
             this.$http.post('/api/v2/admin/translate/elements', data).then(response => {
@@ -177,6 +182,7 @@ export default {
                 this.fields = options.fields
                 this.options = options.options
                 this.model = options.model
+                this.$refs.panel.hide()
 
                 // this.$nextTick(() => this.debug())
             })
@@ -193,15 +199,14 @@ export default {
                 let option = this.options[i]
                 let optionKey = option.title
                 let languages = this.getSingleLocale(optionKey, item)
-                this.languages = Object.assign([], languages)
+                this.translated = Object.assign([], languages)
             }
             this.current = item
 
-            // this.$set(this.languages, this.languages)
             this.$refs.panel.show()
         },
         getSingleLocale: function (key = '', item = {}) {
-            let languages = Object.assign([], this.languages)
+            let languages = Object.assign([], this.translated)
 
             for (let i = 0; i < languages.length; i++) {
                 let language = Object.assign({}, languages[i])
@@ -232,7 +237,31 @@ export default {
             let initial = {}
 
         },
-        saved: function (item) {}
+        saved: function (item) {
+            // console.log(this.current.id);
+            // temporaneo
+            this.resetPanel(false, false).then(() => {
+                this.getTranslations(this.translation)
+            })
+        },
+        resetPanel: function (resetOptions = true, resetModel = true) {
+            return new Promise((resolve, reject) => {
+                if (resetModel) {
+                    this.model = null
+                }
+
+                if (resetOptions) {
+                    this.options = []
+                }
+
+                this.current = null
+                this.translated = Object.assign([], this.languages)
+
+                this.$nextTick(() => {
+                    resolve()
+                })
+            });
+        },
     },
     created: function () {
         this.getLanguages()

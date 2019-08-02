@@ -119,13 +119,7 @@ export default {
             counter: 0,
             master: null,
             isOpen: false,
-            form: {
-                name: null,
-                surname: null,
-                email: null,
-                password: null,
-                role_id: null,
-            },
+            form: {},
             isDisable: false,
         }
     },
@@ -191,12 +185,15 @@ export default {
             this.$http.post('/api/v2/admin/translate/save', data).then(response => {
                 // console.log(response.data);
                 this.isDisable = false
+                this.form = null
                 setTimeout(() => {
                     if (response.data.success) {
                         this.$emit('saved', response.data.translations)
-                        this.hide()
                     }
                 }, 500)
+            }).catch(err => {
+                this.isDisable = false
+                this.form = null
             })
         },
         formatData: function (object) {
@@ -225,12 +222,18 @@ export default {
                     }
                 }
             }
-            // console.log(dataObject);
+
             data.append('type', this.type)
             if (this.current && this.current.hasOwnProperty('id')) {
-                console.log(this.current);
+                // console.log(this.current);
+                console.log(dataObject, this.type, this.current.id);
                 data.append('item_id', this.current.id)
             }
+            // else {
+            //     // this.$nextTick(() => {
+            //     //     this.save()
+            //     // })
+            // }
             data.append('translations', JSON.stringify(dataObject))
 
             return data

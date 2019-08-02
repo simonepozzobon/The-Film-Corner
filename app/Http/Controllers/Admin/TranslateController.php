@@ -99,6 +99,7 @@ class TranslateController extends Controller
 
     public function save(Request $r)
     {
+        $test =[];
         // Prendo il modello e la tabella
         $model = 'App\\'.$r->type;
         $model_check = new $model();
@@ -123,7 +124,7 @@ class TranslateController extends Controller
                     ['locale', '=', $locale]
                 ]
             );
-            // array_push($test, $t);
+            array_push($test, $t);
 
 
             // salvo l'id nel model
