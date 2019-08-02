@@ -94,6 +94,7 @@ Route::prefix('v2')->group(
             Route::prefix('translate')->group(function() {
                 Route::get('/', 'Admin\TranslateController@get_languages');
                 Route::post('elements', 'Admin\TranslateController@get_elements');
+                Route::post('save', 'Admin\TranslateController@save');
             });
         });
     }

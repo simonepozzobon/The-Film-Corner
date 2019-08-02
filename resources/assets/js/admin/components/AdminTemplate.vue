@@ -5,7 +5,10 @@
 >
     <top-bar></top-bar>
     <div class="admin-template__container">
-        <main-sidebar></main-sidebar>
+        <main-sidebar
+            ref="sidebar"
+            class="admin-template__sidebar"
+        />
         <div class="admin-template__content">
             <router-view></router-view>
         </div>
@@ -41,7 +44,8 @@ export default {
             let colors = ['blue', 'red', 'green', 'orange', 'purple']
             let idx = Math.floor(Math.random() * colors.length) + 0
             this.randomColorClass = 'admin-template--' + colors[idx]
-        }
+        },
+        observeMain: function () {},
     },
     mounted: function () {
         this.randomColor()
@@ -49,12 +53,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 
 .admin-template {
     &__container {
         display: flex;
+        height: 100%;
+    }
+
+    &__sidebar {
+        // min-height: 100vh;
+        // height: 100%;
+        width: 200px;
+        padding: ($spacer * 5) $spacer $spacer;
+        z-index: 2;
+        @include custom-box-shadow(lighten($black, 25));
+        @include gradient-directional($gray-100, lighten($gray-200, 10), 145deg);
     }
 
     &__content {

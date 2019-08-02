@@ -1,12 +1,15 @@
 const fields = [{
         title: 'Apps',
         value: 'apps',
+        model: 'AppTranslation',
         options: [{
                 title: 'title',
+                label: 'Titolo',
                 type: 'input'
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             },
         ],
@@ -28,12 +31,14 @@ const fields = [{
     {
         title: 'Glossary',
         value: 'app_keywords',
+        model: 'AppKeywordTranslation',
         options: [{
                 title: 'name',
                 type: 'input',
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],
@@ -55,12 +60,14 @@ const fields = [{
     {
         title: 'Studios',
         value: 'app_sections',
+        model: 'AppSectionTranslation',
         options: [{
                 title: 'name',
                 type: 'input'
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],
@@ -82,12 +89,15 @@ const fields = [{
     {
         title: 'Didactical Path',
         value: 'app_categories',
+        model: 'AppCategoryTranslation',
         options: [{
                 title: 'name',
+                label: 'Nome',
                 type: 'input'
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],
@@ -109,8 +119,10 @@ const fields = [{
     {
         title: 'General Texts',
         value: 'general_texts',
+        model: 'GeneralTextTranslation',
         options: [{
             title: 'description',
+            label: 'Descrizione',
             type: 'textarea'
         }],
         fields: [{
@@ -131,12 +143,15 @@ const fields = [{
     {
         title: 'Captions',
         value: 'captions',
+        model: 'CaptionTranslation',
         options: [{
                 title: 'title',
+                label: 'Titolo',
                 type: 'input'
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],
@@ -158,12 +173,15 @@ const fields = [{
     {
         title: 'Filmography',
         value: 'filmographies',
+        model: 'FilmographyTranslation',
         options: [{
                 title: 'title',
+                label: 'Titolo',
                 type: 'input'
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],
@@ -185,8 +203,10 @@ const fields = [{
     {
         title: 'Partners',
         value: 'partners',
+        model: 'PartnerTranslation',
         options: [{
                 title: 'name',
+                label: 'Nome',
                 type: 'input'
             },
             {
@@ -195,6 +215,7 @@ const fields = [{
             },
             {
                 title: 'description',
+                label: 'Descrizione',
                 type: 'textarea'
             }
         ],

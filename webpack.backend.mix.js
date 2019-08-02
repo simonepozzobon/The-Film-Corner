@@ -44,6 +44,7 @@ mix
         port: 3001,
         browser: 'google chrome',
         files: [
+            'app/{*,**/*}.*',
             'resources/{*,**/*}.*',
             'public/{*,**/*}.*',
         ]

@@ -43,8 +43,10 @@
     </container>
     <translate-create
         ref="panel"
-        :initial="form"
+        :options="options"
         :languages="languages"
+        :type="model"
+        :current="current"
         @saved="saved"
     />
     <container :has-margin="false">
@@ -137,7 +139,10 @@ export default {
             languages: [],
             items: [],
             fields: [],
+            options: [],
             form: {},
+            current: null,
+            model: null,
         }
     },
     watch: {
@@ -149,6 +154,15 @@ export default {
         }
     },
     methods: {
+        debug: function () {
+            setTimeout(() => {
+                let item = this.items[0]
+                this.translate(item)
+            }, 500)
+        },
+        init: function () {
+            this.translation = 'apps'
+        },
         getLanguages: function () {
             this.$http.get('/api/v2/admin/translate').then(response => {
                 this.languages = response.data
@@ -161,6 +175,10 @@ export default {
                 let options = fields.find(field => field.value == translation)
                 this.items = response.data
                 this.fields = options.fields
+                this.options = options.options
+                this.model = options.model
+
+                this.$nextTick(() => this.debug())
             })
         },
         onFiltered: function (filteredItems) {
@@ -168,7 +186,51 @@ export default {
             this.currentPage = 1
         },
         translate: function (item) {
+            // console.log('campi', this.options);
+            let initial = {}
+
+            for (let i = 0; i < this.options.length; i++) {
+                let option = this.options[i]
+                let optionKey = option.title
+                let languages = this.getSingleLocale(optionKey, item)
+                this.languages = Object.assign([], languages)
+            }
+            this.current = item
+
+            // this.$set(this.languages, this.languages)
             this.$refs.panel.show()
+        },
+        getSingleLocale: function (key = '', item = {}) {
+            let languages = Object.assign([], this.languages)
+
+            for (let i = 0; i < languages.length; i++) {
+                let language = Object.assign({}, languages[i])
+                let locale = language.short
+                // console.log('prima', language['initial']);
+
+                if (!language.hasOwnProperty('initial')) {
+                    language['initial'] = {}
+                }
+
+                let hasTranslation = item.translations.find(translation => translation.locale == locale)
+                // console.log('check', hasTranslation, key, language['initial'][key]);
+                if (hasTranslation) {
+                    // console.log(locale);
+                    language['initial'][key] = hasTranslation[key]
+                    // console.log('initial', language['initial']);
+                }
+                else {
+                    language['initial'][key] = ''
+                }
+                // console.log(language);
+                languages.splice(i, 1, language)
+            }
+            // console.log(object);
+            return languages
+        },
+        getFields: function () {
+            let initial = {}
+
         },
         saved: function (item) {}
     },
@@ -177,7 +239,7 @@ export default {
     },
     mounted: function () {
         this.$nextTick(() => {
-            this.translation = 'apps'
+            this.init()
         })
     }
 }

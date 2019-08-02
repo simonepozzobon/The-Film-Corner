@@ -11,6 +11,14 @@ use App\AppSection;
 use App\AppCategory;
 use App\GeneralText;
 use App\Filmography;
+use App\AppTranslation;
+use App\CaptionTranslation;
+use App\PartnerTranslation;
+use App\LanguageTranslation;
+use App\AppSectionTranslation;
+use App\AppCategoryTranslation;
+use App\GeneralTextTranslation;
+use App\FilmographyTranslation;
 use App\AppKeywordTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -89,48 +97,65 @@ class TranslateController extends Controller
 
     public function save(Request $r)
     {
-        // Recupero il locale dalla tabella delle lingue
-        $language = Language::find($r->language);
-
         // Prendo il modello e la tabella
-        $model = $r->translable_type;
-
-        $model_check = new $model;
-
-        $table = $model_check->getTable();
+        $model = 'App\\'.$r->type;
+        $model_check = new $model();
+        $table = $model_check::get_db_table();
 
         // Dalla tabella recupero il nome della seconda colonna che corrisponde all'id dell'elemento da tradurre
         $columns = Schema::getColumnListing($table);
         $column_id = $columns[1];
 
-        // verifico se esiste già
-        $t = $model::where([
-            [$column_id, '=', $r->translable_id],
-            ['locale', '=', $language->short]
-        ])->first();
-
-        // Se non esiste allora ne creo uno nuovo
-        if ($t == null) {
-            $t = new $model;
-        }
-
-        // salvo l'id nel model
-        $t->{$column_id} = $r->translable_id;
-
-        // decodifico l'oggetto con le traduzioni e per ogni proprietà da tradurre la salvo nel model
+        // decodifico le traduzioni
         $translations = json_decode($r->translations);
-        foreach ($translations as $key => $translation) {
-            $t->{$translation->title} = $translation->value;
+        $new_translations = [];
+
+        $test = [];
+
+        foreach ($translations as $locale => $languages) {
+
+            // verifico se esiste già
+            $t = $model::where([
+                [$column_id, '=', $r->item_id],
+                ['locale', '=', $locale]
+            ])->first();
+            array_push($test, get_class($t));
+
+            // Se non esiste allora ne creo uno nuovo
+            if ($t == null) {
+                $t = new $model();
+                array_push($test, 'nuovo');
+            }
+
+
+            // salvo l'id nel model
+            $t->{$column_id} = $r->item_id;
+            $t->locale = $locale;
+
+            foreach ($languages as $field => $translation) {
+                    $t->{$field} = $translation;
+                    array_push($test, [
+                        $locale,
+                        $field,
+                        $translation
+                    ]);
+            }
+
+            $t->save();
+            array_push($test, 'salva');
+            array_push($test, $t);
+
+            array_push($new_translations, $t);
         }
 
-        // Salvo il locale nel model
-        $t->locale = $language->short;
 
-        // Salvo il modello e quindi la traduzione
-        $t->save();
-
-
-        return response()->json($t, 200);
+        return [
+            'sucess' => true,
+            'translations' => $new_translations,
+            'schema' => $columns,
+            'test' => $test,
+            'table' => $table,
+        ];
     }
 
 
