@@ -35,6 +35,8 @@
         <div class="action-row">
             <ui-button
                 class="action-row__button"
+                :disable="isDisable"
+                :has-spinner="isDisable"
                 :has-container="false"
                 :has-margin="false"
                 color="lightest-gray"
@@ -43,6 +45,7 @@
             />
             <ui-button
                 class="action-row__button"
+                :disable="isDisable"
                 :has-container="false"
                 :has-margin="false"
                 color="warning"
@@ -122,7 +125,8 @@ export default {
                 email: null,
                 password: null,
                 role_id: null,
-            }
+            },
+            isDisable: false,
         }
     },
     watch: {
@@ -180,19 +184,24 @@ export default {
             }
         },
         save: function () {
+            this.isDisable = true
+
             let data = this.formatData(this.form)
 
             this.$http.post('/api/v2/admin/translate/save', data).then(response => {
-                console.log(response.data);
-                if (response.data.success) {
-                    this.$emit('saved', response.data.user)
-                    this.hide()
-                }
+                // console.log(response.data);
+                this.isDisable = false
+                setTimeout(() => {
+                    if (response.data.success) {
+                        this.$emit('saved', response.data.translations)
+                        this.hide()
+                    }
+                }, 500)
             })
         },
         formatData: function (object) {
             let data = new FormData()
-            // let keys = []
+            // let keys =[]
             // console.log('object', object);
             let dataObject = {}
 

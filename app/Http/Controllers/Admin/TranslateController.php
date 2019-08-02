@@ -140,7 +140,7 @@ class TranslateController extends Controller
 
 
         return [
-            'sucess' => true,
+            'success' => true,
             'translations' => $new_translations,
         ];
     }

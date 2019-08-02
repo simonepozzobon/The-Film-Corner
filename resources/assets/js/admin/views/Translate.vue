@@ -178,7 +178,7 @@ export default {
                 this.options = options.options
                 this.model = options.model
 
-                this.$nextTick(() => this.debug())
+                // this.$nextTick(() => this.debug())
             })
         },
         onFiltered: function (filteredItems) {

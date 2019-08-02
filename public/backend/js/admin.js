@@ -4230,6 +4230,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4288,7 +4291,8 @@ __webpack_require__.r(__webpack_exports__);
         email: null,
         password: null,
         role_id: null
-      }
+      },
+      isDisable: false
     };
   },
   watch: {
@@ -4342,19 +4346,22 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this = this;
 
+      this.isDisable = true;
       var data = this.formatData(this.form);
       this.$http.post('/api/v2/admin/translate/save', data).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
+        _this.isDisable = false;
+        setTimeout(function () {
+          if (response.data.success) {
+            _this.$emit('saved', response.data.translations);
 
-        if (response.data.success) {
-          _this.$emit('saved', response.data.user);
-
-          _this.hide();
-        }
+            _this.hide();
+          }
+        }, 500);
       });
     },
     formatData: function formatData(object) {
-      var data = new FormData(); // let keys = []
+      var data = new FormData(); // let keys =[]
       // console.log('object', object);
 
       var dataObject = {};
@@ -5181,11 +5188,7 @@ __webpack_require__.r(__webpack_exports__);
         _this3.items = response.data;
         _this3.fields = options.fields;
         _this3.options = options.options;
-        _this3.model = options.model;
-
-        _this3.$nextTick(function () {
-          return _this3.debug();
-        });
+        _this3.model = options.model; // this.$nextTick(() => this.debug())
       });
     },
     onFiltered: function onFiltered(filteredItems) {
@@ -70599,6 +70602,8 @@ var render = function() {
               _c("ui-button", {
                 staticClass: "action-row__button",
                 attrs: {
+                  disable: _vm.isDisable,
+                  "has-spinner": _vm.isDisable,
                   "has-container": false,
                   "has-margin": false,
                   color: "lightest-gray",
@@ -70610,6 +70615,7 @@ var render = function() {
               _c("ui-button", {
                 staticClass: "action-row__button",
                 attrs: {
+                  disable: _vm.isDisable,
                   "has-container": false,
                   "has-margin": false,
                   color: "warning",
