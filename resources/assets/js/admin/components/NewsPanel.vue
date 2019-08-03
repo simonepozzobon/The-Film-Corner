@@ -16,6 +16,10 @@
             placeholder="La parte finale dell'url..."
             :value.sync="form.slug"
         />
+        <file-input
+            label="Immagine di copertina"
+            name="image"
+        />
     </div>
 </container>
 </template>
@@ -23,6 +27,7 @@
 <script>
 import {
     Container,
+    FileInput,
     TextInput,
 }
 from '../adminui'
@@ -31,6 +36,7 @@ export default {
     name: 'NewsPanel',
     components: {
         Container,
+        FileInput,
         TextInput,
     },
     data: function () {

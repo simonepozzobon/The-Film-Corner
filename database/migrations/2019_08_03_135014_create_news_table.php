@@ -21,6 +21,7 @@ class CreateNewsTable extends Migration
                 $table->string('thumb');
                 $table->text('content');
                 $table->string('slug')->unique();
+                $table->boolean('active')->default(0);
                 $table->timestamps();
             }
         );
