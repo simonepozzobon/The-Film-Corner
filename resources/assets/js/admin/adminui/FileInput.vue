@@ -1,0 +1,173 @@
+<template>
+<div class="file-input">
+    <div class="form-group row">
+        <label class="col-md-2">{{ label }}</label>
+        <div class="col-md-10">
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input
+                        ref="file"
+                        type="file"
+                        class="custom-file-input"
+                        :id="name"
+                        :accept="accept"
+                        @change="previewFile"
+                    />
+
+                    <label
+                        class="custom-file-label"
+                        :for="name"
+                    >
+                        Seleziona File
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="crop"
+        v-if="this.showCrop"
+    >
+        <div class="form-group row mt-5">
+            <div class="col-12">
+                <h5>Ritaglio dell'immagine</h5>
+                <hr />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <clipper-fixed
+                    ref="cropper"
+                    :ratio="ratio"
+                    :preview="name"
+                    :src="src"
+                />
+            </div>
+            <div class="col-md-6">
+                <clipper-preview :name="name" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3">Taglia Immagine</label>
+            <div class="col-md-9">
+                <button
+                    class="btn btn-outline-primary"
+                    @click="crop"
+                >
+                    Ritaglia
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+import {
+    clipperFixed,
+    clipperPreview
+}
+from 'vuejs-clipper'
+
+export default {
+    name: 'FileInput',
+    components: {
+        clipperFixed,
+        clipperPreview,
+    },
+    props: {
+        label: {
+            type: String,
+            default: 'label',
+        },
+        name: {
+            type: String,
+            default: 'name',
+        },
+        accept: {
+            type: String,
+            default: null,
+        },
+        ratio: {
+            type: Number,
+            default: 16 / 9
+        },
+        hasCrop: {
+            type: Boolean,
+            default: true,
+        },
+    },
+    data: function () {
+        return {
+            showCrop: false,
+            file: null,
+            src: null,
+        }
+    },
+    watch: {
+        src: function () {
+            this.toggleCrop()
+        },
+        showCrop: function (value) {
+            console.log(value);
+        },
+    },
+    methods: {
+        toggleCrop: function () {
+            if (this.src) {
+                this.showCrop = true
+            }
+            else {
+                this.showCrop = false
+            }
+        },
+        previewFile: function () {
+            this.file = this.$refs.file.files[0]
+            console.log(this.file);
+            if (this.file) {
+                let reader = new FileReader()
+                // console.log('preview');
+                reader.addEventListener('load', () => {
+                    if (this.hasCrop) {
+                        this.src = reader.result
+                    }
+                    else {
+                        let src = reader.result
+                        let file = this.file
+
+                        this.$emit('update', file, src)
+                    }
+
+                })
+                reader.readAsDataURL(this.file)
+            }
+        },
+        crop: function () {
+            // https://developer.mozilla.org/it/docs/Web/API/HTMLCanvasElement/toBlob
+            let canvas = this.$refs.cropper.clip()
+            canvas.toBlob(blob => {
+                // blob.lastModifiedDate = new Date()
+                let file = new File([blob], this.file.name)
+
+                this.getSrc(file).then(src => {
+                    this.$emit('update', file, src)
+                })
+            })
+        },
+        getSrc: function (file) {
+            return new Promise(resolve => {
+                let reader = new FileReader()
+                // console.log('preview');
+                let src = reader.addEventListener('load', event => {
+                    resolve(reader.result)
+                })
+                reader.readAsDataURL(file)
+            })
+        },
+    },
+}
+</script>
+
+<style lang="scss" scoped>
+@import '~styles/shared';
+</style>
