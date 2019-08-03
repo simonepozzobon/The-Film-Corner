@@ -6,7 +6,7 @@
     />
     <sidebar-item
         title="News"
-        url="home"
+        url="news"
     />
     <sidebar-item
         title="Applicazioni"

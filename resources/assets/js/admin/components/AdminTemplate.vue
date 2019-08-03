@@ -60,6 +60,7 @@ export default {
     &__container {
         display: flex;
         height: 100%;
+        min-height: 100vh;
     }
 
     &__sidebar {

@@ -79,24 +79,38 @@ Route::prefix('v2')->group(
             }
         );
 
-        Route::prefix('admin')->group(function() {
-            Route::prefix('users')->group(function() {
-                Route::get('/', 'Api\Admin\UserController@get_users');
-                Route::delete('{id}', 'Api\Admin\UserController@destroy');
-                Route::post('save', 'Api\Admin\UserController@save_user');
-            });
+        Route::prefix('admin')->group(
+            function () {
+                Route::prefix('users')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\UserController@get_users');
+                        Route::delete('{id}', 'Api\Admin\UserController@destroy');
+                        Route::post('save', 'Api\Admin\UserController@save_user');
+                    }
+                );
 
-            Route::prefix('apps')->group(function() {
-                Route::get('/', 'Api\Admin\AppsController@get_apps');
-                Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
-            });
+                Route::prefix('apps')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\AppsController@get_apps');
+                        Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
+                    }
+                );
 
-            Route::prefix('translate')->group(function() {
-                Route::get('/', 'Admin\TranslateController@get_languages');
-                Route::post('elements', 'Admin\TranslateController@get_elements');
-                Route::post('save', 'Admin\TranslateController@save');
-            });
-        });
+                Route::prefix('translate')->group(
+                    function () {
+                        Route::get('/', 'Admin\TranslateController@get_languages');
+                        Route::post('elements', 'Admin\TranslateController@get_elements');
+                        Route::post('save', 'Admin\TranslateController@save');
+                    }
+                );
+
+                Route::prefix('news')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\NewsController@get_all');
+                    }
+                );
+            }
+        );
     }
 );
 

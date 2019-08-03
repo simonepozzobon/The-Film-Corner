@@ -1,5 +1,6 @@
 import AdminHome from './views/AdminHome.vue'
 import Apps from './views/Apps.vue'
+import News from './views/News.vue'
 import Translate from './views/Translate.vue'
 import Users from './views/Users.vue'
 
@@ -23,5 +24,10 @@ export default [
         path: '/utenti',
         name: 'users',
         component: Users
+    },
+    {
+        path: '/news',
+        name: 'news',
+        component: News,
     }
 ]
