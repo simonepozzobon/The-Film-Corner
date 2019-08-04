@@ -69,6 +69,7 @@
         "scrollmonitor": "^1.2.4",
         "socket.io": "^2.1.1",
         "socket.io-client": "^2.1.1",
+        "striptags": "^3.1.1",
         "text-clipper": "^1.2.3",
         "video.js": "^6.10.1",
         "vjs-video": "^0.1.11",

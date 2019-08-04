@@ -1,18 +1,20 @@
 <template>
-    <a
-        :href="url"
-        :target="target"
-        class="ui-link"
-        :class="[
+<a
+    :href="url"
+    :target="target"
+    class="ui-link"
+    :class="[
             btnClass,
             colorClass,
             blockClass,
             spacingClass,
             marginClass,
             disabledClass
-        ]">
-        <slot></slot>
-    </a>
+        ]"
+    @click.prevent="$emit('click')"
+>
+    <slot></slot>
+</a>
 </template>
 
 <script>
@@ -57,34 +59,35 @@ export default {
         },
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             if (this.color && !this.isSimple) {
-                return 'btn-'+this.color
-            } else if (this.color && this.isSimple) {
-                return 'text-'+this.color
+                return 'btn-' + this.color
+            }
+            else if (this.color && this.isSimple) {
+                return 'text-' + this.color
             }
         },
-        blockClass: function() {
+        blockClass: function () {
             if (this.block) {
                 return 'btn-block'
             }
         },
-        btnClass: function() {
+        btnClass: function () {
             if (!this.isSimple) {
                 return 'btn'
             }
         },
-        spacingClass: function() {
+        spacingClass: function () {
             if (!this.hasSpace) {
                 return 'ui-link--no-spacing'
             }
         },
-        marginClass: function() {
+        marginClass: function () {
             if (!this.hasMargin) {
                 return 'ui-link--no-margin'
             }
         },
-        disabledClass: function() {
+        disabledClass: function () {
             if (this.isDisabled) {
                 return 'disabled'
             }

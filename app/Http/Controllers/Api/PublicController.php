@@ -15,10 +15,18 @@ class PublicController extends Controller
 
         $news = $news->transform(function($value, $key) {
             $value->link = $value->slug;
-            $value->link_text = 'Read more';
             return $value;
         })->all();
 
+        return [
+            'success' => true,
+            'news' => $news
+        ];
+    }
+
+    public function get_single_news($slug)
+    {
+        $news = News::where('slug', $slug)->first();
         return [
             'success' => true,
             'news' => $news

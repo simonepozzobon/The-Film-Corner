@@ -19,12 +19,12 @@
                     align="center"
                     :has-padding="false"
                 >
-                    {{ item.shortContent }}
+                    {{ item.content | shortDescription }}
                 </ui-paragraph>
                 <ui-link
-                    @click.native="goTo($event, item.link, item.id)"
+                    @click="$root.goToWithParams('news-single', {slug: item.slug})"
                     align="center"
-                >{{ item.linkText }}</ui-link>
+                >{{ item.read_text }}</ui-link>
             </ui-block>
         </ui-row>
     </ui-container>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+const striptags = require('striptags')
+const clipper = require('text-clipper')
 import News from '../dummies/news'
 import {
     UiBlock,
@@ -58,13 +60,15 @@ export default {
     },
     data: function () {
         return {
-            news: News,
+            news: [],
         }
     },
     methods: {
         getData: function () {
             this.$http.get('/api/v2/news').then(response => {
-                console.log(response);
+                if (response.data.success) {
+                    this.news = response.data.news
+                }
             })
         },
         goTo: function (event, name, id) {
@@ -75,7 +79,16 @@ export default {
                     slug: name,
                 }
             })
-        }
+        },
+    },
+    filters: {
+        shortDescription: function (description) {
+            let string = striptags(description)
+            let short = clipper(string, 150, {
+                html: true
+            })
+            return short
+        },
     },
     mounted: function () {
         this.getData()

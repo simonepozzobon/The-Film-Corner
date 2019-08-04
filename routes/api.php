@@ -38,6 +38,7 @@ Route::prefix('v2')->group(
         Route::post('login', 'Api\AuthController@attempt_login');
         Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
         Route::get('news', 'Api\PublicController@get_news');
+        Route::get('news/{slug}', 'Api\PublicController@get_single_news');
 
         Route::group(
             ['middleware' => ['auth:api']], function () {
