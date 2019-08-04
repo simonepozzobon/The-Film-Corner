@@ -12,7 +12,7 @@
             class="form-control"
             :name="name"
             :placeholder="placeholder"
-            v-model="valueInside"
+            v-model="value"
         />
         <small v-if="info">{{ info }}</small>
     </div>
@@ -43,20 +43,30 @@ export default {
             type: String,
             default: null,
         },
-        value: [String, Number],
+        initial: [String, Number],
     },
     data: function () {
         return {
-            valueInside: null,
+            value: null,
         }
     },
     watch: {
-        valueInside: function (value) {
-            this.$emit('update:value', value)
+        value: function (value) {
+            this.$emit('update', value)
+        },
+        initial: function (value) {
+            this.setInitial()
+        },
+    },
+    methods: {
+        setInitial: function () {
+            if (this.initial) {
+                this.value = this.initial
+            }
         },
     },
     created: function () {
-        this.valueInside = this.value
+        this.setInitial()
     },
 }
 </script>

@@ -37,7 +37,10 @@
             </div>
         </div>
     </container>
-    <news-panel />
+    <news-panel
+        ref="panel"
+        :initial="current"
+    />
     <container :has-margin="false">
         <b-table
             striped
@@ -49,7 +52,17 @@
             :current-page="currentPage"
             :per-page="perPage"
             @filtered="onFiltered"
+            class="admin-news-table"
         >
+            <template
+                slot="thumb"
+                slot-scope="data"
+            >
+                <img
+                    :src="data.item.thumb"
+                    class="admin-news-table__preview"
+                >
+            </template>
             <template
                 slot="tools"
                 slot-scope="data"
@@ -127,7 +140,7 @@ export default {
                 },
                 {
                     key: 'title',
-                    label: 'Tipo',
+                    label: 'Titolo',
                     sortable: true,
                 },
                 {
@@ -136,22 +149,29 @@ export default {
                     sortable: false,
                 }
             ],
+            current: null,
         }
     },
     methods: {
         getData: function () {
             this.$http.get('/api/v2/admin/news').then(response => {
-                console.log(response);
+                if (response.data.success) {
+                    this.items = response.data.items
+                }
             })
         },
-        onFiltered: function () {
-
+        onFiltered: function (filteredItems) {
+            this.totalRows = filteredItems.length
+            this.currentPage = 1
         },
         showPanel: function () {
-
+            this.$refs.panel.show()
         },
-        edit: function () {
-
+        edit: function (item) {
+            this.current = item
+            this.$nextTick(() => {
+                this.showPanel()
+            })
         },
         destroy: function () {
 
@@ -199,6 +219,13 @@ export default {
 
     &__search {
         max-width: 200px;
+    }
+}
+
+.admin-news-table {
+    &__preview {
+        max-width: 100%;
+        max-height: 64px;
     }
 }
 </style>

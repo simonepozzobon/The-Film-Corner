@@ -14,13 +14,15 @@
             label="Titolo"
             name="title"
             placeholder="Inserisci un titolo..."
-            :value.sync="form.title"
+            :initial="form.title"
+            @update="value => { this.form.title = value}"
         />
         <text-input
             label="Slug"
             name="slug"
             placeholder="La parte finale dell'url..."
-            :value.sync="form.slug"
+            :initial="form.slug"
+            @update="value => { this.form.slug = value}"
         />
         <div class="admin-panel__dynamic">
             <file-input
@@ -77,6 +79,7 @@ import Utility from '../../Utilities'
 import mime from 'mime-types'
 
 require('gsap/CSSPlugin')
+require('gsap/RoundPropsPlugin')
 
 import Dummy from './Dummy'
 
@@ -90,6 +93,14 @@ export default {
         TextInput,
         UiButton,
     },
+    props: {
+        initial: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
+    },
     data: function () {
         return {
             form: {
@@ -100,9 +111,65 @@ export default {
             imagePreview: null,
             cropperAnim: null,
             json: null,
+            master: null,
+        }
+    },
+    watch: {
+        initial: {
+            handler: function (obj) {
+                this.form = obj
+                if (obj.content && obj.content != '') {
+                    this.$refs.editor.editor.setContent(obj.content)
+                }
+
+                if (obj.img && obj.img != '') {
+                    this.imagePreview = obj.img
+                    this.hideCropper()
+                }
+            },
+            deep: true
         }
     },
     methods: {
+        initAnim: function () {
+            let container = this.$refs.container.$el
+            let clientRect = container.getBoundingClientRect()
+            let height = clientRect.height
+
+            this.master = new TimelineMax({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.master.fromTo(container, .6, {
+                height: '0',
+                roundProps: 'height',
+            }, {
+                height: '100%',
+                roundProps: 'height',
+                ease: Power4.easeInOut,
+            }, 0)
+
+            this.master.fromTo(container, .6, {
+                autoAlpha: 1,
+            }, {
+                autoAlpha: 1,
+            }, .3)
+
+            this.master.progress(1).progress(0)
+        },
+        show: function () {
+            if (this.master) {
+                this.master.play()
+                this.isOpen = true
+            }
+        },
+        hide: function () {
+            if (this.master) {
+                this.master.reverse()
+                this.isOpen = false
+            }
+        },
         initCropperAnim: function () {
             let input = this.$refs.cropper.$el
             let image = this.$refs.image.$el
@@ -114,18 +181,22 @@ export default {
 
             this.cropperAnim.fromTo(input, .6, {
                 autoAlpha: 1,
-                height: '100%'
+                height: '100%',
+                roundProps: 'height',
             }, {
                 autoAlpha: 0,
                 height: 0,
+                roundProps: 'height',
             }, 0)
 
             this.cropperAnim.fromTo(image, .6, {
                 autoAlpha: 0,
                 height: '0',
+                roundProps: 'height',
             }, {
                 autoAlpha: 1,
                 height: '100%',
+                roundProps: 'height',
             }, 0)
 
             this.cropperAnim.progress(1).progress(0)
@@ -244,9 +315,26 @@ export default {
 
         },
     },
-    mounted: function () {
-        this.initCropperAnim()
+    created: function () {
+        if (this.initial) {
+            this.form = this.initial
+        }
     },
+    mounted: function () {
+        this.$nextTick(() => {
+            this.initAnim()
+            this.initCropperAnim()
+        })
+    },
+    beforeDestroy: function () {
+        if (this.master) {
+            this.master.kill()
+        }
+
+        if (this.cropperAnim) {
+            this.cropperAnim.kill()
+        }
+    }
 }
 </script>
 
@@ -254,6 +342,8 @@ export default {
 @import '~styles/shared';
 
 .admin-panel {
+    overflow: hidden;
+
     &__dynamic {
         position: relative;
         height: auto;
