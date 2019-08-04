@@ -8,7 +8,7 @@
                     color="lightest-gray"
                     :has-container="false"
                     :has-margin="false"
-                    @click="showPanel"
+                    @click="create"
                 />
             </div>
             <div class="admin-news__per-page">
@@ -41,6 +41,7 @@
         ref="panel"
         :initial="current"
         @undo="undo"
+        @saved="saved"
     />
     <container :has-margin="false">
         <b-table
@@ -71,6 +72,8 @@
                 <ui-button
                     :has-container="false"
                     :has-margin="false"
+                    :has-spinner="data.item.isDeleting"
+                    :update-spinner-size="true"
                     size="sm"
                     title="elimina"
                     color="danger"
@@ -151,6 +154,7 @@ export default {
                 }
             ],
             current: null,
+            isDeleting: false
         }
     },
     methods: {
@@ -183,8 +187,44 @@ export default {
                 this.current = null
             })
         },
-        destroy: function () {
+        create: function () {
+            this.current = Object.assign({}, null)
+            this.$nextTick(() => {
+                this.showPanel()
+            })
+        },
+        saved: function (obj) {
+            let idx = this.items.findIndex(item => item.id === Number(obj.id))
+            if (idx > -1) {
+                this.items.splice(idx, 1, obj)
+            }
+            else {
+                this.items.push(obj)
+            }
 
+            this.$nextTick(() => {
+                this.undo()
+            })
+        },
+        destroy: function (obj) {
+            let idx = this.items.findIndex(item => item.id === Number(obj.id))
+            if (idx > -1) {
+                this.items.splice(idx, 1, {
+                    ...obj,
+                    isDeleting: true,
+                })
+            }
+
+            let url = '/api/v2/admin/news/' + obj.id
+            this.$http.delete(url).then(response => {
+                if (response.data.success) {
+                    if (idx > -1) {
+                        setTimeout(() => {
+                            this.items.splice(idx, 1)
+                        }, 500)
+                    }
+                }
+            })
         },
     },
     created: function () {

@@ -109,6 +109,7 @@ Route::prefix('v2')->group(
                         Route::get('/', 'Api\Admin\NewsController@get_all');
                         Route::post('/upload-image', 'Api\Admin\NewsController@upload_img');
                         Route::post('/save', 'Api\Admin\NewsController@save');
+                        Route::delete('{id}', 'Api\Admin\NewsController@destroy');
                     }
                 );
             }

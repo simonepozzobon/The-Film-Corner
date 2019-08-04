@@ -43,6 +43,8 @@
                 class="action-button"
                 :has-container="false"
                 :has-margin="false"
+                :has-spinner="isSaving"
+                :update-spinner-size="true"
                 color="lightest-gray"
                 title="Salva"
                 @click="save"
@@ -113,6 +115,7 @@ export default {
             json: null,
             master: null,
             hasCropper: false,
+            isSaving: false,
         }
     },
     watch: {
@@ -192,9 +195,6 @@ export default {
         },
         hide: function () {
             if (this.master) {
-                this.master.eventCallback('onReverseComplete', () => {
-                    console.log('ciaoooooo');
-                })
                 this.master.reverse()
                 this.isOpen = false
             }
@@ -294,7 +294,6 @@ export default {
 
             // Formo il nuovo oggetto
             const newObj = Object.assign({}, obj)
-            // console.log(newObj);
             newObj.attrs.src = request.data.image
 
             return newObj
@@ -308,9 +307,10 @@ export default {
         debug: async function () {
             let content = Dummy
             let test = await this.checkForImages(content)
-            // console.log(content);
         },
         save: async function () {
+            this.isSaving = true
+
             let comp = this.$refs.editor
             let editor = comp.editor
 
@@ -335,7 +335,10 @@ export default {
                 }
 
                 this.$http.post('/api/v2/admin/news/save', data).then(response => {
-                    console.log(response.data);
+                    this.isSaving = false
+                    this.$emit('saved', response.data.news)
+                }).catch(err => {
+                    this.isSaving = false
                 })
             })
 

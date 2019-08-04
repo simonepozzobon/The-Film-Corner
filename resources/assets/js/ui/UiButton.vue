@@ -19,10 +19,13 @@
         :disabled="disable"
         @click.prevent="clicked"
     >
-        {{ title }}
-        <slot></slot>
+        <span ref="text">
+            {{ title }}
+            <slot></slot>
+        </span>
         <span
             class="spinner-border spinner-border-sm"
+            ref="spinner"
             role="status"
             aria-hidden="true"
             v-if="hasSpinner"
@@ -45,10 +48,13 @@
     :disabled="disable"
     @click.prevent="clicked"
 >
-    {{ title }}
-    <slot></slot>
+    <span ref="text">
+        {{ title }}
+        <slot></slot>
+    </span>
     <span
         class="spinner-border spinner-border-sm"
+        ref="spinner"
         role="status"
         aria-hidden="true"
         v-if="hasSpinner"
@@ -109,7 +115,23 @@ export default {
             default: null
         },
         eventParams: [String, Object, Array, Number],
+        updateSpinnerSize: {
+            type: Boolean,
+            default: false,
+        },
 
+    },
+    watch: {
+        hasSpinner: function (value) {
+            if (value && this.updateSpinnerSize) {
+                let el = this.$refs.text
+                let height = el.getBoundingClientRect().height
+                this.$nextTick(() => {
+                    this.$refs.spinner.style.height = height + 'px'
+                    this.$refs.spinner.style.width = height + 'px'
+                })
+            }
+        },
     },
     computed: {
         colorClass: function () {

@@ -70,4 +70,22 @@ class NewsController extends Controller
             'news' => $news
         ];
     }
+
+    public function destroy($id)
+    {
+        $news = News::find($id);
+        if ($news) {
+            $news->delete();
+
+            return [
+                'success' => true,
+                'id' => $id,
+                'news' => $news
+            ];
+        }
+
+        return [
+            'success' => false,
+        ];
+    }
 }
