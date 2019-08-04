@@ -40,6 +40,7 @@
     <news-panel
         ref="panel"
         :initial="current"
+        @undo="undo"
     />
     <container :has-margin="false">
         <b-table
@@ -167,10 +168,19 @@ export default {
         showPanel: function () {
             this.$refs.panel.show()
         },
+        hidePanel: function () {
+            this.$refs.panel.hide()
+        },
         edit: function (item) {
             this.current = item
             this.$nextTick(() => {
                 this.showPanel()
+            })
+        },
+        undo: function () {
+            this.hidePanel()
+            this.$nextTick(() => {
+                this.current = null
             })
         },
         destroy: function () {

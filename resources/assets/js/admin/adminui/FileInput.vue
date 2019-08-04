@@ -135,7 +135,6 @@ export default {
                     else {
                         let src = reader.result
                         let file = this.file
-
                         this.$emit('update', file, src)
                     }
 

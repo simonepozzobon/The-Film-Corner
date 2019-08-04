@@ -10,6 +10,15 @@
             :src="imagePreview"
             @edit="showCropper"
         />
+        <div class="admin-panel__dynamic">
+            <file-input
+                ref="cropper"
+                label="Immagine di copertina"
+                name="image"
+                accept="image/*"
+                @update="cropped"
+            />
+        </div>
         <text-input
             label="Titolo"
             name="title"
@@ -24,15 +33,6 @@
             :initial="form.slug"
             @update="value => { this.form.slug = value}"
         />
-        <div class="admin-panel__dynamic">
-            <file-input
-                ref="cropper"
-                label="Immagine di copertina"
-                name="image"
-                accept="image/*"
-                @update="cropped"
-            />
-        </div>
         <text-editor
             ref="editor"
             label="Contenuto"
@@ -112,49 +112,75 @@ export default {
             cropperAnim: null,
             json: null,
             master: null,
+            hasCropper: false,
         }
     },
     watch: {
         initial: {
             handler: function (obj) {
-                this.form = obj
-                if (obj.content && obj.content != '') {
-                    this.$refs.editor.editor.setContent(obj.content)
+                if (obj) {
+                    this.form = obj
+
+                    if (obj.content && obj.content != '') {
+                        this.$refs.editor.editor.setContent(obj.content)
+                    }
+                    else {
+                        this.$refs.editor.editor.clearContent(false)
+                    }
+
+                    if (obj.img && obj.img != '') {
+                        this.imagePreview = obj.img
+                        this.hideCropper()
+                    }
+                    else {
+                        this.imagePreview = null
+                        this.showCropper()
+                    }
+                }
+                else {
+                    this.$refs.editor.editor.clearContent(false)
+                    this.imagePreview = null
+                    this.showCropper()
+
+                    this.form = {
+                        title: null,
+                        slug: null,
+                        content: null,
+                    }
                 }
 
-                if (obj.img && obj.img != '') {
-                    this.imagePreview = obj.img
-                    this.hideCropper()
-                }
+
             },
             deep: true
-        }
+        },
     },
     methods: {
         initAnim: function () {
             let container = this.$refs.container.$el
-            let clientRect = container.getBoundingClientRect()
-            let height = clientRect.height
 
             this.master = new TimelineMax({
                 paused: true,
                 yoyo: true,
             })
 
+            this.master.addLabel('start', '+=0')
+            this.master.addLabel('opacity', '+=0.3')
+
             this.master.fromTo(container, .6, {
-                height: '0',
+                height: 0,
                 roundProps: 'height',
             }, {
                 height: '100%',
                 roundProps: 'height',
                 ease: Power4.easeInOut,
-            }, 0)
+            }, 'start')
 
-            this.master.fromTo(container, .6, {
+            this.master.fromTo(container, .3, {
                 autoAlpha: 1,
             }, {
                 autoAlpha: 1,
-            }, .3)
+                ease: Power4.easeInOut,
+            }, 'opacity')
 
             this.master.progress(1).progress(0)
         },
@@ -166,6 +192,9 @@ export default {
         },
         hide: function () {
             if (this.master) {
+                this.master.eventCallback('onReverseComplete', () => {
+                    console.log('ciaoooooo');
+                })
                 this.master.reverse()
                 this.isOpen = false
             }
@@ -182,21 +211,21 @@ export default {
             this.cropperAnim.fromTo(input, .6, {
                 autoAlpha: 1,
                 height: '100%',
-                roundProps: 'height',
+                // roundProps: 'height',
             }, {
                 autoAlpha: 0,
                 height: 0,
-                roundProps: 'height',
+                // roundProps: 'height',
             }, 0)
 
             this.cropperAnim.fromTo(image, .6, {
                 autoAlpha: 0,
                 height: '0',
-                roundProps: 'height',
+                // roundProps: 'height',
             }, {
                 autoAlpha: 1,
                 height: '100%',
-                roundProps: 'height',
+                // roundProps: 'height',
             }, 0)
 
             this.cropperAnim.progress(1).progress(0)
@@ -312,7 +341,7 @@ export default {
 
         },
         undo: function () {
-
+            this.$emit('undo')
         },
     },
     created: function () {
