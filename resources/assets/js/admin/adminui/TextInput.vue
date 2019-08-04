@@ -52,7 +52,7 @@ export default {
     },
     watch: {
         valueInside: function (value) {
-            this.$emit('value:update', value)
+            this.$emit('update:value', value)
         },
     },
     created: function () {

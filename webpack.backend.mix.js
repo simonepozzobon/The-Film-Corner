@@ -19,7 +19,7 @@ mix
         processCssUrls: false
     })
     .js('resources/assets/js/admin/admin.js', 'js/admin.js')
-    .sass('resources/assets/admin/sass/app.scss', 'scss/admin.css')
+    .sass('resources/assets/sass/admin-app.scss', 'css/admin.css')
     .autoload({
         jquery: ['$', 'jQuery', 'jquery'],
         tether: ['Tether'],

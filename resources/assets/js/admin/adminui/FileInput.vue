@@ -17,6 +17,7 @@
                     <label
                         class="custom-file-label"
                         :for="name"
+                        aria-describedby="inputGroupFileAddon02"
                     >
                         Seleziona File
                     </label>
@@ -25,38 +26,36 @@
         </div>
     </div>
     <div
-        class="crop"
-        v-if="this.showCrop"
+        class="crop form-group row"
+        v-if="this.hasCrop && this.accept === 'image/*' && this.showCrop"
     >
-        <div class="form-group row mt-5">
-            <div class="col-12">
-                <h5>Ritaglio dell'immagine</h5>
-                <hr />
+        <label class="col-md-2">
+            Taglia l'immagine
+        </label>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-6">
+                    <clipper-fixed
+                        ref="cropper"
+                        :ratio="ratio"
+                        :preview="name"
+                        :src="src"
+                    />
+                </div>
+                <div class="col-md-6">
+                    <clipper-preview
+                        :name="name"
+                        ref="preview"
+                    />
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-6">
-                <clipper-fixed
-                    ref="cropper"
-                    :ratio="ratio"
-                    :preview="name"
-                    :src="src"
-                />
-            </div>
-            <div class="col-md-6">
-                <clipper-preview :name="name" />
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-md-3">Taglia Immagine</label>
-            <div class="col-md-9">
-                <button
-                    class="btn btn-outline-primary"
-                    @click="crop"
-                >
-                    Ritaglia
-                </button>
-            </div>
+            <ui-button
+                title="Ritaglia"
+                class="mt-3"
+                size="sm"
+                color="primary"
+                @click="crop"
+            />
         </div>
     </div>
 </div>
@@ -69,11 +68,16 @@ import {
 }
 from 'vuejs-clipper'
 
+import {
+    UiButton,
+}
+from '../../ui'
+
 export default {
     name: 'FileInput',
     components: {
         clipperFixed,
-        clipperPreview,
+        UiButton,
     },
     props: {
         label: {
@@ -82,7 +86,7 @@ export default {
         },
         name: {
             type: String,
-            default: 'name',
+            default: 'fileinput',
         },
         accept: {
             type: String,
@@ -108,9 +112,6 @@ export default {
         src: function () {
             this.toggleCrop()
         },
-        showCrop: function (value) {
-            console.log(value);
-        },
     },
     methods: {
         toggleCrop: function () {
@@ -123,13 +124,13 @@ export default {
         },
         previewFile: function () {
             this.file = this.$refs.file.files[0]
-            console.log(this.file);
             if (this.file) {
                 let reader = new FileReader()
                 // console.log('preview');
                 reader.addEventListener('load', () => {
                     if (this.hasCrop) {
                         this.src = reader.result
+                        // console.log(this.src);
                     }
                     else {
                         let src = reader.result
@@ -144,6 +145,7 @@ export default {
         },
         crop: function () {
             // https://developer.mozilla.org/it/docs/Web/API/HTMLCanvasElement/toBlob
+
             let canvas = this.$refs.cropper.clip()
             canvas.toBlob(blob => {
                 // blob.lastModifiedDate = new Date()
@@ -163,6 +165,14 @@ export default {
                 })
                 reader.readAsDataURL(file)
             })
+        },
+        reset: function () {
+            this.$refs.file.value = ''
+            this.file = null
+            this.src = null
+            if (this.hasCrop) {
+                this.toggleCrop()
+            }
         },
     },
 }

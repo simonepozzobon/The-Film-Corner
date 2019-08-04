@@ -45,25 +45,29 @@ const Utility = {
     capitalize: function(string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
     },
-    createBlobFromData: function(dataUri) {
-        // https://github.com/videojs/video.js/issues/4630
-        let data = dataUri.split(',')[1]
+    createBlobFromData: function(dataUri = null) {
+        if (dataUri) {
+            // https://github.com/videojs/video.js/issues/4630
+            let data = dataUri.split(',')[1]
 
-        let mimeType = dataUri.split(';')[0].slice(5)
+            let mimeType = dataUri.split(';')[0].slice(5)
 
-        let bytes = window.atob(data)
-        let buf = new ArrayBuffer(bytes.length)
-        let arr = new Uint8Array(buf)
+            let bytes = window.atob(data)
+            let buf = new ArrayBuffer(bytes.length)
+            let arr = new Uint8Array(buf)
 
-        for (let i = 0; i < bytes.length; i++) {
-            arr[i] = bytes.charCodeAt(i)
+            for (let i = 0; i < bytes.length; i++) {
+                arr[i] = bytes.charCodeAt(i)
+            }
+
+            let blob = new Blob([arr], {
+                type: mimeType
+            });
+
+            return blob
+        } else {
+            return false
         }
-
-        let blob = new Blob([arr], {
-            type: mimeType
-        });
-
-        return blob
     }
 }
 
