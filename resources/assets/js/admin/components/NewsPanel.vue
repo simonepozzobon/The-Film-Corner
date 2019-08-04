@@ -23,20 +23,32 @@
             label="Titolo"
             name="title"
             placeholder="Inserisci un titolo..."
-            :initial="form.title"
+            :initial="this.form.title"
             @update="value => { this.form.title = value}"
         />
         <text-input
             label="Slug"
             name="slug"
             placeholder="La parte finale dell'url..."
-            :initial="form.slug"
+            :initial="this.form.slug"
             @update="value => { this.form.slug = value}"
         />
         <text-editor
             ref="editor"
             label="Contenuto"
             @update="updateContent"
+        />
+        <text-input
+            label="Testo del link in home"
+            name="read_text"
+            placeholder="Read more"
+            :initial="this.form.read_text"
+            @update="value => { this.form.read_text = value}"
+        />
+        <switch-input
+            label="Pubblicata"
+            :initial="Boolean(form.active)"
+            @update="value => { this.form.active = value}"
         />
         <div class="admin-panel__actions">
             <ui-button
@@ -67,6 +79,7 @@ import {
     Container,
     FileInput,
     ImagePreview,
+    SwitchInput,
     TextEditor,
     TextInput,
 }
@@ -91,6 +104,7 @@ export default {
         Container,
         FileInput,
         ImagePreview,
+        SwitchInput,
         TextEditor,
         TextInput,
         UiButton,
@@ -109,6 +123,8 @@ export default {
                 title: null,
                 slug: null,
                 content: null,
+                read_text: null,
+                active: true,
             },
             imagePreview: null,
             cropperAnim: null,
@@ -121,7 +137,7 @@ export default {
     watch: {
         initial: {
             handler: function (obj) {
-                if (obj) {
+                if (obj && Object.keys(obj).length != 0 && obj.constructor === Object) {
                     this.form = obj
 
                     if (obj.content && obj.content != '') {
@@ -139,6 +155,10 @@ export default {
                         this.imagePreview = null
                         this.showCropper()
                     }
+
+                    if (this.form.hasOwnProperty('active')) {
+
+                    }
                 }
                 else {
                     this.$refs.editor.editor.clearContent(false)
@@ -149,6 +169,8 @@ export default {
                         title: null,
                         slug: null,
                         content: null,
+                        read_text: null,
+                        active: true,
                     }
                 }
 

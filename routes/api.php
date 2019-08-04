@@ -37,6 +37,7 @@ Route::prefix('v2')->group(
         Route::post('get-token', 'Api\AuthController@attempt_login_from_cookie');
         Route::post('login', 'Api\AuthController@attempt_login');
         Route::get('logout', 'Api\AuthController@attempt_logout')->middleware('auth:api');
+        Route::get('news', 'Api\PublicController@get_news');
 
         Route::group(
             ['middleware' => ['auth:api']], function () {

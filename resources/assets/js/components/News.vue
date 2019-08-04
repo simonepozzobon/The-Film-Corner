@@ -1,31 +1,49 @@
 <template>
-    <div class="tfc-news">
-        <ui-container class="tfc-news__container">
-            <ui-row>
-                <ui-block
-                    v-for="item in news"
-                    :key="item.id"
-                    :size="4"
-                    class="tfc-news__item">
-                    <ui-image :src="item.img" />
-                    <ui-title
-                        tag="h2"
-                        font-size="h5"
-                        :title="item.title"
-                        align="center"/>
-                    <ui-paragraph align="center" :has-padding="false">
-                        {{ item.shortContent }}
-                    </ui-paragraph>
-                    <ui-link @click.native="goTo($event, item.link, item.id)" align="center">{{ item.linkText }}</ui-link>
-                </ui-block>
-            </ui-row>
-        </ui-container>
-    </div>
+<div class="tfc-news">
+    <ui-container class="tfc-news__container">
+        <ui-row>
+            <ui-block
+                v-for="item in news"
+                :key="item.id"
+                :size="4"
+                class="tfc-news__item"
+            >
+                <ui-image :src="item.img" />
+                <ui-title
+                    tag="h2"
+                    font-size="h5"
+                    :title="item.title"
+                    align="center"
+                />
+                <ui-paragraph
+                    align="center"
+                    :has-padding="false"
+                >
+                    {{ item.shortContent }}
+                </ui-paragraph>
+                <ui-link
+                    @click.native="goTo($event, item.link, item.id)"
+                    align="center"
+                >{{ item.linkText }}</ui-link>
+            </ui-block>
+        </ui-row>
+    </ui-container>
+</div>
 </template>
 
 <script>
 import News from '../dummies/news'
-import { UiBlock, UiContainer, UiHeroImage, UiImage, UiLink, UiParagraph, UiRow, UiTitle } from '../ui'
+import {
+    UiBlock,
+    UiContainer,
+    UiHeroImage,
+    UiImage,
+    UiLink,
+    UiParagraph,
+    UiRow,
+    UiTitle
+}
+from '../ui'
 export default {
     name: 'News',
     components: {
@@ -38,13 +56,18 @@ export default {
         UiRow,
         UiTitle,
     },
-    data: function() {
+    data: function () {
         return {
             news: News,
         }
     },
     methods: {
-        goTo: function(event, name, id) {
+        getData: function () {
+            this.$http.get('/api/v2/news').then(response => {
+                console.log(response);
+            })
+        },
+        goTo: function (event, name, id) {
             event.preventDefault()
             this.$router.push({
                 name: 'news-single',
@@ -53,7 +76,10 @@ export default {
                 }
             })
         }
-    }
+    },
+    mounted: function () {
+        this.getData()
+    },
 }
 </script>
 

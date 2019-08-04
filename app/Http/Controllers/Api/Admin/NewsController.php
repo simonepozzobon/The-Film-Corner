@@ -46,6 +46,8 @@ class NewsController extends Controller
         $news->title = $request->title;
         $news->content = $request->content;
         $news->slug = $request->slug;
+        $news->read_text = $request->read_text;
+        $news->active = $request->active == 'true' ? true : false;
 
         if (isset($request->file)) {
             $file = $request->file('file');

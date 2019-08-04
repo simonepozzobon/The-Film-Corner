@@ -60,9 +60,7 @@ export default {
     },
     methods: {
         setInitial: function () {
-            if (this.initial) {
-                this.value = this.initial
-            }
+            this.value = this.initial
         },
     },
     created: function () {
