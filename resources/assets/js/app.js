@@ -159,6 +159,10 @@ const home = new Vue({
             fullMessage: null,
             fullMessageMaster: null,
             notificationId: null,
+            translationsLoaded: false,
+            translationsCache: [],
+            translations: [],
+            locale: 'en',
         }
     },
     watch: {
@@ -168,7 +172,10 @@ const home = new Vue({
         objectsToLoad: function (value) {
             // console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
-        }
+        },
+        locale: function (locale) {
+
+        },
     },
     methods: {
         getSize: function () {
@@ -286,13 +293,23 @@ const home = new Vue({
                 this.fullMessageMaster.progress(0).play()
             })
         },
+        setLocale: function () {
+            console.log(this.translationsCache);
+        },
         getTranslation: function () {
-            console.log('ciao');
+            console.log('loading translations');
+            this.$http.get('/api/v2/translate').then(response => {
+                if (response.data.success) {
+                    this.translationsLoaded = true
+                    this.translationsCache = response.data.translations
+                    this.setLocale()
+                }
+            })
         },
     },
     created: function () {
-        this.init()
         this.getTranslation()
+        this.init()
     },
     mounted: function () {
         this.getSize()

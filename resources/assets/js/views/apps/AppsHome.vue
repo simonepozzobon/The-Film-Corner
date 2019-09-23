@@ -100,6 +100,8 @@
 </template>
 
 <script>
+import Translations from '../../Translations'
+
 import {
     UiBlock,
     UiButton,
@@ -136,6 +138,21 @@ export default {
     watch: {
         '$root.user': function (user) {
             this.setWelcome()
+        }
+    },
+    filters: {
+        translate: function (valueToTranslate, data, itemToTranslate, key) {
+            // Cultural Approach, $root.translations, sections, name
+            console.log(valueToTranslate, data, itemToTranslate, key)
+            let translations = data[itemToTranslate]
+            let idx = translations.findIndex(translation => translation[key] == valueToTranslate)
+            if (idx > -1) {
+                return translations[idx]
+            }
+            else {
+                return 'error'
+            }
+            console.log(idx);
         }
     },
     methods: {

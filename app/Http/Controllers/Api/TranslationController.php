@@ -29,6 +29,8 @@ class TranslationController extends Controller
         $texts = GeneralText::all();
         $keywords = AppKeyword::all();
 
+
+
         $translations = [
             'sections' => $this->get_translated($sections),
             'categories' => $this->get_translated($categories),
@@ -39,8 +41,8 @@ class TranslationController extends Controller
         ];
 
         return [
-          'success' => true,
-          'translations' => $translations,
+            'success' => true,
+            'translations' => $translations,
         ];
     }
 
