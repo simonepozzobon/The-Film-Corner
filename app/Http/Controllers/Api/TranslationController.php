@@ -40,6 +40,27 @@ class TranslationController extends Controller
         dd($categories);
     }
 
+    public function merge_translation($translations, $column)
+    {
+        $merged = collect();
+
+        foreach ($translations as $key => $translation) {
+            $id = $translation->{$column};
+
+            foreach ($merged as $key => $item) {
+                if ($item->id == $id) {
+                    $item->translations->push($translation);
+                } else {
+                    $object = collect();
+                    $object->id = $id;
+
+                    dump($translation);
+                }
+            }
+            dump($id);
+        }
+    }
+
     public function get_translation($collection)
     {
         return $collection->transform(
