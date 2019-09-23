@@ -12,7 +12,7 @@ use App\Events\UserSignin;
 */
 
 // Route::get('/test', 'Api\LoadController@test');
-Route::get('/test', 'Api\ProfileController@test');
+Route::get('/test', 'Api\TranslationController@get_translations');
 // Route::get('/test', 'Api\SectionController@test');
 
 Route::get('/convert-teachers', 'Api\TestController@convert_teacher_to_user');

@@ -20,7 +20,7 @@ Vue.prototype.$cookie = Cookie
 
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
-    'X-CSRF-TOKEN' : document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 }
 
 Vue.prototype.$http = axios
@@ -40,7 +40,8 @@ const router = new VueRouter({
 function IsJsonString(str) {
     try {
         JSON.parse(str);
-    } catch (e) {
+    }
+    catch (e) {
         return false;
     }
     return true;
@@ -56,7 +57,8 @@ router.beforeEach((to, from, next) => {
             // Procedi
             // console.log('procedi');
             next()
-        } else if (typeof user == 'undefined' || typeof token == 'undefined') {
+        }
+        else if (typeof user == 'undefined' || typeof token == 'undefined') {
             let app = router.app
             let user = app.$cookie.get('tfc-user')
             user = JSON.parse(user) ? JSON.parse(user) : null
@@ -79,27 +81,37 @@ router.beforeEach((to, from, next) => {
 
                         // console.log('procedi dopo riautenticazione');
                         next()
-                    } else {
+                    }
+                    else {
                         app.$cookie.destroy('tfc-logged')
                         app.$cookie.destroy('tfc-user')
                         app.$cookie.destroy('tfc-token')
                         delete app.$http.defaults.headers.common.Authorization
 
                         // console.log('autenticazione cookies non riuscita');
-                        router.push({name: 'login'})
+                        router.push({
+                            name: 'login'
+                        })
                     }
                 })
-            } else {
+            }
+            else {
                 // console.log('user e headers non ci sono nei cookies ->headers', user, auth);
-                router.push({name: 'login'})
+                router.push({
+                    name: 'login'
+                })
                 return false
             }
-        } else {
+        }
+        else {
             // console.log('user e token non esistono');
-            router.push({name: 'login'})
+            router.push({
+                name: 'login'
+            })
             return false
         }
-    } else {
+    }
+    else {
         // console.log('nessuna autorizzazione');
         next()
     }
@@ -125,9 +137,12 @@ const home = new Vue({
     components: {
         MainTemplate,
     },
-    data: function() {
+    data: function () {
         return {
-            window: { w: 0, h: 0 },
+            window: {
+                w: 0,
+                h: 0
+            },
             isMobile: null,
             conferenceMenu: null,
             user: null,
@@ -147,16 +162,16 @@ const home = new Vue({
         }
     },
     watch: {
-        session: function(session) {
+        session: function (session) {
             this.checkSession(session.app_id)
         },
-        objectsToLoad: function(value) {
+        objectsToLoad: function (value) {
             // console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         }
     },
     methods: {
-        getSize: function() {
+        getSize: function () {
             let view = {
                 w: window.innerWidth,
                 h: window.innerHeight
@@ -164,7 +179,8 @@ const home = new Vue({
 
             if (view.w <= 576) {
                 this.isMobile = true
-            } else {
+            }
+            else {
                 this.isMobile = false
             }
 
@@ -172,7 +188,7 @@ const home = new Vue({
 
             return this.window
         },
-        checkSession: function(app_id) {
+        checkSession: function (app_id) {
             let params = SessionParams
             for (let key in params) {
                 if (params.hasOwnProperty(key) && key == app_id) {
@@ -180,12 +196,15 @@ const home = new Vue({
                 }
             }
         },
-        fixSession: function(params) {
+        fixSession: function (params) {
             let content = this.session.content
             // console.log(content);
             if (content.length || content.length == 0) {
                 // https://stackoverflow.com/questions/4215737/convert-array-to-object
-                content = this.session.content.reduce((obj, cur, i) => ({ ...obj, [i]: cur }), {});
+                content = this.session.content.reduce((obj, cur, i) => ({
+                    ...obj,
+                    [i]: cur
+                }), {});
             }
             for (let i = 0; i < params.length; i++) {
                 if (!content.hasOwnProperty(params[i])) {
@@ -195,25 +214,33 @@ const home = new Vue({
 
             this.session.content = content
         },
-        goTo: function(name, bypass = false) {
+        goTo: function (name, bypass = false) {
             if (this.$route.name != name && !bypass) {
-                this.$router.push({ name: name })
-            } else {
+                this.$router.push({
+                    name: name
+                })
+            }
+            else {
                 this.$router.go(this.$route.path)
             }
         },
-        goToAndScroll: function(name, target) {
+        goToAndScroll: function (name, target) {
             if (this.$route.name != target) {
-                this.$router.push({name: target})
+                this.$router.push({
+                    name: target
+                })
                 return false
             }
         },
-        goToWithParams: function(name, params) {
+        goToWithParams: function (name, params) {
             if (this.$route.name != name) {
-                this.$router.push({name: name, params: params})
+                this.$router.push({
+                    name: name,
+                    params: params
+                })
             }
         },
-        init: function() {
+        init: function () {
             let user = this.$cookie.get('tfc-user')
             user = JSON.parse(user) ? JSON.parse(user) : null
 
@@ -228,19 +255,20 @@ const home = new Vue({
                         this.user = response.data.user
                         this.token = response.data.token
                         this.login()
-                    } else {
+                    }
+                    else {
                         this.logout()
                     }
                 })
             }
         },
-        login: function() {
+        login: function () {
             this.$cookie.set('tfc-logged', true)
             this.$cookie.set('tfc-user', JSON.stringify(this.user))
             this.$cookie.set('tfc-token', JSON.stringify(this.token))
             this.$http.defaults.headers.common.Authorization = `${this.token.token_type} ${this.token.access_token}`
         },
-        logout: function() {
+        logout: function () {
             this.user = null
             this.token = null
             // this.$cookie.destroy('tfc-logged')
@@ -250,7 +278,7 @@ const home = new Vue({
             delete this.$http.defaults.headers.common.Authorization
             this.goTo('login')
         },
-        showMessage: function() {
+        showMessage: function () {
             return new Promise(resolve => {
                 this.fullMessageMaster.eventCallback('onComplete', () => {
                     resolve()
@@ -258,11 +286,15 @@ const home = new Vue({
                 this.fullMessageMaster.progress(0).play()
             })
         },
+        getTranslation: function () {
+            console.log('ciao');
+        },
     },
-    created: function() {
+    created: function () {
         this.init()
+        this.getTranslation()
     },
-    mounted: function() {
+    mounted: function () {
         this.getSize()
         window.addEventListener('resize', () => {
             this.getSize()

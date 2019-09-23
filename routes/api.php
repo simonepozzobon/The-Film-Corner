@@ -40,6 +40,12 @@ Route::prefix('v2')->group(
         Route::get('news', 'Api\PublicController@get_news');
         Route::get('news/{slug}', 'Api\PublicController@get_single_news');
 
+        Route::prefix('translate')->group(
+            function () {
+                Route::get('', 'Api\TranslationController@get_translations');
+            }
+        );
+
         Route::group(
             ['middleware' => ['auth:api']], function () {
                 Route::get('get-studios', 'Api\SectionController@get_studios');
