@@ -19,12 +19,12 @@
         :contain="true"
         class="py-5"
     >
-        <ui-paragraph
+        <ui-compless-paragraph
+            v-if="item.content"
             class="news-single__content"
             :has-padding="false"
-            v-html="item.content"
-        >
-        </ui-paragraph>
+            :html="item.content"
+        />
     </ui-container>
     <ui-container
         :contain="true"
@@ -48,6 +48,7 @@ import news from '../dummies/news'
 import {
     UiBlock,
     UiButton,
+    UiComplessParagraph,
     UiContainer,
     UiHeroBanner,
     UiHeroImage,
@@ -75,6 +76,7 @@ export default {
         Twitter,
         UiBlock,
         UiButton,
+        UiComplessParagraph,
         UiContainer,
         UiHeroBanner,
         UiHeroImage,
@@ -107,6 +109,7 @@ export default {
             this.$http.get(url).then(response => {
                 if (response.data.success) {
                     this.item = response.data.news
+                    // console.log(this.item);
                 }
             })
         }

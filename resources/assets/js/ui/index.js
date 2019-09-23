@@ -5,6 +5,7 @@ import UiBreadcrumbs from './UiBreadcrumbs.vue'
 import UiBurger from './UiBurger.vue'
 import UiButton from './UiButton.vue'
 import UiContainer from './UiContainer.vue'
+import UiComplessParagraph from './UiComplessParagraph.vue'
 import UiFolder from './UiFolder.vue'
 import UiFolderCorner from './UiFolderCorner.vue'
 import UiFormGroup from './UiFormGroup.vue'
@@ -32,6 +33,7 @@ export {
     UiBurger,
     UiButton,
     UiContainer,
+    UiComplessParagraph,
     UiFolder,
     UiFolderCorner,
     UiFormGroup,
