@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\AppCategory;
-use App\AppCategoryTranslation;
-use App\AppKeyword;
-use App\AppSection;
 use App\App;
 use App\Caption;
+use App\AppKeyword;
+use App\AppSection;
+use App\AppCategory;
 use App\Filmography;
 use App\GeneralText;
+use App\AppCategoryTranslation;
 
 
 use Illuminate\Http\Request;
@@ -21,32 +21,36 @@ class TranslationController extends Controller
     {
         $translations = array();
 
-        $categories = AppCategoryTranslation::all();
-        $categories = $this->get_translation($categories);
-
-        dd($categories);
-
-        $keywords = AppKeyword::all();
-        $keywords = $this->get_translations($keywords);
-
         $sections = AppSection::all();
-        $sections = $this->get_translations($sections);
-
+        $categories = AppCategory::all();
         $apps = App::all();
-        $apps = $this->get_translations($apps);
 
         $captions = Caption::all();
-        $captions = $this->get_translations($captions);
-        dd($categories);
+        $texts = GeneralText::all();
+        $keywords = AppKeyword::all();
+
+        $translations = [
+            'sections' => $this->get_translated($sections),
+            'categories' => $this->get_translated($categories),
+            'apps' => $this->get_translated($apps),
+            'captions' => $this->get_translated($captions),
+            'texts' => $this->get_translated($texts),
+            'keywords' => $this->get_translated($keywords)
+        ];
+
+        return [
+          'success' => true,
+          'translations' => $translations,
+        ];
     }
 
-    public function get_translation($collection)
+    public function get_translated($models)
     {
-        return $collection->transform(
-            function ($object, $key) {
-                $object->translations = $object->getTranslationsArray();
-                return $object;
-            }
-        );
+        foreach ($models as $key => $model) {
+            $translated = $model->getTranslationsArray();
+            $model->translation = $translated;
+        }
+
+        return $models;
     }
 }
