@@ -19,40 +19,46 @@ class TranslationController extends Controller
 {
     public function get_translations()
     {
-        $translations = array();
-
-        $sections = AppSection::all();
-        $categories = AppCategory::all();
-        $apps = App::all();
-
-        $captions = Caption::all();
-        $texts = GeneralText::all();
-        $keywords = AppKeyword::all();
-
-
-
-        $translations = [
-            'sections' => $this->get_translated($sections),
-            'categories' => $this->get_translated($categories),
-            'apps' => $this->get_translated($apps),
-            'captions' => $this->get_translated($captions),
-            'texts' => $this->get_translated($texts),
-            'keywords' => $this->get_translated($keywords)
+        $contents = [
+            'sections' => AppSection::all(),
+            'categories' => AppCategory::all(),
+            'apps' => App::all(),
+            'captions' => Caption::all(),
+            'texts' => GeneralText::all(),
+            'keywords' => AppKeyword::all()
         ];
+
+        $locales = config('translatable.locales');
+
+        $translated = array();
+        foreach ($locales as $localeKey => $currentLocale) {
+            // itero attraverso i vari locale
+            $translated[$currentLocale] = $this->format_contents_by_locale($currentLocale, $contents);
+        }
 
         return [
             'success' => true,
-            'translations' => $translations,
+            'translations' => $translated,
         ];
     }
 
-    public function get_translated($models)
+    public function format_contents_by_locale($locale, $contents)
     {
-        foreach ($models as $key => $model) {
-            $translated = $model->getTranslationsArray();
-            $model->translation = $translated;
+        $translatedContents = array();
+        foreach ($contents as $key => $content) {
+            $translatedContents[$key] = $this->get_content_translation($locale, $content);
         }
-
-        return $models;
+        return $translatedContents;
     }
+
+    public function get_content_translation($locale, $items)
+    {
+        $translatedItems = collect();
+        foreach ($items as $key => $item) {
+            $translatedItem = $item->translate($locale, true);
+            $translatedItems->push($translatedItem);
+        }
+        return $translatedItems;
+    }
+
 }
