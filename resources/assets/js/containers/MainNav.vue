@@ -106,6 +106,20 @@
                     >
                         српски
                     </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('ka')"
+                    >
+                        ქართული
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('sl')"
+                    >
+                        slovenski
+                    </a>
                 </div>
             </li>
             <li
