@@ -16,54 +16,108 @@
             ref="navbar"
         >
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'home')" class="main-menu__link nav-link">Home</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'home')"
+                    class="main-menu__link nav-link"
+                >Home</a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'project')" class="main-menu__link nav-link">The Project</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'project')"
+                    class="main-menu__link nav-link"
+                >The Project</a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'schools')" class="main-menu__link nav-link">Schools</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'schools')"
+                    class="main-menu__link nav-link"
+                >Schools</a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'conference')" class="main-menu__link nav-link">Conference</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'conference')"
+                    class="main-menu__link nav-link"
+                >Conference</a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'filmography')"
+                    class="main-menu__link nav-link"
+                >Filmography</a>
             </li>
             <li class="main-menu__item nav-item">
-                <a @click="logInOrOut" class="main-menu__link nav-link" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ this.loginTxt }}
-                    </a>
+                <a
+                    @click="logInOrOut"
+                    class="main-menu__link nav-link"
+                    href="#"
+                    id="loginDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {{ this.loginTxt }}
+                </a>
             </li>
-            <li class="main-menu__item nav-item dropdown disabled">
-                <a href="#" id="languageDropdown" class="main-menu__link nav-link dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Language
-                    </a>
+            <li class="main-menu__item nav-item dropdown">
+                <a
+                    href="#"
+                    id="languageDropdown"
+                    class="main-menu__link nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    Language
+                </a>
                 <div
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="languageDropdown"
                 >
-                    <a class="dropdown-item" href="/set-locale/en">
-                            English
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/fr">
-                            Francais
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/it">
-                            Italiano
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/sr">
-                            српски
-                        </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('en')"
+                    >
+                        English
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('fr')"
+                    >
+                        Francais
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('it')"
+                    >
+                        Italiano
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.prevent="setLocale('sr')"
+                    >
+                        српски
+                    </a>
                 </div>
             </li>
             <li
                 class="main-menu__item nav-item user-profile"
                 v-if="$root.user"
             >
-                <a href="#" class="main-menu__link nav-link user-profile__avatar">
-                        SP
-                    </a>
+                <a
+                    href="#"
+                    class="main-menu__link nav-link user-profile__avatar"
+                >
+                    SP
+                </a>
             </li>
         </ul>
         <ui-burger
@@ -91,14 +145,16 @@ import LoaderNav from './LoaderNav.vue'
 import {
     Logo,
     LogoEuropa
-} from '../icons'
+}
+from '../icons'
 import LoggedNav from './LoggedNav.vue'
 import MenuOverlay from './MenuOverlay.vue'
 import NetworkNav from './NetworkNav.vue'
 import Toasts from './Toasts.vue'
 import {
     UiBurger
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'MainNav',
     components: {
@@ -130,11 +186,15 @@ export default {
         }
     },
     methods: {
+        setLocale: function (locale) {
+            this.$root.locale = locale
+        },
         setMenu: function () {
             if (this.$root.window.w <= 992) {
                 this.$refs.navbar.style.display = 'none'
                 this.$refs.burger.$el.style.display = 'flex'
-            } else {
+            }
+            else {
                 this.$refs.navbar.style.display = 'flex'
                 this.$refs.burger.$el.style.display = 'none'
             }
@@ -143,7 +203,8 @@ export default {
         setLoginTxt: function () {
             if (this.$root.user) {
                 this.loginTxt = 'Logout'
-            } else {
+            }
+            else {
                 this.loginTxt = 'Login'
             }
         },
@@ -174,7 +235,8 @@ export default {
                             this.$root.logout()
                         }
                     })
-            } else {
+            }
+            else {
                 // login
                 this.$root.goTo('login')
             }

@@ -17,11 +17,11 @@
             >
 
                 <ui-breadcrumbs
-                    :app="app.title"
+                    :app="app | translate('title', $root.locale)"
                     :appPath="app.slug"
-                    :cat="app.category.name"
+                    :cat="app.category | translate('name', $root.locale)"
                     :catPath="app.category.slug"
-                    :pavilion="app.category.section.name"
+                    :pavilion="app.category.section | translate('name', $root.locale)"
                     :pavilionPath="app.category.section.slug"
                 />
 
@@ -43,13 +43,13 @@
                 <ui-title
                     tag="h2"
                     font-size="h2"
-                    :title="app.title"
+                    :title="app | translate('title', $root.locale)"
                     class="pt-5"
                 />
                 <ui-paragraph
                     class="pt-5 app-container__paragraph"
                     align="justify"
-                    v-html="description"
+                    v-html="translatedDescription"
                 />
                 <div class="pb-4">
                     <ui-button
@@ -81,6 +81,7 @@
 
 <script>
 const clipper = require('text-clipper')
+import TranslationFilter from '../../TranslationFilter'
 import {
     UiAppSession,
     UiAppSessionManager,
@@ -153,6 +154,9 @@ export default {
         path: function () {
             return 'Studios / ' + this.section + ' / ' + this.category +
                 ' / ' + this.appPath
+        },
+        translatedDescription: function () {
+            return this.$options.filters.translate(this.app, 'description', this.$root.locale)
         }
     },
     methods: {
@@ -192,6 +196,9 @@ export default {
                 this.buttonText = 'Close Panel'
             }
         }
+    },
+    filters: {
+        ...TranslationFilter,
     },
     created: function () {
         this.getData()
