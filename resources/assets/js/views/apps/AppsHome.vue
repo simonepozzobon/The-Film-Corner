@@ -37,7 +37,7 @@
                     :full-height="true"
                 >
                     <ui-title
-                        :title="studio.name"
+                        :title="studio | translate( 'name', $root.locale )"
                         align="center"
                         size="h4"
                         color="white"
@@ -80,14 +80,14 @@
                                 class="block-menu__menu-head"
                                 @click="goToCat(cat.slug)"
                             >
-                                {{cat.name}}
+                                {{cat | translate('name', $root.locale)}}
                             </li>
                             <li
                                 class="block-menu__menu-item"
                                 v-for="app in cat.apps"
                                 @click="goToApp(app.slug)"
                             >
-                                {{ app.title }}
+                                {{ app | translate('title', $root.locale) }}
                             </li>
                         </ul>
                     </div>
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import Translations from '../../Translations'
+import TranslationFilter from '../../TranslationFilter'
 
 import {
     UiBlock,
@@ -140,21 +140,6 @@ export default {
             this.setWelcome()
         }
     },
-    filters: {
-        translate: function (valueToTranslate, data, itemToTranslate, key) {
-            // Cultural Approach, $root.translations, sections, name
-            console.log(valueToTranslate, data, itemToTranslate, key)
-            let translations = data[itemToTranslate]
-            let idx = translations.findIndex(translation => translation[key] == valueToTranslate)
-            if (idx > -1) {
-                return translations[idx]
-            }
-            else {
-                return 'error'
-            }
-            console.log(idx);
-        }
-    },
     methods: {
         getStudios: function () {
             this.$http.get('/api/v2/get-studios').then(response => {
@@ -185,7 +170,10 @@ export default {
         },
         goToPropaganda: function (slug) {
             this.$root.goTo('propaganda-intro')
-        }
+        },
+    },
+    filters: {
+        ...TranslationFilter,
     },
     created: function () {
         this.$root.space = true
