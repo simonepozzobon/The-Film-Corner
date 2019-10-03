@@ -174,7 +174,7 @@ const home = new Vue({
             this.objectsLoaded = 0
         },
         locale: function (locale) {
-
+            console.log(locale);
         },
     },
     methods: {
