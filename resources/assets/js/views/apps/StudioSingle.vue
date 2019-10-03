@@ -89,7 +89,7 @@
         <ui-paragraph
             class="pt-5"
             align="justify"
-            v-html="studio.description"
+            v-html="this.studioDescription"
         />
     </ui-container>
 </ui-container>
@@ -130,6 +130,11 @@ export default {
             studio: null,
             image: '/img/grafica/bg.jpg',
         }
+    },
+    computed: {
+        studioDescription: function () {
+            return this.$options.filters.translate(this.studio, 'description', this.$root.locale)
+        },
     },
     methods: {
         getData: function () {
