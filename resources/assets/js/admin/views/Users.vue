@@ -54,19 +54,13 @@
             :per-page="perPage"
             @filtered="onFiltered"
         >
-            <template
-                slot="role_id"
-                slot-scope="data"
-            >
+            <template v-slot:cell(role_id)="data">
                 <span v-if="Number(data.item.role_id) === 1 ">Insegnante</span>
                 <span v-else-if="Number(data.item.role_id) === 2">Studente</span>
                 <span v-else-if="Number(data.item.role_id) === 3">Ospite</span>
             </template>
 
-            <template
-                slot="tools"
-                slot-scope="data"
-            >
+            <template v-slot:cell(tools)="data">
                 <ui-button
                     :has-container="false"
                     :has-margin="false"
