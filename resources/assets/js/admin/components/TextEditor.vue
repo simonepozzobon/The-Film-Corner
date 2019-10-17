@@ -259,7 +259,7 @@ export default {
             }
         },
         showLinkMenu: function (attrs) {
-            console.log('show link menu');
+            // console.log('show link menu');
             this.linkUrl = attrs.href
             this.linkTarget = attrs.href
             this.linkMenuIsActive = true
