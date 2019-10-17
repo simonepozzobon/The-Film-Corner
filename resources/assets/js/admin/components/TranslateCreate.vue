@@ -22,16 +22,6 @@
                 @update="updateTranslation"
             />
         </translate-loop>
-        <!-- <div
-            v-for="(option, i) in this.options"
-            :key="option.title"
-        >
-            <ui-title
-                :title="option.label"
-                :has-container="false"
-            />
-
-        </div> -->
         <div class="action-row">
             <ui-button
                 class="action-row__button"
@@ -70,6 +60,7 @@ import {
 from '../../ui'
 import TranslateLoop from './TranslateLoop.vue'
 import TranslateCreateLanguage from './TranslateCreateLanguage.vue'
+import CSSPlugin from 'gsap/CSSPlugin'
 
 export default {
     name: 'TranslateCreate',
@@ -140,6 +131,8 @@ export default {
     methods: {
         init: function () {
             // console.log('init');
+            CSSPlugin.defaultTransformPerspective = 500
+
             let container = this.$refs.container.$el
             let clientRect = container.getBoundingClientRect()
             let height = clientRect.height
@@ -150,18 +143,26 @@ export default {
                 yoyo: true,
             })
 
+            this.master.addLabel('start', '+=0')
+            this.master.addLabel('startAlpha', '+=.3')
+
+
             this.master.fromTo(container, .6, {
-                height: 0,
+                css: {
+                    height: 0,
+                },
             }, {
-                height: height,
+                css: {
+                    height: '100%',
+                },
                 ease: Power4.easeInOut,
-            }, 0)
+            }, 'start')
 
             this.master.fromTo(container, .6, {
                 autoAlpha: 1,
             }, {
                 autoAlpha: 1,
-            }, .3)
+            }, 'startAlpha')
 
             this.master.progress(1).progress(0)
         },
@@ -173,17 +174,17 @@ export default {
         },
         hide: function () {
             if (this.master) {
-                this.master.reverse()
                 this.isOpen = false
+                this.master.reverse()
             }
         },
         save: function () {
             this.isDisable = true
 
             let data = this.formatData(this.form)
-
+            // console.log('parte');
             this.$http.post('/api/v2/admin/translate/save', data).then(response => {
-                // console.log(response.data);
+                // console.log('risposta', response.data);
                 this.isDisable = false
                 this.form = null
                 setTimeout(() => {
@@ -226,7 +227,7 @@ export default {
             data.append('type', this.type)
             if (this.current && this.current.hasOwnProperty('id')) {
                 // console.log(this.current);
-                console.log(dataObject, this.type, this.current.id);
+                // console.log(dataObject, this.type, this.current.id);
                 data.append('item_id', this.current.id)
             }
             // else {
@@ -303,6 +304,7 @@ export default {
 @import '~styles/shared';
 
 .translate-create {
+    display: block;
     overflow: hidden;
 }
 
