@@ -1,11 +1,11 @@
 import AdminHome from './views/AdminHome.vue'
 import Apps from './views/Apps.vue'
 import News from './views/News.vue'
+import PropagandApp from './views/PropagandApp.vue'
 import Translate from './views/Translate.vue'
 import Users from './views/Users.vue'
 
-export default [
-    {
+export default [{
         path: '/',
         name: 'home',
         component: AdminHome,
@@ -24,6 +24,11 @@ export default [
         path: '/utenti',
         name: 'users',
         component: Users
+    },
+    {
+        path: '/propagandapp',
+        name: 'propagandapp',
+        component: PropagandApp
     },
     {
         path: '/news',

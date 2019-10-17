@@ -9,6 +9,11 @@
         url="news"
     />
     <sidebar-item
+        title="Utenti"
+        url="users"
+    />
+    <hr>
+    <sidebar-item
         title="Applicazioni"
         url="apps"
     />
@@ -17,12 +22,13 @@
         url="propagandapp"
     />
     <sidebar-item
+        title="ArtApp"
+        url="#"
+    />
+    <hr>
+    <sidebar-item
         title="Traduzioni"
         url="translate"
-    />
-    <sidebar-item
-        title="Utenti"
-        url="users"
     />
 </div>
 </template>
