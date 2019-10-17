@@ -22,16 +22,6 @@
                 @update="updateTranslation"
             />
         </translate-loop>
-        <!-- <div
-            v-for="(option, i) in this.options"
-            :key="option.title"
-        >
-            <ui-title
-                :title="option.label"
-                :has-container="false"
-            />
-
-        </div> -->
         <div class="action-row">
             <ui-button
                 class="action-row__button"

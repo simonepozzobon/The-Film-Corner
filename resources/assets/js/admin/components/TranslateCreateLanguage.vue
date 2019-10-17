@@ -6,18 +6,22 @@
     >
         {{ title }}
     </label>
-    <textarea
-        type="text"
-        name="name"
-        class="form-control col-md-9"
-        v-model="value"
-    ></textarea>
+    <text-editor
+        class="col-md-9"
+        @update="updateContent"
+        :initial="this.initialValue ? this.initialValue : null"
+    />
 </div>
 </template>
 
 <script>
+import TextEditor from './TextEditor.vue'
+
 export default {
     name: 'TranslateCreateLanguage',
+    components: {
+        TextEditor,
+    },
     props: {
         title: {
             type: String,
@@ -45,7 +49,8 @@ export default {
     },
     data: function () {
         return {
-            value: null
+            value: null,
+            initialValue: null,
         }
     },
     watch: {
@@ -69,9 +74,12 @@ export default {
                 let key = this.option.title
                 if (this.language.initial.hasOwnProperty(key)) {
                     // console.log(this.language.initial, key);
-                    this.value = this.language.initial[key]
+                    this.initialValue = this.language.initial[key]
                 }
             }
+        },
+        updateContent: function (json, html) {
+            this.value = html
         },
     },
     mounted: function () {
