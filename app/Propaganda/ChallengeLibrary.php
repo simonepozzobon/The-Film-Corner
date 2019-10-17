@@ -4,12 +4,8 @@ namespace App\Propaganda;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Period extends Model
+class ChallengeLibrary extends Model
 {
     protected $connection = 'propagandapp';
-
-    public function clip()
-    {
-        return $this->hasMany('App\Propaganda\Clip');
-    }
+    //
 }
