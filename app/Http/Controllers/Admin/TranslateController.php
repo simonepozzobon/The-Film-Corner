@@ -114,7 +114,6 @@ class TranslateController extends Controller
         $translations = json_decode($r->translations);
         $new_translations = [];
 
-
         foreach ($translations as $locale => $languages) {
 
             // verifico se esiste già
@@ -124,7 +123,7 @@ class TranslateController extends Controller
                     ['locale', '=', $locale]
                 ]
             );
-            array_push($test, $t);
+            // array_push($test, $t);
 
 
             // salvo l'id nel model
@@ -135,13 +134,21 @@ class TranslateController extends Controller
                     $t->{$field} = $translation;
             }
 
-            $t->save();
             array_push($new_translations, $t);
+            try {
+                $t->save();
+                array_push($test, 'success');
+            } catch (\Exception $e) {
+                array_push($test, 'error');
+            }
+
         }
 
 
         return [
             'success' => true,
+            'columns' => $columns,
+            'test' => $test,
             'translations' => $new_translations,
         ];
     }

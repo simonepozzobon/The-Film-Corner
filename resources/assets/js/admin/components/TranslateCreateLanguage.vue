@@ -72,7 +72,7 @@ export default {
         setInitial: function () {
             if (this.option && this.language.initial) {
                 let key = this.option.title
-                if (this.language.initial.hasOwnProperty(key)) {
+                if (this.language.initial && this.language.initial.hasOwnProperty(key)) {
                     // console.log(this.language.initial, key);
                     this.initialValue = this.language.initial[key]
                 }
