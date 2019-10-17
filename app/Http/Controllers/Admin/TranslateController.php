@@ -131,15 +131,18 @@ class TranslateController extends Controller
             $t->locale = $locale;
 
             foreach ($languages as $field => $translation) {
+                if ($field == 'title') {
+                    $t->{$field} = strip_tags($translation);
+                } else {
                     $t->{$field} = $translation;
+                }
             }
 
             array_push($new_translations, $t);
             try {
                 $t->save();
-                array_push($test, 'success');
             } catch (\Exception $e) {
-                array_push($test, 'error');
+                array_push($test, $e);
             }
 
         }

@@ -182,9 +182,9 @@ export default {
             this.isDisable = true
 
             let data = this.formatData(this.form)
-            // console.log('parte');
+            console.log('parte');
             this.$http.post('/api/v2/admin/translate/save', data).then(response => {
-                // console.log('risposta', response.data);
+                console.log('risposta', response.data);
                 this.isDisable = false
                 this.form = null
                 setTimeout(() => {
