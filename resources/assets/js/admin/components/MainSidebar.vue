@@ -13,6 +13,10 @@
         url="apps"
     />
     <sidebar-item
+        title="PropagandApp"
+        url="propagandapp"
+    />
+    <sidebar-item
         title="Traduzioni"
         url="translate"
     />
