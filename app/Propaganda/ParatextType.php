@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ParatextType extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
 }

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
+    protected $table = 'peoples';
 
     public function clip()
     {

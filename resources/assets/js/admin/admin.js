@@ -26,9 +26,11 @@ const admin = new Vue({
         AdminTemplate,
     },
     methods: {
-        goTo: function(name) {
-            this.$router.push({ name: name })
+        goTo: function (name) {
+            this.$router.push({
+                name: name
+            })
         }
     },
-    mounted: function() {}
+    mounted: function () {}
 }).$mount('#admin')

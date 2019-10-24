@@ -5,6 +5,7 @@ import FileInput from './FileInput.vue'
 import SwitchInput from './SwitchInput.vue'
 import TextEditor from './TextEditor.vue'
 import TextInput from './TextInput.vue'
+import Select2Input from './Select2Input.vue'
 
 export {
     Container,
@@ -14,4 +15,5 @@ export {
     SwitchInput,
     TextEditor,
     TextInput,
+    Select2Input,
 }

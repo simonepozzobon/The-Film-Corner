@@ -139,7 +139,7 @@ export default {
                 return 'btn-' + this.color
             }
             else if (this.color && this.theme === 'outline') {
-                return 'btn-outline' + this.color
+                return 'btn-outline-' + this.color
             }
         },
         blockClass: function () {

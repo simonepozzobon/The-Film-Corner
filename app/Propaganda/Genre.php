@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
 
     public function clip()
     {

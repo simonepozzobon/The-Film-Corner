@@ -104,6 +104,13 @@ Route::prefix('v2')->group(
                     }
                 );
 
+                Route::prefix('clips')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\ClipsController@get_clips');
+                        Route::get('/get-initials', 'Api\Admin\ClipsController@get_initials');
+                    }
+                );
+
                 Route::prefix('translate')->group(
                     function () {
                         Route::get('/', 'Admin\TranslateController@get_languages');

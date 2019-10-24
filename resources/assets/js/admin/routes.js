@@ -1,5 +1,6 @@
 import AdminHome from './views/AdminHome.vue'
 import Apps from './views/Apps.vue'
+import ClipCreate from './views/ClipCreate.vue'
 import News from './views/News.vue'
 import PropagandApp from './views/PropagandApp.vue'
 import Translate from './views/Translate.vue'
@@ -34,5 +35,11 @@ export default [{
         path: '/news',
         name: 'news',
         component: News,
+    },
+    {
+        path: '/clips/create',
+        name: 'clips-create',
+        component: ClipCreate,
     }
+
 ]

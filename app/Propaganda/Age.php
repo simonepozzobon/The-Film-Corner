@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Age extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
 
     public function clip()
     {

@@ -6,6 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class ChallengeLibrary extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
     //
 }

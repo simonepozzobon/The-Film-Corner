@@ -1,8 +1,8 @@
 <template>
 <div class="file-input">
     <div class="form-group row">
-        <label class="col-md-2">{{ label }}</label>
-        <div class="col-md-10">
+        <label :class="labelSize">{{ label }}</label>
+        <div :class="inputSize">
             <div class="input-group mb-3">
                 <div class="custom-file">
                     <input
@@ -29,10 +29,10 @@
         class="crop form-group row"
         v-if="this.hasCrop && this.accept === 'image/*' && this.showCrop"
     >
-        <label class="col-md-2">
+        <label :class="labelSize">
             Taglia l'immagine
         </label>
-        <div class="col-md-10">
+        <div :class="inputSize">
             <div class="row">
                 <div class="col-md-6">
                     <clipper-fixed
@@ -83,6 +83,14 @@ export default {
         label: {
             type: String,
             default: 'label',
+        },
+        labelSize: {
+            type: String,
+            default: 'col-md-2',
+        },
+        inputSize: {
+            type: String,
+            default: 'col-md-10',
         },
         name: {
             type: String,

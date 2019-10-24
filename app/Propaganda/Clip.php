@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clip extends Model
 {
-    protected $connection = 'propagandapp';
+    protected $connection = 'tfc_propaganda';
 
     // One to many
     public function period()
@@ -43,5 +43,20 @@ class Clip extends Model
     public function peoples()
     {
         return $this->belongsToMany('App\Propaganda\People', 'clip_people', 'clip_id', 'people_id');
+    }
+
+    public function hashtags()
+    {
+        return $this->belongsToMany('App\Propaganda\Hashtag', 'clip_hashtag', 'clip_id', 'hashtag_id');
+    }
+
+    public function paratexts()
+    {
+        return $this->belongsToMany('App\Propaganda\Paratext', 'clip_paratext', 'clip_id', 'paratext_id');
+    }
+
+    public function libraries()
+    {
+        return $this->hasMany('App\Propaganda\Library');
     }
 }
