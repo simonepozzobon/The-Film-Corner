@@ -1,4 +1,4 @@
-options<template>
+<template>
 <div class="a-clip-panel">
     <container padding="sm">
         <div class="a-clip-panel__topbar">
@@ -9,235 +9,28 @@ options<template>
     </container>
     <container>
         <div class="form">
-            <div class="a-clip-panel__group">
-                <ui-title
-                    title="Carica Clip"
-                    tag="span"
-                    font-size="h5"
-                    :has-padding="false"
-                    :has-margin="false"
-                    :has-container="false"
-                />
-                <hr class="a-clip-panel__divider">
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="title"
-                        class="col-md-1"
-                    >
-                        Titolo
-                    </label>
-                    <div class="col-md-11">
-                        <input
-                            type="text"
-                            name="title"
-                            class="form-control"
-                            v-model="title"
-                        />
-                    </div>
-                </div>
-
-                <file-input
-                    label="Video"
-                    name="video"
-                    accept="video/mp4"
-                    label-size="col-md-1"
-                    input-size="col-md-11"
-                />
-            </div>
-
-            <div class="a-clip-panel__group">
-                <ui-title
-                    title="Informazioni Clip"
-                    tag="span"
-                    font-size="h5"
-                    :has-padding="false"
-                    :has-margin="false"
-                    :has-container="false"
-                />
-                <hr class="a-clip-panel__divider">
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="period"
-                        class="col-md-1"
-                    >
-                        Periodo
-                    </label>
-                    <div class="col-md-11">
-                        <select
-                            class="form-control"
-                            name="period"
-                            v-model="period"
-                        >
-                            <option
-                                v-for="period in this.options.periods"
-                                :key="period.id"
-                                :value="period.id"
-                            >{{ period.title }}</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="directors"
-                        class="col-md-1"
-                    >
-                        Registi
-                    </label>
-                    <div class="col-md-5">
-                        <select-2-input :options="this.options.directors" />
-                    </div>
-                    <label
-                        for="peoples"
-                        class="col-md-1"
-                    >
-                        Interpreti
-                    </label>
-                    <div class="col-md-5">
-                        <select-2-input :options="this.options.peoples" />
-                    </div>
-                </div>
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="year"
-                        class="col-md-1"
-                    >
-                        Anno
-                    </label>
-                    <div class="col-md-3">
-                      <input
-                          type="text"
-                          name="year"
-                          class="form-control"
-                          v-model="year"
-                      />
-                    </div>
-
-                    <label
-                        for="format"
-                        class="col-md-1"
-                    >
-                        Formato
-                    </label>
-                    <div class="col-md-3">
-                        <select-2-input :multiple="false"  :options="this.options.formats"/>
-                    </div>
-                    <label
-                        for="age"
-                        class="col-md-1"
-                    >
-                        Età
-                    </label>
-                    <div class="col-md-3">
-                        <select-2-input :multiple="false"  :options="this.options.ages"/>
-                    </div>
-                </div>
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="genre"
-                        class="col-md-1"
-                    >
-                        Genere
-                    </label>
-                    <div class="col-md-5">
-                      <select-2-input :options="this.options.genres" />
-                    </div>
-                    <label
-                        for="nationality"
-                        class="col-md-1"
-                    >
-                        Nazionalità
-                    </label>
-                    <div class="col-md-5">
-                        <input
-                            type="text"
-                            name="nationality"
-                            class="form-control"
-                            v-model="region"
-                        />
-                    </div>
-                </div>
-
-                <div class="a-clip-panel__row form-group row">
-                    <label
-                        for="topics"
-                        class="col-md-1"
-                    >
-                        Argomenti
-                    </label>
-                    <div class="col-md-11">
-                        <select-2-input :options="this.options.topics" />
-                    </div>
-                </div>
-            </div>
-
-            <clip-depth />
-
-            <div class="a-clip-panel__group">
-                <ui-title
-                    title="Paratesti"
-                    tag="span"
-                    font-size="h5"
-                    :has-padding="false"
-                    :has-margin="false"
-                    :has-container="false"
-                />
-                <hr class="a-clip-panel__divider">
-
-                Paratesti
-            </div>
-
-            <div class="a-clip-panel__group">
-                <ui-title
-                    title="Esercizi"
-                    tag="span"
-                    font-size="h5"
-                    :has-padding="false"
-                    :has-margin="false"
-                    :has-container="false"
-                />
-                <hr class="a-clip-panel__divider">
-
-                <div class="a-clip-panel__row form-group row">
-                    <label class="col-md-2">
-                        Compare The Clips
-                    </label>
-                    <switch-input
-                        label="Compare The Clips"
-                        label-size="col-md-2"
-                        input-size="col-md-1"
-                        :has-row="false"
-                    />
-                    <label class="col-md-2 offset-md-1">
-                        Frame Crop
-                    </label>
-                    <switch-input
-                        label="Frame Crop"
-                        label-size="col-md-2"
-                        input-size="col-md-1"
-                        :has-row="false"
-                    />
-                    <label class="col-md-2 offset-md-1">
-                        Check The Sound
-                    </label>
-                    <switch-input
-                        label="
-                        Check
-                        The
-                        Sound"
-                        label-size="col-md-2"
-                        input-size="col-md-1"
-                        :has-row="false"
-                    />
-                </div>
-            </div>
-
+            <carica-clip />
+            <informazioni :options="options" />
+            <approfondimenti />
+            <paratexts />
+            <esercizi />
         </div>
-
+    </container>
+    <container padding="sm">
+        <div class="a-clip-panel__topbar">
+            <ui-button
+                title="Salva Clip"
+                color="green"
+                :has-container="false"
+                :has-margin="false"
+            />
+            <ui-button
+                title="Annulla"
+                color="red"
+                :has-container="false"
+                :has-margin="false"
+            />
+        </div>
     </container>
 </div>
 </template>
@@ -245,12 +38,6 @@ options<template>
 <script>
 import {
     Container,
-    FileInput,
-    ImagePreview,
-    SwitchInput,
-    TextEditor,
-    TextInput,
-    Select2Input,
 }
 from '../adminui'
 
@@ -261,22 +48,23 @@ import {
 }
 from '../../ui'
 
-import ClipDepth from '../components/ClipDepth.vue'
-
+import Approfondimenti from '../components/clips/Approfondimenti.vue'
+import CaricaClip from '../components/clips/CaricaClip.vue'
+import Informazioni from '../components/clips/Informazioni.vue'
+import Paratexts from '../components/clips/Paratexts.vue'
+import Esercizi from '../components/clips/Esercizi.vue'
 
 export default {
     name: 'ClipCreate',
     components: {
         Container,
-        FileInput,
-        ImagePreview,
-        SwitchInput,
-        TextEditor,
-        TextInput,
         UiButton,
         UiTitle,
-        Select2Input,
-        ClipDepth,
+        Approfondimenti,
+        CaricaClip,
+        Informazioni,
+        Paratexts,
+        Esercizi,
     },
     data: function () {
         return {
@@ -325,7 +113,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
 
 label {
