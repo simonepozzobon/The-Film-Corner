@@ -1,20 +1,46 @@
 <template>
 <div class="a-clip-panel">
     <container padding="sm">
-        <div class="a-clip-panel__topbar">
-            <div class="admin-apps__select">
+        <div class="a-clip-panel__topbar topbar">
+            <div class="topbar__title">
                 <ui-title title="Nuova Clip" />
+            </div>
+            <div class="topbar__steps">
+                <step
+                    :number="1"
+                    :completed="false"
+                />
+                <step
+                    :number="2"
+                    :completed="false"
+                />
+                <step
+                    :number="3"
+                    :completed="false"
+                />
+                <step
+                    :number="4"
+                    :completed="false"
+                />
             </div>
         </div>
     </container>
     <container>
         <div class="form">
-            <carica-clip />
-            <informazioni :options="options" />
-            <approfondimenti />
-            <paratexts />
-            <esercizi />
+            <carica-clip @update="updateField" />
         </div>
+    </container>
+    <container>
+        <informazioni :options="options" />
+    </container>
+    <container>
+        <approfondimenti />
+    </container>
+    <container>
+        <paratexts />
+    </container>
+    <container>
+        <esercizi />
     </container>
     <container padding="sm">
         <div class="a-clip-panel__topbar">
@@ -48,6 +74,7 @@ import {
 }
 from '../../ui'
 
+import Step from '../components/clips/Step.vue'
 import Approfondimenti from '../components/clips/Approfondimenti.vue'
 import CaricaClip from '../components/clips/CaricaClip.vue'
 import Informazioni from '../components/clips/Informazioni.vue'
@@ -65,6 +92,7 @@ export default {
         Informazioni,
         Paratexts,
         Esercizi,
+        Step,
     },
     data: function () {
         return {
@@ -104,7 +132,9 @@ export default {
             })
         },
         updateField: function (key, value) {
-
+            if (this.hasOwnProperty(key)) {
+                this[key] = value
+            }
         },
     },
     created: function () {
@@ -120,6 +150,12 @@ label {
     font-size: $font-size-sm;
 }
 
+.topbar {
+    &__steps {
+        display: flex;
+    }
+}
+
 .a-clip-panel {
     &__topbar {
         display: flex;
@@ -133,7 +169,7 @@ label {
     }
 
     &__group {
-        margin-bottom: $spacer * 2 * 1.618;
+        // margin-bottom: $spacer * 2 * 1.618;
     }
     &__row {
         align-items: center;

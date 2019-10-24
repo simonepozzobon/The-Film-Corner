@@ -54,7 +54,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
-.a-clip-panel__group {
-    background-color: rgba($primary, 0.3);
-}
 </style>

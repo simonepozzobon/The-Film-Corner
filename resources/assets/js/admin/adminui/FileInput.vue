@@ -19,7 +19,7 @@
                         :for="name"
                         aria-describedby="inputGroupFileAddon02"
                     >
-                        Seleziona File
+                        {{ placeholder }}
                     </label>
                 </div>
             </div>
@@ -108,6 +108,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        hasPreview: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: function () {
         return {
@@ -119,6 +123,16 @@ export default {
     watch: {
         src: function () {
             this.toggleCrop()
+        },
+    },
+    computed: {
+        placeholder: function () {
+            if (this.file) {
+                return this.file.name
+            }
+            else {
+                return 'Seleziona File'
+            }
         },
     },
     methods: {
@@ -136,9 +150,16 @@ export default {
                 let reader = new FileReader()
                 // console.log('preview');
                 reader.addEventListener('load', () => {
-                    if (this.hasCrop) {
-                        this.src = reader.result
-                        // console.log(this.src);
+                    if (this.hasPreview) {
+                        if (this.hasCrop) {
+                            this.src = reader.result
+                            // console.log(this.src);
+                        }
+                        else {
+                            let src = reader.result
+                            let file = this.file
+                            this.$emit('update', file, src)
+                        }
                     }
                     else {
                         let src = reader.result
