@@ -114,7 +114,8 @@ Route::prefix('v2')->group(
 
                         Route::prefix('paratexts')->group(
                             function () {
-                                Route::post('add-file', 'Api\Admin\ClipsController@add_paratext_file');
+                                Route::post('upload', 'Api\Admin\ClipsController@upload_paratext');
+                                Route::post('destroy', 'Api\Admin\ClipsController@destroy');
                                 Route::post('add-content', 'Api\Admin\ClipsController@add_paratext_content');
                             }
                         );

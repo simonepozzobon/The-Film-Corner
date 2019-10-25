@@ -5,6 +5,7 @@
     name="states[]"
     :multiple="isMultipleValue"
 >
+    <option value="">Seleziona Valore</option>
     <option
         v-for="option in this.cached"
         :key="option.id"
@@ -64,6 +65,10 @@ export default {
                 }
             })
             this.cached = cache
+
+            this.$nextTick(() => {
+                this.$emit('ready')
+            })
         },
         init: function () {
             $(this.$refs.select).select2({
@@ -81,6 +86,8 @@ export default {
                 this.value = e.params.data
                 this.$emit('remove', this.value)
             });
+
+            this.$emit('update', this.value)
         },
     },
     mounted: function () {

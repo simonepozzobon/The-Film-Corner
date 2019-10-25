@@ -10,6 +10,10 @@
   box-shadow: inset 0px 0px ($spacer / 2) rgba($color, .33);
 }
 
+@mixin custom-inner-shadow-lg($color) {
+  box-shadow: inset 0px 0px ($spacer / 1.618) rgba($color, .33);
+}
+
 //
 // Custom Variant for TFC
 //

@@ -14,10 +14,12 @@ use App\Propaganda\People;
 use App\Propaganda\Hashtag;
 use App\Propaganda\ParatextType;
 use App\Propaganda\Paratext;
+use App\Propaganda\Media;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ClipsController extends Controller
 {
@@ -60,6 +62,7 @@ class ClipsController extends Controller
         $topics = Topic::all();
         $peoples = People::all();
         $hashtags = Hashtag::all();
+        $paraType = ParatextType::all();
 
 
         return [
@@ -72,6 +75,7 @@ class ClipsController extends Controller
             'topics' => $topics,
             'peoples' => $peoples,
             'hashtags' => $hashtags,
+            'paratext_types' => $paraType,
         ];
     }
 
@@ -131,28 +135,78 @@ class ClipsController extends Controller
 
     public function store_paratexts(Request $request)
     {
-        $paraType = new ParatextType();
-        $paraType->type = $request->type;
-        $paraType->has_image = $request->has_image == true ? 1 : 0;
+        // $paraType = new ParatextType();
+        // $paraType->type = $request->type;
+        // $paraType->has_image = $request->has_image == true ? 1 : 0;
+        //
+        // $paraType->save();
+        // return [
+        //   'para' => $paraType
+        // ];
 
-        $paraType->save();
-        return [
-          'para' => $paraType
-        ];
+        return ['deprecata'];
     }
 
-    public function add_paratext_file(Request $request)
+    public function upload_paratext(Request $request)
     {
+        $clip = Clip::find($request->clip_id);
+        $paraType = ParatextType::find($request->paratext_type_id);
+
+        // $file = $this->uploadFile($request->file('file'), $paraType->type);
+        $file = Media::find(2);
+
+
         $p = new Paratext();
-        $p->paratext_type_id = $request->para_id;
-        $p->img = 'file';
-        $p->content = 'è un file';
+        $p->paratext_type_id = $paraType->id;
+        $p->content = $request->content ? $request->content : 'null';
+        $p->media_type = $paraType->type;
+        $p->media = Storage::disk('local')->url($file->src);
         $p->save();
 
+        $p->medias()->attach($file);
+        $p->clip()->attach($clip);
+
         return [
-          'para' => $p
+          'clip' => $clip,
+          'paratext' => $p,
         ];
     }
+
+    public function destroy(Request $request)
+    {
+        $clip = Clip::find($request->clip_id);
+        $paraType = ParatextType::find($request->paratext_type_id);
+
+
+        $p = Paratext::find($request->paratext_id);
+        $p->medias()->detach();
+        $p->clip()->detach();
+        $p->delete();
+
+        return [
+          'id' => $request->paratext_id,
+        ];
+    }
+
+    public function uploadFile($file, $type)
+    {
+        $extension = $file->getClientOriginalExtension();
+        $original_name = $file->getClientOriginalName();
+
+        $filename = uniqid() . '.' . $extension;
+        $path = 'public/propaganda/' . $type;
+
+        $src = $file->storeAs($path, $filename);
+
+        $m = new Media();
+        $m->media_type = $type;
+        $m->name = $original_name;
+        $m->src = $src;
+        $m->save();
+
+        return $m;
+    }
+
     public function add_paratext_content(Request $request)
     {
         $p = new Paratext();

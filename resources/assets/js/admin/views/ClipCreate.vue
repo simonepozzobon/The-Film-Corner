@@ -25,12 +25,12 @@
             </div>
         </div>
     </container>
-    <container>
+    <container v-if="false">
         <div class="form">
             <carica-clip @update="updateField" />
         </div>
     </container>
-    <container>
+    <container v-if="false">
         <informazioni
             :options="options"
             @update="updateField"
@@ -39,6 +39,7 @@
     <container
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
+        v-if="false"
     >
         <approfondimenti @update="updateField" />
     </container>
@@ -46,9 +47,14 @@
         :has-animations="true"
         :state="this.cursor | stateSetter(2)"
     >
-        <paratexts @update="updateField" />
+        <paratexts
+            :clip="this.clip"
+            :options="options"
+            @update="updateField"
+        />
     </container>
     <container
+        v-if="false"
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
     >
@@ -109,6 +115,7 @@ export default {
     },
     data: function () {
         return {
+            clip: null,
             title: null,
             video: null,
             period: null,
@@ -134,6 +141,7 @@ export default {
                 topics: [],
                 peoples: [],
                 hashtags: [],
+                paratext_types: [],
             },
         }
     },

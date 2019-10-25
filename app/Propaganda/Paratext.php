@@ -12,4 +12,9 @@ class Paratext extends Model
     {
         return $this->belongsToMany('App\Propaganda\Clip');
     }
+
+    public function medias()
+    {
+        return $this->morphToMany('App\Propaganda\Media', 'mediable');
+    }
 }

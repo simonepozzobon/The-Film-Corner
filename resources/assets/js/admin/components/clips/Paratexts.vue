@@ -9,50 +9,58 @@
         :has-container="false"
     />
     <hr class="a-clip-panel__divider">
-    <div
-        class="a-clip-panel__row form-group row"
-        v-if="createPara"
-    >
-        <label class="col-md-2">
-            Contiene Media?
-        </label>
-        <switch-input
-            label="Compare The Clips"
-            label-size="col-md-1"
-            input-size="col-md-1"
-            :has-row="false"
-        />
-        <label
-            for="year"
-            class="col-md-1"
-        >
-            Tipo di paratesto
-        </label>
-        <div class="col-md-3">
-            <input
-                type="text"
-                name="year"
-                class="form-control"
-                v-model="type"
-            />
-        </div>
 
+    <div class="mb-5">
+        <paratext
+            v-for="paratext in paratexts"
+            :key="paratext.id"
+            :paratext="paratext"
+            :clip-id="clip ? clip.id : 1"
+        />
     </div>
 
-    <ui-button
-        :title="text"
-        color="yellow"
-        @click="showForm"
+    <ui-title
+        tag="h6"
+        font-size="h6"
+        title="Aggiungi nuova categoria di paratesti"
     />
     <hr class="a-clip-panel__divider">
+    <div class="a-clip-panel__row form-group row">
+        <label
+            for="format"
+            class="col-md-1"
+        >
+            Tipologia
+        </label>
+        <div class="col-md-3">
+            <select-2-input
+                ref="paratextType"
+                :multiple="false"
+                :options="this.options.paratext_types"
+                @update="updateParatextType"
+                @ready="debug"
+            />
+        </div>
+        <div class="col-md-3">
+            <ui-button
+                :title="btnText"
+                color="yellow"
+                :has-margin="false"
+                @click="addParatextType"
+            />
+        </div>
+    </div>
 
-    <div>
+
+    <hr class="a-clip-panel__divider">
+
+    <!-- <div>
         <paratext
             v-for="content in paratexts"
             :key="content.id"
             :para="content"
         />
-    </div>
+    </div> -->
 
 
 
@@ -101,14 +109,19 @@ export default {
                 return {}
             },
         },
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
-            period: null,
-            year: null,
-            region: null,
+            paratext_id: null,
+            paratext_selected: null,
             createPara: false,
-            text: 'aggiungi',
+            btnText: 'aggiungi',
             type: null,
             has_image: true,
             paratexts: [],
@@ -117,34 +130,56 @@ export default {
     methods: {
         showForm: function () {
             if (this.createPara) {
-                this.text = 'aggiungi'
+                this.btnText = 'aggiungi'
                 this.store()
             }
             else {
-                this.text = 'Salva'
+                this.btnText = 'Salva'
                 this.createPara = true
             }
         },
         debug: function () {
-            this.has_image = true
-            this.type = 'sdfskaljdflkjldfs'
-            this.createPara = true
-            this.showForm()
+            let component = this.$refs.paratextType
+            let select = component.$refs.select
+
+            let id = 2
+            $(select).val(id)
+            component.value = this.options.paratext_types.find(single => single.id == id)
+            this.$nextTick(() => {
+                $(select).trigger('change')
+                component.$emit('update', component.value)
+
+                this.$nextTick(() => {
+                    this.addParatextType()
+                })
+            })
         },
         store: function () {
-            let data = new FormData()
-            data.append('type', this.type);
-            data.append('has_image', this.has_image)
-
-            this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
-                console.log('ciao', response.data.para);
-                this.paratexts.push(response.data.para)
-                this.createPara = false
-            })
+            console.log('deprecata');
+            // let data = new FormData()
+            // data.append('type', this.type);
+            // data.append('has_image', this.has_image)
+            //
+            // this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
+            //     console.log('ciao', response.data.para);
+            //     this.paratexts.push(response.data.para)
+            //     this.createPara = false
+            // })
+        },
+        updateParatextType: function (value) {
+            if (value) {
+                this.paratext_id = value.id
+                this.paratext_selected = this.options.paratext_types.find(single => single.id == value.id)
+            }
+        },
+        addParatextType: function () {
+            if (this.paratext_selected) {
+                this.paratexts.push(this.paratext_selected)
+            }
         },
     },
     mounted: function () {
-        this.debug()
+        // this.debug()
     },
 }
 </script>

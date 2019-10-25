@@ -3,12 +3,12 @@
     <div class="form-group row">
         <label
             for=""
-            class="col-md-2"
+            :class="labelSize"
         >
             {{ label }}
         </label>
         <div
-            class="col-md-10"
+            :class="inputSize"
             @click.prevent="focusEditor"
         >
             <div
@@ -192,6 +192,14 @@ export default {
         hasAnimation: {
             type: Boolean,
             default: false,
+        },
+        labelSize: {
+            type: String,
+            default: 'col-md-2',
+        },
+        inputSize: {
+            type: String,
+            default: 'col-md-10',
         },
     },
     components: {
