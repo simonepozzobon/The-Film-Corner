@@ -8,19 +8,19 @@
             <div class="topbar__steps">
                 <step
                     :number="1"
-                    :completed="false"
+                    :completed="this.cursor | completed(0)"
                 />
                 <step
                     :number="2"
-                    :completed="false"
+                    :completed="this.cursor | completed(1)"
                 />
                 <step
                     :number="3"
-                    :completed="false"
+                    :completed="this.cursor | completed(2)"
                 />
                 <step
                     :number="4"
-                    :completed="false"
+                    :completed="this.cursor | completed(3)"
                 />
             </div>
         </div>
@@ -36,13 +36,22 @@
             @update="updateField"
         />
     </container>
-    <container>
+    <container
+        :has-animations="true"
+        :state="this.cursor | stateSetter(1)"
+    >
         <approfondimenti @update="updateField" />
     </container>
-    <container>
+    <container
+        :has-animations="true"
+        :state="this.cursor | stateSetter(2)"
+    >
         <paratexts @update="updateField" />
     </container>
-    <container>
+    <container
+        :has-animations="true"
+        :state="this.cursor | stateSetter(3)"
+    >
         <esercizi @update="updateField" />
     </container>
     <container padding="sm">
@@ -52,6 +61,7 @@
                 color="green"
                 :has-container="false"
                 :has-margin="false"
+                @click="saveClip"
             />
             <ui-button
                 title="Annulla"
@@ -108,9 +118,13 @@ export default {
             format: null,
             age: null,
             genre: null,
-            region: null,
+            nationality: null,
             topics: [],
-
+            cursor: 2,
+            abstract: null,
+            tech_info: null,
+            historical_context: null,
+            food: null,
             options: {
                 periods: [],
                 directors: [],
@@ -122,6 +136,11 @@ export default {
                 hashtags: [],
             },
         }
+    },
+    watch: {
+        cursor: function (cursor) {
+            console.log(cursor);
+        },
     },
     methods: {
         getData: function () {
@@ -139,26 +158,87 @@ export default {
                 this[key] = value
             }
         },
+        debug: function () {
+            this.title = 'tiyueoiruioreuy'
+            this.period = 'gianni'
+            this.year = 'fkdjkgfdlj'
+            this.format = 'fkdjkgfdlj'
+            this.age = 'fkdjkgfdlj'
+            this.genre = 'fkdjkgfdlj'
+            this.nationality = 'fkdjkgfdlj'
+            this.abstract = 'abstract'
+            this.tech_info = 'tech_info'
+            this.historical_context = 'historical_context'
+            this.food = 'food'
+        },
         saveClip: function () {
-            let data = new FormData()
-            data.append('title', this.title)
-            data.append('video', this.video)
-            data.append('period', this.period)
-            data.append('year', this.year)
-            data.append('format', this.format)
-            data.append('age', this.age)
-            data.append('genre', this.genre)
-            data.append('region', this.region)
+            this.debug()
+            if (this.cursor == 0) {
+                let data = new FormData()
+                data.append('title', this.title)
+                data.append('video', this.video)
+                data.append('period', this.period)
+                data.append('year', this.year)
+                data.append('format', this.format)
+                data.append('age', this.age)
+                data.append('genre', this.genre)
+                data.append('nationality', this.nationality)
 
-            data.append('topics', JSON.stringify(this.topics))
-            data.append('directors', JSON.stringify(this.directors))
-            data.append('peoples', JSON.stringify(this.peoples))
+                data.append('topics', JSON.stringify(this.topics))
+                data.append('directors', JSON.stringify(this.directors))
+                data.append('peoples', JSON.stringify(this.peoples))
 
 
-            this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-                console.log(response.data);
-            })
+                this.$http.post('/api/v2/admin/clips/create', data).then(response => {
+                    console.log(response.data);
+                    this.clip = response.data.clip
+                    this.cursor = 1
+                })
+            }
+            else if (this.cursor == 1) {
+                let data = new FormData()
+                data.append('clip_id', this.clip.id)
+                data.append('abstract', this.abstract)
+                data.append('tech_info', this.tech_info)
+                data.append('historical_context', this.historical_context)
+                data.append('food', this.food)
+
+                this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
+                    console.log(response.data);
+                    this.clip = response.data.clip
+                    this.cursor = 2
+                })
+            }
+            else if (this.cursor == 2) {
+                let data = new FormData()
+
+
+                this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
+                    console.log(response.data);
+                    this.clip = response.data.clip
+                    this.cursor = 2
+                })
+            }
         }
+    },
+    filters: {
+        stateSetter: function (value, cursor) {
+            if (cursor > value) {
+                return false
+            }
+            else {
+                return true
+            }
+        },
+        completed: function (value, cursor) {
+            if (cursor >= value) {
+                return false
+            }
+            else {
+                return true
+            }
+
+        },
     },
     created: function () {
         this.getData()

@@ -59,4 +59,9 @@ class Clip extends Model
     {
         return $this->hasMany('App\Propaganda\Library');
     }
+
+    public function details()
+    {
+        return $this->hasMany('App\Propaganda\Detail');
+    }
 }

@@ -132,7 +132,7 @@
                 type="text"
                 name="nationality"
                 class="form-control"
-                v-model="region"
+                v-model="nationality"
             />
         </div>
     </div>
@@ -199,7 +199,7 @@ export default {
         return {
             period: null,
             year: null,
-            region: null,
+            nationality: null,
             directors: [],
             peoples: [],
             format: null,
@@ -215,8 +215,8 @@ export default {
         year: function (year) {
             this.$emit('update', 'year', year)
         },
-        region: function (region) {
-            this.$emit('update', 'region', region)
+        nationality: function (nationality) {
+            this.$emit('update', 'nationality', nationality)
         },
     },
     methods: {

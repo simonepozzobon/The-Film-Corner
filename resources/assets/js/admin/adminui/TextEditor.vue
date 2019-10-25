@@ -298,11 +298,10 @@ export default {
                 }, 0)
                 .progress(1)
                 .progress(0)
-                .then(() => {
-                    this.$nextTick(() => {
-                        this.closePanel()
-                    })
-                })
+
+            this.$nextTick(() => {
+                this.closePanel()
+            })
 
 
 

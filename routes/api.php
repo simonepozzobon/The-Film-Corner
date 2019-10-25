@@ -108,6 +108,16 @@ Route::prefix('v2')->group(
                     function () {
                         Route::get('/', 'Api\Admin\ClipsController@get_clips');
                         Route::get('/get-initials', 'Api\Admin\ClipsController@get_initials');
+                        Route::post('/create-detail', 'Api\Admin\ClipsController@store_details');
+                        Route::post('/create-paratexts', 'Api\Admin\ClipsController@store_paratexts');
+                        Route::post('/create', 'Api\Admin\ClipsController@store');
+
+                        Route::prefix('paratexts')->group(
+                            function () {
+                                Route::post('add-file', 'Api\Admin\ClipsController@add_paratext_file');
+                                Route::post('add-content', 'Api\Admin\ClipsController@add_paratext_content');
+                            }
+                        );
                     }
                 );
 

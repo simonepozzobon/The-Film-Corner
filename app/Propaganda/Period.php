@@ -12,4 +12,9 @@ class Period extends Model
     {
         return $this->hasMany('App\Propaganda\Clip');
     }
+
+    public function getTableColumns()
+    {
+        return $this->getConnection()->getSchemaBuilder()->getColumnListing($this->getTable());
+    }
 }
