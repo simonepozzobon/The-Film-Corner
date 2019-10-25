@@ -76,6 +76,11 @@ export default {
                 this.value = e.params.data
                 this.$emit('update', this.value)
             });
+
+            $(this.$refs.select).on('select2:unselect', e => {
+                this.value = e.params.data
+                this.$emit('remove', this.value)
+            });
         },
     },
     mounted: function () {

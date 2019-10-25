@@ -299,13 +299,13 @@ export default {
                 .progress(1)
                 .progress(0)
                 .then(() => {
-                    console.log('cia');
+                    this.$nextTick(() => {
+                        this.closePanel()
+                    })
                 })
 
 
-            this.$nextTick(() => {
-                this.closePanel()
-            })
+
         },
         closePanel: function () {
             if (this.master) {

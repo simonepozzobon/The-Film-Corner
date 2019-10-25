@@ -31,16 +31,19 @@
         </div>
     </container>
     <container>
-        <informazioni :options="options" />
+        <informazioni
+            :options="options"
+            @update="updateField"
+        />
     </container>
     <container>
-        <approfondimenti />
+        <approfondimenti @update="updateField" />
     </container>
     <container>
-        <paratexts />
+        <paratexts @update="updateField" />
     </container>
     <container>
-        <esercizi />
+        <esercizi @update="updateField" />
     </container>
     <container padding="sm">
         <div class="a-clip-panel__topbar">
@@ -136,6 +139,26 @@ export default {
                 this[key] = value
             }
         },
+        saveClip: function () {
+            let data = new FormData()
+            data.append('title', this.title)
+            data.append('video', this.video)
+            data.append('period', this.period)
+            data.append('year', this.year)
+            data.append('format', this.format)
+            data.append('age', this.age)
+            data.append('genre', this.genre)
+            data.append('region', this.region)
+
+            data.append('topics', JSON.stringify(this.topics))
+            data.append('directors', JSON.stringify(this.directors))
+            data.append('peoples', JSON.stringify(this.peoples))
+
+
+            this.$http.post('/api/v2/admin/clips/create', data).then(response => {
+                console.log(response.data);
+            })
+        }
     },
     created: function () {
         this.getData()
