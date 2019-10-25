@@ -11,8 +11,12 @@
             class="col-md-10"
             @click.prevent="focusEditor"
         >
-            <div class="admin-editor__container">
+            <div
+                class="admin-editor__container"
+                ref="container"
+            >
                 <editor-menu-bar
+                    ref="menuBar"
                     :editor="editor"
                     v-slot="{ commands, isActive }"
                 >
@@ -149,6 +153,11 @@ import {
 }
 from 'tiptap'
 
+import {
+    TimelineMax,
+    Power4,
+}
+from 'gsap'
 
 import {
     Blockquote,
@@ -169,6 +178,7 @@ import {
     Strike,
     Underline,
     History,
+    Focus,
 }
 from 'tiptap-extensions'
 
@@ -178,6 +188,10 @@ export default {
         label: {
             type: String,
             default: 'Titolo',
+        },
+        hasAnimation: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {
@@ -192,6 +206,8 @@ export default {
             json: null,
             linkUrl: null,
             linkMenuIsActive: false,
+            master: null,
+            isOpen: false,
         }
     },
     methods: {
@@ -220,8 +236,22 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Focus({
+                        className: 'has-focus',
+                        nested: true,
+                    }),
                 ],
                 content: this.initial ? this.initial : '',
+                onFocus: () => {
+                    if (this.hasAnimation) {
+                        this.openPanel()
+                    }
+                },
+                onBlur: () => {
+                    if (this.hasAnimation) {
+                        this.closePanel()
+                    }
+                }
             })
 
             // console.log(this.initial);
@@ -232,6 +262,60 @@ export default {
                 this.$emit('update', this.json, this.html)
                 // console.log('updated');
             })
+
+            if (this.hasAnimation == true) {
+                this.$nextTick(() => {
+                    this.initAnim()
+                })
+            }
+        },
+        initAnim: function () {
+            let container = this.$refs.container
+            let menu = container.getElementsByClassName('menubar')
+            if (menu) {
+                menu = menu[0]
+            }
+
+            this.master = new TimelineMax({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.master.fromTo(container, .3, {
+                    minHeight: '40vh',
+                    ease: Power4.easeInOut,
+                }, {
+                    minHeight: '30px',
+                    ease: Power4.easeInOut,
+                }, 0)
+                .fromTo(menu, .2, {
+                    immediateRender: false,
+                    autoAlpha: 1,
+                    ease: Power4.easeInOut,
+                }, {
+                    autoAlpha: 0,
+                    ease: Power4.easeInOut,
+                }, 0)
+                .progress(1)
+                .progress(0)
+                .then(() => {
+                    console.log('cia');
+                })
+
+
+            this.$nextTick(() => {
+                this.closePanel()
+            })
+        },
+        closePanel: function () {
+            if (this.master) {
+                this.master.play()
+            }
+        },
+        openPanel: function () {
+            if (this.master) {
+                this.master.reverse()
+            }
         },
         showLinkMenu: function (attrs) {
             this.linkUrl = attrs.href

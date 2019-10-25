@@ -20,6 +20,12 @@
 </template>
 
 <script>
+import {
+    TimelineMax,
+    Power4,
+}
+from 'gsap'
+
 export default {
     name: 'LoaderNav',
     computed: {

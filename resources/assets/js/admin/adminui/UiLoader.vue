@@ -11,7 +11,10 @@
 
 <script>
 import {
-    TimelineMax
+    TimelineMax,
+    Power2,
+    Power3,
+    Sine,
 }
 from 'gsap'
 

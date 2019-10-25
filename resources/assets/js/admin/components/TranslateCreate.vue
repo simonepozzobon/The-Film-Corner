@@ -60,7 +60,13 @@ import {
 from '../../ui'
 import TranslateLoop from './TranslateLoop.vue'
 import TranslateCreateLanguage from './TranslateCreateLanguage.vue'
-import CSSPlugin from 'gsap/CSSPlugin'
+
+import {
+    TimelineMax,
+    Power4,
+    CSSPlugin,
+}
+from 'gsap'
 
 export default {
     name: 'TranslateCreate',

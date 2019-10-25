@@ -54,7 +54,13 @@ import {
 }
 from './Shared'
 import _ from 'lodash'
-require('gsap/ScrollToPlugin')
+
+import {
+    TimelineMax,
+    ScrollToPlugin
+}
+from 'gsap'
+
 export default {
     name: 'FrameComposer',
     components: {

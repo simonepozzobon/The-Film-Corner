@@ -46,6 +46,12 @@ import {
 }
 from '../../../ui'
 
+import {
+    TimelineMax,
+    Power4,
+}
+from 'gsap'
+
 export default {
     name: 'SubDropDown',
     components: {

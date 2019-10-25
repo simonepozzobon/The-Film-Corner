@@ -1,17 +1,31 @@
 <template>
-    <a
-        href="#"
-        class="ui-burger"
-        ref="burger"
-        @click="mainClick">
-        <span class="ui-burger__line" ref="line1"></span>
-        <span class="ui-burger__line" ref="line2"></span>
-        <span class="ui-burger__line" ref="line3"></span>
-    </a>
+<a
+    href="#"
+    class="ui-burger"
+    ref="burger"
+    @click="mainClick"
+>
+    <span
+        class="ui-burger__line"
+        ref="line1"
+    ></span>
+    <span
+        class="ui-burger__line"
+        ref="line2"
+    ></span>
+    <span
+        class="ui-burger__line"
+        ref="line3"
+    ></span>
+</a>
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import {
+    TweenMax,
+    Power4,
+}
+from 'gsap'
 
 export default {
     name: 'UiBurger',
@@ -21,7 +35,7 @@ export default {
             default: '32px'
         },
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             hover: null,
@@ -35,7 +49,7 @@ export default {
         }
     },
     watch: {
-        '$root.window.h': function(h) {
+        '$root.window.h': function (h) {
             // corregge bug su browser vecchi che modificano la viewport con la barra dell'indirizzo
             // let position = (16 * 100) / h
             // this.$refs.burger.style.top = position + 'vh'
@@ -43,7 +57,7 @@ export default {
         }
     },
     methods: {
-        init: function() {
+        init: function () {
             if (!this.master) {
                 let duration = this.duration
                 let scale = this.scale
@@ -69,11 +83,15 @@ export default {
 
                 this.master.fromTo(line1, duration, {
                     y: 0,
-                    directionalRotation: { rotation: '0_cw' },
+                    directionalRotation: {
+                        rotation: '0_cw'
+                    },
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, {
                     y: yMid - 4,
-                    directionalRotation: { rotation: '45_cw' },
+                    directionalRotation: {
+                        rotation: '45_cw'
+                    },
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, 0)
 
@@ -89,11 +107,15 @@ export default {
 
                 this.master.fromTo(line3, duration, {
                     y: 0,
-                    directionalRotation: { rotation: '0_ccw' },
+                    directionalRotation: {
+                        rotation: '0_ccw'
+                    },
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, {
                     y: -yMid + 4,
-                    directionalRotation: { rotation: '-45_ccw' },
+                    directionalRotation: {
+                        rotation: '-45_ccw'
+                    },
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, 0)
 
@@ -107,7 +129,8 @@ export default {
 
                 this.$emit('ready')
 
-            } else {
+            }
+            else {
                 this.master.kill()
                 this.master = null
 
@@ -119,7 +142,7 @@ export default {
                 })
             }
         },
-        toggle: function() {
+        toggle: function () {
             if (this.status) {
                 this.status = false
                 return this.close()
@@ -127,18 +150,18 @@ export default {
             this.status = true
             return this.open()
         },
-        open: function() {
+        open: function () {
             this.master.play()
         },
-        close: function() {
+        close: function () {
             this.master.reverse()
         },
-        mainClick: function(event) {
+        mainClick: function (event) {
             event.preventDefault()
             this.$emit('main-click')
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
     }
 }

@@ -86,7 +86,13 @@ import {
     UiTitle,
 }
 from '../../../ui'
-import CSSPlugin from 'gsap/CSSPlugin'
+
+import {
+    TimelineMax,
+    Power4,
+    CSSPlugin,
+}
+from 'gsap'
 
 export default {
     name: 'CaricaClip',

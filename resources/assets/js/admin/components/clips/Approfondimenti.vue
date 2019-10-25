@@ -10,10 +10,30 @@
     />
     <hr class="a-clip-panel__divider">
 
-    <text-editor label="Informazioni Tecniche" />
-    <text-editor label="Abstract" />
-    <text-editor label="Contesto Storico" />
-    <text-editor label="Food for thoughts" />
+
+    <text-editor
+        ref="editor"
+        :has-animation="true"
+        label="Informazioni Tecniche"
+    />
+
+    <text-editor
+        ref="editor"
+        :has-animation="true"
+        label="Abstract"
+    />
+
+    <text-editor
+        ref="editor"
+        :has-animation="true"
+        label="Contesto Storico"
+    />
+
+    <text-editor
+        ref="editor"
+        :has-animation="true"
+        label="Food for thoughts"
+    />
 </div>
 </template>
 
@@ -48,6 +68,9 @@ export default {
         UiButton,
         UiTitle,
         Select2Input,
+    },
+    mounted: function () {
+        console.log(this.$children);
     },
 }
 </script>

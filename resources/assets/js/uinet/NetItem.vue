@@ -73,6 +73,12 @@ import {
 from '../icons'
 import NetInteractions from './NetInteractions.vue'
 
+import {
+    TimelineMax,
+    Power4
+}
+from 'gsap'
+
 export default {
     name: 'NetItem',
     components: {

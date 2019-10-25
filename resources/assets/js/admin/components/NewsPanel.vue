@@ -93,8 +93,13 @@ from '../../ui'
 import Utility from '../../Utilities'
 import mime from 'mime-types'
 
-require('gsap/CSSPlugin')
-require('gsap/RoundPropsPlugin')
+import {
+    TimelineMax,
+    Power4,
+    RoundPropsPlugin,
+    CSSPlugin,
+}
+from 'gsap'
 
 import Dummy from './Dummy'
 

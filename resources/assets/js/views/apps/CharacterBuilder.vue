@@ -96,7 +96,13 @@ import {
     UiRow,
 }
 from '../../ui'
-require('gsap/ScrollToPlugin')
+
+import {
+    TimelineMax,
+    ScrollToPlugin
+}
+from 'gsap'
+
 export default {
     name: 'CharacterBuilder',
     components: {

@@ -1,31 +1,50 @@
 <template>
-    <ui-row :no-gutters="true" ref="container">
-        <ui-block :size="12">
-            <div class="ua-timeline">
-                <ui-title :title="title" color="white" :has-padding="false"/>
-                <div class="ua-timeline__container">
-                    <timeline-track
-                        v-for="(track, idx) in timelines"
-                        :key="track.uniqueid"
-                        :track="track"
-                        :idx="idx"
-                        :color="color"
-                        @delete-track="onDeleteTrack"
-                        @duplicate-track="onDuplicate"
-                        @on-drag="onDrag"
-                        @on-resize="onResize"/>
-                    <div ref="playhead" class="ua-timeline__playhead"></div>
-                </div>
+<ui-row
+    :no-gutters="true"
+    ref="container"
+>
+    <ui-block :size="12">
+        <div class="ua-timeline">
+            <ui-title
+                :title="title"
+                color="white"
+                :has-padding="false"
+            />
+            <div class="ua-timeline__container">
+                <timeline-track
+                    v-for="(track, idx) in timelines"
+                    :key="track.uniqueid"
+                    :track="track"
+                    :idx="idx"
+                    :color="color"
+                    @delete-track="onDeleteTrack"
+                    @duplicate-track="onDuplicate"
+                    @on-drag="onDrag"
+                    @on-resize="onResize"
+                />
+                <div
+                    ref="playhead"
+                    class="ua-timeline__playhead"
+                ></div>
             </div>
-        </ui-block>
-    </ui-row>
+        </div>
+    </ui-block>
+</ui-row>
 </template>
 
 <script>
 import TimelineTrack from './sub/timeline/TimelineTrack.vue'
-import { UiBlock, UiTitle, UiRow } from '../ui'
-import { TweenLite } from 'gsap'
-require('gsap/ScrollToPlugin')
+import {
+    UiBlock,
+    UiTitle,
+    UiRow
+}
+from '../ui'
+import {
+    TweenLite,
+    ScrollToPlugin
+}
+from 'gsap'
 
 export default {
     name: 'UiAppTimeline',
@@ -43,7 +62,7 @@ export default {
         },
         timelines: {
             type: Array,
-            default: function() {},
+            default: function () {},
         },
         playheadPosition: {
             type: Number,
@@ -58,7 +77,7 @@ export default {
             default: 'green'
         }
     },
-    data: function() {
+    data: function () {
         return {
             settings: {
                 tick: '10', //1s = Npx
@@ -68,30 +87,30 @@ export default {
         }
     },
     watch: {
-        playheadPosition: function(x) {
+        playheadPosition: function (x) {
             this.movePlayhead()
         }
     },
     methods: {
-        movePlayhead: function() {
+        movePlayhead: function () {
             TweenLite.set(this.$refs.playhead, {
                 left: this.playheadPosition
             })
         },
-        onDrag: function(obj) {
+        onDrag: function (obj) {
             this.$emit('on-drag', obj)
         },
-        onResize: function(obj) {
+        onResize: function (obj) {
             this.$emit('on-resize', obj)
         },
-        onDeleteTrack: function(uniqueid) {
+        onDeleteTrack: function (uniqueid) {
             this.$emit('delete-track', uniqueid)
         },
-        onDuplicate: function(uniqueid) {
+        onDuplicate: function (uniqueid) {
             this.$emit('duplicate-track', uniqueid)
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.$nextTick(() => {
             TweenLite.to(window, .2, {
                 scrollTo: {
@@ -127,5 +146,4 @@ export default {
         left: 171px;
     }
 }
-
 </style>
