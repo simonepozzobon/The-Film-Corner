@@ -50,6 +50,8 @@
             :clip="this.clip"
             :options="options"
             @update="updateField"
+            @completed="paratextCompleted"
+            @uncomplete="paratextUncomplete"
         />
     </container>
     <container
@@ -225,7 +227,13 @@ export default {
                     this.cursor = 2
                 })
             }
-        }
+        },
+        paratextCompleted: function () {
+            this.cursor = 3
+        },
+        paratextUncomplete: function () {
+            this.cursor = 2
+        },
     },
     filters: {
         stateSetter: function (value, cursor) {

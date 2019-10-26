@@ -3,102 +3,127 @@
     class="para-single"
     ref="container"
 >
-    <ui-title
-        font-size="h2"
-        :title="'Gestisci i contenuti di - ' + paratext.title"
-        color="white"
-    />
-    <div class="para-single__table margin-bt">
+    <div class="para-single__topbar">
         <ui-title
-            tag="h6"
-            font-size="h6"
-            title="Carica nuovo contenuto"
+            class="para-single__title"
+            font-size="h4"
+            :title="'Gestisci i contenuti di - ' + paratext.title"
+            :has-shadows="true"
         />
-        <hr>
-
-        <file-input
-            v-if="mediaType === 1"
-            label="Immagine"
-            name="image"
-            accept="image/*"
-            label-size="col-md-1"
-            input-size="col-md-11"
-            :has-crop="false"
-            :has-preview="false"
-            @update="updateFile"
-        />
-
-        <file-input
-            v-if="mediaType === 2"
-            label="Audio"
-            name="audio"
-            accept="audio/mpeg"
-            label-size="col-md-1"
-            input-size="col-md-11"
-            :has-crop="false"
-            :has-preview="false"
-            @update="updateFile"
-        />
-
-        <file-input
-            v-if="mediaType === 3"
-            label="Video"
-            name="video"
-            accept="video/mp4"
-            label-size="col-md-1"
-            input-size="col-md-11"
-            :has-crop="false"
-            :has-preview="false"
-            @update="updateFile"
-        />
-
-        <text-editor
-            :has-animation="true"
-            label-size="col-md-1"
-            input-size="col-md-11"
-            label="Contenuto"
-            @update="updateContent"
-        />
-
         <ui-button
-            title="carica"
-            color="orange"
-            @click="upload"
+            :title="panelBtn"
+            theme="outline"
+            color="dark"
+            :has-margin="false"
+            @click="togglePanel"
         />
     </div>
+    <div
+        ref="uploader"
+        class="para-single__table table margin-bt"
+    >
+        <div class="table__container">
+            <ui-title
+                tag="h5"
+                font-size="h5"
+                class="para-single__sub-title"
+                title="Carica nuovo contenuto"
+                align="center"
+                :has-shadows="true"
+                :shadows-type="3"
+            />
+            <file-input
+                v-if="mediaType === 1"
+                label="Immagine"
+                name="image"
+                accept="image/*"
+                label-size="col-md-1"
+                input-size="col-md-11"
+                :has-crop="false"
+                :has-preview="false"
+                @update="updateFile"
+            />
 
-    <div class="para-single__table">
-        <ui-title
-            tag="h6"
-            font-size="h6"
-            title="Lista dei contenuti"
-        />
-        <hr>
+            <file-input
+                v-if="mediaType === 2"
+                label="Audio"
+                name="audio"
+                accept="audio/mpeg"
+                label-size="col-md-1"
+                input-size="col-md-11"
+                :has-crop="false"
+                :has-preview="false"
+                @update="updateFile"
+            />
 
-        <b-table
-            :fields="fields"
-            :items="contents"
-            hover
-            striped
-            borderless
-        >
-            <template v-slot:cell(preview)="data">
-                <div v-if="data.item.media_type == 'image'">
-                    <img
-                        :src="data.item.media"
-                        class="para-img"
-                        @click.prevent="showPreview(data.item)"
-                    >
-                </div>
-            </template>
-            <template v-slot:cell(tools)="data">
-                <ui-button
-                    color="red"
-                    title="Elimina"
-                    @click="destroy(data.item)"
-                />
-            </template>
-        </b-table>
+            <file-input
+                v-if="mediaType === 3"
+                label="Video"
+                name="video"
+                accept="video/mp4"
+                label-size="col-md-1"
+                input-size="col-md-11"
+                :has-crop="false"
+                :has-preview="false"
+                @update="updateFile"
+            />
+
+            <text-editor
+                :has-animation="true"
+                label-size="col-md-1"
+                input-size="col-md-11"
+                label="Contenuto"
+                @update="updateContent"
+            />
+
+            <ui-button
+                title="carica"
+                color="orange"
+                @click="upload"
+            />
+        </div>
+    </div>
+
+    <div
+        class="para-single__table table"
+        ref="table"
+    >
+        <div class="table__container">
+            <ui-title
+                tag="h5"
+                font-size="h5"
+                :has-shadows="true"
+                :shadows-type="3"
+                class="para-single__sub-title"
+                title="Lista dei contenuti"
+                align="center"
+            />
+
+            <b-table
+                :fields="fields"
+                :items="contents"
+                hover
+                striped
+                borderless
+            >
+                <template v-slot:cell(preview)="data">
+                    <div v-if="data.item.media_type == 'image'">
+                        <img
+                            :src="data.item.media"
+                            class="para-img"
+                            @click.prevent="showPreview(data.item)"
+                        >
+                    </div>
+                </template>
+                <template v-slot:cell(tools)="data">
+                    <ui-button
+                        color="red"
+                        title="Elimina"
+                        @click="destroy(data.item)"
+                    />
+                </template>
+            </b-table>
+        </div>
     </div>
 
     <b-modal
@@ -182,6 +207,8 @@ export default {
     data: function () {
         return {
             master: null,
+            masterPanel: null,
+            isOpen: true,
             file: null,
             content: null,
             contents: [],
@@ -229,21 +256,19 @@ export default {
                 return 0
             }
         },
-    },
-    methods: {
-        blendEases: function (startEase, endEase, blender) {
-            let parse = function (ease) {
-                    return typeof (ease) === "function" ? ease : gsap.parseEase("power4.inOut");
-                },
-                s = gsap.parseEase(startEase),
-                e = gsap.parseEase(endEase)
-
-            blender = parse(blender);
-            return function (v) {
-                var b = blender(v);
-                return s(v) * (1 - b) + e(v) * b;
+        panelBtn: function () {
+            if (this.isOpen) {
+                return 'Minimizza'
+            }
+            else {
+                return 'Espandi'
             }
         },
+        tableShadows: function () {
+            return
+        }
+    },
+    methods: {
         initAnim: function () {
             let container = this.$refs.container
             let parent = this.$parent.$refs.paraContainer
@@ -256,59 +281,109 @@ export default {
                 smoothChildTiming: true,
             })
 
-            this.master.set(container, {
-                height: 'auto',
-            })
-
-            this.master.set(parent, {
-                height: 'auto',
-            })
-
             this.master.addLabel('start', '+=0')
 
             this.master.fromTo(parent, {
                 height: '0',
             }, {
-                height: 'auto',
+                height: '100%',
                 duration: duration,
                 ease: 'power4.inOut',
                 yoyoEase: 'power4.inOut',
-            }, 'start')
+            }, 'start+=0')
 
             this.master.fromTo(container, {
                 height: '0',
             }, {
-                height: 'auto',
+                height: '100%',
                 duration: duration,
                 ease: 'power4.inOut',
                 yoyoEase: 'power4.inOut',
-
             }, 'start+=0.1')
 
-            this.master.progress(1).progress(0)
+            this.master.progress(1).progress(0).then(() => {})
 
             this.$nextTick(() => {
+                this.initPanel()
                 this.master.play()
             })
 
         },
-        // showPanel: function () {
-        //     if (this.master) {
-        //         let container =
-        //             this.master.eventCallback('onComplete', () => {
-        //                 TweenMax.set(this.$refs.container, {
-        //                     clearProps: 'all',
-        //                     onComplete: () => {
-        //                         this.master.kill()
-        //                     }
-        //                 })
-        //             })
-        //         this.master.play()
-        //     }
-        //     else {
-        //         this.initAnim()
-        //     }
-        // },
+        initPanel: function () {
+            let uploader = this.$refs.uploader
+            let table = this.$refs.table
+            let container = this.$refs.container
+            let paddingLeft = gsap.getProperty(uploader, 'paddingLeft')
+            let paddingRight = gsap.getProperty(uploader, 'paddingRight')
+            let paddingTop = gsap.getProperty(uploader, 'paddingTop')
+            let paddingBottom = gsap.getProperty(uploader, 'paddingBottom')
+
+            this.masterPanel = gsap.timeline({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.masterPanel.addLabel('start', '+=0')
+
+            this.masterPanel.fromTo(container, {
+                boxShadow: 'inset 0px 0px 0.61805rem rgba(59, 66, 72, 0.2)',
+            }, {
+                boxShadow: 'inset 0px 0px 0rem rgba(59, 66, 72, 0)',
+                duration: .3,
+            }, 'start+=0')
+
+            this.masterPanel.fromTo(uploader, {
+                autoAlpha: 1,
+                height: '100%',
+                scaleY: 1,
+                yPercent: 0,
+                transformOrigin: 'center top',
+            }, {
+                autoAlpha: 0,
+                scaleY: .6,
+                height: '0',
+                yPercent: -20,
+                transformOrigin: 'center top',
+                duration: .3,
+            }, 'start+=0')
+
+            this.masterPanel.fromTo(uploader, {
+                paddingLeft: paddingLeft,
+                paddingRight: paddingRight,
+                paddingTop: paddingTop,
+                paddingBottom: paddingBottom,
+            }, {
+                paddingLeft: '0',
+                paddingRight: '0',
+                paddingTop: '0',
+                paddingBottom: '0',
+                duration: .3,
+            }, 'start+=.1')
+
+
+
+            this.masterPanel.progress(1).progress(0)
+
+            this.masterPanel.eventCallback('onComplete', () => {
+                console.log('cai');
+                this.isOpen = false
+            })
+
+            this.masterPanel.eventCallback('onReverseComplete', () => {
+                console.log('sds');
+                this.isOpen = true
+            })
+        },
+        togglePanel: function () {
+            if (this.masterPanel) {
+                if (this.isOpen) {
+                    this.masterPanel.play()
+                }
+                else {
+                    this.masterPanel.reverse()
+                }
+            }
+        },
         updateFile: function (file, src) {
             this.file = file
         },
@@ -333,6 +408,7 @@ export default {
                     this.$http.post('/api/v2/admin/clips/paratexts/upload', data).then(response => {
                         // console.log(response.data);
                         this.contents.push(response.data.paratext)
+                        this.setCompleted()
                         resolve(response.data.paratext)
                     })
                 }
@@ -349,8 +425,17 @@ export default {
                     let idx = this.contents.findIndex(content => content.id == response.data.id)
                     if (idx > -1) {
                         this.contents.splice(idx, 1)
+                        this.setCompleted()
                     }
                 })
+            }
+        },
+        setCompleted: function () {
+            if (this.contents.length > 0) {
+                this.$emit('completed')
+            }
+            else {
+                this.$emit('uncomplete')
             }
         },
         debug: function () {
@@ -372,31 +457,96 @@ export default {
 
 <style lang="scss">
 @import '~styles/shared';
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
 
 .para-single {
     // background-color: $white;
     // height: 100%;
     width: 100%;
     position: relative;
-    padding: $spacer * 2;
+    padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) ($spacer * 2);
     margin-bottom: $spacer * 2.5;
-    @include gradient-directional($dark, lighten($dark, 10), 145deg);
+    @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);
+    // @include gradient-directional($red, lighten($red, 2), 10deg);
     @include border-radius($border-radius * 4);
-    @include custom-inner-shadow-lg($black);
+    @include custom-inner-shadow-lg($darken, 0.2);
     transition: $transition-base-lg !important;
     height: 0;
     overflow: hidden;
+    z-index: 3;
+
+    &__title {
+        color: $dark;
+        // color: rgba($color, .7);
+        // -webkit-text-fill-color: rgba($color, .7);
+        // -webkit-text-stroke: 1.618px $darken;
+        letter-spacing: 8px;
+    }
+
+    &__sub-title {
+        padding: ($spacer / 1.618) ($spacer * 2) ($spacer / 2) 0;
+        color: $darken;
+        // color: rgba($color, .7);
+        // -webkit-text-fill-color: rgba($color, .7);
+        // -webkit-text-stroke: 1.33px $darken;
+        letter-spacing: 6px;
+    }
 
     &__table {
-        padding: $spacer * 2;
-        @include gradient-directional($gray-100, lighten($gray-200, 20), 145deg);
-        @include border-radius($border-radius);
-        @include custom-box-shadow($black);
+        height: auto;
+        width: 100%;
         transition: $transition-base-lg !important;
     }
 
     .margin-bt {
         margin-bottom: $spacer * 2.5;
+    }
+
+    &__topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-bottom: $spacer / 1.618;
+    }
+}
+
+.table {
+    // overflow: hidden;
+
+    &__container {
+        @include gradient-directional($color, lighten($color, 2), -11deg);
+        @include border-radius($border-radius);
+        width: 100%;
+        position: relative;
+        padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
+
+        &::after,
+        &::before {
+            content: '';
+            position: absolute;
+            bottom: $spacer / (1.618);
+            top: 80%;
+            background: $darken;
+            @include custom-box-shadow($darken, 2px, 0.2);
+            width: 50%;
+            z-index: -1;
+        }
+
+        &::before {
+            transform-origin: right bottom;
+            left: 8px;
+            right: auto;
+            transform: rotate(-0.5deg);
+        }
+
+        &::after {
+            transform-origin: left top;
+            right: 8px;
+            left: auto;
+            transform: rotate(0.5deg);
+        }
     }
 
 }

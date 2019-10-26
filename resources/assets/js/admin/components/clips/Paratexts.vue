@@ -1,17 +1,15 @@
 <template>
-<div class="a-clip-panel__group">
+<div class="a-clip-panel__group panel-group">
     <ui-title
         title="Paratesti"
-        tag="span"
-        font-size="h5"
-        :has-padding="false"
-        :has-margin="false"
-        :has-container="false"
+        tag="h2"
+        font-size="h2"
+        class="panel-group__title"
+        :has-shadows="true"
+        :shadows-type="2"
     />
-    <hr class="a-clip-panel__divider">
-
     <div
-        class="mb-5 para-container"
+        class="mb-5 para-container panel-group__container"
         ref="paraContainer"
     >
         <paratext
@@ -19,6 +17,8 @@
             :key="paratext.id"
             :paratext="paratext"
             :clip-id="clip ? clip.id : 1"
+            @completed="setCompleted"
+            @uncomplete="setUncomplete"
         />
     </div>
 
@@ -41,6 +41,7 @@
                 :multiple="false"
                 :options="this.options.paratext_types"
                 @update="updateParatextType"
+                @ready="debug"
             />
         </div>
         <div class="col-md-3">
@@ -179,6 +180,12 @@ export default {
                 this.paratexts.push(this.paratext_selected)
             }
         },
+        setCompleted: function () {
+            this.$emit('completed')
+        },
+        setUncomplete: function () {
+            this.$emit('uncomplete')
+        },
     },
     mounted: function () {
         // this.debug()
@@ -188,6 +195,9 @@ export default {
 
 <style lang="scss">
 @import '~styles/shared';
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
 
 .para-container {
     // width: 100%;
@@ -195,6 +205,19 @@ export default {
     transition: $transition-base-lg !important;
     // height: 0;
     overflow: hidden;
+}
+
+.panel-group {
+
+    &__title {
+        // color: rgba($color, .7);
+        // -webkit-text-fill-color: rgba($color, .7);
+        // -webkit-text-stroke: 2px $darken;
+        // letter-spacing: 8px;
+        color: $darken;
+        padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) 0;
+        letter-spacing: 12px;
+    }
 }
 
 .noHeight {

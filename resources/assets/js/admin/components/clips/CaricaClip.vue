@@ -3,7 +3,7 @@
     <ui-title
         title="Carica Clip"
         tag="span"
-        font-size="h5"
+        font-size="h4"
         :has-padding="false"
         :has-margin="false"
         :has-container="false"
