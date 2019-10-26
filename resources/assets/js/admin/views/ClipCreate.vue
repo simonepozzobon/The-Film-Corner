@@ -37,9 +37,7 @@
         ref="test"
         :contains="true"
     >
-        <div class="form">
-            <carica-clip @update="updateField" />
-        </div>
+        <carica-clip @update="updateField" />
     </container>
     <container :contains="true">
         <informazioni

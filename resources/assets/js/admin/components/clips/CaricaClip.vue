@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Carica Clip">
+<block-panel
+    title="Carica Clip"
+    :has-debug="true"
+>
     <div class="a-clip-panel__row form-group row">
         <label
             for="title"

@@ -3,7 +3,7 @@
     class="para-single"
     ref="container"
 >
-    <div class="para-single__topbar">
+    <!-- <div class="para-single__topbar">
         <ui-title
             class="para-single__title"
             font-size="h4"
@@ -17,12 +17,15 @@
             :has-margin="false"
             @click="togglePanel"
         />
-    </div>
-    <div
+    </div> -->
+    <!-- <div
         ref="uploader"
-        class="para-single__table table margin-bt"
+        class="para-single__table para-table"
     >
-        <div class="table__container">
+        <div
+            class="para-table__container uploader"
+            ref="uploadForm"
+        >
             <ui-title
                 tag="h5"
                 font-size="h5"
@@ -82,21 +85,20 @@
                 @click="upload"
             />
         </div>
-    </div>
+    </div> -->
 
     <div
-        class="para-single__table table"
+        class="para-single__table para-table"
         ref="table"
     >
-        <div class="table__container">
+        <div class="para-table__container">
             <ui-title
-                tag="h5"
-                font-size="h5"
+                tag="h4"
+                font-size="h4"
                 :has-shadows="true"
                 :shadows-type="3"
                 class="para-single__sub-title"
-                title="Lista dei contenuti"
-                align="center"
+                :title="paratext.title"
             />
 
             <b-table
@@ -208,7 +210,7 @@ export default {
         return {
             master: null,
             masterPanel: null,
-            isOpen: true,
+            isOpen: false,
             file: null,
             content: null,
             contents: [],
@@ -275,7 +277,7 @@ export default {
             let duration = 0.4
             let delay = (duration * 1)
 
-            this.master = gsap.timeline({
+            this.master = new TimelineMax({
                 paused: true,
                 yoyo: true,
                 smoothChildTiming: true,
@@ -283,28 +285,39 @@ export default {
 
             this.master.addLabel('start', '+=0')
 
-            this.master.fromTo(parent, {
-                height: '0',
+            this.master.fromTo(parent, duration, {
+                height: 0,
+                position: 'absolute',
+                overflow: 'hidden',
             }, {
-                height: '100%',
-                duration: duration,
-                ease: 'power4.inOut',
-                yoyoEase: 'power4.inOut',
+                height: 'auto',
+                position: 'inherit',
+                overflow: 'auto',
+                ease: Power4.easeInOut,
+                yoyoEase: Power4.easeInOut,
             }, 'start+=0')
 
-            this.master.fromTo(container, {
-                height: '0',
+            this.master.fromTo(container, duration, {
+                height: 0,
+                position: 'absolute',
+                overflow: 'hidden',
             }, {
-                height: '100%',
-                duration: duration,
-                ease: 'power4.inOut',
-                yoyoEase: 'power4.inOut',
+                height: 'auto',
+                position: 'relative',
+                overflow: 'auto',
+                ease: Power4.easeInOut,
+                yoyoEase: Power4.easeInOut,
+                onComplete: () => {
+                    TweenMax.set(container, {
+                        clearProps: 'overflow'
+                    })
+                }
             }, 'start+=0.1')
 
             this.master.progress(1).progress(0).then(() => {})
 
             this.$nextTick(() => {
-                this.initPanel()
+                // this.initPanel()
                 this.master.play()
             })
 
@@ -313,74 +326,82 @@ export default {
             let uploader = this.$refs.uploader
             let table = this.$refs.table
             let container = this.$refs.container
-            let paddingLeft = gsap.getProperty(uploader, 'paddingLeft')
-            let paddingRight = gsap.getProperty(uploader, 'paddingRight')
-            let paddingTop = gsap.getProperty(uploader, 'paddingTop')
-            let paddingBottom = gsap.getProperty(uploader, 'paddingBottom')
+            let uploadForm = this.$refs.uploadForm
 
-            this.masterPanel = gsap.timeline({
+            // let paddingLeft = gsap.getProperty(uploader, 'paddingLeft')
+            // let paddingRight = gsap.getProperty(uploader, 'paddingRight')
+            // let paddingTop = gsap.getProperty(uploader, 'paddingTop')
+            // let paddingBottom = gsap.getProperty(uploader, 'paddingBottom')
+            // let height = gsap.getProperty(uploader, 'height')
+            // console.log(height);
+
+            this.masterPanel = new TimelineMax({
                 paused: true,
-                yoyo: true,
             })
 
-            this.masterPanel.addLabel('start', '+=0')
+            let marginBottom = gsap.getProperty(uploader, 'marginBottom')
+            console.log(marginBottom);
 
-            this.masterPanel.fromTo(container, {
-                boxShadow: 'inset 0px 0px 0.61805rem rgba(59, 66, 72, 0.2)',
-            }, {
-                boxShadow: 'inset 0px 0px 0rem rgba(59, 66, 72, 0)',
-                duration: .3,
-            }, 'start+=0')
+            this.masterPanel.fromTo(uploadForm, .1, {
+                    display: 'none',
+                }, {
+                    display: 'block'
+                }, 'panelAnim')
+                .set(uploader, {
+                    opacity: '0',
+                    display: 'block',
+                    height: '1px',
+                    width: '100%',
+                    transformOrigin: 'center center',
+                    overflow: 'hidden',
+                    marginBottom: '0',
+                }, 'panelAnim+=0.1')
+                .set(uploadForm, {
+                    opacity: '0',
+                    borderRadius: '50%',
+                }, 'panelAnim+=0.1')
+                .to(uploader, .65, {
+                    opacity: '1',
+                    // ease: Power4.easeInOut,
+                }, 'panelAnim+=0.11')
+                .set(uploader, {
+                    height: 'auto',
+                    marginBottom: '40px',
+                }, 'panelAnim+=0.4')
+                .from(uploader, 0.25, {
+                    height: '1px',
+                    marginBottom: '0',
+                    immediateRender: false,
+                }, 'panelAnim+=0.4')
+                .to(uploadForm, .25, {
+                    borderRadius: '0.25rem',
+                }, 'panelAnim+=0.7')
+                .fromTo(uploadForm, .25, {
+                    opacity: 0,
+                }, {
+                    opacity: 1,
+                }, 'panelAnim+=0.8')
 
-            this.masterPanel.fromTo(uploader, {
-                autoAlpha: 1,
-                height: '100%',
-                scaleY: 1,
-                yPercent: 0,
-                transformOrigin: 'center top',
-            }, {
-                autoAlpha: 0,
-                scaleY: .6,
-                height: '0',
-                yPercent: -20,
-                transformOrigin: 'center top',
-                duration: .3,
-            }, 'start+=0')
-
-            this.masterPanel.fromTo(uploader, {
-                paddingLeft: paddingLeft,
-                paddingRight: paddingRight,
-                paddingTop: paddingTop,
-                paddingBottom: paddingBottom,
-            }, {
-                paddingLeft: '0',
-                paddingRight: '0',
-                paddingTop: '0',
-                paddingBottom: '0',
-                duration: .3,
-            }, 'start+=.1')
-
-
-
-            this.masterPanel.progress(1).progress(0)
 
             this.masterPanel.eventCallback('onComplete', () => {
-                console.log('cai');
-                this.isOpen = false
+                this.isOpen = true
             })
 
             this.masterPanel.eventCallback('onReverseComplete', () => {
-                console.log('sds');
-                this.isOpen = true
+                this.isOpen = false
+            })
+
+            this.$nextTick(() => {
+                this.togglePanel()
             })
         },
         togglePanel: function () {
             if (this.masterPanel) {
                 if (this.isOpen) {
-                    this.masterPanel.play()
+                    this.masterPanel.reverse()
                 }
                 else {
-                    this.masterPanel.reverse()
+                    this.masterPanel.play()
                 }
             }
         },
@@ -466,19 +487,18 @@ $darken: lighten($dark, 3);
     // height: 100%;
     width: 100%;
     position: relative;
-    padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) ($spacer * 2);
+    // padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) ($spacer * 2);
     margin-bottom: $spacer * 2.5;
-    @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);
+    // @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);
     // @include gradient-directional($red, lighten($red, 2), 10deg);
-    @include border-radius($border-radius * 4);
-    @include custom-inner-shadow-lg($darken, 0.2);
-    transition: $transition-base-lg !important;
+    // @include border-radius($border-radius * 4);
+    // @include custom-inner-shadow-lg($darken, 0.2);
+    // transition: $transition-base-lg !important;
     height: 0;
-    overflow: hidden;
     z-index: 3;
 
     &__title {
-        color: $dark;
+        color: darken($gray-100, 50);
         // color: rgba($color, .7);
         // -webkit-text-fill-color: rgba($color, .7);
         // -webkit-text-stroke: 1.618px $darken;
@@ -486,18 +506,19 @@ $darken: lighten($dark, 3);
     }
 
     &__sub-title {
+        color: darken($gray-100, 50);
         padding: ($spacer / 1.618) ($spacer * 2) ($spacer / 2) 0;
-        color: $darken;
+        // color: $darken;
         // color: rgba($color, .7);
         // -webkit-text-fill-color: rgba($color, .7);
         // -webkit-text-stroke: 1.33px $darken;
-        letter-spacing: 6px;
+        letter-spacing: 8px;
     }
 
     &__table {
         height: auto;
         width: 100%;
-        transition: $transition-base-lg !important;
+        // transition: $transition-base-lg !important;
     }
 
     .margin-bt {
@@ -512,41 +533,47 @@ $darken: lighten($dark, 3);
     }
 }
 
-.table {
+.para-table {
     // overflow: hidden;
+    // transition: $transition-base-lg !important;
 
     &__container {
         @include gradient-directional($color, lighten($color, 2), -11deg);
-        @include border-radius($border-radius);
+        @include border-radius($border-radius * 2);
         width: 100%;
-        position: relative;
+        // position: relative;
         padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
+        // transition: $transition-base-lg !important;
 
-        &::after,
-        &::before {
-            content: '';
-            position: absolute;
-            bottom: ($spacer / (1.618)) * 1.1;
-            top: 80%;
-            background: $darken;
-            @include custom-box-shadow($darken, 2px, 0.2);
-            width: 50%;
-            z-index: -1;
-        }
+        // &::after,
+        // &::before {
+        //     content: '';
+        //     position: absolute;
+        //     bottom: ($spacer / (1.618)) * 1.1;
+        //     top: 80%;
+        //     background: $darken;
+        //     @include custom-box-shadow($darken, 2px, 0.2);
+        //     width: 50%;
+        //     z-index: -1;
+        // }
+        //
+        // &::before {
+        //     transform-origin: right bottom;
+        //     left: 8px;
+        //     right: auto;
+        //     transform: rotate(-0.5deg);
+        // }
+        //
+        // &::after {
+        //     transform-origin: left top;
+        //     right: 8px;
+        //     left: auto;
+        //     transform: rotate(0.5deg);
+        // }
+    }
 
-        &::before {
-            transform-origin: right bottom;
-            left: 8px;
-            right: auto;
-            transform: rotate(-0.5deg);
-        }
-
-        &::after {
-            transform-origin: left top;
-            right: 8px;
-            left: auto;
-            transform: rotate(0.5deg);
-        }
+    &__container .uploader {
+        display: none;
     }
 
 }
