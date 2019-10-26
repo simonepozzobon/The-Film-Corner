@@ -292,9 +292,12 @@ label {
 }
 
 .topbar {
+    $color: $gray-100;
     &__title {
-        @include title-text-shadow(12px, 1px, 1px, 2px, 0.33, false);
+        // @include title-text-shadow(12px, 1px, 1px, 2px, 0.33, false);
         padding-left: $spacer * 2;
+        color: darken($color, 50);
+        letter-spacing: 12px;
     }
     &__steps {
         display: flex;
