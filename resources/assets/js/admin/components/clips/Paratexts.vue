@@ -10,7 +10,11 @@
     />
     <hr class="a-clip-panel__divider">
 
-    <div class="mb-5">
+    <div
+        class="mb-5"
+        ref="paraContainer"
+        style="position: relative"
+    >
         <paratext
             v-for="paratext in paratexts"
             :key="paratext.id"
@@ -179,7 +183,7 @@ export default {
         },
     },
     mounted: function () {
-        // this.debug()
+        this.debug()
     },
 }
 </script>

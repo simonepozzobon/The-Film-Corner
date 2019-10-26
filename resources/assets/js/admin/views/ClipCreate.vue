@@ -25,12 +25,12 @@
             </div>
         </div>
     </container>
-    <container v-if="false">
+    <container>
         <div class="form">
             <carica-clip @update="updateField" />
         </div>
     </container>
-    <container v-if="false">
+    <container>
         <informazioni
             :options="options"
             @update="updateField"
@@ -39,7 +39,6 @@
     <container
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
-        v-if="false"
     >
         <approfondimenti @update="updateField" />
     </container>
@@ -54,7 +53,6 @@
         />
     </container>
     <container
-        v-if="false"
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
     >

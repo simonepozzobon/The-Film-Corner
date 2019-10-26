@@ -221,7 +221,7 @@ export default {
     },
     methods: {
         updateField: function (e, key, isArray = false) {
-            if (this.hasOwnProperty(key)) {
+            if (this.hasOwnProperty(key) && e) {
                 if (isArray === true) {
                     if (e.hasOwnProperty('element')) {
                         this[key].push(e.element.text)

@@ -1,5 +1,8 @@
 <template>
-<div class="para-single">
+<div
+    class="para-single"
+    ref="container"
+>
     <ui-title
         font-size="h2"
         :title="'Gestisci i contenuti di - ' + paratext.title"
@@ -135,6 +138,23 @@ import {
     UiTitle,
 }
 from '../../../ui'
+
+import {
+    gsap,
+    TimelineMax,
+    Power4,
+    CSSPlugin,
+    Elastic,
+}
+from 'gsap'
+
+import {
+    GSDevTools
+}
+from 'gsap/GSDevTools'
+
+console.log(Elastic);
+
 export default {
     name: 'Paratext',
     components: {
@@ -162,6 +182,7 @@ export default {
     },
     data: function () {
         return {
+            master: null,
             file: null,
             content: null,
             contents: [],
@@ -211,6 +232,159 @@ export default {
         },
     },
     methods: {
+        blendEases: function (startEase, endEase, blender) {
+            let parse = function (ease) {
+                    return typeof (ease) === "function" ? ease : gsap.parseEase("power4.inOut");
+                },
+                s = gsap.parseEase(startEase),
+                e = gsap.parseEase(endEase)
+
+            blender = parse(blender);
+            return function (v) {
+                var b = blender(v);
+                return s(v) * (1 - b) + e(v) * b;
+            }
+        },
+        initAnim: function () {
+            let container = this.$refs.container
+            let parent = this.$parent.$refs.paraContainer
+            let duration = 0.4
+            let delay = (duration * 1)
+            console.log(delay);
+
+            let master = gsap.timeline({
+                paused: true,
+                yoyo: true,
+                smoothChildTiming: true,
+            })
+
+            master.set(container, {
+                transformOrigin: 'center top',
+                top: 0,
+                yPercent: -100,
+                width: '100%',
+                position: 'absolute',
+            }, 0)
+
+            master.set(parent, {
+                overflow: 'hidden',
+                transformOrigin: 'center top',
+                position: 'relative',
+                width: '100%'
+            }, 0)
+
+            master.addLabel('start', '+=0')
+
+            master.from(parent, {
+                immediateRender: true,
+                duration: duration,
+                height: 0,
+                ease: 'power4.inOut',
+            }, 'start')
+
+            master.fromTo(parent, {
+                // opacity: 0,
+                yPercent: -25,
+            }, {
+                duration: duration,
+                // opacity: 1,
+                yPercent: 0,
+                ease: 'power4.inOut',
+                onStart: () => {
+                    console.log('start parent');
+                },
+                onComplete: () => {
+                    console.log('completo parent');
+                }
+            }, 'start')
+
+            master.addLabel('sec', '-=0.3')
+
+            master.fromTo(container, {
+                yPercent: -20,
+                scaleY: 0.9,
+            }, {
+                duration: duration / 3,
+                yPercent: 0,
+                scaleY: 1,
+                ease: 'power4.inOut',
+            }, 'sec')
+
+            master.fromTo(container, {
+                opacity: 0,
+            }, {
+                duration: duration / 4,
+                opacity: 1,
+                ease: 'power4.inOut',
+            }, 'sec')
+
+            master.add(
+                gsap.fromTo(container, {
+                    className: '+=no-height'
+                }, {
+                    duration: duration,
+                    className: '-=no-height',
+                    onStart: () => {
+                        console.log('iisdsidsi');
+                    },
+                    onComplete: () => {
+                        console.log('finitooooo');
+                    }
+                }),
+                'sec'
+            )
+
+
+            // master.from(container, {
+            //     immediateRender: true,
+            //     duration: duration,
+            //     // height: 0,
+            //     physics2D: {
+            //         velocity: 2,
+            //         friction: 0.5
+            //     },
+            //     ease: this.blendEases('Power4.easeInOut', 'sine', 'back'),
+            //     onStart: () => {
+            //         console.log('start container');
+            //     },
+            //     onComplete: () => {
+            //         console.log('completo container');
+            //     }
+            // }, delay)
+
+            this.$nextTick(() => {
+                GSDevTools.create({
+                    animation: master,
+                    paused: true,
+                })
+
+                master.eventCallback('onComplete', () => {
+                    console.log('complete');
+                })
+                master.eventCallback('onStart', () => {
+                    console.log('start');
+                    console.log(master.labels);
+                })
+            })
+
+        },
+        // showPanel: function () {
+        //     if (this.master) {
+        //         let container =
+        //             this.master.eventCallback('onComplete', () => {
+        //                 TweenMax.set(this.$refs.container, {
+        //                     clearProps: 'all',
+        //                     onComplete: () => {
+        //                         this.master.kill()
+        //                     }
+        //                 })
+        //             })
+        //         this.master.play()
+        //     }
+        //     else {
+        //         this.initAnim()
+        //     }
+        // },
         updateFile: function (file, src) {
             this.file = file
         },
@@ -262,6 +436,9 @@ export default {
         },
     },
     mounted: function () {
+        this.$nextTick(() => {
+            this.initAnim()
+        })
         // this.$nextTick(() => {
         //     this.debug()
         // })
@@ -274,23 +451,30 @@ export default {
 
 .para-single {
     // background-color: $white;
+    height: 100%;
     padding: $spacer * 2;
     margin-bottom: $spacer * 2.5;
     @include gradient-directional($dark, lighten($dark, 10), 145deg);
     @include border-radius($border-radius * 4);
     @include custom-inner-shadow-lg($black);
+    transition: $transition-base-lg !important;
 
     &__table {
         padding: $spacer * 2;
         @include gradient-directional($gray-100, lighten($gray-200, 20), 145deg);
         @include border-radius($border-radius);
         @include custom-box-shadow($black);
+        transition: $transition-base-lg !important;
     }
 
     .margin-bt {
         margin-bottom: $spacer * 2.5;
     }
 
+}
+
+.no-height {
+    height: 0;
 }
 
 .para-img {

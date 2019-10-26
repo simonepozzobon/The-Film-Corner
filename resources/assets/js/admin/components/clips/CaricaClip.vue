@@ -55,7 +55,6 @@
                     ref="player"
                     :options="playerOptions"
                     :playsinline="true"
-                    @timeupdate="onPlayerTimeUpdate($event)"
                     @ready="previewReady"
                 />
             </div>

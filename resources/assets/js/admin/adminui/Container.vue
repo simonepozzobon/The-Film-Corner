@@ -63,8 +63,10 @@ export default {
 
             this.master.fromTo(container, .6, {
                 height: 0,
+                autoAlpha: 0,
                 ease: Power4.easeInOut,
             }, {
+                autoAlpha: 1,
                 height: 'auto',
                 ease: Power4.easeInOut,
             })
@@ -103,7 +105,9 @@ export default {
     },
     mounted: function () {
         if (this.hasAnimations == true) {
-            this.initAnim()
+            this.$nextTick(() => {
+                this.initAnim()
+            })
         }
     },
 }
