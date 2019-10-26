@@ -11,9 +11,8 @@
     <hr class="a-clip-panel__divider">
 
     <div
-        class="mb-5"
+        class="mb-5 para-container"
         ref="paraContainer"
-        style="position: relative"
     >
         <paratext
             v-for="paratext in paratexts"
@@ -42,7 +41,6 @@
                 :multiple="false"
                 :options="this.options.paratext_types"
                 @update="updateParatextType"
-                @ready="debug"
             />
         </div>
         <div class="col-md-3">
@@ -183,11 +181,24 @@ export default {
         },
     },
     mounted: function () {
-        this.debug()
+        // this.debug()
     },
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
+
+.para-container {
+    // width: 100%;
+    // position: relative;
+    transition: $transition-base-lg !important;
+    // height: 0;
+    overflow: hidden;
+}
+
+.noHeight {
+    height: 0;
+    transition: $transition-base-lg !important;
+}
 </style>

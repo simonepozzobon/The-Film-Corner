@@ -145,6 +145,7 @@ import {
     Power4,
     CSSPlugin,
     Elastic,
+    Back,
 }
 from 'gsap'
 
@@ -152,8 +153,6 @@ import {
     GSDevTools
 }
 from 'gsap/GSDevTools'
-
-console.log(Elastic);
 
 export default {
     name: 'Paratext',
@@ -250,121 +249,46 @@ export default {
             let parent = this.$parent.$refs.paraContainer
             let duration = 0.4
             let delay = (duration * 1)
-            console.log(delay);
 
-            let master = gsap.timeline({
+            this.master = gsap.timeline({
                 paused: true,
                 yoyo: true,
                 smoothChildTiming: true,
             })
 
-            master.set(container, {
-                transformOrigin: 'center top',
-                top: 0,
-                yPercent: -100,
-                width: '100%',
-                position: 'absolute',
-            }, 0)
+            this.master.set(container, {
+                height: 'auto',
+            })
 
-            master.set(parent, {
-                overflow: 'hidden',
-                transformOrigin: 'center top',
-                position: 'relative',
-                width: '100%'
-            }, 0)
+            this.master.set(parent, {
+                height: 'auto',
+            })
 
-            master.addLabel('start', '+=0')
+            this.master.addLabel('start', '+=0')
 
-            master.from(parent, {
-                immediateRender: true,
+            this.master.fromTo(parent, {
+                height: '0',
+            }, {
+                height: 'auto',
                 duration: duration,
-                height: 0,
                 ease: 'power4.inOut',
+                yoyoEase: 'power4.inOut',
             }, 'start')
 
-            master.fromTo(parent, {
-                // opacity: 0,
-                yPercent: -25,
+            this.master.fromTo(container, {
+                height: '0',
             }, {
+                height: 'auto',
                 duration: duration,
-                // opacity: 1,
-                yPercent: 0,
                 ease: 'power4.inOut',
-                onStart: () => {
-                    console.log('start parent');
-                },
-                onComplete: () => {
-                    console.log('completo parent');
-                }
-            }, 'start')
+                yoyoEase: 'power4.inOut',
 
-            master.addLabel('sec', '-=0.3')
+            }, 'start+=0.1')
 
-            master.fromTo(container, {
-                yPercent: -20,
-                scaleY: 0.9,
-            }, {
-                duration: duration / 3,
-                yPercent: 0,
-                scaleY: 1,
-                ease: 'power4.inOut',
-            }, 'sec')
-
-            master.fromTo(container, {
-                opacity: 0,
-            }, {
-                duration: duration / 4,
-                opacity: 1,
-                ease: 'power4.inOut',
-            }, 'sec')
-
-            master.add(
-                gsap.fromTo(container, {
-                    className: '+=no-height'
-                }, {
-                    duration: duration,
-                    className: '-=no-height',
-                    onStart: () => {
-                        console.log('iisdsidsi');
-                    },
-                    onComplete: () => {
-                        console.log('finitooooo');
-                    }
-                }),
-                'sec'
-            )
-
-
-            // master.from(container, {
-            //     immediateRender: true,
-            //     duration: duration,
-            //     // height: 0,
-            //     physics2D: {
-            //         velocity: 2,
-            //         friction: 0.5
-            //     },
-            //     ease: this.blendEases('Power4.easeInOut', 'sine', 'back'),
-            //     onStart: () => {
-            //         console.log('start container');
-            //     },
-            //     onComplete: () => {
-            //         console.log('completo container');
-            //     }
-            // }, delay)
+            this.master.progress(1).progress(0)
 
             this.$nextTick(() => {
-                GSDevTools.create({
-                    animation: master,
-                    paused: true,
-                })
-
-                master.eventCallback('onComplete', () => {
-                    console.log('complete');
-                })
-                master.eventCallback('onStart', () => {
-                    console.log('start');
-                    console.log(master.labels);
-                })
+                this.master.play()
             })
 
         },
@@ -451,13 +375,17 @@ export default {
 
 .para-single {
     // background-color: $white;
-    height: 100%;
+    // height: 100%;
+    width: 100%;
+    position: relative;
     padding: $spacer * 2;
     margin-bottom: $spacer * 2.5;
     @include gradient-directional($dark, lighten($dark, 10), 145deg);
     @include border-radius($border-radius * 4);
     @include custom-inner-shadow-lg($black);
     transition: $transition-base-lg !important;
+    height: 0;
+    overflow: hidden;
 
     &__table {
         padding: $spacer * 2;
