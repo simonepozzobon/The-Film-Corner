@@ -1,15 +1,5 @@
 <template>
-<div class="a-clip-panel__group">
-    <ui-title
-        title="Informazioni Clip"
-        tag="span"
-        font-size="h5"
-        :has-padding="false"
-        :has-margin="false"
-        :has-container="false"
-    />
-    <hr class="a-clip-panel__divider">
-
+<block-panel title="Informazioni Clip">
     <div class="a-clip-panel__row form-group row">
         <label
             for="period"
@@ -152,11 +142,12 @@
             />
         </div>
     </div>
-</div>
+</block-panel>
 </template>
 
 <script>
 import {
+    BlockPanel,
     Container,
     FileInput,
     ImagePreview,
@@ -177,6 +168,7 @@ from '../../../ui'
 export default {
     name: 'Informazioni',
     components: {
+        BlockPanel,
         Container,
         FileInput,
         ImagePreview,

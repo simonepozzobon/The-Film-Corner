@@ -1,15 +1,5 @@
 <template>
-<div class="a-clip-panel__group">
-    <ui-title
-        title="Carica Clip"
-        tag="span"
-        font-size="h4"
-        :has-padding="false"
-        :has-margin="false"
-        :has-container="false"
-    />
-    <hr class="a-clip-panel__divider">
-
+<block-panel title="Carica Clip">
     <div class="a-clip-panel__row form-group row">
         <label
             for="title"
@@ -60,11 +50,12 @@
             </div>
         </div>
     </div>
-</div>
+</block-panel>
 </template>
 
 <script>
 import {
+    BlockPanel,
     Container,
     FileInput,
     ImagePreview,
@@ -96,6 +87,7 @@ from 'gsap'
 export default {
     name: 'CaricaClip',
     components: {
+        BlockPanel,
         Container,
         FileInput,
         ImagePreview,

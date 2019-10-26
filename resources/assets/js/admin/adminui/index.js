@@ -1,4 +1,5 @@
 import Container from './Container.vue'
+import BlockPanel from './BlockPanel.vue'
 import DynamicForm from './DynamicForm.vue'
 import ImagePreview from './ImagePreview.vue'
 import FileInput from './FileInput.vue'
@@ -9,6 +10,7 @@ import Select2Input from './Select2Input.vue'
 
 export {
     Container,
+    BlockPanel,
     DynamicForm,
     ImagePreview,
     FileInput,

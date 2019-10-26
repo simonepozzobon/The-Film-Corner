@@ -1,7 +1,7 @@
 <template>
 <div
     class="admin-container"
-    :class="paddingClass"
+    :class="[paddingClass, containsClass]"
     ref="container"
 >
     <div class="admin-container__content">
@@ -31,6 +31,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        contains: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -46,6 +50,17 @@ export default {
         paddingClass: function () {
             if (this.padding) {
                 return 'admin-container--padding-' + this.padding
+            }
+            else {
+                return null
+            }
+        },
+        containsClass: function () {
+            if (this.contains) {
+                return 'admin-container--contains'
+            }
+            else {
+                return null
             }
         }
     },
@@ -132,6 +147,11 @@ $darken: lighten($dark, 3);
 
     &--padding-sm &__content {
         padding: $spacer;
+    }
+
+    &--contains {
+        @include make-container();
+        @include make-container-max-widths();
     }
 }
 </style>

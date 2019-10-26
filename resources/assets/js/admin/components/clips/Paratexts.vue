@@ -1,13 +1,5 @@
 <template>
-<div class="a-clip-panel__group panel-group">
-    <ui-title
-        title="Paratesti"
-        tag="h2"
-        font-size="h2"
-        class="panel-group__title"
-        :has-shadows="true"
-        :shadows-type="2"
-    />
+<block-panel title="Paratesti">
     <div
         class="mb-5 para-container panel-group__container"
         ref="paraContainer"
@@ -56,22 +48,14 @@
 
 
     <hr class="a-clip-panel__divider">
-
-    <!-- <div>
-        <paratext
-            v-for="content in paratexts"
-            :key="content.id"
-            :para="content"
-        />
-    </div> -->
-
-
-
-</div>
+    <!-- <div class="a-clip-panel__group panel-group">
+  </div> -->
+</block-panel>
 </template>
 
 <script>
 import {
+    BlockPanel,
     Container,
     FileInput,
     ImagePreview,
@@ -94,6 +78,7 @@ import Paratext from './Paratext.vue'
 export default {
     name: 'Paratesti',
     components: {
+        BlockPanel,
         Container,
         FileInput,
         ImagePreview,

@@ -1,16 +1,5 @@
 <template>
-<div class="a-clip-panel__group">
-    <ui-title
-        title="Approfondimenti"
-        tag="span"
-        font-size="h5"
-        :has-padding="false"
-        :has-margin="false"
-        :has-container="false"
-    />
-    <hr class="a-clip-panel__divider">
-
-
+<block-panel title="Approfondimenti">
     <text-editor
         :has-animation="true"
         label="Informazioni Tecniche"
@@ -37,11 +26,12 @@
         label="Food for thoughts"
         @update="updateFood"
     />
-</div>
+</block-panel>
 </template>
 
 <script>
 import {
+    BlockPanel,
     Container,
     FileInput,
     ImagePreview,
@@ -62,6 +52,7 @@ from '../../../ui'
 export default {
     name: 'Approfondimenti',
     components: {
+        BlockPanel,
         Container,
         FileInput,
         ImagePreview,

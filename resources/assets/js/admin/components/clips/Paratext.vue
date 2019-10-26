@@ -526,7 +526,7 @@ $darken: lighten($dark, 3);
         &::before {
             content: '';
             position: absolute;
-            bottom: $spacer / (1.618);
+            bottom: ($spacer / (1.618)) * 1.1;
             top: 80%;
             background: $darken;
             @include custom-box-shadow($darken, 2px, 0.2);

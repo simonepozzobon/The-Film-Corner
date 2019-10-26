@@ -10,6 +10,15 @@
   text-shadow: $size $size_1 $size_2 rgba($color, $opacity * 2), ($size * 2) ($size_1 * 2) ($size_2 * 2) rgba($color, $opacity);
 }
 
+@mixin title-text-shadow($letterspacing: 12px, $size: 2px, $size_1: 4px, $size_2: 8px, $opacity: .9, $has-padding: true) {
+  @if $has-padding {
+    padding: 0 ($spacer * 2) ($spacer * 1.618) 0;
+  }
+  color: $title-darken;
+  letter-spacing: $letterspacing;
+  text-shadow: $size $size_1 $size_2 rgba($title-shadow, $opacity), (-$size) (-$size_1) ($size_2) rgba($title-shadow, $opacity), (0) ($size_1) ($size_2) rgba($title-shadow, $opacity), (0) (-$size_1) ($size_2) rgba($title-shadow, $opacity);
+}
+
 @mixin custom-inner-shadow($color, $size: 4px, $opacity: .33) {
   box-shadow: inset 0px 0px $size rgba($color, $opacity);
 }

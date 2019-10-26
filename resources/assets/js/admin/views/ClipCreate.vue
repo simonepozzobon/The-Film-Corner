@@ -1,9 +1,17 @@
 <template>
 <div class="a-clip-panel">
-    <container padding="sm">
+    <container
+        padding="sm"
+        :contains="true"
+    >
         <div class="a-clip-panel__topbar topbar">
-            <div class="topbar__title">
-                <ui-title title="Nuova Clip" />
+            <div class="topbar__head">
+                <ui-title
+                    title="Nuova Clip"
+                    tag="h1"
+                    font-size="h1"
+                    class="topbar__title"
+                />
             </div>
             <div class="topbar__steps">
                 <step
@@ -25,24 +33,26 @@
             </div>
         </div>
     </container>
-    <container>
+    <container :contains="true">
         <div class="form">
             <carica-clip @update="updateField" />
         </div>
     </container>
-    <container>
+    <container :contains="true">
         <informazioni
             :options="options"
             @update="updateField"
         />
     </container>
     <container
+        :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
     >
         <approfondimenti @update="updateField" />
     </container>
     <container
+        :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(2)"
     >
@@ -55,12 +65,16 @@
         />
     </container>
     <container
+        :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
     >
         <esercizi @update="updateField" />
     </container>
-    <container padding="sm">
+    <container
+        padding="sm"
+        :contains="true"
+    >
         <div class="a-clip-panel__topbar">
             <ui-button
                 title="Salva Clip"
@@ -268,6 +282,10 @@ label {
 }
 
 .topbar {
+    &__title {
+        @include title-text-shadow(12px, 1px, 1px, 2px, 0.33, false);
+        padding-left: $spacer * 2;
+    }
     &__steps {
         display: flex;
     }
