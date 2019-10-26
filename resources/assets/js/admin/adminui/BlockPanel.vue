@@ -35,16 +35,20 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 .block-panel {
+    $color: $gray-100;
+
     &__title {
         @include title-text-shadow(12px, 1px, 1px, 2px, 0.33);
     }
 
     &__container {
-        background-color: $gray-200;
-        padding: ($spacer * 2 * 1.618);
+        background-color: $color;
+        padding: ($spacer * 2 * 1.618) ($spacer * 2 * 1.618) ($spacer * 1.618) ($spacer * 2 * 1.618);
+        border: 3px solid darken($color, 6);
         @include border-radius($border-radius * 2);
-        @include gradient-directional($gray-200, lighten($gray-200, 5), -10deg);
-        @include custom-box-shadow(lighten($black, 25));
+        @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
+        // @include gradient-directional($color, lighten($color, 2), -10deg);
+        // @include custom-box-shadow(lighten($dark, 25), 1px, 0.3);
     }
 }
 </style>

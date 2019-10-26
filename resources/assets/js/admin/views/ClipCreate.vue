@@ -33,7 +33,10 @@
             </div>
         </div>
     </container>
-    <container :contains="true">
+    <container
+        ref="test"
+        :contains="true"
+    >
         <div class="form">
             <carica-clip @update="updateField" />
         </div>
@@ -157,6 +160,7 @@ export default {
                 hashtags: [],
                 paratext_types: [],
             },
+            testState: false,
         }
     },
     watch: {
@@ -165,6 +169,12 @@ export default {
         },
     },
     methods: {
+        testHide: function () {
+            this.testState = false
+        },
+        testShow: function () {
+            this.testState = true
+        },
         getData: function () {
             this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
                 for (let key in this.options) {

@@ -72,18 +72,21 @@ export default {
                 yoyo: true,
             })
 
-            this.master.set(container, {
-                overflow: 'hidden'
-            })
-
             this.master.fromTo(container, .6, {
                 height: 0,
+                overflow: 'hidden',
                 autoAlpha: 0,
                 ease: Power4.easeInOut,
             }, {
                 autoAlpha: 1,
                 height: 'auto',
+                overflow: 'auto',
                 ease: Power4.easeInOut,
+                onComplete: () => {
+                    TweenMax.set(container, {
+                        clearProps: 'overflow'
+                    })
+                }
             })
 
             this.master.progress(1).progress(0)
@@ -130,18 +133,17 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
-$color: lighten($gray-200, 8);
-$color-darken: lighten($gray-200, 3);
+$color-darken: lighten($light, 3);
 $darken: lighten($dark, 3);
 
 .admin-container {
     &__content {
         // background-color: $gray-100;
-        padding: ($spacer * 2) ($spacer * 2 * 1.618) ($spacer * 1.618) ($spacer * 2 * 1.618);
+        padding: ($spacer * 2) ($spacer * 2 * 1.618) ($spacer * 2 * 1.618) ($spacer * 2 * 1.618);
         @include border-radius($border-radius * 4);
         @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);
-        @include custom-box-shadow(lighten($black, 25));
-        margin-bottom: $spacer * 1.618;
+        @include custom-box-shadow($darken, 2px, 0.02);
+        margin-bottom: $spacer * 2 * 1.618;
         z-index: 2;
     }
 
