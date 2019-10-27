@@ -155,6 +155,7 @@ from 'tiptap'
 
 import {
     TweenMax,
+    Power4,
 }
 from 'gsap/all'
 

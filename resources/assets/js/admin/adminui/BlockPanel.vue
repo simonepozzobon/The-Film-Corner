@@ -42,7 +42,13 @@ import {
 from '../../ui'
 
 import {
-    TweenMax
+    TweenMax,
+    Power4,
+    Power0,
+    CSSPlugin,
+    Elastic,
+    Back,
+    Sine,
 }
 from 'gsap/all'
 

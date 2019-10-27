@@ -75,6 +75,7 @@ import NetInteractions from './NetInteractions.vue'
 
 import {
     TweenMax,
+    Power4
 }
 from 'gsap/all'
 

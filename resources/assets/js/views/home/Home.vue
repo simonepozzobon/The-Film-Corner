@@ -48,6 +48,7 @@ import {
 from '../../ui'
 import {
     TweenMax
+    Back,
 }
 from 'gsap/all'
 

@@ -79,6 +79,8 @@ from '../../../ui'
 
 import {
     TweenMax,
+    Power4,
+    CSSPlugin
 }
 from 'gsap/all'
 

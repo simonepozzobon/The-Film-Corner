@@ -57,6 +57,7 @@ import _ from 'lodash'
 
 import {
     TweenMax,
+    ScrollToPlugin
 }
 from 'gsap/all'
 

@@ -95,6 +95,9 @@ import mime from 'mime-types'
 
 import {
     TweenMax,
+    Power4,
+    RoundPropsPlugin,
+    CSSPlugin,
 }
 from 'gsap/all'
 

@@ -77,6 +77,9 @@ import {
 from '../ui'
 import {
     TweenMax,
+    Power4,
+    Sine,
+    Back
 }
 from 'gsap/all'
 

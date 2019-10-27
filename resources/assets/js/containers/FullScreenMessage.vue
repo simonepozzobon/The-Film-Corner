@@ -18,6 +18,7 @@ from '../ui'
 
 import {
     TweenMax,
+    Power4,
 }
 from 'gsap/all'
 

@@ -63,6 +63,8 @@ import TranslateCreateLanguage from './TranslateCreateLanguage.vue'
 
 import {
     TweenMax,
+    Power4,
+    CSSPlugin,
 }
 from 'gsap/all'
 

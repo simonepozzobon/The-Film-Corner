@@ -12,6 +12,9 @@
 <script>
 import {
     TweenMax,
+    Power2,
+    Power3,
+    Sine,
 }
 from 'gsap/all'
 

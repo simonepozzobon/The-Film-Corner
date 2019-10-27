@@ -24,6 +24,8 @@
 <script>
 import {
     TweenMax,
+    CSSPlugin,
+    Back
 }
 from 'gsap/all'
 

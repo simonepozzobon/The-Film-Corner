@@ -99,6 +99,7 @@ from '../../ui'
 
 import {
     TweenMax,
+    ScrollToPlugin
 }
 from 'gsap/all'
 

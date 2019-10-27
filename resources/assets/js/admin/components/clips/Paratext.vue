@@ -84,6 +84,10 @@ from '../../../ui'
 
 import {
     TweenMax,
+    Power4,
+    CSSPlugin,
+    Elastic,
+    Back,
 }
 from 'gsap/all'
 

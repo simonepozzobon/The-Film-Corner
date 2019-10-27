@@ -38,6 +38,10 @@
 import UiAccordionArrow from './UiAccordionArrow.vue'
 import {
     TweenMax,
+    TimelineMax,
+    CSSPlugin,
+    Power3,
+    Sine,
 }
 from 'gsap/all'
 
