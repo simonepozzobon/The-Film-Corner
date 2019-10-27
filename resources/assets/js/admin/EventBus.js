@@ -14,6 +14,7 @@ const EventBus = new Vue({
             test: 0,
             initialized: false,
             wait: false,
+            isReady: true,
         }
     },
     watch: {
@@ -23,21 +24,25 @@ const EventBus = new Vue({
         completed: function (c) {
             console.log('completate', c);
         },
-        // cached: function (cached) {
-        //     if (cached.length > 0) {
-        //         this.checkBuffer()
-        //     }
-        //     else {
-        //         // console.log('fine cache');
-        //     }
-        // },
         toPlay: function (toPlay) {
-            // console.log(toPlay.uuid, 'dentro');
-            if (toPlay.length > 0) {
+            if (toPlay.length >= this.limit) {
+                console.log('sopra il limiter');
+                let gonnaPlay = toPlay.find(item => item.state == 0)
+                console.log(gonnaPlay);
+                if (gonnaPlay) {
+                    this.$nextTick(() => {
+                        this.play(gonnaPlay)
+                        console.log('gonnaPlay');
+                    })
+                }
+            }
+            else if (toPlay.length >= 0 && toPlay.length < this.limit) {
                 let gonnaPlay = toPlay.find(item => item.state == 0)
                 if (gonnaPlay) {
-                    this.play(gonnaPlay)
-                    console.log('gonnaPlay');
+                    this.$nextTick(() => {
+                        this.play(gonnaPlay)
+                        console.log('gonnaPlay');
+                    })
                 }
                 else {
                     console.log('nessuno in lista');
@@ -46,7 +51,29 @@ const EventBus = new Vue({
             else {
                 console.log('buffer finito', this.toPlay.length);
             }
+        },
+        pool: function (pool) {
+            if (pool.length > 0 && this.isReady == true) {
+                this.isReady = false
+                this.$nextTick(() => {
+                    this.checkDuplicatesOnCache(pool[0])
+                })
+            }
+        },
+        isReady: function (value) {
+            if (value == true && this.bufferIsFree) {
+                console.log(this.bufferIsFree);
+                this.checkQueue()
+            }
         }
+    },
+    computed: {
+        bufferIsFree: function () {
+            if (this.toPlay.length >= 0 && this.toPlay.length < this.limit) {
+                return true
+            }
+            return false
+        },
     },
     methods: {
         checkBuffer: function () {
@@ -85,7 +112,7 @@ const EventBus = new Vue({
             let idx = this.toPlay.indexOf(timeline)
             if (idx > -1) {
                 this.toPlay.splice(idx, 1)
-                this.checkBuffer()
+                // this.checkBuffer()
             }
             return true
         },
@@ -176,74 +203,33 @@ const EventBus = new Vue({
             if (this.cached.length > 0) {
                 // prova a cercare i dupplicati se si inceppa
 
-                let similar = []
-
+                let hasDuplicate = false
                 for (let i = 0; i < this.cached.length; i++) {
                     let single = this.cached[i]
 
-                    if (single.uuid == next.uuid) {
-                        let idx = similar.findIndex(item => item.uuid == next.uuid)
-                        if (idx == -1) {
-                            similar.push({
-                                uuid: next.uuid,
-                                items: [next]
-                            })
-                        }
+                    if (single.uuid == next.uuid && single.direction == next.direction) {
+                        hasDuplicate = true
                     }
                 }
 
-                if (similar.length > 0) {
-                    for (let j = 0; j < similar.length; j++) {
-                        this.checkSameDirection(similar[j].items)
-                    }
+                if (hasDuplicate == false) {
+                    this.cached.push(next)
                 }
-
-                // similar.map(serie => {
-                //     if (serie.items.length > 1) {
-                //         // console.log('dupplicati', serie);
-                //         let similarDirections = []
-                //
-                //         serie.items.map(single => {
-                //             let idx = similarDirections.findIndex(item => item.direction == single.direction)
-                //             if (idx == -1) {
-                //                 similarDirections.push({
-                //                     direction: single.direction,
-                //                     items: [single]
-                //                 })
-                //             }
-                //             else {
-                //                 similarDirections[idx].items.push(single)
-                //             }
-                //         })
-                //
-                //         console.log(similarDirections);
-                //     }
-                // })
-
             }
             else {
-                console.log('nuovo');
                 this.cached.push(next)
-                // this.checkBuffer()
             }
-        },
-        checkSameDirection: function (anims) {
-            let similar = []
 
-            for (let i = 0; i < anims.length; i++) {
-                let anim = anims[i]
-                let idx = similar.findIndex(item => item.direction == anim.direction)
-                if (idx == -1) {
-                    similar.push({
-                        direction: anim.direction,
-                        items: [anim]
-                    })
-                }
-                else {
-                    similar[idx].items.push(anim)
-                }
+            // let test = this.checkBuffer()
+            // console.log(test);
+
+            let idx = this.pool.indexOf(next)
+            if (idx > -1) {
+                this.pool.splice(idx, 1)
+                this.$nextTick(() => {
+                    this.isReady = true
+                })
             }
-            console.log(similar);
         },
         bufferPool: function (newAnim) {
             this.pool.push(newAnim)
@@ -261,7 +247,7 @@ const EventBus = new Vue({
                 callback: callback,
             }
 
-            this.checkDuplicatesOnCache(newAnim)
+            this.bufferPool(newAnim)
         })
     },
 }).$mount('#bus')
