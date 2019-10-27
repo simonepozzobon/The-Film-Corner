@@ -36,7 +36,7 @@
             </div>
             <div
                 class="pro-session__icon"
-                @click.prevent="deleteNetwork"
+                @click.stop.prevent="deleteNetwork"
             >
                 <div class="pro-session__value">
                 </div>

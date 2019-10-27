@@ -97,14 +97,12 @@ import {
     TweenMax,
     TimelineMax,
     Power4,
-    RoundPropsPlugin,
     CSSPlugin,
 }
 from 'gsap/all'
 
 const plugins = [
     Power4,
-    RoundPropsPlugin,
     CSSPlugin,
 ]
 
@@ -205,10 +203,10 @@ export default {
 
             this.master.fromTo(container, .6, {
                 height: 0,
-                roundProps: 'height',
+                // roundProps: 'height',
             }, {
                 height: '100%',
-                roundProps: 'height',
+                // roundProps: 'height',
                 ease: Power4.easeInOut,
             }, 'start')
 

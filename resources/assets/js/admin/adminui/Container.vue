@@ -49,7 +49,9 @@ export default {
     },
     watch: {
         state: function () {
-            this.setState()
+            this.$nextTick(() => {
+                this.setState()
+            })
         },
     },
     computed: {
@@ -81,22 +83,24 @@ export default {
                 yoyo: true,
             })
 
-            this.master.fromTo(container, .6, {
-                height: 0,
-                overflow: 'hidden',
-                autoAlpha: 0,
-                ease: Power4.easeInOut,
-            }, {
-                autoAlpha: 1,
-                height: 'auto',
-                overflow: 'auto',
-                ease: Power4.easeInOut,
-                onComplete: () => {
-                    TweenMax.set(container, {
-                        clearProps: 'overflow'
-                    })
-                }
-            })
+            this.master.to(container, .1, {
+                    overflow: 'hidden',
+                }, 'start')
+                .fromTo(container, .6, {
+                    height: '1px',
+                    autoAlpha: 0,
+                    ease: Power4.easeInOut,
+                }, {
+                    autoAlpha: 1,
+                    height: 'auto',
+                    ease: Power4.easeInOut,
+                    immediateRender: false,
+                }, 'start+=0')
+                .to(container, .1, {
+                    overflow: 'inherit'
+                }, 'start+=0.6')
+
+            this.master.progress(1).progress(0)
 
             if (this.state == false) {
                 this.$nextTick(() => {

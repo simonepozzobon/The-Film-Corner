@@ -1,5 +1,7 @@
 const elementResizeEvent = require('element-resize-event')
 
+const debounce = require('lodash.debounce')
+
 const Utility = {
     hexToRgbA: function (hex) {
         let c
@@ -77,11 +79,23 @@ const Utility = {
             return false
         }
     },
-    elementResizeEvent: function (el, callback = null) {
-        if (this.isFunction(callback)) {
-            console.log('è una funzione');
-        }
-    }
+    onResizeListener: function (el, callback = null) {
+        elementResizeEvent(el, () => {
+            if (this.isFunction(callback)) {
+                this.debounceCallback(el, callback)
+            }
+            else {
+                console.log('no callback');
+                return {
+                    el: el,
+                    callback: null,
+                }
+            }
+        })
+    },
+    debounceCallback: debounce((el, callback) => {
+        callback(el)
+    }, 500)
 }
 
 export default Utility

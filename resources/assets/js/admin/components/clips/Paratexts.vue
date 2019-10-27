@@ -169,6 +169,17 @@ export default {
     },
     mounted: function () {
         // this.debug()
+        // this.$nextTick(() => {
+        //     this.$util.onResizeListener(this.$refs.paraContainer, (el) => {
+        //         let panel = this.$refs.panel
+        //         let container = panel.$refs.container
+        //         let height = container.style.height
+        //         if (height != 'auto' && height != '1px') {
+        //             console.log(height);
+        //             // container.style.height = ''
+        //         }
+        //     })
+        // })
     },
 }
 </script>

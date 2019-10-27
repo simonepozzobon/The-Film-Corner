@@ -17,7 +17,7 @@
                 sizeClass,
             ]"
         :disabled="disable"
-        @click.prevent="clicked"
+        @click.stop.prevent="clicked"
     >
         <span ref="text">
             {{ title }}
@@ -46,7 +46,7 @@
             customSizeClass,
         ]"
     :disabled="disable"
-    @click.prevent="clicked"
+    @click.stop.prevent="clicked"
 >
     <span ref="text">
         {{ title }}

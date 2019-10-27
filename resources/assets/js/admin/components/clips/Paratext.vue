@@ -29,7 +29,7 @@
                         <img
                             :src="data.item.media"
                             class="para-img"
-                            @click.prevent="showPreview(data.item)"
+                            @click.stop.prevent="showPreview(data.item)"
                         >
                     </div>
                 </template>

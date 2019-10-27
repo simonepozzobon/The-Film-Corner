@@ -9,7 +9,7 @@
         </label>
         <div
             :class="inputSize"
-            @click.prevent="focusEditor"
+            @click.stop.prevent="focusEditor"
         >
             <div
                 class="admin-editor__container"

@@ -190,44 +190,40 @@ export default {
                 }, {
                     display: 'block',
                 }, 'start')
-
-                .set(childsVisible, {
+                .to(childsVisible, .1, {
                     opacity: '0',
                 }, 'start')
-                .set(this.$refs.parent, {
+                .to(this.$refs.parent, .1, {
                     display: 'flex',
                 }, 'start')
 
-                .set(content, {
+                .to(content, 0, {
                     height: '1px',
                     paddingTop: '0',
                     paddingBottom: '0',
                     overflow: 'hidden',
                 }, 'start')
 
-                .set(content, {
+                .fromTo(content, 0.1, {
+                    width: '1px',
+                    maxWidth: '0%',
+                }, {
                     id: 'width',
                     width: '100%',
                     maxWidth: '100%',
-                }, 'setWidth')
-                .from(content, 0.1, {
-                    width: '1px',
-                    maxWidth: '0%',
                     ease: Sine.easeInOut,
                     yoyoEase: Sine.easeIn,
                     immediateRender: false,
                 }, 'setWidth')
 
-                .set(content, {
-                    id: 'height',
-                    height: 'auto',
-                    paddingTop: '3.236rem',
-                    paddingBottom: '1.618rem',
-                }, 'setHeight')
-                .from(content, .1, {
+                .fromTo(content, .1, {
                     height: '1px',
                     paddingTop: '0',
                     paddingBottom: '0',
+                }, {
+                    height: 'auto',
+                    paddingTop: '3.236rem',
+                    paddingBottom: '1.618rem',
                     immediateRender: false,
                     ease: Sine.easeInOut,
                     yoyoEase: Sine.easeIn,
@@ -264,17 +260,13 @@ export default {
                     immediateRender: false,
                 }, 'revealFrame')
 
-                .set(content, {
-                    id: 'shadows',
-                    boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0.2)',
-                }, 'revealFrame')
-                .from(content, .2, {
+                .fromTo(content, .2, {
                     boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0)',
+                }, {
+                    boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0.2)',
                     immediateRender: false,
-                    // ease: Power4.easeInOut,
                     ease: Sine.easeInOut,
                 }, 'revealFrame')
-
 
                 .fromTo(childsVisible, .15, {
                     opacity: '0',
@@ -284,44 +276,45 @@ export default {
                     opacity: '1',
                     scaleX: 1,
                     scaleY: 1,
-                    stagger: 0.1,
+                    stagger: {
+                        amount: 0.1,
+                        each: -1,
+                        from: 'start',
+                        ease: Sine.easeIn,
+                    },
                     ease: Sine.easeOut,
                     immediateRender: false,
                 }, 'revealContent')
 
-            // if (this.hasDebug) {
-            //     GSDevTools.create({
-            //         animation: this.master,
-            //         inTime: 'revealFrame-=0.1',
-            //         css: {
-            //             zIndex: 999,
-            //         }
-            //     })
-            // }
+            this.master.progress(1).progress(0)
 
             this.$nextTick(() => {
                 this.togglePanel()
             })
         },
         togglePanel: function () {
-            if (this.master) {
-                if (this.isOpen) {
-                    // chiude pannello
-                    this.$ebus.$emit('add-anim', this.master, false, this.uuid, () => {
-                        this.isOpen = false
-                    })
+            this.$nextTick(() => {
+                if (this.master) {
+                    if (this.isOpen) {
+                        // chiude pannello
+                        this.$ebus.$emit('add-anim', this.master, false, this.uuid, () => {
+                            this.isOpen = false
+                        })
+                    }
+                    else {
+                        // apre pannello
+                        this.$ebus.$emit('add-anim', this.master, true, this.uuid, () => {
+                            this.isOpen = true
+                        })
+                    }
                 }
-                else {
-                    // apre pannello
-                    this.$ebus.$emit('add-anim', this.master, true, this.uuid, () => {
-                        this.isOpen = true
-                    })
-                }
-            }
+            })
         },
     },
     mounted: function () {
-
+        // this.$util.onResizeListenerDeb(this.$refs.container, (el) => {
+        //     console.log('resize block panel');
+        // })
         if (this.needsTrigger == false) {
             this.$nextTick(() => {
                 this.initAnim()

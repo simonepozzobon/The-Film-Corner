@@ -16,7 +16,7 @@
     <svg
         v-if="hasTimes"
         class="ui-folder-corner__times"
-        @click.prevent="clicked"
+        @click.stop.prevent="clicked"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 23.35 23.35"
     >

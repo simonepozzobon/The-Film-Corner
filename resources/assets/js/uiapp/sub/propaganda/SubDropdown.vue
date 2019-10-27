@@ -31,7 +31,7 @@
                 v-for="item in items"
                 :key="item.id"
                 class="sub-item__link"
-                @click.prevent="openSub(item.id)"
+                @click.stop.prevent="openSub(item.id)"
             >
                 {{ item.title }}
             </a>
