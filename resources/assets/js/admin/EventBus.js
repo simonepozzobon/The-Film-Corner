@@ -5,6 +5,7 @@ const EventBus = new Vue({
     render: h => h(),
     data: function () {
         return {
+            pool: [],
             cached: [],
             toPlay: [],
             limit: 4,
@@ -22,14 +23,14 @@ const EventBus = new Vue({
         completed: function (c) {
             console.log('completate', c);
         },
-        cached: function (cached) {
-            if (cached.length > 0) {
-                this.checkBuffer()
-            }
-            else {
-                // console.log('fine cache');
-            }
-        },
+        // cached: function (cached) {
+        //     if (cached.length > 0) {
+        //         this.checkBuffer()
+        //     }
+        //     else {
+        //         // console.log('fine cache');
+        //     }
+        // },
         toPlay: function (toPlay) {
             // console.log(toPlay.uuid, 'dentro');
             if (toPlay.length > 0) {
@@ -171,10 +172,87 @@ const EventBus = new Vue({
             }
 
         },
+        checkDuplicatesOnCache: function (next) {
+            if (this.cached.length > 0) {
+                // prova a cercare i dupplicati se si inceppa
+
+                let similar = []
+
+                for (let i = 0; i < this.cached.length; i++) {
+                    let single = this.cached[i]
+
+                    if (single.uuid == next.uuid) {
+                        let idx = similar.findIndex(item => item.uuid == next.uuid)
+                        if (idx == -1) {
+                            similar.push({
+                                uuid: next.uuid,
+                                items: [next]
+                            })
+                        }
+                    }
+                }
+
+                if (similar.length > 0) {
+                    for (let j = 0; j < similar.length; j++) {
+                        this.checkSameDirection(similar[j].items)
+                    }
+                }
+
+                // similar.map(serie => {
+                //     if (serie.items.length > 1) {
+                //         // console.log('dupplicati', serie);
+                //         let similarDirections = []
+                //
+                //         serie.items.map(single => {
+                //             let idx = similarDirections.findIndex(item => item.direction == single.direction)
+                //             if (idx == -1) {
+                //                 similarDirections.push({
+                //                     direction: single.direction,
+                //                     items: [single]
+                //                 })
+                //             }
+                //             else {
+                //                 similarDirections[idx].items.push(single)
+                //             }
+                //         })
+                //
+                //         console.log(similarDirections);
+                //     }
+                // })
+
+            }
+            else {
+                console.log('nuovo');
+                this.cached.push(next)
+                // this.checkBuffer()
+            }
+        },
+        checkSameDirection: function (anims) {
+            let similar = []
+
+            for (let i = 0; i < anims.length; i++) {
+                let anim = anims[i]
+                let idx = similar.findIndex(item => item.direction == anim.direction)
+                if (idx == -1) {
+                    similar.push({
+                        direction: anim.direction,
+                        items: [anim]
+                    })
+                }
+                else {
+                    similar[idx].items.push(anim)
+                }
+            }
+            console.log(similar);
+        },
+        bufferPool: function (newAnim) {
+            this.pool.push(newAnim)
+        },
     },
     created: function () {
         this.$on('add-anim', (anim, direction, uuid, callback = null) => {
             let newAnim = {
+                id: Utility.uuid(),
                 anim: anim,
                 uuid: uuid,
                 direction: direction,
@@ -183,12 +261,7 @@ const EventBus = new Vue({
                 callback: callback,
             }
 
-            if (this.cached.length > 0) {
-
-            }
-            else {
-                this.cached.push(newAnim)
-            }
+            this.checkDuplicatesOnCache(newAnim)
         })
     },
 }).$mount('#bus')
