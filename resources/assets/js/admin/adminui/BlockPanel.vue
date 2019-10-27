@@ -283,9 +283,27 @@ export default {
             //     })
             // }
 
-            this.$nextTick(() => {
-                this.togglePanel()
-            })
+            if (this.hasDebug == true) {
+                let counter = 10
+                this.triggerEvent(counter)
+            }
+            else {
+                this.$nextTick(() => {
+                    this.togglePanel()
+                })
+            }
+
+        },
+        triggerEvent: function (counter, i = 0) {
+            this.togglePanel()
+            i = i + 1
+
+            if (i < counter) {
+                setTimeout(() => {
+                    this.triggerEvent(counter, i)
+                }, 50)
+
+            }
         },
         togglePanel: function () {
             if (this.master) {

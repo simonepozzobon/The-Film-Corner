@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Approfondimenti">
+<block-panel
+    title="Approfondimenti"
+    :has-debug="true"
+>
     <text-editor
         :has-animation="true"
         label="Informazioni Tecniche"

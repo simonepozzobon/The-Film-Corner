@@ -7,7 +7,7 @@ const EventBus = new Vue({
         return {
             cached: [],
             toPlay: [],
-            limit: 2,
+            limit: 4,
             counter: 0,
             completed: 0,
             test: 0,
@@ -31,17 +31,19 @@ const EventBus = new Vue({
             }
         },
         toPlay: function (toPlay) {
+            // console.log(toPlay.uuid, 'dentro');
             if (toPlay.length > 0) {
                 let gonnaPlay = toPlay.find(item => item.state == 0)
                 if (gonnaPlay) {
                     this.play(gonnaPlay)
+                    console.log('gonnaPlay');
                 }
                 else {
                     console.log('nessuno in lista');
                 }
             }
             else {
-                console.log('buffer finito', this.cached.length);
+                console.log('buffer finito', this.toPlay.length);
             }
         }
     },
@@ -49,32 +51,33 @@ const EventBus = new Vue({
         checkBuffer: function () {
             if (this.toPlay.length >= 0 && this.toPlay.length < this.limit) {
                 // c'è spazio
-                this.firstCached()
-                return true
+                return this.checkQueue()
             }
             else {
-                // deve riprovare
-                // console.log(false);
+                // console.log('busy');
                 return false
             }
         },
-        firstCached: function () {
+        checkQueue: function () {
             let next = this.cached.find(item => item.state == 0)
             if (next) {
                 let idx = this.cached.indexOf(next)
                 if (idx > -1) {
                     this.toPlay.push(next)
+                    // console.log(this.cached[idx].uuid, 'fuori');
+                    this.cached.splice(idx, 1)
                 }
                 else {
                     console.log('non trovata');
                 }
-                // this.cached.splice(idx, 1)
             }
             else {
-                console.log('no next');
+                // console.log('no next', this.cached.length);
             }
+            return true
         },
         freeBuffer: function (timeline, callback) {
+            timeline.completed = 1
             // console.log(timeline.uuid, 'complete');
             this.runCallback(timeline, callback)
 
@@ -176,9 +179,16 @@ const EventBus = new Vue({
                 uuid: uuid,
                 direction: direction,
                 state: 0,
+                completed: 0,
                 callback: callback,
             }
-            this.cached.push(newAnim)
+
+            if (this.cached.length > 0) {
+
+            }
+            else {
+                this.cached.push(newAnim)
+            }
         })
     },
 }).$mount('#bus')
