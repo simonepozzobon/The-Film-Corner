@@ -56,10 +56,13 @@ from './Shared'
 import _ from 'lodash'
 
 import {
-    TimelineMax,
-    ScrollToPlugin
+    TweenMax,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin
+]
 
 export default {
     name: 'FrameComposer',

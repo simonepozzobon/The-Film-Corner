@@ -7,6 +7,7 @@ import SwitchInput from './SwitchInput.vue'
 import TextEditor from './TextEditor.vue'
 import TextInput from './TextInput.vue'
 import Select2Input from './Select2Input.vue'
+import PanelTitle from './PanelTitle.vue'
 
 export {
     Container,
@@ -18,4 +19,5 @@ export {
     TextEditor,
     TextInput,
     Select2Input,
+    PanelTitle,
 }

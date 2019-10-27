@@ -77,11 +77,14 @@ import {
 from '../ui'
 import {
     TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     Power4,
     Sine,
     Back,
-}
-from 'gsap'
+]
 
 export default {
     name: 'MenuOverlay',

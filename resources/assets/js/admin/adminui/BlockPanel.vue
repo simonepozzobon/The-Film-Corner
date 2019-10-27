@@ -42,22 +42,24 @@ import {
 from '../../ui'
 
 import {
-    gsap,
-    TimelineMax,
-    Power4,
-    Power0,
-    CSSPlugin,
-    Elastic,
-    Back,
-    Sine,
+    TweenMax
 }
-from 'gsap'
+from 'gsap/all'
 
 
 import {
     GSDevTools
 }
 from 'gsap/GSDevTools'
+
+const plugins = [
+    Power4,
+    Power0,
+    CSSPlugin,
+    Elastic,
+    Back,
+    Sine,
+]
 
 export default {
     name: 'BlockPanel',
@@ -73,7 +75,11 @@ export default {
         hasDebug: {
             type: Boolean,
             default: false,
-        }
+        },
+        needsTriggger: {
+            type: Boolean,
+            default: false
+        },
     },
     data: function () {
         return {
@@ -95,8 +101,11 @@ export default {
         },
     },
     methods: {
-        // https://stackoverflow.com/questions/593785/get-elements-just-1-level-below-the-current-element-by-javascript
+        trigger: function () {
+            this.initAnim()
+        },
         getChildNodes: function (node) {
+            // https://stackoverflow.com/questions/593785/get-elements-just-1-level-below-the-current-element-by-javascript
             let children = new Array();
             for (let child in node.childNodes) {
                 if (node.childNodes[child].nodeType == 1) {
@@ -108,8 +117,8 @@ export default {
             console.log(node, children);
             return children;
         },
-        //https://stackoverflow.com/questions/44612141/get-only-visible-element-using-pure-javascript
         isVisible: function (el) {
+            //https://stackoverflow.com/questions/44612141/get-only-visible-element-using-pure-javascript
             while (el) {
                 if (el === document) {
                     return true;
@@ -290,11 +299,13 @@ export default {
         togglePanel: function () {
             if (this.master) {
                 if (this.isOpen) {
+                    // chiude pannello
                     this.$ebus.$emit('add-anim', this.master, false, this.uuid, () => {
                         this.isOpen = false
                     })
                 }
                 else {
+                    // apre pannello
                     this.$ebus.$emit('add-anim', this.master, true, this.uuid, () => {
                         this.isOpen = true
                     })
@@ -303,9 +314,12 @@ export default {
         },
     },
     mounted: function () {
-        this.$nextTick(() => {
-            this.initAnim()
-        })
+
+        if (this.needsTrigger == false) {
+            this.$nextTick(() => {
+                this.initAnim()
+            })
+        }
     },
 }
 </script>

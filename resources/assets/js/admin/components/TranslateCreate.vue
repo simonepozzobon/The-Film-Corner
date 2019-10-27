@@ -62,11 +62,14 @@ import TranslateLoop from './TranslateLoop.vue'
 import TranslateCreateLanguage from './TranslateCreateLanguage.vue'
 
 import {
-    TimelineMax,
+    TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     Power4,
     CSSPlugin,
-}
-from 'gsap'
+]
 
 export default {
     name: 'TranslateCreate',

@@ -37,11 +37,14 @@
 <script>
 import UiAccordionArrow from './UiAccordionArrow.vue'
 import {
-    TimelineMax,
-    Power3,
-    Sine
+    TweenMax,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    Power3,
+    Sine,
+]
 
 export default {
     name: 'UiAccordionSingle',
@@ -87,12 +90,12 @@ export default {
 
             if (this.panel) {
                 if (this.isOpen) {
-                    TweenLite.set(panel, {
+                    TweenMax.set(panel, {
                         clearProps: 'all'
                     })
                     this.panel.kill()
 
-                    TweenLite.to(panel, .3, {
+                    TweenMax.to(panel, .3, {
                         height: cHeight,
                         autoAlpha: 1,
                         transformOrigin: "left top 0",
@@ -112,7 +115,7 @@ export default {
                     this.master.add(this.panel, 0)
                 }
                 else {
-                    TweenLite.set(panel, {
+                    TweenMax.set(panel, {
                         clearProps: 'all'
                     })
                     this.panel.kill()
@@ -147,7 +150,7 @@ export default {
 
             this.panelHeight = cHeight
 
-            TweenLite.set(panel, {
+            TweenMax.set(panel, {
                 height: 0,
                 autoAlpha: 0,
                 transformOrigin: "left top 0",

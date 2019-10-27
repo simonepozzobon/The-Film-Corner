@@ -78,11 +78,11 @@ import {
 from '../../../ui'
 
 import {
-    TimelineMax,
-    Power4,
-    CSSPlugin,
+    TweenMax,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [Power4, CSSPlugin]
 
 export default {
     name: 'CaricaClip',

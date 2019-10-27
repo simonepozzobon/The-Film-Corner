@@ -37,11 +37,11 @@ const EventBus = new Vue({
                     this.play(gonnaPlay)
                 }
                 else {
-                    console.log('nessuno in lista');
+                    // console.log('nessuno in lista');
                 }
             }
             else {
-                console.log('buffer finito', this.cached.length);
+                // console.log('buffer finito', this.cached.length);
             }
         }
     },
@@ -66,12 +66,12 @@ const EventBus = new Vue({
                     this.toPlay.push(next)
                 }
                 else {
-                    console.log('non trovata');
+                    // console.log('non trovata');
                 }
                 // this.cached.splice(idx, 1)
             }
             else {
-                console.log('no next');
+                // console.log('no next');
             }
         },
         freeBuffer: function (timeline, callback) {
@@ -86,7 +86,7 @@ const EventBus = new Vue({
             return true
         },
         runCallback: function (timeline, callback, onStart = false) {
-            if (Utility.isFunction(timeline.callback)) {
+            if (onStart == true && Utility.isFunction(timeline.callback)) {
                 timeline.callback()
             }
 

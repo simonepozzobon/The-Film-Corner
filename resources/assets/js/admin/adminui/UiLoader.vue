@@ -11,12 +11,15 @@
 
 <script>
 import {
-    TimelineMax,
+    TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     Power2,
     Power3,
     Sine,
-}
-from 'gsap'
+]
 
 const yPercent = 35
 const xPercent = 40

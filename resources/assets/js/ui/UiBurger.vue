@@ -23,9 +23,12 @@
 <script>
 import {
     TweenMax,
-    Power4,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+]
 
 export default {
     name: 'UiBurger',

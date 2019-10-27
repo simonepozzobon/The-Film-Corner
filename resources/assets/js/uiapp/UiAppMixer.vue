@@ -27,7 +27,11 @@ import {
     TweenMax,
     ScrollToPlugin,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin,
+]
 
 export default {
     name: 'UiAppMixer',

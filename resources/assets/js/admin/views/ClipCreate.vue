@@ -34,25 +34,40 @@
         </div>
     </container>
     <container
+        v-if="false"
         ref="test"
         :contains="true"
+        :has-animations="true"
+        :state="false"
     >
         <carica-clip @update="updateField" />
     </container>
-    <container :contains="true">
+    <container
+        v-if="false"
+        :contains="true"
+        :has-animations="true"
+        :state="false"
+    >
         <informazioni
             :options="options"
             @update="updateField"
         />
     </container>
-    <container
+    <!-- <container
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
+    > -->
+    <container
+        v-if="false"
+        :contains="true"
+        :has-animations="true"
+        :state="false"
     >
         <approfondimenti @update="updateField" />
     </container>
     <container
+        v-if="this.clip"
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(2)"
@@ -66,6 +81,7 @@
         />
     </container>
     <container
+        v-if="false"
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
@@ -174,6 +190,7 @@ export default {
             this.testState = true
         },
         getData: function () {
+            this.debug()
             this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
                 for (let key in this.options) {
                     if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
@@ -189,20 +206,25 @@ export default {
             }
         },
         debug: function () {
-            this.title = 'tiyueoiruioreuy'
-            this.period = 'gianni'
-            this.year = 'fkdjkgfdlj'
-            this.format = 'fkdjkgfdlj'
-            this.age = 'fkdjkgfdlj'
-            this.genre = 'fkdjkgfdlj'
-            this.nationality = 'fkdjkgfdlj'
-            this.abstract = 'abstract'
-            this.tech_info = 'tech_info'
-            this.historical_context = 'historical_context'
-            this.food = 'food'
+            this.$http.get('/api/v2/admin/clips').then(response => {
+                if (response.data.clips && response.data.clips.length > 0) {
+                    this.clip = response.data.clips[0]
+                }
+            })
+            // this.title = 'tiyueoiruioreuy'
+            // this.period = 'gianni'
+            // this.year = 'fkdjkgfdlj'
+            // this.format = 'fkdjkgfdlj'
+            // this.age = 'fkdjkgfdlj'
+            // this.genre = 'fkdjkgfdlj'
+            // this.nationality = 'fkdjkgfdlj'
+            // this.abstract = 'abstract'
+            // this.tech_info = 'tech_info'
+            // this.historical_context = 'historical_context'
+            // this.food = 'food'
         },
         saveClip: function () {
-            this.debug()
+            // this.debug()
             if (this.cursor == 0) {
                 let data = new FormData()
                 data.append('title', this.title)

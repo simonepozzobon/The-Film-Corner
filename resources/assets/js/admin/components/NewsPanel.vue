@@ -94,12 +94,15 @@ import Utility from '../../Utilities'
 import mime from 'mime-types'
 
 import {
-    TimelineMax,
+    TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     Power4,
     RoundPropsPlugin,
     CSSPlugin,
-}
-from 'gsap'
+]
 
 import Dummy from './Dummy'
 

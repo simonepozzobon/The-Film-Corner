@@ -98,10 +98,13 @@ import {
 from '../../ui'
 
 import {
-    TimelineMax,
-    ScrollToPlugin
+    TweenMax,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin
+]
 
 export default {
     name: 'CharacterBuilder',

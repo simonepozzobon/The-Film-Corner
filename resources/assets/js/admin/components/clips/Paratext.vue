@@ -3,90 +3,6 @@
     class="para-single"
     ref="container"
 >
-    <!-- <div class="para-single__topbar">
-        <ui-title
-            class="para-single__title"
-            font-size="h4"
-            :title="'Gestisci i contenuti di - ' + paratext.title"
-            :has-shadows="true"
-        />
-        <ui-button
-            :title="panelBtn"
-            theme="outline"
-            color="dark"
-            :has-margin="false"
-            @click="togglePanel"
-        />
-    </div> -->
-    <!-- <div
-        ref="uploader"
-        class="para-single__table para-table"
-    >
-        <div
-            class="para-table__container uploader"
-            ref="uploadForm"
-        >
-            <ui-title
-                tag="h5"
-                font-size="h5"
-                class="para-single__sub-title"
-                title="Carica nuovo contenuto"
-                align="center"
-                :has-shadows="true"
-                :shadows-type="3"
-            />
-            <file-input
-                v-if="mediaType === 1"
-                label="Immagine"
-                name="image"
-                accept="image/*"
-                label-size="col-md-1"
-                input-size="col-md-11"
-                :has-crop="false"
-                :has-preview="false"
-                @update="updateFile"
-            />
-
-            <file-input
-                v-if="mediaType === 2"
-                label="Audio"
-                name="audio"
-                accept="audio/mpeg"
-                label-size="col-md-1"
-                input-size="col-md-11"
-                :has-crop="false"
-                :has-preview="false"
-                @update="updateFile"
-            />
-
-            <file-input
-                v-if="mediaType === 3"
-                label="Video"
-                name="video"
-                accept="video/mp4"
-                label-size="col-md-1"
-                input-size="col-md-11"
-                :has-crop="false"
-                :has-preview="false"
-                @update="updateFile"
-            />
-
-            <text-editor
-                :has-animation="true"
-                label-size="col-md-1"
-                input-size="col-md-11"
-                label="Contenuto"
-                @update="updateContent"
-            />
-
-            <ui-button
-                title="carica"
-                color="orange"
-                @click="upload"
-            />
-        </div>
-    </div> -->
-
     <div
         class="para-single__table para-table"
         ref="table"
@@ -167,14 +83,16 @@ import {
 from '../../../ui'
 
 import {
-    gsap,
-    TimelineMax,
+    TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     Power4,
     CSSPlugin,
     Elastic,
     Back,
-}
-from 'gsap'
+]
 
 import {
     GSDevTools

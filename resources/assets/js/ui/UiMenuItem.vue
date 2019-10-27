@@ -24,10 +24,13 @@
 <script>
 import {
     TweenMax,
+}
+from 'gsap/all'
+
+const plugins = [
     CSSPlugin,
     Back
-}
-from 'gsap'
+]
 
 export default {
     name: 'UiMenuItem',

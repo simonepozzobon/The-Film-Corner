@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import { TweenMax } from 'gsap/all'
 
 export default {
     name: 'LibraryHover',

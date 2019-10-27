@@ -1,3 +1,5 @@
+const elementResizeEvent = require('element-resize-event')
+
 const Utility = {
     hexToRgbA: function (hex) {
         let c
@@ -73,6 +75,11 @@ const Utility = {
         }
         else {
             return false
+        }
+    },
+    elementResizeEvent: function (el, callback = null) {
+        if (this.isFunction(callback)) {
+            console.log('è una funzione');
         }
     }
 }

@@ -1,5 +1,9 @@
 <template>
-<block-panel title="Paratesti">
+<block-panel
+    title="Paratesti"
+    ref="panel"
+    :needs-trigger="true"
+>
     <div
         class="mb-5 para-container panel-group__container"
         ref="paraContainer"
@@ -14,42 +18,37 @@
         />
     </div>
 
-    <ui-title
-        tag="h6"
-        font-size="h6"
-        title="Aggiungi nuova categoria di paratesti"
-    />
-    <hr class="a-clip-panel__divider">
-    <div class="a-clip-panel__row form-group row">
-        <label
-            for="format"
-            class="col-md-1"
-        >
-            Tipologia
-        </label>
-        <div class="col-md-3">
-            <select-2-input
-                ref="paratextType"
-                :multiple="false"
-                :options="this.options.paratext_types"
-                @update="updateParatextType"
-                @ready="debug"
-            />
-        </div>
-        <div class="col-md-3">
-            <ui-button
-                :title="btnText"
-                color="yellow"
-                :has-margin="false"
-                @click="addParatextType"
-            />
+    <div class="h-100">
+        <panel-title
+            title="Nuovo Paratesto"
+            size="h6"
+        />
+        <div class="a-clip-panel__row form-group row">
+            <label
+                for="format"
+                class="col-md-1"
+            >
+                Tipologia
+            </label>
+            <div class="col-md-3">
+                <select-2-input
+                    ref="paratextType"
+                    :multiple="false"
+                    :options="this.options.paratext_types"
+                    @update="updateParatextType"
+                    @ready="selectorReady"
+                />
+            </div>
+            <div class="col-md-3">
+                <ui-button
+                    :title="btnText"
+                    color="yellow"
+                    :has-margin="false"
+                    @click="addParatextType"
+                />
+            </div>
         </div>
     </div>
-
-
-    <hr class="a-clip-panel__divider">
-    <!-- <div class="a-clip-panel__group panel-group">
-  </div> -->
 </block-panel>
 </template>
 
@@ -63,6 +62,7 @@ import {
     TextEditor,
     TextInput,
     Select2Input,
+    PanelTitle,
 }
 from '../../adminui'
 
@@ -89,6 +89,7 @@ export default {
         UiTitle,
         Select2Input,
         Paratext,
+        PanelTitle,
     },
     props: {
         options: {
@@ -116,6 +117,9 @@ export default {
         }
     },
     methods: {
+        selectorReady: function () {
+            this.$refs.panel.trigger()
+        },
         showForm: function () {
             if (this.createPara) {
                 this.btnText = 'aggiungi'
@@ -144,15 +148,6 @@ export default {
         },
         store: function () {
             console.log('deprecata');
-            // let data = new FormData()
-            // data.append('type', this.type);
-            // data.append('has_image', this.has_image)
-            //
-            // this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
-            //     console.log('ciao', response.data.para);
-            //     this.paratexts.push(response.data.para)
-            //     this.createPara = false
-            // })
         },
         updateParatextType: function (value) {
             if (value) {
