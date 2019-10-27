@@ -24,106 +24,159 @@ const EventBus = new Vue({
         },
         cached: function (cached) {
             if (cached.length > 0) {
-                if (this.wait == false) {
-                    this.wait = true
-                    if (this.toPlay.length < this.limit) {
-                        const next = this.cached[0]
-                        if (next) {
-                            this.toPlay.push(next)
-                        }
-                    }
-                    else {
-                        console.log('busy');
-                    }
-                }
+                this.checkBuffer()
+            }
+            else {
+                // console.log('fine cache');
             }
         },
         toPlay: function (toPlay) {
-            // console.log(Object.assign([], toPlay));
-            if (toPlay.length < this.limit) {
-
+            if (toPlay.length > 0) {
+                let gonnaPlay = toPlay.find(item => item.state == 0)
+                if (gonnaPlay) {
+                    this.play(gonnaPlay)
+                }
+                else {
+                    console.log('nessuno in lista');
+                }
+            }
+            else {
+                console.log('buffer finito', this.cached.length);
             }
         }
     },
     methods: {
         checkBuffer: function () {
             if (this.toPlay.length >= 0 && this.toPlay.length < this.limit) {
+                // c'è spazio
+                this.firstCached()
                 return true
             }
             else {
+                // deve riprovare
+                // console.log(false);
                 return false
             }
         },
-        freeCache: function (timeline) {
-            // console.log('qui');
-            let idx = this.cached.findIndex(item => item.uuid == timeline.uuid)
-            let cached = Object.assign([], this.cached)
-            if (idx > -1) {
-                cached.splice(idx, 1)
+        firstCached: function () {
+            let next = this.cached.find(item => item.state == 0)
+            if (next) {
+                let idx = this.cached.indexOf(next)
+                if (idx > -1) {
+                    this.toPlay.push(next)
+                }
+                else {
+                    console.log('non trovata');
+                }
+                // this.cached.splice(idx, 1)
             }
-            // console.log(cached.length, idx);
-            this.wait = false
-            this.cached = cached
+            else {
+                console.log('no next');
+            }
         },
-        setCompleted: function (timeline) {
-            let idx = this.toPlay.findIndex(item => item.uuid == timeline.uuid)
-            let toPlay = Object.assign([], this.toPlay)
-            if (idx > -1) {
-                toPlay.splice(idx, 1)
-            }
-            this.toPlay = toPlay
+        freeBuffer: function (timeline, callback) {
+            // console.log(timeline.uuid, 'complete');
+            this.runCallback(timeline, callback)
 
-            console.log(timeline.uuid, 'completata', this.toPlay.length, this.wait);
+            let idx = this.toPlay.indexOf(timeline)
+            if (idx > -1) {
+                this.toPlay.splice(idx, 1)
+                this.checkBuffer()
+            }
+            return true
+        },
+        runCallback: function (timeline, callback, onStart = false) {
+            if (Utility.isFunction(timeline.callback)) {
+                timeline.callback()
+            }
+
+            if (callback) {
+                callback()
+            }
+
+            this.restoreCallback(timeline, callback ? callback : null, onStart)
+
+
+            return true
+        },
+        restoreCallback: function (timeline, callback, onStart) {
+            if (onStart == true) {
+                if (timeline.direction) {
+                    timeline.anim.eventCallback('onStart', callback)
+                }
+                else {
+                    timeline.anim.eventCallback('onUpdate', callback)
+                }
+            }
+            else {
+                if (timeline.direction) {
+                    timeline.anim.eventCallback('onComplete', callback)
+                }
+                else {
+                    timeline.anim.eventCallback('onReverseComplete', callback)
+                }
+            }
+
+            return true
         },
         play: function (timeline) {
-            if (timeline.direction == true) {
+            if (timeline.state == 0) {
+                if (timeline.direction == true) {
+                    // play
+                    const onComplete = timeline.anim.eventCallback('onComplete')
 
-                const onComplete = timeline.anim.eventCallback('onComplete')
-                timeline.anim.eventCallback('onComplete', () => {
-                    if (onComplete) {
-                        onComplete()
-                        timeline.anim.eventCallback('onComplete', onComplete)
-                    }
-                    else {
-                        timeline.anim.eventCallback('onComplete', null)
-                    }
-                    this.setCompleted(timeline)
-                })
+                    timeline.anim.eventCallback('onComplete', () => {
+                        this.freeBuffer(timeline, onComplete)
+                    })
 
-                timeline.anim.eventCallback('onStart', () => {
-                    timeline.state = 1
-                })
+                    const onStart = timeline.anim.eventCallback('onStart')
+                    timeline.anim.eventCallback('onStart', () => {
+                        timeline.state = 1
+                        this.runCallback(timeline, onStart, true)
+                    })
 
-                timeline.anim.play()
+                    timeline.anim.play()
+                }
+                else if (timeline.direction == false) {
+                    // reverse
+                    const onReverseComplete = timeline.anim.eventCallback('onReverseComplete')
+                    timeline.anim.eventCallback('onReverseComplete', () => {
+                        this.freeBuffer(timeline, onReverseComplete)
+                    })
+
+
+                    // onStart Reverse
+                    let lastTime = 0
+                    let forward = false
+                    const onUpdate = timeline.anim.eventCallback('onUpdate')
+                    timeline.anim.eventCallback('onUpdate', () => {
+                        let newTime = timeline.anim.time();
+                        if ((forward && newTime < lastTime) || (!forward && newTime > lastTime)) {
+                            forward = !forward;
+                            if (!forward) {
+                                timeline.state = 1
+
+                                this.runCallback(timeline, onUpdate, true)
+                            }
+                        }
+                        lastTime = newTime;
+                    })
+
+                    timeline.anim.progress(1)
+                    timeline.anim.reverse()
+                }
             }
-            // else {
-            //     // console.log('rovescio', timeline.debug);
-            //
-            //     let onReverseComplete = timeline.anim.eventCallback('onReverseComplete')
-            //     timeline.anim.eventCallback('onReverseComplete', () => {
-            //         if (onReverseComplete) {
-            //             onReverseComplete()
-            //             timeline.anim.eventCallback('onReverseComplete', onReverseComplete)
-            //         }
-            //         else {
-            //             timeline.anim.eventCallback('onReverseComplete', null)
-            //         }
-            //
-            //         this.setCompleted(timeline)
-            //     })
-            //
-            //     timeline.anim.reverse()
-            // }
+
         },
     },
     created: function () {
-        this.$on('add-anim', (anim, direction, uuid, debug = null) => {
+        this.$on('add-anim', (anim, direction, uuid, callback = null) => {
             let newAnim = {
                 anim: anim,
                 uuid: uuid,
                 direction: direction,
                 state: 0,
-                debug: debug,
+                callback: callback,
             }
             this.cached.push(newAnim)
         })

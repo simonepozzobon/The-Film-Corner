@@ -113,12 +113,12 @@ export default {
         },
         showPanel: function () {
             if (this.master) {
-                this.$ebus.$emit('add-anim', this.master, true, this.uuid, 'container-apri')
+                this.$ebus.$emit('add-anim', this.master, true, this.uuid)
             }
         },
         hidePanel: function () {
             if (this.master) {
-                this.$ebus.$emit('add-anim', this.master, false, this.uuid, 'container-chiudi')
+                this.$ebus.$emit('add-anim', this.master, false, this.uuid)
             }
         },
     },

@@ -160,12 +160,6 @@ export default {
             this.master = new TimelineMax({
                 paused: true,
                 yoyo: true,
-                onComplete: () => {
-                    this.isOpen = true
-                },
-                onReverseComplete: () => {
-                    this.isOpen = false
-                }
             })
 
             this.master.addLabel('start', 0)
@@ -296,10 +290,14 @@ export default {
         togglePanel: function () {
             if (this.master) {
                 if (this.isOpen) {
-                    this.$ebus.$emit('add-anim', this.master, false, this.uuid, 'blockpanel-chiudi')
+                    this.$ebus.$emit('add-anim', this.master, false, this.uuid, () => {
+                        this.isOpen = false
+                    })
                 }
                 else {
-                    this.$ebus.$emit('add-anim', this.master, true, this.uuid, 'blockpanel-apri')
+                    this.$ebus.$emit('add-anim', this.master, true, this.uuid, () => {
+                        this.isOpen = true
+                    })
                 }
             }
         },
