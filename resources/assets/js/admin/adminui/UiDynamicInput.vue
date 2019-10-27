@@ -71,6 +71,7 @@ import UiFormTitle from './UiFormTitle.vue'
 import UiModal from './UiModal.vue'
 import UiTable from './UiTable.vue'
 import {
+    TimelineMax,
     TweenMax
 }
 from 'gsap/all'

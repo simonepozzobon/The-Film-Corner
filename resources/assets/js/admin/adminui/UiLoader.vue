@@ -12,6 +12,7 @@
 <script>
 import {
     TweenMax,
+    TimelineMax,
     Power2,
     Power3,
     Sine,

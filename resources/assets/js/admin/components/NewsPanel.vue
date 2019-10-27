@@ -95,6 +95,7 @@ import mime from 'mime-types'
 
 import {
     TweenMax,
+    TimelineMax,
     Power4,
     RoundPropsPlugin,
     CSSPlugin,

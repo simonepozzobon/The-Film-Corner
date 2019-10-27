@@ -1,10 +1,21 @@
 <template>
-    <login-form
-        ref="login"/>
+<login-form ref="login" />
 </template>
 
 <script>
-import { UiBlock, UiButton, UiContainer, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
+import {
+    UiBlock,
+    UiButton,
+    UiContainer,
+    UiHeroBanner,
+    UiHeroImage,
+    UiLink,
+    UiParagraph,
+    UiSpecialText,
+    UiTitle,
+    UiRow,
+}
+from '../../ui'
 import LoginForm from './LoginForm.vue'
 
 export default {
@@ -22,7 +33,7 @@ export default {
         UiTitle,
         UiRow,
     },
-    data: function() {
+    data: function () {
         return {
             open: false,
         }
@@ -75,14 +86,16 @@ export default {
         //         this.master.play()
         //     }
         // },
-        goTo: function(name) {
+        goTo: function (name) {
             this.toggle()
         },
-        goToHome: function() {
-            this.$router.push({ name: 'home' })
+        goToHome: function () {
+            this.$router.push({
+                name: 'home'
+            })
         }
     },
-    mounted: function() {
+    mounted: function () {
         // this.init()
         this.$refs.login.show()
     }
@@ -91,5 +104,4 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
-
 </style>

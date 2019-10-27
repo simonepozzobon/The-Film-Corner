@@ -70,7 +70,8 @@ import {
 }
 from '../../ui'
 import {
-    TweenMax
+    TweenMax,
+    TimelineMax,
 }
 from 'gsap/all'
 

@@ -70,6 +70,7 @@ import SizeUtility from '../../../Sizes'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import {
     TweenMax,
+    TimelineMax,
     Power4
 }
 from 'gsap/all'

@@ -23,6 +23,7 @@
 
 <script>
 import {
+    TimelineMax,
     TweenMax,
     CSSPlugin,
     Back

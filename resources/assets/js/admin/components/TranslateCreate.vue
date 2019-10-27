@@ -62,6 +62,7 @@ import TranslateLoop from './TranslateLoop.vue'
 import TranslateCreateLanguage from './TranslateCreateLanguage.vue'
 
 import {
+    TimelineMax,
     TweenMax,
     Power4,
     CSSPlugin,

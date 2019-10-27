@@ -85,6 +85,7 @@ from '../../../ui'
 import {
     TweenMax,
     Power4,
+    TimelineMax,
     CSSPlugin,
     Elastic,
     Back,

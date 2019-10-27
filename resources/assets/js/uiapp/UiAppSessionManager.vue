@@ -53,6 +53,11 @@ import {
     UiTitle
 }
 from '../ui'
+
+import {
+    TimelineMax,
+}
+from 'gsap/all'
 export default {
     name: 'UiAppSessionManager',
     components: {

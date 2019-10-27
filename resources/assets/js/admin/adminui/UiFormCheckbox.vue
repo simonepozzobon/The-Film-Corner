@@ -30,6 +30,10 @@
 
 <script>
 import UiFormGroup from './UiFormGroup.vue'
+import {
+    TimelineMax,
+}
+from 'gsap/all'
 export default {
     name: 'UiFormCheckbox',
     components: {

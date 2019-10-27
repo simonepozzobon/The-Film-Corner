@@ -111,6 +111,7 @@ import UiTitle from './UiTitle.vue'
 import {
     gsap,
     TweenMax,
+    TimelineMax,
 }
 from 'gsap/all'
 

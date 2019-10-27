@@ -42,6 +42,7 @@ import {
 from '../ui'
 import {
     TweenMax,
+    TweenLite,
     ScrollToPlugin
 }
 from 'gsap/all'

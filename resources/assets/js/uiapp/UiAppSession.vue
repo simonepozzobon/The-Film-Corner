@@ -46,6 +46,10 @@ import {
 }
 from '../ui'
 import Utility from '../Utilities'
+import {
+    TimelineMax,
+}
+from 'gsap/all'
 
 export default {
     name: 'UiAppSession',

@@ -28,6 +28,10 @@
 
 <script>
 import UiFormGroup from './UiFormGroup.vue'
+import {
+    TimelineMax
+}
+from 'gsap/all'
 export default {
     name: 'UiFormGroupText',
     components: {
@@ -63,7 +67,7 @@ export default {
             default: 'text',
         }
     },
-    data: function() {
+    data: function () {
         return {
             value: null,
             status: null,
@@ -72,45 +76,50 @@ export default {
         }
     },
     computed: {
-        helpName: function() {
+        helpName: function () {
             return this.name + '_help'
         },
-        containerClass: function() {
+        containerClass: function () {
             if (this.status == true) {
                 return 'has-success'
-            } else if (this.status == false) {
+            }
+            else if (this.status == false) {
                 return 'has-danger'
-            } else {
+            }
+            else {
                 return null
             }
         },
-        inputClass: function() {
+        inputClass: function () {
             if (this.status == true) {
                 return 'form-control-success'
-            } else if (this.status == false) {
+            }
+            else if (this.status == false) {
                 return 'form-control-danger'
-            } else {
+            }
+            else {
                 return null
             }
         },
-        statusMessage: function() {
+        statusMessage: function () {
             if (this.status) {
                 return this.isGoodMsg
-            } else if (this.status == false) {
+            }
+            else if (this.status == false) {
                 return this.isMandatoryMsg
             }
             return null
         }
     },
     watch: {
-        value: function(value) {
+        value: function (value) {
             if (this.isClearing == false) {
                 this.$emit('changed', value, this.name, this.idx)
             }
         }
     },
     methods: {
-        globalCheck: function() {
+        globalCheck: function () {
             if (this.isMandatory) {
                 if (this.value && this.value != '') {
                     return true
@@ -119,18 +128,20 @@ export default {
             }
             return true
         },
-        check: function() {
+        check: function () {
             if (this.isMandatory) {
                 if (this.value && this.value != '') {
                     this.setValid()
-                } else {
+                }
+                else {
                     this.setInvalid()
                 }
-            } else {
+            }
+            else {
                 this.setValid()
             }
         },
-        setValid: function() {
+        setValid: function () {
             let el = this.$refs.input
             this.status = true
 
@@ -141,7 +152,7 @@ export default {
             this.showMessage()
             // console.log('set valid');
         },
-        setInvalid: function() {
+        setInvalid: function () {
             let el = this.$refs.input
             this.status = false
 
@@ -152,7 +163,7 @@ export default {
             this.showMessage()
             // console.error('set invalid');
         },
-        clearFeedback: function() {
+        clearFeedback: function () {
             let el = this.$refs.input
             this.status = null
 
@@ -163,7 +174,7 @@ export default {
             this.hideMessage()
             // console.log('clearing feedback');
         },
-        clear: function() {
+        clear: function () {
             this.clearFeedback()
 
             // Prevent the watcher to trigger the event and check the field
@@ -173,7 +184,7 @@ export default {
                 this.isClearing = false
             })
         },
-        initAnim: function() {
+        initAnim: function () {
             let message = this.$refs.message
 
 
@@ -193,16 +204,16 @@ export default {
             this.message.progress(1).progress(0)
 
         },
-        showMessage: function() {
+        showMessage: function () {
             this.message.timeScale(1).progress(0).play()
             // console.log('showMessage');
         },
-        hideMessage: function() {
+        hideMessage: function () {
             this.message.timeScale(5).progress(1).reverse()
             // console.log('hideMessage');
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.initAnim()
 
         this.$parent.$on('check', field => {

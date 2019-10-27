@@ -43,6 +43,7 @@ from '../../ui'
 
 import {
     TweenMax,
+    TimelineMax,
     Power4,
     Power0,
     CSSPlugin,

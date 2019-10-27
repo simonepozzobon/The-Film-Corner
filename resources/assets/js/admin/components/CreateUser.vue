@@ -111,6 +111,7 @@ import {
 from '../../ui'
 
 import {
+    TimelineMax,
     TweenMax,
     Power4,
 }

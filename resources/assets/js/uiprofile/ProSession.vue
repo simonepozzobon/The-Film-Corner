@@ -51,6 +51,11 @@
 
 <script>
 import Utility from '../Utilities'
+import {
+    TimelineMax,
+
+}
+from 'gsap/all'
 
 export default {
     name: 'ProSession',
