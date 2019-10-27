@@ -5,9 +5,13 @@ import routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
 import VuejsClipper from 'vuejs-clipper'
+import EventBus from './EventBus'
+import Utility from '../Utilities'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+Vue.prototype.$ebus = EventBus
+Vue.prototype.$util = Utility
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)

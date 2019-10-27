@@ -90,6 +90,9 @@ export default {
                 return 'Espandi'
             }
         },
+        uuid: function () {
+            return this.$util.uuid()
+        },
     },
     methods: {
         // https://stackoverflow.com/questions/593785/get-elements-just-1-level-below-the-current-element-by-javascript
@@ -157,100 +160,134 @@ export default {
             this.master = new TimelineMax({
                 paused: true,
                 yoyo: true,
+                onComplete: () => {
+                    this.isOpen = true
+                },
+                onReverseComplete: () => {
+                    this.isOpen = false
+                }
             })
+
+            this.master.addLabel('start', 0)
+            this.master.addLabel('setInitial', 'start')
+            this.master.addLabel('setWidth', 'start+=0.1')
+            this.master.addLabel('setHeight', 'start+=0.15')
+            this.master.addLabel('revealFrame', 'start+=0.35')
+            this.master.addLabel('revealContent', 'start+=0.45')
 
             this.master.fromTo(content, .1, {
                     display: 'none',
                 }, {
                     display: 'block',
-                }, 0)
+                }, 'start')
+
                 .set(childsVisible, {
                     opacity: '0',
-                }, .1)
+                }, 'start')
                 .set(this.$refs.parent, {
                     display: 'flex',
-                }, .1)
+                }, 'start')
+
                 .set(content, {
                     height: '1px',
                     paddingTop: '0',
                     paddingBottom: '0',
                     overflow: 'hidden',
+                }, 'start')
+
+                .set(content, {
+                    id: 'width',
                     width: '100%',
                     maxWidth: '100%',
-                }, .11)
-                .from(content, 0.15, {
+                }, 'setWidth')
+                .from(content, 0.1, {
                     width: '1px',
                     maxWidth: '0%',
                     ease: Sine.easeInOut,
                     yoyoEase: Sine.easeIn,
                     immediateRender: false,
-                }, .11)
+                }, 'setWidth')
 
                 .set(content, {
+                    id: 'height',
                     height: 'auto',
                     paddingTop: '3.236rem',
                     paddingBottom: '1.618rem',
-                }, .15)
-                .from(content, 0.15, {
+                }, 'setHeight')
+                .from(content, .1, {
                     height: '1px',
                     paddingTop: '0',
                     paddingBottom: '0',
                     immediateRender: false,
                     ease: Sine.easeInOut,
                     yoyoEase: Sine.easeIn,
-                }, .15)
+                }, 'setHeight')
 
-                .fromTo(content, .45, {
+                .fromTo(content, .2, {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Sine.easeOut,
+                    ease: Power4.eeaseInOut,
                     immediateRender: false,
-                }, .2)
-
-                .fromTo(childsVisible, .25, {
-                    opacity: '0',
-                }, {
-                    opacity: '1',
-                    immediateRender: false,
-                }, .35)
+                }, 'setInitial')
 
                 .fromTo(head, .3, {
                     paddingBottom: '0',
                 }, {
                     paddingBottom: '1.618rem',
                     immediateRender: false,
-                }, .1)
+                }, 'start')
 
-                .fromTo(parent, .15, {
+                .fromTo(parent, .1, {
                     paddingBottom: '2rem',
                 }, {
                     paddingBottom: '3.236rem',
                     immediateRender: false,
-                }, .3)
+                }, 'setHeight+=0.05')
+
+                .fromTo(content, .1, {
+                    borderWidth: '0',
+                }, {
+                    id: 'boders',
+                    borderWidth: '3px',
+                    ease: Power4.easeInOut,
+                    immediateRender: false,
+                }, 'revealFrame')
 
                 .set(content, {
+                    id: 'shadows',
                     boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0.2)',
-                }, .55)
+                }, 'revealFrame')
                 .from(content, .2, {
                     boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0)',
                     immediateRender: false,
+                    // ease: Power4.easeInOut,
+                    ease: Sine.easeInOut,
+                }, 'revealFrame')
+
+
+                .fromTo(childsVisible, .15, {
+                    opacity: '0',
+                    scaleX: 0.9,
+                    scaleY: 1.1,
+                }, {
+                    opacity: '1',
+                    scaleX: 1,
+                    scaleY: 1,
+                    stagger: 0.1,
                     ease: Sine.easeOut,
-                }, .55)
+                    immediateRender: false,
+                }, 'revealContent')
 
-            if (this.hasDebug) {
-                GSDevTools.create({
-                    animation: this.master
-                })
-            }
-
-            this.master.eventCallback('onComplete', () => {
-                this.isOpen = true
-            })
-
-            this.master.eventCallback('onReverseComplete', () => {
-                this.isOpen = false
-            })
+            // if (this.hasDebug) {
+            //     GSDevTools.create({
+            //         animation: this.master,
+            //         inTime: 'revealFrame-=0.1',
+            //         css: {
+            //             zIndex: 999,
+            //         }
+            //     })
+            // }
 
             this.$nextTick(() => {
                 this.togglePanel()
@@ -259,21 +296,11 @@ export default {
         togglePanel: function () {
             if (this.master) {
                 if (this.isOpen) {
-                    this.master.reverse()
+                    this.$ebus.$emit('add-anim', this.master, false, this.uuid, 'blockpanel-chiudi')
                 }
                 else {
-                    this.master.play()
+                    this.$ebus.$emit('add-anim', this.master, true, this.uuid, 'blockpanel-apri')
                 }
-            }
-        },
-        showPanel: function () {
-            if (this.master) {
-                this.master.play()
-            }
-        },
-        hidePanel: function () {
-            if (this.master) {
-                this.master.reverse()
             }
         },
     },

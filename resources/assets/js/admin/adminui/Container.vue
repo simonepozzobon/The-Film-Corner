@@ -47,6 +47,9 @@ export default {
         },
     },
     computed: {
+        uuid: function () {
+            return this.$util.uuid()
+        },
         paddingClass: function () {
             if (this.padding) {
                 return 'admin-container--padding-' + this.padding
@@ -89,8 +92,6 @@ export default {
                 }
             })
 
-            this.master.progress(1).progress(0)
-
             if (this.state == false) {
                 this.$nextTick(() => {
                     this.hidePanel()
@@ -112,12 +113,12 @@ export default {
         },
         showPanel: function () {
             if (this.master) {
-                this.master.play()
+                this.$ebus.$emit('add-anim', this.master, true, this.uuid, 'container-apri')
             }
         },
         hidePanel: function () {
             if (this.master) {
-                this.master.reverse()
+                this.$ebus.$emit('add-anim', this.master, false, this.uuid, 'container-chiudi')
             }
         },
     },
