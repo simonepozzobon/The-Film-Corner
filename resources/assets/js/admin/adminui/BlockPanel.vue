@@ -68,6 +68,8 @@ const plugins = [
     Sine,
 ]
 
+const debounce = require('lodash.debounce')
+
 export default {
     name: 'BlockPanel',
     components: {
@@ -173,7 +175,7 @@ export default {
                 }
             }
 
-            this.master = new TimelineMax({
+            this.master = gsap.timeline({
                 paused: true,
                 yoyo: true,
             })
@@ -222,7 +224,7 @@ export default {
                     paddingBottom: '0',
                 }, {
                     height: 'auto',
-                    paddingTop: '3.236rem',
+                    paddingTop: '1.618rem',
                     paddingBottom: '1.618rem',
                     immediateRender: false,
                     ease: Sine.easeInOut,
@@ -247,7 +249,7 @@ export default {
                 .fromTo(parent, .1, {
                     paddingBottom: '2rem',
                 }, {
-                    paddingBottom: '3.236rem',
+                    paddingBottom: '1.618rem',
                     immediateRender: false,
                 }, 'setHeight+=0.05')
 
@@ -297,19 +299,22 @@ export default {
                 if (this.master) {
                     if (this.isOpen) {
                         // chiude pannello
-                        this.$ebus.$emit('add-anim', this.master, false, this.uuid, () => {
+                        this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
                             this.isOpen = false
                         })
                     }
                     else {
                         // apre pannello
-                        this.$ebus.$emit('add-anim', this.master, true, this.uuid, () => {
+                        this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
                             this.isOpen = true
                         })
                     }
                 }
             })
         },
+        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
+            this.$ebus.$emit(name, anim, direction, uuid, callback)
+        }, 150)
     },
     mounted: function () {
         // this.$util.onResizeListenerDeb(this.$refs.container, (el) => {
@@ -372,7 +377,7 @@ export default {
         width: 100%;
         border: 3px solid darken($color, 6);
         background-color: $color;
-        padding: ($spacer * 2 * 1.618) ($spacer * 2 * 1.618) ($spacer * 1.618) ($spacer * 2 * 1.618);
+        padding: ($spacer * 1.618) ($spacer * 1.618) ($spacer * 1.618) ($spacer * 1.618);
         @include border-radius($border-radius * 2);
         // @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
         // @include gradient-directional($color, lighten($color, 2), -10deg);

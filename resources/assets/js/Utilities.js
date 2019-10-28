@@ -79,6 +79,9 @@ const Utility = {
             return false
         }
     },
+    emitEvent: function (name, ...args) {
+
+    },
     onResizeListener: function (el, callback = null) {
         elementResizeEvent(el, () => {
             if (this.isFunction(callback)) {
@@ -95,7 +98,9 @@ const Utility = {
     },
     debounceCallback: debounce((el, callback) => {
         callback(el)
-    }, 500)
+    }, 500),
+    isEqual: require('lodash.isequal'),
+    debounce: debounce,
 }
 
 export default Utility

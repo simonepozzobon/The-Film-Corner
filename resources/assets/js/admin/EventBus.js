@@ -1,5 +1,13 @@
 import Vue from 'vue'
 import Utility from '../Utilities'
+import {
+    gsap,
+}
+from 'gsap/all'
+
+const throttle = require('lodash.throttle')
+const debounce = require('lodash.debounce')
+const globalTime = 100
 
 const EventBus = new Vue({
     render: h => h(),
@@ -23,6 +31,7 @@ const EventBus = new Vue({
             console.log('completate', c);
         },
         cached: function (cached) {
+            // this.throttleCache()
             if (cached.length > 0) {
                 this.checkBuffer()
             }
@@ -41,39 +50,91 @@ const EventBus = new Vue({
                 }
             }
             else {
-                // console.log('buffer finito', this.cached.length);
+                if (this.cached.length > 0) {
+                    // console.log('da svuotare la cache', this.cached.length);
+                    // this.$nextTick(() => {
+                    this.checkBuffer('qui')
+                    // })
+                }
+                else {
+                    // console.log('buffer finito', this.cached.length);
+                }
             }
         }
     },
     methods: {
-        checkBuffer: function () {
-            if (this.toPlay.length >= 0 && this.toPlay.length < this.limit) {
+        checkBuffer: throttle(function (debug = null) {
+            if (debug) {
+                console.log(debug);
+            }
+            let buffer = this.toPlay.length
+            let queue = this.cached.length
+
+            if (buffer >= 0 && buffer < this.limit) {
                 // c'è spazio
-                this.firstCached()
-                return true
-            }
-            else {
-                // deve riprovare
-                // console.log(false);
-                return false
-            }
-        },
-        firstCached: function () {
-            let next = this.cached.find(item => item.state == 0)
-            if (next) {
-                let idx = this.cached.indexOf(next)
-                if (idx > -1) {
-                    this.toPlay.push(next)
+
+                if (buffer == 0) {
+                    // è il primo play
+                    // console.log('prima', gsap.isTweening(this.toPlay[0].anim));
+                    // console.log('primo');
+                    this.firstCached()
+                }
+                else if (buffer > 0 && buffer < this.limit) {
+                    // ci sono degli slot liberi
+                    // console.log('abbiamo slot liberi');
+                    this.firstCached()
+                }
+                else if (queue > 0 && buffer < (this.limit - 1)) {
+                    // ce almeno uno slot libero e la cache piena
+                    console.log('la cache è ancora piena', buffer, queue);
                 }
                 else {
-                    // console.log('non trovata');
+                    // c'è un problema
+                    console.log('deve vomitare', buffer < this.limit, queue, buffer);
                 }
-                // this.cached.splice(idx, 1)
+            }
+            else if (buffer > 0) {
+                // deve sbloccare la cache
+                console.log('deve sbloccare');
+                let toUnlock = this.toPlay.find(item => gsap.isTweening(item.anim) == false)
+                if (toUnlock) {
+                    toUnlock.state = 0
+                    this.$nextTick(() => {
+                        this.play(toUnlock)
+                    })
+                }
             }
             else {
-                // console.log('no next');
+                console.log('terzo caso');
             }
-        },
+        }, globalTime),
+        firstCached: throttle(function () {
+            let next = this.cached.find(item => item.state == 0)
+            if (next) {
+                let check = gsap.isTweening(next.anim)
+                let idx = this.cached.indexOf(next)
+                if (idx > -1 && check == false) {
+                    this.cached.splice(idx, 1)
+                    return this.toPlay.push(next)
+                }
+                else if (check == true) {
+                    console.log('sta già andando');
+                }
+                else {
+                    console.log('non trovata');
+                    return false
+                }
+            }
+            else {
+                if (this.cached.length > 0 && this.toPlay.length == 0) {
+                    if (gsap.isTweening(this.cached[0])) {
+                        this.cached[0].state = 0
+                    }
+                }
+
+                return false
+            }
+        }, globalTime),
         freeBuffer: function (timeline, callback) {
             // console.log(timeline.uuid, 'complete');
             this.runCallback(timeline, callback)
@@ -83,6 +144,7 @@ const EventBus = new Vue({
                 this.toPlay.splice(idx, 1)
                 this.checkBuffer()
             }
+            else {}
             return true
         },
         runCallback: function (timeline, callback, onStart = false) {
@@ -135,6 +197,7 @@ const EventBus = new Vue({
                         this.runCallback(timeline, onStart, true)
                     })
 
+                    timeline.anim.progress(0)
                     timeline.anim.play()
                 }
                 else if (timeline.direction == false) {
@@ -166,19 +229,27 @@ const EventBus = new Vue({
                     timeline.anim.reverse()
                 }
             }
-
         },
-    },
-    created: function () {
-        this.$on('add-anim', (anim, direction, uuid, callback = null) => {
-            let newAnim = {
+        addToCache: throttle(function (anim, direction, uuid, callback) {
+            // if (gsap.isTweening(anim) == false) {
+            // console.log('dentro', i);
+            const newAnim = {
                 anim: anim,
                 uuid: uuid,
                 direction: direction,
                 state: 0,
                 callback: callback,
             }
-            this.cached.push(newAnim)
+
+            this.$nextTick(() => {
+                this.cached.push(newAnim)
+            })
+
+        }, globalTime),
+    },
+    created: function () {
+        this.$on('add-anim', (anim, direction, uuid, callback = null) => {
+            this.addToCache(anim, direction, uuid, callback)
         })
     },
 }).$mount('#bus')

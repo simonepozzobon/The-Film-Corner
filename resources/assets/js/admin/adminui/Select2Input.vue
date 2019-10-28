@@ -8,6 +8,7 @@
     <option value="">Seleziona Valore</option>
     <option
         v-for="option in this.cached"
+        ref="item"
         :key="option.id"
         :value="option.id"
     >
@@ -43,6 +44,7 @@ export default {
     },
     watch: {
         options: function (options) {
+            // console.log('watch evebt', options);
             this.setOptions(options)
         },
     },
@@ -64,13 +66,73 @@ export default {
                     title: option.title ? option.title : option.name
                 }
             })
-            this.cached = cache
 
+            if (cache.length > 0) {
+                if (this.cached.length > 0) {
+                    this.updateOptions(cache)
+                }
+                else {
+                    this.addOptions(cache)
+                }
+            }
+        },
+        addOptions: function (options) {
+            this.cached = options
+            options.map(option => {
+                return new Object(option.title, option.id, false, false)
+            }).map(option => {
+                return $(this.$refs.select).append(option).trigger('change')
+            })
             this.$nextTick(() => {
                 this.$emit('ready')
             })
         },
+        updateOptions: function (options) {
+            this.removeOptions(options)
+            this.createOptions(options)
+
+            this.$nextTick(() => {
+                this.cached = options
+            })
+
+        },
+        createOptions: function (options) {
+            let toCreate = options.filter(opt => {
+                let exist = this.cached.find(cache => cache.id == opt.id)
+                if (!exist) {
+                    return opt
+                }
+            })
+
+            if (toCreate.length > 0) {
+                toCreate.map(opt => {
+                    return new Object(opt.title, opt.id, false, false)
+                }).map(option => {
+                    return $(this.$refs.select).append(option).trigger('change')
+                })
+            }
+        },
+        removeOptions: function (options) {
+            let toRemove = this.cached.filter(cache => {
+                let exist = options.find(opt => opt.id == cache.id)
+                if (!exist) {
+                    return cache
+                }
+            })
+
+
+            if (toRemove.length > 0) {
+                for (let i = 0; i < toRemove.length; i++) {
+                    let current = toRemove[i]
+                    let opt = this.$refs.item.find(item => item.value == current.id)
+                    if (opt) {
+                        $(opt).remove()
+                    }
+                }
+            }
+        },
         init: function () {
+
             $(this.$refs.select).select2({
                 tags: true,
                 tokenSeparators: [','],
@@ -91,7 +153,13 @@ export default {
         },
     },
     mounted: function () {
-        this.init()
+        this.$nextTick(() => {
+            if (this.options.length > 0) {
+                this.setOptions(this.options)
+            }
+
+            this.init()
+        })
     },
 }
 </script>

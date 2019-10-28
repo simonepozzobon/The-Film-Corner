@@ -5,7 +5,7 @@
     :needs-trigger="true"
 >
     <div
-        class="mb-5 para-container panel-group__container"
+        class="para-container panel-group__container"
         ref="paraContainer"
     >
         <paratext
@@ -18,10 +18,12 @@
         />
     </div>
 
-    <div class="h-100">
+    <div class="para-tools">
         <panel-title
             title="Nuovo Paratesto"
-            size="h6"
+            size="h4"
+            class="para-tools__title"
+            letter-spacing="6px"
         />
         <div class="a-clip-panel__row form-group row">
             <label
@@ -34,7 +36,7 @@
                 <select-2-input
                     ref="paratextType"
                     :multiple="false"
-                    :options="this.options.paratext_types"
+                    :options="selectOptions"
                     @update="updateParatextType"
                     @ready="selectorReady"
                 />
@@ -114,7 +116,18 @@ export default {
             type: null,
             has_image: true,
             paratexts: [],
+            selectOptions: [],
+            initialized: false,
         }
+    },
+    watch: {
+        'options.paratext_types': function (options) {
+            console.log('esterno');
+            if (this.initialized == false || this.selectOptions.length == 0) {
+                this.initialized = true
+                this.selectOptions = Object.assign([], options)
+            }
+        },
     },
     methods: {
         selectorReady: function () {
@@ -131,20 +144,21 @@ export default {
             }
         },
         debug: function () {
-            let component = this.$refs.paratextType
-            let select = component.$refs.select
-
-            let id = 2
-            $(select).val(id)
-            component.value = this.options.paratext_types.find(single => single.id == id)
-            this.$nextTick(() => {
-                $(select).trigger('change')
-                component.$emit('update', component.value)
-
-                this.$nextTick(() => {
-                    this.addParatextType()
-                })
-            })
+            // console.log(Object.assign({}, this.clip));
+            // let component = this.$refs.paratextType
+            // let select = component.$refs.select
+            //
+            // let id = 2
+            // $(select).val(id)
+            // component.value = this.options.paratext_types.find(single => single.id == id)
+            // this.$nextTick(() => {
+            //     $(select).trigger('change')
+            //     component.$emit('update', component.value)
+            //
+            //     this.$nextTick(() => {
+            //         this.addParatextType()
+            //     })
+            // })
         },
         store: function () {
             console.log('deprecata');
@@ -156,8 +170,12 @@ export default {
             }
         },
         addParatextType: function () {
+            // console.log(this.paratext_selected);
             if (this.paratext_selected) {
                 this.paratexts.push(this.paratext_selected)
+                let newOpts = this.selectOptions.filter(option => option.id != this.paratext_selected.id)
+                // console.log(newOpts);
+                this.selectOptions = newOpts
             }
         },
         setCompleted: function () {
@@ -168,7 +186,14 @@ export default {
         },
     },
     mounted: function () {
-        // this.debug()
+        if (this.options && this.options.paratext_types && this.options.paratext_types.length > 0) {
+            this.initialized = true
+            console.log('mounbted');
+            this.selectOptions = Object.assign([], this.options.paratext_types)
+        }
+        this.$nextTick(() => {
+            this.debug()
+        })
         // this.$nextTick(() => {
         //     this.$util.onResizeListener(this.$refs.paraContainer, (el) => {
         //         let panel = this.$refs.panel
@@ -184,18 +209,34 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+@import '~styles/shared';
+</style>
+
 <style lang="scss">
 @import '~styles/shared';
 $color: lighten($gray-200, 8);
 $color-darken: lighten($gray-200, 3);
 $darken: lighten($dark, 3);
 
+.para-tools {
+    @include gradient-directional($color, lighten($color, 2), -11deg);
+    @include border-radius($border-radius * 2);
+    @include custom-box-shadow($darken, 2px, 0.02);
+    width: 100%;
+    padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
+
+    &__title {
+        padding-top: $spacer * 1.618 !important;
+        padding-bottom: $spacer * 1.618 !important;
+    }
+}
 .para-container {
     // width: 100%;
     // position: relative;
-    transition: $transition-base-lg !important;
+    // transition: $transition-base-lg !important;
     // height: 0;
-    overflow: hidden;
+    // overflow: hidden;
 }
 
 .panel-group {

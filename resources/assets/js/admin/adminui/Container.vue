@@ -22,6 +22,8 @@ const plugins = [
     Power4,
 ]
 
+const debounce = require('lodash.debounce')
+
 export default {
     name: 'Container',
     props: {
@@ -78,7 +80,7 @@ export default {
     methods: {
         initAnim: function () {
             let container = this.$refs.container
-            this.master = new TimelineMax({
+            this.master = gsap.timeline({
                 paused: true,
                 yoyo: true,
             })
@@ -123,14 +125,17 @@ export default {
         },
         showPanel: function () {
             if (this.master) {
-                this.$ebus.$emit('add-anim', this.master, true, this.uuid)
+                this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
             }
         },
         hidePanel: function () {
             if (this.master) {
-                this.$ebus.$emit('add-anim', this.master, false, this.uuid)
+                this.debouncedEvent('add-anim', this.master, false, this.uuid, null)
             }
         },
+        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
+            this.$ebus.$emit(name, anim, direction, uuid, null)
+        }, 150)
     },
     mounted: function () {
         if (this.hasAnimations == true) {
