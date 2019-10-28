@@ -89,6 +89,10 @@ export default {
             type: Boolean,
             default: false
         },
+        needsFlex: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -160,6 +164,10 @@ export default {
             }
         },
         initAnim: function () {
+            let display = 'block'
+            if (this.needsFlex == true) {
+                display = 'flex'
+            }
             let parent = this.$parent.$el
             let head = this.$refs.head
             let content = this.$refs.container
@@ -235,7 +243,7 @@ export default {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Power4.eeaseInOut,
+                    ease: Power4.easeInOut,
                     immediateRender: false,
                 }, 'setInitial')
 
@@ -379,6 +387,10 @@ export default {
         background-color: $color;
         padding: ($spacer * 1.618) ($spacer * 1.618) ($spacer * 1.618) ($spacer * 1.618);
         @include border-radius($border-radius * 2);
+
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         // @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
         // @include gradient-directional($color, lighten($color, 2), -10deg);
         // @include custom-box-shadow(lighten($dark, 25), 1px, 0.3);

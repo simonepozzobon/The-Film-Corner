@@ -3,9 +3,10 @@
     title="Paratesti"
     ref="panel"
     :needs-trigger="true"
+    :needs-flex="true"
 >
     <div
-        class="para-container panel-group__container"
+        class="para-container"
         ref="paraContainer"
     >
         <paratext
@@ -122,7 +123,7 @@ export default {
     },
     watch: {
         'options.paratext_types': function (options) {
-            console.log('esterno');
+            // console.log('esterno');
             if (this.initialized == false || this.selectOptions.length == 0) {
                 this.initialized = true
                 this.selectOptions = Object.assign([], options)
@@ -132,6 +133,10 @@ export default {
     methods: {
         selectorReady: function () {
             this.$refs.panel.trigger()
+
+            setTimeout(() => {
+                this.debug()
+            }, 1000)
         },
         showForm: function () {
             if (this.createPara) {
@@ -145,20 +150,20 @@ export default {
         },
         debug: function () {
             // console.log(Object.assign({}, this.clip));
-            // let component = this.$refs.paratextType
-            // let select = component.$refs.select
-            //
-            // let id = 2
-            // $(select).val(id)
-            // component.value = this.options.paratext_types.find(single => single.id == id)
-            // this.$nextTick(() => {
-            //     $(select).trigger('change')
-            //     component.$emit('update', component.value)
-            //
-            //     this.$nextTick(() => {
-            //         this.addParatextType()
-            //     })
-            // })
+            let component = this.$refs.paratextType
+            let select = component.$refs.select
+
+            let id = 2
+            $(select).val(id)
+            component.value = this.options.paratext_types.find(single => single.id == id)
+            this.$nextTick(() => {
+                $(select).trigger('change')
+                component.$emit('update', component.value)
+
+                this.$nextTick(() => {
+                    this.addParatextType()
+                })
+            })
         },
         store: function () {
             console.log('deprecata');
@@ -188,12 +193,11 @@ export default {
     mounted: function () {
         if (this.options && this.options.paratext_types && this.options.paratext_types.length > 0) {
             this.initialized = true
-            console.log('mounbted');
             this.selectOptions = Object.assign([], this.options.paratext_types)
         }
-        this.$nextTick(() => {
-            this.debug()
-        })
+        // this.$nextTick(() => {
+        //     this.debug()
+        // })
         // this.$nextTick(() => {
         //     this.$util.onResizeListener(this.$refs.paraContainer, (el) => {
         //         let panel = this.$refs.panel
@@ -209,11 +213,25 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
+
+.para-tools {
+    &__title {
+        padding-top: $spacer * 1.618 !important;
+        padding-bottom: $spacer * 1.618 !important;
+    }
+}
 </style>
 
 <style lang="scss">
+@import '~styles/shared';
+</style>
+
+<style lang="scss" scoped>
 @import '~styles/shared';
 $color: lighten($gray-200, 8);
 $color-darken: lighten($gray-200, 3);
@@ -225,35 +243,5 @@ $darken: lighten($dark, 3);
     @include custom-box-shadow($darken, 2px, 0.02);
     width: 100%;
     padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
-
-    &__title {
-        padding-top: $spacer * 1.618 !important;
-        padding-bottom: $spacer * 1.618 !important;
-    }
-}
-.para-container {
-    // width: 100%;
-    // position: relative;
-    // transition: $transition-base-lg !important;
-    // height: 0;
-    // overflow: hidden;
-}
-
-.panel-group {
-
-    &__title {
-        // color: rgba($color, .7);
-        // -webkit-text-fill-color: rgba($color, .7);
-        // -webkit-text-stroke: 2px $darken;
-        // letter-spacing: 8px;
-        color: $darken;
-        padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) 0;
-        letter-spacing: 12px;
-    }
-}
-
-.noHeight {
-    height: 0;
-    transition: $transition-base-lg !important;
 }
 </style>

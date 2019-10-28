@@ -67,7 +67,6 @@
         <approfondimenti @update="updateField" />
     </container>
     <container
-        v-if="this.clip"
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(2)"

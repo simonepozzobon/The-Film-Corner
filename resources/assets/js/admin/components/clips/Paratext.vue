@@ -3,46 +3,47 @@
     class="para-single"
     ref="container"
 >
-    <div
+    <!-- <div
         class="para-single__table para-table"
         ref="table"
+    > -->
+    <div
+        class="para-single__content"
+        ref="element"
     >
-        <div class="para-table__container">
-            <ui-title
-                tag="h4"
-                font-size="h4"
-                :has-shadows="true"
-                :shadows-type="3"
-                class="para-single__sub-title"
-                :title="paratext.title"
-            />
+        <panel-title
+            :title="paratext.title"
+            size="h4"
+            class="para-single__sub-title"
+            letter-spacing="6px"
+        />
 
-            <b-table
-                :fields="fields"
-                :items="contents"
-                hover
-                striped
-                borderless
-            >
-                <template v-slot:cell(preview)="data">
-                    <div v-if="data.item.media_type == 'image'">
-                        <img
-                            :src="data.item.media"
-                            class="para-img"
-                            @click.stop.prevent="showPreview(data.item)"
-                        >
-                    </div>
-                </template>
-                <template v-slot:cell(tools)="data">
-                    <ui-button
-                        color="red"
-                        title="Elimina"
-                        @click="destroy(data.item)"
-                    />
-                </template>
-            </b-table>
-        </div>
+        <b-table
+            :fields="fields"
+            :items="contents"
+            hover
+            striped
+            borderless
+        >
+            <template v-slot:cell(preview)="data">
+                <div v-if="data.item.media_type == 'image'">
+                    <img
+                        :src="data.item.media"
+                        class="para-img"
+                        @click.stop.prevent="showPreview(data.item)"
+                    >
+                </div>
+            </template>
+            <template v-slot:cell(tools)="data">
+                <ui-button
+                    color="red"
+                    title="Elimina"
+                    @click="destroy(data.item)"
+                />
+            </template>
+        </b-table>
     </div>
+    <!-- </div> -->
 
     <b-modal
         ref="modal"
@@ -72,6 +73,7 @@ import {
     TextEditor,
     TextInput,
     Select2Input,
+    PanelTitle,
 }
 from '../../adminui'
 
@@ -84,25 +86,35 @@ from '../../../ui'
 
 import {
     TweenMax,
-    Power4,
     TimelineMax,
+    Power4,
+    Power3,
+    Power2,
+    Power0,
     CSSPlugin,
     Elastic,
     Back,
+    Sine,
 }
 from 'gsap/all'
 
 const plugins = [
     Power4,
+    Power3,
+    Power2,
+    Power0,
     CSSPlugin,
     Elastic,
     Back,
+    Sine,
 ]
 
 import {
     GSDevTools
 }
 from 'gsap/GSDevTools'
+
+const debounce = require('lodash.debounce')
 
 export default {
     name: 'Paratext',
@@ -116,6 +128,7 @@ export default {
         UiButton,
         UiTitle,
         Select2Input,
+        PanelTitle,
     },
     props: {
         paratext: {
@@ -191,142 +204,112 @@ export default {
         },
         tableShadows: function () {
             return
-        }
+        },
+        uuid: function () {
+            return this.$util.uuid()
+        },
     },
     methods: {
         initAnim: function () {
             let container = this.$refs.container
-            let parent = this.$parent.$refs.paraContainer
-            let duration = 0.4
-            let delay = (duration * 1)
-
-            this.master = new TimelineMax({
+            let content = this.$refs.element
+            this.master = gsap.timeline({
                 paused: true,
                 yoyo: true,
-                smoothChildTiming: true,
             })
 
-            this.master.addLabel('start', '+=0')
+            this.master.addLabel('start', 0)
+            this.master.addLabel('setInitial', 'start')
+            this.master.addLabel('setWidth', 'start+=0.1')
+            this.master.addLabel('setHeight', 'start+=0.2')
+            this.master.addLabel('revealFrame', 'start+=0.35')
 
-            this.master.fromTo(parent, duration, {
-                height: 0,
-                position: 'absolute',
-                overflow: 'hidden',
-            }, {
-                height: 'auto',
-                position: 'inherit',
-                overflow: 'auto',
-                ease: Power4.easeInOut,
-                yoyoEase: Power4.easeInOut,
-            }, 'start+=0')
-
-            this.master.fromTo(container, duration, {
-                height: 0,
-                position: 'absolute',
-                overflow: 'hidden',
-            }, {
-                height: 'auto',
-                position: 'relative',
-                overflow: 'auto',
-                ease: Power4.easeInOut,
-                yoyoEase: Power4.easeInOut,
-                onComplete: () => {
-                    TweenMax.set(container, {
-                        clearProps: 'overflow'
-                    })
-                }
-            }, 'start+=0.1')
-
-            this.master.progress(1).progress(0).then(() => {})
-
-            this.$nextTick(() => {
-                // this.initPanel()
-                this.master.play()
-            })
-
-        },
-        initPanel: function () {
-            let uploader = this.$refs.uploader
-            let table = this.$refs.table
-            let container = this.$refs.container
-            let uploadForm = this.$refs.uploadForm
-
-            // let paddingLeft = gsap.getProperty(uploader, 'paddingLeft')
-            // let paddingRight = gsap.getProperty(uploader, 'paddingRight')
-            // let paddingTop = gsap.getProperty(uploader, 'paddingTop')
-            // let paddingBottom = gsap.getProperty(uploader, 'paddingBottom')
-            // let height = gsap.getProperty(uploader, 'height')
-            // console.log(height);
-
-            this.masterPanel = new TimelineMax({
-                paused: true,
-            })
-
-            let marginBottom = gsap.getProperty(uploader, 'marginBottom')
-            console.log(marginBottom);
-
-            this.masterPanel.fromTo(uploadForm, .1, {
+            this.master.fromTo(content, .1, {
                     display: 'none',
                 }, {
                     display: 'block'
-                }, 'panelAnim')
-                .set(uploader, {
+                }, 'start')
+                .to(container, .05, {
+                    display: 'flex',
                     opacity: '0',
-                    display: 'block',
+                    marginBottom: '0rem',
+                }, 'start')
+
+                .to(content, .05, {
                     height: '1px',
-                    width: '100%',
-                    transformOrigin: 'center center',
+                    paddingTop: '0',
+                    paddingBottom: '0',
+                    opacity: '0',
                     overflow: 'hidden',
-                    marginBottom: '0',
-                }, 'panelAnim+=0.1')
-                .set(uploadForm, {
-                    opacity: '0',
-                    borderRadius: '50%',
-                }, 'panelAnim+=0.1')
-                .to(uploader, .65, {
-                    opacity: '1',
-                    // ease: Power4.easeInOut,
-                }, 'panelAnim+=0.11')
-                .set(uploader, {
-                    height: 'auto',
-                    marginBottom: '40px',
-                }, 'panelAnim+=0.4')
-                .from(uploader, 0.25, {
-                    height: '1px',
-                    marginBottom: '0',
-                    immediateRender: false,
-                }, 'panelAnim+=0.4')
-                .to(uploadForm, .25, {
-                    borderRadius: '0.25rem',
-                }, 'panelAnim+=0.7')
-                .fromTo(uploadForm, .25, {
-                    opacity: 0,
+                    css: {
+                        boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
+                    },
+                }, 'start')
+
+                .fromTo(content, 0.1, {
+                    width: '1px',
+                    maxWidth: '0%',
                 }, {
-                    opacity: 1,
-                }, 'panelAnim+=0.8')
+                    id: 'width',
+                    width: '100%',
+                    maxWidth: '100%',
+                    ease: Sine.easeInOut,
+                    yoyoEase: Sine.easeIn,
+                    immediateRender: false,
+                }, 'setWidth')
+
+                .fromTo(content, .1, {
+                    height: '1px',
+                    paddingTop: '0',
+                    paddingBottom: '0',
+                }, {
+                    id: 'height',
+                    height: '100%',
+                    paddingTop: '0.5rem',
+                    paddingBottom: '2rem',
+                    immediateRender: false,
+                    ease: Sine.easeInOut,
+                    yoyoEase: Sine.easeIn,
+                }, 'setHeight')
+
+                .fromTo(content, .3, {
+                    opacity: '0',
+                }, {
+                    opacity: '1',
+                    ease: Sine.easeInOut,
+                    immediateRender: false,
+                }, 'start')
+
+                .fromTo(container, .3, {
+                    opacity: '0',
+                }, {
+                    opacity: '1',
+                    ease: Sine.easeInOut,
+                    immediateRender: false,
+                }, 'start')
 
 
-            this.masterPanel.eventCallback('onComplete', () => {
-                this.isOpen = true
-            })
+                .fromTo(container, .1, {
+                    marginBottom: '0rem',
+                }, {
+                    marginBottom: '2.5rem',
+                    immediateRender: false,
+                }, 'setHeight')
 
-            this.masterPanel.eventCallback('onReverseComplete', () => {
-                this.isOpen = false
-            })
+                .fromTo(content, .2, {
+                    boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0), 4px 8px 24px 0 rgba(59, 66, 72, 0)',
+                }, {
+                    boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0.04), 4px 8px 24px 0 rgba(59, 66, 72, 0.02)',
+                    immediateRender: false,
+                    ease: Power0.easeNone,
+                }, 'revealFrame')
+
+            this.master.progress(1).progress(0)
 
             this.$nextTick(() => {
-                this.togglePanel()
+                this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
             })
-        },
-        togglePanel: function () {
-            if (this.masterPanel) {
-                if (this.isOpen) {
-                    this.masterPanel.reverse()
-                }
-                else {
-                    this.masterPanel.play()
-                }
-            }
+
         },
         updateFile: function (file, src) {
             this.file = file
@@ -387,6 +370,9 @@ export default {
                 this.showPreview(item)
             })
         },
+        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
+            this.$ebus.$emit(name, anim, direction, uuid, callback)
+        }, 150)
     },
     mounted: function () {
         this.$nextTick(() => {
@@ -406,124 +392,38 @@ $color-darken: lighten($gray-200, 3);
 $darken: lighten($dark, 3);
 
 .para-single {
-    // background-color: $white;
-    // height: 100%;
-    width: 100%;
-    position: relative;
-    // padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) ($spacer * 2);
-    margin-bottom: $spacer * 2.5;
-    // @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);
-    // @include gradient-directional($red, lighten($red, 2), 10deg);
-    // @include border-radius($border-radius * 4);
-    // @include custom-inner-shadow-lg($darken, 0.2);
-    // transition: $transition-base-lg !important;
-    height: 0;
-    z-index: 3;
-
-    &__title {
-        color: darken($gray-100, 50);
-        // color: rgba($color, .7);
-        // -webkit-text-fill-color: rgba($color, .7);
-        // -webkit-text-stroke: 1.618px $darken;
-        letter-spacing: 8px;
-    }
-
     &__sub-title {
-        color: darken($gray-100, 50);
-        padding: ($spacer / 1.618) ($spacer * 2) ($spacer / 2) 0;
-        // color: $darken;
-        // color: rgba($color, .7);
-        // -webkit-text-fill-color: rgba($color, .7);
-        // -webkit-text-stroke: 1.33px $darken;
-        letter-spacing: 8px;
-    }
-
-    &__table {
-        height: auto;
-        width: 100%;
-        // transition: $transition-base-lg !important;
-    }
-
-    .margin-bt {
-        margin-bottom: $spacer * 2.5;
-    }
-
-    &__topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: $spacer / 1.618;
+        // color: darken($gray-100, 50);
+        padding-top: $spacer * 1.618 !important;
+        padding-bottom: $spacer * 1.618 !important;
+        // padding: ($spacer / 1.618) ($spacer * 2) ($spacer / 2) 0;
     }
 }
+</style>
 
-.para-table {
-    // overflow: hidden;
-    // transition: $transition-base-lg !important;
+<style lang="scss" scoped>
+@import '~styles/shared';
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
 
-    &__container {
-        @include gradient-directional($color, lighten($color, 2), -11deg);
-        @include border-radius($border-radius * 2);
-        width: 100%;
-        // position: relative;
-        padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
-        // transition: $transition-base-lg !important;
-
-        // &::after,
-        // &::before {
-        //     content: '';
-        //     position: absolute;
-        //     bottom: ($spacer / (1.618)) * 1.1;
-        //     top: 80%;
-        //     background: $darken;
-        //     @include custom-box-shadow($darken, 2px, 0.2);
-        //     width: 50%;
-        //     z-index: -1;
-        // }
-        //
-        // &::before {
-        //     transform-origin: right bottom;
-        //     left: 8px;
-        //     right: auto;
-        //     transform: rotate(-0.5deg);
-        // }
-        //
-        // &::after {
-        //     transform-origin: left top;
-        //     right: 8px;
-        //     left: auto;
-        //     transform: rotate(0.5deg);
-        // }
-    }
-
-    &__container .uploader {
-        display: none;
-    }
-
-}
-
-.no-height {
-    height: 0;
-}
-
-.para-img {
-    width: $spacer * 4;
-    height: auto;
-    max-height: $spacer * 4;
-    cursor: pointer;
-}
-
-.preview {
-    &__body {
-        background-color: transparent;
-        padding: 0;
-    }
+.para-single {
+    // width: 100%;
+    // position: relative;
+    margin-bottom: $spacer * 2.5;
+    // height: 0;
+    // z-index: 3;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
     &__content {
-        background-color: transparent;
-    }
+        @include gradient-directional($color, lighten($color, 2), -11deg);
+        @include border-radius($border-radius * 2);
+        // @include custom-box-shadow($darken, 2px, 0.02);
 
-    &__img {
-        width: 100%;
+        // width: 100%;
+        padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
     }
 }
 </style>
