@@ -8,6 +8,7 @@ import TextEditor from './TextEditor.vue'
 import TextInput from './TextInput.vue'
 import Select2Input from './Select2Input.vue'
 import PanelTitle from './PanelTitle.vue'
+import UploadZone from './UploadZone.vue'
 
 export {
     Container,
@@ -20,4 +21,5 @@ export {
     TextInput,
     Select2Input,
     PanelTitle,
+    UploadZone,
 }

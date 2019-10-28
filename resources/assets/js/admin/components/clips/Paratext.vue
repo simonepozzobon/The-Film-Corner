@@ -3,10 +3,6 @@
     class="para-single"
     ref="container"
 >
-    <!-- <div
-        class="para-single__table para-table"
-        ref="table"
-    > -->
     <div
         class="para-single__content"
         ref="element"
@@ -42,9 +38,8 @@
                 />
             </template>
         </b-table>
+        <upload-zone :accept="mime" />
     </div>
-    <!-- </div> -->
-
     <b-modal
         ref="modal"
         title="Anteprima"
@@ -74,6 +69,7 @@ import {
     TextInput,
     Select2Input,
     PanelTitle,
+    UploadZone,
 }
 from '../../adminui'
 
@@ -129,6 +125,7 @@ export default {
         UiTitle,
         Select2Input,
         PanelTitle,
+        UploadZone,
     },
     props: {
         paratext: {
@@ -193,6 +190,19 @@ export default {
             else {
                 return 0
             }
+        },
+        mime: function () {
+            if (this.paratext.type === 'image') {
+                return 'image/*'
+            }
+            else if (this.paratext.type === 'audio') {
+                return 'audio/*'
+            }
+            else if (this.paratext.type === 'video') {
+                return 'video/mp4'
+            }
+
+            return null
         },
         panelBtn: function () {
             if (this.isOpen) {
