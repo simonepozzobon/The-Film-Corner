@@ -65,6 +65,9 @@ export default {
     },
     mounted: function () {
         console.log('home');
+        this.$nextTick(() => {
+            this.title = 'prova input test'
+        })
     }
 }
 </script>
@@ -124,13 +127,15 @@ $i-color: invert($ci-shadow-color);
 
 // transitions
 $ci-transition: all 0.1s linear;
-$ci-transition-label: all 0.1s linear;
+$ci-transition-label: all 0.1s ease-in-out;
 
 // measurements when focused
 $ci-label-font-size-focused: $ci-label-font-size * $ci-small;
-$ci-font-size-focused: $ci-font-size * (1 / $ci-small);
+// $ci-font-size-focused: $ci-font-size * (1 / $ci-small);
+$ci-font-size-focused: $ci-font-size;
 
-$ci-padding-top-focused: $ci-padding-top * $ci-small;
+// $ci-padding-top-focused: $ci-padding-top * $ci-small;
+$ci-padding-top-focused: $ci-padding-top;
 
 @debug unquote('testo') rem-to-px($ci-font-size) unquote(' -> ') rem-to-px($ci-font-size-focused);
 @debug unquote('label') $ci-label-font-size unquote(' -> ') $ci-label-font-size-focused;
@@ -144,11 +149,12 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
         position: absolute;
         top: $ci-label-top;
         left: $ci-label-left;
-        color: $ci-color;
+        color: darken($ci-color, 10);
         font-size: $ci-label-font-size;
         font-weight: $ci-label-font-weight;
         text-transform: uppercase;
         letter-spacing: $ci-label-letter-spacing;
+        transform-origin: left top;
         line-height: 1;
 
         transition: $ci-transition-label;
@@ -157,15 +163,14 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
     &__input {
         @include border-radius($ci-border-radius);
         width: 100%;
-        max-width: 400px;
         padding: $ci-padding-top $ci-padding-right $ci-padding-bottom $ci-padding-left;
+        color: $ci-color;
         font-size: $ci-font-size;
         background-color: $ci-bg;
         @include gradient-directional(lighten($ci-bg, 2), lighten($ci-bg, 3), -5deg);
         border: $ci-border-size solid $ci-border-color;
         box-shadow: inset $i-x $i-y $i-blur $i-spread rgba($i-color, $i-opacity), 2px 4px 12px -2px rgba($i-color, 0.02), 4px 8px 24px -4px rgba($i-color, 0.04);
         line-height: 1;
-
         transition: $ci-transition;
 
         &::placeholder {
@@ -177,7 +182,7 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
 
         &:focus {
             padding-top: $ci-padding-top-focused;
-            color: $dark;
+            color: darken($ci-color, 10);
             font-size: $ci-font-size-focused;
             border-color: darken($ci-border-color, 4);
             outline: none;
@@ -189,7 +194,8 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
     &:focus-within &__label,
     &__input:focus + &__label {
         color: lighten($ci-color, 10);
-        font-size: $ci-label-font-size-focused;
+        // font-size: $ci-label-font-size-focused;
+        transform: scale($ci-small);
         transition: $ci-transition-label;
     }
 }
