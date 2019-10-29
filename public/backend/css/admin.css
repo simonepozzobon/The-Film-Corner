@@ -16952,6 +16952,85 @@ footer.no-margin-top {
   margin-left: 1rem;
 }
 
+.custom-input {
+  position: relative;
+}
+
+.custom-input__label {
+  position: absolute;
+  top: 0.7rem;
+  left: 1.0708rem;
+  color: #8b9aaa;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  transform-origin: left top;
+  line-height: 1;
+  transition: all 0.1s ease-in-out;
+}
+
+.custom-input__input {
+  border-radius: 0.5rem;
+  width: 100%;
+  padding: 1.9rem 0.9708rem 0.7rem 0.9708rem;
+  color: #a8b4c0;
+  font-size: 1rem;
+  background-color: #f2f4f5;
+  background-image: linear-gradient(-5deg, #f8f9fa, #fbfbfc);
+  background-repeat: repeat-x;
+  border: 0.1rem solid #e3e7eb;
+  box-shadow: inset -3px -3px 72px -70px rgba(25, 22, 18, 0.7), 2px 4px 12px -2px rgba(25, 22, 18, 0.02), 4px 8px 24px -4px rgba(25, 22, 18, 0.04);
+  line-height: 1;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input::-webkit-input-placeholder {
+  color: #adb5bd;
+  opacity: 0.4;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input::-moz-placeholder {
+  color: #adb5bd;
+  opacity: 0.4;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input:-ms-input-placeholder {
+  color: #adb5bd;
+  opacity: 0.4;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input::-ms-input-placeholder {
+  color: #adb5bd;
+  opacity: 0.4;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input::placeholder {
+  color: #adb5bd;
+  opacity: 0.4;
+  transition: all 0.1s linear;
+}
+
+.custom-input__input:focus {
+  padding-top: 1.9rem;
+  color: #8b9aaa;
+  font-size: 1rem;
+  border-color: #d7dde2;
+  outline: none;
+  transition: all 0.1s linear;
+}
+
+.custom-input:focus-within .custom-input__label,
+.custom-input__input:focus + .custom-input__label {
+  color: #c6cdd5;
+  transform: scale(0.8);
+  transition: all 0.1s ease-in-out;
+}
+
 /*!
  * Bootstrap v4.3.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

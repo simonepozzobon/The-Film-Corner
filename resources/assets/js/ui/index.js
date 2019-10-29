@@ -24,6 +24,7 @@ import UiRow from './UiRow.vue'
 import UiSpecialText from './UiSpecialText.vue'
 import UiTeam from './UiTeam.vue'
 import UiTitle from './UiTitle.vue'
+import UiCustomInput from './UiCustomInput.vue'
 
 export {
     UiAccordionCols,
@@ -52,4 +53,5 @@ export {
     UiSpecialText,
     UiTeam,
     UiTitle,
+    UiCustomInput,
 }
