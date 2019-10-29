@@ -1,0 +1,21 @@
+// convert Rem to Px
+// https://codepen.io/cyh_beta/pen/ogjyLM
+// https://github.com/stubbornella/oocss/blob/master/oocss/src/components/utils/_fontSize.scss
+$base-px-size: 16px;
+
+
+@function parseInt($n) {
+  @return $n / ($n * 0 + 1);
+}
+
+//convert rem back to px
+@function rem-to-px($size) {
+	$value: parseInt($size) * $base-px-size; //15px is the base size specified
+	@return round($value);
+}
+
+@function px-to-rem($size) {
+  $remSize: $size / $base-px-size;
+//Default font size on html element is 100%, equivalent to 16px;
+  @return #{$remSize}rem;
+}

@@ -71,6 +71,8 @@ export default {
 
 <style lang="scss">
 @import '~styles/shared';
+@import '~styles/utilities/conversion';
+
 $color: lighten($gray-200, 8);
 $color-darken: lighten($gray-200, 3);
 $darken: lighten($dark, 3);
@@ -130,9 +132,9 @@ $ci-font-size-focused: $ci-font-size * (1 / $ci-small);
 
 $ci-padding-top-focused: $ci-padding-top * $ci-small;
 
-@debug unquote('testo') $ci-font-size unquote(' -> ') $ci-font-size-focused;
+@debug unquote('testo') rem-to-px($ci-font-size) unquote(' -> ') rem-to-px($ci-font-size-focused);
 @debug unquote('label') $ci-label-font-size unquote(' -> ') $ci-label-font-size-focused;
-@debug unquote('padding-top') $ci-padding-top unquote(' -> ') $ci-padding-top-focused;
+@debug unquote('padding-top') rem-to-px($ci-padding-top) unquote(' -> ') rem-to-px($ci-padding-top-focused);
 
 // styles
 .custom-input {
@@ -147,6 +149,7 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
         font-weight: $ci-label-font-weight;
         text-transform: uppercase;
         letter-spacing: $ci-label-letter-spacing;
+        line-height: 1;
 
         transition: $ci-transition-label;
     }
@@ -161,7 +164,7 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
         @include gradient-directional(lighten($ci-bg, 2), lighten($ci-bg, 3), -5deg);
         border: $ci-border-size solid $ci-border-color;
         box-shadow: inset $i-x $i-y $i-blur $i-spread rgba($i-color, $i-opacity), 2px 4px 12px -2px rgba($i-color, 0.02), 4px 8px 24px -4px rgba($i-color, 0.04);
-        line-height: 0;
+        line-height: 1;
 
         transition: $ci-transition;
 
@@ -179,7 +182,6 @@ $ci-padding-top-focused: $ci-padding-top * $ci-small;
             border-color: darken($ci-border-color, 4);
             outline: none;
             transition: $ci-transition;
-            line-height: 0;
         }
 
     }
