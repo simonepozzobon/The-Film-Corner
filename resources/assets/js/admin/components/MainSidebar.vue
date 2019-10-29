@@ -30,6 +30,11 @@
         title="Traduzioni"
         url="translate"
     />
+    <hr>
+    <sidebar-item
+        title="Test"
+        url="testing"
+    />
 </div>
 </template>
 
