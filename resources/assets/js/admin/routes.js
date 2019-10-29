@@ -3,6 +3,7 @@ import Apps from './views/Apps.vue'
 import ClipCreate from './views/ClipCreate.vue'
 import News from './views/News.vue'
 import PropagandApp from './views/PropagandApp.vue'
+import TestUi from './views/TestUi.vue'
 import Translate from './views/Translate.vue'
 import Users from './views/Users.vue'
 
@@ -40,6 +41,10 @@ export default [{
         path: '/clips/create',
         name: 'clips-create',
         component: ClipCreate,
-    }
-
+    },
+    {
+        path: '/test-ui',
+        name: 'test-ui',
+        component: TestUi,
+    },
 ]

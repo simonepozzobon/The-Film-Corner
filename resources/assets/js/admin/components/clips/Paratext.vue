@@ -251,9 +251,7 @@ export default {
                     paddingBottom: '0',
                     opacity: '0',
                     overflow: 'hidden',
-                    css: {
-                        boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
-                    },
+                    boxShadow: '1px 1px 1px -1px rgba(59, 66, 72, 0), 1px 1px 1px -1px rgba(59, 66, 72, 0)',
                 }, 'start')
 
                 .fromTo(content, 0.1, {
@@ -307,9 +305,9 @@ export default {
                 }, 'setHeight')
 
                 .fromTo(content, .2, {
-                    boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0), 4px 8px 24px 0 rgba(59, 66, 72, 0)',
+                    boxShadow: '1px 1px 1px -1px rgba(59, 66, 72, 0), 1px 1px 1px -1px rgba(59, 66, 72, 0)',
                 }, {
-                    boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0.04), 4px 8px 24px 0 rgba(59, 66, 72, 0.02)',
+                    boxShadow: '2px 4px 12px -4px rgba(59, 66, 72, 0.04), 4px 8px 24px -8px rgba(59, 66, 72, 0.02)',
                     immediateRender: false,
                     ease: Power0.easeNone,
                 }, 'revealFrame')
