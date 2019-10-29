@@ -137,9 +137,9 @@ $ci-font-size-focused: $ci-font-size;
 // $ci-padding-top-focused: $ci-padding-top * $ci-small;
 $ci-padding-top-focused: $ci-padding-top;
 
-@debug unquote('testo') rem-to-px($ci-font-size) unquote(' -> ') rem-to-px($ci-font-size-focused);
-@debug unquote('label') $ci-label-font-size unquote(' -> ') $ci-label-font-size-focused;
-@debug unquote('padding-top') rem-to-px($ci-padding-top) unquote(' -> ') rem-to-px($ci-padding-top-focused);
+// @debug unquote('testo') rem-to-px($ci-font-size) unquote(' -> ') rem-to-px($ci-font-size-focused);
+// @debug unquote('label') $ci-label-font-size unquote(' -> ') $ci-label-font-size-focused;
+// @debug unquote('padding-top') rem-to-px($ci-padding-top) unquote(' -> ') rem-to-px($ci-padding-top-focused);
 
 // styles
 .custom-input {
