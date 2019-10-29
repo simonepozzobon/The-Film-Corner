@@ -16954,6 +16954,8 @@ footer.no-margin-top {
 
 .custom-input {
   position: relative;
+  height: inherit;
+  margin-bottom: 1.618rem;
 }
 
 .custom-input__label {

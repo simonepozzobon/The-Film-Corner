@@ -68,6 +68,8 @@ $ci-padding-top-focused: $ci-padding-top;
 // styles
 .custom-input {
     position: relative;
+    height: inherit;
+    margin-bottom: $spacer * 1.618;
 
     &__label {
         position: absolute;

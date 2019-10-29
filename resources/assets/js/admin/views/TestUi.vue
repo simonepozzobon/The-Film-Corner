@@ -13,6 +13,7 @@
                 name="prova"
                 :value.sync="title"
             />
+            <text-editor></text-editor>
         </div>
         <block-panel title="Sfondo scuro">
             <ui-custom-input
@@ -20,6 +21,7 @@
                 name="prova"
                 :value.sync="title"
             />
+            <text-editor></text-editor>
         </block-panel>
     </container>
 </div>
@@ -30,6 +32,7 @@ import {
     BlockPanel,
     Container,
     PanelTitle,
+    TextEditor,
 }
 from '../adminui'
 
@@ -45,6 +48,7 @@ export default {
         Container,
         PanelTitle,
         UiCustomInput,
+        TextEditor,
     },
     data: function () {
         return {
