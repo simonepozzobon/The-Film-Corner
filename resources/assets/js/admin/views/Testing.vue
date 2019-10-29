@@ -1,7 +1,10 @@
 <template>
 <div class="admin-home">
     <container>
-        <block-panel title="test">
+        <block-panel
+            title="test"
+            :has-animations="false"
+        >
             <div
                 class="para-single"
                 ref="container"

@@ -83,16 +83,15 @@ export default {
             toastr.info('file added')
         },
         success: function () {
-
+            toastr.success('aggiunto')
         },
         sendingRequest: function (file, xhr, formData) {
-            toastr.info('sending request', formData)
-
             for (let key in this.params) {
                 if (this.params.hasOwnProperty(key)) {
                     formData.append(key, this.params[key])
                 }
             }
+            toastr.warning('sending')
         },
         sendingMultipleRequest: function () {
 
@@ -106,11 +105,30 @@ export default {
 
 <style lang="scss" scoped>
 @import '~styles/shared';
+$base-color: $gray-400;
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
 
 .up-zone {
     &__content {
-        background-color: transparent;
+        padding: $spacer * 1.618;
+        @include border-radius($border-radius * 2);
+        cursor: pointer;
+
+        color: $base-color;
         font-family: $font-family-base;
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        border: 2px dashed $base-color;
+
+        &:hover {
+            color: darken($base-color, 5);
+            border-color: darken($base-color, 5);
+            background-color: rgba($base-color, .1);
+        }
     }
 }
 </style>

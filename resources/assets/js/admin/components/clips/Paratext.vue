@@ -227,7 +227,6 @@ export default {
                     data.append('content', this.content)
 
                     this.$http.post('/api/v2/admin/clips/paratexts/upload', data).then(response => {
-                        // console.log(response.data);
                         this.contents.push(response.data.paratext)
                         this.setCompleted()
                         resolve(response.data.paratext)
@@ -281,10 +280,8 @@ $darken: lighten($dark, 3);
 
 .para-single {
     &__sub-title {
-        // color: darken($gray-100, 50);
         padding-top: $spacer * 1.618 !important;
         padding-bottom: $spacer * 1.618 !important;
-        // padding: ($spacer / 1.618) ($spacer * 2) ($spacer / 2) 0;
     }
 }
 </style>
@@ -296,11 +293,7 @@ $color-darken: lighten($gray-200, 3);
 $darken: lighten($dark, 3);
 
 .para-single {
-    // width: 100%;
-    // position: relative;
     margin-bottom: $spacer * 2.5;
-    // height: 0;
-    // z-index: 3;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -310,7 +303,6 @@ $darken: lighten($dark, 3);
         @include border-radius($border-radius * 2);
         // @include custom-box-shadow($darken, 2px, 0.02);
 
-        // width: 100%;
         padding: ($spacer / 2) ($spacer * 2) ($spacer * 2) ($spacer * 2);
     }
 }

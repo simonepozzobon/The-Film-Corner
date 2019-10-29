@@ -1,6 +1,7 @@
 <template>
 <div
     class="block-panel"
+    :class="shadowClass"
     ref="parent"
 >
     <div
@@ -93,6 +94,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        hasAnimations: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: function () {
         return {
@@ -112,6 +117,12 @@ export default {
         uuid: function () {
             return this.$util.uuid()
         },
+        shadowClass: function () {
+            if (this.hasAnimations == false) {
+                return 'block-panel--shadows'
+            }
+            return null
+        }
     },
     methods: {
         trigger: function () {
@@ -391,9 +402,13 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        // @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
+
         // @include gradient-directional($color, lighten($color, 2), -10deg);
         // @include custom-box-shadow(lighten($dark, 25), 1px, 0.3);
+    }
+
+    &--shadows &__container {
+        @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
     }
 }
 </style>
