@@ -1,7 +1,7 @@
-import DebouncedAnimation from './DebouncedAnimation'
 import BlockPanelAnimation from './BlockPanelAnimation'
+import ThrottleEvent from './ThrotthleEvent'
 
 export {
-    DebouncedAnimation,
+    ThrottleEvent,
     BlockPanelAnimation,
 }

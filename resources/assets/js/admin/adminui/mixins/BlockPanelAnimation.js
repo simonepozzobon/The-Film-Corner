@@ -38,7 +38,8 @@ const BlockPanelAnimation = {
             let childs = content.children
             let childsVisible = []
 
-            parent = parent.parentNode
+            console.log('initializin animation', this.title, parent);
+            // parent = parent.parentNode
 
             for (let i = 0; i < childs.length; i++) {
                 let child = childs[i]
@@ -160,11 +161,9 @@ const BlockPanelAnimation = {
                     immediateRender: false,
                 }, 'revealContent')
 
-            this.master.progress(1).progress(0)
+            // this.master.progress(1).progress(0)
 
-            this.$nextTick(() => {
-                this.togglePanel()
-            })
+            this.togglePanel()
         },
     },
 }

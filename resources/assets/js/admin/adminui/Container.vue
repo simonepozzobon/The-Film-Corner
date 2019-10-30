@@ -22,15 +22,14 @@ const plugins = [
     Power4,
 ]
 
-const debounce = require('lodash.debounce')
 import {
-    DebouncedAnimation,
+    ThrottleEvent,
 }
 from './mixins'
 
 export default {
     name: 'Container',
-    mixins: [DebouncedAnimation, ],
+    mixins: [ThrottleEvent],
     props: {
         padding: {
             type: String,
@@ -125,12 +124,12 @@ export default {
         },
         showPanel: function () {
             if (this.master) {
-                this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
+                this.throttleEvent('add-anim', this.master, true, this.uuid, null)
             }
         },
         hidePanel: function () {
             if (this.master) {
-                this.debouncedEvent('add-anim', this.master, false, this.uuid, null)
+                this.throttleEvent('add-anim', this.master, false, this.uuid, null)
             }
         },
     },
