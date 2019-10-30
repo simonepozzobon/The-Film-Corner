@@ -14,7 +14,7 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 1, 'Compare The Clips')"
+                    @update="updateSelection($event, 1)"
                 />
                 <label class="col-md-2 offset-md-1">
                     Frame Crop
@@ -24,7 +24,7 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 2, 'Frame Crop')"
+                    @update="updateSelection($event, 2)"
                 />
                 <label class="col-md-2 offset-md-1">
                     Check The Sound
@@ -34,7 +34,7 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 3, 'Check The Sound')"
+                    @update="updateSelection($event, 3)"
                 />
             </div>
         </block-panel>
@@ -71,11 +71,20 @@ export default {
     },
     data: function () {
         return {
+            options: {}, // questa diventerà la props di esercizi
             exercises: [],
         }
     },
     methods: {
         debug: function () {},
+        getExercisesAvailable: function () {
+            this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
+                console.log(response);
+                if (response.data.success) {
+                    this.p
+                }
+            })
+        },
         updateSelection: function (value, id, title) {
             if (value) {
                 this.addExercise(id, title)
@@ -102,6 +111,9 @@ export default {
                 console.log('non trovato');
             }
         }
+    },
+    created: function () {
+        this.getExercisesAvailable()
     },
     mounted: function () {
 

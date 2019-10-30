@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
-use App\Propaganda\Clip;
-use App\Propaganda\Period;
-use App\Propaganda\Director;
-use App\Propaganda\Genre;
-use App\Propaganda\Format;
-use App\Propaganda\Detail;
 use App\Propaganda\Age;
-use App\Propaganda\Topic;
-use App\Propaganda\People;
-use App\Propaganda\Hashtag;
-use App\Propaganda\ParatextType;
-use App\Propaganda\Paratext;
+use App\Propaganda\Clip;
 use App\Propaganda\Media;
+use App\Propaganda\Topic;
+use App\Propaganda\Genre;
+use App\Propaganda\Detail;
+use App\Propaganda\Format;
+use App\Propaganda\People;
+use App\Propaganda\Period;
+use App\Propaganda\Hashtag;
+use App\Propaganda\Director;
+use App\Propaganda\Paratext;
+use App\Propaganda\Exercise;
+use App\Propaganda\ParatextType;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ClipsController extends Controller
@@ -63,6 +65,7 @@ class ClipsController extends Controller
         $peoples = People::all();
         $hashtags = Hashtag::all();
         $paraType = ParatextType::all();
+        $exercises = Exercise::all();
 
 
         return [
@@ -76,6 +79,7 @@ class ClipsController extends Controller
             'peoples' => $peoples,
             'hashtags' => $hashtags,
             'paratext_types' => $paraType,
+            'exercises' => $exercises,
         ];
     }
 
