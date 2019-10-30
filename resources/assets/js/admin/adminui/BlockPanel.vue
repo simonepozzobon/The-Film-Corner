@@ -87,11 +87,6 @@ export default {
             master: null,
         }
     },
-    watch: {
-        isOpen: function (value) {
-            console.log('isOpen change state', this.title, value);
-        },
-    },
     computed: {
         panelBtn: function () {
             if (this.isOpen) {

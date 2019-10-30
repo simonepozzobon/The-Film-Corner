@@ -38,7 +38,7 @@ const BlockPanelAnimation = {
             let childs = content.children
             let childsVisible = []
 
-            console.log('initializin animation', this.title, parent);
+            // console.log('initializin animation', this.title, parent);
             // parent = parent.parentNode
 
             for (let i = 0; i < childs.length; i++) {

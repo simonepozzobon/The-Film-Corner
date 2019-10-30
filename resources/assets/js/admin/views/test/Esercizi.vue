@@ -5,36 +5,38 @@
             title="Esercizi"
             :has-animations="true"
         >
-            <label class="col-md-2">
-                Compare The Clips
-            </label>
-            <switch-input
-                label="Compare The Clips"
-                label-size="col-md-2"
-                input-size="col-md-1"
-                :has-row="false"
-                @update="updateSelection($event, 1)"
-            />
-            <label class="col-md-2 offset-md-1">
-                Frame Crop
-            </label>
-            <switch-input
-                label="Frame Crop"
-                label-size="col-md-2"
-                input-size="col-md-1"
-                :has-row="false"
-                @update="updateSelection($event, 2)"
-            />
-            <label class="col-md-2 offset-md-1">
-                Check The Sound
-            </label>
-            <switch-input
-                label="Check The Sound"
-                label-size="col-md-2"
-                input-size="col-md-1"
-                :has-row="false"
-                @update="updateSelection($event, 3)"
-            />
+            <div class="row">
+                <label class="col-md-2">
+                    Compare The Clips
+                </label>
+                <switch-input
+                    label="Compare The Clips"
+                    label-size="col-md-2"
+                    input-size="col-md-1"
+                    :has-row="false"
+                    @update="updateSelection($event, 1)"
+                />
+                <label class="col-md-2 offset-md-1">
+                    Frame Crop
+                </label>
+                <switch-input
+                    label="Frame Crop"
+                    label-size="col-md-2"
+                    input-size="col-md-1"
+                    :has-row="false"
+                    @update="updateSelection($event, 2)"
+                />
+                <label class="col-md-2 offset-md-1">
+                    Check The Sound
+                </label>
+                <switch-input
+                    label="Check The Sound"
+                    label-size="col-md-2"
+                    input-size="col-md-1"
+                    :has-row="false"
+                    @update="updateSelection($event, 3)"
+                />
+            </div>
         </block-panel>
     </container>
     <container>
