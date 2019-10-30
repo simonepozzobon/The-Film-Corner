@@ -14,7 +14,7 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 1)"
+                    @update="updateSelection($event, 1, 'Compare The Clips')"
                 />
                 <label class="col-md-2 offset-md-1">
                     Frame Crop
@@ -24,7 +24,7 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 2)"
+                    @update="updateSelection($event, 2, 'Frame Crop')"
                 />
                 <label class="col-md-2 offset-md-1">
                     Check The Sound
@@ -34,17 +34,19 @@
                     label-size="col-md-2"
                     input-size="col-md-1"
                     :has-row="false"
-                    @update="updateSelection($event, 3)"
+                    @update="updateSelection($event, 3, 'Check The Sound')"
                 />
             </div>
         </block-panel>
     </container>
-    <container>
+    <container
+        v-for="exercise in exercises"
+        :key="exercise.uuid"
+    >
         <block-panel
-            title="Librerie esercizi"
+            :title="exercise.title"
             :has-animations="true"
         >
-            test
         </block-panel>
     </container>
 </div>
@@ -74,11 +76,31 @@ export default {
     },
     methods: {
         debug: function () {},
-        addParatext: function (response) {
-
+        updateSelection: function (value, id, title) {
+            if (value) {
+                this.addExercise(id, title)
+            }
+            else {
+                this.removeExercise(id, title)
+            }
         },
-        updateSelection: function (value, id) {
-
+        addExercise: function (id, title) {
+            const exerxise = {
+                id: id,
+                uuid: this.$util.uuid(),
+                title: title,
+                libraries: [],
+            }
+            this.exercises.push(exerxise)
+        },
+        removeExercise: function (id, title) {
+            let idx = this.exercises.findIndex(exercise => exercise.id == id)
+            if (idx > -1) {
+                this.exercises.splice(idx, 1)
+            }
+            else {
+                console.log('non trovato');
+            }
         }
     },
     mounted: function () {
