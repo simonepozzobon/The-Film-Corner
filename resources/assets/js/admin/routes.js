@@ -5,7 +5,8 @@ import News from './views/News.vue'
 import PropagandApp from './views/PropagandApp.vue'
 import Translate from './views/Translate.vue'
 import Users from './views/Users.vue'
-import Testing from './views/Testing.vue'
+import UploadZone from './views/test/UploadZone.vue'
+import Esercizi from './views/test/Esercizi.vue'
 
 export default [{
         path: '/',
@@ -43,9 +44,14 @@ export default [{
         component: ClipCreate,
     },
     {
-        path: '/testing',
-        name: 'testing',
-        component: Testing,
+        path: '/test/uploadzone',
+        name: 'test-uploadzone',
+        component: UploadZone,
+    },
+    {
+        path: '/test/esercizi',
+        name: 'test-esercizi',
+        component: Esercizi,
     }
 
 ]

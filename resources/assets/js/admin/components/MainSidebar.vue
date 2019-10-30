@@ -32,8 +32,12 @@
     />
     <hr>
     <sidebar-item
-        title="Test"
-        url="testing"
+        title="Test Upload"
+        url="test-uploadzone"
+    />
+    <sidebar-item
+        title="Test Esercizi"
+        url="test-esercizi"
     />
 </div>
 </template>
