@@ -42,6 +42,7 @@
             :accept="mime"
             url="/api/v2/admin/clips/paratexts/upload"
             :params.sync="requestParams"
+            @success="addParatext"
         />
     </div>
     <b-modal
@@ -127,6 +128,7 @@ export default {
             isOpen: false,
             file: null,
             content: null,
+            paratexts: [],
             contents: [],
             files: [],
             fields: [{
@@ -217,6 +219,9 @@ export default {
                 this.$refs.modal.show()
             })
         },
+        addParatext: function (response) {
+            this.contents.push(response.paratext)
+        },
         upload: function () {
             return new Promise((resolve, reject) => {
                 if (this.hasMedia) {
@@ -283,6 +288,11 @@ $darken: lighten($dark, 3);
         padding-top: $spacer * 1.618 !important;
         padding-bottom: $spacer * 1.618 !important;
     }
+}
+
+.para-img {
+    width: $spacer * 4;
+    max-width: 100%;
 }
 </style>
 

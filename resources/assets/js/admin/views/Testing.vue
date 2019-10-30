@@ -19,10 +19,12 @@
                         class="para-single__sub-title"
                         letter-spacing="6px"
                     />
+                    <paratexts-table :paratexts="paratexts" />
                     <upload-zone
                         :accept="mime"
                         url="/api/v2/admin/clips/paratexts/upload"
                         :params.sync="requestParams"
+                        @success="addParatext"
                     />
                 </div>
             </div>
@@ -40,6 +42,8 @@ import {
 }
 from '../adminui'
 
+import ParatextsTable from '../components/clips/ParatextsTable.vue'
+
 export default {
     name: 'Testing',
     components: {
@@ -47,9 +51,11 @@ export default {
         Container,
         PanelTitle,
         UploadZone,
+        ParatextsTable,
     },
     data: function () {
         return {
+            paratexts: [],
             mime: 'image/*',
             requestParams: {
                 clip_id: 1,
@@ -58,8 +64,30 @@ export default {
             }
         }
     },
+    methods: {
+        debug: function () {
+            let test = {
+                content: 'null',
+                created_at: '2019-10-25 20:36:51',
+                id: 4,
+                media: '/storage/propaganda/image/5db35ce397292.jpg',
+                media_type: 'image',
+                paratext_type_id: 2,
+                updated_at: '2019-10-25 20:36:51',
+            }
+
+            this.paratexts.push(test)
+        },
+        addParatext: function (response) {
+            console.log(response);
+            this.paratexts.push(response.paratext)
+        },
+    },
     mounted: function () {
         console.log('home');
+        this.$nextTick(() => {
+            this.debug()
+        })
     }
 }
 </script>

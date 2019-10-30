@@ -152,8 +152,8 @@ class ClipsController extends Controller
         $clip = Clip::find($request->clip_id);
         $paraType = ParatextType::find($request->paratext_type_id);
 
-        // $file = $this->uploadFile($request->file('file'), $paraType->type);
-        $file = Media::find(2);
+        $file = $this->uploadFile($request->file('file'), $paraType->type);
+        // $file = Media::find(2);
 
 
         $p = new Paratext();

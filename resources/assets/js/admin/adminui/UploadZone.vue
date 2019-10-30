@@ -79,11 +79,13 @@ export default {
         uploadProgress: function () {
 
         },
-        fileAdded: function () {
+        fileAdded: function (file) {
             toastr.info('file added')
         },
-        success: function () {
+        success: function (file, response) {
             toastr.success('aggiunto')
+            this.$emit('success', response)
+            console.log(response);
         },
         sendingRequest: function (file, xhr, formData) {
             for (let key in this.params) {
