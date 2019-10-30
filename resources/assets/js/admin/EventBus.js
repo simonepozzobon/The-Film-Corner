@@ -197,8 +197,8 @@ const EventBus = new Vue({
                         this.runCallback(timeline, onStart, true)
                     })
 
-                    timeline.anim.progress(0)
-                    timeline.anim.play()
+
+                    timeline.anim.play(0)
                 }
                 else if (timeline.direction == false) {
                     // reverse
@@ -213,7 +213,7 @@ const EventBus = new Vue({
                     let forward = false
                     const onUpdate = timeline.anim.eventCallback('onUpdate')
                     timeline.anim.eventCallback('onUpdate', () => {
-                        let newTime = timeline.anim.time();
+                        let newTime = timeline.anim.time()
                         if ((forward && newTime < lastTime) || (!forward && newTime > lastTime)) {
                             forward = !forward;
                             if (!forward) {
@@ -225,8 +225,7 @@ const EventBus = new Vue({
                         lastTime = newTime;
                     })
 
-                    timeline.anim.progress(1)
-                    timeline.anim.reverse()
+                    timeline.anim.reverse(0)
                 }
             }
         },

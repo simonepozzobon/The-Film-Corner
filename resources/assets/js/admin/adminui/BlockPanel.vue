@@ -43,36 +43,14 @@ import {
 from '../../ui'
 
 import {
-    TweenMax,
-    TimelineMax,
-    Power4,
-    Power0,
-    CSSPlugin,
-    Elastic,
-    Back,
-    Sine,
+    DebouncedAnimation,
+    BlockPanelAnimation,
 }
-from 'gsap/all'
-
-
-import {
-    GSDevTools
-}
-from 'gsap/GSDevTools'
-
-const plugins = [
-    Power4,
-    Power0,
-    CSSPlugin,
-    Elastic,
-    Back,
-    Sine,
-]
-
-const debounce = require('lodash.debounce')
+from './mixins'
 
 export default {
     name: 'BlockPanel',
+    mixins: [DebouncedAnimation, BlockPanelAnimation],
     components: {
         UiButton,
         UiTitle,
@@ -86,7 +64,7 @@ export default {
             type: Boolean,
             default: false,
         },
-        needsTriggger: {
+        needsTrigger: {
             type: Boolean,
             default: false
         },
@@ -97,6 +75,10 @@ export default {
         hasAnimations: {
             type: Boolean,
             default: true,
+        },
+        initialState: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {
@@ -133,12 +115,12 @@ export default {
             let children = new Array();
             for (let child in node.childNodes) {
                 if (node.childNodes[child].nodeType == 1) {
-                    console.log(child);
+                    // console.log(child);
                     children.push(child);
                 }
             }
 
-            console.log(node, children);
+            // console.log(node, children);
             return children;
         },
         isVisible: function (el) {
@@ -174,156 +156,19 @@ export default {
                 }
             }
         },
-        initAnim: function () {
-            let display = 'block'
-            if (this.needsFlex == true) {
-                display = 'flex'
-            }
-            let parent = this.$parent.$el
-            let head = this.$refs.head
-            let content = this.$refs.container
-            let childs = content.children
-            let childsVisible = []
-
-            parent = parent.parentNode
-
-            for (let i = 0; i < childs.length; i++) {
-                let child = childs[i]
-                if (this.isVisible(child)) {
-                    childsVisible.push(child)
-                }
-            }
-
-            this.master = gsap.timeline({
-                paused: true,
-                yoyo: true,
-            })
-
-            this.master.addLabel('start', 0)
-            this.master.addLabel('setInitial', 'start')
-            this.master.addLabel('setWidth', 'start+=0.1')
-            this.master.addLabel('setHeight', 'start+=0.15')
-            this.master.addLabel('revealFrame', 'start+=0.35')
-            this.master.addLabel('revealContent', 'start+=0.45')
-
-            this.master.fromTo(content, .1, {
-                    display: 'none',
-                }, {
-                    display: 'block',
-                }, 'start')
-                .to(childsVisible, .1, {
-                    opacity: '0',
-                }, 'start')
-                .to(this.$refs.parent, .1, {
-                    display: 'flex',
-                }, 'start')
-
-                .to(content, 0, {
-                    height: '1px',
-                    paddingTop: '0',
-                    paddingBottom: '0',
-                    overflow: 'hidden',
-                }, 'start')
-
-                .fromTo(content, 0.1, {
-                    width: '1px',
-                    maxWidth: '0%',
-                }, {
-                    id: 'width',
-                    width: '100%',
-                    maxWidth: '100%',
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
-                    immediateRender: false,
-                }, 'setWidth')
-
-                .fromTo(content, .1, {
-                    height: '1px',
-                    paddingTop: '0',
-                    paddingBottom: '0',
-                }, {
-                    height: 'auto',
-                    paddingTop: '1.618rem',
-                    paddingBottom: '1.618rem',
-                    immediateRender: false,
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
-                }, 'setHeight')
-
-                .fromTo(content, .2, {
-                    opacity: '0',
-                }, {
-                    opacity: '1',
-                    ease: Power4.easeInOut,
-                    immediateRender: false,
-                }, 'setInitial')
-
-                .fromTo(head, .3, {
-                    paddingBottom: '0',
-                }, {
-                    paddingBottom: '1.618rem',
-                    immediateRender: false,
-                }, 'start')
-
-                .fromTo(parent, .1, {
-                    paddingBottom: '2rem',
-                }, {
-                    paddingBottom: '1.618rem',
-                    immediateRender: false,
-                }, 'setHeight+=0.05')
-
-                .fromTo(content, .1, {
-                    borderWidth: '0',
-                }, {
-                    id: 'boders',
-                    borderWidth: '3px',
-                    ease: Power4.easeInOut,
-                    immediateRender: false,
-                }, 'revealFrame')
-
-                .fromTo(content, .2, {
-                    boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0)',
-                }, {
-                    boxShadow: 'inset 0 0 8px rgba(159, 173, 186, 0.2)',
-                    immediateRender: false,
-                    ease: Sine.easeInOut,
-                }, 'revealFrame')
-
-                .fromTo(childsVisible, .15, {
-                    opacity: '0',
-                    scaleX: 0.9,
-                    scaleY: 1.1,
-                }, {
-                    opacity: '1',
-                    scaleX: 1,
-                    scaleY: 1,
-                    stagger: {
-                        amount: 0.1,
-                        each: -1,
-                        from: 'start',
-                        ease: Sine.easeIn,
-                    },
-                    ease: Sine.easeOut,
-                    immediateRender: false,
-                }, 'revealContent')
-
-            this.master.progress(1).progress(0)
-
-            this.$nextTick(() => {
-                this.togglePanel()
-            })
-        },
         togglePanel: function () {
             this.$nextTick(() => {
                 if (this.master) {
                     if (this.isOpen) {
                         // chiude pannello
+                        // console.log('chiude pannello', this.title);
                         this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
                             this.isOpen = false
                         })
                     }
                     else {
                         // apre pannello
+                        // console.log('apre pannello', this.title);
                         this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
                             this.isOpen = true
                         })
@@ -331,18 +176,18 @@ export default {
                 }
             })
         },
-        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
-            this.$ebus.$emit(name, anim, direction, uuid, callback)
-        }, 150)
     },
+    // created: function () {
+    //     this.isOpen = this.initialState
+    // },
     mounted: function () {
-        // this.$util.onResizeListenerDeb(this.$refs.container, (el) => {
-        //     console.log('resize block panel');
-        // })
         if (this.needsTrigger == false) {
             this.$nextTick(() => {
                 this.initAnim()
             })
+        }
+        else {
+            console.log('ha bisogno di trigger', this.title);
         }
     },
 }

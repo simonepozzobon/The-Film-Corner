@@ -23,9 +23,14 @@ const plugins = [
 ]
 
 const debounce = require('lodash.debounce')
+import {
+    DebouncedAnimation,
+}
+from './mixins'
 
 export default {
     name: 'Container',
+    mixins: [DebouncedAnimation, ],
     props: {
         padding: {
             type: String,
@@ -43,6 +48,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        hasDebug: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -51,9 +60,7 @@ export default {
     },
     watch: {
         state: function () {
-            this.$nextTick(() => {
-                this.setState()
-            })
+            this.setState()
         },
     },
     computed: {
@@ -102,26 +109,19 @@ export default {
                     overflow: 'inherit'
                 }, 'start+=0.6')
 
-            this.master.progress(1).progress(0)
+            // this.master.progress(1).progress(0)
 
-            if (this.state == false) {
-                this.$nextTick(() => {
-                    this.hidePanel()
-                })
-            }
-            else {
-                this.$nextTick(() => {
-                    this.showPanel()
-                })
-            }
+            this.setState()
         },
         setState: function () {
-            if (this.state == true) {
-                this.showPanel()
-            }
-            else {
-                this.hidePanel()
-            }
+            this.$nextTick(() => {
+                if (this.state == true) {
+                    this.showPanel()
+                }
+                else {
+                    this.hidePanel()
+                }
+            })
         },
         showPanel: function () {
             if (this.master) {
@@ -133,9 +133,6 @@ export default {
                 this.debouncedEvent('add-anim', this.master, false, this.uuid, null)
             }
         },
-        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
-            this.$ebus.$emit(name, anim, direction, uuid, null)
-        }, 150)
     },
     mounted: function () {
         if (this.hasAnimations == true) {

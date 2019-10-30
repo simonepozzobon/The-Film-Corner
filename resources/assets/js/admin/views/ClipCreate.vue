@@ -34,35 +34,26 @@
         </div>
     </container>
     <container
-        v-if="false"
-        ref="test"
         :contains="true"
         :has-animations="true"
-        :state="false"
+        :state="this.cursor | stateSetter(0)"
     >
         <carica-clip @update="updateField" />
     </container>
     <container
-        v-if="false"
         :contains="true"
         :has-animations="true"
-        :state="false"
+        :state="this.cursor | stateSetter(0)"
     >
         <informazioni
             :options="options"
             @update="updateField"
         />
     </container>
-    <!-- <container
+    <container
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
-    > -->
-    <container
-        v-if="false"
-        :contains="true"
-        :has-animations="true"
-        :state="false"
     >
         <approfondimenti @update="updateField" />
     </container>
@@ -80,12 +71,18 @@
         />
     </container>
     <container
-        v-if="false"
         :contains="true"
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
     >
         <esercizi @update="updateField" />
+    </container>
+    <container
+        :contains="true"
+        :has-animations="true"
+        :state="this.cursor | stateSetter(4)"
+    >
+        <librerie-esercizi @update="updateField" />
     </container>
     <container
         padding="sm"
@@ -129,19 +126,21 @@ import CaricaClip from '../components/clips/CaricaClip.vue'
 import Informazioni from '../components/clips/Informazioni.vue'
 import Paratexts from '../components/clips/Paratexts.vue'
 import Esercizi from '../components/clips/Esercizi.vue'
+import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
 
 export default {
     name: 'ClipCreate',
     components: {
-        Container,
-        UiButton,
-        UiTitle,
         Approfondimenti,
         CaricaClip,
         Informazioni,
+        LibrerieEsercizi,
         Paratexts,
         Esercizi,
         Step,
+        Container,
+        UiButton,
+        UiTitle,
     },
     data: function () {
         return {
@@ -157,7 +156,7 @@ export default {
             genre: null,
             nationality: null,
             topics: [],
-            cursor: 2,
+            cursor: 0,
             abstract: null,
             tech_info: null,
             historical_context: null,
@@ -173,23 +172,16 @@ export default {
                 hashtags: [],
                 paratext_types: [],
             },
-            testState: false,
         }
     },
     watch: {
         cursor: function (cursor) {
-            console.log(cursor);
+            console.log('cambio cursore', cursor);
         },
     },
     methods: {
-        testHide: function () {
-            this.testState = false
-        },
-        testShow: function () {
-            this.testState = true
-        },
         getData: function () {
-            this.debug()
+            // this.debug()
             this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
                 for (let key in this.options) {
                     if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
@@ -197,6 +189,8 @@ export default {
                     }
                 }
                 this.period = this.options.periods[0].id
+
+                console.log('completed');
             })
         },
         updateField: function (key, value) {
@@ -205,22 +199,7 @@ export default {
             }
         },
         debug: function () {
-            this.$http.get('/api/v2/admin/clips').then(response => {
-                if (response.data.clips && response.data.clips.length > 0) {
-                    this.clip = response.data.clips[0]
-                }
-            })
-            // this.title = 'tiyueoiruioreuy'
-            // this.period = 'gianni'
-            // this.year = 'fkdjkgfdlj'
-            // this.format = 'fkdjkgfdlj'
-            // this.age = 'fkdjkgfdlj'
-            // this.genre = 'fkdjkgfdlj'
-            // this.nationality = 'fkdjkgfdlj'
-            // this.abstract = 'abstract'
-            // this.tech_info = 'tech_info'
-            // this.historical_context = 'historical_context'
-            // this.food = 'food'
+
         },
         saveClip: function () {
             // this.debug()
@@ -284,6 +263,7 @@ export default {
                 return false
             }
             else {
+                // console.log(value, cursor);
                 return true
             }
         },

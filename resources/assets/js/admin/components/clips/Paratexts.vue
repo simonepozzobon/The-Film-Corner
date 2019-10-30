@@ -2,7 +2,6 @@
 <block-panel
     title="Paratesti"
     ref="panel"
-    :needs-trigger="true"
     :needs-flex="true"
 >
     <div
@@ -123,8 +122,8 @@ export default {
     },
     watch: {
         'options.paratext_types': function (options) {
-            // console.log('esterno');
             if (this.initialized == false || this.selectOptions.length == 0) {
+                console.log('esterno');
                 this.initialized = true
                 this.selectOptions = Object.assign([], options)
             }
@@ -134,9 +133,9 @@ export default {
         selectorReady: function () {
             this.$refs.panel.trigger()
 
-            setTimeout(() => {
-                this.debug()
-            }, 1000)
+            // setTimeout(() => {
+            //     this.debug()
+            // }, 1000)
         },
         showForm: function () {
             if (this.createPara) {

@@ -1,15 +1,5 @@
 <template>
-<div class="a-clip-panel__group">
-    <ui-title
-        title="Esercizi"
-        tag="span"
-        font-size="h5"
-        :has-padding="false"
-        :has-margin="false"
-        :has-container="false"
-    />
-    <hr class="a-clip-panel__divider">
-
+<block-panel title="Esercizi">
     <div class="a-clip-panel__row form-group row">
         <label class="col-md-2">
             Compare The Clips
@@ -42,7 +32,7 @@
             :has-row="false"
         />
     </div>
-</div>
+</block-panel>
 </template>
 
 <script>
@@ -54,6 +44,7 @@ import {
     TextEditor,
     TextInput,
     Select2Input,
+    BlockPanel,
 }
 from '../../adminui'
 
@@ -76,6 +67,7 @@ export default {
         UiButton,
         UiTitle,
         Select2Input,
+        BlockPanel,
     },
     props: {
         options: {

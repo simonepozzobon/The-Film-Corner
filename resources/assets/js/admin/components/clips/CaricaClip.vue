@@ -78,6 +78,7 @@ import {
 from '../../../ui'
 
 import {
+    gsap,
     TweenMax,
     TimelineMax,
     Power4,
@@ -133,20 +134,19 @@ export default {
             CSSPlugin.defaultTransformPerspective = 500
             let container = this.$refs.preview
 
-            this.master = new TimelineMax({
+            this.master = gsap.timeline({
                 paused: true,
                 yoyo: true,
             })
 
-            this.master.addLabel('start', '+=0')
+            this.master.addLabel('start')
 
-            this.master.from(container, .6, {
-                height: 0,
+            this.master.fromTo(container, .6, {
+                height: '0',
+            }, {
+                height: 'auto',
                 ease: Power4.easeInOut,
-            })
-            this.master.set(container, {
-                height: 'auto'
-            })
+            }, 'start')
 
             this.master.progress(1).progress(0)
         },
@@ -194,9 +194,6 @@ export default {
     overflow: hidden;
 }
 
-// .a-clip-panel__group {
-//     background-color: rgba($red, .3);
-// }
 .ua-video-preview {
     width: 100%;
     height: 100%;
