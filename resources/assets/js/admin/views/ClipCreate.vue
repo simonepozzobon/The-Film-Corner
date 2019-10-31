@@ -38,7 +38,10 @@
         :has-animations="true"
         :state="this.cursor | stateSetter(0)"
     >
-        <carica-clip @update="updateField" />
+        <carica-clip
+            @update="updateField"
+            :initial-state="false"
+        />
     </container>
     <container
         :contains="true"
@@ -48,6 +51,7 @@
         <informazioni
             :options="options"
             @update="updateField"
+            :initial-state="false"
         />
     </container>
     <container
@@ -55,7 +59,10 @@
         :has-animations="true"
         :state="this.cursor | stateSetter(1)"
     >
-        <approfondimenti @update="updateField" />
+        <approfondimenti
+            @update="updateField"
+            :state="this.cursor | stateSetter(1)"
+        />
     </container>
     <container
         :contains="true"
@@ -65,6 +72,7 @@
         <paratexts
             :clip="this.clip"
             :options="options"
+            :state="this.cursor | stateSetter(2)"
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
@@ -75,14 +83,30 @@
         :has-animations="true"
         :state="this.cursor | stateSetter(3)"
     >
-        <esercizi @update="updateField" />
+        <block-panel
+            title="Esercizi"
+            :has-animations="true"
+        >
+            <esercizi
+                :options="options.exercises"
+                :exercises.sync="exercises"
+                ref="selector"
+            />
+        </block-panel>
     </container>
     <container
         :contains="true"
         :has-animations="true"
-        :state="this.cursor | stateSetter(4)"
+        :state="this.cursor | stateSetter(3)"
     >
-        <librerie-esercizi @update="updateField" />
+        <librerie-esercizi
+            v-for="exercise in exercises"
+            :key="exercise.uuid"
+            :exercise="exercise"
+            :clip="clip"
+            @update="updateExerc"
+            @destroy="destroyMedia"
+        />
     </container>
     <container
         padding="sm"
@@ -110,6 +134,7 @@
 <script>
 import {
     Container,
+    BlockPanel,
 }
 from '../adminui'
 
@@ -119,6 +144,8 @@ import {
     UiTitle,
 }
 from '../../ui'
+
+import EserciziMethods from './mixins/EserciziMethods'
 
 import Step from '../components/clips/Step.vue'
 import Approfondimenti from '../components/clips/Approfondimenti.vue'
@@ -139,9 +166,11 @@ export default {
         Esercizi,
         Step,
         Container,
+        BlockPanel,
         UiButton,
         UiTitle,
     },
+    mixins: [EserciziMethods],
     data: function () {
         return {
             clip: null,
@@ -161,6 +190,7 @@ export default {
             tech_info: null,
             historical_context: null,
             food: null,
+            exercises: [],
             options: {
                 periods: [],
                 directors: [],
@@ -191,7 +221,10 @@ export default {
                 }
                 this.period = this.options.periods[0].id
 
-                console.log('completed');
+                this.$ebus.$on('buffer-free', () => {
+                    console.log('completed');
+                    this.cursor = 1
+                })
             })
         },
         updateField: function (key, value) {

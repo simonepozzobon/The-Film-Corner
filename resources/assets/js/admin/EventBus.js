@@ -57,6 +57,7 @@ const EventBus = new Vue({
                     // })
                 }
                 else {
+                    this.$emit('buffer-free')
                     // console.log('buffer finito', this.cached.length);
                 }
             }

@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Approfondimenti">
+<block-panel
+    title="Approfondimenti"
+    ref="panel"
+>
     <text-editor
         :has-animation="true"
         label="Informazioni Tecniche"
@@ -63,6 +66,12 @@ export default {
         UiTitle,
         Select2Input,
     },
+    props: {
+        state: {
+            type: Boolean,
+            default: false,
+        },
+    },
     data: function () {
         return {
             tech_info: null,
@@ -70,6 +79,12 @@ export default {
             historical_context: null,
             food: null,
         }
+    },
+    watch: {
+        state: function (v) {
+            console.log('state changed');
+            this.$refs.panel.togglePanel()
+        },
     },
     methods: {
         updateTechinfo: function (json, html) {

@@ -163,9 +163,20 @@ const BlockPanelAnimation = {
                     immediateRender: false,
                 }, 'revealContent')
 
-            // this.master.progress(1).progress(0)
+            if (this.initialState == false) {
+                this.master.progress(1)
+            }
+            // else {
+            //     this.master.progress(1).progress(0)
+            // }
+            // this.master.progress(1)
+            // .progress(0)
 
+            this.isOpen = this.initialState
+
+            // console.log(this.isOpen);
             this.togglePanel()
+
         },
     },
 }

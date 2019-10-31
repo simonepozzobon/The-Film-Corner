@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Informazioni Clip">
+<block-panel
+    title="Informazioni Clip"
+    :initial-state="initialState"
+>
     <div class="a-clip-panel__row form-group row">
         <label
             for="period"
@@ -185,6 +188,10 @@ export default {
             default: function () {
                 return {}
             },
+        },
+        initialState: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {

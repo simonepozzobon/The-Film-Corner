@@ -106,6 +106,10 @@ export default {
                 return {}
             },
         },
+        state: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
@@ -123,19 +127,24 @@ export default {
     watch: {
         'options.paratext_types': function (options) {
             if (this.initialized == false || this.selectOptions.length == 0) {
-                console.log('esterno');
                 this.initialized = true
-                this.selectOptions = Object.assign([], options)
+                this.$nextTick(() => {
+                    this.selectOptions = Object.assign([], options)
+                })
+            }
+        },
+        state: function (value) {
+            if (value == true) {
+                this.selectorReady()
             }
         },
     },
     methods: {
         selectorReady: function () {
-            this.$refs.panel.trigger()
-
-            // setTimeout(() => {
-            //     this.debug()
-            // }, 1000)
+            if (this.state == true) {
+                console.log('res');
+                this.$refs.panel.trigger()
+            }
         },
         showForm: function () {
             if (this.createPara) {

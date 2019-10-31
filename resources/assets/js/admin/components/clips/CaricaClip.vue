@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Carica Clip">
+<block-panel
+    title="Carica Clip"
+    :initial-state="initialState"
+>
     <div class="a-clip-panel__row form-group row">
         <label
             for="title"
@@ -102,6 +105,12 @@ export default {
         UiTitle,
         Select2Input,
         videoPlayer,
+    },
+    props: {
+        initialState: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {

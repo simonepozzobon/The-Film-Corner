@@ -74,7 +74,7 @@ export default {
                 this.$emit('update:exercises', cached)
             }
             else {
-                console.log('non trovato');
+                // console.log('non trovato');
             }
         },
     },

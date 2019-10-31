@@ -1,79 +1,77 @@
 <template>
-<container>
-    <block-panel
-        :title="exercise.title"
-        :has-animations="true"
-    >
-        <div v-if="hasLibrary == true">
-            <block-content title="Contenuti">
-                <library-medias
-                    :exercise="exercise"
-                    @destroy="destroyMedia"
-                />
-            </block-content>
-        </div>
+<block-panel
+    :title="exercise.title"
+    :has-animations="true"
+>
+    <div v-if="hasLibrary == true">
+        <block-content title="Contenuti">
+            <library-medias
+                :exercise="exercise"
+                @destroy="destroyMedia"
+            />
+        </block-content>
+    </div>
 
-        <div v-if="hasLibrary == false">
-            Questo esercizio non utilizza librerie
-        </div>
-        <div v-else-if="hasLibrary == true && libraryOptions">
-            <block-content title="Aggiungi un video">
-                <div class="title-section form-group row">
-                    <label
-                        for="title"
-                        class="col-md-2"
+    <div v-if="hasLibrary == false">
+        Questo esercizio non utilizza librerie
+    </div>
+    <div v-else-if="hasLibrary == true && libraryOptions">
+        <block-content title="Aggiungi un video">
+            <div class="title-section form-group row">
+                <label
+                    for="title"
+                    class="col-md-2"
+                >
+                    Titolo Media
+                </label>
+                <div class="col-md-10">
+                    <input
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        v-model="title"
+                    />
+                </div>
+            </div>
+            <div class="uploader">
+                <file-preview
+                    :file="file"
+                    class="uploader__preview f-preview"
+                    @clear="clearFile"
+                />
+
+                <upload-zone
+                    ref="drop"
+                    class="uploader__drop"
+                    url="/api/v2/admin/clips/libraries/upload"
+                    :accept="libraryOptions.accept"
+                    :multiple="false"
+                    :auto-process-queue="false"
+                    :use-styles="false"
+                    @file-added="addFileToQueue"
+                    @success="addMediaToLibrary"
+                />
+
+                <transition name="upload-section-transition">
+                    <div
+                        class="uploader__btn"
+                        v-if="isReadyToUpload"
                     >
-                        Titolo Media
-                    </label>
-                    <div class="col-md-10">
-                        <input
-                            type="text"
-                            name="title"
-                            class="form-control"
-                            v-model="title"
+                        <ui-button
+                            title="carica"
+                            color="dark"
+                            theme="outline"
+                            :has-container="false"
+                            :has-margin="false"
+                            align="center"
+                            @click="uploadFile"
                         />
                     </div>
-                </div>
-                <div class="uploader">
-                    <file-preview
-                        :file="file"
-                        class="uploader__preview f-preview"
-                        @clear="clearFile"
-                    />
-
-                    <upload-zone
-                        ref="drop"
-                        class="uploader__drop"
-                        url="/api/v2/admin/clips/libraries/upload"
-                        :accept="libraryOptions.accept"
-                        :multiple="false"
-                        :auto-process-queue="false"
-                        :use-styles="false"
-                        @file-added="addFileToQueue"
-                        @success="addMediaToLibrary"
-                    />
-
-                    <transition name="upload-section-transition">
-                        <div
-                            class="uploader__btn"
-                            v-if="isReadyToUpload"
-                        >
-                            <ui-button
-                                title="carica"
-                                color="dark"
-                                theme="outline"
-                                :has-container="false"
-                                :has-margin="false"
-                                align="center"
-                                @click="uploadFile"
-                            />
-                        </div>
-                    </transition>
-                </div>
-            </block-content>
-        </div>
-    </block-panel>
-</container>
+                </transition>
+            </div>
+        </block-content>
+    </div>
+</block-panel>
 </template>
 
 <script>

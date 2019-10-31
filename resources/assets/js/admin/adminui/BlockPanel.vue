@@ -78,7 +78,7 @@ export default {
         },
         initialState: {
             type: Boolean,
-            default: false,
+            default: true,
         },
     },
     data: function () {
@@ -170,6 +170,7 @@ export default {
                     this.throttleEvent('add-anim', this.master, true, this.uuid, () => {
                         this.isOpen = true
                     })
+
                 }
             }
         },

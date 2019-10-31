@@ -287,7 +287,7 @@ export default {
             }
         },
         initAnim: function () {
-            console.log('animations');
+            // console.log('animations');
             let container = this.$refs.container
             let menu = container.getElementsByClassName('menubar')
             if (menu) {
