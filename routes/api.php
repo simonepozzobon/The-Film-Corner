@@ -122,7 +122,7 @@ Route::prefix('v2')->group(
 
                         Route::prefix('libraries')->group(
                             function () {
-                                Route::post('upload', 'Api\Admin\LibraryController@upload_library_media');
+                                Route::post('upload', 'Api\Admin\LibraryController@test');
                             }
                         );
                     }

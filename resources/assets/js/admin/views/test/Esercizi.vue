@@ -17,6 +17,7 @@
         :key="exercise.uuid"
         :exercise="exercise"
         :clip="clip"
+        @update="updateExerc"
     />
 </div>
 </template>
@@ -85,7 +86,31 @@ export default {
                 })
             })
         },
+        updateExerc: function (data) {
+            let idx = this.exercises.findIndex(exercise => exercise.id == data.exercise.id)
+            if (idx > -1) {
+                const item = Object.assign({}, this.exercises[idx])
+                item['isNew'] = false
 
+                let libraries = item.libraries
+
+                let library = libraries.find(lib => lib.id == data.library.id)
+                if (library) {
+                    if (library.hasOwnProperty('medias')) {
+                        library.medias.push(data.media)
+                    }
+                    else {
+                        library.medias = [data.media]
+                    }
+                }
+                else {
+                    data.library.medias = [data.media]
+                    libraries.push(data.library)
+                }
+
+                this.exercises.splice(idx, 1, item)
+            }
+        },
     },
     created: function () {
         this.getData()

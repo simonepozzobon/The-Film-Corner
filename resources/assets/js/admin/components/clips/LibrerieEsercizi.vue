@@ -39,7 +39,7 @@
                         ref="drop"
                         class="uploader__drop"
                         url="/api/v2/admin/clips/libraries/upload"
-                        accept="video/mp4"
+                        accept="*/**"
                         :multiple="false"
                         :auto-process-queue="false"
                         :use-styles="false"
@@ -91,7 +91,7 @@ from 'gsap/all'
 
 import {
     DebouncedAnimation,
-    LibraryUpload,
+    // LibraryUpload,
 }
 from './mixins'
 
@@ -106,7 +106,7 @@ export default {
         UiButton,
         FilePreview,
     },
-    mixins: [DebouncedAnimation, LibraryUpload, ],
+    mixins: [DebouncedAnimation, ],
     props: {
         exercise: {
             type: Object,
@@ -223,17 +223,38 @@ export default {
         },
         addFileToQueue: function (file) {
             this.file = file
-            console.log(this.file);
         },
-        clearFile: function () {
+        clearFile: function (titleReset = false) {
             let container = this.$refs.drop
             let dropzone = container.$refs.drop
             dropzone.removeAllFiles()
             this.file = null
+            if (titleReset == true) {
+                this.title = null
+            }
+        },
+        uploadFile: function () {
+            let data = new FormData()
+            data.append('clip_id', this.clip.id)
+            data.append('exercise_id', this.exercise.id)
+            data.append('media', this.file)
+            data.append('title', this.title)
+            data.append('is_new', this.exercise.hasOwnProperty('isNew') && this.exercise.isNew == true ? true : false)
+            data.append('library_type_id', this.exercise.library_type_id)
+
+
+            this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
+                this.clearFile(true)
+                console.log(response.data);
+                this.$emit('update', response.data)
+            })
         },
     },
     mounted: function () {
         this.initAnim()
+        setTimeout(() => {
+            this.uploadFile()
+        }, 1000)
     },
 }
 </script>

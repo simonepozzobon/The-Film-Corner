@@ -11,7 +11,7 @@ const LibraryUpload = {
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
-                console.log(response);
+                this.clearFile(true)
             })
         },
     }

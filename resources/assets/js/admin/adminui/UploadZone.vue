@@ -70,13 +70,13 @@ export default {
                 url: this.url,
                 uploadMultiple: this.multiple,
                 maxFile: this.multiple ? null : 1,
-                maxFilesize: null,
+                // maxFilesize: null,
                 dictDefaultMessage: "Carica un nuovo file",
                 previewsContainer: false,
                 thumbnailWidth: 250,
                 thumbnailHeight: 140,
                 parallelUploads: this.multiple ? 2 : 1,
-                acceptedFiles: this.accept,
+                // acceptedFiles: this.accept,
                 autoProcessQueue: this.autoProcessQueue,
                 // addRemoveLinks: true,
             }
@@ -121,6 +121,7 @@ export default {
 
         },
         manageErrors: function (file, message, xhr) {
+            console.log(message);
             toastr.error('errore')
         },
         dropzoneMounted: function () {

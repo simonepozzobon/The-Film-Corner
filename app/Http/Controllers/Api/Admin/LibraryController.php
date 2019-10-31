@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Storage;
 
 class LibraryController extends Controller
 {
-    public function upload_library_media(Request $request)
+    public function upload_media()
     {
         $exercise = Exercise::find($request->exercise_id);
         $clip = Clip::find($request->clip_id);
@@ -30,22 +30,35 @@ class LibraryController extends Controller
             // $library = Library::find($request->)
         }
 
-        // $src = $this->uploadFile($request->file('media'));
-        $src = $request->file('media')->storeAs('propaganda', 'test.mp4');
-        return [
-            'success' => $src,
-        ];
+        $src = $this->uploadFile($request->file('media'));
 
         $m = new LibraryMedia();
         $m->title = $request->title;
         $m->url = $src;
         $m->library_type_id = $library->library_type_id;
-        $m->library_id = $library;
+        $m->library_id = $library->id;
         $m->save();
+
+        return [
+          'clip' => $clip,
+          'library' => $library,
+          'exercise' => $exercise,
+          'media' => $m,
+        ];
+    }
+    public function test()
+    {
+        $exercise = Exercise::find(1);
+        $clip = Clip::find(1);
+        $library = Library::find(1);
+        $m = LibraryMedia::find(1);
+
+        $m->url = Storage::disk('local')->url($m->url);
 
         return [
             'clip' => $clip,
             'library' => $library,
+            'exercise' => $exercise,
             'media' => $m,
         ];
     }
@@ -55,10 +68,9 @@ class LibraryController extends Controller
         $extension = $file->getClientOriginalExtension();
         $original_name = $file->getClientOriginalName();
 
-
         $filename = uniqid() . '.' . $extension;
         $path = '';
-        $src = $file->storeAs('propaganda/', $filename);
+        $src = $file->storeAs('public/propaganda/libraries/', $filename);
 
         return $src;
     }
