@@ -40,13 +40,15 @@ const BlockPanelAnimation = {
 
             // console.log('initializin animation', this.title, parent);
             // parent = parent.parentNode
-
+            // console.log(this.$children);
             for (let i = 0; i < childs.length; i++) {
                 let child = childs[i]
                 if (this.isVisible(child)) {
                     childsVisible.push(child)
                 }
             }
+
+            // console.log(childsVisible);
 
             this.master = gsap.timeline({
                 paused: true,

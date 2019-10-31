@@ -4,6 +4,20 @@
         :title="exercise.title"
         :has-animations="true"
     >
+        <div>
+            <block-content title="Contenuti">
+                <div>
+                    ciao
+                </div>
+                <div>
+                    ciao
+                </div>
+                <div>
+                    ciao
+                </div>
+            </block-content>
+        </div>
+
         <div v-if="hasLibrary == false">
             Questo esercizio non utilizza librerie
         </div>
@@ -83,6 +97,7 @@ import {
 from '../../../ui'
 
 import FilePreview from './librerie/FilePreview.vue'
+import LibraryMedias from './librerie/LibraryMedias.vue'
 
 import {
     gsap
@@ -105,6 +120,7 @@ export default {
         UploadZone,
         UiButton,
         FilePreview,
+        LibraryMedias,
     },
     mixins: [DebouncedAnimation, ],
     props: {

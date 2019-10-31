@@ -23,17 +23,7 @@ const plugins = [
     Sine,
 ]
 
-import {
-    GSDevTools
-}
-from 'gsap/GSDevTools'
-
 const BlockContentAnimation = {
-    computed: {
-        uuid: function () {
-            return this.$util.uuid()
-        },
-    },
     methods: {
         initAnim: function () {
             let container = this.$refs.container
@@ -129,7 +119,7 @@ const BlockContentAnimation = {
                     ease: Power0.easeNone,
                 }, 'revealFrame')
 
-            this.master.progress(1).progress(0)
+            this.master.progress(1)
 
             this.$nextTick(() => {
                 this.throttleEvent('add-anim', this.master, true, this.uuid, null)

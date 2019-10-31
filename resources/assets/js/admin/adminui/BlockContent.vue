@@ -37,11 +37,18 @@ export default {
         title: {
             default: null,
         },
+        test: {
+            type: String,
+            default: null,
+        },
+    },
+    computed: {
+        uuid: function () {
+            return this.$util.uuid()
+        },
     },
     mounted: function () {
-        this.$nextTick(() => {
-            this.initAnim()
-        })
+        this.initAnim()
     },
 }
 </script>
