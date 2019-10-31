@@ -5,119 +5,91 @@
             title="Esercizi"
             :has-animations="true"
         >
-            <div class="row">
-                <label class="col-md-2">
-                    Compare The Clips
-                </label>
-                <switch-input
-                    label="Compare The Clips"
-                    label-size="col-md-2"
-                    input-size="col-md-1"
-                    :has-row="false"
-                    @update="updateSelection($event, 1)"
-                />
-                <label class="col-md-2 offset-md-1">
-                    Frame Crop
-                </label>
-                <switch-input
-                    label="Frame Crop"
-                    label-size="col-md-2"
-                    input-size="col-md-1"
-                    :has-row="false"
-                    @update="updateSelection($event, 2)"
-                />
-                <label class="col-md-2 offset-md-1">
-                    Check The Sound
-                </label>
-                <switch-input
-                    label="Check The Sound"
-                    label-size="col-md-2"
-                    input-size="col-md-1"
-                    :has-row="false"
-                    @update="updateSelection($event, 3)"
-                />
-            </div>
+            <esercizi
+                :options="options.exercises"
+                :exercises.sync="exercises"
+                ref="selector"
+            />
         </block-panel>
     </container>
-    <container
+    <librerie-esercizi
         v-for="exercise in exercises"
         :key="exercise.uuid"
-    >
-        <block-panel
-            :title="exercise.title"
-            :has-animations="true"
-        >
-        </block-panel>
-    </container>
+        :exercise="exercise"
+        :clip="clip"
+    />
 </div>
 </template>
 
 <script>
 import {
-    BlockPanel,
     Container,
-    PanelTitle,
-    SwitchInput,
+    BlockPanel,
 }
 from '../../adminui'
+
+import Esercizi from '../../components/clips/Esercizi.vue'
+import LibrerieEsercizi from '../../components/clips/LibrerieEsercizi.vue'
 
 export default {
     name: 'Testing',
     components: {
-        BlockPanel,
         Container,
-        PanelTitle,
-        SwitchInput,
+        BlockPanel,
+        Esercizi,
+        LibrerieEsercizi,
     },
     data: function () {
         return {
-            options: {}, // questa diventerà la props di esercizi
+            options: {
+                // periods: [],
+                // directors: [],
+                // genres: [],
+                // formats: [],
+                // ages: [],
+                // topics: [],
+                // peoples: [],
+                // hashtags: [],
+                // paratext_types: [],
+                exercises: [],
+            },
+            clip: {
+                id: 1,
+            },
             exercises: [],
         }
     },
     methods: {
-        debug: function () {},
-        getExercisesAvailable: function () {
-            this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
-                console.log(response);
-                if (response.data.success) {
-                    this.p
-                }
+        debug: function () {
+            // seleziona un esercizio random tra quelli esistenti
+            let selector = this.$refs.selector
+            let switches = selector.$refs.switch
+            let randomIdx = this.$util.randomFromArr(switches.length)
+
+            let switcher = switches[0]
+
+            this.$nextTick(() => {
+                switcher.value = true
             })
         },
-        updateSelection: function (value, id, title) {
-            if (value) {
-                this.addExercise(id, title)
-            }
-            else {
-                this.removeExercise(id, title)
-            }
+        getData: function () {
+            this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
+                for (let key in this.options) {
+                    if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
+                        this.options[key] = response.data[key]
+                    }
+                }
+
+                this.$nextTick(() => {
+                    this.debug()
+                })
+            })
         },
-        addExercise: function (id, title) {
-            const exerxise = {
-                id: id,
-                uuid: this.$util.uuid(),
-                title: title,
-                libraries: [],
-            }
-            this.exercises.push(exerxise)
-        },
-        removeExercise: function (id, title) {
-            let idx = this.exercises.findIndex(exercise => exercise.id == id)
-            if (idx > -1) {
-                this.exercises.splice(idx, 1)
-            }
-            else {
-                console.log('non trovato');
-            }
-        }
+
     },
     created: function () {
-        this.getExercisesAvailable()
+        this.getData()
     },
-    mounted: function () {
-
-    }
 }
 </script>
 

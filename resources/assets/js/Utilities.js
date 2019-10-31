@@ -101,6 +101,18 @@ const Utility = {
     }, 500),
     isEqual: require('lodash.isequal'),
     debounce: debounce,
+    random: function (min, max) {
+        if (min >= 0 && max > 0) {
+            return Math.random() * (max - min) + min
+        }
+        else {
+            return Math.random()
+        }
+    },
+    randomFromArr: function (length) {
+        // https://stackoverflow.com/questions/4550505/getting-a-random-value-from-a-javascript-array
+        return Math.floor(Math.random() * length)
+    }
 }
 
 export default Utility

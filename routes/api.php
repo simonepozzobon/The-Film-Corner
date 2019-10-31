@@ -119,6 +119,12 @@ Route::prefix('v2')->group(
                                 Route::post('add-content', 'Api\Admin\ClipsController@add_paratext_content');
                             }
                         );
+
+                        Route::prefix('libraries')->group(
+                            function () {
+                                Route::post('upload', 'Api\Admin\LibraryController@upload_library_media');
+                            }
+                        );
                     }
                 );
 

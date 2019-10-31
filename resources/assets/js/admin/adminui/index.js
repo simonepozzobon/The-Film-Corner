@@ -1,5 +1,6 @@
 import Container from './Container.vue'
 import BlockPanel from './BlockPanel.vue'
+import BlockContent from './BlockContent.vue'
 import DynamicForm from './DynamicForm.vue'
 import ImagePreview from './ImagePreview.vue'
 import FileInput from './FileInput.vue'
@@ -13,6 +14,7 @@ import UploadZone from './UploadZone.vue'
 export {
     Container,
     BlockPanel,
+    BlockContent,
     DynamicForm,
     ImagePreview,
     FileInput,

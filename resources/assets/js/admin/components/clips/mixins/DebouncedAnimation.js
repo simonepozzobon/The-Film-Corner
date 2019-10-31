@@ -1,8 +1,8 @@
-const debounce = require('lodash.debounce')
+const throttle = require('lodash.throttle')
 
 const DebouncedAnimation = {
     methods: {
-        debouncedEvent: debounce(function (name, anim, direction, uuid, callback) {
+        debouncedEvent: throttle(function (name, anim, direction, uuid, callback) {
             this.$ebus.$emit(name, anim, direction, uuid, callback)
         }, 150)
     }
