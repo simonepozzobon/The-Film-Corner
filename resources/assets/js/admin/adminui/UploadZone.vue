@@ -76,7 +76,7 @@ export default {
                 thumbnailWidth: 250,
                 thumbnailHeight: 140,
                 parallelUploads: this.multiple ? 2 : 1,
-                // acceptedFiles: this.accept,
+                acceptedFiles: this.accept,
                 autoProcessQueue: this.autoProcessQueue,
                 // addRemoveLinks: true,
             }

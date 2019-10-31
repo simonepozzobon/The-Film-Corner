@@ -17,10 +17,7 @@
             Questo esercizio non utilizza librerie
         </div>
         <div v-else-if="hasLibrary == true && libraryOptions">
-            <block-content
-                title="Aggiungi un video"
-                v-if="libraryOptions.type == 'video'"
-            >
+            <block-content title="Aggiungi un video">
                 <div class="title-section form-group row">
                     <label
                         for="title"
@@ -48,7 +45,7 @@
                         ref="drop"
                         class="uploader__drop"
                         url="/api/v2/admin/clips/libraries/upload"
-                        accept="*/**"
+                        :accept="libraryOptions.accept"
                         :multiple="false"
                         :auto-process-queue="false"
                         :use-styles="false"
@@ -57,7 +54,10 @@
                     />
 
                     <transition name="upload-section-transition">
-                        <div class="uploader__btn">
+                        <div
+                            class="uploader__btn"
+                            v-if="isReadyToUpload"
+                        >
                             <ui-button
                                 title="carica"
                                 color="dark"
@@ -167,9 +167,9 @@ export default {
                 case 2:
                     opts = {
                         type: 'audio',
-                        accept: 'video/mp4',
+                        accept: 'audio/mpeg,audio/mpeg3,audio/x-mpeg-3,video/mpeg,video/x-mpeg',
                     }
-                    return
+                    return opts
                 case 3:
                     opts = {
                         type: 'video',
@@ -277,13 +277,13 @@ export default {
     },
     mounted: function () {
         this.initAnim()
-        setTimeout(() => {
-            this.$http.post('/api/v2/admin/clips/libraries/test', {}).then(response => {
-                console.log(response.data);
-                this.$emit('update', response.data)
-                this.clearFile(true)
-            })
-        }, 1000)
+        // setTimeout(() => {
+        //     this.$http.post('/api/v2/admin/clips/libraries/test', {}).then(response => {
+        //         console.log(response.data);
+        //         this.$emit('update', response.data)
+        //         this.clearFile(true)
+        //     })
+        // }, 1000)
     },
 }
 </script>

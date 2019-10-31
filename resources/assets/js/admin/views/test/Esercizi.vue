@@ -68,7 +68,7 @@ export default {
             let switches = selector.$refs.switch
             let randomIdx = this.$util.randomFromArr(switches.length)
 
-            let switcher = switches[0]
+            let switcher = switches[2]
 
             this.$nextTick(() => {
                 switcher.value = true
