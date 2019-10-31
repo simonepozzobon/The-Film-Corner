@@ -32,6 +32,7 @@
                     <file-preview
                         :file="file"
                         class="uploader__preview f-preview"
+                        @clear="clearFile"
                     />
 
                     <upload-zone
@@ -58,6 +59,7 @@
                                 :has-container="false"
                                 :has-margin="false"
                                 align="center"
+                                @click="uploadFile"
                             />
                         </div>
                     </transition>
@@ -85,6 +87,16 @@ from '../../../ui'
 
 import FilePreview from './librerie/FilePreview.vue'
 
+import {
+    gsap
+}
+from 'gsap/all'
+
+import {
+    DebouncedAnimation,
+    LibraryUpload,
+}
+from './mixins'
 
 export default {
     name: 'LibrerieEsecizi',
@@ -97,6 +109,7 @@ export default {
         UiButton,
         FilePreview,
     },
+    mixins: [DebouncedAnimation, LibraryUpload, ],
     props: {
         exercise: {
             type: Object,
@@ -116,20 +129,16 @@ export default {
             title: null,
             file: null,
             showPreview: false,
+            isOpen: false,
+            master: null,
         }
     },
     watch: {
-        isReadyToUpload: function (value) {
-            console.log(value);
+        file: function (file) {
+            this.toggleState()
         },
     },
     computed: {
-        fileName: function () {
-            if (this.file) {
-                return this.file.name
-            }
-            return 'no-file'
-        },
         hasLibrary: function () {
             if (this.exercise.hasOwnProperty('has_library') && this.exercise.has_library == 1) {
                 return true
@@ -171,19 +180,62 @@ export default {
                 return true
             }
             return false
-        }
+        },
+        uuid: function () {
+            return this.$util.uuid()
+        },
     },
     methods: {
+        initAnim: function () {
+            let container = this.$refs.drop.$el
+            this.master = gsap.timeline({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.master.fromTo(container, .15, {
+                height: 0,
+            }, {
+                height: 'auto',
+                immediateRender: false,
+                ease: 'power4.inOut',
+            }, 'start')
+
+            this.master.progress(1).progress(0)
+
+            this.toggleState()
+        },
         addMediaToLibrary: function (response) {
 
         },
-        togglePreview: function () {
-
+        toggleState: function () {
+            if (this.master) {
+                if (this.isOpen == true) {
+                    // close
+                    this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
+                        this.isOpen = false
+                    })
+                }
+                else {
+                    // apri
+                    this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
+                        this.isOpen = true
+                    })
+                }
+            }
         },
         addFileToQueue: function (file) {
             this.file = file
         },
-
+        clearFile: function () {
+            let container = this.$refs.drop
+            let dropzone = container.$refs.drop
+            dropzone.removeAllFiles()
+            this.file = null
+        },
+    },
+    mounted: function () {
+        this.initAnim()
     },
 }
 </script>
@@ -203,6 +255,11 @@ export default {
         width: 100%;
 
     }
+
+    &__drop {
+        overflow: hidden;
+    }
+
     &__btn {
         display: block;
         width: 100%;

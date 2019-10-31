@@ -64,13 +64,7 @@ export default {
     },
     watch: {
         file: function (file) {
-            if (this.file) {
-                this.toggleState()
-            }
-            else {
-                this.toggleState()
-
-            }
+            this.toggleState()
         },
     },
     computed: {
@@ -79,6 +73,9 @@ export default {
                 return this.file.name
             }
             return 'no-file'
+        },
+        uuid: function () {
+            return this.$util.uuid()
         },
     },
     methods: {
@@ -89,11 +86,21 @@ export default {
                 yoyo: true,
             })
 
-            this.master.fromTo(container, .6, {
-                height: 0
+            this.master.fromTo(container, .15, {
+                height: '1px',
             }, {
-                height: 'auto'
+                height: 'auto',
+                immediateRender: false,
+                ease: 'power4.inOut',
             }, 'start')
+
+            this.master.fromTo(container, .15, {
+                marginTop: '0',
+            }, {
+                marginTop: '1.618rem',
+                immediateRender: false,
+                ease: 'power4.inOut',
+            }, 'start+=0.1')
 
             this.master.progress(1).progress(0)
 
@@ -101,25 +108,18 @@ export default {
         },
         toggleState: function () {
             if (this.master) {
-                if (this.isOpen == true) {
-                    // close
-                    this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
-                        this.isOpen = false
-                    })
+                if (this.file) {
+                    // apri
+                    this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
                 }
                 else {
-                    // apri
-                    this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
-                        this.isOpen = true
-                    })
+                    // close
+                    this.debouncedEvent('add-anim', this.master, false, this.uuid, null)
                 }
             }
         },
         clearFile: function () {
-            this.file = null
-            let container = this.$refs.drop
-            let dropzone = container.$refs.drop
-            dropzone.removeAllFiles()
+            this.$emit('clear')
         }
     },
     mounted: function () {
