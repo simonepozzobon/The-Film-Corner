@@ -198,7 +198,7 @@ class ClipsController extends Controller
         $original_name = $file->getClientOriginalName();
 
         $filename = uniqid() . '.' . $extension;
-        $path = 'public/propaganda/' . $type;
+        $path = 'public/propaganda/paratexts/' . $type;
 
         $src = $file->storeAs($path, $filename);
 

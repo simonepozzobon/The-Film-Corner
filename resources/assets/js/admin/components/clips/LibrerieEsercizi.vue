@@ -48,10 +48,7 @@
                     />
 
                     <transition name="upload-section-transition">
-                        <div
-                            class="uploader__btn"
-                            v-if="isReadyToUpload"
-                        >
+                        <div class="uploader__btn">
                             <ui-button
                                 title="carica"
                                 color="dark"
@@ -226,6 +223,7 @@ export default {
         },
         addFileToQueue: function (file) {
             this.file = file
+            console.log(this.file);
         },
         clearFile: function () {
             let container = this.$refs.drop
