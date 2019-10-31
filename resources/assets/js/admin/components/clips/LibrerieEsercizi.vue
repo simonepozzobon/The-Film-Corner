@@ -4,17 +4,12 @@
         :title="exercise.title"
         :has-animations="true"
     >
-        <div>
+        <div v-if="hasLibrary == true">
             <block-content title="Contenuti">
-                <div>
-                    ciao
-                </div>
-                <div>
-                    ciao
-                </div>
-                <div>
-                    ciao
-                </div>
+                <library-medias
+                    :exercise="exercise"
+                    @destroy="destroyMedia"
+                />
             </block-content>
         </div>
 
@@ -200,23 +195,25 @@ export default {
     },
     methods: {
         initAnim: function () {
-            let container = this.$refs.drop.$el
-            this.master = gsap.timeline({
-                paused: true,
-                yoyo: true,
-            })
+            if (this.$refs.drop) {
+                let container = this.$refs.drop.$el
+                this.master = gsap.timeline({
+                    paused: true,
+                    yoyo: true,
+                })
 
-            this.master.fromTo(container, .15, {
-                height: 0,
-            }, {
-                height: 'auto',
-                immediateRender: false,
-                ease: 'power4.inOut',
-            }, 'start')
+                this.master.fromTo(container, .15, {
+                    height: 0,
+                }, {
+                    height: 'auto',
+                    immediateRender: false,
+                    ease: 'power4.inOut',
+                }, 'start')
 
-            this.master.progress(1).progress(0)
+                this.master.progress(1).progress(0)
 
-            this.toggleState()
+                this.toggleState()
+            }
         },
         addMediaToLibrary: function (response) {
 
@@ -241,12 +238,14 @@ export default {
             this.file = file
         },
         clearFile: function (titleReset = false) {
-            let container = this.$refs.drop
-            let dropzone = container.$refs.drop
-            dropzone.removeAllFiles()
-            this.file = null
-            if (titleReset == true) {
-                this.title = null
+            if (this.hasLibrary == true) {
+                let container = this.$refs.drop
+                let dropzone = container.$refs.drop
+                dropzone.removeAllFiles()
+                this.file = null
+                if (titleReset == true) {
+                    this.title = null
+                }
             }
         },
         uploadFile: function () {
@@ -255,21 +254,35 @@ export default {
             data.append('exercise_id', this.exercise.id)
             data.append('media', this.file)
             data.append('title', this.title)
-            data.append('is_new', this.exercise.hasOwnProperty('isNew') && this.exercise.isNew == true ? true : false)
             data.append('library_type_id', this.exercise.library_type_id)
+
+            if (this.exercise.hasOwnProperty('isNew') && this.exercise.isNew == true) {
+                data.append('is_new', 1)
+            }
+            else {
+                // data.append()
+                data.append('is_new', 0)
+                data.append('library_id', this.exercise.libraries[0].id)
+            }
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
-                this.clearFile(true)
-                console.log(response.data);
                 this.$emit('update', response.data)
+                this.clearFile(true)
             })
+        },
+        destroyMedia: function (item) {
+            this.$emit('destroy', item)
         },
     },
     mounted: function () {
         this.initAnim()
         setTimeout(() => {
-            this.uploadFile()
+            this.$http.post('/api/v2/admin/clips/libraries/test', {}).then(response => {
+                console.log(response.data);
+                this.$emit('update', response.data)
+                this.clearFile(true)
+            })
         }, 1000)
     },
 }
