@@ -115,11 +115,11 @@ export default {
         setState: function () {
             this.$nextTick(() => {
                 if (this.state == true) {
-                    console.log('qpre container');
+                    // console.log('qpre container');
                     this.showPanel()
                 }
                 else {
-                    console.log('chiude container');
+                    // console.log('chiude container');
                     this.hidePanel()
                 }
             })

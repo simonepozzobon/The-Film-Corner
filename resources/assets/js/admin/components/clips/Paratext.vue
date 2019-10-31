@@ -221,6 +221,7 @@ export default {
         },
         addParatext: function (response) {
             this.contents.push(response.paratext)
+            this.setCompleted()
         },
         upload: function () {
             return new Promise((resolve, reject) => {

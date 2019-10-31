@@ -87,6 +87,13 @@ export default {
             master: null,
         }
     },
+    watch: {
+        isOpen: function (v) {
+            if (this.title == 'Paratesti') {
+                console.log(v);
+            }
+        },
+    },
     computed: {
         panelBtn: function () {
             if (this.isOpen) {
@@ -158,10 +165,13 @@ export default {
         },
         togglePanel: function () {
             if (this.master) {
-                // console.log(this.title, 'toggle PAnel', this.isOpen);
+                if (this.title == 'Paratesti' || this.title == 'Approfondimenti') {}
                 if (this.isOpen == true) {
                     // chiude pannello
                     this.throttleEvent('add-anim', this.master, false, this.uuid, () => {
+                        if (this.title == 'Paratesti' || this.title == 'Approfondimenti') {
+                            console.log(this.title, 'dentro toggle PAnel', this.isOpen);
+                        }
                         this.isOpen = false
                     })
                 }

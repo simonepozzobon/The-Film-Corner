@@ -122,6 +122,7 @@ export default {
             paratexts: [],
             selectOptions: [],
             initialized: false,
+            initialState: true,
         }
     },
     watch: {
@@ -133,10 +134,16 @@ export default {
                 })
             }
         },
-        state: function (value) {
-            if (value == true) {
-                this.selectorReady()
-            }
+        // state: function (value) {
+        //     console.log(value);
+        //     this.selectorReady()
+        // },
+        state: function (v) {
+            console.log('state changed para', v);
+            this.$nextTick(() => {
+                this.$refs.panel.isOpen = false
+                this.$refs.panel.togglePanel()
+            })
         },
     },
     methods: {
@@ -192,6 +199,7 @@ export default {
             }
         },
         setCompleted: function () {
+            console.log('completed');
             this.$emit('completed')
         },
         setUncomplete: function () {

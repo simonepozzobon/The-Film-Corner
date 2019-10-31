@@ -86,6 +86,7 @@
         <block-panel
             title="Esercizi"
             :has-animations="true"
+            ref="eserciziPanel"
         >
             <esercizi
                 :options="options.exercises"
@@ -208,6 +209,9 @@ export default {
     watch: {
         cursor: function (cursor) {
             console.log('cambio cursore', cursor);
+            if (this.cursor == 3) {
+                this.$refs.eserciziPanel.togglePanel()
+            }
         },
     },
     methods: {
@@ -222,8 +226,15 @@ export default {
                 this.period = this.options.periods[0].id
 
                 this.$ebus.$on('buffer-free', () => {
-                    console.log('completed');
-                    this.cursor = 1
+                    console.log('completed', this.cursor);
+                    this.$nextTick(() => {
+                        if (this.cursor == 0) {
+                            this.cursor = 1
+                        }
+                        else if (this.cursor == 1) {
+                            this.cursor = 2
+                        }
+                    })
                 })
             })
         },
