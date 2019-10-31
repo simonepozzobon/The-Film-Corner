@@ -38,14 +38,17 @@ const BlockPanelAnimation = {
             let childs = content.children
             let childsVisible = []
 
-            parent = parent.parentNode
-
+            // console.log('initializin animation', this.title, parent);
+            // parent = parent.parentNode
+            // console.log(this.$children);
             for (let i = 0; i < childs.length; i++) {
                 let child = childs[i]
                 if (this.isVisible(child)) {
                     childsVisible.push(child)
                 }
             }
+
+            // console.log(childsVisible);
 
             this.master = gsap.timeline({
                 paused: true,
@@ -160,11 +163,9 @@ const BlockPanelAnimation = {
                     immediateRender: false,
                 }, 'revealContent')
 
-            this.master.progress(1).progress(0)
+            // this.master.progress(1).progress(0)
 
-            this.$nextTick(() => {
-                this.togglePanel()
-            })
+            this.togglePanel()
         },
     },
 }

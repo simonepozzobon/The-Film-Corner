@@ -7,15 +7,21 @@
         :options="dropOpts"
         :use-custom-slot="true"
         :duplicate-check="true"
-        :include-styling="false"
+        :include-styling="useStyles"
         @vdropzone-upload-progress="uploadProgress"
         @vdropzone-file-added="fileAdded"
+        @vdropzone-files-added="filesAdded"
         @vdropzone-sending="sendingRequest"
         @vdropzone-sending-multiple="sendingMultipleRequest"
         @vdropzone-success="success"
         @vdropzone-success-multiple="success"
         @vdropzone-error="manageErrors"
-    ></vue-dropzone>
+        @vdropzone-mounted="dropzoneMounted"
+    >
+        <span>
+            Carica un nuovo file
+        </span>
+    </vue-dropzone>
 </div>
 </template>
 
@@ -49,19 +55,30 @@ export default {
             type: Boolean,
             default: false,
         },
+        autoProcessQueue: {
+            type: Boolean,
+            default: true,
+        },
+        useStyles: {
+            type: Boolean,
+            default: false,
+        },
     },
     data: function () {
         return {
             dropOpts: {
                 url: this.url,
-                maxFilesize: null,
+                uploadMultiple: this.multiple,
+                maxFile: this.multiple ? null : 1,
+                // maxFilesize: null,
                 dictDefaultMessage: "Carica un nuovo file",
                 previewsContainer: false,
                 thumbnailWidth: 250,
                 thumbnailHeight: 140,
-                uploadMultiple: this.multiple,
                 parallelUploads: this.multiple ? 2 : 1,
                 acceptedFiles: this.accept,
+                autoProcessQueue: this.autoProcessQueue,
+                // addRemoveLinks: true,
             }
         }
     },
@@ -81,6 +98,11 @@ export default {
         },
         fileAdded: function (file) {
             toastr.info('file added')
+            this.$emit('file-added', file)
+        },
+        filesAdded: function (files) {
+            toastr.info('files added')
+            this.$emit('files-added', files)
         },
         success: function (file, response) {
             toastr.success('aggiunto')
@@ -99,7 +121,13 @@ export default {
 
         },
         manageErrors: function (file, message, xhr) {
+            console.log(message);
             toastr.error('errore')
+        },
+        dropzoneMounted: function () {
+            if (this.multiple == false) {
+                this.$refs.drop.dropzone.hiddenFileInput.removeAttribute('multiple')
+            }
         },
     },
 }

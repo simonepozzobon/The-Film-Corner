@@ -264,9 +264,9 @@ export default {
             }
         },
         debug: function () {
-            this.upload().then((item) => {
-                this.showPreview(item)
-            })
+            // this.upload().then((item) => {
+            //     this.showPreview(item)
+            // })
         },
     },
     mounted: function () {

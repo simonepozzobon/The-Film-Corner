@@ -171,6 +171,7 @@ export default {
                 peoples: [],
                 hashtags: [],
                 paratext_types: [],
+                exercises: [],
             },
         }
     },

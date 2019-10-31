@@ -1,88 +1,82 @@
 <template>
-<block-panel title="Esercizi">
-    <div class="a-clip-panel__row form-group row">
-        <label class="col-md-2">
-            Compare The Clips
-        </label>
+<div class="row no-gutters">
+    <div
+        class="col"
+        v-for="option in options"
+        :key="option.id"
+    >
         <switch-input
-            label="Compare The Clips"
-            label-size="col-md-2"
-            input-size="col-md-1"
-            :has-row="false"
-        />
-        <label class="col-md-2 offset-md-1">
-            Frame Crop
-        </label>
-        <switch-input
-            label="Frame Crop"
-            label-size="col-md-2"
-            input-size="col-md-1"
-            :has-row="false"
-        />
-        <label class="col-md-2 offset-md-1">
-            Check The Sound
-        </label>
-        <switch-input
-            label="
-              Check
-              The
-              Sound"
-            label-size="col-md-2"
-            input-size="col-md-1"
-            :has-row="false"
+            ref="switch"
+            :label="option.title"
+            label-size="col-md-6"
+            input-size="col-md-6"
+            :has-row="true"
+            @update="updateSelection($event, option)"
         />
     </div>
-</block-panel>
+</div>
 </template>
 
 <script>
 import {
-    Container,
-    FileInput,
-    ImagePreview,
     SwitchInput,
-    TextEditor,
-    TextInput,
-    Select2Input,
-    BlockPanel,
 }
 from '../../adminui'
-
-
-import {
-    UiButton,
-    UiTitle,
-}
-from '../../../ui'
 
 export default {
     name: 'Esercizi',
     components: {
-        Container,
-        FileInput,
-        ImagePreview,
         SwitchInput,
-        TextEditor,
-        TextInput,
-        UiButton,
-        UiTitle,
-        Select2Input,
-        BlockPanel,
     },
     props: {
         options: {
-            type: Object,
+            type: Array,
             default: function () {
-                return {}
+                return []
             },
         },
-    },
-    data: function () {
-        return {
-            period: null,
-            year: null,
-            region: null,
+        exercises: {
+            type: Array,
+            default: function () {
+                return []
+            }
         }
+    },
+    methods: {
+        updateSelection: function (value, option) {
+            if (value) {
+                this.addExercise(option)
+            }
+            else {
+                this.removeExercise(option)
+            }
+        },
+        addExercise: function (option) {
+            const newExercise = Object.assign({}, option)
+            newExercise['uuid'] = this.$util.uuid()
+            newExercise['isNew'] = true
+
+            if (newExercise.hasOwnProperty('has_library') && newExercise.has_library == 1) {
+                newExercise['libraries'] = []
+            }
+
+            let cached = this.exercises
+            cached.push(newExercise)
+
+
+            this.$emit('update:exercises', cached)
+        },
+        removeExercise: function (option) {
+            let idx = this.exercises.findIndex(exercise => exercise.id == option.id)
+            if (idx > -1) {
+                let cached = this.exercises
+                cached.splice(idx, 1)
+                this.$emit('update:exercises', cached)
+            }
+            else {
+                console.log('non trovato');
+            }
+        },
     },
 }
 </script>

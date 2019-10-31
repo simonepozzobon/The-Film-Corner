@@ -12,4 +12,14 @@ class Library extends Model
     {
         return $this->belongsTo('App\Propaganda\Clip');
     }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Propaganda\LibraryType');
+    }
+
+    public function medias()
+    {
+        return $this->hasMany('App\Propaganda\LibraryMedia');
+    }
 }

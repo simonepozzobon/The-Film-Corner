@@ -194,6 +194,10 @@ export default {
             type: String,
             default: 'Titolo',
         },
+        hasAnimations: {
+            type: Boolean,
+            default: false,
+        },
         hasAnimation: {
             type: Boolean,
             default: false,
@@ -256,12 +260,12 @@ export default {
                 ],
                 content: this.initial ? this.initial : '',
                 onFocus: () => {
-                    if (this.hasAnimation) {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
                         this.openPanel()
                     }
                 },
                 onBlur: () => {
-                    if (this.hasAnimation) {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
                         this.closePanel()
                     }
                 }
@@ -276,13 +280,14 @@ export default {
                 // console.log('updated');
             })
 
-            if (this.hasAnimation == true) {
+            if (this.hasAnimations == true || this.hasAnimation == true) {
                 this.$nextTick(() => {
                     this.initAnim()
                 })
             }
         },
         initAnim: function () {
+            console.log('animations');
             let container = this.$refs.container
             let menu = container.getElementsByClassName('menubar')
             if (menu) {

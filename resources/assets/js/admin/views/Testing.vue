@@ -30,6 +30,36 @@
             </div>
         </block-panel>
     </container>
+    <container>
+        <block-panel
+            title="test"
+            :has-animations="false"
+        >
+            <div
+                class="para-single"
+                ref="container"
+            >
+                <div
+                    class="para-single__content"
+                    ref="element"
+                >
+                    <panel-title
+                        title="Paintings"
+                        size="h4"
+                        class="para-single__sub-title"
+                        letter-spacing="6px"
+                    />
+                    <paratexts-table :paratexts="paratexts" />
+                    <upload-zone
+                        :accept="mime"
+                        url="/api/v2/admin/clips/paratexts/upload"
+                        :params.sync="requestParams"
+                        @success="addParatext"
+                    />
+                </div>
+            </div>
+        </block-panel>
+    </container>
 </div>
 </template>
 

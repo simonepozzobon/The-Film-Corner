@@ -43,14 +43,14 @@ import {
 from '../../ui'
 
 import {
-    DebouncedAnimation,
+    ThrottleEvent,
     BlockPanelAnimation,
 }
 from './mixins'
 
 export default {
     name: 'BlockPanel',
-    mixins: [DebouncedAnimation, BlockPanelAnimation],
+    mixins: [ThrottleEvent, BlockPanelAnimation],
     components: {
         UiButton,
         UiTitle,
@@ -157,30 +157,28 @@ export default {
             }
         },
         togglePanel: function () {
-            this.$nextTick(() => {
-                if (this.master) {
-                    if (this.isOpen) {
-                        // chiude pannello
-                        // console.log('chiude pannello', this.title);
-                        this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
-                            this.isOpen = false
-                        })
-                    }
-                    else {
-                        // apre pannello
-                        // console.log('apre pannello', this.title);
-                        this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
-                            this.isOpen = true
-                        })
-                    }
+            if (this.master) {
+                // console.log(this.title, 'toggle PAnel', this.isOpen);
+                if (this.isOpen == true) {
+                    // chiude pannello
+                    this.throttleEvent('add-anim', this.master, false, this.uuid, () => {
+                        this.isOpen = false
+                    })
                 }
-            })
+                else if (this.isOpen == false) {
+                    // apre pannello
+                    this.throttleEvent('add-anim', this.master, true, this.uuid, () => {
+                        this.isOpen = true
+                    })
+                }
+            }
         },
     },
     // created: function () {
     //     this.isOpen = this.initialState
     // },
     mounted: function () {
+        // console.log('mounted', this.title);
         if (this.needsTrigger == false) {
             this.$nextTick(() => {
                 this.initAnim()

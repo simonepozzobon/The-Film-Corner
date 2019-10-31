@@ -119,6 +119,14 @@ Route::prefix('v2')->group(
                                 Route::post('add-content', 'Api\Admin\ClipsController@add_paratext_content');
                             }
                         );
+
+                        Route::prefix('libraries')->group(
+                            function () {
+                                Route::post('test', 'Api\Admin\LibraryController@test');
+                                Route::post('upload', 'Api\Admin\LibraryController@upload_media');
+                                Route::delete('{id}', 'Api\Admin\LibraryController@destroy_media');
+                            }
+                        );
                     }
                 );
 

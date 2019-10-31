@@ -9,6 +9,7 @@ import Pause from './Pause.vue'
 import Stop from './Stop.vue'
 import Forward from './Forward.vue'
 import Backward from './Backward.vue'
+import FileIcon from './FileIcon.vue'
 
 export {
     Facebook,
@@ -22,4 +23,5 @@ export {
     Stop,
     Forward,
     Backward,
+    FileIcon,
 }
