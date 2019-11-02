@@ -55,38 +55,42 @@
         />
     </container>
     <container
+        v-if="cursor >= 1"
         :contains="true"
         :has-animations="true"
-        :state="this.cursor | stateSetter(1)"
+        :state="true"
     >
         <approfondimenti
             @update="updateField"
-            :state="this.cursor | stateSetter(1)"
+            :initial-state="false"
         />
     </container>
     <container
+        v-if="cursor >= 2"
         :contains="true"
         :has-animations="true"
-        :state="this.cursor | stateSetter(2)"
+        :state="true"
     >
         <paratexts
             :clip="this.clip"
             :options="options"
-            :state="this.cursor | stateSetter(2)"
+            :state="false"
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
         />
     </container>
     <container
+        v-if="cursor >= 3"
         :contains="true"
         :has-animations="true"
-        :state="this.cursor | stateSetter(3)"
+        :state="true"
     >
         <block-panel
             title="Esercizi"
             :has-animations="true"
             ref="eserciziPanel"
+            :initial-state="false"
         >
             <esercizi
                 :options="options.exercises"
@@ -95,20 +99,15 @@
             />
         </block-panel>
     </container>
-    <container
-        :contains="true"
-        :has-animations="true"
-        :state="this.cursor | stateSetter(3)"
-    >
-        <librerie-esercizi
-            v-for="exercise in exercises"
-            :key="exercise.uuid"
-            :exercise="exercise"
-            :clip="clip"
-            @update="updateExerc"
-            @destroy="destroyMedia"
-        />
-    </container>
+    <librerie-esercizi
+        v-if="cursor >= 3"
+        v-for="exercise in exercises"
+        :key="exercise.uuid"
+        :exercise="exercise"
+        :clip="clip"
+        @update="updateExerc"
+        @destroy="destroyMedia"
+    />
     <container
         padding="sm"
         :contains="true"
@@ -208,10 +207,7 @@ export default {
     },
     watch: {
         cursor: function (cursor) {
-            console.log('cambio cursore', cursor);
-            if (this.cursor == 3) {
-                this.$refs.eserciziPanel.togglePanel()
-            }
+            // console.log('cambio cursore', cursor);
         },
     },
     methods: {
@@ -224,18 +220,6 @@ export default {
                     }
                 }
                 this.period = this.options.periods[0].id
-
-                this.$ebus.$on('buffer-free', () => {
-                    console.log('completed', this.cursor);
-                    this.$nextTick(() => {
-                        if (this.cursor == 0) {
-                            this.cursor = 1
-                        }
-                        else if (this.cursor == 1) {
-                            this.cursor = 2
-                        }
-                    })
-                })
             })
         },
         updateField: function (key, value) {
@@ -265,9 +249,11 @@ export default {
 
 
                 this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-                    console.log(response.data);
-                    this.clip = response.data.clip
-                    this.cursor = 1
+                    console.log('clip', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 1
+                    }
                 })
             }
             else if (this.cursor == 1) {
@@ -279,21 +265,14 @@ export default {
                 data.append('food', this.food)
 
                 this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
-                    console.log(response.data);
-                    this.clip = response.data.clip
-                    this.cursor = 2
+                    console.log('details', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 2
+                    }
                 })
             }
-            else if (this.cursor == 2) {
-                let data = new FormData()
-
-
-                this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
-                    console.log(response.data);
-                    this.clip = response.data.clip
-                    this.cursor = 2
-                })
-            }
+            else if (this.cursor == 2) {}
         },
         paratextCompleted: function () {
             this.cursor = 3

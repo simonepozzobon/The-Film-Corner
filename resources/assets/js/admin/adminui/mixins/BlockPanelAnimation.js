@@ -38,17 +38,12 @@ const BlockPanelAnimation = {
             let childs = content.children
             let childsVisible = []
 
-            // console.log('initializin animation', this.title, parent);
-            // parent = parent.parentNode
-            // console.log(this.$children);
             for (let i = 0; i < childs.length; i++) {
                 let child = childs[i]
                 if (this.isVisible(child)) {
                     childsVisible.push(child)
                 }
             }
-
-            // console.log(childsVisible);
 
             this.master = gsap.timeline({
                 paused: true,
@@ -145,7 +140,8 @@ const BlockPanelAnimation = {
                     ease: Sine.easeInOut,
                 }, 'revealFrame')
 
-                .fromTo(childsVisible, .15, {
+            if (childsVisible) {
+                this.master.fromTo(childsVisible, .15, {
                     opacity: '0',
                     scaleX: 0.9,
                     scaleY: 1.1,
@@ -162,20 +158,10 @@ const BlockPanelAnimation = {
                     ease: Sine.easeOut,
                     immediateRender: false,
                 }, 'revealContent')
-
-            if (this.initialState == false) {
-                this.master.progress(1)
             }
-            // else {
-            //     this.master.progress(1).progress(0)
-            // }
-            // this.master.progress(1)
-            // .progress(0)
 
-            this.isOpen = this.initialState
-
-            // console.log(this.isOpen);
-            this.togglePanel()
+            this.master.progress(1)
+            this.toggleAnim()
 
         },
     },

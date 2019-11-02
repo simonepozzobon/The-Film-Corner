@@ -3,6 +3,7 @@
     title="Paratesti"
     ref="panel"
     :needs-flex="true"
+    :initial-state="state"
 >
     <div
         class="para-container"
@@ -187,6 +188,7 @@ export default {
             if (value) {
                 this.paratext_id = value.id
                 this.paratext_selected = this.options.paratext_types.find(single => single.id == value.id)
+                console.log(value);
             }
         },
         addParatextType: function () {

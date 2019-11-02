@@ -39,18 +39,12 @@ import {
 }
 from 'gsap/all'
 
-import {
-    DebouncedAnimation,
-}
-from '../mixins'
-
 export default {
     name: 'FilePreview',
     components: {
         FileIcon,
         UiButton,
     },
-    mixins: [DebouncedAnimation],
     props: {
         file: {
             default: null
@@ -64,7 +58,7 @@ export default {
     },
     watch: {
         file: function (file) {
-            this.toggleState()
+            this.toggleAnim()
         },
     },
     computed: {
@@ -104,17 +98,20 @@ export default {
 
             this.master.progress(1).progress(0)
 
-            this.toggleState()
+            this.toggleAnim()
         },
         toggleState: function () {
+            console.log('deprecata');
+        },
+        toggleAnim: function () {
             if (this.master) {
                 if (this.file) {
                     // apri
-                    this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
+                    this.master.play()
                 }
                 else {
                     // close
-                    this.debouncedEvent('add-anim', this.master, false, this.uuid, null)
+                    this.master.reverse()
                 }
             }
         },

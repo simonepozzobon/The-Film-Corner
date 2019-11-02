@@ -1,77 +1,83 @@
 <template>
-<block-panel
-    :title="exercise.title"
+<container
+    :contains="true"
     :has-animations="true"
 >
-    <div v-if="hasLibrary == true">
-        <block-content title="Contenuti">
-            <library-medias
-                :exercise="exercise"
-                @destroy="destroyMedia"
-            />
-        </block-content>
-    </div>
-
-    <div v-if="hasLibrary == false">
-        Questo esercizio non utilizza librerie
-    </div>
-    <div v-else-if="hasLibrary == true && libraryOptions">
-        <block-content title="Aggiungi un video">
-            <div class="title-section form-group row">
-                <label
-                    for="title"
-                    class="col-md-2"
-                >
-                    Titolo Media
-                </label>
-                <div class="col-md-10">
-                    <input
-                        type="text"
-                        name="title"
-                        class="form-control"
-                        v-model="title"
-                    />
-                </div>
-            </div>
-            <div class="uploader">
-                <file-preview
-                    :file="file"
-                    class="uploader__preview f-preview"
-                    @clear="clearFile"
+    <block-panel
+        :title="exercise.title"
+        :has-animations="true"
+        ref="panel"
+    >
+        <div v-if="hasLibrary == true">
+            <block-content title="Contenuti">
+                <library-medias
+                    :exercise="exercise"
+                    @destroy="destroyMedia"
                 />
+            </block-content>
+        </div>
 
-                <upload-zone
-                    ref="drop"
-                    class="uploader__drop"
-                    url="/api/v2/admin/clips/libraries/upload"
-                    :accept="libraryOptions.accept"
-                    :multiple="false"
-                    :auto-process-queue="false"
-                    :use-styles="false"
-                    @file-added="addFileToQueue"
-                    @success="addMediaToLibrary"
-                />
-
-                <transition name="upload-section-transition">
-                    <div
-                        class="uploader__btn"
-                        v-if="isReadyToUpload"
+        <div v-if="hasLibrary == false">
+            Questo esercizio non utilizza librerie
+        </div>
+        <div v-else-if="hasLibrary == true && libraryOptions">
+            <block-content title="Aggiungi un video">
+                <div class="title-section form-group row">
+                    <label
+                        for="title"
+                        class="col-md-2"
                     >
-                        <ui-button
-                            title="carica"
-                            color="dark"
-                            theme="outline"
-                            :has-container="false"
-                            :has-margin="false"
-                            align="center"
-                            @click="uploadFile"
+                        Titolo Media
+                    </label>
+                    <div class="col-md-10">
+                        <input
+                            type="text"
+                            name="title"
+                            class="form-control"
+                            v-model="title"
                         />
                     </div>
-                </transition>
-            </div>
-        </block-content>
-    </div>
-</block-panel>
+                </div>
+                <div class="uploader">
+                    <file-preview
+                        :file="file"
+                        class="uploader__preview f-preview"
+                        @clear="clearFile"
+                    />
+
+                    <upload-zone
+                        ref="drop"
+                        class="uploader__drop"
+                        url="/api/v2/admin/clips/libraries/upload"
+                        :accept="libraryOptions.accept"
+                        :multiple="false"
+                        :auto-process-queue="false"
+                        :use-styles="false"
+                        @file-added="addFileToQueue"
+                        @success="addMediaToLibrary"
+                    />
+
+                    <transition name="upload-section-transition">
+                        <div
+                            class="uploader__btn"
+                            v-if="isReadyToUpload"
+                        >
+                            <ui-button
+                                title="carica"
+                                color="dark"
+                                theme="outline"
+                                :has-container="false"
+                                :has-margin="false"
+                                align="center"
+                                @click="uploadFile"
+                            />
+                        </div>
+                    </transition>
+                </div>
+            </block-content>
+        </div>
+    </block-panel>
+</container>
 </template>
 
 <script>
@@ -115,7 +121,6 @@ export default {
         FilePreview,
         LibraryMedias,
     },
-    mixins: [DebouncedAnimation, ],
     props: {
         exercise: {
             type: Object,
@@ -137,11 +142,12 @@ export default {
             showPreview: false,
             isOpen: false,
             master: null,
+            containerState: false,
         }
     },
     watch: {
         file: function (file) {
-            this.toggleState()
+            this.toggleAnim()
         },
     },
     computed: {
@@ -210,25 +216,26 @@ export default {
 
                 this.master.progress(1).progress(0)
 
-                this.toggleState()
+                this.toggleAnim()
             }
         },
         addMediaToLibrary: function (response) {
 
         },
         toggleState: function () {
+            console.log('deprecata');
+        },
+        toggleAnim: function () {
             if (this.master) {
                 if (this.isOpen == true) {
                     // close
-                    this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
-                        this.isOpen = false
-                    })
+                    this.isOpen = false
+                    this.master.reverse()
                 }
                 else {
                     // apri
-                    this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
-                        this.isOpen = true
-                    })
+                    this.isOpen = true
+                    this.master.play()
                 }
             }
         },

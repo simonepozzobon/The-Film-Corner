@@ -43,7 +43,7 @@
             striped
             hover
             sortable
-            :items="items"
+            :items="clips"
             :fields="fields"
             :filter="filter"
             :current-page="currentPage"
@@ -51,29 +51,25 @@
             @filtered="onFiltered"
             class="clips-table"
         >
-            <template v-slot:cell(thumb)="data">
-                <img
-                    :src="data.item.thumb | setThumbSrc"
-                    class="clips-table__preview"
-                >
+            <template v-slot:cell(period)="data">
+                {{ data.item.period.title }}
             </template>
-            <template v-slot:cell(img)="data">
-                <img
-                    :src="data.item.img | setThumbSrc"
-                    class="clips-table__preview"
-                >
-            </template>
-            <template v-slot:cell(leftSrc)="data">
-                <img
-                    :src="data.item.left.thumb | setThumbSrc"
-                    class="clips-table__preview"
-                >
-            </template>
-            <template v-slot:cell(rightSrc)="data">
-                <img
-                    :src="data.item.right.thumb | setThumbSrc"
-                    class="clips-table__preview"
-                >
+            <template v-slot:cell(tools)="data">
+                <ui-button
+                    title="modifica"
+                    theme="outline"
+                    color="orange"
+                    :has-container="false"
+                    display="inline-block"
+                />
+                <ui-button
+                    title="cancella"
+                    theme="outline"
+                    color="red"
+                    :has-container="false"
+                    display="inline-block"
+                    @click="deleteClip(data.item)"
+                />
             </template>
         </b-table>
 
@@ -101,12 +97,15 @@ import {
 }
 from '../../ui'
 
+import PropagandaFields from './mixins/PropagandaFields'
+
 export default {
     name: 'PropagandApp',
     components: {
         Container,
         UiButton,
     },
+    mixins: [PropagandaFields],
     data: function () {
         return {
             clips: [],
@@ -116,15 +115,19 @@ export default {
             perPage: 10,
             currentPage: 1,
             totalRows: 1,
-            fields: [],
         }
+    },
+    watch: {
+        clips: function (clips) {
+            this.totalRows = clips.length
+            this.currentPage = 1
+        },
     },
     methods: {
         getClips: function () {
             this.$http.get('/api/v2/admin/clips').then(response => {
-                console.log(response);
                 if (response.data.success) {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.clips = response.data.clips
                 }
             })
@@ -136,6 +139,15 @@ export default {
         createClip: function () {
             this.$root.goTo('clips-create')
         },
+        deleteClip: function (item) {
+            let url = '/api/v2/admin/clips/' + item.id
+            this.$http.delete(url).then(response => {
+                let idx = this.clips.findIndex(clip => clip.id == response.data.id)
+                if (idx > -1) {
+                    this.clips.splice(idx, 1)
+                }
+            })
+        }
     },
     created: function () {
         this.getClips()

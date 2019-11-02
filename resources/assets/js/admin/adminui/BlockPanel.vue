@@ -23,7 +23,7 @@
             :has-container="false"
             :has-margin="false"
             display="inline-block"
-            @click="togglePanel"
+            @click="toggleAnim"
         />
     </div>
     <div
@@ -43,14 +43,13 @@ import {
 from '../../ui'
 
 import {
-    ThrottleEvent,
     BlockPanelAnimation,
 }
 from './mixins'
 
 export default {
     name: 'BlockPanel',
-    mixins: [ThrottleEvent, BlockPanelAnimation],
+    mixins: [BlockPanelAnimation],
     components: {
         UiButton,
         UiTitle,
@@ -164,36 +163,26 @@ export default {
             }
         },
         togglePanel: function () {
+            console.log('deprecata');
+        },
+        toggleAnim: function () {
             if (this.master) {
-                if (this.title == 'Paratesti' || this.title == 'Approfondimenti') {}
                 if (this.isOpen == true) {
-                    // chiude pannello
-                    this.throttleEvent('add-anim', this.master, false, this.uuid, () => {
-                        if (this.title == 'Paratesti' || this.title == 'Approfondimenti') {
-                            console.log(this.title, 'dentro toggle PAnel', this.isOpen);
-                        }
-                        this.isOpen = false
-                    })
+                    this.isOpen = false
+                    this.master.reverse()
                 }
                 else if (this.isOpen == false) {
                     // apre pannello
-                    this.throttleEvent('add-anim', this.master, true, this.uuid, () => {
-                        this.isOpen = true
-                    })
-
+                    this.isOpen = true
+                    this.master.play()
                 }
             }
-        },
+        }
     },
-    // created: function () {
-    //     this.isOpen = this.initialState
-    // },
     mounted: function () {
         // console.log('mounted', this.title);
         if (this.needsTrigger == false) {
-            this.$nextTick(() => {
-                this.initAnim()
-            })
+            this.initAnim()
         }
         else {
             console.log('ha bisogno di trigger', this.title);

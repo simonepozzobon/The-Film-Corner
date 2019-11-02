@@ -22,14 +22,8 @@ const plugins = [
     Power4,
 ]
 
-import {
-    ThrottleEvent,
-}
-from './mixins'
-
 export default {
     name: 'Container',
-    mixins: [ThrottleEvent],
     props: {
         padding: {
             type: String,
@@ -57,11 +51,6 @@ export default {
             master: null
         }
     },
-    watch: {
-        state: function () {
-            this.setState()
-        },
-    },
     computed: {
         uuid: function () {
             return this.$util.uuid()
@@ -86,12 +75,12 @@ export default {
     methods: {
         initAnim: function () {
             let container = this.$refs.container
-            this.master = gsap.timeline({
+            let master = gsap.timeline({
                 paused: true,
                 yoyo: true,
             })
 
-            this.master.to(container, .1, {
+            master.to(container, .1, {
                     overflow: 'hidden',
                 }, 'start')
                 .fromTo(container, .6, {
@@ -108,38 +97,30 @@ export default {
                     overflow: 'inherit'
                 }, 'start+=0.6')
 
-            // this.master.progress(1).progress(0)
+            master.progress(1).progress(0)
 
-            this.setState()
+            master.eventCallback('onComplete', () => {
+                gsap.set(container, {
+                    clearProps: 'all'
+                })
+                master.kill()
+            })
+
+            master.play()
         },
         setState: function () {
-            this.$nextTick(() => {
-                if (this.state == true) {
-                    // console.log('qpre container');
-                    this.showPanel()
-                }
-                else {
-                    // console.log('chiude container');
-                    this.hidePanel()
-                }
-            })
+            console.log('deprecata');
         },
         showPanel: function () {
-            if (this.master) {
-                this.throttleEvent('add-anim', this.master, true, this.uuid, null)
-            }
+            console.log('deprecata');
         },
         hidePanel: function () {
-            if (this.master) {
-                this.throttleEvent('add-anim', this.master, false, this.uuid, null)
-            }
+            console.log('deprecata');
         },
     },
     mounted: function () {
         if (this.hasAnimations == true) {
-            this.$nextTick(() => {
-                this.initAnim()
-            })
+            this.initAnim()
         }
     },
 }

@@ -129,8 +129,11 @@ export default {
         }
     },
     watch: {
-        title: function () {
-            this.$emit('update', 'title', this.title)
+        title: function (title) {
+            this.$emit('update', 'title', title)
+        },
+        video: function (video) {
+            this.$emit('update', 'video', video)
         },
     },
     methods: {
