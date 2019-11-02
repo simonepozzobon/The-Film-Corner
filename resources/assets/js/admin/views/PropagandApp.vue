@@ -68,6 +68,7 @@
                     color="red"
                     :has-container="false"
                     display="inline-block"
+                    @click="deleteClip(data.item)"
                 />
             </template>
         </b-table>
@@ -126,7 +127,7 @@ export default {
         getClips: function () {
             this.$http.get('/api/v2/admin/clips').then(response => {
                 if (response.data.success) {
-                    console.log(response.data);
+                    // console.log(response.data);
                     this.clips = response.data.clips
                 }
             })
@@ -138,6 +139,15 @@ export default {
         createClip: function () {
             this.$root.goTo('clips-create')
         },
+        deleteClip: function (item) {
+            let url = '/api/v2/admin/clips/' + item.id
+            this.$http.delete(url).then(response => {
+                let idx = this.clips.findIndex(clip => clip.id == response.data.id)
+                if (idx > -1) {
+                    this.clips.splice(idx, 1)
+                }
+            })
+        }
     },
     created: function () {
         this.getClips()

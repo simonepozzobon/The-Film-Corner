@@ -185,7 +185,7 @@ export default {
             genre: null,
             nationality: null,
             topics: [],
-            cursor: 3,
+            cursor: 0,
             abstract: null,
             tech_info: null,
             historical_context: null,
@@ -208,9 +208,6 @@ export default {
     watch: {
         cursor: function (cursor) {
             // console.log('cambio cursore', cursor);
-            if (this.cursor == 3) {
-                this.$refs.eserciziPanel.togglePanel()
-            }
         },
     },
     methods: {
@@ -236,65 +233,46 @@ export default {
         saveClip: function () {
             // this.debug()
             if (this.cursor == 0) {
-                console.log('qui');
-                // let data = new FormData()
-                // data.append('title', this.title)
-                // data.append('video', this.video)
-                // data.append('period', this.period)
-                // data.append('year', this.year)
-                // data.append('format', this.format)
-                // data.append('age', this.age)
-                // data.append('genre', this.genre)
-                // data.append('nationality', this.nationality)
-                //
-                // data.append('topics', JSON.stringify(this.topics))
-                // data.append('directors', JSON.stringify(this.directors))
-                // data.append('peoples', JSON.stringify(this.peoples))
-                //
-                //
-                // this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-                //     console.log('clip', response.data.clip);
-                //     if (response.data.success == true) {
-                //         this.clip = response.data.clip
-                //         this.cursor = 1
-                //     }
-                // })
-                setTimeout(() => {
-                    this.cursor = 1
-                }, 500)
+                let data = new FormData()
+                data.append('title', this.title)
+                data.append('video', this.video)
+                data.append('period', this.period)
+                data.append('year', this.year)
+                data.append('format', this.format)
+                data.append('age', this.age)
+                data.append('genre', this.genre)
+                data.append('nationality', this.nationality)
+
+                data.append('topics', JSON.stringify(this.topics))
+                data.append('directors', JSON.stringify(this.directors))
+                data.append('peoples', JSON.stringify(this.peoples))
+
+
+                this.$http.post('/api/v2/admin/clips/create', data).then(response => {
+                    console.log('clip', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 1
+                    }
+                })
             }
             else if (this.cursor == 1) {
-                // let data = new FormData()
-                // data.append('clip_id', this.clip.id)
-                // data.append('abstract', this.abstract)
-                // data.append('tech_info', this.tech_info)
-                // data.append('historical_context', this.historical_context)
-                // data.append('food', this.food)
-                //
-                // this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
-                //     console.log('details', response.data.clip);
-                //     if (response.data.success == true) {
-                //         this.clip = response.data.clip
-                //         this.cursor = 2
-                //     }
-                // })
-                setTimeout(() => {
-                    this.cursor = 2
-                }, 500)
+                let data = new FormData()
+                data.append('clip_id', this.clip.id)
+                data.append('abstract', this.abstract)
+                data.append('tech_info', this.tech_info)
+                data.append('historical_context', this.historical_context)
+                data.append('food', this.food)
+
+                this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
+                    console.log('details', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 2
+                    }
+                })
             }
-            else if (this.cursor == 2) {
-                setTimeout(() => {
-                    this.cursor = 3
-                }, 500)
-                // let data = new FormData()
-                //
-                //
-                // this.$http.post('/api/v2/admin/clips/create-paratexts', data).then(response => {
-                //     console.log(response.data);
-                //     this.clip = response.data.clip
-                //     this.cursor = 2
-                // })
-            }
+            else if (this.cursor == 2) {}
         },
         paratextCompleted: function () {
             this.cursor = 3

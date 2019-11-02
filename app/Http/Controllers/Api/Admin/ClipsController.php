@@ -133,59 +133,49 @@ class ClipsController extends Controller
         ];
     }
 
-    public function check_single_option($name, $request)
+    public function destroy_clip($id)
     {
-        $model = ucwords('App\\Propaganda\\'.$name);
+        $clip = Clip::findOrFail($id);
+        $clip->peoples()->detach();
+        $clip->directors()->detach();
+        $clip->topics()->detach();
+        $clip->hashtags()->detach();
 
-        $result = $model::where('title', '=', $request->{$name})->first();
-        if ($result) {
-            return $result->id;
-        } else {
-            $obj = \App::make($model);
-            $columns = $obj->getTableColumns();
+        // elimina i paratesti
+        $paratexts = $clip->paratexts;
+        foreach ($paratexts as $key => $paratext) {
 
-            foreach ($columns as $key => $column) {
-                if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
-                    if ($request->input($column, false) == false) {
-                        // va riempita con un random
-                        $obj->{$column} = random_int(1, 100);
-                    } else {
-                        $obj->{$column} = $request->{$name};
-                    }
-                }
+            // elimina i media collegati ai paratesti
+            $medias = $paratext->medias;
+            foreach ($medias as $key => $media) {
+                $paratext->detach($media);
+                $media->delete();
             }
-            // $obj->save();
-            return $obj->id;
+
+            $clip->detach($paratext);
+            $paratext->delete();
         }
-    }
 
-    public function check_multiple_option($name, $request, $clip)
-    {
-        $clip->{$name}()->detach();
-        $singular = rtrim($name, 's');
-        $model = ucwords('App\\Propaganda\\'.$singular);
+        // elimina le librerie
+        $libraries = $clip->libraries;
+        foreach ($libraries as $key => $library) {
 
-        $results = collect();
-
-        if (isset($request->{$name})) {
-            foreach (json_decode($request->{$name}) as $key => $value) {
-                $field = $name == 'directors' ? 'name' : 'title';
-                $result = $model::where($field, '=', $value)->first();
-
-                if ($result) {
-                    $results->push($result);
-                } else {
-                    $obj = \App::make($model);
-                    $obj->{$field} = $value;
-
-                    $obj->save();
-                    $results->push($obj);
-                }
-
-                $clip->{$name}()->attach($result);
+            // elimina i media collegati
+            $medias = $library->medias;
+            foreach ($medias as $key => $media) {
+                $library->detach($media);
+                $media->delete();
             }
+
+            $clip->detach($library);
+            $library->delete();
         }
-        return true;
+
+        $clip->delete();
+        return [
+            'success' => true,
+            'id' => $id
+        ];
     }
 
     public function store_details(Request $request)
@@ -254,7 +244,7 @@ class ClipsController extends Controller
         ];
     }
 
-    public function destroy(Request $request)
+    public function destroy_paratext(Request $request)
     {
         $clip = Clip::find($request->clip_id);
         $paraType = ParatextType::find($request->paratext_type_id);
@@ -300,5 +290,60 @@ class ClipsController extends Controller
         return [
           'para' => $p
         ];
+    }
+
+    public function check_single_option($name, $request)
+    {
+        $model = ucwords('App\\Propaganda\\'.$name);
+
+        $result = $model::where('title', '=', $request->{$name})->first();
+        if ($result) {
+            return $result->id;
+        } else {
+            $obj = \App::make($model);
+            $columns = $obj->getTableColumns();
+
+            foreach ($columns as $key => $column) {
+                if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
+                    if ($request->input($column, false) == false) {
+                        // va riempita con un random
+                        $obj->{$column} = random_int(1, 100);
+                    } else {
+                        $obj->{$column} = $request->{$name};
+                    }
+                }
+            }
+            // $obj->save();
+            return $obj->id;
+        }
+    }
+
+    public function check_multiple_option($name, $request, $clip)
+    {
+        $clip->{$name}()->detach();
+        $singular = rtrim($name, 's');
+        $model = ucwords('App\\Propaganda\\'.$singular);
+
+        $results = collect();
+
+        if (isset($request->{$name})) {
+            foreach (json_decode($request->{$name}) as $key => $value) {
+                $field = $name == 'directors' ? 'name' : 'title';
+                $result = $model::where($field, '=', $value)->first();
+
+                if ($result) {
+                    $results->push($result);
+                } else {
+                    $obj = \App::make($model);
+                    $obj->{$field} = $value;
+
+                    $obj->save();
+                    $results->push($obj);
+                }
+
+                $clip->{$name}()->attach($result);
+            }
+        }
+        return true;
     }
 }
