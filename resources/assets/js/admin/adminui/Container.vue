@@ -22,14 +22,8 @@ const plugins = [
     Power4,
 ]
 
-import {
-    ThrottleEvent,
-}
-from './mixins'
-
 export default {
     name: 'Container',
-    mixins: [ThrottleEvent],
     props: {
         padding: {
             type: String,

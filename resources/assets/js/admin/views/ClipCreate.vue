@@ -223,18 +223,6 @@ export default {
                     }
                 }
                 this.period = this.options.periods[0].id
-
-                // this.$ebus.$on('buffer-free', () => {
-                //     console.log('completed', this.cursor);
-                //     this.$nextTick(() => {
-                //         if (this.cursor == 0) {
-                //             this.cursor = 1
-                //         }
-                //         else if (this.cursor == 1) {
-                //             this.cursor = 2
-                //         }
-                //     })
-                // })
             })
         },
         updateField: function (key, value) {

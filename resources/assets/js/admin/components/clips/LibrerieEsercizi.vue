@@ -2,13 +2,11 @@
 <container
     :contains="true"
     :has-animations="true"
-    :state="containerState"
 >
     <block-panel
         :title="exercise.title"
         :has-animations="true"
         ref="panel"
-        :initial-state="false"
     >
         <div v-if="hasLibrary == true">
             <block-content title="Contenuti">
@@ -123,7 +121,6 @@ export default {
         FilePreview,
         LibraryMedias,
     },
-    mixins: [DebouncedAnimation, ],
     props: {
         exercise: {
             type: Object,
@@ -150,7 +147,7 @@ export default {
     },
     watch: {
         file: function (file) {
-            this.toggleState()
+            this.toggleAnim()
         },
     },
     computed: {
@@ -219,25 +216,26 @@ export default {
 
                 this.master.progress(1).progress(0)
 
-                this.toggleState()
+                this.toggleAnim()
             }
         },
         addMediaToLibrary: function (response) {
 
         },
         toggleState: function () {
+            console.log('deprecata');
+        },
+        toggleAnim: function () {
             if (this.master) {
                 if (this.isOpen == true) {
                     // close
-                    this.debouncedEvent('add-anim', this.master, false, this.uuid, () => {
-                        this.isOpen = false
-                    })
+                    this.isOpen = false
+                    this.master.reverse()
                 }
                 else {
                     // apri
-                    this.debouncedEvent('add-anim', this.master, true, this.uuid, () => {
-                        this.isOpen = true
-                    })
+                    this.isOpen = true
+                    this.master.play()
                 }
             }
         },
@@ -291,14 +289,6 @@ export default {
         //         this.clearFile(true)
         //     })
         // }, 1000)
-        this.$ebus.$once('buffer-free', () => {
-            console.log('first');
-            this.containerState = true
-            this.$ebus.$once('buffer-free', () => {
-                console.log('second');
-                this.$refs.panel.togglePanel()
-            })
-        })
     },
 }
 </script>

@@ -22,7 +22,6 @@
 <script>
 import PanelTitle from './PanelTitle.vue'
 import {
-    ThrottleEvent,
     BlockContentAnimation,
 }
 from './mixins'
@@ -32,7 +31,7 @@ export default {
     components: {
         PanelTitle,
     },
-    mixins: [ThrottleEvent, BlockContentAnimation],
+    mixins: [BlockContentAnimation],
     props: {
         title: {
             default: null,

@@ -119,11 +119,9 @@ const BlockContentAnimation = {
                     ease: Power0.easeNone,
                 }, 'revealFrame')
 
-            this.master.progress(1)
+            this.master.progress(1).progress(0)
 
-            this.$nextTick(() => {
-                this.throttleEvent('add-anim', this.master, true, this.uuid, null)
-            })
+            this.master.play()
         },
     }
 }
