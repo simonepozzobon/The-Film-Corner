@@ -9,18 +9,34 @@ const throttle = require('lodash.throttle')
 const debounce = require('lodash.debounce')
 const globalTime = 100
 
+class Cache {
+    constructor() {
+        this.queue = []
+    }
+
+    add(item) {
+        this.queue.push(item)
+    }
+
+    remove() {
+        this.queue.shift()
+    }
+}
+
 const EventBus = new Vue({
     render: h => h(),
     data: function () {
         return {
             cached: [],
-            toPlay: [],
+            head: [],
             limit: 2,
             counter: 0,
             completed: 0,
             test: 0,
-            initialized: false,
+            running: false,
             wait: false,
+            queue: [],
+            playing: null,
         }
     },
     watch: {
@@ -31,208 +47,127 @@ const EventBus = new Vue({
             console.log('completate', c);
         },
         cached: function (cached) {
-            // this.throttleCache()
-            if (cached.length > 0) {
-                this.checkBuffer()
-            }
-            else {
-                // console.log('fine cache');
-            }
+            this.filterCache()
         },
-        toPlay: function (toPlay) {
-            if (toPlay.length > 0) {
-                let gonnaPlay = toPlay.find(item => item.state == 0)
-                if (gonnaPlay) {
-                    this.play(gonnaPlay)
-                }
-                else {
-                    // console.log('nessuno in lista');
-                }
+        head: function () {
+            this.playNext()
+        },
+        queue: function (l) {
+            this.fillHead()
+        },
+    },
+    computed: {
+        headHasSpace: function () {
+            if (this.headIsEmpty || this.head.length < this.limit) {
+                return true
             }
-            else {
-                if (this.cached.length > 0) {
-                    // console.log('da svuotare la cache', this.cached.length);
-                    // this.$nextTick(() => {
-                    this.checkBuffer('qui')
-                    // })
-                }
-                else {
-                    this.$emit('buffer-free')
-                    // console.log('buffer finito', this.cached.length);
-                }
+            return false
+        },
+        headIsEmpty: function () {
+            return !this.head.length
+        },
+        queueIsEmpty: function () {
+            return !this.queue.length
+        },
+        next: function () {
+            if (this.queueIsEmpty) {
+                return false
             }
+            return this.queue[0]
+        },
+        peek: function () {
+            return this.head.find(item => item.anim.isActive() == false)
         }
     },
     methods: {
-        checkBuffer: throttle(function (debug = null) {
-            if (debug) {
-                console.log(debug);
-            }
-            let buffer = this.toPlay.length
-            let queue = this.cached.length
-
-            if (buffer >= 0 && buffer < this.limit) {
-                // c'è spazio
-
-                if (buffer == 0) {
-                    // è il primo play
-                    // console.log('prima', gsap.isTweening(this.toPlay[0].anim));
-                    // console.log('primo');
-                    this.firstCached()
-                }
-                else if (buffer > 0 && buffer < this.limit) {
-                    // ci sono degli slot liberi
-                    // console.log('abbiamo slot liberi');
-                    this.firstCached()
-                }
-                else if (queue > 0 && buffer < (this.limit - 1)) {
-                    // ce almeno uno slot libero e la cache piena
-                    console.log('la cache è ancora piena', buffer, queue);
-                }
-                else {
-                    // c'è un problema
-                    console.log('deve vomitare', buffer < this.limit, queue, buffer);
-                }
-            }
-            else if (buffer > 0) {
-                // deve sbloccare la cache
-                console.log('deve sbloccare');
-                let toUnlock = this.toPlay.find(item => gsap.isTweening(item.anim) == false)
-                if (toUnlock) {
-                    toUnlock.state = 0
-                    this.$nextTick(() => {
-                        this.play(toUnlock)
-                    })
-                }
-            }
-            else {
-                console.log('terzo caso');
-            }
-        }, globalTime),
-        firstCached: throttle(function () {
-            let next = this.cached.find(item => item.state == 0)
-            if (next) {
-                let check = gsap.isTweening(next.anim)
-                let idx = this.cached.indexOf(next)
-                if (idx > -1 && check == false) {
-                    this.cached.splice(idx, 1)
-                    return this.toPlay.push(next)
-                }
-                else if (check == true) {
-                    console.log('sta già andando');
-                }
-                else {
-                    console.log('non trovata');
-                    return false
-                }
-            }
-            else {
-                if (this.cached.length > 0 && this.toPlay.length == 0) {
-                    if (gsap.isTweening(this.cached[0])) {
-                        this.cached[0].state = 0
-                    }
-                }
-
-                return false
-            }
-        }, globalTime),
-        freeBuffer: function (timeline, callback) {
-            // console.log(timeline.uuid, 'complete');
-            this.runCallback(timeline, callback)
-
-            let idx = this.toPlay.indexOf(timeline)
-            if (idx > -1) {
-                this.toPlay.splice(idx, 1)
-                this.checkBuffer()
-            }
-            else {}
-            return true
-        },
-        runCallback: function (timeline, callback, onStart = false) {
-            if (onStart == true && Utility.isFunction(timeline.callback)) {
-                timeline.callback()
-            }
-
-            if (callback) {
-                callback()
-            }
-
-            this.restoreCallback(timeline, callback ? callback : null, onStart)
-
-
-            return true
-        },
-        restoreCallback: function (timeline, callback, onStart) {
-            if (onStart == true) {
-                if (timeline.direction) {
-                    timeline.anim.eventCallback('onStart', callback)
-                }
-                else {
-                    timeline.anim.eventCallback('onUpdate', callback)
-                }
-            }
-            else {
-                if (timeline.direction) {
-                    timeline.anim.eventCallback('onComplete', callback)
-                }
-                else {
-                    timeline.anim.eventCallback('onReverseComplete', callback)
+        filterCache: debounce(function () {
+            let cache = Object.assign([], this.cached)
+            let addToQueue = true
+            for (let i = 0; i < cache.length; i++) {
+                let current = cache[i]
+                let similar = cache.filter(item => item.uuid == current.uuid)
+                if (similar.length > 1) {
+                    console.log('abbiamo un dupplicato');
+                    addToQueue = false
                 }
             }
 
-            return true
-        },
-        play: function (timeline) {
-            if (timeline.state == 0) {
-                if (timeline.direction == true) {
-                    // play
-                    const onComplete = timeline.anim.eventCallback('onComplete')
+            if (addToQueue == true && cache.length > 0) {
+                this.queue.push(cache[0])
+                this.cached.shift()
+            }
+        }, 100),
+        fillHead: debounce(function () {
+            if (this.next && this.headHasSpace) {
+                this.head.push(this.next)
+                this.queue.shift()
+            }
+        }, 100),
+        playNext: debounce(function () {
+            if (this.peek) {
+                let peek = Object.assign({}, this.peek)
+                if (peek.direction == true) {
+                    const onComplete = peek.anim.eventCallback('onComplete')
 
-                    timeline.anim.eventCallback('onComplete', () => {
-                        this.freeBuffer(timeline, onComplete)
+                    peek.anim.eventCallback('onComplete', () => {
+                        this.removeCompleted(peek, onComplete, 'onComplete')
                     })
 
-                    const onStart = timeline.anim.eventCallback('onStart')
-                    timeline.anim.eventCallback('onStart', () => {
-                        timeline.state = 1
-                        this.runCallback(timeline, onStart, true)
+                    const onStart = peek.anim.eventCallback('onStart')
+                    peek.anim.eventCallback('onStart', () => {
+                        if (Utility.isFunction(peek.callback)) {
+                            peek.callback()
+                        }
                     })
-
-
-                    timeline.anim.play(0)
+                    console.log(peek.anim.progress());
+                    peek.anim.play(0)
                 }
-                else if (timeline.direction == false) {
-                    // reverse
-                    const onReverseComplete = timeline.anim.eventCallback('onReverseComplete')
-                    timeline.anim.eventCallback('onReverseComplete', () => {
-                        this.freeBuffer(timeline, onReverseComplete)
+                else if (peek.direction == false) {
+                    const onReverseComplete = peek.anim.eventCallback('onReverseComplete')
+                    peek.anim.eventCallback('onReverseComplete', () => {
+                        this.removeCompleted(peek, onReverseComplete, 'onReverseComplete')
                     })
 
 
                     // onStart Reverse
                     let lastTime = 0
                     let forward = false
-                    const onUpdate = timeline.anim.eventCallback('onUpdate')
-                    timeline.anim.eventCallback('onUpdate', () => {
-                        let newTime = timeline.anim.time()
+                    const onUpdate = peek.anim.eventCallback('onUpdate')
+                    peek.anim.eventCallback('onUpdate', () => {
+                        let newTime = peek.anim.time()
                         if ((forward && newTime < lastTime) || (!forward && newTime > lastTime)) {
                             forward = !forward;
                             if (!forward) {
-                                timeline.state = 1
-
-                                this.runCallback(timeline, onUpdate, true)
+                                if (Utility.isFunction(peek.callback)) {
+                                    peek.callback()
+                                }
                             }
                         }
                         lastTime = newTime;
                     })
 
-                    timeline.anim.reverse(0)
+                    console.log('reverse', peek.anim.progress());
+                    peek.anim.reverse(1)
                 }
             }
+        }, 100),
+        removeCompleted: function (item, callback, name) {
+            if (Utility.isFunction(callback)) {
+                callback()
+            }
+
+            item.anim.eventCallback(name, callback)
+
+            let idx = this.head.findIndex(obj => obj.uuid == item.uuid)
+            this.$nextTick(() => {
+                if (idx > -1) {
+                    this.head.splice(idx, 1)
+                    this.fillHead()
+                }
+            })
         },
-        addToCache: throttle(function (anim, direction, uuid, callback) {
+        addToCache: function (anim, direction, uuid, callback) {
             // if (gsap.isTweening(anim) == false) {
-            // console.log('dentro', i);
             const newAnim = {
                 anim: anim,
                 uuid: uuid,
@@ -241,11 +176,8 @@ const EventBus = new Vue({
                 callback: callback,
             }
 
-            this.$nextTick(() => {
-                this.cached.push(newAnim)
-            })
-
-        }, globalTime),
+            this.cached.push(newAnim)
+        },
     },
     created: function () {
         this.$on('add-anim', (anim, direction, uuid, callback = null) => {

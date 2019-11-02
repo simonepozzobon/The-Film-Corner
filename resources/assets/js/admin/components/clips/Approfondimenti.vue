@@ -2,6 +2,7 @@
 <block-panel
     title="Approfondimenti"
     ref="panel"
+    :initial-state="state"
 >
     <text-editor
         :has-animation="true"

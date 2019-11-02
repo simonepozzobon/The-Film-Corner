@@ -163,16 +163,17 @@ const BlockPanelAnimation = {
                     immediateRender: false,
                 }, 'revealContent')
 
-            if (this.initialState == false) {
-                this.master.progress(1)
-            }
-            // else {
+            // if (this.initialState == false) {
+            this.master.progress(1)
+            // }
+            // // else {
             //     this.master.progress(1).progress(0)
             // }
             // this.master.progress(1)
             // .progress(0)
 
             this.isOpen = this.initialState
+            // console.log(this.initialState);
 
             // console.log(this.isOpen);
             this.togglePanel()

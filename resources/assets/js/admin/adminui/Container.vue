@@ -96,19 +96,19 @@ export default {
                 }, 'start')
                 .fromTo(container, .6, {
                     height: '1px',
-                    autoAlpha: 0,
+                    // autoAlpha: 0,
                     ease: Power4.easeInOut,
                 }, {
-                    autoAlpha: 1,
+                    // autoAlpha: 1,
                     height: 'auto',
                     ease: Power4.easeInOut,
                     immediateRender: false,
                 }, 'start+=0')
                 .to(container, .1, {
-                    overflow: 'inherit'
+                    // overflow: 'inherit'
                 }, 'start+=0.6')
 
-            // this.master.progress(1).progress(0)
+            this.master.progress(1).progress(0)
 
             this.setState()
         },
