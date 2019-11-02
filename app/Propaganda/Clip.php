@@ -32,7 +32,7 @@ class Clip extends Model
     // Many to many
     public function directors()
     {
-        return $this->belongsToMany('App\Propaganda\Director', 'clip_director', 'clip_id', 'director_id');
+        return $this->belongsToMany('App\Propaganda\Director');
     }
 
     public function topics()

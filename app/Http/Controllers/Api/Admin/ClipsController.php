@@ -30,18 +30,26 @@ class ClipsController extends Controller
         $request = new Request();
         $request->replace(
             [
-                'title'=> 'fdjdjgldkf',
-                'video'=> 'no',
-                'period'=> uniqid(),
-                'year'=> '1900',
-                'format'=> uniqid(),
-                'age'=> uniqid(),
-                'genre'=> uniqid(),
-                'nationality'=> 'ital',
+                // 'title'=> 'fdjdjgldkf',
+                // 'video'=> 'no',
+                // 'period'=> "Second World War",
+                // 'year'=> '1900',
+                // 'format'=> "4/3",
+                // 'age'=> "14-18",
+                // 'genre'=> "tuo",
+                // 'nationality'=> 'ital',
+                // 'directors' => ["Gianni","Beppe","giovanni"],
+                'clip_id' => 20,
+                'abstract' => uniqid(),
+                'tech_info' => uniqid(),
+                'historical_context' => uniqid(),
+                'food' => uniqid(),
             ]
         );
 
-        $this->store($request);
+        $this->store_details($request);
+
+        // $this->store($request);
     }
 
     public function get_clips()
@@ -83,58 +91,128 @@ class ClipsController extends Controller
         ];
     }
 
+    public function upload_video($file)
+    {
+        $extension = $file->getClientOriginalExtension();
+        $original_name = $file->getClientOriginalName();
+
+        $filename = uniqid() . '.' . $extension;
+        $path = 'public/propaganda/clips';
+
+        $src = $file->storeAs($path, $filename);
+        $src = Storage::disk('local')->url($src);
+        return $src;
+    }
+
     public function store(Request $request)
     {
+        $options_single = ['format', 'period', 'age', 'genre'];
+        $options_multiple = ['directors', 'peoples', 'topics'];
+
+
         $clip = new Clip();
-        $options = ['format', 'period', 'age', 'genre'];
-        $clip->video = 'no';
+        $clip->video = $request->hasFile('video') ? $this->upload_video($request->file('video')) : 'no';
         $clip->year = $request->year;
         $clip->title = $request->title;
         $clip->nationality = $request->nationality;
 
-        foreach ($options as $key => $value) {
-            $model = ucwords('App\\Propaganda\\'.$value);
-            $result = $model::where('title', '=', $request->{$value})->first();
-            if ($result) {
-                $clip->{$value.'_id'} = $result->id;
-            } else {
-                $obj = \App::make($model);
-                $columns = $obj->getTableColumns();
-
-                foreach ($columns as $key => $column) {
-                    if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
-                        if ($request->input($column, false) == false) {
-                            // va riempita con un random
-                            $obj->{$column} = random_int(1, 100);
-                        } else {
-                            $obj->{$column} = $request->{$value};
-                        }
-                    }
-                }
-                $obj->save();
-                $clip->{$value.'_id'} = $obj->id;
-            }
+        foreach ($options_single as $key => $value) {
+            $clip->{$value.'_id'} = $this->check_single_option($value, $request);
         }
         $clip->save();
 
+        foreach ($options_multiple as $key => $value) {
+            $saved = $this->check_multiple_option($value, $request, $clip);
+        }
+
+        $clip = $clip->fresh(array_merge($options_single, $options_multiple));
+
         return [
+          'success' => true,
           'clip' => $clip,
         ];
     }
 
+    public function check_single_option($name, $request)
+    {
+        $model = ucwords('App\\Propaganda\\'.$name);
+
+        $result = $model::where('title', '=', $request->{$name})->first();
+        if ($result) {
+            return $result->id;
+        } else {
+            $obj = \App::make($model);
+            $columns = $obj->getTableColumns();
+
+            foreach ($columns as $key => $column) {
+                if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
+                    if ($request->input($column, false) == false) {
+                        // va riempita con un random
+                        $obj->{$column} = random_int(1, 100);
+                    } else {
+                        $obj->{$column} = $request->{$name};
+                    }
+                }
+            }
+            // $obj->save();
+            return $obj->id;
+        }
+    }
+
+    public function check_multiple_option($name, $request, $clip)
+    {
+        $clip->{$name}()->detach();
+        $singular = rtrim($name, 's');
+        $model = ucwords('App\\Propaganda\\'.$singular);
+
+        $results = collect();
+
+        if (isset($request->{$name})) {
+            foreach (json_decode($request->{$name}) as $key => $value) {
+                $field = $name == 'directors' ? 'name' : 'title';
+                $result = $model::where($field, '=', $value)->first();
+
+                if ($result) {
+                    $results->push($result);
+                } else {
+                    $obj = \App::make($model);
+                    $obj->{$field} = $value;
+
+                    $obj->save();
+                    $results->push($obj);
+                }
+
+                $clip->{$name}()->attach($result);
+            }
+        }
+        return true;
+    }
+
     public function store_details(Request $request)
     {
-        $detail = new Detail();
-        $detail->clip_id = $request->clip_id;
-        $detail->abstract = $request->abstract;
-        $detail->tech_info = $request->tech_info;
-        $detail->historical_context = $request->historical_context;
-        $detail->foods = $request->food;
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            if ($clip->details->count() > 0) {
+                $detail = $clip->details->first();
+            } else {
+                $detail = new Detail();
+            }
+            $detail->clip_id = $request->clip_id;
+            $detail->abstract = $request->abstract;
+            $detail->tech_info = $request->tech_info;
+            $detail->historical_context = $request->historical_context;
+            $detail->foods = $request->food;
+            $detail->save();
 
-        $detail->save();
-        return [
-          'detail' => $detail
-        ];
+            return [
+                'success' => true,
+                'detail' => $detail
+            ];
+        } else {
+            return [
+                'success' => false,
+            ];
+        }
     }
 
     public function store_paratexts(Request $request)

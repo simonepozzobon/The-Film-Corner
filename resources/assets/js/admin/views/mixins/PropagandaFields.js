@@ -17,7 +17,7 @@ const PropagandaFields = {
                     sortable: true
                 },
                 {
-                    key: 'period.title',
+                    key: 'period',
                     label: 'Periodo',
                     sortable: true
                 },

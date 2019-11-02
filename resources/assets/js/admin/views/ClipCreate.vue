@@ -249,6 +249,7 @@ export default {
         saveClip: function () {
             // this.debug()
             if (this.cursor == 0) {
+                console.log('qui');
                 let data = new FormData()
                 data.append('title', this.title)
                 data.append('video', this.video)
@@ -265,9 +266,11 @@ export default {
 
 
                 this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-                    console.log(response.data);
-                    this.clip = response.data.clip
-                    this.cursor = 1
+                    console.log('clip', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 1
+                    }
                 })
             }
             else if (this.cursor == 1) {
@@ -279,9 +282,11 @@ export default {
                 data.append('food', this.food)
 
                 this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
-                    console.log(response.data);
-                    this.clip = response.data.clip
-                    this.cursor = 2
+                    console.log('details', response.data.clip);
+                    if (response.data.success == true) {
+                        this.clip = response.data.clip
+                        this.cursor = 2
+                    }
                 })
             }
             else if (this.cursor == 2) {

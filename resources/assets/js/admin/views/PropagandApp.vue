@@ -51,6 +51,9 @@
             @filtered="onFiltered"
             class="clips-table"
         >
+            <template v-slot:cell(period)="data">
+                {{ data.item.period.title }}
+            </template>
             <template v-slot:cell(tools)="data">
                 <ui-button
                     title="modifica"

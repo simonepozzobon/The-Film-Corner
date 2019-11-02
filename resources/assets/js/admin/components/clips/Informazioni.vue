@@ -19,7 +19,7 @@
                 <option
                     v-for="period in this.options.periods"
                     :key="period.id"
-                    :value="period.id"
+                    :value="period.title"
                 >{{ period.title }}</option>
             </select>
         </div>
@@ -230,9 +230,18 @@ export default {
                     }
                 }
                 else {
-                    this[key] = e.text
+                    if (e.hasOwnProperty('element')) {
+                        if (e.id == '') {
+                            this[key] = null
+                        }
+                        else {
+                            this[key] = e.element.text
+                        }
+                    }
+                    else {
+                        this[key] = e.text
+                    }
                 }
-
                 this.$emit('update', key, this[key])
             }
         },
