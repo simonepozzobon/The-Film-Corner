@@ -46,7 +46,7 @@ class ClipsController extends Controller
 
     public function get_clips()
     {
-        $clips = Clip::all();
+        $clips = Clip::with('period')->get();
 
         return [
             'success' => true,

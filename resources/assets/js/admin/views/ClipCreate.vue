@@ -208,7 +208,7 @@ export default {
     },
     watch: {
         cursor: function (cursor) {
-            console.log('cambio cursore', cursor);
+            // console.log('cambio cursore', cursor);
             if (this.cursor == 3) {
                 this.$refs.eserciziPanel.togglePanel()
             }
@@ -225,17 +225,17 @@ export default {
                 }
                 this.period = this.options.periods[0].id
 
-                this.$ebus.$on('buffer-free', () => {
-                    console.log('completed', this.cursor);
-                    this.$nextTick(() => {
-                        if (this.cursor == 0) {
-                            this.cursor = 1
-                        }
-                        else if (this.cursor == 1) {
-                            this.cursor = 2
-                        }
-                    })
-                })
+                // this.$ebus.$on('buffer-free', () => {
+                //     console.log('completed', this.cursor);
+                //     this.$nextTick(() => {
+                //         if (this.cursor == 0) {
+                //             this.cursor = 1
+                //         }
+                //         else if (this.cursor == 1) {
+                //             this.cursor = 2
+                //         }
+                //     })
+                // })
             })
         },
         updateField: function (key, value) {
