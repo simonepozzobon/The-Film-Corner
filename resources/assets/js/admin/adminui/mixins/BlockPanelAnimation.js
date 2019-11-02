@@ -145,7 +145,8 @@ const BlockPanelAnimation = {
                     ease: Sine.easeInOut,
                 }, 'revealFrame')
 
-                .fromTo(childsVisible, .15, {
+            if (childsVisible) {
+                this.master.fromTo(childsVisible, .15, {
                     opacity: '0',
                     scaleX: 0.9,
                     scaleY: 1.1,
@@ -162,6 +163,7 @@ const BlockPanelAnimation = {
                     ease: Sine.easeOut,
                     immediateRender: false,
                 }, 'revealContent')
+            }
 
             // if (this.initialState == false) {
             this.master.progress(1)
