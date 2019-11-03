@@ -10,6 +10,7 @@ import TextInput from './TextInput.vue'
 import Select2Input from './Select2Input.vue'
 import PanelTitle from './PanelTitle.vue'
 import UploadZone from './UploadZone.vue'
+import SimpleVideoPlayer from './SimpleVideoPlayer.vue'
 
 export {
     Container,
@@ -24,4 +25,5 @@ export {
     Select2Input,
     PanelTitle,
     UploadZone,
+    SimpleVideoPlayer,
 }

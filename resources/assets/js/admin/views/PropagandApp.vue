@@ -51,6 +51,13 @@
             @filtered="onFiltered"
             class="clips-table"
         >
+            <template v-slot:cell(video)="data">
+                <simple-video-player
+                    v-if="data.item.video && data.item.video != 'no'"
+                    :src="data.item.video"
+                />
+                <span v-else>Nessuna clip</span>
+            </template>
             <template v-slot:cell(period)="data">
                 {{ data.item.period.title }}
             </template>
@@ -89,6 +96,7 @@
 <script>
 import {
     Container,
+    SimpleVideoPlayer,
 }
 from '../adminui'
 
@@ -103,6 +111,7 @@ export default {
     name: 'PropagandApp',
     components: {
         Container,
+        SimpleVideoPlayer,
         UiButton,
     },
     mixins: [PropagandaFields],
