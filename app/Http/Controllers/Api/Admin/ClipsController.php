@@ -25,6 +25,13 @@ use Illuminate\Support\Facades\Storage;
 
 class ClipsController extends Controller
 {
+    public function __construct()
+    {
+        $this->options_single = ['format', 'period', 'age', 'genre'];
+        $this->options_multiple = ['directors', 'peoples', 'topics'];
+        $this->options = array_merge($this->options_single, $this->options_multiple);
+    }
+
     public function test()
     {
         $request = new Request();
@@ -116,16 +123,16 @@ class ClipsController extends Controller
         $clip->title = $request->title;
         $clip->nationality = $request->nationality;
 
-        foreach ($options_single as $key => $value) {
+        foreach ($this->options_single as $key => $value) {
             $clip->{$value.'_id'} = $this->check_single_option($value, $request);
         }
         $clip->save();
 
-        foreach ($options_multiple as $key => $value) {
+        foreach ($this->options_multiple as $key => $value) {
             $saved = $this->check_multiple_option($value, $request, $clip);
         }
 
-        $clip = $clip->fresh(array_merge($options_single, $options_multiple));
+        $clip = $clip->fresh($this->options);
 
         return [
           'success' => true,
@@ -196,6 +203,7 @@ class ClipsController extends Controller
 
             return [
                 'success' => true,
+                'clip' => $clip->fresh($this->options),
                 'detail' => $detail
             ];
         } else {
@@ -239,7 +247,7 @@ class ClipsController extends Controller
         $p->clip()->attach($clip);
 
         return [
-          'clip' => $clip,
+          'clip' => $clip->fresh($this->options),
           'paratext' => $p,
         ];
     }
@@ -313,7 +321,7 @@ class ClipsController extends Controller
                     }
                 }
             }
-            // $obj->save();
+            $obj->save();
             return $obj->id;
         }
     }

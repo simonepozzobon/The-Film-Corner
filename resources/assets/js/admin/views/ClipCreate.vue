@@ -142,7 +142,7 @@ export default {
             genre: null,
             nationality: null,
             topics: [],
-            cursor: 2,
+            cursor: 0,
             abstract: null,
             tech_info: null,
             historical_context: null,
