@@ -1,80 +1,36 @@
 <template>
 <div class="a-clip-panel">
+    <topbar :cursor="cursor" />
     <container
-        padding="sm"
         :contains="true"
+        :has-animations="true"
     >
-        <div class="a-clip-panel__topbar topbar">
-            <div class="topbar__head">
-                <ui-title
-                    title="Nuova Clip"
-                    tag="h1"
-                    font-size="h1"
-                    class="topbar__title"
-                />
-            </div>
-            <div class="topbar__steps">
-                <step
-                    :number="1"
-                    :completed="this.cursor | completed(0)"
-                />
-                <step
-                    :number="2"
-                    :completed="this.cursor | completed(1)"
-                />
-                <step
-                    :number="3"
-                    :completed="this.cursor | completed(2)"
-                />
-                <step
-                    :number="4"
-                    :completed="this.cursor | completed(3)"
-                />
-            </div>
-        </div>
+        <carica-clip @update="updateField" />
     </container>
     <container
         :contains="true"
         :has-animations="true"
-        :state="this.cursor | stateSetter(0)"
-    >
-        <carica-clip
-            @update="updateField"
-            :initial-state="false"
-        />
-    </container>
-    <container
-        :contains="true"
-        :has-animations="true"
-        :state="this.cursor | stateSetter(0)"
     >
         <informazioni
             :options="options"
             @update="updateField"
-            :initial-state="false"
         />
     </container>
     <container
         v-if="cursor >= 1"
         :contains="true"
         :has-animations="true"
-        :state="true"
     >
-        <approfondimenti
-            @update="updateField"
-            :initial-state="false"
-        />
+        <approfondimenti @update="updateField" />
     </container>
     <container
         v-if="cursor >= 2"
         :contains="true"
         :has-animations="true"
-        :state="true"
     >
         <paratexts
             :clip="this.clip"
             :options="options"
-            :state="false"
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
@@ -84,13 +40,11 @@
         v-if="cursor >= 3"
         :contains="true"
         :has-animations="true"
-        :state="true"
     >
         <block-panel
+            ref="eserciziPanel"
             title="Esercizi"
             :has-animations="true"
-            ref="eserciziPanel"
-            :initial-state="false"
         >
             <esercizi
                 :options="options.exercises"
@@ -111,6 +65,7 @@
     <container
         padding="sm"
         :contains="true"
+        :has-animations="true"
     >
         <div class="a-clip-panel__topbar">
             <ui-button
@@ -154,6 +109,7 @@ import Informazioni from '../components/clips/Informazioni.vue'
 import Paratexts from '../components/clips/Paratexts.vue'
 import Esercizi from '../components/clips/Esercizi.vue'
 import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
+import Topbar from './propaganda/Topbar.vue'
 
 export default {
     name: 'ClipCreate',
@@ -169,6 +125,7 @@ export default {
         BlockPanel,
         UiButton,
         UiTitle,
+        Topbar,
     },
     mixins: [EserciziMethods],
     data: function () {
@@ -185,7 +142,7 @@ export default {
             genre: null,
             nationality: null,
             topics: [],
-            cursor: 0,
+            cursor: 2,
             abstract: null,
             tech_info: null,
             historical_context: null,
@@ -290,15 +247,6 @@ export default {
                 // console.log(value, cursor);
                 return true
             }
-        },
-        completed: function (value, cursor) {
-            if (cursor >= value) {
-                return false
-            }
-            else {
-                return true
-            }
-
         },
     },
     created: function () {

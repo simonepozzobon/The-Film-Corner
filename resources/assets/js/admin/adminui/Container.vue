@@ -104,6 +104,7 @@ export default {
                     clearProps: 'all'
                 })
                 master.kill()
+                this.$emit('completed')
             })
 
             master.play()
