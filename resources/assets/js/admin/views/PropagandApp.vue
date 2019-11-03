@@ -1,14 +1,18 @@
 <template>
 <div class="a-propaganda">
-    <container padding="sm">
+    <container
+        padding="sm"
+        :has-animations="true"
+    >
         <div class="a-propaganda__topbar">
             <div class="admin-apps__select">
                 <ui-button
-                    :has-container="false"
-                    :has-margin="false"
                     title="Aggiungi Clip"
-                    size="sm"
                     color="green-var"
+                    theme="outline"
+                    size="sm"
+                    :has-margin="false"
+                    :has-container="false"
                     @click="createClip"
                 />
             </div>
@@ -38,7 +42,7 @@
             </div>
         </div>
     </container>
-    <container>
+    <container :has-animations="true">
         <b-table
             striped
             hover
@@ -66,20 +70,26 @@
                     title="modifica"
                     theme="outline"
                     color="orange"
-                    :has-container="false"
+                    size="sm"
                     display="inline-block"
+                    :has-container="false"
                 />
                 <ui-button
                     title="cancella"
                     theme="outline"
                     color="red"
-                    :has-container="false"
+                    size="sm"
                     display="inline-block"
+                    :has-container="false"
                     @click="deleteClip(data.item)"
                 />
             </template>
         </b-table>
-
+    </container>
+    <container
+        padding="sm"
+        :has-animations="true"
+    >
         <div class="admin-clips__center">
             <b-pagination
                 v-model="currentPage"

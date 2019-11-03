@@ -97,9 +97,6 @@ export default {
 
             this.posterSrc = canvas.toDataURL()
 
-            this.$nextTick(() => {
-                this.showPreview()
-            })
         },
         stopPlayer: function () {
             this.player.pause()
