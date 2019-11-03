@@ -16,27 +16,40 @@
         <div
             class="a-video-player__img a-player-poster"
             v-if="posterSrc"
+            @click.prevent.stop="showPreview"
         >
             <img :src="posterSrc" />
             <div class="a-player-poster__overlay"></div>
         </div>
     </transition>
-    <div class="player d-none">
-        <video
-            ref="player"
-            class="video-js"
-        ></video>
-    </div>
+
+    <ui-modal
+        ref="modal"
+        title="Anteprima della clip"
+        :hide-header="true"
+        :hide-footer="true"
+        @hidden="stopPlayer"
+    >
+        <div class="player">
+            <video
+                ref="player"
+                class="video-js"
+            ></video>
+        </div>
+    </ui-modal>
 </div>
 </template>
 
 <script>
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
+import UiModal from '../adminui/UiModal.vue'
 
 export default {
     name: 'SimpleVideoPlayer',
-    components: {},
+    components: {
+        UiModal,
+    },
     props: {
         src: {
             type: String,
@@ -45,7 +58,6 @@ export default {
     },
     data: function () {
         return {
-            isLoading: true,
             posterSrc: null,
             player: null,
             options: {
@@ -84,13 +96,17 @@ export default {
             ctx.drawImage(player, 0, 0)
 
             this.posterSrc = canvas.toDataURL()
-        },
-        previewReady: function () {
-            if (this.isLoading) {
-                this.isLoading = false
 
-                console.log('loaded', this.player);
-            }
+            this.$nextTick(() => {
+                this.showPreview()
+            })
+        },
+        stopPlayer: function () {
+            this.player.pause()
+            this.player.currentTime(0)
+        },
+        showPreview: function () {
+            this.$refs.modal.show()
         },
     },
     mounted: function () {

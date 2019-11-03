@@ -11,6 +11,7 @@ import Select2Input from './Select2Input.vue'
 import PanelTitle from './PanelTitle.vue'
 import UploadZone from './UploadZone.vue'
 import SimpleVideoPlayer from './SimpleVideoPlayer.vue'
+import UiModal from './UiModal.vue'
 
 export {
     Container,
@@ -26,4 +27,5 @@ export {
     PanelTitle,
     UploadZone,
     SimpleVideoPlayer,
+    UiModal,
 }
