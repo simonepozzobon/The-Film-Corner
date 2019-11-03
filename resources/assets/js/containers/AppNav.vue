@@ -19,7 +19,7 @@
         >
             <a
                 href="#"
-                @click.prevent="approveAndShare"
+                @click.stop.prevent="approveAndShare"
                 class="nav-link app-nav__link"
             >
                 Approve and Share
@@ -31,7 +31,7 @@
         >
             <a
                 href="#"
-                @click.prevent="addTitle"
+                @click.stop.prevent="addTitle"
                 class="nav-link app-nav__link"
             >
                 Save Session
@@ -40,7 +40,7 @@
         <li class="app-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="openSession"
+                @click.stop.prevent="openSession"
                 class="nav-link app-nav__link"
             >
                 Open Existing Session
@@ -49,7 +49,7 @@
         <li class="app-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="resetSession"
+                @click.stop.prevent="resetSession"
                 class="nav-link app-nav__link"
             >
                 Reset Session
@@ -58,7 +58,7 @@
         <li class="app-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="printPage"
+                @click.stop.prevent="printPage"
                 class="nav-link app-nav__link"
             >
                 Print

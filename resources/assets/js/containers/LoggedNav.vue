@@ -7,7 +7,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="goTo('apps-home')"
+                @click.stop.prevent="goTo('apps-home')"
                 class="nav-link logged-nav__link"
             >
                 Studios
@@ -16,7 +16,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="goTo('network-home')"
+                @click.stop.prevent="goTo('network-home')"
                 class="nav-link logged-nav__link"
             >
                 Network
@@ -28,7 +28,7 @@
         >
             <a
                 href="#"
-                @click.prevent="goTo('teacher-profile')"
+                @click.stop.prevent="goTo('teacher-profile')"
                 class="nav-link logged-nav__link"
             >
                 Students
@@ -37,7 +37,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.prevent="goTo('apps-help')"
+                @click.stop.prevent="goTo('apps-help')"
                 class="nav-link logged-nav__link disabled"
                 disabled
             >

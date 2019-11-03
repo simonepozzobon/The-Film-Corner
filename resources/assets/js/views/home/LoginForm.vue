@@ -1,55 +1,79 @@
 <template>
-    <ui-row
-        direction="column"
-        min-width="400px"
-        align="center"
-        ref="container">
-        <ui-block
-            size="auto"
-            :has-container="false"
-            class="login-form__container">
-            <ui-title
-                title="Login"
-                color="white"
-                :uppercase="false"
-                align="center"
-                class="login-form__title"/>
+<ui-row
+    direction="column"
+    min-width="400px"
+    align="center"
+    ref="container"
+>
+    <ui-block
+        size="auto"
+        :has-container="false"
+        class="login-form__container"
+    >
+        <ui-title
+            title="Login"
+            color="white"
+            :uppercase="false"
+            align="center"
+            class="login-form__title"
+        />
 
-            <ui-form-group
-                name="Email"
-                type="email"
-                class="login-form__input"
-                @changed="changed"/>
+        <ui-form-group
+            name="Email"
+            type="email"
+            class="login-form__input"
+            @changed="changed"
+        />
 
-            <ui-form-group
-                name="Password"
-                type="password"
-                class="login-form__input"
-                @changed="changed"/>
+        <ui-form-group
+            name="Password"
+            type="password"
+            class="login-form__input"
+            @changed="changed"
+        />
 
-            <ui-button
-                color="white"
-                :block="true"
-                class="login-form__submit"
-                @click.native="attemptLogin">
-                Login
-            </ui-button>
+        <ui-button
+            color="white"
+            :block="true"
+            class="login-form__submit"
+            @click.native="attemptLogin"
+        >
+            Login
+        </ui-button>
 
-            <ui-button
-                color="white"
-                :block="true"
-                class="login-form__submit"
-                @click.native="goBack">
-                Back
-            </ui-button>
-        </ui-block>
-    </ui-row>
+        <ui-button
+            color="white"
+            :block="true"
+            class="login-form__submit"
+            @click.native="goBack"
+        >
+            Back
+        </ui-button>
+    </ui-block>
+</ui-row>
 </template>
 
 <script>
 import axios from 'axios'
-import { UiBlock, UiButton, UiContainer, UiFormGroup, UiHeroBanner, UiHeroImage, UiLink, UiParagraph, UiSpecialText, UiTitle, UiRow, } from '../../ui'
-import { TimelineMax } from 'gsap'
+import {
+    UiBlock,
+    UiButton,
+    UiContainer,
+    UiFormGroup,
+    UiHeroBanner,
+    UiHeroImage,
+    UiLink,
+    UiParagraph,
+    UiSpecialText,
+    UiTitle,
+    UiRow,
+}
+from '../../ui'
+import {
+    TweenMax,
+    TimelineMax,
+}
+from 'gsap/all'
 
 export default {
     name: 'LoginForm',
@@ -66,7 +90,7 @@ export default {
         UiTitle,
         UiRow,
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             obj: {
@@ -76,7 +100,7 @@ export default {
         }
     },
     methods: {
-        init: function() {
+        init: function () {
             let container = this.$refs.container.$el
             let inputs = container.getElementsByClassName('login-form__input')
             let btn = container.getElementsByClassName('login-form__submit')
@@ -98,16 +122,18 @@ export default {
 
             this.master.progress(1).progress(0)
         },
-        show: function() {
+        show: function () {
             this.master.play()
         },
-        hide: function() {
+        hide: function () {
             this.master.reverse()
         },
-        goBack: function() {
-            this.$router.push({name: 'home'})
+        goBack: function () {
+            this.$router.push({
+                name: 'home'
+            })
         },
-        attemptLogin: function() {
+        attemptLogin: function () {
             // login
             let data = new FormData()
 
@@ -123,11 +149,11 @@ export default {
                 }
             })
         },
-        changed: function(v, name) {
+        changed: function (v, name) {
             this.obj[name] = v
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
     }
 }

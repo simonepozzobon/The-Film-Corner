@@ -1,12 +1,18 @@
 <template>
-<div class="form-group row">
+<div
+    class="form-group row"
+    v-if="hasRow"
+>
     <label
         :for="uuid"
-        class="col-md-2"
+        :class="labelSize"
     >
         {{ label }}
     </label>
-    <div class="form-group col-md-10">
+    <div
+        class="form-group"
+        :class="inputSize"
+    >
         <span class="switch">
             <input
                 type="checkbox"
@@ -18,6 +24,22 @@
         </span>
         <small v-if="info">{{ info }}</small>
     </div>
+</div>
+<div
+    v-else
+    class="form-group"
+    :class="inputSize"
+>
+    <span class="switch">
+        <input
+            type="checkbox"
+            class="switch"
+            :id="uuid"
+            v-model="value"
+        />
+        <label :for="uuid"></label>
+    </span>
+    <small v-if="info">{{ info }}</small>
 </div>
 </template>
 
@@ -31,9 +53,21 @@ export default {
             type: String,
             default: null,
         },
+        labelSize: {
+            type: String,
+            default: 'col-md-2',
+        },
+        inputSize: {
+            type: String,
+            default: 'col-md-10',
+        },
         initial: {
             type: Boolean,
             default: false,
+        },
+        hasRow: {
+            type: Boolean,
+            default: true,
         },
         info: {
             type: String,

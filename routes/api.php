@@ -14,7 +14,8 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get(
-    '/user', function (Request $request) {
+    '/user',
+    function (Request $request) {
         return $request->user();
     }
 );
@@ -47,7 +48,8 @@ Route::prefix('v2')->group(
         );
 
         Route::group(
-            ['middleware' => ['auth:api']], function () {
+            ['middleware' => ['auth:api']],
+            function () {
                 Route::get('get-studios', 'Api\SectionController@get_studios');
                 Route::get('get-studio/{slug}', 'Api\SectionController@get_studio');
                 Route::get('get-cat/{slug}', 'Api\SectionController@get_cat');
@@ -101,6 +103,33 @@ Route::prefix('v2')->group(
                     function () {
                         Route::get('/', 'Api\Admin\AppsController@get_apps');
                         Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
+                    }
+                );
+
+                Route::prefix('clips')->group(
+                    function () {
+                        Route::get('/', 'Api\Admin\ClipsController@get_clips');
+                        Route::delete('/{id}', 'Api\Admin\ClipsController@destroy_clip');
+                        Route::get('/get-initials', 'Api\Admin\ClipsController@get_initials');
+                        Route::post('/create-detail', 'Api\Admin\ClipsController@store_details');
+                        Route::post('/create-paratexts', 'Api\Admin\ClipsController@store_paratexts');
+                        Route::post('/create', 'Api\Admin\ClipsController@store');
+
+                        Route::prefix('paratexts')->group(
+                            function () {
+                                Route::post('upload', 'Api\Admin\ClipsController@upload_paratext');
+                                Route::post('destroy', 'Api\Admin\ClipsController@destroy_paratext');
+                                Route::post('add-content', 'Api\Admin\ClipsController@add_paratext_content');
+                            }
+                        );
+
+                        Route::prefix('libraries')->group(
+                            function () {
+                                Route::post('test', 'Api\Admin\LibraryController@test');
+                                Route::post('upload', 'Api\Admin\LibraryController@upload_media');
+                                Route::delete('{id}', 'Api\Admin\LibraryController@destroy_media');
+                            }
+                        );
                     }
                 );
 

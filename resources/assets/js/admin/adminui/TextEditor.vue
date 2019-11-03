@@ -3,16 +3,20 @@
     <div class="form-group row">
         <label
             for=""
-            class="col-md-2"
+            :class="labelSize"
         >
             {{ label }}
         </label>
         <div
-            class="col-md-10"
-            @click.prevent="focusEditor"
+            :class="inputSize"
+            @click.stop.prevent="focusEditor"
         >
-            <div class="admin-editor__container">
+            <div
+                class="admin-editor__container"
+                ref="container"
+            >
                 <editor-menu-bar
+                    ref="menuBar"
                     :editor="editor"
                     v-slot="{ commands, isActive }"
                 >
@@ -149,6 +153,16 @@ import {
 }
 from 'tiptap'
 
+import {
+    TweenMax,
+    Power4,
+    TimelineMax,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+]
 
 import {
     Blockquote,
@@ -169,6 +183,7 @@ import {
     Strike,
     Underline,
     History,
+    Focus,
 }
 from 'tiptap-extensions'
 
@@ -178,6 +193,22 @@ export default {
         label: {
             type: String,
             default: 'Titolo',
+        },
+        hasAnimations: {
+            type: Boolean,
+            default: false,
+        },
+        hasAnimation: {
+            type: Boolean,
+            default: false,
+        },
+        labelSize: {
+            type: String,
+            default: 'col-md-2',
+        },
+        inputSize: {
+            type: String,
+            default: 'col-md-10',
         },
     },
     components: {
@@ -192,6 +223,8 @@ export default {
             json: null,
             linkUrl: null,
             linkMenuIsActive: false,
+            master: null,
+            isOpen: false,
         }
     },
     methods: {
@@ -220,8 +253,22 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Focus({
+                        className: 'has-focus',
+                        nested: true,
+                    }),
                 ],
                 content: this.initial ? this.initial : '',
+                onFocus: () => {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
+                        this.openPanel()
+                    }
+                },
+                onBlur: () => {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
+                        this.closePanel()
+                    }
+                }
             })
 
             // console.log(this.initial);
@@ -232,6 +279,60 @@ export default {
                 this.$emit('update', this.json, this.html)
                 // console.log('updated');
             })
+
+            if (this.hasAnimations == true || this.hasAnimation == true) {
+                this.$nextTick(() => {
+                    this.initAnim()
+                })
+            }
+        },
+        initAnim: function () {
+            // console.log('animations');
+            let container = this.$refs.container
+            let menu = container.getElementsByClassName('menubar')
+            if (menu) {
+                menu = menu[0]
+            }
+
+            this.master = new TimelineMax({
+                paused: true,
+                yoyo: true,
+            })
+
+            this.master.fromTo(container, .3, {
+                    minHeight: '40vh',
+                    ease: Power4.easeInOut,
+                }, {
+                    minHeight: '30px',
+                    ease: Power4.easeInOut,
+                }, 0)
+                .fromTo(menu, .2, {
+                    immediateRender: false,
+                    autoAlpha: 1,
+                    ease: Power4.easeInOut,
+                }, {
+                    autoAlpha: 0,
+                    ease: Power4.easeInOut,
+                }, 0)
+                .progress(1)
+                .progress(0)
+
+            this.$nextTick(() => {
+                this.closePanel()
+            })
+
+
+
+        },
+        closePanel: function () {
+            if (this.master) {
+                this.master.play()
+            }
+        },
+        openPanel: function () {
+            if (this.master) {
+                this.master.reverse()
+            }
         },
         showLinkMenu: function (attrs) {
             this.linkUrl = attrs.href

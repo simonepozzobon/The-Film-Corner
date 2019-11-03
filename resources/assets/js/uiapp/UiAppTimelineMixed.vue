@@ -41,10 +41,15 @@ import {
 }
 from '../ui'
 import {
-    TweenLite
+    TweenMax,
+    TweenLite,
+    ScrollToPlugin
 }
-from 'gsap'
-require('gsap/ScrollToPlugin')
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin,
+]
 
 export default {
     name: 'UiAppTimeline',

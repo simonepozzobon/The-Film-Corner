@@ -47,9 +47,15 @@ import {
 }
 from '../../ui'
 import {
-    TimelineMax
+    TweenMax,
+    TimelineMax,
+    Back,
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    Back,
+]
 export default {
     name: 'Home',
     components: {

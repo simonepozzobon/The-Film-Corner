@@ -69,10 +69,15 @@
 import SizeUtility from '../../../Sizes'
 import VueDraggableResizable from 'vue-draggable-resizable'
 import {
+    TweenMax,
     TimelineMax,
     Power4
 }
-from 'gsap'
+from 'gsap/all'
+
+const plugins = [
+    Power4
+]
 
 export default {
     name: 'TimelineTrack',

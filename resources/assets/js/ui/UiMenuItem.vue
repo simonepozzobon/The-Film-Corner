@@ -1,22 +1,39 @@
 <template>
-    <div class="menu-item" ref="item">
-        <a
-            :href="url"
-            :target="target"
-            ref="text"
-            :class="uuid + ' menu-item__link'"
-            @mouseenter="hoverAnim"
-            @mouseleave="hoverAnimLeave"
-            @click="mainClick">
-            {{ title }}
-        </a>
-        <div class="menu-item__underline" ref="underline"></div>
-    </div>
+<div
+    class="menu-item"
+    ref="item"
+>
+    <a
+        :href="url"
+        :target="target"
+        ref="text"
+        :class="uuid + ' menu-item__link'"
+        @mouseenter="hoverAnim"
+        @mouseleave="hoverAnimLeave"
+        @click="mainClick"
+    >
+        {{ title }}
+    </a>
+    <div
+        class="menu-item__underline"
+        ref="underline"
+    ></div>
+</div>
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
-import CSSPlugin from 'gsap/CSSPlugin'
+import {
+    TimelineMax,
+    TweenMax,
+    CSSPlugin,
+    Back
+}
+from 'gsap/all'
+
+const plugins = [
+    CSSPlugin,
+    Back
+]
 
 export default {
     name: 'UiMenuItem',
@@ -34,7 +51,7 @@ export default {
             default: '#'
         }
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             status: false,
@@ -45,13 +62,13 @@ export default {
         }
     },
     computed: {
-        uuid: function() {
+        uuid: function () {
             // https://gist.github.com/6174/6062387
-            return [...Array(10)].map(i=>(~~(Math.random()*36)).toString(36)).join('')
+            return [...Array(10)].map(i => (~~(Math.random() * 36)).toString(36)).join('')
         },
     },
     methods: {
-        init: function() {
+        init: function () {
             let duration = this.duration
             let scale = this.scale
             let invscale = 1 / scale
@@ -95,17 +112,17 @@ export default {
                 this.status = false
             })
         },
-        hoverAnim: function() {
+        hoverAnim: function () {
             if (!this.status && this.master) {
                 return this.master.pause().play()
             }
         },
-        hoverAnimLeave: function() {
+        hoverAnimLeave: function () {
             if (this.master) {
                 return this.master.pause().reverse()
             }
         },
-        mainClick: function(event) {
+        mainClick: function (event) {
             if (this.target == '_self') {
                 event.preventDefault()
             }
@@ -113,7 +130,7 @@ export default {
             this.$emit('main-click', this.url, this.target)
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
     }
 }
@@ -135,7 +152,8 @@ export default {
         text-transform: uppercase;
         transition: $transition-base;
 
-        &:hover, &:focus {
+        &:focus,
+        &:hover {
             text-decoration: none;
             transition: $transition-base;
         }
@@ -147,7 +165,7 @@ export default {
         width: 100%;
         height: 2px;
         background-color: $red;
-        bottom: 0px;
+        bottom: 0;
         left: 0;
     }
 }

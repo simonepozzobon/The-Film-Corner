@@ -1,3 +1,5 @@
+require('bootstrap')
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import AdminTemplate from './components/AdminTemplate.vue'
@@ -5,9 +7,13 @@ import routes from './routes'
 import BootstrapVue from 'bootstrap-vue'
 import axios from 'axios'
 import VuejsClipper from 'vuejs-clipper'
+import EventBus from './EventBus'
+import Utility from '../Utilities'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
+Vue.prototype.$ebus = EventBus
+Vue.prototype.$util = Utility
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -26,9 +32,11 @@ const admin = new Vue({
         AdminTemplate,
     },
     methods: {
-        goTo: function(name) {
-            this.$router.push({ name: name })
+        goTo: function (name) {
+            this.$router.push({
+                name: name
+            })
         }
     },
-    mounted: function() {}
+    mounted: function () {}
 }).$mount('#admin')

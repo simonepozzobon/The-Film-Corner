@@ -9,7 +9,7 @@
     <a
         v-else
         href="#"
-        @click.prevent="openDepth"
+        @click.stop.prevent="openDepth"
         class="ua-depth-single__link"
     >
         {{ title }}

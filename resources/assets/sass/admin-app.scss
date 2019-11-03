@@ -54,6 +54,12 @@
 @import "filters";
 @import "switch";
 @import "bootstrap-vue";
+@import "toastr";
+
+:root {
+  --transparent-var: $transparent-var;
+  --transparent: $transparent;
+}
 
 body {
     max-width: 100vw;

@@ -51,6 +51,12 @@ import {
 }
 from 'vue-video-player'
 import SizeUtility from '../Sizes'
+
+import {
+    TimelineMax,
+}
+from 'gsap/all'
+
 export default {
     name: 'UiAppVideoPreview',
     components: {

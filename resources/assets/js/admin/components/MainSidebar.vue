@@ -9,16 +9,35 @@
         url="news"
     />
     <sidebar-item
+        title="Utenti"
+        url="users"
+    />
+    <hr>
+    <sidebar-item
         title="Applicazioni"
         url="apps"
     />
     <sidebar-item
+        title="PropagandApp"
+        url="propagandapp"
+    />
+    <sidebar-item
+        title="ArtApp"
+        url="#"
+    />
+    <hr>
+    <sidebar-item
         title="Traduzioni"
         url="translate"
     />
+    <hr>
     <sidebar-item
-        title="Utenti"
-        url="users"
+        title="Test Upload"
+        url="test-uploadzone"
+    />
+    <sidebar-item
+        title="Test Esercizi"
+        url="test-esercizi"
     />
 </div>
 </template>

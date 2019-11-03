@@ -36,7 +36,7 @@
             </div>
             <div
                 class="pro-session__icon"
-                @click.prevent="deleteNetwork"
+                @click.stop.prevent="deleteNetwork"
             >
                 <div class="pro-session__value">
                 </div>
@@ -51,6 +51,11 @@
 
 <script>
 import Utility from '../Utilities'
+import {
+    TimelineMax,
+
+}
+from 'gsap/all'
 
 export default {
     name: 'ProSession',
