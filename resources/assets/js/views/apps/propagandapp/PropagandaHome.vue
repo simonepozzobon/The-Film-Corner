@@ -132,7 +132,7 @@ export default {
         getData: function () {
             // perform api call
             this.$http.get('/api/v2/propaganda/clips').then(response => {
-                console.log(response);
+                // console.log(response);
                 this.channels = response.data.periods
             })
             // this.channels = Channels
@@ -158,7 +158,6 @@ export default {
 
                 return channel
             })
-            console.log(selected);
             this.currentChannel = selected
         },
         goToChallenges: function () {

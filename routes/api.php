@@ -74,6 +74,7 @@ Route::prefix('v2')->group(
 
                 Route::prefix('propaganda')->group(function () {
                     Route::get('clips', 'Api\PropagandaController@get_clips');
+                    Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
                 });
 
                 Route::prefix('profile')->group(
