@@ -40,4 +40,24 @@ class PropagandaController extends Controller
             'clip' => $clip,
         ];
     }
+
+    public function get_exercise_single($id, $exercise_id)
+    {
+        $get_clip = $this->get_clip_single($id);
+        $clip = $get_clip['clip'];
+
+        $exercise = collect();
+        $exercises = $clip->exercises;
+        foreach ($exercises as $key => $item) {
+            if ($item->id == $exercise_id) {
+                $exercise = $item;
+            }
+        }
+
+        return [
+            'success' => true,
+            'clip' => $clip,
+            'exercise' => $exercise,
+        ];
+    }
 }
