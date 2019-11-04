@@ -8,7 +8,7 @@ class Period extends Model
 {
     protected $connection = 'tfc_propaganda';
 
-    public function clip()
+    public function clips()
     {
         return $this->hasMany('App\Propaganda\Clip');
     }

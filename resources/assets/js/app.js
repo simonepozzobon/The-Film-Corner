@@ -173,9 +173,9 @@ const home = new Vue({
             // console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         },
-        locale: function (locale) {
-            console.log(locale);
-        },
+        // locale: function (locale) {
+        //     console.log(locale);
+        // },
     },
     methods: {
         getSize: function () {

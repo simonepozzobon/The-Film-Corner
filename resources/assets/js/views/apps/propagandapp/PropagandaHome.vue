@@ -131,8 +131,12 @@ export default {
     methods: {
         getData: function () {
             // perform api call
-            this.channels = Channels
-            this.debug()
+            this.$http.get('/api/v2/propaganda/clips').then(response => {
+                console.log(response);
+                this.channels = response.data.periods
+            })
+            // this.channels = Channels
+            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])

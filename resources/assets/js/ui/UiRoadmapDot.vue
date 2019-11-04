@@ -2,19 +2,21 @@
 <div
     class="roadmap-dot"
     :class="[
-        colorClass,
         isActiveClass,
     ]"
     @click="clicked"
 >
     <div class="roadmap-dot__wrapper">
         <div class="roadmap-dot__period">
-            {{ point.period }}
+            {{ point.year }}
         </div>
-        <div class="roadmap-dot__circle">
+        <div
+            class="roadmap-dot__circle"
+            :class="bgClass"
+        >
         </div>
         <div class="roadmap-dot__label">
-            {{ point.label }}
+            {{ point.title }}
         </div>
     </div>
 </div>
@@ -40,10 +42,17 @@ export default {
             if (this.point.color) {
                 return 'roadmap-dot--' + this.point.color
             }
+            return null
         },
         isActiveClass: function () {
             if (this.isActive) {
                 return 'roadmap-dot--is-active'
+            }
+            return null
+        },
+        bgClass: function () {
+            if (this.point.color) {
+                return 'bg-' + this.point.color
             }
             return null
         },
