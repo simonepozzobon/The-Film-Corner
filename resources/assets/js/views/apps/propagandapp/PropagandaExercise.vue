@@ -170,7 +170,6 @@ export default {
 
             // this.clip = movies.find(movie => movie.id == id)
             // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
-            //
             // this.debug()
         },
         debug: function () {
@@ -181,7 +180,7 @@ export default {
         leave: function () {},
         startApp: function () {
             console.log(this.content.slug);
-            let slug = 'propaganda-' + this.content.slug
+            let slug = this.content.slug
             this.$root.goTo(slug)
         },
         togglePanel: function () {
