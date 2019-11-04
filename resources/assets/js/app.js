@@ -295,7 +295,7 @@ const home = new Vue({
         },
         setLocale: function () {
             this.translations = this.translationsCache[this.locale]
-            console.log(this.translations);
+            // console.log(this.translations);
         },
         getTranslation: function () {
             // console.log('loading translations');
