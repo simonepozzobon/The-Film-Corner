@@ -80,7 +80,8 @@ import {
     TweenMax,
     Power4,
     Sine,
-    Back
+    Back,
+    ExpoScaleEase,
 }
 from 'gsap/all'
 
@@ -88,6 +89,7 @@ const plugins = [
     Power4,
     Sine,
     Back,
+    ExpoScaleEase,
 ]
 
 export default {

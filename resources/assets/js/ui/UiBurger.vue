@@ -22,14 +22,20 @@
 
 <script>
 import {
+    gsap,
     TweenMax,
     TimelineMax,
     Power4,
+    Sine,
+    CSSPlugin,
+    ExpoScaleEase
 }
 from 'gsap/all'
 
 const plugins = [
+    Sine,
     Power4,
+    ExpoScaleEase
 ]
 
 export default {
@@ -88,15 +94,11 @@ export default {
 
                 this.master.fromTo(line1, duration, {
                     y: 0,
-                    directionalRotation: {
-                        rotation: '0_cw'
-                    },
+                    rotation: '0',
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, {
                     y: yMid - 4,
-                    directionalRotation: {
-                        rotation: '45_cw'
-                    },
+                    rotation: '+=45',
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, 0)
 
@@ -112,15 +114,11 @@ export default {
 
                 this.master.fromTo(line3, duration, {
                     y: 0,
-                    directionalRotation: {
-                        rotation: '0_ccw'
-                    },
+                    rotation: '0',
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, {
                     y: -yMid + 4,
-                    directionalRotation: {
-                        rotation: '-45_ccw'
-                    },
+                    rotation: '-=45',
                     ease: ExpoScaleEase.config(invscale, 1, baseEase),
                 }, 0)
 

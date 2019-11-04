@@ -42914,6 +42914,12 @@ input[type="color"].form-control:disabled {
   background-color: #343a40;
 }
 
+html,
+:root {
+  --transparent-var: 0.4;
+  --transparent: 0.2;
+}
+
 body {
   max-width: 100vw;
   overflow-x: hidden;

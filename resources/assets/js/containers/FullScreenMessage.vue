@@ -20,11 +20,13 @@ import {
     TimelineMax,
     TweenMax,
     Power4,
+    Sine,
 }
 from 'gsap/all'
 
 const plugins = [
     Power4,
+    Sine,
 ]
 
 export default {
