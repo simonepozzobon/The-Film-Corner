@@ -298,7 +298,7 @@ const home = new Vue({
             console.log(this.translations);
         },
         getTranslation: function () {
-            console.log('loading translations');
+            // console.log('loading translations');
             this.$http.get('/api/v2/translate').then(response => {
                 if (response.data.success) {
                     this.translationsLoaded = true
