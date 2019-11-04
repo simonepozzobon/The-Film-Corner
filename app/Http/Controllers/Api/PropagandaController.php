@@ -11,7 +11,7 @@ class PropagandaController extends Controller
 {
     public function get_clips()
     {
-        $periods = Period::with('clips.period', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics')->get();
+        $periods = Period::with('clips.period', 'clips.format', 'clips.age', 'clips.directors', 'clips.peoples', 'clips.topics')->get();
 
         return [
             'success' => true,

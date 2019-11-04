@@ -116,13 +116,13 @@ export default {
             this.setWelcome()
         },
         currentChannel: function (channel) {
-            this.results = channel.contents
+            this.results = channel.clips
         },
     },
     computed: {
         currentChannelTitle: function () {
-            if (this.currentChannel && this.currentChannel.hasOwnProperty('label')) {
-                return this.currentChannel.label
+            if (this.currentChannel && this.currentChannel.hasOwnProperty('title')) {
+                return this.currentChannel.title
             }
 
             return null
@@ -158,7 +158,7 @@ export default {
 
                 return channel
             })
-
+            console.log(selected);
             this.currentChannel = selected
         },
         goToChallenges: function () {
