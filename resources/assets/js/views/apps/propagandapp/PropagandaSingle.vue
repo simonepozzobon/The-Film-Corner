@@ -3,7 +3,10 @@
     <div class="propaganda-back">
         <div class="propaganda-back__container">
             <div class="propaganda-back__content">
-                <ui-row class="prop-top">
+                <ui-row
+                    class="prop-top"
+                    v-if="content"
+                >
                     <ui-block
                         :size="8"
                         :has-container="false"
@@ -124,7 +127,14 @@ export default {
         getData: function () {
             let id = this.$route.params.id
             // perform api call
-            this.content = movies.find(movie => movie.id == id)
+            let url = '/api/v2/propaganda/clip/' + id
+            this.$http.get(url).then(response => {
+                // console.log(response);
+                if (response.data.success) {
+                    this.content = response.data.clip
+                }
+            })
+            // this.content = movies.find(movie => movie.id == id)
             // this.debug()
         },
         debug: function () {

@@ -72,6 +72,11 @@ Route::prefix('v2')->group(
                 Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
                 Route::get('like-network/{id}', 'Api\SectionController@add_network_like');
 
+                Route::prefix('propaganda')->group(function () {
+                    Route::get('clips', 'Api\PropagandaController@get_clips');
+                    Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
+                });
+
                 Route::prefix('profile')->group(
                     function () {
                         Route::get('/', 'Api\ProfileController@get_profile');

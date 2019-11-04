@@ -26,13 +26,15 @@ import {
     TimelineMax,
     TweenMax,
     CSSPlugin,
-    Back
+    Back,
+    ExpoScaleEase,
 }
 from 'gsap/all'
 
 const plugins = [
     CSSPlugin,
-    Back
+    Back,
+    ExpoScaleEase,
 ]
 
 export default {

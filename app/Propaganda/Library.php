@@ -13,6 +13,11 @@ class Library extends Model
         return $this->belongsTo('App\Propaganda\Clip');
     }
 
+    public function exercise()
+    {
+        return $this->belongsTo('App\Propaganda\Exercise');
+    }
+
     public function type()
     {
         return $this->belongsTo('App\Propaganda\LibraryType');

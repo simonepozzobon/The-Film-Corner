@@ -36,7 +36,7 @@
             color="white"
             :block="true"
             class="login-form__submit"
-            @click.native="attemptLogin"
+            @click="attemptLogin"
         >
             Login
         </ui-button>
@@ -45,7 +45,7 @@
             color="white"
             :block="true"
             class="login-form__submit"
-            @click.native="goBack"
+            @click="goBack"
         >
             Back
         </ui-button>

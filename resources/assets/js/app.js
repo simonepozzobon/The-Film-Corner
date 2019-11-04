@@ -173,9 +173,9 @@ const home = new Vue({
             // console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         },
-        locale: function (locale) {
-            console.log(locale);
-        },
+        // locale: function (locale) {
+        //     console.log(locale);
+        // },
     },
     methods: {
         getSize: function () {
@@ -295,10 +295,10 @@ const home = new Vue({
         },
         setLocale: function () {
             this.translations = this.translationsCache[this.locale]
-            console.log(this.translations);
+            // console.log(this.translations);
         },
         getTranslation: function () {
-            console.log('loading translations');
+            // console.log('loading translations');
             this.$http.get('/api/v2/translate').then(response => {
                 if (response.data.success) {
                     this.translationsLoaded = true

@@ -53,7 +53,7 @@
                 color="white"
                 :has-margin="false"
                 align="center"
-                @click.native="randomize"
+                @click="randomize"
             >
                 Reload
             </ui-button>

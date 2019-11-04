@@ -7,13 +7,17 @@
         >
             <div class="ua-single-res__thumb-container">
                 <ui-image
-                    :src="content.image.thumb"
+                    :src="posterSrc"
                     :alt="content.title"
                     :has-margin="false"
                 />
                 <div class="overlay">
                     <single-hover />
                 </div>
+                <video
+                    ref="player"
+                    class="video-js d-none"
+                ></video>
             </div>
         </div>
         <div class="ua-single-res__details">
@@ -31,32 +35,46 @@
                 {{ content.year }}
             </div>
             <div class="ua-single-res__director">
-                {{ content.director }}
+                <span
+                    v-for="(director, i) in content.directors"
+                    :key="director.id"
+                >
+                    <span v-if="i < content.directors.length - 1">{{ director.name }}, </span>
+                    <span v-else>{{ director.name }}</span>
+                </span>
             </div>
             <div class="ua-single-res__country">
                 <span v-if="content.duration">
-                    {{ content.country }}, {{ content.duration }}'
+                    {{ content.nationality }}, {{ content.duration }}'
                 </span>
                 <span v-else>
-                    {{ content.country }}
+                    {{ content.nationality }}
                 </span>
             </div>
             <div class="ua-single-res__attributes">
-                <div
-                    class="ua-single-res__attribute"
-                    v-for="(attribute, i) in content.attributes"
-                    :key="attribute.id"
-                >
-                    <span v-if="i != content.attributes.length - 1 ">
-                        {{ attribute.value }},&nbsp;
-                    </span>
-                    <span v-else>
-                        {{ attribute.value }}
-                    </span>
+                <div class="ua-single-res__attribute">
+                    <span>{{ content.format.title }}</span>
 
                 </div>
             </div>
             <div class="ua-single-res__tags">
+                <div
+                    class="ua-single-res__tag"
+                    v-for="(topic, i) in content.topics"
+                    :key="topic.id"
+                >
+                    <span v-if="i != content.topics.length - 1 ">
+                        {{ topic.title }},&nbsp;
+                    </span>
+                    <span v-else>
+                        {{ topic.title }}
+                    </span>
+                </div>
+            </div>
+            <div
+                class="ua-single-res__tags"
+                v-if="content.tags"
+            >
                 <div
                     class="ua-single-res__tag"
                     v-for="(tag, i) in content.tags"
@@ -83,6 +101,7 @@ import {
 from '../../../ui'
 
 import SingleHover from './SingleHover.vue'
+import videojs from 'video.js'
 
 export default {
     name: 'SingleResult',
@@ -99,11 +118,70 @@ export default {
             },
         },
     },
-    methods: {
-        openResult: function () {
-            this.$emit('open-result', this.content)
+    data: function () {
+        return {
+            posterSrc: null,
+            playerReady: false,
+            options: {
+                aspectRatio: '16:9',
+                controls: true,
+                preload: 'auto',
+                width: 480,
+                height: 270,
+            }
         }
     },
+    watch: {
+        'content.src': function (src) {
+            if (this.player && this.playerReady) {
+                this.setSrc()
+            }
+        },
+    },
+    methods: {
+        initPlayer: function () {
+            this.player = videojs(this.$refs.player, this.options, () => {
+                this.playerReady = true
+                if (this.content.video) {
+                    this.setSrc()
+                }
+            })
+            this.player.on('loadeddata', () => {
+                this.getThumbnail()
+            })
+        },
+        getThumbnail: function () {
+            let player = this.player.tech({
+                IWillNotUseThisInPlugins: true
+            }).el()
+
+            let canvas = document.createElement('canvas')
+            canvas.height = 270
+            canvas.width = 480
+
+            let ctx = canvas.getContext('2d')
+            ctx.drawImage(player, 0, 0)
+
+            this.posterSrc = canvas.toDataURL()
+        },
+        openResult: function () {
+            this.$emit('open-result', this.content)
+        },
+        setSrc: function () {
+            this.player.src({
+                type: 'video/mp4',
+                src: this.content.video
+            })
+        },
+    },
+    mounted: function () {
+        this.initPlayer()
+    },
+    beforeDestroy: function () {
+        if (this.player) {
+            this.player.dispose()
+        }
+    }
 }
 </script>
 
