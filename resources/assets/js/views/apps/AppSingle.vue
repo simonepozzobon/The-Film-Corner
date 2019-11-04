@@ -55,14 +55,14 @@
                     <ui-button
                         color="dark"
                         display="inline-block"
-                        @click.native="startApp"
+                        @click="startApp"
                     >
                         Start a new session
                     </ui-button>
                     <ui-button
                         color="dark"
                         display="inline-block"
-                        @click.native="togglePanel"
+                        @click="togglePanel"
                     >
                         {{ buttonText }}
                     </ui-button>

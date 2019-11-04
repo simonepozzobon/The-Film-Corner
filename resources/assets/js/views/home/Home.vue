@@ -23,7 +23,7 @@
             could improve Film Literacy skills among the audience in order to foster Audience Development and Engagement towards film as an art form, with a particular focus on young and non-core audience...
         </ui-paragraph>
         <ui-link
-            @click.native="goTo($event, 'project')"
+            @click="goTo($event, 'project')"
             align="center"
         >Read more</ui-link>
         <news></news>
