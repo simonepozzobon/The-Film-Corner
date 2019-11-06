@@ -18,6 +18,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 
 Vue.prototype.$cookie = Cookie
+window.$translations = Vue.prototype.$translations = new Translations()
 
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
@@ -163,7 +164,7 @@ const home = new Vue({
             translationsLoaded: false,
             translationsCache: [],
             translations: [],
-            locale: 'en',
+            locale: 'it',
         }
     },
     watch: {
@@ -295,17 +296,14 @@ const home = new Vue({
             })
         },
         setLocale: function () {
-            // console.log(this.translationsCache);
+            console.log('setting locale', this.locale);
+            this.$translations.locale = this.locale
         },
         getTranslation: function () {
-            console.log('loading translations');
             this.$http.get('/api/v2/translate').then(response => {
                 if (response.data.success) {
                     this.translationsLoaded = true
-                    this.translationsCache = response.data.translations
-                    this.translations = new Translations(response.data.translations)
-                    this.translations = this.translationsCache
-                    console.log(response.data);
+                    this.$translations.translations = response.data.translations
                     this.setLocale()
                 }
             })
@@ -322,4 +320,5 @@ const home = new Vue({
         })
     },
     // render: h => h(home)
+// })
 }).$mount('#home')

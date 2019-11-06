@@ -27,7 +27,12 @@
                 />
             </ui-row>
             <ui-row justify="center">
-                <ui-block
+                <studio-block
+                    v-for="studio in this.studios"
+                    :key="studio.id"
+                    :studio="studio"
+                />
+                <!-- <ui-block
                     v-for="studio in this.studios"
                     :key="studio.id"
                     :size="4"
@@ -37,7 +42,7 @@
                     :full-height="true"
                 >
                     <ui-title
-                        :title="studio.name"
+                        :title="studio.name | translate('name', 'sections', $translations)"
                         align="center"
                         size="h4"
                         color="white"
@@ -92,7 +97,7 @@
                         </ul>
                     </div>
 
-                </ui-block>
+                </ui-block> -->
             </ui-row>
         </ui-container>
     </ui-hero-banner>
@@ -100,7 +105,7 @@
 </template>
 
 <script>
-import Translations from '../../Translations'
+import StudioBlock from '../../components/StudioBlock.vue'
 
 import {
     UiBlock,
@@ -118,6 +123,7 @@ from '../../ui'
 export default {
     name: 'AppsHome',
     components: {
+        StudioBlock,
         UiBlock,
         UiButton,
         UiContainer,
@@ -141,18 +147,8 @@ export default {
         }
     },
     filters: {
-        translate: function (valueToTranslate, data, itemToTranslate, key) {
-            // Cultural Approach, $root.translations, sections, name
-            console.log(valueToTranslate, data, itemToTranslate, key)
-            let translations = data[itemToTranslate]
-            let idx = translations.findIndex(translation => translation[key] == valueToTranslate)
-            if (idx > -1) {
-                return translations[idx]
-            }
-            else {
-                return 'error'
-            }
-            console.log(idx);
+        translate: function (defaultValue, key, section, translations) {
+            return translations.getContent(defaultValue, key, section);
         }
     },
     methods: {
@@ -167,25 +163,7 @@ export default {
             // console.log(this.$root.user);
             this.title = 'Welcome ' + this.$root.user.name
         },
-        goToPavilion: function (event, slug) {
-            event.preventDefault()
-            this.$root.goToWithParams('pavilion-home', {
-                pavilion: slug
-            })
-        },
-        goToCat: function (slug) {
-            this.$root.goToWithParams('cat-home', {
-                cat: slug
-            })
-        },
-        goToApp: function (slug) {
-            this.$root.goToWithParams('app-home', {
-                app: slug
-            })
-        },
-        goToPropaganda: function (slug) {
-            this.$root.goTo('propaganda-intro')
-        }
+
     },
     created: function () {
         this.$root.space = true

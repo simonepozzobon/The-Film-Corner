@@ -1,7 +1,46 @@
 class Translations {
-    constructor(translations) {
-        console.log('traduzioni inizializate');
-        this.translations = translations
+    constructor(contents = [], locale = 'en') {
+        console.log('traduzioni inizializate')
+        this.translations = contents
+        this.locale = locale
+        this.localized = {}
+    }
+
+    get translations() {
+        return this._translations
+    }
+
+    get locale() {
+        return this._locale
+    }
+
+    get localized() {
+        return this._localized
+    }
+
+    set translations(translations) {
+        this.localized = translations[this.locale]
+        this._translations = translations
+
+        // imposta anche le traduzioni già localizzate
+    }
+
+    set locale(locale) {
+        this._locale = locale
+    }
+
+    set localized(localized) {
+        this._localized = localized
+    }
+
+    getContent(defaultValue, key, section) {
+        let content = this.localized[section].find(content => content[key] == defaultValue)
+        if (content) {
+            return content[key]
+        } else {
+            console.error('non c\'è una traduzione')
+            return defaultValue
+        }
     }
 }
 
