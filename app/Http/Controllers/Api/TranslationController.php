@@ -56,9 +56,14 @@ class TranslationController extends Controller
         $translatedItems = collect();
         foreach ($items as $key => $item) {
             $translatedItem = $item->translate($locale, true);
+
+            foreach ($translatedItem->getAttributes() as $attributeKey => $attributeValue) {
+                if ($attributeKey == 'name' || $attributeKey == 'title') {
+                    $translatedItem->{$attributeKey} = strip_tags($attributeValue);
+                }
+            }
             $translatedItems->push($translatedItem);
         }
         return $translatedItems;
     }
-
 }

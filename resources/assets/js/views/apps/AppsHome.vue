@@ -117,6 +117,7 @@ import {
 from '../../ui'
 export default {
     name: 'AppsHome',
+    mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiButton,
@@ -171,9 +172,6 @@ export default {
         goToPropaganda: function (slug) {
             this.$root.goTo('propaganda-intro')
         },
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.$root.space = true

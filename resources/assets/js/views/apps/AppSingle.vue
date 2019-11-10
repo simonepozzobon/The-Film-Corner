@@ -105,6 +105,7 @@ import {
 from '../../ui'
 export default {
     name: 'AppSingle',
+    mixins: [TranslationFilter],
     components: {
         UiAppSession,
         UiAppSessionManager,
@@ -196,9 +197,6 @@ export default {
                 this.buttonText = 'Close Panel'
             }
         }
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.getData()
