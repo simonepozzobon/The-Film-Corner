@@ -95,8 +95,15 @@ export default {
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
             // perform api call
-            this.clip = movies.find(movie => movie.id == id)
-            this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
+            let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+            this.$http.get(url).then(response => {
+                console.log(response);
+                this.clip = response.data.clip
+                this.content = response.data.exercise
+            })
+
+            // this.clip = movies.find(movie => movie.id == id)
+            // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
         },
         cropFrame: function () {
             let video = this.player.el().querySelector('video')

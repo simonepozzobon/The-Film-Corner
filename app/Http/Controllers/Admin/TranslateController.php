@@ -141,9 +141,8 @@ class TranslateController extends Controller
             array_push($new_translations, $t);
             try {
                 $t->save();
-                array_push($test, 'success');
             } catch (\Exception $e) {
-                array_push($test, 'error');
+                array_push($test, $e);
             }
 
         }

@@ -54,7 +54,17 @@ import {
 }
 from './Shared'
 import _ from 'lodash'
-require('gsap/ScrollToPlugin')
+
+import {
+    TweenMax,
+    ScrollToPlugin
+}
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin
+]
+
 export default {
     name: 'FrameComposer',
     components: {

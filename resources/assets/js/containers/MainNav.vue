@@ -81,42 +81,42 @@
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('en')"
+                        @click.stop.prevent="setLocale('en')"
                     >
                         English
                     </a>
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('fr')"
+                        @click.stop.prevent="setLocale('fr')"
                     >
                         Francais
                     </a>
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('it')"
+                        @click.stop.prevent="setLocale('it')"
                     >
                         Italiano
                     </a>
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('sr')"
+                        @click.stop.prevent="setLocale('sr')"
                     >
                         српски
                     </a>
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('ka')"
+                        @click.stop.prevent="setLocale('ka')"
                     >
                         ქართული
                     </a>
                     <a
                         class="dropdown-item"
                         href="#"
-                        @click.prevent="setLocale('sl')"
+                        @click.stop.prevent="setLocale('sl')"
                     >
                         slovenski
                     </a>

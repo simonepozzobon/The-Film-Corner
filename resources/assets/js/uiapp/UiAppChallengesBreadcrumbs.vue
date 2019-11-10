@@ -3,7 +3,7 @@
     <div class="ui-breadcrumbs__studio">
         <a
             href="#"
-            @click.prevent="goToStudio"
+            @click.stop.prevent="goToStudio"
             class="ui-breadcrumbs__link"
         >
             Studios
@@ -15,7 +15,7 @@
     <div class="ui-breadcrumbs__pavilion">
         <a
             href="#"
-            @click.prevent="goToPropaganda"
+            @click.stop.prevent="goToPropaganda"
             class="ui-breadcrumbs__link"
         >
             Propagandapp
@@ -27,7 +27,7 @@
     <div class="ui-breadcrumbs__cat">
         <a
             href="#"
-            @click.prevent="goToChallenges"
+            @click.stop.prevent="goToChallenges"
             class="ui-breadcrumbs__link"
         >
             Creative Challenges

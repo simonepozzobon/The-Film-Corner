@@ -14,7 +14,7 @@
     </div>
     <div
         class="net-actions__action"
-        @click.prevent="addLike"
+        @click.stop.prevent="addLike"
     >
         <span class="net-actions__count">
             {{ likes }}

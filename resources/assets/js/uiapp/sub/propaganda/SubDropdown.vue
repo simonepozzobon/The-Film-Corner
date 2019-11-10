@@ -31,7 +31,7 @@
                 v-for="item in items"
                 :key="item.id"
                 class="sub-item__link"
-                @click.prevent="openSub(item.id)"
+                @click.stop.prevent="openSub(item.id)"
             >
                 {{ item.title }}
             </a>
@@ -45,6 +45,17 @@ import {
     UiTitle
 }
 from '../../../ui'
+
+import {
+    TweenMax,
+    TimelineMax,
+    Power4,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+]
 
 export default {
     name: 'SubDropDown',

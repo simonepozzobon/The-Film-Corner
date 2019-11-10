@@ -67,6 +67,21 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'tfc_propaganda' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB2_DATABASE', 'tfc_propaganda'),
+            'username' => env('DB2_USERNAME', 'the_film_corner'),
+            'password' => env('DB2_PASSWORD', 's1m0n3'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'host' => env('DB_HOST', 'localhost'),

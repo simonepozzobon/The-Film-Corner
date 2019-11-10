@@ -1,30 +1,54 @@
 <template>
+<div
+    :id="randomID"
+    class="ui-accordion-single"
+    ref="accordion"
+>
     <div
-        :id="randomID"
-        class="ui-accordion-single"
-        ref="accordion">
-        <div
-            class="ui-accordion-single__head"
-            @click="openPanel(true)"
-            ref="header">
-            <div class="ui-accordion-single__arrow">
-                <ui-accordion-arrow :is-open="isOpen"/>
-            </div>
-            <div class="ui-accordion-single__title" ref="title">
-                {{ title }}
-            </div>
+        class="ui-accordion-single__head"
+        @click="openPanel(true)"
+        ref="header"
+    >
+        <div class="ui-accordion-single__arrow">
+            <ui-accordion-arrow :is-open="isOpen" />
         </div>
-
-        <div class="ui-accordion-single__body" ref="panel">
-            <div class="ui-accordion-single__content" ref="content">
-                <p v-html="content"></p>
-            </div>
+        <div
+            class="ui-accordion-single__title"
+            ref="title"
+        >
+            {{ title }}
         </div>
     </div>
+
+    <div
+        class="ui-accordion-single__body"
+        ref="panel"
+    >
+        <div
+            class="ui-accordion-single__content"
+            ref="content"
+        >
+            <p v-html="content"></p>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
 import UiAccordionArrow from './UiAccordionArrow.vue'
+import {
+    TweenMax,
+    TimelineMax,
+    CSSPlugin,
+    Power3,
+    Sine,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power3,
+    Sine,
+]
 
 export default {
     name: 'UiAccordionSingle',
@@ -46,7 +70,7 @@ export default {
             default: 'Contenuto'
         }
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             isOpen: false,
@@ -56,13 +80,13 @@ export default {
         }
     },
     computed: {
-        randomID: function() {
+        randomID: function () {
             //https://gist.github.com/gordonbrander/2230317
             return '_' + Math.random().toString(36).substr(2, 9)
         }
     },
     methods: {
-        reset: function() {
+        reset: function () {
             let panel = this.$refs.panel
             let content = this.$refs.content
             let cRect = content.getBoundingClientRect()
@@ -70,12 +94,12 @@ export default {
 
             if (this.panel) {
                 if (this.isOpen) {
-                    TweenLite.set(panel, {
+                    TweenMax.set(panel, {
                         clearProps: 'all'
                     })
                     this.panel.kill()
 
-                    TweenLite.to(panel, .3, {
+                    TweenMax.to(panel, .3, {
                         height: cHeight,
                         autoAlpha: 1,
                         transformOrigin: "left top 0",
@@ -86,15 +110,16 @@ export default {
                         autoAlpha: 0,
                         transformOrigin: "left top 0",
                         ease: Power3.easeInOut
-                    },{
+                    }, {
                         height: cHeight,
                         autoAlpha: 1,
                         transformOrigin: "left top 0",
                         ease: Power3.easeInOut,
                     })
                     this.master.add(this.panel, 0)
-                } else {
-                    TweenLite.set(panel, {
+                }
+                else {
+                    TweenMax.set(panel, {
                         clearProps: 'all'
                     })
                     this.panel.kill()
@@ -104,7 +129,7 @@ export default {
                         autoAlpha: 0,
                         transformOrigin: "left top 0",
                         ease: Power3.easeInOut
-                    },{
+                    }, {
                         height: cHeight,
                         autoAlpha: 1,
                         transformOrigin: "left top 0",
@@ -114,7 +139,7 @@ export default {
                 }
             }
         },
-        init: function() {
+        init: function () {
             let panel = this.$refs.panel
             let content = this.$refs.content
             let title = this.$refs.title
@@ -129,7 +154,7 @@ export default {
 
             this.panelHeight = cHeight
 
-            TweenLite.set(panel, {
+            TweenMax.set(panel, {
                 height: 0,
                 autoAlpha: 0,
                 transformOrigin: "left top 0",
@@ -144,7 +169,7 @@ export default {
                 autoAlpha: 0,
                 transformOrigin: "left top 0",
                 ease: Power3.easeInOut
-            },{
+            }, {
                 height: cHeight,
                 autoAlpha: 1,
                 transformOrigin: "left top 0",
@@ -165,7 +190,7 @@ export default {
                 this.master.eventCallback('onComplete', () => {
                     let scroller = TweenMax.to(window, .2, {
                         scrollTo: {
-                            y: '#'+this.randomID,
+                            y: '#' + this.randomID,
                             offsetY: 90,
                             autoKill: false,
                         },
@@ -178,7 +203,7 @@ export default {
                 this.master.eventCallback('onReverseComplete', () => {
                     let scroller = TweenMax.to(window, .2, {
                         scrollTo: {
-                            y: '#'+this.randomID,
+                            y: '#' + this.randomID,
                             offsetY: 90,
                             autoKill: false,
                         },
@@ -190,14 +215,15 @@ export default {
             }
 
         },
-        openPanel: function(isInternal = null) {
+        openPanel: function (isInternal = null) {
             this.$parent.$emit('open-accordion', this.idx, isInternal)
             if (this.isOpen) {
                 this.isOpen = false
                 this.$nextTick(() => {
                     this.master.reverse()
                 })
-            } else {
+            }
+            else {
                 this.isOpen = true
                 this.$nextTick(() => {
                     this.master.play()
@@ -205,7 +231,7 @@ export default {
             }
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.$parent.$on('open-accordion', (idx) => {
             if (this.idx != idx && this.isOpen) {
                 this.openPanel()
@@ -255,16 +281,15 @@ export default {
         position: relative;
         // height: 0;
 
-        visibility:hidden; /* hides all .Tile-flyout on load so GSAP autoAlpha can do its thing */
-        height:auto; /* tell the browser that initial height is auto */
-        overflow:hidden;
+        visibility: hidden;
+        /* hides all .Tile-flyout on load so GSAP autoAlpha can do its thing */
+        height: auto;
+        /* tell the browser that initial height is auto */
+        overflow: hidden;
     }
 
     &__content {
-        padding-left: $spacer * 2;
-        padding-right: $spacer * 2;
-        padding-top: $spacer;
-        padding-bottom: $spacer;
+        padding: $spacer $spacer * 2;
     }
 
     &__button {

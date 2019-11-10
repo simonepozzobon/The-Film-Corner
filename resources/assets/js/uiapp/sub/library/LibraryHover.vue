@@ -1,18 +1,25 @@
 <template>
-    <svg
-        :width="size"
-        :height="size"
-        class="ui-library-hover"
-        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-        <path
-            ref="path"
-            class="ui-library-hover__path"
-            d="M61.57,26.67V37.32H38V63H26V37.32H2.43V26.67H26V1H38V26.67Z"/>
-    </svg>
+<svg
+    :width="size"
+    :height="size"
+    class="ui-library-hover"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 64 64"
+>
+    <path
+        ref="path"
+        class="ui-library-hover__path"
+        d="M61.57,26.67V37.32H38V63H26V37.32H2.43V26.67H26V1H38V26.67Z"
+    />
+</svg>
 </template>
 
 <script>
-import { TweenMax } from 'gsap'
+import {
+    TimelineMax,
+    TweenMax
+}
+from 'gsap/all'
 
 export default {
     name: 'LibraryHover',
@@ -22,14 +29,14 @@ export default {
             default: '32px'
         },
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             status: false,
         }
     },
     methods: {
-        init: function() {
+        init: function () {
             if (!this.master) {
                 this.master = new TimelineMax({
                     paused: true,
@@ -48,21 +55,21 @@ export default {
                 })
             }
         },
-        play: function() {
+        play: function () {
             if (this.master) {
                 this.master.play()
             }
         },
-        reverse: function() {
+        reverse: function () {
             if (this.master) {
                 this.master.reverse()
             }
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.init()
     },
-    beforeDestroy: function() {
+    beforeDestroy: function () {
         if (this.master) {
             this.master.kill()
         }

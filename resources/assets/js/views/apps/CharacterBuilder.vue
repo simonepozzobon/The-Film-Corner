@@ -96,7 +96,17 @@ import {
     UiRow,
 }
 from '../../ui'
-require('gsap/ScrollToPlugin')
+
+import {
+    TweenMax,
+    ScrollToPlugin
+}
+from 'gsap/all'
+
+const plugins = [
+    ScrollToPlugin
+]
+
 export default {
     name: 'CharacterBuilder',
     components: {

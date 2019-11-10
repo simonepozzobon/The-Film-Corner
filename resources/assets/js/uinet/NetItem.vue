@@ -73,6 +73,17 @@ import {
 from '../icons'
 import NetInteractions from './NetInteractions.vue'
 
+import {
+    TweenMax,
+    TimelineMax,
+    Power4
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4
+]
+
 export default {
     name: 'NetItem',
     components: {

@@ -48,13 +48,13 @@
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="goToApp(app.slug)"
+                            @click="goToApp(app.slug)"
                         >Read More</ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="startApp(app.slug)"
+                            @click="startApp(app.slug)"
                         >New</ui-button>
                         <ui-button
                             color="black"

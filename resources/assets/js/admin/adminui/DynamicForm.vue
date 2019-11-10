@@ -109,9 +109,11 @@ import UiLoader from './UiLoader.vue'
 import UiTitle from './UiTitle.vue'
 
 import {
-    TweenMax
+    gsap,
+    TweenMax,
+    TimelineMax,
 }
-from 'gsap'
+from 'gsap/all'
 
 export default {
     name: 'DynamicForm',

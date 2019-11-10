@@ -11,7 +11,7 @@
             marginClass,
             disabledClass
         ]"
-    @click.prevent="$emit('click')"
+    @click.stop.prevent="$emit('click')"
 >
     <slot></slot>
 </a>

@@ -2,13 +2,13 @@
     <nav class="network-nav navbar navbar-dark navbar-expand-lg fixed-top" ref="menu">
         <ul class="navbar-nav network-nav__nav">
             <li class="network-nav__item nav-item">
-                <a href="#" @click.prevent="sortByDate" class="nav-link network-nav__link">Most Recent</a>
+                <a href="#" @click.stop.prevent="sortByDate" class="nav-link network-nav__link">Most Recent</a>
             </li>
             <li class="network-nav__item nav-item">
-                <a href="#" @click.prevent="sortByLikes" class="nav-link network-nav__link">Most Liked</a>
+                <a href="#" @click.stop.prevent="sortByLikes" class="nav-link network-nav__link">Most Liked</a>
             </li>
             <li class="network-nav__item nav-item">
-                <a href="#" @click.prevent="filterByApp" class="nav-link network-nav__link disabled" disabled>Filter By App</a>
+                <a href="#" @click.stop.prevent="filterByApp" class="nav-link network-nav__link disabled" disabled>Filter By App</a>
             </li>
         </ul>
     </nav>

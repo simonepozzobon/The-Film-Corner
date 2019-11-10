@@ -20,6 +20,17 @@
 </template>
 
 <script>
+import {
+    TimelineMax,
+    TweenMax,
+    Power4,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+]
+
 export default {
     name: 'LoaderNav',
     computed: {
