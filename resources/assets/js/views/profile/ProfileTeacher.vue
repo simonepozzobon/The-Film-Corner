@@ -153,7 +153,7 @@ export default {
             // console.log(this.$root.user);
             this.$http.get('/api/v2/profile').then(response => {
                 // console.log(response.data.user.activities[0]);
-
+                console.log(response.data);
                 if (response.data.success) {
                     this.activities = response.data.user.activities
                     this.students = response.data.user.students

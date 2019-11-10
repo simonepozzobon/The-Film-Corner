@@ -25,7 +25,10 @@ class ProfileController extends Controller
     public function get_profile(Request $request)
     {
         // $user = Auth::user();
-        $user = User::find(349);
+        // return [
+        //   $request->user(),
+        // ];
+        $user = $request->user();
         if ($user->role_id == 1) {
             $students = $user->students;
             $user->students = $students;
@@ -118,7 +121,7 @@ class ProfileController extends Controller
             foreach ($columns as $key => $column) {
                 if ($column == 'password') {
                     $user->password = Hash::make($request->password);
-                } else if (isset($request->{$column})) {
+                } elseif (isset($request->{$column})) {
                     $user->{$column} = $request->{$column};
                 }
             }
@@ -133,7 +136,6 @@ class ProfileController extends Controller
                 'request' => $request->all(),
                 'columns' => $columns,
             ];
-
         } else {
             return [
                 'success' => false,
@@ -150,7 +152,7 @@ class ProfileController extends Controller
             foreach ($columns as $key => $column) {
                 if ($column == 'password') {
                     $user->password = Hash::make($request->password);
-                } else if (isset($request->{$column})) {
+                } elseif (isset($request->{$column})) {
                     $user->{$column} = $request->{$column};
                 }
             }
@@ -163,7 +165,6 @@ class ProfileController extends Controller
                 'request' => $request->all(),
                 'columns' => $columns,
             ];
-
         } else {
             return [
                 'success' => false,

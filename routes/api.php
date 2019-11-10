@@ -81,6 +81,7 @@ Route::prefix('v2')->group(
                 Route::prefix('profile')->group(
                     function () {
                         Route::get('/', 'Api\ProfileController@get_profile');
+                        Route::post('/', 'Api\ProfileController@get_profile');
                         Route::delete('/network/{id}', 'Api\ProfileController@destroy_network');
                         Route::delete('/activity/{id}', 'Api\ProfileController@destroy_activity');
 
