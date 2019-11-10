@@ -63,7 +63,7 @@
         "element-resize-event": "^3.0.3",
         "font-awesome": "^4.7.0",
         "google-charts": "^1.1.0",
-        "gsap": "file:../Downloads/greensock-js-shockingly-green 2/gsap-3-beta/npm-install-this/gsap-bonus.tgz",
+        "gsap": "file:../Downloads/gsap-shockingly-green/npm-install-this/gsap-bonus.tgz",
         "izitoast": "^1.4.0",
         "laravel-echo": "^1.3.5",
         "lodash.debounce": "^4.0.8",

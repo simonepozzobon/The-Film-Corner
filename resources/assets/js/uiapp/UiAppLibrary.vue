@@ -155,6 +155,12 @@ import {
     UiTitle
 }
 from '../ui'
+
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'UiAppLibrary',
     components: {

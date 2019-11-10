@@ -150,6 +150,12 @@ import {
 }
 from '../ui'
 
+import {
+    gsap,
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'AppNav',
     components: {
