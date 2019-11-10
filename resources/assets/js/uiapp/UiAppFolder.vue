@@ -1,29 +1,35 @@
 <template>
-<ui-folder class="ua-folder"
+<ui-folder
+    class="ua-folder"
     ref="folder"
-    :title="app.title"
-    :app="app.title"
+    :title="app | translate( 'title', $root.locale )"
+    :app="app | translate( 'title', $root.locale )"
     :appPath="app.slug"
-    :cat="app.category.name"
+    :cat="app.category | translate( 'name', $root.locale )"
     :catPath="app.category.slug"
-    :pavilion="app.category.section.name"
+    :pavilion="app.category.section | translate( 'name', $root.locale )"
     :pavilionPath="app.category.section.slug"
     :color="app.category.section.color_class"
     :has-times="isOpen"
-    @click="toggleFolder">
+    @click="toggleFolder"
+>
 
     <div class="ua-folder__description">
-        <p ref="description"
+        <p
+            ref="description"
             class="ua-folder__content"
-            v-html="description">
+            v-html="description"
+        >
         </p>
     </div>
 
     <ui-paragraph :full-width="true">
-        <ui-button color="dark"
+        <ui-button
+            color="dark"
             align-self="start"
             :has-container="false"
-            @click="toggleFolder">
+            @click="toggleFolder"
+        >
             {{ button }}
         </ui-button>
     </ui-paragraph>
@@ -36,9 +42,13 @@ import {
     UiButton,
     UiFolder,
     UiParagraph
-} from '../ui'
+}
+from '../ui'
+import TranslationFilter from '../TranslationFilter'
+
 export default {
     name: 'UiAppFolder',
+    mixins: [TranslationFilter],
     components: {
         UiButton,
         UiFolder,
@@ -62,6 +72,17 @@ export default {
         app: function (app) {
             this.setDescription()
         },
+        '$root.locale': function (lang) {
+            if (this.isOpen) {
+                this.description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
+            }
+            else {
+                let description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
+                this.description = clipper(description, 150, {
+                    html: true
+                })
+            }
+        }
     },
     methods: {
         setDescription: function () {
@@ -72,7 +93,8 @@ export default {
         toggleFolder: function () {
             if (this.isOpen) {
                 this.close()
-            } else {
+            }
+            else {
                 this.open()
             }
         },
@@ -80,13 +102,14 @@ export default {
             this.button = 'Close'
             this.isOpen = true
             this.$nextTick(() => {
-                this.description = this.app.description
+                this.description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
             })
         },
         close: function () {
             this.button = 'Read More'
             this.isOpen = false
-            this.description = clipper(this.app.description, 150, {
+            let description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
+            this.description = clipper(description, 150, {
                 html: true
             })
         },

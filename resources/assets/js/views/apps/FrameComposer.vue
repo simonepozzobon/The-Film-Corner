@@ -65,6 +65,7 @@ const plugins = [
     ScrollToPlugin
 ]
 
+
 export default {
     name: 'FrameComposer',
     components: {

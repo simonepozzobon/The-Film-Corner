@@ -112,6 +112,7 @@ import {
 from '../../ui'
 export default {
     name: 'StudioSingle',
+    mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiButton,
@@ -161,9 +162,6 @@ export default {
                 app: slug
             })
         }
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.getData()

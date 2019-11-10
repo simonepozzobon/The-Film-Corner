@@ -146,6 +146,7 @@ from '../../ui'
 
 export default {
     name: 'CatSingle',
+    mixins: [TranslationFilter],
     components: {
         UiAccordionCols,
         UiBlock,
@@ -201,9 +202,6 @@ export default {
             })
             return short
         }
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.getData()
