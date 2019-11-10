@@ -124,6 +124,7 @@ export default {
             this.canvas.add(this.landscape)
 
             if (this.$root.session.content.canvas) {
+                console.log('qui');
                 this.addListeners(true)
                 this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)

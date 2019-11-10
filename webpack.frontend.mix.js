@@ -38,4 +38,8 @@ mix
         proxy: 'http://tfc.test',
         port: 3020,
         browser: 'google chrome',
+        files: [
+            'app/{*,**/*}.*',
+            'resources/{*,**/*}.*',
+        ]
     })
