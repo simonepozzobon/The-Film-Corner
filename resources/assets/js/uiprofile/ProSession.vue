@@ -174,7 +174,7 @@ export default {
     },
     mounted: function () {
         this.init()
-        console.log(this.network);
+        // console.log(this.network);
     },
 }
 </script>

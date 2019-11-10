@@ -52,7 +52,10 @@ import {
     SharedMethods,
     SharedWatch
 }
+
 from './Shared'
+import Shared from './Shared'
+
 import _ from 'lodash'
 
 import {
@@ -75,9 +78,9 @@ export default {
         UiAppNote,
         UiAppPreview,
     },
+    mixins: [Shared],
     data: function () {
         return {
-            ...SharedData,
             canvas: null,
             landscape: null,
             objs: [],
@@ -91,7 +94,6 @@ export default {
                 this.resizeCanvas(size.wClean)
             }
         },
-        ...SharedWatch,
     },
     methods: {
         init: function () {
@@ -124,7 +126,6 @@ export default {
             this.canvas.add(this.landscape)
 
             if (this.$root.session.content.canvas) {
-                console.log('qui');
                 this.addListeners(true)
                 this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)
@@ -140,6 +141,7 @@ export default {
             let canvasParsed = JSON.parse(content.canvas)
             let objects = canvasParsed.objects
 
+            // console.log(objects);
             this.$root.isOpen = true
             this.$root.objectsToLoad = objects.length
 
@@ -241,7 +243,9 @@ export default {
             }
 
             // Save canvas to JSON for future edit
-            let json_canvas = JSON.stringify(this.canvas.toDatalessJSON())
+            let newCanvas = this.canvas.toDatalessJSON()
+            // console.log('new canvas', newCanvas);
+            let json_canvas = JSON.stringify(newCanvas)
 
             for (let key in content) {
                 if (content.hasOwnProperty(key) && key == 'canvas') {
@@ -273,7 +277,7 @@ export default {
                 let uuid = this.uniqid()
 
                 if (fromOpen && savedObj) {
-                    console.log('from open', fromOpen);
+                    // console.log('from open', fromOpen);
                     obj.set({
                         selectable: true,
                         centeredScaling: true,
@@ -301,6 +305,7 @@ export default {
 
                     // se si tratta di un elemento e non di uno sfondo
                     if (libraryID != 1) {
+                        // console.log('elemento');
                         obj.set({
                             originY: 'center',
                         })
@@ -347,10 +352,14 @@ export default {
                     }
                     else {
                         let items = this.landscape.getObjects()
+                        // console.log('si tratta di uno sfondo', items);
+
                         for (let i = 0; i < items.length; i++) {
                             this.landscape.removeWithUpdate(items[i])
                         }
+
                         this.landscape.addWithUpdate(obj)
+
                         let width = this.landscape.getScaledWidth()
                         let scaleFactor = this.canvasWidth / width
                         if (width > this.canvasWidth) {
@@ -387,13 +396,14 @@ export default {
                         this.landscape.setCoords()
                         this.canvas.calcOffset()
                         this.canvas.renderAll()
+                        // console.log('fine');
+                        this.saveCanvas(false, fromOpen)
                     }
                 }
-
-
             })
             this.canvas.calcOffset()
             this.canvas.renderAll()
+            // console.log('dopo');
             this.saveCanvas(false, fromOpen)
         },
         selected: function (index, libraryID) {
@@ -416,10 +426,28 @@ export default {
         }
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
+        // this.uniqid = SharedMethods.uniqid.bind(this)
+        // this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
-        // this.$root.session =
+
+        // this.$http.get('/api/v2/profile').then(response => {
+        //     if (response.data.success) {
+        //         let activity = response.data.user.activities[0]
+        //
+        //         let session = activity.data.session
+        //         session.content = JSON.parse(session.content)
+        //
+        //         this.$root.session = session
+        //         this.$root.isOpen = true
+        //         this.$root.isTeacherCheck = true
+        //         this.$root.notificationId = activity.id
+        //
+        //         this.$nextTick(() => {
+        //             this.getData()
+        //         })
+        //     }
+        //
+        // })
         this.getData()
     },
     mounted: function () {},

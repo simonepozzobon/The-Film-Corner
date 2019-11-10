@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Auth;
 use App\User;
 use App\Network;
+use App\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
@@ -79,13 +80,28 @@ class ProfileController extends Controller
         if ($notifications->count() > 0) {
             foreach ($notifications as $key => $notification) {
                 // dd($notification->data);
-                $is_shared = $notification->data['session']['is_shared'];
-                if ($is_shared == 0) {
+                $sender = User::find($notification->data['sender']);
+                $user = User::find($notification->data['user']);
+                $session = Session::where('token', $notification->data['session'])->with('app', 'user')->first();
+
+                if ($session->is_shared == 0) {
+                    $notification->data = [
+                      'sender' => $sender,
+                      'user' => $user,
+                      'session' => $session
+                    ];
+
                     array_push($activities, $notification);
                 } else {
-                    $token = $notification->data['session']['token'];
-                    $activity = Network::where('token', '=', $token)->with('app', 'user')->first();
+                    $activity = Network::where('token', '=', $notification->data['session'])->with('app', 'user')->first();
+
                     if ($activity) {
+                        $notification->data = [
+                            'sender' => $sender,
+                            'user' => $user,
+                            'session' => $session
+                        ];
+
                         $activity->notification = $notification;
                         array_push($activities, $activity);
                     }

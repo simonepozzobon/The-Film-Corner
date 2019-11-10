@@ -175,6 +175,7 @@ export default {
         },
         openSession: function () {
             let session = this.activity.data.session
+            // console.log(session);
             session.content = JSON.parse(session.content)
 
             let appSlug = this.activity.data.session.app.slug
@@ -184,7 +185,7 @@ export default {
             this.$root.isTeacherCheck = true
             this.$root.notificationId = this.activity.id
 
-            console.log(session, this.activity);
+            // console.log(session, this.activity);
 
             this.$root.goTo(appSlug)
         },
