@@ -24,7 +24,7 @@
             aria-hidden="true"
         />
     </div>
-    <div class="net-actions__action">
+    <!-- <div class="net-actions__action">
         <span class="net-actions__count">
             {{ comments }}
         </span>
@@ -32,7 +32,7 @@
             class="fa fa-comment net-actions__icon"
             aria-hidden="true"
         />
-    </div>
+    </div> -->
 </div>
 </template>
 

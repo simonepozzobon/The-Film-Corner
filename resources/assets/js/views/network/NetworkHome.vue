@@ -10,9 +10,9 @@
             :idx="item.id"
             :title="item.title"
             :color="item.app.category | getColorClass"
-            :category="item.app.category | getName"
+            :category="item.app.category | translate('name', $root.locale)"
             :category-slug="item.app.category | getSlug"
-            :app-name="item.app.title"
+            :app-name="item.app | translate('title', $root.locale)"
             :comments="item.comments.length"
             :likes="item.likes.length"
             :views="item.views"
@@ -33,8 +33,12 @@ import {
     NetItem
 }
 from '../../uinet'
+
+import TranslationFilter from '../../TranslationFilter'
+
 export default {
     name: 'NewtworkHome',
+    mixins: [TranslationFilter],
     components: {
         UiContainer,
         NetItem,
