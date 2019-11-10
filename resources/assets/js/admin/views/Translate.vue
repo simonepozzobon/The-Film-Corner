@@ -12,6 +12,7 @@
                     <option value="apps">Apps</option>
                     <option value="app_categories">Percorso didattico</option>
                     <option value="app_sections">Studio</option>
+                    <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
                 </select>
             </div>

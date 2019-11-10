@@ -7,6 +7,8 @@ use App\Teacher;
 use App\Student;
 use App\User;
 use App\Network;
+use App\GeneralText;
+use App\GeneralTextTranslation;
 use App\SharedSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
@@ -15,13 +17,34 @@ use Illuminate\Support\Facades\Schema;
 
 class TestController extends Controller
 {
-    public function test() {
+    public function networks()
+    {
         $user = User::find(1);
         $networks = $user->networks;
         dd($networks);
     }
 
-    public function convert_shared_sessions_to_networs() {
+    public function fill_empty_translations()
+    {
+        $texts = GeneralText::all();
+        foreach ($texts as $key => $text) {
+            $has_translation = $text->hasTranslation('en');
+
+            if ($has_translation == false) {
+                $label = ucwords(str_replace('_', ' ', $text->field));
+
+                $translate = new GeneralTextTranslation();
+                $translate->general_text_id = $text->id;
+                $translate->description = $label;
+                $translate->locale = 'en';
+                $translate->save();
+            }
+        }
+        dd($texts);
+    }
+
+    public function convert_shared_sessions_to_networs()
+    {
         $sessions = SharedSession::all();
 
         foreach ($sessions as $key => $session) {
@@ -52,10 +75,10 @@ class TestController extends Controller
             $n->save();
             dump($n->title);
         }
-
     }
 
-    public function convert_teacher_to_user() {
+    public function convert_teacher_to_user()
+    {
         $teachers = Teacher::all();
 
         foreach ($teachers as $key => $teacher) {
@@ -75,7 +98,8 @@ class TestController extends Controller
         dd('completato');
     }
 
-    public function convert_student_to_user() {
+    public function convert_student_to_user()
+    {
         $students = Student::all();
 
         foreach ($students as $key => $student) {
