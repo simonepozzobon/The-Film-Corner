@@ -31,6 +31,7 @@ import {
     TimelineMax
 }
 from 'gsap/all'
+
 export default {
     name: 'UiAccordionArrow',
     props: {

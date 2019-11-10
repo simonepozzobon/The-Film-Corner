@@ -65,8 +65,11 @@ const plugins = [
     ScrollToPlugin
 ]
 
+import TranslationFilter from '../../TranslationFilter'
+
 export default {
     name: 'FrameComposer',
+    mixins: [TranslationFilter],
     components: {
         AppTemplate,
         UiAppLayers,

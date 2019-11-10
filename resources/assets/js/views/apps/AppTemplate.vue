@@ -40,8 +40,12 @@ import {
     UiAppFolder
 }
 from '../../uiapp'
+
+import TranslationFilter from '../../TranslationFilter'
+
 export default {
     name: 'AppTemplate',
+    mixins: [TranslationFilter],
     components: {
         UiAppFolder,
         UiBlock,
