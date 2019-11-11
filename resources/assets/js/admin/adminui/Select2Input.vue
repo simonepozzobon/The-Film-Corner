@@ -34,18 +34,26 @@ export default {
             default: function () {
                 return []
             }
+        },
+        setValue: {
+            type: [Object, Array, String, Number],
         }
     },
     data: function () {
         return {
             cached: [],
             value: null,
+            ready: false,
+            initialized: false,
         }
     },
     watch: {
         options: function (options) {
             // console.log('watch evebt', options);
             this.setOptions(options)
+        },
+        setValue: function (value) {
+            this.setInitialValue(value)
         },
     },
     computed: {
@@ -59,11 +67,20 @@ export default {
         },
     },
     methods: {
+        setInitialValue: function (value) {
+            if (this.ready && this.initialized == false) {
+                $(this.$refs.select).val(`${value}`)
+                $(this.$refs.select).trigger('change')
+                this.initialized = true
+            }
+
+            // this.setOptions(this.cached)
+        },
         setOptions: function (options) {
             let cache = options.map(option => {
                 return {
                     id: option.id,
-                    title: option.title ? option.title : option.name
+                    title: option.title ? option.title : option.name,
                 }
             })
 
@@ -150,14 +167,17 @@ export default {
             });
 
             this.$emit('update', this.value)
+
+            this.$nextTick(() => {
+                this.ready = true
+            })
         },
     },
     mounted: function () {
+        if (this.options.length > 0) {
+            this.setOptions(this.options)
+        }
         this.$nextTick(() => {
-            if (this.options.length > 0) {
-                this.setOptions(this.options)
-            }
-
             this.init()
         })
     },

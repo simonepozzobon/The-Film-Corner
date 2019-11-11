@@ -47,6 +47,11 @@ import {
 }
 from './mixins'
 
+import {
+    gsap
+}
+from 'gsap/all'
+
 export default {
     name: 'BlockPanel',
     mixins: [BlockPanelAnimation],

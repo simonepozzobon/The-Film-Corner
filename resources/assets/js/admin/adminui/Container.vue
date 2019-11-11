@@ -12,6 +12,7 @@
 
 <script>
 import {
+    gsap,
     TweenMax,
     TimelineMax,
     Power4,

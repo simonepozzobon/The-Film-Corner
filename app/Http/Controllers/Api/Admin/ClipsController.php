@@ -69,8 +69,15 @@ class ClipsController extends Controller
         ];
     }
 
-    public function get_initials()
+    public function get_initials($id = null)
     {
+        $clip = false;
+
+        if ($id != null) {
+            $clip =  Clip::find($id);
+            $clip = $clip->fresh($this->options);
+        }
+
         $periods = Period::all();
         $directors = Director::all();
         $genres = Genre::all();
@@ -84,6 +91,7 @@ class ClipsController extends Controller
 
 
         return [
+            'clip' => $clip,
             'success' => true,
             'periods' => $periods,
             'directors' => $directors,

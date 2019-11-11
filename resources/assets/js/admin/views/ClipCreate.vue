@@ -5,7 +5,10 @@
         :contains="true"
         :has-animations="true"
     >
-        <carica-clip @update="updateField" />
+        <carica-clip
+            @update="updateField"
+            :initial="this.clip"
+        />
     </container>
     <container
         :contains="true"
@@ -13,6 +16,7 @@
     >
         <informazioni
             :options="options"
+            :initial="this.clip"
             @update="updateField"
         />
     </container>
@@ -170,12 +174,24 @@ export default {
     methods: {
         getData: function () {
             // this.debug()
-            this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
+            let url = '/api/v2/admin/clips/get-initials/'
+
+            if (this.$route.params.hasOwnProperty('id')) {
+                url = `/api/v2/admin/clips/get-initials/${this.$route.params.id}`
+            }
+
+            this.$http.get(url).then(response => {
                 for (let key in this.options) {
                     if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
                         this.options[key] = response.data[key]
                     }
                 }
+
+                let clip = response.data.clip
+                if (clip != false) {
+                    this.clip = clip
+                }
+
                 this.period = this.options.periods[0].id
             })
         },

@@ -73,6 +73,7 @@
                     size="sm"
                     display="inline-block"
                     :has-container="false"
+                    @click="editClip(data.item)"
                 />
                 <ui-button
                     title="cancella"
@@ -166,7 +167,12 @@ export default {
                     this.clips.splice(idx, 1)
                 }
             })
-        }
+        },
+        editClip: function (item) {
+            this.$root.goToWithParams('clips-edit', {
+                id: item.id
+            })
+        },
     },
     created: function () {
         this.getClips()

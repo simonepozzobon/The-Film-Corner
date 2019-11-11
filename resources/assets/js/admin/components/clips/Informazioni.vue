@@ -11,17 +11,13 @@
             Periodo
         </label>
         <div class="col-md-11">
-            <select
-                class="form-control"
-                name="period"
-                v-model="period"
-            >
-                <option
-                    v-for="period in this.options.periods"
-                    :key="period.id"
-                    :value="period.title"
-                >{{ period.title }}</option>
-            </select>
+            <select-2-input
+                :multiple="false"
+                :options="this.options.periods"
+                :setValue="this.period"
+                @update="updateField($event, 'period')"
+                @remove="removeValue($event, 'period')"
+            />
         </div>
     </div>
 
@@ -35,6 +31,7 @@
         <div class="col-md-5">
             <select-2-input
                 :options="this.options.directors"
+                :setValue="this.directors"
                 @update="updateField($event, 'directors', true)"
                 @remove="removeValue($event, 'directors', true)"
             />
@@ -48,6 +45,7 @@
         <div class="col-md-5">
             <select-2-input
                 :options="this.options.peoples"
+                :setValue="this.peoples"
                 @update="updateField($event, 'peoples', true)"
                 @remove="removeValue($event, 'peoples', true)"
             />
@@ -80,6 +78,7 @@
             <select-2-input
                 :multiple="false"
                 :options="this.options.formats"
+                :setValue="this.format"
                 @update="updateField($event, 'format')"
                 @remove="removeValue($event, 'format')"
             />
@@ -93,6 +92,7 @@
         <div class="col-md-3">
             <select-2-input
                 :multiple="false"
+                :setValue="this.age"
                 :options="this.options.ages"
                 @update="updateField($event, 'age')"
                 @remove="removeValue($event, 'age')"
@@ -110,6 +110,7 @@
         <div class="col-md-5">
             <select-2-input
                 :multiple="false"
+                :setValue="this.genre"
                 :options="this.options.genres"
                 @update="updateField($event, 'genre')"
             />
@@ -140,6 +141,7 @@
         <div class="col-md-11">
             <select-2-input
                 :options="this.options.topics"
+                :setValue="this.topics"
                 @update="updateField($event, 'topics', true)"
                 @remove="removeValue($event, 'topics', true)"
             />
@@ -193,6 +195,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        initial: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
@@ -217,8 +225,30 @@ export default {
         nationality: function (nationality) {
             this.$emit('update', 'nationality', nationality)
         },
+        initial: function (init) {
+            console.log('trr', init);
+
+            this.$nextTick(() => {
+                this.setInit()
+            })
+        },
+    },
+    computed: {
+        hasInitial: function () {
+            return this.initial ? true : false
+        },
     },
     methods: {
+        setInit: function () {
+            let obj = this.initial
+            this.period = obj.period.id
+            this.year = obj.year
+            this.age = obj.age.id
+            this.period = obj.period.id
+            this.format = obj.format.id
+            this.genre = obj.genre.id
+            this.nationality = obj.nationality
+        },
         updateField: function (e, key, isArray = false) {
             if (this.hasOwnProperty(key) && e) {
                 if (isArray === true) {

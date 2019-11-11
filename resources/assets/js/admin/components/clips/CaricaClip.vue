@@ -111,6 +111,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        initial: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
@@ -135,6 +141,22 @@ export default {
         video: function (video) {
             this.$emit('update', 'video', video)
         },
+        initial: function (init) {
+            // console.log('trr', init);
+
+            if (this.master) {
+                this.master.kill()
+            }
+
+            this.$nextTick(() => {
+                this.initAnim()
+            })
+        },
+    },
+    computed: {
+        hasInitial: function () {
+            return this.initial ? true : false
+        },
     },
     methods: {
         updateFile: function (file, src) {
@@ -143,6 +165,13 @@ export default {
             this.changeSrc(src)
         },
         initAnim: function () {
+
+            if (this.hasInitial) {
+                // console.log('iniziali', this.initial);
+                this.title = this.initial.title
+            }
+
+
             CSSPlugin.defaultTransformPerspective = 500
             let container = this.$refs.preview
 
