@@ -7,7 +7,7 @@
         <li class="app-nav__item nav-item">
             <a
                 href="#"
-                @click="goTo($event, 'apps-home')"
+                @click="$router.go(-1)"
                 class="nav-link app-nav__link"
             >
                 Close
