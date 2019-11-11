@@ -43,6 +43,7 @@
 
 <script>
 import AppTemplate from './AppTemplate.vue'
+
 import {
     UiAppFolder,
     UiAppLibrary,
@@ -52,14 +53,14 @@ import {
 }
 from '../../uiapp'
 import SizeUtility from '../../Sizes'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
+const debounce = require('lodash.debounce')
+
 export default {
     name: 'ParallelAction',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -70,7 +71,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             timelines: [],
             tick: 10,
             isFree: true,
@@ -86,17 +86,16 @@ export default {
         'timelines': function (timelines) {
             this.$nextTick(this.updateEditor)
         },
-        ...SharedWatch,
     },
     methods: {
         ready: function () {
             this.$nextTick(() => {
                 let title = this.$refs.preview.$refs.title.$el
                 let titleH = SizeUtility.get(title)
-                let containerH = SizeUtility.get(this.$refs.preview
-                    .$el)
+                let containerH = SizeUtility.get(this.$refs.preview.$el)
                 let height = containerH.hClean - titleH.hClean + 2
                 this.$refs.library.setLibraryHeight(height)
+                // console.log(height);
                 if (this.isLoading) {
                     this.$root.objectsLoaded++
                 }
@@ -186,7 +185,7 @@ export default {
         onUpdatePlayer: function (time) {
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
-        updateEditor: function () {
+        updateEditor: debounce(function () {
             if (this.isFree) {
                 this.isFree = false
                 if (this.$refs.preview) {
@@ -220,7 +219,7 @@ export default {
                 // console.log('cache');
                 this.cache = this.timelines
             }
-        },
+        }, 150),
         setNotes: function (notes) {
             this.notes = notes
             this.saveContent()
@@ -244,10 +243,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        // this.debug = SharedMethods.debug.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
         this.$root.isApp = true
         this.getData()
     },

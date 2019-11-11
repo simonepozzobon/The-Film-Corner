@@ -49,6 +49,11 @@
 </template>
 
 <script>
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'LoggedNav',
     data: function () {

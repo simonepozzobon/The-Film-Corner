@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Auth;
 use App\User;
 use App\Network;
+use App\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
@@ -25,7 +26,10 @@ class ProfileController extends Controller
     public function get_profile(Request $request)
     {
         // $user = Auth::user();
-        $user = User::find(349);
+        // return [
+        //   $request->user(),
+        // ];
+        $user = $request->user();
         if ($user->role_id == 1) {
             $students = $user->students;
             $user->students = $students;
@@ -76,13 +80,28 @@ class ProfileController extends Controller
         if ($notifications->count() > 0) {
             foreach ($notifications as $key => $notification) {
                 // dd($notification->data);
-                $is_shared = $notification->data['session']['is_shared'];
-                if ($is_shared == 0) {
+                $sender = User::find($notification->data['sender']);
+                $user = User::find($notification->data['user']);
+                $session = Session::where('token', $notification->data['session'])->with('app', 'user')->first();
+
+                if ($session->is_shared == 0) {
+                    $notification->data = [
+                      'sender' => $sender,
+                      'user' => $user,
+                      'session' => $session
+                    ];
+
                     array_push($activities, $notification);
                 } else {
-                    $token = $notification->data['session']['token'];
-                    $activity = Network::where('token', '=', $token)->with('app', 'user')->first();
+                    $activity = Network::where('token', '=', $notification->data['session'])->with('app', 'user')->first();
+
                     if ($activity) {
+                        $notification->data = [
+                            'sender' => $sender,
+                            'user' => $user,
+                            'session' => $session
+                        ];
+
                         $activity->notification = $notification;
                         array_push($activities, $activity);
                     }
@@ -118,7 +137,7 @@ class ProfileController extends Controller
             foreach ($columns as $key => $column) {
                 if ($column == 'password') {
                     $user->password = Hash::make($request->password);
-                } else if (isset($request->{$column})) {
+                } elseif (isset($request->{$column})) {
                     $user->{$column} = $request->{$column};
                 }
             }
@@ -133,7 +152,6 @@ class ProfileController extends Controller
                 'request' => $request->all(),
                 'columns' => $columns,
             ];
-
         } else {
             return [
                 'success' => false,
@@ -150,7 +168,7 @@ class ProfileController extends Controller
             foreach ($columns as $key => $column) {
                 if ($column == 'password') {
                     $user->password = Hash::make($request->password);
-                } else if (isset($request->{$column})) {
+                } elseif (isset($request->{$column})) {
                     $user->{$column} = $request->{$column};
                 }
             }
@@ -163,7 +181,6 @@ class ProfileController extends Controller
                 'request' => $request->all(),
                 'columns' => $columns,
             ];
-
         } else {
             return [
                 'success' => false,

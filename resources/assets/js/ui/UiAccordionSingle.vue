@@ -37,18 +37,16 @@
 <script>
 import UiAccordionArrow from './UiAccordionArrow.vue'
 import {
+    gsap,
     TweenMax,
     TimelineMax,
     CSSPlugin,
     Power3,
     Sine,
+    ScrollToPlugin
 }
 from 'gsap/all'
-
-const plugins = [
-    Power3,
-    Sine,
-]
+gsap.registerPlugin(ScrollToPlugin, CSSPlugin);
 
 export default {
     name: 'UiAccordionSingle',

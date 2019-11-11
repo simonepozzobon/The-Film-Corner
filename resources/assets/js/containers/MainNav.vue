@@ -140,11 +140,11 @@
             @main-click="toggle"
         />
     </nav>
-    <menu-overlay
+    <!-- <menu-overlay
         ref="overlay"
         @ready="timelineReady('overlay')"
         @main-click="toggle"
-    />
+    /> -->
     <logged-nav v-if="$root.user" />
     <app-nav v-if="$root.user && $root.isApp" />
     <network-nav v-if="$root.user && $root.isNetwork" />

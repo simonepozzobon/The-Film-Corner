@@ -56,10 +56,14 @@ Route::prefix('v2')->group(
                 Route::get('get-app/{slug}', 'Api\SectionController@get_app');
 
                 Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
-                Route::post('session', 'Api\LoadController@save_session');
-                Route::post('session/share-to-teacher', 'Api\LoadController@share_to_teacher');
-                Route::post('session/share-to-network', 'Api\LoadController@share_to_network');
-                Route::delete('session/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
+
+                Route::prefix('session')->group(function () {
+                    Route::post('', 'Api\LoadController@save_session');
+                    Route::post('/share-to-teacher', 'Api\LoadController@share_to_teacher');
+                    Route::post('/share-to-network', 'Api\LoadController@share_to_network');
+                    Route::delete('/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
+                });
+
 
                 Route::post('render-video', 'Api\VideoEditorController@update_editor');
                 Route::post('render-audio', 'Api\AudioEditorController@update_editor');
@@ -81,6 +85,7 @@ Route::prefix('v2')->group(
                 Route::prefix('profile')->group(
                     function () {
                         Route::get('/', 'Api\ProfileController@get_profile');
+                        // Route::post('/', 'Api\ProfileController@get_profile');
                         Route::delete('/network/{id}', 'Api\ProfileController@destroy_network');
                         Route::delete('/activity/{id}', 'Api\ProfileController@destroy_activity');
 

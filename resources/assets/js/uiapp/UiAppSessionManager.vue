@@ -158,15 +158,17 @@ export default {
             })
             this.master.fromTo(this.$refs.container.$el, .3, {
                 autoAlpha: 0,
+                overflow: 'hidden',
                 height: 0,
-                className: '-=app-sessions--visible'
+                // className: '-=app-sessions--visible'
             }, {
                 autoAlpha: 1,
                 height: '100%',
-                className: '+=app-sessions--visible'
+                overflow: 'visible',
+                immediateRender: false,
+                // className: '+=app-sessions--visible'
             })
-            this.master.progress(1)
-                .progress(0)
+            this.master.progress(1).progress(0)
         },
         play: function () {
             if (this.master) {

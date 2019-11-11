@@ -84,12 +84,7 @@ import {
     UiAppPreview,
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
 import {
     UiBlock,
     UiImage,
@@ -99,16 +94,22 @@ from '../../ui'
 
 import {
     TweenMax,
-    ScrollToPlugin
 }
 from 'gsap/all'
+
+import {
+    ScrollToPlugin
+}
+from 'gsap/ScrollToPlugin'
 
 const plugins = [
     ScrollToPlugin
 ]
+import Shared from './Shared'
 
 export default {
     name: 'CharacterBuilder',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -121,7 +122,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             srcs: {
                 landscape: null,
                 objects: null,
@@ -137,7 +137,6 @@ export default {
                 this.resizeCanvas(size.wClean)
             }
         },
-        ...SharedWatch,
     },
     methods: {
         init: function () {
@@ -223,8 +222,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },

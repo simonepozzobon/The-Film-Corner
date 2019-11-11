@@ -169,11 +169,12 @@ export default {
                     ease: ExpoScaleEase.config(invscale, 1, Power4.easeIn),
                 }, {
                     opacity: 1,
+                    delay: linksDelay,
                     x: 0,
                     y: 0,
                     scaleY: 1,
                     ease: ExpoScaleEase.config(invscale, 1, Power4.easeIn),
-                }, linksDelay, linksStart)
+                }, linksStart)
 
                 this.master.progress(1).progress(0)
 

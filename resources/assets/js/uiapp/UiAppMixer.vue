@@ -25,9 +25,12 @@ import UiAppBlock from './UiAppBlock.vue'
 import MixerChannel from './sub/mixer/MixerChannel.vue'
 import {
     TweenMax,
-    ScrollToPlugin,
 }
 from 'gsap/all'
+import {
+    ScrollToPlugin
+}
+from 'gsap/ScrollToPlugin'
 
 const plugins = [
     ScrollToPlugin,

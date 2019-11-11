@@ -169,7 +169,7 @@ export default {
                         this.app = response.data.app
                         this.sessions = response.data.sessions
 
-                        this.debug()
+                        // this.debug()
                     }
                 })
         },

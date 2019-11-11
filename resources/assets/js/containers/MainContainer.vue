@@ -13,6 +13,7 @@ import {
     TweenMax,
 }
 from 'gsap/all'
+
 export default {
     name: 'MainContainer',
     methods: {
