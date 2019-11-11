@@ -43,6 +43,7 @@
 
 <script>
 import AppTemplate from './AppTemplate.vue'
+
 import {
     UiAppFolder,
     UiAppLibrary,
@@ -54,6 +55,8 @@ from '../../uiapp'
 import SizeUtility from '../../Sizes'
 
 import Shared from './Shared'
+
+const debounce = require('lodash.debounce')
 
 export default {
     name: 'ParallelAction',
@@ -182,7 +185,7 @@ export default {
         onUpdatePlayer: function (time) {
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
-        updateEditor: function () {
+        updateEditor: debounce(function () {
             if (this.isFree) {
                 this.isFree = false
                 if (this.$refs.preview) {
@@ -216,7 +219,7 @@ export default {
                 // console.log('cache');
                 this.cache = this.timelines
             }
-        },
+        }, 150),
         setNotes: function (notes) {
             this.notes = notes
             this.saveContent()
