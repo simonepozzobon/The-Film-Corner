@@ -54,15 +54,12 @@ import {
 }
 from '../../uiapp'
 import SizeUtility from '../../Sizes'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
 
 export default {
     name: 'ActiveParallelAction',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -73,7 +70,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             timelines: [],
             tick: 10,
             isFree: true,
@@ -89,7 +85,6 @@ export default {
         'timelines': function (timelines) {
             this.$nextTick(this.updateEditor)
         },
-        ...SharedWatch,
     },
     computed: {
         video: function () {
@@ -250,10 +245,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
-
         this.$root.isApp = true
         this.getData()
     },

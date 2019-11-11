@@ -47,13 +47,7 @@ import {
     UiAppPreview,
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
 
-from './Shared'
 import Shared from './Shared'
 
 import _ from 'lodash'

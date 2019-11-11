@@ -55,18 +55,16 @@ import {
     UiAppNote
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods
-}
-from './Shared'
+
 import {
     UiButton
 }
 from '../../ui'
+import Shared from './Shared'
 
 export default {
     name: 'MakeYouOwnFilm',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -77,7 +75,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             title: null,
             file: null,
             percent: 0,
@@ -141,7 +138,6 @@ export default {
         }, 500),
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
         this.$root.isApp = true
         this.getData()
     },

@@ -56,12 +56,7 @@ import {
     UiAppNote
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
 import {
     UiBlock,
     UiButton,
@@ -69,8 +64,10 @@ import {
     UiRow
 }
 from '../../ui'
+import Shared from './Shared'
 export default {
     name: 'TypesOfImages',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -85,13 +82,9 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             media: null,
             isLoading: false,
         }
-    },
-    watch: {
-        ...SharedWatch,
     },
     methods: {
         init: function () {
@@ -154,8 +147,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
-        // this.debug = SharedMethods.debug.bind(this)
         this.$root.isApp = true
         this.getData()
     },
