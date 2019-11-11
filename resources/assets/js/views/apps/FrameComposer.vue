@@ -54,9 +54,13 @@ import _ from 'lodash'
 
 import {
     TweenMax,
-    ScrollToPlugin
 }
 from 'gsap/all'
+
+import {
+    ScrollToPlugin
+}
+from 'gsap/ScrollToPlugin'
 
 const plugins = [
     ScrollToPlugin

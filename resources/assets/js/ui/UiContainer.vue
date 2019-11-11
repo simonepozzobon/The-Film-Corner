@@ -1,14 +1,16 @@
 <template>
-    <div class="ui-container"
-        ref="container"
-        :class="[
+<div
+    class="ui-container"
+    ref="container"
+    :class="[
             bgColorClass,
             containClass,
             alignClass,
             directionClass
-        ]">
-        <slot></slot>
-    </div>
+        ]"
+>
+    <slot></slot>
+</div>
 </template>
 
 <script>
@@ -41,7 +43,7 @@ export default {
         }
     },
     computed: {
-        alignClass: function() {
+        alignClass: function () {
             if (this.align == 'center') {
                 return 'ui-container--align-center'
             }
@@ -54,33 +56,44 @@ export default {
                 return 'ui-container--around'
             }
         },
-        directionClass: function() {
+        directionClass: function () {
             if (this.direction == 'row') {
                 return null
             }
 
             return 'ui-container--column'
         },
-        fullClass: function() {
+        fullClass: function () {
             if (this.fullWidth) {
                 return 'ui-container--full-width'
             }
         },
-        containClass: function() {
+        containClass: function () {
             if (this.contain) {
                 return 'container'
             }
         },
-        bgColorClass: function() {
+        bgColorClass: function () {
             if (this.bgColor) {
                 return 'bg-' + this.bgColor
             }
         }
     },
-    mounted: function() {
+    methods: {
+        emitInit: function () {
+            this.$nextTick(() => {
+                this.$emit('init')
+            })
+        },
+    },
+    mounted: function () {
         if (this.minWidth) {
             this.$refs.container.style.minWidth = this.minWidth
         }
+
+        this.$nextTick(() => {
+            this.emitInit()
+        })
     }
 }
 </script>

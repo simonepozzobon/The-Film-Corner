@@ -1,5 +1,8 @@
 <template>
-<div class="ua-video-controls">
+<div
+    class="ua-video-controls"
+    ref="controls"
+>
     <div class="ua-video-controls__container">
         <div class="ua-video-controls__control">
             <play
@@ -55,6 +58,8 @@ import {
 }
 from '../icons'
 
+import ElementMeasurer from 'element-measurer'
+
 export default {
     name: 'UiAppVideoControls',
     components: {
@@ -63,6 +68,16 @@ export default {
         Pause,
         Play,
         Stop,
+    },
+    data: function () {
+        return {
+            height: 0,
+        }
+    },
+    watch: {
+        height: function (height) {
+            this.$emit('update-size', height)
+        }
     },
     methods: {
         play: function () {
@@ -79,8 +94,17 @@ export default {
         },
         forward: function () {
             this.$emit('forward')
-        }
-    }
+        },
+        getSize: function () {
+            const size = new ElementMeasurer(this.$refs.controls)
+            this.height = size.clientHeight
+        },
+    },
+    mounted: function () {
+        this.$nextTick(() => {
+            this.getSize()
+        })
+    },
 }
 </script>
 
@@ -89,14 +113,15 @@ export default {
 
 .ua-video-controls {
     background-color: $light-gray;
-    z-index: 0;
+    z-index: 1;
     display: flex;
     justify-content: center;
     @include app-block-padding;
-    margin-left: -$app-padding-x;
-    margin-right: -$app-padding-x;
-    position: relative;
-    bottom: 0;
+    // margin-left: -$app-padding-x;
+    // margin-right: -$app-padding-x;
+    // position: absolute;
+    // bottom: 0;
+    width: 100%;
     // transform: translateY($spacer);
 
     &__container {

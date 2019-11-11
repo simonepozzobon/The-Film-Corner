@@ -60,6 +60,7 @@
         "@sentry/integrations": "^5.4.1",
         "any-resize-event": "^1.0.0",
         "bootstrap-vue": "^2.0.0-rc.20",
+        "element-measurer": "^1.4.2",
         "element-resize-event": "^3.0.3",
         "font-awesome": "^4.7.0",
         "google-charts": "^1.1.0",
