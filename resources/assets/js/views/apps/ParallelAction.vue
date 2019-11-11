@@ -89,10 +89,10 @@ export default {
             this.$nextTick(() => {
                 let title = this.$refs.preview.$refs.title.$el
                 let titleH = SizeUtility.get(title)
-                let containerH = SizeUtility.get(this.$refs.preview
-                    .$el)
+                let containerH = SizeUtility.get(this.$refs.preview.$el)
                 let height = containerH.hClean - titleH.hClean + 2
                 this.$refs.library.setLibraryHeight(height)
+                // console.log(height);
                 if (this.isLoading) {
                     this.$root.objectsLoaded++
                 }
