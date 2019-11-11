@@ -1,47 +1,59 @@
 <template>
-    <div class="ua-video-controls">
-        <div class="ua-video-controls__container">
-            <div class="ua-video-controls__control">
-                <play
-                    @click.native="play"
-                    color="white"
-                    :hoverable="true"
-                    hover-color="darker"/>
-            </div>
-            <div class="ua-video-controls__control">
-                <pause
-                    @click.native="pause"
-                    color="white"
-                    :hoverable="true"
-                    hover-color="darker"/>
-            </div>
-            <div class="ua-video-controls__control">
-                <stop
-                    @click.native="stop"
-                    color="white"
-                    :hoverable="true"
-                    hover-color="darker"/>
-            </div>
-            <div class="ua-video-controls__control">
-                <backward
-                    @click.native="backward"
-                    color="white"
-                    :hoverable="true"
-                    hover-color="darker"/>
-            </div>
-            <div class="ua-video-controls__control">
-                <forward
-                    @click.native="forward"
-                    color="white"
-                    :hoverable="true"
-                    hover-color="darker"/>
-            </div>
+<div class="ua-video-controls">
+    <div class="ua-video-controls__container">
+        <div class="ua-video-controls__control">
+            <play
+                @click.native="play"
+                color="white"
+                :hoverable="true"
+                hover-color="darker"
+            />
+        </div>
+        <div class="ua-video-controls__control">
+            <pause
+                @click.native="pause"
+                color="white"
+                :hoverable="true"
+                hover-color="darker"
+            />
+        </div>
+        <div class="ua-video-controls__control">
+            <stop
+                @click.native="stop"
+                color="white"
+                :hoverable="true"
+                hover-color="darker"
+            />
+        </div>
+        <div class="ua-video-controls__control">
+            <backward
+                @click.native="backward"
+                color="white"
+                :hoverable="true"
+                hover-color="darker"
+            />
+        </div>
+        <div class="ua-video-controls__control">
+            <forward
+                @click.native="forward"
+                color="white"
+                :hoverable="true"
+                hover-color="darker"
+            />
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { Backward, Forward, Pause, Play, Stop } from '../icons'
+import {
+    Backward,
+    Forward,
+    Pause,
+    Play,
+    Stop
+}
+from '../icons'
 
 export default {
     name: 'UiAppVideoControls',
@@ -53,19 +65,19 @@ export default {
         Stop,
     },
     methods: {
-        play: function() {
+        play: function () {
             this.$emit('play')
         },
-        pause: function() {
+        pause: function () {
             this.$emit('pause')
         },
-        stop: function() {
+        stop: function () {
             this.$emit('stop')
         },
-        backward: function() {
+        backward: function () {
             this.$emit('backward')
         },
-        forward: function() {
+        forward: function () {
             this.$emit('forward')
         }
     }
@@ -83,6 +95,8 @@ export default {
     @include app-block-padding;
     margin-left: -$app-padding-x;
     margin-right: -$app-padding-x;
+    position: relative;
+    bottom: 0;
     // transform: translateY($spacer);
 
     &__container {

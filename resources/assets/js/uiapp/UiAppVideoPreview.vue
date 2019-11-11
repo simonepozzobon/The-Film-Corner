@@ -54,6 +54,7 @@ import SizeUtility from '../Sizes'
 
 import {
     TimelineMax,
+    TweenMax,
 }
 from 'gsap/all'
 
@@ -153,9 +154,6 @@ export default {
                 if (el && loader) {
                     this.loaderVisible = true
 
-                    let size = SizeUtility.get(el)
-                    this.playerHeight = Math.round(size.h)
-
                     TweenMax.set([el, loader], {
                         clearProps: "all"
                     })
@@ -164,22 +162,29 @@ export default {
                         paused: true,
                         autoRemoveChildren: true
                     })
+
+                    master.addLabel('start', '+=0')
+
                     master.fromTo(el, .6, {
                         transformOrigin: '50% 100%',
-                        height: size.h,
+                        height: 'auto',
                         autoAlpha: 1,
                     }, {
                         transformOrigin: '50% 100%',
-                        height: 0,
+                        height: '1px',
                         autoAlpha: 0,
-                    }, 0)
+                        immediateRender: false,
+                    }, 'start')
+
                     master.fromTo(loader, .3, {
-                        height: 0,
+                        height: '1px',
                         autoAlpha: 0,
                     }, {
-                        height: size.h,
+                        height: '100%',
                         autoAlpha: 1,
-                    }, 0)
+                        immediateRender: false,
+                    }, 'start')
+
                     master.progress(1).progress(0)
                     master.eventCallback('onComplete', () => {
                         this.$nextTick(() => {
@@ -196,33 +201,33 @@ export default {
                     let el = this.$refs.player.$el
                     let loader = this.$refs.loader
                     if (el && loader) {
-                        let size = SizeUtility.get(loader)
-                        let originalHeight = this.playerHeight
-                        // console.log('player', size.h, this.playerHeight);
 
                         let master = new TimelineMax({
                             paused: true
                         })
 
+                        master.addLabel('start', '+=0')
+
                         master.fromTo(el, .3, {
                             transformOrigin: '50% 0%',
-                            height: 0,
+                            height: '1px',
                             autoAlpha: 0,
                         }, {
                             transformOrigin: '50% 0%',
-                            height: originalHeight,
+                            height: 'auto',
                             autoAlpha: 1,
-                        }, 0)
+                            immediateRender: false,
+                        }, 'start')
 
                         master.fromTo(loader, .3, {
-                            height: originalHeight,
+                            height: '100%',
                             autoAlpha: 1,
                         }, {
-                            height: 0,
+                            height: '1px',
                             autoAlpha: 0,
-                        }, 0)
+                            immediateRender: false,
+                        }, 'start')
 
-                        master.progress(1).progress(0)
                         master.eventCallback('onComplete', () => {
                             this.loaderVisible = false
                             this.$nextTick(() => {
