@@ -1,41 +1,52 @@
 <template>
 <div class="ua-video-preview">
-    <ui-title
-        title="Preview"
-        color="white"
-        :has-padding="false"
-        ref="title"
-    />
-
-    <div
-        class="ua-video-preview__loader"
-        ref="loader"
-    >
-        <div
-            class="spinner-border"
-            :class="loaderColorClass"
-            role="status"
-        >
-            <span class="sr-only">Loading...</span>
-        </div>
+    <div class="ua-video-preview__title">
+        <ui-title
+            title="Preview"
+            color="white"
+            :has-padding="false"
+            ref="title"
+        />
     </div>
 
-    <video-player
-        class="video-player-box ua-video-preview__player"
-        ref="player"
-        :options="playerOptions"
-        :playsinline="true"
-        @timeupdate="onPlayerTimeUpdate($event)"
-        @ready="ready"
-    />
+    <div class="ua-video-preview__container">
+        <div
+            class="ua-video-preview__loader"
+            ref="loader"
+        >
+            <div
+                class="spinner-border"
+                :class="loaderColorClass"
+                role="status"
+            >
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
 
-    <ui-app-video-controls
-        @play="play"
-        @pause="pause"
-        @stop="stop"
-        @backward="backward"
-        @forward="forward"
-    />
+        <div
+            class="ua-video-preview__player"
+            ref="playerContainer"
+        >
+            <video-player
+                class="video-player-box"
+                ref="player"
+                :options="playerOptions"
+                :playsinline="true"
+                @timeupdate="onPlayerTimeUpdate($event)"
+                @ready="ready"
+            />
+        </div>
+
+        <ui-app-video-controls
+            class="ua-video-preview__controls"
+            @play="play"
+            @pause="pause"
+            @stop="stop"
+            @backward="backward"
+            @forward="forward"
+            @update-size="setControlsHeight"
+        />
+    </div>
 </div>
 </template>
 
@@ -88,6 +99,7 @@ export default {
                 poster: '/video/empty-session.png',
             },
             playerHeight: 0,
+            controlsHeight: 0,
         }
     },
     watch: {
@@ -149,7 +161,7 @@ export default {
         },
         showLoader: function () {
             if (!this.loaderVisible) {
-                let el = this.$refs.player.$el
+                let el = this.$refs.playerContainer
                 let loader = this.$refs.loader
                 if (el && loader) {
                     this.loaderVisible = true
@@ -160,32 +172,24 @@ export default {
 
                     let master = new TimelineMax({
                         paused: true,
-                        autoRemoveChildren: true
                     })
 
                     master.addLabel('start', '+=0')
 
                     master.fromTo(el, .6, {
-                        transformOrigin: '50% 100%',
-                        height: 'auto',
                         autoAlpha: 1,
                     }, {
-                        transformOrigin: '50% 100%',
-                        height: '1px',
                         autoAlpha: 0,
                         immediateRender: false,
-                    }, 'start')
+                    }, 'start+=0.2')
 
                     master.fromTo(loader, .3, {
-                        height: '1px',
                         autoAlpha: 0,
                     }, {
-                        height: '100%',
                         autoAlpha: 1,
                         immediateRender: false,
                     }, 'start')
 
-                    master.progress(1).progress(0)
                     master.eventCallback('onComplete', () => {
                         this.$nextTick(() => {
                             master.kill()
@@ -198,7 +202,7 @@ export default {
         hideLoader: function () {
             return new Promise(resolve => {
                 if (this.loaderVisible) {
-                    let el = this.$refs.player.$el
+                    let el = this.$refs.playerContainer
                     let loader = this.$refs.loader
                     if (el && loader) {
 
@@ -209,21 +213,15 @@ export default {
                         master.addLabel('start', '+=0')
 
                         master.fromTo(el, .3, {
-                            transformOrigin: '50% 0%',
-                            height: '1px',
                             autoAlpha: 0,
                         }, {
-                            transformOrigin: '50% 0%',
-                            height: 'auto',
                             autoAlpha: 1,
                             immediateRender: false,
-                        }, 'start')
+                        }, 'start+=0.2')
 
                         master.fromTo(loader, .3, {
-                            height: '100%',
                             autoAlpha: 1,
                         }, {
-                            height: '1px',
                             autoAlpha: 0,
                             immediateRender: false,
                         }, 'start')
@@ -245,7 +243,7 @@ export default {
         },
         ready: function () {
             if (this.loaderVisible) {
-                // console.log('triggered');
+                console.log('triggered');
                 this.hideLoader().then(() => {
                     this.$emit('ready')
                 })
@@ -253,37 +251,83 @@ export default {
             else {
                 this.$emit('ready')
             }
-        }
+        },
+        setControlsHeight: function (height) {
+            // this.controlsHeight = height
+            // this.$refs.playerContainer.style.bottom = `${0}px`
+        },
     },
-    mounted: function () {}
+    mounted: function () {
+
+    }
 }
 </script>
+<style lang="scss">
+@import '~styles/shared';
+.ua-video-preview {
+    &__controls {
+        left: 0;
+        right: 0;
+    }
+}
+</style>
 
 <style lang="scss" scoped>
 @import '~styles/shared';
 
 .ua-video-preview {
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: $dark-gray;
     @include border-left-radius(24px);
-    padding: $app-padding-x $app-padding-x 0;
     overflow: hidden;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    // position: relative;
 
-    &__loader {
+    &__title {
+        padding: $app-padding-x $app-padding-x 0;
+    }
+
+    &__container {
         position: relative;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 0;
+        flex-direction: column;
+        height: 100%;
         width: 100%;
-        visibility: hidden;
-        opacity: 0;
     }
 
     &__player {
-        position: relative;
+        padding: 0 $app-padding-x;
+        max-width: 100%;
     }
+
+    &__loader {
+        background-color: rgba($dark-gray, .9);
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        width: 100%;
+        height: 100%;
+        visibility: hidden;
+        opacity: 0;
+        z-index: 2;
+
+        .spinner-border {
+            width: $spacer * 4;
+            height: $spacer * 4;
+            font-size: $font-size-base * 2;
+        }
+    }
+    //
+    // &__player {
+    //     position: absolute;
+    //     width: calc(100% - (#{$app-padding-x} * 2));
+    //     height: 100%;
+    //     top: 0;
+    // }
 }
 </style>
