@@ -119,7 +119,7 @@
         <ui-paragraph
             class="pt-5"
             align="justify"
-            v-html="cat.description"
+            v-html="catDescription"
         />
     </ui-container>
 </ui-container>
@@ -171,7 +171,10 @@ export default {
     computed: {
         catTitle: function () {
             return this.$options.filters.translate(this.cat, 'name', this.$root.locale)
-        }
+        },
+        catDescription: function () {
+            return this.$options.filters.translate(this.cat, 'description', this.$root.locale)
+        },
     },
     methods: {
         getData: function () {
