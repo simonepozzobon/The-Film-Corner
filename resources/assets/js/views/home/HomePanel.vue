@@ -30,7 +30,7 @@
                     color="white"
                     :block="true"
                     @click="goToLogin"
-                >Login</ui-button>
+                >{{ getCmd('login') }}</ui-button>
             </ui-block>
         </ui-row>
     </ui-container>
@@ -51,8 +51,12 @@ import {
     UiRow,
 }
 from '../../ui'
+
+import TranslateCmd from '_js/TranslateCmd'
+
 export default {
     name: 'HomePanel',
+    mixins: [TranslateCmd],
     components: {
         UiBlock,
         UiButton,
@@ -70,7 +74,7 @@ export default {
             this.$router.push({
                 name: 'login'
             })
-        }
+        },
     }
 }
 </script>

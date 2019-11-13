@@ -24,7 +24,6 @@ class TranslationController extends Controller
             'categories' => AppCategory::all(),
             'apps' => App::all(),
             'captions' => Caption::all(),
-            'texts' => GeneralText::all(),
             'keywords' => AppKeyword::all()
         ];
 
@@ -36,10 +35,20 @@ class TranslationController extends Controller
             $translated[$currentLocale] = $this->format_contents_by_locale($currentLocale, $contents);
         }
 
+        $general_texts = $this->get_general_texts();
+
         return [
             'success' => true,
             'translations' => $translated,
+            'general_texts' => $general_texts,
         ];
+    }
+
+    public function get_general_texts()
+    {
+        $texts = GeneralText::with('translations')->get();
+
+        return $texts;
     }
 
     public function format_contents_by_locale($locale, $contents)

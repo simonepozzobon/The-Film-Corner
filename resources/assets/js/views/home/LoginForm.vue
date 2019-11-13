@@ -11,7 +11,7 @@
         class="login-form__container"
     >
         <ui-title
-            title="Login"
+            :title="getCmd('login')"
             color="white"
             :uppercase="false"
             align="center"
@@ -19,14 +19,14 @@
         />
 
         <ui-form-group
-            name="Email"
+            :name="getCmd('email')"
             type="email"
             class="login-form__input"
             @changed="changed"
         />
 
         <ui-form-group
-            name="Password"
+            :name="getCmd('password')"
             type="password"
             class="login-form__input"
             @changed="changed"
@@ -38,7 +38,7 @@
             class="login-form__submit"
             @click="attemptLogin"
         >
-            Login
+            {{ getCmd('login') }}
         </ui-button>
 
         <ui-button
@@ -47,7 +47,7 @@
             class="login-form__submit"
             @click="goBack"
         >
-            Back
+            {{ getCmd('back') }}
         </ui-button>
     </ui-block>
 </ui-row>
@@ -75,8 +75,11 @@ import {
 }
 from 'gsap/all'
 
+import TranslateCmd from '_js/TranslateCmd'
+
 export default {
     name: 'LoginForm',
+    mixins: [TranslateCmd],
     components: {
         UiBlock,
         UiButton,

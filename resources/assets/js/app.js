@@ -163,6 +163,7 @@ const home = new Vue({
             translationsCache: [],
             translations: [],
             locale: 'it',
+            generalTexts: [],
         }
     },
     watch: {
@@ -303,6 +304,7 @@ const home = new Vue({
                 if (response.data.success) {
                     this.translationsLoaded = true
                     this.translationsCache = response.data.translations
+                    this.generalTexts = response.data.general_texts
                     // this.translations = new Translations(response.data.translations)
                     // this.translations = this.translationsCache
                     // console.log(response.data);
