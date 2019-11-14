@@ -11,7 +11,7 @@
         class="login-form__container"
     >
         <ui-title
-            :title="getCmd('login')"
+            :title="this.$root.getCmd('login')"
             color="white"
             :uppercase="false"
             align="center"
@@ -19,14 +19,14 @@
         />
 
         <ui-form-group
-            :name="getCmd('email')"
+            name="Email"
             type="email"
             class="login-form__input"
             @changed="changed"
         />
 
         <ui-form-group
-            :name="getCmd('password')"
+            :name="this.$root.getCmd('password')"
             type="password"
             class="login-form__input"
             @changed="changed"
@@ -38,7 +38,7 @@
             class="login-form__submit"
             @click="attemptLogin"
         >
-            {{ getCmd('login') }}
+            {{ this.$root.getCmd('login') }}
         </ui-button>
 
         <ui-button
@@ -47,7 +47,7 @@
             class="login-form__submit"
             @click="goBack"
         >
-            {{ getCmd('back') }}
+            {{ this.$root.getCmd('back') }}
         </ui-button>
     </ui-block>
 </ui-row>
@@ -75,11 +75,8 @@ import {
 }
 from 'gsap/all'
 
-import TranslateCmd from '_js/TranslateCmd'
-
 export default {
     name: 'LoginForm',
-    mixins: [TranslateCmd],
     components: {
         UiBlock,
         UiButton,
@@ -144,6 +141,7 @@ export default {
             data.append('password', this.obj.password)
 
             axios.post('/api/v2/login', data).then(response => {
+                console.log(response.data);
                 if (response.data.success) {
                     this.$root.user = response.data.user
                     this.$root.token = response.data.token
