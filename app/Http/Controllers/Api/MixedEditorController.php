@@ -38,6 +38,14 @@ class MixedEditorController extends Controller
 
         // decode timelines
         $timelines = collect(json_decode($request->timelines));
+        $timelines = $timelines->transform(function ($item, $key) {
+            $item->duration = $item->duration / 10;
+            $item->cutEnd = $item->cutEnd / 10;
+            $item->cutStart = $item->cutStart / 10;
+            $item->originalDuration = $item->originalDuration / 10;
+            $item->start = $item->start / 10;
+            return $item;
+        });
 
         // divido le timelines
         $audio_trks = collect();
@@ -131,7 +139,7 @@ class MixedEditorController extends Controller
 
         // sort timelines by start time
         $timelines = $timelines->sortBy('start')->values();
-        $timelines = $timelines->transform(function($item, $key) {
+        $timelines = $timelines->transform(function ($item, $key) {
             $item->is_black = false;
             return $item;
         });
@@ -250,7 +258,6 @@ class MixedEditorController extends Controller
 
     public function detect_black($timelines)
     {
-
         $blacks = collect();
         $dataLenght = $timelines->count();
 
@@ -280,7 +287,6 @@ class MixedEditorController extends Controller
                     $black->duration = $next_start - $current_end;
                     $blacks->push($black);
                 }
-
             }
         }
 
@@ -357,8 +363,8 @@ class MixedEditorController extends Controller
                 exec($cli);
                 $clis->push($cli);
             } else {
-              // salto il passagio del taglio assegnando la sorgente alla variabile tagliata
-              $trimmedPath = $srcPath;
+                // salto il passagio del taglio assegnando la sorgente alla variabile tagliata
+                $trimmedPath = $srcPath;
             }
 
             /*
@@ -369,7 +375,6 @@ class MixedEditorController extends Controller
             $cli = SOX_LIB.' '.$trimmedPath. ' '.$offsettedPath.' pad '.$item->start. ' 0';
             exec($cli);
             $clis->push($cli);
-
         }
 
         if ($dataLenght > 1) {
@@ -460,16 +465,16 @@ class MixedEditorController extends Controller
 
         // Se non esiste la cartella src la creo
         if (!file_exists($srcPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/src', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/src', 0777, true);
         }
 
         // Se non esiste la cartella tmp la Creo
         if (!file_exists($tmpPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/tmp', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/tmp', 0777, true);
         }
 
         if (!file_exists($expPath)) {
-          $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/exp', 0777, true);
+            $mkdir = Storage::makeDirectory('public/video/sessions/'.$token.'/exp', 0777, true);
         }
 
         return [
