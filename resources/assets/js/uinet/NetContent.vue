@@ -13,7 +13,7 @@
         >
             <div class="net-content__head">
                 <ui-title
-                    title="Notes"
+                    :title="$root.getCmd('notes')"
                     :color="titleColor"
                     align="center"
                 />
@@ -51,6 +51,11 @@ import {
     UiTitle
 }
 from '../ui'
+
+import {
+    TweenMax
+}
+from 'gsap/all'
 
 export default {
     name: 'NetContent',
