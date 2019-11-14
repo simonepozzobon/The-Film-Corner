@@ -17,7 +17,7 @@ Route::get('/test', 'Api\TranslationController@get_translations');
 // Route::get('/test', 'Api\PropagandaController@test');
 // Route::get('/test', 'Api\SectionController@test');
 // Route::get('/test', 'Api\SectionController@get_network');
-// Route::get('/test', 'Api\TestController@fill_empty_translations');
+Route::get('/fill-trans', 'Api\TestController@fill_empty_translations');
 
 Route::get('/convert-teachers', 'Api\TestController@convert_teacher_to_user');
 Route::get('/convert-students', 'Api\TestController@convert_student_to_user');
