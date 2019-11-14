@@ -58,17 +58,20 @@ export default {
     watch: {
         '$root.objectsToLoad': function (count, oldCount) {
             // console.log('old', oldCount, 'new', count);
-            if (count > 0) {
+            if (count > 0 && oldCount == 0) {
+                console.log('inizia', count, oldCount);
                 this.master.tweenFromTo('start', 'endOpen')
+            }
+            else {
+                console.log('siamo qui', count, oldCount);
             }
         },
         '$root.objectsLoaded': function (count) {
-            let percent = 100
+            let percent = 0
             if (this.$root.objectsToLoad > 0) {
                 percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
             }
 
-            // console.log('counter', count);
             if (percent > 100) {
                 this.value = 100
             }
@@ -78,14 +81,18 @@ export default {
             else {
                 this.value = percent
             }
+            console.log('counter', percent);
         },
         value: function (value) {
-            // console.log('valueee', value, this.master.isActive(), this.destroy ? this.destroy.isActive() : 'non eistes');
+            console.log('valueee', value, this.master.isActive(), this.master.progress());
             if (value >= 100) {
                 // console.log('counter', value, this.master.isActive());
                 if (this.master) {
                     if (this.master.isActive() == false) {
                         this.master.tweenFromTo('endOpen', 'end')
+                    }
+                    else {
+                        console.log('freeesze');
                     }
                 }
             }
@@ -132,10 +139,6 @@ export default {
             }, `start+=0.2`).addLabel('endOpen')
 
             this.master.addLabel('close', 'endOpen+=0')
-            //
-            // this.master.set(el, {
-            //     autoAlpha: 1,
-            // }, 'close')
 
             this.master.to(content, {
                 duration: .5,
@@ -147,7 +150,6 @@ export default {
                 duration: .7,
                 autoAlpha: 0,
                 ease: 'sine.out',
-                // immediateRender: false,
                 onComplete: () => {
                     this.$root.loaderOpen = false
                     this.$root.objectsToLoad = 0

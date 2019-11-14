@@ -58,6 +58,7 @@ from '../../uiapp'
 import SizeUtility from '../../Sizes'
 
 import Shared from './Shared'
+const debounce = require('lodash.debounce')
 
 export default {
     name: 'ActiveParallelAction',
@@ -90,16 +91,16 @@ export default {
     },
     methods: {
         ready: function () {
-            this.$nextTick(() => {
-                let title = this.$refs.preview.$refs.title.$el
-                let titleH = SizeUtility.get(title)
-                let containerH = SizeUtility.get(this.$refs.preview.$el)
-                let height = containerH.hClean - titleH.hClean + 2
-                this.$refs.library.setLibraryHeight(height)
-                if (this.isLoading) {
-                    this.$root.objectsLoaded++
-                }
-            })
+            let title = this.$refs.preview.$refs.title.$el
+            let titleH = SizeUtility.get(title)
+            let containerH = SizeUtility.get(this.$refs.preview.$el)
+            let height = containerH.hClean - titleH.hClean + 2
+            this.$refs.library.setLibraryHeight(height)
+            if (this.isLoading) {
+                console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+                this.$root.objectsLoaded++
+                console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+            }
         },
         init: function () {
             let session = this.$root.session
@@ -113,16 +114,19 @@ export default {
                     this.session = session
                     this.isLoading = true
                     this.$root.isOpen = true
-                    this.$root.objectsToLoad = 1
-                    for (let i = 0; i < timelines.length; i++) {
-                        this.$nextTick(() => {
-                            this.timelines.push(timelines[i])
-                        })
-                    }
+                    this.$root.objectsToLoad = timelines.length > 0 ? 2 : 1
+                    // for (let i = 0; i < timelines.length; i++) {
+                    //     this.$nextTick(() => {
+                    //         this.timelines.push(timelines[i])
+                    //     })
+                    // }
+                    this.$nextTick(() => {
+                        this.timelines = timelines
+                    })
                 }
             }
 
-            console.log(this.assets);
+            // console.log(this.assets);
         },
         addTimeline: function (id, libraryID) {
             let timeline
@@ -145,7 +149,7 @@ export default {
                         cutEnd: 0,
                     }
 
-                    console.log(timeline);
+                    // console.log(timeline);
                 }
             }
 
@@ -178,13 +182,13 @@ export default {
         onUpdatePlayer: function (time) {
             this.playheadPosition = Math.round((time * this.tick) + this.playheadStart)
         },
-        updateEditor: function () {
+        updateEditor: debounce(function () {
             if (this.isFree) {
                 this.isFree = false
                 if (this.$refs.preview) {
                     this.$refs.preview.showLoader()
                 }
-                console.log('updating');
+                // console.log('updating');
                 let data = new FormData()
                 data.append('token', this.session.token)
                 data.append('timelines', JSON.stringify(this.timelines))
@@ -203,20 +207,20 @@ export default {
                             this.currentExport = response.data.export
                             this.saveContent()
                         })
-                        console.log('complete');
+                        // console.log('complete');
                     }
                 })
             }
             else {
-                // console.log('cache');
+                console.log('cache');
                 this.cache = this.timelines
             }
-        },
+        }, 150),
         setNotes: function (notes) {
             this.notes = notes
             this.saveContent()
         },
-        saveContent: _.debounce(function () {
+        saveContent: debounce(function () {
             let content = this.$root.session.content
             let newContent = {
                 video: this.currentExport,
@@ -238,7 +242,7 @@ export default {
             }
         }, 500),
         uploaded: function (asset) {
-            console.log(this.assets, asset);
+            // console.log(this.assets, asset);
         },
     },
     created: function () {

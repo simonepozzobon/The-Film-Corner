@@ -174,7 +174,7 @@ export default {
                         display: 'block',
                         ease: Power4.easeInOut,
                         onComplete: () => {
-                            console.log('completat')
+                            // console.log('completat')
                             resolve()
                         }
                     })
@@ -230,7 +230,7 @@ export default {
     },
     mounted: function () {
         this.$nextTick(this.getTitleSize)
-        console.log(this.track);
+        // console.log(this.track);
     },
     beforeDestroy: function () {
         // this.$refs.title.style.display = 'none'

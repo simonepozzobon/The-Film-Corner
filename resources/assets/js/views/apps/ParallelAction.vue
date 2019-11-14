@@ -224,7 +224,7 @@ export default {
             this.notes = notes
             this.saveContent()
         },
-        saveContent: _.debounce(function () {
+        saveContent: debounce(function () {
             let content = this.$root.session.content
             let newContent = {
                 video: this.currentExport,
