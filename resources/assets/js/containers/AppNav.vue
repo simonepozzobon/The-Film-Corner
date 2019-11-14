@@ -209,7 +209,7 @@ export default {
             this.$refs.saveSession.hide()
         },
         addTitle: function () {
-            if (this.title == null) {
+            if (this.title == null && this.$root.session.title != 'empty') {
                 this.title = this.$root.session.title
             }
             this.$refs.saveSession.show()

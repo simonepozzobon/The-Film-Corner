@@ -102,7 +102,7 @@ export default {
                 }
             }
 
-            if (!this.isLoading) {
+            if (this.isLoading == false) {
                 console.log('siamo qui');
                 let idx = Math.round(Math.random() * this.assets.library.length)
                 this.media = this.assets.library[idx]
@@ -136,25 +136,28 @@ export default {
             this.saveContent()
         },
         saveContent: _.debounce(function () {
-            let content = this.$root.session.content
+            if (this.media) {
+                let content = this.$root.session.content
+                console.log('media', this.media);
 
-            let newContent = {
-                main_video: this.media.videoSrc,
-                videos: [],
-                notes: this.notes
-            }
-
-            // console.log(newContent);
-
-            for (let key in content) {
-                if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
-                    content[key] = newContent[key]
+                let newContent = {
+                    main_video: this.media.videoSrc,
+                    videos: [],
+                    notes: this.notes
                 }
-            }
 
-            this.$root.session = {
-                ...this.$root.session,
-                content: content
+                // console.log(newContent);
+
+                for (let key in content) {
+                    if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
+                        content[key] = newContent[key]
+                    }
+                }
+
+                this.$root.session = {
+                    ...this.$root.session,
+                    content: content
+                }
             }
         }, 500),
         uploaded: function (asset) {

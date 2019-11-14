@@ -59,6 +59,7 @@ export default {
             data.append('app_id', this.appId)
 
             this.$http.post('/api/v2/asset-upload', data).then(response => {
+                console.log(response.data);
                 this.$emit('uploaded', response.data)
                 this.$nextTick(() => {
                     this.isLoading = false
