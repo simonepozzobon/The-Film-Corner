@@ -10,7 +10,7 @@
                 @click.stop.prevent="goTo('apps-home')"
                 class="nav-link logged-nav__link"
             >
-                Studios
+                {{ this.$root.getCmd('studios') }}
             </a>
         </li>
         <li class="logged-nav__item nav-item">
@@ -19,7 +19,7 @@
                 @click.stop.prevent="goTo('network-home')"
                 class="nav-link logged-nav__link"
             >
-                Network
+                {{ this.$root.getCmd('network') }}
             </a>
         </li>
         <li
@@ -31,7 +31,7 @@
                 @click.stop.prevent="goTo('teacher-profile')"
                 class="nav-link logged-nav__link"
             >
-                Students
+                {{ this.$root.getCmd('students') }}
             </a>
         </li>
         <li class="logged-nav__item nav-item">
@@ -41,7 +41,7 @@
                 class="nav-link logged-nav__link disabled"
                 disabled
             >
-                Help
+                {{ this.$root.getCmd('help') }}
             </a>
         </li>
     </ul>

@@ -209,7 +209,6 @@ export default {
             this.$refs.saveSession.hide()
         },
         addTitle: function () {
-            console.log(this.$root.session.title);
             if (this.title == null) {
                 this.title = this.$root.session.title
             }
@@ -218,7 +217,6 @@ export default {
         saveSession: function () {
             let session = this.$root.session
 
-            console.log(this.title);
             if (this.title) {
                 session.title = this.title
             }
