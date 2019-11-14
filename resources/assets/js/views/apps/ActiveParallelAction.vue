@@ -97,9 +97,9 @@ export default {
             let height = containerH.hClean - titleH.hClean + 2
             this.$refs.library.setLibraryHeight(height)
             if (this.isLoading) {
-                console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+                // console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
                 this.$root.objectsLoaded++
-                console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+                // console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
             }
         },
         init: function () {
@@ -212,7 +212,7 @@ export default {
                 })
             }
             else {
-                console.log('cache');
+                // console.log('cache');
                 this.cache = this.timelines
             }
         }, 150),

@@ -59,11 +59,11 @@ export default {
         '$root.objectsToLoad': function (count, oldCount) {
             // console.log('old', oldCount, 'new', count);
             if (count > 0 && oldCount == 0) {
-                console.log('inizia', count, oldCount);
+                // console.log('inizia', count, oldCount);
                 this.master.tweenFromTo('start', 'endOpen')
             }
             else {
-                console.log('siamo qui', count, oldCount);
+                // console.log('siamo qui', count, oldCount);
             }
         },
         '$root.objectsLoaded': function (count) {
@@ -81,10 +81,10 @@ export default {
             else {
                 this.value = percent
             }
-            console.log('counter', percent);
+            // console.log('counter', percent);
         },
         value: function (value) {
-            console.log('valueee', value, this.master.isActive(), this.master.progress());
+            // console.log('valueee', value, this.master.isActive(), this.master.progress());
             if (value >= 100) {
                 // console.log('counter', value, this.master.isActive());
                 if (this.master) {
@@ -92,7 +92,7 @@ export default {
                         this.master.tweenFromTo('endOpen', 'end')
                     }
                     else {
-                        console.log('freeesze');
+                        // console.log('freeesze');
                     }
                 }
             }
