@@ -133,7 +133,8 @@ export default {
             })
         },
         onPlayerTimeUpdate: function (player) {
-            let time = this.player.currentTime()
+            let time = player.currentTime()
+            console.log(time);
             this.$emit('on-update-player', time)
         },
         play: function () {
