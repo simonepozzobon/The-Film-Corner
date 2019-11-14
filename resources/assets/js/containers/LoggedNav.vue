@@ -7,7 +7,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('apps-home')"
+                @click.stop.prevent="$root.goTo('apps-home')"
                 class="nav-link logged-nav__link"
             >
                 {{ this.$root.getCmd('studios') }}
@@ -16,7 +16,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('network-home')"
+                @click.stop.prevent="$root.goTo('network-home')"
                 class="nav-link logged-nav__link"
             >
                 {{ this.$root.getCmd('network') }}
@@ -28,7 +28,7 @@
         >
             <a
                 href="#"
-                @click.stop.prevent="goTo('teacher-profile')"
+                @click.stop.prevent="$root.goTo('teacher-profile')"
                 class="nav-link logged-nav__link"
             >
                 {{ this.$root.getCmd('students') }}
@@ -37,7 +37,7 @@
         <li class="logged-nav__item nav-item">
             <a
                 href="#"
-                @click.stop.prevent="goTo('apps-help')"
+                @click.stop.prevent="$root.goTo('apps-help')"
                 class="nav-link logged-nav__link disabled"
                 disabled
             >
@@ -68,11 +68,6 @@ export default {
         },
     },
     methods: {
-        goTo: function (name) {
-            this.$router.push({
-                name: name
-            })
-        },
         show: function () {
             let master = TweenMax.fromTo(this.$refs.menu, .5, {
                 y: -100,

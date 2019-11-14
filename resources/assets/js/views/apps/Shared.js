@@ -106,8 +106,14 @@ const Shared = {
                         }
                     }
                 })
-        }
+        },
     },
+    beforeDestroy: function () {
+        console.log('before');
+        this.$root.objectsToLoad = 0
+        this.$root.objectsLoaded = 0
+    }
+
 }
 
 const SharedData = {

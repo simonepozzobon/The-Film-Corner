@@ -3,7 +3,7 @@
     <template slot="left">
         <ui-app-preview
             ref="preview"
-            title="Character"
+            :title="$root.getCmd('character')"
         />
     </template>
     <template
@@ -153,7 +153,7 @@ export default {
 
             // console.log(objects);
             this.$root.isOpen = true
-            console.log('to load', objects.length);
+            // console.log('to load', objects.length);
             this.$root.objectsToLoad = objects.length
             // console.log('da caricare', objects.length);
 
@@ -177,14 +177,16 @@ export default {
             }
         },
         getCanvasSize: function (hasReturn) {
-            let el = this.$refs.preview.$el
-            let title = this.$refs.preview.$refs.title.$refs.title
-            let elSize = SizeUtility.get(el)
-            let titleSize = SizeUtility.get(title)
-            elSize.hClean = elSize.hClean - titleSize.hClean - titleSize.marginY
-            this.size = elSize
-            if (hasReturn) {
-                return this.size
+            if (this.$refs.preview) {
+                let el = this.$refs.preview.$el
+                let title = this.$refs.preview.$refs.title.$refs.title
+                let elSize = SizeUtility.get(el)
+                let titleSize = SizeUtility.get(title)
+                elSize.hClean = elSize.hClean - titleSize.hClean - titleSize.marginY
+                this.size = elSize
+                if (hasReturn) {
+                    return this.size
+                }
             }
         },
         resizeCanvas: function (width) {
@@ -469,7 +471,7 @@ export default {
                     session.content = JSON.parse(session.content)
 
                     this.$root.session = session
-                    this.$root.isOpen = true
+                    // this.$root.isOpen = true
                     this.$root.isTeacherCheck = true
                     this.$root.notificationId = activity.id
 
@@ -484,6 +486,9 @@ export default {
     created: function () {
         // this.uniqid = SharedMethods.uniqid.bind(this)
         // this.getData = SharedMethods.getData.bind(this)
+        // if (this.$root.session == null) {
+        //     this.$router.go(-1)
+        // }
         this.$root.isApp = true
 
         // this.debugSession()
@@ -492,6 +497,7 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
+        console.log('ondeosx');
     }
 }
 </script>

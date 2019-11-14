@@ -158,7 +158,7 @@
     <logged-nav v-if="$root.user" />
     <app-nav v-if="$root.user && $root.isApp" />
     <network-nav v-if="$root.user && $root.isNetwork" />
-    <loader-nav v-if="$root.user && $root.isApp && $root.isOpen" />
+    <loader-nav v-if="$root.user" />
     <toasts />
 </div>
 </template>

@@ -184,7 +184,7 @@ export default {
             let appSlug = this.activity.data.session.app.slug
 
             this.$root.session = session
-            this.$root.isOpen = true
+            // this.$root.isOpen = true
             this.$root.isTeacherCheck = true
             this.$root.notificationId = this.activity.id
 
