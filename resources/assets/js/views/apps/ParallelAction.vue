@@ -89,17 +89,17 @@ export default {
     },
     methods: {
         ready: function () {
-            this.$nextTick(() => {
-                let title = this.$refs.preview.$refs.title.$el
-                let titleH = SizeUtility.get(title)
-                let containerH = SizeUtility.get(this.$refs.preview.$el)
-                let height = containerH.hClean - titleH.hClean + 2
-                this.$refs.library.setLibraryHeight(height)
-                // console.log(height);
-                if (this.isLoading) {
-                    this.$root.objectsLoaded++
-                }
-            })
+            let title = this.$refs.preview.$refs.title.$el
+            let titleH = SizeUtility.get(title)
+            let containerH = SizeUtility.get(this.$refs.preview.$el)
+            let height = containerH.hClean - titleH.hClean + 2
+            this.$refs.library.setLibraryHeight(height)
+            // console.log(height);
+            if (this.isLoading) {
+                // console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+                this.$root.objectsLoaded++
+                // console.log('isLoading', this.isLoading, this.$root.objectsLoaded);
+            }
         },
         init: function () {
             let session = this.$root.session
@@ -115,22 +115,23 @@ export default {
                     this.session = session
                     this.isLoading = true
                     this.$root.isOpen = true
-                    this.$root.objectsToLoad = 1
-                    for (let i = 0; i < timelines.length; i++) {
-                        this.$nextTick(() => {
-                            this.timelines.push(timelines[i])
-                        })
-                    }
+                    this.$root.objectsToLoad = timelines.length > 0 ? 2 : 1
+                    // for (let i = 0; i < timelines.length; i++) {
+                    //     this.$nextTick(() => {
+                    //         this.timelines.push(timelines[i])
+                    //     })
+                    // }
+                    this.$nextTick(() => {
+                        this.timelines = timelines
+                    })
                 }
             }
         },
         addTimeline: function (id, libraryID) {
             let timeline
-            let library = this.assets.library.filter(library => library.id ==
-                libraryID)[0]
+            let library = this.assets.library.filter(library => library.id == libraryID)[0]
             if (library) {
-                let video = library.videos.filter(video => video.id == id)[
-                    0]
+                let video = library.videos.filter(video => video.id == id)[0]
                 if (video) {
                     timeline = {
                         id: video.id,
@@ -157,8 +158,7 @@ export default {
                 uniqueid)
         },
         onDuplicate: function (uniqueid) {
-            let obj = this.timelines.filter(timeline => timeline.uniqueid ==
-                uniqueid)[0]
+            let obj = this.timelines.filter(timeline => timeline.uniqueid == uniqueid)[0]
             if (obj) {
                 obj = {
                     ...obj,
@@ -168,8 +168,7 @@ export default {
                 }
                 this.timelines.push(obj)
             }
-            this.timelines = this.timelines.filter(timeline => timeline.uniqueid !=
-                uniqueid)
+            this.timelines = this.timelines.filter(timeline => timeline.uniqueid != uniqueid)
         },
         onDrag: function (obj) {
             this.timelines[obj.idx]['start'] = obj.start
@@ -191,29 +190,28 @@ export default {
                 if (this.$refs.preview) {
                     this.$refs.preview.showLoader()
                 }
-                console.log('updating');
+                // console.log('updating');
                 let data = new FormData()
                 data.append('token', this.session.token)
                 data.append('timelines', JSON.stringify(this.timelines))
-                this.$http.post('/api/v2/render-video', data)
-                    .then(response => {
-                        // se c'è qualcosa nella cache
-                        this.isFree = true
-                        if (this.cache) {
-                            this.cache = null
+                this.$http.post('/api/v2/render-video', data).then(response => {
+                    // se c'è qualcosa nella cache
+                    this.isFree = true
+                    if (this.cache) {
+                        this.cache = null
+                        this.saveContent()
+                        this.updateEditor()
+                    }
+                    else {
+                        this.$refs.preview.hideLoader()
+                        // carico l'export solo quando è finita la coda
+                        this.$nextTick(() => {
+                            this.currentExport = response.data.export
                             this.saveContent()
-                            this.updateEditor()
-                        }
-                        else {
-                            this.$refs.preview.hideLoader()
-                            // carico l'export solo quando è finita la coda
-                            this.$nextTick(() => {
-                                this.currentExport = response.data.export
-                                this.saveContent()
-                            })
-                            console.log('complete');
-                        }
-                    })
+                        })
+                        // console.log('complete');
+                    }
+                })
             }
             else {
                 // console.log('cache');
@@ -224,7 +222,7 @@ export default {
             this.notes = notes
             this.saveContent()
         },
-        saveContent: _.debounce(function () {
+        saveContent: debounce(function () {
             let content = this.$root.session.content
             let newContent = {
                 video: this.currentExport,
@@ -246,9 +244,7 @@ export default {
         this.$root.isApp = true
         this.getData()
     },
-    mounted: function () {
-        // this.debug('parallel-action', '5cff9a09d936f')
-    },
+    mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
     }

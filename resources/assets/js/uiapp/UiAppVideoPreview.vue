@@ -2,7 +2,7 @@
 <div class="ua-video-preview">
     <div class="ua-video-preview__title">
         <ui-title
-            title="Preview"
+            :title="$root.getCmd('preview')"
             color="white"
             :has-padding="false"
             ref="title"
@@ -19,7 +19,7 @@
                 :class="loaderColorClass"
                 role="status"
             >
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">{{ this.$root.getCmd('loading') }}...</span>
             </div>
         </div>
 
@@ -64,6 +64,7 @@ from 'vue-video-player'
 import SizeUtility from '../Sizes'
 
 import {
+    gsap,
     TimelineMax,
     TweenMax,
 }
@@ -132,7 +133,8 @@ export default {
             })
         },
         onPlayerTimeUpdate: function (player) {
-            let time = this.player.currentTime()
+            let time = player.currentTime()
+            console.log(time);
             this.$emit('on-update-player', time)
         },
         play: function () {
@@ -166,29 +168,35 @@ export default {
                 if (el && loader) {
                     this.loaderVisible = true
 
-                    TweenMax.set([el, loader], {
+
+
+                    let master = gsap.timeline({
+                        paused: true,
+                        smoothChildTiming: true,
+                    })
+
+                    master.set([el, loader], {
                         clearProps: "all"
                     })
-
-                    let master = new TimelineMax({
-                        paused: true,
-                    })
-
                     master.addLabel('start', '+=0')
 
-                    master.fromTo(el, .6, {
+                    master.fromTo(loader, {
+                        autoAlpha: 0,
+                    }, {
+                        duration: .3,
+                        autoAlpha: 1,
+                        // immediateRender: false,
+                    }, 'start')
+
+                    master.fromTo(el, {
                         autoAlpha: 1,
                     }, {
+                        duration: .6,
                         autoAlpha: 0,
-                        immediateRender: false,
+                        // immediateRender: false,
                     }, 'start+=0.2')
 
-                    master.fromTo(loader, .3, {
-                        autoAlpha: 0,
-                    }, {
-                        autoAlpha: 1,
-                        immediateRender: false,
-                    }, 'start')
+
 
                     master.eventCallback('onComplete', () => {
                         this.$nextTick(() => {
@@ -206,33 +214,36 @@ export default {
                     let loader = this.$refs.loader
                     if (el && loader) {
 
-                        let master = new TimelineMax({
-                            paused: true
+                        let master = gsap.timeline({
+                            paused: true,
+                            smoothChildTiming: true,
                         })
 
                         master.addLabel('start', '+=0')
 
-                        master.fromTo(el, .3, {
+                        master.fromTo(loader, {
+                            autoAlpha: 1,
+                        }, {
+                            duration: .3,
+                            autoAlpha: 0,
+                            // immediateRender: false,
+                        }, 'start')
+
+                        master.fromTo(el, {
                             autoAlpha: 0,
                         }, {
+                            duration: .3,
                             autoAlpha: 1,
-                            immediateRender: false,
+                            // immediateRender: false,
                         }, 'start+=0.2')
 
-                        master.fromTo(loader, .3, {
-                            autoAlpha: 1,
-                        }, {
-                            autoAlpha: 0,
-                            immediateRender: false,
-                        }, 'start')
 
                         master.eventCallback('onComplete', () => {
                             this.loaderVisible = false
-                            this.$nextTick(() => {
-                                master.kill()
-                                resolve()
-                            })
+                            master.kill()
+                            resolve()
                         })
+
                         master.play()
                     }
                 }
@@ -243,7 +254,7 @@ export default {
         },
         ready: function () {
             if (this.loaderVisible) {
-                console.log('triggered');
+                // console.log('triggered');
                 this.hideLoader().then(() => {
                     this.$emit('ready')
                 })

@@ -9,7 +9,7 @@
             ver-align="center"
         >
             <ui-title
-                title="Advanced Search"
+                :title="$root.getCmd('advanced_search')"
                 font-size="h1"
                 align="center"
                 :uppercase="false"
@@ -79,7 +79,7 @@ export default {
     watch: {
         results: function (results) {
             if (results.length > 0) {
-                this.title = 'My results'
+                this.title = this.$root.getCmd('my_search')
             }
             else {
                 this.title = null

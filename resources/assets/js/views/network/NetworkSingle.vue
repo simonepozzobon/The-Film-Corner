@@ -7,11 +7,11 @@
         v-if="item"
         :color="item.app.category.color_class"
         :title="item.title"
-        :app="item.app.title"
-        :cat="item.app.category.name"
+        :app="item.app | translate('title', $root.locale)"
+        :cat="item.app.category | translate('name', $root.locale)"
     >
         <ui-button
-            title="like"
+            :title="$root.getCmd('like')"
             color="dark"
             @click="addLike"
         />
@@ -55,9 +55,11 @@ import {
     NetPreview
 }
 from '../../uinet'
+import TranslationFilter from '_js/TranslationFilter'
 
 export default {
     name: 'NetworkSingle',
+    mixins: [TranslationFilter],
     components: {
         NetContent,
         NetFolder,

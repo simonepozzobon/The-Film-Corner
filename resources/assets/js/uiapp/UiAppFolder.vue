@@ -99,14 +99,14 @@ export default {
             }
         },
         open: function () {
-            this.button = 'Close'
+            this.button = this.$root.getCmd('close')
             this.isOpen = true
             this.$nextTick(() => {
                 this.description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
             })
         },
         close: function () {
-            this.button = 'Read More'
+            this.button = this.$root.getCmd('read_more')
             this.isOpen = false
             let description = this.$options.filters.translate(this.app, 'description', this.$root.locale)
             this.description = clipper(description, 150, {

@@ -57,7 +57,7 @@
                         display="inline-block"
                         @click="startApp"
                     >
-                        Start a new session
+                        {{ this.$root.getCmd('start_new_session') }}
                     </ui-button>
                     <ui-button
                         color="dark"
@@ -87,6 +87,8 @@ import {
     UiAppSessionManager,
 }
 from '../../uiapp'
+
+
 import {
     UiBlock,
     UiBlockHead,
@@ -130,7 +132,7 @@ export default {
             sessions: [],
             open: false,
             description: null,
-            buttonText: 'Open existing session',
+            buttonText: null,
             isOpenClass: null,
         }
     },
@@ -162,21 +164,23 @@ export default {
     },
     methods: {
         getData: function () {
+
+
             let slug = this.$route.params.app
             this.$http.get('/api/v2/get-app/' + slug)
                 .then(response => {
                     if (response.data.success) {
                         this.app = response.data.app
                         this.sessions = response.data.sessions
-
+                        this.buttonText = this.$root.getCmd('open_existing_session')
                         // this.debug()
                     }
                 })
         },
         debug: function () {
-            this.$nextTick(() => {
-                this.togglePanel()
-            })
+            // this.$nextTick(() => {
+            //     this.togglePanel()
+            // })
         },
         startApp: function () {
             this.$root.goTo(this.app.slug)
@@ -186,7 +190,7 @@ export default {
                 this.open = false
                 this.isOpenClass = null
                 this.description = this.app.description
-                this.buttonText = 'Open existing session'
+                this.buttonText = this.$root.getCmd('open_existing_session')
             }
             else {
                 this.open = true
@@ -194,7 +198,7 @@ export default {
                 this.description = clipper(this.app.description, 150, {
                     html: true
                 })
-                this.buttonText = 'Close Panel'
+                this.buttonText = this.$root.getCmd('close_panel')
             }
         }
     },

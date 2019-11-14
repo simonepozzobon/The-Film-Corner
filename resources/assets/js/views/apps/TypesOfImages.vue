@@ -7,7 +7,7 @@
     <template slot="left">
         <ui-app-image
             v-if="media"
-            title="first image"
+            :title="$root.getCmd('first_image')"
             :src="media.leftSrc"
             @loaded="loaded"
         />
@@ -15,7 +15,7 @@
     <template slot="right">
         <ui-app-image
             v-if="media"
-            title="second image"
+            :title="$root.getCmd('second_image')"
             :src="media.rightSrc"
             border-direction="right"
             @loaded="loaded"
@@ -33,7 +33,7 @@
                 align="center"
                 @click="randomize"
             >
-                Change Images
+                {{ $root.getCmd('change_images') }}
             </ui-button>
         </ui-app-block>
         <ui-app-note

@@ -6,7 +6,7 @@
             title="Character"
         /> -->
         <ui-app-block
-            title="Preview"
+            :title="$root.getCmd('preview')"
             titleColor="white"
             color="dark"
             :size="12"

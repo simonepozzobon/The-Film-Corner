@@ -6,10 +6,10 @@
             :has-container="false"
         >
             <text-input
-                title="Title"
+                :title="$root.getCmd('title')"
                 name="title"
                 :value.sync="search.title"
-                :placeholder="placeholders.title"
+                :placeholder="$root.getCmd('write_a_title')"
             />
         </ui-block>
         <ui-block
@@ -17,10 +17,10 @@
             :has-container="false"
         >
             <select-input
-                title="Historical period"
+                :title="$root.getCmd('historical_period')"
                 name="period"
                 :value.sync="search.period"
-                :placeholder="placeholders.period"
+                :placeholder="$root.getCmd('select_an_historical_period')"
             />
         </ui-block>
         <ui-block
@@ -28,10 +28,10 @@
             :has-container="false"
         >
             <text-input
-                title="Director"
+                :title="$root.getCmd('director')"
                 name="director"
                 :value.sync="search.director"
-                :placeholder="placeholders.director"
+                :placeholder="$root.getCmd('write_a_director')"
             />
         </ui-block>
         <ui-block
@@ -39,10 +39,10 @@
             :has-container="false"
         >
             <select-input
-                title="Genre"
+                :title="$root.getCmd('genre')"
                 name="genre"
                 :value.sync="search.genre"
-                :placeholder="placeholders.genre"
+                :placeholder="$root.getCmd('select_a_genre')"
             />
         </ui-block>
         <ui-block
@@ -50,10 +50,10 @@
             :has-container="false"
         >
             <text-input
-                title="Year of production"
+                :title="$root.getCmd('year_of_production')"
                 name="year"
                 :value.sync="search.year"
-                :placeholder="placeholders.year"
+                :placeholder="$root.getCmd('write_a_year_of_production')"
             />
         </ui-block>
         <ui-block
@@ -61,10 +61,10 @@
             :has-container="false"
         >
             <select-input
-                title="Format"
+                :title="$root.getCmd('format')"
                 name="format"
                 :value.sync="search.format"
-                :placeholder="placeholders.format"
+                :placeholder="$root.getCmd('select_a_format')"
             />
         </ui-block>
         <ui-block
@@ -72,10 +72,10 @@
             :has-container="false"
         >
             <text-input
-                title="Nationality"
+                :title="$root.getCmd('nationality')"
                 name="country"
                 :value.sync="search.country"
-                :placeholder="placeholders.country"
+                :placeholder="$root.getCmd('write_a_nationality')"
             />
         </ui-block>
         <ui-block
@@ -83,10 +83,10 @@
             :has-container="false"
         >
             <text-input
-                title="People"
+                :title="$root.getCmd('people')"
                 name="cast"
                 :value.sync="search.cast"
-                :placeholder="placeholders.cast"
+                :placeholder="$root.getCmd('write_peoples')"
             />
         </ui-block>
         <ui-block
@@ -94,10 +94,10 @@
             :has-container="false"
         >
             <text-input
-                title="Topic"
+                :title="$root.getCmd('topic')"
                 name="topic"
                 :value.sync="search.topic"
-                :placeholder="placeholders.topic"
+                :placeholder="$root.getCmd('write_a_topic')"
             />
         </ui-block>
         <ui-block
@@ -105,16 +105,16 @@
             :has-container="false"
         >
             <select-input
-                title="Student age"
+                :title="$root.getCmd('student_age')"
                 name="age_range"
                 :value.sync="search.age_range"
-                :placeholder="placeholders.age_range"
+                :placeholder="$root.getCmd('select_age_range')"
             />
         </ui-block>
     </ui-row>
     <div class="ua-search-form__btns">
         <ui-button
-            title="Search"
+            :title="$root.getCmd('search')"
             color="red"
             :has-container="false"
             @click="startSearch"

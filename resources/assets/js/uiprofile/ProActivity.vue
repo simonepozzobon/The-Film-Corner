@@ -30,7 +30,7 @@
         </div>
         <div class="pro-activity__delete">
             <ui-button
-                title="open"
+                :title="$root.getCmd('open')"
                 color="black"
                 size="sm"
                 :has-margin="false"
@@ -38,7 +38,7 @@
                 @click="openSession"
             />
             <ui-button
-                title="delete"
+                :title="$root.getCmd('delete')"
                 color="black"
                 size="sm"
                 :has-margin="false"
@@ -63,8 +63,11 @@ import {
 }
 from 'gsap/all'
 
+import TranslationFilter from '_js/TranslationFilter'
+
 export default {
     name: 'ProActivity',
+    mixins: [TranslationFilter],
     components: {
         UiButton,
     },
@@ -119,7 +122,7 @@ export default {
         app: function () {
             if (this.activity.data && this.activity.data.session) {
                 if (this.activity.data.session.app.title) {
-                    return this.activity.data.session.app.title
+                    return this.$options.filters.translate(this.activity.data.session.app, 'title', this.$root.locale)
                 }
             }
             return 'no name'
@@ -181,7 +184,7 @@ export default {
             let appSlug = this.activity.data.session.app.slug
 
             this.$root.session = session
-            this.$root.isOpen = true
+            // this.$root.isOpen = true
             this.$root.isTeacherCheck = true
             this.$root.notificationId = this.activity.id
 

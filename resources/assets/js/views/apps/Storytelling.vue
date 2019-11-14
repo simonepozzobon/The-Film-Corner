@@ -55,7 +55,7 @@
                 align="center"
                 @click="randomize"
             >
-                Reload
+                {{ this.$root.getCmd('reload') }}
             </ui-button>
         </ui-app-block>
         <ui-app-note

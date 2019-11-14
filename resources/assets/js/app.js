@@ -131,9 +131,11 @@ router.beforeEach((to, from, next) => {
 
 import MainTemplate from './containers/MainTemplate.vue'
 import SessionParams from './SessionParams'
+import TranslateCmd from './TranslateCmd'
 
 const home = new Vue({
     router,
+    mixins: [TranslateCmd],
     components: {
         MainTemplate,
     },
@@ -156,6 +158,7 @@ const home = new Vue({
             progress: 0,
             objectsToLoad: 0,
             objectsLoaded: 0,
+            loaderOpen: false,
             fullMessage: null,
             fullMessageMaster: null,
             notificationId: null,
@@ -171,7 +174,7 @@ const home = new Vue({
             this.checkSession(session.app_id)
         },
         objectsToLoad: function (value) {
-            // console.log('oggetti da caricare', value);
+            console.log('oggetti da caricare', value);
             this.objectsLoaded = 0
         },
         // locale: function (locale) {

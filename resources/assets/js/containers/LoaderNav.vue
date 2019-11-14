@@ -21,6 +21,7 @@
 
 <script>
 import {
+    gsap,
     TimelineMax,
     TweenMax,
     Power4,
@@ -49,11 +50,28 @@ export default {
     data: function () {
         return {
             value: 0,
+            master: null,
+            destroy: null,
+            stretch: 10,
         }
     },
     watch: {
+        '$root.objectsToLoad': function (count, oldCount) {
+            // console.log('old', oldCount, 'new', count);
+            if (count > 0 && oldCount == 0) {
+                // console.log('inizia', count, oldCount);
+                this.master.tweenFromTo('start', 'endOpen')
+            }
+            else {
+                // console.log('siamo qui', count, oldCount);
+            }
+        },
         '$root.objectsLoaded': function (count) {
-            let percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
+            let percent = 0
+            if (this.$root.objectsToLoad > 0) {
+                percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
+            }
+
             if (percent > 100) {
                 this.value = 100
             }
@@ -63,55 +81,94 @@ export default {
             else {
                 this.value = percent
             }
+            // console.log('counter', percent);
         },
         value: function (value) {
-            // console.log('counter', value);
+            // console.log('valueee', value, this.master.isActive(), this.master.progress());
             if (value >= 100) {
-                this.destroyLoader()
+                // console.log('counter', value, this.master.isActive());
+                if (this.master) {
+                    if (this.master.isActive() == false) {
+                        this.master.tweenFromTo('endOpen', 'end')
+                    }
+                    else {
+                        // console.log('freeesze');
+                    }
+                }
             }
         }
     },
     methods: {
         init: function () {
+            // console.log('init');
             let el = this.$refs.menu
-            let master = new TimelineMax({
-                paused: true
+            let content = document.getElementsByClassName('main__content')[0]
+
+            this.master = gsap.timeline({
+                paused: true,
+                smoothChildTiming: true
             })
-            master.fromTo(el, .7, {
+
+            this.master.addLabel('start', 0)
+
+            this.master.set(content, {
+                autoAlpha: 0
+            })
+
+            this.master.fromTo(el, {
                 scaleX: 0,
             }, {
+                duration: .5,
                 scaleX: 1,
-                ease: Sine.easeOut,
-            }, 0)
-            master.fromTo(el, .5, {
+                ease: 'sine.out',
+                onStart: () => {
+                    this.$root.loaderOpen = true
+                },
+                // immediateRender: false,
+            }, 'start')
+
+            this.master.fromTo(el, {
                 scaleY: 0,
                 autoAlpha: 0,
             }, {
+                duration: .3,
                 scaleY: 1,
                 autoAlpha: 1,
-                ease: Power4.easeIn,
-                // onComplete: () => {
-                //     master.kill()
-                // }
-            }, .2)
-            master.progress(1).progress(0)
-            master.play()
-        },
-        destroyLoader: function () {
-            let master = TweenMax.fromTo(this.$refs.menu, .5, {
+                ease: 'power4.in',
+                // immediateRender: false,
+            }, `start+=0.2`).addLabel('endOpen')
+
+            this.master.addLabel('close', 'endOpen+=0')
+
+            this.master.to(content, {
+                duration: .5,
                 autoAlpha: 1,
-            }, {
-                delay: 1,
+                ease: 'sine.in',
+            }, 'close+=0.5')
+
+            this.master.to(el, {
+                duration: .7,
                 autoAlpha: 0,
+                ease: 'sine.out',
                 onComplete: () => {
-                    // console.log('completo', this.$refs.menu);
-                }
-            })
-        }
+                    this.$root.loaderOpen = false
+                    this.$root.objectsToLoad = 0
+                    this.$root.objectsLoaded = 0
+                },
+            }, 'close+=0.5')
+
+            this.master.addLabel('end')
+        },
     },
     mounted: function () {
         this.$nextTick(this.init)
     },
+    beforeDestroy: function () {
+        this.$root.loaderOpen = false
+        if (this.master) {
+            this.master.kill()
+        }
+    }
 }
 </script>
 

@@ -9,7 +9,7 @@
             ref="timeline"
         >
             <ui-title
-                :title="title"
+                :title="$root.getCmd(title)"
                 color="white"
                 :has-padding="false"
             />
@@ -66,7 +66,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Timeline',
+            default: 'timeline',
         },
         timelines: {
             type: Array,
