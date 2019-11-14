@@ -131,9 +131,11 @@ router.beforeEach((to, from, next) => {
 
 import MainTemplate from './containers/MainTemplate.vue'
 import SessionParams from './SessionParams'
+import TranslateCmd from './TranslateCmd'
 
 const home = new Vue({
     router,
+    mixins: [TranslateCmd],
     components: {
         MainTemplate,
     },
