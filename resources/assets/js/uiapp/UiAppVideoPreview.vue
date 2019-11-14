@@ -2,7 +2,7 @@
 <div class="ua-video-preview">
     <div class="ua-video-preview__title">
         <ui-title
-            title="Preview"
+            :title="$root.getCmd('preview')"
             color="white"
             :has-padding="false"
             ref="title"
@@ -19,7 +19,7 @@
                 :class="loaderColorClass"
                 role="status"
             >
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">{{ this.$root.getCmd('loading') }}...</span>
             </div>
         </div>
 

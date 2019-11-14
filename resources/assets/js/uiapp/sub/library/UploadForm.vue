@@ -9,7 +9,7 @@
 
     <ui-button
         :has-container="false"
-        title="Upload"
+        :title="$root.getCmd('upload')"
         color="dark"
         :has-spinner="isLoading"
         :disable="isLoading"

@@ -8,7 +8,7 @@
         <ui-block-head
             class="app-container__list"
             :size="12"
-            title="Open Existing Session"
+            :title="getCmd('open_existing_session')"
             :color="colorClass"
             :radius="true"
             radius-size="md"
@@ -37,6 +37,7 @@
 
 <script>
 import UiAppSession from './UiAppSession.vue'
+import TranslateCmd from '_js/TranslateCmd'
 import {
     UiBlock,
     UiBlockHead,
@@ -60,6 +61,7 @@ import {
 from 'gsap/all'
 export default {
     name: 'UiAppSessionManager',
+    mixins: [TranslateCmd],
     components: {
         UiAppSession,
         UiBlock,
@@ -126,8 +128,7 @@ export default {
             this.$http.delete(url)
                 .then(response => {
                     if (response.data.success) {
-                        this.sessions = this.sessions.filter(session =>
-                            session.token != idx)
+                        this.sessions = this.sessions.filter(session => session.token != idx)
                     }
                 })
         },
@@ -145,7 +146,7 @@ export default {
 
             let data = new FormData()
             data.append('token', token)
-            this.$root.fullMessage = 'Shared with your teacher'
+            this.$root.fullMessage = this.$root.getCmd('shared_with_your_teacher')
 
             this.$http.post('/api/v2/session/share-to-teacher', data).then(response => {
                 this.$root.showMessage()

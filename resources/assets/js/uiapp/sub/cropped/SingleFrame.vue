@@ -25,7 +25,7 @@
                 ></textarea>
             </div>
             <ui-button
-                title="Delete Frame"
+                :title="$root.getCmd('delete_frame')"
                 align="center"
                 :has-margin="false"
                 color="dark"

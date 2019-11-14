@@ -49,19 +49,25 @@
                             display="inline-block"
                             :has-container="false"
                             @click="goToApp(app.slug)"
-                        >Read More</ui-button>
+                        >
+                            {{ $root.getCmd('read_more') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
                             @click="startApp(app.slug)"
-                        >New</ui-button>
+                        >
+                            {{ $root.getCmd('new') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
                             :disable="true"
-                        >Open</ui-button>
+                        >
+                            {{ $root.getCmd('open') }}
+                        </ui-button>
                     </div>
                 </ui-block>
             </ui-row>
@@ -106,7 +112,7 @@
             v-if="keywords && keywords.length > 0"
         >
             <ui-title
-                title="Glossary"
+                :title="this.$root.getCmd('glossary')"
                 align="center"
             />
             <ui-accordion-cols :keywords="keywords" />
@@ -128,6 +134,7 @@
 <script>
 const clipper = require('text-clipper')
 import TranslationFilter from '../../TranslationFilter'
+
 
 import {
     UiAccordionCols,

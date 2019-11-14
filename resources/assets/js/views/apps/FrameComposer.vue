@@ -21,6 +21,7 @@
         <ui-app-layers
             ref="layers"
             :layers="objs"
+            :title="this.$root.getCmd('layers')"
             @select-layer="selectLayer"
             @delete-layer="deleteLayer"
         />

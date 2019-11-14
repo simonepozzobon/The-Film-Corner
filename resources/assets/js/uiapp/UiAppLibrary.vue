@@ -10,7 +10,7 @@
     >
         <ui-title
             ref="title"
-            :title="title"
+            :title="this.$root.getCmd(title)"
             :has-padding="false"
         />
         <div
@@ -18,7 +18,7 @@
             class="ua-library__libraries row no-gutters"
             v-if="hasSubLibraries"
         >
-            <label class="col-4">Select From</label>
+            <label class="col-4">{{ this.$root.getCmd('select_from') }}</label>
             <select
                 class="form-control ua-library__select col-8"
                 v-model="currentLibrary"
@@ -173,7 +173,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Library',
+            default: 'library',
         },
         hasSubLibraries: {
             type: Boolean,
