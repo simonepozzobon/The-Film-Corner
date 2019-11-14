@@ -20,35 +20,45 @@
                     href="#"
                     @click="goTo($event, 'home')"
                     class="main-menu__link nav-link"
-                >Home</a>
+                >
+                    {{ this.$root.getCmd('home') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
                 <a
                     href="#"
                     @click="goTo($event, 'project')"
                     class="main-menu__link nav-link"
-                >The Project</a>
+                >
+                    {{ this.$root.getCmd('the_project') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
                 <a
                     href="#"
                     @click="goTo($event, 'schools')"
                     class="main-menu__link nav-link"
-                >Schools</a>
+                >
+                    {{ this.$root.getCmd('schools') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
                 <a
                     href="#"
                     @click="goTo($event, 'conference')"
                     class="main-menu__link nav-link"
-                >Conference</a>
+                >
+                    {{ this.$root.getCmd('conference') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
                 <a
                     href="#"
                     @click="goTo($event, 'filmography')"
                     class="main-menu__link nav-link"
-                >Filmography</a>
+                >
+                    {{ this.$root.getCmd('filmography') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
                 <a
@@ -72,7 +82,7 @@
                     aria-haspopup="true"
                     aria-expanded="false"
                 >
-                    Language
+                    {{ this.$root.getCmd('language') }}
                 </a>
                 <div
                     class="dropdown-menu dropdown-menu-right"
@@ -130,7 +140,7 @@
                     href="#"
                     class="main-menu__link nav-link user-profile__avatar"
                 >
-                    SP
+                    {{ initialsName }}
                 </a>
             </li>
         </ul>
@@ -182,6 +192,15 @@ export default {
         NetworkNav,
         Toasts
     },
+    data: function () {
+        return {
+            loginTxt: null,
+            ready: {
+                burger: false,
+                overlay: false,
+            },
+        }
+    },
     watch: {
         '$root.window': function () {
             this.setMenu()
@@ -190,14 +209,19 @@ export default {
             this.setLoginTxt()
         }
     },
-    data: function () {
-        return {
-            loginTxt: 'Login',
-            ready: {
-                burger: false,
-                overlay: false,
-            },
-        }
+    computed: {
+        initialsName: function () {
+            if (this.$root.user) {
+                let first = this.$root.user.name.charAt(0)
+                let second = this.$root.user.name.charAt(1)
+                if (this.$root.user.surname) {
+                    second = this.$root.user.surname.charAt(0)
+                }
+
+                return `${first}${second}`
+            }
+            return null
+        },
     },
     methods: {
         setLocale: function (locale) {
@@ -216,10 +240,10 @@ export default {
         },
         setLoginTxt: function () {
             if (this.$root.user) {
-                this.loginTxt = 'Logout'
+                this.loginTxt = this.$root.getCmd('logout')
             }
             else {
-                this.loginTxt = 'Login'
+                this.loginTxt = this.$root.getCmd('login')
             }
         },
         timelineReady: function (key) {
