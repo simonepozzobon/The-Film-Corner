@@ -84,26 +84,28 @@ class ProfileController extends Controller
                 $user = User::find($notification->data['user']);
                 $session = Session::where('token', $notification->data['session'])->with('app', 'user')->first();
 
-                if ($session->is_shared == 0) {
-                    $notification->data = [
-                      'sender' => $sender,
-                      'user' => $user,
-                      'session' => $session
-                    ];
-
-                    array_push($activities, $notification);
-                } else {
-                    $activity = Network::where('token', '=', $notification->data['session'])->with('app', 'user')->first();
-
-                    if ($activity) {
+                if ($session) {
+                    if ($session->is_shared == 0) {
                         $notification->data = [
-                            'sender' => $sender,
-                            'user' => $user,
-                            'session' => $session
-                        ];
+                        'sender' => $sender,
+                        'user' => $user,
+                        'session' => $session
+                      ];
 
-                        $activity->notification = $notification;
-                        array_push($activities, $activity);
+                        array_push($activities, $notification);
+                    } else {
+                        $activity = Network::where('token', '=', $notification->data['session'])->with('app', 'user')->first();
+
+                        if ($activity) {
+                            $notification->data = [
+                              'sender' => $sender,
+                              'user' => $user,
+                              'session' => $session
+                          ];
+
+                            $activity->notification = $notification;
+                            array_push($activities, $activity);
+                        }
                     }
                 }
             }
