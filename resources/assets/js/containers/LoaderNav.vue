@@ -53,7 +53,12 @@ export default {
     },
     watch: {
         '$root.objectsLoaded': function (count) {
-            let percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
+            let percent = 100
+            if (this.$root.objectsToLoad > 0) {
+                percent = Math.floor(count * 100 / (this.$root.objectsToLoad - 1))
+            }
+
+            // console.log('counter', count);
             if (percent > 100) {
                 this.value = 100
             }
@@ -65,9 +70,9 @@ export default {
             }
         },
         value: function (value) {
-            // console.log('counter', value);
             if (value >= 100) {
-                this.destroyLoader()
+                // console.log('counter', value);
+                this.$nextTick(() => this.destroyLoader())
             }
         }
     },
@@ -82,6 +87,7 @@ export default {
             }, {
                 scaleX: 1,
                 ease: Sine.easeOut,
+                immediateRender: false,
             }, 0)
             master.fromTo(el, .5, {
                 scaleY: 0,
@@ -90,11 +96,14 @@ export default {
                 scaleY: 1,
                 autoAlpha: 1,
                 ease: Power4.easeIn,
-                // onComplete: () => {
-                //     master.kill()
-                // }
+                immediateRender: false,
             }, .2)
             master.progress(1).progress(0)
+
+            master.eventCallback('onStart', () => {
+                this.$root.loaderOpen = true
+            })
+
             master.play()
         },
         destroyLoader: function () {
@@ -103,7 +112,8 @@ export default {
             }, {
                 delay: 1,
                 autoAlpha: 0,
-                onComplete: () => {
+                onStart: () => {
+                    this.$root.loaderOpen = false
                     // console.log('completo', this.$refs.menu);
                 }
             })
@@ -112,6 +122,9 @@ export default {
     mounted: function () {
         this.$nextTick(this.init)
     },
+    beforeDestroy: function () {
+        this.$root.loaderOpen = false
+    }
 }
 </script>
 

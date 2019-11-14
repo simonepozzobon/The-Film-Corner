@@ -128,12 +128,20 @@ export default {
                 // console.log('listener');
                 let listener = await this.addListeners(true)
                 // console.log('completi');
-                this.selectionListeners()
+                let selection = await this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)
             }
             else {
-                this.addListeners()
-                this.selectionListeners()
+                let listeners = await this.addListeners()
+                let selection = await this.selectionListeners()
+
+                // risolve bug con il loader che rimane bloccato in caso di sessione vuota
+                if (this.$root.loaderOpen == true && this.$root.objectsToLoad == 0 && this.$root.objectsLoaded == 0) {
+                    this.$nextTick(() => {
+                        this.$root.objectsLoaded = 1
+                    })
+
+                }
             }
 
         },
@@ -145,6 +153,7 @@ export default {
 
             // console.log(objects);
             this.$root.isOpen = true
+            console.log('to load', objects.length);
             this.$root.objectsToLoad = objects.length
             // console.log('da caricare', objects.length);
 
@@ -198,10 +207,7 @@ export default {
         },
         addListener: function (obj, fromOpen = false, isLandscape = false) {
             return new Promise((resolve, reject) => {
-                let events = ['object:added', 'object:removed',
-                    'object:modified', 'object:rotating', 'object:scaling',
-                    'object:moving'
-                ]
+                let events = ['object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling', 'object:moving']
                 for (let j = 0; j < events.length; j++) {
                     obj.on(events[j], () => {
                         if (isLandscape == true) {
@@ -218,15 +224,22 @@ export default {
                 })
             })
         },
-        selectionListeners: function () {
-            let events = ['selection:created', 'selection:updated']
-            for (let j = 0; j < events.length; j++) {
-                this.canvas.on(events[j], (el) => {
-                    this.toggleActiveLayer(el, true)
+        selectionListeners: async function () {
+            await new Promise((resolve, reject) => {
+                let events = ['selection:created', 'selection:updated']
+                for (let j = 0; j < events.length; j++) {
+                    this.canvas.on(events[j], (el) => {
+                        this.toggleActiveLayer(el, true)
+                    })
+                }
+
+                this.canvas.on('selection:cleared', (el) => {
+                    this.toggleActiveLayer(el, false)
                 })
-            }
-            this.canvas.on('selection:cleared', (el) => {
-                this.toggleActiveLayer(el, false)
+
+                this.$nextTick(() => {
+                    resolve()
+                })
             })
         },
         toggleActiveLayer: function (el, hasToActive = true) {
