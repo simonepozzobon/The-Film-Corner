@@ -14,7 +14,7 @@
                 {{ title }}
             </div>
             <div class="pro-session__info">
-                {{ app }} Made by {{ fullName }}
+                {{ app }} {{ this.$root.getCmd('made_by') }} {{ fullName }}
             </div>
         </div>
         <div class="pro-session__tools">
