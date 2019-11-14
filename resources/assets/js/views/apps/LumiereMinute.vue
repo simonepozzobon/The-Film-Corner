@@ -2,7 +2,7 @@
 <app-template :app="app">
     <template>
         <ui-app-block
-            title="Submission"
+            :title="$root.getCmd('submission')"
             title-color="white"
             color="dark"
         >
@@ -28,7 +28,7 @@
                         class="custom-file-label"
                         for="inputGroupFile04"
                     >
-                        Choose file
+                        {{ this.$root.getCmd('select_file') }}
                     </label>
                 </div>
             </div>
@@ -39,7 +39,7 @@
                 align="center"
                 @click="upload"
             >
-                Upload
+                {{ this.$root.getCmd('upload') }}
             </ui-button>
         </ui-app-block>
     </template>
