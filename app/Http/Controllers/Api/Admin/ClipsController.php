@@ -302,7 +302,7 @@ class ClipsController extends Controller
 
     public function check_single_option($name, $request)
     {
-        $model = ucwords('App\\Propaganda\\'.$name);
+        $model = ucwords('App\\Propaganda\\'.ucfirst($name));
 
         $result = $model::where('title', '=', $request->{$name})->first();
         if ($result) {
