@@ -123,7 +123,7 @@ export default {
 
             this.stickyNavbar = currentScrollPosition > this.topLimit
 
-            console.log(this.stickyNavbar, currentScrollPosition);
+            // console.log(this.stickyNavbar, currentScrollPosition);
         },
     },
     filters: {
