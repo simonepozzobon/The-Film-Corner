@@ -9,6 +9,7 @@ import axios from 'axios'
 import VuejsClipper from 'vuejs-clipper'
 import EventBus from './EventBus'
 import Utility from '../Utilities'
+import Sticky from 'vue-sticky-directive'
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
@@ -18,6 +19,7 @@ Vue.prototype.$util = Utility
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 Vue.use(VuejsClipper)
+Vue.use(Sticky)
 
 const router = new VueRouter({
     mode: 'history',

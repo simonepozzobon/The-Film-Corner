@@ -1,6 +1,12 @@
 <template>
-<div class="a-clip-panel">
-    <topbar :cursor="cursor" />
+<div
+    class="a-clip-panel"
+    sticky-container
+>
+    <topbar
+        :cursor="cursor"
+        :title="panelTitle"
+    />
     <container
         :contains="true"
         :has-animations="true"
@@ -137,6 +143,8 @@ export default {
     mixins: [EserciziMethods],
     data: function () {
         return {
+            sticky: false,
+            panelTitle: 'Nuova Clip',
             clip: null,
             title: null,
             video: null,
@@ -202,6 +210,8 @@ export default {
             // open existing clip
             if (id != null) {
                 url = '/api/v2/admin/clips/get-initials/' + id
+
+                this.panelTitle = 'Modifica Clip'
             }
 
             this.$http.get(url).then(response => {
@@ -291,6 +301,22 @@ export default {
         paratextUncomplete: function () {
             this.cursor = 2
         },
+        initSticky: function () {
+            this.sticky = stickybits('#topbar', {
+                stickyBitStickyOffset: 96,
+            })
+
+            window.addEventListener('resize', () => {
+                this.sticky.update();
+            });
+            // when the url hash changes
+            window.addEventListener('hashchange', () => {
+                this.sticky.update();
+            });
+        },
+        onStick: function (data) {
+            console.log(data);
+        },
     },
     filters: {
         stateSetter: function (value, cursor) {
@@ -311,6 +337,10 @@ export default {
             this.getData()
         }
     },
+    mounted: function () {
+        // this.initSticky()
+
+    },
 }
 </script>
 
@@ -319,6 +349,10 @@ export default {
 
 label {
     font-size: $font-size-sm;
+}
+
+#topbar {
+    z-index: 10;
 }
 
 .topbar {
