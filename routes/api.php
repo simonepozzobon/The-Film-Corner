@@ -121,6 +121,7 @@ Route::prefix('v2')->group(
                     function () {
                         Route::get('/', 'Api\Admin\ClipsController@get_clips');
                         Route::delete('/{id}', 'Api\Admin\ClipsController@destroy_clip');
+                        Route::get('/get-initials/{id?}', 'Api\Admin\ClipsController@get_initials_edit');
                         Route::get('/get-initials', 'Api\Admin\ClipsController@get_initials');
                         Route::post('/create-detail', 'Api\Admin\ClipsController@store_details');
                         Route::post('/create-paratexts', 'Api\Admin\ClipsController@store_paratexts');

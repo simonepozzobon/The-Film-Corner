@@ -98,6 +98,22 @@ class ClipsController extends Controller
         ];
     }
 
+    public function get_initials_edit($id = null)
+    {
+        $response = $this->get_initials();
+
+        if ($id) {
+            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics')->first();
+
+            $response['success'] = true;
+            $response['initial'] = $clip;
+        } else {
+            $response['success'] = false;
+        }
+
+        return $response;
+    }
+
     public function upload_video($file)
     {
         $extension = $file->getClientOriginalExtension();

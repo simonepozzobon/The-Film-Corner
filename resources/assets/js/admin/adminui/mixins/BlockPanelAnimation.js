@@ -7,6 +7,7 @@ import {
     Elastic,
     Back,
     Sine,
+    gsap
 }
 from 'gsap/all'
 

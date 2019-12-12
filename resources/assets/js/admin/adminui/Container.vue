@@ -15,6 +15,7 @@ import {
     TweenMax,
     TimelineMax,
     Power4,
+    gsap
 }
 from 'gsap/all'
 
