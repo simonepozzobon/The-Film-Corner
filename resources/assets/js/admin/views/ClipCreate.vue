@@ -198,13 +198,16 @@ export default {
     methods: {
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
+
+            // open existing clip
             if (id != null) {
                 url = '/api/v2/admin/clips/get-initials/' + id
-
-                console.log(url);
             }
+
             this.$http.get(url).then(response => {
                 if (response.data.success) {
+
+                    // set initials values
                     if (response.data.hasOwnProperty('initial')) {
                         let initial = response.data.initial
 
@@ -217,7 +220,6 @@ export default {
                         }
 
                         this.initials = Object.assign({}, this.initials)
-
                         this.cursor = 3
                     }
 
@@ -302,9 +304,7 @@ export default {
         },
     },
     created: function () {
-
         if (this.$route.params && this.$route.params.hasOwnProperty('id')) {
-            console.log(this.$route.params.id);
             this.getData(this.$route.params.id)
         }
         else {

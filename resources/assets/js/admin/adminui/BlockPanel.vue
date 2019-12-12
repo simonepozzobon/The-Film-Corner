@@ -86,13 +86,6 @@ export default {
             master: null,
         }
     },
-    watch: {
-        isOpen: function (v) {
-            if (this.title == 'Paratesti') {
-                console.log(v);
-            }
-        },
-    },
     computed: {
         panelBtn: function () {
             if (this.isOpen) {

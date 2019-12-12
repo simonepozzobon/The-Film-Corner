@@ -76,6 +76,7 @@
         "select2": "^4.0.11",
         "socket.io": "^2.1.1",
         "socket.io-client": "^2.1.1",
+        "stickybits": "^3.7.1",
         "striptags": "^3.1.1",
         "text-clipper": "^1.2.3",
         "v-select2-component": "^0.4.1",

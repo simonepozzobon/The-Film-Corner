@@ -275,21 +275,18 @@ export default {
                 }
             }
         },
-        directors: function (d) {
-            console.log(d);
-        },
     },
     methods: {
         selectIsReady: function (key) {
+            // se si tratta di un'array
             if (this.initials[key].length) {
-                console.log('prointi', key);
                 let old = this[key]
                 for (let j = 0; j < this.initials[key].length; j++) {
                     let current = this.initials[key][j]
-                    console.log('curernt', current);
                     this.$refs[key].selectOption(current.id)
                 }
             }
+            // o se si tratta una singola selezione
             else {
                 this.$refs[key].selectOption(this.initials[key].id)
             }
