@@ -73,6 +73,7 @@
                     size="sm"
                     display="inline-block"
                     :has-container="false"
+                    @click="$root.goToWithParams('clips-edit', {id: data.item.id})"
                 />
                 <ui-button
                     title="cancella"

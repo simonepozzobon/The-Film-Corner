@@ -44,6 +44,11 @@ export default [{
         component: ClipCreate,
     },
     {
+        path: '/clips/edit/:id',
+        name: 'clips-edit',
+        component: ClipCreate,
+    },
+    {
         path: '/test/uploadzone',
         name: 'test-uploadzone',
         component: UploadZone,

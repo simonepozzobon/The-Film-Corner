@@ -5,7 +5,10 @@
         :contains="true"
         :has-animations="true"
     >
-        <carica-clip @update="updateField" />
+        <carica-clip
+            @update="updateField"
+            :initials="initials"
+        />
     </container>
     <container
         :contains="true"
@@ -14,6 +17,7 @@
         <informazioni
             :options="options"
             @update="updateField"
+            :initials="initials"
         />
     </container>
     <container
@@ -21,7 +25,10 @@
         :contains="true"
         :has-animations="true"
     >
-        <approfondimenti @update="updateField" />
+        <approfondimenti
+            @update="updateField"
+            :initials="initials"
+        />
     </container>
     <container
         v-if="cursor >= 2"
@@ -160,6 +167,27 @@ export default {
                 paratext_types: [],
                 exercises: [],
             },
+            keys: [
+                'clip',
+                'title',
+                'video',
+                'period',
+                'directors',
+                'peoples',
+                'year',
+                'format',
+                'age',
+                'genre',
+                'nationality',
+                'topics',
+                'cursor',
+                'abstract',
+                'tech_info',
+                'historical_context',
+                'food',
+                'exercises',
+            ],
+            initials: {},
         }
     },
     watch: {
@@ -168,15 +196,41 @@ export default {
         },
     },
     methods: {
-        getData: function () {
-            // this.debug()
-            this.$http.get('/api/v2/admin/clips/get-initials').then(response => {
-                for (let key in this.options) {
-                    if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
-                        this.options[key] = response.data[key]
+        getData: function (id = null) {
+            let url = '/api/v2/admin/clips/get-initials'
+
+            // open existing clip
+            if (id != null) {
+                url = '/api/v2/admin/clips/get-initials/' + id
+            }
+
+            this.$http.get(url).then(response => {
+                if (response.data.success) {
+
+                    // set initials values
+                    if (response.data.hasOwnProperty('initial')) {
+                        let initial = response.data.initial
+
+                        for (let i = 0; i < this.keys.length; i++) {
+                            let key = this.keys[i]
+
+                            if (initial.hasOwnProperty(key)) {
+                                this.initials[key] = initial[key]
+                            }
+                        }
+
+                        this.initials = Object.assign({}, this.initials)
+                        this.cursor = 3
                     }
+
+
+                    for (let key in this.options) {
+                        if (this.options.hasOwnProperty(key) && response.data.hasOwnProperty(key)) {
+                            this.options[key] = response.data[key]
+                        }
+                    }
+                    this.period = this.options.periods[0].id
                 }
-                this.period = this.options.periods[0].id
             })
         },
         updateField: function (key, value) {
@@ -250,7 +304,12 @@ export default {
         },
     },
     created: function () {
-        this.getData()
+        if (this.$route.params && this.$route.params.hasOwnProperty('id')) {
+            this.getData(this.$route.params.id)
+        }
+        else {
+            this.getData()
+        }
     },
 }
 </script>
@@ -276,6 +335,9 @@ label {
 }
 
 .a-clip-panel {
+    position: relative;
+    width: 100%;
+
     &__topbar {
         display: flex;
         justify-content: space-between;

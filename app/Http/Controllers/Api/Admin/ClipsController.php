@@ -98,6 +98,22 @@ class ClipsController extends Controller
         ];
     }
 
+    public function get_initials_edit($id = null)
+    {
+        $response = $this->get_initials();
+
+        if ($id) {
+            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics')->first();
+
+            $response['success'] = true;
+            $response['initial'] = $clip;
+        } else {
+            $response['success'] = false;
+        }
+
+        return $response;
+    }
+
     public function upload_video($file)
     {
         $extension = $file->getClientOriginalExtension();
@@ -302,7 +318,7 @@ class ClipsController extends Controller
 
     public function check_single_option($name, $request)
     {
-        $model = ucwords('App\\Propaganda\\'.$name);
+        $model = ucwords('App\\Propaganda\\'.ucfirst($name));
 
         $result = $model::where('title', '=', $request->{$name})->first();
         if ($result) {

@@ -111,6 +111,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
@@ -126,6 +132,7 @@ export default {
                 }],
                 poster: '/video/empty-session.png',
             },
+            keys: ['title', 'video'],
         }
     },
     watch: {
@@ -134,6 +141,14 @@ export default {
         },
         video: function (video) {
             this.$emit('update', 'video', video)
+        },
+        initials: function (initials) {
+            for (let i = 0; i < this.keys.length; i++) {
+                let key = this.keys[i]
+                if (initials.hasOwnProperty(key)) {
+                    this[key] = initials[key]
+                }
+            }
         },
     },
     methods: {

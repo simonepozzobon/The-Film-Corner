@@ -34,9 +34,11 @@
         </label>
         <div class="col-md-5">
             <select-2-input
+                ref="directors"
                 :options="this.options.directors"
                 @update="updateField($event, 'directors', true)"
                 @remove="removeValue($event, 'directors', true)"
+                @ready="selectIsReady('directors')"
             />
         </div>
         <label
@@ -47,9 +49,11 @@
         </label>
         <div class="col-md-5">
             <select-2-input
+                ref="peoples"
                 :options="this.options.peoples"
                 @update="updateField($event, 'peoples', true)"
                 @remove="removeValue($event, 'peoples', true)"
+                @ready="selectIsReady('peoples')"
             />
         </div>
     </div>
@@ -78,10 +82,12 @@
         </label>
         <div class="col-md-3">
             <select-2-input
+                ref="format"
                 :multiple="false"
                 :options="this.options.formats"
                 @update="updateField($event, 'format')"
                 @remove="removeValue($event, 'format')"
+                @ready="selectIsReady('format')"
             />
         </div>
         <label
@@ -92,10 +98,12 @@
         </label>
         <div class="col-md-3">
             <select-2-input
+                ref="age"
                 :multiple="false"
                 :options="this.options.ages"
                 @update="updateField($event, 'age')"
                 @remove="removeValue($event, 'age')"
+                @ready="selectIsReady('age')"
             />
         </div>
     </div>
@@ -109,9 +117,11 @@
         </label>
         <div class="col-md-5">
             <select-2-input
+                ref="genre"
                 :multiple="false"
                 :options="this.options.genres"
                 @update="updateField($event, 'genre')"
+                @ready="selectIsReady('genre')"
             />
         </div>
         <label
@@ -139,9 +149,11 @@
         </label>
         <div class="col-md-11">
             <select-2-input
+                ref="topics"
                 :options="this.options.topics"
                 @update="updateField($event, 'topics', true)"
                 @remove="removeValue($event, 'topics', true)"
+                @ready="selectIsReady('topics')"
             />
         </div>
     </div>
@@ -193,6 +205,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
@@ -205,6 +223,17 @@ export default {
             age: null,
             genre: null,
             topics: [],
+            keys: [
+                'period',
+                'year',
+                'nationality',
+                'directors',
+                'peoples',
+                'format',
+                'age',
+                'genre',
+                'topics',
+            ]
         }
     },
     watch: {
@@ -217,8 +246,51 @@ export default {
         nationality: function (nationality) {
             this.$emit('update', 'nationality', nationality)
         },
+        initials: function (initials) {
+            for (let i = 0; i < this.keys.length; i++) {
+                let key = this.keys[i]
+                if (initials.hasOwnProperty(key)) {
+                    if (typeof initials[key] == 'string') {
+                        this[key] = initials[key]
+                    }
+                    // else if (initials[key].length) {
+                    //     if (key == 'directors') {
+                    //         let old = this[key]
+                    //         for (let j = 0; j < initials[key].length; j++) {
+                    //             let current = initials[key][j]
+                    //             console.log('curernt', current);
+                    //             this.$refs.directors.selectOption(current.id)
+                    //         }
+                    //
+                    //         // this[key] = Object.assign([], old)
+                    //         console.log('modificata', this[key]);
+                    //     }
+                    //
+                    // }
+                    // else {
+                    //     this[key] = initials[key]
+                    //     // console.log('no', key, this[key]);
+                    // }
+                    // console.log(this[key]);
+                }
+            }
+        },
     },
     methods: {
+        selectIsReady: function (key) {
+            // se si tratta di un'array
+            if (this.initials[key].length) {
+                let old = this[key]
+                for (let j = 0; j < this.initials[key].length; j++) {
+                    let current = this.initials[key][j]
+                    this.$refs[key].selectOption(current.id)
+                }
+            }
+            // o se si tratta una singola selezione
+            else {
+                this.$refs[key].selectOption(this.initials[key].id)
+            }
+        },
         updateField: function (e, key, isArray = false) {
             if (this.hasOwnProperty(key) && e) {
                 if (isArray === true) {
