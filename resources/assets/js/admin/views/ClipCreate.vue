@@ -217,6 +217,8 @@ export default {
                         }
 
                         this.initials = Object.assign({}, this.initials)
+
+                        this.cursor = 3
                     }
 
 

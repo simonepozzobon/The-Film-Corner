@@ -11,21 +11,18 @@
     />
 
     <text-editor
-        ref="editor"
         :has-animation="true"
         label="Abstract"
         @update="updateAbstract"
     />
 
     <text-editor
-        ref="editor"
         :has-animation="true"
         label="Contesto Storico"
         @update="updateHistorical"
     />
 
     <text-editor
-        ref="editor"
         :has-animation="true"
         label="Food for thoughts"
         @update="updateFood"
@@ -71,6 +68,12 @@ export default {
         state: {
             type: Boolean,
             default: false,
+        },
+        initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
         },
     },
     data: function () {
