@@ -103,7 +103,9 @@ class ClipsController extends Controller
         $response = $this->get_initials();
 
         if ($id) {
-            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics')->first();
+            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries')->first();
+
+            $clip->details = $clip->details()->first();
 
             $response['success'] = true;
             $response['initial'] = $clip;

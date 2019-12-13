@@ -4,7 +4,6 @@
     v-sticky="stickyEnabled"
     sticky-offset="{top: 96, bottom: 0}"
     sticky-z-index="10"
-    on-stick="onStick"
 >
     <container
         ref="container"
@@ -125,10 +124,6 @@ export default {
                 return
             }
             this.stickyNavbar = currentScrollPosition > this.topLimit
-        },
-        onStick: function (data) {
-            console.log(data);
-            return
         },
     },
     filters: {

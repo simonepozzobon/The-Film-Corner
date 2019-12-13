@@ -161,7 +161,7 @@ export default {
             abstract: null,
             tech_info: null,
             historical_context: null,
-            food: null,
+            foods: null,
             exercises: [],
             options: {
                 periods: [],
@@ -176,6 +176,7 @@ export default {
                 exercises: [],
             },
             keys: [
+                'id',
                 'clip',
                 'title',
                 'video',
@@ -192,7 +193,7 @@ export default {
                 'abstract',
                 'tech_info',
                 'historical_context',
-                'food',
+                'foods',
                 'exercises',
             ],
             initials: {},
@@ -219,18 +220,57 @@ export default {
 
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
+                        this.cursor = 3
+
                         let initial = response.data.initial
-
-                        for (let i = 0; i < this.keys.length; i++) {
-                            let key = this.keys[i]
-
+                        // console.dir(initial);
+                        for (let key in initial) {
                             if (initial.hasOwnProperty(key)) {
-                                this.initials[key] = initial[key]
+
+                                // se il valore corrisponde ad uno di quelli richiesti lo aggiunge all'oggetto
+                                let idx = this.keys.findIndex(value => value == key)
+                                if (idx > -1) {
+                                    this.initials[key] = initial[key]
+                                }
+                                // se si tratta di un oggetto o di un'array cerca a fondo
+                                else if (typeof initial[key] == 'object') {
+                                    let deepInitial = initial[key]
+
+                                    // se si tratta di un'array cerca di individuare delle corrispondenze
+                                    if (deepInitial.length >= 0) {
+                                        for (let i = 0; i < deepInitial.length; i++) {
+                                            let current = deepInitial[i]
+                                            for (let currentKey in current) {
+                                                if (current.hasOwnProperty(currentKey)) {
+                                                    let idx = this.keys.findIndex(value => value == currentKey)
+                                                    if (idx > -1) {
+                                                        this.initials[currentKey] = current[currentKey]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // si tratta di un singolo oggetto
+                                    else {
+                                        // console.log(deepInitial);
+                                        let current = deepInitial
+                                        for (let currentKey in current) {
+                                            if (current.hasOwnProperty(currentKey)) {
+                                                let idx = this.keys.findIndex(value => value == currentKey)
+                                                if (idx > -1) {
+                                                    this.initials[currentKey] = current[currentKey]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // lo scarta
+                                else {
+
+                                }
                             }
                         }
-
                         this.initials = Object.assign({}, this.initials)
-                        this.cursor = 3
                     }
 
 
@@ -283,7 +323,7 @@ export default {
                 data.append('abstract', this.abstract)
                 data.append('tech_info', this.tech_info)
                 data.append('historical_context', this.historical_context)
-                data.append('food', this.food)
+                data.append('food', this.foods)
 
                 this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
                     console.log('details', response.data.clip);

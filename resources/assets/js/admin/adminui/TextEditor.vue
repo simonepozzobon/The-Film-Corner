@@ -156,12 +156,29 @@ from 'tiptap'
 import {
     TweenMax,
     Power4,
+    Back,
     TimelineMax,
 }
 from 'gsap/all'
+import {
+    gsap
+}
+from 'gsap'
+import {
+    CSSPlugin
+}
+from 'gsap/CSSPlugin'
+
+import {
+    GSDevTools
+}
+from 'gsap/GSDevTools'
+
+gsap.registerPlugin(CSSPlugin, GSDevTools)
 
 const plugins = [
     Power4,
+    Back,
 ]
 
 import {
@@ -209,6 +226,10 @@ export default {
         inputSize: {
             type: String,
             default: 'col-md-10',
+        },
+        debug: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {
@@ -293,35 +314,64 @@ export default {
             if (menu) {
                 menu = menu[0]
             }
+            menu.style.overflow = 'hidden'
 
-            this.master = new TimelineMax({
+            this.master = gsap.timeline({
                 paused: true,
-                yoyo: true,
             })
 
-            this.master.fromTo(container, .3, {
-                    minHeight: '40vh',
-                    ease: Power4.easeInOut,
-                }, {
+            this.master.addLabel('start', 0)
+
+
+            this.master.fromTo(container, {
+                css: {
+                    minHeight: '250px',
+                },
+            }, {
+                css: {
                     minHeight: '30px',
-                    ease: Power4.easeInOut,
-                }, 0)
-                .fromTo(menu, .2, {
-                    immediateRender: false,
-                    autoAlpha: 1,
-                    ease: Power4.easeInOut,
-                }, {
-                    autoAlpha: 0,
-                    ease: Power4.easeInOut,
-                }, 0)
-                .progress(1)
-                .progress(0)
+                },
+                duration: .3,
+                ease: 'back.out(1.4)',
+            }, 'start')
+
+            this.master.fromTo(menu, {
+                padding: '0.61805rem',
+                marginBottom: '1rem',
+                maxHeight: '100%',
+            }, {
+                padding: 0,
+                marginBottom: 0,
+                maxHeight: 0,
+                lazy: true,
+                duration: .1,
+                ease: 'power4.inOut',
+            }, 'start+=0.1')
+
+            this.master.fromTo(menu, {
+                autoAlpha: 1,
+            }, {
+                autoAlpha: 0,
+                lazy: true,
+                duration: .2,
+                immediateRender: false,
+            }, 'start')
+
+            this.master.progress(1).progress(0)
+
+            if (this.debug) {
+                GSDevTools.create({
+                    animation: this.master,
+                    css: {
+                        zIndex: 100
+                    }
+                })
+            }
 
             this.$nextTick(() => {
                 this.closePanel()
+                this.$emit('ready')
             })
-
-
 
         },
         closePanel: function () {
@@ -363,6 +413,9 @@ export default {
     },
     beforeDestroy: function () {
         this.editor.destroy()
+        if (this.master) {
+            this.master.kill()
+        }
     }
 }
 </script>
