@@ -5,27 +5,35 @@
     :initial-state="state"
 >
     <text-editor
+        ref="tech_info"
         :has-animation="true"
         label="Informazioni Tecniche"
         @update="updateTechinfo"
+        @ready="editorReady('tech_info')"
     />
 
     <text-editor
+        ref="abstract"
         :has-animation="true"
         label="Abstract"
         @update="updateAbstract"
+        @ready="editorReady('abstract')"
     />
 
     <text-editor
+        ref="historical_context"
         :has-animation="true"
         label="Contesto Storico"
         @update="updateHistorical"
+        @ready="editorReady('historical_context')"
     />
 
     <text-editor
+        ref="foods"
         :has-animation="true"
         label="Food for thoughts"
         @update="updateFood"
+        @ready="editorReady('foods')"
     />
 </block-panel>
 </template>
@@ -81,16 +89,33 @@ export default {
             tech_info: null,
             abstract: null,
             historical_context: null,
-            food: null,
+            foods: null,
+            keys: [
+                'tech_info',
+                'abstract',
+                'historical_context',
+                'foods',
+            ],
         }
     },
     watch: {
         state: function (v) {
-            console.log('state changed');
             this.$refs.panel.togglePanel()
+        },
+        initials: function (initials) {
+            this.setInitials()
         },
     },
     methods: {
+        setInitials: function () {
+            for (let i = 0; i < this.keys.length; i++) {
+                let key = this.keys[i]
+
+                if (this.initials.hasOwnProperty(key) && this.$refs.hasOwnProperty(key) && this.$refs[key].editor) {
+                    this.$refs[key].editor.setContent(this.initials[key])
+                }
+            }
+        },
         updateTechinfo: function (json, html) {
             this.tech_info = html
             this.$emit('update', 'tech_info', html)
@@ -104,11 +129,16 @@ export default {
             this.$emit('update', 'historical_context', html)
         },
         updateFood: function (json, html) {
-            this.food = html
-            this.$emit('update', 'food', html)
+            this.foods = html
+            this.$emit('update', 'foods', html)
+        },
+        editorReady: function (key) {
+            this.setInitials()
         },
     },
-    mounted: function () {},
+    mounted: function () {
+        this.setInitials()
+    },
 }
 </script>
 
