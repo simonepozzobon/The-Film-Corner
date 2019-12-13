@@ -47,6 +47,7 @@
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
+            :initials="initials"
         />
     </container>
     <container
@@ -217,7 +218,6 @@ export default {
 
             this.$http.get(url).then(response => {
                 if (response.data.success) {
-
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
                         this.cursor = 3

@@ -5,19 +5,23 @@ import {
     Power3,
     Power2,
     Power0,
-    CSSPlugin,
     Elastic,
     Back,
     Sine,
+    gsap,
 }
 from 'gsap/all'
+
+import {
+    CSSPlugin
+}
+from 'gsap/CSSPlugin'
 
 const plugins = [
     Power4,
     Power3,
     Power2,
     Power0,
-    CSSPlugin,
     Elastic,
     Back,
     Sine,
@@ -27,6 +31,8 @@ import {
     GSDevTools
 }
 from 'gsap/GSDevTools'
+
+gsap.registerPlugin(CSSPlugin, GSDevTools)
 
 const ParatextAnimation = {
     computed: {

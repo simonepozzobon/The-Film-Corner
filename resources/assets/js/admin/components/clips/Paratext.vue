@@ -90,6 +90,11 @@ import {
 }
 from './mixins'
 
+import {
+    gsap
+}
+from 'gsap'
+
 export default {
     name: 'Paratext',
     components: {
