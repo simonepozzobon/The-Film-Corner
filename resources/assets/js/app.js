@@ -6,7 +6,6 @@ import Cookie from './Cookies'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
-import Translations from './Translations'
 
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
@@ -176,7 +175,7 @@ const home = new Vue({
             this.objectsLoaded = 0
         },
         locale: function (locale) {
-
+            console.log(locale);
         },
     },
     methods: {
@@ -296,14 +295,26 @@ const home = new Vue({
             })
         },
         setLocale: function () {
+<<<<<<< HEAD
             console.log('setting locale', this.locale);
             this.$translations.locale = this.locale
+=======
+            this.translations = this.translationsCache[this.locale]
+            console.log(this.translations);
+>>>>>>> traduzioni
         },
         getTranslation: function () {
             this.$http.get('/api/v2/translate').then(response => {
                 if (response.data.success) {
                     this.translationsLoaded = true
+<<<<<<< HEAD
                     this.$translations.translations = response.data.translations
+=======
+                    this.translationsCache = response.data.translations
+                    // this.translations = new Translations(response.data.translations)
+                    // this.translations = this.translationsCache
+                    // console.log(response.data);
+>>>>>>> traduzioni
                     this.setLocale()
                 }
             })

@@ -42,7 +42,11 @@
                     :full-height="true"
                 >
                     <ui-title
+<<<<<<< HEAD
                         :title="studio.name | translate('name', 'sections', $translations)"
+=======
+                        :title="studio | translate( 'name', $root.locale )"
+>>>>>>> traduzioni
                         align="center"
                         size="h4"
                         color="white"
@@ -85,14 +89,14 @@
                                 class="block-menu__menu-head"
                                 @click="goToCat(cat.slug)"
                             >
-                                {{cat.name}}
+                                {{cat | translate('name', $root.locale)}}
                             </li>
                             <li
                                 class="block-menu__menu-item"
                                 v-for="app in cat.apps"
                                 @click="goToApp(app.slug)"
                             >
-                                {{ app.title }}
+                                {{ app | translate('title', $root.locale) }}
                             </li>
                         </ul>
                     </div>
@@ -105,7 +109,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import StudioBlock from '../../components/StudioBlock.vue'
+=======
+import TranslationFilter from '../../TranslationFilter'
+>>>>>>> traduzioni
 
 import {
     UiBlock,
@@ -146,11 +154,14 @@ export default {
             this.setWelcome()
         }
     },
+<<<<<<< HEAD
     filters: {
         translate: function (defaultValue, key, section, translations) {
             return translations.getContent(defaultValue, key, section);
         }
     },
+=======
+>>>>>>> traduzioni
     methods: {
         getStudios: function () {
             this.$http.get('/api/v2/get-studios').then(response => {
@@ -163,7 +174,32 @@ export default {
             // console.log(this.$root.user);
             this.title = 'Welcome ' + this.$root.user.name
         },
+<<<<<<< HEAD
 
+=======
+        goToPavilion: function (event, slug) {
+            event.preventDefault()
+            this.$root.goToWithParams('pavilion-home', {
+                pavilion: slug
+            })
+        },
+        goToCat: function (slug) {
+            this.$root.goToWithParams('cat-home', {
+                cat: slug
+            })
+        },
+        goToApp: function (slug) {
+            this.$root.goToWithParams('app-home', {
+                app: slug
+            })
+        },
+        goToPropaganda: function (slug) {
+            this.$root.goTo('propaganda-intro')
+        },
+    },
+    filters: {
+        ...TranslationFilter,
+>>>>>>> traduzioni
     },
     created: function () {
         this.$root.space = true
