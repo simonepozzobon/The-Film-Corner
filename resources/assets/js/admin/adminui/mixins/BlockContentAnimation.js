@@ -5,7 +5,6 @@ import {
     Power3,
     Power2,
     Power0,
-    CSSPlugin,
     Elastic,
     Back,
     Sine,
@@ -17,11 +16,22 @@ const plugins = [
     Power3,
     Power2,
     Power0,
-    CSSPlugin,
     Elastic,
     Back,
     Sine,
 ]
+
+import {
+    gsap
+}
+from 'gsap'
+
+import {
+    CSSPlugin
+}
+from 'gsap/CSSPlugin'
+
+gsap.registerPlugin(CSSPlugin)
 
 const BlockContentAnimation = {
     methods: {
@@ -56,9 +66,7 @@ const BlockContentAnimation = {
                     paddingBottom: '0',
                     opacity: '0',
                     overflow: 'hidden',
-                    css: {
-                        boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
-                    },
+                    boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
                 }, 'start')
 
                 .fromTo(content, 0.1, {
@@ -68,8 +76,8 @@ const BlockContentAnimation = {
                     id: 'width',
                     width: '100%',
                     maxWidth: '100%',
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
+                    ease: 'sine.inOut',
+                    yoyoEase: 'sine.in',
                     immediateRender: false,
                 }, 'setWidth')
 
@@ -83,15 +91,15 @@ const BlockContentAnimation = {
                     paddingTop: '0.5rem',
                     paddingBottom: '2rem',
                     immediateRender: false,
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
+                    ease: 'sine.inOut',
+                    yoyoEase: 'sine.in',
                 }, 'setHeight')
 
                 .fromTo(content, .3, {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Sine.easeInOut,
+                    ease: 'sine.inOut',
                     immediateRender: false,
                 }, 'start')
 
@@ -99,7 +107,7 @@ const BlockContentAnimation = {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Sine.easeInOut,
+                    ease: 'sine.inOut',
                     immediateRender: false,
                 }, 'start')
 
@@ -116,7 +124,7 @@ const BlockContentAnimation = {
                 }, {
                     boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0.04), 4px 8px 24px 0 rgba(59, 66, 72, 0.02)',
                     immediateRender: false,
-                    ease: Power0.easeNone,
+                    ease: 'power0.none',
                 }, 'revealFrame')
 
             this.master.progress(1).progress(0)
