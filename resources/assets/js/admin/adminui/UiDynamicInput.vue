@@ -70,7 +70,11 @@ import UiFormGroupText from './UiFormGroupText.vue'
 import UiFormTitle from './UiFormTitle.vue'
 import UiModal from './UiModal.vue'
 import UiTable from './UiTable.vue'
-import { TweenMax } from 'gsap'
+import {
+    TimelineMax,
+    TweenMax
+}
+from 'gsap/all'
 
 export default {
     name: 'UiDynamicInput',
@@ -96,11 +100,11 @@ export default {
         },
         fields: {
             type: Array,
-            default: function() {}
+            default: function () {}
         },
         initialObj: {
             type: Object,
-            default: function() {}
+            default: function () {}
         },
         api: {
             type: String,
@@ -123,7 +127,7 @@ export default {
             default: 'Looks Good'
         },
     },
-    data: function() {
+    data: function () {
         return {
             obj: {},
             hasError: null,
@@ -134,7 +138,7 @@ export default {
         }
     },
     watch: {
-        hasError: function(status) {
+        hasError: function (status) {
             let el = this.$refs.alert
             let master = new TimelineMax({
                 paused: true
@@ -152,7 +156,8 @@ export default {
                 }, {
                     autoAlpha: 1
                 })
-            } else {
+            }
+            else {
                 master.fromTo(el, .1, {
                     display: 'block'
                 }, {
@@ -168,22 +173,22 @@ export default {
 
             master.play()
         },
-        value: function(value) {
+        value: function (value) {
             this.$emit('changed', value, this.name, this.idx)
         }
     },
     methods: {
-        uuid: function() {
+        uuid: function () {
             // https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-            return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+            return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
                 (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
             )
         },
-        globalCheck: function() {
-                let check = this.checkFields()
-                return check
+        globalCheck: function () {
+            let check = this.checkFields()
+            return check
         },
-        checkFields: function() {
+        checkFields: function () {
             let inputs = this.$refs.input
             let hasError = false
             let check = false
@@ -196,17 +201,19 @@ export default {
                     let value = inputs[i].value
 
                     // verifico se il campo è compilato
-                    if ( value && value != '' ) {
+                    if (value && value != '') {
                         check = this.upload(true)
                         break
-                    } else {
+                    }
+                    else {
                         inputs[i].clear()
                         this.hasError = null
                         check = true
                     }
                 }
 
-            } else {
+            }
+            else {
                 // altrimenti guarda se c'è qualcosa nei campi
                 check = false
                 // verifica se almeno uno dei campi è stato compilato
@@ -215,10 +222,11 @@ export default {
 
                     // verifico se il campo è compilato
                     hasError = false
-                    if ( value && value != '' ) {
+                    if (value && value != '') {
                         check = this.upload(true)
                         break
-                    } else {
+                    }
+                    else {
                         hasError = true
                         inputs[i].check()
                     }
@@ -232,13 +240,13 @@ export default {
 
             return check
         },
-        destroyRow: function(row) {
+        destroyRow: function (row) {
             let idx = this.table.rows.findIndex(item => item[0] == row[0])
             if (idx > -1) {
                 this.table.rows.splice(idx, 1)
             }
         },
-        setValue: function(value, field, idx) {
+        setValue: function (value, field, idx) {
             this.obj[field] = value // assegno il valore
             this.$refs.container[idx].emit('check', field)
 
@@ -262,12 +270,12 @@ export default {
                 }
             }
         },
-        show: function() {
+        show: function () {
             if (this.obj && this.fields) {
                 this.$refs.modal.show()
             }
         },
-        upload: function(hasReturn = false) {
+        upload: function (hasReturn = false) {
             this.hasError = null
             this.errorMsg = 'Please check '
             this.missingFields = 0
@@ -301,7 +309,8 @@ export default {
 
             if (hasReturn) {
                 return this.sendRequest(hasReturn)
-            } else {
+            }
+            else {
                 this.sendRequest()
             }
 
@@ -309,17 +318,19 @@ export default {
 
 
         },
-        sendRequest: function(hasReturn = false) {
+        sendRequest: function (hasReturn = false) {
             if (this.hasError == true) {
                 if (this.missingFields > 1) {
                     this.errorMsg = this.errorMsg + ' these fields are mandatory!'
-                } else {
+                }
+                else {
                     this.errorMsg = this.errorMsg + 'this field is mandatory!'
                 }
                 if (hasReturn) {
                     return false
                 }
-            } else {
+            }
+            else {
                 let row = this.formatRow(this.obj)
                 this.table.rows.push(row)
                 this.clearForm()
@@ -328,7 +339,7 @@ export default {
                 }
             }
         },
-        formatRow: function() {
+        formatRow: function () {
             let row = []
             let uuid = this.uuid()
             row.push(uuid)
@@ -350,7 +361,7 @@ export default {
             this.value.push(dummy)
             return row
         },
-        setTable: function() {
+        setTable: function () {
             let heading = []
             let inputs = this.$refs.input
             // iterate trough obj key to prepare the FormData
@@ -370,21 +381,21 @@ export default {
                 rows: [],
             }
         },
-        setData: function(data, field, value) {
+        setData: function (data, field, value) {
             if (value) {
                 data.append(field, value)
                 return data
             }
             return data
         },
-        clearForm: function() {
+        clearForm: function () {
             let inputs = this.$refs.input
             for (let i = 0; i < inputs.length; i++) {
                 inputs[i].clear()
             }
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.obj = this.initialObj
         this.setTable()
     }

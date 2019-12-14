@@ -1,68 +1,103 @@
 <template>
-    <div class="menu-overlay" ref="container">
-        <div class="menu-overlay__content" ref="content">
-            <ui-menu-item
-                title="Home"
-                target="_self"
-                url="home"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="The Project"
-                target="_self"
-                url="project"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="Schools"
-                target="_self"
-                url="schools"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="Conference"
-                target="_self"
-                url="conference"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="Filmography"
-                target="_self"
-                url="filmography"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="Login"
-                target="_self"
-                url="#"
-                @main-click="mainClick"/>
-            <ui-menu-item
-                title="Language"
-                target="_self"
-                url="#"
-                @main-click="mainClick"/>
-        </div>
-        <div class="menu-overlay__pin ui-pin-mobile" ref="pin" @click="promemoria">
-            <div class="ui-pin-mobile__content">
-                <span class="ui-pin-text ui-pin-text--light">
-                    Codice fiscale
-                </span>
-                <span class="ui-pin-text">
-                    07636600962
-                </span>
-                <span class="ui-pin-text ui-pin-text--light">
-                    Scarica Promemoria
-                </span>
-            </div>
+<div
+    class="menu-overlay"
+    ref="container"
+>
+    <div
+        class="menu-overlay__content"
+        ref="content"
+    >
+        <ui-menu-item
+            title="Home"
+            target="_self"
+            url="home"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="The Project"
+            target="_self"
+            url="project"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="Schools"
+            target="_self"
+            url="schools"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="Conference"
+            target="_self"
+            url="conference"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="Filmography"
+            target="_self"
+            url="filmography"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="Login"
+            target="_self"
+            url="#"
+            @main-click="mainClick"
+        />
+        <ui-menu-item
+            title="Language"
+            target="_self"
+            url="#"
+            @main-click="mainClick"
+        />
+    </div>
+    <div
+        class="menu-overlay__pin ui-pin-mobile"
+        ref="pin"
+        @click="promemoria"
+    >
+        <div class="ui-pin-mobile__content">
+            <span class="ui-pin-text ui-pin-text--light">
+                Codice fiscale
+            </span>
+            <span class="ui-pin-text">
+                07636600962
+            </span>
+            <span class="ui-pin-text ui-pin-text--light">
+                Scarica Promemoria
+            </span>
         </div>
     </div>
+</div>
 </template>
 
 <script>
-import { UiMenuItem } from '../ui'
-import { TweenMax } from 'gsap'
+import {
+    UiMenuItem
+}
+from '../ui'
+import {
+    TimelineMax,
+    TweenMax,
+    Power4,
+    Sine,
+    Back,
+    ExpoScaleEase,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+    Sine,
+    Back,
+    ExpoScaleEase,
+]
 
 export default {
     name: 'MenuOverlay',
     components: {
         UiMenuItem,
     },
-    data: function() {
+    data: function () {
         return {
             master: null,
             duration: .6,
@@ -79,12 +114,12 @@ export default {
         }
     },
     watch: {
-        '$root.window': function(w) {
+        '$root.window': function (w) {
             this.height = w.h
         }
     },
     methods: {
-        promemoria: function() {
+        promemoria: function () {
             let url = '/files/OSR-5xmille-promemoria-2019-stampa.pdf'
             if (window.mobilecheck()) {
                 url = '/files/OSR-5xmille-promemoria-2019-mobile.pdf'
@@ -92,7 +127,7 @@ export default {
 
             window.open(url, '_blank')
         },
-        init: function() {
+        init: function () {
             if (!this.master) {
                 let duration = this.duration
                 let scale = 2
@@ -134,20 +169,21 @@ export default {
                     ease: ExpoScaleEase.config(invscale, 1, Power4.easeIn),
                 }, {
                     opacity: 1,
+                    delay: linksDelay,
                     x: 0,
                     y: 0,
                     scaleY: 1,
                     ease: ExpoScaleEase.config(invscale, 1, Power4.easeIn),
-                }, linksDelay, linksStart)
+                }, linksStart)
 
                 this.master.progress(1).progress(0)
 
                 // vai sempre in alto quando apre il il menu
                 this.master.eventCallback('onComplete', () => {
-                        this.url = null
-                        // this.$nextTick(() => {
-                        //     this.tempTimelineCheck()
-                        // })
+                    this.url = null
+                    // this.$nextTick(() => {
+                    //     this.tempTimelineCheck()
+                    // })
                 })
 
                 this.master.eventCallback('onReverseComplete', () => {
@@ -159,7 +195,8 @@ export default {
 
                 this.$emit('ready')
 
-            } else {
+            }
+            else {
                 this.master.kill()
                 this.master = null
                 this.$nextTick(() => {
@@ -167,7 +204,7 @@ export default {
                 })
             }
         },
-        toggle: function() {
+        toggle: function () {
             if (this.status) {
                 this.status = false
                 return this.close()
@@ -175,29 +212,30 @@ export default {
             this.status = true
             return this.open()
         },
-        open: function() {
+        open: function () {
             this.master.play()
         },
-        close: function() {
+        close: function () {
             this.master.reverse()
         },
-        mainClick: function(url = null, target = null) {
+        mainClick: function (url = null, target = null) {
             this.$emit('main-click')
             if (target == '_self') {
                 if (url != 'contatti') {
                     this.$root.goToAndScroll('home', url)
-                } else {
+                }
+                else {
                     this.$root.goTo('contatti')
                 }
             }
         }
     },
     filters: {
-        decode: function(url) {
+        decode: function (url) {
             return decodeURIComponent(url.replace(/\+/g, ' '))
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.height = this.$root.window.h
         this.init()
     }
@@ -281,5 +319,4 @@ export default {
         }
     }
 }
-
 </style>

@@ -21,21 +21,25 @@ mix
         tether: ['Tether'],
     })
     .webpackConfig({
-        resolve:{
+        resolve: {
             alias: {
                 'styles': path.resolve(__dirname, 'resources/assets/sass'),
                 '_js': path.resolve(__dirname, 'resources/assets/js')
             }
         }
     })
-    // .polyfill({
-    //     enabled: true,
-    //     useBuiltIns: 'usage',
-    //     targets: 'last 2 version, not dead',
-    //     debug: true
-    // })
+    .polyfill({
+        enabled: false,
+        useBuiltIns: 'usage',
+        targets: 'last 2 version, not dead',
+        debug: true
+    })
     .browserSync({
         proxy: 'http://tfc.test',
         port: 3020,
         browser: 'google chrome',
+        files: [
+            'app/{*,**/*}.*',
+            'resources/{*,**/*}.*',
+        ]
     })

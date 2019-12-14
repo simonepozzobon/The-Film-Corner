@@ -48,20 +48,26 @@
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="goToApp(app.slug)"
-                        >Read More</ui-button>
+                            @click="goToApp(app.slug)"
+                        >
+                            {{ $root.getCmd('read_more') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="startApp(app.slug)"
-                        >New</ui-button>
+                            @click="startApp(app.slug)"
+                        >
+                            {{ $root.getCmd('new') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
                             :disable="true"
-                        >Open</ui-button>
+                        >
+                            {{ $root.getCmd('open') }}
+                        </ui-button>
                     </div>
                 </ui-block>
             </ui-row>
@@ -106,7 +112,7 @@
             v-if="keywords && keywords.length > 0"
         >
             <ui-title
-                title="Glossary"
+                :title="this.$root.getCmd('glossary')"
                 align="center"
             />
             <ui-accordion-cols :keywords="keywords" />
@@ -119,7 +125,7 @@
         <ui-paragraph
             class="pt-5"
             align="justify"
-            v-html="cat.description"
+            v-html="catDescription"
         />
     </ui-container>
 </ui-container>
@@ -128,6 +134,7 @@
 <script>
 const clipper = require('text-clipper')
 import TranslationFilter from '../../TranslationFilter'
+
 
 import {
     UiAccordionCols,
@@ -146,6 +153,7 @@ from '../../ui'
 
 export default {
     name: 'CatSingle',
+    mixins: [TranslationFilter],
     components: {
         UiAccordionCols,
         UiBlock,
@@ -170,7 +178,10 @@ export default {
     computed: {
         catTitle: function () {
             return this.$options.filters.translate(this.cat, 'name', this.$root.locale)
-        }
+        },
+        catDescription: function () {
+            return this.$options.filters.translate(this.cat, 'description', this.$root.locale)
+        },
     },
     methods: {
         getData: function () {
@@ -201,9 +212,6 @@ export default {
             })
             return short
         }
-    },
-    filters: {
-        ...TranslationFilter,
     },
     created: function () {
         this.getData()

@@ -10,7 +10,7 @@
     >
         <ui-title
             ref="title"
-            :title="title"
+            :title="this.$root.getCmd(title)"
             :has-padding="false"
         />
         <div
@@ -18,7 +18,7 @@
             class="ua-library__libraries row no-gutters"
             v-if="hasSubLibraries"
         >
-            <label class="col-4">Select From</label>
+            <label class="col-4">{{ this.$root.getCmd('select_from') }}</label>
             <select
                 class="form-control ua-library__select col-8"
                 v-model="currentLibrary"
@@ -155,6 +155,12 @@ import {
     UiTitle
 }
 from '../ui'
+
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'UiAppLibrary',
     components: {
@@ -167,7 +173,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Library',
+            default: 'library',
         },
         hasSubLibraries: {
             type: Boolean,
@@ -320,49 +326,54 @@ export default {
             })
         },
         setLibraryHeight: function (h = false) {
-            let container, el, title, assets, titleSize, headSize,
-                containerSize, containerH, height, select, selectSize
+            this.$nextTick(() => {
+                let container, el, title, assets, titleSize, headSize,
+                    containerSize, containerH, height, select, selectSize
 
-            container = this.$refs.container
-            el = this.$refs.head
-            title = this.$refs.title.$refs.title
-            assets = this.$refs.assets
-            titleSize = SizeUtility.get(title)
-            headSize = SizeUtility.get(el)
-            containerSize = SizeUtility.get(container)
-            containerH = containerSize.hClean
+                container = this.$refs.container
+                el = this.$refs.head
+                title = this.$refs.title.$refs.title
+                assets = this.$refs.assets
+                titleSize = SizeUtility.get(title)
+                headSize = SizeUtility.get(el)
+                containerSize = SizeUtility.get(container)
+                containerH = containerSize.hClean
+                // console.log(h, containerH);
 
-            if (h && h > containerH) {
-                containerH = h
-            }
+                if (h && h > containerH) {
+                    containerH = h
+                }
 
-            height = containerH - titleSize.h - titleSize.marginY
 
-            if (this.hasSubLibraries) {
-                select = this.$refs.select
-                selectSize = SizeUtility.get(select)
-                height = height - selectSize.h - selectSize.marginY
-            }
+                height = containerH - titleSize.h - titleSize.marginY
 
-            let startHeight = this.libraryHeight
-            height = Math.round(height)
-            // console.log('dentro', startHeight, height, h);
+                if (this.hasSubLibraries) {
+                    select = this.$refs.select
+                    selectSize = SizeUtility.get(select)
+                    // console.log('select', selectSize);
+                    height = height - selectSize.h - (selectSize.marginY * 2) - 10
+                }
 
-            if (startHeight != height) {
-                this.libraryHeight = height
+                let startHeight = this.libraryHeight
+                height = Math.round(height)
+                // console.log('dentro', startHeight, height, h);
 
-                TweenMax.fromTo(assets, .4, {
-                    height: startHeight,
-                    autoAlpha: 0,
-                }, {
-                    height: height,
-                    autoAlpha: 1,
-                    onComplete: () => {
-                        // console.log('dentro completp', this.libraryHeight, height);
-                        // this.libraryHeight = height
-                    }
-                })
-            }
+                if (startHeight != height) {
+                    this.libraryHeight = height
+
+                    TweenMax.fromTo(assets, .4, {
+                        height: startHeight,
+                        autoAlpha: 0,
+                    }, {
+                        height: height,
+                        autoAlpha: 1,
+                        onComplete: () => {
+                            // console.log('dentro completp', this.libraryHeight, height);
+                            // this.libraryHeight = height
+                        }
+                    })
+                }
+            })
             // console.log(container);
         },
         ready: function () {

@@ -3,7 +3,10 @@
     <div class="propaganda-back">
         <div class="propaganda-back__container">
             <div class="propaganda-back__content">
-                <ui-container class="prop-ex-container">
+                <ui-container
+                    class="prop-ex-container"
+                    v-if="content"
+                >
                     <ui-container
                         :contain="true"
                         ref="folder"
@@ -156,11 +159,18 @@ export default {
         getData: function () {
             let id = this.$route.params.id
             let exerciseId = this.$route.params.exerciseId
-            // perform api call
-            this.clip = movies.find(movie => movie.id == id)
-            this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
 
-            this.debug()
+            // perform api call
+            let url = '/api/v2/propaganda/clip/' + id + '/exercise/' + exerciseId
+            this.$http.get(url).then(response => {
+                console.log(response);
+                this.clip = response.data.clip
+                this.content = response.data.exercise
+            })
+
+            // this.clip = movies.find(movie => movie.id == id)
+            // this.content = this.clip.exercises.find(exercise => exercise.id == exerciseId)
+            // this.debug()
         },
         debug: function () {
             console.log(this.content);
@@ -170,7 +180,7 @@ export default {
         leave: function () {},
         startApp: function () {
             console.log(this.content.slug);
-            let slug = 'propaganda-' + this.content.slug
+            let slug = this.content.slug
             this.$root.goTo(slug)
         },
         togglePanel: function () {

@@ -58,37 +58,25 @@
             @filtered="onFiltered"
             class="apps-table"
         >
-            <template
-                slot="thumb"
-                slot-scope="data"
-            >
+            <template v-slot:cell(thumb)="data">
                 <img
                     :src="data.item.thumb | setThumbSrc"
                     class="apps-table__preview"
                 >
             </template>
-            <template
-                slot="img"
-                slot-scope="data"
-            >
+            <template v-slot:cell(img)="data">
                 <img
                     :src="data.item.img | setThumbSrc"
                     class="apps-table__preview"
                 >
             </template>
-            <template
-                slot="leftSrc"
-                slot-scope="data"
-            >
+            <template v-slot:cell(leftSrc)="data">
                 <img
                     :src="data.item.left.thumb | setThumbSrc"
                     class="apps-table__preview"
                 >
             </template>
-            <template
-                slot="rightSrc"
-                slot-scope="data"
-            >
+            <template v-slot:cell(rightSrc)="data">
                 <img
                     :src="data.item.right.thumb | setThumbSrc"
                     class="apps-table__preview"

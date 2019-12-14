@@ -1,7 +1,7 @@
 <template>
 <div class="ua-soundscapes-preview">
     <ui-title
-        title="Preview"
+        :title="$root.getCmd('preview')"
         color="white"
         :has-padding="false"
         ref="title"
@@ -29,7 +29,8 @@ import UiAppVideoControls from './UiAppVideoControls.vue'
 import {
     UiImage,
     UiTitle
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'UiAppSoundscapesPreview',
     components: {

@@ -1,13 +1,30 @@
-@mixin custom-box-shadow($color) {
-  box-shadow: 4px 8px 32px 0 rgba($color, .1), 8px 16px 64px 0 rgba($color, .05);
+@mixin custom-box-shadow($color, $size: 4px, $opacity: .05) {
+  box-shadow: $size ($size * 2) ($size * 6) 0 rgba($color, $opacity * 2), ($size * 2) ($size * 4) ($size * 12) 0 rgba($color, $opacity);
 }
 
-@mixin custom-text-shadow($color) {
-  text-shadow: 2px 4px 8px rgba($color, .1), 4px 8px 16px rgba($color, .05);
+@mixin custom-text-shadow($color, $size: 2px, $opacity: .05) {
+  text-shadow: $size ($size * 2) ($size * 4) rgba($color, $opacity * 2), ($size * 2) ($size * 4) ($size * 8) rgba($color, $opacity);
 }
 
-@mixin custom-inner-shadow($color) {
-  box-shadow: inset 0px 0px ($spacer / 2) rgba($color, .33);
+@mixin custom-text-shadow-custom($color, $size: 2px, $size_1: 4px, $size_2: 8px, $opacity: .05) {
+  text-shadow: $size $size_1 $size_2 rgba($color, $opacity * 2), ($size * 2) ($size_1 * 2) ($size_2 * 2) rgba($color, $opacity);
+}
+
+@mixin title-text-shadow($letterspacing: 12px, $size: 2px, $size_1: 4px, $size_2: 8px, $opacity: .9, $has-padding: true) {
+  @if $has-padding {
+    padding: 0 ($spacer * 2) ($spacer * 1.618) 0;
+  }
+  color: $title-darken;
+  letter-spacing: $letterspacing;
+  text-shadow: $size $size_1 $size_2 rgba($title-shadow, $opacity), (-$size) (-$size_1) ($size_2) rgba($title-shadow, $opacity), (0) ($size_1) ($size_2) rgba($title-shadow, $opacity), (0) (-$size_1) ($size_2) rgba($title-shadow, $opacity);
+}
+
+@mixin custom-inner-shadow($color, $size: 4px, $opacity: .33) {
+  box-shadow: inset 0px 0px $size rgba($color, $opacity);
+}
+
+@mixin custom-inner-shadow-lg($color, $opacity: 0.33) {
+  box-shadow: inset 0px 0px ($spacer / 1.618) rgba($color, $opacity);
 }
 
 //

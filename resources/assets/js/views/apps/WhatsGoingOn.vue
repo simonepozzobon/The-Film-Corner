@@ -39,14 +39,12 @@ import {
     UiAppAudioPreview
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
 export default {
     name: 'WhatsGoingOn',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -57,15 +55,11 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             media: {
                 audioSrc: null
             },
             isLoading: false,
         }
-    },
-    watch: {
-        ...SharedWatch,
     },
     methods: {
         ready: function () {
@@ -122,10 +116,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        // this.debug = SharedMethods.debug.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(this)
         this.$root.isApp = true
         this.getData()
     },

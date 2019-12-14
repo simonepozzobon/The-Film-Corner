@@ -15,6 +15,7 @@
                 displayClass,
                 hoverableClass,
                 xPaddingClass,
+                shadowsTypeClass,
             ]"
     >
         {{ title }}
@@ -37,6 +38,7 @@
             displayClass,
             hoverableClass,
             xPaddingClass,
+            shadowsTypeClass,
         ]"
 >
     {{ title }}
@@ -91,6 +93,14 @@ export default {
         hasContainer: {
             type: Boolean,
             default: true,
+        },
+        hasShadows: {
+            type: Boolean,
+            default: false,
+        },
+        shadowsType: {
+            type: Number,
+            default: 0,
         },
         hoverable: {
             type: Boolean,
@@ -147,12 +157,37 @@ export default {
                 return 'ui-title--x-padding'
             }
         },
+        shadowsClass: function () {
+            if (this.hasShadows) {
+                return 'ui-title--has-shadows'
+            }
+            return null
+        },
+        shadowsTypeClass: function () {
+            if (this.hasShadows) {
+                if (this.shadowsType == 2) {
+                    return 'ui-title--has-shadows-2'
+                }
+                else if (this.shadowsType == 3) {
+                    return 'ui-title--has-shadows-3'
+                }
+                else {
+                    return 'ui-title--has-shadows'
+                }
+            }
+            else {
+                return null
+            }
+        }
     }
 }
 </script>
 
 <style lang="scss">
 @import '~styles/shared';
+$color: lighten($gray-200, 4);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
 
 .ui-title {
     $self: &;
@@ -218,6 +253,33 @@ export default {
 
     &--inline-block {
         display: inline-block;
+    }
+
+    &--has-shadows {
+        position: relative;
+        @include custom-text-shadow-custom($darken, -1px, 3px, 8px, 0.05);
+    }
+
+    &--has-shadows-2 {
+        $c: white;
+        $size: 2px;
+        $size_1: 2px;
+        $size_2: 2px;
+        $opacity: 0.9;
+
+        // @include custom-text-shadow-custom($red, $size, $size_1, $size_2, $opacity);
+        text-shadow: $size $size_1 $size_2 rgba($c, $opacity), (-$size) (-$size_1) ($size_2) rgba($c, $opacity), (0) ($size_1) ($size_2) rgba($c, $opacity), (0) (-$size_1) ($size_2) rgba($c, $opacity),;
+    }
+
+    &--has-shadows-3 {
+        $b: darken(white, 20);
+        $size: 1px;
+        $size_1: -1px;
+        $size_2: 0;
+        $opacity: 0;
+        // @include custom-text-shadow-custom($darken, $size, $size_1, $size_2, $opacity);
+        text-shadow: $size $size_1 $size_2 rgba($b, $opacity), (-$size) (-$size_1) ($size_2) rgba($b, $opacity), (0) ($size_1) ($size_2) rgba($b, $opacity), (0) (-$size_1) ($size_2) rgba($b, $opacity),;
+        // text-shadow: $size $size_1 $size_2 rgba($red, $opacity), ($size * .33) ($size_1 * -1.618) ($size_2 * 0.66) rgba($green, $opacity), ($size * -1.618) ($size_1 * .66) ($size_2 * 0.33) rgba($yellow, $opacity);
     }
 }
 </style>

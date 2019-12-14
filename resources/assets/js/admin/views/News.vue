@@ -56,19 +56,13 @@
             @filtered="onFiltered"
             class="admin-news-table"
         >
-            <template
-                slot="thumb"
-                slot-scope="data"
-            >
+            <template v-slot:cell(thumb)="data">
                 <img
                     :src="data.item.thumb"
                     class="admin-news-table__preview"
                 >
             </template>
-            <template
-                slot="tools"
-                slot-scope="data"
-            >
+            <template v-slot:cell(tools)="data">
                 <ui-button
                     :has-container="false"
                     :has-margin="false"

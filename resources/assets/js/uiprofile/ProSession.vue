@@ -14,7 +14,7 @@
                 {{ title }}
             </div>
             <div class="pro-session__info">
-                {{ app }} Made by {{ fullName }}
+                {{ app }} {{ this.$root.getCmd('made_by') }} {{ fullName }}
             </div>
         </div>
         <div class="pro-session__tools">
@@ -36,7 +36,7 @@
             </div>
             <div
                 class="pro-session__icon"
-                @click.prevent="deleteNetwork"
+                @click.stop.prevent="deleteNetwork"
             >
                 <div class="pro-session__value">
                 </div>
@@ -51,6 +51,11 @@
 
 <script>
 import Utility from '../Utilities'
+import {
+    TimelineMax,
+
+}
+from 'gsap/all'
 
 export default {
     name: 'ProSession',
@@ -169,7 +174,7 @@ export default {
     },
     mounted: function () {
         this.init()
-        console.log(this.network);
+        // console.log(this.network);
     },
 }
 </script>

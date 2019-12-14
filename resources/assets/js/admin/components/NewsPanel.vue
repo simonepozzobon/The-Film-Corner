@@ -93,8 +93,18 @@ from '../../ui'
 import Utility from '../../Utilities'
 import mime from 'mime-types'
 
-require('gsap/CSSPlugin')
-require('gsap/RoundPropsPlugin')
+import {
+    TweenMax,
+    TimelineMax,
+    Power4,
+    CSSPlugin,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+    CSSPlugin,
+]
 
 import Dummy from './Dummy'
 
@@ -193,10 +203,10 @@ export default {
 
             this.master.fromTo(container, .6, {
                 height: 0,
-                roundProps: 'height',
+                // roundProps: 'height',
             }, {
                 height: '100%',
-                roundProps: 'height',
+                // roundProps: 'height',
                 ease: Power4.easeInOut,
             }, 'start')
 

@@ -110,6 +110,17 @@ import {
 }
 from '../../ui'
 
+import {
+    TimelineMax,
+    TweenMax,
+    Power4,
+}
+from 'gsap/all'
+
+const plugins = [
+    Power4,
+]
+
 export default {
     name: 'CreateUser',
     components: {

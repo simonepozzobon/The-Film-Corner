@@ -1,22 +1,27 @@
 <template>
-    <b-modal
-        ref="modal"
-        title="Select Channel"
-        hide-footer>
-        <ui-row justify="space-around">
-            <selector-btn
-                v-for="(player, i) in players"
-                :key="i"
-                :idx="i"
-                :src="player.obj"
-                @selected="selected"/>
-        </ui-row>
-    </b-modal>
+<b-modal
+    ref="modal"
+    :title="$root.getCmd('select_channel')"
+    hide-footer
+>
+    <ui-row justify="space-around">
+        <selector-btn
+            v-for="(player, i) in players"
+            :key="i"
+            :idx="i"
+            :src="player.obj"
+            @selected="selected"
+        />
+    </ui-row>
+</b-modal>
 </template>
 
 <script>
 import SelectorBtn from './SelectorBtn.vue'
-import { UiRow } from '../../../ui'
+import {
+    UiRow
+}
+from '../../../ui'
 
 export default {
     name: 'ChannelSelector',
@@ -27,15 +32,15 @@ export default {
     props: {
         players: {
             type: Array,
-            default: function() {}
+            default: function () {}
         }
     },
     methods: {
-        selected: function(idx) {
+        selected: function (idx) {
             this.$emit('channel-selected', idx)
             this.$refs.modal.hide()
         },
-        show: function() {
+        show: function () {
             this.$refs.modal.show()
         }
     },

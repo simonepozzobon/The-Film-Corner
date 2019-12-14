@@ -3,16 +3,20 @@
     <div class="form-group row">
         <label
             for=""
-            class="col-md-2"
+            :class="labelSize"
         >
             {{ label }}
         </label>
         <div
-            class="col-md-10"
-            @click.prevent="focusEditor"
+            :class="inputSize"
+            @click.stop.prevent="focusEditor"
         >
-            <div class="admin-editor__container">
+            <div
+                class="admin-editor__container"
+                ref="container"
+            >
                 <editor-menu-bar
+                    ref="menuBar"
                     :editor="editor"
                     v-slot="{ commands, isActive }"
                 >
@@ -149,6 +153,33 @@ import {
 }
 from 'tiptap'
 
+import {
+    TweenMax,
+    Power4,
+    Back,
+    TimelineMax,
+}
+from 'gsap/all'
+import {
+    gsap
+}
+from 'gsap'
+import {
+    CSSPlugin
+}
+from 'gsap/CSSPlugin'
+
+import {
+    GSDevTools
+}
+from 'gsap/GSDevTools'
+
+gsap.registerPlugin(CSSPlugin, GSDevTools)
+
+const plugins = [
+    Power4,
+    Back,
+]
 
 import {
     Blockquote,
@@ -169,6 +200,7 @@ import {
     Strike,
     Underline,
     History,
+    Focus,
 }
 from 'tiptap-extensions'
 
@@ -178,6 +210,26 @@ export default {
         label: {
             type: String,
             default: 'Titolo',
+        },
+        hasAnimations: {
+            type: Boolean,
+            default: false,
+        },
+        hasAnimation: {
+            type: Boolean,
+            default: false,
+        },
+        labelSize: {
+            type: String,
+            default: 'col-md-2',
+        },
+        inputSize: {
+            type: String,
+            default: 'col-md-10',
+        },
+        debug: {
+            type: Boolean,
+            default: false,
         },
     },
     components: {
@@ -192,6 +244,8 @@ export default {
             json: null,
             linkUrl: null,
             linkMenuIsActive: false,
+            master: null,
+            isOpen: false,
         }
     },
     methods: {
@@ -220,8 +274,22 @@ export default {
                     new Strike(),
                     new Underline(),
                     new History(),
+                    new Focus({
+                        className: 'has-focus',
+                        nested: true,
+                    }),
                 ],
                 content: this.initial ? this.initial : '',
+                onFocus: () => {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
+                        this.openPanel()
+                    }
+                },
+                onBlur: () => {
+                    if (this.hasAnimations == true || this.hasAnimation == true) {
+                        this.closePanel()
+                    }
+                }
             })
 
             // console.log(this.initial);
@@ -232,6 +300,89 @@ export default {
                 this.$emit('update', this.json, this.html)
                 // console.log('updated');
             })
+
+            if (this.hasAnimations == true || this.hasAnimation == true) {
+                this.$nextTick(() => {
+                    this.initAnim()
+                })
+            }
+        },
+        initAnim: function () {
+            // console.log('animations');
+            let container = this.$refs.container
+            let menu = container.getElementsByClassName('menubar')
+            if (menu) {
+                menu = menu[0]
+            }
+            menu.style.overflow = 'hidden'
+
+            this.master = gsap.timeline({
+                paused: true,
+            })
+
+            this.master.addLabel('start', 0)
+
+
+            this.master.fromTo(container, {
+                css: {
+                    minHeight: '250px',
+                },
+            }, {
+                css: {
+                    minHeight: '30px',
+                },
+                duration: .3,
+                ease: 'back.out(1.4)',
+            }, 'start')
+
+            this.master.fromTo(menu, {
+                padding: '0.61805rem',
+                marginBottom: '1rem',
+                maxHeight: '100%',
+            }, {
+                padding: 0,
+                marginBottom: 0,
+                maxHeight: 0,
+                lazy: true,
+                duration: .1,
+                ease: 'power4.inOut',
+            }, 'start+=0.1')
+
+            this.master.fromTo(menu, {
+                autoAlpha: 1,
+            }, {
+                autoAlpha: 0,
+                lazy: true,
+                duration: .2,
+                immediateRender: false,
+            }, 'start')
+
+            this.master.progress(1).progress(0)
+
+            if (this.debug) {
+                GSDevTools.create({
+                    animation: this.master,
+                    css: {
+                        zIndex: 100
+                    }
+                })
+            }
+
+            this.$nextTick(() => {
+                this.closePanel()
+                this.$emit('ready')
+            })
+
+        },
+        closePanel: function () {
+            if (this.master) {
+                this.master.play()
+            }
+        },
+        openPanel: function () {
+            if (this.master) {
+                this.master.reverse()
+            }
         },
         showLinkMenu: function (attrs) {
             this.linkUrl = attrs.href
@@ -262,6 +413,9 @@ export default {
     },
     beforeDestroy: function () {
         this.editor.destroy()
+        if (this.master) {
+            this.master.kill()
+        }
     }
 }
 </script>

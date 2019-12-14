@@ -130,6 +130,7 @@ import {
 from '../../ui'
 export default {
     name: 'AppsHome',
+    mixins: [TranslationFilter],
     components: {
         StudioBlock,
         UiBlock,
@@ -197,10 +198,13 @@ export default {
             this.$root.goTo('propaganda-intro')
         },
     },
+<<<<<<< HEAD
     filters: {
         ...TranslationFilter,
 >>>>>>> traduzioni
     },
+=======
+>>>>>>> 3f4de7f3e796945a2ab50b5e30e8ad1f55e5c65c
     created: function () {
         this.$root.space = true
         this.getStudios()

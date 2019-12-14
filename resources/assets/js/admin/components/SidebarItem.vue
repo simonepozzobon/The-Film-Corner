@@ -3,7 +3,7 @@
     <a
         href="#"
         class="sidebar-item__link"
-        @click.prevent="goTo"
+        @click.stop.prevent="goTo"
     >
         {{ title }}
     </a>

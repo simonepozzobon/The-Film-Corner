@@ -41,10 +41,15 @@ import {
 }
 from '../ui'
 import {
-    TweenLite
+    gsap,
+    TweenMax,
+    TweenLite,
+    ScrollToPlugin
 }
-from 'gsap'
-require('gsap/ScrollToPlugin')
+from 'gsap/all'
+
+gsap.registerPlugin(ScrollToPlugin);
+
 
 export default {
     name: 'UiAppTimeline',
@@ -112,12 +117,15 @@ export default {
     },
     mounted: function () {
         this.$nextTick(() => {
-            TweenLite.to(window, .2, {
-                scrollTo: {
-                    y: '.ua-timeline',
-                    offsetY: 200,
-                }
-            })
+            let timeline = this.$refs.timeline
+            if (timeline) {
+                TweenLite.to(window, .2, {
+                    scrollTo: {
+                        y: timeline,
+                        offsetY: 200,
+                    }
+                })
+            }
         })
     },
 }

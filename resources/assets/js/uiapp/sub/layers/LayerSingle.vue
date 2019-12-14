@@ -1,37 +1,46 @@
 <template>
-    <div
-        class="layer-single"
-        :class="activeClass">
-        <div class="layer-single__idx">
-            {{ idx }}
-        </div>
-        <div class="layer-single__title">
-            {{ title }}
-        </div>
-        <div class="layer-single__tools">
-            <ui-button
-                color="white"
-                display="inline-block"
-                :has-container="false"
-                :has-margin="false"
-                @click.native="selectLayer">
-                Select
-            </ui-button>
-            <ui-button
-                color="white"
-                display="inline-block"
-                :has-container="false"
-                :has-margin="false"
-                @click.native="deleteLayer">
-                Delete
-            </ui-button>
-        </div>
+<div
+    class="layer-single"
+    :class="activeClass"
+>
+    <div class="layer-single__idx">
+        {{ idx }}
     </div>
+    <div class="layer-single__title">
+        {{ title }}
+    </div>
+    <div class="layer-single__tools">
+        <ui-button
+            color="white"
+            display="inline-block"
+            :has-container="false"
+            :has-margin="false"
+            @click="selectLayer"
+        >
+            {{ this.$root.getCmd('select') }}
+        </ui-button>
+        <ui-button
+            color="white"
+            display="inline-block"
+            :has-container="false"
+            :has-margin="false"
+            @click="deleteLayer"
+        >
+            {{ this.$root.getCmd('delete') }}
+        </ui-button>
+    </div>
+</div>
 </template>
 
 <script>
-import { fabric } from 'fabric'
-import { UiButton } from '../../../ui'
+import {
+    fabric
+}
+from 'fabric'
+import {
+    UiButton
+}
+from '../../../ui'
 
 export default {
     name: 'LayerSingle',
@@ -45,46 +54,46 @@ export default {
         },
         layer: {
             type: Object,
-            default: function() {}
+            default: function () {}
         },
     },
-    data: function() {
+    data: function () {
         return {
             active: false,
             uuid: null,
         }
     },
     computed: {
-        activeClass: function() {
+        activeClass: function () {
             if (this.active) {
                 return 'layer-single--active'
             }
         },
-        obj: function() {
+        obj: function () {
             return this.layer.toJSON()
         },
-        title: function() {
+        title: function () {
             return this.obj.originalObj.title
         }
     },
     methods: {
-        setUuid: function() {
+        setUuid: function () {
             this.uuid = this.obj.uuid
         },
-        selectLayer: function() {
+        selectLayer: function () {
             this.$emit('select-layer', this.idx)
         },
-        deleteLayer: function() {
+        deleteLayer: function () {
             this.$emit('delete-layer', this.idx)
         },
-        setActive: function() {
+        setActive: function () {
             this.active = true
         },
-        unsetActive: function() {
+        unsetActive: function () {
             this.active = false
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.setUuid()
         // console.log(this.obj);
     }

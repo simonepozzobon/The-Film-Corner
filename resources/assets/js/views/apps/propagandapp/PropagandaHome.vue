@@ -116,13 +116,13 @@ export default {
             this.setWelcome()
         },
         currentChannel: function (channel) {
-            this.results = channel.contents
+            this.results = channel.clips
         },
     },
     computed: {
         currentChannelTitle: function () {
-            if (this.currentChannel && this.currentChannel.hasOwnProperty('label')) {
-                return this.currentChannel.label
+            if (this.currentChannel && this.currentChannel.hasOwnProperty('title')) {
+                return this.currentChannel.title
             }
 
             return null
@@ -131,8 +131,12 @@ export default {
     methods: {
         getData: function () {
             // perform api call
-            this.channels = Channels
-            this.debug()
+            this.$http.get('/api/v2/propaganda/clips').then(response => {
+                // console.log(response);
+                this.channels = response.data.periods
+            })
+            // this.channels = Channels
+            // this.debug()
         },
         debug: function () {
             // this.selectChannel(this.channels[2])
@@ -154,7 +158,6 @@ export default {
 
                 return channel
             })
-
             this.currentChannel = selected
         },
         goToChallenges: function () {

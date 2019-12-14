@@ -41,10 +41,30 @@ export default {
     methods: {
         getState: function (language, item) {
             let lang = language.short
-            let translation = item.translated.find(translation => translation.short == lang)
+            let translation = item.translations.find(translation => translation.locale == lang)
+
+            let values = ['name', 'title', 'description']
 
             if (translation) {
-                return 'active'
+                let check = true
+
+                // verifica se almeno una delle proprietà da tradurre manca, la segna come non completa
+                for (let i = 0; i < values.length; i++) {
+                    if (translation.hasOwnProperty(values[i])) {
+                        let value = translation[values[i]]
+                        if (!value || value == '' || value == '<p></p>') {
+                            check = false
+                        }
+                    }
+                }
+
+                if (check == false) {
+                    return null
+                }
+                else {
+                    return 'active'
+                }
+
             }
             return null
         }

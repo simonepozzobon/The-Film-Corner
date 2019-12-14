@@ -18,7 +18,7 @@
 import {
     TweenMax
 }
-from 'gsap'
+from 'gsap/all'
 
 export default {
     name: 'LibraryHover',

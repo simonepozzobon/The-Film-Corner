@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 class AudioEditorController extends Controller
 {
-    public function update_editor(Request $request, Audio $t) {
+    public function update_editor(Request $request, Audio $t)
+    {
         // inizializzo la sessione
         $Audio = new Audio;
 
@@ -66,20 +67,20 @@ class AudioEditorController extends Controller
             $originalDuration = Utility::getAudioLenght($srcPath);
 
             //imposto come limite massimo di durata quello originale del file
-            $duration = $item->duration;
+            $duration = ($item->duration / 10);
             if ($duration > $originalDuration) {
-                $duration = $originalDuration;
+                $duration = ($originalDuration / 10);
             }
 
             if ($duration != $originalDuration) {
                 // taglio l'audio
                 // sox input output trim <start> <duration>
-                $cli = SOX_LIB.' "'.$srcPath.'" "'.$trimmedPath.'" trim '.$item->cutStart.' '.$duration;
+                $cli = SOX_LIB.' "'.$srcPath.'" "'.$trimmedPath.'" trim '.($item->cutStart / 10).' '.$duration;
                 exec($cli);
                 $clis->push($cli);
             } else {
-              // salto il passagio del taglio assegnando la sorgente alla variabile tagliata
-              $trimmedPath = $srcPath;
+                // salto il passagio del taglio assegnando la sorgente alla variabile tagliata
+                $trimmedPath = $srcPath;
             }
 
             /*
@@ -87,10 +88,9 @@ class AudioEditorController extends Controller
              */
 
             // ritardo il file
-            $cli = SOX_LIB.' '.$trimmedPath. ' '.$offsettedPath.' pad '.$item->start. ' 0';
+            $cli = SOX_LIB.' '.$trimmedPath. ' '.$offsettedPath.' pad '.($item->start / 10). ' 0';
             exec($cli);
             $clis->push($cli);
-
         }
 
         if ($dataLenght > 1) {
@@ -164,8 +164,8 @@ class AudioEditorController extends Controller
         ];
     }
 
-    public function scaffold_audio($token) {
-
+    public function scaffold_audio($token)
+    {
         $storePath = storage_path('app/public/audio/sessions/'.$token);
         $srcPath = $storePath.'/src';
         $tmpPath = $storePath.'/tmp';
@@ -188,16 +188,17 @@ class AudioEditorController extends Controller
         return true;
     }
 
-    public function paste_original_to_project($timelines, $storePath, $token) {
+    public function paste_original_to_project($timelines, $storePath, $token)
+    {
         foreach ($timelines as $key => $item) {
             $audioPath = urldecode($item->src);
             $srcFilename = pathinfo($audioPath, PATHINFO_FILENAME);
-            $srcPath = $storePath.'/src/'.$srcFilename;
+            $srcPath = $storePath.'/src/'.$srcFilename.'.wav';
             // Se il file non è presente allora lo copio dalla libreria
             if (!file_exists($srcPath)) {
                 // qui copio i file nella cartella src
-                Storage::copy('public/'.$audioPath, 'public/audio/sessions/'.$token.'/src/'.$srcFilename);
-                $convPath = storage_path('app/public/audio/sessions/'.$token.'/src/'.$srcFilename);
+                Storage::copy('public/'.$audioPath, 'public/audio/sessions/'.$token.'/src/'.$srcFilename.'.wav');
+                $convPath = storage_path('app/public/audio/sessions/'.$token.'/src/'.$srcFilename.'wav');
                 $basename = $srcFilename;
                 $outPath = storage_path('app/public/audio/sessions/'.$token.'/src/'.$basename.'.wav');
                 $cli = SOX_LIB.' '.$convPath.' -r 44.1k -b 16 -c 2 '.$outPath.' -D';

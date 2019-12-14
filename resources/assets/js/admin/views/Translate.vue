@@ -12,6 +12,7 @@
                     <option value="apps">Apps</option>
                     <option value="app_categories">Percorso didattico</option>
                     <option value="app_sections">Studio</option>
+                    <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
                 </select>
             </div>
@@ -61,16 +62,10 @@
             :per-page="perPage"
             @filtered="onFiltered"
         >
-            <template
-                slot="description"
-                slot-scope="data"
-            >
+            <template v-slot:cell(description)="data">
                 <div v-html="data.item.description"></div>
             </template>
-            <template
-                slot="languages"
-                slot-scope="data"
-            >
+            <template v-slot:cell(languages)="data">
                 <div class="admin-translate__state">
                     <translate-state
                         :languages="languages"
@@ -79,10 +74,7 @@
                 </div>
             </template>
 
-            <template
-                slot="tools"
-                slot-scope="data"
-            >
+            <template v-slot:cell(tools)="data">
                 <ui-button
                     :has-container="false"
                     :has-margin="false"

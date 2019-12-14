@@ -13,9 +13,9 @@
 
 <script>
 import {
-    TweenMax
+    gsap
 }
-from 'gsap'
+from 'gsap/all'
 import FullScreenMessage from './FullScreenMessage.vue'
 import MainNav from './MainNav.vue'
 
