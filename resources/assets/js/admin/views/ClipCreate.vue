@@ -61,9 +61,11 @@
             :has-animations="true"
         >
             <esercizi
+                ref="selector"
+                :clip.sync="this.clip"
                 :options="options.exercises"
                 :exercises.sync="exercises"
-                ref="selector"
+                :initials="initials"
             />
         </block-panel>
     </container>
@@ -196,6 +198,9 @@ export default {
                 'historical_context',
                 'foods',
                 'exercises',
+                'exercise_1',
+                'exercise_2',
+                'exercise_3',
             ],
             initials: {},
         }
@@ -204,6 +209,9 @@ export default {
         cursor: function (cursor) {
             // console.log('cambio cursore', cursor);
         },
+        // exercises: function (exercises) {
+        //     console.log('esercizi', exercises);
+        // }
     },
     methods: {
         getData: function (id = null) {
@@ -223,7 +231,8 @@ export default {
                         this.cursor = 3
 
                         let initial = response.data.initial
-                        // console.dir(initial);
+                        this.clip = initial
+                        // console.log('initials', initial);
                         for (let key in initial) {
                             if (initial.hasOwnProperty(key)) {
 
@@ -333,7 +342,9 @@ export default {
                     }
                 })
             }
-            else if (this.cursor == 2) {}
+            else if (this.cursor == 2) {
+                // paratesti
+            }
         },
         paratextCompleted: function () {
             this.cursor = 3

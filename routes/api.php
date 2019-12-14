@@ -57,12 +57,14 @@ Route::prefix('v2')->group(
 
                 Route::get('load-assets/{slug}/{token?}', 'Api\LoadController@load_assets');
 
-                Route::prefix('session')->group(function () {
-                    Route::post('', 'Api\LoadController@save_session');
-                    Route::post('/share-to-teacher', 'Api\LoadController@share_to_teacher');
-                    Route::post('/share-to-network', 'Api\LoadController@share_to_network');
-                    Route::delete('/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
-                });
+                Route::prefix('session')->group(
+                    function () {
+                        Route::post('', 'Api\LoadController@save_session');
+                        Route::post('/share-to-teacher', 'Api\LoadController@share_to_teacher');
+                        Route::post('/share-to-network', 'Api\LoadController@share_to_network');
+                        Route::delete('/{token}/{clean}', 'Api\LoadController@delete_session')->defaults('clean', true);
+                    }
+                );
 
 
                 Route::post('render-video', 'Api\VideoEditorController@update_editor');
@@ -76,11 +78,13 @@ Route::prefix('v2')->group(
                 Route::get('get-network-single/{id}', 'Api\SectionController@get_network_single');
                 Route::get('like-network/{id}', 'Api\SectionController@add_network_like');
 
-                Route::prefix('propaganda')->group(function () {
-                    Route::get('clips', 'Api\PropagandaController@get_clips');
-                    Route::get('clip/{id}/exercise/{exercise_id}', 'Api\PropagandaController@get_exercise_single');
-                    Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
-                });
+                Route::prefix('propaganda')->group(
+                    function () {
+                        Route::get('clips', 'Api\PropagandaController@get_clips');
+                        Route::get('clip/{id}/exercise/{exercise_id}', 'Api\PropagandaController@get_exercise_single');
+                        Route::get('clip/{id}', 'Api\PropagandaController@get_clip_single');
+                    }
+                );
 
                 Route::prefix('profile')->group(
                     function () {
@@ -126,6 +130,13 @@ Route::prefix('v2')->group(
                         Route::post('/create-detail', 'Api\Admin\ClipsController@store_details');
                         Route::post('/create-paratexts', 'Api\Admin\ClipsController@store_paratexts');
                         Route::post('/create', 'Api\Admin\ClipsController@store');
+
+                        Route::prefix('exercises')->group(
+                            function () {
+                                Route::post('add', 'Api\Admin\ClipsController@add_exercise');
+                                Route::post('remove', 'Api\Admin\ClipsController@remove_exercise');
+                            }
+                        );
 
                         Route::prefix('paratexts')->group(
                             function () {

@@ -96,9 +96,9 @@ export default {
         setInitial: function () {
             this.value = this.initial
         },
-    },
-    created: function () {
-        this.setInitial()
+        created: function () {
+            this.setInitial()
+        },
     },
 }
 </script>

@@ -69,6 +69,46 @@ class ClipsController extends Controller
         ];
     }
 
+    public function add_exercise(Request $request)
+    {
+        $exercise_id = "exercise_$request->exercise_id";
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $clip->{$exercise_id} = 1;
+            $clip->save();
+
+            return [
+                'success' => true,
+                'clip' => $clip,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
+        ];
+    }
+
+    public function remove_exercise(Request $request)
+    {
+        $exercise_id = "exercise_$request->exercise_id";
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $clip->{$exercise_id} = 0;
+            $clip->save();
+
+            return [
+                'success' => true,
+                'clip' => $clip,
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
+        ];
+    }
+
     public function get_initials()
     {
         $periods = Period::all();
