@@ -12,6 +12,7 @@
             <block-content title="Contenuti">
                 <library-medias
                     :exercise="exercise"
+                    :initials="initials | filterInitials(exercise)"
                     @destroy="destroyMedia"
                 />
             </block-content>
@@ -122,6 +123,12 @@ export default {
         LibraryMedias,
     },
     props: {
+        initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
         exercise: {
             type: Object,
             default: function () {
@@ -279,6 +286,11 @@ export default {
         destroyMedia: function (item) {
             this.$emit('destroy', item)
         },
+    },
+    filters: {
+        filterInitials: function (initials, exercise) {
+            console.log(initials, exercise);
+        }
     },
     mounted: function () {
         this.initAnim()

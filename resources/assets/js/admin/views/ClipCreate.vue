@@ -75,6 +75,7 @@
         :key="exercise.uuid"
         :exercise="exercise"
         :clip="clip"
+        :initials="initials"
         @update="updateExerc"
         @destroy="destroyMedia"
     />
