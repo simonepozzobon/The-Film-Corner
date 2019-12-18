@@ -16,6 +16,14 @@
             :initials="initials"
         />
     </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <traduzioni-clip :initials="initials" />
+    </container>
+
     <container
         :contains="true"
         :has-animations="true"
@@ -126,23 +134,25 @@ import Informazioni from '../components/clips/Informazioni.vue'
 import Paratexts from '../components/clips/Paratexts.vue'
 import Esercizi from '../components/clips/Esercizi.vue'
 import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
+import TraduzioniClip from '../components/clips/TraduzioniClip.vue'
 import Topbar from './propaganda/Topbar.vue'
 
 export default {
     name: 'ClipCreate',
     components: {
         Approfondimenti,
+        BlockPanel,
         CaricaClip,
+        Container,
+        Esercizi,
         Informazioni,
         LibrerieEsercizi,
         Paratexts,
-        Esercizi,
         Step,
-        Container,
-        BlockPanel,
+        Topbar,
+        TraduzioniClip,
         UiButton,
         UiTitle,
-        Topbar,
     },
     mixins: [EserciziMethods],
     data: function () {

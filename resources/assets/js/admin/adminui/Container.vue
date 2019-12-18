@@ -98,21 +98,25 @@ export default {
             })
 
             master.to(container, .1, {
-                    overflow: 'hidden',
-                }, 'start')
-                .fromTo(container, .6, {
-                    height: '1px',
-                    autoAlpha: 0,
-                    ease: Power4.easeInOut,
-                }, {
-                    autoAlpha: 1,
-                    height: 'auto',
-                    ease: Power4.easeInOut,
-                    immediateRender: false,
-                }, 'start+=0')
-                .to(container, .1, {
-                    overflow: 'inherit'
-                }, 'start+=0.6')
+                overflow: 'hidden',
+            }, 'start')
+
+            master.fromTo(container, .6, {
+                // height: '1px',
+                maxHeight: 0,
+                autoAlpha: 0,
+                ease: 'power4.inOut',
+            }, {
+                autoAlpha: 1,
+                // height: 'auto',
+                maxHeight: '100%',
+                ease: 'power4.inOut',
+                immediateRender: false,
+            }, 'start+=0')
+
+            master.to(container, .1, {
+                overflow: 'inherit'
+            }, 'start+=0.6')
 
             master.progress(1).progress(0)
 
