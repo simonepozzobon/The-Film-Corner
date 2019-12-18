@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clip extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
     protected $connection = 'tfc_propaganda';
+
+    public $translatedAttributes = ['title'];
+
+    protected $fillable = ['video', 'year', 'nationality'];
 
     // One to many
     public function period()

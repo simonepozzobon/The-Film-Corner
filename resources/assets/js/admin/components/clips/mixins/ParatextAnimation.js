@@ -1,31 +1,12 @@
 import {
-    TweenMax,
-    TimelineMax,
-    Power4,
-    Power3,
-    Power2,
-    Power0,
-    Elastic,
-    Back,
-    Sine,
     gsap,
 }
-from 'gsap/all'
+from 'gsap/'
 
 import {
     CSSPlugin
 }
 from 'gsap/CSSPlugin'
-
-const plugins = [
-    Power4,
-    Power3,
-    Power2,
-    Power0,
-    Elastic,
-    Back,
-    Sine,
-]
 
 import {
     GSDevTools
@@ -72,9 +53,7 @@ const ParatextAnimation = {
                     paddingBottom: '0',
                     opacity: '0',
                     overflow: 'hidden',
-                    css: {
-                        boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
-                    },
+                    boxShadow: '1px 1px 1px 0 rgba(59, 66, 72, 0), 1px 1px 1px 0 rgba(59, 66, 72, 0)',
                 }, 'start')
 
                 .fromTo(content, 0.1, {
@@ -84,8 +63,8 @@ const ParatextAnimation = {
                     id: 'width',
                     width: '100%',
                     maxWidth: '100%',
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
+                    ease: 'sine.inOut',
+                    yoyoEase: 'sine.in',
                     immediateRender: false,
                 }, 'setWidth')
 
@@ -99,15 +78,15 @@ const ParatextAnimation = {
                     paddingTop: '0.5rem',
                     paddingBottom: '2rem',
                     immediateRender: false,
-                    ease: Sine.easeInOut,
-                    yoyoEase: Sine.easeIn,
+                    ease: 'sine.inOut',
+                    yoyoEase: 'sine.in',
                 }, 'setHeight')
 
                 .fromTo(content, .3, {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Sine.easeInOut,
+                    ease: 'sine.inOut',
                     immediateRender: false,
                 }, 'start')
 
@@ -115,7 +94,7 @@ const ParatextAnimation = {
                     opacity: '0',
                 }, {
                     opacity: '1',
-                    ease: Sine.easeInOut,
+                    ease: 'sine.inOut',
                     immediateRender: false,
                 }, 'start')
 
@@ -132,7 +111,7 @@ const ParatextAnimation = {
                 }, {
                     boxShadow: '2px 4px 12px 0 rgba(59, 66, 72, 0.04), 4px 8px 24px 0 rgba(59, 66, 72, 0.02)',
                     immediateRender: false,
-                    ease: Power0.easeNone,
+                    ease: 'power0.none',
                 }, 'revealFrame')
 
             this.master.progress(1).progress(0)

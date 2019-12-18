@@ -55,7 +55,7 @@ const BlockPanelAnimation = {
             }, 'start')
 
             this.master.to(childsVisible, {
-                opacity: '0',
+                opacity: 0,
                 duration: 0.1,
             }, 'start')
 
@@ -103,9 +103,9 @@ const BlockPanelAnimation = {
             }, 'setHeight')
 
             this.master.fromTo(content, {
-                opacity: '0',
+                opacity: 0,
             }, {
-                opacity: '1',
+                opacity: 1,
                 ease: 'power4.inOut',
                 immediateRender: false,
                 duration: 0.2,
@@ -148,11 +148,11 @@ const BlockPanelAnimation = {
 
             if (childsVisible) {
                 this.master.fromTo(childsVisible, {
-                    opacity: '0',
+                    opacity: 0,
                     scaleX: 0.9,
                     scaleY: 1.1,
                 }, {
-                    opacity: '1',
+                    opacity: 1,
                     scaleX: 1,
                     scaleY: 1,
                     stagger: {

@@ -21,7 +21,17 @@
         :contains="true"
         :has-animations="true"
     >
-        <traduzioni-clip :initials="initials" />
+        <sottotitoli />
+    </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <traduzioni-clip
+            :initials="altInitials"
+            :title="title"
+        />
     </container>
 
     <container
@@ -127,13 +137,14 @@ from '../../ui'
 
 import EserciziMethods from './mixins/EserciziMethods'
 
-import Step from '../components/clips/Step.vue'
 import Approfondimenti from '../components/clips/Approfondimenti.vue'
 import CaricaClip from '../components/clips/CaricaClip.vue'
-import Informazioni from '../components/clips/Informazioni.vue'
-import Paratexts from '../components/clips/Paratexts.vue'
 import Esercizi from '../components/clips/Esercizi.vue'
+import Informazioni from '../components/clips/Informazioni.vue'
 import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
+import Paratexts from '../components/clips/Paratexts.vue'
+import Sottotitoli from '../components/clips/Sottotitoli.vue'
+import Step from '../components/clips/Step.vue'
 import TraduzioniClip from '../components/clips/TraduzioniClip.vue'
 import Topbar from './propaganda/Topbar.vue'
 
@@ -148,6 +159,7 @@ export default {
         Informazioni,
         LibrerieEsercizi,
         Paratexts,
+        Sottotitoli,
         Step,
         Topbar,
         TraduzioniClip,
@@ -214,6 +226,7 @@ export default {
                 'exercise_3',
             ],
             initials: {},
+            altInitials: {},
         }
     },
     watch: {
@@ -237,11 +250,13 @@ export default {
 
             this.$http.get(url).then(response => {
                 if (response.data.success) {
+                    console.log(response.data.initial);
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
                         this.cursor = 3
 
                         let initial = response.data.initial
+                        this.altInitials = Object.assign({}, initial)
                         this.clip = initial
                         // console.log('initials', initial);
                         for (let key in initial) {
