@@ -122,7 +122,7 @@ const BlockPanelAnimation = {
             this.master.fromTo(parent, {
                 paddingBottom: '2rem',
             }, {
-                paddingBottom: '1.618rem',
+                paddingBottom: '0',
                 immediateRender: false,
                 duration: 0.1,
             }, 'setHeight+=0.05')
