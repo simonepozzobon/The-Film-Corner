@@ -1,6 +1,6 @@
 <template>
 <block-panel
-    title="Carica Clip"
+    title="Clip"
     :initial-state="initialState"
 >
     <div class="a-clip-panel__row form-group row">

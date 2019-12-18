@@ -1,6 +1,6 @@
 <template>
 <block-panel
-    title="Informazioni Clip"
+    title="Informazioni"
     :initial-state="initialState"
 >
     <div class="a-clip-panel__row form-group row">

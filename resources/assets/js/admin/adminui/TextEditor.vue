@@ -324,13 +324,9 @@ export default {
 
 
             this.master.fromTo(container, {
-                css: {
-                    minHeight: '250px',
-                },
+                minHeight: '250px',
             }, {
-                css: {
-                    minHeight: '30px',
-                },
+                minHeight: '1px',
                 duration: .3,
                 ease: 'back.out(1.4)',
             }, 'start')
@@ -339,11 +335,13 @@ export default {
                 padding: '0.61805rem',
                 marginBottom: '1rem',
                 maxHeight: '100%',
+                height: 'auto',
             }, {
                 padding: 0,
                 marginBottom: 0,
                 maxHeight: 0,
-                lazy: true,
+                height: 0,
+                // lazy: true,
                 duration: .1,
                 ease: 'power4.inOut',
             }, 'start+=0.1')
@@ -352,7 +350,7 @@ export default {
                 autoAlpha: 1,
             }, {
                 autoAlpha: 0,
-                lazy: true,
+                // lazy: true,
                 duration: .2,
                 immediateRender: false,
             }, 'start')
