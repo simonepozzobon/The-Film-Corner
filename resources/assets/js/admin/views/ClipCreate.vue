@@ -282,6 +282,7 @@ export default {
 
                 this.panelTitle = 'Modifica Clip'
             }
+            console.log('url', url);
 
             this.$http.get(url).then(response => {
                 console.log('setting', response);
