@@ -156,7 +156,7 @@ class ClipsController extends Controller
             $response['success'] = true;
             $response['initial'] = $clip;
         } else {
-            $response['success'] = false;
+            $response['success'] = true;
         }
 
 
