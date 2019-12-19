@@ -182,6 +182,10 @@ $darken: lighten($dark, 3);
         padding: $spacer;
     }
 
+    &--padding-no &__content {
+        padding: ($spacer * 2) ($spacer * 2) ($spacer * 1.618) ($spacer * 2);
+    }
+
     &--no-top &__content {
         margin-top: 0;
     }
@@ -189,6 +193,10 @@ $darken: lighten($dark, 3);
     &--contains {
         @include make-container();
         @include make-container-max-widths();
+    }
+
+    &--contains &--padding-no {
+        padding: 0;
     }
 
     &--sticky &__content:before {

@@ -36,29 +36,29 @@ class ClipsController extends Controller
 
     public function test()
     {
-        $request = new Request();
-        $request->replace(
-            [
-                // 'title'=> 'fdjdjgldkf',
-                // 'video'=> 'no',
-                // 'period'=> "Second World War",
-                // 'year'=> '1900',
-                // 'format'=> "4/3",
-                // 'age'=> "14-18",
-                // 'genre'=> "tuo",
-                // 'nationality'=> 'ital',
-                // 'directors' => ["Gianni","Beppe","giovanni"],
-                'clip_id' => 20,
-                'abstract' => uniqid(),
-                'tech_info' => uniqid(),
-                'historical_context' => uniqid(),
-                'food' => uniqid(),
-            ]
-        );
+        // $request = new Request();
+        // $request->replace(
+        //     [
+        //         // 'title'=> 'fdjdjgldkf',
+        //         // 'video'=> 'no',
+        //         // 'period'=> "Second World War",
+        //         // 'year'=> '1900',
+        //         // 'format'=> "4/3",
+        //         // 'age'=> "14-18",
+        //         // 'genre'=> "tuo",
+        //         // 'nationality'=> 'ital',
+        //         // 'directors' => ["Gianni","Beppe","giovanni"],
+        //         'clip_id' => 20,
+        //         'abstract' => uniqid(),
+        //         'tech_info' => uniqid(),
+        //         'historical_context' => uniqid(),
+        //         'food' => uniqid(),
+        //     ]
+        // );
 
-        $this->store_details($request);
+        // $this->store_details($request);
 
-        // $this->store($request);
+        $this->get_initials_edit(39);
     }
 
     public function get_clips()
@@ -148,7 +148,7 @@ class ClipsController extends Controller
             $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
 
             $details = $clip->details()->first();
-            $details = $details->translate('it', true);
+            $details = $details->setDefaultLocale('it');
             $clip->details = $details;
 
             $response['success'] = true;
@@ -156,6 +156,7 @@ class ClipsController extends Controller
         } else {
             $response['success'] = false;
         }
+
 
         return $response;
     }
@@ -303,6 +304,31 @@ class ClipsController extends Controller
         $t->locale = 'it';
 
         $t->save();
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json([
+            'clip' => $clip,
+        ]);
+    }
+
+    public function store_details_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+        $clip = Clip::find($id);
+        $detail = $clip->details->first();
+
+        foreach ($translations as $key => $translation) {
+            $t = $translation->value;
+            $current = $detail->translateOrNew($translation->locale);
+            $current->detail_id = $detail->id;
+            $current->tech_info = $t->tech_info;
+            $current->abstract = $t->abstract;
+            $current->historical_context = $t->historical_context;
+            $current->foods = $t->foods;
+            $current->save();
+        }
 
         $clip = $clip->fresh($this->options);
 

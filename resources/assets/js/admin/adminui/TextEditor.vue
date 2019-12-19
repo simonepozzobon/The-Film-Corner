@@ -408,6 +408,9 @@ export default {
     },
     mounted: function () {
         this.$nextTick(this.init)
+        if (this.debug) {
+            console.log('mounted inside');
+        }
     },
     beforeDestroy: function () {
         this.editor.destroy()

@@ -65,7 +65,11 @@
         :contains="true"
         :has-animations="true"
     >
-        <traduzioni-approfondimenti />
+        <traduzioni-approfondimenti
+            :clip="clip"
+            :initials="initials"
+            @saved="updateClip"
+        />
     </container>
     <container
         v-if="cursor >= 2"

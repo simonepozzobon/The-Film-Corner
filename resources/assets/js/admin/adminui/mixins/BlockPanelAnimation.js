@@ -54,11 +54,6 @@ const BlockPanelAnimation = {
                 duration: 0.1,
             }, 'start')
 
-            this.master.to(childsVisible, {
-                opacity: 0,
-                duration: 0.1,
-            }, 'start')
-
             this.master.to(this.$refs.parent, {
                 display: 'flex',
                 duration: 0.1,
@@ -119,13 +114,15 @@ const BlockPanelAnimation = {
                 duration: 0.3,
             }, 'start')
 
-            this.master.fromTo(parent, {
-                paddingBottom: '2rem',
-            }, {
-                paddingBottom: '0',
-                immediateRender: false,
-                duration: 0.1,
-            }, 'setHeight+=0.05')
+            if (this.noParent == false) {
+                this.master.fromTo(parent, {
+                    paddingBottom: '2rem',
+                }, {
+                    paddingBottom: '0',
+                    immediateRender: false,
+                    duration: 0.1,
+                }, 'setHeight+=0.05')
+            }
 
             this.master.fromTo(content, {
                 borderWidth: '0',
@@ -146,7 +143,12 @@ const BlockPanelAnimation = {
                 duration: 0.2,
             }, 'revealFrame')
 
-            if (childsVisible) {
+            if (childsVisible && childsVisible.length > 0) {
+                this.master.to(childsVisible, {
+                    opacity: 0,
+                    duration: 0.1,
+                }, 'start')
+
                 this.master.fromTo(childsVisible, {
                     opacity: 0,
                     scaleX: 0.9,
@@ -167,8 +169,19 @@ const BlockPanelAnimation = {
                 }, 'revealContent')
             }
 
-            this.master.progress(1)
-            this.toggleAnim()
+
+            if (this.initialState) {
+                this.isOpen = true
+                this.$nextTick(() => {
+                    this.toggleAnim()
+                })
+            }
+            else {
+                this.master.progress(1)
+                this.toggleAnim()
+
+            }
+
         },
     },
 }

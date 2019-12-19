@@ -10,8 +10,8 @@
     >
         <ui-title
             :title="title"
-            tag="h2"
-            font-size="h2"
+            :tag="titleSize"
+            :font-size="titleSize"
             class="block-panel__title"
             :has-container="false"
             :has-margin="false"
@@ -84,9 +84,17 @@ export default {
         },
         initialState: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         hasFooter: {
+            type: Boolean,
+            default: false,
+        },
+        titleSize: {
+            type: String,
+            default: 'h2',
+        },
+        noParent: {
             type: Boolean,
             default: false,
         },
@@ -185,7 +193,7 @@ export default {
     },
     mounted: function () {
         // console.log('mounted', this.title);
-        if (this.needsTrigger == false) {
+        if (this.needsTrigger == false && this.hasAnimations == true) {
             this.initAnim()
         }
         else {
@@ -228,7 +236,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding: 0 0 ($spacer * 1.618) 0;
+        padding: 0;
     }
 
     &__title {

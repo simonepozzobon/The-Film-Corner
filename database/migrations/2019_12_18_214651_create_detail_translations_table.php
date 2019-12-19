@@ -23,10 +23,10 @@ class CreateDetailTranslationsTable extends Migration
         Schema::connection('tfc_propaganda')->create('detail_translations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('detail_id')->unsigned();
-            $table->longText('tech_info');
-            $table->longText('abstract');
-            $table->longText('historical_context');
-            $table->longText('foods');
+            $table->longText('tech_info')->nullable();
+            $table->longText('abstract')->nullable();
+            $table->longText('historical_context')->nullable();
+            $table->longText('foods')->nullable();
             $table->string('locale')->index();
 
             $table->unique(['detail_id','locale']);

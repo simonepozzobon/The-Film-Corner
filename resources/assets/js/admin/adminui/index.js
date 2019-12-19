@@ -12,6 +12,7 @@ import PanelTitle from './PanelTitle.vue'
 import UploadZone from './UploadZone.vue'
 import SimpleVideoPlayer from './SimpleVideoPlayer.vue'
 import UiModal from './UiModal.vue'
+import UiTitle from './UiTitle.vue'
 
 export {
     Container,
@@ -28,4 +29,5 @@ export {
     UploadZone,
     SimpleVideoPlayer,
     UiModal,
+    UiTitle,
 }
