@@ -117,7 +117,7 @@ const ParatextAnimation = {
             this.master.progress(1).progress(0)
 
             this.$nextTick(() => {
-                this.debouncedEvent('add-anim', this.master, true, this.uuid, null)
+                this.master.play()
             })
         },
     }

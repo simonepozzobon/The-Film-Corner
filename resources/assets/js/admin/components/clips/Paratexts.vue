@@ -16,6 +16,7 @@
             :clip-id="clip ? clip.id : 1"
             @completed="setCompleted"
             @uncomplete="setUncomplete"
+            @translate="translate"
         />
     </div>
 
@@ -148,10 +149,49 @@ export default {
         },
     },
     methods: {
+        translate: function (item) {
+            this.$emit('translate', item)
+        },
+        setClip: function () {
+            if (this.clip && this.clip.hasOwnProperty('paratexts') && this.clip.paratexts.length > 0) {
+                let paratexts = this.clip.paratexts
+                let cache = []
+                for (let i = 0; i < paratexts.length; i++) {
+                    let paratext = paratexts[i]
+                    let typeId = paratext.paratext_type_id
+
+                    let group = this.selectOptions.find(opt => opt.id == typeId)
+                    let idx = cache.findIndex(obj => obj.id == group.id)
+
+                    if (idx < 0) {
+                        // console.log(paratext, typeId);
+                        group = {
+                            ...group,
+                            contents: [paratext],
+                        }
+                        cache.push(group)
+                    }
+                    else {
+                        cache[idx].contents.push(paratext)
+                        // console.log('ce ', cache[idx]);
+                    }
+                }
+
+                for (let i = 0; i < cache.length; i++) {
+                    let current = cache[i]
+                    this.paratext_selected = current
+
+                    this.addParatextType()
+                }
+                // console.log('cache ', cache);
+
+            }
+        },
         selectorReady: function () {
             if (this.state == true) {
                 console.log('res');
                 this.$refs.panel.trigger()
+                this.setClip()
             }
         },
         showForm: function () {
@@ -213,20 +253,8 @@ export default {
             this.initialized = true
             this.selectOptions = Object.assign([], this.options.paratext_types)
         }
-        // this.$nextTick(() => {
-        //     this.debug()
-        // })
-        // this.$nextTick(() => {
-        //     this.$util.onResizeListener(this.$refs.paraContainer, (el) => {
-        //         let panel = this.$refs.panel
-        //         let container = panel.$refs.container
-        //         let height = container.style.height
-        //         if (height != 'auto' && height != '1px') {
-        //             console.log(height);
-        //             // container.style.height = ''
-        //         }
-        //     })
-        // })
+
+        this.setClip()
     },
 }
 </script>

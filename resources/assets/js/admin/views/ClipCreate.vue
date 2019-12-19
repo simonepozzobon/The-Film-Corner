@@ -83,6 +83,7 @@
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
             :initials="initials"
+            @translate="translate"
         />
     </container>
     <container
@@ -135,6 +136,7 @@
             />
         </div>
     </container>
+    <traduzioni-paratext ref="translate" />
 </div>
 </template>
 
@@ -151,6 +153,8 @@ import {
     UiTitle,
 }
 from '../../ui'
+
+import TraduzioniParatext from '../components/clips/paratesti/TraduzioniParatext.vue'
 
 import EserciziMethods from './mixins/EserciziMethods'
 
@@ -184,6 +188,7 @@ export default {
         TraduzioniClip,
         UiButton,
         UiTitle,
+        TraduzioniParatext,
     },
     mixins: [EserciziMethods],
     data: function () {
@@ -257,6 +262,9 @@ export default {
         // }
     },
     methods: {
+        translate: function (item) {
+            this.$refs.translate.show(item)
+        },
         updateClip: function (clip) {
             this.clip == clip
         },

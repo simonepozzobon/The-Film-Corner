@@ -2,6 +2,7 @@
 <div class="admin-editor">
     <div class="form-group row">
         <label
+            v-if="hasLabel"
             for=""
             :class="labelSize"
         >
@@ -134,6 +135,7 @@
                     </div>
                 </editor-menu-bubble>
                 <editor-content
+                    ref="content"
                     class="admin-editor__content"
                     :editor="editor"
                 >
@@ -231,6 +233,14 @@ export default {
             type: Boolean,
             default: false,
         },
+        minHeight: {
+            type: String,
+            default: '250px',
+        },
+        hasLabel: {
+            type: Boolean,
+            default: true,
+        },
     },
     components: {
         EditorContent,
@@ -324,7 +334,7 @@ export default {
 
 
             this.master.fromTo(container, {
-                minHeight: '250px',
+                minHeight: this.minHeight,
             }, {
                 minHeight: '1px',
                 duration: .3,
@@ -405,8 +415,15 @@ export default {
                 this.editor.focus()
             }
         },
+        setHeight: function () {
+            let container = this.$refs.container
+            let content = container.getElementsByClassName('admin-editor__content')[0]
+            container.style.minHeight = this.minHeight
+            content.style.minHeight = this.minHeight
+        },
     },
     mounted: function () {
+        this.setHeight()
         this.$nextTick(this.init)
         if (this.debug) {
             console.log('mounted inside');
@@ -433,10 +450,10 @@ export default {
         @include border-radius(10px);
         padding: $spacer;
         border: $input-border-width solid $input-border-color;
-        min-height: 40vh;
+        min-height: 250px;
 
         &__content {
-            min-height: 40vh;
+            min-height: 250px;
         }
 
         img {

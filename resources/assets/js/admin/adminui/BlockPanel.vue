@@ -1,7 +1,7 @@
 <template>
 <div
     class="block-panel"
-    :class="shadowClass"
+    :class="[shadowClass, hasAnimationsClass]"
     ref="parent"
 >
     <div
@@ -17,6 +17,7 @@
             :has-margin="false"
         />
         <ui-button
+            v-if="hasAnimations"
             :title="panelBtn"
             theme="outline"
             class="block-panel__top-btn"
@@ -120,6 +121,12 @@ export default {
         shadowClass: function () {
             if (this.hasAnimations == false) {
                 return 'block-panel--shadows'
+            }
+            return null
+        },
+        hasAnimationsClass: function () {
+            if (this.hasAnimations == false) {
+                return 'block-panel--no-animations'
             }
             return null
         }
@@ -271,6 +278,10 @@ export default {
 
     &--shadows &__container {
         @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
+    }
+
+    &--no-animations &__container {
+        margin-top: $spacer * 1.618;
     }
 }
 </style>
