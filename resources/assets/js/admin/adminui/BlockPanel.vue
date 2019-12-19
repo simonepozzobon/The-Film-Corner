@@ -256,6 +256,9 @@ export default {
 
     &__footer {
         margin-top: $spacer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
     &--shadows &__container {

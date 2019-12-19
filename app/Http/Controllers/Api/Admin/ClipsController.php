@@ -28,6 +28,7 @@ class ClipsController extends Controller
 {
     public function __construct()
     {
+        $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics'];
         $this->options = array_merge($this->options_single, $this->options_multiple);
@@ -146,7 +147,9 @@ class ClipsController extends Controller
         if ($id) {
             $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
 
-            $clip->details = $clip->details()->first();
+            $details = $clip->details()->first();
+            $details = $details->translate('it', true);
+            $clip->details = $details;
 
             $response['success'] = true;
             $response['initial'] = $clip;
@@ -271,6 +274,35 @@ class ClipsController extends Controller
         foreach ($this->options_multiple as $key => $value) {
             $saved = $this->check_multiple_option($value, $request, $clip);
         }
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json([
+            'clip' => $clip,
+        ]);
+    }
+
+    public function store_details_new(Request $request)
+    {
+        $clip = Clip::find($request->id);
+
+        if ($clip->details->count() > 0) {
+            $detail = $clip->details->first();
+        } else {
+            $detail = new Detail();
+            $detail->clip_id = $clip->id;
+            $detail->save();
+        }
+
+        $t = $detail->translateOrNew('it');
+        $t->detail_id = $detail->id;
+        $t->tech_info = $request->tech_info;
+        $t->abstract = $request->abstract;
+        $t->historical_context = $request->historical_context;
+        $t->foods = $request->foods;
+        $t->locale = 'it';
+
+        $t->save();
 
         $clip = $clip->fresh($this->options);
 

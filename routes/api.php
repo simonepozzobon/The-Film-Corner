@@ -132,6 +132,7 @@ Route::prefix('v2')->group(
                         Route::post('/create', 'Api\Admin\ClipsController@store');
                         Route::post('/create-clip', 'Api\Admin\ClipsController@store_clip');
                         Route::post('/create-informations', 'Api\Admin\ClipsController@store_informations');
+                        Route::post('/create-details', 'Api\Admin\ClipsController@store_details_new');
 
                         Route::prefix('translations')->group(function () {
                             Route::post('title', 'Api\Admin\ClipsController@store_title_translation');

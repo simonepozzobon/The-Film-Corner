@@ -156,7 +156,7 @@ $darken: lighten($dark, 3);
 .admin-container {
     &__content {
         position: relative;
-        padding: ($spacer * 2) ($spacer * 2 * 1.618) ($spacer * 2 * 1.618) ($spacer * 2 * 1.618);
+        padding: ($spacer * 2) ($spacer * 2 * 1.618) ($spacer * 1.618) ($spacer * 2 * 1.618);
         margin-top: $spacer * 2 * 1.618;
         @include border-radius($border-radius * 4);
         @include gradient-directional($color-darken, lighten($color-darken, 1), -10deg);

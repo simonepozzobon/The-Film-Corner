@@ -214,11 +214,29 @@ export default {
         letter-spacing: 3px;
     }
 
-    &--sm {
+    &--sm,
+    &--sm &__content {
         text-transform: uppercase;
         font-size: $font-size-base * 0.55;
         font-weight: 600;
         letter-spacing: 3px;
+    }
+
+    &--lg,
+    &--lg &__content {
+        text-transform: uppercase;
+        font-size: $font-size-base * 1;
+        font-weight: 500;
+        letter-spacing: 3px;
+    }
+
+    &--xl,
+    &--xl &__content {
+        text-transform: uppercase;
+        font-size: $font-size-base * 1.25;
+        font-weight: 400;
+        letter-spacing: 6px;
+        padding: 0.375rem 2rem;
     }
 
     &--inline-block {

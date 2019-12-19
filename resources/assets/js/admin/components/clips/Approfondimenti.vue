@@ -3,6 +3,7 @@
     title="Approfondimenti"
     ref="panel"
     :initial-state="state"
+    :has-footer="true"
 >
     <text-editor
         ref="tech_info"
@@ -35,6 +36,19 @@
         @update="updateFood"
         @ready="editorReady('foods')"
     />
+
+    <template v-slot:footer>
+        <ui-button
+            title="salva"
+            color="green"
+            theme="outline"
+            :disable="isLoading"
+            :has-spinner="isLoading"
+            :has-margin="false"
+            :has-container="false"
+            @click="save"
+        />
+    </template>
 </block-panel>
 </template>
 
@@ -83,9 +97,16 @@ export default {
                 return {}
             },
         },
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
+            isLoading: false,
             tech_info: null,
             abstract: null,
             historical_context: null,
@@ -113,6 +134,7 @@ export default {
 
                 if (this.initials.hasOwnProperty(key) && this.$refs.hasOwnProperty(key) && this.$refs[key].editor) {
                     this.$refs[key].editor.setContent(this.initials[key])
+                    this[key] = this.initials[key]
                 }
             }
         },
@@ -134,6 +156,20 @@ export default {
         },
         editorReady: function (key) {
             this.setInitials()
+        },
+        save: function () {
+            let data = new FormData()
+            data.append('id', this.clip.id)
+
+
+            data.append('tech_info', this.tech_info)
+            data.append('abstract', this.abstract)
+            data.append('historical_context', this.historical_context)
+            data.append('foods', this.foods)
+
+            this.$http.post('/api/v2/admin/clips/create-details', data).then(response => {
+                console.log(response.data);
+            })
         },
     },
     mounted: function () {

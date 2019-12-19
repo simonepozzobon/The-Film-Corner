@@ -56,8 +56,16 @@
     >
         <approfondimenti
             @update="updateField"
+            :clip="clip"
             :initials="initials"
         />
+    </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <traduzioni-approfondimenti />
     </container>
     <container
         v-if="cursor >= 2"
@@ -150,6 +158,7 @@ import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
 import Paratexts from '../components/clips/Paratexts.vue'
 import Sottotitoli from '../components/clips/Sottotitoli.vue'
 import Step from '../components/clips/Step.vue'
+import TraduzioniApprofondimenti from '../components/clips/TraduzioniApprofondimenti.vue'
 import TraduzioniClip from '../components/clips/TraduzioniClip.vue'
 import Topbar from './propaganda/Topbar.vue'
 
@@ -167,6 +176,7 @@ export default {
         Sottotitoli,
         Step,
         Topbar,
+        TraduzioniApprofondimenti,
         TraduzioniClip,
         UiButton,
         UiTitle,

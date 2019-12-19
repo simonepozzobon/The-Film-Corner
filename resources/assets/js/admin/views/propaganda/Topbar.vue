@@ -140,7 +140,8 @@ export default {
         window.addEventListener('scroll', this.onScroll)
         this.$nextTick(() => {
             this.getWidth()
-            this.stickyEnabled = true
+            this.stickyEnabled = false
+            // this.stickyEnabled = true
         })
     },
     beforeDestroy: function () {
