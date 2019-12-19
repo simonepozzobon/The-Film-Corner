@@ -1,7 +1,7 @@
 <template>
 <div
     class="block-panel"
-    :class="shadowClass"
+    :class="[shadowClass, hasAnimationsClass]"
     ref="parent"
 >
     <div
@@ -10,13 +10,14 @@
     >
         <ui-title
             :title="title"
-            tag="h2"
-            font-size="h2"
+            :tag="titleSize"
+            :font-size="titleSize"
             class="block-panel__title"
             :has-container="false"
             :has-margin="false"
         />
         <ui-button
+            v-if="hasAnimations"
             :title="panelBtn"
             theme="outline"
             class="block-panel__top-btn"
@@ -31,6 +32,13 @@
         ref="container"
     >
         <slot></slot>
+    </div>
+
+    <div
+        v-if="hasFooter"
+        class="block-panel__footer"
+    >
+        <slot name="footer"></slot>
     </div>
 </div>
 </template>
@@ -77,7 +85,19 @@ export default {
         },
         initialState: {
             type: Boolean,
-            default: true,
+            default: false,
+        },
+        hasFooter: {
+            type: Boolean,
+            default: false,
+        },
+        titleSize: {
+            type: String,
+            default: 'h2',
+        },
+        noParent: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {
@@ -101,6 +121,12 @@ export default {
         shadowClass: function () {
             if (this.hasAnimations == false) {
                 return 'block-panel--shadows'
+            }
+            return null
+        },
+        hasAnimationsClass: function () {
+            if (this.hasAnimations == false) {
+                return 'block-panel--no-animations'
             }
             return null
         }
@@ -174,7 +200,7 @@ export default {
     },
     mounted: function () {
         // console.log('mounted', this.title);
-        if (this.needsTrigger == false) {
+        if (this.needsTrigger == false && this.hasAnimations == true) {
             this.initAnim()
         }
         else {
@@ -217,7 +243,7 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        padding: 0 0 ($spacer * 1.618) 0;
+        padding: 0;
     }
 
     &__title {
@@ -243,8 +269,19 @@ export default {
         // @include custom-box-shadow(lighten($dark, 25), 1px, 0.3);
     }
 
+    &__footer {
+        margin-top: $spacer;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     &--shadows &__container {
         @include custom-inner-shadow(darken($color, 30), 8px, 0.2);
+    }
+
+    &--no-animations &__container {
+        margin-top: $spacer * 1.618;
     }
 }
 </style>

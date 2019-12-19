@@ -1,15 +1,42 @@
 <template>
-<div class="a-clip-panel">
-    <topbar :cursor="cursor" />
+<div
+    class="a-clip-panel"
+    sticky-container
+>
+    <topbar
+        :cursor="cursor"
+        :title="panelTitle"
+    />
     <container
         :contains="true"
         :has-animations="true"
     >
         <carica-clip
             @update="updateField"
+            @saved="updateClip"
             :initials="initials"
         />
     </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <sottotitoli />
+    </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <traduzioni-clip
+            :initials="altInitials"
+            :title="title"
+            :clip="clip"
+            @saved="updateClip"
+        />
+    </container>
+
     <container
         :contains="true"
         :has-animations="true"
@@ -17,7 +44,9 @@
         <informazioni
             :options="options"
             @update="updateField"
+            :clip="clip"
             :initials="initials"
+            @saved="updateClip"
         />
     </container>
     <container
@@ -27,7 +56,19 @@
     >
         <approfondimenti
             @update="updateField"
+            :clip="clip"
             :initials="initials"
+        />
+    </container>
+
+    <container
+        :contains="true"
+        :has-animations="true"
+    >
+        <traduzioni-approfondimenti
+            :clip="clip"
+            :initials="initials"
+            @saved="updateClip"
         />
     </container>
     <container
@@ -41,6 +82,8 @@
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
+            :initials="initials"
+            @translate="translate"
         />
     </container>
     <container
@@ -54,9 +97,11 @@
             :has-animations="true"
         >
             <esercizi
+                ref="selector"
+                :clip.sync="this.clip"
                 :options="options.exercises"
                 :exercises.sync="exercises"
-                ref="selector"
+                :initials="initials"
             />
         </block-panel>
     </container>
@@ -66,6 +111,7 @@
         :key="exercise.uuid"
         :exercise="exercise"
         :clip="clip"
+        :initials="initials"
         @update="updateExerc"
         @destroy="destroyMedia"
     />
@@ -90,6 +136,11 @@
             />
         </div>
     </container>
+    <traduzioni-paratext
+        ref="translate"
+        :clip="clip"
+        @saved="updateClip"
+    />
 </div>
 </template>
 
@@ -107,37 +158,48 @@ import {
 }
 from '../../ui'
 
+import TraduzioniParatext from '../components/clips/paratesti/TraduzioniParatext.vue'
+
 import EserciziMethods from './mixins/EserciziMethods'
 
-import Step from '../components/clips/Step.vue'
 import Approfondimenti from '../components/clips/Approfondimenti.vue'
 import CaricaClip from '../components/clips/CaricaClip.vue'
-import Informazioni from '../components/clips/Informazioni.vue'
-import Paratexts from '../components/clips/Paratexts.vue'
 import Esercizi from '../components/clips/Esercizi.vue'
+import Informazioni from '../components/clips/Informazioni.vue'
 import LibrerieEsercizi from '../components/clips/LibrerieEsercizi.vue'
+import Paratexts from '../components/clips/Paratexts.vue'
+import Sottotitoli from '../components/clips/Sottotitoli.vue'
+import Step from '../components/clips/Step.vue'
+import TraduzioniApprofondimenti from '../components/clips/TraduzioniApprofondimenti.vue'
+import TraduzioniClip from '../components/clips/TraduzioniClip.vue'
 import Topbar from './propaganda/Topbar.vue'
 
 export default {
     name: 'ClipCreate',
     components: {
         Approfondimenti,
+        BlockPanel,
         CaricaClip,
+        Container,
+        Esercizi,
         Informazioni,
         LibrerieEsercizi,
         Paratexts,
-        Esercizi,
+        Sottotitoli,
         Step,
-        Container,
-        BlockPanel,
+        Topbar,
+        TraduzioniApprofondimenti,
+        TraduzioniClip,
         UiButton,
         UiTitle,
-        Topbar,
+        TraduzioniParatext,
     },
     mixins: [EserciziMethods],
     data: function () {
         return {
             clip: null,
+            sticky: false,
+            panelTitle: 'Nuova Clip',
             title: null,
             video: null,
             period: null,
@@ -153,7 +215,7 @@ export default {
             abstract: null,
             tech_info: null,
             historical_context: null,
-            food: null,
+            foods: null,
             exercises: [],
             options: {
                 periods: [],
@@ -168,6 +230,7 @@ export default {
                 exercises: [],
             },
             keys: [
+                'id',
                 'clip',
                 'title',
                 'video',
@@ -184,43 +247,101 @@ export default {
                 'abstract',
                 'tech_info',
                 'historical_context',
-                'food',
+                'foods',
                 'exercises',
+                'exercise_1',
+                'exercise_2',
+                'exercise_3',
             ],
             initials: {},
+            altInitials: {},
         }
     },
     watch: {
         cursor: function (cursor) {
             // console.log('cambio cursore', cursor);
         },
+        // exercises: function (exercises) {
+        //     console.log('esercizi', exercises);
+        // }
     },
     methods: {
+        translate: function (item) {
+            this.$refs.translate.show(item)
+        },
+        updateClip: function (clip) {
+            this.clip = clip
+            console.log('set', clip);
+        },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
 
             // open existing clip
             if (id != null) {
                 url = '/api/v2/admin/clips/get-initials/' + id
+
+                this.panelTitle = 'Modifica Clip'
             }
 
             this.$http.get(url).then(response => {
                 if (response.data.success) {
-
+                    console.log(response.data.initial);
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
+                        this.cursor = 3
+
                         let initial = response.data.initial
-
-                        for (let i = 0; i < this.keys.length; i++) {
-                            let key = this.keys[i]
-
+                        let cache = Object.assign({}, this.initials)
+                        this.altInitials = Object.assign({}, initial)
+                        this.clip = initial
+                        // console.log('initials', initial);
+                        for (let key in initial) {
                             if (initial.hasOwnProperty(key)) {
-                                this.initials[key] = initial[key]
+
+                                // se il valore corrisponde ad uno di quelli richiesti lo aggiunge all'oggetto
+                                let idx = this.keys.findIndex(value => value == key)
+                                if (idx > -1) {
+                                    this.initials[key] = initial[key]
+                                }
+                                // se si tratta di un oggetto o di un'array cerca a fondo
+                                else if (typeof initial[key] == 'object') {
+                                    let deepInitial = initial[key]
+                                    // se si tratta di un'array cerca di individuare delle corrispondenze
+                                    if (deepInitial.length >= 0) {
+                                        for (let i = 0; i < deepInitial.length; i++) {
+                                            let current = deepInitial[i]
+                                            for (let currentKey in current) {
+
+                                                if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
+                                                    let idx = this.keys.findIndex(value => value == currentKey)
+                                                    if (idx > -1) {
+                                                        this.initials[currentKey] = current[currentKey]
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    // si tratta di un singolo oggetto
+                                    else {
+                                        // console.log(deepInitial);
+                                        let current = deepInitial
+                                        for (let currentKey in current) {
+                                            if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
+                                                let idx = this.keys.findIndex(value => value == currentKey)
+                                                if (idx > -1) {
+                                                    this.initials[currentKey] = current[currentKey]
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                // lo scarta
+                                else {
+
+                                }
                             }
                         }
-
                         this.initials = Object.assign({}, this.initials)
-                        this.cursor = 3
                     }
 
 
@@ -273,7 +394,7 @@ export default {
                 data.append('abstract', this.abstract)
                 data.append('tech_info', this.tech_info)
                 data.append('historical_context', this.historical_context)
-                data.append('food', this.food)
+                data.append('food', this.foods)
 
                 this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
                     console.log('details', response.data.clip);
@@ -283,13 +404,31 @@ export default {
                     }
                 })
             }
-            else if (this.cursor == 2) {}
+            else if (this.cursor == 2) {
+                // paratesti
+            }
         },
         paratextCompleted: function () {
             this.cursor = 3
         },
         paratextUncomplete: function () {
             this.cursor = 2
+        },
+        initSticky: function () {
+            this.sticky = stickybits('#topbar', {
+                stickyBitStickyOffset: 96,
+            })
+
+            window.addEventListener('resize', () => {
+                this.sticky.update();
+            });
+            // when the url hash changes
+            window.addEventListener('hashchange', () => {
+                this.sticky.update();
+            });
+        },
+        onStick: function (data) {
+            console.log(data);
         },
     },
     filters: {
@@ -311,6 +450,10 @@ export default {
             this.getData()
         }
     },
+    mounted: function () {
+        // this.initSticky()
+
+    },
 }
 </script>
 
@@ -319,6 +462,10 @@ export default {
 
 label {
     font-size: $font-size-sm;
+}
+
+#topbar {
+    z-index: 10;
 }
 
 .topbar {

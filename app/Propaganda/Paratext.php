@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Paratext extends Model
 {
+    use \Dimsav\Translatable\Translatable;
+
     protected $connection = 'tfc_propaganda';
+
+    public $translatedAttributes = ['content'];
+
+    protected $fillable = ['media', 'media_type'];
 
     public function clip()
     {

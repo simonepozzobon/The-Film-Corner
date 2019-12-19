@@ -132,6 +132,7 @@ export default {
     display: flex;
     flex-direction: column;
     height: 100%;
+    transition: $transition-base;
 
     &__bread {
         padding-top: $spacer * 3;

@@ -1,7 +1,8 @@
 <template>
 <block-panel
-    title="Carica Clip"
+    title="Clip"
     :initial-state="initialState"
+    :has-footer="true"
 >
     <div class="a-clip-panel__row form-group row">
         <label
@@ -53,6 +54,18 @@
             </div>
         </div>
     </div>
+    <template v-slot:footer>
+        <ui-button
+            title="salva"
+            color="green"
+            theme="outline"
+            :disable="isLoading"
+            :has-spinner="isLoading"
+            :has-margin="false"
+            :has-container="false"
+            @click="save"
+        />
+    </template>
 </block-panel>
 </template>
 
@@ -121,6 +134,7 @@ export default {
     data: function () {
         return {
             isLoading: false,
+            id: null,
             master: null,
             title: null,
             video: null,
@@ -132,7 +146,7 @@ export default {
                 }],
                 poster: '/video/empty-session.png',
             },
-            keys: ['title', 'video'],
+            keys: ['id', 'title', 'video'],
         }
     },
     watch: {
@@ -143,12 +157,14 @@ export default {
             this.$emit('update', 'video', video)
         },
         initials: function (initials) {
+            // console.log('winitials', this.initials);
             for (let i = 0; i < this.keys.length; i++) {
                 let key = this.keys[i]
                 if (initials.hasOwnProperty(key)) {
                     this[key] = initials[key]
                 }
             }
+
         },
     },
     methods: {
@@ -206,6 +222,25 @@ export default {
             if (this.master) {
                 this.master.reverse()
             }
+        },
+        save: function () {
+            this.isLoading = true
+
+            let data = new FormData()
+
+            if (this.id != null && this.id > 0) {
+                data.append('id', this.id)
+            }
+
+            data.append('title', this.title)
+            data.append('video', this.video)
+
+            this.$http.post('/api/v2/admin/clips/create-clip', data).then(response => {
+                this.isLoading = false
+                this.$emit('saved', response.data.clip)
+            }).catch(() => {
+                this.isLoading = false
+            })
         }
     },
     mounted: function () {

@@ -14,7 +14,8 @@ class CreateMediasTable extends Migration
     public function up()
     {
         Schema::connection('tfc_propaganda')->create(
-            'medias', function (Blueprint $table) {
+            'medias',
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('media_type');
                 $table->string('name');
@@ -24,7 +25,8 @@ class CreateMediasTable extends Migration
         );
 
         Schema::connection('tfc_propaganda')->create(
-            'mediables', function (Blueprint $table) {
+            'mediables',
+            function (Blueprint $table) {
                 $table->increments('id');
                 $table->integer('media_id')->unsigned();
                 $table->morphs('mediable');

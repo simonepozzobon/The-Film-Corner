@@ -27,7 +27,12 @@
                 />
             </ui-row>
             <ui-row justify="center">
-                <ui-block
+                <studio-block
+                    v-for="studio in this.studios"
+                    :key="studio.id"
+                    :studio="studio"
+                />
+                <!-- <ui-block
                     v-for="studio in this.studios"
                     :key="studio.id"
                     :size="4"
@@ -37,7 +42,11 @@
                     :full-height="true"
                 >
                     <ui-title
+<<<<<<< HEAD
+                        :title="studio.name | translate('name', 'sections', $translations)"
+=======
                         :title="studio | translate( 'name', $root.locale )"
+>>>>>>> traduzioni
                         align="center"
                         size="h4"
                         color="white"
@@ -92,7 +101,7 @@
                         </ul>
                     </div>
 
-                </ui-block>
+                </ui-block> -->
             </ui-row>
         </ui-container>
     </ui-hero-banner>
@@ -100,7 +109,11 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+import StudioBlock from '../../components/StudioBlock.vue'
+=======
 import TranslationFilter from '../../TranslationFilter'
+>>>>>>> traduzioni
 
 import {
     UiBlock,
@@ -119,6 +132,7 @@ export default {
     name: 'AppsHome',
     mixins: [TranslationFilter],
     components: {
+        StudioBlock,
         UiBlock,
         UiButton,
         UiContainer,
@@ -141,6 +155,14 @@ export default {
             this.setWelcome()
         }
     },
+<<<<<<< HEAD
+    filters: {
+        translate: function (defaultValue, key, section, translations) {
+            return translations.getContent(defaultValue, key, section);
+        }
+    },
+=======
+>>>>>>> traduzioni
     methods: {
         getStudios: function () {
             this.$http.get('/api/v2/get-studios').then(response => {
@@ -153,6 +175,9 @@ export default {
             // console.log(this.$root.user);
             this.title = 'Welcome ' + this.$root.user.name
         },
+<<<<<<< HEAD
+
+=======
         goToPavilion: function (event, slug) {
             event.preventDefault()
             this.$root.goToWithParams('pavilion-home', {
@@ -173,6 +198,13 @@ export default {
             this.$root.goTo('propaganda-intro')
         },
     },
+<<<<<<< HEAD
+    filters: {
+        ...TranslationFilter,
+>>>>>>> traduzioni
+    },
+=======
+>>>>>>> 3f4de7f3e796945a2ab50b5e30e8ad1f55e5c65c
     created: function () {
         this.$root.space = true
         this.getStudios()

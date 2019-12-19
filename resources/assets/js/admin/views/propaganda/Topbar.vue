@@ -1,55 +1,52 @@
 <template>
-<div class="a-topbar-container">
-    <div class="a-topbar-container__wrapper">
+<div
+    class="a-topbar"
+    v-sticky="stickyEnabled"
+    sticky-offset="{top: 96, bottom: 0}"
+    sticky-z-index="10"
+>
+    <container
+        ref="container"
+        class="a-topbar__container"
+        :class="stickyClass"
+        padding="sm"
+        :contains="true"
+        :has-animations="true"
+        @completed="getWidth"
+        :top-margin="false"
+    >
         <div
-            class="a-topbar"
-            :class="stickyClass"
+            class="a-clip-panel__topbar topbar"
+            :class="stickyClassTitle"
         >
-            <container
-                ref="container"
-                class="a-topbar__container"
-                padding="sm"
-                :contains="true"
-                :has-animations="true"
-                @completed="getWidth"
-            >
-                <div class="a-clip-panel__topbar topbar">
-                    <div class="topbar__head">
-                        <ui-title
-                            title="Nuova Clip"
-                            tag="h1"
-                            font-size="h1"
-                            class="topbar__title"
-                        />
-                    </div>
-                    <div class="topbar__steps">
-                        <step
-                            :number="1"
-                            :completed="this.cursor | completed(0)"
-                        />
-                        <step
-                            :number="2"
-                            :completed="this.cursor | completed(1)"
-                        />
-                        <step
-                            :number="3"
-                            :completed="this.cursor | completed(2)"
-                        />
-                        <step
-                            :number="4"
-                            :completed="this.cursor | completed(3)"
-                        />
-                    </div>
-                </div>
-            </container>
+            <div class="topbar__head">
+                <ui-title
+                    :title="title"
+                    tag="h1"
+                    font-size="h1"
+                    class="topbar__title"
+                />
+            </div>
+            <div class="topbar__steps">
+                <step
+                    :number="1"
+                    :completed="this.cursor | completed(0)"
+                />
+                <step
+                    :number="2"
+                    :completed="this.cursor | completed(1)"
+                />
+                <step
+                    :number="3"
+                    :completed="this.cursor | completed(2)"
+                />
+                <step
+                    :number="4"
+                    :completed="this.cursor | completed(3)"
+                />
+            </div>
         </div>
-        <div
-            v-if="stickyNavbar"
-            ref="dummy"
-            class="a-topbar-dummy"
-            :style="`height: ${this.dummyHeigth}px; min-width: ${this.width}px max-width: 100%;`"
-        ></div>
-    </div>
+    </container>
 </div>
 </template>
 
@@ -65,7 +62,6 @@ import {
 from '../../../ui'
 
 import Step from '../../components/clips/Step.vue'
-
 export default {
     name: 'Topbar',
     components: {
@@ -78,6 +74,10 @@ export default {
             type: Number,
             default: 0,
         },
+        title: {
+            type: String,
+            default: null,
+        },
     },
     data: function () {
         return {
@@ -86,12 +86,19 @@ export default {
             stickyNavbar: false,
             lastScrollPosition: 0,
             topLimit: 30,
+            stickyEnabled: false,
         }
     },
     computed: {
         stickyClass: function () {
             if (this.stickyNavbar) {
-                return 'a-topbar--sticky'
+                return 'admin-container--sticky'
+            }
+            return null
+        },
+        stickyClassTitle: function () {
+            if (this.stickyNavbar) {
+                return 'topbar--sticky'
             }
             return null
         },
@@ -109,8 +116,6 @@ export default {
         getWidth: function () {
             this.width = this.$refs.container.$el.offsetWidth
             this.height = this.$refs.container.$el.offsetHeight
-
-            // this.$refs.container.$el.style.minWidth = this.width + 'px'
         },
         onScroll: function () {
             const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
@@ -118,14 +123,7 @@ export default {
             if (currentScrollPosition < 0) {
                 return
             }
-
-            // if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 30) {
-            //     return
-            // }
-
             this.stickyNavbar = currentScrollPosition > this.topLimit
-
-            // console.log(this.stickyNavbar, currentScrollPosition);
         },
     },
     filters: {
@@ -142,6 +140,8 @@ export default {
         window.addEventListener('scroll', this.onScroll)
         this.$nextTick(() => {
             this.getWidth()
+            this.stickyEnabled = false
+            // this.stickyEnabled = true
         })
     },
     beforeDestroy: function () {
@@ -153,32 +153,11 @@ export default {
 <style lang="scss">
 @import '~styles/shared';
 
-@mixin calc($key, $value) {
-    #{$key}: -webkit-calc(#{$value});
-    #{$key}: -moz-calc(#{$value});
-    #{$key}: calc(#{$value});
-}
+.topbar {
 
-.a-topbar {
-    z-index: 1;
-    width: 100%;
-    transition: $transition-base;
-
-    &--sticky {
-        position: fixed;
-        top: 64px;
-        left: 53.5%;
-        max-width: 79%;
-        transform: translateX(-45%);
+    &--sticky .ui-title {
+        color: $light;
         transition: $transition-base;
-    }
-
-    &__dummy {
-        display: none;
-    }
-
-    &--dummy-visible &__dummy {
-        display: block;
     }
 }
 </style>

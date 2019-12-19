@@ -32,19 +32,33 @@
             </template>
             <template v-slot:cell(tools)="data">
                 <ui-button
-                    color="red"
+                    title="Aggiungi traduzioni"
+                    color="orange"
+                    size="sm"
+                    theme="outline"
+                    :has-margin="false"
+                    :has-container="false"
+                    @click="translate(data.item)"
+                />
+                <ui-button
                     title="Elimina"
+                    color="red"
+                    size="sm"
+                    theme="outline"
+                    :has-margin="false"
+                    :has-container="false"
                     @click="destroy(data.item)"
                 />
             </template>
         </b-table>
-        <upload-zone
-            :accept="mime"
-            url="/api/v2/admin/clips/paratexts/upload"
-            :params.sync="requestParams"
-            @success="addParatext"
-        />
     </div>
+    <single-upload
+        :title="paratext.title"
+        :paratext="paratext"
+        :clip-id="clipId"
+        @add-paratext="addParatext"
+        class="mt-2"
+    />
     <b-modal
         ref="modal"
         title="Anteprima"
@@ -66,6 +80,7 @@
 
 <script>
 import {
+    BlockPanel,
     Container,
     FileInput,
     ImagePreview,
@@ -90,9 +105,16 @@ import {
 }
 from './mixins'
 
+import {
+    gsap
+}
+from 'gsap'
+import SingleUpload from './paratesti/SingleUpload.vue'
+
 export default {
     name: 'Paratext',
     components: {
+        BlockPanel,
         Container,
         FileInput,
         ImagePreview,
@@ -104,6 +126,7 @@ export default {
         Select2Input,
         PanelTitle,
         UploadZone,
+        SingleUpload,
     },
     mixins: [
         ParatextAnimation,
@@ -150,6 +173,12 @@ export default {
             }],
             preview: null,
         }
+    },
+    watch: {
+        paratext: function (obj) {
+            this.setContents()
+        },
+
     },
     computed: {
         hasMedia: function () {
@@ -219,6 +248,9 @@ export default {
                 this.$refs.modal.show()
             })
         },
+        translate: function (item) {
+            this.$emit('translate', item)
+        },
         addParatext: function (response) {
             this.contents.push(response.paratext)
             this.setCompleted()
@@ -269,11 +301,38 @@ export default {
             //     this.showPreview(item)
             // })
         },
+        setContents: function () {
+            if (this.paratext && this.paratext.hasOwnProperty('contents') && this.paratext.contents.length > 0) {
+                let contents = this.paratext.contents
+
+                for (let i = 0; i < contents.length; i++) {
+                    let content = contents[i]
+                    this.contents.push(content)
+                }
+            }
+
+            // this.translate(this.contents[0])
+
+        },
+    },
+    created: function () {
+        this.$ebus.$on('paratext-saved', (paratext) => {
+            let idx = this.contents.findIndex(content => content.id == paratext.id)
+
+            if (idx > -1) {
+                let contents = Object.assign([], this.contents)
+                contents[idx] = paratext
+                this.contents = contents
+            }
+        })
     },
     mounted: function () {
         this.$nextTick(() => {
             this.initAnim()
+            this.setContents()
         })
+
+
     },
 }
 </script>
@@ -295,6 +354,13 @@ $darken: lighten($dark, 3);
     width: $spacer * 4;
     max-width: 100%;
 }
+
+.preview {
+    &__img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+}
 </style>
 
 <style lang="scss" scoped>
@@ -310,6 +376,7 @@ $darken: lighten($dark, 3);
     justify-content: center;
 
     &__content {
+        width: 100%;
         @include gradient-directional($color, lighten($color, 2), -11deg);
         @include border-radius($border-radius * 2);
         // @include custom-box-shadow($darken, 2px, 0.02);

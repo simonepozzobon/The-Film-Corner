@@ -1,7 +1,8 @@
 <template>
 <block-panel
-    title="Informazioni Clip"
+    title="Informazioni"
     :initial-state="initialState"
+    :has-footer="true"
 >
     <div class="a-clip-panel__row form-group row">
         <label
@@ -157,6 +158,19 @@
             />
         </div>
     </div>
+
+    <template v-slot:footer>
+        <ui-button
+            title="salva"
+            color="green"
+            theme="outline"
+            :disable="isLoading"
+            :has-spinner="isLoading"
+            :has-margin="false"
+            :has-container="false"
+            @click="save"
+        />
+    </template>
 </block-panel>
 </template>
 
@@ -211,9 +225,16 @@ export default {
                 return {}
             },
         },
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
+            isLoading: false,
             period: null,
             year: null,
             nationality: null,
@@ -225,13 +246,13 @@ export default {
             topics: [],
             keys: [
                 'period',
-                'year',
-                'nationality',
                 'directors',
                 'peoples',
+                'year',
                 'format',
                 'age',
                 'genre',
+                'nationality',
                 'topics',
             ]
         }
@@ -253,25 +274,6 @@ export default {
                     if (typeof initials[key] == 'string') {
                         this[key] = initials[key]
                     }
-                    // else if (initials[key].length) {
-                    //     if (key == 'directors') {
-                    //         let old = this[key]
-                    //         for (let j = 0; j < initials[key].length; j++) {
-                    //             let current = initials[key][j]
-                    //             console.log('curernt', current);
-                    //             this.$refs.directors.selectOption(current.id)
-                    //         }
-                    //
-                    //         // this[key] = Object.assign([], old)
-                    //         console.log('modificata', this[key]);
-                    //     }
-                    //
-                    // }
-                    // else {
-                    //     this[key] = initials[key]
-                    //     // console.log('no', key, this[key]);
-                    // }
-                    // console.log(this[key]);
                 }
             }
         },
@@ -284,11 +286,31 @@ export default {
                 for (let j = 0; j < this.initials[key].length; j++) {
                     let current = this.initials[key][j]
                     this.$refs[key].selectOption(current.id)
+
+                    let value = this.initials[key][j].name
+                    let arr = this[key]
+
+                    if (!value) {
+                        value = this.initials[key][j].title
+                    }
+
+                    let idx = arr.findIndex(item => item == value)
+                    if (idx < 0) {
+                        this[key].push(value)
+                    }
                 }
             }
             // o se si tratta una singola selezione
             else {
                 this.$refs[key].selectOption(this.initials[key].id)
+                if (this.initials[key].title) {
+                    this[key] = this.initials[key].title
+                }
+
+
+                if (this.initials[key].name) {
+                    this[key] = this.initials[key].name
+                }
             }
         },
         updateField: function (e, key, isArray = false) {
@@ -332,6 +354,29 @@ export default {
                 }
             }
         },
+        save: function () {
+            this.isLoading = true
+
+            let data = new FormData()
+            data.append('id', this.clip.id)
+            data.append('period', this.period)
+            data.append('directors', JSON.stringify(this.directors))
+            data.append('peoples', JSON.stringify(this.peoples))
+            data.append('year', this.year)
+            data.append('format', this.format)
+            data.append('age', this.age)
+            data.append('genre', this.genre)
+            data.append('nationality', this.nationality)
+            data.append('topics', JSON.stringify(this.topics))
+
+            this.$http.post('/api/v2/admin/clips/create-informations', data).then(response => {
+                this.isLoading = false
+                this.$emit('saved', response.data.clip)
+            }).catch(() => {
+                this.isLoading = false
+            })
+
+        }
     },
 }
 </script>
