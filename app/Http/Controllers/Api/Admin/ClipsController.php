@@ -148,7 +148,9 @@ class ClipsController extends Controller
             $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
 
             $details = $clip->details()->first();
-            $details = $details->setDefaultLocale('it');
+            if ($details) {
+                $details = $details->setDefaultLocale('it');
+            }
             $clip->details = $details;
 
             $response['success'] = true;
