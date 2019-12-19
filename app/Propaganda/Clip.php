@@ -58,7 +58,7 @@ class Clip extends Model
 
     public function paratexts()
     {
-        return $this->belongsToMany('App\Propaganda\Paratext', 'clip_paratext', 'clip_id', 'paratext_id');
+        return $this->belongsToMany('App\Propaganda\Paratext');
     }
 
     public function libraries()

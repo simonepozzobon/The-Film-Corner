@@ -42,7 +42,7 @@
                             :has-animation="true"
                             min-height="100px"
                             @ready="editorReady('en')"
-                            @update="update('it', arguments)"
+                            @update="update('en', arguments)"
                         />
 
                         <text-editor
@@ -51,7 +51,7 @@
                             :has-animation="true"
                             min-height="100px"
                             @ready="editorReady('fr')"
-                            @update="update('it', arguments)"
+                            @update="update('fr', arguments)"
                         />
 
                         <text-editor
@@ -60,7 +60,7 @@
                             :has-animation="true"
                             min-height="100px"
                             @ready="editorReady('sr')"
-                            @update="update('it', arguments)"
+                            @update="update('sr', arguments)"
                         />
                         <text-editor
                             ref="ka"
@@ -68,7 +68,7 @@
                             :has-animation="true"
                             min-height="100px"
                             @ready="editorReady('ka')"
-                            @update="update('it', arguments)"
+                            @update="update('ka', arguments)"
                         />
                         <text-editor
                             ref="sl"
@@ -76,7 +76,7 @@
                             :has-animation="true"
                             min-height="100px"
                             @ready="editorReady('sl')"
-                            @update="update('it', arguments)"
+                            @update="update('sl', arguments)"
                         />
 
                         <template v-slot:footer>
@@ -84,31 +84,22 @@
                                 title="salva"
                                 color="green"
                                 theme="outline"
+                                :disable="isLoading"
+                                :has-spinner="isLoading"
                                 :has-margin="false"
                                 :has-container="false"
+                                @click="save"
                             />
                         </template>
                     </block-panel>
                 </container>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
 
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
-<!-- <b-modal
-    ref="modal"
-    title="Traduzioni"
-    hide-footer
-    hide-header
-    size="xl"
-    modal-class="translate"
-    body-class="translate__body"
-    content-class="translate__content"
->
-
-</b-modal> -->
 </template>
 
 <script>
@@ -144,8 +135,17 @@ export default {
         PanelTitle,
         UiButton,
     },
+    props: {
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
+    },
     data: function () {
         return {
+            isLoading: false,
             item: null,
             values: {
                 it: null,
@@ -159,14 +159,44 @@ export default {
     },
     methods: {
         show: function (item) {
+            this.item = null
+            this.values = {
+                it: null,
+                en: null,
+                fr: null,
+                sr: null,
+                sl: null,
+                ka: null,
+            }
+
             this.setItem(item).then(() => {
-                $(this.$refs.modal).modal('toggle')
+                $(this.$refs.modal).modal('show')
             })
+        },
+        hide: function () {
+            this.item = null
+            $(this.$refs.modal).modal('hide')
         },
         setItem: function (item) {
             return new Promise((resolve, reject) => {
-                console.log(item);
                 this.item = item
+
+                let translations = item.translations
+
+                for (let i = 0; i < translations.length; i++) {
+                    let current = translations[i]
+                    let locale = current.locale
+
+                    if (this.values.hasOwnProperty(locale)) {
+                        this.values[locale] = current.content
+
+                        this.$refs[locale].editor.setContent(current.content)
+                    }
+                }
+
+                this.$nextTick(() => {
+                    resolve()
+                })
             });
         },
         update: function (key, values = arguments) {
@@ -174,6 +204,33 @@ export default {
             this.values[key] = value
         },
         editorReady: function (key) {},
+        save: function () {
+            this.isLoading = true
+            let data = new FormData()
+            let translations = []
+
+            data.append('id', this.item.id)
+            data.append('clip_id', this.clip.id)
+
+            for (let key in this.values) {
+                if (this.values.hasOwnProperty(key) && this.values[key]) {
+                    translations.push({
+                        locale: key,
+                        value: this.values[key]
+                    })
+                }
+            }
+            data.append('translations', JSON.stringify(translations))
+
+            this.$http.post('/api/v2/admin/clips/translations/paratext', data).then(response => {
+                this.isLoading = false
+                this.$emit('saved', response.data.clip)
+                this.$ebus.$emit('paratext-saved', response.data.paratext)
+                this.hide()
+            }).catch(() => {
+                this.isLoading = false
+            })
+        },
     },
 }
 </script>

@@ -315,11 +315,23 @@ export default {
 
         },
     },
+    created: function () {
+        this.$ebus.$on('paratext-saved', (paratext) => {
+            let idx = this.contents.findIndex(content => content.id == paratext.id)
+
+            if (idx > -1) {
+                let contents = Object.assign([], this.contents)
+                contents[idx] = paratext
+                this.contents = contents
+            }
+        })
+    },
     mounted: function () {
         this.$nextTick(() => {
             this.initAnim()
             this.setContents()
         })
+
 
     },
 }

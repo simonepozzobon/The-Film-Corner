@@ -136,7 +136,11 @@
             />
         </div>
     </container>
-    <traduzioni-paratext ref="translate" />
+    <traduzioni-paratext
+        ref="translate"
+        :clip="clip"
+        @saved="updateClip"
+    />
 </div>
 </template>
 
@@ -266,7 +270,8 @@ export default {
             this.$refs.translate.show(item)
         },
         updateClip: function (clip) {
-            this.clip == clip
+            this.clip = clip
+            console.log('set', clip);
         },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'

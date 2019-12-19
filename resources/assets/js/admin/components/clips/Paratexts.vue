@@ -147,6 +147,11 @@ export default {
                 this.$refs.panel.togglePanel()
             })
         },
+        clip: function () {
+            this.$nextTick(() => {
+                this.setClip()
+            })
+        },
     },
     methods: {
         translate: function (item) {
@@ -161,19 +166,22 @@ export default {
                     let typeId = paratext.paratext_type_id
 
                     let group = this.selectOptions.find(opt => opt.id == typeId)
-                    let idx = cache.findIndex(obj => obj.id == group.id)
 
-                    if (idx < 0) {
-                        // console.log(paratext, typeId);
-                        group = {
-                            ...group,
-                            contents: [paratext],
+                    if (group) {
+                        let idx = cache.findIndex(obj => obj.id == group.id)
+
+                        if (idx < 0) {
+                            // console.log(paratext, typeId);
+                            group = {
+                                ...group,
+                                contents: [paratext],
+                            }
+                            cache.push(group)
                         }
-                        cache.push(group)
-                    }
-                    else {
-                        cache[idx].contents.push(paratext)
-                        // console.log('ce ', cache[idx]);
+                        else {
+                            cache[idx].contents.push(paratext)
+                            // console.log('ce ', cache[idx]);
+                        }
                     }
                 }
 

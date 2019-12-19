@@ -137,6 +137,7 @@ Route::prefix('v2')->group(
                         Route::prefix('translations')->group(function () {
                             Route::post('title', 'Api\Admin\ClipsController@store_title_translation');
                             Route::post('details', 'Api\Admin\ClipsController@store_details_translation');
+                            Route::post('paratext', 'Api\Admin\ClipsController@store_paratext_translation');
                         });
 
                         Route::prefix('exercises')->group(

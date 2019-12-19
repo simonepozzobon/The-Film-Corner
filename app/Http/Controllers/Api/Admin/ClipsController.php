@@ -337,6 +337,29 @@ class ClipsController extends Controller
         ]);
     }
 
+    public function store_paratext_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+        $p = Paratext::find($id);
+
+        foreach ($translations as $key => $translation) {
+            $t = $translation->value;
+            $current = $p->translateOrNew($translation->locale);
+            $current->paratext_id = $p->id;
+            $current->content = $t ? $t : 'null';
+            $current->locale = $translation->locale;
+            $current->save();
+        }
+
+        $clip = Clip::where('id', $request->clip_id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
+
+        return response()->json([
+            'clip' => $clip,
+            'paratext' => $p,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $clip = new Clip();
@@ -460,7 +483,7 @@ class ClipsController extends Controller
 
         $p = new Paratext();
         $p->paratext_type_id = $paraType->id;
-        $p->content = $request->content ? $request->content : 'null';
+        // $p->content = $request->content ? $request->content : 'null';
         $p->media_type = $paraType->type;
         $p->media = Storage::disk('local')->url($file->src);
         $p->save();
@@ -468,8 +491,16 @@ class ClipsController extends Controller
         $p->medias()->attach($file);
         $p->clip()->attach($clip);
 
+        $t = $p->translateOrNew('it');
+        $t->paratext_id = $p->id;
+        $t->content = $request->content ? $request->content : 'null';
+        $t->locale = 'it';
+        $t->save();
+
+        $clip = $clip->fresh($this->options);
+
         return [
-          'clip' => $clip->fresh($this->options),
+          'clip' => $clip,
           'paratext' => $p,
         ];
     }
