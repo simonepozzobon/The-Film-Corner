@@ -13,6 +13,7 @@
     >
         <carica-clip
             @update="updateField"
+            @saved="updateClip"
             :initials="initials"
         />
     </container>
@@ -31,6 +32,8 @@
         <traduzioni-clip
             :initials="altInitials"
             :title="title"
+            :clip="clip"
+            @saved="updateClip"
         />
     </container>
 
@@ -41,7 +44,9 @@
         <informazioni
             :options="options"
             @update="updateField"
+            :clip="clip"
             :initials="initials"
+            @saved="updateClip"
         />
     </container>
     <container
@@ -169,9 +174,9 @@ export default {
     mixins: [EserciziMethods],
     data: function () {
         return {
+            clip: null,
             sticky: false,
             panelTitle: 'Nuova Clip',
-            clip: null,
             title: null,
             video: null,
             period: null,
@@ -238,6 +243,9 @@ export default {
         // }
     },
     methods: {
+        updateClip: function (clip) {
+            this.clip == clip
+        },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
 
@@ -256,6 +264,7 @@ export default {
                         this.cursor = 3
 
                         let initial = response.data.initial
+                        let cache = Object.assign({}, this.initials)
                         this.altInitials = Object.assign({}, initial)
                         this.clip = initial
                         // console.log('initials', initial);
@@ -270,13 +279,13 @@ export default {
                                 // se si tratta di un oggetto o di un'array cerca a fondo
                                 else if (typeof initial[key] == 'object') {
                                     let deepInitial = initial[key]
-
                                     // se si tratta di un'array cerca di individuare delle corrispondenze
                                     if (deepInitial.length >= 0) {
                                         for (let i = 0; i < deepInitial.length; i++) {
                                             let current = deepInitial[i]
                                             for (let currentKey in current) {
-                                                if (current.hasOwnProperty(currentKey)) {
+
+                                                if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
                                                     let idx = this.keys.findIndex(value => value == currentKey)
                                                     if (idx > -1) {
                                                         this.initials[currentKey] = current[currentKey]
@@ -290,7 +299,7 @@ export default {
                                         // console.log(deepInitial);
                                         let current = deepInitial
                                         for (let currentKey in current) {
-                                            if (current.hasOwnProperty(currentKey)) {
+                                            if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
                                                 let idx = this.keys.findIndex(value => value == currentKey)
                                                 if (idx > -1) {
                                                     this.initials[currentKey] = current[currentKey]

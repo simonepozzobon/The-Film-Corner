@@ -130,6 +130,12 @@ Route::prefix('v2')->group(
                         Route::post('/create-detail', 'Api\Admin\ClipsController@store_details');
                         Route::post('/create-paratexts', 'Api\Admin\ClipsController@store_paratexts');
                         Route::post('/create', 'Api\Admin\ClipsController@store');
+                        Route::post('/create-clip', 'Api\Admin\ClipsController@store_clip');
+                        Route::post('/create-informations', 'Api\Admin\ClipsController@store_informations');
+
+                        Route::prefix('translations')->group(function () {
+                            Route::post('title', 'Api\Admin\ClipsController@store_title_translation');
+                        });
 
                         Route::prefix('exercises')->group(
                             function () {

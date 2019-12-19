@@ -32,6 +32,13 @@
     >
         <slot></slot>
     </div>
+
+    <div
+        v-if="hasFooter"
+        class="block-panel__footer"
+    >
+        <slot name="footer"></slot>
+    </div>
 </div>
 </template>
 
@@ -78,6 +85,10 @@ export default {
         initialState: {
             type: Boolean,
             default: true,
+        },
+        hasFooter: {
+            type: Boolean,
+            default: false,
         },
     },
     data: function () {
@@ -241,6 +252,10 @@ export default {
 
         // @include gradient-directional($color, lighten($color, 2), -10deg);
         // @include custom-box-shadow(lighten($dark, 25), 1px, 0.3);
+    }
+
+    &__footer {
+        margin-top: $spacer;
     }
 
     &--shadows &__container {

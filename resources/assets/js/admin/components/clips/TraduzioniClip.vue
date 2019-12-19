@@ -1,5 +1,8 @@
 <template>
-<block-panel title="Traduzioni Titolo">
+<block-panel
+    title="Traduzioni Titolo"
+    :has-footer="true"
+>
     <text-input
         ref="it"
         label="Italiano"
@@ -47,6 +50,19 @@
         :initial="values.sl"
         @update="updateValue($event, 'sl')"
     />
+
+    <template v-slot:footer>
+        <ui-button
+            title="salva"
+            color="green"
+            theme="outline"
+            :disable="isLoading"
+            :has-spinner="isLoading"
+            :has-margin="false"
+            :has-container="false"
+            @click="save"
+        />
+    </template>
 </block-panel>
 </template>
 
@@ -63,11 +79,17 @@ import {
 }
 from '../../adminui'
 
+import {
+    UiButton
+}
+from '../../../ui'
+
 export default {
     name: 'TraduzioniClip',
     components: {
         BlockPanel,
         TextInput,
+        UiButton,
     },
     props: {
         title: {
@@ -75,6 +97,12 @@ export default {
             default: null,
         },
         initials: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
+        clip: {
             type: Object,
             default: function () {
                 return {}
@@ -91,7 +119,8 @@ export default {
                 sl: null,
                 ka: null,
             },
-            languages: ['it', 'en', 'fr', 'sr', 'sl', 'ka']
+            languages: ['it', 'en', 'fr', 'sr', 'sl', 'ka'],
+            isLoading: false,
         }
     },
     watch: {
@@ -100,6 +129,9 @@ export default {
         },
         initials: function () {
             this.setInitials()
+        },
+        clip: function (clip) {
+            this.setClip()
         },
     },
     methods: {
@@ -115,8 +147,45 @@ export default {
                 }
             }
         },
+        setClip: function () {
+            if (this.clip && this.clip.hasOwnProperty('translations')) {
+                let translations = this.clip.translations
+
+                for (let i = 0; i < translations.length; i++) {
+                    let current = translations[i]
+                    let locale = current.locale
+
+                    this.values[locale] = current.title
+                }
+            }
+        },
         updateValue: function (value, key) {
             this.values[key] = value
+        },
+        save: function () {
+            this.isLoading = true
+
+            let data = new FormData()
+            let translations = []
+
+            data.append('id', this.clip.id)
+
+            for (let key in this.values) {
+                if (this.values.hasOwnProperty(key) && this.values[key]) {
+                    translations.push({
+                        locale: key,
+                        value: this.values[key]
+                    })
+                }
+            }
+            data.append('translations', JSON.stringify(translations))
+
+            this.$http.post('/api/v2/admin/clips/translations/title', data).then(response => {
+                this.isLoading = false
+                this.$emit('saved', response.data.clip)
+            }).catch(() => {
+                this.isLoading = false
+            })
         },
     },
     mounted: function () {

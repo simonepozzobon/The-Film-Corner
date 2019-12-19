@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Propaganda\Age;
 use App\Propaganda\Clip;
+use App\Propaganda\ClipTranslation;
 use App\Propaganda\Media;
 use App\Propaganda\Topic;
 use App\Propaganda\Genre;
@@ -169,12 +170,117 @@ class ClipsController extends Controller
         return $src;
     }
 
+    public function store_clip(Request $request)
+    {
+        $is_new = false;
+
+        if (isset($request->id)) {
+            $clip = Clip::find($request->id);
+        } else {
+            $clip = new Clip();
+            $clip->year = 'no';
+            $clip->nationality = 'no';
+            $clip->period_id = 0;
+            $clip->genre_id = 0;
+            $clip->format_id = 0;
+            $clip->age_id = 0;
+            $is_new = true;
+
+            $t = new ClipTranslation();
+        }
+
+
+        // Upload Clip
+        $filename = uniqid() . '.mp4';
+        $path = 'public/propaganda/clips';
+        $file = $request->file('video');
+
+        if ($file) {
+            $src = $file->storeAs($path, $filename);
+            $src = Storage::disk('local')->url($src);
+        } else {
+            $src = 'no';
+        }
+
+        if ($is_new == false) {
+            if ($src != 'no') {
+                $clip->video = $src;
+            } else {
+                $clip->video = $clip->video;
+            }
+        } else {
+            $clip->video = $src;
+        }
+
+        $clip->save();
+
+
+        // Upload Titolo
+        $t = $clip->translateOrNew('it');
+        $t->clip_id = $clip->id;
+        $t->title = $request->title;
+        $t->locale = 'it';
+        $t->save();
+
+        $clip = $clip->fresh($this->options);
+
+        return [
+          'success' => true,
+          'clip' => $clip,
+          'translation' => $t,
+        ];
+    }
+
+    public function store_title_translation(Request $request)
+    {
+        $id = $request->id;
+        $translations = json_decode($request->translations);
+
+        $clip = Clip::find($id);
+
+        foreach ($translations as $key => $translation) {
+            $current = $clip->translateOrNew($translation->locale);
+            $current->clip_id = $clip->id;
+            $current->title = $translation->value;
+            $current->save();
+        }
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json([
+            'clip' => $clip,
+            'translations' => $translations
+        ]);
+    }
+
+    public function store_informations(Request $request)
+    {
+        $id = $request->id;
+        $clip = Clip::find($id);
+
+        $clip->year = $request->year;
+        $clip->nationality = $request->nationality;
+
+        foreach ($this->options_single as $key => $value) {
+            $clip->{$value.'_id'} = $this->check_single_option($value, $request);
+        }
+
+        $clip->save();
+        // $clip = $clip->fresh($this->options);
+
+        foreach ($this->options_multiple as $key => $value) {
+            $saved = $this->check_multiple_option($value, $request, $clip);
+        }
+
+        $clip = $clip->fresh($this->options);
+
+        return response()->json([
+            'clip' => $clip,
+        ]);
+    }
+
     public function store(Request $request)
     {
-        $options_single = ['format', 'period', 'age', 'genre'];
-        $options_multiple = ['directors', 'peoples', 'topics'];
-
-
         $clip = new Clip();
         $clip->video = $request->hasFile('video') ? $this->upload_video($request->file('video')) : 'no';
         $clip->year = $request->year;
@@ -387,6 +493,8 @@ class ClipsController extends Controller
     public function check_multiple_option($name, $request, $clip)
     {
         $clip->{$name}()->detach();
+        // return true;
+
         $singular = rtrim($name, 's');
         $model = ucwords('App\\Propaganda\\'.$singular);
 
@@ -397,19 +505,19 @@ class ClipsController extends Controller
                 $field = $name == 'directors' ? 'name' : 'title';
                 $result = $model::where($field, '=', $value)->first();
 
-                if ($result) {
-                    $results->push($result);
-                } else {
+                if (!$result || $result == null) {
                     $obj = \App::make($model);
                     $obj->{$field} = $value;
-
                     $obj->save();
-                    $results->push($obj);
+
+                    $result = $obj;
                 }
+
+                $results->push($result);
 
                 $clip->{$name}()->attach($result);
             }
         }
-        return true;
+        return $results;
     }
 }
