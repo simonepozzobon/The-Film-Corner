@@ -282,10 +282,11 @@ export default {
 
                 this.panelTitle = 'Modifica Clip'
             }
+            console.log('url', url);
 
             this.$http.get(url).then(response => {
+                console.log('setting', response);
                 if (response.data.success) {
-                    console.log(response.data.initial);
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
                         this.cursor = 3

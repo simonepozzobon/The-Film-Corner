@@ -50,14 +50,14 @@
                 class="block-menu__menu-head"
                 @click="goToCat(cat.slug)"
             >
-                {{cat.name}}
+                {{cat | translate('name', $root.locale)}}
             </li>
             <li
                 class="block-menu__menu-item"
                 v-for="app in cat.apps"
                 @click="goToApp(app.slug)"
             >
-                {{ app.title }}
+                {{ app | translate('title', $root.locale) }}
             </li>
         </ul>
     </div>
@@ -72,8 +72,11 @@ import {
 }
 from '../ui'
 
+import TranslationFilter from '../TranslationFilter'
+
 export default {
     name: 'StudioBlock',
+    mixins: [TranslationFilter],
     components: {
         UiBlock,
         UiTitle,
@@ -98,7 +101,8 @@ export default {
     },
     computed: {
         nameTranslated: function () {
-            return this.$translations.getContent(this.studio.name, 'name', 'sections')
+            // return this.$translations.getContent(this.studio.name, 'name', 'sections')
+            return this.$options.filters.translate(this.studio, 'name', this.$root.locale)
         },
     },
     methods: {
