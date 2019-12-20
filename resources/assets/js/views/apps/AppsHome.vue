@@ -152,6 +152,11 @@ export default {
             this.setWelcome()
         }
     },
+    filters: {
+        translate: function (defaultValue, key, section, translations) {
+            return translations.getContent(defaultValue, key, section);
+        }
+    },
     methods: {
         getStudios: function () {
             this.$http.get('/api/v2/get-studios').then(response => {
@@ -184,9 +189,9 @@ export default {
             this.$root.goTo('propaganda-intro')
         },
     },
-    filters: {
-        ...TranslationFilter,
-    },
+    // filters: {
+    //     ...TranslationFilter,
+    // },
     created: function () {
         this.$root.space = true
         this.getStudios()
