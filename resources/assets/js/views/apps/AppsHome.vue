@@ -109,11 +109,8 @@
 </template>
 
 <script>
-<<<<<<< HEAD
 import StudioBlock from '../../components/StudioBlock.vue'
-=======
 import TranslationFilter from '../../TranslationFilter'
->>>>>>> traduzioni
 
 import {
     UiBlock,
@@ -155,14 +152,6 @@ export default {
             this.setWelcome()
         }
     },
-<<<<<<< HEAD
-    filters: {
-        translate: function (defaultValue, key, section, translations) {
-            return translations.getContent(defaultValue, key, section);
-        }
-    },
-=======
->>>>>>> traduzioni
     methods: {
         getStudios: function () {
             this.$http.get('/api/v2/get-studios').then(response => {
@@ -175,9 +164,6 @@ export default {
             // console.log(this.$root.user);
             this.title = 'Welcome ' + this.$root.user.name
         },
-<<<<<<< HEAD
-
-=======
         goToPavilion: function (event, slug) {
             event.preventDefault()
             this.$root.goToWithParams('pavilion-home', {
@@ -198,13 +184,9 @@ export default {
             this.$root.goTo('propaganda-intro')
         },
     },
-<<<<<<< HEAD
     filters: {
         ...TranslationFilter,
->>>>>>> traduzioni
     },
-=======
->>>>>>> 3f4de7f3e796945a2ab50b5e30e8ad1f55e5c65c
     created: function () {
         this.$root.space = true
         this.getStudios()
