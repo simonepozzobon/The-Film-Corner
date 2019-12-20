@@ -270,7 +270,7 @@ export default {
         updateClip: function (clip, step) {
             this.clip = clip
             this.step = step
-            console.log('set', clip);
+            // console.log('set', clip);
         },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
@@ -281,10 +281,10 @@ export default {
 
                 this.panelTitle = 'Modifica Clip'
             }
-            console.log('url', url);
+            // console.log('url', url);
 
             this.$http.get(url).then(response => {
-                console.log('setting', response);
+                // console.log('setting', response);
                 if (response.data.success) {
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {

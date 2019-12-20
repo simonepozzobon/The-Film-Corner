@@ -66,7 +66,7 @@ export default {
     },
     watch: {
         initials: function (initials) {
-            console.log('wqtch', initials);
+            // console.log('wqtch', initials);
             this.setInitials()
         },
         clip: function () {

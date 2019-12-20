@@ -204,7 +204,7 @@ export default {
             this.initAnim()
         }
         else {
-            console.log('ha bisogno di trigger', this.title);
+            // console.log('ha bisogno di trigger', this.title);
         }
     },
 }
