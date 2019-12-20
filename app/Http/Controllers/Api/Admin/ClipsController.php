@@ -394,38 +394,35 @@ class ClipsController extends Controller
     public function destroy_clip($id)
     {
         $clip = Clip::findOrFail($id);
-        $clip->peoples()->detach();
-        $clip->directors()->detach();
-        $clip->topics()->detach();
-        $clip->hashtags()->detach();
+
+        $relations = ['peoples', 'directors', 'topics', 'hashtags'];
+
+        foreach ($relations as $key => $relation) {
+            if ($clip->{$relation} && $clip->{$relation}->count() > 0) {
+                $clip->{$relation}->detach();
+            }
+        }
 
         // elimina i paratesti
-        $paratexts = $clip->paratexts;
+        $paratexts = $clip->paratexts()->get();
         foreach ($paratexts as $key => $paratext) {
-
             // elimina i media collegati ai paratesti
-            $medias = $paratext->medias;
+            $medias = $paratext->medias()->get();
             foreach ($medias as $key => $media) {
-                $paratext->detach($media);
                 $media->delete();
             }
-
-            $clip->detach($paratext);
             $paratext->delete();
         }
 
         // elimina le librerie
-        $libraries = $clip->libraries;
+        $libraries = $clip->libraries()->get();
         foreach ($libraries as $key => $library) {
 
             // elimina i media collegati
-            $medias = $library->medias;
+            $medias = $library->medias()->get();
             foreach ($medias as $key => $media) {
-                $library->detach($media);
                 $media->delete();
             }
-
-            $clip->detach($library);
             $library->delete();
         }
 
