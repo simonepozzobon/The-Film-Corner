@@ -63,7 +63,7 @@
                 <span v-else>Nessuna clip</span>
             </template>
             <template v-slot:cell(period)="data">
-                {{ data.item.period.title }}
+                {{ data.item.period | filterPeriod }}
             </template>
             <template v-slot:cell(tools)="data">
                 <ui-button
@@ -147,7 +147,6 @@ export default {
         getClips: function () {
             this.$http.get('/api/v2/admin/clips').then(response => {
                 if (response.data.success) {
-                    // console.log(response.data);
                     this.clips = response.data.clips
                 }
             })
@@ -167,6 +166,15 @@ export default {
                     this.clips.splice(idx, 1)
                 }
             })
+        }
+    },
+    filters: {
+        filterPeriod: function (period) {
+            if (period && period.hasOwnProperty('title')) {
+                return period.title
+            }
+
+            return 'no-period'
         }
     },
     created: function () {

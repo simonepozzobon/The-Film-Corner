@@ -66,7 +66,7 @@ export default {
     },
     watch: {
         initials: function (initials) {
-            console.log('wqtch', initials);
+            // console.log('wqtch', initials);
             this.setInitials()
         },
         clip: function () {
@@ -146,8 +146,11 @@ export default {
                     let key = this.keys[i]
                     if (this.initials.hasOwnProperty(key)) {
                         let idx = parseInt(key.replace('exercise_', '')) - 1
-                        let component = this.$refs.switch[idx]
-                        component.value = this.initials[key] == 1 ? true : false
+
+                        if (this.$refs.switch) {
+                            let component = this.$refs.switch[idx]
+                            component.value = this.initials[key] == 1 ? true : false
+                        }
                     }
                 }
             }

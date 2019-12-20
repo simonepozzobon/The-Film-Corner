@@ -12,9 +12,9 @@
         :has-animations="true"
     >
         <carica-clip
-            @update="updateField"
-            @saved="updateClip"
             :initials="initials"
+            @update="updateField"
+            @saved="updateClip($event, 1)"
         />
     </container>
 
@@ -33,7 +33,7 @@
             :initials="altInitials"
             :title="title"
             :clip="clip"
-            @saved="updateClip"
+            @saved="updateClip($event, 2)"
         />
     </container>
 
@@ -43,21 +43,21 @@
     >
         <informazioni
             :options="options"
-            @update="updateField"
             :clip="clip"
             :initials="initials"
-            @saved="updateClip"
+            @update="updateField"
+            @saved="updateClip($event, 3)"
         />
     </container>
     <container
-        v-if="cursor >= 1"
         :contains="true"
         :has-animations="true"
     >
         <approfondimenti
-            @update="updateField"
             :clip="clip"
             :initials="initials"
+            @update="updateField"
+            @saved="updateClip($event, 4)"
         />
     </container>
 
@@ -68,26 +68,24 @@
         <traduzioni-approfondimenti
             :clip="clip"
             :initials="initials"
-            @saved="updateClip"
+            @saved="updateClip($event, 5)"
         />
     </container>
     <container
-        v-if="cursor >= 2"
         :contains="true"
         :has-animations="true"
     >
         <paratexts
             :clip="this.clip"
             :options="options"
+            :initials="initials"
             @update="updateField"
             @completed="paratextCompleted"
             @uncomplete="paratextUncomplete"
-            :initials="initials"
             @translate="translate"
         />
     </container>
     <container
-        v-if="cursor >= 3"
         :contains="true"
         :has-animations="true"
     >
@@ -106,7 +104,6 @@
         </block-panel>
     </container>
     <librerie-esercizi
-        v-if="cursor >= 3"
         v-for="exercise in exercises"
         :key="exercise.uuid"
         :exercise="exercise"
@@ -115,7 +112,7 @@
         @update="updateExerc"
         @destroy="destroyMedia"
     />
-    <container
+    <!-- <container
         padding="sm"
         :contains="true"
         :has-animations="true"
@@ -135,7 +132,7 @@
                 :has-margin="false"
             />
         </div>
-    </container>
+    </container> -->
     <traduzioni-paratext
         ref="translate"
         :clip="clip"
@@ -197,6 +194,7 @@ export default {
     mixins: [EserciziMethods],
     data: function () {
         return {
+            step: 0,
             clip: null,
             sticky: false,
             panelTitle: 'Nuova Clip',
@@ -269,9 +267,10 @@ export default {
         translate: function (item) {
             this.$refs.translate.show(item)
         },
-        updateClip: function (clip) {
+        updateClip: function (clip, step) {
             this.clip = clip
-            console.log('set', clip);
+            this.step = step
+            // console.log('set', clip);
         },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
@@ -282,10 +281,10 @@ export default {
 
                 this.panelTitle = 'Modifica Clip'
             }
-            console.log('url', url);
+            // console.log('url', url);
 
             this.$http.get(url).then(response => {
-                console.log('setting', response);
+                // console.log('setting', response);
                 if (response.data.success) {
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
@@ -307,30 +306,33 @@ export default {
                                 // se si tratta di un oggetto o di un'array cerca a fondo
                                 else if (typeof initial[key] == 'object') {
                                     let deepInitial = initial[key]
-                                    // se si tratta di un'array cerca di individuare delle corrispondenze
-                                    if (deepInitial.length >= 0) {
-                                        for (let i = 0; i < deepInitial.length; i++) {
-                                            let current = deepInitial[i]
-                                            for (let currentKey in current) {
 
+                                    if (deepInitial) {
+                                        // se si tratta di un'array cerca di individuare delle corrispondenze
+                                        if (deepInitial.length >= 0) {
+                                            for (let i = 0; i < deepInitial.length; i++) {
+                                                let current = deepInitial[i]
+                                                for (let currentKey in current) {
+
+                                                    if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
+                                                        let idx = this.keys.findIndex(value => value == currentKey)
+                                                        if (idx > -1) {
+                                                            this.initials[currentKey] = current[currentKey]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // si tratta di un singolo oggetto
+                                        else {
+                                            // console.log(deepInitial);
+                                            let current = deepInitial
+                                            for (let currentKey in current) {
                                                 if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
                                                     let idx = this.keys.findIndex(value => value == currentKey)
                                                     if (idx > -1) {
                                                         this.initials[currentKey] = current[currentKey]
                                                     }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    // si tratta di un singolo oggetto
-                                    else {
-                                        // console.log(deepInitial);
-                                        let current = deepInitial
-                                        for (let currentKey in current) {
-                                            if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
-                                                let idx = this.keys.findIndex(value => value == currentKey)
-                                                if (idx > -1) {
-                                                    this.initials[currentKey] = current[currentKey]
                                                 }
                                             }
                                         }
