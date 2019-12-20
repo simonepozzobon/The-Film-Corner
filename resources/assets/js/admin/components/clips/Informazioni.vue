@@ -280,36 +280,38 @@ export default {
     },
     methods: {
         selectIsReady: function (key) {
-            // se si tratta di un'array
-            if (this.initials[key].length) {
-                let old = this[key]
-                for (let j = 0; j < this.initials[key].length; j++) {
-                    let current = this.initials[key][j]
-                    this.$refs[key].selectOption(current.id)
+            if (this.initials.hasOwnProperty(key)) {
+                // se si tratta di un'array
+                if (this.initials[key].length) {
+                    let old = this[key]
+                    for (let j = 0; j < this.initials[key].length; j++) {
+                        let current = this.initials[key][j]
+                        this.$refs[key].selectOption(current.id)
 
-                    let value = this.initials[key][j].name
-                    let arr = this[key]
+                        let value = this.initials[key][j].name
+                        let arr = this[key]
 
-                    if (!value) {
-                        value = this.initials[key][j].title
-                    }
+                        if (!value) {
+                            value = this.initials[key][j].title
+                        }
 
-                    let idx = arr.findIndex(item => item == value)
-                    if (idx < 0) {
-                        this[key].push(value)
+                        let idx = arr.findIndex(item => item == value)
+                        if (idx < 0) {
+                            this[key].push(value)
+                        }
                     }
                 }
-            }
-            // o se si tratta una singola selezione
-            else {
-                this.$refs[key].selectOption(this.initials[key].id)
-                if (this.initials[key].title) {
-                    this[key] = this.initials[key].title
-                }
+                // o se si tratta una singola selezione
+                else {
+                    this.$refs[key].selectOption(this.initials[key].id)
+                    if (this.initials[key].title) {
+                        this[key] = this.initials[key].title
+                    }
 
 
-                if (this.initials[key].name) {
-                    this[key] = this.initials[key].name
+                    if (this.initials[key].name) {
+                        this[key] = this.initials[key].name
+                    }
                 }
             }
         },
