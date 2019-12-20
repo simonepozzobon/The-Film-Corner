@@ -148,10 +148,6 @@ export default {
             this.$http.get('/api/v2/admin/clips').then(response => {
                 if (response.data.success) {
                     this.clips = response.data.clips
-
-                    this.clips.map(clip => {
-                        console.log(clip.period);
-                    })
                 }
             })
         },
