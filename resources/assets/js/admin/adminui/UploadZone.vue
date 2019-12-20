@@ -1,5 +1,6 @@
 <template>
 <div class="up-zone">
+    <div class="up-zone__preview"></div>
     <vue-dropzone
         ref="drop"
         :id="uuid"
@@ -19,7 +20,7 @@
         @vdropzone-mounted="dropzoneMounted"
     >
         <span>
-            Carica un nuovo file
+            Trascina un file o clicca per caricarne uno
         </span>
     </vue-dropzone>
     <div
@@ -88,7 +89,8 @@ export default {
                 maxFile: this.multiple ? null : 1,
                 // maxFilesize: null,
                 dictDefaultMessage: "Carica un nuovo file",
-                previewsContainer: false,
+                previewsContainer: null,
+                // previewsContainer: '.up-zone__preview',
                 thumbnailWidth: 250,
                 thumbnailHeight: 140,
                 parallelUploads: this.multiple ? 2 : 1,
@@ -125,6 +127,7 @@ export default {
         fileAdded: function (file) {
             toastr.info('file added')
             this.$emit('file-added', file)
+            console.log(file);
         },
         filesAdded: function (files) {
             toastr.info('files added')
@@ -159,6 +162,63 @@ export default {
     },
 }
 </script>
+
+<style lang="scss">
+@import '~styles/shared';
+$base-color: $gray-400;
+$color: lighten($gray-200, 8);
+$color-darken: lighten($gray-200, 3);
+$darken: lighten($dark, 3);
+
+.up-zone {
+    &__preview {
+        .dz-preview {
+            display: flex;
+            margin-bottom: $spacer;
+            align-items: center;
+
+            .dz-image {
+                flex: 20% 1 1;
+                max-width: 20%;
+            }
+
+            .dz-image img {
+                max-width: 100%;
+            }
+        }
+
+        .dz-details {
+            margin-left: $spacer;
+        }
+
+        .dz-success-mark {
+            flex: 5% 1 1;
+            max-width: 5%;
+            margin-left: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dz-success-mark svg {
+            max-width: 100%;
+        }
+
+        .dz-error-mark {
+            flex: 5% 1 1;
+            max-width: 5%;
+            margin-left: $spacer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dz-error-mark svg {
+            max-width: 100%;
+        }
+    }
+}
+</style>
 
 <style lang="scss" scoped>
 @import '~styles/shared';
