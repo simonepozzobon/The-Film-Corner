@@ -28,6 +28,9 @@ class ClipsController extends Controller
 {
     public function __construct()
     {
+        // set default locale per admin su italiano
+        \App::setLocale('it');
+
         $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics'];
@@ -64,6 +67,7 @@ class ClipsController extends Controller
     public function get_clips()
     {
         $clips = Clip::with('period')->get();
+
 
         return [
             'success' => true,
