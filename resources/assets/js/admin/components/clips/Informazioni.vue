@@ -280,7 +280,7 @@ export default {
     },
     methods: {
         selectIsReady: function (key) {
-            if (this.initials.hasOwnProperty(key)) {
+            if (this.initials.hasOwnProperty(key) && this.initials[key]) {
                 // se si tratta di un'array
                 if (this.initials[key].length) {
                     let old = this[key]
