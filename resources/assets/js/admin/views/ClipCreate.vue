@@ -306,30 +306,33 @@ export default {
                                 // se si tratta di un oggetto o di un'array cerca a fondo
                                 else if (typeof initial[key] == 'object') {
                                     let deepInitial = initial[key]
-                                    // se si tratta di un'array cerca di individuare delle corrispondenze
-                                    if (deepInitial.length >= 0) {
-                                        for (let i = 0; i < deepInitial.length; i++) {
-                                            let current = deepInitial[i]
-                                            for (let currentKey in current) {
 
+                                    if (deepInitial) {
+                                        // se si tratta di un'array cerca di individuare delle corrispondenze
+                                        if (deepInitial.length >= 0) {
+                                            for (let i = 0; i < deepInitial.length; i++) {
+                                                let current = deepInitial[i]
+                                                for (let currentKey in current) {
+
+                                                    if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
+                                                        let idx = this.keys.findIndex(value => value == currentKey)
+                                                        if (idx > -1) {
+                                                            this.initials[currentKey] = current[currentKey]
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        // si tratta di un singolo oggetto
+                                        else {
+                                            // console.log(deepInitial);
+                                            let current = deepInitial
+                                            for (let currentKey in current) {
                                                 if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
                                                     let idx = this.keys.findIndex(value => value == currentKey)
                                                     if (idx > -1) {
                                                         this.initials[currentKey] = current[currentKey]
                                                     }
-                                                }
-                                            }
-                                        }
-                                    }
-                                    // si tratta di un singolo oggetto
-                                    else {
-                                        // console.log(deepInitial);
-                                        let current = deepInitial
-                                        for (let currentKey in current) {
-                                            if (current.hasOwnProperty(currentKey) && currentKey != 'id') {
-                                                let idx = this.keys.findIndex(value => value == currentKey)
-                                                if (idx > -1) {
-                                                    this.initials[currentKey] = current[currentKey]
                                                 }
                                             }
                                         }
