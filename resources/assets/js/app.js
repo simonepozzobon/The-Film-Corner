@@ -17,7 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 
 Vue.prototype.$cookie = Cookie
-window.$translations = Vue.prototype.$translations = new Translations()
+// window.$translations = Vue.prototype.$translations = new Translations()
 
 axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
