@@ -106,6 +106,12 @@ export default {
                 return {}
             },
         },
+        current: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
@@ -134,8 +140,21 @@ export default {
         clip: function () {
             this.setClip()
         },
+        current: function () {
+            this.setCurrent()
+        },
     },
     methods: {
+        setCurrent: function () {
+            let current = Object.assign({}, this.values.it)
+            for (let i = 0; i < this.keys.length; i++) {
+                let key = this.keys[i]
+                if (this.current.hasOwnProperty(key)) {
+                    current[key] = this.current[key]
+                }
+            }
+            this.values.it = current
+        },
         setInitials: function () {
 
         },

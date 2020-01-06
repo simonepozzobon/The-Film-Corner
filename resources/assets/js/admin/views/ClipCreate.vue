@@ -68,6 +68,8 @@
         <traduzioni-approfondimenti
             :clip="clip"
             :initials="initials"
+            :current="current"
+            @update="updateField"
             @saved="updateClip($event, 5)"
         />
     </container>
@@ -253,6 +255,7 @@ export default {
             ],
             initials: {},
             altInitials: {},
+            current: {},
         }
     },
     watch: {
@@ -360,6 +363,11 @@ export default {
         updateField: function (key, value) {
             if (this.hasOwnProperty(key)) {
                 this[key] = value
+
+                let current = Object.assign({}, this.current)
+                current[key] = value
+
+                this.current = current
             }
         },
         debug: function () {
@@ -367,49 +375,50 @@ export default {
         },
         saveClip: function () {
             // this.debug()
-            if (this.cursor == 0) {
-                let data = new FormData()
-                data.append('title', this.title)
-                data.append('video', this.video)
-                data.append('period', this.period)
-                data.append('year', this.year)
-                data.append('format', this.format)
-                data.append('age', this.age)
-                data.append('genre', this.genre)
-                data.append('nationality', this.nationality)
-
-                data.append('topics', JSON.stringify(this.topics))
-                data.append('directors', JSON.stringify(this.directors))
-                data.append('peoples', JSON.stringify(this.peoples))
-
-
-                this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-                    console.log('clip', response.data.clip);
-                    if (response.data.success == true) {
-                        this.clip = response.data.clip
-                        this.cursor = 1
-                    }
-                })
-            }
-            else if (this.cursor == 1) {
-                let data = new FormData()
-                data.append('clip_id', this.clip.id)
-                data.append('abstract', this.abstract)
-                data.append('tech_info', this.tech_info)
-                data.append('historical_context', this.historical_context)
-                data.append('food', this.foods)
-
-                this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
-                    console.log('details', response.data.clip);
-                    if (response.data.success == true) {
-                        this.clip = response.data.clip
-                        this.cursor = 2
-                    }
-                })
-            }
-            else if (this.cursor == 2) {
-                // paratesti
-            }
+            console.log('deprecata');
+            // if (this.cursor == 0) {
+            //     let data = new FormData()
+            //     data.append('title', this.title)
+            //     data.append('video', this.video)
+            //     data.append('period', this.period)
+            //     data.append('year', this.year)
+            //     data.append('format', this.format)
+            //     data.append('age', this.age)
+            //     data.append('genre', this.genre)
+            //     data.append('nationality', this.nationality)
+            //
+            //     data.append('topics', JSON.stringify(this.topics))
+            //     data.append('directors', JSON.stringify(this.directors))
+            //     data.append('peoples', JSON.stringify(this.peoples))
+            //
+            //
+            //     this.$http.post('/api/v2/admin/clips/create', data).then(response => {
+            //         console.log('clip', response.data.clip);
+            //         if (response.data.success == true) {
+            //             this.clip = response.data.clip
+            //             this.cursor = 1
+            //         }
+            //     })
+            // }
+            // else if (this.cursor == 1) {
+            //     let data = new FormData()
+            //     data.append('clip_id', this.clip.id)
+            //     data.append('abstract', this.abstract)
+            //     data.append('tech_info', this.tech_info)
+            //     data.append('historical_context', this.historical_context)
+            //     data.append('food', this.foods)
+            //
+            //     this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
+            //         console.log('details', response.data.clip);
+            //         if (response.data.success == true) {
+            //             this.clip = response.data.clip
+            //             this.cursor = 2
+            //         }
+            //     })
+            // }
+            // else if (this.cursor == 2) {
+            //     // paratesti
+            // }
         },
         paratextCompleted: function () {
             this.cursor = 3
