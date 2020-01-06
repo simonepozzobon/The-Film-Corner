@@ -12,4 +12,9 @@ class Partner extends Model
     protected $table = 'partners';
     protected $fillable = ['logo_url', 'id_tag', 'url'];
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
 }

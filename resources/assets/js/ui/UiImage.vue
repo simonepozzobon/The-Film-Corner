@@ -1,9 +1,14 @@
 <template>
 <div
     class="ui-image"
-    :class="[ fullWidthClass, fullHeightClass ]"
+    :class="[
+        fullWidthClass,
+        fullHeightClass,
+        marginClass,
+    ]"
     :title="alt"
     ref="container"
+    @click.stop.prevent="$emit('click')"
 >
     <!-- <img
         :src="src"
@@ -32,7 +37,11 @@ export default {
         fullHeight: {
             type: Boolean,
             default: false,
-        }
+        },
+        hasMargin: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: function () {
         return {
@@ -57,7 +66,12 @@ export default {
             if (this.fullHeight) {
                 return 'ui-image--full-height'
             }
-        }
+        },
+        marginClass: function () {
+            if (!this.hasMargin) {
+                return 'ui-image--no-margin'
+            }
+        },
     },
     methods: {
         appendToDOM: function (img) {
@@ -115,6 +129,10 @@ export default {
             width: 100%;
             height: auto;
         }
+    }
+
+    &--no-margin {
+        margin-bottom: 0;
     }
 }
 </style>

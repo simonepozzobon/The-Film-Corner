@@ -1,11 +1,11 @@
 <template>
 <ui-row
     :no-gutters="true"
-    class="ui-app-block"
+    class="ua-block"
 >
     <ui-block :size="size">
         <div
-            class="ui-app-block__block"
+            class="ua-block__block"
             :class="[colorClass]"
         >
 
@@ -16,7 +16,7 @@
                 :color="titleColor"
             />
 
-            <div class="ui-app-block__field">
+            <div class="ua-block__field">
                 <slot></slot>
             </div>
         </div>
@@ -61,7 +61,7 @@ export default {
     },
     computed: {
         colorClass: function () {
-            return 'ui-app-block--' + this.color
+            return 'ua-block--' + this.color
         }
     }
 }
@@ -70,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-block {
+.ua-block {
     width: 100%;
     height: 100%;
 

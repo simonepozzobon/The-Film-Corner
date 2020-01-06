@@ -15,7 +15,7 @@
         class="mixer-channel__delete"
     >
         <ui-button
-            title="Clear"
+            :title="$root.getCmd('clear')"
             color="white"
             :has-container="false"
             :has-margin="false"

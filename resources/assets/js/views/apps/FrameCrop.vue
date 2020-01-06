@@ -54,14 +54,12 @@ import {
     UiButton
 }
 from '../../ui'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
 export default {
     name: 'FrameCrop',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppBlock,
@@ -75,7 +73,6 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             viewer: null,
             renderer: null,
             frames: [],
@@ -84,7 +81,6 @@ export default {
         }
     },
     watch: {
-        ...SharedWatch,
         'frames': function (frames) {
             if (frames.length > 0) {
                 this.clearAll = true
@@ -200,8 +196,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.getData = SharedMethods.getData.bind(this)
-        this.uniqidSimple = SharedMethods.uniqidSimple.bind(this)
         this.$root.isApp = true
         this.getData()
     },

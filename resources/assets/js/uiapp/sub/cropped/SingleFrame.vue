@@ -1,6 +1,6 @@
 <template>
 <ui-app-block
-    color="green"
+    :color="color"
     :title="idx | formatFrameTitle"
     class="mt-4"
 >
@@ -25,7 +25,7 @@
                 ></textarea>
             </div>
             <ui-button
-                title="Delete Frame"
+                :title="$root.getCmd('delete_frame')"
                 align="center"
                 :has-margin="false"
                 color="dark"
@@ -41,7 +41,8 @@ import UiAppBlock from '../../UiAppBlock.vue'
 import {
     UiButton,
     UiImage
-} from '../../../ui'
+}
+from '../../../ui'
 export default {
     name: 'SingleFrame',
     components: {
@@ -67,6 +68,10 @@ export default {
             type: String,
             default: null,
             required: true,
+        },
+        color: {
+            type: String,
+            default: 'green',
         },
     },
     data: function () {

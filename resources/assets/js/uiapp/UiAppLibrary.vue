@@ -1,26 +1,26 @@
 <template>
 <div
     ref="container"
-    class="ui-app-library"
+    class="ua-library"
     :class="colorClass"
 >
     <div
         ref="head"
-        class="ui-app-library__head"
+        class="ua-library__head"
     >
         <ui-title
             ref="title"
-            :title="title"
+            :title="this.$root.getCmd(title)"
             :has-padding="false"
         />
         <div
             ref="select"
-            class="ui-app-library__libraries row no-gutters"
+            class="ua-library__libraries row no-gutters"
             v-if="hasSubLibraries"
         >
-            <label class="col-4">Select From</label>
+            <label class="col-4">{{ this.$root.getCmd('select_from') }}</label>
             <select
-                class="form-control ui-app-library__select col-8"
+                class="form-control ua-library__select col-8"
                 v-model="currentLibrary"
             >
                 <option
@@ -35,7 +35,7 @@
     </div>
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-if="mediaType == 'videos'"
     >
         <transition-group
@@ -58,7 +58,7 @@
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else-if="mediaType == 'audios'"
     >
         <transition-group
@@ -80,12 +80,12 @@
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else-if="mediaType == 'uploads'"
     >
         <upload-form
             :app-id="appId"
-            accept="video/*"
+            :accept="accept"
             @uploaded="addToLibrary"
         />
 
@@ -94,22 +94,35 @@
             @enter="assetEnter"
             @leave="assetLeave"
         >
-            <library-item-video
+            <div
                 v-for="(asset, i) in assets"
                 :key="asset.id"
-                :delay="i"
-                :index="asset.id"
-                :title="asset.title"
-                :img="asset.img | fixImgPath"
-                @selected="selected"
-                @ready="ready"
-            />
+            >
+                <library-item-audio
+                    v-if="asset.type == 'audio'"
+                    :delay="i"
+                    :index="asset.id"
+                    :title="asset.title"
+                    @selected="selected"
+                    @ready="ready"
+                />
+                <library-item-video
+                    v-else
+                    :delay="i"
+                    :index="asset.id"
+                    :title="asset.title"
+                    :img="asset.img | fixImgPath"
+                    @selected="selected"
+                    @ready="ready"
+                />
+            </div>
+
         </transition-group>
     </div>
 
     <div
         ref="assets"
-        class="ui-app-library__assets"
+        class="ua-library__assets"
         v-else
     >
         <transition-group
@@ -142,6 +155,12 @@ import {
     UiTitle
 }
 from '../ui'
+
+import {
+    TweenMax
+}
+from 'gsap/all'
+
 export default {
     name: 'UiAppLibrary',
     components: {
@@ -154,7 +173,7 @@ export default {
     props: {
         title: {
             type: String,
-            default: 'Library',
+            default: 'library',
         },
         hasSubLibraries: {
             type: Boolean,
@@ -182,6 +201,10 @@ export default {
             type: Number,
             default: 0,
         },
+        accept: {
+            type: String,
+            default: 'video/*',
+        },
     },
     data: function () {
         return {
@@ -207,7 +230,7 @@ export default {
     },
     computed: {
         colorClass: function () {
-            return 'ui-app-library--' + this.color
+            return 'ua-library--' + this.color
         },
     },
     filters: {
@@ -218,6 +241,7 @@ export default {
     methods: {
         beforeInit: function () {},
         init: function () {
+            // console.log('initialized', this.items);
             if (this.hasSubLibraries) {
                 this.libraries = this.items
                 if (this.libraries.length > 0) {
@@ -302,34 +326,52 @@ export default {
             })
         },
         setLibraryHeight: function (h = false) {
-            let container, el, title, assets, titleSize, headSize,
-                containerSize, containerH, height
-            container = this.$refs.container
-            el = this.$refs.head
-            title = this.$refs.title.$refs.title
-            assets = this.$refs.assets
-            titleSize = SizeUtility.get(title)
-            headSize = SizeUtility.get(el)
-            containerSize = SizeUtility.get(container)
-            containerH = containerSize.hClean
-            if (h && h > containerH) {
-                containerH = h
-            }
-            height = containerH - titleSize.h - titleSize.marginY
-            if (this.hasSubLibraries) {
-                let select = this.$refs.select
-                let selectSize = SizeUtility.get(select)
-                height = height - selectSize.h - selectSize.marginY
-            }
-            height = Math.round(height)
-            TweenMax.fromTo(assets, .4, {
-                height: this.libraryHeight,
-                autoAlpha: 0,
-            }, {
-                height: height,
-                autoAlpha: 1,
-                onStart: () => {
+            this.$nextTick(() => {
+                let container, el, title, assets, titleSize, headSize,
+                    containerSize, containerH, height, select, selectSize
+
+                container = this.$refs.container
+                el = this.$refs.head
+                title = this.$refs.title.$refs.title
+                assets = this.$refs.assets
+                titleSize = SizeUtility.get(title)
+                headSize = SizeUtility.get(el)
+                containerSize = SizeUtility.get(container)
+                containerH = containerSize.hClean
+                // console.log(h, containerH);
+
+                if (h && h > containerH) {
+                    containerH = h
+                }
+
+
+                height = containerH - titleSize.h - titleSize.marginY
+
+                if (this.hasSubLibraries) {
+                    select = this.$refs.select
+                    selectSize = SizeUtility.get(select)
+                    // console.log('select', selectSize);
+                    height = height - selectSize.h - (selectSize.marginY * 2) - 10
+                }
+
+                let startHeight = this.libraryHeight
+                height = Math.round(height)
+                // console.log('dentro', startHeight, height, h);
+
+                if (startHeight != height) {
                     this.libraryHeight = height
+
+                    TweenMax.fromTo(assets, .4, {
+                        height: startHeight,
+                        autoAlpha: 0,
+                    }, {
+                        height: height,
+                        autoAlpha: 1,
+                        onComplete: () => {
+                            // console.log('dentro completp', this.libraryHeight, height);
+                            // this.libraryHeight = height
+                        }
+                    })
                 }
             })
             // console.log(container);
@@ -338,8 +380,10 @@ export default {
             this.counter--
         },
         addToLibrary: function (file) {
+            // console.log('uplaod', file);
             let newUpload = {
                 id: this.assets.length,
+                type: file.hasOwnProperty('type') ? file.type : 'video',
                 title: file.title,
                 img: file.img,
                 duration: file.duration,
@@ -363,7 +407,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-library {
+.ua-library {
     width: 100%;
     min-height: 100%;
     min-height: 450px;

@@ -11,6 +11,11 @@ class AppSection extends Model
     protected $table = 'app_sections';
     protected $fillable = ['slug'];
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
     public function appCategories()
     {
       return $this->hasMany('App\AppCategory', 'id', 'app_section_id');

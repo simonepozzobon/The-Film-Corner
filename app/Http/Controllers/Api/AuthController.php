@@ -10,9 +10,9 @@ use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    public function attempt_login(Request $r) {
+    public function attempt_login(Request $r)
+    {
         $credentials = $r->only('email', 'password');
-
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
             $user->role = $user->role;
@@ -29,7 +29,8 @@ class AuthController extends Controller
     }
 
 
-    public function attempt_login_from_cookie(Request $r) {
+    public function attempt_login_from_cookie(Request $r)
+    {
         $user = User::where([
             ['email', '=', $r->email],
             ['id', '=', $r->id],
@@ -51,16 +52,18 @@ class AuthController extends Controller
         ];
     }
 
-    public function attempt_logout(Request $r) {
+    public function attempt_logout(Request $r)
+    {
         $r->user()->token()->revoke();
-        
+
         return [
             'success' => true,
         ];
         // return redirect()->url('/');
     }
 
-    public function create_token($user, $request) {
+    public function create_token($user, $request)
+    {
         $tokenResult = $user->createToken('Personal Access Token');
         $token = $tokenResult->token;
         if ($request->remember_me) {
@@ -70,7 +73,8 @@ class AuthController extends Controller
         return $tokenResult;
     }
 
-    public function format_token($tokenResult) {
+    public function format_token($tokenResult)
+    {
         return [
             'access_token' => $tokenResult->accessToken,
             'token_type' => 'Bearer',

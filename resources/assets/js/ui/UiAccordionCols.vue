@@ -1,22 +1,24 @@
 <template>
-    <ui-row class="pb-4 ui-accordion-cols">
-        <div class="col-md-6">
-            <ui-accordion-single
-                v-for="keyword in cols.left"
-                :key="keyword.id"
-                :idx="keyword.id"
-                :title="keyword.name"
-                :content="keyword.description"/>
-        </div>
-        <div class="col-md-6">
-            <ui-accordion-single
-                v-for="keyword in cols.right"
-                :key="keyword.id"
-                :idx="keyword.id"
-                :title="keyword.name"
-                :content="keyword.description"/>
-        </div>
-    </ui-row>
+<ui-row class="pb-4 ui-accordion-cols">
+    <div class="col-md-6">
+        <ui-accordion-single
+            v-for="keyword in cols.left"
+            :key="keyword.id"
+            :idx="keyword.id"
+            :title="keyword | translate('name', $root.locale)"
+            :content="keyword | translate('description', $root.locale)"
+        />
+    </div>
+    <div class="col-md-6">
+        <ui-accordion-single
+            v-for="keyword in cols.right"
+            :key="keyword.id"
+            :idx="keyword.id"
+            :title="keyword | translate('name', $root.locale)"
+            :content="keyword | translate('description', $root.locale)"
+        />
+    </div>
+</ui-row>
 </template>
 
 <script>
@@ -24,8 +26,11 @@ import UiAccordionSingle from './UiAccordionSingle.vue'
 import UiBlock from './UiBlock.vue'
 import UiRow from './UiRow.vue'
 
+import TranslationFilter from '../TranslationFilter'
+
 export default {
     name: 'UiAccordionCols',
+    mixins: [TranslationFilter],
     components: {
         UiAccordionSingle,
         UiBlock,
@@ -34,10 +39,10 @@ export default {
     props: {
         keywords: {
             type: Array,
-            default: function() {}
+            default: function () {}
         }
     },
-    data: function() {
+    data: function () {
         return {
             isOpen: false,
             cols: {
@@ -47,12 +52,12 @@ export default {
         }
     },
     watch: {
-        'keywords': function(keywords) {
+        'keywords': function (keywords) {
 
         }
     },
     methods: {
-        split: function() {
+        split: function () {
             let half = Math.ceil(this.keywords.length / 2)
             this.cols = {
                 left: this.keywords.slice(0, half),
@@ -61,7 +66,7 @@ export default {
             console.log(this.cols);
         }
     },
-    mounted: function() {
+    mounted: function () {
         this.split()
     }
 }

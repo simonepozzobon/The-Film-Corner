@@ -19,32 +19,54 @@
             <ui-row
                 :full-width="true"
                 ver-align="center"
+                align="center"
             >
                 <ui-special-text
                     :has-padding="false"
                     display="inline-block"
                     class="mr-3"
-                    text="search the clips and didactical content through the timeline below or through the advanced"
+                    text="search the clips and didactical content through the timeline below or through the"
                 />
 
                 <ui-button
-                    title="search engine"
+                    title="Advanced search engine"
                     color="red"
                     :has-container="false"
                     :has-margin="false"
+                    @click="$root.goTo('propaganda-search')"
                 />
             </ui-row>
 
-            <ui-roadmap />
+            <ui-roadmap
+                :channels="channels"
+                @select-channel="selectChannel"
+            />
+
+            <ui-row
+                align="center"
+                :full-width="true"
+            >
+                <ui-button
+                    title="Go to the creative challenges"
+                    color="yellow"
+                    :has-container="false"
+                    :has-margin="false"
+                    @click="goToChallenges"
+                />
+            </ui-row>
         </ui-row>
     </ui-hero-banner>
-    <ui-container>
-        Contenuto
-    </ui-container>
+    <ui-app-channel-results
+        :contents="results"
+        :title="currentChannelTitle"
+    />
 </ui-container>
 </template>
 
 <script>
+import Channels from '../../../dummies/PropagandAppContent'
+import Utility from '../../../Utilities'
+
 import {
     UiBlock,
     UiButton,
@@ -57,10 +79,18 @@ import {
     UiSpecialText,
     UiTitle,
     UiRow,
-} from '../../../ui'
+}
+from '../../../ui'
+
+import {
+    UiAppChannelResults
+}
+from '../../../uiapp'
+
 export default {
     name: 'PropagandaHome',
     components: {
+        UiAppChannelResults,
         UiBlock,
         UiButton,
         UiContainer,
@@ -73,25 +103,72 @@ export default {
         UiTitle,
         UiRow,
     },
-    data: function() {
+    data: function () {
         return {
-            title: 'Welcome'
+            title: 'Welcome',
+            channels: [],
+            currentChannel: null,
+            results: [],
         }
     },
     watch: {
-        '$root.user': function(user) {
+        '$root.user': function (user) {
             this.setWelcome()
-        }
+        },
+        currentChannel: function (channel) {
+            this.results = channel.clips
+        },
+    },
+    computed: {
+        currentChannelTitle: function () {
+            if (this.currentChannel && this.currentChannel.hasOwnProperty('title')) {
+                return this.currentChannel.title
+            }
+
+            return null
+        },
     },
     methods: {
-        setWelcome: function() {
-            this.title = 'Welcome ' + this.$root.user.name
-            console.log(this.title);
+        getData: function () {
+            // perform api call
+            this.$http.get('/api/v2/propaganda/clips').then(response => {
+                // console.log(response);
+                this.channels = response.data.periods
+            })
+            // this.channels = Channels
+            // this.debug()
         },
-        enter: function() {},
-        leave: function() {}
+        debug: function () {
+            // this.selectChannel(this.channels[2])
+        },
+        setWelcome: function () {
+            this.title = 'Welcome ' + Utility.capitalize(this.$root.user.name)
+            // console.log(this.title);
+        },
+        enter: function () {},
+        leave: function () {},
+        selectChannel: function (selected) {
+            this.channels = this.channels.map(channel => {
+
+                delete channel.isActive
+
+                if (channel.id == selected.id) {
+                    channel.isActive = true
+                }
+
+                return channel
+            })
+            this.currentChannel = selected
+        },
+        goToChallenges: function () {
+            this.$root.goTo('propaganda-challenges')
+        }
+
     },
-    mounted: function() {
+    created: function () {
+        this.getData()
+    },
+    mounted: function () {
         this.$nextTick(this.setWelcome)
     },
 }

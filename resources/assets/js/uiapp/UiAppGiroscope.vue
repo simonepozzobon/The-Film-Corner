@@ -1,11 +1,11 @@
 <template>
-    <div class="ui-app-giroscope">
+    <div class="ua-giroscope">
         <ui-title
             title="Scene"
             color="white"
             :has-padding="false"
             ref="title"/>
-        <div class="ui-app-giroscope__canvas" id="panorama" ref="content"></div>
+        <div class="ua-giroscope__canvas" id="panorama" ref="content"></div>
     </div>
 </template>
 
@@ -43,7 +43,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-giroscope {
+.ua-giroscope {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

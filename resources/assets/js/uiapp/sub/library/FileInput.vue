@@ -17,7 +17,7 @@
                     :for="name"
                     aria-describedby="inputGroupFileAddon02"
                 >
-                    Seleziona File
+                    {{ this.$root.getCmd('select_file') }}
                 </label>
             </div>
         </div>

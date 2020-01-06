@@ -3,7 +3,7 @@
     <template slot="left">
         <ui-app-preview
             ref="preview"
-            title="Character"
+            :title="$root.getCmd('character')"
         />
     </template>
     <template
@@ -21,6 +21,7 @@
         <ui-app-layers
             ref="layers"
             :layers="objs"
+            :title="this.$root.getCmd('layers')"
             @select-layer="selectLayer"
             @delete-layer="deleteLayer"
         />
@@ -47,14 +48,26 @@ import {
     UiAppPreview,
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
 import _ from 'lodash'
-require('gsap/ScrollToPlugin')
+
+import {
+    TweenMax,
+}
+from 'gsap/all'
+
+import {
+    ScrollToPlugin
+}
+from 'gsap/ScrollToPlugin'
+
+const plugins = [
+    ScrollToPlugin
+]
+
+
 export default {
     name: 'FrameComposer',
     components: {
@@ -64,9 +77,9 @@ export default {
         UiAppNote,
         UiAppPreview,
     },
+    mixins: [Shared],
     data: function () {
         return {
-            ...SharedData,
             canvas: null,
             landscape: null,
             objs: [],
@@ -80,10 +93,9 @@ export default {
                 this.resizeCanvas(size.wClean)
             }
         },
-        ...SharedWatch,
     },
     methods: {
-        init: function () {
+        init: async function () {
             let size = this.getCanvasSize(true)
             let preview = this.$refs.preview
             let container = preview.$el
@@ -113,51 +125,68 @@ export default {
             this.canvas.add(this.landscape)
 
             if (this.$root.session.content.canvas) {
-                this.addListeners(true)
-                this.selectionListeners()
+                // console.log('listener');
+                let listener = await this.addListeners(true)
+                // console.log('completi');
+                let selection = await this.selectionListeners()
                 this.$nextTick(this.loadFromJSON)
             }
             else {
-                this.addListeners()
-                this.selectionListeners()
+                let listeners = await this.addListeners()
+                let selection = await this.selectionListeners()
+
+                // risolve bug con il loader che rimane bloccato in caso di sessione vuota
+                if (this.$root.loaderOpen == true && this.$root.objectsToLoad == 0 && this.$root.objectsLoaded == 0) {
+                    this.$nextTick(() => {
+                        this.$root.objectsLoaded = 1
+                    })
+
+                }
             }
 
         },
         loadFromJSON: function () {
+            // console.log('loadFromJSON');
             let content = this.$root.session.content
             let canvasParsed = JSON.parse(content.canvas)
             let objects = canvasParsed.objects
 
+            // console.log(objects);
             this.$root.isOpen = true
+            // console.log('to load', objects.length);
             this.$root.objectsToLoad = objects.length
+            // console.log('da caricare', objects.length);
 
             this.notes = content.notes
             for (let i = 0; i < objects.length; i++) {
-                let objs = objects[i]
-                if (objs.type == 'group') {
+                let layer = objects[i]
+                if (layer.type == 'group') {
                     // è uno sfondo
-                    for (let j = 0; j < objs.objects.length; j++) {
-                        let obj = objs.objects[j]
-                        this.addToCanvas(obj.idx, obj.libraryIdx, true)
+                    for (let j = 0; j < layer.objects.length; j++) {
+                        let landscape = layer.objects[j]
+                        // console.log('e uno sfondo', landscape.idx, landscape.libraryIdx);
+                        this.addToCanvas(landscape.idx, landscape.libraryIdx, true)
                     }
                 }
                 else {
                     // è un'immagine
-                    let obj = objs
-                    console.log(obj);
+                    let obj = layer
+                    // console.log(obj);
                     this.addToCanvas(obj.idx, obj.libraryIdx, true, obj)
                 }
             }
         },
         getCanvasSize: function (hasReturn) {
-            let el = this.$refs.preview.$el
-            let title = this.$refs.preview.$refs.title.$refs.title
-            let elSize = SizeUtility.get(el)
-            let titleSize = SizeUtility.get(title)
-            elSize.hClean = elSize.hClean - titleSize.hClean - titleSize.marginY
-            this.size = elSize
-            if (hasReturn) {
-                return this.size
+            if (this.$refs.preview) {
+                let el = this.$refs.preview.$el
+                let title = this.$refs.preview.$refs.title.$refs.title
+                let elSize = SizeUtility.get(el)
+                let titleSize = SizeUtility.get(title)
+                elSize.hClean = elSize.hClean - titleSize.hClean - titleSize.marginY
+                this.size = elSize
+                if (hasReturn) {
+                    return this.size
+                }
             }
         },
         resizeCanvas: function (width) {
@@ -169,32 +198,50 @@ export default {
             this.canvas.calcOffset()
             this.canvas.renderAll()
         },
-        addListeners: function (fromOpen = false) {
-            this.addListener(this.landscape, fromOpen)
-            this.addListener(this.canvas, fromOpen)
+        addListeners: async function (fromOpen = false) {
+            await Promise.all([
+                this.addListener(this.landscape, fromOpen, true),
+                this.addListener(this.canvas, fromOpen)
+            ])
+            // .then(values => {
+            //     // console.log(values);
+            // })
         },
-        addListener: function (obj, fromOpen = false) {
-            let events = ['object:added', 'object:removed',
-                'object:modified', 'object:rotating', 'object:scaling',
-                'object:moving'
-            ]
-            for (let j = 0; j < events.length; j++) {
-                obj.on(events[j], () => {
-                    this.$nextTick(() => {
-                        this.saveCanvas(events[j], fromOpen)
+        addListener: function (obj, fromOpen = false, isLandscape = false) {
+            return new Promise((resolve, reject) => {
+                let events = ['object:added', 'object:removed', 'object:modified', 'object:rotating', 'object:scaling', 'object:moving']
+                for (let j = 0; j < events.length; j++) {
+                    obj.on(events[j], () => {
+                        if (isLandscape == true) {
+                            // console.log('qui');
+                        }
+                        this.$nextTick(() => {
+                            this.saveCanvas(events[j], fromOpen)
+                        })
                     })
+                }
+
+                this.$nextTick(() => {
+                    resolve(isLandscape)
                 })
-            }
+            })
         },
-        selectionListeners: function () {
-            let events = ['selection:created', 'selection:updated']
-            for (let j = 0; j < events.length; j++) {
-                this.canvas.on(events[j], (el) => {
-                    this.toggleActiveLayer(el, true)
+        selectionListeners: async function () {
+            await new Promise((resolve, reject) => {
+                let events = ['selection:created', 'selection:updated']
+                for (let j = 0; j < events.length; j++) {
+                    this.canvas.on(events[j], (el) => {
+                        this.toggleActiveLayer(el, true)
+                    })
+                }
+
+                this.canvas.on('selection:cleared', (el) => {
+                    this.toggleActiveLayer(el, false)
                 })
-            }
-            this.canvas.on('selection:cleared', (el) => {
-                this.toggleActiveLayer(el, false)
+
+                this.$nextTick(() => {
+                    resolve()
+                })
             })
         },
         toggleActiveLayer: function (el, hasToActive = true) {
@@ -218,6 +265,11 @@ export default {
         saveCanvas: function (event = false, fromOpen = false) {
             // console.log('salva', event, fromOpen);
             if (event === 'object:added' && fromOpen === true) {
+                // console.log('object:added', event, fromOpen);
+                this.$root.objectsLoaded++
+            }
+            else if (fromOpen === true) {
+                // console.log('from open', event, fromOpen);
                 this.$root.objectsLoaded++
             }
 
@@ -229,7 +281,9 @@ export default {
             }
 
             // Save canvas to JSON for future edit
-            let json_canvas = JSON.stringify(this.canvas.toDatalessJSON())
+            let newCanvas = this.canvas.toDatalessJSON()
+            // console.log('new canvas', newCanvas);
+            let json_canvas = JSON.stringify(newCanvas)
 
             for (let key in content) {
                 if (content.hasOwnProperty(key) && key == 'canvas') {
@@ -250,9 +304,8 @@ export default {
         setValue: function (value) {},
         // addToCanvas: function(item, libraryIdx, isID = false, isImage = false) {
         addToCanvas: function (index, libraryID, fromOpen = false, savedObj = null) {
-            let library = this.assets.library.filter(library => library.id ==
-                libraryID)[0]
-            let asset = library.medias.filter(asset => asset.id == index)[0]
+            let library = this.assets.library.find(library => library.id == libraryID)
+            let asset = library.medias.find(asset => asset.id == index)
             let url = '/storage/' + asset.src
             // console.log(url);
             // crea l'istanza di FabricJs
@@ -261,7 +314,7 @@ export default {
                 let uuid = this.uniqid()
 
                 if (fromOpen && savedObj) {
-                    console.log('from open', fromOpen);
+                    // console.log('from open', fromOpen);
                     obj.set({
                         selectable: true,
                         centeredScaling: true,
@@ -289,6 +342,7 @@ export default {
 
                     // se si tratta di un elemento e non di uno sfondo
                     if (libraryID != 1) {
+                        // console.log('elemento');
                         obj.set({
                             originY: 'center',
                         })
@@ -335,10 +389,15 @@ export default {
                     }
                     else {
                         let items = this.landscape.getObjects()
+                        // console.log('si tratta di uno sfondo', fromOpen);
+
+
                         for (let i = 0; i < items.length; i++) {
                             this.landscape.removeWithUpdate(items[i])
                         }
+
                         this.landscape.addWithUpdate(obj)
+
                         let width = this.landscape.getScaledWidth()
                         let scaleFactor = this.canvasWidth / width
                         if (width > this.canvasWidth) {
@@ -375,13 +434,14 @@ export default {
                         this.landscape.setCoords()
                         this.canvas.calcOffset()
                         this.canvas.renderAll()
+                        // console.log('fine');
+                        this.saveCanvas(false, fromOpen)
                     }
                 }
-
-
             })
             this.canvas.calcOffset()
             this.canvas.renderAll()
+            // console.log('dopo');
             this.saveCanvas(false, fromOpen)
         },
         selected: function (index, libraryID) {
@@ -401,18 +461,43 @@ export default {
         setNotes: function (notes) {
             this.notes = notes
             this.saveCanvas()
+        },
+        debugSession: function () {
+            this.$http.get('/api/v2/profile').then(response => {
+                if (response.data.success) {
+                    let activity = response.data.user.activities[0]
+
+                    let session = activity.data.session
+                    session.content = JSON.parse(session.content)
+
+                    this.$root.session = session
+                    // this.$root.isOpen = true
+                    this.$root.isTeacherCheck = true
+                    this.$root.notificationId = activity.id
+
+                    this.$nextTick(() => {
+                        this.getData()
+                    })
+                }
+
+            })
         }
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
+        // this.uniqid = SharedMethods.uniqid.bind(this)
+        // this.getData = SharedMethods.getData.bind(this)
+        // if (this.$root.session == null) {
+        //     this.$router.go(-1)
+        // }
         this.$root.isApp = true
-        // this.$root.session =
+
+        // this.debugSession()
         this.getData()
     },
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
+        console.log('ondeosx');
     }
 }
 </script>

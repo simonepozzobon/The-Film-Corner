@@ -41,15 +41,13 @@ import {
     UiAppVideoPreview
 }
 from '../../uiapp'
-import {
-    SharedData,
-    SharedMethods,
-    SharedWatch
-}
-from './Shared'
+
+import Shared from './Shared'
+
 import SizeUtility from '../../Sizes'
 export default {
     name: 'Offscreen',
+    mixins: [Shared],
     components: {
         AppTemplate,
         UiAppFolder,
@@ -60,15 +58,11 @@ export default {
     },
     data: function () {
         return {
-            ...SharedData,
             media: {
                 videoSrc: '/video/empty-session.mp4'
             },
             isLoading: false
         }
-    },
-    watch: {
-        ...SharedWatch,
     },
     methods: {
         ready: function () {
@@ -133,11 +127,6 @@ export default {
         }, 500)
     },
     created: function () {
-        this.uniqid = SharedMethods.uniqid.bind(this)
-        this.getData = SharedMethods.getData.bind(this)
-        // this.debug = SharedMethods.debug.bind(this)
-        this.deleteEmptySession = SharedMethods.deleteEmptySession.bind(
-            this)
         this.$root.isApp = true
         this.getData()
     },

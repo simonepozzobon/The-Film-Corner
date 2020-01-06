@@ -11,6 +11,11 @@ class AppCategory extends Model
     protected $table = 'app_categories';
     protected $fillable = ['slug', 'color_class'];
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
     public function section()
     {
       return $this->belongsTo('App\AppSection', 'app_section_id', 'id');

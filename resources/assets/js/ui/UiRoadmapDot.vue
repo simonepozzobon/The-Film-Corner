@@ -2,18 +2,21 @@
 <div
     class="roadmap-dot"
     :class="[
-        colorClass,
+        isActiveClass,
     ]"
     @click="clicked"
 >
     <div class="roadmap-dot__wrapper">
         <div class="roadmap-dot__period">
-            {{ point.period }}
+            {{ point.year }}
         </div>
-        <div class="roadmap-dot__circle">
+        <div
+            class="roadmap-dot__circle"
+            :class="bgClass"
+        >
         </div>
         <div class="roadmap-dot__label">
-            {{ point.label }}
+            {{ point.title }}
         </div>
     </div>
 </div>
@@ -25,20 +28,37 @@ export default {
     props: {
         point: {
             type: Object,
-            default: function() {
+            default: function () {
                 return {}
             },
         },
+        isActive: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
-        colorClass: function() {
+        colorClass: function () {
             if (this.point.color) {
                 return 'roadmap-dot--' + this.point.color
             }
-        }
+            return null
+        },
+        isActiveClass: function () {
+            if (this.isActive) {
+                return 'roadmap-dot--is-active'
+            }
+            return null
+        },
+        bgClass: function () {
+            if (this.point.color) {
+                return 'bg-' + this.point.color
+            }
+            return null
+        },
     },
     methods: {
-        clicked: function() {
+        clicked: function () {
             this.$emit('click', this.point)
         }
     },
@@ -105,6 +125,7 @@ $size-hover: $spacer * 4 !default;
         transition: $transition-base;
     }
 
+    &--is-active &,
     &:hover & {
         &__circle {
             width: $size-hover;

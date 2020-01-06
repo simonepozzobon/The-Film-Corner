@@ -10,4 +10,9 @@ class Caption extends Model
     public $translatedAttributes = ['title', 'description'];
     protected $table = 'captions';
     protected $fillable = [];
+
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
 }

@@ -12,6 +12,11 @@ class App extends Model
     protected $table = 'apps';
     protected $fillable = ['slug'];
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
     public function sessions() {
         return $this->hasMany(Session::class);
     }

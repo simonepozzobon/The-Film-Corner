@@ -1,7 +1,7 @@
 <template>
-<div class="ui-app-soundscapes-preview">
+<div class="ua-soundscapes-preview">
     <ui-title
-        title="Preview"
+        :title="$root.getCmd('preview')"
         color="white"
         :has-padding="false"
         ref="title"
@@ -14,7 +14,7 @@
     />
 
     <ui-app-video-controls
-        class="ui-app-soundscapes-preview__controls"
+        class="ua-soundscapes-preview__controls"
         @play="play"
         @pause="pause"
         @stop="stop"
@@ -29,7 +29,8 @@ import UiAppVideoControls from './UiAppVideoControls.vue'
 import {
     UiImage,
     UiTitle
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'UiAppSoundscapesPreview',
     components: {
@@ -140,7 +141,7 @@ export default {
 <style lang="scss" scoped>
 @import '~styles/shared';
 
-.ui-app-soundscapes-preview {
+.ua-soundscapes-preview {
     width: 100%;
     height: 100%;
     background-color: $dark-gray;

@@ -1,45 +1,61 @@
 <template>
-    <ui-container
-        :contain="true"
-        class="net-content"
-        :class="colorClass">
-        <ui-row
-            ref="row">
-            <ui-block
-                v-if="this.notes && this.notes != ''"
-                class="net-content__col"
-                :size="colSize"
-                :radius="true">
-                <div class="net-content__head">
-                    <ui-title
-                        title="Notes"
-                        :color="titleColor"
-                        align="center"/>
-                </div>
-                <div class="net-content__content">
-                    {{ notes }} {{ colSize }}
-                </div>
-            </ui-block>
-            <ui-block
-                class="net-content__col"
-                :size="colSize"
-                :radius="true">
-                <div class="net-content__head">
-                    <ui-title
-                        title="Join The Discussion"
-                        :color="titleColor"
-                        align="center"/>
-                </div>
-                <div class="net-content__content">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </div>
-            </ui-block>
-        </ui-row>
-    </ui-container>
+<ui-container
+    :contain="true"
+    class="net-content"
+    :class="colorClass"
+>
+    <ui-row ref="row">
+        <ui-block
+            v-if="this.notes && this.notes != ''"
+            class="net-content__col"
+            :size="colSize"
+            :radius="true"
+        >
+            <div class="net-content__head">
+                <ui-title
+                    :title="$root.getCmd('notes')"
+                    :color="titleColor"
+                    align="center"
+                />
+            </div>
+            <div class="net-content__content">
+                {{ notes }} {{ colSize }}
+            </div>
+        </ui-block>
+        <!-- <ui-block
+            class="net-content__col"
+            :size="colSize"
+            :radius="true"
+        >
+            <div class="net-content__head">
+                <ui-title
+                    title="Join The Discussion"
+                    :color="titleColor"
+                    align="center"
+                />
+            </div>
+            <div class="net-content__content">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+        </ui-block> -->
+    </ui-row>
+</ui-container>
 </template>
 
 <script>
-import { UiBlock, UiContainer, UiRow, UiTitle  } from '../ui'
+import {
+    UiBlock,
+    UiContainer,
+    UiRow,
+    UiTitle
+}
+from '../ui'
+
+import {
+    TweenMax
+}
+from 'gsap/all'
 
 export default {
     name: 'NetContent',
@@ -52,7 +68,7 @@ export default {
     props: {
         hasComments: {
             type: Boolean,
-            default: true,
+            default: false,
         },
         color: {
             type: String,
@@ -64,7 +80,7 @@ export default {
         },
     },
     computed: {
-        colSize: function() {
+        colSize: function () {
             if (this.hasComments && this.notes != '') {
                 return 6
             }
@@ -72,10 +88,10 @@ export default {
                 return 12
             }
         },
-        colorClass: function() {
+        colorClass: function () {
             return 'net-content--' + this.color
         },
-        titleColor: function() {
+        titleColor: function () {
             if (this.color == 'yellow')
                 return 'dark'
 
@@ -83,13 +99,13 @@ export default {
         },
     },
     methods: {
-        debug: function() {
+        debug: function () {
             TweenMax.to(window, .2, {
                 scrollTo: this.$refs.row.$el
             })
         },
     },
-    mounted: function() {
+    mounted: function () {
         this.debug()
     },
 }

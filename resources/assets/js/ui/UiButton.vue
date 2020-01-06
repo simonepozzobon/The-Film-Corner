@@ -6,6 +6,7 @@
             displayClass,
             alignSelfClass,
             marginClass,
+            customSizeClass,
         ]"
 >
     <button
@@ -13,14 +14,18 @@
         :class="[
                 colorClass,
                 blockClass,
+                sizeClass,
             ]"
         :disabled="disable"
-        @click.prevent="clicked"
+        @click.stop.prevent="clicked"
     >
-        {{ title }}
-        <slot></slot>
+        <span ref="text">
+            {{ title }}
+            <slot></slot>
+        </span>
         <span
             class="spinner-border spinner-border-sm"
+            ref="spinner"
             role="status"
             aria-hidden="true"
             v-if="hasSpinner"
@@ -37,14 +42,19 @@
             noContainerClass,
             alignSelfClass,
             marginClass,
+            sizeClass,
+            customSizeClass,
         ]"
     :disabled="disable"
-    @click.prevent="clicked"
+    @click.stop.prevent="clicked"
 >
-    {{ title }}
-    <slot></slot>
+    <span ref="text">
+        {{ title }}
+        <slot></slot>
+    </span>
     <span
         class="spinner-border spinner-border-sm"
+        ref="spinner"
         role="status"
         aria-hidden="true"
         v-if="hasSpinner"
@@ -96,12 +106,40 @@ export default {
             type: Boolean,
             default: false,
         },
+        theme: {
+            type: String,
+            default: null,
+        },
+        size: {
+            type: String,
+            default: null
+        },
         eventParams: [String, Object, Array, Number],
+        updateSpinnerSize: {
+            type: Boolean,
+            default: false,
+        },
+
+    },
+    watch: {
+        hasSpinner: function (value) {
+            if (value && this.updateSpinnerSize) {
+                let el = this.$refs.text
+                let height = el.getBoundingClientRect().height
+                this.$nextTick(() => {
+                    this.$refs.spinner.style.height = height + 'px'
+                    this.$refs.spinner.style.width = height + 'px'
+                })
+            }
+        },
     },
     computed: {
         colorClass: function () {
-            if (this.color) {
+            if (this.color && !this.theme) {
                 return 'btn-' + this.color
+            }
+            else if (this.color && this.theme === 'outline') {
+                return 'btn-outline-' + this.color
             }
         },
         blockClass: function () {
@@ -134,6 +172,16 @@ export default {
                 return 'text-' + this.fontColor
             }
         },
+        sizeClass: function () {
+            if (this.size) {
+                return 'btn-' + this.size
+            }
+        },
+        customSizeClass: function () {
+            if (this.size) {
+                return 'ui-button--' + this.size
+            }
+        }
     },
     methods: {
         clicked: function () {
@@ -164,6 +212,31 @@ export default {
         font-size: $font-size-base * 0.75;
         font-weight: 600;
         letter-spacing: 3px;
+    }
+
+    &--sm,
+    &--sm &__content {
+        text-transform: uppercase;
+        font-size: $font-size-base * 0.55;
+        font-weight: 600;
+        letter-spacing: 3px;
+    }
+
+    &--lg,
+    &--lg &__content {
+        text-transform: uppercase;
+        font-size: $font-size-base * 1;
+        font-weight: 500;
+        letter-spacing: 3px;
+    }
+
+    &--xl,
+    &--xl &__content {
+        text-transform: uppercase;
+        font-size: $font-size-base * 1.25;
+        font-weight: 400;
+        letter-spacing: 6px;
+        padding: 0.375rem 2rem;
     }
 
     &--inline-block {

@@ -11,7 +11,7 @@
             <ui-row align="center">
                 <ui-block :size="4">
                     <ui-title
-                        :title="this.cat.name"
+                        :title="this.catTitle"
                         :uppercase="false"
                         tag="h1"
                         font-size="h1"
@@ -32,7 +32,7 @@
                     align="center"
                 >
                     <ui-title
-                        :title="app.title"
+                        :title="app | translate('title', $root.locale)"
                         color="black"
                         size="h4"
                         align="center"
@@ -41,28 +41,33 @@
 
                     <ui-paragraph
                         align="center"
-                        v-html="shortDescription(app.description)"
-                    >
-                    </ui-paragraph>
+                        v-html="shortDescription(app)"
+                    />
                     <div>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="goToApp(app.slug)"
-                        >Read More</ui-button>
+                            @click="goToApp(app.slug)"
+                        >
+                            {{ $root.getCmd('read_more') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
-                            @click.native="startApp(app.slug)"
-                        >New</ui-button>
+                            @click="startApp(app.slug)"
+                        >
+                            {{ $root.getCmd('new') }}
+                        </ui-button>
                         <ui-button
                             color="black"
                             display="inline-block"
                             :has-container="false"
                             :disable="true"
-                        >Open</ui-button>
+                        >
+                            {{ $root.getCmd('open') }}
+                        </ui-button>
                     </div>
                 </ui-block>
             </ui-row>
@@ -107,7 +112,7 @@
             v-if="keywords && keywords.length > 0"
         >
             <ui-title
-                title="Glossary"
+                :title="this.$root.getCmd('glossary')"
                 align="center"
             />
             <ui-accordion-cols :keywords="keywords" />
@@ -120,7 +125,7 @@
         <ui-paragraph
             class="pt-5"
             align="justify"
-            v-html="cat.description"
+            v-html="catDescription"
         />
     </ui-container>
 </ui-container>
@@ -128,6 +133,9 @@
 
 <script>
 const clipper = require('text-clipper')
+import TranslationFilter from '../../TranslationFilter'
+
+
 import {
     UiAccordionCols,
     UiBlock,
@@ -140,9 +148,12 @@ import {
     UiRow,
     UiSpecialText,
     UiTitle
-} from '../../ui'
+}
+from '../../ui'
+
 export default {
     name: 'CatSingle',
+    mixins: [TranslationFilter],
     components: {
         UiAccordionCols,
         UiBlock,
@@ -163,6 +174,14 @@ export default {
             keywords: null,
             image: '/img/grafica/bg.jpg',
         }
+    },
+    computed: {
+        catTitle: function () {
+            return this.$options.filters.translate(this.cat, 'name', this.$root.locale)
+        },
+        catDescription: function () {
+            return this.$options.filters.translate(this.cat, 'description', this.$root.locale)
+        },
     },
     methods: {
         getData: function () {
@@ -186,8 +205,9 @@ export default {
                 app: slug
             })
         },
-        shortDescription: function (value) {
-            let short = clipper(value, 150, {
+        shortDescription: function (app) {
+            let description = this.$options.filters.translate(app, 'description', this.$root.locale)
+            let short = clipper(description, 150, {
                 html: true
             })
             return short

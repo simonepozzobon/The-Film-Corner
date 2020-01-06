@@ -15,6 +15,8 @@ return [
         'fr', // Francese
         'it', // Italiano
         'sr', // Serbo
+        'ka', // croato
+        'sl', // sloveno
     ],
 
     /*

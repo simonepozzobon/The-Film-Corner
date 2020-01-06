@@ -16,54 +16,132 @@
             ref="navbar"
         >
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'home')" class="main-menu__link nav-link">Home</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'home')"
+                    class="main-menu__link nav-link"
+                >
+                    {{ this.$root.getCmd('home') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'project')" class="main-menu__link nav-link">The Project</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'project')"
+                    class="main-menu__link nav-link"
+                >
+                    {{ this.$root.getCmd('the_project') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'schools')" class="main-menu__link nav-link">Schools</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'schools')"
+                    class="main-menu__link nav-link"
+                >
+                    {{ this.$root.getCmd('schools') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'conference')" class="main-menu__link nav-link">Conference</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'conference')"
+                    class="main-menu__link nav-link"
+                >
+                    {{ this.$root.getCmd('conference') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
-                <a href="#" @click="goTo($event, 'filmography')" class="main-menu__link nav-link">Filmography</a>
+                <a
+                    href="#"
+                    @click="goTo($event, 'filmography')"
+                    class="main-menu__link nav-link"
+                >
+                    {{ this.$root.getCmd('filmography') }}
+                </a>
             </li>
             <li class="main-menu__item nav-item">
-                <a @click="logInOrOut" class="main-menu__link nav-link" href="#" id="loginDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ this.loginTxt }}
-                    </a>
+                <a
+                    @click="logInOrOut"
+                    class="main-menu__link nav-link"
+                    href="#"
+                    id="loginDropdown"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {{ this.loginTxt }}
+                </a>
             </li>
-            <li class="main-menu__item nav-item dropdown disabled">
-                <a href="#" id="languageDropdown" class="main-menu__link nav-link dropdown-toggle disabled" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Language
-                    </a>
+            <li class="main-menu__item nav-item dropdown">
+                <a
+                    href="#"
+                    id="languageDropdown"
+                    class="main-menu__link nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    {{ this.$root.getCmd('language') }}
+                </a>
                 <div
                     class="dropdown-menu dropdown-menu-right"
                     aria-labelledby="languageDropdown"
                 >
-                    <a class="dropdown-item" href="/set-locale/en">
-                            English
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/fr">
-                            Francais
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/it">
-                            Italiano
-                        </a>
-                    <a class="dropdown-item" href="/set-locale/sr">
-                            српски
-                        </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('en')"
+                    >
+                        English
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('fr')"
+                    >
+                        Francais
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('it')"
+                    >
+                        Italiano
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('sr')"
+                    >
+                        српски
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('ka')"
+                    >
+                        ქართული
+                    </a>
+                    <a
+                        class="dropdown-item"
+                        href="#"
+                        @click.stop.prevent="setLocale('sl')"
+                    >
+                        slovenski
+                    </a>
                 </div>
             </li>
             <li
                 class="main-menu__item nav-item user-profile"
                 v-if="$root.user"
             >
-                <a href="#" class="main-menu__link nav-link user-profile__avatar">
-                        SP
-                    </a>
+                <a
+                    href="#"
+                    class="main-menu__link nav-link user-profile__avatar"
+                >
+                    {{ initialsName }}
+                </a>
             </li>
         </ul>
         <ui-burger
@@ -72,15 +150,15 @@
             @main-click="toggle"
         />
     </nav>
-    <menu-overlay
+    <!-- <menu-overlay
         ref="overlay"
         @ready="timelineReady('overlay')"
         @main-click="toggle"
-    />
+    /> -->
     <logged-nav v-if="$root.user" />
     <app-nav v-if="$root.user && $root.isApp" />
     <network-nav v-if="$root.user && $root.isNetwork" />
-    <loader-nav v-if="$root.user && $root.isApp && $root.isOpen" />
+    <loader-nav v-if="$root.user" />
     <toasts />
 </div>
 </template>
@@ -91,14 +169,16 @@ import LoaderNav from './LoaderNav.vue'
 import {
     Logo,
     LogoEuropa
-} from '../icons'
+}
+from '../icons'
 import LoggedNav from './LoggedNav.vue'
 import MenuOverlay from './MenuOverlay.vue'
 import NetworkNav from './NetworkNav.vue'
 import Toasts from './Toasts.vue'
 import {
     UiBurger
-} from '../ui'
+}
+from '../ui'
 export default {
     name: 'MainNav',
     components: {
@@ -112,6 +192,15 @@ export default {
         NetworkNav,
         Toasts
     },
+    data: function () {
+        return {
+            loginTxt: null,
+            ready: {
+                burger: false,
+                overlay: false,
+            },
+        }
+    },
     watch: {
         '$root.window': function () {
             this.setMenu()
@@ -120,21 +209,30 @@ export default {
             this.setLoginTxt()
         }
     },
-    data: function () {
-        return {
-            loginTxt: 'Login',
-            ready: {
-                burger: false,
-                overlay: false,
-            },
-        }
+    computed: {
+        initialsName: function () {
+            if (this.$root.user) {
+                let first = this.$root.user.name.charAt(0)
+                let second = this.$root.user.name.charAt(1)
+                if (this.$root.user.surname) {
+                    second = this.$root.user.surname.charAt(0)
+                }
+
+                return `${first}${second}`
+            }
+            return null
+        },
     },
     methods: {
+        setLocale: function (locale) {
+            this.$root.locale = locale
+        },
         setMenu: function () {
             if (this.$root.window.w <= 992) {
                 this.$refs.navbar.style.display = 'none'
                 this.$refs.burger.$el.style.display = 'flex'
-            } else {
+            }
+            else {
                 this.$refs.navbar.style.display = 'flex'
                 this.$refs.burger.$el.style.display = 'none'
             }
@@ -142,9 +240,10 @@ export default {
         },
         setLoginTxt: function () {
             if (this.$root.user) {
-                this.loginTxt = 'Logout'
-            } else {
-                this.loginTxt = 'Login'
+                this.loginTxt = this.$root.getCmd('logout')
+            }
+            else {
+                this.loginTxt = this.$root.getCmd('login')
             }
         },
         timelineReady: function (key) {
@@ -174,7 +273,8 @@ export default {
                             this.$root.logout()
                         }
                     })
-            } else {
+            }
+            else {
                 // login
                 this.$root.goTo('login')
             }

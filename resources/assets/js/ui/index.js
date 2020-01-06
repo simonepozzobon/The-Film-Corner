@@ -5,12 +5,14 @@ import UiBreadcrumbs from './UiBreadcrumbs.vue'
 import UiBurger from './UiBurger.vue'
 import UiButton from './UiButton.vue'
 import UiContainer from './UiContainer.vue'
+import UiComplessParagraph from './UiComplessParagraph.vue'
 import UiFolder from './UiFolder.vue'
 import UiFolderCorner from './UiFolderCorner.vue'
 import UiFormGroup from './UiFormGroup.vue'
 import UiHeroBanner from './UiHeroBanner.vue'
 import UiHeroImage from './UiHeroImage.vue'
 import UiImage from './UiImage.vue'
+import UiImageSlider from './UiImageSlider.vue'
 import UiInput from './UiInput.vue'
 import UiLink from './UiLink.vue'
 import UiList from './UiList.vue'
@@ -31,6 +33,7 @@ export {
     UiBurger,
     UiButton,
     UiContainer,
+    UiComplessParagraph,
     UiFolder,
     UiFolderCorner,
     UiFormGroup,
@@ -38,6 +41,7 @@ export {
     UiHeroImage,
     UiInput,
     UiImage,
+    UiImageSlider,
     UiLink,
     UiList,
     UiListItem,
