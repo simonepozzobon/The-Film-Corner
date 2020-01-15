@@ -162,6 +162,7 @@ export default {
                 let key = this.keys[i]
                 if (initials.hasOwnProperty(key)) {
                     this[key] = initials[key]
+                    console.log(key, initials[key]);
                 }
             }
 
