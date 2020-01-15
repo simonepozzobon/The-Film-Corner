@@ -52,13 +52,14 @@
             >
                 {{cat | translate('name', $root.locale)}}
             </li>
-            <li
+            <!-- <li
                 class="block-menu__menu-item"
-                v-for="app in cat.apps"
+                v-for="app in sortedApps(cat.apps)"
                 @click="goToApp(app.slug)"
             >
                 {{ app | translate('title', $root.locale) }}
-            </li>
+            </li> -->
+            <studio-block-app-loop :apps="cat.apps" />
         </ul>
     </div>
 
@@ -71,7 +72,7 @@ import {
     UiTitle
 }
 from '../ui'
-
+import StudioBlockAppLoop from './StudioBlockAppLoop.vue'
 import TranslationFilter from '../TranslationFilter'
 
 export default {
@@ -80,6 +81,7 @@ export default {
     components: {
         UiBlock,
         UiTitle,
+        StudioBlockAppLoop,
     },
     props: {
         studio: {
@@ -124,7 +126,7 @@ export default {
         },
         goToPropaganda: function (slug) {
             this.$root.goTo('propaganda-intro')
-        }
+        },
     },
 }
 </script>
