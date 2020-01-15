@@ -13,6 +13,7 @@
         </label>
         <div class="col-md-11">
             <select
+                ref="periodSelect"
                 class="form-control"
                 name="period"
                 v-model="period"
@@ -275,6 +276,12 @@ export default {
                 if (initials.hasOwnProperty(key)) {
                     if (typeof initials[key] == 'string') {
                         this[key] = initials[key]
+                    }
+
+                    if (key == 'period') {
+                        console.log(initials[key], this.$refs.periodSelect.value);
+                        let obj = initials[key]
+                        this[key] = obj.title
                     }
                 }
             }
