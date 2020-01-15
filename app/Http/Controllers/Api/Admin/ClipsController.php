@@ -257,10 +257,12 @@ class ClipsController extends Controller
 
         $clip = $clip->fresh($this->options);
 
-        return response()->json([
+        return response()->json(
+            [
             'clip' => $clip,
             'translations' => $translations
-        ]);
+            ]
+        );
     }
 
     public function store_informations(Request $request)
@@ -271,12 +273,14 @@ class ClipsController extends Controller
         $clip->year = $request->year;
         $clip->nationality = $request->nationality;
 
+        // $debug = collect();
+
         foreach ($this->options_single as $key => $value) {
+            // $debug->push($this->check_single_option($value, $request));
             $clip->{$value.'_id'} = $this->check_single_option($value, $request);
         }
 
         $clip->save();
-        // $clip = $clip->fresh($this->options);
 
         foreach ($this->options_multiple as $key => $value) {
             $saved = $this->check_multiple_option($value, $request, $clip);
@@ -284,9 +288,12 @@ class ClipsController extends Controller
 
         $clip = $clip->fresh($this->options);
 
-        return response()->json([
-            'clip' => $clip,
-        ]);
+        return response()->json(
+            [
+                'clip' => $clip,
+                // 'debug' => $debug,
+            ]
+        );
     }
 
     public function store_details_new(Request $request)
@@ -313,9 +320,11 @@ class ClipsController extends Controller
 
         $clip = $clip->fresh($this->options);
 
-        return response()->json([
+        return response()->json(
+            [
             'clip' => $clip,
-        ]);
+            ]
+        );
     }
 
     public function store_details_translation(Request $request)
@@ -338,9 +347,11 @@ class ClipsController extends Controller
 
         $clip = $clip->fresh($this->options);
 
-        return response()->json([
+        return response()->json(
+            [
             'clip' => $clip,
-        ]);
+            ]
+        );
     }
 
     public function store_paratext_translation(Request $request)
@@ -360,10 +371,12 @@ class ClipsController extends Controller
 
         $clip = Clip::where('id', $request->clip_id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
 
-        return response()->json([
+        return response()->json(
+            [
             'clip' => $clip,
             'paratext' => $p,
-        ]);
+            ]
+        );
     }
 
     public function store(Request $request)
@@ -561,7 +574,9 @@ class ClipsController extends Controller
         $model = ucwords('App\\Propaganda\\'.ucfirst($name));
 
         $result = $model::where('title', '=', $request->{$name})->first();
+
         if ($result) {
+            // return 'il risultato esiste già';
             return $result->id;
         } else {
             $obj = \App::make($model);
@@ -571,7 +586,7 @@ class ClipsController extends Controller
                 if ($column != 'id' && $column != 'created_at' && $column != 'updated_at') {
                     if ($request->input($column, false) == false) {
                         // va riempita con un random
-                        $obj->{$column} = random_int(1, 100);
+                        $obj->{$column} = $request->{$name};
                     } else {
                         $obj->{$column} = $request->{$name};
                     }

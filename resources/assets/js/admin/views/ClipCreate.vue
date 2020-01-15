@@ -12,7 +12,7 @@
         :has-animations="true"
     >
         <carica-clip
-            :initials="initials"
+            :initials="altInitials"
             @update="updateField"
             @saved="updateClip($event, 1)"
         />

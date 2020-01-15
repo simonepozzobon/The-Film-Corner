@@ -13,6 +13,7 @@
         </label>
         <div class="col-md-11">
             <select
+                ref="periodSelect"
                 class="form-control"
                 name="period"
                 v-model="period"
@@ -21,7 +22,9 @@
                     v-for="period in this.options.periods"
                     :key="period.id"
                     :value="period.title"
-                >{{ period.title }}</option>
+                >
+                    {{ period.title }}
+                </option>
             </select>
         </div>
     </div>
@@ -274,6 +277,11 @@ export default {
                     if (typeof initials[key] == 'string') {
                         this[key] = initials[key]
                     }
+
+                    if (key == 'period') {
+                        let obj = initials[key]
+                        this[key] = obj.title
+                    }
                 }
             }
         },
@@ -312,6 +320,9 @@ export default {
                     if (this.initials[key].name) {
                         this[key] = this.initials[key].name
                     }
+
+                    // console.log('singola selezione');
+
                 }
             }
         },
@@ -374,6 +385,8 @@ export default {
             this.$http.post('/api/v2/admin/clips/create-informations', data).then(response => {
                 this.isLoading = false
                 this.$emit('saved', response.data.clip)
+
+                // console.log('crea informazioni', response);
             }).catch(() => {
                 this.isLoading = false
             })
