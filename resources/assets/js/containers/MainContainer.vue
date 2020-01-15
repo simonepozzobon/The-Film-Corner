@@ -43,7 +43,19 @@ export default {
                 }
             })
         }
-    }
+    },
+    mounted: function () {
+        this.$nextTick(() => {
+            console.log('Main Container Rendered');
+            TweenMax.to(window, .2, {
+                delay: .5,
+                scrollTo: {
+                    y: 0,
+                    autoKill: false,
+                },
+            })
+        })
+    },
 }
 </script>
 

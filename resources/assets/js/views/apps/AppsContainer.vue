@@ -49,6 +49,11 @@ export default {
             })
         }
     },
+    mounted: function () {
+        this.$nextTick(() => {
+            console.log('Apps Container Rendered');
+        })
+    },
     // mounted: function() {
     //     this.$root.conferenceMenu = true
     // },
