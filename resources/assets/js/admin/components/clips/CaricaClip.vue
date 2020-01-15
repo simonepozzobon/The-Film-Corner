@@ -161,8 +161,15 @@ export default {
             for (let i = 0; i < this.keys.length; i++) {
                 let key = this.keys[i]
                 if (initials.hasOwnProperty(key)) {
-                    this[key] = initials[key]
-                    console.log(key, initials[key]);
+
+                    if (key == 'video') {
+                        this[key] = initials[key]
+                        this.isLoading = true
+                        this.changeSrc(initials[key])
+                    }
+                    else {
+                        this[key] = initials[key]
+                    }
                 }
             }
 
