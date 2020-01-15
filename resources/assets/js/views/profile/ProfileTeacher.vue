@@ -152,6 +152,22 @@ export default {
             },
         }
     },
+    watch: {
+        '$root.locale': function (locale) {
+            if (this.panelType == 1) {
+                this.button = this.$root.getCmd('add_student')
+            }
+            else if (this.panelType == 2) {
+                this.button = this.$root.getCmd('save_student')
+            }
+            else if (this.panelType == 3) {
+                this.button = this.$root.getCmd('update_student')
+            }
+            else {
+                this.button = this.$root.getCmd('add_student')
+            }
+        }
+    },
     methods: {
         getData: function () {
             // console.log(this.$root.user);
