@@ -70,25 +70,27 @@
     </div>
 
     <div v-else>
-        <ul
-            class="block-menu"
-            v-for="cat in studio.categories"
-        >
-            <li
-                class="block-menu__menu-head"
-                @click="goToCat(cat.slug)"
+        <div v-for="cat in studio.categories">
+            <ul
+                class="block-menu"
+                v-if="cat.active == 1"
             >
-                {{cat | translate('name', $root.locale)}}
-            </li>
-            <!-- <li
-                class="block-menu__menu-item"
-                v-for="app in sortedApps(cat.apps)"
-                @click="goToApp(app.slug)"
-            >
-                {{ app | translate('title', $root.locale) }}
-            </li> -->
-            <studio-block-app-loop :apps="cat.apps" />
-        </ul>
+                <li
+                    class="block-menu__menu-head"
+                    @click="goToCat(cat.slug)"
+                >
+                    {{cat | translate('name', $root.locale)}}
+                </li>
+                <!-- <li
+                  class="block-menu__menu-item"
+                  v-for="app in sortedApps(cat.apps)"
+                  @click="goToApp(app.slug)"
+              >
+                  {{ app | translate('title', $root.locale) }}
+              </li> -->
+                <studio-block-app-loop :apps="cat.apps" />
+            </ul>
+        </div>
     </div>
 
 </ui-block>
