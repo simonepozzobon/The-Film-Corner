@@ -17,7 +17,10 @@
     />
 
     <div v-if="studio.slug == 'cultural-approach'">
-        <ul class="block-menu block-menu--var">
+        <ul
+            class="block-menu block-menu--var"
+            v-if="curlturalApproach"
+        >
             <li
                 class="block-menu__menu-head"
                 @click="goToPropaganda(studio.slug)"
@@ -31,12 +34,37 @@
                 Go to the challenges
             </li>
         </ul>
-        <ul class="block-menu block-menu--var">
+        <ul
+            class="block-menu block-menu--var"
+            v-else
+        >
+            <li class="block-menu__menu-head">
+                Propagand<b>app</b>
+            </li>
+            <li>
+                Under Construction
+            </li>
+        </ul>
+        <ul
+            class="block-menu block-menu--var"
+            v-if="curlturalApproach"
+        >
             <li class="block-menu__menu-head">
                 Art<b>app</b>
             </li>
-            <li class="block-menu__menu-item">
+            <li>
                 Go to the challenges
+            </li>
+        </ul>
+        <ul
+            class="block-menu block-menu--var"
+            v-else
+        >
+            <li class="block-menu__menu-head">
+                Art<b>app</b>
+            </li>
+            <li>
+                Under Construction
             </li>
         </ul>
     </div>
@@ -94,6 +122,7 @@ export default {
     data: function () {
         return {
             name: null,
+            curlturalApproach: false,
         }
     },
     watch: {
