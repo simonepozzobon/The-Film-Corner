@@ -321,7 +321,7 @@ export default {
                         this[key] = this.initials[key].name
                     }
 
-                    console.log('singola selezione');
+                    // console.log('singola selezione');
 
                 }
             }
@@ -386,7 +386,7 @@ export default {
                 this.isLoading = false
                 this.$emit('saved', response.data.clip)
 
-                console.log('crea informazioni', response);
+                // console.log('crea informazioni', response);
             }).catch(() => {
                 this.isLoading = false
             })
