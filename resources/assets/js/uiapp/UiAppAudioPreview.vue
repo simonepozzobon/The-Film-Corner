@@ -149,7 +149,12 @@ export default {
             this.player.skipForward(5)
         },
     },
-    mounted: function () {}
+    mounted: function () {},
+    beforeDestroy: function () {
+        if (this.player) {
+            this.player.destroy()
+        }
+    },
 }
 </script>
 
