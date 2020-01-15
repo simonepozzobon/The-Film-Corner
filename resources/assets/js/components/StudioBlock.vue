@@ -81,13 +81,6 @@
                 >
                     {{cat | translate('name', $root.locale)}}
                 </li>
-                <!-- <li
-                  class="block-menu__menu-item"
-                  v-for="app in sortedApps(cat.apps)"
-                  @click="goToApp(app.slug)"
-              >
-                  {{ app | translate('title', $root.locale) }}
-              </li> -->
                 <studio-block-app-loop :apps="cat.apps" />
             </ul>
         </div>
