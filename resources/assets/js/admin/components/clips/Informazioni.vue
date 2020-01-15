@@ -385,6 +385,8 @@ export default {
             this.$http.post('/api/v2/admin/clips/create-informations', data).then(response => {
                 this.isLoading = false
                 this.$emit('saved', response.data.clip)
+
+                console.log('crea informazioni', response);
             }).catch(() => {
                 this.isLoading = false
             })
