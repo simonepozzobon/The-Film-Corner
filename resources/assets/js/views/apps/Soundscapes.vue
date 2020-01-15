@@ -266,6 +266,14 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
+        if (this.players.length > 0) {
+            for (let i = 0; i < this.players.length; i++) {
+                let player = this.players[i]
+                if (player.hasOwnProperty('player') && player.player) {
+                    player.player.destroy()
+                }
+            }
+        }
     }
 }
 </script>
