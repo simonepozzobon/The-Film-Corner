@@ -21,7 +21,9 @@
                     v-for="period in this.options.periods"
                     :key="period.id"
                     :value="period.title"
-                >{{ period.title }}</option>
+                >
+                    {{ period.title }}
+                </option>
             </select>
         </div>
     </div>
@@ -312,6 +314,9 @@ export default {
                     if (this.initials[key].name) {
                         this[key] = this.initials[key].name
                     }
+
+                    console.log('singola selezione');
+
                 }
             }
         },
