@@ -279,7 +279,6 @@ export default {
                     }
 
                     if (key == 'period') {
-                        console.log(initials[key], this.$refs.periodSelect.value);
                         let obj = initials[key]
                         this[key] = obj.title
                     }
