@@ -15,7 +15,7 @@
             ref="library"
             :hasSubLibraries="assets.hasSubLibraries"
             :type="assets.type"
-            :items="assets.library"
+            :items="assets.library[0].medias"
             @selected="selected"
         />
     </template>
@@ -76,6 +76,7 @@ export default {
             viewer: null,
             renderer: null,
             frames: [],
+            currentSrc: '/img/test-app/360.jpg',
             clearAll: false,
             isLoading: false,
         }
@@ -94,18 +95,30 @@ export default {
         selected: function (idx) {
             let asset = this.assets.library.find(asset => asset.id == idx)
             let url = '/storage/' + asset.medias[0].src
-            console.log(this.viewer);
+            this.currentSrc = url
 
-            let scene = this.viewer.loadScene({
-                type: 'equirectangular',
-                panorama: url,
-                autoLoad: true,
-                showFullscreenCtrl: false,
-                hfov: 100,
-                pitch: 0,
-                yaw: 0,
-                ignoreGPanoXMP: true,
-            })
+            let preview = this.$refs.preview
+            if (preview && preview.hasOwnProperty('$refs')) {
+                let el = this.$refs.preview.$refs.content
+                this.viewer.destroy()
+                this.viewer = pannellum.viewer(el, {
+                        type: 'equirectangular',
+                        panorama: url,
+                        autoLoad: true,
+                        showFullscreenCtrl: false,
+                        hfov: 100,
+                        pitch: 0,
+                        yaw: 0,
+                        ignoreGPanoXMP: true,
+                    })
+                    .on('load', () => {
+                        this.renderer = this.viewer.getRenderer()
+                        let height = SizeUtility.get(this.$refs.preview.$el)
+                        this.$refs.library.setLibraryHeight(height.hClean)
+                        // this.$nextTick(this.cropFrame)
+                    })
+            }
+
         },
         setNotes: function (notes) {
             this.notes = notes
@@ -123,6 +136,9 @@ export default {
         },
         init: function () {
             // load app
+            // this.$refs.library.init()
+            // console.log(this.assets);
+
             if (this.$root.session && this.$root.session.app_id) {
                 if (this.$root.session.content.hasOwnProperty('frames')) {
                     let frames = JSON.parse(this.$root.session.content.frames)
@@ -137,6 +153,9 @@ export default {
                     }
                 }
             }
+
+            console.log('library', this.$refs.library);
+
             let preview = this.$refs.preview
             if (preview && preview.hasOwnProperty('$refs')) {
                 let el = this.$refs.preview.$refs.content
@@ -197,7 +216,7 @@ export default {
             let content = this.$root.session.content
             let newContent = {
                 frames: JSON.stringify(this.frames),
-                src: '/img/test-app/360.jpg',
+                src: this.currentSrc,
             }
             for (let key in content) {
                 if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {

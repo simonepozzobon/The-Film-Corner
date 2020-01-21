@@ -241,7 +241,7 @@ export default {
     methods: {
         beforeInit: function () {},
         init: function () {
-            // console.log('initialized', this.items);
+            console.log('initialized', this.items, this.hasSubLibraries);
             if (this.hasSubLibraries) {
                 this.libraries = this.items
                 if (this.libraries.length > 0) {
@@ -257,6 +257,7 @@ export default {
             let type = this.type != 'mix' ? this.type : selected.type
             this.mediaType = type
             this.counter = 0
+            console.log('selected', selected);
             if (selected) {
                 switch (type) {
                 case 'videos':
@@ -275,6 +276,8 @@ export default {
                 default:
                     this.counter = selected.medias.length
                     this.assets = selected.medias
+
+                    console.log('dentro', this.assets);
                 }
             }
             this.counter = this.assets.length
