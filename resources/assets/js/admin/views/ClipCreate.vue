@@ -22,7 +22,7 @@
         :contains="true"
         :has-animations="true"
     >
-        <sottotitoli />
+        <sottotitoli :clip="clip" />
     </container>
 
     <container

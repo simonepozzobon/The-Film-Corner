@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Propaganda\Age;
 use App\Propaganda\Clip;
-use App\Propaganda\ClipTranslation;
 use App\Propaganda\Media;
 use App\Propaganda\Topic;
 use App\Propaganda\Genre;
@@ -12,11 +11,13 @@ use App\Propaganda\Detail;
 use App\Propaganda\Format;
 use App\Propaganda\People;
 use App\Propaganda\Period;
+use App\Propaganda\Caption;
 use App\Propaganda\Hashtag;
 use App\Propaganda\Director;
 use App\Propaganda\Paratext;
 use App\Propaganda\Exercise;
 use App\Propaganda\ParatextType;
+use App\Propaganda\ClipTranslation;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -62,6 +63,41 @@ class ClipsController extends Controller
         // $this->store_details($request);
 
         $this->get_initials_edit(39);
+    }
+
+    public function upload_caption(Request $request)
+    {
+        $clip = Clip::find($request->clip_id);
+        if ($clip) {
+            $caption = new Caption();
+            $caption->clip_id = $clip->id;
+            $caption->locale = $request->cap_locale;
+
+            $file = $request->file('cap_file');
+            $original_name = $file->getClientOriginalName();
+            $filename = uniqid() . '.srt';
+            $path = 'public/propaganda/clips/captions';
+            $src = $file->storeAs($path, $filename);
+            $src = Storage::disk('local')->url($src);
+
+            $caption->src = $src;
+            $caption->save();
+
+            $clip = $clip->fresh($this->options);
+            return [
+              'success' => true,
+              'message' => 'non trovato',
+            ];
+        }
+
+        return [
+            'success' => false,
+            'message' => 'non trovato',
+        ];
+    }
+
+    public function destroy_caption(Request $request)
+    {
     }
 
     public function get_clips()
@@ -149,7 +185,7 @@ class ClipsController extends Controller
         $response = $this->get_initials();
 
         if ($id) {
-            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise')->first();
+            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'captions')->first();
 
             $details = $clip->details()->first();
             if ($details) {

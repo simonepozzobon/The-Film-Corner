@@ -17,7 +17,10 @@
     />
 
     <div v-if="studio.slug == 'cultural-approach'">
-        <ul class="block-menu block-menu--var">
+        <ul
+            class="block-menu block-menu--var"
+            v-if="curlturalApproach"
+        >
             <li
                 class="block-menu__menu-head"
                 @click="goToPropaganda(studio.slug)"
@@ -31,35 +34,56 @@
                 Go to the challenges
             </li>
         </ul>
-        <ul class="block-menu block-menu--var">
+        <ul
+            class="block-menu block-menu--var"
+            v-else
+        >
+            <li class="block-menu__menu-head">
+                Propagand<b>app</b>
+            </li>
+            <li>
+                Under Construction
+            </li>
+        </ul>
+        <ul
+            class="block-menu block-menu--var"
+            v-if="curlturalApproach"
+        >
             <li class="block-menu__menu-head">
                 Art<b>app</b>
             </li>
-            <li class="block-menu__menu-item">
+            <li>
                 Go to the challenges
+            </li>
+        </ul>
+        <ul
+            class="block-menu block-menu--var"
+            v-else
+        >
+            <li class="block-menu__menu-head">
+                Art<b>app</b>
+            </li>
+            <li>
+                Under Construction
             </li>
         </ul>
     </div>
 
     <div v-else>
-        <ul
-            class="block-menu"
-            v-for="cat in studio.categories"
-        >
-            <li
-                class="block-menu__menu-head"
-                @click="goToCat(cat.slug)"
+        <div v-for="cat in studio.categories">
+            <ul
+                class="block-menu"
+                v-if="cat.active == 1"
             >
-                {{cat | translate('name', $root.locale)}}
-            </li>
-            <li
-                class="block-menu__menu-item"
-                v-for="app in cat.apps"
-                @click="goToApp(app.slug)"
-            >
-                {{ app | translate('title', $root.locale) }}
-            </li>
-        </ul>
+                <li
+                    class="block-menu__menu-head"
+                    @click="goToCat(cat.slug)"
+                >
+                    {{cat | translate('name', $root.locale)}}
+                </li>
+                <studio-block-app-loop :apps="cat.apps" />
+            </ul>
+        </div>
     </div>
 
 </ui-block>
@@ -71,7 +95,7 @@ import {
     UiTitle
 }
 from '../ui'
-
+import StudioBlockAppLoop from './StudioBlockAppLoop.vue'
 import TranslationFilter from '../TranslationFilter'
 
 export default {
@@ -80,6 +104,7 @@ export default {
     components: {
         UiBlock,
         UiTitle,
+        StudioBlockAppLoop,
     },
     props: {
         studio: {
@@ -92,6 +117,7 @@ export default {
     data: function () {
         return {
             name: null,
+            curlturalApproach: false,
         }
     },
     watch: {
@@ -124,7 +150,7 @@ export default {
         },
         goToPropaganda: function (slug) {
             this.$root.goTo('propaganda-intro')
-        }
+        },
     },
 }
 </script>
