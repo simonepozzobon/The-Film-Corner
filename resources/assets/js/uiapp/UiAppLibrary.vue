@@ -288,7 +288,7 @@ export default {
                 this.$emit('selected', index, this.currentLibrary)
             }
             else {
-                console.log('no sub libraries');
+                console.log('no sub libraries', index);
                 this.$emit('selected', index)
             }
         },

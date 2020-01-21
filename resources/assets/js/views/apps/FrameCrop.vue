@@ -102,17 +102,18 @@ export default {
     },
     methods: {
         selected: function (idx) {
-            let asset = this.assets.library.find(asset => asset.id == idx)
-            let url = '/storage/' + asset.medias[0].src
-            this.currentSrc = url
+            let asset = this.assets.library[0].medias.find(asset => asset.id == idx)
+            this.currentSrc = '/storage/' + asset.src
+            // console.log(asset);
 
             let preview = this.$refs.preview
             if (preview && preview.hasOwnProperty('$refs')) {
-                let el = this.$refs.preview.$refs.content
                 this.viewer.destroy()
+                let el = this.$refs.preview.$refs.content
+
                 this.viewer = pannellum.viewer(el, {
                         type: 'equirectangular',
-                        panorama: url,
+                        panorama: this.currentSrc,
                         autoLoad: true,
                         showFullscreenCtrl: false,
                         hfov: 100,
