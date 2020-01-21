@@ -1,30 +1,44 @@
 <template>
 <block-panel title="Sottotitoli">
+    <sottotitoli-table :caps.sync="caps" />
+
     <container
         :contains="true"
-        :top-margin="false"
         padding="no"
     >
-        <select
-            class="form-control mb-2"
-            name=""
-            v-model="capLocale"
-        >
-            <option value="it">Italiano</option>
-            <option value="en">Inglese</option>
-            <option value="fr">Francese</option>
-            <option value="sr">Serbo</option>
-            <option value="ka">Georgiano</option>
-            <option value="sl">Sloveno</option>
-        </select>
-        <upload-zone
-            ref="upload"
-            :accept="mime"
-            url="/api/v2/admin/clips/captions/upload"
-            :params.sync="requestParams"
-            :auto-process-queue="false"
-            @success="addCaptions"
+        <div class="a-clip-panel__row form-group row">
+            <label
+                for="cap_locale"
+                class="col-md-2"
+            >
+                Lingua
+            </label>
+            <div class="col-md-10">
+                <select
+                    class="form-control mb-2"
+                    name="cap_locale"
+                    v-model="capLocale"
+                >
+                    <option value="it">Italiano</option>
+                    <option value="en">Inglese</option>
+                    <option value="fr">Francese</option>
+                    <option value="sr">Serbo</option>
+                    <option value="ka">Georgiano</option>
+                    <option value="sl">Sloveno</option>
+                </select>
+            </div>
+        </div>
+
+
+        <file-input
+            label="Traccia Sottotitoli"
+            name="captions"
+            accept=""
+            :has-crop="false"
+            :has-preview="false"
+            @update="updateFile"
         />
+
         <div class="w-100 d-flex justify-content-center mt-4">
             <ui-button
                 title="Carica Traccia sottotitoli"
@@ -61,6 +75,8 @@ import {
 }
 from '../../../ui'
 
+import SottotitoliTable from './SottotitoliTable.vue'
+
 export default {
     name: 'Sottotitoli',
     components: {
@@ -68,34 +84,59 @@ export default {
         BlockPanel,
         UploadZone,
         UiButton,
+        FileInput,
+        SottotitoliTable,
     },
     props: {
         clipId: {
             type: Number,
             default: 0,
-        }
+        },
+        clip: {
+            type: Object,
+            default: function () {
+                return {}
+            },
+        },
     },
     data: function () {
         return {
             mime: '',
-            capLocale: '',
+            capFile: null,
+            capLocale: 'it',
             isLoading: false,
+            caps: [],
         }
     },
-    computed: {
-        requestParams: function () {
-            return {
-                clip_id: this.clipId,
-                cap_locale: this.capLocale,
-            }
-        },
-    },
     methods: {
+        updateFile: function (file, src) {
+            this.capFile = file
+        },
         addCaptions: function (response) {
             console.log('response', response);
         },
         save: function () {
-            this.$refs.upload.$refs.drop.processQueue()
+            this.isLoading = true
+
+            let data = new FormData()
+
+            if (this.id != null && this.id > 0) {
+                data.append('id', this.id)
+            }
+
+            data.append('clip_id', this.clip ? this.clip.id : 0)
+            data.append('cap_locale', this.capLocale)
+            data.append('cap_file', this.capFile)
+
+            this.$http.post('/api/v2/admin/clips/captions/upload', data).then(response => {
+                console.log('response', response);
+                this.isLoading = false
+                this.caps.push(response.data.caption)
+                this.$emit('saved', response.data.clip)
+            }).catch(() => {
+                this.isLoading = false
+            })
+
         },
     },
 }

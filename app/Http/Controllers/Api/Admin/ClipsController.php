@@ -73,6 +73,7 @@ class ClipsController extends Controller
             $caption->clip_id = $clip->id;
             $caption->locale = $request->cap_locale;
 
+            $file = $request->file('cap_file');
             $original_name = $file->getClientOriginalName();
             $filename = uniqid() . '.srt';
             $path = 'public/propaganda/clips/captions';
