@@ -8,6 +8,7 @@
         v-for="cap in caps"
         :key="cap.id"
         :cap="cap"
+        @deleted="deleted"
     />
 </container>
 </template>
@@ -40,6 +41,11 @@ export default {
             default: function () {
                 return []
             },
+        },
+    },
+    methods: {
+        deleted: function (data) {
+            this.$emit('deleted', data)
         },
     },
 }
