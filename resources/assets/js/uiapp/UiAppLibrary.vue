@@ -281,9 +281,11 @@ export default {
         },
         selected: function (index) {
             if (this.hasSubLibraries) {
+                console.log('has sub libraries');
                 this.$emit('selected', index, this.currentLibrary)
             }
             else {
+                console.log('no sub libraries');
                 this.$emit('selected', index)
             }
         },

@@ -91,7 +91,22 @@ export default {
         }
     },
     methods: {
-        selected: function () {},
+        selected: function (idx) {
+            let asset = this.assets.library.find(asset => asset.id == idx)
+            let url = '/storage/' + asset.medias[0].src
+            console.log(this.viewer);
+
+            let scene = this.viewer.loadScene({
+                type: 'equirectangular',
+                panorama: url,
+                autoLoad: true,
+                showFullscreenCtrl: false,
+                hfov: 100,
+                pitch: 0,
+                yaw: 0,
+                ignoreGPanoXMP: true,
+            })
+        },
         setNotes: function (notes) {
             this.notes = notes
         },
