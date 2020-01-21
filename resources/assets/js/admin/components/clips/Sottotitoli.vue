@@ -1,6 +1,9 @@
 <template>
 <block-panel title="Sottotitoli">
-    <sottotitoli-table :caps.sync="caps" />
+    <sottotitoli-table
+        :caps.sync="caps"
+        @deleted="deleted"
+    />
 
     <container
         :contains="true"
@@ -108,12 +111,29 @@ export default {
             caps: [],
         }
     },
+    watch: {
+        clip: {
+            handler: function (clip) {
+                if (clip.captions) {
+                    this.caps = Object.assign([], clip.captions)
+                }
+            },
+            deep: true,
+        },
+    },
     methods: {
         updateFile: function (file, src) {
             this.capFile = file
         },
-        addCaptions: function (response) {
-            console.log('response', response);
+        deleted: function (data) {
+            let idx = this.caps.findIndex(item => item.id == data.id)
+            // console.log(idx);
+            if (idx > -1) {
+                this.caps.splice(idx, 1)
+            }
+
+            let clip = Object.assign({}, data.clip)
+            this.$emit('saved', clip)
         },
         save: function () {
             this.isLoading = true

@@ -34,7 +34,7 @@ class ClipsController extends Controller
 
         $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
         $this->options_single = ['format', 'period', 'age', 'genre'];
-        $this->options_multiple = ['directors', 'peoples', 'topics'];
+        $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
         $this->options = array_merge($this->options_single, $this->options_multiple);
     }
 
@@ -86,6 +86,8 @@ class ClipsController extends Controller
             $clip = $clip->fresh($this->options);
             return [
               'success' => true,
+              'clip' => $clip,
+              'caption' => $caption,
               'message' => 'non trovato',
             ];
         }
@@ -98,6 +100,17 @@ class ClipsController extends Controller
 
     public function destroy_caption(Request $request)
     {
+        $caption = Caption::find($request->id);
+        $clip = $caption->clip;
+        $caption->delete();
+
+        $clip = $clip->fresh($this->options);
+
+        return [
+            'success' => true,
+            'id' => $request->id,
+            'clip' => $clip
+        ];
     }
 
     public function get_clips()
