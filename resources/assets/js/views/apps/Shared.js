@@ -67,7 +67,7 @@ const Shared = {
 
             this.$http.get(url).then(response => {
                 // console.log('caricata')
-                console.log('getData', response.data);
+                // console.log('getData', response.data);
                 if (response.data.success) {
                     this.app = response.data.app
                     this.assets = response.data.assets

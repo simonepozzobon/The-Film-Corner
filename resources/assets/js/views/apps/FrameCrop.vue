@@ -15,7 +15,7 @@
             ref="library"
             :hasSubLibraries="assets.hasSubLibraries"
             :type="assets.type"
-            :items="assets.library[0].medias"
+            :items="vrImages"
             @selected="selected"
         />
     </template>
@@ -91,6 +91,15 @@ export default {
             }
         }
     },
+    computed: {
+        vrImages: function () {
+            if (this.assets && this.assets.library && this.assets.library.length > 0) {
+                return this.assets.library[0].medias
+            }
+
+            return []
+        }
+    },
     methods: {
         selected: function (idx) {
             let asset = this.assets.library.find(asset => asset.id == idx)
@@ -154,8 +163,6 @@ export default {
                 }
             }
 
-            console.log('library', this.$refs.library);
-
             let preview = this.$refs.preview
             if (preview && preview.hasOwnProperty('$refs')) {
                 let el = this.$refs.preview.$refs.content
@@ -218,11 +225,13 @@ export default {
                 frames: JSON.stringify(this.frames),
                 src: this.currentSrc,
             }
+
             for (let key in content) {
                 if (content.hasOwnProperty(key) && newContent.hasOwnProperty(key)) {
                     content[key] = newContent[key]
                 }
             }
+
             this.$root.session = {
                 ...this.$root.session,
                 content: content
