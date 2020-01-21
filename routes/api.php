@@ -155,6 +155,13 @@ Route::prefix('v2')->group(
                             }
                         );
 
+                        Route::prefix('captions')->group(
+                            function () {
+                                Route::post('upload', 'Api\Admin\ClipsController@upload_caption');
+                                Route::post('destroy', 'Api\Admin\ClipsController@destroy_caption');
+                            }
+                        );
+
                         Route::prefix('libraries')->group(
                             function () {
                                 Route::post('test', 'Api\Admin\LibraryController@test');
