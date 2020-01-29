@@ -265,7 +265,9 @@ export default {
         updateClip: function (clip, step) {
             this.clip = clip
             this.step = step
-            console.log(clip, step);
+
+            this.altInitials = Object.assign({}, clip)
+            // console.log(clip, step);
         },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'

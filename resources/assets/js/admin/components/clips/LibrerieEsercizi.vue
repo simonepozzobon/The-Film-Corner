@@ -157,6 +157,11 @@ export default {
         file: function (file) {
             this.toggleAnim()
         },
+        clip: {
+            handler: function (clip) {
+                console.log('clup changed');
+            },
+        },
     },
     computed: {
         hasLibrary: function () {

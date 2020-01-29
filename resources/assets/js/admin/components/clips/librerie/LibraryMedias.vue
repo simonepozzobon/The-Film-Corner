@@ -99,6 +99,7 @@ export default {
         },
         initials: function (initials) {
             console.log('initials', initials);
+            this.setMedia(initials)
         }
     },
     methods: {
