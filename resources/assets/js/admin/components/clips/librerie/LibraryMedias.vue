@@ -93,7 +93,7 @@ export default {
             if (this.exercise.libraries.length > 0 && libraries == null) {
                 this.medias = Object.assign([], this.exercise.libraries[0].medias)
             }
-            else if (libraries != null) {
+            else if (libraries != null && libraries.length > 0) {
                 console.log('medias', libraries);
                 this.medias = Object.assign([], libraries[0].medias)
             }
