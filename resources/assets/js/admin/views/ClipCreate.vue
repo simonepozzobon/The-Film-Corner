@@ -111,11 +111,17 @@
         :exercise="exercise"
         :clip="clip"
         :initials="altInitials"
+        @translate="translateMedia"
         @update="updateExerc"
         @destroy="destroyMedia"
     />
     <traduzioni-paratext
         ref="translate"
+        :clip="clip"
+        @saved="updateClip"
+    />
+    <traduzioni-media
+        ref="translateMedia"
         :clip="clip"
         @saved="updateClip"
     />
@@ -137,6 +143,7 @@ import {
 from '../../ui'
 
 import TraduzioniParatext from '../components/clips/paratesti/TraduzioniParatext.vue'
+import TraduzioniMedia from '../components/clips/media/TraduzioniMedia.vue'
 
 import EserciziMethods from './mixins/EserciziMethods'
 
@@ -171,6 +178,7 @@ export default {
         UiButton,
         UiTitle,
         TraduzioniParatext,
+        TraduzioniMedia,
     },
     mixins: [EserciziMethods],
     data: function () {
@@ -251,6 +259,10 @@ export default {
         translate: function (item) {
             this.$refs.translate.show(item)
         },
+        translateMedia: function (item) {
+            console.log('translate media');
+            this.$refs.translateMedia.show(item)
+        },
         updateClip: function (clip, step) {
             this.clip = clip
             this.step = step
@@ -272,7 +284,7 @@ export default {
                 if (response.data.success) {
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
-                        this.cursor = 3
+                        // this.cursor = 3
 
                         let initial = response.data.initial
                         let cache = Object.assign({}, this.initials)
@@ -368,10 +380,10 @@ export default {
             console.log('deprecata');
         },
         paratextCompleted: function () {
-            this.cursor = 3
+            // this.cursor = 3
         },
         paratextUncomplete: function () {
-            this.cursor = 2
+            // this.cursor = 2
         },
         initSticky: function () {
             this.sticky = stickybits('#topbar', {

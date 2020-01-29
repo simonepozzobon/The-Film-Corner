@@ -14,6 +14,7 @@
                     :exercise="exercise"
                     :initials="initials | filterInitials(exercise)"
                     @destroy="destroyMedia"
+                    @translate="translate"
                 />
             </block-content>
         </div>
@@ -289,6 +290,9 @@ export default {
         },
         setInitials: function () {
 
+        },
+        translate: function (item) {
+            this.$emit('translate', item)
         }
     },
     filters: {
