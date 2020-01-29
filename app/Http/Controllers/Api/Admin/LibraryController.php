@@ -33,26 +33,42 @@ class LibraryController extends Controller
     {
         $exercise = Exercise::find($request->exercise_id);
         $clip = Clip::find($request->clip_id);
-        if ($request->is_new == 1) {
+
+        $libraries = $exercise->libraries;
+        // return [
+        //   'libraries' => $libraries,
+        //   'count' => $libraries->count(),
+        //   'first' => $libraries[0]
+        //
+        // ];
+
+        if ($libraries->count() > 0) {
+            $library = $libraries[0];
+        } else {
             $library = new Library();
             $library->clip_id = $clip->id;
             $library->exercise_id = $exercise->id;
             $library->library_type_id = $request->library_type_id;
             $library->save();
-        } else {
-            $library = Library::find($request->library_id);
         }
 
         $src = $this->uploadFile($request->file('media'));
 
         $m = new LibraryMedia();
-        $m->title = $request->title;
         $m->url = $src;
         $m->library_type_id = $library->library_type_id;
         $m->library_id = $library->id;
         $m->save();
 
+        $current = $m->translateOrNew('it');
+        $current->library_media_id = $m->id;
+        $current->title = $request->title ? $request->title : '';
+        $current->description = $request->description ? $request->description : '';
+        $current->save();
+
         $m->url = Storage::disk('local')->url($m->url);
+
+        $clip = $clip->fresh($this->options);
 
         return [
           'clip' => $clip,
