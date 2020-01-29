@@ -112,7 +112,8 @@
         :clip="clip"
         :initials="altInitials"
         @update="updateExerc"
-        @destroy="destroyMedia"
+        @deleted="destroyMedia"
+        @saved="updateClip"
         @translate="translateMedia"
     />
     <traduzioni-paratext

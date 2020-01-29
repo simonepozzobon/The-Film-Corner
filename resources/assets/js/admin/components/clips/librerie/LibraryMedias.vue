@@ -117,7 +117,16 @@ export default {
             }
         },
         destroy: function (item) {
-            this.$emit('destroy', item)
+
+            let url = `/api/v2/admin/clips/libraries/destroy/${item.id}`
+
+            this.$http.delete(url).then(response => {
+                console.log(response);
+                this.$emit('deleted', {
+                    id: response.data.id,
+                    clip: response.data.clip,
+                })
+            })
         },
         setInitials: function () {
             this.setMedia(this.initials)

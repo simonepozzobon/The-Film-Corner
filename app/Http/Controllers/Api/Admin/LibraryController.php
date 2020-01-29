@@ -65,10 +65,16 @@ class LibraryController extends Controller
     public function destroy_media($id)
     {
         $m = LibraryMedia::find($id);
+        $clip = $m->library->clip;
         $m->delete();
 
+        $clip = $clip->fresh($this->options);
+
         return [
+            'success' => true,
+            'clip' => $clip,
             'id' => $id,
+            'message' => 'eliminato'
         ];
     }
 
@@ -134,6 +140,22 @@ class LibraryController extends Controller
         return [
           'success' => false,
           'message' => 'non trovato',
+        ];
+    }
+
+    public function destroy_caption(Request $request)
+    {
+        $caption = LibraryCaption::find($request->id);
+        $clip = $caption->library_media->library->clip;
+        $caption->delete();
+
+        $clip = $clip->fresh($this->options);
+
+        return [
+            'success' => true,
+            'clip' => $clip,
+            'id' => $request->id,
+            'message' => 'eliminato'
         ];
     }
 

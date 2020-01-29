@@ -412,8 +412,7 @@ export default {
                 this.caps.splice(idx, 1)
             }
 
-            let clip = Object.assign({}, data.clip)
-            this.$emit('saved', clip)
+            this.$emit('saved', data.clip)
         },
         setItem: function (item) {
             return new Promise((resolve, reject) => {

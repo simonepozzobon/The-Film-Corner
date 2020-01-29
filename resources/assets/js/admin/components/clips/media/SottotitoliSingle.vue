@@ -42,8 +42,8 @@ export default {
 
             this.$http.post('/api/v2/admin/clips/captions/destroy', data).then(response => {
                 this.$emit('deleted', {
+                    id: response.data.id,
                     clip: response.data.clip,
-                    id: response.data.id
                 })
             })
         },

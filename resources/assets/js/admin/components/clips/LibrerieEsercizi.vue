@@ -13,7 +13,7 @@
                 <library-medias
                     :exercise="exercise"
                     :initials="initials | filterInitials(exercise)"
-                    @destroy="destroyMedia"
+                    @deleted="deleted"
                     @translate="translate"
                 />
             </block-content>
@@ -290,8 +290,8 @@ export default {
                 this.clearFile(true)
             })
         },
-        destroyMedia: function (item) {
-            this.$emit('destroy', item)
+        deleted: function (data) {
+            this.$emit('saved', data.clip)
         },
         setInitials: function () {
 
