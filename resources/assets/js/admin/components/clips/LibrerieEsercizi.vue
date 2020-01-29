@@ -24,57 +24,65 @@
         </div>
         <div v-else-if="hasLibrary == true && libraryOptions">
             <block-content title="Aggiungi un video">
-                <div class="title-section form-group row">
-                    <label
-                        for="title"
-                        class="col-md-2"
-                    >
-                        Titolo Media
-                    </label>
-                    <div class="col-md-10">
-                        <input
-                            type="text"
-                            name="title"
-                            class="form-control"
-                            v-model="title"
-                        />
-                    </div>
-                </div>
+                <text-input
+                    label="Titolo"
+                    name="it_title"
+                    :initial="title"
+                    @update="updateTitle"
+                />
+                <text-editor
+                    ref="description"
+                    label="Descrizione"
+                    :has-animation="true"
+                    min-height="100px"
+                    @update="updateDescription('it', arguments)"
+                />
                 <div class="uploader">
-                    <file-preview
-                        :file="file"
-                        class="uploader__preview f-preview"
-                        @clear="clearFile"
-                    />
-
-                    <upload-zone
-                        ref="drop"
-                        class="uploader__drop"
-                        url="/api/v2/admin/clips/libraries/upload"
-                        :accept="libraryOptions.accept"
-                        :multiple="false"
-                        :auto-process-queue="false"
-                        :use-styles="false"
-                        @file-added="addFileToQueue"
-                        @success="addMediaToLibrary"
-                    />
-
-                    <transition name="upload-section-transition">
-                        <div
-                            class="uploader__btn"
-                            v-if="isReadyToUpload"
+                    <div class="title-section form-group row">
+                        <label
+                            for="title"
+                            class="col-md-2"
                         >
-                            <ui-button
-                                title="carica"
-                                color="dark"
-                                theme="outline"
-                                :has-container="false"
-                                :has-margin="false"
-                                align="center"
-                                @click="uploadFile"
+                            Upload file
+                        </label>
+                        <div class="col-md-10">
+                            <file-preview
+                                v-if="hasFile"
+                                :file="file"
+                                class="uploader__preview f-preview"
+                                @clear="clearFile"
                             />
+
+                            <upload-zone
+                                ref="drop"
+                                class="uploader__drop"
+                                url="/api/v2/admin/clips/libraries/upload"
+                                :accept="libraryOptions.accept"
+                                :multiple="false"
+                                :auto-process-queue="false"
+                                :use-styles="false"
+                                @file-added="addFileToQueue"
+                                @success="addMediaToLibrary"
+                            />
+
+                            <transition name="upload-section-transition">
+                                <div
+                                    class="uploader__btn"
+                                    v-if="isReadyToUpload"
+                                >
+                                    <ui-button
+                                        title="carica"
+                                        color="dark"
+                                        theme="outline"
+                                        :has-container="false"
+                                        :has-margin="false"
+                                        align="center"
+                                        @click="uploadFile"
+                                    />
+                                </div>
+                            </transition>
                         </div>
-                    </transition>
+                    </div>
                 </div>
             </block-content>
         </div>
@@ -88,6 +96,7 @@ import {
     BlockPanel,
     Container,
     TextEditor,
+    TextInput,
     UploadZone,
 }
 from '../../adminui'
@@ -118,6 +127,7 @@ export default {
         BlockPanel,
         Container,
         TextEditor,
+        TextInput,
         UploadZone,
         UiButton,
         FilePreview,
@@ -146,11 +156,13 @@ export default {
     data: function () {
         return {
             title: null,
+            description: null,
             file: null,
             showPreview: false,
             isOpen: false,
             master: null,
             containerState: false,
+            dropAnim: null,
         }
     },
     watch: {
@@ -162,6 +174,9 @@ export default {
                 console.log('clup changed');
             },
         },
+        hasFile: function (value) {
+            this.toggleDrop()
+        }
     },
     computed: {
         hasLibrary: function () {
@@ -209,8 +224,31 @@ export default {
         uuid: function () {
             return this.$util.uuid()
         },
+        hasFile: function () {
+            if (this.file) {
+                return true
+            }
+
+            return false
+        }
     },
     methods: {
+        toggleDrop: function () {
+            if (this.hasFile) {
+                gsap.to(this.$refs.drop.$el, .2, {
+                    height: 0,
+                    autoAlpha: 0,
+                    display: 'none'
+                })
+            }
+            else {
+                gsap.to(this.$refs.drop.$el, .2, {
+                    height: 'auto',
+                    autoAlpha: 1,
+                    display: 'block'
+                })
+            }
+        },
         initAnim: function () {
             if (this.$refs.drop) {
                 let container = this.$refs.drop.$el
@@ -264,6 +302,8 @@ export default {
                 this.file = null
                 if (titleReset == true) {
                     this.title = null
+                    this.description = null
+                    this.$refs.description.editor.setContent(null)
                 }
             }
         },
@@ -273,6 +313,7 @@ export default {
             data.append('exercise_id', this.exercise.id)
             data.append('media', this.file)
             data.append('title', this.title)
+            data.append('description', this.description)
             data.append('library_type_id', this.exercise.library_type_id)
 
             if (this.exercise.hasOwnProperty('isNew') && this.exercise.isNew == true) {
@@ -290,6 +331,18 @@ export default {
                 this.$emit('update', response.data)
                 this.clearFile(true)
             })
+        },
+        updateTitle: function (values = arguments) {
+            if (values) {
+                this.title = values
+            }
+            else {
+                this.title = null
+            }
+        },
+        updateDescription: function (key, values = arguments) {
+            let value = values[1]
+            this.description = value
         },
         deleted: function (data) {
             this.$emit('saved', data.clip)

@@ -79,6 +79,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        showDropzone: {
+            type: Boolean,
+            default: true,
+        },
     },
     data: function () {
         return {
