@@ -2,6 +2,7 @@
 <div
     class="modal fade"
     ref="modal"
+    data-backdrop="false"
 >
     <div
         class="modal-dialog"
@@ -50,6 +51,18 @@
                     {{ cancelButton }}
                 </button>
             </div>
+            <div
+                class="modal-footer"
+                v-if="simpleFooter"
+            >
+                <ui-button
+                    title="chiudi"
+                    color="red"
+                    theme="outline"
+                    size="sm"
+                    @click="hide"
+                />
+            </div>
         </div>
     </div>
 </div>
@@ -57,8 +70,13 @@
 
 <script>
 import $ from 'jquery'
+import UiButton from '../../ui/UiButton.vue'
+
 export default {
     name: 'UiModal',
+    components: {
+        UiButton,
+    },
     props: {
         title: {
             type: String,
@@ -77,6 +95,10 @@ export default {
             default: 'Cancel'
         },
         hideFooter: {
+            type: Boolean,
+            default: false,
+        },
+        simpleFooter: {
             type: Boolean,
             default: false,
         },
@@ -109,14 +131,29 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~styles/shared';
+
+.modal {
+    position: fixed;
+}
+
+.modal-backdrop.show {
+    z-index: 1040;
+}
 
 .modal-content {
     background: none;
     border: none;
+    z-index: 1050;
+    box-shadow: none;
 }
 .modal-body {
     padding: 0;
+}
+.modal-footer {
+    justify-content: space-around;
+    background-color: $white;
+
 }
 </style>

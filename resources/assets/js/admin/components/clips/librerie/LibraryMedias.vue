@@ -7,13 +7,16 @@
         striped
         borderless
     >
-        <template v-slot:cell(preview)="data">
+        <template v-slot:cell(url)="data">
             <div v-if="data.item.media_type == 'image'">
                 <img
                     :src="data.item.media"
                     class="para-img"
                     @click.stop.prevent="showPreview(data.item)"
                 >
+            </div>
+            <div v-else-if="data.item.library_type_id == 3">
+                <simple-video-player :src="data.item.url | filterUrl" />
             </div>
         </template>
         <template v-slot:cell(tools)="data">
@@ -43,6 +46,7 @@
 <script>
 import {
     BlockContent,
+    SimpleVideoPlayer,
 }
 from '../../../adminui'
 
@@ -56,6 +60,7 @@ export default {
     components: {
         BlockContent,
         UiButton,
+        SimpleVideoPlayer,
     },
     props: {
         exercise: {
@@ -134,6 +139,12 @@ export default {
         translate: function (item) {
             this.$emit('translate', item)
         }
+    },
+    filters: {
+        filterUrl: function (url) {
+            url = url.replace('public/', '')
+            return '/storage/' + url
+        },
     },
     mounted: function () {
         this.setMedia()

@@ -28,6 +28,7 @@
         title="Anteprima della clip"
         :hide-header="true"
         :hide-footer="true"
+        :simple-footer="true"
         @hidden="stopPlayer"
     >
         <div class="player">
@@ -36,6 +37,7 @@
                 class="video-js"
             ></video>
         </div>
+
     </ui-modal>
 </div>
 </template>
