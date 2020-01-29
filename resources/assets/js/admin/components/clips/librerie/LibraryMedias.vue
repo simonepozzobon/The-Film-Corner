@@ -109,10 +109,10 @@ export default {
             else if (libraries != null && libraries.length > 0) {
                 this.medias = Object.assign([], libraries[0].medias)
 
-                // DEBUG
-                setTimeout(() => {
-                    this.translate(this.medias[0])
-                }, 1000)
+                // // DEBUG
+                // setTimeout(() => {
+                //     this.translate(this.medias[0])
+                // }, 1000)
             }
         },
         destroy: function (item) {

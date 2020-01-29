@@ -25,7 +25,8 @@ class LibraryController extends Controller
         $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
-        $this->options = array_merge($this->options_single, $this->options_multiple);
+        $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
+        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed);
     }
 
     public function upload_media(Request $request)

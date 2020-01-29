@@ -33,6 +33,7 @@
                                 label="Titolo"
                                 name="it_title"
                                 :initial="values.it.title"
+                                @update="updateTitle('it', arguments)"
                             />
                             <text-editor
                                 ref="it"
@@ -49,6 +50,7 @@
                                 label="Titolo"
                                 name="en_title"
                                 :initial="values.en.title"
+                                @update="updateTitle('en', arguments)"
                             />
                             <text-editor
                                 ref="en"
@@ -66,6 +68,7 @@
                                 label="Titolo"
                                 name="fr_title"
                                 :initial="values.fr.title"
+                                @update="updateTitle('fr', arguments)"
                             />
                             <text-editor
                                 ref="fr"
@@ -83,6 +86,7 @@
                                 label="Titolo"
                                 name="sr_title"
                                 :initial="values.sr.title"
+                                @update="updateTitle('sr', arguments)"
                             />
                             <text-editor
                                 ref="sr"
@@ -100,6 +104,7 @@
                                 label="Titolo"
                                 name="ka_title"
                                 :initial="values.ka.title"
+                                @update="updateTitle('ka', arguments)"
                             />
                             <text-editor
                                 ref="ka"
@@ -117,6 +122,7 @@
                                 label="Titolo"
                                 name="sl_title"
                                 :initial="values.sl.title"
+                                @update="updateTitle('sl', arguments)"
                             />
                             <text-editor
                                 ref="sl"
@@ -292,6 +298,15 @@ export default {
             let value = values[1]
             this.values[key].description = value
         },
+        updateTitle: function (key, values = arguments) {
+            let value = values[0]
+            if (value) {
+                this.values[key].title = value
+            }
+            else {
+                this.values[key].title = null
+            }
+        },
         updateFile: function (file, src) {
             this.capFile = file
         },
@@ -333,18 +348,25 @@ export default {
             data.append('translations', JSON.stringify(translations))
 
             this.$http.post('/api/v2/admin/clips/libraries/translations', data).then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.isLoading = false
                 if (response.data.success) {
                     this.$emit('saved', response.data.clip)
+
+                    this.hide()
                 }
             }).catch(() => {
                 this.isLoading = false
             })
         },
-        show: function (item) {
-            console.log('traduzioni', item);
+        resetValues: function () {
             this.item = null
+            this.caps = []
+            this.capFile = null
+            this.capLocale = 'it'
+            this.isLoading = false
+            this.isLoadingCap = false
+
             this.values = {
                 it: {
                     title: null,
@@ -371,13 +393,17 @@ export default {
                     description: null,
                 },
             }
+        },
+        show: function (item) {
+            console.log('traduzioni', item);
+            this.resetValues()
 
             this.setItem(item).then(() => {
                 $(this.$refs.modal).modal('show')
             })
         },
         hide: function () {
-            this.item = null
+            this.resetValues()
             $(this.$refs.modal).modal('hide')
         },
         deleted: function (data) {
