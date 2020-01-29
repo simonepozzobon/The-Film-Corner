@@ -6,7 +6,7 @@
         :key="option.id"
         :option="option"
         @ready="switchReady"
-        @update="updateSelection($event, option)"
+        @updateSelection="updateSelection($event, option)"
     />
 </div>
 </template>
@@ -74,9 +74,11 @@ export default {
         },
         updateSelection: function (value, option) {
             if (value) {
+                console.log('add exercise');
                 this.addExercise(option);
             }
             else {
+                console.log('remove exercise');
                 this.removeExercise(option);
             }
         },
@@ -153,7 +155,9 @@ export default {
                         let idx = parseInt(key.replace("exercise_", "")) - 1;
                         if (this.$refs.switch) {
                             let component = this.$refs.switch[idx];
-                            console.log(component);
+                            // console.log(component);
+
+                            // la clip ha questo esercizio
                             component.value = this.initials[key] == 1 ? true : false;
                         }
                     }

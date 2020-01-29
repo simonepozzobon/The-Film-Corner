@@ -6,6 +6,7 @@
         label-size="col-md-6"
         input-size="col-md-6"
         :has-row="true"
+        :initial="value"
         @update="updateSelection($event, option)"
     />
 </div>
@@ -34,15 +35,16 @@ export default {
             value: null
         }
     },
-    watch: {
-        value: function (value) {
-            this.$refs.switch.value = value
-        }
-    },
+    // watch: {
+    //     value: function (value) {
+    //         this.$refs.switch.value = value
+    //     }
+    // },
     methods: {
         updateSelection: function ($event, option) {
             this.$emit('updateSelection', $event, option)
-        }
+        },
+        setInitials: function (value) {}
     },
     mounted: function () {
         this.$nextTick(() => {

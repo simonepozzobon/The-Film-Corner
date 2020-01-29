@@ -224,6 +224,7 @@ export default {
                 this.master.progress(1).progress(0)
 
                 this.toggleAnim()
+                this.setInitials()
             }
         },
         addMediaToLibrary: function (response) {
@@ -286,10 +287,15 @@ export default {
         destroyMedia: function (item) {
             this.$emit('destroy', item)
         },
+        setInitials: function () {
+
+        }
     },
     filters: {
         filterInitials: function (initials, exercise) {
-            console.log(initials, exercise);
+            // console.log('filters', initials, exercise);
+            let libraries = initials.libraries.filter(library => library.exercise_id == exercise.id)
+            return libraries
         }
     },
     mounted: function () {

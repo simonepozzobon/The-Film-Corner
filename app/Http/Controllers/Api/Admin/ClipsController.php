@@ -198,7 +198,7 @@ class ClipsController extends Controller
         $response = $this->get_initials();
 
         if ($id) {
-            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'captions')->first();
+            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'libraries.medias', 'captions')->first();
 
             $details = $clip->details()->first();
             if ($details) {

@@ -51,6 +51,12 @@ export default {
                 return {}
             },
         },
+        initials: {
+            type: Array,
+            default: function () {
+                return []
+            },
+        },
     },
     data: function () {
         return {
@@ -78,19 +84,31 @@ export default {
         exercise: function () {
             this.setMedia()
         },
+        initials: function (initials) {
+            console.log('initials', initials);
+        }
     },
     methods: {
-        setMedia: function () {
-            if (this.exercise.libraries.length > 0) {
+        setMedia: function (libraries = null) {
+            if (this.exercise.libraries.length > 0 && libraries == null) {
                 this.medias = Object.assign([], this.exercise.libraries[0].medias)
+            }
+            else if (libraries != null) {
+                console.log('medias', libraries);
+                this.medias = Object.assign([], libraries[0].medias)
             }
         },
         destroy: function (item) {
             this.$emit('destroy', item)
+        },
+        setInitials: function () {
+            console.log(this.initials);
+            this.setMedia(this.initials)
         }
     },
     mounted: function () {
         this.setMedia()
+        this.setInitials()
     },
 }
 </script>
