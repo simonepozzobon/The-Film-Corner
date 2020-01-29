@@ -102,7 +102,6 @@ export default {
             this.$emit('destroy', item)
         },
         setInitials: function () {
-            console.log(this.initials);
             this.setMedia(this.initials)
         }
     },
