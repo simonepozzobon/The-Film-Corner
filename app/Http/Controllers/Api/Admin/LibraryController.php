@@ -7,6 +7,7 @@ use App\Propaganda\Media;
 use App\Propaganda\Library;
 use App\Propaganda\Exercise;
 use App\Propaganda\LibraryMedia;
+use App\Propaganda\LibraryCaption;
 use App\Propaganda\LibraryType;
 
 use File;
@@ -16,6 +17,17 @@ use Illuminate\Support\Facades\Storage;
 
 class LibraryController extends Controller
 {
+    public function __construct()
+    {
+        // set default locale per admin su italiano
+        \App::setLocale('it');
+
+        $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
+        $this->options_single = ['format', 'period', 'age', 'genre'];
+        $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
+        $this->options = array_merge($this->options_single, $this->options_multiple);
+    }
+
     public function upload_media(Request $request)
     {
         $exercise = Exercise::find($request->exercise_id);
@@ -86,5 +98,74 @@ class LibraryController extends Controller
         $src = $file->storeAs('public/propaganda/libraries', $filename);
 
         return $src;
+    }
+
+    public function upload_caption(Request $request)
+    {
+        $media = LibraryMedia::find($request->library_media_id);
+
+        if ($media) {
+            $caption = new LibraryCaption();
+            $caption->library_media_id = $media->id;
+            $caption->locale = $request->cap_locale;
+
+            $file = $request->file('cap_file');
+            $original_name = $file->getClientOriginalName();
+            $filename = uniqid() . '.srt';
+            $path = 'public/propaganda/libraries/captions';
+            $src = $file->storeAs($path, $filename);
+            $src = Storage::disk('local')->url($src);
+
+            $caption->src = $src;
+            $caption->save();
+
+            $clip = $media->library->clip;
+            $clip = $clip->fresh($this->options);
+
+            return [
+                'success' => true,
+                'clip' => $clip,
+                'caption' => $caption,
+                'message' => 'salvato'
+            ];
+        }
+
+        return [
+          'success' => false,
+          'message' => 'non trovato',
+        ];
+    }
+
+    public function upload_translations(Request $request)
+    {
+        $translations = json_decode($request->translations);
+        $media = LibraryMedia::find($request->library_media_id);
+
+        if ($media) {
+            foreach ($translations as $key => $translation) {
+                $current = $media->translateOrNew($translation->locale);
+                $current->library_media_id = $media->id;
+                $current->title = $translation->title ? $translation->title : '';
+                $current->description = $translation->description ? $translation->description : '';
+                $current->save();
+            }
+
+            $clip = $media->library->clip;
+            $clip = $clip->fresh($this->options);
+
+            return response()->json(
+                [
+                    'success' => true,
+                    'clip' => $clip,
+                    'translations' => $translations,
+                    'message' => 'salvato'
+                ]
+            );
+        }
+
+        return [
+          'success' => false,
+          'message' => 'non trovato',
+        ];
     }
 }

@@ -107,9 +107,9 @@ export default {
                 this.medias = Object.assign([], this.exercise.libraries[0].medias)
             }
             else if (libraries != null && libraries.length > 0) {
-                console.log('medias', libraries);
                 this.medias = Object.assign([], libraries[0].medias)
 
+                // DEBUG
                 setTimeout(() => {
                     this.translate(this.medias[0])
                 }, 1000)

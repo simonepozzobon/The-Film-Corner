@@ -32,6 +32,7 @@
                             <text-input
                                 label="Titolo"
                                 name="it_title"
+                                :initial="values.it.title"
                             />
                             <text-editor
                                 ref="it"
@@ -47,6 +48,7 @@
                             <text-input
                                 label="Titolo"
                                 name="en_title"
+                                :initial="values.en.title"
                             />
                             <text-editor
                                 ref="en"
@@ -63,6 +65,7 @@
                             <text-input
                                 label="Titolo"
                                 name="fr_title"
+                                :initial="values.fr.title"
                             />
                             <text-editor
                                 ref="fr"
@@ -79,6 +82,7 @@
                             <text-input
                                 label="Titolo"
                                 name="sr_title"
+                                :initial="values.sr.title"
                             />
                             <text-editor
                                 ref="sr"
@@ -95,6 +99,7 @@
                             <text-input
                                 label="Titolo"
                                 name="ka_title"
+                                :initial="values.ka.title"
                             />
                             <text-editor
                                 ref="ka"
@@ -111,6 +116,7 @@
                             <text-input
                                 label="Titolo"
                                 name="sl_title"
+                                :initial="values.sl.title"
                             />
                             <text-editor
                                 ref="sl"
@@ -284,7 +290,7 @@ export default {
         editorReady: function (key) {},
         update: function (key, values = arguments) {
             let value = values[1]
-            this.values[key] = value
+            this.values[key].description = value
         },
         updateFile: function (file, src) {
             this.capFile = file
@@ -293,12 +299,49 @@ export default {
             this.isLoadingCap = true
             let data = new FormData()
 
-            data.append('clip_id', this.clip ? this.clip.id : 0)
-            data.append('media_id', this.item.id) // deve aggiungere l'id della clip degli esercizi
+            data.append('library_media_id', this.item.id) // deve aggiungere l'id della clip degli esercizi
             data.append('cap_locale', this.capLocale)
             data.append('cap_file', this.capFile)
+
+            this.$http.post('/api/v2/admin/clips/libraries/captions/upload', data).then(response => {
+                this.isLoadingCap = false
+                if (response.data.success) {
+                    this.caps.push(response.data.caption)
+                    this.$emit('saved', response.data.clip)
+                }
+            }).catch(() => {
+                this.isLoadingCap = false
+            })
         },
-        save: function () {},
+        save: function () {
+            this.isLoading = true
+
+            let data = new FormData()
+            data.append('library_media_id', this.item.id)
+
+            let translations = []
+
+            for (let key in this.values) {
+                if (this.values.hasOwnProperty(key)) {
+                    translations.push({
+                        locale: key,
+                        title: this.values[key].title,
+                        description: this.values[key].description
+                    })
+                }
+            }
+            data.append('translations', JSON.stringify(translations))
+
+            this.$http.post('/api/v2/admin/clips/libraries/translations', data).then(response => {
+                console.log(response.data);
+                this.isLoading = false
+                if (response.data.success) {
+                    this.$emit('saved', response.data.clip)
+                }
+            }).catch(() => {
+                this.isLoading = false
+            })
+        },
         show: function (item) {
             console.log('traduzioni', item);
             this.item = null
@@ -350,18 +393,26 @@ export default {
             return new Promise((resolve, reject) => {
                 this.item = item
 
-                // let translations = item.translations
-                //
-                // for (let i = 0; i < translations.length; i++) {
-                //     let current = translations[i]
-                //     let locale = current.locale
-                //
-                //     if (this.values.hasOwnProperty(locale)) {
-                //         this.values[locale] = current.content
-                //
-                //         this.$refs[locale].editor.setContent(current.content)
-                //     }
-                // }
+
+                // set Translations
+                let translations = item.translations
+
+                for (let i = 0; i < translations.length; i++) {
+                    let current = translations[i]
+                    let locale = current.locale
+
+                    if (this.values.hasOwnProperty(locale)) {
+                        this.values[locale] = {
+                            title: current.title,
+                            description: current.description
+                        }
+
+                        this.$refs[locale].editor.setContent(current.description)
+                    }
+                }
+
+                let captions = item.library_captions
+                this.caps = captions
 
                 this.$nextTick(() => {
                     resolve()

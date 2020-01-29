@@ -74,11 +74,11 @@ export default {
         },
         updateSelection: function (value, option) {
             if (value) {
-                console.log('add exercise');
+                // console.log('add exercise');
                 this.addExercise(option);
             }
             else {
-                console.log('remove exercise');
+                // console.log('remove exercise');
                 this.removeExercise(option);
             }
         },

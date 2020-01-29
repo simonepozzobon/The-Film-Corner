@@ -112,7 +112,7 @@ import {
 from './mixins'
 
 export default {
-    name: 'LibrerieEsecizi',
+    name: 'LibrerieEsercizi',
     components: {
         BlockContent,
         BlockPanel,
@@ -292,7 +292,6 @@ export default {
 
         },
         translate: function (item) {
-            console.log('translate LibrerieEsecizi');
             this.$emit('translate', item)
         }
     },
