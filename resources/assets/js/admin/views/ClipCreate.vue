@@ -113,9 +113,15 @@
         :initials="altInitials"
         @update="updateExerc"
         @destroy="destroyMedia"
+        @translate="translateMedia"
     />
     <traduzioni-paratext
         ref="translate"
+        :clip="clip"
+        @saved="updateClip"
+    />
+    <traduzioni-media
+        ref="translateMedia"
         :clip="clip"
         @saved="updateClip"
     />
@@ -137,6 +143,7 @@ import {
 from '../../ui'
 
 import TraduzioniParatext from '../components/clips/paratesti/TraduzioniParatext.vue'
+import TraduzioniMedia from '../components/clips/media/TraduzioniMedia.vue'
 
 import EserciziMethods from './mixins/EserciziMethods'
 
@@ -167,6 +174,7 @@ export default {
         Step,
         Topbar,
         TraduzioniApprofondimenti,
+        TraduzioniMedia,
         TraduzioniClip,
         UiButton,
         UiTitle,
@@ -250,6 +258,9 @@ export default {
     methods: {
         translate: function (item) {
             this.$refs.translate.show(item)
+        },
+        translateMedia: function (item) {
+            this.$refs.translateMedia.show(item)
         },
         updateClip: function (clip, step) {
             this.clip = clip

@@ -18,8 +18,21 @@
         </template>
         <template v-slot:cell(tools)="data">
             <ui-button
+                color="orange"
+                title="Aggiungi traduzioni"
+                size="sm"
+                theme="outline"
+                :has-margin="false"
+                :has-container="false"
+                @click="translate(data.item)"
+            />
+            <ui-button
                 color="red"
                 title="Elimina"
+                size="sm"
+                theme="outline"
+                :has-margin="false"
+                :has-container="false"
                 @click="destroy(data.item)"
             />
         </template>
@@ -96,6 +109,10 @@ export default {
             else if (libraries != null && libraries.length > 0) {
                 console.log('medias', libraries);
                 this.medias = Object.assign([], libraries[0].medias)
+
+                setTimeout(() => {
+                    this.translate(this.medias[0])
+                }, 1000)
             }
         },
         destroy: function (item) {
@@ -103,6 +120,9 @@ export default {
         },
         setInitials: function () {
             this.setMedia(this.initials)
+        },
+        translate: function (item) {
+            this.$emit('translate', item)
         }
     },
     mounted: function () {
