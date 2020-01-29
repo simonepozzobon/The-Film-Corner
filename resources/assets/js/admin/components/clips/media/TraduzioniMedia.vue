@@ -27,7 +27,7 @@
                         :has-animations="false"
                         :has-footer="true"
                     >
-                        <div>
+                        <container>
                             <ui-title title="Italiano" />
                             <text-input
                                 label="Titolo"
@@ -41,9 +41,8 @@
                                 @ready="editorReady('it')"
                                 @update="update('it', arguments)"
                             />
-                        </div>
-
-                        <div>
+                        </container>
+                        <container class="mt-2">
                             <ui-title title="English" />
                             <text-input
                                 label="Titolo"
@@ -57,9 +56,9 @@
                                 @ready="editorReady('en')"
                                 @update="update('en', arguments)"
                             />
-                        </div>
+                        </container>
 
-                        <div>
+                        <container class="mt-2">
                             <ui-title title="Francais" />
                             <text-input
                                 label="Titolo"
@@ -73,9 +72,9 @@
                                 @ready="editorReady('fr')"
                                 @update="update('fr', arguments)"
                             />
-                        </div>
+                        </container>
 
-                        <div>
+                        <container class="mt-2">
                             <ui-title title="Serbian" />
                             <text-input
                                 label="Titolo"
@@ -89,9 +88,9 @@
                                 @ready="editorReady('sr')"
                                 @update="update('sr', arguments)"
                             />
-                        </div>
+                        </container>
 
-                        <div>
+                        <container class="mt-2">
                             <ui-title title="Georgiano" />
                             <text-input
                                 label="Titolo"
@@ -105,9 +104,9 @@
                                 @ready="editorReady('ka')"
                                 @update="update('ka', arguments)"
                             />
-                        </div>
+                        </container>
 
-                        <div>
+                        <container class="mt-2">
                             <ui-title title="Slovenian" />
                             <text-input
                                 label="Titolo"
@@ -121,7 +120,62 @@
                                 @ready="editorReady('sl')"
                                 @update="update('sl', arguments)"
                             />
-                        </div>
+                        </container>
+
+                        <sottotitoli-table
+                            class="mt-2"
+                            :caps.sync="caps"
+                            @deleted="deleted"
+                        />
+
+                        <container class="mt-2">
+                            <ui-title label="Sottotitoli" />
+                            <div class="a-clip-panel__row form-group row">
+                                <label
+                                    for="locale"
+                                    class="col-md-2"
+                                >
+                                    Lingua
+                                </label>
+                                <div class="col-md-10">
+                                    <select
+                                        class="form-control mb-2"
+                                        name="locale"
+                                        v-model="capLocale"
+                                    >
+                                        <option value="it">Italiano</option>
+                                        <option value="en">Inglese</option>
+                                        <option value="fr">Francese</option>
+                                        <option value="sr">Serbo</option>
+                                        <option value="ka">Georgiano</option>
+                                        <option value="sl">Sloveno</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <file-input
+                                label="Traccia Sottotitoli"
+                                name="captions"
+                                accept=""
+                                :has-crop="false"
+                                :has-preview="false"
+                                @update="updateFile"
+                            />
+
+                            <div class="w-100 d-flex justify-content-center mt-4">
+                                <ui-button
+                                    title="Carica Traccia sottotitoli"
+                                    color="green"
+                                    theme="outline"
+                                    :disable="isLoadingCap"
+                                    :has-spinner="isLoadingCap"
+                                    :has-margin="false"
+                                    :has-container="false"
+                                    @click="uploadCaption"
+                                />
+                            </div>
+                        </container>
 
                         <template v-slot:footer>
                             <ui-button
@@ -158,7 +212,7 @@ import {
 }
 from '../../../adminui'
 
-
+import SottotitoliTable from './SottotitoliTable.vue'
 
 import {
     UiButton,
@@ -177,6 +231,8 @@ export default {
         UploadZone,
         PanelTitle,
         UiButton,
+        FileInput,
+        SottotitoliTable,
     },
     props: {
         clip: {
@@ -189,14 +245,38 @@ export default {
     data: function () {
         return {
             isLoading: false,
+            isLoadingCap: false,
             item: null,
+            media_id: null,
+            mime: '',
+            capLocale: 'it',
+            capFile: null,
+            caps: [],
             values: {
-                it: null,
-                en: null,
-                fr: null,
-                sr: null,
-                sl: null,
-                ka: null,
+                it: {
+                    title: null,
+                    description: null,
+                },
+                en: {
+                    title: null,
+                    description: null,
+                },
+                fr: {
+                    title: null,
+                    description: null,
+                },
+                sr: {
+                    title: null,
+                    description: null,
+                },
+                sl: {
+                    title: null,
+                    description: null,
+                },
+                ka: {
+                    title: null,
+                    description: null,
+                },
             },
         }
     },
@@ -206,16 +286,47 @@ export default {
             let value = values[1]
             this.values[key] = value
         },
+        updateFile: function (file, src) {
+            this.capFile = file
+        },
+        uploadCaption: function () {
+            this.isLoadingCap = true
+            let data = new FormData()
+
+            data.append('clip_id', this.clip ? this.clip.id : 0)
+            data.append('media_id', this.item.id) // deve aggiungere l'id della clip degli esercizi
+            data.append('cap_locale', this.capLocale)
+            data.append('cap_file', this.capFile)
+        },
         save: function () {},
         show: function (item) {
+            console.log('traduzioni', item);
             this.item = null
             this.values = {
-                it: null,
-                en: null,
-                fr: null,
-                sr: null,
-                sl: null,
-                ka: null,
+                it: {
+                    title: null,
+                    description: null,
+                },
+                en: {
+                    title: null,
+                    description: null,
+                },
+                fr: {
+                    title: null,
+                    description: null,
+                },
+                sr: {
+                    title: null,
+                    description: null,
+                },
+                sl: {
+                    title: null,
+                    description: null,
+                },
+                ka: {
+                    title: null,
+                    description: null,
+                },
             }
 
             this.setItem(item).then(() => {
@@ -225,6 +336,15 @@ export default {
         hide: function () {
             this.item = null
             $(this.$refs.modal).modal('hide')
+        },
+        deleted: function (data) {
+            let idx = this.caps.findIndex(item => item.id == data.id)
+            if (idx > -1) {
+                this.caps.splice(idx, 1)
+            }
+
+            let clip = Object.assign({}, data.clip)
+            this.$emit('saved', clip)
         },
         setItem: function (item) {
             return new Promise((resolve, reject) => {
