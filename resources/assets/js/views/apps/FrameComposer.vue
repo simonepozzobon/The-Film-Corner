@@ -39,8 +39,10 @@ import {
     fabric
 }
 from 'fabric'
+
 import AppTemplate from './AppTemplate.vue'
 import SizeUtility from '../../Sizes'
+
 import {
     UiAppLayers,
     UiAppLibrary,
@@ -497,7 +499,7 @@ export default {
     mounted: function () {},
     beforeDestroy: function () {
         this.$root.isApp = false
-        console.log('ondeosx');
+        // console.log('ondeosx');
     }
 }
 </script>
