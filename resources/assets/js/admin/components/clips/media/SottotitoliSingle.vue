@@ -40,7 +40,7 @@ export default {
             let data = new FormData()
             data.append('id', this.cap.id)
 
-            this.$http.post('/api/v2/admin/clips/captions/destroy', data).then(response => {
+            this.$http.post('/api/v2/admin/clips/libraries/captions/destroy', data).then(response => {
                 this.$emit('deleted', {
                     id: response.data.id,
                     clip: response.data.clip,
