@@ -110,33 +110,19 @@
         :key="exercise.uuid"
         :exercise="exercise"
         :clip="clip"
-        :initials="initials"
+        :initials="altInitials"
         @update="updateExerc"
-        @destroy="destroyMedia"
+        @deleted="destroyMedia"
+        @saved="updateClip"
+        @translate="translateMedia"
     />
-    <!-- <container
-        padding="sm"
-        :contains="true"
-        :has-animations="true"
-    >
-        <div class="a-clip-panel__topbar">
-            <ui-button
-                title="Salva Clip"
-                color="green"
-                :has-container="false"
-                :has-margin="false"
-                @click="saveClip"
-            />
-            <ui-button
-                title="Annulla"
-                color="red"
-                :has-container="false"
-                :has-margin="false"
-            />
-        </div>
-    </container> -->
     <traduzioni-paratext
         ref="translate"
+        :clip="clip"
+        @saved="updateClip"
+    />
+    <traduzioni-media
+        ref="translateMedia"
         :clip="clip"
         @saved="updateClip"
     />
@@ -158,6 +144,7 @@ import {
 from '../../ui'
 
 import TraduzioniParatext from '../components/clips/paratesti/TraduzioniParatext.vue'
+import TraduzioniMedia from '../components/clips/media/TraduzioniMedia.vue'
 
 import EserciziMethods from './mixins/EserciziMethods'
 
@@ -188,6 +175,7 @@ export default {
         Step,
         Topbar,
         TraduzioniApprofondimenti,
+        TraduzioniMedia,
         TraduzioniClip,
         UiButton,
         UiTitle,
@@ -262,18 +250,25 @@ export default {
         cursor: function (cursor) {
             // console.log('cambio cursore', cursor);
         },
-        // exercises: function (exercises) {
-        //     console.log('esercizi', exercises);
-        // }
+        exercises: function (exercises) {
+            this.$nextTick(() => {
+                this.findLibrary(exercises)
+            })
+        }
     },
     methods: {
         translate: function (item) {
             this.$refs.translate.show(item)
         },
+        translateMedia: function (item) {
+            this.$refs.translateMedia.show(item)
+        },
         updateClip: function (clip, step) {
             this.clip = clip
             this.step = step
-            // console.log('set', clip);
+
+            this.altInitials = Object.assign({}, clip)
+            // console.log(clip, step);
         },
         getData: function (id = null) {
             let url = '/api/v2/admin/clips/get-initials'
@@ -348,6 +343,16 @@ export default {
                             }
                         }
                         this.initials = Object.assign({}, this.initials)
+
+                        // if (this.clip.exercise_1 == 1) {
+                        //     this.findLibrary(1)
+                        // }
+                        // if (this.clip.exercise_2 == 1) {
+                        //     this.findLibrary(2)
+                        // }
+                        // if (this.clip.exercise_3 == 1) {
+                        //     this.findLibrary(2)
+                        // }
                     }
 
 
@@ -374,51 +379,7 @@ export default {
 
         },
         saveClip: function () {
-            // this.debug()
             console.log('deprecata');
-            // if (this.cursor == 0) {
-            //     let data = new FormData()
-            //     data.append('title', this.title)
-            //     data.append('video', this.video)
-            //     data.append('period', this.period)
-            //     data.append('year', this.year)
-            //     data.append('format', this.format)
-            //     data.append('age', this.age)
-            //     data.append('genre', this.genre)
-            //     data.append('nationality', this.nationality)
-            //
-            //     data.append('topics', JSON.stringify(this.topics))
-            //     data.append('directors', JSON.stringify(this.directors))
-            //     data.append('peoples', JSON.stringify(this.peoples))
-            //
-            //
-            //     this.$http.post('/api/v2/admin/clips/create', data).then(response => {
-            //         console.log('clip', response.data.clip);
-            //         if (response.data.success == true) {
-            //             this.clip = response.data.clip
-            //             this.cursor = 1
-            //         }
-            //     })
-            // }
-            // else if (this.cursor == 1) {
-            //     let data = new FormData()
-            //     data.append('clip_id', this.clip.id)
-            //     data.append('abstract', this.abstract)
-            //     data.append('tech_info', this.tech_info)
-            //     data.append('historical_context', this.historical_context)
-            //     data.append('food', this.foods)
-            //
-            //     this.$http.post('/api/v2/admin/clips/create-detail', data).then(response => {
-            //         console.log('details', response.data.clip);
-            //         if (response.data.success == true) {
-            //             this.clip = response.data.clip
-            //             this.cursor = 2
-            //         }
-            //     })
-            // }
-            // else if (this.cursor == 2) {
-            //     // paratesti
-            // }
         },
         paratextCompleted: function () {
             this.cursor = 3
@@ -442,6 +403,20 @@ export default {
         onStick: function (data) {
             console.log(data);
         },
+        findLibrary: function (exercises) {
+            let cached = Object.assign([], exercises)
+            for (let i = 0; i < exercises.length; i++) {
+                let exercise = exercises[i]
+                let libraries = this.altInitials.libraries.filter(library => library.exercise_id == exercise.id)
+
+                if (libraries) {
+                    this.exercises[i].libraries = libraries
+                }
+            }
+
+            // let libraries = this.clip.libraries.filter(library => library.exercise_id == exerciseId)
+
+        }
     },
     filters: {
         stateSetter: function (value, cursor) {

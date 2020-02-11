@@ -164,9 +164,16 @@ Route::prefix('v2')->group(
 
                         Route::prefix('libraries')->group(
                             function () {
+                                Route::prefix('captions')->group(function () {
+                                    Route::post('upload', 'Api\Admin\LibraryController@upload_caption');
+                                    Route::post('destroy', 'Api\Admin\LibraryController@destroy_caption');
+                                });
+
+                                Route::post('translations', 'Api\Admin\LibraryController@upload_translations');
+
                                 Route::post('test', 'Api\Admin\LibraryController@test');
                                 Route::post('upload', 'Api\Admin\LibraryController@upload_media');
-                                Route::delete('{id}', 'Api\Admin\LibraryController@destroy_media');
+                                Route::delete('destroy/{id}', 'Api\Admin\LibraryController@destroy_media');
                             }
                         );
                     }
