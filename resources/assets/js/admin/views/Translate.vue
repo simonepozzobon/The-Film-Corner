@@ -14,6 +14,7 @@
                     <option value="app_sections">Studio</option>
                     <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
+                    <option value="exercises">Propaganda App Esercizi</option>
                 </select>
             </div>
             <div class="admin-translate__per-page">
@@ -157,7 +158,8 @@ export default {
             }, 500)
         },
         init: function () {
-            this.translation = 'apps'
+            // this.translation = 'apps'
+            this.translation = 'exercises'
         },
         getLanguages: function () {
             this.$http.get('/api/v2/admin/translate').then(response => {
@@ -168,14 +170,18 @@ export default {
         getTranslations: function (translation) {
             let data = new FormData()
             data.append('type', translation)
+
+
             this.$http.post('/api/v2/admin/translate/elements', data).then(response => {
                 let options = fields.find(field => field.value == translation)
+                // console.log('opzioni', options);
                 this.items = response.data
                 this.fields = options.fields
                 this.options = options.options
                 this.model = options.model
                 this.$refs.panel.hide()
 
+                // console.log('response', response.data);
                 // this.$nextTick(() => this.debug())
             })
         },
