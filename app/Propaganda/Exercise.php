@@ -14,6 +14,11 @@ class Exercise extends Model
     public $translatedAttributes = ['title', 'description'];
     protected $fillable = ['has_library', 'library_type_id', 'slug'];
 
+    public static function get_db_table()
+    {
+        return with(new static)->getTable();
+    }
+
     public function libraries()
     {
         return $this->hasMany('App\Propaganda\Library');

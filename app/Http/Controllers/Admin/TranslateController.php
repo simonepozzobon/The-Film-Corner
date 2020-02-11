@@ -20,13 +20,14 @@ use App\AppCategoryTranslation;
 use App\GeneralTextTranslation;
 use App\FilmographyTranslation;
 use App\AppKeywordTranslation;
+use App\Propaganda\Exercise;
+use App\Propaganda\ExerciseTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
 
 class TranslateController extends Controller
 {
-
     public function get_languages()
     {
         $locales = Language::all();
@@ -72,6 +73,10 @@ class TranslateController extends Controller
         case 'partners':
             $items = Partner::all();
             break;
+
+        case 'exercises':
+            $items = Exercise::all();
+          break;
         }
 
         $locales = Language::all();
@@ -107,7 +112,12 @@ class TranslateController extends Controller
         $table = $model_check::get_db_table();
 
         // Dalla tabella recupero il nome della seconda colonna che corrisponde all'id dell'elemento da tradurre
-        $columns = Schema::getColumnListing($table);
+        $columns = array();
+        if ($table == 'exercise_translations') {
+            $columns = Schema::connection('tfc_propaganda')->getColumnListing($table);
+        } else {
+            $columns = Schema::getColumnListing($table);
+        }
         $column_id = $columns[1];
 
         // decodifico le traduzioni
@@ -131,10 +141,16 @@ class TranslateController extends Controller
             $t->locale = $locale;
 
             foreach ($languages as $field => $translation) {
-                if ($field == 'title') {
-                    $t->{$field} = strip_tags($translation);
+                // array_push($test, $translation);
+
+                if (gettype($translation) == 'string') {
+                    if ($field == 'title') {
+                        $t->{$field} = strip_tags($translation);
+                    } else {
+                        $t->{$field} = $translation;
+                    }
                 } else {
-                    $t->{$field} = $translation;
+                    array_push($test, $field);
                 }
             }
 
@@ -144,7 +160,6 @@ class TranslateController extends Controller
             } catch (\Exception $e) {
                 array_push($test, $e);
             }
-
         }
 
 

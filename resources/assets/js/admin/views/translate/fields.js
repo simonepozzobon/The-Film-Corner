@@ -238,6 +238,33 @@ const fields = [{
             },
         ],
     },
+    {
+        title: 'Propaganda App Esercizi',
+        value: 'exercises',
+        model: 'Propaganda\\ExerciseTranslation',
+        options: [{
+            title: 'title',
+            label: 'Titolo',
+            type: 'input',
+        }, {
+            title: 'description',
+            label: 'Descrizione',
+            type: 'textarea',
+        }],
+        fields: [{
+                key: 'title',
+                label: 'Titolo',
+            }, {
+                key: 'languages',
+                label: 'Stato Traduzione',
+                sortable: true,
+            },
+            {
+                key: 'tools',
+                label: '',
+            },
+        ]
+    }
 ]
 
 export default fields
