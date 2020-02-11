@@ -14,6 +14,7 @@
                     <option value="app_sections">Studio</option>
                     <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
+                    <option value="Propaganda_app">Propaganda App Esercizi</option>
                 </select>
             </div>
             <div class="admin-translate__per-page">
