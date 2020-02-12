@@ -4,14 +4,11 @@ namespace App\Propaganda;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Challenge extends Model
+class ChallengeTranslation extends Model
 {
-    use \Dimsav\Translatable\Translatable;
+    public $timestamps = false;
     protected $connection = 'tfc_propaganda';
-
-    protected $table = 'challenges';
-    public $translatedAttributes = ['title', 'description'];
-    protected $fillable = ['has_library'];
+    protected $fillable = ['title', 'description'];
 
     public static function get_db_table()
     {
