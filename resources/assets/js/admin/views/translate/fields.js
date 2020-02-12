@@ -264,7 +264,34 @@ const fields = [{
                 label: '',
             },
         ]
-    }
+    },
+    {
+        title: 'Propaganda App Challenges',
+        value: 'challenges',
+        model: 'Propaganda\\ChallengeTranslation',
+        options: [{
+            title: 'title',
+            label: 'Titolo',
+            type: 'input',
+        }, {
+            title: 'description',
+            label: 'Descrizione',
+            type: 'textarea',
+        }],
+        fields: [{
+                key: 'title',
+                label: 'Titolo',
+            }, {
+                key: 'languages',
+                label: 'Stato Traduzione',
+                sortable: true,
+            },
+            {
+                key: 'tools',
+                label: '',
+            },
+        ]
+    },
 ]
 
 export default fields

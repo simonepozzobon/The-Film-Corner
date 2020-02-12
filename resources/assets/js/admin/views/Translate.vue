@@ -15,6 +15,7 @@
                     <option value="app_keywords">Glossario</option>
                     <option value="general_texts">Testi Generali</option>
                     <option value="exercises">Propaganda App Esercizi</option>
+                    <option value="challenges">Propaganda App Challenges</option>
                 </select>
             </div>
             <div class="admin-translate__per-page">
