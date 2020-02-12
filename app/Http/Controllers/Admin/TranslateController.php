@@ -22,6 +22,8 @@ use App\FilmographyTranslation;
 use App\AppKeywordTranslation;
 use App\Propaganda\Exercise;
 use App\Propaganda\ExerciseTranslation;
+use App\Propaganda\Challenge;
+use App\Propaganda\ChallengeTranslation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
@@ -76,7 +78,11 @@ class TranslateController extends Controller
 
         case 'exercises':
             $items = Exercise::all();
-          break;
+            break;
+
+        case 'challenges':
+            $items = Challenge::all();
+            break;
         }
 
         $locales = Language::all();
@@ -113,7 +119,7 @@ class TranslateController extends Controller
 
         // Dalla tabella recupero il nome della seconda colonna che corrisponde all'id dell'elemento da tradurre
         $columns = array();
-        if ($table == 'exercise_translations') {
+        if ($table == 'exercise_translations' || $table == 'challenge_translations') {
             $columns = Schema::connection('tfc_propaganda')->getColumnListing($table);
         } else {
             $columns = Schema::getColumnListing($table);
