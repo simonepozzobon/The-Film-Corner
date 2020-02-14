@@ -10,6 +10,12 @@
     >
         <div v-if="hasLibrary == true">
             <block-content title="Contenuti">
+                <div>
+                    Test <br>
+                    <pre>
+                        {{ initials }}
+                    </pre>
+                </div>
                 <library-medias
                     :exercise="exercise"
                     :initials="initials | filterInitials(exercise)"
