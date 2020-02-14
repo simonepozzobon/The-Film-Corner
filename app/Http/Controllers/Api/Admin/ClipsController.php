@@ -542,7 +542,9 @@ class ClipsController extends Controller
         $clip = Clip::find($request->clip_id);
         $paraType = ParatextType::find($request->paratext_type_id);
 
-        $file = $this->uploadFile($request->file('file'), $paraType->type);
+        if ($paraType->has_media == 1) {
+            $file = $this->uploadFile($request->file('file'), $paraType->type);
+        }
         // $file = Media::find(2);
 
 
@@ -550,10 +552,12 @@ class ClipsController extends Controller
         $p->paratext_type_id = $paraType->id;
         // $p->content = $request->content ? $request->content : 'null';
         $p->media_type = $paraType->type;
-        $p->media = Storage::disk('local')->url($file->src);
+        $p->media = $paraType->has_media == 1 ? Storage::disk('local')->url($file->src) : 'no-file';
         $p->save();
 
-        $p->medias()->attach($file);
+        if ($paraType->has_media == 1) {
+            $p->medias()->attach($file);
+        }
         $p->clip()->attach($clip);
 
         $t = $p->translateOrNew('it');
