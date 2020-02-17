@@ -159,8 +159,8 @@ export default {
             }, 500)
         },
         init: function () {
-            // this.translation = 'apps'
-            this.translation = 'exercises'
+            this.translation = 'apps'
+            // this.translation = 'exercises'
         },
         getLanguages: function () {
             this.$http.get('/api/v2/admin/translate').then(response => {

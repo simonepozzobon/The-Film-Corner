@@ -52,7 +52,9 @@ class LibraryController extends Controller
             $library->save();
         }
 
-        $src = $this->uploadFile($request->file('media'));
+        $upload = $this->uploadFile($request->file('media'));
+        $src = $upload['src'];
+        $name = $upload['name'];
 
         $m = new LibraryMedia();
         $m->url = $src;
@@ -62,8 +64,13 @@ class LibraryController extends Controller
 
         $current = $m->translateOrNew('it');
         $current->library_media_id = $m->id;
-        $current->title = $request->title ? $request->title : '';
-        $current->description = $request->description ? $request->description : '';
+        if ($library->library_type_id != 2) {
+            $current->title = $request->title ? $request->title : '';
+            $current->description = $request->description ? $request->description : '';
+        } else {
+            $current->title = $name;
+            $current->description = $request->description ? $request->description : '';
+        }
         $current->save();
 
         $m->url = Storage::disk('local')->url($m->url);
@@ -75,6 +82,7 @@ class LibraryController extends Controller
           'library' => $library,
           'exercise' => $exercise,
           'media' => $m,
+          'upload' => $upload
         ];
     }
 
@@ -120,7 +128,10 @@ class LibraryController extends Controller
         $path = '';
         $src = $file->storeAs('public/propaganda/libraries', $filename);
 
-        return $src;
+        return [
+            'src' => $src,
+            'name' => $original_name
+        ];
     }
 
     public function upload_caption(Request $request)

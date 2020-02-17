@@ -33,9 +33,14 @@ class ClipsController extends Controller
         \App::setLocale('it');
 
         $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
+        // $this->options_single = ['format', 'period', 'age', 'genre'];
+        // $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
+        // $this->options = array_merge($this->options_single, $this->options_multiple);
+
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
-        $this->options = array_merge($this->options_single, $this->options_multiple);
+        $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
+        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed);
     }
 
     public function test()
@@ -198,16 +203,21 @@ class ClipsController extends Controller
         $response = $this->get_initials();
 
         if ($id) {
-            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'libraries.medias.library_captions', 'captions')->first();
+            $clip = Clip::where('id', $id)->first();
+            $clip = $clip->fresh($this->options);
 
-            $details = $clip->details()->first();
-            if ($details) {
-                $details = $details->setDefaultLocale('it');
+            if ($clip) {
+                $details = $clip->details()->first();
+                if ($details) {
+                    $details = $details->setDefaultLocale('it');
+                }
+                $clip->details = $details;
+
+                $response['success'] = true;
+                $response['initial'] = $clip;
+            } else {
+                $response['success'] = true;
             }
-            $clip->details = $details;
-
-            $response['success'] = true;
-            $response['initial'] = $clip;
         } else {
             $response['success'] = true;
         }
@@ -542,7 +552,9 @@ class ClipsController extends Controller
         $clip = Clip::find($request->clip_id);
         $paraType = ParatextType::find($request->paratext_type_id);
 
-        $file = $this->uploadFile($request->file('file'), $paraType->type);
+        if ($paraType->has_media == 1) {
+            $file = $this->uploadFile($request->file('file'), $paraType->type);
+        }
         // $file = Media::find(2);
 
 
@@ -550,10 +562,12 @@ class ClipsController extends Controller
         $p->paratext_type_id = $paraType->id;
         // $p->content = $request->content ? $request->content : 'null';
         $p->media_type = $paraType->type;
-        $p->media = Storage::disk('local')->url($file->src);
+        $p->media = $paraType->has_media == 1 ? Storage::disk('local')->url($file->src) : 'no-file';
         $p->save();
 
-        $p->medias()->attach($file);
+        if ($paraType->has_media == 1) {
+            $p->medias()->attach($file);
+        }
         $p->clip()->attach($clip);
 
         $t = $p->translateOrNew('it');
