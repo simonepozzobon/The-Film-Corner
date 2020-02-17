@@ -273,20 +273,22 @@ export default {
             });
         },
         destroy: function (item) {
-            if (this.hasMedia) {
-                let data = new FormData()
-                data.append('clip_id', this.clipId)
-                data.append('paratext_type_id', this.paratext.id)
-                data.append('paratext_id', item.id)
+            console.log('destroying');
+            // if (this.hasMedia || this.) {
+            let data = new FormData()
+            data.append('clip_id', this.clipId)
+            data.append('paratext_type_id', this.paratext.id)
+            data.append('paratext_id', item.id)
 
-                this.$http.post('/api/v2/admin/clips/paratexts/destroy', data).then(response => {
-                    let idx = this.contents.findIndex(content => content.id == response.data.id)
-                    if (idx > -1) {
-                        this.contents.splice(idx, 1)
-                        this.setCompleted()
-                    }
-                })
-            }
+            this.$http.post('/api/v2/admin/clips/paratexts/destroy', data).then(response => {
+                console.log('paratesto', response);
+                let idx = this.contents.findIndex(content => content.id == response.data.id)
+                if (idx > -1) {
+                    this.contents.splice(idx, 1)
+                    this.setCompleted()
+                }
+            })
+            // }
         },
         setCompleted: function () {
             if (this.contents.length > 0) {
