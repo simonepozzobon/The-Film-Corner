@@ -131,7 +131,7 @@ export default {
         fileAdded: function (file) {
             toastr.info('file added')
             this.$emit('file-added', file)
-            console.log(file);
+            // console.log(file);
         },
         filesAdded: function (files) {
             toastr.info('files added')

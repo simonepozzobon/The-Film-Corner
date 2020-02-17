@@ -345,7 +345,7 @@ export default {
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
-                console.log(response);
+                // console.log(response);
                 this.$emit('update', response.data)
                 this.clearFile(true)
             })
