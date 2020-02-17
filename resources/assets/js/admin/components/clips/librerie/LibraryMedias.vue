@@ -78,7 +78,37 @@ export default {
     },
     data: function () {
         return {
-            fields: [{
+
+            medias: [],
+        }
+    },
+    watch: {
+        exercise: function () {
+            this.setMedia()
+        },
+        initials: function (initials) {
+            // console.log('initials', initials);
+            this.setMedia(initials)
+        }
+    },
+    computed: {
+        fields: function () {
+            if (this.exercise.library_type_id == 2) {
+                return [{
+                    key: 'id',
+                    label: 'id',
+                    sortable: true
+                }, {
+                    key: 'title',
+                    label: 'Titolo',
+                    sortable: true,
+                }, {
+                    key: 'tools',
+                    label: 'Strumenti',
+                    sortable: false,
+                }]
+            }
+            return [{
                 key: 'id',
                 label: 'id',
                 sortable: true
@@ -94,20 +124,11 @@ export default {
                 key: 'tools',
                 label: 'Strumenti',
                 sortable: false,
-            }],
-            medias: [],
-        }
-    },
-    watch: {
-        exercise: function () {
-            this.setMedia()
+            }]
         },
-        initials: function (initials) {
-            console.log('initials', initials);
-            this.setMedia(initials)
-        }
     },
     methods: {
+
         setMedia: function (libraries = null) {
             if (this.exercise.libraries.length > 0 && libraries == null) {
                 this.medias = Object.assign([], this.exercise.libraries[0].medias)

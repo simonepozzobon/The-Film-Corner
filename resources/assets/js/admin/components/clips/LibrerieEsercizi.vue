@@ -23,12 +23,13 @@
             Questo esercizio non utilizza librerie
         </div>
         <div v-else-if="hasLibrary == true && libraryOptions">
-            <block-content title="Aggiungi un video">
+            <block-content :title="uploadText">
                 <text-input
                     label="Titolo"
                     name="it_title"
                     :initial="title"
                     @update="updateTitle"
+                    v-if="libraryOptions.type != 'audio'"
                 />
                 <text-editor
                     ref="description"
@@ -36,6 +37,7 @@
                     :has-animation="true"
                     min-height="100px"
                     @update="updateDescription('it', arguments)"
+                    v-if="libraryOptions.type != 'audio'"
                 />
                 <div class="uploader">
                     <div class="title-section form-group row">
@@ -199,7 +201,7 @@ export default {
                 case 2:
                     opts = {
                         type: 'audio',
-                        accept: 'audio/mpeg,audio/mpeg3,audio/x-mpeg-3,video/mpeg,video/x-mpeg',
+                        accept: 'audio/mp3',
                     }
                     return opts
                 case 3:
@@ -215,11 +217,25 @@ export default {
             }
             return false
         },
-        isReadyToUpload: function () {
-            if (this.title && this.title.length > 0 && this.file != null) {
-                return true
+        uploadText: function () {
+            if (this.libraryOptions && this.libraryOptions.type != 'audio') {
+                return 'Aggiungi un video'
             }
-            return false
+            return 'Aggiungi un file audio'
+        },
+        isReadyToUpload: function () {
+            if (this.libraryOptions && this.libraryOptions.type != 'audio') {
+                if (this.title && this.title.length > 0 && this.file != null) {
+                    return true
+                }
+                return false
+            }
+            else {
+                if (this.file != null) {
+                    return true
+                }
+                return false
+            }
         },
         uuid: function () {
             return this.$util.uuid()
@@ -303,7 +319,9 @@ export default {
                 if (titleReset == true) {
                     this.title = null
                     this.description = null
-                    this.$refs.description.editor.setContent(null)
+                    if (this.$refs.description) {
+                        this.$refs.description.editor.setContent(null)
+                    }
                 }
             }
         },
@@ -327,7 +345,7 @@ export default {
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
-                // console.log(response);
+                console.log(response);
                 this.$emit('update', response.data)
                 this.clearFile(true)
             })
