@@ -23,10 +23,7 @@
             Questo esercizio non utilizza librerie
         </div>
         <div v-else-if="hasLibrary == true && libraryOptions">
-            <pre>
-            {{ libraryOptions }}
-            </pre>
-            <block-content title="Aggiungi un video">
+            <block-content :title="uploadText">
                 <text-input
                     label="Titolo"
                     name="it_title"
@@ -220,6 +217,12 @@ export default {
             }
             return false
         },
+        uploadText: function () {
+            if (this.libraryOptions && this.libraryOptions.type != 'audio') {
+                return 'Aggiungi un video'
+            }
+            return 'Aggiungi un file audio'
+        },
         isReadyToUpload: function () {
             if (this.libraryOptions && this.libraryOptions.type != 'audio') {
                 if (this.title && this.title.length > 0 && this.file != null) {
@@ -316,7 +319,9 @@ export default {
                 if (titleReset == true) {
                     this.title = null
                     this.description = null
-                    this.$refs.description.editor.setContent(null)
+                    if (this.$refs.description) {
+                        this.$refs.description.editor.setContent(null)
+                    }
                 }
             }
         },
@@ -340,7 +345,7 @@ export default {
 
 
             this.$http.post('/api/v2/admin/clips/libraries/upload', data).then(response => {
-                // console.log(response);
+                console.log(response);
                 this.$emit('update', response.data)
                 this.clearFile(true)
             })
