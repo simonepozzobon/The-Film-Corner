@@ -187,8 +187,7 @@ export default {
             data.append('paratext_type_id', this.paratext.id)
 
             this.$http.post('/api/v2/admin/clips/paratexts/upload', data).then(response => {
-                console.log('response', response.data);
-                this.addParatext(response)
+                this.addParatext(response.data)
             })
         }
     },
