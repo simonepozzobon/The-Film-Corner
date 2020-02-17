@@ -27,6 +27,7 @@
 
             <upload-zone
                 ref="upload"
+                v-if="mediaType != 0"
                 :accept="mime"
                 url="/api/v2/admin/clips/paratexts/upload"
                 :params.sync="requestParams"
@@ -171,8 +172,24 @@ export default {
             this.content = html
         },
         save: function () {
-            this.$refs.upload.$refs.drop.processQueue()
+            if (this.mediaType === 0) {
+                this.uploadText()
+            }
+            else {
+                this.$refs.upload.$refs.drop.processQueue()
+
+            }
         },
+        uploadText: function () {
+            let data = new FormData()
+            data.append('clip_id', this.clipId)
+            data.append('content', this.content)
+            data.append('paratext_type_id', this.paratext.id)
+
+            this.$http.post('/api/v2/admin/clips/paratexts/upload', data).then(response => {
+                this.addParatext(response.data)
+            })
+        }
     },
 }
 </script>
