@@ -200,14 +200,18 @@ class ClipsController extends Controller
         if ($id) {
             $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'libraries.medias.library_captions', 'captions')->first();
 
-            $details = $clip->details()->first();
-            if ($details) {
-                $details = $details->setDefaultLocale('it');
-            }
-            $clip->details = $details;
+            if ($clip) {
+                $details = $clip->details()->first();
+                if ($details) {
+                    $details = $details->setDefaultLocale('it');
+                }
+                $clip->details = $details;
 
-            $response['success'] = true;
-            $response['initial'] = $clip;
+                $response['success'] = true;
+                $response['initial'] = $clip;
+            } else {
+                $response['success'] = true;
+            }
         } else {
             $response['success'] = true;
         }
