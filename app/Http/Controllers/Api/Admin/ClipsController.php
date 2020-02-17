@@ -33,9 +33,14 @@ class ClipsController extends Controller
         \App::setLocale('it');
 
         $this->locales = ['en', 'fr', 'it', 'sr', 'ka', 'sl'];
+        // $this->options_single = ['format', 'period', 'age', 'genre'];
+        // $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
+        // $this->options = array_merge($this->options_single, $this->options_multiple);
+
         $this->options_single = ['format', 'period', 'age', 'genre'];
         $this->options_multiple = ['directors', 'peoples', 'topics', 'captions'];
-        $this->options = array_merge($this->options_single, $this->options_multiple);
+        $this->options_mixed = ['paratexts', 'libraries.exercise', 'libraries.medias.library_captions'];
+        $this->options = array_merge($this->options_single, $this->options_multiple, $this->options_mixed);
     }
 
     public function test()
@@ -198,16 +203,21 @@ class ClipsController extends Controller
         $response = $this->get_initials();
 
         if ($id) {
-            $clip = Clip::where('id', $id)->with('format', 'period', 'age', 'genre', 'directors', 'peoples', 'topics', 'paratexts', 'libraries.exercise', 'libraries.medias.library_captions', 'captions')->first();
+            $clip = Clip::where('id', $id)->first();
+            $clip = $clip->fresh($this->options);
 
-            $details = $clip->details()->first();
-            if ($details) {
-                $details = $details->setDefaultLocale('it');
+            if ($clip) {
+                $details = $clip->details()->first();
+                if ($details) {
+                    $details = $details->setDefaultLocale('it');
+                }
+                $clip->details = $details;
+
+                $response['success'] = true;
+                $response['initial'] = $clip;
+            } else {
+                $response['success'] = true;
             }
-            $clip->details = $details;
-
-            $response['success'] = true;
-            $response['initial'] = $clip;
         } else {
             $response['success'] = true;
         }

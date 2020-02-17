@@ -282,7 +282,7 @@ export default {
             // console.log('url', url);
 
             this.$http.get(url).then(response => {
-                // console.log('setting', response);
+                // console.log('setting', response.data);
                 if (response.data.success) {
                     // set initials values
                     if (response.data.hasOwnProperty('initial')) {
