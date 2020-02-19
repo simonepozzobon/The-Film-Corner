@@ -329,6 +329,11 @@ const values = [{
         value: 'propaganda_topic',
         model: 'Propaganda\\TopicTranslation',
     },
+    {
+        title: 'Propaganda App Età',
+        value: 'propaganda_age',
+        model: 'Propaganda\\AgeTranslation',
+    },
 ]
 
 for (let i = 0; i < values.length; i++) {
