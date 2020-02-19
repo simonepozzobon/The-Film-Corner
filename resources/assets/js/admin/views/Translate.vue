@@ -16,6 +16,13 @@
                     <option value="general_texts">Testi Generali</option>
                     <option value="exercises">Propaganda App Esercizi</option>
                     <option value="challenges">Propaganda App Challenges</option>
+                    <option value="propaganda_period">Propaganda App Informazioni - Periodo</option>
+                    <option value="propaganda_director">Propaganda App Informazioni - Registi</option>
+                    <option value="propaganda_people">Propaganda App Informazioni - Interpreti</option>
+                    <option value="propaganda_format">Propaganda App Informazioni - Formato</option>
+                    <option value="propaganda_genre">Propaganda App Informazioni - Genere</option>
+                    <!-- <option value="propaganda_country">Propaganda App Informazioni - Nazionalità</option> -->
+                    <option value="propaganda_topic">Propaganda App Informazioni - Argomenti</option>
                 </select>
             </div>
             <div class="admin-translate__per-page">

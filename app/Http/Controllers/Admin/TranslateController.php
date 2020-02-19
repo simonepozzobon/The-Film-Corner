@@ -24,6 +24,19 @@ use App\Propaganda\Exercise;
 use App\Propaganda\ExerciseTranslation;
 use App\Propaganda\Challenge;
 use App\Propaganda\ChallengeTranslation;
+use App\Propaganda\Director;
+use App\Propaganda\DirectorTranslation;
+use App\Propaganda\Format;
+use App\Propaganda\FormatTranslation;
+use App\Propaganda\Genre;
+use App\Propaganda\GenreTranslation;
+use App\Propaganda\People;
+use App\Propaganda\PeopleTranslation;
+use App\Propaganda\Period;
+use App\Propaganda\PeriodTranslation;
+use App\Propaganda\Topic;
+use App\Propaganda\TopicTranslation;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Schema;
@@ -83,6 +96,30 @@ class TranslateController extends Controller
         case 'challenges':
             $items = Challenge::all();
             break;
+
+        case 'propaganda_period':
+            $items = Period::all();
+            break;
+
+        case 'propaganda_director':
+            $items = Director::all();
+            break;
+
+        case 'propaganda_people':
+            $items = People::all();
+            break;
+
+        case 'propaganda_format':
+            $items = Format::all();
+            break;
+
+        case 'propaganda_genre':
+            $items = Genre::all();
+            break;
+
+        case 'propaganda_topic':
+            $items = Topic::all();
+            break;
         }
 
         $locales = Language::all();
@@ -121,6 +158,8 @@ class TranslateController extends Controller
         $columns = array();
         if ($table == 'exercise_translations' || $table == 'challenge_translations') {
             $columns = Schema::connection('tfc_propaganda')->getColumnListing($table);
+        } elseif (substr($r->type, 0, 10) == 'Propaganda') {
+            $columns = Schema::connection('tfc_propaganda')->getColumnListing($table);
         } else {
             $columns = Schema::getColumnListing($table);
         }
@@ -150,7 +189,7 @@ class TranslateController extends Controller
                 // array_push($test, $translation);
 
                 if (gettype($translation) == 'string') {
-                    if ($field == 'title') {
+                    if ($field == 'title' || $field == 'name') {
                         $t->{$field} = strip_tags($translation);
                     } else {
                         $t->{$field} = $translation;
