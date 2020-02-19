@@ -341,10 +341,6 @@ for (let i = 0; i < values.length; i++) {
             title: 'title',
             label: 'Titolo',
             type: 'input',
-        }, {
-            title: 'description',
-            label: 'Descrizione',
-            type: 'textarea',
         }],
         fields: [{
                 key: 'title',
@@ -360,6 +356,32 @@ for (let i = 0; i < values.length; i++) {
             },
         ]
     }
+
+
+    if (current.value == 'propaganda_director') {
+        newObj = {
+            ...newObj,
+            options: [{
+                title: 'name',
+                label: 'Nome',
+                type: 'input',
+            }],
+            fields: [{
+                    key: 'name',
+                    label: 'Nome',
+                }, {
+                    key: 'languages',
+                    label: 'Stato Traduzione',
+                    sortable: true,
+                },
+                {
+                    key: 'tools',
+                    label: '',
+                },
+            ]
+        }
+    }
+
 
     fields.push(newObj)
 }
